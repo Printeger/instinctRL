@@ -55,10 +55,21 @@ The static call/config chain is:
    `RotorGroup`, `RigidPrimView`s, and rotor/body state buffers.
 6. The controller path is `VelController(LeePositionController(...))`; the
    TASLAB gains are loaded from `lee_controller_taslab_uav.yaml`.
-7. Training/eval consumers select `TaslabUAV` through Hydra config and platform
-   audit in `instinctRL/audit.py`.
+7. `training/scripts/train.py` creates `NavigationEnv`, wraps it with
+   `VelController(LeePositionController(...))`, and, when instinctRL is enabled,
+   runs governor/adapter/ICS before writing `("agents", "action")`.
+8. `training/scripts/eval.py` uses the same controller/adapter path for
+   evaluation and records the controller command against actual drone velocity.
+9. `training/scripts/instinctRL/command_adapter.py` rotates body-frame
+   `v_final_b` to world-frame using `("info", "drone_state")[..., 3:7]`; that
+   privileged attitude quaternion stays at the controller boundary and never
+   enters the learned actor.
+10. Hydra `train.yaml`, `eval.yaml`, and `ppo.yaml` configure the training/eval
+    controller path, PPO action limit, and instinctRL governor/ICS settings;
+    `drone.yaml` remains the file that selects `model_name: "TaslabUAV"`.
 
-This chain is supported by `raw_logs/M1A-001/cmd_015` and the manifest.
+This chain is supported by `raw_logs/M1A-001/cmd_015`,
+`raw_logs/M1A-001-R1/cmd_001`, `cmd_003`, and the completed manifest.
 
 ## Required inventory summary
 
@@ -73,7 +84,11 @@ The full 10-field inventory is in
 - `omni_drones/actuators/rotor_group.py`
 - `omni_drones/utils/torchrl/transforms.py` (`VelController`)
 - `omni_drones/robots/robot.py` (registry/spawn)
-- training/config consumers and historical docs listed in the manifest
+- `training/scripts/train.py`
+- `training/scripts/eval.py`
+- `training/scripts/instinctRL/command_adapter.py`
+- `training/cfg/train.yaml`, `eval.yaml`, `ppo.yaml`
+- historical docs and modern/Isaac Lab counterparts listed in the manifest
 
 ## USD size conflict
 
@@ -100,6 +115,10 @@ Each conflict is recorded without silent resolution.
 | Binary USD author and license | USD crate has no static embedded license discovered by `file`/`git`; directory name cannot establish owner | Binary redistribution/compatibility risk | Commander/legal review before asset reuse | Confirm USD provenance separately |
 | TASLAB YAML vs USD authority | `taslab_uav.yaml` states `mass: 1.1583`; USD mass/inertia/topology is not statically introspected | Runtime mass/inertia may differ | M1B USD stage introspection | Compare USD-authored mass/inertia/rotor topology with YAML |
 | Stale 158 KB statement | `docs/instinctRL_0_platform_sensor_audit.md` vs 9,563,347-byte blob | Historical documentation error | M1A records, no rewrite | Blob/SHA/size/type evidence |
+| Stale README path and model casing | `docs/TASLAB_UAV_README.md` references `training/cfg/drone_taslab.yaml` and lower-case `model_name: "taslab_uav"`; actual runtime config is `training/cfg/drone.yaml` with `model_name: "TaslabUAV"` | Can mislead M1B config mapping | M1A records, no rewrite | Static config/search evidence |
+| Hummingbird placeholder claim | `docs/TASLAB_UAV_README.md` says "current use hummingbird.usd"; `taslab_uav.py` active `usd_path` is `taslab_uav.usd` | Confuses active asset identity | M1A records, no rewrite | Static `taslab_uav.py`/README diff evidence |
+| YAML-only physics authority claim | `docs/TASLAB_UAV_README.md` says all physics parameters are controlled by `taslab_uav.yaml`; no USD stage introspection supports exclusive authority | Runtime USD may author mass/inertia/topology | M1B USD stage introspection | Compare USD-authored fields to YAML |
+| Unproven USD alignment claim | `docs/instinctRL_0_platform_sensor_audit.md` says YAML mass is aligned with USD rigid body without stage evidence | Same authority conflict as above | M1B USD stage introspection | Enumerate USD mass and compare with YAML |
 | Rotor prim topology/order/axes | Not statically proven from binary USD | Rotor mapping risk | M1B USD stage introspection | Enumerate prims, joints, rotor order/axes |
 | Command frame | Legacy `VelController` expects world-frame velocity; project governor emits body-frame command and uses an adapter | Controller-frame semantic risk | M5 control path | Frame conversion tests at named boundary |
 | Upstream modern pin URL | Qualification evidence gives full commit and local path but not a canonical upstream URL | Reproducibility uncertainty | Commander baseline refresh decision | Record exact qualified local path/full object; do not guess URL |

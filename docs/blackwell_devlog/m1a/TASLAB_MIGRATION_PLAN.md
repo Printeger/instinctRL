@@ -68,7 +68,12 @@ topology by assumption:
   state.
 - Legacy `VelController` shape semantics → modern `LeePositionController.compute`
   contract.
+- Preserve the controller-only `("info", "drone_state")` boundary and the
+  overwrite of `("agents", "action")` with normalized rotor commands; do not
+  silently copy `torch.nan_to_num_(cmds, 0.)` as a correctness mechanism.
 - Legacy `omni.isaac.core` imports → modern `isaacsim` / Isaac Lab APIs.
+- Reconcile legacy scalar `RotorGroup`/`make_functional` expansion with modern
+  batched `RotorGroup` parameter ownership.
 - Command frame: keep body-frame velocity-governor method unchanged and put the
   body-to-world conversion at a named controller boundary, not inside actor
   observation.
@@ -80,6 +85,9 @@ Static:
 - exact provenance/commit/blob/SHA-256/size/type manifest
 - allowlist diff
 - symbol/config/asset-contract diff
+- static controller/rotor contract check: keys, shapes, device/dtype, state
+  boundary, normalized output path, clamp/NaN location, rotor ordering and
+  force/moment application
 - negative search proving no accidental legacy import or actor leakage
 
 Runtime, only if separately authorized:

@@ -146,7 +146,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `88bae956eb8f9527a9592e9aa87eed69a586599b`
 5. SHA-256: `c2da932defd3d36909902e77443b7021e903c8847a1c1c83d87bd45151657eed`
 6. Size/type: `1353` bytes, `Unicode text, UTF-8 text`
-7. Intro/update: `unknown` for exact introduction from static log; runtime config in source tree
+7. Intro/update: introduced `e970cbf89887c163ef2f9a711377ac267a2cee3d`; latest `9637ca71b59a3e4ae897ff8644d850924dd08653`; evidence `git log --follow`
 8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
 9. Runtime consumer: Hydra config selects `drone.model_name: "TaslabUAV"`
 10. Authority: `configuration intent`
@@ -159,7 +159,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `3391ec58276e998bde96f147eaa5847fb03a4187`
 5. SHA-256: `072295d5eff1707333dfdebd92557f4de4b5ccd89d92cf717949c44ceb82d4bb`
 6. Size/type: `83808` bytes, `Python script, Unicode text, UTF-8 text executable`
-7. Intro/update: not separately traced in M1A static log
+7. Intro/update: introduced `e970cbf89887c163ef2f9a711377ac267a2cee3d`; latest `9c8b1b0d08a19bdb888bea691dad1555bb57c903`; evidence `git log --follow`
 8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
 9. Runtime consumer: builds `NavigationEnv`, resolves TASLAB base link dynamically
 10. Authority: `runtime-effective` / local project code
@@ -172,7 +172,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `9ac002dd1e52632d4b75e42e2db4f8ffb62b0880`
 5. SHA-256: `7bf51e9d9b8f1c39ebe64094914b626b268ce916a5c028932937c22ae8d2b49a`
 6. Size/type: `10823` bytes, `Python script, Unicode text, UTF-8 text executable`
-7. Intro/update: not separately traced in M1A static log
+7. Intro/update: introduced `835a77f4e6f5417b7bbce19db1c5261181ea6ee0`; latest `9c8b1b0d08a19bdb888bea691dad1555bb57c903`; evidence `git log --follow`
 8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
 9. Runtime consumer: `check_platform_lock` asserts `drone.model_name == TaslabUAV`
 10. Authority: `runtime-effective` / local project code
@@ -185,7 +185,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `124b0cbe80fb6b6391e574f6c091433580a3a44b`
 5. SHA-256: `0cee0eb0f2c0c4c210586a42604ea53208cf122b622037f426288e9408433d2a`
 6. Size/type: `86027` bytes, `Python script, ASCII text executable`
-7. Intro/update: not separately traced in M1A static log
+7. Intro/update: introduced `c6c092dfa86325a84b01a0b2a553766a5b36808a`; latest `9c8b1b0d08a19bdb888bea691dad1555bb57c903`; evidence `git log --follow`
 8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
 9. Runtime consumer: body/world-frame velocity rotation helper for TASLAB controller path
 10. Authority: `runtime-effective` / local project code
@@ -198,7 +198,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `cc61056505600a81b7b0103c580af0416fb884e9`
 5. SHA-256: `93af4bc9986eb777704eba20915747984f8f5b038aa8a1535578522b0624d745`
 6. Size/type: `2715` bytes, `Unicode text, UTF-8 text`
-7. Intro/update: `unknown` for exact introduction from static log
+7. Intro/update: introduced `c4cca8b29aba2fdea37f649bb13c9f35e27aaf49`; latest `4318e07aa51fcf8a41315b7ea9f7af15748d2fe3`; evidence `git log --follow`
 8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
 9. Runtime consumer: historical instructions only, not runtime-effective
 10. Authority: `historical documentation`
@@ -211,7 +211,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `5216a37372023e295c6bdc2b9bc9d4421ac410bb`
 5. SHA-256: `538f2bb550bf5af8ce15dea2e70948624f6ff17bd43d50372a84afe6f7558f94`
 6. Size/type: `28323` bytes, `Unicode text, UTF-8 text, with very long lines (517)`
-7. Intro/update: `unknown` for exact introduction from static log
+7. Intro/update: introduced/latest `4318e07aa51fcf8a41315b7ea9f7af15748d2fe3`; evidence `git log --follow`
 8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
 9. Runtime consumer: historical audit; contains stale ~158KB USD statement
 10. Authority: `historical documentation`
@@ -237,7 +237,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `a17cc02095f2a2a439199c26328c2f5e9787ff26`
 5. SHA-256: `2f2a332be1ec504dfee6fa9000ddaee6ad3380c2c3539baecc60ce62e52fe3de`
 6. Size/type: `9658` bytes, `Python script, ASCII text executable`
-7. Intro/update: not separately traced in M1A static log
+7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `91020583fe974fbf41fa1257ef36d53954d310a6`; evidence `git log --follow`
 8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: modern registry/spawn API; `TaslabUAV` absent
 10. Authority: `runtime-effective` / modern comparison reference
@@ -250,7 +250,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `c96cb017c0faa0b47a6d1f9c8da1cc03d057d2b3`
 5. SHA-256: `39ea4cfe2a6748a04a7d13b3ae4e60c606ea75251be95f643ec011ac546a5930`
 6. Size/type: `18548` bytes, `Python script, ASCII text executable`
-7. Intro/update: not separately traced in M1A static log
+7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `91020583fe974fbf41fa1257ef36d53954d310a6`; evidence `git log --follow`
 8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: modern multirotor base; no `TaslabUAV`
 10. Authority: `runtime-effective` / modern comparison reference
@@ -263,7 +263,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `539cad2de88fa9ab72c4c1af4cc3a362dfeac109`
 5. SHA-256: `4b7e794b53c9385b0dbed4dd1fd2b47aa7c299c2f42db82a9babe2dfc72b9400`
 6. Size/type: `3248` bytes, `Python script, ASCII text executable`
-7. Intro/update: not separately traced in M1A static log
+7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `91020583fe974fbf41fa1257ef36d53954d310a6`; evidence `git log --follow`
 8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: modern `MultirotorBase` constructs batched `RotorGroup`
 10. Authority: `runtime-effective` / modern comparison reference
@@ -276,7 +276,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `4f8af6e51215c5d80aea5969a01e897788de1b64`
 5. SHA-256: `331df4beec0515d69e472a13e92281d1cd319c1bcaa70a32019d152aff2c4933`
 6. Size/type: `13447` bytes, `Python script, ASCII text executable`
-7. Intro/update: not separately traced in M1A static log
+7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `f67b58fe742b59ebd54cef01fbd5ea19d9a13578`; evidence `git log --follow`
 8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: `VelController` calls `LeePositionController.compute` in modern stack
 10. Authority: `runtime-effective` / modern comparison reference
@@ -289,33 +289,189 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `c193f224312e7297afcfc982059ae34f191ce4f9`
 5. SHA-256: `841de861e2bde09dd0acdfad87faafea7b4e3ae832b49d59d38a98ed759a20dc`
 6. Size/type: `14567` bytes, `Python script, ASCII text executable`
-7. Intro/update: modern branch port of NavRL `VelController` (`5045c71`)
+7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `5045c71cc73d224144cc08bc38d65cabeedaec8c`; evidence `git log --follow`
 8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: modern velocity action transform; `TaslabUAV` absent
 10. Authority: `runtime-effective` / modern comparison reference
 
-## 23. Isaac Lab `ArticulationCfg` / `Articulation` and `RigidObjectCfg` / `RigidObject`
+## 23. Isaac Lab `source/isaaclab/isaaclab/assets/articulation/articulation_cfg.py`
 
 1. Repository/authority: `~/rl_blackwell_test/repos/IsaacLab` v2.3.2
 2. Exact commit: `37ddf626871758333d6ed89cf64ad702aef127d0`
-3. Path: `source/isaaclab/isaaclab/assets/articulation/articulation_cfg.py`, `articulation.py`, `rigid_object/rigid_object_cfg.py`, `rigid_object.py`
-4. Git blob: not individually recorded for this summary row; class declarations are in `cmd_020`
-5. SHA-256: not individually recorded for this summary row
-6. Size/type: source Python; static class declarations
-7. Intro/update: Isaac Lab v2.3.2 snapshot
-8. License: Isaac Lab repo license not individually copied here; frozen baseline reference only
-9. Runtime consumer: future M1B Isaac Lab asset migration candidate
+3. Path: `source/isaaclab/isaaclab/assets/articulation/articulation_cfg.py`
+4. Git blob: `fad16cd8360a8e6feb4892c796d8aaa9d24640ec`
+5. SHA-256: `a80e979d069f6abf6b87c41ae79926b70185b13a9e64f62829002bc7ed5e27ad`
+6. Size/type: `3055` bytes, `Python script, ASCII text executable`
+7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
+9. Runtime consumer: future M1B `ArticulationCfg` asset-mapping candidate
 10. Authority: `runtime-effective` / modern comparison reference
 
-## 24. Isaac Lab actuator APIs
+## 24. Isaac Lab `source/isaaclab/isaaclab/assets/articulation/articulation.py`
 
 1. Repository/authority: `~/rl_blackwell_test/repos/IsaacLab` v2.3.2
 2. Exact commit: `37ddf626871758333d6ed89cf64ad702aef127d0`
-3. Path: `source/isaaclab/isaaclab/actuators/actuator_pd_cfg.py`, `actuator_pd.py`
-4. Git blob: not individually recorded for this summary row
-5. SHA-256: not individually recorded for this summary row
-6. Size/type: source Python; classes `ImplicitActuatorCfg`, `IdealPDActuatorCfg`, `DCMotorCfg`
-7. Intro/update: Isaac Lab v2.3.2 snapshot
-8. License: Isaac Lab repo license not individually copied here
-9. Runtime consumer: future M1B actuator mapping candidate
+3. Path: `source/isaaclab/isaaclab/assets/articulation/articulation.py`
+4. Git blob: `b67ded15ac48373a5b1bad4dd0602da664a9bea7`
+5. SHA-256: `fb179aacdd848906367d01105020e1d36412bd0f1da7187be09f0781ff589309`
+6. Size/type: `107526` bytes, `Python script, ASCII text executable`
+7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
+9. Runtime consumer: future M1B `Articulation` runtime asset-mapping candidate
+10. Authority: `runtime-effective` / modern comparison reference
+
+## 25. Isaac Lab `source/isaaclab/isaaclab/assets/rigid_object/rigid_object_cfg.py`
+
+1. Repository/authority: `~/rl_blackwell_test/repos/IsaacLab` v2.3.2
+2. Exact commit: `37ddf626871758333d6ed89cf64ad702aef127d0`
+3. Path: `source/isaaclab/isaaclab/assets/rigid_object/rigid_object_cfg.py`
+4. Git blob: `8340aa45f763779fa206057497ca2696de689b84`
+5. SHA-256: `45c407ae76bcb4f737bf02c65424f957e8a0b1f7a8981ed992e0a780ab69dc13`
+6. Size/type: `1091` bytes, `Python script, ASCII text executable`
+7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
+9. Runtime consumer: future M1B `RigidObjectCfg` asset-mapping candidate
+10. Authority: `runtime-effective` / modern comparison reference
+
+## 26. Isaac Lab `source/isaaclab/isaaclab/assets/rigid_object/rigid_object.py`
+
+1. Repository/authority: `~/rl_blackwell_test/repos/IsaacLab` v2.3.2
+2. Exact commit: `37ddf626871758333d6ed89cf64ad702aef127d0`
+3. Path: `source/isaaclab/isaaclab/assets/rigid_object/rigid_object.py`
+4. Git blob: `6d0ec98f4314e328a4131d6bf852294d87ef67ce`
+5. SHA-256: `0aa371d43fae2f9dbfccc98bdb1d14f75860973afb68d3832e83b815d52fb546`
+6. Size/type: `27299` bytes, `Python script, ASCII text executable`
+7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
+9. Runtime consumer: future M1B `RigidObject` runtime asset-mapping candidate
+10. Authority: `runtime-effective` / modern comparison reference
+
+## 27. Isaac Lab `source/isaaclab/isaaclab/actuators/actuator_pd_cfg.py`
+
+1. Repository/authority: `~/rl_blackwell_test/repos/IsaacLab` v2.3.2
+2. Exact commit: `37ddf626871758333d6ed89cf64ad702aef127d0`
+3. Path: `source/isaaclab/isaaclab/actuators/actuator_pd_cfg.py`
+4. Git blob: `d1f5a6282ad85bd2f83224da77559999e67c933b`
+5. SHA-256: `01149887c4440da8da86ce781c8ae2beb57a8e31981b17abb1133ea03a1e1fa8`
+6. Size/type: `2311` bytes, `Python script, ASCII text executable`
+7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
+9. Runtime consumer: future M1B actuator-config mapping candidate
+10. Authority: `runtime-effective` / modern comparison reference
+
+## 28. Isaac Lab `source/isaaclab/isaaclab/actuators/actuator_pd.py`
+
+1. Repository/authority: `~/rl_blackwell_test/repos/IsaacLab` v2.3.2
+2. Exact commit: `37ddf626871758333d6ed89cf64ad702aef127d0`
+3. Path: `source/isaaclab/isaaclab/actuators/actuator_pd.py`
+4. Git blob: `ff014fa7a58eaaf9fa058161f1d93c669075050c`
+5. SHA-256: `105f0341f972102f6bd5b0c544bc7c0510662241389a9decd24406bb2371d27e`
+6. Size/type: `20769` bytes, `Python script, Unicode text, UTF-8 text executable`
+7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
+9. Runtime consumer: future M1B actuator-runtime mapping candidate
+10. Authority: `runtime-effective` / modern comparison reference
+
+## 29. Legacy `isaac-training/training/scripts/train.py`
+
+1. Repository/authority: `Printeger/instinctRL` legacy source
+2. Exact commit: `6f6dee3da72d0b0202846b330adcaeeec8ee7bc3`
+3. Path: `isaac-training/training/scripts/train.py`
+4. Git blob: `c0809cdd4c163b4f5b471104a97891002ffb49d3`
+5. SHA-256: `1578b266adb020ba4a96a024a5c329a6f33fcb0b766686a86c05187cee94e32d`
+6. Size/type: `24483` bytes, `Python script, Unicode text, UTF-8 text executable`
+7. Intro/update: introduced `e970cbf89887c163ef2f9a711377ac267a2cee3d`; latest `ca5795252faa069de9406a733be26a53d6269ee5`; evidence `git log --follow`
+8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
+9. Runtime consumer: creates `NavigationEnv`, imports `LeePositionController`, `VelController`, `BodyToWorldVelocityAdapter`, wraps env, writes `("agents", "action")`, and runs B0/smoke path
+10. Authority: `runtime-effective` / local project code
+
+## 30. Legacy `isaac-training/training/scripts/eval.py`
+
+1. Repository/authority: `Printeger/instinctRL` legacy source
+2. Exact commit: `6f6dee3da72d0b0202846b330adcaeeec8ee7bc3`
+3. Path: `isaac-training/training/scripts/eval.py`
+4. Git blob: `dd721963a93e3987c243fa0cccd6b5bc37b516b3`
+5. SHA-256: `bdef411b9e0859a473108959733cf3c71267051e0c618bfcbae71cf86dd40538`
+6. Size/type: `22453` bytes, `Python script, Unicode text, UTF-8 text executable`
+7. Intro/update: introduced `e970cbf89887c163ef2f9a711377ac267a2cee3d`; latest `9c8b1b0d08a19bdb888bea691dad1555bb57c903`; evidence `git log --follow`
+8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
+9. Runtime consumer: imports `LeePositionController`/`VelController`, constructs `BodyToWorldVelocityAdapter`, writes body→world action, and records controller command/actual velocity diagnostics
+10. Authority: `runtime-effective` / local project code
+
+## 31. Legacy `isaac-training/training/scripts/instinctRL/command_adapter.py`
+
+1. Repository/authority: `Printeger/instinctRL` legacy source
+2. Exact commit: `6f6dee3da72d0b0202846b330adcaeeec8ee7bc3`
+3. Path: `isaac-training/training/scripts/instinctRL/command_adapter.py`
+4. Git blob: `a1f025e813b23f058decd80ba1da332928ebbaf9`
+5. SHA-256: `1b3e7aa5f89634638bd243fa9041868a8a2268d1880e4935928d11bb00162ee9`
+6. Size/type: `2071` bytes, `Python script, Unicode text, UTF-8 text executable`
+7. Intro/update: introduced `835a77f4e6f5417b7bbce19db1c5261181ea6ee0`; latest `9637ca71b59a3e4ae897ff8644d850924dd08653`; evidence `git log --follow`
+8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
+9. Runtime consumer: `BodyToWorldVelocityAdapter` rotates body-frame `v_final_b` to world-frame using privileged controller-only `("info", "drone_state")[..., 3:7]`; the quaternion never enters the learned actor
+10. Authority: `runtime-effective` / local project code
+
+## 32. Legacy `isaac-training/training/cfg/train.yaml`
+
+1. Repository/authority: `Printeger/instinctRL` legacy source
+2. Exact commit: `6f6dee3da72d0b0202846b330adcaeeec8ee7bc3`
+3. Path: `isaac-training/training/cfg/train.yaml`
+4. Git blob: `ec6657aa7415ff8c45e7c213f53f096367e89069`
+5. SHA-256: `2676c30aeacef0249b1087f14f257f67cae47a7b8413a7388f14f99b0aa3394e`
+6. Size/type: `5262` bytes, `Unicode text, UTF-8 text`
+7. Intro/update: introduced `e970cbf89887c163ef2f9a711377ac267a2cee3d`; latest `ca5795252faa069de9406a733be26a53d6269ee5`; evidence `git log --follow`
+8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
+9. Runtime consumer: Hydra training config; includes `drone`, `ppo`, `sim` defaults and `instinctRL.mode/task` command-governor settings consumed by `train.py`
+10. Authority: `configuration intent`
+
+## 33. Legacy `isaac-training/training/cfg/eval.yaml`
+
+1. Repository/authority: `Printeger/instinctRL` legacy source
+2. Exact commit: `6f6dee3da72d0b0202846b330adcaeeec8ee7bc3`
+3. Path: `isaac-training/training/cfg/eval.yaml`
+4. Git blob: `cae984a99b767c2c781c35fc7a241edd855a491f`
+5. SHA-256: `1f1dff0d3d62ec7eceff76105f1c8fde69d6d3ddb0508f3eadc4ee0e7e0462d7`
+6. Size/type: `3723` bytes, `ASCII text`
+7. Intro/update: introduced `e970cbf89887c163ef2f9a711377ac267a2cee3d`; latest `ca5795252faa069de9406a733be26a53d6269ee5`; evidence `git log --follow`
+8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
+9. Runtime consumer: Hydra evaluation config; includes `drone`, `ppo`, `sim` defaults and `instinctRL` eval/command/ICS settings consumed by `eval.py`
+10. Authority: `configuration intent`
+
+## 34. Legacy `isaac-training/training/cfg/ppo.yaml`
+
+1. Repository/authority: `Printeger/instinctRL` legacy source
+2. Exact commit: `6f6dee3da72d0b0202846b330adcaeeec8ee7bc3`
+3. Path: `isaac-training/training/cfg/ppo.yaml`
+4. Git blob: `952257f18fe2a63b93f94abd697bead310cfb58f`
+5. SHA-256: `6e047632166c19d0816539cfdc542cb9b0749bdb7a7f97b3fd097d3c19a54909`
+6. Size/type: `2850` bytes, `ASCII text`
+7. Intro/update: introduced `e970cbf89887c163ef2f9a711377ac267a2cee3d`; latest `ca5795252faa069de9406a733be26a53d6269ee5`; evidence `git log --follow`
+8. License: no file header; repository-level root LICENSE `MIT / Copyright (c) 2025 Zhefan Xu`
+9. Runtime consumer: PPO actor/critic/governor/action-limit config loaded by `train.py`/`eval.py`; not a TASLAB asset authority
+10. Authority: `configuration intent`
+
+## 35. Modern `omni_drones/controllers/controller.py`
+
+1. Repository/authority: `~/rl_blackwell_test/repos/OmniDrones` `blackwell-feasibility`
+2. Exact commit: `5045c71cc73d224144cc08bc38d65cabeedaec8c`
+3. Path: `omni_drones/controllers/controller.py`
+4. Git blob: `2d120a7497698968fc8d12fabeeb7c84bcd2d7ea`
+5. SHA-256: `0c6e019e23e689dbec2a69237d5b5540f5dbf24a8748d34d2e2743fa69113186`
+6. Size/type: `706` bytes, `Python script, ASCII text executable`
+7. Intro/update: introduced/latest `f67b58fe742b59ebd54cef01fbd5ea19d9a13578`; evidence `git log --follow`
+8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
+9. Runtime consumer: `ControllerBase` registry/abstract API; modern `LeePositionController` inherits from it
+10. Authority: `runtime-effective` / modern comparison reference
+
+## 36. Modern `omni_drones/robots/drone/__init__.py`
+
+1. Repository/authority: `~/rl_blackwell_test/repos/OmniDrones` `blackwell-feasibility`
+2. Exact commit: `5045c71cc73d224144cc08bc38d65cabeedaec8c`
+3. Path: `omni_drones/robots/drone/__init__.py`
+4. Git blob: `28fd9b62b1e1ecb630e1f1cb9da24248dcabd568`
+5. SHA-256: `876b1e32957dfdfcb37fde7928f493401d61f4ddcb1341ef761b136bec143306`
+6. Size/type: `1364` bytes, `Python script, ASCII text executable`
+7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `f67b58fe742b59ebd54cef01fbd5ea19d9a13578`; evidence `git log --follow`
+8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
+9. Runtime consumer: imports `Crazyflie`, `Firefly`, `Hummingbird`, `Iris`, `Neo11`, `Omav`, `Dragon`; no `TaslabUAV`
 10. Authority: `runtime-effective` / modern comparison reference

@@ -150,6 +150,61 @@ The removal of the legacy `unsqueeze(1)` is a meaningful shape-semantics
 difference. Controller saturation, frame semantics, and NaN handling require
 runtime/unit validation and are not proven by static diff.
 
+## 8b. Static controller/rotor contract
+
+The following facts are visible in static source and must be preserved in any
+M1B adapter:
+
+- Learned action input key: `("agents", "action")` in both legacy and modern
+  `VelController`.
+- Controller-only privileged state key: `("info", "drone_state")`; both
+  transforms read only the first 13 dimensions `[pos(3), quat(4), vel(3),
+  ang_vel(3)]`. This state is used by the controller/adapter boundary and is not
+  an authorized actor observation field.
+- Motor-command overwrite: `VelController._inv_call` replaces
+  `tensordict[("agents", "action")]` with the controller's normalized rotor
+  commands after computing them.
+- Normalized motor-output path: `LeePositionController` computes
+  `acc` from position/velocity error and gravity, derives desired body axes,
+  computes angular acceleration and thrust, forms
+  `ang_acc_thrust = [ang_acc, thrust]`, then calculates
+  `cmd = (mixer @ ang_acc_thrust.T).T`, followed by
+  `cmd = (cmd / max_thrusts) * 2 - 1`. That is the normalized `[-1, 1]` rotor
+  command written back to the action key.
+- Clamping/saturation location: `VelController` does not clamp the normalized
+  motor command before writing it. `RotorGroup.forward` later clamps the
+  normalized command indirectly with `target_throttle =
+  f_inv(clamp((cmds + 1) / 2, 0, 1))`. The controller's command construction
+  divides by per-rotor `max_thrusts`, but no explicit `[-1, 1]` clamp appears in
+  `VelController` or `LeePositionController._compute`.
+- Existing NaN handling: both legacy and modern `VelController` call
+  `torch.nan_to_num_(cmds, 0.)` immediately before overwriting the action key.
+  This is inherited behavior/risk to document; M1A does not endorse it as a
+  correctness workaround and M1B must not silently copy it as a physics fix.
+- Device/dtype construction: controller transforms and the local
+  `BodyToWorldVelocityAdapter` are moved to `cfg.device`; rotor/controller
+  parameters are created as `torch` tensors/`nn.Parameter`s from YAML values.
+  Inputs come from the TensorDict on the environment device.
+- Rotor ordering and force/moment application: `RotorGroup` returns per-rotor
+  `thrusts` and `moments` in YAML list order. `MultirotorBase.apply_action`
+  expands actions to `(..., num_rotors)`, obtains world poses for
+  `rotor_*`, derives each rotor torque axis from its world rotation, sets
+  `self.thrusts[..., 2] = thrusts`, computes
+  `self.torques = sum(moments * torque_axis)`, and applies rotor forces/torques
+  at rotor positions. Legacy applies rotor forces before base-body forces;
+  modern applies base-body forces before rotor forces because of the recorded
+  Isaac Sim 5.1 force-overwrite behavior.
+- Unresolved rotor-order mapping: the YAML `arm_lengths`, `rotor_angles`, and
+  `directions` lists are consumed by `compute_parameters` in
+  `lee_position_controller.py`; the binary USD prim enumeration and its exact
+  correspondence to `rotor_*` view order are not statically proven. This remains
+  an M1B USD stage-introspection requirement.
+- Legacy vs modern controller API: legacy `VelController` calls
+  `self.controller(...)` and legacy `LeePositionController` exposes `forward`;
+  modern `VelController` calls `self.controller.compute(...)`, and modern
+  `LeePositionController` inherits from `ControllerBase`, which declares
+  `compute` and `process_rl_actions`.
+
 ## 9. Legacy Isaac Sim/Orbit vs modern Isaac Lab
 
 Legacy `robot.py` imports `omni.isaac.core.*` and
