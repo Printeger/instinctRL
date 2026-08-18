@@ -29,7 +29,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `31c928753e3295a8e44f2f6980c6fdf8075069c0`
 5. SHA-256: `78a597835fdc5bdb6c8713a9b7196209d609c8ba54519fd0a7f5fc2a88bc97cd`
 6. Size/type: `1413` bytes, `Python script, ASCII text executable`
-7. Intro/update: `2a46c06` vendored OmniDrones add; TASLAB import added by `c4cca8b`
+7. Intro/update: introduction unknown; earliest visible formal history `e970cbf89887c163ef2f9a711377ac267a2cee3d`; later visible events `7cb5209decb6860e1a0b5f8b5f363cfaa52b9a55`, `2a46c06c60c1d5f0fb1430281a8a3803acb37a71`; TASLAB import added `c4cca8b29aba2fdea37f649bb13c9f35e27aaf49` (evidence `git log --follow`)
 8. License: vendored OmniDrones LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: imports `TaslabUAV`, triggering registry entry through `RobotBase.__init_subclass__`
 10. Authority: `runtime-effective` / `third-party source` with local TASLAB import
@@ -55,7 +55,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `b16b1b16f21166d82579a9a5b190cb49191ddef5`
 5. SHA-256: `3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99`
 6. Size/type: `9563347` bytes, `USD crate, version 0.8.0`
-7. Intro/update: introduced in OmniDrones history `2a46c06`; updated by `8c9f80a` to current 9,563,347-byte blob
+7. Intro/update: introduction unknown; earliest visible formal history `e970cbf89887c163ef2f9a711377ac267a2cee3d`; later visible events `7cb5209decb6860e1a0b5f8b5f363cfaa52b9a55`, `2a46c06c60c1d5f0fb1430281a8a3803acb37a71`, `6d6e0ba6d45bd978e88af6f4abe8615a3156e731`; TASLAB asset update `8c9f80afc34021624e3851d7331dacd503351e95` (evidence `git log --follow`)
 8. License: `unknown` (binary crate; no static license text discovered)
 9. Runtime consumer: `TaslabUAV.usd_path` → `RobotBase._create_prim` USD reference
 10. Authority: `authored asset` / `unresolved` ownership and license
@@ -94,7 +94,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `21ff282fd4dce7a593fc437a0ac1ecbce46b31a6`
 5. SHA-256: `645051c002ca53e46425108f549dd3ee7168f0e5f510423bc8f1dc72187ec4ec`
 6. Size/type: `2781` bytes, `Python script, ASCII text executable`
-7. Intro/update: vendored at `2a46c06`
+7. Intro/update: introduction unknown; earliest visible formal history `e970cbf89887c163ef2f9a711377ac267a2cee3d`; later visible events `7cb5209decb6860e1a0b5f8b5f363cfaa52b9a55`, `2a46c06c60c1d5f0fb1430281a8a3803acb37a71` (evidence `git log --follow`)
 8. License: vendored OmniDrones LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: constructed by `MultirotorBase.initialize`; `forward` returns thrust/moment from commands
 10. Authority: `runtime-effective` / `third-party source`
@@ -107,7 +107,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `2699f7ffe5f0fda2be7638a096bdbabec80c567a`
 5. SHA-256: `2ea4bac88b69cca73ec92930ef23d84ec710b06f83d6dc8210957fe65021d586`
 6. Size/type: `15399` bytes, `Python script, ASCII text executable`
-7. Intro/update: vendored at `2a46c06`
+7. Intro/update: introduction unknown; earliest visible formal history `e970cbf89887c163ef2f9a711377ac267a2cee3d`; later visible events `7cb5209decb6860e1a0b5f8b5f363cfaa52b9a55`, `2a46c06c60c1d5f0fb1430281a8a3803acb37a71` (evidence `git log --follow`)
 8. License: vendored OmniDrones LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: `VelController` wraps `LeePositionController` in training/eval transforms
 10. Authority: `runtime-effective` / `third-party source`
@@ -120,7 +120,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `2d9644685dee27a14711a756aa910ef1fdf1a1be`
 5. SHA-256: `fb27bb171808c93b7b71af59f61ed369f4812d8e93d6631a3a51c6a893fe1e66`
 6. Size/type: `9508` bytes, `Python script, ASCII text executable`
-7. Intro/update: vendored at `2a46c06`
+7. Intro/update: introduction unknown; earliest visible formal history `e970cbf89887c163ef2f9a711377ac267a2cee3d`; later visible events `7cb5209decb6860e1a0b5f8b5f363cfaa52b9a55`, `2a46c06c60c1d5f0fb1430281a8a3803acb37a71` (evidence `git log --follow`)
 8. License: vendored OmniDrones LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: provides `RobotBase.REGISTRY`, `spawn`, `_create_prim`, `initialize`
 10. Authority: `runtime-effective` / `third-party source`
@@ -133,7 +133,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `06ab504820d460591dde5929677d04ad07689849`
 5. SHA-256: `8606b4d0b2f4eb70e27d740a79e517dd484ed5b8820be29731b4048715b53fbc`
 6. Size/type: `13799` bytes, `Python script, Unicode text, UTF-8 text executable`
-7. Intro/update: vendored at `2a46c06`
+7. Intro/update: introduction unknown; earliest visible formal history `e970cbf89887c163ef2f9a711377ac267a2cee3d`; later visible events `7cb5209decb6860e1a0b5f8b5f363cfaa52b9a55`, `2a46c06c60c1d5f0fb1430281a8a3803acb37a71`; latest update `37f78093c9343f89c10775a66d8b9377547f24c3` (evidence `git log --follow`)
 8. License: vendored OmniDrones LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: instantiated by controller path; TASLAB gains loaded by `name`
 10. Authority: `runtime-effective` / `third-party source`
@@ -237,7 +237,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `a17cc02095f2a2a439199c26328c2f5e9787ff26`
 5. SHA-256: `2f2a332be1ec504dfee6fa9000ddaee6ad3380c2c3539baecc60ce62e52fe3de`
 6. Size/type: `9658` bytes, `Python script, ASCII text executable`
-7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `91020583fe974fbf41fa1257ef36d53954d310a6`; evidence `git log --follow`
+7. Intro/update: introduction unknown from shallow boundary with inaccessible parent; earliest visible snapshot `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; later visible update `91020583fe974fbf41fa1257ef36d53954d310a6` (evidence `git log --follow`, `git rev-list --parents`)
 8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: modern registry/spawn API; `TaslabUAV` absent
 10. Authority: `runtime-effective` / modern comparison reference
@@ -250,7 +250,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `c96cb017c0faa0b47a6d1f9c8da1cc03d057d2b3`
 5. SHA-256: `39ea4cfe2a6748a04a7d13b3ae4e60c606ea75251be95f643ec011ac546a5930`
 6. Size/type: `18548` bytes, `Python script, ASCII text executable`
-7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `91020583fe974fbf41fa1257ef36d53954d310a6`; evidence `git log --follow`
+7. Intro/update: introduction unknown from shallow boundary with inaccessible parent; earliest visible snapshot `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; later visible update `91020583fe974fbf41fa1257ef36d53954d310a6` (evidence `git log --follow`, `git rev-list --parents`)
 8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: modern multirotor base; no `TaslabUAV`
 10. Authority: `runtime-effective` / modern comparison reference
@@ -263,7 +263,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `539cad2de88fa9ab72c4c1af4cc3a362dfeac109`
 5. SHA-256: `4b7e794b53c9385b0dbed4dd1fd2b47aa7c299c2f42db82a9babe2dfc72b9400`
 6. Size/type: `3248` bytes, `Python script, ASCII text executable`
-7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `91020583fe974fbf41fa1257ef36d53954d310a6`; evidence `git log --follow`
+7. Intro/update: introduction unknown from shallow boundary with inaccessible parent; earliest visible snapshot `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; later visible events `0408aa2f72ce7dd94c6fba93f934fbfd579da83a`, `91020583fe974fbf41fa1257ef36d53954d310a6` (evidence `git log --follow`, `git rev-list --parents`)
 8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: modern `MultirotorBase` constructs batched `RotorGroup`
 10. Authority: `runtime-effective` / modern comparison reference
@@ -276,7 +276,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `4f8af6e51215c5d80aea5969a01e897788de1b64`
 5. SHA-256: `331df4beec0515d69e472a13e92281d1cd319c1bcaa70a32019d152aff2c4933`
 6. Size/type: `13447` bytes, `Python script, ASCII text executable`
-7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `f67b58fe742b59ebd54cef01fbd5ea19d9a13578`; evidence `git log --follow`
+7. Intro/update: introduction unknown from shallow boundary with inaccessible parent; earliest visible snapshot `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; later visible events `00a2cb47f3503bac872a895c08542efeef50db75`, `0408aa2f72ce7dd94c6fba93f934fbfd579da83a`, `a0bd24dd9e1f27a5ee7d52200f93e9350d85fffe`, `f67b58fe742b59ebd54cef01fbd5ea19d9a13578` (evidence `git log --follow`, `git rev-list --parents`)
 8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: `VelController` calls `LeePositionController.compute` in modern stack
 10. Authority: `runtime-effective` / modern comparison reference
@@ -289,7 +289,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `c193f224312e7297afcfc982059ae34f191ce4f9`
 5. SHA-256: `841de861e2bde09dd0acdfad87faafea7b4e3ae832b49d59d38a98ed759a20dc`
 6. Size/type: `14567` bytes, `Python script, ASCII text executable`
-7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `5045c71cc73d224144cc08bc38d65cabeedaec8c`; evidence `git log --follow`
+7. Intro/update: introduction unknown from shallow boundary with inaccessible parent; earliest visible snapshot `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; later visible events `b24a761b92a938b97cf4de8970559f1ee0dd1576`, `16377606092eb82b4b2f9ae405850f9a8bc306a1`, `0408aa2f72ce7dd94c6fba93f934fbfd579da83a`, `c1178416dd4522a7b4115efd42a766c7a67b9060`, `91020583fe974fbf41fa1257ef36d53954d310a6`, `5045c71cc73d224144cc08bc38d65cabeedaec8c` (evidence `git log --follow`, `git rev-list --parents`)
 8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: modern velocity action transform; `TaslabUAV` absent
 10. Authority: `runtime-effective` / modern comparison reference
@@ -302,7 +302,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `fad16cd8360a8e6feb4892c796d8aaa9d24640ec`
 5. SHA-256: `a80e979d069f6abf6b87c41ae79926b70185b13a9e64f62829002bc7ed5e27ad`
 6. Size/type: `3055` bytes, `Python script, ASCII text executable`
-7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+7. Intro/update: introduction unknown; `37ddf626871758333d6ed89cf64ad702aef127d0` is the qualified snapshot/earliest visible boundary in a one-commit shallow checkout (evidence `git rev-list --parents`)
 8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
 9. Runtime consumer: future M1B `ArticulationCfg` asset-mapping candidate
 10. Authority: `runtime-effective` / modern comparison reference
@@ -315,7 +315,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `b67ded15ac48373a5b1bad4dd0602da664a9bea7`
 5. SHA-256: `fb179aacdd848906367d01105020e1d36412bd0f1da7187be09f0781ff589309`
 6. Size/type: `107526` bytes, `Python script, ASCII text executable`
-7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+7. Intro/update: introduction unknown; `37ddf626871758333d6ed89cf64ad702aef127d0` is the qualified snapshot/earliest visible boundary in a one-commit shallow checkout (evidence `git rev-list --parents`)
 8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
 9. Runtime consumer: future M1B `Articulation` runtime asset-mapping candidate
 10. Authority: `runtime-effective` / modern comparison reference
@@ -328,7 +328,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `8340aa45f763779fa206057497ca2696de689b84`
 5. SHA-256: `45c407ae76bcb4f737bf02c65424f957e8a0b1f7a8981ed992e0a780ab69dc13`
 6. Size/type: `1091` bytes, `Python script, ASCII text executable`
-7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+7. Intro/update: introduction unknown; `37ddf626871758333d6ed89cf64ad702aef127d0` is the qualified snapshot/earliest visible boundary in a one-commit shallow checkout (evidence `git rev-list --parents`)
 8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
 9. Runtime consumer: future M1B `RigidObjectCfg` asset-mapping candidate
 10. Authority: `runtime-effective` / modern comparison reference
@@ -341,7 +341,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `6d0ec98f4314e328a4131d6bf852294d87ef67ce`
 5. SHA-256: `0aa371d43fae2f9dbfccc98bdb1d14f75860973afb68d3832e83b815d52fb546`
 6. Size/type: `27299` bytes, `Python script, ASCII text executable`
-7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+7. Intro/update: introduction unknown; `37ddf626871758333d6ed89cf64ad702aef127d0` is the qualified snapshot/earliest visible boundary in a one-commit shallow checkout (evidence `git rev-list --parents`)
 8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
 9. Runtime consumer: future M1B `RigidObject` runtime asset-mapping candidate
 10. Authority: `runtime-effective` / modern comparison reference
@@ -354,7 +354,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `d1f5a6282ad85bd2f83224da77559999e67c933b`
 5. SHA-256: `01149887c4440da8da86ce781c8ae2beb57a8e31981b17abb1133ea03a1e1fa8`
 6. Size/type: `2311` bytes, `Python script, ASCII text executable`
-7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+7. Intro/update: introduction unknown; `37ddf626871758333d6ed89cf64ad702aef127d0` is the qualified snapshot/earliest visible boundary in a one-commit shallow checkout (evidence `git rev-list --parents`)
 8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
 9. Runtime consumer: future M1B actuator-config mapping candidate
 10. Authority: `runtime-effective` / modern comparison reference
@@ -367,7 +367,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `ff014fa7a58eaaf9fa058161f1d93c669075050c`
 5. SHA-256: `105f0341f972102f6bd5b0c544bc7c0510662241389a9decd24406bb2371d27e`
 6. Size/type: `20769` bytes, `Python script, Unicode text, UTF-8 text executable`
-7. Intro/update: introduced/latest `37ddf626871758333d6ed89cf64ad702aef127d0`; evidence `git log --follow`
+7. Intro/update: introduction unknown; `37ddf626871758333d6ed89cf64ad702aef127d0` is the qualified snapshot/earliest visible boundary in a one-commit shallow checkout (evidence `git rev-list --parents`)
 8. License: Isaac Lab `LICENSE` `BSD-3-Clause / Copyright (c) 2022-2025 The Isaac Lab Project Developers`
 9. Runtime consumer: future M1B actuator-runtime mapping candidate
 10. Authority: `runtime-effective` / modern comparison reference
@@ -471,7 +471,7 @@ raw evidence index `~/rl_dev/instinctRL_coordination/raw_logs/M1A-001/INDEX.md`.
 4. Git blob: `28fd9b62b1e1ecb630e1f1cb9da24248dcabd568`
 5. SHA-256: `876b1e32957dfdfcb37fde7928f493401d61f4ddcb1341ef761b136bec143306`
 6. Size/type: `1364` bytes, `Python script, ASCII text executable`
-7. Intro/update: introduced `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; latest `f67b58fe742b59ebd54cef01fbd5ea19d9a13578`; evidence `git log --follow`
+7. Intro/update: introduction unknown from shallow boundary with inaccessible parent; earliest visible snapshot `f8f65d3c6ea3e243335f3444d58dfe241a7655b5`; later visible events `0408aa2f72ce7dd94c6fba93f934fbfd579da83a`, `f67b58fe742b59ebd54cef01fbd5ea19d9a13578` (evidence `git log --follow`, `git rev-list --parents`)
 8. License: modern LICENSE `MIT / Copyright (c) 2023 Botian Xu, Tsinghua University`
 9. Runtime consumer: imports `Crazyflie`, `Firefly`, `Hummingbird`, `Iris`, `Neo11`, `Omav`, `Dragon`; no `TaslabUAV`
 10. Authority: `runtime-effective` / modern comparison reference

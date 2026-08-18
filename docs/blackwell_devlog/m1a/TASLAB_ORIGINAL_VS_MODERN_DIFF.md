@@ -162,15 +162,16 @@ M1B adapter:
   ang_vel(3)]`. This state is used by the controller/adapter boundary and is not
   an authorized actor observation field.
 - Motor-command overwrite: `VelController._inv_call` replaces
-  `tensordict[("agents", "action")]` with the controller's normalized rotor
-  commands after computing them.
+  `tensordict[("agents", "action")]` with the controller's affine-normalized
+  rotor-command coordinates after computing them.
 - Normalized motor-output path: `LeePositionController` computes
   `acc` from position/velocity error and gravity, derives desired body axes,
   computes angular acceleration and thrust, forms
   `ang_acc_thrust = [ang_acc, thrust]`, then calculates
   `cmd = (mixer @ ang_acc_thrust.T).T`, followed by
-  `cmd = (cmd / max_thrusts) * 2 - 1`. That is the normalized `[-1, 1]` rotor
-  command written back to the action key.
+  `cmd = (cmd / max_thrusts) * 2 - 1`. That is an affine-normalized
+  rotor-command coordinate, not a guaranteed `[-1, 1]` value; no controller-side
+  clamp enforces that interval.
 - Clamping/saturation location: `VelController` does not clamp the normalized
   motor command before writing it. `RotorGroup.forward` later clamps the
   normalized command indirectly with `target_throttle =
@@ -190,10 +191,12 @@ M1B adapter:
   expands actions to `(..., num_rotors)`, obtains world poses for
   `rotor_*`, derives each rotor torque axis from its world rotation, sets
   `self.thrusts[..., 2] = thrusts`, computes
-  `self.torques = sum(moments * torque_axis)`, and applies rotor forces/torques
-  at rotor positions. Legacy applies rotor forces before base-body forces;
-  modern applies base-body forces before rotor forces because of the recorded
-  Isaac Sim 5.1 force-overwrite behavior.
+  `self.torques = sum(moments * torque_axis)`. Per-rotor thrust forces are
+  applied through `rotors_view.apply_forces_and_torques_at_pos`; the aggregate
+  reaction torque and body force are applied through
+  `base_link.apply_forces_and_torques_at_pos`. Legacy applies rotor forces
+  before base-body forces; modern applies base-body forces before rotor forces
+  because of the recorded Isaac Sim 5.1 force-overwrite behavior.
 - Unresolved rotor-order mapping: the YAML `arm_lengths`, `rotor_angles`, and
   `directions` lists are consumed by `compute_parameters` in
   `lee_position_controller.py`; the binary USD prim enumeration and its exact
