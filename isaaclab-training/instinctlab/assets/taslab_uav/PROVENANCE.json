@@ -1,0 +1,39 @@
+{
+  "schema_version": "instinctrl-taslab-provenance-1",
+  "base_commit": "6eb521f2174a64030e30ea5e8ce8db1f89006619",
+  "authorization": {
+    "record": "commander/authorizations/USER-20260821-TASLAB-REUSE.md",
+    "sha256": "972e68c3677e9c07446106e3c69926753e97aa8b685bc10d2a88491fe6f48b7a",
+    "scope": "project-specific reuse of the three enumerated TASLAB artifacts"
+  },
+  "artifacts": [
+    {
+      "target": "taslab_uav.usd",
+      "source_path": "isaac-training/third_party/OmniDrones/omni_drones/robots/assets/usd/taslab_uav.usd",
+      "git_blob": "b16b1b16f21166d82579a9a5b190cb49191ddef5",
+      "sha256": "3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99",
+      "size_bytes": 9563347,
+      "git_object_type": "blob",
+      "file_type": "USD crate"
+    },
+    {
+      "target": "taslab_uav.yaml",
+      "source_path": "isaac-training/third_party/OmniDrones/omni_drones/robots/assets/usd/taslab_uav.yaml",
+      "git_blob": "babeb587f2db83764ca9812942e8e819d0813146",
+      "sha256": "91b7319fd844303eb8e18f946434f3369988c8789e6ba0172b67bfd89177e3e4",
+      "size_bytes": 3457,
+      "git_object_type": "blob",
+      "file_type": "YAML text"
+    },
+    {
+      "target": "lee_controller_taslab_uav.yaml",
+      "source_path": "isaac-training/third_party/OmniDrones/omni_drones/controllers/cfg/lee_controller_taslab_uav.yaml",
+      "git_blob": "d7aab1f4705898fd20759f14e0a7b0cbfe2d3a37",
+      "sha256": "e5e0496666f3f245d604a949eedc5060370d71b95de0d2337d39617bacd1f8e6",
+      "size_bytes": 1202,
+      "git_object_type": "blob",
+      "file_type": "YAML text"
+    }
+  ]
+}
+
