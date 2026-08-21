@@ -13,3 +13,11 @@ launches one headless CUDA articulation at 2 m and records two 32-step
 gravity-only trajectories. It applies no rotor force, target, controller,
 sensor, actor, reward, PPO, or training behavior and does not claim hover or
 flight parity.
+
+## M3 MID360 contract
+
+`instinctlab.sensors.mid360` defines the fixed 21,240-ray MID360 geometry,
+TASLAB `base_link` mount, and explicit raw-range/serialized-range/validity
+contract. The bounded M3 smoke uses one static ground plane and one sensor to
+qualify shape, ordering, range bounds, valid/miss handling, and repeatability;
+it does not introduce actor observations, control, reward, PPO, or training.
