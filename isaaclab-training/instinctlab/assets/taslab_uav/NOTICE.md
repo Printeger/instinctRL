@@ -11,4 +11,3 @@ record `commander/authorizations/USER-20260821-TASLAB-REUSE.md`, whose SHA-256
 is `972e68c3677e9c07446106e3c69926753e97aa8b685bc10d2a88491fe6f48b7a`.
 This notice records that authorization and provenance; it does not claim or
 grant broader third-party rights.
-

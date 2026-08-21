@@ -1,28 +1,32 @@
 # M1B Test Report
 
-## Results
+## Attempt history
+
+| Attempt | Check | Result | Evidence |
+| --- | --- | --- | --- |
+| D0001 | Unqualified base-to-HEAD `git diff --check` | FAIL, exit 2 | Immutable `M1B-001-D0001/git/diff_check.*` |
+| D0002 | Unfiltered canonical diagnostics restricted to eight copied-YAML lines | PASS | `M1B-001-D0002/git/canonical_diff_check.*` |
+| D0002 | Base-to-HEAD check excluding only three copied artifacts | PASS, exit 0 | `M1B-001-D0002/git/artifact_excluded_diff_check.*` |
+
+## D0002 results
 
 | Check | Result | Evidence |
 | --- | --- | --- |
-| Governance/base/source/authorization preflight | PASS | `M1B-001-D0001/INDEX.md` |
-| Three source-object/target byte identities | PASS | static runs and object ledger |
-| Provenance and notice completeness | PASS | static runs |
-| Vehicle YAML active values | PASS | static runs |
-| Lee YAML active values | PASS | static runs |
-| Standard-library config parity and units | PASS | static runs |
-| New-tree path independence | PASS | static runs and USD dependency inventory |
-| Forbidden import/runtime/actor surfaces | PASS | static runs and negative-search evidence |
-| Read-only source/target USD inventory | PASS | `usd_inspection_run_1.json`, `usd_inspection_run_2.json` |
+| Revision-1/start-HEAD/source/authorization preflight | PASS | D0002 index and object ledger |
+| Three source-object/target byte identities | PASS | final static runs and object ledger |
+| Provenance/notice and exact YAML/config/gain values | PASS | final static runs |
+| New-tree independence and forbidden actor/runtime surfaces | PASS | final static runs and USD dependency inventory |
+| Read-only source/target USD inventory twice | PASS | `usd_inspection_final_1.json`, `usd_inspection_final_2.json` |
 | Four-rotor ordered topology mapping | PASS | normalized USD mapping rows |
 | Static suite repeatability | PASS | two runs, ten tests and exit 0 each |
 | USD semantic repeatability | PASS | two byte-identical normalized JSON files |
-| Git/diff/two-commit/final-clean gates | PASS | final exact-HEAD evidence ledger |
-| Frozen runtime/repository integrity | PASS | before/after integrity ledger |
+| Additive three-commit chain, allowed paths, final clean state | PASS | final exact-HEAD Git evidence |
+| Frozen runtime/repository and D0001 integrity | PASS | integrity ledger |
 
-No test was represented as PASS without execution. The USD inspector opens
-only existing stages and performs schema queries. It flushes complete results
-and uses the Order-permitted `os._exit` handling for the baseline-known
-headless close behavior; it does not create physics or simulation state.
+No test is represented as PASS without execution. The USD inspector opens only
+existing stages and performs schema queries. It flushes complete results and
+uses the Order-permitted `os._exit` handling for the baseline-known headless
+close behavior; it does not create physics or simulation state.
 
 ## Rotor mapping method
 
@@ -32,6 +36,4 @@ asset-origin offset. Subtracting the four-candidate centroid produces four
 unique nearest matches to the ordered YAML
 `arm_length * (cos(angle), sin(angle))` locations. Each nearest index also
 equals the `rotor_N` index. Errors are approximately `1.85e-6 m`; the recorded
-`5e-6 m` tolerance covers the YAML angle precision and USD floating-point
-storage while remaining far below the separation between rotor locations.
-
+`5e-6 m` tolerance covers YAML angle precision and USD floating-point storage.

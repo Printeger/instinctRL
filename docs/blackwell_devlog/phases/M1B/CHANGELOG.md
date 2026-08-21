@@ -13,4 +13,4 @@
 | `tests/test_m1b_static.py` | Added ten static checks | Persist byte/value/path/boundary qualification | Static gates | Test only |
 | `tests/inspect_taslab_usd.py` | Added deterministic read-only stage inventory | Prove source/target and four-rotor topology | USD gate | Query only; no simulation activity |
 | `docs/blackwell_devlog/phases/M1B/*` | Added plan, results, evidence map, limitations, and report | Reviewable phase evidence | Delivery record | Documentation only |
-
+| Revision-1 authored files | Removed one extra EOF blank line from 13 authorized text files and reconciled the six phase records with D0001/D0002 | Close Commander findings without changing copied artifacts or semantics | M1B-001 revision 1 | Formatting and truthful reporting only |
