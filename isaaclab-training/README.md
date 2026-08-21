@@ -25,3 +25,13 @@ Revision 1 composes the tracked `base_link` pose with the configured mount pose
 before calculating ranges and checks every return against an independent
 world-z=0 tiled-plane oracle. Parent and mounted sensor poses remain separately
 identified in evidence.
+
+## M4 actor-clean observation boundary
+
+`instinctlab.observations` consumes only the qualified flat M3 ranges and mask,
+explicit sensor/policy times, approved body angular velocity and gravity cues,
+the body-frame command, and the previous issued body-frame command. It maintains
+four oldest-to-newest frames and returns exactly `lidar_grid [N,12,59,360]`
+plus `state_vec [N,52]`. The pure-PyTorch M4 tests and CUDA smoke do not launch
+Isaac Sim or Isaac Lab and add no actor network, controller, reward, PPO,
+rollout, evaluation, or training behavior.
