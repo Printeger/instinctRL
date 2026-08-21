@@ -35,3 +35,15 @@ four oldest-to-newest frames and returns exactly `lidar_grid [N,12,59,360]`
 plus `state_vec [N,52]`. The pure-PyTorch M4 tests and CUDA smoke do not launch
 Isaac Sim or Isaac Lab and add no actor network, controller, reward, PPO,
 rollout, evaluation, or training behavior.
+
+## M5 pure-tensor control core
+
+`instinctlab.control` consumes only the exact audited M4 observation, a bounded
+four-dimensional candidate action, reset masks, and the qualified history
+interval. It deterministically composes body-frame governor decoding,
+measurement-space anchoring, mounted-MID360 history attenuation, and bounded
+body-frame output. Scalar-first attitude is a separate controller-private input
+to the final body-to-world adapter and cannot affect any earlier result or cache.
+
+M5-001 does not instantiate an actor network, controller, articulation,
+simulator, reward, PPO loop, checkpoint, rollout, evaluation, or training job.
