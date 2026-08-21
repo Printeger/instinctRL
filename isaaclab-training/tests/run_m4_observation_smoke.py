@@ -37,6 +37,12 @@ def make_inputs(step: int, device: torch.device) -> dict[str, torch.Tensor]:
     ranges.add_(0.01 * step)
     env_ids = torch.arange(batch, device=device).reshape(batch, 1)
     validity = ((ray_ids.reshape(1, -1) + step + env_ids) % 7) != 0
+    ranges = torch.where(validity, ranges, torch.full_like(ranges, 40.0))
+    # Mixed authoritative mask fixture: identical 40 m serialization is valid
+    # in env 0 and invalid in env 1 because M3 uses a closed valid interval.
+    ranges[:, 0] = 40.0
+    validity[0, 0] = True
+    validity[1, 0] = False
     sensor = torch.tensor([[float(step)], [float(step)]], device=device, dtype=dtype)
     if step == 5:
         sensor[1, 0] = 0.5

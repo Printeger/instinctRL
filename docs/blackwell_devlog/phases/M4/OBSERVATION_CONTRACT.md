@@ -17,6 +17,10 @@
 
 No full-state, generic mapping, extra-field, or keyword catch-all input exists.
 Reset indices enter only through `reset`, never through the actor data path.
+Every invalid beam must have serialized range exactly `40.0 m`, matching M3.
+A valid beam may also be exactly `40.0 m`; the supplied boolean mask remains
+authoritative and is never inferred from range alone. Pair rejection occurs
+before any history or time-provenance mutation.
 
 ## Exact output boundary
 
@@ -42,6 +46,11 @@ Initial older slots are zero and the first frame occupies the newest slot.
 Rollover removes only the oldest frame. Selective reset clears only named
 environments and their time provenance; full reset clears all history and time
 provenance. Returned tensors are detached copies and cannot mutate internal history.
+
+The output audit classifies every environment/history frame as either wholly
+zero-filled (LiDAR channels and state) or populated. Populated frames require
+the closed M3 range domain, exact invalid/40 m pairing, and a unit gravity slice
+within the same `1e-5` tolerance. Partial zero frames fail closed.
 
 ## Machine-readable output-slice provenance
 

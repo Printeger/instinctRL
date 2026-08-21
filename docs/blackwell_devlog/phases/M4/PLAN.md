@@ -1,7 +1,9 @@
 # M4 Observation Boundary Plan
 
-Order: `M4-001`  
-Attempt: `M4-001-D0001`  
+Order: `M4-001`, revision 1
+
+Current attempt: `M4-001-D0002`
+
 Base: `99ec3b0099b887a31962b2a5c862e3e73efc6872`
 
 ## Goal
@@ -17,6 +19,15 @@ two outputs derive only from Order-approved MID360, timing, IMU, and body-comman
 4. Test mapping, ordering, timing, rollover, reset, aliasing, malformed inputs,
    forbidden-field rejection, CUDA determinism, M3 regression, and repository integrity.
 5. Commit implementation, then documentation/evidence, using exactly the two ordered commits.
+
+## Revision 1 correction
+
+Preserve the first two M4 commits and add exactly one correction. Enforce M3's
+exact invalid/40 m serialized pair before state mutation; classify audit history
+frames as completely zero or coherent populated M3 frames; validate populated
+gravity; parse accepted M3 source AST for direct constants/order provenance;
+make CUDA fixtures pair-coherent; and close both original-base and revision-only
+diff hygiene gates. D0001 evidence stays immutable.
 
 ## Guaranteed exclusions
 

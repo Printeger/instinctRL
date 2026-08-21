@@ -131,6 +131,9 @@ class ActorObservationHistory:
             raise ValueError("all floating inputs must be finite")
         if bool(((ranges_m < M3_MIN_RANGE_M) | (ranges_m > M3_MAX_RANGE_M)).any().item()):
             raise ValueError("ranges_m must preserve the M3 closed [0.1, 40.0] metre domain")
+        invalid_nonfill = (~validity) & (ranges_m != M3_MAX_RANGE_M)
+        if bool(invalid_nonfill.any().item()):
+            raise ValueError("every invalid M3 beam must use the exact 40.0 metre serialized fill")
 
         gravity_norm = torch.linalg.vector_norm(gravity_direction_body, dim=-1)
         if bool((torch.abs(gravity_norm - 1.0) > self.gravity_norm_tolerance).any().item()):

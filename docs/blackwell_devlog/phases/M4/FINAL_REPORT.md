@@ -24,6 +24,8 @@ range reconstruction, `[360,59]` layout, and weak key-only audit were not copied
 ## Contract and correctness
 
 - Range values and boolean mask enter without recomputation or reordering.
+- Every invalid input beam must carry M3's exact serialized 40 m fill; valid
+  beams may also be exactly 40 m because the M3 validity interval is closed.
 - LiDAR channels are interleaved range/validity/reliability per oldest-to-newest frame.
 - State frames are angular velocity `[0:3]`, gravity `[3:6]`, command `[6:9]`,
   previous issued command `[9:12]`, and sensor age `[12:13]`.
@@ -33,6 +35,10 @@ range reconstruction, `[360,59]` layout, and weak key-only audit were not copied
 - Selective/full reset clears the corresponding history and time provenance;
   returned outputs do not alias internal buffers.
 - Machine-readable output-slice provenance is asserted against code by tests.
+- Revision 1 audits each frame as either completely zero-filled or a coherent
+  populated M3 frame, including exact pair and unit-gravity domains.
+- A persisted AST test directly binds M4's 360, 59, 21,240, 0.1 m, 40 m, and
+  flattening semantics to the unchanged accepted M3 source without importing it.
 
 ## Changed-file ledger
 
@@ -45,17 +51,21 @@ range reconstruction, `[360,59]` layout, and weak key-only audit were not copied
 
 ## Results
 
-The 18-test suite passes, M3's 8-test static suite passes twice, and both CUDA
+The revision-1 22-test suite passes twice, M3's 8-test static suite passes twice, and both CUDA
 processes produce byte-identical summaries. The full comparator proves exact
 equality over 3,059,184 tensor elements with maximum error `0.0`. Complete raw
 results and later final Git/integrity checks are indexed by `EVIDENCE_INDEX.md`.
 
 ## Integrity and exclusions
 
-Driver changed: NO  
-Conda changed: NO  
-PyTorch changed: NO  
-Isaac changed: NO  
+Driver changed: NO
+
+Conda changed: NO
+
+PyTorch changed: NO
+
+Isaac changed: NO
+
 Frozen baseline changed: NO
 
 NO M5/CONTROLLER/GOVERNOR/ANCHOR/ICS/REWARD/PPO/TRAINING WORK STARTED.

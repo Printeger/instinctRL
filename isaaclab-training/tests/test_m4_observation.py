@@ -57,8 +57,16 @@ class ObservationContractTests(unittest.TestCase):
     def test_exact_schema_mapping_interleave_fields_and_initial_zero_fill(self) -> None:
         builder = ActorObservationHistory(tau_s=2.0)
         inputs = frame(sensor_time=4.0, policy_time=4.5)
-        sentinels = {(0, 0): 0.1, (0, 359): 1.25, (58, 0): 2.5, (58, 359): 39.9, (17, 123): 7.75}
+        sentinels = {
+            (0, 0): 0.1,
+            (0, 359): 1.25,
+            (1, 1): 40.0,
+            (58, 0): 2.5,
+            (58, 359): 39.9,
+            (17, 123): 7.75,
+        }
         inputs["validity"].zero_()
+        inputs["ranges_m"].fill_(40.0)
         for (elevation, azimuth), value in sentinels.items():
             flat_index = elevation * 360 + azimuth
             inputs["ranges_m"][:, flat_index] = value
@@ -91,6 +99,25 @@ class ObservationContractTests(unittest.TestCase):
         )
         self.assertTrue(torch.equal(output["state_vec"][:, 39:52], expected_state))
         audit_actor_observation(output)
+
+    def test_invalid_range_pair_rejection_is_exact_and_atomic(self) -> None:
+        builder = ActorObservationHistory()
+        reference = ActorObservationHistory()
+        first = frame(value=1.0, sensor_time=1.0, policy_time=1.0)
+        builder.update(**first)
+        reference.update(**frame(value=1.0, sensor_time=1.0, policy_time=1.0))
+        for bad_fill in (1.0, 39.999996):
+            bad = frame(value=2.0, sensor_time=2.0, policy_time=2.0)
+            bad["validity"][0, 123] = False
+            bad["ranges_m"][0, 123] = bad_fill
+            with self.subTest(bad_fill=bad_fill):
+                with self.assertRaisesRegex(ValueError, "exact 40.0"):
+                    builder.update(**bad)
+        second = frame(value=2.0, sensor_time=2.0, policy_time=2.0)
+        actual = builder.update(**second)
+        expected = reference.update(**frame(value=2.0, sensor_time=2.0, policy_time=2.0))
+        self.assertTrue(torch.equal(actual["lidar_grid"], expected["lidar_grid"]))
+        self.assertTrue(torch.equal(actual["state_vec"], expected["state_vec"]))
 
     def test_history_oldest_to_newest_and_rollover(self) -> None:
         builder = ActorObservationHistory()
@@ -254,6 +281,38 @@ class ActorAuditTests(unittest.TestCase):
             with self.assertRaises(ActorObservationAuditError):
                 audit_actor_observation(wrong_device)
 
+    def test_audit_rejects_incoherent_pairs_partial_frames_and_gravity(self) -> None:
+        invalid_nonfill = self.valid_output()
+        invalid_nonfill["lidar_grid"][0, 10, 0, 0] = 0.0
+        invalid_nonfill["lidar_grid"][0, 11, 0, 0] = 0.0
+        with self.assertRaisesRegex(ActorObservationAuditError, "exact 40.0"):
+            audit_actor_observation(invalid_nonfill)
+
+        valid_zero = self.valid_output()
+        valid_zero["lidar_grid"][0, 9, 0, 0] = 0.0
+        with self.assertRaisesRegex(ActorObservationAuditError, "closed"):
+            audit_actor_observation(valid_zero)
+
+        partial_zero = self.valid_output()
+        partial_zero["lidar_grid"][0, 0, 0, 0] = 1.0
+        with self.assertRaises(ActorObservationAuditError):
+            audit_actor_observation(partial_zero)
+
+        nonunit_gravity = self.valid_output()
+        nonunit_gravity["state_vec"][0, 42:45] = torch.tensor([0.0, 0.0, -0.9])
+        with self.assertRaisesRegex(ActorObservationAuditError, "unit length"):
+            audit_actor_observation(nonunit_gravity)
+
+    def test_audit_accepts_zero_history_and_mixed_valid_invalid_40m(self) -> None:
+        inputs = frame()
+        inputs["ranges_m"][:, 0] = 40.0
+        inputs["validity"][0, 0] = True
+        inputs["validity"][1, 0] = False
+        output = ActorObservationHistory().update(**inputs)
+        audit_actor_observation(output)
+        self.assertEqual(output["lidar_grid"][0, 10, 0, 0].item(), 1.0)
+        self.assertEqual(output["lidar_grid"][1, 10, 0, 0].item(), 0.0)
+
 
 class SourceAndProvenanceTests(unittest.TestCase):
     def test_update_signature_is_exact_and_has_no_generic_container(self) -> None:
@@ -284,6 +343,44 @@ class SourceAndProvenanceTests(unittest.TestCase):
         source = textwrap.dedent(inspect.getsource(ActorObservationHistory._actor_output_copy))
         literals = {node.value for node in ast.walk(ast.parse(source)) if isinstance(node, ast.Constant) and isinstance(node.value, str)}
         self.assertEqual(literals, {"lidar_grid", "state_vec"})
+
+    def test_m4_constants_and_flattening_match_accepted_m3_source_ast(self) -> None:
+        m3_path = ROOT / "instinctlab" / "sensors" / "mid360.py"
+        m3_tree = ast.parse(m3_path.read_text(encoding="utf-8"))
+        assignments = {
+            node.targets[0].id: node.value
+            for node in m3_tree.body
+            if isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Name)
+        }
+        numeric = {
+            name: ast.literal_eval(assignments[name])
+            for name in ("AZIMUTH_SAMPLES", "ELEVATION_SAMPLES", "MIN_RANGE_M", "MAX_RANGE_M")
+        }
+        ray_expression = assignments["RAY_COUNT"]
+        self.assertIsInstance(ray_expression, ast.BinOp)
+        self.assertIsInstance(ray_expression.op, ast.Mult)
+        numeric["RAY_COUNT"] = numeric[ray_expression.left.id] * numeric[ray_expression.right.id]  # type: ignore[attr-defined]
+        self.assertEqual(numeric["AZIMUTH_SAMPLES"], actor_module.AZIMUTH_SAMPLES)
+        self.assertEqual(numeric["ELEVATION_SAMPLES"], actor_module.ELEVATION_SAMPLES)
+        self.assertEqual(numeric["RAY_COUNT"], actor_module.RAY_COUNT)
+        self.assertEqual(numeric["MIN_RANGE_M"], actor_module.M3_MIN_RANGE_M)
+        self.assertEqual(numeric["MAX_RANGE_M"], actor_module.M3_MAX_RANGE_M)
+
+        pattern = next(
+            node for node in m3_tree.body if isinstance(node, ast.FunctionDef) and node.name == "mid360_pattern"
+        )
+        pattern_source = ast.unparse(pattern)
+        self.assertIn(
+            "elevation_grid, azimuth_grid = torch.meshgrid(elevation_deg, azimuth_deg, indexing='ij')",
+            pattern_source,
+        )
+        self.assertIn("azimuth_grid.reshape(-1)", pattern_source)
+        self.assertIn("elevation_grid.reshape(-1)", pattern_source)
+        for elevation, azimuth in ((0, 0), (0, 359), (1, 0), (58, 359)):
+            flat_index = elevation * numeric["AZIMUTH_SAMPLES"] + azimuth
+            self.assertEqual(divmod(flat_index, actor_module.AZIMUTH_SAMPLES), (elevation, azimuth))
 
 
 if __name__ == "__main__":
