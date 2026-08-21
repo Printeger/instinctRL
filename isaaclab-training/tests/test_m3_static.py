@@ -51,10 +51,32 @@ def _install_config_stubs() -> None:
             "isaaclab.sensors.ray_caster.patterns.patterns_cfg"
         ),
         "isaaclab.utils": types.ModuleType("isaaclab.utils"),
+        "isaaclab.utils.math": types.ModuleType("isaaclab.utils.math"),
     }
     modules["isaaclab.sensors.ray_caster"].RayCasterCfg = _RayCasterCfg
     modules["isaaclab.sensors.ray_caster.patterns.patterns_cfg"].PatternBaseCfg = _PatternBaseCfg
     modules["isaaclab.utils"].configclass = lambda cls: cls
+
+    def quat_apply(quaternion: torch.Tensor, vector: torch.Tensor) -> torch.Tensor:
+        xyz = quaternion[..., 1:]
+        twice_cross = 2.0 * torch.linalg.cross(xyz, vector, dim=-1)
+        return vector + quaternion[..., :1] * twice_cross + torch.linalg.cross(xyz, twice_cross, dim=-1)
+
+    def quat_mul(first: torch.Tensor, second: torch.Tensor) -> torch.Tensor:
+        first_w, first_x, first_y, first_z = first.unbind(-1)
+        second_w, second_x, second_y, second_z = second.unbind(-1)
+        return torch.stack(
+            (
+                first_w * second_w - first_x * second_x - first_y * second_y - first_z * second_z,
+                first_w * second_x + first_x * second_w + first_y * second_z - first_z * second_y,
+                first_w * second_y - first_x * second_z + first_y * second_w + first_z * second_x,
+                first_w * second_z + first_x * second_y - first_y * second_x + first_z * second_w,
+            ),
+            dim=-1,
+        )
+
+    modules["isaaclab.utils.math"].quat_apply = quat_apply
+    modules["isaaclab.utils.math"].quat_mul = quat_mul
     sys.modules.update(modules)
 
 
@@ -64,6 +86,7 @@ from instinctlab.sensors.mid360 import (  # noqa: E402
     MID360_RAY_CASTER_CFG,
     MOUNT_QUATERNION_WXYZ,
     Mid360PatternCfg,
+    compose_mounted_sensor_pose,
     mid360_pattern,
     ranges_and_validity,
 )
@@ -81,6 +104,42 @@ def _calls(path: Path) -> set[str]:
 
 
 class TestM3Static(unittest.TestCase):
+    def test_mounted_pose_nontrivial_analytic_fixture(self) -> None:
+        root_half = math.sqrt(0.5)
+        parent_position = torch.tensor([[1.0, 2.0, 3.0]], dtype=torch.float64)
+        parent_quaternion = torch.tensor([[root_half, 0.0, 0.0, root_half]], dtype=torch.float64)
+        mount_position = torch.tensor([1.0, 0.0, 0.0], dtype=torch.float64)
+        mount_quaternion = torch.tensor([root_half, root_half, 0.0, 0.0], dtype=torch.float64)
+        sensor_position, sensor_quaternion = compose_mounted_sensor_pose(
+            parent_position, parent_quaternion, mount_position, mount_quaternion
+        )
+        independently_calculated_position = torch.tensor([[1.0, 3.0, 3.0]], dtype=torch.float64)
+        independently_calculated_quaternion = torch.tensor([[0.5, 0.5, 0.5, 0.5]], dtype=torch.float64)
+        self.assertTrue(torch.allclose(sensor_position, independently_calculated_position, atol=1.0e-12, rtol=0.0))
+        self.assertTrue(
+            torch.allclose(sensor_quaternion, independently_calculated_quaternion, atol=1.0e-12, rtol=0.0)
+        )
+        self.assertFalse(torch.equal(sensor_position, parent_position))
+
+    def test_mounted_pose_rejects_malformed_shape_batch_dtype_and_device(self) -> None:
+        position = torch.zeros((2, 3), dtype=torch.float32)
+        quaternion = torch.tensor([[1.0, 0.0, 0.0, 0.0]] * 2, dtype=torch.float32)
+        mount_position = torch.zeros(3, dtype=torch.float32)
+        mount_quaternion = torch.tensor([1.0, 0.0, 0.0, 0.0], dtype=torch.float32)
+        malformed = (
+            (position.reshape(6), quaternion, mount_position, mount_quaternion),
+            (position, quaternion[:, :3], mount_position, mount_quaternion),
+            (position, quaternion[:1], mount_position, mount_quaternion),
+            (position, quaternion, mount_position[:2], mount_quaternion),
+            (position, quaternion, mount_position, mount_quaternion[:3]),
+            (position, quaternion, mount_position.to(torch.float64), mount_quaternion),
+            (position, quaternion, torch.empty(3, device="meta"), mount_quaternion),
+        )
+        for values in malformed:
+            with self.subTest(shapes=[tuple(value.shape) for value in values]):
+                with self.assertRaises(ValueError):
+                    compose_mounted_sensor_pose(*values)
+
     def test_pattern_shape_order_dtype_unit_and_contiguity(self) -> None:
         starts, directions = mid360_pattern(Mid360PatternCfg(), "cpu")
         self.assertEqual(starts.shape, (21240, 3))
@@ -153,6 +212,16 @@ class TestM3Static(unittest.TestCase):
             self.assertGreater(smoke_text.index(marker), launch)
         self.assertNotIn("cfg.spawn.func", smoke_text)
         self.assertNotIn("_initialize_impl", smoke_text)
+        self.assertNotIn("origins_w = sensor.data.pos_w", smoke_text)
+        for required in (
+            "parent_positions_w = sensor.data.pos_w",
+            "parent_quaternions_w = sensor.data.quat_w",
+            "compose_mounted_sensor_pose(",
+            "ranges_and_validity(hits_w, sensor_origins_w)",
+            '"parent_pose_world"',
+            '"analytic_plane_oracle"',
+        ):
+            self.assertIn(required, smoke_text)
         forbidden_calls = {
             "set_external_force_and_torque", "set_joint_effort_target", "set_joint_position_target",
             "set_joint_velocity_target", "write_data_to_sim",

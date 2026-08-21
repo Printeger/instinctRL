@@ -21,3 +21,7 @@ TASLAB `base_link` mount, and explicit raw-range/serialized-range/validity
 contract. The bounded M3 smoke uses one static ground plane and one sensor to
 qualify shape, ordering, range bounds, valid/miss handling, and repeatability;
 it does not introduce actor observations, control, reward, PPO, or training.
+Revision 1 composes the tracked `base_link` pose with the configured mount pose
+before calculating ranges and checks every return against an independent
+world-z=0 tiled-plane oracle. Parent and mounted sensor poses remain separately
+identified in evidence.

@@ -37,3 +37,12 @@ The frozen runtime may require tightly bounded initialization/update operations.
 ## Stop conditions
 
 Stop on governance mismatch, forbidden write need, runtime/package modification need, private API need, correctness failure, or exhausted bounded repair attempts.
+
+## Revision 1 correction plan
+
+Attempt `M3-001-D0002` preserves D0001 and adds exactly one corrective commit.
+It will compose the public parent pose with the configured mount pose in one
+validated helper, use only the mounted origin for ranges, and independently
+check all 21,240 static-plane rays. Static transform/malformed fixtures, two
+fresh CUDA processes, the unchanged comparator, and complete M2 regressions
+must pass before fresh evidence is frozen.

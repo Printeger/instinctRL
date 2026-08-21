@@ -8,6 +8,7 @@ import torch
 from isaaclab.sensors.ray_caster import RayCasterCfg
 from isaaclab.sensors.ray_caster.patterns.patterns_cfg import PatternBaseCfg
 from isaaclab.utils import configclass
+from isaaclab.utils.math import quat_apply, quat_mul
 
 AZIMUTH_MIN_DEG = -180.0
 AZIMUTH_MAX_DEG_EXCLUSIVE = 180.0
@@ -85,6 +86,51 @@ MID360_RAY_CASTER_CFG = RayCasterCfg(
 )
 
 
+def compose_mounted_sensor_pose(
+    parent_positions_w: torch.Tensor,
+    parent_quaternions_w: torch.Tensor,
+    mount_position_parent: torch.Tensor,
+    mount_quaternion_parent: torch.Tensor,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """Compose a batched public parent pose with one body-frame sensor mount."""
+    tensors = {
+        "parent_positions_w": parent_positions_w,
+        "parent_quaternions_w": parent_quaternions_w,
+        "mount_position_parent": mount_position_parent,
+        "mount_quaternion_parent": mount_quaternion_parent,
+    }
+    if not all(isinstance(value, torch.Tensor) for value in tensors.values()):
+        raise TypeError("all pose inputs must be torch.Tensor instances")
+    if parent_positions_w.ndim != 2 or parent_positions_w.shape[-1] != 3:
+        raise ValueError(f"parent_positions_w must have shape (N, 3), got {tuple(parent_positions_w.shape)}")
+    if parent_quaternions_w.ndim != 2 or parent_quaternions_w.shape[-1] != 4:
+        raise ValueError(
+            f"parent_quaternions_w must have shape (N, 4), got {tuple(parent_quaternions_w.shape)}"
+        )
+    if parent_positions_w.shape[0] != parent_quaternions_w.shape[0]:
+        raise ValueError("parent position and quaternion batches must match")
+    if mount_position_parent.shape != (3,):
+        raise ValueError(f"mount_position_parent must have shape (3,), got {tuple(mount_position_parent.shape)}")
+    if mount_quaternion_parent.shape != (4,):
+        raise ValueError(
+            f"mount_quaternion_parent must have shape (4,), got {tuple(mount_quaternion_parent.shape)}"
+        )
+    devices = {value.device for value in tensors.values()}
+    if len(devices) != 1:
+        raise ValueError("all pose inputs must be on the same device")
+    dtypes = {value.dtype for value in tensors.values()}
+    if len(dtypes) != 1 or not parent_positions_w.is_floating_point():
+        raise ValueError("all pose inputs must have the same floating-point dtype")
+    if not all(torch.isfinite(value).all().item() for value in tensors.values()):
+        raise ValueError("all pose inputs must be finite")
+
+    batch_size = parent_positions_w.shape[0]
+    mounted_offset_w = quat_apply(parent_quaternions_w, mount_position_parent.expand(batch_size, -1))
+    sensor_positions_w = parent_positions_w + mounted_offset_w
+    sensor_quaternions_w = quat_mul(parent_quaternions_w, mount_quaternion_parent.expand(batch_size, -1))
+    return sensor_positions_w, sensor_quaternions_w
+
+
 def ranges_and_validity(
     hit_positions_w: torch.Tensor,
     sensor_origins_w: torch.Tensor,
@@ -125,6 +171,7 @@ __all__ = [
     "Mid360PatternCfg",
     "RAY_COUNT",
     "UPDATE_PERIOD_S",
+    "compose_mounted_sensor_pose",
     "mid360_pattern",
     "ranges_and_validity",
 ]
