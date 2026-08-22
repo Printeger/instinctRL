@@ -75,3 +75,16 @@ accepted M5 command/control path does not import or consume task privilege.
 M6-001 contains no actor or critic network, PPO/GAE, optimizer, collector,
 rollout, replay, checkpoint, environment wiring, evaluation, training, or M7
 work. Its CUDA smoke is pure tensor computation and does not launch Isaac Sim.
+
+## M6 DirectRLEnv integration
+
+`instinctlab.envs.TaslabDirectEnv` composes the accepted TASLAB articulation,
+MID360, exact M4 policy observation, non-B0 M5 governor/control/runtime path,
+and M6 reward, termination, and critic-only state. Physics runs at `0.005 s`,
+one normalized `[N,4]` action is held for 20 physics steps, and each returned
+policy branch contains only `lidar_grid [N,12,59,360]` and `state_vec [N,52]`.
+The separate critic branch is the accepted privileged `[N,18]` tensor.
+
+The fixed-action smoke is an environment integration qualification only. It
+contains no policy/critic network, PPO/GAE, optimizer, collection framework,
+checkpointing, evaluation, randomization, curriculum, or training.
