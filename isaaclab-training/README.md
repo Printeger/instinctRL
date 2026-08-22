@@ -62,3 +62,16 @@ The bounded qualification uses one environment on `cuda:0`, `dt=0.005 s`, a
 `0.1 s` policy/history interval, four fixed scenarios, and 256 physics steps
 per process. It introduces no actor network, reward, critic, PPO, collector,
 checkpoint, rollout API, evaluation, training, parameter tuning, or M6 work.
+
+## M6 pure-tensor task contract
+
+`instinctlab.task` defines reward, termination, and critic-only tensor
+contracts without an Isaac Lab environment dependency. Primary nonzero-command
+tracking requires privileged actual body-frame velocity; collision, exact
+clearance, world height, and root state remain reward/termination/critic-only.
+The actor surface remains exactly M4 `lidar_grid` plus `state_vec`, and the
+accepted M5 command/control path does not import or consume task privilege.
+
+M6-001 contains no actor or critic network, PPO/GAE, optimizer, collector,
+rollout, replay, checkpoint, environment wiring, evaluation, training, or M7
+work. Its CUDA smoke is pure tensor computation and does not launch Isaac Sim.
