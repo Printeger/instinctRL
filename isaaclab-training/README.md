@@ -88,3 +88,15 @@ The separate critic branch is the accepted privileged `[N,18]` tensor.
 The fixed-action smoke is an environment integration qualification only. It
 contains no policy/critic network, PPO/GAE, optimizer, collection framework,
 checkpointing, evaluation, randomization, curriculum, or training.
+
+## M6 pure-tensor PPO core
+
+`instinctlab.training` adds an environment-independent feedforward actor over
+exact M4 `lidar_grid [N,12,59,360]` plus `state_vec [N,52]`, one structurally
+separate critic over exact M6 privileged `[N,18]`, a four-dimensional bounded
+Beta policy, timeout-aware GAE, deterministic PPO-Clip minibatch updates, and
+strict atomic checkpoints. The bounded CUDA qualification uses one persisted
+synthetic four-sample batch and exactly two update calls per independent
+process. It does not import or step the environment, collect experience, claim
+learning quality, or authorize simulator training, evaluation, M7, 128k, 1M,
+or scale runs.
