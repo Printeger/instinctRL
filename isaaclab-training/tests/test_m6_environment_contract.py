@@ -113,6 +113,32 @@ def test_step_order_same_state_direct_metrics_and_atomic_reset_sources():
     ):
         assert token in reset
     assert reset.index("_validate_reset_indices") < reset.index("_wrench_adapter.reset")
+    assert "if indices.numel() == self.num_envs:" in reset
+    assert "_zero_selected_batch(cache, indices, self.num_envs)" in reset
+    assert reset.index("if indices.numel() == self.num_envs:") < reset.index("self._control = None")
+
+
+def test_subset_reset_cannot_blanket_invalidate_batch_caches():
+    source = _source()
+    tree = ast.parse(source)
+    reset = next(node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef) and node.name == "_reset_idx")
+    full_reset_if = next(
+        node for node in reset.body
+        if isinstance(node, ast.If) and "indices.numel() == self.num_envs" in ast.unparse(node.test)
+    )
+    assignments = {
+        ast.unparse(target)
+        for statement in full_reset_if.body
+        if isinstance(statement, ast.Assign)
+        for target in statement.targets
+    }
+    assert assignments == {"self._control", "self._lee", "self._wrench", "self._reward", "self._task"}
+    assert all(
+        not isinstance(statement, ast.Assign)
+        or all(ast.unparse(target) not in assignments for target in statement.targets)
+        for statement in reset.body if statement is not full_reset_if
+    )
+    assert any("_zero_selected_batch" in ast.unparse(statement) for statement in full_reset_if.orelse)
 
 
 def test_public_producers_frames_and_actor_dependency_boundary():
@@ -140,6 +166,9 @@ def test_runner_and_comparator_are_persisted_fail_closed_programs():
     assert "max_absolute_error" in compare
     runner = RUNNER.read_text(encoding="utf-8")
     assert "POLICY_STEPS = 32" in runner and "SELECTIVE_RESET_STEP = 16" in runner
+    assert "env.episode_length_buf[0] = env.max_episode_length - 1" in runner
+    assert "public step did not produce the exact selected timeout edge" in runner
+    assert "post-reset continuation steps were not finite" in runner
     for key in ("actions", "policy", "critic", "control", "reward", "done", "root_state_w",
                 "forces_body_n", "rotor", "reset_marker", "episode_length"):
         assert f'"{key}"' in runner

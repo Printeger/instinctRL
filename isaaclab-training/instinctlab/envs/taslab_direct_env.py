@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
-from dataclasses import dataclass
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, fields, is_dataclass
 from typing import Any
 
 import gymnasium as gym
@@ -90,6 +90,36 @@ class _TaskSnapshot:
     exact_clearance_m: torch.Tensor
     collision: torch.Tensor
     termination: TerminationResult
+
+
+def _detached_snapshot(value: Any) -> Any:
+    """Copy nested diagnostic state without exposing a live control reference."""
+    if isinstance(value, torch.Tensor):
+        return value.detach().clone()
+    if is_dataclass(value) and not isinstance(value, type):
+        return {field.name: _detached_snapshot(getattr(value, field.name)) for field in fields(value)}
+    if isinstance(value, Mapping):
+        return {key: _detached_snapshot(item) for key, item in value.items()}
+    if isinstance(value, tuple):
+        return tuple(_detached_snapshot(item) for item in value)
+    if isinstance(value, list):
+        return [_detached_snapshot(item) for item in value]
+    return value
+
+
+def _zero_selected_batch(value: Any, indices: torch.Tensor, batch_size: int) -> None:
+    """Clear selected leading-batch tensor slices in one nested cache object."""
+    if isinstance(value, torch.Tensor):
+        if value.ndim > 0 and value.shape[0] == batch_size:
+            value[indices] = 0
+        return
+    if is_dataclass(value) and not isinstance(value, type):
+        for field in fields(value):
+            _zero_selected_batch(getattr(value, field.name), indices, batch_size)
+        return
+    if isinstance(value, Mapping):
+        for item in value.values():
+            _zero_selected_batch(item, indices, batch_size)
 
 
 def _spawn_static_ray_plane() -> None:
@@ -302,7 +332,19 @@ class TaslabDirectEnv(DirectRLEnv):
         self.extras["reward_diagnostics"] = {
             key: value.detach().clone() for key, value in reward.diagnostics.items()
         }
-        return reward.total[:, 0]
+        self.extras["pre_reset"] = {
+            "reset_mask": self.reset_buf.detach().clone(),
+            "episode_length": self.episode_length_buf.detach().clone(),
+            "root_state_w": self._robot.data.root_state_w.detach().clone(),
+            "joint_pos": self._robot.data.joint_pos.detach().clone(),
+            "joint_vel": self._robot.data.joint_vel.detach().clone(),
+            "control": _detached_snapshot(self._control),
+            "lee": _detached_snapshot(self._lee),
+            "wrench": _detached_snapshot(self._wrench),
+            "reward": _detached_snapshot(reward),
+            "task": _detached_snapshot(self._task),
+        }
+        return reward.total[:, 0].clone()
 
     def _get_observations(self) -> dict[str, Any]:
         root = self._validated_root_state()
@@ -375,11 +417,17 @@ class TaslabDirectEnv(DirectRLEnv):
         self._explicit_reset_pending[indices] = True
         self._policy["lidar_grid"][indices] = 0.0
         self._policy["state_vec"][indices] = 0.0
-        self._control = None
-        self._lee = None
-        self._wrench = None
-        self._reward = None
-        self._task = None
+        caches = (self._control, self._lee, self._wrench, self._reward, self._task)
+        if indices.numel() == self.num_envs:
+            self._control = None
+            self._lee = None
+            self._wrench = None
+            self._reward = None
+            self._task = None
+        else:
+            for cache in caches:
+                if cache is not None:
+                    _zero_selected_batch(cache, indices, self.num_envs)
 
 
 __all__ = [

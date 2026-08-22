@@ -1,75 +1,56 @@
-# M6-002 Environment Final Report
+# M6-002 Environment Final Report — Revision 1
 
-## Order and history
+## Preserved history
 
-```text
-ORDER_ID: M6-002
-PHASE: M6
-BASE_COMMIT: 8295f6622354988ad9e00734126ebfa4a9eeaf73
-FUNCTIONAL_COMMIT: 07746d6e95c218dfe5803c64c86088b976b4cb91
-FUNCTIONAL_PARENT: 8295f6622354988ad9e00734126ebfa4a9eeaf73
-BRANCH: blackwell-migration
-```
+Original base is `8295f6622354988ad9e00734126ebfa4a9eeaf73`.
+D0001 commits `07746d6e95c218dfe5803c64c86088b976b4cb91` and
+`ca793159c6e1ae853b95af554bbb39d0b36cff79` remain unchanged. Revision 1 adds
+one correction commit only; no history rewrite is used.
 
-The functional commit adds the DirectRLEnv integration, exact tests/comparator,
-fixed rollout, and README boundary. The second ordered commit adds only these
-six environment records.
+## F1-F4 closure
 
-## Scope completed
+- F1: step 16 now proves public env0 timeout, terminal reward/reason/extras,
+  automatic selected reset, post-reset policy/critic/counter, unaffected env1,
+  and sixteen subsequent finite steps.
+- F2: subset reset recursively clears only selected batch slices in control,
+  Lee, wrench, reward, and task caches. Full reset alone invalidates whole
+  cache objects.
+- F3: both independent trees persist discriminating behavioral evidence for
+  articulation, joints, sensors, rotor/wrench, M4 history/time, M5 pipeline/
+  anchor/ICS, counters/actions/commands/flags/policy, and all output caches.
+- F4: contact documentation now matches the implemented full vector norm.
 
-The accepted TASLAB articulation, MID360 RayCaster, M4 history, non-B0 M5
-governor/control, Lee/rotor/wrench runtime, and M6 reward/termination/critic are
-composed without changing accepted source. The environment enforces float32
-normalized `[N,4]` actions, exact M4 policy and separate M6 critic branches,
-same-post-step reward/done, direct M5 metrics, and full/selective vector reset.
+## Information flow
 
-## Information contract
+Detached pre-reset extras preserve terminal provenance and are never actor or
+control input. Returned reward/done/reason refer to the same terminal state;
+returned exact-M4 policy and separate M6 critic refer to post-reset state.
+Selected reward cache clearing cannot mutate returned reward because the public
+return is an independent clone.
 
-Actor inputs remain only the accepted onboard MID360 history, validity/
-reliability/age, body angular velocity, body gravity direction, commanded body
-velocity, and previous issued body velocity. Root pose/state, actual velocity,
-clearance/contact truth, critic, rewards, reasons, Lee state, wrenches, and
-rotors remain outside policy/action/control. Privilege perturbations change the
-critic while the policy branch stays byte-identical.
+## Correctness results
 
-## Correctness gates
-
-- environment configuration, public API, action, and schemas: PASS;
-- actor leakage and source-dependency boundary: PASS;
-- frames/units/ray order/direct M5 metric identity: PASS;
-- same-state done/reward and accepted reason/timeout semantics: PASS;
-- full/selective reset and malformed-input atomicity: PASS;
-- two independent complete rollouts: PASS;
-- 1,800-tensor/16,834,412-element exact comparison: PASS, max error `0.0`;
-- comparator fail-closed mutations: PASS;
-- accepted M2-M6 regressions and byte/diff integrity: PASS;
-- frozen runtime/formal/external integrity: PASS;
-- exact allowlist, history, and diff hygiene: PASS at functional evidence point.
+- original API/schema/formulas/defaults: preserved;
+- strengthened static suite: 8 PASS;
+- required regression passes: 118 tests + 33 subtests, twice;
+- M2 static: 10 PASS; accepted M5 runtime: 256 steps PASS;
+- independent rollouts: 32 policy/640 rollout physics steps each;
+- exact auto timeout/reset: one selected event per process;
+- complete comparison: 4,423 tensors, 20,925,086 elements, max error `0.0`;
+- actor leakage, integrity, prohibited-scope, and frozen-runtime gates: retained.
 
 ## Package/runtime integrity
 
-```text
 Driver changed: NO
 Conda changed: NO
 PyTorch changed: NO
 Isaac changed: NO
 Frozen baseline changed: NO
-```
-
-The frozen Isaac Lab checkout's previously known kit-file modification was not
-created or changed by this Order.
-
-## Deferred findings
-
-None requiring an in-scope implementation change.
 
 ## Recommendation and stop declaration
 
-`READY_FOR_REVIEW` after the documentation commit and final clean-history
-self-audit.
+READY_FOR_REVIEW after committed-HEAD formal evidence and final clean audit.
 
-```text
 NO NEXT-PHASE WORK WAS STARTED.
-NO PPO, TRAINING, EVALUATION, M7, MERGE, OR PUSH WAS PERFORMED.
+NO PPO, TRAINING, EVALUATION, M7, MERGE, PUSH, OR HISTORY REWRITE WAS PERFORMED.
 AWAITING COMMANDER REVIEW.
-```
