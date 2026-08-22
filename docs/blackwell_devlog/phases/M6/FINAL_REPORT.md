@@ -48,7 +48,7 @@ insufficient anchors contribute zero. Collision remains boolean. No unrelated
 formula, component order/total, termination, critic, actor or control semantic
 changed.
 
-Two independent pure CUDA outputs compare 108 tensors and 1,020,432 elements
+Two independent pure CUDA outputs compare 110 tensors and 1,020,440 elements
 with maximum error zero. Accepted M1-M5, frozen packages/runtime/external
 repositories and Git configuration remain unchanged.
 
