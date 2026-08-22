@@ -100,3 +100,20 @@ synthetic four-sample batch and exactly two update calls per independent
 process. It does not import or step the environment, collect experience, claim
 learning quality, or authorize simulator training, evaluation, M7, 128k, 1M,
 or scale runs.
+
+## M6 bounded learning-pipeline integration
+
+`instinctlab.training.rollout` is the sole adapter between the accepted
+`TaslabDirectEnv` observation/action/extras surface and the accepted PPO tensor
+core. It clones detached pre-action policy and critic inputs, passes only the
+exact M4 pair to the actor, passes only `[N,18]` privilege to the critic, steps
+the environment with the sampled normalized Beta action, reconstructs pure-
+timeout value input from `extras["pre_reset"]`, computes terminal-safe GAE, and
+flattens `[T,N]` in explicit time-major order without dropping samples.
+
+The qualification is fixed to two environments, two four-step segments, eight
+policy steps / 160 physics steps per process, 16 total samples, two PPO update
+calls, and one checkpoint reload. It exercises one public automatic timeout
+and finite post-reset continuation. It is not a production trainer, does not
+checkpoint simulator state, and does not authorize evaluation, M7, 128k, 1M,
+or scale training.
