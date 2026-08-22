@@ -117,3 +117,16 @@ calls, and one checkpoint reload. It exercises one public automatic timeout
 and finite post-reset continuation. It is not a production trainer, does not
 checkpoint simulator state, and does not authorize evaluation, M7, 128k, 1M,
 or scale training.
+
+## M7 pure-tensor evaluation core
+
+`instinctlab.evaluation` audits the exact M4 policy mapping before consuming a
+separate, exactly ordered evaluation-only `[T,N]` mapping. It emits explicit
+tracking, null-command station, anchor, clearance, collision, ICS,
+command-preservation, intervention, observability-source, and independent
+termination counts as canonical JSON. Conditional metrics retain numerator,
+denominator, valid count, total count, and an explicit unavailable state.
+
+M7-001 uses only persisted synthetic tensors. It does not launch Isaac Sim,
+collect a rollout, evaluate policy quality, implement or run B0-B8 ablations,
+compute a range-Jacobian, train, or authorize M8, 128k, 1M, or scale work.
