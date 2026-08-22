@@ -54,6 +54,7 @@ class RewardConfig:
     preservation_upper: float = 1.05
     command_epsilon_m_s: float = 1.0e-3
     full_compliance_beta: float = 0.999
+    anchor_min_usable_fraction: float = 0.1
 
     def __post_init__(self) -> None:
         numeric = (
@@ -62,7 +63,7 @@ class RewardConfig:
             "issued_smoothness_weight", "governor_proxy_weight", "final_proxy_weight",
             "preservation_weight", "clearance_safe_m", "clearance_margin_m",
             "preservation_lower", "preservation_upper", "command_epsilon_m_s",
-            "full_compliance_beta",
+            "full_compliance_beta", "anchor_min_usable_fraction",
         )
         for name in numeric:
             value = getattr(self, name)
@@ -82,6 +83,8 @@ class RewardConfig:
             raise ValueError("command_epsilon_m_s must be positive")
         if not 0.0 < self.full_compliance_beta <= 1.0:
             raise ValueError("full_compliance_beta must be in (0, 1]")
+        if not 0.0 <= self.anchor_min_usable_fraction <= 1.0:
+            raise ValueError("anchor_min_usable_fraction must be in [0, 1]")
 
 
 @dataclass(frozen=True)
@@ -127,6 +130,13 @@ def _label(name: str, value: torch.Tensor, reference: torch.Tensor) -> torch.Ten
     return value
 
 
+def _binary_metric(name: str, value: torch.Tensor, reference: torch.Tensor) -> torch.Tensor:
+    metric = _scalar(name, value, reference)
+    if not bool(((metric == 0.0) | (metric == 1.0)).all().item()):
+        raise ValueError(f"{name} must contain exact floating 0/1 values")
+    return metric
+
+
 def compute_reward(
     *,
     v_cmd_b: torch.Tensor,
@@ -136,6 +146,7 @@ def compute_reward(
     actual_velocity_b: torch.Tensor,
     anchor_loss: torch.Tensor,
     anchor_active: torch.Tensor,
+    anchor_usable_fraction: torch.Tensor,
     ics_beta: torch.Tensor,
     ics_emergency: torch.Tensor,
     exact_clearance_m: torch.Tensor,
@@ -156,29 +167,37 @@ def compute_reward(
         if value.dtype != command.dtype or value.device != command.device:
             raise TypeError(f"{name} must share command dtype and device")
     anchor_error = _scalar("anchor_loss", anchor_loss, command)
+    anchor_on = _binary_metric("anchor_active", anchor_active, command)
+    anchor_usable = _scalar("anchor_usable_fraction", anchor_usable_fraction, command)
     beta = _scalar("ics_beta", ics_beta, command)
+    emergency = _binary_metric("ics_emergency", ics_emergency, command)
     clearance = _scalar("exact_clearance_m", exact_clearance_m, command)
-    anchor_on = _label("anchor_active", anchor_active, command)
-    emergency = _label("ics_emergency", ics_emergency, command)
     collided = _label("collision", collision, command)
     if bool((anchor_error < 0.0).any().item()):
         raise ValueError("anchor_loss must be nonnegative")
     if bool(((beta < 0.0) | (beta > 1.0)).any().item()):
         raise ValueError("ics_beta must be in [0, 1]")
+    if bool(((anchor_usable < 0.0) | (anchor_usable > 1.0)).any().item()):
+        raise ValueError("anchor_usable_fraction must be in [0, 1]")
     if bool((clearance < 0.0).any().item()):
         raise ValueError("exact_clearance_m must be nonnegative")
-    if bool((emergency & (beta != 0.0)).any().item()):
+    emergency_bool = emergency == 1.0
+    if bool((emergency_bool & (beta != 0.0)).any().item()):
         raise ValueError("ICS emergency requires exact zero beta")
 
     command_norm = torch.linalg.vector_norm(command, dim=-1, keepdim=True)
     command_active_bool = command_norm > config.command_epsilon_m_s
     command_active = command_active_bool.to(command.dtype)
     null_command = 1.0 - command_active
-    ordinary_gate_bool = command_active_bool & (beta >= config.full_compliance_beta) & ~emergency
+    ordinary_gate_bool = command_active_bool & (beta >= config.full_compliance_beta) & ~emergency_bool
     ordinary_gate = ordinary_gate_bool.to(command.dtype)
     actual_error = torch.linalg.vector_norm(actual - command, dim=-1, keepdim=True)
     null_actual_speed = torch.linalg.vector_norm(actual, dim=-1, keepdim=True)
-    anchor_gate = null_command * anchor_on.to(command.dtype)
+    anchor_gate = (
+        null_command
+        * (anchor_on == 1.0).to(command.dtype)
+        * (anchor_usable >= config.anchor_min_usable_fraction).to(command.dtype)
+    )
     clearance_threshold = config.clearance_safe_m + config.clearance_margin_m
     clearance_violation = torch.relu(clearance_threshold - clearance)
     intervention_delta = torch.linalg.vector_norm(governor - final, dim=-1, keepdim=True)

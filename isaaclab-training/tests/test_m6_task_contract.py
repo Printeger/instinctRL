@@ -47,9 +47,10 @@ def _reward_inputs(batch: int = 2, dtype: torch.dtype = torch.float64, device: s
         "previous_issued_v_final_b": zero3.clone(),
         "actual_velocity_b": zero3.clone(),
         "anchor_loss": zero1.clone(),
-        "anchor_active": false.clone(),
+        "anchor_active": zero1.clone(),
+        "anchor_usable_fraction": torch.ones(batch, 1, dtype=dtype, device=device),
         "ics_beta": torch.ones(batch, 1, dtype=dtype, device=device),
-        "ics_emergency": false.clone(),
+        "ics_emergency": zero1.clone(),
         "exact_clearance_m": torch.full((batch, 1), 2.0, dtype=dtype, device=device),
         "collision": false.clone(),
     }
@@ -78,6 +79,7 @@ def test_reward_defaults_keys_shapes_and_exact_unscaled_total():
     config = RewardConfig()
     assert config.actual_tracking_weight == 1.0 and config.clearance_safe_m == 0.8
     assert config.preservation_lower == 0.75 and config.preservation_upper == 1.05
+    assert config.anchor_min_usable_fraction == 0.1
     result = compute_reward(**_reward_inputs(), config=config)
     assert tuple(result.components) == REWARD_COMPONENT_KEYS
     assert tuple(result.diagnostics) == REWARD_DIAGNOSTIC_KEYS
@@ -111,7 +113,7 @@ def test_ics_attenuation_and_emergency_gate_compliance_but_penalize_usage():
     values["v_gov_b"][:, 0] = 1.0
     values["v_final_b"][:, 0] = torch.tensor([0.5, 0.0], dtype=torch.float64)
     values["ics_beta"][:, 0] = torch.tensor([0.5, 0.0], dtype=torch.float64)
-    values["ics_emergency"][1, 0] = True
+    values["ics_emergency"][1, 0] = 1.0
     result = compute_reward(**values)
     assert torch.count_nonzero(result.components["reward_actual_tracking"]) == 0
     assert torch.count_nonzero(result.components["reward_final_proxy"]) == 0
@@ -123,7 +125,7 @@ def test_null_command_actual_speed_and_valid_active_anchor_are_distinct():
     values = _reward_inputs(2)
     values["actual_velocity_b"][:, 0] = 0.5
     values["anchor_loss"][:, 0] = 0.25
-    values["anchor_active"][0, 0] = True
+    values["anchor_active"][0, 0] = 1.0
     result = compute_reward(**values)
     assert result.components["reward_null_actual_speed"].flatten().tolist() == [-1.0, -1.0]
     assert result.components["reward_anchor"].flatten().tolist() == [-1.0, 0.0]
@@ -132,6 +134,44 @@ def test_null_command_actual_speed_and_valid_active_anchor_are_distinct():
     values["v_final_b"][0, 0] = 0.1
     gated = compute_reward(**values)
     assert gated.components["reward_anchor"][0].item() == 0.0
+
+
+def test_anchor_usable_fraction_gate_is_exact_below_at_and_above_threshold():
+    values = _reward_inputs(3)
+    values["anchor_active"][:] = 1.0
+    values["anchor_loss"][:] = 0.25
+    values["anchor_usable_fraction"][:, 0] = torch.tensor([0.0, 0.1, 0.2], dtype=torch.float64)
+    result = compute_reward(**values)
+    assert result.components["reward_anchor"].flatten().tolist() == [0.0, -1.0, -1.0]
+    assert result.diagnostics["anchor_gate"].flatten().tolist() == [0.0, 1.0, 1.0]
+
+
+def test_direct_accepted_m5_metrics_feed_reward_without_cast_or_synthetic_labels():
+    actor = _actor(dtype=torch.float32)
+    pipeline = ControlCorePipeline(ControlCoreConfig(use_b0=True))
+    reset = torch.zeros(2, dtype=torch.bool)
+    action = torch.zeros(2, 4)
+    quaternion = torch.tensor([[1.0, 0.0, 0.0, 0.0]]).repeat(2, 1)
+    control = pipeline(
+        actor["lidar_grid"], actor["state_vec"], action, 0.1, reset, reset, quaternion
+    )
+    values = _reward_inputs(2, dtype=torch.float32)
+    values.update({
+        "v_gov_b": control.v_gov_b,
+        "v_final_b": control.v_final_b,
+        "anchor_loss": control.anchor_metrics["huber_loss"],
+        "anchor_active": control.anchor_metrics["active"],
+        "anchor_usable_fraction": control.anchor_metrics["usable_fraction"],
+        "ics_beta": control.ics_metrics["beta"],
+        "ics_emergency": control.ics_metrics["emergency"],
+    })
+    result = compute_reward(**values)
+    assert result.total.shape == (2, 1)
+    assert values["anchor_active"] is control.anchor_metrics["active"]
+    assert values["anchor_usable_fraction"] is control.anchor_metrics["usable_fraction"]
+    assert values["anchor_loss"] is control.anchor_metrics["huber_loss"]
+    assert values["ics_beta"] is control.ics_metrics["beta"]
+    assert values["ics_emergency"] is control.ics_metrics["emergency"]
 
 
 def test_clearance_collision_smoothness_proxy_and_preservation_components():
@@ -191,18 +231,25 @@ def test_reward_missing_inputs_labels_domains_device_and_config_fail_closed():
     values = _reward_inputs(1)
     with pytest.raises(TypeError):
         compute_reward(**{key: value for key, value in values.items() if key != "actual_velocity_b"})
-    for field in ("anchor_active", "ics_emergency", "collision"):
+    for field in ("anchor_active", "ics_emergency"):
         malformed = _reward_inputs(1)
-        malformed[field] = torch.zeros(1, 1, dtype=torch.float64)
+        malformed[field] = torch.zeros(1, 1, dtype=torch.bool)
         with pytest.raises(TypeError):
             compute_reward(**malformed)
-    for field, bad in (("anchor_loss", -0.1), ("ics_beta", 1.1), ("exact_clearance_m", -0.1)):
+    malformed = _reward_inputs(1)
+    malformed["collision"] = torch.zeros(1, 1, dtype=torch.float64)
+    with pytest.raises(TypeError):
+        compute_reward(**malformed)
+    for field, bad in (
+        ("anchor_loss", -0.1), ("anchor_usable_fraction", -0.1),
+        ("anchor_usable_fraction", 1.1), ("ics_beta", 1.1), ("exact_clearance_m", -0.1),
+    ):
         malformed = _reward_inputs(1)
         malformed[field][0, 0] = bad
         with pytest.raises(ValueError):
             compute_reward(**malformed)
     inconsistent = _reward_inputs(1)
-    inconsistent["ics_emergency"][0, 0] = True
+    inconsistent["ics_emergency"][0, 0] = 1.0
     with pytest.raises(ValueError):
         compute_reward(**inconsistent)
     if torch.cuda.is_available():
@@ -215,9 +262,64 @@ def test_reward_missing_inputs_labels_domains_device_and_config_fail_closed():
         lambda: RewardConfig(clearance_safe_m=0.0),
         lambda: RewardConfig(preservation_lower=2.0, preservation_upper=1.0),
         lambda: RewardConfig(full_compliance_beta=1.1),
+        lambda: RewardConfig(anchor_min_usable_fraction=-0.1),
+        lambda: RewardConfig(anchor_min_usable_fraction=1.1),
     ):
         with pytest.raises((TypeError, ValueError)):
             config()
+
+
+@pytest.mark.parametrize("field", ["anchor_active", "ics_emergency"])
+@pytest.mark.parametrize("bad", [-0.1, 0.5, 1.1, float("nan"), float("inf")])
+def test_m5_binary_metrics_reject_nonbinary_and_nonfinite_values(field, bad):
+    values = _reward_inputs(1)
+    values[field][0, 0] = bad
+    with pytest.raises(ValueError):
+        compute_reward(**values)
+
+
+@pytest.mark.parametrize("field", ["anchor_active", "ics_emergency"])
+def test_m5_binary_metrics_reject_integer_shape_dtype_and_device(field):
+    for replacement in (
+        torch.zeros(1, 1, dtype=torch.long),
+        torch.zeros(1, dtype=torch.float64),
+        torch.zeros(1, 1, dtype=torch.float32),
+    ):
+        values = _reward_inputs(1)
+        values[field] = replacement
+        with pytest.raises((TypeError, ValueError)):
+            compute_reward(**values)
+    if torch.cuda.is_available():
+        values = _reward_inputs(1)
+        values[field] = values[field].cuda()
+        with pytest.raises(TypeError):
+            compute_reward(**values)
+
+
+def test_usable_fraction_missing_shape_dtype_device_nonfinite_and_config_type_fail_closed():
+    values = _reward_inputs(1)
+    with pytest.raises(TypeError):
+        compute_reward(**{key: value for key, value in values.items() if key != "anchor_usable_fraction"})
+    replacements = (
+        torch.zeros(1, dtype=torch.float64),
+        torch.zeros(1, 1, dtype=torch.float32),
+        torch.zeros(1, 1, dtype=torch.bool),
+        torch.zeros(1, 1, dtype=torch.long),
+        torch.tensor([[float("nan")]], dtype=torch.float64),
+    )
+    for replacement in replacements:
+        malformed = _reward_inputs(1)
+        malformed["anchor_usable_fraction"] = replacement
+        with pytest.raises((TypeError, ValueError)):
+            compute_reward(**malformed)
+    if torch.cuda.is_available():
+        malformed = _reward_inputs(1)
+        malformed["anchor_usable_fraction"] = malformed["anchor_usable_fraction"].cuda()
+        with pytest.raises(TypeError):
+            compute_reward(**malformed)
+    for value in (True, "0.1", float("nan")):
+        with pytest.raises(TypeError):
+            RewardConfig(anchor_min_usable_fraction=value)
 
 
 def test_termination_truth_table_boundaries_and_reason_precedence():
@@ -353,6 +455,17 @@ def test_task_sources_are_pure_fail_closed_and_have_no_goal_or_training_semantic
         ROOT / "instinctlab/control/pipeline.py",
     ):
         assert "instinctlab.task" not in path.read_text(encoding="utf-8")
+    smoke = (ROOT / "tests/run_m6_task_contract_smoke.py").read_text(encoding="utf-8")
+    for direct in (
+        'control.anchor_metrics["active"]',
+        'control.anchor_metrics["usable_fraction"]',
+        'control.anchor_metrics["huber_loss"]',
+        'control.ics_metrics["beta"]',
+        'control.ics_metrics["emergency"]',
+    ):
+        assert direct in smoke
+    assert ".to(torch.bool)" not in smoke
+    assert '"anchor_active": torch.' not in smoke
 
 
 def test_termination_and_critic_reject_cross_device_inputs():
