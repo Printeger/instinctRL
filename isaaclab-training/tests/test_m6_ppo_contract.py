@@ -25,6 +25,7 @@ from instinctlab.training import (
 )
 from instinctlab.training.networks import ACTION_DIM, ACTOR_KEYS, CRITIC_DIM
 from instinctlab.training.ppo import deterministic_minibatches, normalize_advantages
+from instinctlab.task import compute_termination
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -218,6 +219,54 @@ def test_gae_hand_truth_table_for_all_four_transition_cases():
     assert torch.equal(continuation.returns, continuation.advantages + torch.tensor([[[2.0]]]))
 
 
+def test_accepted_task_simultaneous_masks_use_termination_precedence_and_ignore_both_bootstraps():
+    task = compute_termination(
+        height_w_m=torch.tensor([[0.4]], dtype=torch.float32),
+        collision=torch.tensor([[False]]),
+        elapsed_steps=torch.tensor([[1000]], dtype=torch.long),
+    )
+    assert task.terminated.item() and task.truncated.item()
+    scalar = lambda value: torch.tensor([[[value]]], dtype=torch.float32)
+    first = compute_gae(
+        scalar(7.0), scalar(2.0), scalar(100.0), task.terminated.unsqueeze(0),
+        task.truncated.unsqueeze(0), torch.zeros(1, 1, 1, dtype=torch.bool),
+        timeout_bootstrap_values=scalar(-100.0), gamma=0.9, gae_lambda=0.8,
+    )
+    second = compute_gae(
+        scalar(7.0), scalar(2.0), scalar(-500.0), task.terminated.unsqueeze(0),
+        task.truncated.unsqueeze(0), torch.zeros(1, 1, 1, dtype=torch.bool),
+        timeout_bootstrap_values=scalar(900.0), gamma=0.9, gae_lambda=0.8,
+    )
+    without_timeout_tensor = compute_gae(
+        scalar(7.0), scalar(2.0), scalar(1234.0), task.terminated.unsqueeze(0),
+        task.truncated.unsqueeze(0), torch.zeros(1, 1, 1, dtype=torch.bool),
+        timeout_bootstrap_values=None, gamma=0.9, gae_lambda=0.8,
+    )
+    for result in (first, second, without_timeout_tensor):
+        assert result.advantages.item() == pytest.approx(5.0)
+        assert result.returns.item() == pytest.approx(7.0)
+    assert torch.equal(first.advantages, second.advantages)
+    assert torch.equal(first.returns, second.returns)
+
+
+def test_gae_mixed_multistep_table_distinguishes_every_mask_and_recursion_cut():
+    rewards = torch.tensor([[[1.0], [2.0]], [[3.0], [4.0]], [[5.0], [6.0]]])
+    values = torch.tensor([[[0.5], [1.0]], [[1.5], [2.0]], [[2.5], [3.0]]])
+    next_values = torch.tensor([[[10.0], [20.0]], [[30.0], [40.0]], [[50.0], [60.0]]])
+    timeout = torch.tensor([[[100.0], [7.0]], [[200.0], [300.0]], [[400.0], [500.0]]])
+    terminated = torch.tensor([[[False], [False]], [[True], [False]], [[True], [False]]])
+    truncated = torch.tensor([[[False], [True]], [[True], [False]], [[False], [False]]])
+    reset = torch.tensor([[[False], [False]], [[False], [False]], [[False], [True]]])
+    result = compute_gae(
+        rewards, values, next_values, terminated, truncated, reset,
+        timeout_bootstrap_values=timeout, gamma=0.9, gae_lambda=0.8,
+    )
+    expected_advantages = torch.tensor([[[10.58], [7.3]], [[1.5], [40.16]], [[2.5], [3.0]]])
+    expected_returns = expected_advantages + values
+    torch.testing.assert_close(result.advantages, expected_advantages, rtol=0.0, atol=1.0e-5)
+    torch.testing.assert_close(result.returns, expected_returns, rtol=0.0, atol=1.0e-5)
+
+
 def test_gae_recursion_and_timeout_ignore_post_reset_value():
     rewards = torch.tensor([[[1.0]], [[2.0]]])
     values = torch.tensor([[[0.5]], [[0.25]]])
@@ -232,14 +281,15 @@ def test_gae_recursion_and_timeout_ignore_post_reset_value():
     assert result.advantages[1].item() == pytest.approx(2.0 + 0.9 * 4.0 - 0.25)
 
 
-def test_gae_rejects_missing_timeout_bootstrap_and_bad_masks():
+def test_gae_rejects_missing_pure_timeout_bootstrap_and_bad_dtype():
     value = torch.zeros(1, 1, 1)
     false = torch.zeros(1, 1, 1, dtype=torch.bool)
     true = torch.ones_like(false)
     with pytest.raises(ValueError):
         compute_gae(value, value, value, false, true, false, timeout_bootstrap_values=None)
-    with pytest.raises(ValueError):
-        compute_gae(value, value, value, true, true, false, timeout_bootstrap_values=value)
+    simultaneous = compute_gae(value, value, value, true, true, false, timeout_bootstrap_values=None)
+    assert torch.equal(simultaneous.advantages, value)
+    assert torch.equal(simultaneous.returns, value)
     with pytest.raises(TypeError):
         compute_gae(value.double(), value, value, false, false, false, timeout_bootstrap_values=value)
 

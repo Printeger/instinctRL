@@ -1,5 +1,21 @@
 # M6-003 PPO Tensor-Core Evidence Index
 
+## Revision 1 / M6-003-D0002
+
+Fresh correction evidence is under
+`attempts/development/M6-003/M6-003-D0002/`. Its passing functional candidate
+contains the revised synthetic generator, semantic inspector, complete command
+ledger and output manifest, two CUDA trees/checkpoints, simultaneous/pure-
+timeout mask capture, exact comparison, comparator/checkpoint negatives,
+regressions, integrity streams, and the accepted environment regression. The
+passing final candidate contains the preserved three-commit history, revision
+allowlist, complete base/start diffs, commit shows, D0001 inventory check, and
+clean-state self-audit. Exact candidate numbers and SHA256 values are recorded
+in the D0002 coordination `INDEX.md` and Executor report.
+
+Historical D0001 evidence below remains immutable and is referenced, not
+rewritten.
+
 Fresh coordination namespace:
 `attempts/development/M6-003/M6-003-D0001/`.
 

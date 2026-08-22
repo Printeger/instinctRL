@@ -1,5 +1,22 @@
 # M6-003 PPO Tensor-Core Test Report
 
+## Revision 1 simultaneous-mask correction
+
+The accepted task producer directly generated `terminated=True` and
+`truncated=True`. Focused D0002 tests prove `advantage=reward-value` and
+`return=reward`, exact independence from materially different next/timeout
+values, successful simultaneous-only computation without a timeout tensor,
+continued pure-timeout rejection without one, and a hand-computed 3-step by
+2-environment table covering continuation, termination, pure timeout,
+simultaneous done, and explicit reset. The focused contract suite is 57/57
+PASS.
+
+Fresh development CUDA processes each contained one simultaneous and one pure
+timeout row, performed exactly two updates, reloaded exactly, and compared 33
+tensors / 1,020,176 elements at maximum error 0.0. The semantic inspector
+passed 14/14 assertions per inspected tree. Final D0002 command identities and
+hashes are indexed in the fresh evidence namespace.
+
 ## Functional candidate 0002
 
 | Check | Result | Measured evidence |

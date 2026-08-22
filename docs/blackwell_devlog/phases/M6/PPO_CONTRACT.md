@@ -57,14 +57,17 @@ return_t = adv_t + value_t
 ```
 
 - ordinary continuation: bootstrap from supplied next-state value and recurse;
-- termination: zero bootstrap and no recursion;
-- truncation: bootstrap only from explicit terminal-state critic value and do
-  not recurse into the reset episode;
+- termination: zero bootstrap and no recursion, including when timeout is also
+  true;
+- pure timeout (`truncated=True, terminated=False`): bootstrap only from an
+  explicit terminal-state critic value and do not recurse into the reset
+  episode;
 - explicit reset boundary: zero bootstrap and no recursion.
 
-Terminated and truncated cannot both be true. A truncation without explicit
-terminal bootstrap is rejected. Post-reset `next_values` cannot affect a
-truncated transition.
+The task cause masks remain independent, so terminated and truncated may both
+be true. True termination has precedence and the simultaneous row depends on
+neither timeout bootstrap nor post-reset `next_values`. An explicit terminal
+bootstrap is required only when at least one pure-timeout row exists.
 
 ## PPO update contract
 

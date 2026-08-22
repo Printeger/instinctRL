@@ -6,7 +6,9 @@
 - The actor CNN architecture is bounded and contract-qualified, not tuned for
   task performance or deployment latency.
 - GAE consumes explicitly supplied values and masks; no collector or
-  environment adapter is provided by this Order.
+  environment adapter is provided by this Order. Simultaneous termination and
+  timeout is qualified with termination precedence; explicit terminal-value
+  bootstrap remains required for pure timeouts only.
 - Checkpoint atomicity is local-filesystem atomic replacement. Cross-filesystem
   transport, distributed writers, export, and deployment packaging are not
   qualified.

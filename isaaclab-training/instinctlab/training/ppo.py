@@ -107,10 +107,9 @@ def compute_gae(
     terminated = _trajectory_mask("terminated", terminated, rewards)
     truncated = _trajectory_mask("truncated", truncated, rewards)
     reset_boundary = _trajectory_mask("reset_boundary", reset_boundary, rewards)
-    if bool((terminated & truncated).any().item()):
-        raise ValueError("one transition cannot be both terminated and truncated")
-    if bool(truncated.any().item()) and timeout_bootstrap_values is None:
-        raise ValueError("truncated transitions require explicit terminal-state timeout bootstrap values")
+    pure_timeout = truncated & ~terminated
+    if bool(pure_timeout.any().item()) and timeout_bootstrap_values is None:
+        raise ValueError("pure timeout transitions require explicit terminal-state bootstrap values")
     if timeout_bootstrap_values is None:
         timeout_bootstrap_values = torch.zeros_like(rewards)
     timeout_bootstrap_values = _trajectory_float("timeout_bootstrap_values", timeout_bootstrap_values, shape)
@@ -120,7 +119,11 @@ def compute_gae(
     gae_lambda = _finite_scalar("gae_lambda", gae_lambda, lower=0.0, upper=1.0)
 
     ordinary = ~(terminated | truncated | reset_boundary)
-    bootstrap = torch.where(truncated, timeout_bootstrap_values, torch.where(ordinary, next_values, torch.zeros_like(values)))
+    bootstrap = torch.where(
+        terminated,
+        torch.zeros_like(values),
+        torch.where(pure_timeout, timeout_bootstrap_values, torch.where(ordinary, next_values, torch.zeros_like(values))),
+    )
     deltas = rewards + gamma * bootstrap - values
     recursion = ordinary.to(dtype=rewards.dtype)
     advantages = torch.empty_like(rewards)

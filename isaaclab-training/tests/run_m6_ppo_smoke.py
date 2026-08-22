@@ -87,7 +87,7 @@ def main() -> None:
         "rewards", "terminated", "truncated", "reset_boundary",
     ):
         raise ValueError("synthetic input tree schema/order mismatch")
-    if source["schema_version"] != "m6-ppo-synthetic-1":
+    if source["schema_version"] != "m6-ppo-synthetic-2":
         raise ValueError("synthetic input schema version mismatch")
     data = _cpu(source)
     policy = {key: value.to(device) for key, value in source["policy"].items()}
@@ -98,6 +98,9 @@ def main() -> None:
     terminated = source["terminated"].to(device)
     truncated = source["truncated"].to(device)
     reset_boundary = source["reset_boundary"].to(device)
+    simultaneous_mask_count = int((terminated & truncated).sum().item())
+    if simultaneous_mask_count < 1:
+        raise ValueError("synthetic smoke must contain a simultaneous terminated+truncated row")
 
     network_config = NetworkConfig()
     ppo_config = PPOConfig(minibatch_size=2, epoch_count=1, permutation_seed=1701)
@@ -165,7 +168,8 @@ def main() -> None:
         "contract": {
             "device": "cuda:0", "batch_size": privileged.shape[0], "trajectory_shape": tuple(trajectory_shape),
             "update_calls": 2, "actor_keys": tuple(policy), "critic_dimension": privileged.shape[1],
-            "action_dimension": action.shape[1], "network_config": network_config.manifest(),
+            "action_dimension": action.shape[1], "simultaneous_mask_count": simultaneous_mask_count,
+            "network_config": network_config.manifest(),
             "ppo_config": ppo_config.manifest(), "actor_manifest": actor.parameter_manifest(),
             "critic_manifest": critic.parameter_manifest(),
         },
@@ -195,7 +199,8 @@ def main() -> None:
             "critic_optimizer": _optimizer_summary(restored.critic_optimizer),
         },
         "resource": {"peak_cuda_memory_bytes": torch.cuda.max_memory_allocated()},
-        "gates": {"all_finite": True, "checkpoint_exact": True, "two_updates": True, "status": "PASS"},
+        "gates": {"all_finite": True, "checkpoint_exact": True, "simultaneous_termination_precedence": True,
+                  "two_updates": True, "status": "PASS"},
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     torch.save(result, args.output)

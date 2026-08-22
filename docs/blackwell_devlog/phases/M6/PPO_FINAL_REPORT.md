@@ -1,5 +1,14 @@
 # M6-003 PPO Tensor-Core Final Report
 
+## Revision 1 correction
+
+M6-003-D0002 closes Commander finding F1 without reopening any unaffected
+tensor-core design. GAE now accepts the accepted independent task masks when
+termination and timeout coincide. Termination has precedence: bootstrap and
+recursion are zero. Pure timeout alone uses the explicit terminal-state value.
+Focused tests and fresh CUDA evidence prove the simultaneous result is
+independent of both post-reset next values and timeout bootstrap values.
+
 ## Delivered boundary
 
 The new `instinctlab.training` package implements the exact M4-only actor,
@@ -17,8 +26,8 @@ input.
 - Actor perturbation changes actor output; critic-only step leaves actor exact:
   PASS.
 - Hand GAE and PPO truth tables, zero-variance advantage, deterministic full
-  sample coverage, gradient clipping, finite state, and old-log immutability:
-  PASS.
+  sample coverage, gradient clipping, finite state, old-log immutability, and
+  simultaneous termination precedence: PASS.
 - Strict checkpoint exact reload and seven persisted negative classes: PASS.
 - Two independent CUDA processes, exactly two updates each, complete-tree max
   error 0.0: PASS.
@@ -29,6 +38,9 @@ Functional implementation commit is `a09c18bcfd8c8a9c3aec83b9c1198e90e75bcf56`
 with exact parent `2d414e744b116dd6e4d52a34b297306376ed8bf0`.
 Final documentation commit identity and two-commit self-audit are recorded in
 the Executor evidence after this record is committed.
+
+The additive Revision 1 correction commit and preserved three-commit audit are
+recorded in the D0002 Executor evidence after this record is committed.
 
 ## Stop declaration
 
