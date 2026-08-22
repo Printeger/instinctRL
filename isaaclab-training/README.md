@@ -47,3 +47,18 @@ to the final body-to-world adapter and cannot affect any earlier result or cache
 
 M5-001 does not instantiate an actor network, controller, articulation,
 simulator, reward, PPO loop, checkpoint, rollout, evaluation, or training job.
+
+## M5 TASLAB runtime-control boundary
+
+M5-002 consumes M5-001 `v_final_w` only after the actor-clean pipeline and
+combines it with controller-private `root_state_w` in a local, MIT-notice-
+preserving TASLAB Lee velocity controller. Exact four-rotor throttle response
+then produces local +Z rotor thrusts and a summed base-link local +Z reaction
+moment through Isaac Lab's public Articulation wrench API. Root state, pose,
+true velocity, attitude, angular rate, and controller internals never become M4
+fields or actor-visible results.
+
+The bounded qualification uses one environment on `cuda:0`, `dt=0.005 s`, a
+`0.1 s` policy/history interval, four fixed scenarios, and 256 physics steps
+per process. It introduces no actor network, reward, critic, PPO, collector,
+checkpoint, rollout API, evaluation, training, parameter tuning, or M6 work.
