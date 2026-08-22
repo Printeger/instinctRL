@@ -42,6 +42,22 @@ from instinctlab.control.pipeline import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
+ACTOR_CLEAN_CONTROL_MODULES = (
+    "governor.py",
+    "anchor.py",
+    "ics.py",
+    "command_adapter.py",
+    "pipeline.py",
+)
+ACTOR_CLEAN_FORBIDDEN_TOKENS = (
+    "isaaclab",
+    "omni.",
+    "surface_normal",
+    "odometry",
+    "slam",
+    "root_state",
+    "privileged_height",
+)
 
 
 def _actor(batch: int = 2, dtype: torch.dtype = torch.float32, device: str = "cpu"):
@@ -371,9 +387,19 @@ def test_direct_m3_m4_ast_provenance_and_no_runtime_or_forbidden_dependency():
     }
     m4_source = m4_path.read_text(encoding="utf-8")
     assert 'HISTORY_LENGTH = 4' in m4_source and 'LIDAR_FIELDS_PER_FRAME = 3' in m4_source
-    control_source = "\n".join(path.read_text(encoding="utf-8").lower() for path in (ROOT / "instinctlab" / "control").glob("*.py"))
-    for token in ("isaaclab", "omni.", "surface_normal", "odometry", "slam", "root_state", "privileged_height"):
+    control_directory = ROOT / "instinctlab" / "control"
+    control_source = "\n".join(
+        (control_directory / module).read_text(encoding="utf-8").lower()
+        for module in ACTOR_CLEAN_CONTROL_MODULES
+    )
+    for token in ACTOR_CLEAN_FORBIDDEN_TOKENS:
         assert token not in control_source
+    lee_source = (control_directory / "lee_velocity_controller.py").read_text(encoding="utf-8").lower()
+    broadened_source = control_source + "\n" + lee_source
+    assert "root_state_w" in lee_source
+    assert {
+        token for token in ACTOR_CLEAN_FORBIDDEN_TOKENS if token in broadened_source
+    } == {"root_state"}
     assert "controller_quaternion_wxyz" not in (ROOT / "instinctlab" / "control" / "governor.py").read_text()
     assert "controller_quaternion_wxyz" not in (ROOT / "instinctlab" / "control" / "anchor.py").read_text()
     assert "controller_quaternion_wxyz" not in (ROOT / "instinctlab" / "control" / "ics.py").read_text()

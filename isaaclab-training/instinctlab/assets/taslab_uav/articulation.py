@@ -8,6 +8,8 @@ from isaaclab.assets import ArticulationCfg
 
 TASLAB_USD_PATH = (Path(__file__).resolve().parent / "taslab_uav.usd").as_posix()
 ROTOR_JOINT_EXPRESSION = r"rotor_[0-3]_joint"
+TASLAB_BODY_NAMES = ("base_link", "rotor_0", "rotor_1", "rotor_2", "rotor_3")
+TASLAB_ROTOR_BODY_NAMES = TASLAB_BODY_NAMES[1:]
 
 TASLAB_ARTICULATION_CFG = ArticulationCfg(
     prim_path="/World/TASLAB",
@@ -44,4 +46,10 @@ TASLAB_ARTICULATION_CFG = ArticulationCfg(
     },
 )
 
-__all__ = ["ROTOR_JOINT_EXPRESSION", "TASLAB_ARTICULATION_CFG", "TASLAB_USD_PATH"]
+__all__ = [
+    "ROTOR_JOINT_EXPRESSION",
+    "TASLAB_ARTICULATION_CFG",
+    "TASLAB_BODY_NAMES",
+    "TASLAB_ROTOR_BODY_NAMES",
+    "TASLAB_USD_PATH",
+]
