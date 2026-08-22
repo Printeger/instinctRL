@@ -130,3 +130,8 @@ denominator, valid count, total count, and an explicit unavailable state.
 M7-001 uses only persisted synthetic tensors. It does not launch Isaac Sim,
 collect a rollout, evaluate policy quality, implement or run B0-B8 ablations,
 compute a range-Jacobian, train, or authorize M8, 128k, 1M, or scale work.
+
+`instinctlab.evaluation.runtime` is the bounded M7-002 bridge. Its persisted
+smoke connects exactly two accepted M6 environments for eight policy steps,
+uses only `HistoryActor.mean_action`, and separates terminal pre-reset records
+from post-reset actor observations and station references.
