@@ -65,6 +65,26 @@ def _validate_provenance(provenance: Mapping[str, object]) -> None:
         raise ValueError("seed must be a nonnegative integer")
 
 
+def _reject_cross_branch_storage_aliases(
+    policy: Mapping[str, torch.Tensor], evaluation: object
+) -> None:
+    """Reject evaluation tensors backed by either audited policy storage."""
+    if not isinstance(evaluation, Mapping):
+        return
+    policy_storage = {
+        (value.device, value.untyped_storage().data_ptr()): name
+        for name, value in policy.items()
+    }
+    for name, value in evaluation.items():
+        if not isinstance(value, torch.Tensor):
+            continue
+        key = (value.device, value.untyped_storage().data_ptr())
+        if key in policy_storage:
+            raise ValueError(
+                f"policy tensor {policy_storage[key]} and evaluation tensor {name} alias storage"
+            )
+
+
 def _metric_record(aggregate: AggregateMetricResult) -> OrderedDict[str, object]:
     output: OrderedDict[str, object] = OrderedDict()
     for metric in aggregate.metrics:
@@ -120,6 +140,7 @@ def build_evaluation_record(
     policy = branches["policy"]
     evaluation = branches["evaluation"]
     audit_actor_observation(policy)
+    _reject_cross_branch_storage_aliases(policy, evaluation)
     _validate_provenance(provenance)
     step = compute_step_metrics(evaluation, config)
     if policy["lidar_grid"].shape[0] != step.environments:

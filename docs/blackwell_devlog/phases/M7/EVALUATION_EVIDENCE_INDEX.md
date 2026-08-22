@@ -1,9 +1,37 @@
 # M7-001 Evaluation Evidence Index
 
+## Revision 1 / D0002
+
+Fresh coordination root:
+`/home/mint/rl_dev/instinctRL_coordination/attempts/development/M7-001/M7-001-D0002`
+
+D0002 retains revised source audit, D0001 evidence verifier, fixture and record
+generators, exact comparator/mutations, formal runner, final audit, command
+ledgers, complete output trees, requirement map, and Executor report. D0001 is
+consumed read-only and its complete 315-file manifest is checked byte-for-byte.
+
+Accepted `formal_candidates/0001/`:
+
+- `COMMAND_LEDGER.json` — 44/44 expected exits; SHA256
+  `df66dea5cd42da181bc538d39eaa020d0c6c96b75ddce0b6eb57f9cf569dc7e7`.
+- `VALIDATION_SUMMARY.json` — PASS, 7/7 assertions; SHA256
+  `40c8f77d64a72659f481faf648d62ee0339c3668b505eec823efc3ad6cd1d857`.
+- `OUTPUT_MANIFEST.json` — complete derived tree; SHA256
+  `2c5b778c9903fe11429526a71407ebb9cfb23afd4660f0ddad013c2a4fdc5b5c`.
+- `derived/fixture.pt` — SHA256
+  `17c686bcb7eff6c80cd9c3f8f8b31bcae9242cb529d16835ef63a7f96d2ed28f`.
+- both `derived/process_*/record.json` — D0001-identical SHA256
+  `38d1f7462247b2211a636e1c2160b9dcade5153ca4ca707b97213d9fdadd2cea`.
+- `derived/comparison.json` — PASS, 78 numeric leaves, maximum error 0.0.
+- `D0001_EVIDENCE_BASELINE.json` — 315-file immutable baseline; SHA256
+  `c17231b865fc760667b839c41cebf7a06e97c2cb35511b5e28106c10412ee6e6`.
+
+## D0001 (historical)
+
 Coordination root:
 `/home/mint/rl_dev/instinctRL_coordination/attempts/development/M7-001/M7-001-D0001`
 
-## Persisted programs
+### Persisted programs
 
 - `generate_fixture.py`: exact hand table and provenance writer.
 - `generate_record.py`: independent-process canonical record writer.
@@ -12,7 +40,7 @@ Coordination root:
 - `audit_source.py`: AST/source/information-flow audit.
 - `run_formal_validation.py`: command runner and ledger producer.
 
-## Accepted formal candidate
+### Accepted formal candidate
 
 `formal_candidates/0002/` contains:
 
@@ -34,7 +62,7 @@ Coordination root:
 Rejected formal candidate `formal_candidates/0001/` is retained unchanged and
 identified in the test report. It is not the accepted evidence candidate.
 
-## Source provenance at accepted base
+### Source provenance at accepted base
 
 | Source | SHA256 | Consumed semantic |
 | --- | --- | --- |

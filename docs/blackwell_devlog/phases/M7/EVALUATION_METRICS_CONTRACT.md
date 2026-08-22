@@ -12,6 +12,14 @@ computed and remains exactly:
 No evaluation value is copied, reconstructed, or forwarded into that mapping.
 The evaluation branch is privileged evaluation/logging input only.
 
+At the public boundary, accepted M4 audit runs first. Before provenance,
+metric, hashing, or record work, every evaluation tensor's underlying untyped
+storage identity is compared with both policy tensor storages. Direct aliases
+and differently shaped, strided, or nonzero-offset views fail closed. Equal-
+valued tensors with independent storage remain valid. This cross-branch check
+does not clone an input to hide aliasing and does not change the retained
+evaluation-internal alias check.
+
 ## Exact evaluation input order
 
 All vector tensors are `[T,N,3]`; all scalar/mask/class tensors are `[T,N]`.

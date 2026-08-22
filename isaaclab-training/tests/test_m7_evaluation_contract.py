@@ -28,6 +28,7 @@ from instinctlab.task.termination import (
     TERMINATION_COLLISION,
     TERMINATION_NONE,
 )
+from instinctlab.training.networks import HistoryActor
 
 
 def _actor(batch: int = 2, dtype: torch.dtype = torch.float64, device: str = "cpu"):
@@ -193,25 +194,87 @@ def test_every_source_is_detached_owned_and_input_mutation_cannot_change_results
         record.canonical_json = "changed"
 
 
-def test_evaluation_privilege_cannot_change_actor_output_but_actor_input_discriminates():
-    actor = _actor()
-    actor_output = actor["state_vec"][:, -7:-4].square().sum(dim=-1)
-    first = build_evaluation_record(_branches(_evaluation(), actor), _provenance())
-    changed = _evaluation()
+def test_evaluation_privilege_cannot_change_real_actor_distribution_action_or_log_probability():
+    torch.manual_seed(103)
+    history_actor = HistoryActor().eval()
+    policy = _actor(dtype=torch.float32)
+    evaluation = _evaluation(dtype=torch.float32)
+    first = build_evaluation_record(_branches(evaluation, policy), _provenance())
+    cpu_rng = torch.random.get_rng_state().clone()
+    cuda_rng = torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None
+    with torch.no_grad():
+        _, first_output = history_actor.distribution(policy)
+        first_action, first_log_probability, _ = history_actor.sample(policy)
+
+    changed = _evaluation(dtype=torch.float32)
     changed["actual_velocity_b_m_s"].add_(3.0)
     changed["position_w_m"].add_(4.0)
     changed["anchor_error_m"].add_(2.0)
     changed["minimum_clearance_m"].add_(1.0)
+    changed["ics_beta"][0, 0] = 0.5
     changed["ics_worst_margin_m_s"].mul_(-1.0)
     changed["observability_value"].add_(8.0)
-    second = build_evaluation_record(_branches(changed, actor), _provenance())
-    second_actor_output = actor["state_vec"][:, -7:-4].square().sum(dim=-1)
-    assert torch.equal(actor_output, second_actor_output)
+    termination_fields = (
+        "collision", "terminated", "truncated", "termination_reason",
+        "termination_collision", "termination_below_height", "termination_above_height",
+        "termination_timeout",
+    )
+    for name in termination_fields:
+        changed[name] = torch.flip(changed[name], dims=(0,)).clone()
+    second = build_evaluation_record(_branches(changed, policy), _provenance())
+    torch.random.set_rng_state(cpu_rng)
+    if cuda_rng is not None:
+        torch.cuda.set_rng_state_all(cuda_rng)
+    with torch.no_grad():
+        _, second_output = history_actor.distribution(policy)
+        second_action, second_log_probability, _ = history_actor.sample(policy)
+    assert torch.equal(first_output.alpha, second_output.alpha)
+    assert torch.equal(first_output.beta, second_output.beta)
+    assert torch.equal(first_action, second_action)
+    assert torch.equal(first_log_probability, second_log_probability)
     assert first.canonical_json != second.canonical_json
-    actor_changed = _actor()
-    actor_changed["state_vec"][0, -7] = 0.5
-    changed_actor_output = actor_changed["state_vec"][:, -7:-4].square().sum(dim=-1)
-    assert not torch.equal(actor_output, changed_actor_output)
+
+    changed_policy = _actor(dtype=torch.float32)
+    changed_policy["state_vec"][:, 0].add_(10.0)
+    with torch.no_grad():
+        _, changed_output = history_actor.distribution(changed_policy)
+    assert not torch.equal(first_output.alpha, changed_output.alpha) or not torch.equal(
+        first_output.beta, changed_output.beta
+    )
+
+
+@pytest.mark.parametrize("origin", ["state_direct", "state_offset_strided", "lidar_strided"])
+def test_cross_branch_policy_storage_aliases_fail_closed(origin):
+    actor, evaluation = _actor(), _evaluation()
+    if origin == "state_direct":
+        shared = actor["state_vec"].as_strided((2, 2), (52, 1))
+    elif origin == "state_offset_strided":
+        shared = actor["state_vec"].as_strided((2, 2), (52, 2), storage_offset=1)
+        assert shared.data_ptr() != actor["state_vec"].data_ptr()
+    else:
+        shared = actor["lidar_grid"].as_strided(
+            (2, 2), (actor["lidar_grid"].stride(0), 3), storage_offset=1
+        )
+        assert shared.data_ptr() != actor["lidar_grid"].data_ptr()
+    assert shared.untyped_storage().data_ptr() in {
+        actor["state_vec"].untyped_storage().data_ptr(),
+        actor["lidar_grid"].untyped_storage().data_ptr(),
+    }
+    evaluation["anchor_error_m"] = shared
+    with pytest.raises(ValueError, match="policy tensor .* and evaluation tensor anchor_error_m alias storage"):
+        build_evaluation_record(_branches(evaluation, actor), _provenance())
+
+
+def test_equal_valued_independent_cross_branch_storage_remains_valid():
+    actor, evaluation = _actor(), _evaluation()
+    shared_values = actor["state_vec"].as_strided((2, 2), (52, 1))
+    evaluation["anchor_error_m"] = shared_values.clone()
+    assert (
+        evaluation["anchor_error_m"].untyped_storage().data_ptr()
+        != actor["state_vec"].untyped_storage().data_ptr()
+    )
+    record = build_evaluation_record(_branches(evaluation, actor), _provenance())
+    assert record.to_mapping()["actor_audit"]["status"] == "PASS"
 
 
 @pytest.mark.parametrize("mutation", ["missing", "extra", "reordered", "alias", "shape", "dtype", "nonfinite", "domain", "inconsistent"])

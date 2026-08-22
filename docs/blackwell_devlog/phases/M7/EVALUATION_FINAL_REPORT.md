@@ -1,6 +1,27 @@
 # M7-001 Final Report
 
-## Result
+## Revision 1 result
+
+`READY_FOR_REVIEW`. M7-001-D0002 corrects preserved D0001 HEAD
+`95cfd849d55425d5d9f7dd5a07903b99a080a544`. It is limited to rejecting
+policy/evaluation shared storage and replacing the weak arithmetic isolation
+test with accepted `HistoryActor` distribution/action/log-probability proof.
+Metric and record semantics below remain unchanged.
+
+The public boundary now rejects direct, differently shaped, strided,
+nonzero-offset, and LiDAR/state-originating shared storage before metrics or
+record construction. Independent equal-valued storage remains accepted. Under
+restored identical RNG, materially changing evaluation values preserves exact
+HistoryActor alpha, beta, sampled action, and log probability; a valid policy
+perturbation changes the distribution.
+
+Fresh D0002 formal evidence passes 44/44 commands and 7/7 assertions: M7 38,
+M3-M6 twice at 204 tests plus 33 subtests, and M2 static 10. Both independent
+records retain exact D0001 SHA256 and compare at maximum error zero. The five
+record negatives reject, all 315 D0001 evidence files remain byte-identical,
+and unaffected product/frozen/package identities pass.
+
+## D0001 result (historical; Commander requested rework)
 
 `READY_FOR_REVIEW`. Starting from accepted base
 `033514d8fa7d8d2bb2ece5faa1521d528e32b0a4`, M7-001 adds the ordered pure-

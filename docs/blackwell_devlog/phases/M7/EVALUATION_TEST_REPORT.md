@@ -1,6 +1,33 @@
 # M7-001 Evaluation Test Report
 
-## Formal result
+## Revision 1 correction
+
+M7-001-D0002 `formal_candidates/0001` is **PASS**: 44/44 commands and
+7/7 summary assertions. It rejects the exact Commander cross-branch alias plus
+state offset/strided and LiDAR-originating views; 38 M7 tests pass. The accepted
+`HistoryActor` test restores identical RNG and compares exact alpha, beta,
+sampled action, and log probability under materially changed evaluation data,
+then proves an actor-visible policy perturbation changes the distribution. The
+D0001 result below remains historical and is not rewritten.
+
+| D0002 check | Result | Measured outcome |
+| --- | --- | --- |
+| Commander alias reproduction | PASS | `REJECTED_CROSS_BRANCH_ALIAS` |
+| M7 focused/retained suite | PASS | 38 passed |
+| Accepted M3-M6 pure suites, round 1 | PASS | 204 passed, 33 subtests passed |
+| Accepted M3-M6 pure suites, round 2 | PASS | 204 passed, 33 subtests passed |
+| M2 static | PASS | 10 passed |
+| D0001 evidence integrity | PASS | 315 files byte-identical |
+| Two independent records | PASS | D0001-identical SHA256 |
+| Complete comparison | PASS | 78 numeric leaves, maximum error 0.0 |
+| Five record mutations | PASS | five expected exit 1 rejections |
+| Six-path/unaffected/frozen/package checks | PASS | all expected exits |
+
+All D0002 formal executable validation used persisted file paths. No stdin,
+heredoc, here-string, process substitution, shell/interpreter `-c`, `python3 -`,
+or `python -` command was used.
+
+## D0001 formal result (historical)
 
 Candidate `formal_candidates/0002`: **PASS**, 38/38 commands and 7/7 summary
 assertions. All formal executable validation used persisted program paths; no
