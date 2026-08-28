@@ -6,6 +6,13 @@ The registry is an ordered tuple of frozen records. ID and config switch are
 one-to-one exact identities; case folding, trimming, aliases, `ours`, `full`,
 switch-as-ID, and ID-as-switch are rejected.
 
+Validation locks every value in every `BaselineSpec` field, not only the row
+ID, switch, privilege, and readiness invariants. A separately constructed
+tuple passes only when each row is value-identical to the canonical registry;
+any single-field drift in identity, family, descriptive/contribution text,
+deployability, privilege, actor/evaluation schema, toggles, capability,
+optionality, or readiness is rejected.
+
 | ID | Config switch | Execution family | Deployable | Privilege | H/I/A/ICS | Optional | Current readiness |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | B0 | `direct_velocity` | `direct_control` | yes | actor-clean | 0/0/0/0 | no | `READY` |
@@ -69,6 +76,12 @@ canonical token and seed is a nonnegative exact integer. `READY` and
 `NOT_RUN`. The SHA-256 covers the canonical ASCII JSON bytes of every preceding
 field. Parsing rejects duplicate/missing/extra/reordered keys, noncanonical
 bytes, nonfinite values, mismatched row data, and hash tampering.
+
+`deployable` and each `component_toggles` member (`history`, `imu`, `anchor`,
+and `ics`) must be an exact JSON boolean before its value is compared with the
+canonical row. JSON integers `0`/`1`, floats, strings, nulls, arrays, and
+objects are rejected even where Python equality would otherwise equate a
+numeric value with `False` or `True`.
 
 The frozen record owns only canonical JSON text. Returned mappings are fresh,
 so caller mutation cannot change record bytes or registry state. No candidate

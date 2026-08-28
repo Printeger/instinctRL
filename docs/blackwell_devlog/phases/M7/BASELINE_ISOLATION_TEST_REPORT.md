@@ -1,55 +1,54 @@
 # M7-006 Baseline Isolation Test Report
 
-Accepted evidence candidate: `M7-006-D0001/formal_candidates/0002`
+D0001 accepted evidence remains immutable at
+`M7-006-D0001/formal_candidates/0002`. The D0002 correction evidence is
+`M7-006-D0002/formal_candidates/0001`; its 55-row ledger records every command,
+stream, exit, and hash.
 
-## Results
+## D0002 results
 
 | Gate | Result | Count | Evidence command |
 | --- | --- | ---: | --- |
-| Exact READY/EXECUTED/NOT_READY/SKIPPED manifest fixtures | PASS | 4 | ledger 005-009 |
-| Persisted alias/schema/capability/audit/hash/nonfinite negative matrix | PASS | 17 expected rejects | ledger 010-027, each actual exit 2 |
-| Standard-library and reverse-import/source-hash isolation | PASS | 1 audit | ledger 028 |
-| Functional commit/allowlist/frozen repos/critical packages | PASS | 1 audit | ledger 029 |
-| Focused baseline isolation suite, pass 1 | PASS | 47 | ledger 030 |
-| Focused baseline isolation suite, pass 2 | PASS | 47 | ledger 031 |
-| M2 static suite | PASS | 10 | ledger 032 |
-| Accepted M7 pure suites, pass 1 | PASS | 267 | ledger 033 |
-| Relevant M3-M6 pure regressions, pass 1 | PASS | 204 + 33 subtests | ledger 034 |
-| Accepted M7 pure suites, pass 2 | PASS | 267 | ledger 035 |
-| Relevant M3-M6 pure regressions, pass 2 | PASS | 204 + 33 subtests | ledger 036 |
-| Functional history/name-status/stat/full diff/diff-check/clean | PASS | 6 commands | ledger 037-042 |
+| Exact unchanged READY/EXECUTED/NOT_READY/SKIPPED fixtures | PASS | 4 | ledger 005-009 |
+| Persisted manifest negative matrix | PASS | 27 expected rejects | ledger 010-037, each actual exit 2 |
+| Standard-library and reverse-import/source-hash isolation | PASS | 1 audit | ledger 038 |
+| Commander exact-boolean reproduction probe | PASS | 5 malformed integer forms rejected | ledger 039, exit 0 |
+| Commander registry-drift reproduction probe | PASS | 6 formerly accepted drifts rejected | ledger 040, exit 0 |
+| Correction allowlist/D0001/frozen repos/critical packages | PASS | 1 audit | ledger 041 |
+| Focused baseline isolation suite, pass 1 | PASS | 72 | ledger 042 |
+| Focused baseline isolation suite, pass 2 | PASS | 72 | ledger 043 |
+| M2 static suite | PASS | 10 | ledger 044 |
+| Accepted M7 pure suites, pass 1 | PASS | 292 | ledger 045 |
+| Relevant M3-M6 pure regressions, pass 1 | PASS | 204 + 33 subtests | ledger 046 |
+| Accepted M7 pure suites, pass 2 | PASS | 292 | ledger 047 |
+| Relevant M3-M6 pure regressions, pass 2 | PASS | 204 + 33 subtests | ledger 048 |
+| Full history/correction and base allowlists/stat/diff/diff-check/clean | PASS | 7 commands | ledger 049-055 |
 
-The formal summary records 1,046 pytest passes and zero skips; repeated subtests
-are reported separately by pytest and are not added to that count.
+The formal summary records 1,146 pytest passes and zero skips; 66 regression
+subtests are reported separately by pytest and are not added to that count.
 
-## Requirement mapping
+## D0002 requirement mapping
 
-- Exact B0-B8 identity, order, descriptions, families, schemas, toggles,
-  capabilities, optionality, privilege, and readiness: focused tests
-  `test_exact_canonical_rows_and_every_field` and
-  `test_exact_policy_schemas_and_b0_evidence_binding`.
-- B1 nondeployability and deployable actor cleanliness:
-  `test_b1_privilege_and_all_deployable_rows_are_actor_clean`.
-- Alias, case, whitespace, duplicate, missing/extra/reordered, unsupported,
-  wrong-hash, false-readiness, and fallback rejection: focused parametrized
-  negatives plus persisted 17-file comparator matrix.
-- B8 explicit optional skip: `test_ready_executed_not_ready_and_b8_skipped_hand_fixtures`
-  and `skipped.json`; unavailable B8 `NOT_READY` is rejected.
-- Canonical bytes/order/hash/round trip/ownership/commit/platform/sensor/
-  schema/toggle/scenario/seed/audit/status binding: four hand fixtures and
-  focused serialization/mutation tests.
-- Nonfinite/control/duplicate-key/hash tampering: focused negatives and
-  negative files 15-17.
-- Standard-library-only and reverse-import isolation: focused static test and
-  `audit_import_isolation.py`.
-- Accepted source identity: actor, B0 governor, metrics source manifest, and
-  runtime source-manifest file hashes match the base.
+- Exact JSON boolean typing: integer `1` at `deployable`, integer `0` at all
+  four toggle positions, and representative float, string, null, array, and
+  object substitutions are persisted in the negative matrix and covered by
+  focused parametrized tests. Four exact-boolean status fixtures still pass.
+- Exact canonical registry: focused tests mutate each of the 13
+  `BaselineSpec` fields individually and require rejection. A separately
+  reconstructed value-identical tuple passes. The Commander six-field drift
+  probe also exits 0 with an empty accepted-case list.
+- D0001 preservation: field order, canonical bytes, and the four valid fixture
+  hashes are unchanged; D0001 summary and ledger hashes are recomputed by the
+  integrity and final audits.
+- Existing round-trip, mutation-isolation, duplicate/missing/extra/reordered,
+  nonfinite, capability, audit, skip, alias, and no-fallback negatives remain
+  active in the focused suite and persisted comparator matrix.
+- Standard-library-only imports, reverse-import isolation, accepted actor/B0/
+  metrics/runtime source hashes, exact six-path correction allowlist, frozen
+  checkout/package identity, clean state, and diff hygiene are audited.
 
 ## Test boundaries
 
 No CUDA device, Isaac Lab/Isaac Sim runtime, scenario, baseline adapter,
 ablation, rollout, training, checkpoint, policy-quality metric, or M8 gate was
-executed. `candidate 0001` is not acceptance evidence: it stopped before tests
-because the formal runner was given a mistyped caller-supplied functional SHA.
-It remains immutable. Fresh `candidate 0002` used the exact Git object and
-passed all gates.
+executed. No D0001 evidence file was changed.

@@ -357,6 +357,13 @@ def validate_baseline_registry(registry: tuple[BaselineSpec, ...]) -> None:
                 if requirement.accepted_provider in accepted_providers:
                     raise ValueError("accepted capability providers must be globally unique")
                 accepted_providers.add(requirement.accepted_provider)
+    for row, canonical_row in zip(registry, BASELINE_REGISTRY, strict=True):
+        for field in fields(BaselineSpec):
+            if getattr(row, field.name) != getattr(canonical_row, field.name):
+                raise ValueError(
+                    f"registry {row.baseline_id.value}.{field.name} does not match "
+                    "the canonical baseline row"
+                )
 
 
 validate_baseline_registry(BASELINE_REGISTRY)
@@ -556,6 +563,18 @@ def _validate_manifest_mapping(mapping: OrderedDict[str, object]) -> None:
     baseline = resolve_baseline(mapping["baseline_id"])
     if resolve_config_switch(mapping["config_switch"]) is not baseline:
         raise ValueError("baseline ID and config switch do not identify the same row")
+    if type(mapping["deployable"]) is not bool:
+        raise TypeError("manifest deployable must be an exact JSON boolean")
+    component_toggles = mapping["component_toggles"]
+    if not isinstance(component_toggles, OrderedDict) or tuple(
+        component_toggles
+    ) != COMPONENT_TOGGLE_FIELD_ORDER:
+        raise ValueError("component toggle keys are missing, extra, or reordered")
+    for name in COMPONENT_TOGGLE_FIELD_ORDER:
+        if type(component_toggles[name]) is not bool:
+            raise TypeError(
+                f"manifest component_toggles.{name} must be an exact JSON boolean"
+            )
     exact_values = {
         "execution_family": baseline.execution_family.value,
         "contribution_tested": baseline.contribution_tested,
@@ -568,10 +587,6 @@ def _validate_manifest_mapping(mapping: OrderedDict[str, object]) -> None:
     for name, expected in exact_values.items():
         if mapping[name] != expected:
             raise ValueError(f"manifest {name} does not match the canonical baseline row")
-    if not isinstance(mapping["component_toggles"], OrderedDict) or tuple(
-        mapping["component_toggles"]
-    ) != COMPONENT_TOGGLE_FIELD_ORDER:
-        raise ValueError("component toggle keys are missing, extra, or reordered")
     raw_bindings = mapping["capability_bindings"]
     if type(raw_bindings) is not list:
         raise TypeError("manifest capability_bindings must be a JSON array")

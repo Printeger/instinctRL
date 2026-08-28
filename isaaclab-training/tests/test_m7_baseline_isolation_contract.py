@@ -272,6 +272,43 @@ def test_registry_frozen_and_incomplete_reordered_duplicate_or_false_ready_rejec
         validate_baseline_registry((BASELINE_REGISTRY[0], false_ready) + BASELINE_REGISTRY[2:])
 
 
+def test_independently_reconstructed_value_identical_registry_passes() -> None:
+    reconstructed = tuple(replace(row) for row in BASELINE_REGISTRY)
+    assert reconstructed is not BASELINE_REGISTRY
+    assert all(actual is not canonical for actual, canonical in zip(
+        reconstructed, BASELINE_REGISTRY, strict=True
+    ))
+    validate_baseline_registry(reconstructed)
+
+
+@pytest.mark.parametrize(
+    ("field_name", "value"),
+    (
+        ("baseline_id", BaselineId.B3),
+        ("config_switch", "wrong_switch"),
+        ("execution_family", ExecutionFamily.DIRECT_CONTROL),
+        ("description", "wrong"),
+        ("contribution_tested", "wrong"),
+        ("deployable", False),
+        ("privilege_class", PrivilegeClass.PRIVILEGED_UPPER_BOUND),
+        ("actor_input_fields", ("commanded_body_velocity_m_s",)),
+        ("evaluation_only_fields", ("wrong",)),
+        ("component_toggles", ComponentToggles(True, True, True, True)),
+        (
+            "capability_requirements",
+            (CapabilityRequirement("wrong.capability", None, None),),
+        ),
+        ("optional", True),
+        ("readiness", ReadinessState.READY),
+    ),
+)
+def test_every_baseline_spec_field_drift_rejects(field_name: str, value: object) -> None:
+    mutated = replace(BASELINE_REGISTRY[2], **{field_name: value})
+    candidate = BASELINE_REGISTRY[:2] + (mutated,) + BASELINE_REGISTRY[3:]
+    with pytest.raises((TypeError, ValueError)):
+        validate_baseline_registry(candidate)
+
+
 def test_capabilities_reject_mutability_alias_duplicates_order_hash_and_fallback() -> None:
     b0, b1 = resolve_baseline("B0"), resolve_baseline("B1")
     binding = _b0_binding()
@@ -345,6 +382,52 @@ def test_manifest_bytes_round_trip_and_returned_mapping_mutation_isolated() -> N
     assert BaselineRunManifest.from_json(original).to_bytes() == original.encode("ascii")
     with pytest.raises(FrozenInstanceError):
         record.canonical_json = "changed"
+
+
+@pytest.mark.parametrize(
+    ("root_key", "nested_key", "value"),
+    (
+        ("deployable", None, 1),
+        ("component_toggles", "history", 0),
+        ("component_toggles", "imu", 0),
+        ("component_toggles", "anchor", 0),
+        ("component_toggles", "ics", 0),
+        ("deployable", None, 1.0),
+        ("component_toggles", "history", "false"),
+        ("component_toggles", "imu", None),
+        ("component_toggles", "anchor", [False]),
+        ("component_toggles", "ics", {"value": False}),
+    ),
+)
+def test_manifest_boolean_positions_require_exact_json_booleans(
+    root_key: str,
+    nested_key: str | None,
+    value: object,
+) -> None:
+    mapping = OrderedDict(_manifest().to_mapping())
+    if nested_key is None:
+        mapping[root_key] = value
+    else:
+        toggles = mapping[root_key]
+        assert isinstance(toggles, dict)
+        toggles[nested_key] = value
+    with pytest.raises(TypeError, match="exact JSON boolean"):
+        BaselineRunManifest.from_json(_resign(mapping))
+
+
+def test_manifest_exact_json_booleans_still_pass() -> None:
+    for record in (
+        _manifest("B0", ExecutionStatus.READY),
+        _manifest("B0", ExecutionStatus.EXECUTED),
+        _manifest("B1", ExecutionStatus.NOT_READY),
+        _manifest("B8", ExecutionStatus.SKIPPED),
+    ):
+        mapping = record.to_mapping()
+        assert type(mapping["deployable"]) is bool
+        assert all(type(value) is bool for value in mapping["component_toggles"].values())
+        assert BaselineRunManifest.from_json(record.canonical_json).canonical_json == (
+            record.canonical_json
+        )
 
 
 @pytest.mark.parametrize(
