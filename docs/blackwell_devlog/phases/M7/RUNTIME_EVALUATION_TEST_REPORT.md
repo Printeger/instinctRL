@@ -1,6 +1,6 @@
 # Runtime Evaluation Test Report
 
-Revision 1 formal candidate `M7-002-D0002/formal_candidates/0001`: **PASS**.
+Revision 1 formal candidate `M7-002-D0002/formal_candidates/0002`: **PASS**.
 All 51 commands produced their expected exits.
 
 | Check | Result |
@@ -21,3 +21,6 @@ All 51 commands produced their expected exits.
 
 The D0001 formal candidates and all D0001 evidence remain immutable. Simulator
 outcome magnitudes and untrained-policy quality remain non-blocking diagnostics.
+Preserved D0002 `formal_candidates/0001` is **FAIL** at 50/51 commands because
+the validator inherited the product-test `PYTHONPATH` instead of the frozen
+package-collection `PYTHONPATH` context; no product or package byte changed between candidates.
