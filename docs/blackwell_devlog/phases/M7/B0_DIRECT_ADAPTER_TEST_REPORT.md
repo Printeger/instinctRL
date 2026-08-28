@@ -1,6 +1,6 @@
 # M7-007 B0 Direct Adapter Test Report
 
-Accepted functional evidence candidate: `M7-007-D0001/formal_candidates/0001`
+Accepted functional evidence candidate: `M7-007-D0001/formal_candidates/0003`
 
 ## Results
 
@@ -50,3 +50,9 @@ M3-M6 behavior test is deselected.
 No CUDA, Isaac Lab, Isaac Sim, environment/controller runtime integration,
 baseline/scenario execution, metric aggregation, training, M8, or scale work
 was run.
+
+Candidates `0001` and `0002` are retained but excluded from acceptance. The
+first was executed before the final-audit validator was persisted. The second
+passed every command but its summary counter also parsed a pytest-count phrase
+inside `git diff` documentation. Candidate `0003` persisted both corrected
+programs before execution and reports the exact 1,356-test aggregate.

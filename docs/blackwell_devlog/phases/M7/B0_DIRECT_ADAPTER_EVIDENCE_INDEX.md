@@ -1,17 +1,17 @@
 # M7-007 B0 Direct Adapter Evidence Index
 
 Accepted evidence root:
-`/home/mint/rl_dev/instinctRL_coordination/attempts/development/M7-007/M7-007-D0001/formal_candidates/0001/`
+`/home/mint/rl_dev/instinctRL_coordination/attempts/development/M7-007/M7-007-D0001/formal_candidates/0003/`
 
 The 40-row command ledger records exact argv, cwd, isolated environment, UTC
 timestamps, expected/actual exits, stdout/stderr paths, and stream hashes.
 
 | Artifact | SHA-256 |
 | --- | --- |
-| `SUMMARY.json` | `febf0bd1b317c4d29c10ab230a0f2f5db7ff97fad3bcfa68c7dbce7ac631407f` |
-| `COMMAND_LEDGER.json` | `721c4bf7d83a447b556b410528e30cf9e5e20a38fd0530b191f0b9febcc8e43a` |
-| `fixtures/FIXTURE_INDEX.json` | `689363a22b7c20cfb4b074b3eea5a2e55b7a73920db772703301549f9d7e6c9a` |
-| `negative_matrix/INDEX.json` | `9dcfe1f31c6cf68b58caec0b714901008dd90e0642e70f6725b76ee5c08c272c` |
+| `SUMMARY.json` | `1cdeee0d3dcfb1352781e0ef657de09f10d56cc713f07bfbf5553c45a6ab01df` |
+| `COMMAND_LEDGER.json` | `c52f3b6f160038579ac8308803fa6b7291314f6a190475f7b871eed07622e208` |
+| `fixtures/FIXTURE_INDEX.json` | `bd88f438f434041ce19f9cf524029500852130e33554a5f28e8ea94b2e5e6dd5` |
+| `negative_matrix/INDEX.json` | `97072ee38d8a4443f3c6f2e4662f9a5797df9a1f50f163264394fd68ddd6d87b` |
 | `process_records/process_1.json` | `0ee1f23c46727779cc536a709ab6d1b2bbbf2a2721faffe98172403a734c5ddf` |
 | `process_records/process_2.json` | `0ee1f23c46727779cc536a709ab6d1b2bbbf2a2721faffe98172403a734c5ddf` |
 
@@ -37,3 +37,8 @@ scenario `S1.corner`, and seed 7.
 M7-006 historical fixture bytes/hashes remain immutable. Successor hashes
 change because the B0 capability list and functional product commit changed;
 B1-B8 registry row source is byte-identical to the approved base.
+
+Formal candidates `0001/` and `0002/` remain immutable and are excluded from
+acceptance: `0001` preceded the persisted final-audit validator; `0002` had an
+overbroad summary regex that counted a phrase in full-diff output. Candidate
+`0003` corrected only evidence orchestration and reran every command.
