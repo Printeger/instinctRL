@@ -9,6 +9,7 @@ import hashlib
 import os
 from pathlib import Path
 import sys
+import traceback
 
 from isaaclab.app import AppLauncher
 
@@ -24,11 +25,18 @@ import torch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from instinctlab.envs import TaslabDirectEnv, TaslabDirectEnvCfg
 from instinctlab.evaluation import RuntimeEvaluationCollector, RuntimeEvaluationConfig
+from instinctlab.evaluation.raycaster_observability import (
+    acquire_exact_observability_from_source,
+    frozen_raycaster_provenance,
+)
+from instinctlab.evaluation.runtime import distill_exact_runtime_observability
 from instinctlab.training.networks import HistoryActor
 
 NUM_ENVS = 2
 POLICY_STEPS = 8
 PHYSICS_STEPS = 160
+RAYS_PER_ENVIRONMENT = 21240
+RAY_SAMPLES = POLICY_STEPS * NUM_ENVS * RAYS_PER_ENVIRONMENT
 TIMEOUT_STEP = 4
 SEED = 7002
 
@@ -89,6 +97,7 @@ def main() -> None:
     concentration_hashes: list[OrderedDict[str, str]] = []
     timeout_evidence: OrderedDict[str, object] | None = None
     pending_timeout_policy: OrderedDict[str, torch.Tensor] | None = None
+    source_snapshots: list[OrderedDict[str, object]] = []
     for step in range(1, POLICY_STEPS + 1):
         if step == TIMEOUT_STEP:
             env.episode_length_buf[0] = env.max_episode_length - 1
@@ -130,10 +139,31 @@ def main() -> None:
         )))
         observation, reward, terminated, truncated, _ = env.step(action)
         pre_reset = env.extras['pre_reset']
+        ray_source = env.extras['evaluation_ray_source']
+        actor_after_step = _owned_policy(observation['policy'])
+        source_before = OrderedDict(
+            (name, value.detach().clone() if isinstance(value, torch.Tensor) else value)
+            for name, value in ray_source.items()
+        )
+        acquisition = acquire_exact_observability_from_source(ray_source)
+        exact_observability = distill_exact_runtime_observability(ray_source, acquisition)
+        if any(
+            isinstance(value, torch.Tensor) and not torch.equal(value, source_before[name])
+            for name, value in ray_source.items()
+        ):
+            raise AssertionError('exact acquisition mutated the detached evaluation ray source')
+        if any(not torch.equal(actor_after_step[name], observation['policy'][name]) for name in actor_after_step):
+            raise AssertionError('exact evaluation mutated returned actor policy inputs')
+        source_snapshots.append(OrderedDict((
+            ('source_step', exact_observability.source_step.detach().cpu().clone()),
+            ('reset_mask', exact_observability.source_reset_mask.detach().cpu().clone()),
+            ('source_identity_sha256', exact_observability.source_identity_sha256.detach().cpu().clone()),
+        )))
         collector.record_transition(
             pre_action_policy=audited,
             action=action,
             pre_reset=pre_reset,
+            exact_observability=exact_observability,
             returned_policy=observation['policy'],
             returned_critic=observation['critic'].detach().clone(),
             returned_episode_length=env.episode_length_buf.detach().clone(),
@@ -151,21 +181,25 @@ def main() -> None:
                 ('pre_reset_episode_length', int(pre_reset['episode_length'][0].item())),
                 ('post_reset_episode_length', int(env.episode_length_buf[0].item())),
                 ('terminated', bool(terminated[0].item())), ('truncated', bool(truncated[0].item())),
+                ('evaluation_source_step', int(exact_observability.source_step[0].item())),
+                ('evaluation_source_reset_mask', bool(exact_observability.source_reset_mask[0].item())),
+                ('evaluation_source_identity_sha256', exact_observability.source_identity_sha256[0].detach().cpu().clone()),
             ))
     if timeout_evidence is None or pending_timeout_policy is not None:
         raise RuntimeError('timeout evidence or exact next-call policy binding was not captured')
     provenance = OrderedDict((
-        ('product_commit', ARGS.product_commit), ('fixture_id', 'm7-runtime-two-env-eight-step-v1'),
+        ('product_commit', ARGS.product_commit), ('fixture_id', 'm7-exact-runtime-two-env-eight-step-v1'),
         ('generator_id', 'run_m7_runtime_evaluation_smoke.py'), ('seed', SEED),
     ))
     evaluation = collector.finalize(provenance)
     output = OrderedDict((
-        ('schema_version', 'm7.runtime-smoke.v1'),
+        ('schema_version', 'm7.exact-runtime-smoke.v1'),
         ('runtime_manifest', OrderedDict((
             ('num_envs', NUM_ENVS), ('policy_steps', POLICY_STEPS), ('physics_steps', PHYSICS_STEPS),
             ('physics_dt_s', 0.005), ('decimation', 20), ('policy_dt_s', 0.1),
             ('device', str(env.device)), ('headless', True), ('seed', SEED),
             ('timeout_step', TIMEOUT_STEP), ('actor_action', 'HistoryActor.forward.mean_action'),
+            ('rays_per_environment', RAYS_PER_ENVIRONMENT), ('ray_samples', RAY_SAMPLES),
             ('gradient_enabled_during_inference', False), ('training_performed', False),
             ('sampling_performed', False), ('checkpoint_loaded', False),
         ))),
@@ -174,14 +208,18 @@ def main() -> None:
             ('source_sha256', _file_hash(actor_source)), ('parameter_sha256', _actor_hash(actor)),
             ('parameter_manifest', actor.parameter_manifest()),
         ))),
+        ('raycaster_provenance', frozen_raycaster_provenance()),
         ('policy_field_hashes', tuple(policy_field_hashes)),
         ('concentration_hashes', tuple(concentration_hashes)),
+        ('evaluation_ray_sources', tuple(source_snapshots)),
         ('timeout_evidence', timeout_evidence),
         ('evaluation', evaluation),
         ('gates', OrderedDict((
             ('coverage_exact', len(policy_field_hashes) == POLICY_STEPS),
             ('physics_coverage_exact', POLICY_STEPS * cfg.decimation == PHYSICS_STEPS),
+            ('ray_coverage_exact', evaluation['contract']['ray_samples'] == RAY_SAMPLES),
             ('single_selective_timeout', evaluation['gates']['reset_count'] == 1),
+            ('observability_exact', evaluation['gates']['observability_exact']),
             ('all_finite', evaluation['gates']['all_finite']), ('all_gates_pass', True),
         ))),
     ))
@@ -189,11 +227,17 @@ def main() -> None:
         raise AssertionError(f'runtime gates failed: {output["gates"]}')
     ARGS.output.parent.mkdir(parents=True, exist_ok=True)
     torch.save(output, ARGS.output)
-    print({'status': 'PASS', 'policy_steps': POLICY_STEPS, 'physics_steps': PHYSICS_STEPS, 'reset_count': 1})
+    print({'status': 'PASS', 'policy_steps': POLICY_STEPS, 'physics_steps': PHYSICS_STEPS,
+           'ray_samples': RAY_SAMPLES, 'reset_count': 1})
     sys.stdout.flush()
     sys.stderr.flush()
     os._exit(0)
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except BaseException:
+        traceback.print_exc()
+        sys.stdout.flush(); sys.stderr.flush()
+        os._exit(1)

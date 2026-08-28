@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections import OrderedDict
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, fields, is_dataclass
 from typing import Any
@@ -17,6 +18,7 @@ from isaaclab.sensors import ContactSensor, ContactSensorCfg, RayCaster
 from isaaclab.sim import SimulationCfg
 from isaaclab.sim.spawners.from_files import GroundPlaneCfg, spawn_ground_plane
 from isaaclab.utils import configclass
+from isaaclab.utils.math import quat_apply
 from pxr import UsdGeom
 
 from instinctlab.assets.taslab_uav.articulation import TASLAB_ARTICULATION_CFG
@@ -90,6 +92,17 @@ class _TaskSnapshot:
     exact_clearance_m: torch.Tensor
     collision: torch.Tensor
     termination: TerminationResult
+
+
+@dataclass(frozen=True)
+class _EvaluationRaySnapshot:
+    """Owned raw rays from the sole task-snapshot sensor update."""
+
+    ray_starts_w: torch.Tensor
+    ray_directions_w: torch.Tensor
+    accepted_ray_hits_w: torch.Tensor
+    accepted_beam_valid: torch.Tensor
+    source_step: torch.Tensor
 
 
 def _detached_snapshot(value: Any) -> Any:
@@ -178,6 +191,8 @@ class TaslabDirectEnv(DirectRLEnv):
         self._wrench: WrenchResult | None = None
         self._reward: RewardResult | None = None
         self._task: _TaskSnapshot | None = None
+        self._evaluation_source_step = 0
+        self._evaluation_ray_snapshot: _EvaluationRaySnapshot | None = None
 
     def _setup_scene(self) -> None:
         _spawn_static_ray_plane()
@@ -263,7 +278,9 @@ class TaslabDirectEnv(DirectRLEnv):
             raise FloatingPointError("public articulation root_state_w is non-finite")
         return root
 
-    def _read_sensor_producers(self) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    def _read_sensor_producers(
+        self, *, capture_evaluation_source: bool = False
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
         self._ray_caster.update(UPDATE_PERIOD_S, force_recompute=True)
         hits_w = self._ray_caster.data.ray_hits_w
         parent_pos_w = self._ray_caster.data.pos_w
@@ -274,6 +291,30 @@ class TaslabDirectEnv(DirectRLEnv):
         mount_quat = torch.tensor(self.cfg.ray_caster.offset.rot, device=self.device, dtype=hits_w.dtype)
         sensor_origins_w, _ = compose_mounted_sensor_pose(parent_pos_w, parent_quat_w, mount_pos, mount_quat)
         _, ranges_m, validity = ranges_and_validity(hits_w, sensor_origins_w)
+        if capture_evaluation_source:
+            mounted_starts = self._ray_caster.ray_starts
+            mounted_directions = self._ray_caster.ray_directions
+            expected_ray_shape = (self.num_envs, RAY_COUNT, 3)
+            if mounted_starts.shape != expected_ray_shape or mounted_directions.shape != expected_ray_shape:
+                raise RuntimeError("RayCaster public local ray geometry shape mismatch")
+            ray_starts_w = quat_apply(
+                parent_quat_w.repeat(1, RAY_COUNT), mounted_starts
+            )
+            ray_starts_w = ray_starts_w + parent_pos_w.unsqueeze(1)
+            ray_directions_w = quat_apply(
+                parent_quat_w.repeat(1, RAY_COUNT), mounted_directions
+            )
+            self._evaluation_source_step += 1
+            self._evaluation_ray_snapshot = _EvaluationRaySnapshot(
+                ray_starts_w.detach().clone(),
+                ray_directions_w.detach().clone(),
+                hits_w.detach().clone(),
+                validity.detach().clone(),
+                torch.full(
+                    (self.num_envs,), self._evaluation_source_step,
+                    dtype=torch.long, device=self.device,
+                ),
+            )
         exact_clearance_m = ranges_m.min(dim=1, keepdim=True).values
         forces_w = self._contact_sensor.data.net_forces_w
         if forces_w is None or forces_w.ndim != 3 or forces_w.shape[0] != self.num_envs or forces_w.shape[2] != 3:
@@ -288,7 +329,7 @@ class TaslabDirectEnv(DirectRLEnv):
     def _refresh_task_snapshot(self) -> _TaskSnapshot:
         root = self._validated_root_state()
         actual_velocity_b = rotate_world_to_body_wxyz(root[:, 3:7], root[:, 7:10])
-        _, _, clearance, collision = self._read_sensor_producers()
+        _, _, clearance, collision = self._read_sensor_producers(capture_evaluation_source=True)
         termination = compute_termination(
             height_w_m=root[:, 2:3], collision=collision,
             elapsed_steps=self.episode_length_buf.unsqueeze(-1),
@@ -344,6 +385,19 @@ class TaslabDirectEnv(DirectRLEnv):
             "reward": _detached_snapshot(reward),
             "task": _detached_snapshot(self._task),
         }
+        if self._evaluation_ray_snapshot is None:
+            raise RuntimeError("same-state evaluation ray source is unavailable")
+        source = self._evaluation_ray_snapshot
+        self.extras["evaluation_ray_source"] = OrderedDict((
+            ("ray_starts_w", source.ray_starts_w.detach().clone()),
+            ("ray_directions_w", source.ray_directions_w.detach().clone()),
+            ("accepted_ray_hits_w", source.accepted_ray_hits_w.detach().clone()),
+            ("accepted_beam_valid", source.accepted_beam_valid.detach().clone()),
+            ("mesh_path", self.cfg.ray_caster.mesh_prim_paths[0]),
+            ("maximum_distance_m", float(self.cfg.ray_caster.max_distance)),
+            ("source_step", source.source_step.detach().clone()),
+            ("reset_mask", self.reset_buf.detach().clone()),
+        ))
         return reward.total[:, 0].clone()
 
     def _get_observations(self) -> dict[str, Any]:

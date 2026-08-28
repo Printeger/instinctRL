@@ -2,13 +2,34 @@
 
 from __future__ import annotations
 
+from collections import OrderedDict
+from collections.abc import Mapping
 from dataclasses import dataclass, fields
+import hashlib
+import inspect
 import math
+from pathlib import Path
+import subprocess
 from typing import Any
 
 import torch
 
 from .observability import ExactObservabilityConfig, ExactObservabilityResult, compute_exact_observability
+
+EVALUATION_RAY_SOURCE_KEYS = (
+    "ray_starts_w", "ray_directions_w", "accepted_ray_hits_w", "accepted_beam_valid",
+    "mesh_path", "maximum_distance_m", "source_step", "reset_mask",
+)
+FROZEN_ISAAC_LAB_REPOSITORY = Path("/home/mint/rl_blackwell_test/repos/IsaacLab")
+FROZEN_ISAAC_LAB_HEAD = "37ddf626871758333d6ed89cf64ad702aef127d0"
+FROZEN_ISAAC_LAB_VERSION = "2.3.2"
+FROZEN_ISAAC_LAB_STATUS = " M apps/isaaclab.python.headless.kit\n"
+FROZEN_RAYCAST_SIGNATURE = "(ray_starts: 'torch.Tensor', ray_directions: 'torch.Tensor', mesh: 'wp.Mesh', max_dist: 'float' = 1000000.0, return_distance: 'bool' = False, return_normal: 'bool' = False, return_face_id: 'bool' = False) -> 'tuple[torch.Tensor, torch.Tensor | None, torch.Tensor | None, torch.Tensor | None]'"
+FROZEN_SOURCE_SHA256 = OrderedDict((
+    ("source/isaaclab/isaaclab/utils/warp/ops.py", "6202538ae05e3f424a0dfdd4df7e00cc272e4213827cceafa5a0a72df8baea84"),
+    ("source/isaaclab/isaaclab/utils/warp/kernels.py", "b38780baabb26b035595e6b6710e26381a18e99ed3bfbbc82887321aee7f82bf"),
+    ("source/isaaclab/isaaclab/sensors/ray_caster/ray_caster.py", "b6a84cb0e506f4a4724d3262e0f533ccb31d75128e1e46282220fcfa688e286c"),
+))
 
 
 @dataclass(frozen=True)
@@ -59,6 +80,96 @@ def _raycast_mesh_with_normals(
         max_dist=maximum_distance_m,
         return_distance=True,
         return_normal=True,
+    )
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def frozen_raycaster_provenance() -> OrderedDict[str, Any]:
+    """Fail closed unless the accepted M7-004 RayCaster/Warp baseline is exact."""
+    from isaaclab.utils.warp import raycast_mesh
+
+    head = subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=FROZEN_ISAAC_LAB_REPOSITORY,
+        check=True, capture_output=True, text=True,
+    ).stdout.strip()
+    status = subprocess.run(
+        ["git", "status", "--porcelain=v1"], cwd=FROZEN_ISAAC_LAB_REPOSITORY,
+        check=True, capture_output=True, text=True,
+    ).stdout
+    version = (FROZEN_ISAAC_LAB_REPOSITORY / "VERSION").read_text(encoding="utf-8").strip()
+    signature = str(inspect.signature(raycast_mesh))
+    hashes = OrderedDict(
+        (relative, _sha256(FROZEN_ISAAC_LAB_REPOSITORY / relative)) for relative in FROZEN_SOURCE_SHA256
+    )
+    if head != FROZEN_ISAAC_LAB_HEAD or status != FROZEN_ISAAC_LAB_STATUS:
+        raise RuntimeError("frozen Isaac Lab head/status mismatch")
+    if version != FROZEN_ISAAC_LAB_VERSION or signature != FROZEN_RAYCAST_SIGNATURE:
+        raise RuntimeError("frozen RayCaster/Warp version or signature mismatch")
+    if hashes != FROZEN_SOURCE_SHA256:
+        raise RuntimeError("frozen RayCaster/Warp source hash mismatch")
+    return OrderedDict((
+        ("isaac_lab_head", head), ("isaac_lab_version", version),
+        ("isaac_lab_status", status.rstrip("\n")), ("raycast_mesh_signature", signature),
+        ("source_sha256", hashes),
+    ))
+
+
+def resolve_frozen_raycaster_mesh(mesh_path: str) -> Any:
+    """Resolve one guarded frozen mesh without exposing the cache to callers."""
+    if not isinstance(mesh_path, str) or not mesh_path.startswith("/World/") or not mesh_path.strip():
+        raise ValueError("mesh_path must be one absolute /World prim path")
+    frozen_raycaster_provenance()
+    from isaaclab.sensors import RayCaster
+
+    if mesh_path not in RayCaster.meshes:
+        raise RuntimeError("guarded frozen RayCaster mesh cache entry is unavailable")
+    mesh = RayCaster.meshes[mesh_path]
+    if mesh is None or not hasattr(mesh, "id") or not hasattr(mesh, "device"):
+        raise RuntimeError("guarded frozen RayCaster mesh handle is invalid")
+    return mesh
+
+
+def acquire_exact_observability_from_source(
+    source: Mapping[str, object],
+    config: RaycasterObservabilityConfig = RaycasterObservabilityConfig(),
+) -> RaycasterObservabilityResult:
+    """Validate an ordered environment source, resolve its mesh, and acquire exactly once."""
+    if not isinstance(source, Mapping) or tuple(source) != EVALUATION_RAY_SOURCE_KEYS:
+        raise ValueError(f"evaluation ray source keys must be exactly ordered as {EVALUATION_RAY_SOURCE_KEYS}")
+    mesh_path = source["mesh_path"]
+    if not isinstance(mesh_path, str):
+        raise TypeError("evaluation ray source mesh_path must be a string")
+    source_step = source["source_step"]
+    reset_mask = source["reset_mask"]
+    if not isinstance(source_step, torch.Tensor) or source_step.ndim != 1 or source_step.dtype != torch.long:
+        raise TypeError("evaluation ray source source_step must be torch.long [N]")
+    if not isinstance(reset_mask, torch.Tensor) or reset_mask.shape != source_step.shape or reset_mask.dtype != torch.bool:
+        raise TypeError("evaluation ray source reset_mask must be bool [N]")
+    if source_step.requires_grad or reset_mask.requires_grad or source_step.device != reset_mask.device:
+        raise ValueError("evaluation ray source identities must be detached on one device")
+    if bool((source_step <= 0).any().item()):
+        raise ValueError("evaluation ray source source_step must be positive")
+    tensor_inputs = tuple(
+        (name, source[name]) for name in (
+            "ray_starts_w", "ray_directions_w", "accepted_ray_hits_w", "accepted_beam_valid",
+            "source_step", "reset_mask",
+        )
+    )
+    _validate_owned_inputs(tensor_inputs)
+    if any(value.shape[0] != source_step.shape[0] or value.device != source_step.device for _, value in tensor_inputs):
+        raise ValueError("evaluation ray source tensors must share one leading batch and device")
+    mesh = resolve_frozen_raycaster_mesh(mesh_path)
+    return acquire_exact_raycaster_observability(
+        source["ray_starts_w"], source["ray_directions_w"], mesh,
+        source["maximum_distance_m"], source["accepted_ray_hits_w"],
+        source["accepted_beam_valid"], config,
     )
 
 
@@ -176,8 +287,14 @@ def acquire_exact_raycaster_observability(
     cast_valid = torch.isfinite(ray_hits_w).all(dim=-1)
     if not torch.equal(cast_valid, accepted_beam_valid):
         raise RuntimeError("returned hit validity disagrees with the accepted MID360 mask")
-    if not torch.equal(ray_hits_w, accepted_ray_hits_w):
-        raise RuntimeError("returned hits do not exactly match the accepted same-state sensor hits")
+    hit_error = torch.linalg.vector_norm(
+        ray_hits_w[accepted_beam_valid] - accepted_ray_hits_w[accepted_beam_valid], dim=-1
+    )
+    hit_max_error = hit_error.max() if hit_error.numel() else torch.zeros((), device=ray_starts_w.device)
+    if bool((hit_error > config.distance_tolerance_m).any().item()):
+        raise RuntimeError(
+            f"returned hits disagree with accepted same-state sensor hits: max error {hit_max_error.item()} m"
+        )
     if not bool(torch.isfinite(ray_distances_m[accepted_beam_valid]).all().item()):
         raise RuntimeError("returned valid distances must be finite")
     if not bool(torch.isfinite(raw_normals_w[accepted_beam_valid]).all().item()):
@@ -210,7 +327,7 @@ def acquire_exact_raycaster_observability(
         raw_surface_normals_w=_owned(raw_normals_w),
         surface_normals_w=normals_handoff,
         beam_valid=validity_handoff,
-        hit_max_error_m=torch.zeros((), dtype=torch.float32, device=ray_starts_w.device),
+        hit_max_error_m=_owned(hit_max_error),
         distance_max_error_m=_owned(distance_max_error),
         observability=observability,
     )
@@ -223,7 +340,14 @@ def acquire_exact_raycaster_observability(
 
 
 __all__ = [
+    "EVALUATION_RAY_SOURCE_KEYS",
+    "FROZEN_ISAAC_LAB_HEAD",
+    "FROZEN_ISAAC_LAB_VERSION",
+    "FROZEN_SOURCE_SHA256",
     "RaycasterObservabilityConfig",
     "RaycasterObservabilityResult",
     "acquire_exact_raycaster_observability",
+    "acquire_exact_observability_from_source",
+    "frozen_raycaster_provenance",
+    "resolve_frozen_raycaster_mesh",
 ]

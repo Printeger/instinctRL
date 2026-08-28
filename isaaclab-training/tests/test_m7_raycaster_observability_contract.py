@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import ast
+from collections import OrderedDict
 from dataclasses import FrozenInstanceError, fields
 import importlib
 import math
 from pathlib import Path
+import sys
 from types import SimpleNamespace
 
 import pytest
@@ -18,6 +20,8 @@ from instinctlab.evaluation.raycaster_observability import (
     RaycasterObservabilityConfig,
     RaycasterObservabilityResult,
     acquire_exact_raycaster_observability,
+    acquire_exact_observability_from_source,
+    resolve_frozen_raycaster_mesh,
 )
 
 
@@ -139,7 +143,7 @@ def test_official_call_flags_and_argument_order_are_exact(monkeypatch):
         ("hit_dtype", lambda result, *_: result.__setitem__(0, result[0].double()), "hits dtype/device"),
         ("distance_dtype", lambda result, *_: result.__setitem__(1, result[1].double()), "distances dtype/device"),
         ("normal_dtype", lambda result, *_: result.__setitem__(2, result[2].double()), "normals dtype/device"),
-        ("hit_mismatch", lambda result, *_: result[0].__setitem__((0, 0, 0), 2.1), "exactly match"),
+        ("hit_mismatch", lambda result, *_: result[0].__setitem__((0, 0, 0), 2.1), "sensor hits"),
         ("validity_mismatch", lambda result, *_: result[0].__setitem__((0, 3), torch.zeros(3)), "validity disagrees"),
         ("distance_mismatch", lambda result, *_: result[1].__setitem__((0, 0), 2.1), "distances disagree"),
         ("valid_normal_nonfinite", lambda result, *_: result[2].__setitem__((0, 0, 0), float("nan")), "valid normals"),
@@ -237,6 +241,50 @@ def test_config_boundaries_immutability_and_no_silent_normalization(monkeypatch)
     assert qualified.surface_normals_w[0, 0, 0, 2].item() == pytest.approx(1.0009)
 
 
+def _source() -> OrderedDict[str, object]:
+    starts, directions, hits, valid, _, _ = _fixture()
+    return OrderedDict((
+        ('ray_starts_w', starts), ('ray_directions_w', directions),
+        ('accepted_ray_hits_w', hits), ('accepted_beam_valid', valid),
+        ('mesh_path', '/World/TestMesh'), ('maximum_distance_m', 40.0),
+        ('source_step', torch.ones(1, dtype=torch.long)),
+        ('reset_mask', torch.zeros(1, dtype=torch.bool)),
+    ))
+
+
+@pytest.mark.parametrize('mutation', [
+    'missing', 'extra', 'reordered', 'step_shape', 'step_dtype', 'step_zero',
+    'reset_shape', 'reset_dtype', 'step_view', 'reset_alias',
+])
+def test_ordered_environment_source_schema_fails_closed(monkeypatch, mutation):
+    source = _source()
+    monkeypatch.setattr(adapter, 'resolve_frozen_raycaster_mesh', lambda _: SimpleNamespace(id=1, device='cpu'))
+    _install_cast(monkeypatch)
+    if mutation == 'missing': source.pop('mesh_path')
+    elif mutation == 'extra': source['extra'] = 1
+    elif mutation == 'reordered': source.move_to_end('ray_starts_w')
+    elif mutation == 'step_shape': source['source_step'] = torch.ones(1, 1, dtype=torch.long)
+    elif mutation == 'step_dtype': source['source_step'] = torch.ones(1)
+    elif mutation == 'step_zero': source['source_step'].zero_()
+    elif mutation == 'reset_shape': source['reset_mask'] = torch.zeros(1, 1, dtype=torch.bool)
+    elif mutation == 'reset_dtype': source['reset_mask'] = torch.zeros(1, dtype=torch.long)
+    elif mutation == 'step_view': source['source_step'] = torch.ones(2, dtype=torch.long)[:1]
+    elif mutation == 'reset_alias': source['reset_mask'] = source['accepted_beam_valid'][:, :1]
+    with pytest.raises((TypeError, ValueError)):
+        acquire_exact_observability_from_source(source)
+
+
+def test_guarded_mesh_resolver_confines_cache_access(monkeypatch):
+    mesh = SimpleNamespace(id=17, device='cuda:0')
+    monkeypatch.setattr(adapter, 'frozen_raycaster_provenance', lambda: OrderedDict())
+    monkeypatch.setitem(sys.modules, 'isaaclab.sensors', SimpleNamespace(
+        RayCaster=SimpleNamespace(meshes={'/World/TestMesh': mesh})
+    ))
+    assert resolve_frozen_raycaster_mesh('/World/TestMesh') is mesh
+    with pytest.raises(RuntimeError, match='unavailable'):
+        resolve_frozen_raycaster_mesh('/World/Missing')
+
+
 def test_module_is_not_reexported_and_consumers_remain_normal_free():
     evaluation = importlib.import_module("instinctlab.evaluation")
     assert not hasattr(evaluation, "acquire_exact_raycaster_observability")
@@ -250,10 +298,11 @@ def test_module_is_not_reexported_and_consumers_remain_normal_free():
             assert "surface_normal" not in consumer, path
 
 
-def test_m7_003_core_and_m7_002_runtime_are_unmodified_and_unavailable():
+def test_m7_003_core_is_unmodified_and_m7_005_runtime_is_exact():
     core = ROOT / "instinctlab/evaluation/observability.py"
     runtime = ROOT / "instinctlab/evaluation/runtime.py"
     assert core.exists() and "compute_exact_observability" in core.read_text(encoding="utf-8")
     runtime_source = runtime.read_text(encoding="utf-8")
-    assert "int(ObservabilitySource.UNAVAILABLE)" in runtime_source
-    assert '("observability_valid", torch.zeros(' in runtime_source
+    assert "int(ObservabilitySource.EXACT)" in runtime_source
+    assert '("observability_valid", torch.ones(' in runtime_source
+    assert "distill_exact_runtime_observability" in runtime_source

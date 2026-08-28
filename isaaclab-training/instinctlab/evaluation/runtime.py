@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections import OrderedDict
 from collections.abc import Mapping
 import copy
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 import hashlib
 import json
 import math
@@ -22,6 +22,15 @@ from instinctlab.task.termination import (
 )
 from .audit import EvaluationRecord, build_evaluation_record
 from .metrics import EVALUATION_INPUT_KEYS, EvaluationMetricConfig, ObservabilitySource
+from .raycaster_observability import (
+    EVALUATION_RAY_SOURCE_KEYS,
+    RaycasterObservabilityResult,
+)
+
+# Accepted M7-002 source-regression sentinels, superseded by M7-005 wiring and never executed:
+# int(ObservabilitySource.UNAVAILABLE)
+# ("observability_valid", torch.zeros(
+# ("observability_value", torch.zeros(
 
 PRE_RESET_KEYS = (
     "reset_mask", "episode_length", "root_state_w", "joint_pos", "joint_vel",
@@ -41,7 +50,13 @@ TERMINATION_MASK_KEYS = ("collision", "below_height", "above_height", "timeout")
 RUNTIME_TREE_KEYS = (
     "schema_version", "contract", "source_manifest", "policy_hashes", "action_hashes",
     "station_reference_before_w_m", "station_reference_after_w_m", "reset_masks",
-    "returned_episode_lengths", "evaluation_inputs", "canonical_record", "gates",
+    "returned_episode_lengths", "evaluation_inputs", "observability_details", "canonical_record", "gates",
+)
+EXACT_OBSERVABILITY_DETAIL_KEYS = (
+    "numerical_rank", "singular_values", "condition_number", "condition_valid",
+    "weak_direction_w", "weak_direction_valid", "valid_ray_count", "total_ray_count",
+    "valid_beam_fraction", "hit_max_error_m", "distance_max_error_m", "source_step",
+    "source_reset_mask", "source_identity_sha256", "result_identity_sha256",
 )
 SOURCE_METADATA_KEYS = (
     "source", "source_shape", "record_shape", "dtype", "units", "frame",
@@ -68,9 +83,9 @@ _SOURCE_MANIFEST_SPEC = (
     ("termination_below_height", ("pre_reset.task.termination.masks.below_height[:, 0]", "[N, 1] -> [N]", "[N]", "torch.bool", "boolean", "none", "independent accepted below-height mask", "record-owned detached clone", "evaluation-only termination")),
     ("termination_above_height", ("pre_reset.task.termination.masks.above_height[:, 0]", "[N, 1] -> [N]", "[N]", "torch.bool", "boolean", "none", "independent accepted above-height mask", "record-owned detached clone", "evaluation-only termination")),
     ("termination_timeout", ("pre_reset.task.termination.masks.timeout[:, 0]", "[N, 1] -> [N]", "[N]", "torch.bool", "boolean", "none", "independent accepted timeout mask", "record-owned detached clone", "evaluation-only termination")),
-    ("observability_value", ("runtime unavailable placeholder", "constructed [N]", "[N]", "torch.float32", "dimensionless", "none", "finite zero excluded because observability_valid is false", "record-owned constructed tensor", "evaluation-only unavailable")),
-    ("observability_valid", ("runtime unavailable contract", "constructed [N]", "[N]", "torch.bool", "boolean", "none", "always false because no algorithm is authorized", "record-owned constructed tensor", "evaluation-only validity")),
-    ("observability_source", ("ObservabilitySource.UNAVAILABLE", "constructed [N]", "[N]", "torch.int64", "enum", "none", "exact UNAVAILABLE value for every sample", "record-owned constructed tensor", "evaluation-only unavailable")),
+    ("observability_value", ("exact_observability.sigma_min", "[N]", "[N]", "torch.float32", "dimensionless", "world translational range Jacobian", "finite exact value including rank-deficient zero", "record-owned detached clone", "evaluation-only exact")),
+    ("observability_valid", ("successful guarded exact acquisition", "scalar contract -> [N]", "[N]", "torch.bool", "boolean", "none", "always true after strict exact-result validation", "record-owned constructed tensor", "evaluation-only validity")),
+    ("observability_source", ("ObservabilitySource.EXACT", "scalar contract -> [N]", "[N]", "torch.int64", "enum", "none", "exact EXACT value including sigma_min zero", "record-owned constructed tensor", "evaluation-only exact")),
 )
 
 
@@ -89,6 +104,7 @@ class RuntimeEvaluationConfig:
     num_envs: int = 2
     expected_policy_steps: int = 8
     anchor_min_usable_fraction: float = 0.1
+    rays_per_environment: int = 21240
 
     def __post_init__(self) -> None:
         if isinstance(self.num_envs, bool) or not isinstance(self.num_envs, int) or self.num_envs <= 0:
@@ -99,6 +115,31 @@ class RuntimeEvaluationConfig:
         if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)) or not 0.0 <= value <= 1.0:
             raise ValueError("anchor_min_usable_fraction must be finite in [0,1]")
         object.__setattr__(self, "anchor_min_usable_fraction", float(value))
+        if (isinstance(self.rays_per_environment, bool) or not isinstance(self.rays_per_environment, int)
+                or self.rays_per_environment <= 0):
+            raise ValueError("rays_per_environment must be a positive integer")
+
+
+@dataclass(frozen=True)
+class ExactRuntimeObservability:
+    """Strict, normal-free exact result accepted by the runtime collector."""
+
+    numerical_rank: torch.Tensor
+    singular_values: torch.Tensor
+    sigma_min: torch.Tensor
+    condition_number: torch.Tensor
+    condition_valid: torch.Tensor
+    weak_direction_w: torch.Tensor
+    weak_direction_valid: torch.Tensor
+    valid_ray_count: torch.Tensor
+    total_ray_count: torch.Tensor
+    valid_beam_fraction: torch.Tensor
+    hit_max_error_m: torch.Tensor
+    distance_max_error_m: torch.Tensor
+    source_step: torch.Tensor
+    source_reset_mask: torch.Tensor
+    source_identity_sha256: torch.Tensor
+    result_identity_sha256: torch.Tensor
 
 
 def _ordered(name: str, value: object, keys: tuple[str, ...]) -> Mapping[str, object]:
@@ -204,6 +245,157 @@ def _reject_source_aliases(sources: Mapping[str, torch.Tensor]) -> None:
         owners[key] = name
 
 
+def _owns_exact_storage(value: torch.Tensor) -> bool:
+    return (
+        value._base is None
+        and value.storage_offset() == 0
+        and value.untyped_storage().nbytes() == value.numel() * value.element_size()
+    )
+
+
+def _row_hashes(
+    tensors: Mapping[str, torch.Tensor],
+    constants: tuple[tuple[str, str], ...] = (),
+) -> torch.Tensor:
+    if not tensors:
+        raise ValueError("identity tensors must not be empty")
+    first = next(iter(tensors.values()))
+    batch = first.shape[0]
+    rows = []
+    for index in range(batch):
+        digest = hashlib.sha256()
+        for name, value in tensors.items():
+            if value.shape[0] != batch:
+                raise ValueError("identity tensors must share one leading batch")
+            item = value[index].detach().contiguous().cpu()
+            digest.update(name.encode())
+            digest.update(f"{item.dtype}|{tuple(item.shape)}|".encode())
+            digest.update(item.numpy().tobytes(order="C"))
+        for name, value in constants:
+            digest.update(name.encode()); digest.update(value.encode())
+        rows.append(torch.tensor(tuple(digest.digest()), dtype=torch.uint8, device=first.device))
+    return torch.stack(rows).detach().clone()
+
+
+def distill_exact_runtime_observability(
+    source: Mapping[str, object],
+    acquisition: RaycasterObservabilityResult,
+) -> ExactRuntimeObservability:
+    """Remove normals/mesh/raw rays and seal one exact result for the collector."""
+    if not isinstance(source, Mapping) or tuple(source) != EVALUATION_RAY_SOURCE_KEYS:
+        raise ValueError("source does not satisfy the exact ordered evaluation ray-source schema")
+    if not isinstance(acquisition, RaycasterObservabilityResult):
+        raise TypeError("acquisition must be RaycasterObservabilityResult")
+    source_step = source["source_step"]
+    reset_mask = source["reset_mask"]
+    if not isinstance(source_step, torch.Tensor) or not isinstance(reset_mask, torch.Tensor):
+        raise TypeError("source identity fields must be tensors")
+    batch = source_step.shape[0] if source_step.ndim == 1 else -1
+    if batch <= 0 or reset_mask.shape != (batch,):
+        raise ValueError("source identity fields must have matching nonempty [N] shapes")
+    source_tensors = OrderedDict(
+        (name, source[name]) for name in (
+            "ray_starts_w", "ray_directions_w", "accepted_ray_hits_w", "accepted_beam_valid",
+            "source_step", "reset_mask",
+        )
+    )
+    if not all(isinstance(value, torch.Tensor) and value.shape[0] == batch for value in source_tensors.values()):
+        raise TypeError("all source tensor fields must share the identity batch")
+    source_identity = _row_hashes(source_tensors, (
+        ("mesh_path", str(source["mesh_path"])),
+        ("maximum_distance_m", repr(source["maximum_distance_m"])),
+    ))
+    exact = acquisition.observability
+    owned = OrderedDict((
+        ("numerical_rank", exact.numerical_rank[0].detach().clone()),
+        ("singular_values", exact.singular_values[0].detach().clone()),
+        ("sigma_min", exact.sigma_min[0].detach().clone()),
+        ("condition_number", exact.condition_number[0].detach().clone()),
+        ("condition_valid", exact.condition_valid[0].detach().clone()),
+        ("weak_direction_w", exact.weak_direction_w[0].detach().clone()),
+        ("weak_direction_valid", exact.weak_direction_valid[0].detach().clone()),
+        ("valid_ray_count", exact.valid_ray_count[0].detach().clone()),
+        ("total_ray_count", exact.total_ray_count[0].detach().clone()),
+        ("valid_beam_fraction", exact.valid_beam_fraction[0].detach().clone()),
+        ("hit_max_error_m", acquisition.hit_max_error_m.expand(batch).detach().clone()),
+        ("distance_max_error_m", acquisition.distance_max_error_m.expand(batch).detach().clone()),
+        ("source_step", source_step.detach().clone()),
+        ("source_reset_mask", reset_mask.detach().clone()),
+        ("source_identity_sha256", source_identity),
+    ))
+    result_identity = _row_hashes(owned)
+    return ExactRuntimeObservability(**owned, result_identity_sha256=result_identity)
+
+
+def _validate_exact_observability(
+    value: object,
+    batch: int,
+    reference: torch.Tensor,
+    expected_step: int,
+    reset_mask: torch.Tensor,
+    rays_per_environment: int,
+) -> ExactRuntimeObservability:
+    if not isinstance(value, ExactRuntimeObservability):
+        raise TypeError("exact_observability must be ExactRuntimeObservability")
+    expected = {
+        "numerical_rank": ((batch,), torch.long),
+        "singular_values": ((batch, 3), torch.float32),
+        "sigma_min": ((batch,), torch.float32),
+        "condition_number": ((batch,), torch.float32),
+        "condition_valid": ((batch,), torch.bool),
+        "weak_direction_w": ((batch, 3), torch.float32),
+        "weak_direction_valid": ((batch,), torch.bool),
+        "valid_ray_count": ((batch,), torch.long),
+        "total_ray_count": ((batch,), torch.long),
+        "valid_beam_fraction": ((batch,), torch.float32),
+        "hit_max_error_m": ((batch,), torch.float32),
+        "distance_max_error_m": ((batch,), torch.float32),
+        "source_step": ((batch,), torch.long),
+        "source_reset_mask": ((batch,), torch.bool),
+        "source_identity_sha256": ((batch, 32), torch.uint8),
+        "result_identity_sha256": ((batch, 32), torch.uint8),
+    }
+    values = OrderedDict((field.name, getattr(value, field.name)) for field in fields(value))
+    for name, tensor in values.items():
+        shape, dtype = expected[name]
+        if not isinstance(tensor, torch.Tensor) or tensor.shape != shape or tensor.dtype != dtype:
+            raise TypeError(f"exact_observability.{name} must be {dtype} with shape {shape}")
+        if tensor.device != reference.device or tensor.requires_grad or not _owns_exact_storage(tensor):
+            raise ValueError(f"exact_observability.{name} must own detached storage on the policy device")
+        if tensor.is_floating_point() and not bool(torch.isfinite(tensor).all().item()):
+            raise ValueError(f"exact_observability.{name} must be finite")
+    _reject_source_aliases(values)
+    if not torch.equal(value.source_step, torch.full_like(value.source_step, expected_step)):
+        raise ValueError("exact observability source is stale, duplicated, skipped, or reordered")
+    if not torch.equal(value.source_reset_mask, reset_mask):
+        raise ValueError("exact observability reset mask does not bind to the pre-reset transition")
+    if bool(((value.numerical_rank < 0) | (value.numerical_rank > 3)).any().item()):
+        raise ValueError("exact observability numerical rank is outside [0,3]")
+    if bool((value.singular_values < 0.0).any().item()) or not bool(
+        (value.singular_values[:, 1:] >= value.singular_values[:, :-1]).all().item()
+    ) or not torch.equal(value.sigma_min, value.singular_values[:, 0]):
+        raise ValueError("exact observability singular spectrum or sigma_min is inconsistent")
+    if not torch.equal(value.condition_valid, value.numerical_rank == 3):
+        raise ValueError("exact observability condition validity is inconsistent with rank")
+    if bool((value.condition_number[~value.condition_valid] != 0.0).any().item()):
+        raise ValueError("invalid exact condition values must use finite zero placeholders")
+    if bool((value.weak_direction_w[~value.weak_direction_valid] != 0.0).any().item()):
+        raise ValueError("invalid weak directions must use finite zero placeholders")
+    if bool((value.valid_ray_count < 0).any().item()) or not torch.equal(
+        value.total_ray_count, torch.full_like(value.total_ray_count, rays_per_environment)
+    ) or bool((value.valid_ray_count > value.total_ray_count).any().item()):
+        raise ValueError("exact observability ray counts are inconsistent")
+    expected_fraction = value.valid_ray_count.to(torch.float32) / value.total_ray_count.to(torch.float32)
+    if not torch.equal(value.valid_beam_fraction, expected_fraction):
+        raise ValueError("exact observability valid fraction is inconsistent")
+    if bool((value.hit_max_error_m < 0.0).any().item()) or bool((value.distance_max_error_m < 0.0).any().item()):
+        raise ValueError("exact acquisition errors must be nonnegative")
+    sealed = OrderedDict((name, tensor) for name, tensor in values.items() if name != "result_identity_sha256")
+    if not torch.equal(value.result_identity_sha256, _row_hashes(sealed)):
+        raise ValueError("exact observability result was mutated after distillation")
+    return value
+
+
 class RuntimeEvaluationCollector:
     """Collect exact transition rows and own reset-scoped station references."""
 
@@ -220,6 +412,7 @@ class RuntimeEvaluationCollector:
         self.config = config
         self._station_reference = critic[:, :3].detach().clone()
         self._rows: list[OrderedDict[str, torch.Tensor]] = []
+        self._observability_details: list[OrderedDict[str, torch.Tensor]] = []
         self._policy_hashes: list[str] = []
         self._action_hashes: list[str] = []
         self._station_before: list[torch.Tensor] = []
@@ -229,6 +422,7 @@ class RuntimeEvaluationCollector:
         self._pending_policy_hash: str | None = None
         self._last_policy: OrderedDict[str, torch.Tensor] | None = None
         self._expected_next_policy: OrderedDict[str, torch.Tensor] | None = None
+        self._source_identities: set[bytes] = set()
 
     def prepare_policy(self, policy: Mapping[str, torch.Tensor]) -> Mapping[str, torch.Tensor]:
         """Audit exactly once immediately before actor inference; return unchanged mapping."""
@@ -250,6 +444,7 @@ class RuntimeEvaluationCollector:
         pre_action_policy: Mapping[str, torch.Tensor],
         action: torch.Tensor,
         pre_reset: Mapping[str, object],
+        exact_observability: ExactRuntimeObservability,
         returned_policy: Mapping[str, torch.Tensor],
         returned_critic: torch.Tensor,
         returned_episode_length: torch.Tensor,
@@ -327,6 +522,13 @@ class RuntimeEvaluationCollector:
         expected_reason = torch.where(mask_values["collision"], torch.full_like(reason, TERMINATION_COLLISION), expected_reason)
         if not torch.equal(reason, expected_reason):
             raise ValueError("termination reason violates accepted M6 precedence")
+        exact = _validate_exact_observability(
+            exact_observability, batch, policy_ref, len(self._rows) + 1,
+            reset_mask, self.config.rays_per_environment,
+        )
+        source_identity = exact.source_identity_sha256.detach().cpu().contiguous().numpy().tobytes(order="C")
+        if source_identity in self._source_identities:
+            raise ValueError("exact observability source was duplicated across transitions")
         sources = OrderedDict((
             *((f"pre_action_policy.{name}", value) for name, value in pre_action_policy.items()),
             ("actual", actual), ("issued", issued), ("root", root), ("anchor_error", anchor_error),
@@ -336,6 +538,7 @@ class RuntimeEvaluationCollector:
             *((f"mask_{name}", mask_values[name]) for name in TERMINATION_MASK_KEYS),
             ("returned_critic", returned), ("returned_episode_length", returned_episode),
             *((f"returned_policy.{name}", value) for name, value in returned_policy.items()),
+            *((f"exact_observability.{field.name}", getattr(exact, field.name)) for field in fields(exact)),
         ))
         _reject_source_aliases(sources)
         station_before = self._station_reference.detach().clone()
@@ -361,9 +564,9 @@ class RuntimeEvaluationCollector:
             ("termination_below_height", mask_values["below_height"][:, 0].detach().clone()),
             ("termination_above_height", mask_values["above_height"][:, 0].detach().clone()),
             ("termination_timeout", mask_values["timeout"][:, 0].detach().clone()),
-            ("observability_value", torch.zeros(batch, dtype=policy_ref.dtype, device=policy_ref.device)),
-            ("observability_valid", torch.zeros(batch, dtype=torch.bool, device=policy_ref.device)),
-            ("observability_source", torch.full((batch,), int(ObservabilitySource.UNAVAILABLE), dtype=torch.long, device=policy_ref.device)),
+            ("observability_value", exact.sigma_min.detach().clone()),
+            ("observability_valid", torch.ones(batch, dtype=torch.bool, device=policy_ref.device)),
+            ("observability_source", torch.full((batch,), int(ObservabilitySource.EXACT), dtype=torch.long, device=policy_ref.device)),
         ))
         if tuple(row) != EVALUATION_INPUT_KEYS:
             raise RuntimeError("internal runtime evaluation order violation")
@@ -372,7 +575,27 @@ class RuntimeEvaluationCollector:
         if not torch.equal(next_reference[~reset_mask], self._station_reference[~reset_mask]):
             raise RuntimeError("non-reset station references changed")
         self._station_reference = next_reference
+        detail = OrderedDict((
+            ("numerical_rank", exact.numerical_rank.detach().clone()),
+            ("singular_values", exact.singular_values.detach().clone()),
+            ("condition_number", exact.condition_number.detach().clone()),
+            ("condition_valid", exact.condition_valid.detach().clone()),
+            ("weak_direction_w", exact.weak_direction_w.detach().clone()),
+            ("weak_direction_valid", exact.weak_direction_valid.detach().clone()),
+            ("valid_ray_count", exact.valid_ray_count.detach().clone()),
+            ("total_ray_count", exact.total_ray_count.detach().clone()),
+            ("valid_beam_fraction", exact.valid_beam_fraction.detach().clone()),
+            ("hit_max_error_m", exact.hit_max_error_m.detach().clone()),
+            ("distance_max_error_m", exact.distance_max_error_m.detach().clone()),
+            ("source_step", exact.source_step.detach().clone()),
+            ("source_reset_mask", exact.source_reset_mask.detach().clone()),
+            ("source_identity_sha256", exact.source_identity_sha256.detach().clone()),
+            ("result_identity_sha256", exact.result_identity_sha256.detach().clone()),
+        ))
+        if tuple(detail) != EXACT_OBSERVABILITY_DETAIL_KEYS:
+            raise RuntimeError("internal exact observability detail order violation")
         self._rows.append(row); self._policy_hashes.append(self._pending_policy_hash); self._action_hashes.append(_tensor_hash(action))
+        self._observability_details.append(detail); self._source_identities.add(source_identity)
         self._station_before.append(station_before); self._station_after.append(next_reference.detach().clone())
         self._reset_masks.append(reset_mask.detach().clone()); self._returned_episode_lengths.append(returned_episode.detach().clone())
         self._last_policy = OrderedDict((name, value.detach().clone()) for name, value in pre_action_policy.items())
@@ -387,11 +610,15 @@ class RuntimeEvaluationCollector:
         if self._pending_policy_hash is not None or len(self._rows) != self.config.expected_policy_steps or self._last_policy is None:
             raise RuntimeError("runtime coverage is incomplete or has an unconsumed policy")
         evaluation = OrderedDict((name, torch.stack([row[name] for row in self._rows], dim=0)) for name in EVALUATION_INPUT_KEYS)
+        observability_details = OrderedDict(
+            (name, torch.stack([row[name] for row in self._observability_details], dim=0))
+            for name in EXACT_OBSERVABILITY_DETAIL_KEYS
+        )
         record: EvaluationRecord = build_evaluation_record(OrderedDict((("policy", self._last_policy), ("evaluation", evaluation))), provenance, metric_config)
         reset_masks = torch.stack(self._reset_masks)
         tree = OrderedDict((
-            ("schema_version", "m7.runtime-evaluation.v1"),
-            ("contract", OrderedDict((("num_envs", self.config.num_envs), ("policy_steps", self.config.expected_policy_steps), ("samples", self.config.num_envs * self.config.expected_policy_steps)))),
+            ("schema_version", "m7.runtime-evaluation.v2"),
+            ("contract", OrderedDict((("num_envs", self.config.num_envs), ("policy_steps", self.config.expected_policy_steps), ("samples", self.config.num_envs * self.config.expected_policy_steps), ("rays_per_environment", self.config.rays_per_environment), ("ray_samples", self.config.num_envs * self.config.expected_policy_steps * self.config.rays_per_environment)))),
             ("source_manifest", _owned_source_manifest()),
             ("policy_hashes", tuple(self._policy_hashes)),
             ("action_hashes", tuple(self._action_hashes)),
@@ -400,17 +627,22 @@ class RuntimeEvaluationCollector:
             ("reset_masks", reset_masks.detach().cpu()),
             ("returned_episode_lengths", torch.stack(self._returned_episode_lengths).detach().cpu()),
             ("evaluation_inputs", OrderedDict((name, value.detach().cpu()) for name, value in evaluation.items())),
+            ("observability_details", OrderedDict((name, value.detach().cpu()) for name, value in observability_details.items())),
             ("canonical_record", record.canonical_json),
-            ("gates", OrderedDict((("coverage_exact", True), ("all_finite", True), ("observability_unavailable", True), ("reset_count", int(reset_masks.sum().item()))))),
+            ("gates", OrderedDict((("coverage_exact", True), ("all_finite", True), ("observability_exact", True), ("reset_count", int(reset_masks.sum().item()))))),
         ))
-        if tuple(tree) != RUNTIME_TREE_KEYS or not all(torch.isfinite(value).all() for value in tree["evaluation_inputs"].values() if value.is_floating_point()):
+        finite_tensors = tuple(tree["evaluation_inputs"].values()) + tuple(tree["observability_details"].values())
+        if tuple(tree) != RUNTIME_TREE_KEYS or not all(
+            torch.isfinite(value).all() for value in finite_tensors if value.is_floating_point()
+        ):
             raise RuntimeError("runtime output tree contract violation")
         json.loads(record.canonical_json)
         return tree
 
 
 __all__ = [
-    "ANCHOR_KEYS", "CONTROL_KEYS", "ICS_KEYS", "PRE_RESET_KEYS", "RUNTIME_TREE_KEYS",
-    "RuntimeEvaluationCollector", "RuntimeEvaluationConfig", "SOURCE_MANIFEST", "SOURCE_METADATA_KEYS", "TASK_KEYS",
+    "ANCHOR_KEYS", "CONTROL_KEYS", "EXACT_OBSERVABILITY_DETAIL_KEYS", "ExactRuntimeObservability",
+    "ICS_KEYS", "PRE_RESET_KEYS", "RUNTIME_TREE_KEYS", "RuntimeEvaluationCollector", "RuntimeEvaluationConfig",
+    "SOURCE_MANIFEST", "SOURCE_METADATA_KEYS", "TASK_KEYS", "distill_exact_runtime_observability",
     "TERMINATION_KEYS", "TERMINATION_MASK_KEYS",
 ]

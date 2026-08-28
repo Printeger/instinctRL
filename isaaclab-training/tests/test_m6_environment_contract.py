@@ -101,6 +101,21 @@ def test_step_order_same_state_direct_metrics_and_atomic_reset_sources():
     assert methods["step"].index("_validate_action") < methods["step"].index("super().step")
     assert "self._task = snapshot" in methods["_refresh_task_snapshot"]
     assert "self._refresh_task_snapshot()" in methods["_get_dones"]
+    assert "capture_evaluation_source=True" in methods["_refresh_task_snapshot"]
+    assert "self._evaluation_source_step += 1" in methods["_read_sensor_producers"]
+    assert "self.extras[\"evaluation_ray_source\"]" in methods["_get_rewards"]
+    assert tuple(
+        key.value for node in ast.walk(ast.parse(methods["_get_rewards"]))
+        if isinstance(node, ast.Constant) and isinstance(node.value, str)
+        for key in [node]
+        if node.value in {
+            "ray_starts_w", "ray_directions_w", "accepted_ray_hits_w", "accepted_beam_valid",
+            "mesh_path", "maximum_distance_m", "source_step", "reset_mask",
+        }
+    )[-8:] == (
+        "ray_starts_w", "ray_directions_w", "accepted_ray_hits_w", "accepted_beam_valid",
+        "mesh_path", "maximum_distance_m", "source_step", "reset_mask",
+    )
     assert "self._task.actual_velocity_b" in methods["_get_rewards"]
     for metric in ("huber_loss", "active", "usable_fraction", "beta", "emergency"):
         assert f'["{metric}"]' in methods["_get_rewards"]
@@ -151,6 +166,13 @@ def test_public_producers_frames_and_actor_dependency_boundary():
     assert "rotate_world_to_body_wxyz(root[:, 3:7], root[:, 7:10])" in source
     assert "exact_clearance_m = ranges_m.min" in source
     assert "nan_to_num" not in source
+    assert "_ray_starts_w" not in source and "_ray_directions_w" not in source
+    assert "RayCaster.meshes" not in source and "surface_normal" not in source.lower()
+    observations = next(
+        node for node in ast.walk(ast.parse(source))
+        if isinstance(node, ast.FunctionDef) and node.name == "_get_observations"
+    )
+    assert "evaluation_ray_source" not in ast.unparse(observations)
     imports = {node.module for node in ast.walk(ast.parse(source)) if isinstance(node, ast.ImportFrom)}
     assert not any(name and ("coordination" in name or "formal" in name or ".tests" in name) for name in imports)
 

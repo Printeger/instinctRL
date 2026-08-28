@@ -4,8 +4,11 @@ from __future__ import annotations
 
 from collections import OrderedDict
 import copy
+from dataclasses import fields, replace
 import hashlib
+import importlib.util
 import json
+from pathlib import Path
 
 import pytest
 import torch
@@ -14,6 +17,8 @@ from instinctlab.evaluation import EVALUATION_INPUT_KEYS, RuntimeEvaluationColle
 from instinctlab.evaluation.runtime import (
     ANCHOR_KEYS,
     CONTROL_KEYS,
+    EXACT_OBSERVABILITY_DETAIL_KEYS,
+    ExactRuntimeObservability,
     ICS_KEYS,
     PRE_RESET_KEYS,
     SOURCE_MANIFEST,
@@ -21,7 +26,10 @@ from instinctlab.evaluation.runtime import (
     TASK_KEYS,
     TERMINATION_KEYS,
     TERMINATION_MASK_KEYS,
+    _row_hashes,
 )
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def _policy() -> OrderedDict[str, torch.Tensor]:
@@ -103,13 +111,49 @@ def _pre_reset(*, timeout: bool = False) -> tuple[OrderedDict[str, object], torc
     return pre, returned, returned_episode
 
 
+def _exact(step: int, reset_mask: torch.Tensor) -> ExactRuntimeObservability:
+    valid_count = torch.tensor([12000, 10000], dtype=torch.long)
+    total_count = torch.full((2,), 21240, dtype=torch.long)
+    source_identity = torch.stack(tuple(
+        torch.tensor(tuple(hashlib.sha256(f'{step}:{index}'.encode()).digest()), dtype=torch.uint8)
+        for index in range(2)
+    ))
+    values = OrderedDict((
+        ('numerical_rank', torch.tensor([1, 3], dtype=torch.long)),
+        ('singular_values', torch.tensor([[0.0, 0.0, 10.0], [1.0, 2.0, 3.0]], dtype=torch.float32)),
+        ('sigma_min', torch.tensor([0.0, 1.0], dtype=torch.float32)),
+        ('condition_number', torch.tensor([0.0, 3.0], dtype=torch.float32)),
+        ('condition_valid', torch.tensor([False, True])),
+        ('weak_direction_w', torch.zeros(2, 3, dtype=torch.float32)),
+        ('weak_direction_valid', torch.zeros(2, dtype=torch.bool)),
+        ('valid_ray_count', valid_count), ('total_ray_count', total_count),
+        ('valid_beam_fraction', valid_count.to(torch.float32) / total_count.to(torch.float32)),
+        ('hit_max_error_m', torch.zeros(2, dtype=torch.float32)),
+        ('distance_max_error_m', torch.zeros(2, dtype=torch.float32)),
+        ('source_step', torch.full((2,), step, dtype=torch.long)),
+        ('source_reset_mask', reset_mask.detach().clone()),
+        ('source_identity_sha256', source_identity),
+    ))
+    return ExactRuntimeObservability(**values, result_identity_sha256=_row_hashes(values))
+
+
+def _reseal(value: ExactRuntimeObservability, **changes: torch.Tensor) -> ExactRuntimeObservability:
+    values = OrderedDict(
+        (field.name, changes.get(field.name, getattr(value, field.name)).detach().clone())
+        for field in fields(value) if field.name != 'result_identity_sha256'
+    )
+    return ExactRuntimeObservability(**values, result_identity_sha256=_row_hashes(values))
+
+
 def _record(collector: RuntimeEvaluationCollector, policy: OrderedDict[str, torch.Tensor], *, timeout: bool) -> None:
     audited = collector.prepare_policy(policy)
     pre, returned, episode = _pre_reset(timeout=timeout)
+    exact = _exact(len(collector._rows) + 1, pre['reset_mask'])
     collector.record_transition(
         pre_action_policy=audited,
         action=torch.full((2, 4), 0.5),
         pre_reset=pre,
+        exact_observability=exact,
         returned_policy=copy.deepcopy(policy),
         returned_critic=returned,
         returned_episode_length=episode,
@@ -131,7 +175,7 @@ def test_exact_source_mapping_reset_lifecycle_and_canonical_record() -> None:
     assert all(tuple(entry) == SOURCE_METADATA_KEYS for entry in tree['source_manifest'].values())
     assert tree['source_manifest'] == SOURCE_MANIFEST
     encoded_manifest = json.dumps(tree['source_manifest'], separators=(',', ':')).encode()
-    assert hashlib.sha256(encoded_manifest).hexdigest() == '08c62ddb3a6ce6ce6df0f673f14b2826e2de85107d59eb79d4eeed2530f64af0'
+    assert hashlib.sha256(encoded_manifest).hexdigest() == '6494c906e12ebef5db5bd8f42b21692a34d592d9b59a834dfa328527edfd70be'
     assert values['commanded_velocity_b_m_s'].shape == (2, 2, 3)
     assert torch.equal(values['commanded_velocity_b_m_s'][0], policy['state_vec'][:, -7:-4])
     assert torch.equal(values['position_w_m'][1, :, 0], torch.tensor([1.0, 11.0]))
@@ -140,6 +184,13 @@ def test_exact_source_mapping_reset_lifecycle_and_canonical_record() -> None:
     assert tree['station_reference_before_w_m'][0, :, 0].tolist() == [0.0, 10.0]
     assert tree['station_reference_after_w_m'][1, :, 0].tolist() == [100.0, 10.0]
     assert tree['gates']['reset_count'] == 1
+    assert tree['gates']['observability_exact'] is True
+    assert values['observability_value'].tolist() == [[0.0, 1.0], [0.0, 1.0]]
+    assert values['observability_valid'].all()
+    assert values['observability_source'].tolist() == [[2, 2], [2, 2]]
+    assert tuple(tree['observability_details']) == EXACT_OBSERVABILITY_DETAIL_KEYS
+    assert tree['observability_details']['source_step'].tolist() == [[1, 1], [2, 2]]
+    assert tree['observability_details']['source_reset_mask'].tolist() == [[False, False], [True, False]]
     assert '"actor_audit":{"status":"PASS"' in tree['canonical_record']
 
 
@@ -157,7 +208,9 @@ def test_spy_actor_receives_exactly_one_unchanged_audited_policy_mapping() -> No
     audited = collector.prepare_policy(policy)
     action = spy(audited)
     pre, returned, episode = _pre_reset()
+    exact = _exact(1, pre['reset_mask'])
     collector.record_transition(pre_action_policy=audited, action=action, pre_reset=pre,
+                                exact_observability=exact,
                                 returned_policy=copy.deepcopy(policy), returned_critic=returned,
                                 returned_episode_length=episode)
     assert spy.calls == [policy] and audited is policy
@@ -177,6 +230,7 @@ def test_runtime_sources_fail_closed(mutation: str) -> None:
     pre, returned, episode = _pre_reset(timeout=mutation == 'postreset_terminal')
     returned_policy = copy.deepcopy(policy)
     action = torch.full((2, 4), 0.5)
+    exact = _exact(1, pre['reset_mask'])
     if mutation == 'missing':
         pre['control'].pop('alpha')
     elif mutation == 'extra':
@@ -244,6 +298,7 @@ def test_runtime_sources_fail_closed(mutation: str) -> None:
         pre['task']['termination']['reason_code'][0, 0] = 4
     with pytest.raises((TypeError, ValueError)):
         collector.record_transition(pre_action_policy=audited, action=action, pre_reset=pre,
+                                    exact_observability=exact,
                                     returned_policy=returned_policy, returned_critic=returned,
                                     returned_episode_length=episode)
 
@@ -264,16 +319,107 @@ def test_output_is_owned_and_incomplete_or_extra_coverage_fails() -> None:
         collector.prepare_policy(_policy())
 
 
+@pytest.mark.parametrize('mutation', [
+    'type', 'shape', 'dtype', 'device', 'nonfinite', 'alias', 'stale', 'skipped',
+    'wrong_reset', 'mutated_result', 'rank', 'spectrum', 'sigma', 'condition',
+    'weak', 'count', 'fraction', 'error', 'source_identity_shape',
+])
+def test_exact_observability_distilled_contract_fails_closed(mutation: str) -> None:
+    collector, policy = _collector(), _policy()
+    audited = collector.prepare_policy(policy)
+    pre, returned, episode = _pre_reset(timeout=True)
+    exact: object = _exact(1, pre['reset_mask'])
+    if mutation == 'type':
+        exact = OrderedDict()
+    elif mutation == 'shape':
+        exact = replace(exact, singular_values=exact.singular_values[:, :2].clone())
+    elif mutation == 'dtype':
+        exact = replace(exact, sigma_min=exact.sigma_min.double())
+    elif mutation == 'device':
+        if not torch.cuda.is_available():
+            pytest.skip('CUDA unavailable')
+        exact = replace(exact, sigma_min=exact.sigma_min.cuda())
+    elif mutation == 'nonfinite':
+        exact.sigma_min[0] = float('nan')
+    elif mutation == 'alias':
+        exact = replace(exact, hit_max_error_m=exact.distance_max_error_m)
+    elif mutation == 'stale':
+        exact = _reseal(exact, source_step=torch.zeros(2, dtype=torch.long))
+    elif mutation == 'skipped':
+        exact = _reseal(exact, source_step=torch.full((2,), 2, dtype=torch.long))
+    elif mutation == 'wrong_reset':
+        exact = _reseal(exact, source_reset_mask=~exact.source_reset_mask)
+    elif mutation == 'mutated_result':
+        exact.singular_values[0, 2] += 1.0
+    elif mutation == 'rank':
+        exact = _reseal(exact, numerical_rank=torch.tensor([4, 3]))
+    elif mutation == 'spectrum':
+        exact = _reseal(exact, singular_values=torch.tensor([[1.0, 0.0, 2.0], [1.0, 2.0, 3.0]]))
+    elif mutation == 'sigma':
+        exact = _reseal(exact, sigma_min=torch.tensor([0.5, 1.0]))
+    elif mutation == 'condition':
+        exact = _reseal(exact, condition_valid=torch.tensor([True, True]))
+    elif mutation == 'weak':
+        exact = _reseal(exact, weak_direction_w=torch.ones(2, 3))
+    elif mutation == 'count':
+        exact = _reseal(exact, total_ray_count=torch.full((2,), 10, dtype=torch.long))
+    elif mutation == 'fraction':
+        exact = _reseal(exact, valid_beam_fraction=torch.ones(2))
+    elif mutation == 'error':
+        exact = _reseal(exact, hit_max_error_m=torch.full((2,), -1.0))
+    elif mutation == 'source_identity_shape':
+        exact = replace(exact, source_identity_sha256=exact.source_identity_sha256[:, :31].clone())
+    with pytest.raises((TypeError, ValueError)):
+        collector.record_transition(
+            pre_action_policy=audited, action=torch.full((2, 4), 0.5), pre_reset=pre,
+            exact_observability=exact, returned_policy=copy.deepcopy(policy),
+            returned_critic=returned, returned_episode_length=episode,
+        )
+
+
+def test_duplicate_exact_source_identity_is_rejected_across_transitions() -> None:
+    collector, policy = _collector(), _policy()
+    _record(collector, policy, timeout=False)
+    audited = collector.prepare_policy(policy)
+    pre, returned, episode = _pre_reset(timeout=True)
+    duplicate = _exact(2, pre['reset_mask'])
+    duplicate = _reseal(duplicate, source_identity_sha256=collector._observability_details[0]['source_identity_sha256'])
+    with pytest.raises(ValueError, match='duplicated'):
+        collector.record_transition(
+            pre_action_policy=audited, action=torch.full((2, 4), 0.5), pre_reset=pre,
+            exact_observability=duplicate, returned_policy=copy.deepcopy(policy),
+            returned_critic=returned, returned_episode_length=episode,
+        )
+
+
+@pytest.mark.parametrize('field', EXACT_OBSERVABILITY_DETAIL_KEYS)
+def test_complete_tree_comparator_rejects_every_exact_detail_mutation(field: str) -> None:
+    spec = importlib.util.spec_from_file_location(
+        'm7_runtime_comparator', ROOT / 'tests/compare_m7_runtime_evaluation_smoke.py'
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    left = OrderedDict((('observability_details', OrderedDict((
+        (name, torch.zeros(1, dtype=torch.float32)) for name in EXACT_OBSERVABILITY_DETAIL_KEYS
+    ))),))
+    right = copy.deepcopy(left)
+    right['observability_details'][field][0] = 1.0
+    with pytest.raises(AssertionError, match='tensor mismatch'):
+        module._compare(left, right, 'root', {'tensor_count': 0, 'element_count': 0})
+
+
 def test_returned_policy_is_owned_and_binds_exactly_to_next_audited_policy() -> None:
     collector, first = _collector(), _policy()
     audited = collector.prepare_policy(first)
     pre, returned_critic, episode = _pre_reset(timeout=True)
     returned_policy = _policy()
     expected_next = copy.deepcopy(returned_policy)
+    exact = _exact(1, pre['reset_mask'])
     collector.record_transition(
         pre_action_policy=audited,
         action=torch.full((2, 4), 0.5),
         pre_reset=pre,
+        exact_observability=exact,
         returned_policy=returned_policy,
         returned_critic=returned_critic,
         returned_episode_length=episode,
@@ -288,10 +434,12 @@ def test_returned_policy_next_audited_binding_fails_closed(mutation: str) -> Non
     audited = collector.prepare_policy(first)
     pre, returned_critic, episode = _pre_reset(timeout=True)
     returned_policy = _policy()
+    exact = _exact(1, pre['reset_mask'])
     collector.record_transition(
         pre_action_policy=audited,
         action=torch.full((2, 4), 0.5),
         pre_reset=pre,
+        exact_observability=exact,
         returned_policy=returned_policy,
         returned_critic=returned_critic,
         returned_episode_length=episode,
