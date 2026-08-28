@@ -152,3 +152,15 @@ the unchanged M7 exact-J handoff. It is intentionally not re-exported by the
 pure evaluation package. Private RayCaster buffers are accessed only by the
 hash-guarded qualification runner; no environment or sensor API changes, actor
 inference, runtime-record wiring, proxy, or training behavior are introduced.
+
+## M7 baseline isolation manifest
+
+`instinctlab.evaluation.baselines` is a standard-library-only, non-executing
+registry for the exact Handbook B0-B8 identities. It records each row's policy
+and evaluation schemas, component toggles, privilege/deployability boundary,
+capability evidence, optionality, and current readiness, then builds immutable
+canonical per-run manifests with deterministic SHA-256 provenance. Only the
+accepted B0 direct-velocity capability is currently ready; B1-B8 remain
+non-executable, and unavailable optional B8 must be explicitly `SKIPPED` with a
+reason. This layer does not implement an adapter, select a fallback, execute a
+scenario or ablation, or make a policy-performance claim.

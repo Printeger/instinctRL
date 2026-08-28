@@ -1,6 +1,35 @@
 """Deterministic M7 evaluation metrics and actor-input audit records."""
 
 from .audit import BRANCH_KEYS, PLATFORM_ID, PROVENANCE_KEYS, SENSOR_ID, EvaluationRecord, build_evaluation_record
+from .baselines import (
+    ActorAuditStatus,
+    BASELINE_CONFIG_SWITCHES,
+    BASELINE_IDS,
+    BASELINE_REGISTRY,
+    BASELINE_SPEC_FIELD_ORDER,
+    BaselineId,
+    BaselineRunManifest,
+    BaselineSpec,
+    CAPABILITY_BINDING_FIELD_ORDER,
+    COMPONENT_TOGGLE_FIELD_ORDER,
+    CapabilityBinding,
+    CapabilityRequirement,
+    ComponentToggles,
+    EVALUATION_ONLY_FIELDS,
+    ExecutionFamily,
+    ExecutionStatus,
+    FULL_ACTOR_INPUT_FIELDS,
+    MANIFEST_FIELD_ORDER,
+    MANIFEST_PAYLOAD_FIELD_ORDER,
+    MANIFEST_SCHEMA_VERSION,
+    PrivilegeClass,
+    ReadinessState,
+    build_run_manifest,
+    resolve_baseline,
+    resolve_config_switch,
+    validate_baseline_registry,
+    validate_capability_bindings,
+)
 from .metrics import (
     EVALUATION_INPUT_KEYS,
     METRIC_KEYS,
@@ -23,11 +52,19 @@ from .observability import (
 from .runtime import RUNTIME_TREE_KEYS, SOURCE_MANIFEST, RuntimeEvaluationCollector, RuntimeEvaluationConfig
 
 __all__ = [
-    "AggregateMetricResult", "BRANCH_KEYS", "EVALUATION_INPUT_KEYS", "EvaluationMetricConfig",
-    "EvaluationRecord", "ExactObservabilityConfig", "ExactObservabilityResult", "METRIC_KEYS",
-    "MetricResult", "ObservabilitySource", "PLATFORM_ID",
-    "PROVENANCE_KEYS", "SENSOR_ID", "STEP_MASK_KEYS", "STEP_VALUE_KEYS", "StepMetricResult",
-    "RUNTIME_TREE_KEYS", "RuntimeEvaluationCollector", "RuntimeEvaluationConfig", "SOURCE_MANIFEST",
-    "aggregate_metrics", "build_evaluation_record", "compute_exact_observability", "compute_step_metrics",
-    "validate_evaluation_inputs",
+    "ActorAuditStatus", "AggregateMetricResult", "BASELINE_CONFIG_SWITCHES", "BASELINE_IDS",
+    "BASELINE_REGISTRY", "BASELINE_SPEC_FIELD_ORDER", "BRANCH_KEYS", "BaselineId",
+    "BaselineRunManifest", "BaselineSpec", "CAPABILITY_BINDING_FIELD_ORDER",
+    "COMPONENT_TOGGLE_FIELD_ORDER", "CapabilityBinding", "CapabilityRequirement",
+    "ComponentToggles", "EVALUATION_INPUT_KEYS", "EVALUATION_ONLY_FIELDS",
+    "EvaluationMetricConfig", "EvaluationRecord", "ExactObservabilityConfig",
+    "ExactObservabilityResult", "ExecutionFamily", "ExecutionStatus", "FULL_ACTOR_INPUT_FIELDS",
+    "MANIFEST_FIELD_ORDER", "MANIFEST_PAYLOAD_FIELD_ORDER", "MANIFEST_SCHEMA_VERSION",
+    "METRIC_KEYS", "MetricResult", "ObservabilitySource", "PLATFORM_ID", "PROVENANCE_KEYS",
+    "PrivilegeClass", "RUNTIME_TREE_KEYS", "ReadinessState", "RuntimeEvaluationCollector",
+    "RuntimeEvaluationConfig", "SENSOR_ID", "SOURCE_MANIFEST", "STEP_MASK_KEYS",
+    "STEP_VALUE_KEYS", "StepMetricResult", "aggregate_metrics", "build_evaluation_record",
+    "build_run_manifest", "compute_exact_observability", "compute_step_metrics",
+    "resolve_baseline", "resolve_config_switch", "validate_baseline_registry",
+    "validate_capability_bindings", "validate_evaluation_inputs",
 ]
