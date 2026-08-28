@@ -164,3 +164,13 @@ accepted B0 direct-velocity capability is currently ready; B1-B8 remain
 non-executable, and unavailable optional B8 must be explicitly `SKIPPED` with a
 reason. This layer does not implement an adapter, select a fallback, execute a
 scenario or ablation, or make a policy-performance claim.
+
+## M7 pure B0 direct adapter
+
+`instinctlab.control.baseline_b0` is a non-integrated, stateless B0 execution
+primitive. Its actor-approved surface is exactly commanded body velocity. A
+separately named controller-private scalar-first quaternion is used only after
+that boundary to rotate the exact norm-limited body command into the world
+frame. The module adds no learned action, observation/history, sensor, anchor,
+ICS, task, reward, evaluator, environment, simulator, or controller wiring and
+does not execute a baseline or scenario.

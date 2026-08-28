@@ -43,17 +43,18 @@ from instinctlab.evaluation import (
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE_COMMIT = "dbc05a58ca98958c9100fa5e002fe6b9083e40ec"
-B0_EVIDENCE_SHA256 = "cd5cf6c73578bc69dc5f696ac6d294d9d4c8db0baaf12265e6715646554b7197"
+B0_GOVERNOR_SHA256 = "cd5cf6c73578bc69dc5f696ac6d294d9d4c8db0baaf12265e6715646554b7197"
+B0_ROTATION_SHA256 = "a79ea8d88fb0391762a9efcebbfa783d5287ee1393d3b6e2757812032c32991d"
+B0_ADAPTER_SHA256 = "5fa2b8d746eb231a1bb12f331fe1a76e8f988005e9a315e1dbf622e0bf1ed3d1"
 
 
-def _b0_binding() -> CapabilityBinding:
-    requirement = resolve_baseline(BaselineId.B0).capability_requirements[0]
-    assert requirement.accepted_provider is not None
-    assert requirement.accepted_evidence_sha256 is not None
-    return CapabilityBinding(
-        requirement.name,
-        requirement.accepted_provider,
-        requirement.accepted_evidence_sha256,
+def _b0_bindings() -> tuple[CapabilityBinding, ...]:
+    requirements = resolve_baseline(BaselineId.B0).capability_requirements
+    assert all(item.accepted_provider is not None for item in requirements)
+    assert all(item.accepted_evidence_sha256 is not None for item in requirements)
+    return tuple(
+        CapabilityBinding(item.name, item.accepted_provider, item.accepted_evidence_sha256)
+        for item in requirements
     )
 
 
@@ -62,7 +63,7 @@ def _manifest(
     status: ExecutionStatus = ExecutionStatus.READY,
 ) -> BaselineRunManifest:
     row = resolve_baseline(baseline_id)
-    bindings = (_b0_binding(),) if status in (ExecutionStatus.READY, ExecutionStatus.EXECUTED) else ()
+    bindings = _b0_bindings() if status in (ExecutionStatus.READY, ExecutionStatus.EXECUTED) else ()
     audit = (
         ActorAuditStatus.PASS
         if status in (ExecutionStatus.READY, ExecutionStatus.EXECUTED)
@@ -166,6 +167,8 @@ def test_exact_canonical_rows_and_every_field() -> None:
     ) + (ReadinessState.NOT_READY,) * 8
     assert tuple(item.name for row in BASELINE_REGISTRY for item in row.capability_requirements) == (
         "m5.b0_direct_velocity",
+        "m5.b0_body_to_world",
+        "m7.b0_direct_adapter",
         "m7.b1_state_velocity_upper_bound_adapter",
         "m7.b2_no_history_adapter",
         "m7.b3_no_anchor_adapter",
@@ -197,11 +200,26 @@ def test_exact_policy_schemas_and_b0_evidence_binding() -> None:
         "commanded_body_velocity_m_s",
     )
     assert resolve_baseline("B8").actor_input_fields == resolve_baseline("B7").actor_input_fields
-    assert hashlib.sha256((ROOT / "instinctlab/control/governor.py").read_bytes()).hexdigest() == (
-        B0_EVIDENCE_SHA256
+    expected_sources = {
+        "instinctlab/control/governor.py": B0_GOVERNOR_SHA256,
+        "instinctlab/control/command_adapter.py": B0_ROTATION_SHA256,
+        "instinctlab/control/baseline_b0.py": B0_ADAPTER_SHA256,
+    }
+    assert {
+        name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
+        for name in expected_sources
+    } == expected_sources
+    requirements = resolve_baseline("B0").capability_requirements
+    assert tuple(item.name for item in requirements) == (
+        "m5.b0_direct_velocity", "m5.b0_body_to_world", "m7.b0_direct_adapter",
     )
-    assert resolve_baseline("B0").capability_requirements[0].accepted_evidence_sha256 == (
-        B0_EVIDENCE_SHA256
+    assert tuple(item.accepted_provider for item in requirements) == (
+        "instinctlab.control.governor.b0_governor",
+        "instinctlab.control.command_adapter.rotate_body_to_world",
+        "instinctlab.control.baseline_b0.execute_b0_direct_velocity",
+    )
+    assert tuple(item.accepted_evidence_sha256 for item in requirements) == (
+        B0_GOVERNOR_SHA256, B0_ROTATION_SHA256, B0_ADAPTER_SHA256,
     )
     assert all(
         row.capability_requirements[0].accepted_provider is None
@@ -263,7 +281,7 @@ def test_registry_frozen_and_incomplete_reordered_duplicate_or_false_ready_rejec
             CapabilityRequirement(
                 "m7.b1_state_velocity_upper_bound_adapter",
                 "instinctlab.control.governor.b0_governor",
-                B0_EVIDENCE_SHA256,
+                B0_GOVERNOR_SHA256,
             ),
         ),
         readiness=ReadinessState.READY,
@@ -311,24 +329,45 @@ def test_every_baseline_spec_field_drift_rejects(field_name: str, value: object)
 
 def test_capabilities_reject_mutability_alias_duplicates_order_hash_and_fallback() -> None:
     b0, b1 = resolve_baseline("B0"), resolve_baseline("B1")
-    binding = _b0_binding()
-    validate_capability_bindings(b0, (binding,), ExecutionStatus.READY)
+    bindings = _b0_bindings()
+    validate_capability_bindings(b0, bindings, ExecutionStatus.READY)
     with pytest.raises(TypeError):
-        validate_capability_bindings(b0, [binding], ExecutionStatus.READY)
+        validate_capability_bindings(b0, list(bindings), ExecutionStatus.READY)
     with pytest.raises(ValueError):
         validate_capability_bindings(b0, (), ExecutionStatus.READY)
     with pytest.raises(ValueError):
-        validate_capability_bindings(b0, (binding, binding), ExecutionStatus.READY)
-    wrong_name = replace(binding, name="m5.unknown")
-    wrong_provider = replace(binding, provider="instinctlab.control.governor.alias")
-    wrong_hash = replace(binding, evidence_sha256="0" * 64)
+        validate_capability_bindings(b0, bindings[:1], ExecutionStatus.READY)
+    with pytest.raises(ValueError):
+        validate_capability_bindings(b0, bindings[:-1], ExecutionStatus.READY)
+    with pytest.raises(ValueError):
+        validate_capability_bindings(b0, (bindings[1], bindings[0], bindings[2]), ExecutionStatus.READY)
+    with pytest.raises(ValueError):
+        validate_capability_bindings(b0, (bindings[0], bindings[0], bindings[2]), ExecutionStatus.READY)
+    duplicate_name = replace(bindings[1], name=bindings[0].name)
+    duplicate_provider = replace(bindings[1], provider=bindings[0].provider)
+    with pytest.raises(ValueError):
+        validate_capability_bindings(
+            b0, (bindings[0], duplicate_name, bindings[2]), ExecutionStatus.READY
+        )
+    with pytest.raises(ValueError):
+        validate_capability_bindings(
+            b0, (bindings[0], duplicate_provider, bindings[2]), ExecutionStatus.READY
+        )
+    extra = CapabilityBinding("m7.extra", "instinctlab.control.extra", "1" * 64)
+    with pytest.raises(ValueError):
+        validate_capability_bindings(b0, bindings + (extra,), ExecutionStatus.READY)
+    wrong_name = replace(bindings[0], name="m5.unknown")
+    wrong_provider = replace(bindings[1], provider="instinctlab.control.command_adapter.alias")
+    wrong_hash = replace(bindings[2], evidence_sha256="0" * 64)
     for candidate in (wrong_name, wrong_provider, wrong_hash):
+        index = (wrong_name, wrong_provider, wrong_hash).index(candidate)
+        mutated = bindings[:index] + (candidate,) + bindings[index + 1:]
         with pytest.raises(ValueError):
-            validate_capability_bindings(b0, (candidate,), ExecutionStatus.READY)
+            validate_capability_bindings(b0, mutated, ExecutionStatus.READY)
     with pytest.raises(ValueError):
-        validate_capability_bindings(b1, (binding,), ExecutionStatus.READY)
+        validate_capability_bindings(b1, bindings, ExecutionStatus.READY)
     with pytest.raises(ValueError):
-        validate_capability_bindings(b1, (binding,), ExecutionStatus.NOT_READY)
+        validate_capability_bindings(b1, bindings, ExecutionStatus.NOT_READY)
 
 
 def test_ready_executed_not_ready_and_b8_skipped_hand_fixtures() -> None:
@@ -337,8 +376,8 @@ def test_ready_executed_not_ready_and_b8_skipped_hand_fixtures() -> None:
     not_ready = _manifest("B1", ExecutionStatus.NOT_READY)
     skipped = _manifest("B8", ExecutionStatus.SKIPPED)
     expected_hashes = (
-        "d63489d940a86c8922707295471259a505ec3f423ad3f69d183202f855707191",
-        "1a2ba73b21187b2afce23c89178752cd322577d3dc520f02f4a450d6c4e30472",
+        "3dae4aaf30d5735e4919f8cef2fe092f269559bd4876c152b1e18142bdb85ab3",
+        "0ed869ee82af52024fa8c5342549721bf2c825be503ccffa0bf721b6791e4898",
         "7b685595dc93cfd585e8a1c8ba09f8e2378c354c0d9a5007f98a7960c69ab0dd",
         "ef82d1209605dabc9c5fc289e368bb32d7c9a4107672d3cb5867ef812cdbb8b9",
     )
@@ -494,7 +533,7 @@ def test_manifest_builder_rejects_incomplete_unsupported_and_hidden_fallback_cla
         product_commit=BASE_COMMIT,
         baseline_id="B0",
         config_switch="direct_velocity",
-        capability_bindings=(_b0_binding(),),
+        capability_bindings=_b0_bindings(),
         scenario_id="S1.corner",
         seed=0,
         actor_audit_status=ActorAuditStatus.PASS,
@@ -574,7 +613,9 @@ def test_module_is_standard_library_only_and_reverse_import_isolation_holds() ->
 def test_accepted_actor_and_source_manifest_files_remain_byte_identical() -> None:
     expected = {
         "instinctlab/observations/actor.py": "dfc339233e146e585493bfcc1893b5ee87c46c827963e36d6f9ec79e4b81ce44",
-        "instinctlab/control/governor.py": B0_EVIDENCE_SHA256,
+        "instinctlab/control/governor.py": B0_GOVERNOR_SHA256,
+        "instinctlab/control/command_adapter.py": B0_ROTATION_SHA256,
+        "instinctlab/control/baseline_b0.py": B0_ADAPTER_SHA256,
         "instinctlab/evaluation/metrics.py": "a37cf88a04d55ac4e32fee93f5504a6ff446f8804694a310013fb704438a3960",
         "instinctlab/evaluation/runtime.py": "7abaa594a63b0a90d9a0bb5b1ec66a9f71d3c91aa464f2890001a2040384cde3",
     }

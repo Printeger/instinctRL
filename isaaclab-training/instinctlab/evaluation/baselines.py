@@ -213,10 +213,22 @@ EVALUATION_ONLY_FIELDS: Final = (
 )
 
 _DEPLOYABLE_ACTOR_FIELDS = frozenset(FULL_ACTOR_INPUT_FIELDS + ("minimum_range_m",))
-_B0_REQUIREMENT = CapabilityRequirement(
-    "m5.b0_direct_velocity",
-    "instinctlab.control.governor.b0_governor",
-    "cd5cf6c73578bc69dc5f696ac6d294d9d4c8db0baaf12265e6715646554b7197",
+_B0_REQUIREMENTS = (
+    CapabilityRequirement(
+        "m5.b0_direct_velocity",
+        "instinctlab.control.governor.b0_governor",
+        "cd5cf6c73578bc69dc5f696ac6d294d9d4c8db0baaf12265e6715646554b7197",
+    ),
+    CapabilityRequirement(
+        "m5.b0_body_to_world",
+        "instinctlab.control.command_adapter.rotate_body_to_world",
+        "a79ea8d88fb0391762a9efcebbfa783d5287ee1393d3b6e2757812032c32991d",
+    ),
+    CapabilityRequirement(
+        "m7.b0_direct_adapter",
+        "instinctlab.control.baseline_b0.execute_b0_direct_velocity",
+        "5fa2b8d746eb231a1bb12f331fe1a76e8f988005e9a315e1dbf622e0bf1ed3d1",
+    ),
 )
 
 
@@ -230,7 +242,7 @@ BASELINE_REGISTRY: Final = (
         "Direct velocity execution with no learned governor, anchor, or intervention.",
         "TASLAB velocity controller alone.", True, PrivilegeClass.ACTOR_CLEAN,
         ("commanded_body_velocity_m_s",), EVALUATION_ONLY_FIELDS,
-        ComponentToggles(False, False, False, False), (_B0_REQUIREMENT,), False,
+        ComponentToggles(False, False, False, False), _B0_REQUIREMENTS, False,
         ReadinessState.READY,
     ),
     BaselineSpec(
