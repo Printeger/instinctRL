@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from collections import OrderedDict
 import copy
+import hashlib
+import json
 
 import pytest
 import torch
@@ -15,6 +17,7 @@ from instinctlab.evaluation.runtime import (
     ICS_KEYS,
     PRE_RESET_KEYS,
     SOURCE_MANIFEST,
+    SOURCE_METADATA_KEYS,
     TASK_KEYS,
     TERMINATION_KEYS,
     TERMINATION_MASK_KEYS,
@@ -107,6 +110,7 @@ def _record(collector: RuntimeEvaluationCollector, policy: OrderedDict[str, torc
         pre_action_policy=audited,
         action=torch.full((2, 4), 0.5),
         pre_reset=pre,
+        returned_policy=copy.deepcopy(policy),
         returned_critic=returned,
         returned_episode_length=episode,
     )
@@ -124,6 +128,10 @@ def test_exact_source_mapping_reset_lifecycle_and_canonical_record() -> None:
     tree = collector.finalize(OrderedDict((('product_commit', '0' * 40), ('fixture_id', 'runtime-v1'), ('generator_id', 'pytest'), ('seed', 7))))
     values = tree['evaluation_inputs']
     assert tuple(SOURCE_MANIFEST) == EVALUATION_INPUT_KEYS == tuple(values)
+    assert all(tuple(entry) == SOURCE_METADATA_KEYS for entry in tree['source_manifest'].values())
+    assert tree['source_manifest'] == SOURCE_MANIFEST
+    encoded_manifest = json.dumps(tree['source_manifest'], separators=(',', ':')).encode()
+    assert hashlib.sha256(encoded_manifest).hexdigest() == '08c62ddb3a6ce6ce6df0f673f14b2826e2de85107d59eb79d4eeed2530f64af0'
     assert values['commanded_velocity_b_m_s'].shape == (2, 2, 3)
     assert torch.equal(values['commanded_velocity_b_m_s'][0], policy['state_vec'][:, -7:-4])
     assert torch.equal(values['position_w_m'][1, :, 0], torch.tensor([1.0, 11.0]))
@@ -150,24 +158,35 @@ def test_spy_actor_receives_exactly_one_unchanged_audited_policy_mapping() -> No
     action = spy(audited)
     pre, returned, episode = _pre_reset()
     collector.record_transition(pre_action_policy=audited, action=action, pre_reset=pre,
-                                returned_critic=returned, returned_episode_length=episode)
+                                returned_policy=copy.deepcopy(policy), returned_critic=returned,
+                                returned_episode_length=episode)
     assert spy.calls == [policy] and audited is policy
 
 
 @pytest.mark.parametrize('mutation', [
-    'missing', 'reordered', 'policy_changed', 'action_grad', 'action_nonfinite', 'alias_policy',
-    'alias_sources', 'dtype', 'device', 'reset_mismatch', 'episode_mismatch',
-    'stale_live', 'postreset_terminal', 'nonfinite',
+    'missing', 'extra', 'reordered', 'malformed_nested', 'wrong_shape', 'policy_changed',
+    'action_grad', 'action_nonfinite', 'alias_policy', 'alias_sources', 'alias_returned_policy',
+    'dtype', 'device', 'reset_mismatch', 'episode_mismatch', 'stale_live',
+    'postreset_terminal', 'nonfinite', 'anchor_active_domain', 'anchor_usable_domain',
+    'negative_anchor_error', 'negative_clearance', 'beta_domain', 'emergency_beta',
+    'collision_mismatch', 'terminated_masks', 'truncated_mask', 'reason_precedence',
 ])
 def test_runtime_sources_fail_closed(mutation: str) -> None:
     collector, policy = _collector(), _policy()
     audited = collector.prepare_policy(policy)
     pre, returned, episode = _pre_reset(timeout=mutation == 'postreset_terminal')
+    returned_policy = copy.deepcopy(policy)
     action = torch.full((2, 4), 0.5)
     if mutation == 'missing':
         pre['control'].pop('alpha')
+    elif mutation == 'extra':
+        pre['unexpected'] = torch.zeros(2)
     elif mutation == 'reordered':
         pre.move_to_end('reset_mask')
+    elif mutation == 'malformed_nested':
+        pre['control'] = torch.zeros(2)
+    elif mutation == 'wrong_shape':
+        pre['task']['actual_velocity_b'] = torch.zeros(2, 2)
     elif mutation == 'policy_changed':
         policy['state_vec'][0, 0] = 0.25
     elif mutation == 'action_grad':
@@ -178,6 +197,8 @@ def test_runtime_sources_fail_closed(mutation: str) -> None:
         pre['task']['actual_velocity_b'] = policy['state_vec'].as_strided((2, 3), (52, 1))
     elif mutation == 'alias_sources':
         pre['control']['v_final_b'] = pre['task']['actual_velocity_b']
+    elif mutation == 'alias_returned_policy':
+        returned_policy['lidar_grid'] = policy['lidar_grid']
     elif mutation == 'dtype':
         pre['task']['actual_velocity_b'] = pre['task']['actual_velocity_b'].double()
     elif mutation == 'device':
@@ -195,9 +216,36 @@ def test_runtime_sources_fail_closed(mutation: str) -> None:
         pre['root_state_w'][0] = returned[0, :13]
     elif mutation == 'nonfinite':
         pre['task']['exact_clearance_m'][0, 0] = float('inf')
+    elif mutation == 'anchor_active_domain':
+        pre['control']['anchor_metrics']['active'][0, 0] = 0.5
+    elif mutation == 'anchor_usable_domain':
+        pre['control']['anchor_metrics']['usable_fraction'][0, 0] = 1.1
+    elif mutation == 'negative_anchor_error':
+        pre['control']['anchor_metrics']['mean_absolute_error_m'][0, 0] = -0.1
+    elif mutation == 'negative_clearance':
+        pre['task']['exact_clearance_m'][0, 0] = -0.1
+    elif mutation == 'beta_domain':
+        pre['control']['ics_metrics']['beta'][0, 0] = 1.1
+    elif mutation == 'emergency_beta':
+        pre['control']['ics_metrics']['beta'][0, 0] = 0.5
+    elif mutation == 'collision_mismatch':
+        pre['task']['collision'][0, 0] = True
+    elif mutation == 'terminated_masks':
+        pre['task']['termination']['terminated'][0, 0] = True
+        pre['task']['termination']['done'][0, 0] = True
+        pre['reset_mask'][0] = True
+        episode[0] = 0
+    elif mutation == 'truncated_mask':
+        pre['task']['termination']['truncated'][0, 0] = True
+        pre['task']['termination']['done'][0, 0] = True
+        pre['reset_mask'][0] = True
+        episode[0] = 0
+    elif mutation == 'reason_precedence':
+        pre['task']['termination']['reason_code'][0, 0] = 4
     with pytest.raises((TypeError, ValueError)):
         collector.record_transition(pre_action_policy=audited, action=action, pre_reset=pre,
-                                    returned_critic=returned, returned_episode_length=episode)
+                                    returned_policy=returned_policy, returned_critic=returned,
+                                    returned_episode_length=episode)
 
 
 def test_output_is_owned_and_incomplete_or_extra_coverage_fails() -> None:
@@ -210,5 +258,97 @@ def test_output_is_owned_and_incomplete_or_extra_coverage_fails() -> None:
     snapshot = copy.deepcopy(tree)
     policy['state_vec'].add_(1.0)
     assert torch.equal(tree['evaluation_inputs']['commanded_velocity_b_m_s'], snapshot['evaluation_inputs']['commanded_velocity_b_m_s'])
+    pointers = [value.untyped_storage().data_ptr() for value in tree['evaluation_inputs'].values()]
+    assert len(pointers) == len(set(pointers))
     with pytest.raises(RuntimeError):
         collector.prepare_policy(_policy())
+
+
+def test_returned_policy_is_owned_and_binds_exactly_to_next_audited_policy() -> None:
+    collector, first = _collector(), _policy()
+    audited = collector.prepare_policy(first)
+    pre, returned_critic, episode = _pre_reset(timeout=True)
+    returned_policy = _policy()
+    expected_next = copy.deepcopy(returned_policy)
+    collector.record_transition(
+        pre_action_policy=audited,
+        action=torch.full((2, 4), 0.5),
+        pre_reset=pre,
+        returned_policy=returned_policy,
+        returned_critic=returned_critic,
+        returned_episode_length=episode,
+    )
+    returned_policy['state_vec'].add_(1.0)
+    assert collector.prepare_policy(expected_next) is expected_next
+
+
+@pytest.mark.parametrize('mutation', ['keys', 'shape', 'dtype', 'device', 'values'])
+def test_returned_policy_next_audited_binding_fails_closed(mutation: str) -> None:
+    collector, first = _collector(), _policy()
+    audited = collector.prepare_policy(first)
+    pre, returned_critic, episode = _pre_reset(timeout=True)
+    returned_policy = _policy()
+    collector.record_transition(
+        pre_action_policy=audited,
+        action=torch.full((2, 4), 0.5),
+        pre_reset=pre,
+        returned_policy=returned_policy,
+        returned_critic=returned_critic,
+        returned_episode_length=episode,
+    )
+    next_policy = copy.deepcopy(returned_policy)
+    if mutation == 'keys':
+        next_policy.move_to_end('lidar_grid')
+    elif mutation == 'shape':
+        next_policy['state_vec'] = next_policy['state_vec'][:, :-1]
+    elif mutation == 'dtype':
+        next_policy['state_vec'] = next_policy['state_vec'].double()
+    elif mutation == 'device':
+        if not torch.cuda.is_available():
+            pytest.skip('CUDA unavailable')
+        next_policy = OrderedDict((name, value.cuda()) for name, value in next_policy.items())
+    elif mutation == 'values':
+        next_policy['state_vec'][0, 0] = 0.25
+    with pytest.raises((TypeError, ValueError)):
+        collector.prepare_policy(next_policy)
+
+
+@pytest.mark.parametrize('mutation', ['missing', 'extra', 'reordered', 'malformed', 'field_value'])
+def test_structured_source_manifest_fails_closed(monkeypatch: pytest.MonkeyPatch, mutation: str) -> None:
+    import instinctlab.evaluation.runtime as runtime
+
+    manifest = copy.deepcopy(SOURCE_MANIFEST)
+    if mutation == 'missing':
+        manifest.pop('observability_source')
+    elif mutation == 'extra':
+        manifest['unexpected'] = copy.deepcopy(next(iter(manifest.values())))
+    elif mutation == 'reordered':
+        manifest.move_to_end('commanded_velocity_b_m_s')
+    elif mutation == 'malformed':
+        manifest['commanded_velocity_b_m_s'] = 'not metadata'
+    elif mutation == 'field_value':
+        manifest['commanded_velocity_b_m_s']['units'] = 'km/h'
+    monkeypatch.setattr(runtime, 'SOURCE_MANIFEST', manifest)
+    collector, policy = _collector(), _policy()
+    _record(collector, policy, timeout=False)
+    _record(collector, policy, timeout=True)
+    with pytest.raises(RuntimeError):
+        collector.finalize(OrderedDict((('product_commit', '0' * 40), ('fixture_id', 'x'), ('generator_id', 'x'), ('seed', 1))))
+
+
+def test_emitted_source_manifest_is_deeply_owned() -> None:
+    first_collector, policy = _collector(), _policy()
+    _record(first_collector, policy, timeout=False)
+    _record(first_collector, policy, timeout=True)
+    provenance = OrderedDict((('product_commit', '0' * 40), ('fixture_id', 'x'), ('generator_id', 'x'), ('seed', 1)))
+    first = first_collector.finalize(provenance)
+    module_snapshot = copy.deepcopy(SOURCE_MANIFEST)
+    first['source_manifest']['commanded_velocity_b_m_s']['source'] = 'mutated'
+    first['source_manifest']['commanded_velocity_b_m_s'].move_to_end('source')
+    first['source_manifest'].move_to_end('commanded_velocity_b_m_s')
+    second_collector = _collector()
+    _record(second_collector, _policy(), timeout=False)
+    _record(second_collector, _policy(), timeout=True)
+    second = second_collector.finalize(provenance)
+    assert SOURCE_MANIFEST == module_snapshot
+    assert second['source_manifest'] == module_snapshot

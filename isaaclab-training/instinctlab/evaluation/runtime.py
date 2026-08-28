@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections import OrderedDict
 from collections.abc import Mapping
+import copy
 from dataclasses import dataclass
 import hashlib
 import json
@@ -12,6 +13,13 @@ import math
 import torch
 
 from instinctlab.observations.audit import audit_actor_observation
+from instinctlab.task.termination import (
+    TERMINATION_ABOVE_HEIGHT,
+    TERMINATION_BELOW_HEIGHT,
+    TERMINATION_COLLISION,
+    TERMINATION_NONE,
+    TERMINATION_TIMEOUT,
+)
 from .audit import EvaluationRecord, build_evaluation_record
 from .metrics import EVALUATION_INPUT_KEYS, EvaluationMetricConfig, ObservabilitySource
 
@@ -35,32 +43,45 @@ RUNTIME_TREE_KEYS = (
     "station_reference_before_w_m", "station_reference_after_w_m", "reset_masks",
     "returned_episode_lengths", "evaluation_inputs", "canonical_record", "gates",
 )
+SOURCE_METADATA_KEYS = (
+    "source", "source_shape", "record_shape", "dtype", "units", "frame",
+    "validity", "ownership", "privilege",
+)
+_SOURCE_MANIFEST_SPEC = (
+    ("commanded_velocity_b_m_s", ("pre_action.policy.state_vec[:, -7:-4]", "[N, 3]", "[N, 3]", "torch.float32", "m/s", "body", "accepted M4 latest command slice", "record-owned detached clone", "actor-approved command")),
+    ("actual_velocity_b_m_s", ("pre_reset.task.actual_velocity_b", "[N, 3]", "[N, 3]", "torch.float32", "m/s", "body", "finite accepted same-state task producer", "record-owned detached clone", "evaluation-only privileged")),
+    ("issued_velocity_b_m_s", ("pre_reset.control.v_final_b", "[N, 3]", "[N, 3]", "torch.float32", "m/s", "body", "finite accepted same-state controller producer", "record-owned detached clone", "evaluation-only diagnostic")),
+    ("position_w_m", ("pre_reset.task.root_state_w[:, 0:3]", "[N, 13] -> [N, 3]", "[N, 3]", "torch.float32", "m", "world", "same-state task root equals top-level pre_reset root", "record-owned detached clone", "evaluation-only privileged")),
+    ("station_reference_position_w_m", ("collector.station_reference", "[N, 3]", "[N, 3]", "torch.float32", "m", "world", "reset-owned reference before this transition", "record-owned clone of collector-owned detached state", "evaluation-only derived")),
+    ("anchor_error_m", ("pre_reset.control.anchor_metrics.mean_absolute_error_m[:, 0]", "[N, 1] -> [N]", "[N]", "torch.float32", "m", "body scan geometry", "finite and nonnegative", "record-owned detached clone", "evaluation-only diagnostic")),
+    ("anchor_valid", ("pre_reset.control.anchor_metrics.active[:, 0] and usable_fraction[:, 0]", "two [N, 1] sources -> [N]", "[N]", "torch.bool", "boolean", "none", "active is exact 1 and usable_fraction >= configured minimum", "record-owned derived tensor", "evaluation-only validity")),
+    ("minimum_clearance_m", ("pre_reset.task.exact_clearance_m[:, 0]", "[N, 1] -> [N]", "[N]", "torch.float32", "m", "world geometry", "finite and nonnegative accepted exact task producer", "record-owned detached clone", "evaluation-only privileged")),
+    ("clearance_valid", ("accepted exact task producer availability", "scalar contract -> [N]", "[N]", "torch.bool", "boolean", "none", "always true for the accepted exact task producer", "record-owned constructed tensor", "evaluation-only validity")),
+    ("collision", ("pre_reset.task.collision[:, 0]", "[N, 1] -> [N]", "[N]", "torch.bool", "boolean", "none", "identical to termination collision mask", "record-owned detached clone", "evaluation-only privileged")),
+    ("ics_beta", ("pre_reset.control.ics_metrics.beta[:, 0]", "[N, 1] -> [N]", "[N]", "torch.float32", "ratio", "none", "finite in [0, 1]", "record-owned detached clone", "evaluation-only diagnostic")),
+    ("ics_emergency", ("pre_reset.control.ics_metrics.emergency[:, 0]", "[N, 1] exact 0/1 -> [N]", "[N]", "torch.bool", "boolean", "none", "exact 0/1 and true requires exact zero beta", "record-owned derived tensor", "evaluation-only diagnostic")),
+    ("ics_worst_margin_m_s", ("pre_reset.control.ics_metrics.worst_margin_m_s[:, 0]", "[N, 1] -> [N]", "[N]", "torch.float32", "m/s", "body radial", "finite accepted same-state ICS producer", "record-owned detached clone", "evaluation-only diagnostic")),
+    ("terminated", ("pre_reset.task.termination.terminated[:, 0]", "[N, 1] -> [N]", "[N]", "torch.bool", "boolean", "none", "equals collision or below-height or above-height masks", "record-owned detached clone", "evaluation-only termination")),
+    ("truncated", ("pre_reset.task.termination.truncated[:, 0]", "[N, 1] -> [N]", "[N]", "torch.bool", "boolean", "none", "equals timeout mask", "record-owned detached clone", "evaluation-only termination")),
+    ("termination_reason", ("pre_reset.task.termination.reason_code[:, 0]", "[N, 1] -> [N]", "[N]", "torch.int64", "enum", "none", "accepted M6 collision > below > above > timeout precedence", "record-owned detached clone", "evaluation-only termination")),
+    ("termination_collision", ("pre_reset.task.termination.masks.collision[:, 0]", "[N, 1] -> [N]", "[N]", "torch.bool", "boolean", "none", "independent accepted collision mask", "record-owned detached clone", "evaluation-only termination")),
+    ("termination_below_height", ("pre_reset.task.termination.masks.below_height[:, 0]", "[N, 1] -> [N]", "[N]", "torch.bool", "boolean", "none", "independent accepted below-height mask", "record-owned detached clone", "evaluation-only termination")),
+    ("termination_above_height", ("pre_reset.task.termination.masks.above_height[:, 0]", "[N, 1] -> [N]", "[N]", "torch.bool", "boolean", "none", "independent accepted above-height mask", "record-owned detached clone", "evaluation-only termination")),
+    ("termination_timeout", ("pre_reset.task.termination.masks.timeout[:, 0]", "[N, 1] -> [N]", "[N]", "torch.bool", "boolean", "none", "independent accepted timeout mask", "record-owned detached clone", "evaluation-only termination")),
+    ("observability_value", ("runtime unavailable placeholder", "constructed [N]", "[N]", "torch.float32", "dimensionless", "none", "finite zero excluded because observability_valid is false", "record-owned constructed tensor", "evaluation-only unavailable")),
+    ("observability_valid", ("runtime unavailable contract", "constructed [N]", "[N]", "torch.bool", "boolean", "none", "always false because no algorithm is authorized", "record-owned constructed tensor", "evaluation-only validity")),
+    ("observability_source", ("ObservabilitySource.UNAVAILABLE", "constructed [N]", "[N]", "torch.int64", "enum", "none", "exact UNAVAILABLE value for every sample", "record-owned constructed tensor", "evaluation-only unavailable")),
+)
 
-SOURCE_MANIFEST = OrderedDict((
-    ("commanded_velocity_b_m_s", "pre_action.policy.state_vec latest M4 command slice [-7:-4]; m/s body"),
-    ("actual_velocity_b_m_s", "pre_reset.task.actual_velocity_b; m/s body; privileged evaluation"),
-    ("issued_velocity_b_m_s", "pre_reset.control.v_final_b; m/s body"),
-    ("position_w_m", "pre_reset.task.root_state_w[:,0:3]; m world; privileged evaluation"),
-    ("station_reference_position_w_m", "collector-owned detached reset reference; m world"),
-    ("anchor_error_m", "pre_reset.control.anchor_metrics.mean_absolute_error_m; m"),
-    ("anchor_valid", "anchor active and usable_fraction >= configured minimum"),
-    ("minimum_clearance_m", "pre_reset.task.exact_clearance_m; m; privileged evaluation"),
-    ("clearance_valid", "true for accepted exact task producer"),
-    ("collision", "pre_reset.task.collision; bool"),
-    ("ics_beta", "pre_reset.control.ics_metrics.beta; ratio"),
-    ("ics_emergency", "pre_reset.control.ics_metrics.emergency exact 0/1 converted to bool"),
-    ("ics_worst_margin_m_s", "pre_reset.control.ics_metrics.worst_margin_m_s; m/s"),
-    ("terminated", "pre_reset.task.termination.terminated; bool"),
-    ("truncated", "pre_reset.task.termination.truncated; bool"),
-    ("termination_reason", "pre_reset.task.termination.reason_code; accepted M6 precedence"),
-    ("termination_collision", "pre_reset.task.termination.masks.collision; bool"),
-    ("termination_below_height", "pre_reset.task.termination.masks.below_height; bool"),
-    ("termination_above_height", "pre_reset.task.termination.masks.above_height; bool"),
-    ("termination_timeout", "pre_reset.task.termination.masks.timeout; bool"),
-    ("observability_value", "finite placeholder excluded by invalid UNAVAILABLE source"),
-    ("observability_valid", "false; no authorized algorithm"),
-    ("observability_source", "UNAVAILABLE; no authorized algorithm"),
-))
+
+def _manifest_from_spec() -> OrderedDict[str, OrderedDict[str, str]]:
+    return OrderedDict(
+        (name, OrderedDict(zip(SOURCE_METADATA_KEYS, values, strict=True)))
+        for name, values in _SOURCE_MANIFEST_SPEC
+    )
+
+
+SOURCE_MANIFEST = _manifest_from_spec()
 
 
 @dataclass(frozen=True)
@@ -99,6 +120,45 @@ def _policy_hash(policy: Mapping[str, torch.Tensor]) -> str:
     return digest.hexdigest()
 
 
+def _validate_policy(name: str, policy: object) -> Mapping[str, torch.Tensor]:
+    if not isinstance(policy, Mapping) or tuple(policy) != ("lidar_grid", "state_vec"):
+        raise ValueError(f"{name} must contain exactly ordered actor-only policy keys")
+    audit_actor_observation(policy)
+    for field, value in policy.items():
+        if value.dtype != torch.float32 or value.requires_grad or not bool(torch.isfinite(value).all().item()):
+            raise ValueError(f"{name}.{field} must be detached finite float32")
+    return policy
+
+
+def _policy_snapshot(policy: Mapping[str, torch.Tensor]) -> OrderedDict[str, torch.Tensor]:
+    return OrderedDict((name, value.detach().clone()) for name, value in policy.items())
+
+
+def _assert_exact_policy_binding(
+    returned_policy: Mapping[str, torch.Tensor],
+    next_audited_policy: Mapping[str, torch.Tensor],
+) -> None:
+    expected = _validate_policy("returned_policy_snapshot", returned_policy)
+    actual = _validate_policy("next_audited_policy", next_audited_policy)
+    for name in expected:
+        left, right = expected[name], actual[name]
+        if left.shape != right.shape or left.dtype != right.dtype or left.device != right.device:
+            raise ValueError(f"returned policy metadata does not bind to next audited {name}")
+        if not torch.equal(left, right) or _tensor_hash(left) != _tensor_hash(right):
+            raise ValueError(f"returned policy values do not bind to next audited {name}")
+
+
+def _owned_source_manifest() -> OrderedDict[str, OrderedDict[str, str]]:
+    expected = _manifest_from_spec()
+    if not isinstance(SOURCE_MANIFEST, OrderedDict) or tuple(SOURCE_MANIFEST) != EVALUATION_INPUT_KEYS:
+        raise RuntimeError("source manifest field order violates the exact evaluation contract")
+    for name in EVALUATION_INPUT_KEYS:
+        entry = SOURCE_MANIFEST[name]
+        if not isinstance(entry, OrderedDict) or tuple(entry) != SOURCE_METADATA_KEYS or entry != expected[name]:
+            raise RuntimeError(f"source manifest metadata for {name} violates the exact contract")
+    return copy.deepcopy(SOURCE_MANIFEST)
+
+
 def _float(name: str, value: object, shape: tuple[int, ...], reference: torch.Tensor) -> torch.Tensor:
     if not isinstance(value, torch.Tensor) or value.shape != shape:
         raise ValueError(f"{name} must have shape {shape}")
@@ -135,9 +195,9 @@ def _long(name: str, value: object, shape: tuple[int, ...], reference: torch.Ten
     return value
 
 
-def _reject_source_aliases(policy: Mapping[str, torch.Tensor], sources: Mapping[str, torch.Tensor]) -> None:
+def _reject_source_aliases(sources: Mapping[str, torch.Tensor]) -> None:
     owners: dict[tuple[torch.device, int], str] = {}
-    for name, value in tuple(policy.items()) + tuple(sources.items()):
+    for name, value in sources.items():
         key = (value.device, value.untyped_storage().data_ptr())
         if key in owners:
             raise ValueError(f"runtime sources {owners[key]} and {name} alias storage")
@@ -168,6 +228,7 @@ class RuntimeEvaluationCollector:
         self._returned_episode_lengths: list[torch.Tensor] = []
         self._pending_policy_hash: str | None = None
         self._last_policy: OrderedDict[str, torch.Tensor] | None = None
+        self._expected_next_policy: OrderedDict[str, torch.Tensor] | None = None
 
     def prepare_policy(self, policy: Mapping[str, torch.Tensor]) -> Mapping[str, torch.Tensor]:
         """Audit exactly once immediately before actor inference; return unchanged mapping."""
@@ -175,9 +236,10 @@ class RuntimeEvaluationCollector:
             raise RuntimeError("runtime policy count exceeds configured coverage")
         if self._pending_policy_hash is not None:
             raise RuntimeError("previous audited policy has not been consumed")
-        audit_actor_observation(policy)
-        if policy["lidar_grid"].dtype != torch.float32:
-            raise TypeError("runtime HistoryActor policy must use float32")
+        policy = _validate_policy("policy", policy)
+        if self._expected_next_policy is not None:
+            _assert_exact_policy_binding(self._expected_next_policy, policy)
+            self._expected_next_policy = None
         value = _policy_hash(policy)
         self._pending_policy_hash = value
         return policy
@@ -188,6 +250,7 @@ class RuntimeEvaluationCollector:
         pre_action_policy: Mapping[str, torch.Tensor],
         action: torch.Tensor,
         pre_reset: Mapping[str, object],
+        returned_policy: Mapping[str, torch.Tensor],
         returned_critic: torch.Tensor,
         returned_episode_length: torch.Tensor,
     ) -> None:
@@ -229,6 +292,9 @@ class RuntimeEvaluationCollector:
         reset_mask = _bool("pre_reset.reset_mask", pre["reset_mask"], (batch,), policy_ref)
         episode = _long("pre_reset.episode_length", pre["episode_length"], (batch,), policy_ref)
         returned = _critic("returned_critic", returned_critic, batch, policy_ref)
+        returned_policy = _validate_policy("returned_policy", returned_policy)
+        if returned_policy["state_vec"].device != policy_ref.device:
+            raise ValueError("returned policy must remain on the actor policy device")
         returned_episode = _long("returned_episode_length", returned_episode_length, (batch,), policy_ref)
         if not torch.equal(done[:, 0], reset_mask) or not torch.equal(done, terminated | truncated):
             raise ValueError("pre_reset reset/done masks are inconsistent")
@@ -244,15 +310,34 @@ class RuntimeEvaluationCollector:
             raise ValueError("accepted anchor/ICS boolean metrics must contain exact 0/1")
         if bool(((anchor_usable < 0.0) | (anchor_usable > 1.0)).any().item()):
             raise ValueError("anchor usable fraction must be in [0,1]")
+        if bool((anchor_error < 0.0).any().item()) or bool((clearance < 0.0).any().item()):
+            raise ValueError("anchor error and exact clearance must be nonnegative")
+        if bool(((beta < 0.0) | (beta > 1.0)).any().item()) or bool(((emergency_float == 1.0) & (beta != 0.0)).any().item()):
+            raise ValueError("ICS beta/emergency domain violates the accepted contract")
+        if not torch.equal(collision, mask_values["collision"]):
+            raise ValueError("collision must equal the independent collision mask")
+        if not torch.equal(terminated, mask_values["collision"] | mask_values["below_height"] | mask_values["above_height"]):
+            raise ValueError("terminated violates independent accepted masks")
+        if not torch.equal(truncated, mask_values["timeout"]):
+            raise ValueError("truncated must equal the timeout mask")
+        expected_reason = torch.full_like(reason, TERMINATION_NONE)
+        expected_reason = torch.where(mask_values["timeout"], torch.full_like(reason, TERMINATION_TIMEOUT), expected_reason)
+        expected_reason = torch.where(mask_values["above_height"], torch.full_like(reason, TERMINATION_ABOVE_HEIGHT), expected_reason)
+        expected_reason = torch.where(mask_values["below_height"], torch.full_like(reason, TERMINATION_BELOW_HEIGHT), expected_reason)
+        expected_reason = torch.where(mask_values["collision"], torch.full_like(reason, TERMINATION_COLLISION), expected_reason)
+        if not torch.equal(reason, expected_reason):
+            raise ValueError("termination reason violates accepted M6 precedence")
         sources = OrderedDict((
+            *((f"pre_action_policy.{name}", value) for name, value in pre_action_policy.items()),
             ("actual", actual), ("issued", issued), ("root", root), ("anchor_error", anchor_error),
             ("anchor_active", anchor_active), ("anchor_usable", anchor_usable), ("clearance", clearance),
             ("collision", collision), ("beta", beta), ("emergency", emergency_float), ("worst", worst),
             ("terminated", terminated), ("truncated", truncated), ("reason", reason),
             *((f"mask_{name}", mask_values[name]) for name in TERMINATION_MASK_KEYS),
             ("returned_critic", returned), ("returned_episode_length", returned_episode),
+            *((f"returned_policy.{name}", value) for name, value in returned_policy.items()),
         ))
-        _reject_source_aliases(pre_action_policy, sources)
+        _reject_source_aliases(sources)
         station_before = self._station_reference.detach().clone()
         command = pre_action_policy["state_vec"][:, -7:-4]
         row = OrderedDict((
@@ -291,6 +376,7 @@ class RuntimeEvaluationCollector:
         self._station_before.append(station_before); self._station_after.append(next_reference.detach().clone())
         self._reset_masks.append(reset_mask.detach().clone()); self._returned_episode_lengths.append(returned_episode.detach().clone())
         self._last_policy = OrderedDict((name, value.detach().clone()) for name, value in pre_action_policy.items())
+        self._expected_next_policy = _policy_snapshot(returned_policy)
         self._pending_policy_hash = None
 
     def finalize(
@@ -306,7 +392,7 @@ class RuntimeEvaluationCollector:
         tree = OrderedDict((
             ("schema_version", "m7.runtime-evaluation.v1"),
             ("contract", OrderedDict((("num_envs", self.config.num_envs), ("policy_steps", self.config.expected_policy_steps), ("samples", self.config.num_envs * self.config.expected_policy_steps)))),
-            ("source_manifest", SOURCE_MANIFEST.copy()),
+            ("source_manifest", _owned_source_manifest()),
             ("policy_hashes", tuple(self._policy_hashes)),
             ("action_hashes", tuple(self._action_hashes)),
             ("station_reference_before_w_m", torch.stack(self._station_before).detach().cpu()),
@@ -325,6 +411,6 @@ class RuntimeEvaluationCollector:
 
 __all__ = [
     "ANCHOR_KEYS", "CONTROL_KEYS", "ICS_KEYS", "PRE_RESET_KEYS", "RUNTIME_TREE_KEYS",
-    "RuntimeEvaluationCollector", "RuntimeEvaluationConfig", "SOURCE_MANIFEST", "TASK_KEYS",
+    "RuntimeEvaluationCollector", "RuntimeEvaluationConfig", "SOURCE_MANIFEST", "SOURCE_METADATA_KEYS", "TASK_KEYS",
     "TERMINATION_KEYS", "TERMINATION_MASK_KEYS",
 ]

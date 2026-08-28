@@ -1,19 +1,23 @@
 # Runtime Evaluation Test Report
 
-Formal candidate `0002`: **PASS**, 42/42 commands with expected exits.
+Revision 1 formal candidate `M7-002-D0002/formal_candidates/0001`: **PASS**.
+All 51 commands produced their expected exits.
 
 | Check | Result |
 | --- | --- |
-| Runtime pure contract | PASS — 17 tests |
+| Revised runtime pure contract | PASS — 43 tests |
+| Structured metadata | PASS — exact 23 fields × 9 ordered metadata keys, exact values/digest, malformed/reordered/mutated negatives, deep ownership |
+| Runtime source negatives | PASS — extra/malformed/shape/dtype/device/nonfinite/domain/precedence/alias/stale/reset corruption fail closed |
+| Post-reset policy binding | PASS — complete `lidar_grid` and `state_vec` retained and exactly bound to next audited actor-only call |
 | M7-001 plus M3-M6 pure replay, twice | PASS — 242 tests and 33 subtests each |
-| M2 static | PASS |
+| M2 static | PASS — 10 tests |
 | Accepted M6 environment smoke | PASS — 2 envs, 32 policy / 640 physics steps |
 | Two M7 runtime processes | PASS each — 2 envs, 8 policy / 160 physics steps |
-| Semantic inspection | PASS each — 16 samples, 1 selective reset |
-| Complete-tree comparison | PASS — 29 tensors, 682 elements, maximum error 0 |
+| Semantic inspection | PASS each — 16 samples, 1 selective reset, terminal row and post-reset binding exact |
+| Complete-tree comparison | PASS — 33 tensors, 1,020,410 elements, maximum numeric error 0 |
 | Eight comparator mutations | PASS — every expected exit was nonzero |
-| Accepted-source/static/external integrity | PASS |
+| Formal/frozen/package assertions | PASS — exact heads/status bytes, kit SHA256, driver/core versions, and byte-identical frozen `pip freeze` |
+| History/scope | PASS — D0001 commits preserved, one correction commit, exact seven-path rework allowlist |
 
-Preserved candidate `0001` failed only an extra `.pt` container-byte equality assertion;
-its semantic comparison was already zero. Candidate `0002` applies the ordered recursive
-semantic comparator required by the Order. Simulator outcome magnitudes were not gates.
+The D0001 formal candidates and all D0001 evidence remain immutable. Simulator
+outcome magnitudes and untrained-policy quality remain non-blocking diagnostics.
