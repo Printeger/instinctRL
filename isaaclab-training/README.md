@@ -135,3 +135,10 @@ compute a range-Jacobian, train, or authorize M8, 128k, 1M, or scale work.
 smoke connects exactly two accepted M6 environments for eight policy steps,
 uses only `HistoryActor.mean_action`, and separates terminal pre-reset records
 from post-reset actor observations and station references.
+
+`instinctlab.evaluation.observability` is a pure evaluation-only M7 core. It
+computes the exact translational range Jacobian from caller-supplied world-frame
+unit surface normals and validity masks. It does not acquire simulator hits,
+wire the runtime collector, define a hardware proxy, or expose normals to the
+actor, control, environment, reward, critic, or training paths. The M7-002
+runtime observability fields therefore remain explicitly `UNAVAILABLE`.
