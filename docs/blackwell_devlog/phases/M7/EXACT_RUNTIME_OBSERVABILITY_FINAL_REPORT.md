@@ -32,5 +32,5 @@ The M7-004 adapter now owns frozen mesh-cache resolution and validates the pinne
 
 No proxy, plot, B0-B8, training, evaluation expansion, M8, 128k/1M/scale run, package mutation, frozen-tree mutation, history rewrite, merge, or push was performed.
 
-`NO NEXT-PHASE WORK WAS STARTED.`  
+`NO NEXT-PHASE WORK WAS STARTED.`
 `AWAITING COMMANDER REVIEW.`

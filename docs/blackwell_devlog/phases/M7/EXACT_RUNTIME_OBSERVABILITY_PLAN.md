@@ -1,7 +1,7 @@
 # M7-005 Exact Runtime Observability Plan
 
-Order: `M7-005`  
-Base: `a8a88de1a12f24011646a9e43615d7c3e0b0f2df`  
+Order: `M7-005`
+Base: `a8a88de1a12f24011646a9e43615d7c3e0b0f2df`
 Branch: `blackwell-migration`
 
 ## Goal
