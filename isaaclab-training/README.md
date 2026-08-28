@@ -142,3 +142,13 @@ unit surface normals and validity masks. It does not acquire simulator hits,
 wire the runtime collector, define a hardware proxy, or expose normals to the
 actor, control, environment, reward, critic, or training paths. The M7-002
 runtime observability fields therefore remain explicitly `UNAVAILABLE`.
+
+`instinctlab.evaluation.raycaster_observability` is an explicitly imported,
+evaluation-runtime-only adapter around the frozen Isaac Lab/Warp exact
+normal-producing ray cast. Its bounded qualification re-casts the accepted
+live MID360 world-frame rays against the same cached mesh and validates exact
+sensor hits, distances, validity, raw miss convention, unit face normals, and
+the unchanged M7 exact-J handoff. It is intentionally not re-exported by the
+pure evaluation package. Private RayCaster buffers are accessed only by the
+hash-guarded qualification runner; no environment or sensor API changes, actor
+inference, runtime-record wiring, proxy, or training behavior are introduced.
