@@ -244,6 +244,11 @@ _B0_REQUIREMENTS = (
         "instinctlab.evaluation.baseline_run.begin_ready_b0_run",
         "5210566e987b737657d30ba44075a4dc835e379eae438726449dbc76002ab847",
     ),
+    CapabilityRequirement(
+        "m7.b0_taslab_environment",
+        "instinctlab.evaluation.baseline_environment.TaslabB0EvaluationEnv",
+        "714080d04dee16e73c408f6c0e8c7c8d4a5d0b5a603e698714c5a330c8509e5d",
+    ),
 )
 
 

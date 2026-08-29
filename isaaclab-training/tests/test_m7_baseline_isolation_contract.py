@@ -49,6 +49,7 @@ B0_ADAPTER_SHA256 = "5fa2b8d746eb231a1bb12f331fe1a76e8f988005e9a315e1dbf622e0bf1
 B0_EXECUTION_SHA256 = "db7b73ee7e9c4b39689814530363bafb6a1ef48c2513a0208c0ff29c7073c108"
 B0_CONTROLLER_SHA256 = "72d104850f8c8fede59998f14661b5b7ea7cd2c113ec11218fe232337732ab52"
 B0_RUN_SHA256 = "5210566e987b737657d30ba44075a4dc835e379eae438726449dbc76002ab847"
+B0_ENVIRONMENT_SHA256 = "714080d04dee16e73c408f6c0e8c7c8d4a5d0b5a603e698714c5a330c8509e5d"
 
 
 def _b0_bindings() -> tuple[CapabilityBinding, ...]:
@@ -175,6 +176,7 @@ def test_exact_canonical_rows_and_every_field() -> None:
         "m7.b0_manifest_execution",
         "m7.b0_taslab_controller_handoff",
         "m7.b0_run_lifecycle",
+        "m7.b0_taslab_environment",
         "m7.b1_state_velocity_upper_bound_adapter",
         "m7.b2_no_history_adapter",
         "m7.b3_no_anchor_adapter",
@@ -213,6 +215,7 @@ def test_exact_policy_schemas_and_b0_evidence_binding() -> None:
         "instinctlab/evaluation/baseline_execution.py": B0_EXECUTION_SHA256,
         "instinctlab/evaluation/baseline_controller_execution.py": B0_CONTROLLER_SHA256,
         "instinctlab/evaluation/baseline_run.py": B0_RUN_SHA256,
+        "instinctlab/evaluation/baseline_environment.py": B0_ENVIRONMENT_SHA256,
     }
     assert {
         name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
@@ -224,6 +227,7 @@ def test_exact_policy_schemas_and_b0_evidence_binding() -> None:
         "m7.b0_manifest_execution",
         "m7.b0_taslab_controller_handoff",
         "m7.b0_run_lifecycle",
+        "m7.b0_taslab_environment",
     )
     assert tuple(item.accepted_provider for item in requirements) == (
         "instinctlab.control.governor.b0_governor",
@@ -232,12 +236,14 @@ def test_exact_policy_schemas_and_b0_evidence_binding() -> None:
         "instinctlab.evaluation.baseline_execution.execute_ready_b0",
         "instinctlab.evaluation.baseline_controller_execution.execute_ready_b0_controller",
         "instinctlab.evaluation.baseline_run.begin_ready_b0_run",
+        "instinctlab.evaluation.baseline_environment.TaslabB0EvaluationEnv",
     )
     assert tuple(item.accepted_evidence_sha256 for item in requirements) == (
         B0_GOVERNOR_SHA256, B0_ROTATION_SHA256, B0_ADAPTER_SHA256,
         B0_EXECUTION_SHA256,
         B0_CONTROLLER_SHA256,
         B0_RUN_SHA256,
+        B0_ENVIRONMENT_SHA256,
     )
     assert all(
         row.capability_requirements[0].accepted_provider is None
@@ -398,8 +404,8 @@ def test_ready_executed_not_ready_and_b8_skipped_hand_fixtures() -> None:
     not_ready = _manifest("B1", ExecutionStatus.NOT_READY)
     skipped = _manifest("B8", ExecutionStatus.SKIPPED)
     expected_hashes = (
-        "5ef25cca3c1c704747cb8eee352acc5eded039558f3f13ed6240e0b378916443",
-        "6da398117194e6aee145b409627fd2a7d59fd0492cefa8ff6e11fc2befd23ac7",
+        "489287a2ac180dfb8ff525e859498fdfa9801a49cdc9809499cc0170f93d6178",
+        "9cbb1b442f615b685540e42692900e8192c9256c500ca11d9b10f752f832b69a",
         "7b685595dc93cfd585e8a1c8ba09f8e2378c354c0d9a5007f98a7960c69ab0dd",
         "ef82d1209605dabc9c5fc289e368bb32d7c9a4107672d3cb5867ef812cdbb8b9",
     )
@@ -641,6 +647,7 @@ def test_accepted_actor_and_source_manifest_files_remain_byte_identical() -> Non
         "instinctlab/evaluation/baseline_execution.py": B0_EXECUTION_SHA256,
         "instinctlab/evaluation/baseline_controller_execution.py": B0_CONTROLLER_SHA256,
         "instinctlab/evaluation/baseline_run.py": B0_RUN_SHA256,
+        "instinctlab/evaluation/baseline_environment.py": B0_ENVIRONMENT_SHA256,
         "instinctlab/evaluation/metrics.py": "a37cf88a04d55ac4e32fee93f5504a6ff446f8804694a310013fb704438a3960",
         "instinctlab/evaluation/runtime.py": "7abaa594a63b0a90d9a0bb5b1ec66a9f71d3c91aa464f2890001a2040384cde3",
     }

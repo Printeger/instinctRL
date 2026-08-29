@@ -179,7 +179,7 @@ does not execute a baseline or scenario.
 
 `instinctlab.evaluation.baseline_execution.execute_ready_b0` is a pure,
 non-integrated dispatch boundary. It accepts only an exact, self-verifying B0
-`READY` manifest with the six accepted capability bindings, invokes the
+`READY` manifest with the seven accepted capability bindings, invokes the
 accepted direct adapter once, and returns an immutable envelope with the
 unchanged READY manifest, its exact `EXECUTED` successor, and the owned adapter
 result. It is not wired to an environment, controller, runtime collector, or
@@ -203,3 +203,14 @@ SHA-256 on every step, then finalizes once to an immutable receipt containing
 only independent READY/EXECUTED manifests, step count, schema, and hash. It
 retains no command, root state, or output tensor and does not integrate an
 environment, collector, scenario, simulator, metrics, or performance logic.
+
+## M7 command-only B0 TASLAB environment mode
+
+`instinctlab.evaluation.baseline_environment` is a direct-import-only,
+evaluation-only subclass boundary over the accepted `TaslabDirectEnv`. It owns
+one exact lifecycle session, accepts only detached finite body-velocity commands
+`[N,3]`, reuses each command for the exact 20 physics substeps, and applies only
+the returned Lee rotor command through the accepted wrench adapter. Finalization
+after the explicit bounded horizon returns the private lifecycle receipt plus
+scalar coverage. The mode does not run a learned actor/control pipeline,
+collector, scenario campaign, metric comparison, training, or performance gate.

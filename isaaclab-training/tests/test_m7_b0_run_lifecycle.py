@@ -538,9 +538,9 @@ def test_exact_api_exports_imports_framing_and_actor_boundary() -> None:
     assert public == {"expected_steps", "finalize", "finalized", "next_step", "state_token", "step"}
 
 
-def test_resigned_stale_five_manifest_rejects_before_session_creation() -> None:
+def test_resigned_stale_six_manifest_rejects_before_session_creation() -> None:
     mapping = OrderedDict(_manifest().to_mapping())
-    mapping["capability_bindings"] = mapping["capability_bindings"][:5]
+    mapping["capability_bindings"] = mapping["capability_bindings"][:6]
     payload = OrderedDict((name, mapping[name]) for name in MANIFEST_PAYLOAD_FIELD_ORDER)
     mapping["manifest_sha256"] = hashlib.sha256(
         json.dumps(payload, ensure_ascii=True, allow_nan=False, separators=(",", ":")).encode("ascii")
