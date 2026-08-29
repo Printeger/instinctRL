@@ -234,6 +234,11 @@ _B0_REQUIREMENTS = (
         "instinctlab.evaluation.baseline_execution.execute_ready_b0",
         "db7b73ee7e9c4b39689814530363bafb6a1ef48c2513a0208c0ff29c7073c108",
     ),
+    CapabilityRequirement(
+        "m7.b0_taslab_controller_handoff",
+        "instinctlab.evaluation.baseline_controller_execution.execute_ready_b0_controller",
+        "72d104850f8c8fede59998f14661b5b7ea7cd2c113ec11218fe232337732ab52",
+    ),
 )
 
 

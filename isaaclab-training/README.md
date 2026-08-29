@@ -184,3 +184,12 @@ accepted direct adapter once, and returns an immutable envelope with the
 unchanged READY manifest, its exact `EXECUTED` successor, and the owned adapter
 result. It is not wired to an environment, controller, runtime collector, or
 scenario and does not claim that a baseline run occurred.
+
+## M7 B0 TASLAB controller handoff
+
+`instinctlab.evaluation.baseline_controller_execution` is a stateless,
+manifest-gated bridge from the command-only B0 boundary to the accepted TASLAB
+Lee controller. Root state is explicitly controller-private and never enters
+the actor schema or manifest. Qualification is limited to one-articulation,
+constant-command headless CUDA wiring; it is not environment integration,
+scenario evaluation, baseline performance, or training.

@@ -325,7 +325,10 @@ def test_no_actor_environment_training_or_evaluation_reverse_import() -> None:
         ROOT / "instinctlab/training",
         ROOT / "instinctlab/evaluation",
     )
-    execution_source = ROOT / "instinctlab/evaluation/baseline_execution.py"
+    exact_exceptions = {
+        ROOT / "instinctlab/evaluation/baseline_execution.py",
+        ROOT / "instinctlab/evaluation/baseline_controller_execution.py",
+    }
     for path in (source for root in roots for source in root.rglob("*.py")):
         tree = ast.parse(path.read_text())
         imported = []
@@ -335,7 +338,7 @@ def test_no_actor_environment_training_or_evaluation_reverse_import() -> None:
             elif isinstance(node, ast.ImportFrom):
                 imported.append((node.module or ""))
         exact_count = imported.count("instinctlab.control.baseline_b0")
-        if path == execution_source:
+        if path in exact_exceptions:
             assert exact_count == 1
             assert "instinctlab.control" not in imported
         else:

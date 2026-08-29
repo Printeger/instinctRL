@@ -108,7 +108,7 @@ def test_successor_changes_only_status_and_hash() -> None:
     changed = {name for name in before if before[name] != after[name]}
     assert changed == {"execution_status", "manifest_sha256"}
     assert before["manifest_sha256"] != after["manifest_sha256"]
-    assert len(before["capability_bindings"]) == 4
+    assert len(before["capability_bindings"]) == 5
 
 
 def test_adapter_is_called_exactly_once_after_manifest_checks(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -157,7 +157,7 @@ def test_unsupported_or_malformed_manifest_rejects_before_adapter(
     "mutation",
     (
         "alias", "switch", "actor_schema", "toggle", "audit", "skip",
-        "stale_three", "missing", "extra", "reordered", "duplicate_name",
+        "stale_three", "stale_four", "missing", "extra", "reordered", "duplicate_name",
         "duplicate_provider", "wrong_provider", "wrong_hash",
     ),
 )
@@ -173,14 +173,15 @@ def test_resigned_semantic_mutations_reject_before_adapter(
     elif mutation == "audit": mapping["actor_audit_status"] = "NOT_RUN"
     elif mutation == "skip": mapping["skip_reason"] = "fallback"
     elif mutation == "stale_three": mapping["capability_bindings"] = bindings[:3]
+    elif mutation == "stale_four": mapping["capability_bindings"] = bindings[:4]
     elif mutation == "missing": mapping["capability_bindings"] = bindings[:-1]
     elif mutation == "extra": bindings.append(OrderedDict((
         ("name", "m7.extra"), ("provider", "instinctlab.extra"), ("evidence_sha256", "1" * 64))))
     elif mutation == "reordered": mapping["capability_bindings"] = [bindings[1], bindings[0], *bindings[2:]]
     elif mutation == "duplicate_name": bindings[1]["name"] = bindings[0]["name"]
     elif mutation == "duplicate_provider": bindings[1]["provider"] = bindings[0]["provider"]
-    elif mutation == "wrong_provider": bindings[3]["provider"] = "instinctlab.evaluation.alias"
-    elif mutation == "wrong_hash": bindings[3]["evidence_sha256"] = "0" * 64
+    elif mutation == "wrong_provider": bindings[4]["provider"] = "instinctlab.evaluation.alias"
+    elif mutation == "wrong_hash": bindings[4]["evidence_sha256"] = "0" * 64
     calls = []
     monkeypatch.setattr(execution_module, "execute_b0_direct_velocity", lambda *args: calls.append(args))
     with pytest.raises((KeyError, TypeError, ValueError)):
