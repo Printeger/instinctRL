@@ -231,3 +231,19 @@ owned result tree. It does not fabricate a learned actor or normalized action,
 enter or weaken the learned runtime collector, retain raw rays or normals,
 feed evaluation privilege into actuation, run a scenario campaign, compare
 baselines, train, or make a flight-performance claim.
+
+## M7 canonical evaluation scenario catalog
+
+`instinctlab.evaluation.scenarios` is a pure-Python, direct-import-only
+identity catalog for the ten ordered Handbook scenario groups. It records the
+eight simulator and two real-robot domains, the sole optional-when-available
+dynamic-obstacle row, command-only generator-to-actor boundary, required log
+identity and accepted metric-name obligations. Every row is truthfully
+`NOT_READY` with no provider or evidence hash.
+
+An exact scenario ID and nonnegative seed may be paired with an unchanged,
+self-verifying `BaselineRunManifest` to produce deterministic canonical
+run-plan identity bytes. The run plan remains non-executable and supplies no
+geometry, generator, command schedule, reset behavior, metric values,
+thresholds, baseline comparison, simulator or real-robot execution, training
+or M8 harness.
