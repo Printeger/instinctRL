@@ -28,6 +28,9 @@ from instinctlab.evaluation.scenarios import (
     ExecutionDomain,
     FORWARDED_ACTOR_FIELDS,
     GENERATOR_PRIVILEGED_FIELDS,
+    OPEN_FIELD_EVIDENCE_SHA256,
+    OPEN_FIELD_PROVIDER,
+    OPEN_FIELD_SEED,
     REAL_ROBOT_REPEATABILITY_METRIC,
     REQUIRED_RUN_LOG_FIELDS,
     RUN_PLAN_FIELD_ORDER,
@@ -122,10 +125,10 @@ def test_evidence_exact_type_and_paired_readiness_invariants(args) -> None:
         ScenarioEvidence(*args)
 
 
-def test_future_ready_evidence_record_cannot_change_registry_truth() -> None:
+def test_ad_hoc_ready_evidence_record_cannot_change_registry_truth() -> None:
     future = ScenarioEvidence(ScenarioReadiness.READY, "future.provider", "0" * 64, None)
     assert future.readiness is ScenarioReadiness.READY
-    assert all(item.evidence.readiness is ScenarioReadiness.NOT_READY for item in scenario_registry())
+    assert tuple(item.scenario_id for item in scenario_registry() if item.evidence.readiness is ScenarioReadiness.READY) == (ScenarioId.OPEN_FIELD,)
 
 
 @pytest.mark.parametrize("record,args", (
@@ -142,16 +145,22 @@ def test_public_records_are_frozen_and_non_subclassable(record, args) -> None:
         type("Forbidden", (record,), {})
 
 
-def test_exact_registry_order_domains_optional_and_not_ready_truth() -> None:
+def test_exact_registry_order_domains_optional_and_sole_ready_truth() -> None:
     rows = scenario_registry()
     assert type(rows) is tuple and len(rows) == 10
     assert tuple(item.scenario_id.value for item in rows) == EXPECTED_IDS
     assert tuple(item.execution_domain for item in rows[:8]) == (ExecutionDomain.SIMULATOR,) * 8
     assert tuple(item.execution_domain for item in rows[8:]) == (ExecutionDomain.REAL_ROBOT,) * 2
     assert tuple(item.scenario_id for item in rows if item.requirement_class is RequirementClass.OPTIONAL_WHEN_AVAILABLE) == (ScenarioId.DYNAMIC_OBSTACLE,)
-    assert all(item.evidence.readiness is ScenarioReadiness.NOT_READY for item in rows)
-    assert all(item.evidence.provider is None and item.evidence.evidence_sha256 is None for item in rows)
-    assert all(type(item.evidence.unavailability_reason) is str and item.evidence.unavailability_reason for item in rows)
+    ready = rows[3]
+    assert ready.scenario_id is ScenarioId.OPEN_FIELD and ready.evidence.readiness is ScenarioReadiness.READY
+    assert (ready.evidence.provider, ready.evidence.evidence_sha256, ready.evidence.unavailability_reason) == (OPEN_FIELD_PROVIDER, OPEN_FIELD_EVIDENCE_SHA256, None)
+    fixture_source = ROOT / "instinctlab/evaluation/scenario_open_field.py"
+    assert hashlib.sha256(fixture_source.read_bytes()).hexdigest() == OPEN_FIELD_EVIDENCE_SHA256
+    not_ready = rows[:3] + rows[4:]
+    assert len(not_ready) == 9 and all(item.evidence.readiness is ScenarioReadiness.NOT_READY for item in not_ready)
+    assert all(item.evidence.provider is None and item.evidence.evidence_sha256 is None for item in not_ready)
+    assert all(type(item.evidence.unavailability_reason) is str and item.evidence.unavailability_reason for item in not_ready)
     assert all(item.requirement_class is RequirementClass.REQUIRED for item in rows if item.scenario_id is not ScenarioId.DYNAMIC_OBSTACLE)
 
 
@@ -293,7 +302,8 @@ def test_catalog_canonical_bytes_hash_round_trip_and_exact_rows() -> None:
     assert mapping["schema_version"] == CATALOG_SCHEMA_VERSION
     assert mapping["scenario_order"] == list(EXPECTED_IDS)
     assert len(mapping["rows"]) == 10
-    assert all(tuple(row) == SCENARIO_ROW_FIELD_ORDER and row["executable"] is False for row in mapping["rows"])
+    assert all(tuple(row) == SCENARIO_ROW_FIELD_ORDER for row in mapping["rows"])
+    assert tuple(row["scenario_id"] for row in mapping["rows"] if row["executable"]) == ("open_field",)
     assert _canonical(mapping) == first.canonical_json
 
 
@@ -357,6 +367,33 @@ def test_run_plan_hash_round_trip_is_exact_and_manifest_bound() -> None:
     assert plan.to_mapping()["scenario_readiness"] == "NOT_READY"
 
 
+def test_exact_open_field_ready_plan_is_sole_executable_plan() -> None:
+    manifest = _manifest("open_field", OPEN_FIELD_SEED, ExecutionStatus.READY)
+    plan = bind_scenario_run_plan(
+        selection=select_scenario(scenario_id="open_field", seed=OPEN_FIELD_SEED),
+        manifest=manifest,
+    )
+    mapping = plan.to_mapping()
+    assert mapping["executable"] is True
+    assert mapping["scenario_provider"] == OPEN_FIELD_PROVIDER
+    assert mapping["scenario_evidence_sha256"] == OPEN_FIELD_EVIDENCE_SHA256
+    assert not hasattr(plan, "execute") and not hasattr(plan, "callback")
+
+
+@pytest.mark.parametrize("scenario_id,seed,status", (
+    ("open_field", OPEN_FIELD_SEED, ExecutionStatus.EXECUTED),
+    ("open_field", OPEN_FIELD_SEED, ExecutionStatus.NOT_READY),
+    ("open_field", OPEN_FIELD_SEED + 1, ExecutionStatus.READY),
+    ("corner", OPEN_FIELD_SEED, ExecutionStatus.READY),
+))
+def test_nonexact_status_identity_or_seed_is_nonexecutable(scenario_id, seed, status) -> None:
+    manifest = _manifest(scenario_id, seed, status)
+    plan = bind_scenario_run_plan(
+        selection=select_scenario(scenario_id=scenario_id, seed=seed), manifest=manifest,
+    )
+    assert plan.to_mapping()["executable"] is False
+
+
 def test_direct_import_isolation_import_time_purity_and_no_forbidden_paths() -> None:
     source = SOURCE.read_text()
     tree = ast.parse(source)
@@ -398,4 +435,4 @@ def test_no_existing_smoke_is_relabelled_as_handbook_scenario() -> None:
     source = SOURCE.read_text()
     assert PRODUCT_COMMIT not in source
     assert "M7-012.runtime-evaluation-smoke" not in source
-    assert all("smoke" not in item.evidence.unavailability_reason for item in scenario_registry())
+    assert all(item.evidence.unavailability_reason is None or "smoke" not in item.evidence.unavailability_reason for item in scenario_registry())

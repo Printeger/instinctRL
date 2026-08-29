@@ -16,6 +16,9 @@ from .baselines import BaselineRunManifest, PLATFORM_ID, SENSOR_ID
 CATALOG_SCHEMA_VERSION: Final = "m7.scenario-catalog.v1"
 RUN_PLAN_SCHEMA_VERSION: Final = "m7.scenario-run-plan.v1"
 REAL_ROBOT_REPEATABILITY_METRIC: Final = "real_robot_repeatability"
+OPEN_FIELD_PROVIDER: Final = "instinctlab.evaluation.scenario_open_field.OpenFieldScenarioFixture"
+OPEN_FIELD_EVIDENCE_SHA256: Final = "5ae2a457ec7de4fcba5c32a014e8bed640c25b4cfd49d3965aedf66cacdd61a3"
+OPEN_FIELD_SEED: Final = 7014
 
 
 class ScenarioId(str, Enum):
@@ -249,17 +252,26 @@ def _not_ready(reason: str) -> ScenarioEvidence:
     return ScenarioEvidence(ScenarioReadiness.NOT_READY, None, None, reason)
 
 
+def _ready(provider: str, evidence_sha256: str) -> ScenarioEvidence:
+    return ScenarioEvidence(ScenarioReadiness.READY, provider, evidence_sha256, None)
+
+
 def _spec(
     scenario_id: ScenarioId,
     domain: ExecutionDomain,
     requirement: RequirementClass,
-    reason: str,
+    reason: str | None,
+    *,
+    provider: str | None = None,
+    evidence_sha256: str | None = None,
 ) -> ScenarioSpec:
     metrics = ACCEPTED_METRIC_NAMES + (
         (REAL_ROBOT_REPEATABILITY_METRIC,) if domain is ExecutionDomain.REAL_ROBOT else ()
     )
     return ScenarioSpec(
-        scenario_id, domain, requirement, _not_ready(reason), FORWARDED_ACTOR_FIELDS,
+        scenario_id, domain, requirement,
+        _not_ready(reason) if reason is not None else _ready(provider, evidence_sha256),
+        FORWARDED_ACTOR_FIELDS,
         GENERATOR_PRIVILEGED_FIELDS, REQUIRED_RUN_LOG_FIELDS, metrics,
     )
 
@@ -268,7 +280,10 @@ _SCENARIO_REGISTRY = (
     _spec(ScenarioId.CORNER, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted corner scenario fixture or evidence"),
     _spec(ScenarioId.FLAT_WALL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted flat-wall scenario fixture or evidence"),
     _spec(ScenarioId.CORRIDOR_TUNNEL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted corridor/tunnel scenario fixture or evidence"),
-    _spec(ScenarioId.OPEN_FIELD, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted open-field scenario fixture or evidence"),
+    _spec(
+        ScenarioId.OPEN_FIELD, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
+        provider=OPEN_FIELD_PROVIDER, evidence_sha256=OPEN_FIELD_EVIDENCE_SHA256,
+    ),
     _spec(ScenarioId.CLUTTERED_INDOOR, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted cluttered-indoor scenario fixture or evidence"),
     _spec(ScenarioId.UNSAFE_COMMAND_TOWARD_WALL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted unsafe-command-toward-wall scenario fixture or evidence"),
     _spec(ScenarioId.GAP_DOORWAY, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted gap/doorway scenario fixture or evidence"),
@@ -292,8 +307,9 @@ def _validate_registry(registry: object) -> tuple[ScenarioSpec, ...]:
     optional = tuple(item.scenario_id for item in registry if item.requirement_class is RequirementClass.OPTIONAL_WHEN_AVAILABLE)
     if optional != (ScenarioId.DYNAMIC_OBSTACLE,):
         raise ValueError("dynamic_obstacle must be the sole optional row")
-    if any(item.evidence.readiness is not ScenarioReadiness.NOT_READY for item in registry):
-        raise ValueError("M7-013 scenario registry must remain entirely NOT_READY")
+    ready = tuple(item.scenario_id for item in registry if item.evidence.readiness is ScenarioReadiness.READY)
+    if ready != (ScenarioId.OPEN_FIELD,):
+        raise ValueError("open_field must be the sole READY scenario")
     return registry
 
 
@@ -344,7 +360,7 @@ def _row_mapping(spec: ScenarioSpec) -> OrderedDict[str, object]:
         ("generator_privileged_fields", list(spec.generator_privileged_fields)),
         ("required_run_log_fields", list(spec.required_run_log_fields)),
         ("metric_obligations", list(spec.metric_obligations)),
-        ("executable", False),
+        ("executable", evidence.readiness is ScenarioReadiness.READY),
     ))
 
 
@@ -409,6 +425,15 @@ def _run_plan_mapping(selection: ScenarioSelection, manifest: BaselineRunManifes
     spec = resolve_scenario(selection.scenario_id)
     evidence = spec.evidence
     baseline = manifest.to_mapping()
+    executable = (
+        selection.scenario_id is ScenarioId.OPEN_FIELD
+        and selection.seed == OPEN_FIELD_SEED
+        and evidence.readiness is ScenarioReadiness.READY
+        and baseline["baseline_id"] == "B0"
+        and baseline["config_switch"] == "direct_velocity"
+        and baseline["actor_audit_status"] == "PASS"
+        and baseline["execution_status"] == "READY"
+    )
     return OrderedDict((
         ("schema_version", RUN_PLAN_SCHEMA_VERSION),
         ("catalog_sha256", build_scenario_catalog().catalog_sha256),
@@ -430,7 +455,7 @@ def _run_plan_mapping(selection: ScenarioSelection, manifest: BaselineRunManifes
         ("forwarded_actor_fields", list(spec.forwarded_actor_fields)),
         ("required_run_log_fields", list(spec.required_run_log_fields)),
         ("metric_obligations", list(spec.metric_obligations)),
-        ("executable", False),
+        ("executable", executable),
     ))
 
 
@@ -496,6 +521,7 @@ def bind_scenario_run_plan(
 __all__ = [
     "ACCEPTED_METRIC_NAMES", "CATALOG_FIELD_ORDER", "CATALOG_SCHEMA_VERSION",
     "ExecutionDomain", "FORWARDED_ACTOR_FIELDS", "GENERATOR_PRIVILEGED_FIELDS",
+    "OPEN_FIELD_EVIDENCE_SHA256", "OPEN_FIELD_PROVIDER", "OPEN_FIELD_SEED",
     "REAL_ROBOT_REPEATABILITY_METRIC", "REQUIRED_RUN_LOG_FIELDS",
     "RUN_PLAN_FIELD_ORDER", "RUN_PLAN_SCHEMA_VERSION", "RequirementClass",
     "SCENARIO_EVIDENCE_FIELD_ORDER", "SCENARIO_IDS", "SCENARIO_ROW_FIELD_ORDER",

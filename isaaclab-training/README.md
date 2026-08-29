@@ -238,12 +238,14 @@ baselines, train, or make a flight-performance claim.
 identity catalog for the ten ordered Handbook scenario groups. It records the
 eight simulator and two real-robot domains, the sole optional-when-available
 dynamic-obstacle row, command-only generator-to-actor boundary, required log
-identity and accepted metric-name obligations. Every row is truthfully
-`NOT_READY` with no provider or evidence hash.
+identity and accepted metric-name obligations. Exactly `open_field` is now
+evidence-backed `READY`; the other nine rows remain `NOT_READY`, and
+`dynamic_obstacle` remains the sole optional row.
 
-An exact scenario ID and nonnegative seed may be paired with an unchanged,
-self-verifying `BaselineRunManifest` to produce deterministic canonical
-run-plan identity bytes. The run plan remains non-executable and supplies no
-geometry, generator, command schedule, reset behavior, metric values,
-thresholds, baseline comparison, simulator or real-robot execution, training
-or M8 harness.
+`instinctlab.evaluation.scenario_open_field` owns the sole exact B0 executable
+fixture: seed 7014, two environments, eight fixed command rows, the accepted
+20-step decimation and the locked plane-only scene. Its final canonical
+qualification binds live geometry, the manifest/run plan, environment receipt,
+B0 evaluation record, coverage and unchanged metric facts. This qualifies
+migration wiring and scenario identity only; it supplies no callback,
+performance threshold, baseline comparison, training, campaign or M8 harness.
