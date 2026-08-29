@@ -6,8 +6,9 @@
 - The mode accepts only exact finite contiguous Torch commands shaped `[N, 3]`
   with the environment's dtype and device. Other shapes, dtypes and devices are
   deliberately rejected.
-- The validated configuration is fixed to two environments on `cuda:0`,
-  decimation 20, no action noise, and a positive exact policy-step horizon.
+- The factory-owned and post-construction-revalidated configuration is fixed
+  to two environments on `cuda:0`, decimation 20, no action noise, and a
+  positive exact policy-step horizon.
 - Reset after motion, early or repeated finalization, horizon overrun and
   rendering are intentionally rejected. Resume, checkpoint, retry, async and
   concurrent ownership are not defined.
@@ -19,8 +20,9 @@
 - The public final receipt is privacy-preserving and contains hashes and
   counts, not trajectory tensors. Detailed state/control tensors remain only
   in coordination evidence and are not actor inputs.
-- The exact cross-process comparator proves equality of accepted public
-  records for the bounded smoke on the frozen host. It does not claim
-  portability to a different GPU, driver, package stack or configuration.
+- The exact cross-process comparator proves equality of 66 accepted tensors
+  and 45,496 elements for the bounded smoke on the frozen host and fixed
+  configuration. It does not claim portability to another GPU, driver,
+  package stack or configuration.
 - No collector, new scenario, metrics integration, MID360 change, reward, PPO,
   training, M8 or scale work was authorized or performed.
