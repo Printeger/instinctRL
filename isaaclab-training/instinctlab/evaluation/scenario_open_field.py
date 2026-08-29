@@ -13,6 +13,7 @@ from instinctlab.control import B0DirectConfig
 from instinctlab.envs.taslab_direct_env import DECIMATION, TaslabDirectEnvCfg
 
 from .baseline_environment import B0EnvironmentConfig, B0EnvironmentResult
+from .baseline_run import B0_RUN_RECEIPT_SCHEMA_VERSION
 from .baseline_runtime import (
     B0RuntimeEvaluationRecord,
     B0RuntimeEvaluationConfig,
@@ -356,7 +357,7 @@ def _validate_b0_record(
     if tuple(manifest.values()) != (ready_manifest.manifest_sha256, executed_manifest.manifest_sha256):
         raise ValueError("B0 record manifest hashes are not bound")
     b0_receipt = _ordered("evaluation_record.receipt", root["receipt"], _B0_RECEIPT_KEYS)
-    if tuple(b0_receipt.values()) != (receipt["schema_version"], PHYSICS_STEPS, receipt["trajectory_sha256"]):
+    if tuple(b0_receipt.values()) != (B0_RUN_RECEIPT_SCHEMA_VERSION, PHYSICS_STEPS, receipt["trajectory_sha256"]):
         raise ValueError("B0 record receipt is not bound")
     if _ordered("evaluation_record.coverage", root["coverage"], _COVERAGE_KEYS) != coverage:
         raise ValueError("B0 record coverage is not bound")
@@ -444,7 +445,7 @@ def _validate_qualification_mapping(mapping: OrderedDict[str, object]) -> None:
     )
     _exact_schedule(_json_tuple(root["commands"]))
     receipt = _ordered("environment_receipt", root["environment_receipt"], _RECEIPT_KEYS)
-    if type(receipt["schema_version"]) is not str or not receipt["schema_version"] or receipt["ready_manifest_sha256"] != manifest.manifest_sha256 or receipt["executed_manifest_sha256"] != executed.manifest_sha256 or type(receipt["step_count"]) is not int or receipt["step_count"] != PHYSICS_STEPS:
+    if receipt["schema_version"] != B0_RUN_RECEIPT_SCHEMA_VERSION or receipt["ready_manifest_sha256"] != manifest.manifest_sha256 or receipt["executed_manifest_sha256"] != executed.manifest_sha256 or type(receipt["step_count"]) is not int or receipt["step_count"] != PHYSICS_STEPS:
         raise ValueError("qualification receipt identity/count is not exact")
     _exact_sha("receipt.executed_manifest_sha256", receipt["executed_manifest_sha256"])
     _exact_sha("receipt.trajectory_sha256", receipt["trajectory_sha256"])

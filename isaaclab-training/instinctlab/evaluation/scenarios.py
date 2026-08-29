@@ -17,7 +17,7 @@ CATALOG_SCHEMA_VERSION: Final = "m7.scenario-catalog.v1"
 RUN_PLAN_SCHEMA_VERSION: Final = "m7.scenario-run-plan.v1"
 REAL_ROBOT_REPEATABILITY_METRIC: Final = "real_robot_repeatability"
 OPEN_FIELD_PROVIDER: Final = "instinctlab.evaluation.scenario_open_field.OpenFieldScenarioFixture"
-OPEN_FIELD_EVIDENCE_SHA256: Final = "92e4d58b9e8295637386d07380479a1036adb4eb028ec684570efc648b037173"
+OPEN_FIELD_EVIDENCE_SHA256: Final = "26b2de5c089e337e2977bbf8279b94d2aaa01d1e181b77a2fbc725925c9b1bb2"
 OPEN_FIELD_SEED: Final = 7014
 
 

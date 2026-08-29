@@ -84,6 +84,7 @@ from instinctlab.evaluation.scenario_open_field import (
     finalize_open_field_qualification,
 )
 from instinctlab.evaluation.scenarios import OPEN_FIELD_EVIDENCE_SHA256
+from instinctlab.evaluation.baseline_run import B0_RUN_RECEIPT_SCHEMA_VERSION
 from instinctlab.evaluation.baseline_runtime import B0_SOURCE_MANIFEST
 from instinctlab.evaluation.baselines import ActorAuditStatus, CapabilityBinding, ExecutionStatus, build_run_manifest
 from instinctlab.evaluation.metrics import EVALUATION_INPUT_KEYS
@@ -146,7 +147,7 @@ def _qualification_payload() -> str:
         ("claim", "exact command-only wiring and aggregation evidence; no policy-performance claim"),
         ("actor_surface", OrderedDict((("kind", "command-only"), ("input_fields", ["commanded_body_velocity_m_s"]), ("learned_actor_called", False), ("normalized_action_present", False)))),
         ("manifest", OrderedDict((("ready_sha256", ready.manifest_sha256), ("executed_sha256", executed.manifest_sha256)))),
-        ("receipt", OrderedDict((("schema_version", "m7.b0-run-receipt.v1"), ("step_count", 160), ("trajectory_sha256", trajectory)))),
+        ("receipt", OrderedDict((("schema_version", B0_RUN_RECEIPT_SCHEMA_VERSION), ("step_count", 160), ("trajectory_sha256", trajectory)))),
         ("coverage", coverage), ("evaluation_input_order", list(EVALUATION_INPUT_KEYS)),
         ("source_manifest", OrderedDict((name, OrderedDict(metadata)) for name, metadata in B0_SOURCE_MANIFEST)),
         ("metric_config", OrderedDict((("schema_version", "m7.evaluation.v1"), ("null_command_threshold_m_s", 0.001), ("full_compliance_beta", 0.999)))),
@@ -167,7 +168,7 @@ def _qualification_payload() -> str:
         ("geometry", OrderedDict((field.name, getattr(geometry, field.name)) for field in fields(geometry))),
         ("commands", COMMAND_SCHEDULE),
         ("evaluation_record", OrderedDict((("sha256", hashlib.sha256(_canonical(record).encode("ascii")).hexdigest()), ("mapping", record)))),
-        ("environment_receipt", OrderedDict((("schema_version", "m7.b0-run-receipt.v1"), ("ready_manifest_sha256", ready.manifest_sha256), ("executed_manifest_sha256", executed.manifest_sha256), ("trajectory_sha256", trajectory), ("step_count", 160)))),
+        ("environment_receipt", OrderedDict((("schema_version", B0_RUN_RECEIPT_SCHEMA_VERSION), ("ready_manifest_sha256", ready.manifest_sha256), ("executed_manifest_sha256", executed.manifest_sha256), ("trajectory_sha256", trajectory), ("step_count", 160)))),
         ("coverage", coverage), ("metrics", metrics),
         ("termination_counts", OrderedDict((("terminated", 0), ("truncated", 0), ("reset", 0)))),
         ("gates", OrderedDict((("catalog_open_field_only", True), ("run_plan_executable", True), ("geometry_exact", True), ("coverage_exact", True), ("receipt_bound", True), ("evaluation_record_bound", True), ("no_reset_or_done", True), ("actor_command_only", True)))),
@@ -353,6 +354,89 @@ def test_nested_b0_metric_forgery_is_rejected_even_with_recomputed_record_hash()
     mapping["evaluation_record"]["sha256"] = hashlib.sha256(_canonical(mapping["evaluation_record"]["mapping"]).encode("ascii")).hexdigest()
     with pytest.raises((TypeError, ValueError)):
         OpenFieldQualificationRecord(_canonical(mapping))
+
+
+def _set_path(mapping: OrderedDict[str, object], path: tuple[str, ...], value: object) -> None:
+    target = mapping
+    for item in path[:-1]:
+        target = target[item]
+    target[path[-1]] = value
+
+
+def _repair_record_hash(mapping: OrderedDict[str, object]) -> None:
+    record = mapping["evaluation_record"]["mapping"]
+    mapping["evaluation_record"]["sha256"] = hashlib.sha256(_canonical(record).encode("ascii")).hexdigest()
+
+
+@pytest.mark.parametrize("name,path", (
+    ("qualification", ("schema_version",)),
+    ("run_plan", ("run_plan", "mapping", "schema_version")),
+    ("manifest", ("manifest", "mapping", "schema_version")),
+    ("b0_record", ("evaluation_record", "mapping", "schema_version")),
+    ("outer_receipt", ("environment_receipt", "schema_version")),
+    ("embedded_receipt", ("evaluation_record", "mapping", "receipt", "schema_version")),
+    ("metric_config", ("evaluation_record", "mapping", "metric_config", "schema_version")),
+))
+def test_every_static_schema_field_rejects_atomic_mutation_without_input_change(name, path) -> None:
+    mapping = json.loads(_qualification_payload(), object_pairs_hook=OrderedDict)
+    _set_path(mapping, path, f"forged.{name}.v9")
+    before = copy.deepcopy(mapping)
+    accepted: list[OpenFieldQualificationRecord] = []
+    with pytest.raises((TypeError, ValueError)):
+        accepted.append(OpenFieldQualificationRecord(_canonical(mapping)))
+    assert accepted == [] and mapping == before
+
+
+@pytest.mark.parametrize("name", (
+    "qualification", "run_plan", "manifest", "b0_record",
+    "receipt_pair", "metric_config",
+))
+def test_every_static_schema_identity_rejects_consistent_mutation_after_digest_repairs(name) -> None:
+    mapping = json.loads(_qualification_payload(), object_pairs_hook=OrderedDict)
+    forged = f"forged.{name}.v9"
+    if name == "qualification":
+        mapping["schema_version"] = forged
+    elif name == "run_plan":
+        mapping["run_plan"]["mapping"]["schema_version"] = forged
+        mapping["run_plan"]["sha256"] = hashlib.sha256(_canonical(mapping["run_plan"]["mapping"]).encode("ascii")).hexdigest()
+    elif name == "manifest":
+        manifest = mapping["manifest"]["mapping"]
+        manifest["schema_version"] = forged
+        manifest_sha = hashlib.sha256(_canonical(manifest).encode("ascii")).hexdigest()
+        mapping["manifest"]["sha256"] = manifest_sha
+        mapping["run_plan"]["mapping"]["manifest_sha256"] = manifest_sha
+        mapping["run_plan"]["sha256"] = hashlib.sha256(_canonical(mapping["run_plan"]["mapping"]).encode("ascii")).hexdigest()
+        mapping["environment_receipt"]["ready_manifest_sha256"] = manifest_sha
+        mapping["evaluation_record"]["mapping"]["manifest"]["ready_sha256"] = manifest_sha
+        _repair_record_hash(mapping)
+    elif name == "b0_record":
+        mapping["evaluation_record"]["mapping"]["schema_version"] = forged
+        _repair_record_hash(mapping)
+    elif name == "receipt_pair":
+        mapping["environment_receipt"]["schema_version"] = forged
+        mapping["evaluation_record"]["mapping"]["receipt"]["schema_version"] = forged
+        _repair_record_hash(mapping)
+    else:
+        mapping["evaluation_record"]["mapping"]["metric_config"]["schema_version"] = forged
+        _repair_record_hash(mapping)
+    before = copy.deepcopy(mapping)
+    accepted: list[OpenFieldQualificationRecord] = []
+    with pytest.raises((TypeError, ValueError)):
+        accepted.append(OpenFieldQualificationRecord(_canonical(mapping)))
+    assert accepted == [] and mapping == before
+
+
+def test_commander_f3_consistent_two_copy_receipt_schema_forgery_is_rejected_atomically() -> None:
+    mapping = json.loads(_qualification_payload(), object_pairs_hook=OrderedDict)
+    mapping["environment_receipt"]["schema_version"] = "forged.receipt.v9"
+    mapping["evaluation_record"]["mapping"]["receipt"]["schema_version"] = "forged.receipt.v9"
+    _repair_record_hash(mapping)
+    before = copy.deepcopy(mapping)
+    accepted: list[OpenFieldQualificationRecord] = []
+    with pytest.raises((TypeError, ValueError)):
+        accepted.append(OpenFieldQualificationRecord(_canonical(mapping)))
+    assert accepted == [] and mapping == before
+    assert B0_RUN_RECEIPT_SCHEMA_VERSION == "m7.b0-run-receipt.v1"
 
 
 def test_duplicate_nested_key_and_nonfinite_json_are_rejected() -> None:

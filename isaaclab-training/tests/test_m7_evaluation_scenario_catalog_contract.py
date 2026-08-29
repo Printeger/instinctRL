@@ -441,7 +441,7 @@ def test_no_existing_smoke_is_relabelled_as_handbook_scenario() -> None:
 
 def test_d0001_non_open_field_registry_rows_remain_byte_equivalent() -> None:
     reviewed = subprocess.run(
-        ["git", "show", "72c4f4b60fece213d368e0def3921bcb29e38a81:isaaclab-training/instinctlab/evaluation/scenarios.py"],
+        ["git", "show", "c6720a6c9a8275ebf1743697126eb5dfb4fb0a11:isaaclab-training/instinctlab/evaluation/scenarios.py"],
         cwd=ROOT.parent, check=True, capture_output=True, text=True,
     ).stdout
     current = SOURCE.read_text()
