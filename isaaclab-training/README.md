@@ -179,7 +179,7 @@ does not execute a baseline or scenario.
 
 `instinctlab.evaluation.baseline_execution.execute_ready_b0` is a pure,
 non-integrated dispatch boundary. It accepts only an exact, self-verifying B0
-`READY` manifest with the four accepted capability bindings, invokes the
+`READY` manifest with the six accepted capability bindings, invokes the
 accepted direct adapter once, and returns an immutable envelope with the
 unchanged READY manifest, its exact `EXECUTED` successor, and the owned adapter
 result. It is not wired to an environment, controller, runtime collector, or
@@ -193,3 +193,13 @@ Lee controller. Root state is explicitly controller-private and never enters
 the actor schema or manifest. Qualification is limited to one-articulation,
 constant-command headless CUDA wiring; it is not environment integration,
 scenario evaluation, baseline performance, or training.
+
+## M7 B0 multi-step run lifecycle
+
+`instinctlab.evaluation.baseline_run` owns one exact canonical B0 `READY`
+manifest for a configured positive number of sequential controller-handoff
+steps. It stages successor, counter, and an injectively framed trajectory
+SHA-256 on every step, then finalizes once to an immutable receipt containing
+only independent READY/EXECUTED manifests, step count, schema, and hash. It
+retains no command, root state, or output tensor and does not integrate an
+environment, collector, scenario, simulator, metrics, or performance logic.

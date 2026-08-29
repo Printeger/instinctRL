@@ -239,6 +239,11 @@ _B0_REQUIREMENTS = (
         "instinctlab.evaluation.baseline_controller_execution.execute_ready_b0_controller",
         "72d104850f8c8fede59998f14661b5b7ea7cd2c113ec11218fe232337732ab52",
     ),
+    CapabilityRequirement(
+        "m7.b0_run_lifecycle",
+        "instinctlab.evaluation.baseline_run.begin_ready_b0_run",
+        "5210566e987b737657d30ba44075a4dc835e379eae438726449dbc76002ab847",
+    ),
 )
 
 

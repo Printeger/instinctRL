@@ -328,6 +328,7 @@ def test_no_actor_environment_training_or_evaluation_reverse_import() -> None:
     exact_exceptions = {
         ROOT / "instinctlab/evaluation/baseline_execution.py",
         ROOT / "instinctlab/evaluation/baseline_controller_execution.py",
+        ROOT / "instinctlab/evaluation/baseline_run.py",
     }
     for path in (source for root in roots for source in root.rglob("*.py")):
         tree = ast.parse(path.read_text())
