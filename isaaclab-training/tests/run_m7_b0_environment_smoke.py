@@ -347,7 +347,6 @@ def main() -> None:
             "lifecycle": result.coverage.lifecycle_calls,
             "wrench": result.coverage.wrench_applications,
         },
-        "oracle_diagnostics": oracle_diagnostics,
         "gates": gates,
     }
     ARGS.output.parent.mkdir(parents=True, exist_ok=True)
