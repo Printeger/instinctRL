@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass
 
 import torch
@@ -31,6 +32,28 @@ def _owned_direct_config(config: B0DirectConfig) -> B0DirectConfig:
     return B0DirectConfig(config.velocity_limit_m_s)
 
 
+def _validate_environment_config(config: TaslabDirectEnvCfg) -> None:
+    if type(config) is not TaslabDirectEnvCfg:
+        raise TypeError("environment_config must be an exact TaslabDirectEnvCfg")
+    if config.decimation != DECIMATION:
+        raise ValueError(f"B0 evaluation decimation must remain exactly {DECIMATION}")
+    if config.scene.num_envs != 2:
+        raise ValueError("B0 evaluation environment must contain exactly two environments")
+    if torch.device(config.sim.device) != torch.device("cuda:0"):
+        raise ValueError("B0 evaluation environment must use exact cuda:0")
+    if config.action_noise_model is not None:
+        raise ValueError("B0 evaluation action noise must be disabled")
+
+
+def _owned_environment_config(config: TaslabDirectEnvCfg) -> TaslabDirectEnvCfg:
+    _validate_environment_config(config)
+    owned = deepcopy(config)
+    if owned is config:
+        raise RuntimeError("environment_config copy must be independently owned")
+    _validate_environment_config(owned)
+    return owned
+
+
 @dataclass(frozen=True, slots=True)
 class B0EnvironmentConfig:
     """Exact bounded policy horizon, direct config, and accepted environment config."""
@@ -44,17 +67,8 @@ class B0EnvironmentConfig:
             raise TypeError("expected_policy_steps must be an exact integer")
         if self.expected_policy_steps <= 0:
             raise ValueError("expected_policy_steps must be positive")
-        if type(self.environment_config) is not TaslabDirectEnvCfg:
-            raise TypeError("environment_config must be an exact TaslabDirectEnvCfg")
-        if self.environment_config.decimation != DECIMATION:
-            raise ValueError(f"B0 evaluation decimation must remain exactly {DECIMATION}")
-        if self.environment_config.scene.num_envs != 2:
-            raise ValueError("B0 evaluation environment must contain exactly two environments")
-        if torch.device(self.environment_config.sim.device) != torch.device("cuda:0"):
-            raise ValueError("B0 evaluation environment must use exact cuda:0")
-        if self.environment_config.action_noise_model is not None:
-            raise ValueError("B0 evaluation action noise must be disabled")
         object.__setattr__(self, "direct_config", _owned_direct_config(self.direct_config))
+        object.__setattr__(self, "environment_config", _owned_environment_config(self.environment_config))
 
 
 @dataclass(frozen=True, slots=True)
@@ -132,6 +146,7 @@ class TaslabB0EvaluationEnv(TaslabDirectEnv):
             raise TypeError("TaslabB0EvaluationEnv must be created by begin_ready_b0_environment")
         if type(config) is not B0EnvironmentConfig:
             raise TypeError("config must be an exact B0EnvironmentConfig")
+        environment_config = _owned_environment_config(config.environment_config)
         expected_physics_steps = config.expected_policy_steps * DECIMATION
         if expected_physics_steps >= 2**64:
             raise ValueError("environment lifecycle horizon exceeds unsigned 64-bit framing")
@@ -140,7 +155,7 @@ class TaslabB0EvaluationEnv(TaslabDirectEnv):
             B0RunConfig(expected_physics_steps, config.direct_config),
         )
         self._b0_motion_started = False
-        super().__init__(config.environment_config, render_mode)
+        super().__init__(environment_config, render_mode)
         if self.num_envs != 2 or self.cfg.decimation != DECIMATION:
             raise RuntimeError("constructed environment violates exact B0 coverage dimensions")
         if torch.device(self.device) != torch.device("cuda:0"):

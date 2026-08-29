@@ -25,6 +25,9 @@ import torch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from instinctlab.assets.taslab_uav.config import TASLAB_UAV
 from instinctlab.control.baseline_b0 import B0DirectConfig
+from instinctlab.control.command_adapter import rotate_body_to_world
+from instinctlab.control.governor import clip_vector_norm
+from instinctlab.control.lee_velocity_controller import taslab_velocity_control
 from instinctlab.evaluation.baseline_environment import (
     B0EnvironmentConfig,
     begin_ready_b0_environment,
@@ -111,6 +114,13 @@ def _all_finite(value: Any) -> bool:
     return True
 
 
+def _exact_error(actual: torch.Tensor, expected: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+    return (
+        torch.count_nonzero(actual != expected),
+        torch.max(torch.abs(actual - expected)),
+    )
+
+
 def main() -> None:
     bundle_path = ARGS.output.with_suffix(".pt")
     if ARGS.output.exists() or bundle_path.exists():
@@ -145,15 +155,48 @@ def main() -> None:
     env._reset_idx = traced_reset
     physics_records: list[dict[str, Any]] = []
     accepted_apply = env._apply_action
+    accepted_wrench_apply = env._wrench_adapter.apply
+    oracle_lee = [None]
+    wrench_command_pointers: list[tuple[int, int]] = []
+
+    def traced_wrench_apply(robot, normalized_commands):
+        if oracle_lee[0] is None:
+            raise AssertionError("evidence oracle must be staged before lifecycle actuation")
+        wrench_command_pointers.append((
+            normalized_commands.untyped_storage().data_ptr(),
+            oracle_lee[0].normalized_rotor_commands.untyped_storage().data_ptr(),
+        ))
+        return accepted_wrench_apply(robot, normalized_commands)
+
+    env._wrench_adapter.apply = traced_wrench_apply
     current_policy = [0]
 
     def traced_apply():
         command = env._b0_current_command.detach().clone()
         root_before = env._robot.data.root_state_w.detach().clone()
+        expected_body = clip_vector_norm(command.detach().clone(), VELOCITY_LIMIT_M_S)
+        expected_world = rotate_body_to_world(
+            expected_body.detach().clone(),
+            root_before[:, 3:7].detach().clone(),
+        )
+        expected_lee = taslab_velocity_control(
+            root_before.detach().clone(),
+            expected_world.detach().clone(),
+        )
+        oracle_lee[0] = expected_lee
         accepted_apply()
         control = env._control
         lee = env._lee
         wrench = env._wrench
+        wrench_pointer, oracle_pointer = wrench_command_pointers[-1]
+        body_mismatch, body_max_error = _exact_error(control.v_final_b, expected_body)
+        world_mismatch, world_max_error = _exact_error(control.v_final_w, expected_world)
+        lee_mismatch = {}
+        lee_max_error = {}
+        for field in fields(expected_lee):
+            mismatch, max_error = _exact_error(getattr(lee, field.name), getattr(expected_lee, field.name))
+            lee_mismatch[field.name] = mismatch
+            lee_max_error[field.name] = max_error
         physics_records.append({
             "physics_step": torch.tensor(env.physics_steps, device=env.device, dtype=torch.long),
             "policy_step": torch.tensor(current_policy[0], device=env.device, dtype=torch.long),
@@ -167,14 +210,34 @@ def main() -> None:
             "anchor_metrics": _cpu(control.anchor_metrics),
             "ics_metrics": _cpu(control.ics_metrics),
             "lee": _cpu(lee),
+            "expected_body_m_s": expected_body.detach().clone(),
+            "expected_world_m_s": expected_world.detach().clone(),
+            "expected_lee": _cpu(expected_lee),
             "rotor": _cpu(wrench.rotor),
             "forces_body_n": wrench.forces_body_n.detach().clone(),
             "torques_body_nm": wrench.torques_body_nm.detach().clone(),
             "body_identity_mismatch": torch.count_nonzero(control.v_gov_b != control.v_final_b),
+            "body_clip_mismatch": body_mismatch,
+            "body_clip_max_error": body_max_error,
+            "world_rotation_mismatch": world_mismatch,
+            "world_rotation_max_error": world_max_error,
+            "lee_direct_mismatch": lee_mismatch,
+            "lee_direct_max_error": lee_max_error,
             "lee_wrench_mismatch": torch.count_nonzero(
                 lee.normalized_rotor_commands != wrench.rotor.normalized_commands
             ),
+            "wrench_used_lifecycle_lee": torch.tensor(
+                wrench_pointer == lee.normalized_rotor_commands.untyped_storage().data_ptr(),
+                device=env.device,
+                dtype=torch.bool,
+            ),
+            "wrench_used_oracle_lee": torch.tensor(
+                wrench_pointer == oracle_pointer,
+                device=env.device,
+                dtype=torch.bool,
+            ),
         })
+        oracle_lee[0] = None
 
     env._apply_action = traced_apply
     policy_records = []
@@ -203,6 +266,18 @@ def main() -> None:
     physics = _stack(physics_records)
     policies = _stack(policy_records)
     rotor = physics["rotor"]
+    oracle_diagnostics = {
+        "body_mismatch_count": int(physics["body_clip_mismatch"].sum().item()),
+        "body_max_error": float(physics["body_clip_max_error"].max().item()),
+        "world_mismatch_count": int(physics["world_rotation_mismatch"].sum().item()),
+        "world_max_error": float(physics["world_rotation_max_error"].max().item()),
+        "lee_mismatch_count": {
+            name: int(value.sum().item()) for name, value in physics["lee_direct_mismatch"].items()
+        },
+        "lee_max_error": {
+            name: float(value.max().item()) for name, value in physics["lee_direct_max_error"].items()
+        },
+    }
     max_thrust = TASLAB_UAV.rotors.force_constants[0] * TASLAB_UAV.rotors.max_angular_velocities[0] ** 2
     gates = {
         "exact_policy_count": result.coverage.policy_steps == POLICY_STEPS,
@@ -218,6 +293,11 @@ def main() -> None:
         "no_done": not bool(policies["terminated"].any().item()) and not bool(policies["truncated"].any().item()),
         "all_finite": _all_finite({"physics": physics, "policies": policies}),
         "body_identity_exact": int(physics["body_identity_mismatch"].sum().item()) == 0,
+        "body_clip_value_exact": oracle_diagnostics["body_mismatch_count"] == 0 and oracle_diagnostics["body_max_error"] == 0.0,
+        "world_rotation_value_exact": oracle_diagnostics["world_mismatch_count"] == 0 and oracle_diagnostics["world_max_error"] == 0.0,
+        "lee_direct_chain_exact": all(value == 0 for value in oracle_diagnostics["lee_mismatch_count"].values()) and all(value == 0.0 for value in oracle_diagnostics["lee_max_error"].values()),
+        "body_norm_bound": bool((torch.linalg.vector_norm(physics["issued_body_m_s"], dim=-1) <= VELOCITY_LIMIT_M_S).all().item()),
+        "oracle_non_actuation": bool(physics["wrench_used_lifecycle_lee"].all().item()) and not bool(physics["wrench_used_oracle_lee"].any().item()),
         "lee_wrench_identity_exact": int(physics["lee_wrench_mismatch"].sum().item()) == 0,
         "alpha_one": bool((physics["alpha"] == 1.0).all().item()),
         "correction_zero": int(torch.count_nonzero(physics["correction_body_m_s"]).item()) == 0,
@@ -267,6 +347,7 @@ def main() -> None:
             "lifecycle": result.coverage.lifecycle_calls,
             "wrench": result.coverage.wrench_applications,
         },
+        "oracle_diagnostics": oracle_diagnostics,
         "gates": gates,
     }
     ARGS.output.parent.mkdir(parents=True, exist_ok=True)
@@ -277,6 +358,7 @@ def main() -> None:
         "receipt": receipt,
         "coverage": _cpu(result.coverage),
         "call_counts": payload["call_counts"],
+        "oracle_diagnostics": oracle_diagnostics,
         "gates": gates,
         "bundle": bundle_path.name,
         "bundle_sha256": bundle_sha,

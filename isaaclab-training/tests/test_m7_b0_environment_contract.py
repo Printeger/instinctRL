@@ -31,7 +31,7 @@ from instinctlab.evaluation.baselines import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "instinctlab/evaluation/baseline_environment.py"
-SOURCE_SHA256 = "714080d04dee16e73c408f6c0e8c7c8d4a5d0b5a603e698714c5a330c8509e5d"
+SOURCE_SHA256 = "b1ecdaa8b7d01ff0f9dd49891c2266908cea5a2540e8a91c33b9626464ded584"
 DECIMATION = 20
 
 
@@ -44,11 +44,14 @@ class FakeTaslabDirectEnvCfg:
 
 
 class FakeDirectRLEnv:
+    simulator_steps = 0
+
     def step(self, action):
         self._pre_physics_step(action)
         for _ in range(self.cfg.decimation):
             self._apply_action()
             self._fake_sim_steps += 1
+            type(self).simulator_steps += 1
         return "observation", "reward", "terminated", "truncated", "extras"
 
     def _validated_root_state(self):
@@ -59,7 +62,10 @@ class FakeDirectRLEnv:
 
 
 class FakeTaslabDirectEnv(FakeDirectRLEnv):
+    constructor_calls = 0
+
     def __init__(self, cfg, render_mode) -> None:
+        type(self).constructor_calls += 1
         self.cfg = cfg
         self.render_mode = render_mode
         self.num_envs = cfg.scene.num_envs
@@ -229,6 +235,55 @@ def test_exact_config_api_factory_and_import_isolation() -> None:
     assert not hasattr(aggregate, "TaslabB0EvaluationEnv")
 
 
+def test_environment_config_owns_nested_copy_and_ignores_caller_mutation() -> None:
+    original = FakeTaslabDirectEnvCfg()
+    config = environment.B0EnvironmentConfig(1, B0DirectConfig(2.0), original)
+    assert config.environment_config is not original
+    assert config.environment_config.scene is not original.scene
+    assert config.environment_config.sim is not original.sim
+    original.decimation = 7
+    original.scene.num_envs = 9
+    original.sim.device = "cpu"
+    original.action_noise_model = object()
+    assert config.environment_config.decimation == DECIMATION
+    assert config.environment_config.scene.num_envs == 2
+    assert config.environment_config.sim.device == "cuda:0"
+    assert config.environment_config.action_noise_model is None
+    value = environment.begin_ready_b0_environment(_manifest(), config, None)
+    assert value.cfg is not config.environment_config
+    assert value.cfg.scene is not config.environment_config.scene
+    assert value.cfg.sim is not config.environment_config.sim
+
+
+@pytest.mark.parametrize("mutation", ("action_noise", "device", "num_envs", "decimation"))
+def test_post_wrapper_nested_drift_rejects_before_constructor_lifecycle_or_simulator(
+    mutation: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    config = environment.B0EnvironmentConfig(1, B0DirectConfig(2.0), FakeTaslabDirectEnvCfg())
+    if mutation == "action_noise":
+        config.environment_config.action_noise_model = object()
+    elif mutation == "device":
+        config.environment_config.sim.device = "cpu"
+    elif mutation == "num_envs":
+        config.environment_config.scene.num_envs = 1
+    else:
+        config.environment_config.decimation = DECIMATION - 1
+    lifecycle_calls = []
+
+    def forbidden_lifecycle(*args, **kwargs):
+        lifecycle_calls.append((args, kwargs))
+        raise AssertionError("lifecycle construction must not run after nested config drift")
+
+    monkeypatch.setattr(environment, "begin_ready_b0_run", forbidden_lifecycle)
+    constructor_calls = FakeTaslabDirectEnv.constructor_calls
+    simulator_steps = FakeTaslabDirectEnv.simulator_steps
+    with pytest.raises(ValueError):
+        environment.begin_ready_b0_environment(_manifest(), config, None)
+    assert lifecycle_calls == []
+    assert FakeTaslabDirectEnv.constructor_calls == constructor_calls
+    assert FakeTaslabDirectEnv.simulator_steps == simulator_steps
+
+
 def test_two_policy_steps_exact_call_control_wrench_and_finalize_contract() -> None:
     value = _new_env(2)
     first = _command()
@@ -384,7 +439,11 @@ def test_cuda_runner_and_complete_comparator_are_bounded_and_fail_closed() -> No
     assert all(token in runner for token in (
         "NUM_ENVS = 2", "POLICY_STEPS = 8", "PHYSICS_STEPS = 160",
         "ENVIRONMENT_SAMPLES = 320", "COMMAND_SCHEDULE", "torch.save",
-        "pipeline_calls", "reset_calls", 'os._exit(0 if gates["all_gates_pass"] else 2)',
+        "pipeline_calls", "reset_calls", "clip_vector_norm",
+        "rotate_body_to_world", "taslab_velocity_control",
+        '"body_clip_value_exact"', '"world_rotation_value_exact"',
+        '"lee_direct_chain_exact"', '"oracle_non_actuation"',
+        'os._exit(0 if gates["all_gates_pass"] else 2)',
     ))
     assert "HistoryActor" not in runner and "training" not in runner
     assert all(token in comparator for token in (

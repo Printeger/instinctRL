@@ -49,7 +49,7 @@ B0_ADAPTER_SHA256 = "5fa2b8d746eb231a1bb12f331fe1a76e8f988005e9a315e1dbf622e0bf1
 B0_EXECUTION_SHA256 = "db7b73ee7e9c4b39689814530363bafb6a1ef48c2513a0208c0ff29c7073c108"
 B0_CONTROLLER_SHA256 = "72d104850f8c8fede59998f14661b5b7ea7cd2c113ec11218fe232337732ab52"
 B0_RUN_SHA256 = "5210566e987b737657d30ba44075a4dc835e379eae438726449dbc76002ab847"
-B0_ENVIRONMENT_SHA256 = "714080d04dee16e73c408f6c0e8c7c8d4a5d0b5a603e698714c5a330c8509e5d"
+B0_ENVIRONMENT_SHA256 = "b1ecdaa8b7d01ff0f9dd49891c2266908cea5a2540e8a91c33b9626464ded584"
 
 
 def _b0_bindings() -> tuple[CapabilityBinding, ...]:
@@ -404,8 +404,8 @@ def test_ready_executed_not_ready_and_b8_skipped_hand_fixtures() -> None:
     not_ready = _manifest("B1", ExecutionStatus.NOT_READY)
     skipped = _manifest("B8", ExecutionStatus.SKIPPED)
     expected_hashes = (
-        "489287a2ac180dfb8ff525e859498fdfa9801a49cdc9809499cc0170f93d6178",
-        "9cbb1b442f615b685540e42692900e8192c9256c500ca11d9b10f752f832b69a",
+        "7441b11b9368e03243edea53465a8624432d83a2ae76e4dc473f7fc54b93b30a",
+        "b69c706f9edc1ff79acbf13e4247bae29afab415888295a4b228a2b312d55776",
         "7b685595dc93cfd585e8a1c8ba09f8e2378c354c0d9a5007f98a7960c69ab0dd",
         "ef82d1209605dabc9c5fc289e368bb32d7c9a4107672d3cb5867ef812cdbb8b9",
     )
