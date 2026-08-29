@@ -8,3 +8,4 @@
 - Reported metric values are wiring evidence only. No threshold, ranking, flight-quality, safety or comparative-performance conclusion is made.
 - Independent Torch archives have different serialization hashes while their complete decoded contents compare exactly.
 - The 25-entry live inventory count is specific to the accepted two-environment runtime topology. Any extra geometry/collision prim fails closed rather than being treated as a supported topology variation.
+- Static protocol identities are qualified for the seven `schema_version` paths exposed by this canonical envelope. Runtime-derived trajectory identity remains cross-bound to the accepted receipt and is not reconstructed by a new offline oracle.

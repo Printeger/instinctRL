@@ -1,24 +1,24 @@
 # M7-014 Evidence Index
 
-Root: `/home/mint/rl_dev/instinctRL_coordination/attempts/development/M7-014/M7-014-D0002/`
+Root: `/home/mint/rl_dev/instinctRL_coordination/attempts/development/M7-014/M7-014-D0003/`
 
-Accepted formal candidate `formal_candidates/0002/` contains `COMMAND_LEDGER.json` (38 commands), per-command stdout/stderr under `raw_logs/`, `REQUIREMENT_MAP.json`, `SUMMARY.json`, D0001 end hashes, three accepted regression outputs and two dedicated open-field bundles/summaries under `smokes/`. Development evidence includes the original Commander probe, the Executor nested-mutation equivalent, the retained failed first probe attempt and its corrected passing rerun. Formal candidate `0001` is retained as superseded evidence of the summary-count parser defect only.
+Accepted formal candidate `formal_candidates/0001/` contains `COMMAND_LEDGER.json` (41 commands), per-command stdout/stderr under `raw_logs/`, `REQUIREMENT_MAP.json`, `SUMMARY.json`, D0001/D0002 end hashes, the seven-path schema audit matrix, three accepted regression outputs and two dedicated open-field bundles/summaries under `smokes/`.
 
 Key hashes:
 
 | Evidence | SHA-256 |
 | --- | --- |
-| fixture source | `92e4d58b9e8295637386d07380479a1036adb4eb028ec684570efc648b037173` |
-| catalog | `11af27cea6311b900c7510dd288035710b70f73f39ebc77905b6a649a72a3bb9` |
-| READY manifest | `90604e33a7f6ae23299a12f7ba0c55256b8bce7d6d0a26b033de7ed88d507f63` |
-| executable run plan | `2764a603d6170034eb6e4cea58879a16a542fdc38d4eba12990da242e5ab23e0` |
+| fixture source | `26b2de5c089e337e2977bbf8279b94d2aaa01d1e181b77a2fbc725925c9b1bb2` |
+| catalog | `5c3c50f93c6c6c29f07958bf9b37f1458bec94d4301ffdb8003e80a782c66687` |
+| READY manifest | `c4837231c237dac7a9911a72c626b62b375fa11ad6397e161ef84b3597a4790b` |
+| executable run plan | `8eb6821bb9c3b82d8be29e54524866d48bdf47cd10e870a9f9a7eecac539baf3` |
 | geometry | `485f81db4dabbeae689539a883d719e75544b1086bd22d6fdec50846f906d6fd` |
-| receipt | `b76cb1e70df5633f766eaf2efce8c5be92d24987392be21634addda86e417832` |
-| B0 evaluation record | `1a1f324dc7b18bb5bdf7dfcd70ddfb181b884e14fd2ab5b93673067181b9d799` |
-| open-field qualification | `c5a35bb6152b138bd152ac2131fd1a1986cff58a40dcef0f9a8d4fb79ee7ec51` |
-| process 1 bundle | `8d01c828f88e166e166a608b1db779238083b6e31a67646a073820a98d293add` |
-| process 2 bundle | `933164e46240a474ea6a0ec0b5be7bf5a6feff70c260f2d5cb71654f6fba1cb9` |
-| formal command ledger | `4ddb7d5426d766ab012061577af528c6b23f2a0f8e59e21fa3d8c79187ce1eff` |
-| formal summary | `df64b2a1f4f5c3bb5f3f30e81bd360a6b6dc50f191e84b8ccb3e0f0a278bfaef` |
+| receipt | `81bc828984536f17fba4781a80f79db82354bd8ed3cfad3ba0ff96437ba5ac68` |
+| B0 evaluation record | `9c4ef19c05a73454d1854b8a8186ef8c76e6d1ffb22daf6654308c2326b4d626` |
+| open-field qualification | `4fe595dd911fc43bc3dba730a23bd5882e5fa5aa64dcd143fd097841c040820c` |
+| process 1 bundle | `a3557198a509b0d9fa20ea30f8afad28d6809fc55dea81884a52bf75982a0257` |
+| process 2 bundle | `2bd122a2e55178104d3b68cc18cac1a463adc2c73558f5ddcf43c6898b2d6a52` |
+| formal command ledger | `ddf7f7190ca7f45eb9442a56b66092afa29cfac7aea1a3c4871af836555778bd` |
+| formal summary | `98ecc649eb1807fe93f180c94696671d8743a0a323072aa5c00e64210788e0fd` |
 
-Each live run persisted a 25-entry full-stage geometry inventory: two exact ray-scene entries, twenty TASLAB articulation mesh entries and three ground-subtree entries. The forbidden set was empty. The Torch archive byte hashes differ as expected; the unchanged complete comparator validates exact decoded field/key order, scalar values and tensor bits and rejects 11 mutation classes. Raw logs and binary bundles are coordination evidence and are not committed to the product repository.
+The schema matrix is `formal_candidates/0001/raw_logs/010_schema_audit_matrix.stdout`; it records each path, atomic and consistent mutation, repaired dependent hashes, rejection error and input-preservation result. Each live run persisted the unchanged 25-entry full-stage geometry inventory and empty forbidden set. The Torch archive byte hashes differ as expected; the unchanged comparator rejects 11 mutation classes. Raw logs and binary bundles are coordination evidence and are not committed to the product repository.
