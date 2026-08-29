@@ -108,7 +108,7 @@ def test_successor_changes_only_status_and_hash() -> None:
     changed = {name for name in before if before[name] != after[name]}
     assert changed == {"execution_status", "manifest_sha256"}
     assert before["manifest_sha256"] != after["manifest_sha256"]
-    assert len(before["capability_bindings"]) == 7
+    assert len(before["capability_bindings"]) == 8
 
 
 def test_adapter_is_called_exactly_once_after_manifest_checks(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -157,7 +157,7 @@ def test_unsupported_or_malformed_manifest_rejects_before_adapter(
     "mutation",
     (
         "alias", "switch", "actor_schema", "toggle", "audit", "skip",
-        "stale_three", "stale_four", "stale_five", "stale_six", "missing", "extra", "reordered", "duplicate_name",
+        "stale_three", "stale_four", "stale_five", "stale_six", "stale_seven", "missing", "extra", "reordered", "duplicate_name",
         "duplicate_provider", "wrong_provider", "wrong_hash",
     ),
 )
@@ -176,6 +176,7 @@ def test_resigned_semantic_mutations_reject_before_adapter(
     elif mutation == "stale_four": mapping["capability_bindings"] = bindings[:4]
     elif mutation == "stale_five": mapping["capability_bindings"] = bindings[:5]
     elif mutation == "stale_six": mapping["capability_bindings"] = bindings[:6]
+    elif mutation == "stale_seven": mapping["capability_bindings"] = bindings[:7]
     elif mutation == "missing": mapping["capability_bindings"] = bindings[:-1]
     elif mutation == "extra": bindings.append(OrderedDict((
         ("name", "m7.extra"), ("provider", "instinctlab.extra"), ("evidence_sha256", "1" * 64))))

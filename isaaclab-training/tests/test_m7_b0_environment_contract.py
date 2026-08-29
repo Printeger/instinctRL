@@ -386,7 +386,7 @@ def test_forged_envelope_and_downstream_apply_failure_boundaries() -> None:
     assert downstream.policy_steps == 0 and downstream._b0_current_command is None
 
 
-def test_source_api_import_privacy_and_exact_seventh_binding_audit() -> None:
+def test_source_api_import_privacy_and_preserved_seventh_binding_audit() -> None:
     source = SOURCE.read_text()
     assert hashlib.sha256(SOURCE.read_bytes()).hexdigest() == SOURCE_SHA256
     tree = ast.parse(source)
@@ -407,14 +407,14 @@ def test_source_api_import_privacy_and_exact_seventh_binding_audit() -> None:
     assert calls.count("self._wrench_adapter.apply") == 1
     assert "instinctlab.evaluation" not in imports
     requirements = resolve_baseline(BaselineId.B0).capability_requirements
-    assert len(requirements) == 7
-    assert tuple(item.name for item in requirements[-2:]) == (
-        "m7.b0_run_lifecycle", "m7.b0_taslab_environment"
+    assert len(requirements) == 8
+    assert tuple(item.name for item in requirements[-3:]) == (
+        "m7.b0_run_lifecycle", "m7.b0_taslab_environment", "m7.b0_runtime_evaluation"
     )
-    assert requirements[-1].accepted_provider == (
+    assert requirements[-2].accepted_provider == (
         "instinctlab.evaluation.baseline_environment.TaslabB0EvaluationEnv"
     )
-    assert requirements[-1].accepted_evidence_sha256 == SOURCE_SHA256
+    assert requirements[-2].accepted_evidence_sha256 == SOURCE_SHA256
     assert resolve_baseline(BaselineId.B0).actor_input_fields == ("commanded_body_velocity_m_s",)
     assert tuple(item.readiness.value for item in (
         resolve_baseline("B1"), resolve_baseline("B8")
@@ -424,6 +424,18 @@ def test_source_api_import_privacy_and_exact_seventh_binding_audit() -> None:
 def test_resigned_stale_six_rejects_under_current_registry() -> None:
     mapping = _manifest().to_mapping()
     mapping["capability_bindings"] = mapping["capability_bindings"][:6]
+    payload = {name: mapping[name] for name in mapping if name != "manifest_sha256"}
+    mapping["manifest_sha256"] = hashlib.sha256(
+        json.dumps(payload, ensure_ascii=True, allow_nan=False, separators=(",", ":")).encode("ascii")
+    ).hexdigest()
+    canonical = json.dumps(mapping, ensure_ascii=True, allow_nan=False, separators=(",", ":"))
+    with pytest.raises(ValueError, match="capability bindings"):
+        BaselineRunManifest.from_json(canonical)
+
+
+def test_resigned_stale_seven_rejects_under_current_registry() -> None:
+    mapping = _manifest().to_mapping()
+    mapping["capability_bindings"] = mapping["capability_bindings"][:7]
     payload = {name: mapping[name] for name in mapping if name != "manifest_sha256"}
     mapping["manifest_sha256"] = hashlib.sha256(
         json.dumps(payload, ensure_ascii=True, allow_nan=False, separators=(",", ":")).encode("ascii")

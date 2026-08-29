@@ -179,7 +179,7 @@ does not execute a baseline or scenario.
 
 `instinctlab.evaluation.baseline_execution.execute_ready_b0` is a pure,
 non-integrated dispatch boundary. It accepts only an exact, self-verifying B0
-`READY` manifest with the seven accepted capability bindings, invokes the
+`READY` manifest with the eight accepted capability bindings, invokes the
 accepted direct adapter once, and returns an immutable envelope with the
 unchanged READY manifest, its exact `EXECUTED` successor, and the owned adapter
 result. It is not wired to an environment, controller, runtime collector, or
@@ -214,3 +214,20 @@ the returned Lee rotor command through the accepted wrench adapter. Finalization
 after the explicit bounded horizon returns the private lifecycle receipt plus
 scalar coverage. The mode does not run a learned actor/control pipeline,
 collector, scenario campaign, metric comparison, training, or performance gate.
+
+## M7 exact B0 runtime evaluation collection
+
+`instinctlab.evaluation.baseline_runtime` is a direct-import-only,
+factory-owned collector for the exact command-only B0 environment mode. It
+stages the sole `[N,3]` command passed to each environment step, consumes the
+same-state pre-reset tree, exact normal-free observability and final lifecycle
+receipt, and applies the unchanged M7 step and aggregate metric formulas. The
+bounded contract is exactly two environments, eight policy rows, 16 metric
+samples, 160 physics/lifecycle/wrench calls, 320 environment samples and
+339,840 rays with no reset or termination.
+
+The collector emits one canonical `m7.b0-runtime-evaluation.v1` record and an
+owned result tree. It does not fabricate a learned actor or normalized action,
+enter or weaken the learned runtime collector, retain raw rays or normals,
+feed evaluation privilege into actuation, run a scenario campaign, compare
+baselines, train, or make a flight-performance claim.

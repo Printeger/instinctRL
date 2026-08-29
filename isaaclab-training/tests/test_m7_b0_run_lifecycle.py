@@ -549,3 +549,16 @@ def test_resigned_stale_six_manifest_rejects_before_session_creation() -> None:
     object.__setattr__(forged, "canonical_json", json.dumps(mapping, ensure_ascii=True, allow_nan=False, separators=(",", ":")))
     with pytest.raises(ValueError):
         begin_ready_b0_run(forged, B0RunConfig(1, B0DirectConfig()))
+
+
+def test_resigned_stale_seven_manifest_rejects_before_session_creation() -> None:
+    mapping = OrderedDict(_manifest().to_mapping())
+    mapping["capability_bindings"] = mapping["capability_bindings"][:7]
+    payload = OrderedDict((name, mapping[name]) for name in MANIFEST_PAYLOAD_FIELD_ORDER)
+    mapping["manifest_sha256"] = hashlib.sha256(
+        json.dumps(payload, ensure_ascii=True, allow_nan=False, separators=(",", ":")).encode("ascii")
+    ).hexdigest()
+    forged = object.__new__(BaselineRunManifest)
+    object.__setattr__(forged, "canonical_json", json.dumps(mapping, ensure_ascii=True, allow_nan=False, separators=(",", ":")))
+    with pytest.raises(ValueError):
+        begin_ready_b0_run(forged, B0RunConfig(1, B0DirectConfig()))
