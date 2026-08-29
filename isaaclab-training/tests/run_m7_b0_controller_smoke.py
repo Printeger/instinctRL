@@ -29,6 +29,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from instinctlab.assets.taslab_uav.articulation import TASLAB_ARTICULATION_CFG, TASLAB_BODY_NAMES
 from instinctlab.assets.taslab_uav.config import TASLAB_UAV
 from instinctlab.control.baseline_b0 import B0DirectConfig
+from instinctlab.control.command_adapter import rotate_body_to_world
+from instinctlab.control.governor import clip_vector_norm
+from instinctlab.control.lee_velocity_controller import taslab_velocity_control
 from instinctlab.control.runtime_adapter import TaslabArticulationWrenchAdapter
 from instinctlab.evaluation.baseline_controller_execution import execute_ready_b0_controller
 from instinctlab.evaluation.baselines import ActorAuditStatus, CapabilityBinding, ExecutionStatus, build_run_manifest, resolve_baseline
@@ -83,6 +86,23 @@ def _fixture(sim: SimulationContext, robot: Articulation, adapter: TaslabArticul
     for step in range(STEPS_PER_FIXTURE):
         root_before = robot.data.root_state_w.clone()
         envelope = execute_ready_b0_controller(manifest, command, root_before, config)
+        oracle_root = root_before.detach().clone()
+        expected_body = clip_vector_norm(command.detach().clone(), config.velocity_limit_m_s)
+        expected_world = rotate_body_to_world(expected_body, oracle_root[:, 3:7].clone())
+        expected_lee = taslab_velocity_control(
+            oracle_root,
+            envelope.b0_execution.result.issued_world_velocity_m_s,
+        )
+        body_error = torch.abs(
+            expected_body - envelope.b0_execution.result.issued_body_velocity_m_s
+        )
+        world_error = torch.abs(
+            expected_world - envelope.b0_execution.result.issued_world_velocity_m_s
+        )
+        lee_errors = tuple(
+            torch.abs(getattr(expected_lee, name) - getattr(envelope.lee_result, name))
+            for name in vars(expected_lee)
+        )
         if executed_json is None: executed_json = envelope.b0_execution.executed_manifest.canonical_json
         elif envelope.b0_execution.executed_manifest.canonical_json != executed_json: raise AssertionError("EXECUTED manifest changed within fixture")
         wrench = adapter.apply(robot, envelope.lee_result.normalized_rotor_commands)
@@ -93,13 +113,31 @@ def _fixture(sim: SimulationContext, robot: Articulation, adapter: TaslabArticul
             "reset_marker": torch.tensor(step == 0, device=DEVICE, dtype=torch.bool),
             "root_before_w": root_before[0].clone(), "root_after_w": robot.data.root_state_w[0].clone(),
             "command_body_m_s": command[0].clone(),
+            "oracle_body_m_s": expected_body[0].clone(),
             "issued_body_m_s": envelope.b0_execution.result.issued_body_velocity_m_s[0].clone(),
+            "body_clip_max_abs_error": body_error.max().clone(),
+            "body_clip_mismatch_count": torch.count_nonzero(body_error).clone(),
+            "oracle_world_m_s": expected_world[0].clone(),
             "issued_world_m_s": envelope.b0_execution.result.issued_world_velocity_m_s[0].clone(),
+            "world_rotation_max_abs_error": world_error.max().clone(),
+            "world_rotation_mismatch_count": torch.count_nonzero(world_error).clone(),
+            "oracle_lee_normalized_rotor": expected_lee.normalized_rotor_commands[0].clone(),
+            "oracle_lee_held_position_w_m": expected_lee.held_position_w_m[0].clone(),
+            "oracle_lee_held_yaw_rad": expected_lee.held_yaw_rad[0].clone(),
+            "oracle_lee_desired_rotation_w": expected_lee.desired_rotation_w[0].clone(),
+            "oracle_lee_collective_thrust_n": expected_lee.collective_thrust_n[0].clone(),
             "lee_normalized_rotor": envelope.lee_result.normalized_rotor_commands[0].clone(),
             "lee_held_position_w_m": envelope.lee_result.held_position_w_m[0].clone(),
             "lee_held_yaw_rad": envelope.lee_result.held_yaw_rad[0].clone(),
             "lee_desired_rotation_w": envelope.lee_result.desired_rotation_w[0].clone(),
             "lee_collective_thrust_n": envelope.lee_result.collective_thrust_n[0].clone(),
+            "lee_direct_chain_max_abs_error": torch.stack(
+                tuple(error.max() for error in lee_errors)
+            ).max().clone(),
+            "lee_direct_chain_mismatch_count": sum(
+                (torch.count_nonzero(error) for error in lee_errors),
+                start=torch.zeros((), dtype=torch.long, device=DEVICE),
+            ).clone(),
             "rotor_target_throttle": wrench.rotor.target_throttle[0].clone(),
             "rotor_throttle": wrench.rotor.throttle[0].clone(),
             "rotor_thrusts_n": wrench.rotor.thrusts_n[0].clone(),
@@ -121,25 +159,38 @@ def main() -> None:
     traces = {name: _fixture(sim, robot, adapter, manifest, command, yaw) for name, command, yaw in FIXTURES}
     floating = [value for trace in traces.values() for value in trace["records"].values() if value.is_floating_point()]
     max_thrust = TASLAB_UAV.rotors.force_constants[0] * TASLAB_UAV.rotors.max_angular_velocities[0] ** 2
+    oracle_errors = {
+        "body_clip_max_abs_error": max(float(trace["records"]["body_clip_max_abs_error"].max().item()) for trace in traces.values()),
+        "body_clip_mismatch_count": sum(int(trace["records"]["body_clip_mismatch_count"].sum().item()) for trace in traces.values()),
+        "world_rotation_max_abs_error": max(float(trace["records"]["world_rotation_max_abs_error"].max().item()) for trace in traces.values()),
+        "world_rotation_mismatch_count": sum(int(trace["records"]["world_rotation_mismatch_count"].sum().item()) for trace in traces.values()),
+        "lee_direct_chain_max_abs_error": max(float(trace["records"]["lee_direct_chain_max_abs_error"].max().item()) for trace in traces.values()),
+        "lee_direct_chain_mismatch_count": sum(int(trace["records"]["lee_direct_chain_mismatch_count"].sum().item()) for trace in traces.values()),
+    }
     gates = {
         "all_finite": all(bool(value.isfinite().all().item()) for value in floating),
         "topology_exact": tuple(robot.body_names) == TASLAB_BODY_NAMES,
         "unit_quaternion": all(bool((torch.abs(torch.linalg.vector_norm(trace["records"]["root_before_w"][:, 3:7], dim=-1) - 1.0) <= 1e-5).all().item()) for trace in traces.values()),
-        "body_clip_exact": all(bool((torch.linalg.vector_norm(trace["records"]["issued_body_m_s"], dim=-1) <= VELOCITY_LIMIT_M_S + 1e-6).all().item()) for trace in traces.values()),
+        "body_clip_value_exact": oracle_errors["body_clip_mismatch_count"] == 0 and oracle_errors["body_clip_max_abs_error"] == 0.0,
+        "body_clip_norm_bound": all(bool((torch.linalg.vector_norm(trace["records"]["issued_body_m_s"], dim=-1) <= VELOCITY_LIMIT_M_S + 1e-6).all().item()) for trace in traces.values()),
+        "world_rotation_value_exact": oracle_errors["world_rotation_mismatch_count"] == 0 and oracle_errors["world_rotation_max_abs_error"] == 0.0,
+        "lee_direct_chain_exact": oracle_errors["lee_direct_chain_mismatch_count"] == 0 and oracle_errors["lee_direct_chain_max_abs_error"] == 0.0,
         "throttle_domain": all(bool(((trace["records"]["rotor_throttle"] >= 0.0) & (trace["records"]["rotor_throttle"] <= 1.0)).all().item()) for trace in traces.values()),
         "target_throttle_domain": all(bool(((trace["records"]["rotor_target_throttle"] >= 0.0) & (trace["records"]["rotor_target_throttle"] <= 1.0)).all().item()) for trace in traces.values()),
-        "physical_thrust_bound": all(bool((trace["records"]["rotor_thrusts_n"] <= max_thrust + 1e-5).all().item()) for trace in traces.values()),
+        "physical_thrust_nonnegative": all(bool((trace["records"]["rotor_thrusts_n"] >= 0.0).all().item()) for trace in traces.values()),
+        "physical_thrust_maximum": all(bool((trace["records"]["rotor_thrusts_n"] <= max_thrust).all().item()) for trace in traces.values()),
         "reset_replay_exact": all(torch.equal(traces["below_identity"]["records"][key], traces["reset_replay"]["records"][key]) for key in traces["below_identity"]["records"]),
         "manifest_constant": len({trace["executed_json"] for trace in traces.values()}) == 1,
         "complete_steps": sum(trace["records"]["step"].numel() for trace in traces.values()) == TOTAL_STEPS,
     }
+    gates["physical_thrust_bound"] = gates["physical_thrust_nonnegative"] and gates["physical_thrust_maximum"]
     gates["all_gates_pass"] = all(gates.values())
     contract = {"schema": "m7-009-b0-controller-smoke-v1", "device": DEVICE, "dt_s": DT_S, "steps_per_fixture": STEPS_PER_FIXTURE, "fixture_count": FIXTURE_COUNT, "total_steps": TOTAL_STEPS, "fixed_seed": FIXED_SEED, "body_names": tuple(robot.body_names), "gpu_name": torch.cuda.get_device_name(0), "torch_version": str(torch.__version__)}
-    payload = {"contract": contract, "traces": traces, "gates": gates}
+    payload = {"contract": contract, "traces": traces, "oracle_errors": oracle_errors, "gates": gates}
     ARGS.output.parent.mkdir(parents=True, exist_ok=True)
     torch.save(_cpu(payload), ARGS.output.with_suffix(".pt"))
     bundle_sha = hashlib.sha256(ARGS.output.with_suffix(".pt").read_bytes()).hexdigest()
-    ARGS.output.write_text(json.dumps({"contract": contract, "gates": gates, "bundle": ARGS.output.with_suffix(".pt").name, "bundle_sha256": bundle_sha}, indent=2, sort_keys=True) + "\n")
+    ARGS.output.write_text(json.dumps({"contract": contract, "oracle_errors": oracle_errors, "gates": gates, "bundle": ARGS.output.with_suffix(".pt").name, "bundle_sha256": bundle_sha}, indent=2, sort_keys=True) + "\n")
     print(json.dumps({"status": "PASS" if gates["all_gates_pass"] else "FAIL", "steps": TOTAL_STEPS}, sort_keys=True)); sys.stdout.flush(); sys.stderr.flush(); os._exit(0 if gates["all_gates_pass"] else 2)
 
 if __name__ == "__main__": main()

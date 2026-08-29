@@ -247,3 +247,44 @@ def test_signature_exports_imports_and_command_only_actor_boundary() -> None:
     assert row.actor_input_fields == ("commanded_body_velocity_m_s",)
     assert "root_state_w" not in row.actor_input_fields
     assert "root_state" not in _manifest().canonical_json
+
+
+def test_bounded_smoke_has_exact_value_oracles_and_nonactuating_two_sided_gates() -> None:
+    path = ROOT / "tests/run_m7_b0_controller_smoke.py"
+    source = path.read_text(encoding="utf-8")
+    tree = ast.parse(source)
+    calls = {
+        node.func.id
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+    }
+    literal_keys = {
+        node.value
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Constant) and isinstance(node.value, str)
+    }
+    assert {"clip_vector_norm", "rotate_body_to_world", "taslab_velocity_control"} <= calls
+    assert {
+        "body_clip_value_exact", "body_clip_norm_bound",
+        "world_rotation_value_exact", "lee_direct_chain_exact",
+        "physical_thrust_nonnegative", "physical_thrust_maximum",
+        "body_clip_max_abs_error", "body_clip_mismatch_count",
+        "world_rotation_max_abs_error", "world_rotation_mismatch_count",
+        "lee_direct_chain_max_abs_error", "lee_direct_chain_mismatch_count",
+    } <= literal_keys
+    assert 'oracle_errors["body_clip_mismatch_count"] == 0' in source
+    assert 'oracle_errors["body_clip_max_abs_error"] == 0.0' in source
+    assert 'oracle_errors["world_rotation_mismatch_count"] == 0' in source
+    assert 'oracle_errors["world_rotation_max_abs_error"] == 0.0' in source
+    assert 'oracle_errors["lee_direct_chain_mismatch_count"] == 0' in source
+    assert 'oracle_errors["lee_direct_chain_max_abs_error"] == 0.0' in source
+    assert 'trace["records"]["rotor_thrusts_n"] >= 0.0' in source
+    assert 'trace["records"]["rotor_thrusts_n"] <= max_thrust' in source
+    adapter_calls = [
+        node for node in ast.walk(tree)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+        and node.func.attr == "apply"
+    ]
+    assert len(adapter_calls) == 1
+    assert ast.unparse(adapter_calls[0].args[1]) == "envelope.lee_result.normalized_rotor_commands"
+    assert "expected_lee" not in ast.unparse(adapter_calls[0])
