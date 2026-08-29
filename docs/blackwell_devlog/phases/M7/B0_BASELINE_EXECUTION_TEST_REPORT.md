@@ -19,3 +19,23 @@ forbids every evaluation module from importing the accepted B0 adapter. M7-008
 requires the new execution module to be the sole such evaluation-side import.
 No test was deselected. Candidate 0001 remains immutable; a bounded nonsemantic
 import-boundary repair and fresh candidate are required.
+
+## Formal candidate 0002
+
+Status: **PASS**.
+
+| Check | Result |
+| --- | --- |
+| Focused execution, twice | PASS, 36 each |
+| Updated isolation, twice | PASS, 72 each |
+| M2 static | PASS, 10 |
+| Accepted M7 pure suites, twice | PASS, 381 each |
+| Relevant M3-M6 regressions, twice | PASS, 203 each |
+| Manifest rejection matrix | PASS, 17 expected exits |
+| Independent processes | PASS, 2 byte-identical records |
+| Source/import/frozen/package/history/diff checks | PASS |
+
+Total recorded pytest results: **1394 passed, 0 skipped**. The obsolete M6
+whole-control-directory assertion was the sole deselection and was replaced by
+the M7 exact-path/source audit. No M7 test was deselected. Candidate 0002 ran
+44 commands, all with actual exit equal to expected exit.

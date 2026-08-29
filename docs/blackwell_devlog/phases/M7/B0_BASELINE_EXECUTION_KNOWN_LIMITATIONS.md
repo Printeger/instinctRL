@@ -5,5 +5,6 @@
 - No baseline or scenario was executed and no performance claim is made.
 - B1-B8 remain non-executable.
 - Tensor inputs/results are deliberately outside canonical manifest payloads.
-- Formal candidate 0001 is rejected pending a bounded import-boundary repair;
-  this record does not claim final qualification.
+- Formal candidate 0001 remains rejected evidence. Candidate 0002 qualifies
+  the bounded public-control-package import repair; no old test was changed or
+  deselected to obtain the pass.
