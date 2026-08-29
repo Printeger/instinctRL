@@ -325,6 +325,7 @@ def test_no_actor_environment_training_or_evaluation_reverse_import() -> None:
         ROOT / "instinctlab/training",
         ROOT / "instinctlab/evaluation",
     )
+    execution_source = ROOT / "instinctlab/evaluation/baseline_execution.py"
     for path in (source for root in roots for source in root.rglob("*.py")):
         tree = ast.parse(path.read_text())
         imported = []
@@ -333,7 +334,12 @@ def test_no_actor_environment_training_or_evaluation_reverse_import() -> None:
                 imported.extend(item.name for item in node.names)
             elif isinstance(node, ast.ImportFrom):
                 imported.append((node.module or ""))
-        assert not any(name.endswith("control.baseline_b0") for name in imported), path
+        exact_count = imported.count("instinctlab.control.baseline_b0")
+        if path == execution_source:
+            assert exact_count == 1
+            assert "instinctlab.control" not in imported
+        else:
+            assert exact_count == 0, path
 
 
 def test_result_type_is_exact_frozen_public_record() -> None:

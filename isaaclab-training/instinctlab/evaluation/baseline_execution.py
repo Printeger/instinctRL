@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 import torch
 
-from instinctlab.control import (
+from instinctlab.control.baseline_b0 import (
     B0DirectConfig,
     B0DirectResult,
     execute_b0_direct_velocity,

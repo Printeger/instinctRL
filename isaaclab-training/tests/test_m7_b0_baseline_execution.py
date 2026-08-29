@@ -238,7 +238,11 @@ def test_signature_exports_import_boundary_and_no_reverse_import() -> None:
     for node in ast.walk(tree):
         if isinstance(node, ast.Import): imports.update(item.name for item in node.names)
         elif isinstance(node, ast.ImportFrom): imports.add(("." * node.level) + (node.module or ""))
-    assert imports == {"__future__", "dataclasses", "torch", "instinctlab.control", ".baselines"}
+    assert imports == {
+        "__future__", "dataclasses", "torch",
+        "instinctlab.control.baseline_b0", ".baselines",
+    }
+    assert "instinctlab.control" not in imports
     for root in (ROOT / "instinctlab/envs", ROOT / "instinctlab/observations", ROOT / "instinctlab/training"):
         assert all("baseline_execution" not in source.read_text() for source in root.rglob("*.py"))
 
