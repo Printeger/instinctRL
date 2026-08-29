@@ -20,9 +20,10 @@ requires the new execution module to be the sole such evaluation-side import.
 No test was deselected. Candidate 0001 remains immutable; a bounded nonsemantic
 import-boundary repair and fresh candidate are required.
 
-## Formal candidate 0002
+## Formal candidates 0002 and 0003
 
-Status: **PASS**.
+Status: **PASS**. Candidate 0003 is the accepted final candidate because its
+program index binds the corrected persisted final-audit argument contract.
 
 | Check | Result |
 | --- | --- |
@@ -35,7 +36,8 @@ Status: **PASS**.
 | Independent processes | PASS, 2 byte-identical records |
 | Source/import/frozen/package/history/diff checks | PASS |
 
-Total recorded pytest results: **1394 passed, 0 skipped**. The obsolete M6
+Each passing candidate recorded **1394 passed, 0 skipped**. The obsolete M6
 whole-control-directory assertion was the sole deselection and was replaced by
 the M7 exact-path/source audit. No M7 test was deselected. Candidate 0002 ran
-44 commands, all with actual exit equal to expected exit.
+44 commands, all with actual exit equal to expected exit. Candidate 0002 is
+preserved as a successful but superseded coordination-evidence attempt.

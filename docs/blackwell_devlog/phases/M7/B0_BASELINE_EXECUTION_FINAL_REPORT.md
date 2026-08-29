@@ -14,7 +14,10 @@ The disclosed nonsemantic repair imports the same exact accepted adapter API
 through M7-007's accepted `instinctlab.control` public export; no provider,
 dispatch, behavior, test, or runtime boundary changed.
 
-Fresh formal candidate 0002 is **PASS**: 17 expected manifest rejections, two
+Formal candidate 0002 passed but was superseded after correcting only the
+persisted final-audit argument distinction between nominal delivery and final
+repair HEAD. Fresh formal candidate 0003 is **PASS** and accepted: 17 expected
+manifest rejections, two
 byte-identical independent-process records, exact source/import/frozen/package
 integrity, 1394 pytest passes with zero skips, full history/allowlist/diff
 hygiene, and clean-state checks all passed. B0 READY/EXECUTED differ only in
