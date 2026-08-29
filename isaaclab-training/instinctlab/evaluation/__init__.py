@@ -30,6 +30,7 @@ from .baselines import (
     validate_baseline_registry,
     validate_capability_bindings,
 )
+from .baseline_execution import B0ExecutionEnvelope, execute_ready_b0
 from .metrics import (
     EVALUATION_INPUT_KEYS,
     METRIC_KEYS,
@@ -53,7 +54,7 @@ from .runtime import RUNTIME_TREE_KEYS, SOURCE_MANIFEST, RuntimeEvaluationCollec
 
 __all__ = [
     "ActorAuditStatus", "AggregateMetricResult", "BASELINE_CONFIG_SWITCHES", "BASELINE_IDS",
-    "BASELINE_REGISTRY", "BASELINE_SPEC_FIELD_ORDER", "BRANCH_KEYS", "BaselineId",
+    "BASELINE_REGISTRY", "BASELINE_SPEC_FIELD_ORDER", "B0ExecutionEnvelope", "BRANCH_KEYS", "BaselineId",
     "BaselineRunManifest", "BaselineSpec", "CAPABILITY_BINDING_FIELD_ORDER",
     "COMPONENT_TOGGLE_FIELD_ORDER", "CapabilityBinding", "CapabilityRequirement",
     "ComponentToggles", "EVALUATION_INPUT_KEYS", "EVALUATION_ONLY_FIELDS",
@@ -64,7 +65,7 @@ __all__ = [
     "PrivilegeClass", "RUNTIME_TREE_KEYS", "ReadinessState", "RuntimeEvaluationCollector",
     "RuntimeEvaluationConfig", "SENSOR_ID", "SOURCE_MANIFEST", "STEP_MASK_KEYS",
     "STEP_VALUE_KEYS", "StepMetricResult", "aggregate_metrics", "build_evaluation_record",
-    "build_run_manifest", "compute_exact_observability", "compute_step_metrics",
+    "build_run_manifest", "compute_exact_observability", "compute_step_metrics", "execute_ready_b0",
     "resolve_baseline", "resolve_config_switch", "validate_baseline_registry",
     "validate_capability_bindings", "validate_evaluation_inputs",
 ]

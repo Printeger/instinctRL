@@ -174,3 +174,13 @@ that boundary to rotate the exact norm-limited body command into the world
 frame. The module adds no learned action, observation/history, sensor, anchor,
 ICS, task, reward, evaluator, environment, simulator, or controller wiring and
 does not execute a baseline or scenario.
+
+## M7 manifest-gated B0 execution boundary
+
+`instinctlab.evaluation.baseline_execution.execute_ready_b0` is a pure,
+non-integrated dispatch boundary. It accepts only an exact, self-verifying B0
+`READY` manifest with the four accepted capability bindings, invokes the
+accepted direct adapter once, and returns an immutable envelope with the
+unchanged READY manifest, its exact `EXECUTED` successor, and the owned adapter
+result. It is not wired to an environment, controller, runtime collector, or
+scenario and does not claim that a baseline run occurred.

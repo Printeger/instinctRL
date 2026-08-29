@@ -229,6 +229,11 @@ _B0_REQUIREMENTS = (
         "instinctlab.control.baseline_b0.execute_b0_direct_velocity",
         "5fa2b8d746eb231a1bb12f331fe1a76e8f988005e9a315e1dbf622e0bf1ed3d1",
     ),
+    CapabilityRequirement(
+        "m7.b0_manifest_execution",
+        "instinctlab.evaluation.baseline_execution.execute_ready_b0",
+        "db7b73ee7e9c4b39689814530363bafb6a1ef48c2513a0208c0ff29c7073c108",
+    ),
 )
 
 
