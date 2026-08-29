@@ -44,7 +44,7 @@ result. Tensor payloads are never serialized into either manifest.
 | `m5.b0_direct_velocity` | `instinctlab.control.governor.b0_governor` | `cd5cf6c73578bc69dc5f696ac6d294d9d4c8db0baaf12265e6715646554b7197` |
 | `m5.b0_body_to_world` | `instinctlab.control.command_adapter.rotate_body_to_world` | `a79ea8d88fb0391762a9efcebbfa783d5287ee1393d3b6e2757812032c32991d` |
 | `m7.b0_direct_adapter` | `instinctlab.control.baseline_b0.execute_b0_direct_velocity` | `5fa2b8d746eb231a1bb12f331fe1a76e8f988005e9a315e1dbf622e0bf1ed3d1` |
-| `m7.b0_manifest_execution` | `instinctlab.evaluation.baseline_execution.execute_ready_b0` | `db7b73ee7e9c4b39689814530363bafb6a1ef48c2513a0208c0ff29c7073c108` |
+| `m7.b0_manifest_execution` | `instinctlab.evaluation.baseline_execution.execute_ready_b0` | `19d910c0f7bf16994ffcc2c0a15a9efc0cbe2e2148075a1056681044e8140767` |
 
 ## Boundary
 

@@ -232,7 +232,7 @@ _B0_REQUIREMENTS = (
     CapabilityRequirement(
         "m7.b0_manifest_execution",
         "instinctlab.evaluation.baseline_execution.execute_ready_b0",
-        "db7b73ee7e9c4b39689814530363bafb6a1ef48c2513a0208c0ff29c7073c108",
+        "19d910c0f7bf16994ffcc2c0a15a9efc0cbe2e2148075a1056681044e8140767",
     ),
 )
 

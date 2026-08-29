@@ -12,7 +12,7 @@ environment, controller, simulator, or scenario integration.
 | Source | Accepted SHA-256 | Use |
 | --- | --- | --- |
 | `instinctlab/control/baseline_b0.py` | `5fa2b8d746eb231a1bb12f331fe1a76e8f988005e9a315e1dbf622e0bf1ed3d1` | Sole adapter invoked after manifest validation |
-| `instinctlab/evaluation/baseline_execution.py` | `db7b73ee7e9c4b39689814530363bafb6a1ef48c2513a0208c0ff29c7073c108` | Fourth exact B0 readiness capability |
+| `instinctlab/evaluation/baseline_execution.py` | `19d910c0f7bf16994ffcc2c0a15a9efc0cbe2e2148075a1056681044e8140767` | Fourth exact B0 readiness capability |
 | M7-007 base | `fb9b9c4af7b0004c0b0647b80acef2e9e85e361b` | Accepted registry, manifest, and adapter contract |
 
 ## Writable files
