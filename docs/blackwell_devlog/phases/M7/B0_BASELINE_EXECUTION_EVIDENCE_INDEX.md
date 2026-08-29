@@ -1,35 +1,38 @@
-# M7-008 B0 Manifest Execution Evidence Index
+# M7-008 Revision 1 Import-Boundary Rework Evidence Index
 
-## Namespace
+## Fresh namespace
 
-`/home/mint/rl_dev/instinctRL_coordination/attempts/development/M7-008/M7-008-D0001/`
+`/home/mint/rl_dev/instinctRL_coordination/attempts/development/M7-008/M7-008-D0002/`
 
-## Persisted programs
+## Accepted candidate
 
-- `generate_execution_record.py` and `compare_execution_records.py`
-- `generate_manifest_fixtures.py` and `generate_negative_matrix.py`
-- `validate_execution_manifest.py`
-- `audit_execution_source.py` and `audit_integrity.py`
-- `run_formal_validation.py`
-- `final_audit.py` and `run_final_audit.py`
-
-## Candidates
-
-| Candidate | Status | Location |
-| --- | --- | --- |
-| `0001` | REJECTED: one obsolete M7-007 reverse-import assertion | `formal_candidates/0001/` |
-| `0002` | PASS, superseded by corrected final-audit program index | `formal_candidates/0002/` |
-| `0003` | ACCEPTED: all 44 commands matched expected exits | `formal_candidates/0003/` |
-
-Candidate directories, command ledgers, stdout, stderr, fixtures, negative
-manifests, process records, and hashes are immutable after execution.
-
-Accepted candidate 0003 exact indexes:
+`formal_candidates/0001/`
 
 - `SUMMARY.json` SHA-256:
-  `56b1e7380f3fd099a9ca7dd865bdf834abf6b502851c5a8a541530005aa14a7e`
+  `6c026403fd2f00d42e761d2dea2d8d7fbe905a54f6b6817b77524c8b3e5db7a6`
 - `COMMAND_LEDGER.json` SHA-256:
-  `7ed05f951d02aa6a593aeab27d625a5bf7fd2353a039dc0dc1693923c0bf628f`
-- Functional commit: `025f22f0f20f81eff121c7dfef14a4bdfa35de6e`
-- Import-boundary repair commit: `dea6a723d3daffe2ece7881e2460d59a3dc6663d`
-- Candidate 0003 product HEAD: `6f6da160b65839bc9575e14007d2218218c29a4e`
+  `325439293b0ef32150129b8f4ea88f96f9d45f320a09295127312e6937ec8e07`
+- `REQUIREMENT_MAP.json` SHA-256:
+  `50c0ca8167707252143e6f8557bb2140ea5e0d9c1f5cd14ad5141b93cc82a2e2`
+- Functional commit:
+  `666aafc1e3f2fa6c153d7c9ea2cda43e7f87de81`
+
+The candidate contains 50-command raw stdout/stderr, exact argv/environment/
+UTC/exit/hash ledger entries, canonical fixtures, 17 negative manifests, two
+independent process records, source/frozen integrity, full rework and original-
+base diffs, and the requirement map.
+
+## D0001 immutability
+
+`D0001_SNAPSHOT.json` records SHA-256 for all 351 D0001 evidence files and has
+SHA-256 `0c7b3e00c99b760d1cdf4f90dec85ed2af7afa3b95628a4f207a89e21dd40d4f`.
+The formal candidate rechecked the snapshot exactly. D0001 programs,
+candidates, final audit, and reports were not changed.
+
+## Persisted D0002 programs
+
+The attempt root contains the import probe, D0001 snapshot verifier, manifest/
+process generators and comparator, 17-case validator matrix, source/integrity
+auditors, formal runner, and final-audit runner. Candidate `SUMMARY.json` binds
+every program and artifact hash. No formal program used stdin, heredoc, here-
+string, process substitution, interpreter/shell `-c`, or ephemeral code.

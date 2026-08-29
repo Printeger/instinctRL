@@ -1,32 +1,38 @@
-# M7-008 B0 Manifest Execution Final Report
+# M7-008 Revision 1 Import-Boundary Rework Final Report
 
-## Scope implemented
+## Finding F1 closure
 
-The functional commit adds an exact canonical B0 READY gate, one accepted
-adapter call, an exact EXECUTED successor, an immutable owned envelope, four-
-source capability binding, exports, focused tests, and non-integration records.
+Functional commit `666aafc1e3f2fa6c153d7c9ea2cda43e7f87de81`
+restores a direct, exact import of `B0DirectConfig`, `B0DirectResult`, and
+`execute_b0_direct_velocity` from `instinctlab.control.baseline_b0`. The
+execution module does not import aggregate `instinctlab.control` or any other
+control module.
+
+The historical M7-007 test now permits exactly this one named evaluation source
+and continues rejecting the direct B0 dependency in every other evaluation,
+actor/observation, environment, task, and training module. The corrected module
+SHA-256 is
+`db7b73ee7e9c4b39689814530363bafb6a1ef48c2513a0208c0ff29c7073c108`;
+the fourth capability and B0 READY/EXECUTED fixtures bind those exact bytes.
+
+## Unchanged behavior
+
+Manifest reparsing, fail-closed B0 READY validation, exact one adapter call,
+READY-to-EXECUTED status/hash-only transition, tensor parity/ownership,
+determinism, B1-B8 values/readiness, exports, and non-integration boundaries are
+unchanged from D0001.
 
 ## Qualification
 
-Formal candidate 0001 remains **REJECTED** immutable evidence. It exposed one
-obsolete M7-007 assertion that prohibited every evaluation-side adapter import.
-The disclosed nonsemantic repair imports the same exact accepted adapter API
-through M7-007's accepted `instinctlab.control` public export; no provider,
-dispatch, behavior, test, or runtime boundary changed.
-
-Formal candidate 0002 passed but was superseded after correcting only the
-persisted final-audit argument distinction between nominal delivery and final
-repair HEAD. Fresh formal candidate 0003 is **PASS** and accepted: 17 expected
-manifest rejections, two
-byte-identical independent-process records, exact source/import/frozen/package
-integrity, 1394 pytest passes with zero skips, full history/allowlist/diff
-hygiene, and clean-state checks all passed. B0 READY/EXECUTED differ only in
-execution status and canonical hash, and only validated B0 READY reaches the
-accepted adapter exactly once.
+Fresh D0002 candidate 0001 is **PASS**: 50 expected command exits, 1,500 pytest
+passes with zero skips, 17 pre-adapter rejects, two byte-identical independent-
+process records, exact import/source/frozen/package integrity, D0001 evidence
+immutability, full allowlist/history/diff hygiene, and clean state passed.
 
 ## Recommendation
 
 `READY_FOR_REVIEW`
 
-No environment/controller/runtime integration, baseline execution, CUDA,
-simulator, training, M8, scale, merge, push, or history rewrite was performed.
+No environment/controller/runtime/scenario integration, baseline execution,
+CUDA, simulator, training, M8, scale work, merge, push, or history rewrite was
+performed.

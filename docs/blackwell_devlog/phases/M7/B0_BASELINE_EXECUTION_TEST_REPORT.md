@@ -1,43 +1,28 @@
-# M7-008 B0 Manifest Execution Test Report
+# M7-008 Revision 1 Import-Boundary Rework Test Report
 
-## Formal candidate 0001
+## D0002 formal candidate 0001
 
-Status: **REJECTED**.
+Status: **PASS**.
 
 | Check | Result | Evidence |
 | --- | --- | --- |
-| Focused execution, twice | PASS, 36 each | candidate 0001 raw logs 030 and 032 |
-| Updated isolation, twice | PASS, 72 each | candidate 0001 raw logs 031 and 033 |
-| M2 static | PASS, 10 | candidate 0001 raw log 034 |
-| 17 manifest rejection cases | PASS | candidate 0001 ledger entries 012-028 |
-| Two independent process records | PASS, byte-identical | candidate 0001 ledger entries 005-007 |
-| Source/frozen/package integrity | PASS | candidate 0001 ledger entries 029 and preceding source audit |
-| Accepted M7 pure suite, first pass | FAIL, 380 passed / 1 failed | candidate 0001 raw log 035 |
+| Exact single-exception import probe | PASS | ledger 006 |
+| D0001 evidence immutability | PASS, 351 files | ledger 005 |
+| Focused execution, twice | PASS, 36 each | ledger 032, 035 |
+| Focused direct adapter, twice | PASS, 53 each | ledger 033, 036 |
+| Focused isolation, twice | PASS, 72 each | ledger 034, 037 |
+| M2 static | PASS, 10 | ledger 038 |
+| Accepted M7 pure suites, twice | PASS, 381 each | ledger 039, 041 |
+| Relevant M3-M6 regressions, twice | PASS, 203 each | ledger 040, 042 |
+| Seventeen manifest rejection cases | PASS, expected exit 2 | ledger 013-029 |
+| Two independent process records | PASS, byte-identical | ledger 007-009 |
+| Source/frozen/package/allowlist/diff checks | PASS | ledger 030-031, 043-050 |
 
-The sole failure is the accepted M7-007 reverse-import assertion, which still
-forbids every evaluation module from importing the accepted B0 adapter. M7-008
-requires the new execution module to be the sole such evaluation-side import.
-No test was deselected. Candidate 0001 remains immutable; a bounded nonsemantic
-import-boundary repair and fresh candidate are required.
+Candidate 0001 records **1,500 pytest passes and zero skips**. The exact
+Order-identified obsolete M6 whole-control-directory assertion is the sole
+deselection; the M7 exact source/path auditors replace it. No M7 or behavior
+test was deselected, and all 50 commands matched their expected exit code.
 
-## Formal candidates 0002 and 0003
-
-Status: **PASS**. Candidate 0003 is the accepted final candidate because its
-program index binds the corrected persisted final-audit argument contract.
-
-| Check | Result |
-| --- | --- |
-| Focused execution, twice | PASS, 36 each |
-| Updated isolation, twice | PASS, 72 each |
-| M2 static | PASS, 10 |
-| Accepted M7 pure suites, twice | PASS, 381 each |
-| Relevant M3-M6 regressions, twice | PASS, 203 each |
-| Manifest rejection matrix | PASS, 17 expected exits |
-| Independent processes | PASS, 2 byte-identical records |
-| Source/import/frozen/package/history/diff checks | PASS |
-
-Each passing candidate recorded **1394 passed, 0 skipped**. The obsolete M6
-whole-control-directory assertion was the sole deselection and was replaced by
-the M7 exact-path/source audit. No M7 test was deselected. Candidate 0002 ran
-44 commands, all with actual exit equal to expected exit. Candidate 0002 is
-preserved as a successful but superseded coordination-evidence attempt.
+Commander probe semantics are exact: the execution module imports
+`instinctlab.control.baseline_b0` once, does not import aggregate
+`instinctlab.control`, and no other prohibited module has the direct B0 import.
