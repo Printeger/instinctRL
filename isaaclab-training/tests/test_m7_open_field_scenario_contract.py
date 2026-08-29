@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import ast
+from collections import OrderedDict
+import copy
 from dataclasses import dataclass, FrozenInstanceError, fields
 import hashlib
-import importlib
 import inspect
+import json
 from pathlib import Path
 from types import ModuleType, SimpleNamespace
 import sys
@@ -53,6 +55,7 @@ sys.modules[fake_environment.__name__] = fake_environment
 
 from instinctlab.evaluation.scenario_open_field import (
     BASELINE_ID,
+    CANONICAL_SCENARIO_PRIMS,
     COMMAND_SCHEDULE,
     ENVIRONMENT_SAMPLES,
     FACE_INDEX_COUNT,
@@ -81,6 +84,9 @@ from instinctlab.evaluation.scenario_open_field import (
     finalize_open_field_qualification,
 )
 from instinctlab.evaluation.scenarios import OPEN_FIELD_EVIDENCE_SHA256
+from instinctlab.evaluation.baseline_runtime import B0_SOURCE_MANIFEST
+from instinctlab.evaluation.baselines import ActorAuditStatus, CapabilityBinding, ExecutionStatus, build_run_manifest
+from instinctlab.evaluation.metrics import EVALUATION_INPUT_KEYS
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -91,12 +97,83 @@ PRODUCT_COMMIT = "deeb7ad4221df1f0e74ec0ac24affefbc27b817d"
 def _geometry() -> OpenFieldGeometryEvidence:
     axis = tuple(float(value) for value in range(-42, 43, 2))
     return OpenFieldGeometryEvidence(
-        ((GROUND_PRIM_PATH, "Xform"), (RAY_SCENE_PRIM_PATH, "Xform"), (RAY_MESH_PRIM_PATH, "Mesh")),
+        CANONICAL_SCENARIO_PRIMS, (),
         GROUND_PRIM_PATH, RAY_SCENE_PRIM_PATH, RAY_MESH_PRIM_PATH,
         RAYCASTER_MESH_PRIM_PATHS, POINT_COUNT, TRIANGLE_COUNT,
         FACE_INDEX_COUNT, (-42.0, -42.0, 0.0), (42.0, 42.0, 0.0),
         axis, axis, (0.0,),
     )
+
+
+def _canonical(value: object) -> str:
+    return json.dumps(value, ensure_ascii=True, allow_nan=False, separators=(",", ":"))
+
+
+def _metric_rows() -> list[OrderedDict[str, object]]:
+    specs = (
+        ("tracking_rmse_m_s", "root_mean_square", "m/s", True, 1.0, 16.0, 16, 16),
+        ("null_station_drift_mean_m", "mean", "m", True, 1.0, 8.0, 8, 8),
+        ("null_station_speed_mean_m_s", "mean", "m/s", True, 0.5, 4.0, 8, 8),
+        ("anchor_error_mean_m", "mean", "m", False, None, None, 0, 0),
+        ("minimum_clearance_m", "minimum", "m", True, 2.0, 2.0, 1, 16),
+        ("collision_rate", "mean", "fraction", True, 0.0, 0.0, 16, 16),
+        ("ics_violation_rate", "mean", "fraction", True, 0.0, 0.0, 16, 16),
+        ("command_preservation_ratio", "mean", "ratio", True, 1.0, 8.0, 8, 8),
+        ("intervention_frequency", "mean", "fraction", True, 0.0, 0.0, 16, 16),
+        ("observability_mean", "mean", "source-defined", True, 0.0, 0.0, 16, 16),
+    )
+    return [OrderedDict((("name", name), ("reduction", reduction), ("unit", unit), ("available", available), ("value", value), ("numerator", numerator), ("denominator", denominator), ("valid_count", valid), ("total_count", 16))) for name, reduction, unit, available, value, numerator, denominator, valid in specs]
+
+
+def _qualification_payload() -> str:
+    fixture = create_open_field_fixture(product_commit=PRODUCT_COMMIT)
+    ready = fixture.manifest
+    ready_mapping = ready.to_mapping()
+    bindings = tuple(CapabilityBinding(item["name"], item["provider"], item["evidence_sha256"]) for item in ready_mapping["capability_bindings"])
+    executed = build_run_manifest(
+        product_commit=PRODUCT_COMMIT, baseline_id="B0", config_switch="direct_velocity",
+        capability_bindings=bindings, scenario_id="open_field", seed=7014,
+        actor_audit_status=ActorAuditStatus.PASS, execution_status=ExecutionStatus.EXECUTED,
+        skip_reason=None,
+    )
+    trajectory = "1" * 64
+    coverage = OrderedDict((("num_envs", 2), ("policy_steps", 8), ("metric_samples", 16), ("physics_steps", 160), ("lifecycle_calls", 160), ("wrench_applications", 160), ("environment_samples", 320), ("rays_per_environment", 21240), ("ray_samples", 339840)))
+    metrics = _metric_rows()
+    b0_metrics = OrderedDict((row["name"], OrderedDict((key, row[key]) for key in ("reduction", "unit", "available", "value", "numerator", "denominator", "valid_count", "total_count"))) for row in metrics)
+    record = OrderedDict((
+        ("schema_version", "m7.b0-runtime-evaluation.v1"), ("platform", "TASLAB_UAV"),
+        ("sensor", "Livox MID360"), ("baseline_id", "B0"),
+        ("claim", "exact command-only wiring and aggregation evidence; no policy-performance claim"),
+        ("actor_surface", OrderedDict((("kind", "command-only"), ("input_fields", ["commanded_body_velocity_m_s"]), ("learned_actor_called", False), ("normalized_action_present", False)))),
+        ("manifest", OrderedDict((("ready_sha256", ready.manifest_sha256), ("executed_sha256", executed.manifest_sha256)))),
+        ("receipt", OrderedDict((("schema_version", "m7.b0-run-receipt.v1"), ("step_count", 160), ("trajectory_sha256", trajectory)))),
+        ("coverage", coverage), ("evaluation_input_order", list(EVALUATION_INPUT_KEYS)),
+        ("source_manifest", OrderedDict((name, OrderedDict(metadata)) for name, metadata in B0_SOURCE_MANIFEST)),
+        ("metric_config", OrderedDict((("schema_version", "m7.evaluation.v1"), ("null_command_threshold_m_s", 0.001), ("full_compliance_beta", 0.999)))),
+        ("observability_source_counts", OrderedDict((("UNAVAILABLE", 0), ("PROXY", 0), ("EXACT", 16)))),
+        ("metrics", b0_metrics),
+        ("termination_counts", OrderedDict((("collision", 0), ("below_height", 0), ("above_height", 0), ("timeout", 0), ("terminated", 0), ("truncated", 0), ("done", 0), ("reason_none", 16)))),
+        ("provenance", OrderedDict((("product_commit", PRODUCT_COMMIT), ("fixture_id", FIXTURE_ID), ("generator_id", GENERATOR_ID), ("seed", 7014)))),
+        ("gates", OrderedDict((("coverage_exact", True), ("metrics_unchanged", True), ("command_only_actor_surface", True), ("observability_normal_free", True), ("no_reset", True), ("all_finite", True)))),
+    ))
+    geometry = _geometry()
+    mapping = OrderedDict((
+        ("schema_version", QUALIFICATION_SCHEMA_VERSION),
+        ("catalog_sha256", fixture.run_plan.to_mapping()["catalog_sha256"]),
+        ("fixture", OrderedDict((("fixture_id", FIXTURE_ID), ("generator_id", GENERATOR_ID), ("scenario_id", "open_field"), ("baseline_id", "B0"), ("seed", 7014)))),
+        ("fixture_source_sha256", OPEN_FIELD_EVIDENCE_SHA256),
+        ("run_plan", OrderedDict((("sha256", fixture.run_plan.run_plan_sha256), ("mapping", fixture.run_plan.to_mapping())))),
+        ("manifest", OrderedDict((("sha256", ready.manifest_sha256), ("mapping", ready_mapping)))),
+        ("geometry", OrderedDict((field.name, getattr(geometry, field.name)) for field in fields(geometry))),
+        ("commands", COMMAND_SCHEDULE),
+        ("evaluation_record", OrderedDict((("sha256", hashlib.sha256(_canonical(record).encode("ascii")).hexdigest()), ("mapping", record)))),
+        ("environment_receipt", OrderedDict((("schema_version", "m7.b0-run-receipt.v1"), ("ready_manifest_sha256", ready.manifest_sha256), ("executed_manifest_sha256", executed.manifest_sha256), ("trajectory_sha256", trajectory), ("step_count", 160)))),
+        ("coverage", coverage), ("metrics", metrics),
+        ("termination_counts", OrderedDict((("terminated", 0), ("truncated", 0), ("reset", 0)))),
+        ("gates", OrderedDict((("catalog_open_field_only", True), ("run_plan_executable", True), ("geometry_exact", True), ("coverage_exact", True), ("receipt_bound", True), ("evaluation_record_bound", True), ("no_reset_or_done", True), ("actor_command_only", True)))),
+        ("claim", "exact open-field B0 migration wiring and scenario identity only; no performance or comparison claim"),
+    ))
+    return _canonical(mapping)
 
 
 def test_exact_constants_schedule_and_committed_source_identity() -> None:
@@ -141,7 +218,8 @@ def test_fixture_factory_rejects_commit_alias_or_coercion(value) -> None:
 def test_geometry_exact_plane_grid_topology_and_frozen_type() -> None:
     geometry = _geometry()
     assert tuple(field.name for field in fields(geometry)) == (
-        "prim_paths_and_types", "ground_prim_path", "ray_scene_prim_path",
+        "prim_paths_and_types", "forbidden_scenario_geometry_paths",
+        "ground_prim_path", "ray_scene_prim_path",
         "ray_mesh_prim_path", "raycaster_mesh_prim_paths", "point_count",
         "triangle_count", "face_index_count", "minimum_xyz_m", "maximum_xyz_m",
         "unique_x_m", "unique_y_m", "unique_z_m",
@@ -153,6 +231,10 @@ def test_geometry_exact_plane_grid_topology_and_frozen_type() -> None:
 
 
 @pytest.mark.parametrize("field,value", (
+    ("prim_paths_and_types", CANONICAL_SCENARIO_PRIMS + (("/World/Wall", "Mesh"),)),
+    ("prim_paths_and_types", CANONICAL_SCENARIO_PRIMS[::-1]),
+    ("prim_paths_and_types", ((GROUND_PRIM_PATH, "Mesh"),) + CANONICAL_SCENARIO_PRIMS[1:]),
+    ("forbidden_scenario_geometry_paths", ("/World/Wall",)),
     ("point_count", POINT_COUNT - 1),
     ("triangle_count", TRIANGLE_COUNT + 1),
     ("face_index_count", FACE_INDEX_COUNT - 3),
@@ -185,6 +267,101 @@ def test_qualification_record_rejects_noncanonical_incomplete_or_wrong_schema() 
         with pytest.raises((TypeError, ValueError)):
             OpenFieldQualificationRecord(payload)
     assert QUALIFICATION_SCHEMA_VERSION == "m7.open-field-b0-qualification.v1"
+
+
+def test_semantic_qualification_round_trip_is_exact() -> None:
+    payload = _qualification_payload()
+    record = OpenFieldQualificationRecord(payload)
+    assert record.canonical_json == payload
+    assert record.to_mapping()["geometry"]["forbidden_scenario_geometry_paths"] == []
+    assert record.to_mapping()["claim"].endswith("no performance or comparison claim")
+    assert record.qualification_sha256 == hashlib.sha256(payload.encode("ascii")).hexdigest()
+
+
+def test_all_nested_qualification_mutations_fail_atomically_without_input_change() -> None:
+    original = json.loads(_qualification_payload(), object_pairs_hook=OrderedDict)
+    snapshot = copy.deepcopy(original)
+    accepted: list[OpenFieldQualificationRecord] = []
+
+    def set_path(mapping, path, value):
+        target = mapping
+        for item in path[:-1]:
+            target = target[item]
+        target[path[-1]] = value
+
+    cases = (
+        ("root_schema", ("schema_version",), "bad"),
+        ("catalog", ("catalog_sha256",), "0" * 64),
+        ("fixture", ("fixture", "seed"), 7015),
+        ("source", ("fixture_source_sha256",), "0" * 64),
+        ("plan_hash", ("run_plan", "sha256"), "0" * 64),
+        ("plan_mapping", ("run_plan", "mapping", "seed"), 7015),
+        ("manifest_hash", ("manifest", "sha256"), "0" * 64),
+        ("manifest_mapping", ("manifest", "mapping", "scenario_id"), "corner"),
+        ("geometry_count", ("geometry", "point_count"), 0),
+        ("geometry_forbidden", ("geometry", "forbidden_scenario_geometry_paths"), ["/World/Wall"]),
+        ("geometry_extra", ("geometry", "prim_paths_and_types"), [*original["geometry"]["prim_paths_and_types"], ["/World/Wall", "Mesh"]]),
+        ("commands", ("commands", 0, 0, 0), 0.1),
+        ("record_hash", ("evaluation_record", "sha256"), "0" * 64),
+        ("record_metric", ("evaluation_record", "mapping", "metrics", "tracking_rmse_m_s", "denominator"), 999),
+        ("receipt", ("environment_receipt", "step_count"), 159),
+        ("coverage", ("coverage", "ray_samples"), 1),
+        ("metric_count", ("metrics", 0, "denominator"), 999),
+        ("termination", ("termination_counts", "reset"), 1),
+        ("gate", ("gates", "geometry_exact"), False),
+        ("claim", ("claim",), "performance pass"),
+        ("actor_private", ("evaluation_record", "mapping", "actor_surface", "input_fields"), ["commanded_body_velocity_m_s", "pose"]),
+        ("b0_source", ("evaluation_record", "mapping", "source_manifest", "commanded_velocity_b_m_s", "frame"), "world"),
+        ("b0_observability_count", ("evaluation_record", "mapping", "observability_source_counts", "EXACT"), 15),
+        ("b0_termination", ("evaluation_record", "mapping", "termination_counts", "done"), 1),
+        ("b0_provenance", ("evaluation_record", "mapping", "provenance", "fixture_id"), "forged"),
+    )
+    for name, path, value in cases:
+        candidate = copy.deepcopy(original)
+        set_path(candidate, path, value)
+        before = copy.deepcopy(candidate)
+        try:
+            accepted.append(OpenFieldQualificationRecord(_canonical(candidate)))
+        except (TypeError, ValueError):
+            pass
+        else:
+            pytest.fail(f"nested mutation accepted: {name}")
+        assert candidate == before, name
+
+    for name, mutate in (
+        ("root_missing", lambda value: value.pop("claim")),
+        ("root_extra", lambda value: value.update(private_pose=[0.0])),
+        ("root_reordered", lambda value: value.move_to_end("schema_version")),
+        ("geometry_private", lambda value: value["geometry"].update(private_wall=True)),
+        ("geometry_reordered", lambda value: value["geometry"].move_to_end("prim_paths_and_types")),
+        ("metric_private", lambda value: value["metrics"][0].update(private_count=1)),
+        ("metric_reordered", lambda value: value["metrics"][0].move_to_end("name")),
+        ("record_private", lambda value: value["evaluation_record"]["mapping"].update(private_state=True)),
+        ("record_reordered", lambda value: value["evaluation_record"]["mapping"].move_to_end("schema_version")),
+    ):
+        candidate = copy.deepcopy(original); mutate(candidate); before = copy.deepcopy(candidate)
+        with pytest.raises((TypeError, ValueError)):
+            accepted.append(OpenFieldQualificationRecord(_canonical(candidate)))
+        assert candidate == before, name
+    assert accepted == [] and original == snapshot
+
+
+def test_nested_b0_metric_forgery_is_rejected_even_with_recomputed_record_hash() -> None:
+    mapping = json.loads(_qualification_payload(), object_pairs_hook=OrderedDict)
+    metric = mapping["evaluation_record"]["mapping"]["metrics"]["tracking_rmse_m_s"]
+    metric["denominator"] = 999
+    mapping["evaluation_record"]["sha256"] = hashlib.sha256(_canonical(mapping["evaluation_record"]["mapping"]).encode("ascii")).hexdigest()
+    with pytest.raises((TypeError, ValueError)):
+        OpenFieldQualificationRecord(_canonical(mapping))
+
+
+def test_duplicate_nested_key_and_nonfinite_json_are_rejected() -> None:
+    payload = _qualification_payload()
+    duplicate = payload.replace('"point_count":1849', '"point_count":1849,"point_count":1849', 1)
+    nonfinite = payload.replace('"point_count":1849', '"point_count":NaN', 1)
+    for candidate in (duplicate, nonfinite):
+        with pytest.raises((TypeError, ValueError)):
+            OpenFieldQualificationRecord(candidate)
 
 
 def test_direct_import_isolation_and_no_aggregate_export_or_old_smoke_reference() -> None:

@@ -9,6 +9,7 @@ import hashlib
 import inspect
 import json
 from pathlib import Path
+import subprocess
 
 import pytest
 
@@ -436,3 +437,16 @@ def test_no_existing_smoke_is_relabelled_as_handbook_scenario() -> None:
     assert PRODUCT_COMMIT not in source
     assert "M7-012.runtime-evaluation-smoke" not in source
     assert all(item.evidence.unavailability_reason is None or "smoke" not in item.evidence.unavailability_reason for item in scenario_registry())
+
+
+def test_d0001_non_open_field_registry_rows_remain_byte_equivalent() -> None:
+    reviewed = subprocess.run(
+        ["git", "show", "72c4f4b60fece213d368e0def3921bcb29e38a81:isaaclab-training/instinctlab/evaluation/scenarios.py"],
+        cwd=ROOT.parent, check=True, capture_output=True, text=True,
+    ).stdout
+    current = SOURCE.read_text()
+    def non_open_lines(source: str) -> tuple[str, ...]:
+        registry = source.split("_SCENARIO_REGISTRY = (", 1)[1].split("\n)\n", 1)[0]
+        return tuple(line for line in registry.splitlines() if "_spec(ScenarioId." in line and "ScenarioId.OPEN_FIELD" not in line)
+    assert len(non_open_lines(current)) == 9
+    assert non_open_lines(current) == non_open_lines(reviewed)

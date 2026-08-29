@@ -26,7 +26,7 @@ SIMULATION_APP = APP_LAUNCHER.app
 
 import torch
 import isaaclab.sim as sim_utils
-from pxr import UsdGeom
+from pxr import UsdGeom, UsdPhysics
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from instinctlab.evaluation.baseline_environment import begin_ready_b0_environment
@@ -35,6 +35,7 @@ from instinctlab.evaluation.metrics import EvaluationMetricConfig, aggregate_met
 from instinctlab.evaluation.raycaster_observability import acquire_exact_observability_from_source
 from instinctlab.evaluation.runtime import distill_exact_runtime_observability
 from instinctlab.evaluation.scenario_open_field import (
+    CANONICAL_SCENARIO_PRIMS,
     COMMAND_SCHEDULE,
     FACE_INDEX_COUNT,
     FIXED_SEED,
@@ -125,12 +126,31 @@ def _independent_metric_oracle(evaluation: OrderedDict[str, torch.Tensor]) -> Or
 
 def _live_geometry(env: object) -> tuple[OpenFieldGeometryEvidence, OrderedDict[str, object]]:
     stage = sim_utils.get_current_stage()
-    relevant = []
+    geometry_types = {"Mesh", "Cube", "Sphere", "Capsule", "Cylinder"}
+    full_inventory = []
+    forbidden = []
     for prim in stage.Traverse():
         path = str(prim.GetPath())
-        if path == GROUND_PRIM_PATH or path.startswith(GROUND_PRIM_PATH + "/") or path == RAY_SCENE_PRIM_PATH or path.startswith(RAY_SCENE_PRIM_PATH + "/"):
-            relevant.append((path, str(prim.GetTypeName())))
-    relevant.sort()
+        prim_type = str(prim.GetTypeName())
+        collision = bool(prim.HasAPI(UsdPhysics.CollisionAPI))
+        if prim_type not in geometry_types and not collision and path not in (GROUND_PRIM_PATH, RAY_SCENE_PRIM_PATH):
+            continue
+        parts = path.split("/")
+        taslab = len(parts) > 4 and parts[1] == "World" and parts[2] == "envs" and parts[3].startswith("env_") and parts[4] == "TASLAB"
+        if path == GROUND_PRIM_PATH or path.startswith(GROUND_PRIM_PATH + "/"):
+            classification = "permitted_ground"
+        elif path == RAY_SCENE_PRIM_PATH:
+            classification = "permitted_ray_scene_root"
+        elif path == RAY_MESH_PRIM_PATH:
+            classification = "permitted_ray_plane_mesh"
+        elif taslab:
+            classification = "permitted_taslab_articulation"
+        else:
+            classification = "forbidden_scenario_geometry"
+            forbidden.append(path)
+        full_inventory.append((path, prim_type, collision, classification))
+    full_inventory.sort()
+    forbidden = sorted(forbidden)
     mesh_prim = stage.GetPrimAtPath(RAY_MESH_PRIM_PATH)
     if not mesh_prim.IsValid() or mesh_prim.GetTypeName() != "Mesh":
         raise AssertionError("live exact ray plane mesh is absent")
@@ -145,7 +165,8 @@ def _live_geometry(env: object) -> tuple[OpenFieldGeometryEvidence, OrderedDict[
     maximum = tuple(max(point[axis] for point in points) for axis in range(3))
     mesh_paths = tuple(env.cfg.ray_caster.mesh_prim_paths)
     evidence = OpenFieldGeometryEvidence(
-        tuple(relevant), GROUND_PRIM_PATH, RAY_SCENE_PRIM_PATH, RAY_MESH_PRIM_PATH,
+        CANONICAL_SCENARIO_PRIMS, tuple(forbidden),
+        GROUND_PRIM_PATH, RAY_SCENE_PRIM_PATH, RAY_MESH_PRIM_PATH,
         mesh_paths, len(points), len(counts), len(indices), minimum, maximum,
         unique_x, unique_y, unique_z,
     )
@@ -157,10 +178,13 @@ def _live_geometry(env: object) -> tuple[OpenFieldGeometryEvidence, OrderedDict[
         ("faces_exact", len(counts) == TRIANGLE_COUNT and set(counts) == {3}),
         ("indices_exact", len(indices) == FACE_INDEX_COUNT and min(indices) == 0 and max(indices) == POINT_COUNT - 1),
         ("mesh_paths_exact", mesh_paths == RAYCASTER_MESH_PRIM_PATHS),
-        ("scenario_roots_exact", tuple(path for path, _ in relevant if path.count("/") == 2) == tuple(sorted((GROUND_PRIM_PATH, RAY_SCENE_PRIM_PATH)))),
+        ("full_stage_geometry_inventory", len(full_inventory) > 3),
+        ("forbidden_scenario_geometry_empty", forbidden == []),
+        ("canonical_scenario_prims_exact", evidence.prim_paths_and_types == CANONICAL_SCENARIO_PRIMS),
     ))
     if not all(oracle.values()):
         raise AssertionError(f"live geometry oracle failed: {oracle}")
+    oracle["inventory"] = tuple(full_inventory)
     return evidence, oracle
 
 
