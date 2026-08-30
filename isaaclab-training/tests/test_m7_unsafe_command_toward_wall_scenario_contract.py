@@ -101,6 +101,7 @@ from instinctlab.evaluation.metrics import EVALUATION_INPUT_KEYS
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "instinctlab/evaluation/scenario_unsafe_command_toward_wall.py"
+RUNNER = ROOT / "tests/run_m7_unsafe_command_toward_wall_b0_scenario.py"
 PRODUCT_COMMIT = "deeb7ad4221df1f0e74ec0ac24affefbc27b817d"
 
 
@@ -518,6 +519,36 @@ def test_direct_import_isolation_and_no_aggregate_export_or_old_smoke_reference(
     import instinctlab.evaluation as aggregate
     assert not hasattr(aggregate, "UnsafeCommandTowardWallScenarioFixture")
     assert "UnsafeCommandTowardWallScenarioFixture" not in aggregate.__all__
+
+
+def test_runner_normalizes_exact_twentieth_controller_quaternion_before_independent_rotation() -> None:
+    tree = ast.parse(RUNNER.read_text())
+    assignments = {
+        target.id: node
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Assign)
+        for target in node.targets
+        if isinstance(target, ast.Name)
+    }
+    q_raw = assignments["q_raw"]
+    q_raw_norm = assignments["q_raw_norm"]
+    q_norm = assignments["q_norm"]
+    independently_rotated = assignments["independently_rotated"]
+
+    assert ast.unparse(q_raw.value) == "controller_root_snapshots[-1][:, 3:7]"
+    assert ast.unparse(q_raw_norm.value) == "torch.linalg.vector_norm(q_raw, dim=-1, keepdim=True)"
+    assert ast.unparse(q_norm.value) == "q_raw / q_raw_norm"
+    assert ast.unparse(independently_rotated.value) == "quat_apply(q_norm, staged)"
+    assert q_raw.lineno < q_raw_norm.lineno < q_norm.lineno < independently_rotated.lineno
+
+    source = RUNNER.read_text()
+    assert "QUATERNION_NORM_TOLERANCE = 1.0e-5" in source
+    assert "torch.isfinite(q_raw_norm).all()" in source
+    assert "(q_raw_norm - 1.0).abs() > QUATERNION_NORM_TOLERANCE" in source
+    assert "len(controller_root_snapshots) - controller_calls_before != 20" in source
+    assert "torch.equal(issued_body, staged)" in source
+    assert "torch.equal(issued_world, independently_rotated)" in source
+    assert '("quaternion_norm_oracle",' in source
 
 
 @pytest.mark.parametrize("field,value", (

@@ -66,6 +66,7 @@ from instinctlab.evaluation.scenario_unsafe_command_toward_wall import (
 
 actor_calls = [0]
 training_calls = [0]
+QUATERNION_NORM_TOLERANCE = 1.0e-5
 
 
 def _expected_inventory() -> tuple[tuple[str, str, bool, str], ...]:
@@ -310,6 +311,7 @@ def main() -> None:
     world_commands = []
     approach_components = []
     signed_wall_distances = []
+    raw_quaternion_norms = []
     staged_identity = 0
     controller_root_snapshots = []
     accepted_controller_execution = baseline_run_module.execute_ready_b0_controller
@@ -337,10 +339,16 @@ def main() -> None:
         issued_world = pre_reset["control"]["v_final_w"]
         if len(controller_root_snapshots) - controller_calls_before != 20:
             raise AssertionError("each policy row must expose exactly twenty B0 controller quaternion snapshots")
-        command_time_quaternion = controller_root_snapshots[-1][:, 3:7]
-        independently_rotated = quat_apply(command_time_quaternion, staged)
+        q_raw = controller_root_snapshots[-1][:, 3:7]
+        q_raw_norm = torch.linalg.vector_norm(q_raw, dim=-1, keepdim=True)
+        if not bool(torch.isfinite(q_raw_norm).all().item()) or bool(
+            ((q_raw_norm - 1.0).abs() > QUATERNION_NORM_TOLERANCE).any().item()
+        ):
+            raise AssertionError("controller-private quaternion norm is non-finite or outside the accepted tolerance")
+        q_norm = q_raw / q_raw_norm
+        independently_rotated = quat_apply(q_norm, staged)
         if not torch.equal(issued_body, staged) or not torch.equal(issued_world, independently_rotated):
-            raise AssertionError("environment/B0 issued command must equal the staged command and independent live quaternion rotation")
+            raise AssertionError("environment/B0 issued command must equal the staged command and independent normalized quaternion rotation")
         approach = issued_world[:, 0]
         signed_distance = 6.0 - root_state[:, 0]
         if bool((approach <= 0.0).any().item()) or bool((signed_distance <= 0.0).any().item()):
@@ -348,6 +356,7 @@ def main() -> None:
         world_commands.append(tuple(tuple(float(item) for item in row) for row in issued_world.tolist()))
         approach_components.append(tuple(float(item) for item in approach.tolist()))
         signed_wall_distances.append(tuple(float(item) for item in signed_distance.tolist()))
+        raw_quaternion_norms.append(tuple(float(item) for item in q_raw_norm.squeeze(-1).tolist()))
         source = extras["evaluation_ray_source"]
         acquisition = acquire_exact_observability_from_source(source)
         hits = acquisition.ray_hits_w
@@ -402,6 +411,7 @@ def main() -> None:
         ("preconstruction_root_preserved_once", preserved_root_calls == [1]),
         ("wall_visibility_oracle", all(count >= 1 for row in wall_hit_counts for count in row) and wall_normals_exact),
         ("command_oracle", torch.equal(evaluation["commanded_velocity_b_m_s"].cpu(), expected_commands) and torch.equal(evaluation["issued_velocity_b_m_s"], evaluation["commanded_velocity_b_m_s"])),
+        ("quaternion_norm_oracle", len(raw_quaternion_norms) == POLICY_STEPS and all(math.isfinite(value) and abs(value - 1.0) <= QUATERNION_NORM_TOLERANCE for row in raw_quaternion_norms for value in row)),
         ("toward_wall_oracle", all(value > 0.0 for row in approach_components for value in row) and all(value > 0.0 for row in signed_wall_distances for value in row)),
         ("initial_quaternion_oracle", initial_quaternion_exact and len(controller_root_snapshots) == POLICY_STEPS * 20),
         ("source_steps_exact", torch.equal(torch.stack(source_steps), torch.arange(1, 9).unsqueeze(1).expand(-1, 2))),
@@ -419,6 +429,7 @@ def main() -> None:
         ("geometry", _cpu(geometry)), ("geometry_oracle", geometry_oracle),
         ("wall_visibility", _cpu(wall_visibility)),
         ("command_direction", _cpu(command_direction)),
+        ("raw_quaternion_norms", tuple(raw_quaternion_norms)),
         ("evaluation_inputs", _cpu(evaluation)), ("observability_details", _cpu(details)),
         ("command_identity_sha256", _cpu(result.command_identity_sha256)),
         ("source_identity_sha256", _cpu(result.source_identity_sha256)),
@@ -443,6 +454,7 @@ def main() -> None:
         ("call_counts", call_counts), ("geometry_oracle", geometry_oracle), ("gates", gates),
         ("wall_visibility", _cpu(wall_visibility)),
         ("command_direction", _cpu(command_direction)),
+        ("raw_quaternion_norms", tuple(raw_quaternion_norms)),
     ))
     ARGS.output.write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps({"status": summary["status"], "seed": FIXED_SEED, "policy_steps": POLICY_STEPS, "rays": result.contract.ray_samples}, sort_keys=True))
