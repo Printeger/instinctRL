@@ -316,6 +316,8 @@ def main() -> None:
         staged = collector.prepare_command(original)
         if staged is original or staged.untyped_storage().data_ptr() == original.untyped_storage().data_ptr() or not torch.equal(staged, snapshot):
             raise AssertionError("collector command ownership oracle failed")
+        command_time_quaternion = env._robot.data.root_quat_w.detach().clone()
+        independently_rotated = quat_apply(command_time_quaternion, staged)
         observation, _, terminated, truncated, extras = env.step(staged)
         staged_identity += 1
         if bool(terminated.any().item()) or bool(truncated.any().item()):
@@ -324,7 +326,6 @@ def main() -> None:
         root_state = pre_reset["root_state_w"]
         issued_body = pre_reset["control"]["v_final_b"]
         issued_world = pre_reset["control"]["v_final_w"]
-        independently_rotated = quat_apply(root_state[:, 3:7], staged)
         if not torch.equal(issued_body, staged) or not torch.equal(issued_world, independently_rotated):
             raise AssertionError("environment/B0 issued command must equal the staged command and independent live quaternion rotation")
         approach = issued_world[:, 0]
