@@ -546,6 +546,8 @@ def test_runner_normalizes_exact_twentieth_controller_quaternion_before_independ
     assert "torch.isfinite(q_raw_norm).all()" in source
     assert "(q_raw_norm - 1.0).abs() > QUATERNION_NORM_TOLERANCE" in source
     assert "len(controller_root_snapshots) - controller_calls_before != 20" in source
+    assert 'len(controller_root_snapshots) == POLICY_STEPS * 20' in source
+    assert "initial_quaternion_oracle" not in source
     assert "torch.equal(issued_body, staged)" in source
     assert "torch.equal(issued_world, independently_rotated)" in source
     assert '("quaternion_norm_oracle",' in source

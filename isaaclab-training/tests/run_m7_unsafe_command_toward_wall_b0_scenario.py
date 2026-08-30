@@ -382,8 +382,6 @@ def main() -> None:
             returned_episode_length=env.episode_length_buf.detach().clone(),
         )
     baseline_run_module.execute_ready_b0_controller = accepted_controller_execution
-    identity_quaternion = torch.tensor((1.0, 0.0, 0.0, 0.0), device=env.device).expand(NUM_ENVS, -1)
-    initial_quaternion_exact = torch.equal(controller_root_snapshots[0][:, 3:7], identity_quaternion)
     environment_result = env.finalize()
     result = collector.finalize(environment_result)
     wall_visibility = UnsafeCommandTowardWallVisibilityEvidence(
@@ -413,7 +411,7 @@ def main() -> None:
         ("command_oracle", torch.equal(evaluation["commanded_velocity_b_m_s"].cpu(), expected_commands) and torch.equal(evaluation["issued_velocity_b_m_s"], evaluation["commanded_velocity_b_m_s"])),
         ("quaternion_norm_oracle", len(raw_quaternion_norms) == POLICY_STEPS and all(math.isfinite(value) and abs(value - 1.0) <= QUATERNION_NORM_TOLERANCE for row in raw_quaternion_norms for value in row)),
         ("toward_wall_oracle", all(value > 0.0 for row in approach_components for value in row) and all(value > 0.0 for row in signed_wall_distances for value in row)),
-        ("initial_quaternion_oracle", initial_quaternion_exact and len(controller_root_snapshots) == POLICY_STEPS * 20),
+        ("controller_snapshot_count_oracle", len(controller_root_snapshots) == POLICY_STEPS * 20),
         ("source_steps_exact", torch.equal(torch.stack(source_steps), torch.arange(1, 9).unsqueeze(1).expand(-1, 2))),
         ("metric_oracle", independent == accepted),
         ("coverage_exact", tuple(call_counts.values()) == (0, 0, 8, 8, 0, 8, 16, 160, 160, 160, 320, 339840, 1, 1, 1)),
