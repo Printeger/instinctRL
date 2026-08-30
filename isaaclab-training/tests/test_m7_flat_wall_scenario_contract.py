@@ -234,6 +234,17 @@ def test_fixture_factory_owns_exact_manifest_plan_configs_and_schedule() -> None
     assert fixture.command_schedule == COMMAND_SCHEDULE and fixture.command_schedule is not COMMAND_SCHEDULE
 
 
+def test_fixture_id_and_all_exposed_provenance_match_ordered_literal() -> None:
+    expected_fixture_id = "m7-015-flat-wall-b0-two-env-eight-step-v1"
+    fixture = create_flat_wall_fixture(product_commit=PRODUCT_COMMIT)
+    qualification = json.loads(_qualification_payload(), object_pairs_hook=OrderedDict)
+
+    assert FIXTURE_ID == expected_fixture_id
+    assert fixture.evaluation_config.provenance.fixture_id == expected_fixture_id
+    assert qualification["fixture"]["fixture_id"] == expected_fixture_id
+    assert qualification["evaluation_record"]["mapping"]["provenance"]["fixture_id"] == expected_fixture_id
+
+
 @pytest.mark.parametrize("value", ("0" * 39, "G" * 40, "0" * 41, "  " + "0" * 40, 1, None, True))
 def test_fixture_factory_rejects_commit_alias_or_coercion(value) -> None:
     with pytest.raises((TypeError, ValueError)):

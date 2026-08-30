@@ -43,7 +43,7 @@ from .scenarios import (
 
 
 QUALIFICATION_SCHEMA_VERSION: Final = "m7.flat-wall-b0-qualification.v1"
-FIXTURE_ID: Final = "m7-014-flat-wall-b0-two-env-eight-step-v1"
+FIXTURE_ID: Final = "m7-015-flat-wall-b0-two-env-eight-step-v1"
 GENERATOR_ID: Final = "instinctlab.evaluation.scenario_flat_wall"
 SCENARIO_ID: Final = "flat_wall"
 BASELINE_ID: Final = "B0"
