@@ -239,8 +239,9 @@ identity catalog for the ten ordered Handbook scenario groups. It records the
 eight simulator and two real-robot domains, the sole optional-when-available
 dynamic-obstacle row, command-only generator-to-actor boundary, required log
 identity and accepted metric-name obligations. Exactly `corner`, `flat_wall`,
-`corridor_tunnel`, `open_field` and `cluttered_indoor` are evidence-backed
-`READY`; the other five rows remain `NOT_READY`, and
+`corridor_tunnel`, `open_field`, `cluttered_indoor` and
+`unsafe_command_toward_wall` are evidence-backed `READY`; the other four rows
+remain `NOT_READY`, and
 `dynamic_obstacle` remains the sole optional row.
 
 `instinctlab.evaluation.scenario_open_field` retains the exact B0 executable
@@ -289,3 +290,13 @@ verification. The unchanged separate PlaneMesh remains topology evidence in the
 complete 26-entry inventory; the fixture makes no closed-room claim. Its scope
 is migration wiring and scenario identity only, with no safety, clearance,
 performance, comparison, training, campaign or M8 claim.
+
+`instinctlab.evaluation.scenario_unsafe_command_toward_wall` owns the exact
+seed-7019 B0 direction fixture. Its runner authors one first-selected collision
+Mesh at x=6 m, preserves the separate PlaneMesh, and proves every prescribed
+positive body-x command is forwarded unchanged. Live pre-reset quaternion
+rotation yields a positive world-frame approach component and the vehicle
+remains on the inward side of the wall in all 16 policy-row/environment cells.
+This is command-direction and wiring evidence only; it establishes no unsafe
+speed, avoidance, braking, ICS, clearance, collision, safety, performance,
+ranking or comparison claim.
