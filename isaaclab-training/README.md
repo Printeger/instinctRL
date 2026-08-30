@@ -238,14 +238,25 @@ baselines, train, or make a flight-performance claim.
 identity catalog for the ten ordered Handbook scenario groups. It records the
 eight simulator and two real-robot domains, the sole optional-when-available
 dynamic-obstacle row, command-only generator-to-actor boundary, required log
-identity and accepted metric-name obligations. Exactly `open_field` is now
-evidence-backed `READY`; the other nine rows remain `NOT_READY`, and
+identity and accepted metric-name obligations. Exactly `flat_wall` and
+`open_field` are evidence-backed `READY`; the other eight rows remain
+`NOT_READY`, and
 `dynamic_obstacle` remains the sole optional row.
 
-`instinctlab.evaluation.scenario_open_field` owns the sole exact B0 executable
+`instinctlab.evaluation.scenario_open_field` retains the exact B0 executable
 fixture: seed 7014, two environments, eight fixed command rows, the accepted
 20-step decimation and the locked plane-only scene. Its final canonical
 qualification binds live geometry, the manifest/run plan, environment receipt,
 B0 evaluation record, coverage and unchanged metric facts. This qualifies
 migration wiring and scenario identity only; it supplies no callback,
 performance threshold, baseline comparison, training, campaign or M8 harness.
+
+`instinctlab.evaluation.scenario_flat_wall` owns the second exact B0 fixture:
+seed 7015, two environments, eight prescribed command rows and one bounded
+triangle wall at x=6 m inside the unchanged RayCaster root. The dedicated
+runner authors that wall before environment construction and independently
+checks its ordered points/faces, CollisionAPI, acquired -x normals and at least
+one wall hit in each environment on every row while preserving the accepted
+z=0 plane. Its canonical qualification is wiring/identity evidence only; it
+does not qualify approach safety, ICS effectiveness, clearance, performance,
+comparison, policy quality, training, campaign execution or M8.

@@ -42,7 +42,7 @@ from .scenarios import (
 )
 
 
-QUALIFICATION_SCHEMA_VERSION: Final = "m7.open-field-b0-qualification.v1"
+QUALIFICATION_SCHEMA_VERSION: Final = "m7.open-field-b0-qualification.v2"
 FIXTURE_ID: Final = "m7-014-open-field-b0-two-env-eight-step-v1"
 GENERATOR_ID: Final = "instinctlab.evaluation.scenario_open_field"
 SCENARIO_ID: Final = "open_field"
@@ -114,7 +114,7 @@ _METRIC_KEYS = (
 )
 _TERMINATION_COUNT_KEYS = ("terminated", "truncated", "reset")
 _QUALIFICATION_GATE_KEYS = (
-    "catalog_open_field_only", "run_plan_executable", "geometry_exact",
+    "catalog_ready_set_exact", "run_plan_executable", "geometry_exact",
     "coverage_exact", "receipt_bound", "evaluation_record_bound",
     "no_reset_or_done", "actor_command_only",
 )
@@ -556,7 +556,7 @@ def finalize_open_field_qualification(
     terminated = int(termination["terminated"].sum().item())
     truncated = int(termination["truncated"].sum().item())
     gates = OrderedDict((
-        ("catalog_open_field_only", sum(row["executable"] for row in catalog.to_mapping()["rows"]) == 1),
+        ("catalog_ready_set_exact", tuple(row["scenario_id"] for row in catalog.to_mapping()["rows"] if row["executable"]) == ("flat_wall", "open_field")),
         ("run_plan_executable", plan["executable"] is True),
         ("geometry_exact", True),
         ("coverage_exact", True),

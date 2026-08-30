@@ -171,7 +171,7 @@ def _qualification_payload() -> str:
         ("environment_receipt", OrderedDict((("schema_version", B0_RUN_RECEIPT_SCHEMA_VERSION), ("ready_manifest_sha256", ready.manifest_sha256), ("executed_manifest_sha256", executed.manifest_sha256), ("trajectory_sha256", trajectory), ("step_count", 160)))),
         ("coverage", coverage), ("metrics", metrics),
         ("termination_counts", OrderedDict((("terminated", 0), ("truncated", 0), ("reset", 0)))),
-        ("gates", OrderedDict((("catalog_open_field_only", True), ("run_plan_executable", True), ("geometry_exact", True), ("coverage_exact", True), ("receipt_bound", True), ("evaluation_record_bound", True), ("no_reset_or_done", True), ("actor_command_only", True)))),
+        ("gates", OrderedDict((("catalog_ready_set_exact", True), ("run_plan_executable", True), ("geometry_exact", True), ("coverage_exact", True), ("receipt_bound", True), ("evaluation_record_bound", True), ("no_reset_or_done", True), ("actor_command_only", True)))),
         ("claim", "exact open-field B0 migration wiring and scenario identity only; no performance or comparison claim"),
     ))
     return _canonical(mapping)
@@ -264,10 +264,10 @@ def test_public_records_are_exact_frozen_non_subclassable_and_signatures_have_no
 
 
 def test_qualification_record_rejects_noncanonical_incomplete_or_wrong_schema() -> None:
-    for payload in ("{}", '{ "schema_version":"m7.open-field-b0-qualification.v1"}', '{"schema_version":"bad"}'):
+    for payload in ("{}", '{ "schema_version":"m7.open-field-b0-qualification.v2"}', '{"schema_version":"bad"}'):
         with pytest.raises((TypeError, ValueError)):
             OpenFieldQualificationRecord(payload)
-    assert QUALIFICATION_SCHEMA_VERSION == "m7.open-field-b0-qualification.v1"
+    assert QUALIFICATION_SCHEMA_VERSION == "m7.open-field-b0-qualification.v2"
 
 
 def test_semantic_qualification_round_trip_is_exact() -> None:

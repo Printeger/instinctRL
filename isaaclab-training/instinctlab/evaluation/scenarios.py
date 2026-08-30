@@ -16,8 +16,11 @@ from .baselines import BaselineRunManifest, PLATFORM_ID, SENSOR_ID
 CATALOG_SCHEMA_VERSION: Final = "m7.scenario-catalog.v1"
 RUN_PLAN_SCHEMA_VERSION: Final = "m7.scenario-run-plan.v1"
 REAL_ROBOT_REPEATABILITY_METRIC: Final = "real_robot_repeatability"
+FLAT_WALL_PROVIDER: Final = "instinctlab.evaluation.scenario_flat_wall.FlatWallScenarioFixture"
+FLAT_WALL_EVIDENCE_SHA256: Final = "ed170f337abf9cd2aff288b54473b9404824be7885b4c3fa61e75484de88bdcf"
+FLAT_WALL_SEED: Final = 7015
 OPEN_FIELD_PROVIDER: Final = "instinctlab.evaluation.scenario_open_field.OpenFieldScenarioFixture"
-OPEN_FIELD_EVIDENCE_SHA256: Final = "26b2de5c089e337e2977bbf8279b94d2aaa01d1e181b77a2fbc725925c9b1bb2"
+OPEN_FIELD_EVIDENCE_SHA256: Final = "04c743b6c3ef31ff74b5ca9e5d4c18a808f5a171fb832e3932aa12c82950d976"
 OPEN_FIELD_SEED: Final = 7014
 
 
@@ -278,7 +281,10 @@ def _spec(
 
 _SCENARIO_REGISTRY = (
     _spec(ScenarioId.CORNER, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted corner scenario fixture or evidence"),
-    _spec(ScenarioId.FLAT_WALL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted flat-wall scenario fixture or evidence"),
+    _spec(
+        ScenarioId.FLAT_WALL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
+        provider=FLAT_WALL_PROVIDER, evidence_sha256=FLAT_WALL_EVIDENCE_SHA256,
+    ),
     _spec(ScenarioId.CORRIDOR_TUNNEL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted corridor/tunnel scenario fixture or evidence"),
     _spec(
         ScenarioId.OPEN_FIELD, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
@@ -308,8 +314,8 @@ def _validate_registry(registry: object) -> tuple[ScenarioSpec, ...]:
     if optional != (ScenarioId.DYNAMIC_OBSTACLE,):
         raise ValueError("dynamic_obstacle must be the sole optional row")
     ready = tuple(item.scenario_id for item in registry if item.evidence.readiness is ScenarioReadiness.READY)
-    if ready != (ScenarioId.OPEN_FIELD,):
-        raise ValueError("open_field must be the sole READY scenario")
+    if ready != (ScenarioId.FLAT_WALL, ScenarioId.OPEN_FIELD):
+        raise ValueError("flat_wall and open_field must be the exact READY scenarios")
     return registry
 
 
@@ -425,9 +431,12 @@ def _run_plan_mapping(selection: ScenarioSelection, manifest: BaselineRunManifes
     spec = resolve_scenario(selection.scenario_id)
     evidence = spec.evidence
     baseline = manifest.to_mapping()
+    executable_pair = (selection.scenario_id, selection.seed)
     executable = (
-        selection.scenario_id is ScenarioId.OPEN_FIELD
-        and selection.seed == OPEN_FIELD_SEED
+        executable_pair in (
+            (ScenarioId.FLAT_WALL, FLAT_WALL_SEED),
+            (ScenarioId.OPEN_FIELD, OPEN_FIELD_SEED),
+        )
         and evidence.readiness is ScenarioReadiness.READY
         and baseline["baseline_id"] == "B0"
         and baseline["config_switch"] == "direct_velocity"
@@ -520,7 +529,8 @@ def bind_scenario_run_plan(
 
 __all__ = [
     "ACCEPTED_METRIC_NAMES", "CATALOG_FIELD_ORDER", "CATALOG_SCHEMA_VERSION",
-    "ExecutionDomain", "FORWARDED_ACTOR_FIELDS", "GENERATOR_PRIVILEGED_FIELDS",
+    "ExecutionDomain", "FLAT_WALL_EVIDENCE_SHA256", "FLAT_WALL_PROVIDER",
+    "FLAT_WALL_SEED", "FORWARDED_ACTOR_FIELDS", "GENERATOR_PRIVILEGED_FIELDS",
     "OPEN_FIELD_EVIDENCE_SHA256", "OPEN_FIELD_PROVIDER", "OPEN_FIELD_SEED",
     "REAL_ROBOT_REPEATABILITY_METRIC", "REQUIRED_RUN_LOG_FIELDS",
     "RUN_PLAN_FIELD_ORDER", "RUN_PLAN_SCHEMA_VERSION", "RequirementClass",
