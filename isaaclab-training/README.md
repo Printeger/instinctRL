@@ -238,8 +238,8 @@ baselines, train, or make a flight-performance claim.
 identity catalog for the ten ordered Handbook scenario groups. It records the
 eight simulator and two real-robot domains, the sole optional-when-available
 dynamic-obstacle row, command-only generator-to-actor boundary, required log
-identity and accepted metric-name obligations. Exactly `corner`, `flat_wall`
-and `open_field` are evidence-backed `READY`; the other seven rows remain
+identity and accepted metric-name obligations. Exactly `corner`, `flat_wall`,
+`corridor_tunnel` and `open_field` are evidence-backed `READY`; the other six rows remain
 `NOT_READY`, and
 `dynamic_obstacle` remains the sole optional row.
 
@@ -269,3 +269,13 @@ the unchanged separate PlaneMesh in the complete 26-entry USD inventory. The
 plane is a preserved topology fact, not a same-scan hit claim. This qualifies
 migration wiring and scenario identity only; it adds no performance threshold,
 baseline comparison, training, campaign execution or M8 work.
+
+`instinctlab.evaluation.scenario_corridor_tunnel` owns the exact seed-7017 B0
+corridor fixture. Its runner authors one first-selected collision Mesh with
+parallel walls at y=-6 m and y=6 m, proves the acquired inward +y and -y normal
+families are visible in both environments on every command row, and separately
+validates the unchanged PlaneMesh in the complete 26-entry USD inventory. The
+fixture adds no ceiling or tunnel enclosure, and the plane remains topology
+evidence rather than a same-scan hit claim. Qualification is limited to exact
+migration wiring and scenario identity, with no safety, clearance, performance,
+comparison, training, campaign or M8 claim.

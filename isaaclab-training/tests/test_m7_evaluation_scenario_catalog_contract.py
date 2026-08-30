@@ -1,4 +1,4 @@
-"""Pure/static contract tests for the M7-016 three-READY scenario catalog."""
+"""Pure/static contract tests for the M7-017 four-READY scenario catalog."""
 
 from __future__ import annotations
 
@@ -29,6 +29,9 @@ from instinctlab.evaluation.scenarios import (
     CORNER_EVIDENCE_SHA256,
     CORNER_PROVIDER,
     CORNER_SEED,
+    CORRIDOR_TUNNEL_EVIDENCE_SHA256,
+    CORRIDOR_TUNNEL_PROVIDER,
+    CORRIDOR_TUNNEL_SEED,
     ExecutionDomain,
     FLAT_WALL_EVIDENCE_SHA256,
     FLAT_WALL_PROVIDER,
@@ -135,7 +138,7 @@ def test_evidence_exact_type_and_paired_readiness_invariants(args) -> None:
 def test_ad_hoc_ready_evidence_record_cannot_change_registry_truth() -> None:
     future = ScenarioEvidence(ScenarioReadiness.READY, "future.provider", "0" * 64, None)
     assert future.readiness is ScenarioReadiness.READY
-    assert tuple(item.scenario_id for item in scenario_registry() if item.evidence.readiness is ScenarioReadiness.READY) == (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.OPEN_FIELD)
+    assert tuple(item.scenario_id for item in scenario_registry() if item.evidence.readiness is ScenarioReadiness.READY) == (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.CORRIDOR_TUNNEL, ScenarioId.OPEN_FIELD)
 
 
 @pytest.mark.parametrize("record,args", (
@@ -152,24 +155,26 @@ def test_public_records_are_frozen_and_non_subclassable(record, args) -> None:
         type("Forbidden", (record,), {})
 
 
-def test_exact_registry_order_domains_optional_and_three_ready_truth() -> None:
+def test_exact_registry_order_domains_optional_and_four_ready_truth() -> None:
     rows = scenario_registry()
     assert type(rows) is tuple and len(rows) == 10
     assert tuple(item.scenario_id.value for item in rows) == EXPECTED_IDS
     assert tuple(item.execution_domain for item in rows[:8]) == (ExecutionDomain.SIMULATOR,) * 8
     assert tuple(item.execution_domain for item in rows[8:]) == (ExecutionDomain.REAL_ROBOT,) * 2
     assert tuple(item.scenario_id for item in rows if item.requirement_class is RequirementClass.OPTIONAL_WHEN_AVAILABLE) == (ScenarioId.DYNAMIC_OBSTACLE,)
-    ready = (rows[0], rows[1], rows[3])
-    assert tuple(item.scenario_id for item in ready) == (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.OPEN_FIELD)
+    ready = (rows[0], rows[1], rows[2], rows[3])
+    assert tuple(item.scenario_id for item in ready) == (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.CORRIDOR_TUNNEL, ScenarioId.OPEN_FIELD)
     assert all(item.evidence.readiness is ScenarioReadiness.READY for item in ready)
     assert (ready[0].evidence.provider, ready[0].evidence.evidence_sha256, ready[0].evidence.unavailability_reason) == (CORNER_PROVIDER, CORNER_EVIDENCE_SHA256, None)
     assert (ready[1].evidence.provider, ready[1].evidence.evidence_sha256, ready[1].evidence.unavailability_reason) == (FLAT_WALL_PROVIDER, FLAT_WALL_EVIDENCE_SHA256, None)
-    assert (ready[2].evidence.provider, ready[2].evidence.evidence_sha256, ready[2].evidence.unavailability_reason) == (OPEN_FIELD_PROVIDER, OPEN_FIELD_EVIDENCE_SHA256, None)
+    assert (ready[2].evidence.provider, ready[2].evidence.evidence_sha256, ready[2].evidence.unavailability_reason) == (CORRIDOR_TUNNEL_PROVIDER, CORRIDOR_TUNNEL_EVIDENCE_SHA256, None)
+    assert (ready[3].evidence.provider, ready[3].evidence.evidence_sha256, ready[3].evidence.unavailability_reason) == (OPEN_FIELD_PROVIDER, OPEN_FIELD_EVIDENCE_SHA256, None)
     assert hashlib.sha256((ROOT / "instinctlab/evaluation/scenario_corner.py").read_bytes()).hexdigest() == CORNER_EVIDENCE_SHA256
     assert hashlib.sha256((ROOT / "instinctlab/evaluation/scenario_flat_wall.py").read_bytes()).hexdigest() == FLAT_WALL_EVIDENCE_SHA256
+    assert hashlib.sha256((ROOT / "instinctlab/evaluation/scenario_corridor_tunnel.py").read_bytes()).hexdigest() == CORRIDOR_TUNNEL_EVIDENCE_SHA256
     assert hashlib.sha256((ROOT / "instinctlab/evaluation/scenario_open_field.py").read_bytes()).hexdigest() == OPEN_FIELD_EVIDENCE_SHA256
-    not_ready = tuple(row for row in rows if row.scenario_id not in (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.OPEN_FIELD))
-    assert len(not_ready) == 7 and all(item.evidence.readiness is ScenarioReadiness.NOT_READY for item in not_ready)
+    not_ready = tuple(row for row in rows if row.scenario_id not in (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.CORRIDOR_TUNNEL, ScenarioId.OPEN_FIELD))
+    assert len(not_ready) == 6 and all(item.evidence.readiness is ScenarioReadiness.NOT_READY for item in not_ready)
     assert all(item.evidence.provider is None and item.evidence.evidence_sha256 is None for item in not_ready)
     assert all(type(item.evidence.unavailability_reason) is str and item.evidence.unavailability_reason for item in not_ready)
     assert all(item.requirement_class is RequirementClass.REQUIRED for item in rows if item.scenario_id is not ScenarioId.DYNAMIC_OBSTACLE)
@@ -268,8 +273,9 @@ def test_manifest_binding_reparses_owns_and_preserves_exact_identity() -> None:
     assert (mapping["platform"], mapping["sensor"], mapping["baseline_id"]) == ("TASLAB_UAV", "Livox MID360", "B0")
     assert (mapping["scenario_id"], mapping["seed"]) == ("corridor_tunnel", 13)
     assert mapping["actor_audit_status"] == "PASS" and mapping["baseline_execution_status"] == "READY"
-    assert mapping["scenario_readiness"] == "NOT_READY" and mapping["executable"] is False
-    assert mapping["scenario_provider"] is None and mapping["scenario_evidence_sha256"] is None
+    assert mapping["scenario_readiness"] == "READY" and mapping["executable"] is False
+    assert mapping["scenario_provider"] == CORRIDOR_TUNNEL_PROVIDER
+    assert mapping["scenario_evidence_sha256"] == CORRIDOR_TUNNEL_EVIDENCE_SHA256
     assert not hasattr(plan, "execute") and not hasattr(plan, "callback")
 
 
@@ -314,7 +320,7 @@ def test_catalog_canonical_bytes_hash_round_trip_and_exact_rows() -> None:
     assert mapping["scenario_order"] == list(EXPECTED_IDS)
     assert len(mapping["rows"]) == 10
     assert all(tuple(row) == SCENARIO_ROW_FIELD_ORDER for row in mapping["rows"])
-    assert tuple(row["scenario_id"] for row in mapping["rows"] if row["executable"]) == ("corner", "flat_wall", "open_field")
+    assert tuple(row["scenario_id"] for row in mapping["rows"] if row["executable"]) == ("corner", "flat_wall", "corridor_tunnel", "open_field")
     assert _canonical(mapping) == first.canonical_json
 
 
@@ -381,6 +387,7 @@ def test_run_plan_hash_round_trip_is_exact_and_manifest_bound() -> None:
 @pytest.mark.parametrize("scenario_id,seed,provider,evidence", (
     ("corner", CORNER_SEED, CORNER_PROVIDER, CORNER_EVIDENCE_SHA256),
     ("flat_wall", FLAT_WALL_SEED, FLAT_WALL_PROVIDER, FLAT_WALL_EVIDENCE_SHA256),
+    ("corridor_tunnel", CORRIDOR_TUNNEL_SEED, CORRIDOR_TUNNEL_PROVIDER, CORRIDOR_TUNNEL_EVIDENCE_SHA256),
     ("open_field", OPEN_FIELD_SEED, OPEN_FIELD_PROVIDER, OPEN_FIELD_EVIDENCE_SHA256),
 ))
 def test_exact_ready_pairs_are_the_only_executable_plans(scenario_id, seed, provider, evidence) -> None:
@@ -402,6 +409,8 @@ def test_exact_ready_pairs_are_the_only_executable_plans(scenario_id, seed, prov
     ("open_field", OPEN_FIELD_SEED + 1, ExecutionStatus.READY),
     ("flat_wall", FLAT_WALL_SEED, ExecutionStatus.EXECUTED),
     ("flat_wall", FLAT_WALL_SEED + 1, ExecutionStatus.READY),
+    ("corridor_tunnel", CORRIDOR_TUNNEL_SEED, ExecutionStatus.EXECUTED),
+    ("corridor_tunnel", CORRIDOR_TUNNEL_SEED + 1, ExecutionStatus.READY),
     ("corner", CORNER_SEED, ExecutionStatus.EXECUTED),
     ("corner", CORNER_SEED + 1, ExecutionStatus.READY),
 ))
@@ -457,7 +466,7 @@ def test_no_existing_smoke_is_relabelled_as_handbook_scenario() -> None:
     assert all(item.evidence.unavailability_reason is None or "smoke" not in item.evidence.unavailability_reason for item in scenario_registry())
 
 
-def test_m7_015_remaining_seven_registry_rows_remain_byte_equivalent() -> None:
+def test_m7_015_remaining_six_registry_rows_remain_byte_equivalent() -> None:
     reviewed = subprocess.run(
         ["git", "show", "c6720a6c9a8275ebf1743697126eb5dfb4fb0a11:isaaclab-training/instinctlab/evaluation/scenarios.py"],
         cwd=ROOT.parent, check=True, capture_output=True, text=True,
@@ -465,6 +474,6 @@ def test_m7_015_remaining_seven_registry_rows_remain_byte_equivalent() -> None:
     current = SOURCE.read_text()
     def unqualified_lines(source: str) -> tuple[str, ...]:
         registry = source.split("_SCENARIO_REGISTRY = (", 1)[1].split("\n)\n", 1)[0]
-        return tuple(line for line in registry.splitlines() if "_spec(ScenarioId." in line and "ScenarioId.OPEN_FIELD" not in line and "ScenarioId.FLAT_WALL" not in line and "ScenarioId.CORNER" not in line)
-    assert len(unqualified_lines(current)) == 7
+        return tuple(line for line in registry.splitlines() if "_spec(ScenarioId." in line and "ScenarioId.OPEN_FIELD" not in line and "ScenarioId.FLAT_WALL" not in line and "ScenarioId.CORNER" not in line and "ScenarioId.CORRIDOR_TUNNEL" not in line)
+    assert len(unqualified_lines(current)) == 6
     assert unqualified_lines(current) == unqualified_lines(reviewed)

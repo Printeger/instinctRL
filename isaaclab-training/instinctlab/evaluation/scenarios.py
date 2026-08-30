@@ -17,13 +17,16 @@ CATALOG_SCHEMA_VERSION: Final = "m7.scenario-catalog.v1"
 RUN_PLAN_SCHEMA_VERSION: Final = "m7.scenario-run-plan.v1"
 REAL_ROBOT_REPEATABILITY_METRIC: Final = "real_robot_repeatability"
 CORNER_PROVIDER: Final = "instinctlab.evaluation.scenario_corner.CornerScenarioFixture"
-CORNER_EVIDENCE_SHA256: Final = "e1fb467b14a4f496bc65015b69802c3a8540d410304682e00f7cae4e0b3ac933"
+CORNER_EVIDENCE_SHA256: Final = "ae6f54b2cb1d711418bc44db28784b0a1b92b762a68743b6b88abb26841b5aaf"
 CORNER_SEED: Final = 7016
 FLAT_WALL_PROVIDER: Final = "instinctlab.evaluation.scenario_flat_wall.FlatWallScenarioFixture"
-FLAT_WALL_EVIDENCE_SHA256: Final = "47193e6578da82d19041d5bb70058320111ea19f5cf4dad769dc9338093d092e"
+FLAT_WALL_EVIDENCE_SHA256: Final = "67a733c67981e543455dec6d12c84ce80f09d7b1d41eadbb851ab9525cda42a0"
 FLAT_WALL_SEED: Final = 7015
+CORRIDOR_TUNNEL_PROVIDER: Final = "instinctlab.evaluation.scenario_corridor_tunnel.CorridorTunnelScenarioFixture"
+CORRIDOR_TUNNEL_EVIDENCE_SHA256: Final = "dcf31feaffe36a7588f9cb2a1affed389fdc32c380e63042a45807b9c2966559"
+CORRIDOR_TUNNEL_SEED: Final = 7017
 OPEN_FIELD_PROVIDER: Final = "instinctlab.evaluation.scenario_open_field.OpenFieldScenarioFixture"
-OPEN_FIELD_EVIDENCE_SHA256: Final = "02abe9462865d2110c112a06b2fd6e5cb804a4ff9143d053935d3ed51b00695a"
+OPEN_FIELD_EVIDENCE_SHA256: Final = "3b51174eeac1997786fedc0e8dbc9711ffee14a1f3d33592618e10f79181af0e"
 OPEN_FIELD_SEED: Final = 7014
 
 
@@ -291,7 +294,10 @@ _SCENARIO_REGISTRY = (
         ScenarioId.FLAT_WALL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
         provider=FLAT_WALL_PROVIDER, evidence_sha256=FLAT_WALL_EVIDENCE_SHA256,
     ),
-    _spec(ScenarioId.CORRIDOR_TUNNEL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted corridor/tunnel scenario fixture or evidence"),
+    _spec(
+        ScenarioId.CORRIDOR_TUNNEL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
+        provider=CORRIDOR_TUNNEL_PROVIDER, evidence_sha256=CORRIDOR_TUNNEL_EVIDENCE_SHA256,
+    ),
     _spec(
         ScenarioId.OPEN_FIELD, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
         provider=OPEN_FIELD_PROVIDER, evidence_sha256=OPEN_FIELD_EVIDENCE_SHA256,
@@ -320,8 +326,8 @@ def _validate_registry(registry: object) -> tuple[ScenarioSpec, ...]:
     if optional != (ScenarioId.DYNAMIC_OBSTACLE,):
         raise ValueError("dynamic_obstacle must be the sole optional row")
     ready = tuple(item.scenario_id for item in registry if item.evidence.readiness is ScenarioReadiness.READY)
-    if ready != (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.OPEN_FIELD):
-        raise ValueError("corner, flat_wall and open_field must be the exact READY scenarios")
+    if ready != (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.CORRIDOR_TUNNEL, ScenarioId.OPEN_FIELD):
+        raise ValueError("corner, flat_wall, corridor_tunnel and open_field must be the exact READY scenarios")
     return registry
 
 
@@ -442,6 +448,7 @@ def _run_plan_mapping(selection: ScenarioSelection, manifest: BaselineRunManifes
         executable_pair in (
             (ScenarioId.CORNER, CORNER_SEED),
             (ScenarioId.FLAT_WALL, FLAT_WALL_SEED),
+            (ScenarioId.CORRIDOR_TUNNEL, CORRIDOR_TUNNEL_SEED),
             (ScenarioId.OPEN_FIELD, OPEN_FIELD_SEED),
         )
         and evidence.readiness is ScenarioReadiness.READY
@@ -537,6 +544,8 @@ def bind_scenario_run_plan(
 __all__ = [
     "ACCEPTED_METRIC_NAMES", "CATALOG_FIELD_ORDER", "CATALOG_SCHEMA_VERSION",
     "CORNER_EVIDENCE_SHA256", "CORNER_PROVIDER", "CORNER_SEED",
+    "CORRIDOR_TUNNEL_EVIDENCE_SHA256", "CORRIDOR_TUNNEL_PROVIDER",
+    "CORRIDOR_TUNNEL_SEED",
     "ExecutionDomain", "FLAT_WALL_EVIDENCE_SHA256", "FLAT_WALL_PROVIDER",
     "FLAT_WALL_SEED", "FORWARDED_ACTOR_FIELDS", "GENERATOR_PRIVILEGED_FIELDS",
     "OPEN_FIELD_EVIDENCE_SHA256", "OPEN_FIELD_PROVIDER", "OPEN_FIELD_SEED",
