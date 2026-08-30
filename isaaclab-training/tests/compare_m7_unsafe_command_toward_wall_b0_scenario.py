@@ -71,7 +71,7 @@ def main() -> None:
             ("body_command", lambda value: value["command_direction"].__setitem__("body_commanded_velocity_m_s", ())),
             ("world_projection", lambda value: value["command_direction"].__setitem__("approach_component_m_s", ())),
             ("signed_distance", lambda value: value["command_direction"].__setitem__("signed_wall_distance_m", ())),
-            ("command", lambda value: value["fixture"].__setitem__("schedule", value["fixture"]["schedule"][::-1])),
+            ("command", lambda value: value["fixture"].__setitem__("schedule", value["fixture"]["schedule"][1:] + value["fixture"]["schedule"][:1])),
             ("metric_count", lambda value: value["metric_oracle"]["tracking_rmse_m_s"].__setitem__("total_count", 15)),
             ("plan", lambda value: value["fixture"].__setitem__("plan", value["fixture"]["plan"] + " ")),
             ("receipt_record", lambda value: value.__setitem__("evaluation_record", value["evaluation_record"] + " ")),

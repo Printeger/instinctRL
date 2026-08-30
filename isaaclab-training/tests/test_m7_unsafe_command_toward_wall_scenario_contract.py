@@ -102,6 +102,7 @@ from instinctlab.evaluation.metrics import EVALUATION_INPUT_KEYS
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "instinctlab/evaluation/scenario_unsafe_command_toward_wall.py"
 RUNNER = ROOT / "tests/run_m7_unsafe_command_toward_wall_b0_scenario.py"
+COMPARATOR = ROOT / "tests/compare_m7_unsafe_command_toward_wall_b0_scenario.py"
 PRODUCT_COMMIT = "deeb7ad4221df1f0e74ec0ac24affefbc27b817d"
 
 
@@ -551,6 +552,21 @@ def test_runner_normalizes_exact_twentieth_controller_quaternion_before_independ
     assert "torch.equal(issued_body, staged)" in source
     assert "torch.equal(issued_world, independently_rotated)" in source
     assert '("quaternion_norm_oracle",' in source
+
+
+def test_comparator_command_mutation_is_exact_changed_one_row_left_rotation() -> None:
+    rotated = COMMAND_SCHEDULE[1:] + COMMAND_SCHEDULE[:1]
+    assert type(rotated) is type(COMMAND_SCHEDULE)
+    assert len(rotated) == len(COMMAND_SCHEDULE)
+    assert rotated != COMMAND_SCHEDULE
+    assert sorted(rotated) == sorted(COMMAND_SCHEDULE)
+    assert rotated[0] == COMMAND_SCHEDULE[1]
+    assert rotated[-1] == COMMAND_SCHEDULE[0]
+
+    source = COMPARATOR.read_text()
+    exact_rotation = 'value["fixture"]["schedule"][1:] + value["fixture"]["schedule"][:1]'
+    assert exact_rotation in source
+    assert 'value["fixture"]["schedule"][::-1]' not in source
 
 
 @pytest.mark.parametrize("field,value", (
