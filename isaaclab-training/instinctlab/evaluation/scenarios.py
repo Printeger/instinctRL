@@ -17,17 +17,20 @@ CATALOG_SCHEMA_VERSION: Final = "m7.scenario-catalog.v1"
 RUN_PLAN_SCHEMA_VERSION: Final = "m7.scenario-run-plan.v1"
 REAL_ROBOT_REPEATABILITY_METRIC: Final = "real_robot_repeatability"
 CORNER_PROVIDER: Final = "instinctlab.evaluation.scenario_corner.CornerScenarioFixture"
-CORNER_EVIDENCE_SHA256: Final = "ae6f54b2cb1d711418bc44db28784b0a1b92b762a68743b6b88abb26841b5aaf"
+CORNER_EVIDENCE_SHA256: Final = "6c243bdc5a07209cb3e38b8b4449782081c08e4ae9e41d004916b2f05d7b84c6"
 CORNER_SEED: Final = 7016
 FLAT_WALL_PROVIDER: Final = "instinctlab.evaluation.scenario_flat_wall.FlatWallScenarioFixture"
-FLAT_WALL_EVIDENCE_SHA256: Final = "67a733c67981e543455dec6d12c84ce80f09d7b1d41eadbb851ab9525cda42a0"
+FLAT_WALL_EVIDENCE_SHA256: Final = "0d6f4aa7fabf28693808618cb6c46d4b42f777397481c1c3cc1ab4fd0f268544"
 FLAT_WALL_SEED: Final = 7015
 CORRIDOR_TUNNEL_PROVIDER: Final = "instinctlab.evaluation.scenario_corridor_tunnel.CorridorTunnelScenarioFixture"
-CORRIDOR_TUNNEL_EVIDENCE_SHA256: Final = "dcf31feaffe36a7588f9cb2a1affed389fdc32c380e63042a45807b9c2966559"
+CORRIDOR_TUNNEL_EVIDENCE_SHA256: Final = "77a8ed38e0df63ecda39574babc56d01e194af751a000c58b46a517d5de0d512"
 CORRIDOR_TUNNEL_SEED: Final = 7017
 OPEN_FIELD_PROVIDER: Final = "instinctlab.evaluation.scenario_open_field.OpenFieldScenarioFixture"
-OPEN_FIELD_EVIDENCE_SHA256: Final = "3b51174eeac1997786fedc0e8dbc9711ffee14a1f3d33592618e10f79181af0e"
+OPEN_FIELD_EVIDENCE_SHA256: Final = "bdfe3a26315f11da4d00839fe673dcd18db0fa24b0925615624d106309b22dff"
 OPEN_FIELD_SEED: Final = 7014
+CLUTTERED_INDOOR_PROVIDER: Final = "instinctlab.evaluation.scenario_cluttered_indoor.ClutteredIndoorScenarioFixture"
+CLUTTERED_INDOOR_EVIDENCE_SHA256: Final = "0e77c42e0fb38b1f1f9531c5c7e3c9f8e9432dede13e579ebfcaffb290db83a4"
+CLUTTERED_INDOOR_SEED: Final = 7018
 
 
 class ScenarioId(str, Enum):
@@ -302,7 +305,10 @@ _SCENARIO_REGISTRY = (
         ScenarioId.OPEN_FIELD, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
         provider=OPEN_FIELD_PROVIDER, evidence_sha256=OPEN_FIELD_EVIDENCE_SHA256,
     ),
-    _spec(ScenarioId.CLUTTERED_INDOOR, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted cluttered-indoor scenario fixture or evidence"),
+    _spec(
+        ScenarioId.CLUTTERED_INDOOR, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
+        provider=CLUTTERED_INDOOR_PROVIDER, evidence_sha256=CLUTTERED_INDOOR_EVIDENCE_SHA256,
+    ),
     _spec(ScenarioId.UNSAFE_COMMAND_TOWARD_WALL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted unsafe-command-toward-wall scenario fixture or evidence"),
     _spec(ScenarioId.GAP_DOORWAY, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted gap/doorway scenario fixture or evidence"),
     _spec(ScenarioId.DYNAMIC_OBSTACLE, ExecutionDomain.SIMULATOR, RequirementClass.OPTIONAL_WHEN_AVAILABLE, "optional dynamic-obstacle scenario has no accepted fixture or evidence"),
@@ -326,8 +332,8 @@ def _validate_registry(registry: object) -> tuple[ScenarioSpec, ...]:
     if optional != (ScenarioId.DYNAMIC_OBSTACLE,):
         raise ValueError("dynamic_obstacle must be the sole optional row")
     ready = tuple(item.scenario_id for item in registry if item.evidence.readiness is ScenarioReadiness.READY)
-    if ready != (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.CORRIDOR_TUNNEL, ScenarioId.OPEN_FIELD):
-        raise ValueError("corner, flat_wall, corridor_tunnel and open_field must be the exact READY scenarios")
+    if ready != (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.CORRIDOR_TUNNEL, ScenarioId.OPEN_FIELD, ScenarioId.CLUTTERED_INDOOR):
+        raise ValueError("corner, flat_wall, corridor_tunnel, open_field and cluttered_indoor must be the exact READY scenarios")
     return registry
 
 
@@ -450,6 +456,7 @@ def _run_plan_mapping(selection: ScenarioSelection, manifest: BaselineRunManifes
             (ScenarioId.FLAT_WALL, FLAT_WALL_SEED),
             (ScenarioId.CORRIDOR_TUNNEL, CORRIDOR_TUNNEL_SEED),
             (ScenarioId.OPEN_FIELD, OPEN_FIELD_SEED),
+            (ScenarioId.CLUTTERED_INDOOR, CLUTTERED_INDOOR_SEED),
         )
         and evidence.readiness is ScenarioReadiness.READY
         and baseline["baseline_id"] == "B0"
@@ -546,6 +553,8 @@ __all__ = [
     "CORNER_EVIDENCE_SHA256", "CORNER_PROVIDER", "CORNER_SEED",
     "CORRIDOR_TUNNEL_EVIDENCE_SHA256", "CORRIDOR_TUNNEL_PROVIDER",
     "CORRIDOR_TUNNEL_SEED",
+    "CLUTTERED_INDOOR_EVIDENCE_SHA256", "CLUTTERED_INDOOR_PROVIDER",
+    "CLUTTERED_INDOOR_SEED",
     "ExecutionDomain", "FLAT_WALL_EVIDENCE_SHA256", "FLAT_WALL_PROVIDER",
     "FLAT_WALL_SEED", "FORWARDED_ACTOR_FIELDS", "GENERATOR_PRIVILEGED_FIELDS",
     "OPEN_FIELD_EVIDENCE_SHA256", "OPEN_FIELD_PROVIDER", "OPEN_FIELD_SEED",

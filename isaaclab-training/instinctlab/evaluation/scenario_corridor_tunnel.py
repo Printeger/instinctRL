@@ -42,7 +42,7 @@ from .scenarios import (
 )
 
 
-QUALIFICATION_SCHEMA_VERSION: Final = "m7.corridor-tunnel-b0-qualification.v1"
+QUALIFICATION_SCHEMA_VERSION: Final = "m7.corridor-tunnel-b0-qualification.v2"
 FIXTURE_ID: Final = "m7-017-corridor-tunnel-b0-two-env-eight-step-v1"
 GENERATOR_ID: Final = "instinctlab.evaluation.scenario_corridor_tunnel"
 SCENARIO_ID: Final = "corridor_tunnel"
@@ -684,7 +684,7 @@ def finalize_corridor_tunnel_qualification(
     terminated = int(termination["terminated"].sum().item())
     truncated = int(termination["truncated"].sum().item())
     gates = OrderedDict((
-        ("catalog_ready_set_exact", tuple(row["scenario_id"] for row in catalog.to_mapping()["rows"] if row["executable"]) == ("corner", "flat_wall", "corridor_tunnel", "open_field")),
+        ("catalog_ready_set_exact", tuple(row["scenario_id"] for row in catalog.to_mapping()["rows"] if row["executable"]) == ("corner", "flat_wall", "corridor_tunnel", "open_field", "cluttered_indoor")),
         ("run_plan_executable", plan["executable"] is True),
         ("geometry_exact", True),
         ("both_walls_visible_every_row_environment", all(

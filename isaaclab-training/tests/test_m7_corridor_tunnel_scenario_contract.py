@@ -314,10 +314,10 @@ def test_public_records_are_exact_frozen_non_subclassable_and_signatures_have_no
 
 
 def test_qualification_record_rejects_noncanonical_incomplete_or_wrong_schema() -> None:
-    for payload in ("{}", '{ "schema_version":"m7.corridor-tunnel-b0-qualification.v1"}', '{"schema_version":"bad"}'):
+    for payload in ("{}", '{ "schema_version":"m7.corridor-tunnel-b0-qualification.v2"}', '{"schema_version":"bad"}'):
         with pytest.raises((TypeError, ValueError)):
             CorridorTunnelQualificationRecord(payload)
-    assert QUALIFICATION_SCHEMA_VERSION == "m7.corridor-tunnel-b0-qualification.v1"
+    assert QUALIFICATION_SCHEMA_VERSION == "m7.corridor-tunnel-b0-qualification.v2"
 
 
 def test_semantic_qualification_round_trip_is_exact() -> None:

@@ -42,7 +42,7 @@ from .scenarios import (
 )
 
 
-QUALIFICATION_SCHEMA_VERSION: Final = "m7.flat-wall-b0-qualification.v3"
+QUALIFICATION_SCHEMA_VERSION: Final = "m7.flat-wall-b0-qualification.v4"
 FIXTURE_ID: Final = "m7-015-flat-wall-b0-two-env-eight-step-v1"
 GENERATOR_ID: Final = "instinctlab.evaluation.scenario_flat_wall"
 SCENARIO_ID: Final = "flat_wall"
@@ -663,7 +663,7 @@ def finalize_flat_wall_qualification(
     terminated = int(termination["terminated"].sum().item())
     truncated = int(termination["truncated"].sum().item())
     gates = OrderedDict((
-        ("catalog_ready_set_exact", tuple(row["scenario_id"] for row in catalog.to_mapping()["rows"] if row["executable"]) == ("corner", "flat_wall", "corridor_tunnel", "open_field")),
+        ("catalog_ready_set_exact", tuple(row["scenario_id"] for row in catalog.to_mapping()["rows"] if row["executable"]) == ("corner", "flat_wall", "corridor_tunnel", "open_field", "cluttered_indoor")),
         ("run_plan_executable", plan["executable"] is True),
         ("geometry_exact", True),
         ("wall_visible_every_row_environment", all(count >= 1 for row in wall_visibility.wall_hit_counts for count in row)),
