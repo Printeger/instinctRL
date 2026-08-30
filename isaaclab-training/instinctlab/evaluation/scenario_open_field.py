@@ -42,7 +42,7 @@ from .scenarios import (
 )
 
 
-QUALIFICATION_SCHEMA_VERSION: Final = "m7.open-field-b0-qualification.v2"
+QUALIFICATION_SCHEMA_VERSION: Final = "m7.open-field-b0-qualification.v3"
 FIXTURE_ID: Final = "m7-014-open-field-b0-two-env-eight-step-v1"
 GENERATOR_ID: Final = "instinctlab.evaluation.scenario_open_field"
 SCENARIO_ID: Final = "open_field"
@@ -556,7 +556,7 @@ def finalize_open_field_qualification(
     terminated = int(termination["terminated"].sum().item())
     truncated = int(termination["truncated"].sum().item())
     gates = OrderedDict((
-        ("catalog_ready_set_exact", tuple(row["scenario_id"] for row in catalog.to_mapping()["rows"] if row["executable"]) == ("flat_wall", "open_field")),
+        ("catalog_ready_set_exact", tuple(row["scenario_id"] for row in catalog.to_mapping()["rows"] if row["executable"]) == ("corner", "flat_wall", "open_field")),
         ("run_plan_executable", plan["executable"] is True),
         ("geometry_exact", True),
         ("coverage_exact", True),

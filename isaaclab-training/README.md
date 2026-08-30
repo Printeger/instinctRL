@@ -238,8 +238,8 @@ baselines, train, or make a flight-performance claim.
 identity catalog for the ten ordered Handbook scenario groups. It records the
 eight simulator and two real-robot domains, the sole optional-when-available
 dynamic-obstacle row, command-only generator-to-actor boundary, required log
-identity and accepted metric-name obligations. Exactly `flat_wall` and
-`open_field` are evidence-backed `READY`; the other eight rows remain
+identity and accepted metric-name obligations. Exactly `corner`, `flat_wall`
+and `open_field` are evidence-backed `READY`; the other seven rows remain
 `NOT_READY`, and
 `dynamic_obstacle` remains the sole optional row.
 
@@ -260,3 +260,12 @@ one wall hit in each environment on every row while preserving the accepted
 z=0 plane. Its canonical qualification is wiring/identity evidence only; it
 does not qualify approach safety, ICS effectiveness, clearance, performance,
 comparison, policy quality, training, campaign execution or M8.
+
+`instinctlab.evaluation.scenario_corner` owns the exact seed-7016 B0 corner
+fixture. Its runner authors one first-selected collision Mesh containing the
+ordered x=6 m and y=6 m wall faces, proves both acquired normal families are
+visible in both environments on every command row, and independently validates
+the unchanged separate PlaneMesh in the complete 26-entry USD inventory. The
+plane is a preserved topology fact, not a same-scan hit claim. This qualifies
+migration wiring and scenario identity only; it adds no performance threshold,
+baseline comparison, training, campaign execution or M8 work.

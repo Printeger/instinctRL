@@ -16,11 +16,14 @@ from .baselines import BaselineRunManifest, PLATFORM_ID, SENSOR_ID
 CATALOG_SCHEMA_VERSION: Final = "m7.scenario-catalog.v1"
 RUN_PLAN_SCHEMA_VERSION: Final = "m7.scenario-run-plan.v1"
 REAL_ROBOT_REPEATABILITY_METRIC: Final = "real_robot_repeatability"
+CORNER_PROVIDER: Final = "instinctlab.evaluation.scenario_corner.CornerScenarioFixture"
+CORNER_EVIDENCE_SHA256: Final = "e1fb467b14a4f496bc65015b69802c3a8540d410304682e00f7cae4e0b3ac933"
+CORNER_SEED: Final = 7016
 FLAT_WALL_PROVIDER: Final = "instinctlab.evaluation.scenario_flat_wall.FlatWallScenarioFixture"
-FLAT_WALL_EVIDENCE_SHA256: Final = "900a9147cd74cd1750d831afbba5319acef62c30f748e9599053266d83c87e6e"
+FLAT_WALL_EVIDENCE_SHA256: Final = "47193e6578da82d19041d5bb70058320111ea19f5cf4dad769dc9338093d092e"
 FLAT_WALL_SEED: Final = 7015
 OPEN_FIELD_PROVIDER: Final = "instinctlab.evaluation.scenario_open_field.OpenFieldScenarioFixture"
-OPEN_FIELD_EVIDENCE_SHA256: Final = "04c743b6c3ef31ff74b5ca9e5d4c18a808f5a171fb832e3932aa12c82950d976"
+OPEN_FIELD_EVIDENCE_SHA256: Final = "02abe9462865d2110c112a06b2fd6e5cb804a4ff9143d053935d3ed51b00695a"
 OPEN_FIELD_SEED: Final = 7014
 
 
@@ -280,7 +283,10 @@ def _spec(
 
 
 _SCENARIO_REGISTRY = (
-    _spec(ScenarioId.CORNER, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted corner scenario fixture or evidence"),
+    _spec(
+        ScenarioId.CORNER, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
+        provider=CORNER_PROVIDER, evidence_sha256=CORNER_EVIDENCE_SHA256,
+    ),
     _spec(
         ScenarioId.FLAT_WALL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
         provider=FLAT_WALL_PROVIDER, evidence_sha256=FLAT_WALL_EVIDENCE_SHA256,
@@ -314,8 +320,8 @@ def _validate_registry(registry: object) -> tuple[ScenarioSpec, ...]:
     if optional != (ScenarioId.DYNAMIC_OBSTACLE,):
         raise ValueError("dynamic_obstacle must be the sole optional row")
     ready = tuple(item.scenario_id for item in registry if item.evidence.readiness is ScenarioReadiness.READY)
-    if ready != (ScenarioId.FLAT_WALL, ScenarioId.OPEN_FIELD):
-        raise ValueError("flat_wall and open_field must be the exact READY scenarios")
+    if ready != (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.OPEN_FIELD):
+        raise ValueError("corner, flat_wall and open_field must be the exact READY scenarios")
     return registry
 
 
@@ -434,6 +440,7 @@ def _run_plan_mapping(selection: ScenarioSelection, manifest: BaselineRunManifes
     executable_pair = (selection.scenario_id, selection.seed)
     executable = (
         executable_pair in (
+            (ScenarioId.CORNER, CORNER_SEED),
             (ScenarioId.FLAT_WALL, FLAT_WALL_SEED),
             (ScenarioId.OPEN_FIELD, OPEN_FIELD_SEED),
         )
@@ -529,6 +536,7 @@ def bind_scenario_run_plan(
 
 __all__ = [
     "ACCEPTED_METRIC_NAMES", "CATALOG_FIELD_ORDER", "CATALOG_SCHEMA_VERSION",
+    "CORNER_EVIDENCE_SHA256", "CORNER_PROVIDER", "CORNER_SEED",
     "ExecutionDomain", "FLAT_WALL_EVIDENCE_SHA256", "FLAT_WALL_PROVIDER",
     "FLAT_WALL_SEED", "FORWARDED_ACTOR_FIELDS", "GENERATOR_PRIVILEGED_FIELDS",
     "OPEN_FIELD_EVIDENCE_SHA256", "OPEN_FIELD_PROVIDER", "OPEN_FIELD_SEED",
