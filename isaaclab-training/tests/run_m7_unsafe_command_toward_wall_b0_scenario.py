@@ -31,6 +31,7 @@ from pxr import UsdGeom, UsdPhysics
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from instinctlab.evaluation.baseline_environment import begin_ready_b0_environment
+import instinctlab.evaluation.baseline_run as baseline_run_module
 from instinctlab.evaluation.baseline_runtime import begin_ready_b0_runtime_evaluation
 from instinctlab.evaluation.metrics import EvaluationMetricConfig, aggregate_metrics, compute_step_metrics
 from instinctlab.evaluation.raycaster_observability import acquire_exact_observability_from_source
@@ -310,14 +311,22 @@ def main() -> None:
     approach_components = []
     signed_wall_distances = []
     staged_identity = 0
+    controller_root_snapshots = []
+    accepted_controller_execution = baseline_run_module.execute_ready_b0_controller
+
+    def capture_controller_root(*args, **kwargs):
+        root_state = args[2] if len(args) > 2 else kwargs["controller_private_root_state_w"]
+        controller_root_snapshots.append(root_state.detach().clone())
+        return accepted_controller_execution(*args, **kwargs)
+
+    baseline_run_module.execute_ready_b0_controller = capture_controller_root
     for step, values in enumerate(fixture.command_schedule, 1):
         original = torch.tensor(values, device=env.device, dtype=torch.float32)
         snapshot = original.detach().clone()
         staged = collector.prepare_command(original)
         if staged is original or staged.untyped_storage().data_ptr() == original.untyped_storage().data_ptr() or not torch.equal(staged, snapshot):
             raise AssertionError("collector command ownership oracle failed")
-        command_time_quaternion = env._robot.data.root_quat_w.detach().clone()
-        independently_rotated = quat_apply(command_time_quaternion, staged)
+        controller_calls_before = len(controller_root_snapshots)
         observation, _, terminated, truncated, extras = env.step(staged)
         staged_identity += 1
         if bool(terminated.any().item()) or bool(truncated.any().item()):
@@ -326,6 +335,10 @@ def main() -> None:
         root_state = pre_reset["root_state_w"]
         issued_body = pre_reset["control"]["v_final_b"]
         issued_world = pre_reset["control"]["v_final_w"]
+        if len(controller_root_snapshots) - controller_calls_before != 20:
+            raise AssertionError("each policy row must expose exactly twenty B0 controller quaternion snapshots")
+        command_time_quaternion = controller_root_snapshots[-1][:, 3:7]
+        independently_rotated = quat_apply(command_time_quaternion, staged)
         if not torch.equal(issued_body, staged) or not torch.equal(issued_world, independently_rotated):
             raise AssertionError("environment/B0 issued command must equal the staged command and independent live quaternion rotation")
         approach = issued_world[:, 0]
@@ -359,6 +372,9 @@ def main() -> None:
             returned_critic=observation["critic"].detach().clone(),
             returned_episode_length=env.episode_length_buf.detach().clone(),
         )
+    baseline_run_module.execute_ready_b0_controller = accepted_controller_execution
+    identity_quaternion = torch.tensor((1.0, 0.0, 0.0, 0.0), device=env.device).expand(NUM_ENVS, -1)
+    initial_quaternion_exact = torch.equal(controller_root_snapshots[0][:, 3:7], identity_quaternion)
     environment_result = env.finalize()
     result = collector.finalize(environment_result)
     wall_visibility = UnsafeCommandTowardWallVisibilityEvidence(
@@ -387,6 +403,7 @@ def main() -> None:
         ("wall_visibility_oracle", all(count >= 1 for row in wall_hit_counts for count in row) and wall_normals_exact),
         ("command_oracle", torch.equal(evaluation["commanded_velocity_b_m_s"].cpu(), expected_commands) and torch.equal(evaluation["issued_velocity_b_m_s"], evaluation["commanded_velocity_b_m_s"])),
         ("toward_wall_oracle", all(value > 0.0 for row in approach_components for value in row) and all(value > 0.0 for row in signed_wall_distances for value in row)),
+        ("initial_quaternion_oracle", initial_quaternion_exact and len(controller_root_snapshots) == POLICY_STEPS * 20),
         ("source_steps_exact", torch.equal(torch.stack(source_steps), torch.arange(1, 9).unsqueeze(1).expand(-1, 2))),
         ("metric_oracle", independent == accepted),
         ("coverage_exact", tuple(call_counts.values()) == (0, 0, 8, 8, 0, 8, 16, 160, 160, 160, 320, 339840, 1, 1, 1)),
