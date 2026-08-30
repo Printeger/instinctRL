@@ -1,7 +1,7 @@
 # M7-015 Exact Flat-Wall B0 Plan
 
-Order: `M7-015`, revision 0, attempt `M7-015-D0001`  
-Base: `eb4f265f181169fcd75ac16fb4bc4a49be441a87`  
+Order: `M7-015`, revision 0, attempt `M7-015-D0001`
+Base: `eb4f265f181169fcd75ac16fb4bc4a49be441a87`
 Branch: `blackwell-migration`
 
 ## Goal and boundary
@@ -33,4 +33,3 @@ to author before RayCaster construction without a locked-source edit,
 unclassifiable wall/plane hits, open-field drift, frozen/package drift, or loss
 of the exact commit/evidence shape. No M8, training, B1–B8 or other Handbook
 scenario work is permitted.
-

@@ -49,4 +49,3 @@ first exposed a USD tuple type-inference mismatch; the second proved the
 accepted environment rejects a pre-existing RayCaster root. Both were repaired
 before the functional commit by exact list authoring and a counted runner-local
 one-call root-preservation bridge. No failed candidate was relabelled PASS.
-

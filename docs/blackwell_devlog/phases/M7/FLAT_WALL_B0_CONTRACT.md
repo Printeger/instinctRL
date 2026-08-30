@@ -56,4 +56,3 @@ qualification evidence and must compare exactly across independent processes.
 The qualification is a strict wiring, geometry visibility and scenario
 identity record. It contains no threshold, ranking, safety, clearance,
 performance, baseline-comparison, training or policy-quality claim.
-
