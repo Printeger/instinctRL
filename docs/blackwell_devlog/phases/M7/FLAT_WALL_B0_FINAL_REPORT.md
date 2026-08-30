@@ -1,41 +1,54 @@
-# M7-015 Flat-Wall B0 Final Report
+# M7-015-D0002 Flat-Wall Identity Rework Report
 
 ## Outcome
 
-Order M7-015 is implemented at functional commit
-`fdc81997ac5055a626571f244d68890cf1a2a425`, a direct child of accepted base
-`eb4f265f181169fcd75ac16fb4bc4a49be441a87`. Exactly nine functional paths
-changed in that commit. The catalog READY/executable set is exactly
-`(flat_wall,7015)` and `(open_field,7014)` in canonical order; all other rows
-retain NOT_READY and actor-privacy semantics.
+Commander finding F1 is closed at functional commit
+`cbd51657bdecfb76408bc5f4531f77635449b7e8`, a direct child of reviewed D0001
+head `cc2128cb65b29c74fd1b61ff9c3c13762501bc0a`. The sole fixture ID is now
+exactly `m7-015-flat-wall-b0-two-env-eight-step-v1`, and an independent-literal
+regression checks the product constant, fixture evaluation provenance,
+qualification fixture section and embedded B0 provenance.
 
-The dedicated runner authored the exact x=6 m CollisionAPI triangle wall before
-environment/RayCaster construction. Both formal processes traversed the exact
-accepted 25-entry inventory plus only `FlatWallMesh`, found zero forbidden
-paths, preserved the z=0 plane and recorded the same positive wall-hit counts
-for both environments on all eight rows. Acquired wall normals were exactly -x
-within `1e-5`; every valid static hit classified as wall or plane.
+Exactly three functional paths changed. The only source semantic change is the
+fixture literal and dependent committed flat source/catalog identity. The
+catalog READY/executable set remains exactly `(flat_wall,7015)` and
+`(open_field,7014)`; the other eight rows remain NOT_READY.
 
 ## Exact evidence
 
-- Flat-wall source / qualification:
-  `ed170f337abf9cd2aff288b54473b9404824be7885b4c3fa61e75484de88bdcf` /
-  `2592b2e6dddd0a27fccc126ab98acee644eb3d22fa1f79d6eac4004579cb8497`.
-- Open-field v2 source / qualification:
-  `04c743b6c3ef31ff74b5ca9e5d4c18a808f5a171fb832e3932aa12c82950d976` /
-  `15368f7e8feabb61bf39ac1d4251cb97a3ecc65ff47cce1271e3c812b68474e2`.
-- Each scenario process: 2 environments, 8 policy steps, 16 metric samples,
-  160 physics/lifecycle/wrench calls, 320 environment samples and 339,840 rays;
-  zero reset/done/actor/training calls and one receipt/B0/qualification record.
-- Pure/static tests: 2,072 passed, two disclosed accepted M6 deselections.
-- Flat-wall/open-field comparators: complete equality and 13/11 rejected
-  mutation classes. Three accepted CUDA regressions passed.
+- Flat source / catalog / qualification:
+  `900a9147cd74cd1750d831afbba5319acef62c30f748e9599053266d83c87e6e` /
+  `0ff2a806ffa5452c784b60dd7a65d7f9ba4b23a2d669af8f990274cc37612769` /
+  `8de863aaeb2b369fe9c0038fc33f20bca234851b600ef173143c708653f3163c`.
+- Flat plan / manifest / receipt / record:
+  `19017a0c378cf43af8a7b239c1f9c7290809d4d434505ca31ffc92c664bb8218` /
+  `5a48153a4621e3ddeb67189e12b588ac68c5d8b5913de179c7ce4d5bd28e83c3` /
+  `3f3176f4f6a91a8c7dd0a66bb6ba7a2694bbc6bf3892f222e337cac2888eed0f` /
+  `2948ddc64371832eb472492c323c080ae38d5f7e11b7554df441fa34c2413f9c`.
+- Open-field v2 plan / manifest / receipt / record / qualification:
+  `344e1311f7961c52f5b02e1048d4073d4f3429cfff1e09411f04b29fb308aec0` /
+  `10b63205f9ed7d78dc053d5224789194466c146a67396b5f0ca38ee6efaac67c` /
+  `4c1ea869f74e729a42c4ea7cf1db9bbaf09f4688af2f8f43490a0073852e0f77` /
+  `13d2802319d10ab3fe2b86d9a3a0caf5f41008b7efddd105975d014b3142db48` /
+  `afa353106b02d9a2e243383d343f9a6477540cce17c1f58eaaa0cf9693e0858f`.
+- Pure/static tests: 2,076 passed with two disclosed accepted M6
+  deselections. Both comparators passed with 13/11 mutation rejections; three
+  accepted CUDA regressions also passed.
+
+Both fresh flat-wall processes retained the exact 26-entry/zero-forbidden
+topology and the D0001 runtime-derived hit matrix, with positive bounded x=6 m
+hits and acquired -x normals in both environments on all eight rows. Both
+open-field processes retained exact 25-entry/zero-forbidden M7-014 semantics.
+Hit counts remain live evidence and were not made a product-source oracle.
 
 Locked hashes, package/driver identities, formal source and frozen checkout
-heads match the accepted baseline. IsaacLab retains only its accepted known kit
-override at exact hash `0a0dee5f…`. M7-014 product history and evidence were not
-modified. No aggregate export, callback, actor/control/sensor/task/reward/PPO/
-training change, other scenario, B1–B8, M8, scale run, merge or push occurred.
+heads match the accepted baseline. Both runners, both comparators and
+`scenario_open_field.py` are byte-identical to D0001. The complete D0001
+evidence namespace is hash-identical to its pre-rework snapshot.
+
+No runtime, actor/control/sensor/task/reward/PPO/training source, other
+scenario, B1–B8, M8, scale run, merge, push or Git configuration change
+occurred.
 
 ## Recommendation
 
