@@ -17,23 +17,26 @@ CATALOG_SCHEMA_VERSION: Final = "m7.scenario-catalog.v1"
 RUN_PLAN_SCHEMA_VERSION: Final = "m7.scenario-run-plan.v1"
 REAL_ROBOT_REPEATABILITY_METRIC: Final = "real_robot_repeatability"
 CORNER_PROVIDER: Final = "instinctlab.evaluation.scenario_corner.CornerScenarioFixture"
-CORNER_EVIDENCE_SHA256: Final = "b79f7aedda550ed79833650e404f1c4724f16aa8703b2e3066e5cb2e59fb99e9"
+CORNER_EVIDENCE_SHA256: Final = "0bda06f61c40a02d3cb77aa89e4035648005f4c56f49ce78948a03cf76bf3c16"
 CORNER_SEED: Final = 7016
 FLAT_WALL_PROVIDER: Final = "instinctlab.evaluation.scenario_flat_wall.FlatWallScenarioFixture"
-FLAT_WALL_EVIDENCE_SHA256: Final = "fab844c40069d22ef33c96a7015992adfe69e4bfa1d572b94bf5c81bfe6d000e"
+FLAT_WALL_EVIDENCE_SHA256: Final = "605106440555e167865eb0ee79158a3f901924013a24286785678986ae717564"
 FLAT_WALL_SEED: Final = 7015
 CORRIDOR_TUNNEL_PROVIDER: Final = "instinctlab.evaluation.scenario_corridor_tunnel.CorridorTunnelScenarioFixture"
-CORRIDOR_TUNNEL_EVIDENCE_SHA256: Final = "361808b95e7de569bdfdbb2e9e9757b7bd73295204266b86a19fd9a875996321"
+CORRIDOR_TUNNEL_EVIDENCE_SHA256: Final = "6c785b69a5c92e3031a242519364541c99a60efdd83c4332f1813a0c475ae1db"
 CORRIDOR_TUNNEL_SEED: Final = 7017
 OPEN_FIELD_PROVIDER: Final = "instinctlab.evaluation.scenario_open_field.OpenFieldScenarioFixture"
-OPEN_FIELD_EVIDENCE_SHA256: Final = "1a2dca9901c2610b341df9333eb06270520685a274536ec08d0f520741ab764c"
+OPEN_FIELD_EVIDENCE_SHA256: Final = "1ae99e70eecfd6dee5797302f6730bbf56b70ed3fd5b26510b1730ed654bb348"
 OPEN_FIELD_SEED: Final = 7014
 CLUTTERED_INDOOR_PROVIDER: Final = "instinctlab.evaluation.scenario_cluttered_indoor.ClutteredIndoorScenarioFixture"
-CLUTTERED_INDOOR_EVIDENCE_SHA256: Final = "199620516661dbbec15f2f5977f9bf560f7fa910e9c95eb632a9bfb1d8072360"
+CLUTTERED_INDOOR_EVIDENCE_SHA256: Final = "aa3e97282593839117ab353cdcf6e44d903feafdd039eaae91e145a118f5d42e"
 CLUTTERED_INDOOR_SEED: Final = 7018
 UNSAFE_COMMAND_TOWARD_WALL_PROVIDER: Final = "instinctlab.evaluation.scenario_unsafe_command_toward_wall.UnsafeCommandTowardWallScenarioFixture"
-UNSAFE_COMMAND_TOWARD_WALL_EVIDENCE_SHA256: Final = "e587f36c06897e3410ffa225b40c3d267ad61d785240194abbd61750333b8329"
+UNSAFE_COMMAND_TOWARD_WALL_EVIDENCE_SHA256: Final = "727ebc918d47fad90f61b382c13175abc09f884c218542aef0879729b156ffad"
 UNSAFE_COMMAND_TOWARD_WALL_SEED: Final = 7019
+GAP_DOORWAY_PROVIDER: Final = "instinctlab.evaluation.scenario_gap_doorway.GapDoorwayScenarioFixture"
+GAP_DOORWAY_EVIDENCE_SHA256: Final = "844c781fd944f069b2b9d2b40a30525fbc2e9b93dd902581d7dfaa2809bb4b38"
+GAP_DOORWAY_SEED: Final = 7020
 
 
 class ScenarioId(str, Enum):
@@ -316,7 +319,10 @@ _SCENARIO_REGISTRY = (
         ScenarioId.UNSAFE_COMMAND_TOWARD_WALL, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
         provider=UNSAFE_COMMAND_TOWARD_WALL_PROVIDER, evidence_sha256=UNSAFE_COMMAND_TOWARD_WALL_EVIDENCE_SHA256,
     ),
-    _spec(ScenarioId.GAP_DOORWAY, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, "no accepted gap/doorway scenario fixture or evidence"),
+    _spec(
+        ScenarioId.GAP_DOORWAY, ExecutionDomain.SIMULATOR, RequirementClass.REQUIRED, None,
+        provider=GAP_DOORWAY_PROVIDER, evidence_sha256=GAP_DOORWAY_EVIDENCE_SHA256,
+    ),
     _spec(ScenarioId.DYNAMIC_OBSTACLE, ExecutionDomain.SIMULATOR, RequirementClass.OPTIONAL_WHEN_AVAILABLE, "optional dynamic-obstacle scenario has no accepted fixture or evidence"),
     _spec(ScenarioId.REAL_ROBOT_OBSERVABLE_HOLDING, ExecutionDomain.REAL_ROBOT, RequirementClass.REQUIRED, "no accepted real-robot observable-holding access, fixture, or evidence"),
     _spec(ScenarioId.REAL_ROBOT_UNSAFE_COMMAND_APPROACH, ExecutionDomain.REAL_ROBOT, RequirementClass.REQUIRED, "no accepted real-robot unsafe-command-approach access, fixture, or evidence"),
@@ -338,8 +344,8 @@ def _validate_registry(registry: object) -> tuple[ScenarioSpec, ...]:
     if optional != (ScenarioId.DYNAMIC_OBSTACLE,):
         raise ValueError("dynamic_obstacle must be the sole optional row")
     ready = tuple(item.scenario_id for item in registry if item.evidence.readiness is ScenarioReadiness.READY)
-    if ready != (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.CORRIDOR_TUNNEL, ScenarioId.OPEN_FIELD, ScenarioId.CLUTTERED_INDOOR, ScenarioId.UNSAFE_COMMAND_TOWARD_WALL):
-        raise ValueError("corner, flat_wall, corridor_tunnel, open_field, cluttered_indoor and unsafe_command_toward_wall must be the exact READY scenarios")
+    if ready != (ScenarioId.CORNER, ScenarioId.FLAT_WALL, ScenarioId.CORRIDOR_TUNNEL, ScenarioId.OPEN_FIELD, ScenarioId.CLUTTERED_INDOOR, ScenarioId.UNSAFE_COMMAND_TOWARD_WALL, ScenarioId.GAP_DOORWAY):
+        raise ValueError("corner, flat_wall, corridor_tunnel, open_field, cluttered_indoor, unsafe_command_toward_wall and gap_doorway must be the exact READY scenarios")
     return registry
 
 
@@ -464,6 +470,7 @@ def _run_plan_mapping(selection: ScenarioSelection, manifest: BaselineRunManifes
             (ScenarioId.OPEN_FIELD, OPEN_FIELD_SEED),
             (ScenarioId.CLUTTERED_INDOOR, CLUTTERED_INDOOR_SEED),
             (ScenarioId.UNSAFE_COMMAND_TOWARD_WALL, UNSAFE_COMMAND_TOWARD_WALL_SEED),
+            (ScenarioId.GAP_DOORWAY, GAP_DOORWAY_SEED),
         )
         and evidence.readiness is ScenarioReadiness.READY
         and baseline["baseline_id"] == "B0"
@@ -567,6 +574,7 @@ __all__ = [
     "ExecutionDomain", "FLAT_WALL_EVIDENCE_SHA256", "FLAT_WALL_PROVIDER",
     "FLAT_WALL_SEED", "FORWARDED_ACTOR_FIELDS", "GENERATOR_PRIVILEGED_FIELDS",
     "OPEN_FIELD_EVIDENCE_SHA256", "OPEN_FIELD_PROVIDER", "OPEN_FIELD_SEED",
+    "GAP_DOORWAY_EVIDENCE_SHA256", "GAP_DOORWAY_PROVIDER", "GAP_DOORWAY_SEED",
     "REAL_ROBOT_REPEATABILITY_METRIC", "REQUIRED_RUN_LOG_FIELDS",
     "RUN_PLAN_FIELD_ORDER", "RUN_PLAN_SCHEMA_VERSION", "RequirementClass",
     "SCENARIO_EVIDENCE_FIELD_ORDER", "SCENARIO_IDS", "SCENARIO_ROW_FIELD_ORDER",

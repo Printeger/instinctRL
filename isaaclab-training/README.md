@@ -239,8 +239,8 @@ identity catalog for the ten ordered Handbook scenario groups. It records the
 eight simulator and two real-robot domains, the sole optional-when-available
 dynamic-obstacle row, command-only generator-to-actor boundary, required log
 identity and accepted metric-name obligations. Exactly `corner`, `flat_wall`,
-`corridor_tunnel`, `open_field`, `cluttered_indoor` and
-`unsafe_command_toward_wall` are evidence-backed `READY`; the other four rows
+`corridor_tunnel`, `open_field`, `cluttered_indoor`,
+`unsafe_command_toward_wall` and `gap_doorway` are evidence-backed `READY`; the other three rows
 remain `NOT_READY`, and
 `dynamic_obstacle` remains the sole optional row.
 
@@ -300,3 +300,14 @@ remains on the inward side of the wall in all 16 policy-row/environment cells.
 This is command-direction and wiring evidence only; it establishes no unsafe
 speed, avoidance, braking, ICS, clearance, collision, safety, performance,
 ranking or comparison claim.
+
+`instinctlab.evaluation.scenario_gap_doorway` owns the exact seed-7020 B0
+doorway fixture. Its runner authors one first-selected collision Mesh at x=6 m
+with negative jamb, positive jamb and lintel faces around the strict
+`-2 < y < 2`, `0 < z < 3` aperture. Every policy-row/environment cell must
+observe all three acquired hit families with exclusive membership and exact
+-x normals. Independently normalized live quaternions project every unchanged
+positive body-x command through the aperture and persist the world command,
+plane intersection and four strict margins. This qualifies geometry,
+visibility, direction and wiring identity only; it makes no traversal,
+vehicle-clearance, safety, performance, ranking or comparison claim.

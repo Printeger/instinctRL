@@ -42,7 +42,7 @@ from .scenarios import (
 )
 
 
-QUALIFICATION_SCHEMA_VERSION: Final = "m7.cluttered-indoor-b0-qualification.v2"
+QUALIFICATION_SCHEMA_VERSION: Final = "m7.cluttered-indoor-b0-qualification.v3"
 FIXTURE_ID: Final = "m7-018-cluttered-indoor-b0-two-env-eight-step-v1"
 GENERATOR_ID: Final = "instinctlab.evaluation.scenario_cluttered_indoor"
 SCENARIO_ID: Final = "cluttered_indoor"
@@ -715,7 +715,7 @@ def finalize_cluttered_indoor_qualification(
     terminated = int(termination["terminated"].sum().item())
     truncated = int(termination["truncated"].sum().item())
     gates = OrderedDict((
-        ("catalog_ready_set_exact", tuple(row["scenario_id"] for row in catalog.to_mapping()["rows"] if row["executable"]) == ("corner", "flat_wall", "corridor_tunnel", "open_field", "cluttered_indoor", "unsafe_command_toward_wall")),
+        ("catalog_ready_set_exact", tuple(row["scenario_id"] for row in catalog.to_mapping()["rows"] if row["executable"]) == ("corner", "flat_wall", "corridor_tunnel", "open_field", "cluttered_indoor", "unsafe_command_toward_wall", "gap_doorway")),
         ("run_plan_executable", plan["executable"] is True),
         ("geometry_exact", True),
         ("all_four_panels_visible_every_row_environment", all(
