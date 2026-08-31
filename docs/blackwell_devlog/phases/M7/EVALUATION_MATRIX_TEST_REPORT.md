@@ -4,7 +4,7 @@
 
 | Check | Result | Evidence |
 | --- | --- | --- |
-| Matrix contract precommit | PASS — 33 tests | commands `001`, `005` |
+| Matrix contract precommit | PASS — 32 then 33 tests | commands `001`, `005` |
 | Matrix/baseline/scenario focused pass 1 | PASS — 197 tests | command `011` |
 | Matrix/baseline/scenario focused pass 2 | PASS — 197 tests | command `012` |
 | Accepted M7 pure pass 1 | PASS — 976 tests | command `013` |
