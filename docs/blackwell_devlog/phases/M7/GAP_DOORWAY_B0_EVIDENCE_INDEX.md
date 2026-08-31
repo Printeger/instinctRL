@@ -24,4 +24,3 @@ geometry inventory, hit-count matrices, body/world commands, quaternion norms,
 intersection parameters/coordinates, four margin matrices and all gates.
 
 Functional commit: `62494f1894a83e7c57fc0fcc62ada4a07160ca66`.
-

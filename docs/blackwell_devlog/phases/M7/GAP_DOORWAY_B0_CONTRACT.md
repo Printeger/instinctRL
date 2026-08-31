@@ -36,4 +36,3 @@ bundles and compare exactly across processes.
 
 Only `commanded_body_velocity_m_s` crosses the actor boundary. Geometry,
 pose, hits, normals and projection evidence remain runner/evaluation privilege.
-

@@ -13,4 +13,3 @@
   established.
 - Normal shutdown emits accepted headless Isaac deprecation/windowing messages
   on stdout; formal command stderr is empty and all formal gates pass.
-

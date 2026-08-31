@@ -26,4 +26,3 @@ The initial pure run reported two test-expectation defects, and two early CUDA
 diagnostics exposed persisted float-rounding and catalog-ID defects. All are
 retained in commands `003`, `005`-`007`; corrective runs `004`, `008` and all
 formal runs pass. No gate was weakened.
-
