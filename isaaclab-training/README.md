@@ -311,3 +311,15 @@ positive body-x command through the aperture and persist the world command,
 plane intersection and four strict margins. This qualifies geometry,
 visibility, direction and wiring identity only; it makes no traversal,
 vehicle-clearance, safety, performance, ranking or comparison claim.
+
+## M7 canonical evaluation availability matrix
+
+`instinctlab.evaluation.matrix` is a pure immutable control-plane view of all
+nine accepted baselines crossed with all ten accepted scenarios. Its exact 90
+baseline-major cells contain 7 `READY`, 74 `NOT_READY` and 9 `SKIPPED` results,
+derived fail-closed from accepted capability and scenario evidence. Only B0
+crossed with the seven evidence-backed simulator scenarios is `READY` for a
+later audited run plan. Every cell requires an actor audit before execution and
+states that execution was not performed. The matrix does not launch a scenario,
+add an adapter or fixture, report metrics, compare performance, train, or claim
+M7/M8 acceptance.
