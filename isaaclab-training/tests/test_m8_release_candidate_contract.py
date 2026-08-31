@@ -153,7 +153,7 @@ def test_exact_frozen_runtime_platform_sensor_and_source_identity():
     assert FORMAL_SOURCE_COMMIT == "6f6dee3da72d0b0202846b330adcaeeec8ee7bc3"
     assert M7_RELEASE_INPUT_COMMIT == "e2d46fc3ad909052182200b7cc958012000a454a"
     assert tuple(getattr(RUNTIME_IDENTITY, name) for name in RUNTIME_FIELD_ORDER) == (
-        FROZEN_BASELINE, "580.173.02-open", "3.11.15", "2.7.0+cu128", "5.1.0", "2.3.2", "0.54.2", "0.10.0", "0.10.0",
+        FROZEN_BASELINE, "580.173.02", "3.11.15", "2.7.0+cu128", "5.1.0", "2.3.2", "0.54.2", "0.10.0", "0.10.0",
         "5045c71cc73d224144cc08bc38d65cabeedaec8c", "3725bcc2e7c1be4ecf1455d922299ae85042603a", FORMAL_SOURCE_COMMIT,
     )
 

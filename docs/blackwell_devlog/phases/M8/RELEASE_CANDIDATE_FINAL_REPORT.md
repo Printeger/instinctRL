@@ -1,5 +1,19 @@
 # M8 release-candidate manifest report
 
+## Revision 1 repair outcome
+
+M8-001 Revision 1 corrects the sole D0001 contract defect: the frozen runtime
+driver identity is now exactly `580.173.02`, matching accepted evidence. The
+obsolete `580.173.02-open` value is absent from the repaired module, focused
+expectation and canonical JSON. No schema, field order, enum, accepted chain,
+approval hash, other runtime value, actor/privilege boundary, M7 availability
+value, qualification gate, release status or authorization boolean changes.
+
+D0001's two nominal commits and coordination evidence remain immutable.
+Revision 1 adds one five-path repair commit and fresh D0002 evidence. The final
+coordination Executor report binds the resulting three-commit candidate HEAD,
+old/new canonical hashes, exact repair ledger and final closure.
+
 ## Outcome
 
 M8-001 adds a pure immutable release-candidate manifest and qualification gate
