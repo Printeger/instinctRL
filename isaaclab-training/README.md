@@ -323,3 +323,15 @@ later audited run plan. Every cell requires an actor audit before execution and
 states that execution was not performed. The matrix does not launch a scenario,
 add an adapter or fixture, report metrics, compare performance, train, or claim
 M7/M8 acceptance.
+
+## M8 immutable release-candidate manifest
+
+`instinctlab.qualification.release_candidate` is a standard-library-only,
+immutable and fail-closed provenance contract. It binds the exact accepted
+M1A-M7 chain, frozen Blackwell identities, hard actor boundary, M7 90/7/74/9
+availability summary and the ordered gates still required for later release
+qualification. The caller must supply an exact candidate commit. The manifest
+status is always `MANIFESTED_NOT_QUALIFIED`; qualification execution, release
+approval, scale training, merge and push remain false. Building or decoding the
+manifest imports no simulator, runtime, actor, controller, sensor, task,
+training or evaluation implementation and performs no qualification work.
