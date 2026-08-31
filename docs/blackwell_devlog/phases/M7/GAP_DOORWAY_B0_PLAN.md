@@ -1,6 +1,6 @@
 # M7 Gap/Doorway B0 Plan
 
-Order: `M7-020`, revision 1, attempt `M7-020-D0001`.
+Order: `M7-020`, revision 0, attempt `M7-020-D0001`.
 
 Base commit: `05d9f99fd63e7cdfed54d9d2446c3118570f4473` on
 `blackwell-migration`.
@@ -33,4 +33,3 @@ The accepted environment, sensor, RayCaster, platform, controller, B0 runtime,
 metrics, actor boundary, packages and historical evidence remain unchanged.
 Stop on missing frame-family hits, non-`-x` normals, invalid aperture direction,
 collision/reset/termination, locked-path need or runtime/package drift.
-
