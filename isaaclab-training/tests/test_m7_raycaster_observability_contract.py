@@ -67,6 +67,95 @@ def _run(monkeypatch, mutation=None, config=RaycasterObservabilityConfig()):
     )
 
 
+def _run_parameter_case(monkeypatch, scale, parameter=2.0, returned_hit_offset=0.0, accepted_hit_offset=0.0):
+    starts = torch.zeros(1, 1, 3, dtype=torch.float32)
+    directions = torch.tensor([[[scale, 0.0, 0.0]]], dtype=torch.float32)
+    valid = torch.ones(1, 1, dtype=torch.bool)
+    accepted_hits = starts + float(parameter) * directions
+    accepted_hits[0, 0, 0] += accepted_hit_offset
+    returned_hits = starts + float(parameter) * directions
+    returned_hits[0, 0, 0] += returned_hit_offset
+    parameters = torch.tensor([[parameter]], dtype=torch.float32)
+    normals = torch.tensor([[[1.0, 0.0, 0.0]]], dtype=torch.float32)
+
+    def fake(ray_starts_w, ray_directions_w, mesh, maximum_distance_m):
+        assert ray_starts_w is starts and ray_directions_w is directions
+        assert mesh.id == 23 and maximum_distance_m == 40.0
+        return returned_hits.clone(), parameters.clone(), normals.clone(), None
+
+    monkeypatch.setattr(adapter, "_raycast_mesh_with_normals", fake)
+    result = acquire_exact_raycaster_observability(
+        starts, directions, SimpleNamespace(id=23, device="cpu"), 40.0, accepted_hits, valid
+    )
+    return result, parameters
+
+
+def test_admitted_nonunit_parameter_is_converted_to_metric_metres(monkeypatch):
+    result, raw_parameters = _run_parameter_case(monkeypatch, 1.000008, parameter=2.0)
+    independent_expected_metres = 2.000016
+    assert result.ray_distances_m.item() == pytest.approx(independent_expected_metres, abs=3.0e-7)
+    assert result.distance_max_error_m.item() <= RaycasterObservabilityConfig().distance_tolerance_m
+    assert result.ray_distances_m.data_ptr() != raw_parameters.data_ptr()
+    assert result.ray_distances_m.grad_fn is None and not result.ray_distances_m.requires_grad
+
+
+def test_direction_error_float32_accepted_and_rejected_neighbors(monkeypatch):
+    one = torch.tensor(1.0, dtype=torch.float32)
+    rounded_boundary = torch.tensor(1.0 + RaycasterObservabilityConfig().unit_tolerance, dtype=torch.float32)
+    accepted_scale = torch.nextafter(rounded_boundary, one).item()
+    rejected_scale = rounded_boundary.item()
+    assert accepted_scale - 1.0 <= RaycasterObservabilityConfig().unit_tolerance
+    assert rejected_scale - 1.0 > RaycasterObservabilityConfig().unit_tolerance
+    _run_parameter_case(monkeypatch, accepted_scale)
+    with pytest.raises(ValueError, match="unit length"):
+        _run_parameter_case(monkeypatch, rejected_scale)
+
+
+def test_metric_distance_effective_float32_boundary(monkeypatch):
+    base = torch.tensor(2.0, dtype=torch.float32)
+    first_rejected = torch.tensor(2.0 + RaycasterObservabilityConfig().distance_tolerance_m, dtype=torch.float32)
+    effective_boundary = torch.nextafter(first_rejected, base)
+    below = torch.nextafter(effective_boundary, base)
+    for parameter in (below.item(), effective_boundary.item()):
+        starts, directions, hits, valid, _, normals = _fixture()
+        returned = torch.tensor([[parameter, 3.0, 4.0, float("inf")]], dtype=torch.float32)
+        monkeypatch.setattr(adapter, "_raycast_mesh_with_normals", lambda *_: (hits.clone(), returned.clone(), normals.clone(), None))
+        result = acquire_exact_raycaster_observability(starts, directions, SimpleNamespace(id=1, device="cpu"), 40.0, hits, valid)
+        assert result.distance_max_error_m.item() <= RaycasterObservabilityConfig().distance_tolerance_m
+    starts, directions, hits, valid, _, normals = _fixture()
+    rejected = torch.tensor([[first_rejected.item(), 3.0, 4.0, float("inf")]], dtype=torch.float32)
+    monkeypatch.setattr(adapter, "_raycast_mesh_with_normals", lambda *_: (hits.clone(), rejected.clone(), normals.clone(), None))
+    with pytest.raises(RuntimeError, match="distances disagree"):
+        acquire_exact_raycaster_observability(starts, directions, SimpleNamespace(id=1, device="cpu"), 40.0, hits, valid)
+
+
+@pytest.mark.parametrize("parameter,match", [
+    (-1.0, "nonnegative"), (float("nan"), "finite"), (float("inf"), "finite"),
+    (-float("inf"), "finite"),
+])
+def test_valid_raw_parameter_values_fail_closed(monkeypatch, parameter, match):
+    starts, directions, hits, valid, distance, normals = _fixture()
+    distance[0, 0] = parameter
+    monkeypatch.setattr(adapter, "_raycast_mesh_with_normals", lambda *_: (hits.clone(), distance.clone(), normals.clone(), None))
+    with pytest.raises(RuntimeError, match=match):
+        acquire_exact_raycaster_observability(starts, directions, SimpleNamespace(id=1, device="cpu"), 40.0, hits, valid)
+
+
+@pytest.mark.parametrize("parameter", [0.0, float("nan"), -float("inf")])
+def test_invalid_beam_raw_parameter_requires_positive_infinity(monkeypatch, parameter):
+    starts, directions, hits, valid, distance, normals = _fixture()
+    distance[0, 3] = parameter
+    monkeypatch.setattr(adapter, "_raycast_mesh_with_normals", lambda *_: (hits.clone(), distance.clone(), normals.clone(), None))
+    with pytest.raises(RuntimeError, match="invalid ray parameters"):
+        acquire_exact_raycaster_observability(starts, directions, SimpleNamespace(id=1, device="cpu"), 40.0, hits, valid)
+
+
+@pytest.mark.parametrize("returned_offset,accepted_offset", [(2.0e-5, 0.0), (0.0, 2.0e-5)])
+def test_hit_inconsistency_precedes_metric_acceptance(monkeypatch, returned_offset, accepted_offset):
+    with pytest.raises(RuntimeError, match="sensor hits"):
+        _run_parameter_case(monkeypatch, 1.0, returned_hit_offset=returned_offset, accepted_hit_offset=accepted_offset)
+
+
 def test_positive_exact_handoff_all_fields_ownership_and_planar_degeneracy(monkeypatch):
     result, inputs = _run(monkeypatch)
     assert isinstance(result, RaycasterObservabilityResult)
@@ -138,17 +227,17 @@ def test_official_call_flags_and_argument_order_are_exact(monkeypatch):
         ("tuple_type", lambda result, *_: result.append(0), "four ordered"),
         ("face_id", lambda result, *_: result.__setitem__(3, torch.zeros(1, 4, dtype=torch.int32)), "face ids"),
         ("hit_shape", lambda result, *_: result.__setitem__(0, result[0][:, :3].clone()), "hits metadata"),
-        ("distance_shape", lambda result, *_: result.__setitem__(1, result[1][:, :3].clone()), "distances metadata"),
+        ("distance_shape", lambda result, *_: result.__setitem__(1, result[1][:, :3].clone()), "ray parameters metadata"),
         ("normal_shape", lambda result, *_: result.__setitem__(2, result[2][:, :3].clone()), "normals metadata"),
         ("hit_dtype", lambda result, *_: result.__setitem__(0, result[0].double()), "hits dtype/device"),
-        ("distance_dtype", lambda result, *_: result.__setitem__(1, result[1].double()), "distances dtype/device"),
+        ("distance_dtype", lambda result, *_: result.__setitem__(1, result[1].double()), "ray parameters dtype/device"),
         ("normal_dtype", lambda result, *_: result.__setitem__(2, result[2].double()), "normals dtype/device"),
         ("hit_mismatch", lambda result, *_: result[0].__setitem__((0, 0, 0), 2.1), "sensor hits"),
         ("validity_mismatch", lambda result, *_: result[0].__setitem__((0, 3), torch.zeros(3)), "validity disagrees"),
         ("distance_mismatch", lambda result, *_: result[1].__setitem__((0, 0), 2.1), "distances disagree"),
         ("valid_normal_nonfinite", lambda result, *_: result[2].__setitem__((0, 0, 0), float("nan")), "valid normals"),
         ("valid_normal_nonunit", lambda result, *_: result[2].__setitem__((0, 0), torch.tensor([0.0, 0.0, 2.0])), "unit length"),
-        ("miss_distance", lambda result, *_: result[1].__setitem__((0, 3), 40.0), "invalid distances"),
+        ("miss_distance", lambda result, *_: result[1].__setitem__((0, 3), 40.0), "invalid ray parameters"),
         ("miss_normal", lambda result, *_: result[2].__setitem__((0, 3), torch.zeros(3)), "invalid normals"),
         ("mutate_start", lambda result, starts, *_: starts.__setitem__((0, 0, 0), 1.0), "mutated ray_starts"),
     ],

@@ -242,7 +242,8 @@ def acquire_exact_raycaster_observability(
         torch.isfinite(ray_directions_w).all().item()
     ):
         raise ValueError("ray starts and directions must be finite")
-    direction_error = (torch.linalg.vector_norm(ray_directions_w, dim=-1) - 1.0).abs()
+    direction_norm = torch.linalg.vector_norm(ray_directions_w, dim=-1)
+    direction_error = (direction_norm - 1.0).abs()
     if bool((direction_error > config.unit_tolerance).any().item()):
         raise ValueError("ray directions must be unit length within tolerance")
     if isinstance(maximum_distance_m, bool) or not isinstance(maximum_distance_m, (int, float)):
@@ -268,12 +269,12 @@ def acquire_exact_raycaster_observability(
     returned = _raycast_mesh_with_normals(ray_starts_w, ray_directions_w, mesh, maximum_distance_m)
     if not isinstance(returned, tuple) or len(returned) != 4:
         raise RuntimeError("raycast_mesh must return exactly four ordered results")
-    ray_hits_w, ray_distances_m, raw_normals_w, face_ids = returned
+    ray_hits_w, ray_parameters, raw_normals_w, face_ids = returned
     if face_ids is not None:
         raise RuntimeError("face ids must be unavailable when return_face_id is false")
     for name, value, shape in (
         ("ray hits", ray_hits_w, ray_starts_w.shape),
-        ("ray distances", ray_distances_m, accepted_beam_valid.shape),
+        ("ray parameters", ray_parameters, accepted_beam_valid.shape),
         ("ray normals", raw_normals_w, ray_starts_w.shape),
     ):
         if not isinstance(value, torch.Tensor) or value.shape != shape:
@@ -295,15 +296,24 @@ def acquire_exact_raycaster_observability(
         raise RuntimeError(
             f"returned hits disagree with accepted same-state sensor hits: max error {hit_max_error.item()} m"
         )
-    if not bool(torch.isfinite(ray_distances_m[accepted_beam_valid]).all().item()):
-        raise RuntimeError("returned valid distances must be finite")
+    valid_parameters = ray_parameters[accepted_beam_valid]
+    if not bool(torch.isfinite(valid_parameters).all().item()):
+        raise RuntimeError("returned valid ray parameters must be finite")
+    if bool((valid_parameters < 0.0).any().item()):
+        raise RuntimeError("returned valid ray parameters must be nonnegative")
     if not bool(torch.isfinite(raw_normals_w[accepted_beam_valid]).all().item()):
         raise RuntimeError("returned valid normals must be finite")
-    for name, value in (("distances", ray_distances_m), ("normals", raw_normals_w)):
+    for name, value in (("ray parameters", ray_parameters), ("normals", raw_normals_w)):
         invalid = value[~accepted_beam_valid]
         if invalid.numel() and not bool(_positive_infinity(invalid).all().item()):
             raise RuntimeError(f"returned invalid {name} must preserve the positive-infinity miss convention")
-    distance_error = (ray_distances_m[accepted_beam_valid] - accepted_distance[accepted_beam_valid]).abs()
+    ray_distances_m = ray_parameters * direction_norm
+    valid_metric_distances = ray_distances_m[accepted_beam_valid]
+    if not bool(torch.isfinite(valid_metric_distances).all().item()) or bool(
+        (valid_metric_distances < 0.0).any().item()
+    ):
+        raise RuntimeError("converted valid ray distances must be finite and nonnegative")
+    distance_error = (valid_metric_distances - accepted_distance[accepted_beam_valid]).abs()
     distance_max_error = distance_error.max() if distance_error.numel() else torch.zeros((), device=ray_starts_w.device)
     if bool((distance_error > config.distance_tolerance_m).any().item()):
         raise RuntimeError("returned distances disagree with accepted same-state hit geometry")
