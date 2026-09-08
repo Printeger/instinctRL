@@ -10,6 +10,8 @@ from instinctlab.training.checkpoint import CheckpointError
 from instinctlab.training.checkpoint_h1 import load_checkpoint_h1, save_checkpoint_h1
 from instinctlab.training.networks_h1 import PrivilegedCriticH1
 from instinctlab.training.ppo import PPOBatch
+from instinctlab.task.rewards_h1 import compute_reward_h1
+from instinctlab.training.ppo import compute_gae
 
 
 METHOD = {"method": "a" * 64}
@@ -79,3 +81,25 @@ def test_checkpoint_rejects_actual_adam_step_disagreement_partial_and_nonfinite(
     for index, wrong in enumerate(variants):
         corrupt = (tmp_path / f"adam_bad_{index}.pt").resolve(); torch.save(wrong, corrupt)
         with pytest.raises(CheckpointError): _load(corrupt, _trainer())
+
+
+def test_actual_reward_short_trajectories_and_gae_match_hand_calculation():
+    steps = 40; zero3 = torch.zeros(steps, 3); zero1 = torch.zeros(steps, 1)
+    lidar = torch.zeros(steps, 12, 59, 360); lidar[:, 0::3] = 40.; lidar[:, 1::3] = 1.; lidar[:, 2::3] = 1.
+    base = dict(lidar_grid=lidar,
+        command_b=zero3, v_gov_b=zero3, v_final_b=zero3, previous_issued_v_final_b=zero3,
+        actual_velocity_b=torch.full((steps, 3), .0), anchor_loss=zero1,
+        anchor_active=zero1, anchor_usable_fraction=torch.ones_like(zero1), ics_beta=torch.ones_like(zero1),
+        exact_clearance_m=torch.ones_like(zero1), collision=torch.zeros(steps, 1, dtype=torch.bool),
+        below_height=torch.zeros(steps, 1, dtype=torch.bool), above_height=torch.zeros(steps, 1, dtype=torch.bool))
+    safe = compute_reward_h1(**base).total
+    collision_args = dict(base); collision_args["collision"] = torch.zeros(steps, 1, dtype=torch.bool); collision_args["collision"][-1] = True
+    failed = compute_reward_h1(**collision_args).total
+    expected_safe = sum(float(safe[index]) * .99 ** index for index in range(steps))
+    expected_failed = sum(float(failed[index]) * .99 ** index for index in range(steps))
+    assert expected_failed < expected_safe and failed[-1].item() == pytest.approx(safe[-1].item() - 300.)
+    rewards = failed.reshape(steps, 1, 1); values = torch.zeros_like(rewards)
+    terminated = torch.zeros_like(rewards, dtype=torch.bool); terminated[-1] = True
+    result = compute_gae(rewards, values, values, terminated, torch.zeros_like(terminated), terminated,
+                         timeout_bootstrap_values=torch.zeros_like(rewards), gamma=.99, gae_lambda=1.)
+    assert result.returns[0].item() == pytest.approx(expected_failed, abs=2e-4)
