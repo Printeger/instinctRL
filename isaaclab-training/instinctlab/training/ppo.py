@@ -9,7 +9,7 @@ import math
 import torch
 from torch import nn
 
-from .networks import ACTION_DIM, HistoryActor, PrivilegedCritic, validate_critic_input, validate_policy
+from .networks import ACTION_DIM, CRITIC_DIM, HistoryActor, PrivilegedCritic, validate_critic_input, validate_policy
 
 
 def _finite_scalar(name: str, value: float, *, lower: float, upper: float | None = None) -> float:
@@ -182,11 +182,23 @@ class PPOBatch:
     returns: torch.Tensor
 
 
-def _validate_batch(batch: PPOBatch) -> int:
+def _validate_batch(batch: PPOBatch, critic_dimension: int = CRITIC_DIM) -> int:
     if not isinstance(batch, PPOBatch):
         raise TypeError("batch must be PPOBatch")
     lidar, _ = validate_policy(batch.policy)
-    privileged = validate_critic_input(batch.privileged)
+    if critic_dimension == CRITIC_DIM:
+        privileged = validate_critic_input(batch.privileged)
+    else:
+        privileged = batch.privileged
+        if (
+            not isinstance(privileged, torch.Tensor)
+            or privileged.ndim != 2
+            or privileged.shape[0] <= 0
+            or privileged.shape[1] != critic_dimension
+            or privileged.dtype != torch.float32
+            or not bool(torch.isfinite(privileged).all().item())
+        ):
+            raise ValueError(f"privileged must be finite float32 [N,{critic_dimension}]")
     size = lidar.shape[0]
     if privileged.shape[0] != size or privileged.device != lidar.device:
         raise ValueError("actor and critic branches must share batch size and device")
@@ -272,7 +284,7 @@ class PPOTrainer:
         self.update_counter = 0
 
     def update(self, batch: PPOBatch) -> dict[str, object]:
-        size = _validate_batch(batch)
+        size = _validate_batch(batch, getattr(self.critic, "critic_dimension", CRITIC_DIM))
         if size % self.config.minibatch_size != 0:
             raise ValueError("batch must be divisible by configured minibatch_size")
         old_snapshot = batch.old_log_probabilities.detach().clone()
@@ -352,7 +364,18 @@ class PPOTrainer:
         }
 
     def critic_only_step(self, privileged: torch.Tensor, returns: torch.Tensor) -> dict[str, float]:
-        privileged = validate_critic_input(privileged)
+        critic_dimension = getattr(self.critic, "critic_dimension", CRITIC_DIM)
+        if critic_dimension == CRITIC_DIM:
+            privileged = validate_critic_input(privileged)
+        elif (
+            not isinstance(privileged, torch.Tensor)
+            or privileged.ndim != 2
+            or privileged.shape[0] <= 0
+            or privileged.shape[1] != critic_dimension
+            or privileged.dtype != torch.float32
+            or not bool(torch.isfinite(privileged).all().item())
+        ):
+            raise ValueError(f"privileged must be finite float32 [N,{critic_dimension}]")
         if not isinstance(returns, torch.Tensor) or returns.shape != (privileged.shape[0], 1):
             raise ValueError("returns must have shape (N,1)")
         if returns.dtype != torch.float32 or returns.device != privileged.device or not bool(torch.isfinite(returns).all().item()):
