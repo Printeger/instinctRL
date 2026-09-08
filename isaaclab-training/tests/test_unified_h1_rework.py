@@ -8,6 +8,7 @@ from instinctlab.task.scene_h1 import H1_RAY_MESH_PATH, combined_scene_triangles
 from instinctlab.training import HistoryActor, NetworkConfig, PPOConfig, PPOTrainer
 from instinctlab.training.checkpoint import CheckpointError
 from instinctlab.training.checkpoint_h1 import load_checkpoint_h1, save_checkpoint_h1
+from instinctlab.training.checkpoint_h1 import _apply_rng_state, _restore_rng_state
 from instinctlab.training.networks_h1 import PrivilegedCriticH1
 from instinctlab.training.ppo import PPOBatch
 from instinctlab.task.rewards_h1 import compute_reward_h1
@@ -103,3 +104,18 @@ def test_actual_reward_short_trajectories_and_gae_match_hand_calculation():
     result = compute_gae(rewards, values, values, terminated, torch.zeros_like(terminated), terminated,
                          timeout_bootstrap_values=torch.zeros_like(rewards), gamma=.99, gae_lambda=1.)
     assert result.returns[0].item() == pytest.approx(expected_failed, abs=2e-4)
+
+
+def test_cuda_rng_apply_and_rollback_use_no_gpu_substitute(monkeypatch):
+    calls=[]
+    monkeypatch.setattr(torch.cuda,"set_rng_state_all",lambda values:calls.append([value.clone() for value in values]))
+    generator=torch.Generator().manual_seed(4)
+    before={"torch":torch.get_rng_state().clone(),"torch_cuda":[torch.tensor([1],dtype=torch.uint8)],
+            "python":__import__("random").getstate(),"numpy":__import__("numpy").random.get_state(),
+            "curriculum":generator.get_state().clone()}
+    numpy_state=before["numpy"]
+    rng={"torch_cpu":before["torch"],"torch_cuda":[torch.tensor([2],dtype=torch.uint8)],
+         "curriculum":before["curriculum"]}
+    _apply_rng_state(rng,(before["python"],numpy_state),generator,cuda_active=True)
+    _restore_rng_state(before,generator)
+    assert calls[0][0].item()==2 and calls[1][0].item()==1

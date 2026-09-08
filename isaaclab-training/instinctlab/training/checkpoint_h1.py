@@ -163,6 +163,21 @@ def _validate_rng_payload(value: object, *, target_device: torch.device) -> tupl
     return value, (python_state, np_state)
 
 
+def _apply_rng_state(rng: Mapping[str, Any], parsed_rng: tuple[Any, ...],
+                     curriculum_generator: torch.Generator, *, cuda_active: bool) -> None:
+    torch.set_rng_state(rng["torch_cpu"].cpu())
+    if cuda_active: torch.cuda.set_rng_state_all([item.cpu() for item in rng["torch_cuda"]])
+    random.setstate(parsed_rng[0]); np.random.set_state(parsed_rng[1])
+    curriculum_generator.set_state(rng["curriculum"].cpu())
+
+
+def _restore_rng_state(before: Mapping[str, Any], curriculum_generator: torch.Generator) -> None:
+    torch.set_rng_state(before["torch"])
+    if "torch_cuda" in before: torch.cuda.set_rng_state_all(before["torch_cuda"])
+    random.setstate(before["python"]); np.random.set_state(before["numpy"])
+    curriculum_generator.set_state(before["curriculum"])
+
+
 def save_checkpoint_h1(
     path: str | Path, trainer: PPOTrainer, *, method_hashes: Mapping[str, str],
     source_identity: Mapping[str, str], transition_counter: int, global_policy_step: int,
@@ -296,19 +311,12 @@ def load_checkpoint_h1(
         trainer.actor.load_state_dict(actor, strict=True); trainer.critic.load_state_dict(critic, strict=True)
         trainer.actor_optimizer.load_state_dict(actor_optimizer); trainer.critic_optimizer.load_state_dict(critic_optimizer)
         trainer.update_counter = update
-        torch.set_rng_state(rng["torch_cpu"].cpu())
-        if rng["torch_cuda"]:
-            torch.cuda.set_rng_state_all([item.cpu() for item in rng["torch_cuda"]])
-        random.setstate(parsed_rng[0])
-        np.random.set_state(parsed_rng[1])
-        curriculum_generator.set_state(rng["curriculum"].cpu())
+        _apply_rng_state(rng, parsed_rng, curriculum_generator, cuda_active=bool(rng["torch_cuda"]))
     except BaseException as error:
         trainer.actor.load_state_dict(before["actor"]); trainer.critic.load_state_dict(before["critic"])
         trainer.actor_optimizer.load_state_dict(before["actor_optimizer"]); trainer.critic_optimizer.load_state_dict(before["critic_optimizer"])
-        trainer.update_counter = before["update"]; torch.set_rng_state(before["torch"])
-        if "torch_cuda" in before:
-            torch.cuda.set_rng_state_all(before["torch_cuda"])
-        random.setstate(before["python"]); np.random.set_state(before["numpy"]); curriculum_generator.set_state(before["curriculum"])
+        trainer.update_counter = before["update"]
+        _restore_rng_state(before, curriculum_generator)
         raise CheckpointError("checkpoint-h1 transactional load failed without partial mutation") from error
     return metadata
 
