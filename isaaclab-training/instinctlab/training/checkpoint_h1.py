@@ -32,12 +32,24 @@ CHECKPOINT_H1_SCHEMA = {
 }
 
 
+def _exact_adam_step(value: object, label: str) -> int:
+    if not isinstance(value, torch.Tensor) or value.numel() != 1:
+        raise CheckpointError(f"{label} Adam step must be a scalar tensor")
+    scalar = float(value.detach().cpu().item())
+    if not np.isfinite(scalar) or scalar < 0 or scalar != float(int(scalar)):
+        raise CheckpointError(f"{label} Adam step must be an exact nonnegative integer")
+    return int(scalar)
+
+
 def _optimizer_step(optimizer: torch.optim.Optimizer) -> int | None:
     states = optimizer.state_dict()["state"]
     if not states:
         return None
-    steps = [int(item["step"].item()) for item in states.values()]
-    if len(steps) != len(states) or len(set(steps)) != 1:
+    parameter_count = sum(len(group["params"]) for group in optimizer.state_dict()["param_groups"])
+    if len(states) != parameter_count or any(not isinstance(item, dict) or "step" not in item for item in states.values()):
+        raise CheckpointError("Adam state must cover every parameter")
+    steps = [_exact_adam_step(item["step"], "live") for item in states.values()]
+    if len(set(steps)) != 1:
         raise CheckpointError("Adam optimizer parameters do not share one exact step")
     return steps[0]
 
@@ -58,11 +70,15 @@ def _tuple_tree(value: Any) -> Any:
     return tuple(_tuple_tree(item) for item in value) if isinstance(value, list) else value
 
 
-def _rng_payload(curriculum_generator: torch.Generator) -> dict[str, Any]:
+def _rng_payload(curriculum_generator: torch.Generator, trainer: PPOTrainer) -> dict[str, Any]:
     numpy_state = np.random.get_state()
+    device = next(trainer.actor.parameters()).device
+    # A CPU checkpoint must not query the CUDA driver.  A live CUDA checkpoint
+    # captures all CUDA generators because the trainer is already on CUDA.
+    cuda_state = [item.clone() for item in torch.cuda.get_rng_state_all()] if device.type == "cuda" else []
     return {
         "torch_cpu": torch.get_rng_state().clone(),
-        "torch_cuda": [item.clone() for item in torch.cuda.get_rng_state_all()] if torch.cuda.is_available() else [],
+        "torch_cuda": cuda_state,
         "python": _json_tree(random.getstate()),
         "numpy": {
             "algorithm": numpy_state[0], "keys": numpy_state[1].tolist(), "position": numpy_state[2],
@@ -86,6 +102,67 @@ def _validate_counter(value: object, label: str) -> int:
     return value
 
 
+def _validate_clock_and_curriculum(*, update: int, transition: int, policy_step: int,
+                                   curriculum: object, training_seed: int) -> dict[str, Any]:
+    if transition != 512 * update or policy_step != 16 * update:
+        raise CheckpointError("checkpoint-h1 counters must equal 512*update and 16*update")
+    if training_seed != 20260908:
+        raise CheckpointError("checkpoint-h1 training seed mismatch")
+    if not isinstance(curriculum, dict) or set(curriculum) != {"version", "completed_policy_steps"}:
+        raise CheckpointError("checkpoint-h1 curriculum schema mismatch")
+    if curriculum["version"] != "curriculum-h1-v1":
+        raise CheckpointError("checkpoint-h1 curriculum version mismatch")
+    completed = _validate_counter(curriculum["completed_policy_steps"], "completed_policy_steps")
+    if completed != policy_step:
+        raise CheckpointError("checkpoint-h1 curriculum clock mismatch")
+    return dict(curriculum)
+
+
+def _validated_saved_optimizer(label: str, saved: object, optimizer: torch.optim.Optimizer,
+                                expected_step: int) -> dict[str, Any]:
+    validated = _validate_optimizer_state(label, saved, optimizer)
+    states = validated["state"]
+    parameter_count = sum(len(group["params"]) for group in validated["param_groups"])
+    if len(states) != parameter_count:
+        raise CheckpointError(f"{label} Adam state does not cover every parameter")
+    for state in states.values():
+        if not isinstance(state, dict) or "step" not in state:
+            raise CheckpointError(f"{label} Adam state is partial")
+        if _exact_adam_step(state["step"], label) != expected_step:
+            raise CheckpointError(f"{label} Adam step disagrees with declared counter")
+    return validated
+
+
+def _validate_rng_payload(value: object, *, target_device: torch.device) -> tuple[dict[str, Any], tuple[Any, ...]]:
+    if not isinstance(value, dict) or set(value) != {"torch_cpu", "torch_cuda", "python", "numpy", "curriculum"}:
+        raise CheckpointError("checkpoint-h1 RNG schema mismatch")
+    cpu, curriculum = value["torch_cpu"], value["curriculum"]
+    if (not isinstance(cpu, torch.Tensor) or cpu.dtype != torch.uint8 or cpu.ndim != 1
+            or not isinstance(curriculum, torch.Tensor) or curriculum.dtype != torch.uint8 or curriculum.ndim != 1):
+        raise CheckpointError("checkpoint-h1 CPU/curriculum RNG is invalid")
+    cuda = value["torch_cuda"]
+    if not isinstance(cuda, list) or any(not isinstance(item, torch.Tensor) or item.dtype != torch.uint8 or item.ndim != 1 for item in cuda):
+        raise CheckpointError("checkpoint-h1 CUDA RNG schema is invalid")
+    if target_device.type == "cpu" and cuda:
+        raise CheckpointError("CPU trainer cannot restore CUDA RNG state")
+    if target_device.type == "cuda" and not cuda:
+        raise CheckpointError("CUDA trainer checkpoint is missing CUDA RNG state")
+    numpy_state = value["numpy"]
+    if not isinstance(numpy_state, dict) or set(numpy_state) != {"algorithm", "keys", "position", "has_gauss", "cached_gaussian"}:
+        raise CheckpointError("checkpoint-h1 NumPy RNG schema mismatch")
+    try:
+        python_state = _tuple_tree(value["python"])
+        probe = random.Random(); probe.setstate(python_state)
+        np_state = (numpy_state["algorithm"], np.asarray(numpy_state["keys"], dtype=np.uint32),
+                    numpy_state["position"], numpy_state["has_gauss"], numpy_state["cached_gaussian"])
+        probe_np = np.random.RandomState(); probe_np.set_state(np_state)
+        probe_generator = torch.Generator(); probe_generator.set_state(curriculum.cpu())
+        probe_cpu = torch.Generator(); probe_cpu.set_state(cpu.cpu())
+    except BaseException as error:
+        raise CheckpointError("checkpoint-h1 RNG payload is invalid") from error
+    return value, (python_state, np_state)
+
+
 def save_checkpoint_h1(
     path: str | Path, trainer: PPOTrainer, *, method_hashes: Mapping[str, str],
     source_identity: Mapping[str, str], transition_counter: int, global_policy_step: int,
@@ -104,6 +181,10 @@ def save_checkpoint_h1(
     policy_step = _validate_counter(global_policy_step, "global_policy_step")
     seed = _validate_counter(training_seed, "training_seed")
     reset = _validate_counter(reset_number, "reset_number")
+    curriculum_value = _validate_clock_and_curriculum(
+        update=update, transition=transition, policy_step=policy_step,
+        curriculum=curriculum, training_seed=seed,
+    )
     actor_step = _optimizer_step(trainer.actor_optimizer)
     critic_step = _optimizer_step(trainer.critic_optimizer)
     if update == 0:
@@ -119,8 +200,8 @@ def save_checkpoint_h1(
         "actor_optimizer": trainer.actor_optimizer.state_dict(), "critic_optimizer": trainer.critic_optimizer.state_dict(),
         "counters": {"update": update, "transition": transition, "global_policy_step": policy_step,
                      "actor_optimizer": actor_step or 0, "critic_optimizer": critic_step or 0},
-        "curriculum": dict(curriculum), "training_seed": seed, "reset_number": reset,
-        "rng": _rng_payload(curriculum_generator),
+        "curriculum": curriculum_value, "training_seed": seed, "reset_number": reset,
+        "rng": _rng_payload(curriculum_generator, trainer),
     }
     _validate_metadata(payload["method_hashes"], "method_hashes")
     _validate_metadata(payload["source_identity"], "source_identity")
@@ -174,6 +255,14 @@ def load_checkpoint_h1(
     for key in counters:
         _validate_counter(counters[key], key)
     update = counters["update"]
+    transition = counters["transition"]
+    policy_step = counters["global_policy_step"]
+    seed = _validate_counter(payload["training_seed"], "training_seed")
+    reset_number = _validate_counter(payload["reset_number"], "reset_number")
+    curriculum = _validate_clock_and_curriculum(
+        update=update, transition=transition, policy_step=policy_step,
+        curriculum=payload["curriculum"], training_seed=seed,
+    )
     if update == 0:
         for label in ("actor_optimizer", "critic_optimizer"):
             saved = payload[label]
@@ -184,21 +273,15 @@ def load_checkpoint_h1(
         if counters["actor_optimizer"] != 0 or counters["critic_optimizer"] != 0:
             raise CheckpointError("cold checkpoint optimizer counters must be zero")
     else:
-        actor_optimizer = _validate_optimizer_state("actor", payload["actor_optimizer"], trainer.actor_optimizer)
-        critic_optimizer = _validate_optimizer_state("critic", payload["critic_optimizer"], trainer.critic_optimizer)
         if counters["actor_optimizer"] != counters["critic_optimizer"] or counters["actor_optimizer"] != 8 * update:
             raise CheckpointError("checkpoint-h1 Adam counters must equal 8*update")
-    rng = payload["rng"]
-    if not isinstance(rng, dict) or set(rng) != {"torch_cpu", "torch_cuda", "python", "numpy", "curriculum"}:
-        raise CheckpointError("checkpoint-h1 RNG schema mismatch")
-    if not isinstance(rng["torch_cpu"], torch.Tensor) or rng["torch_cpu"].dtype != torch.uint8 or not isinstance(rng["curriculum"], torch.Tensor) or rng["curriculum"].dtype != torch.uint8:
-        raise CheckpointError("checkpoint-h1 CPU/curriculum RNG is invalid")
-    if rng["torch_cuda"] and (not torch.cuda.is_available() or len(rng["torch_cuda"]) != torch.cuda.device_count()):
-        raise CheckpointError("checkpoint-h1 CUDA RNG device mismatch")
-    numpy_state = rng["numpy"]
-    if not isinstance(numpy_state, dict) or set(numpy_state) != {"algorithm", "keys", "position", "has_gauss", "cached_gaussian"}:
-        raise CheckpointError("checkpoint-h1 NumPy RNG schema mismatch")
+        actor_optimizer = _validated_saved_optimizer("actor", payload["actor_optimizer"], trainer.actor_optimizer, counters["actor_optimizer"])
+        critic_optimizer = _validated_saved_optimizer("critic", payload["critic_optimizer"], trainer.critic_optimizer, counters["critic_optimizer"])
+    rng, parsed_rng = _validate_rng_payload(payload["rng"], target_device=next(trainer.actor.parameters()).device)
     _finite_tree(payload, "checkpoint-h1")
+
+    metadata = {"counters": dict(counters), "curriculum": curriculum,
+                "training_seed": seed, "reset_number": reset_number}
 
     before = {
         "actor": deepcopy(trainer.actor.state_dict()), "critic": deepcopy(trainer.critic.state_dict()),
@@ -207,6 +290,8 @@ def load_checkpoint_h1(
         "torch": torch.get_rng_state().clone(), "python": random.getstate(), "numpy": np.random.get_state(),
         "curriculum": curriculum_generator.get_state().clone(),
     }
+    if next(trainer.actor.parameters()).device.type == "cuda":
+        before["torch_cuda"] = [item.clone() for item in torch.cuda.get_rng_state_all()]
     try:
         trainer.actor.load_state_dict(actor, strict=True); trainer.critic.load_state_dict(critic, strict=True)
         trainer.actor_optimizer.load_state_dict(actor_optimizer); trainer.critic_optimizer.load_state_dict(critic_optimizer)
@@ -214,16 +299,18 @@ def load_checkpoint_h1(
         torch.set_rng_state(rng["torch_cpu"].cpu())
         if rng["torch_cuda"]:
             torch.cuda.set_rng_state_all([item.cpu() for item in rng["torch_cuda"]])
-        random.setstate(_tuple_tree(rng["python"]))
-        np.random.set_state((numpy_state["algorithm"], np.asarray(numpy_state["keys"], dtype=np.uint32), numpy_state["position"], numpy_state["has_gauss"], numpy_state["cached_gaussian"]))
+        random.setstate(parsed_rng[0])
+        np.random.set_state(parsed_rng[1])
         curriculum_generator.set_state(rng["curriculum"].cpu())
     except BaseException as error:
         trainer.actor.load_state_dict(before["actor"]); trainer.critic.load_state_dict(before["critic"])
         trainer.actor_optimizer.load_state_dict(before["actor_optimizer"]); trainer.critic_optimizer.load_state_dict(before["critic_optimizer"])
         trainer.update_counter = before["update"]; torch.set_rng_state(before["torch"])
+        if "torch_cuda" in before:
+            torch.cuda.set_rng_state_all(before["torch_cuda"])
         random.setstate(before["python"]); np.random.set_state(before["numpy"]); curriculum_generator.set_state(before["curriculum"])
         raise CheckpointError("checkpoint-h1 transactional load failed without partial mutation") from error
-    return {"counters": dict(counters), "curriculum": dict(payload["curriculum"]), "training_seed": payload["training_seed"], "reset_number": payload["reset_number"]}
+    return metadata
 
 
 __all__ = [

@@ -151,7 +151,7 @@ SOURCE = {"product_commit": "c" * 40, "workload_commit": "d" * 40}
 
 def _checkpoint_args(generator):
     return dict(method_hashes=METHOD, source_identity=SOURCE, transition_counter=0,
-                global_policy_step=0, curriculum={"version": "curriculum-h1-v1", "block": 0},
+                global_policy_step=0, curriculum={"version": "curriculum-h1-v1", "completed_policy_steps": 0},
                 training_seed=20260908, reset_number=0, curriculum_generator=generator)
 
 

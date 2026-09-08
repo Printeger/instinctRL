@@ -11,18 +11,54 @@ from collections import OrderedDict
 from collections.abc import Sequence
 
 import torch
+import isaaclab.sim as sim_utils
+from isaaclab.assets import Articulation
 from isaaclab.scene import InteractiveSceneCfg
+from isaaclab.sensors import ContactSensor, RayCaster
+from isaaclab.sim.spawners.from_files import GroundPlaneCfg, spawn_ground_plane
 from isaaclab.utils import configclass
+from pxr import UsdGeom, UsdPhysics
 
 from instinctlab.task.critic_h1 import CRITIC_H1_DIMENSION, build_critic_h1_state
 from instinctlab.task.rewards_h1 import compute_reward_h1
+from instinctlab.task.scene_h1 import H1_RAY_MESH_PATH, H1_RAY_SCENE_PATH, combined_scene_triangles
+from instinctlab.control.baseline_b0 import B0DirectConfig, execute_b0_direct_velocity
+from instinctlab.control.pipeline import ControlCoreResult
 from .taslab_direct_env import TaslabDirectEnv, TaslabDirectEnvCfg, _detached_snapshot
+
+def _define_triangle_mesh(path: str, points: list[tuple[float, float, float]], indices: list[int], *, collision: bool) -> None:
+    mesh = UsdGeom.Mesh.Define(sim_utils.get_current_stage(), path)
+    mesh.CreatePointsAttr(points)
+    mesh.CreateFaceVertexCountsAttr([3] * (len(indices) // 3))
+    mesh.CreateFaceVertexIndicesAttr(indices)
+    mesh.CreateSubdivisionSchemeAttr("none")
+    if collision:
+        UsdPhysics.CollisionAPI.Apply(mesh.GetPrim())
+
+
+def _spawn_unified_h1_combined_scene(env_origins: torch.Tensor) -> None:
+    """Author the actual 32-lane finite ray mesh and matching wall collision mesh."""
+    points, indices, _ = combined_scene_triangles(env_origins)
+    sim_utils.create_prim(H1_RAY_SCENE_PATH, "Xform")
+    _define_triangle_mesh(H1_RAY_MESH_PATH, points, indices, collision=False)
+    # The physical ground remains Isaac's plane.  Only wall triangles are
+    # duplicated into the collision mesh, avoiding a co-planar collision floor.
+    wall_points: list[tuple[float, float, float]] = []
+    wall_indices: list[int] = []
+    for offset in range(0, len(points), 12):
+        for surface_offset in (4, 8):
+            start = len(wall_points)
+            wall_points.extend(points[offset + surface_offset:offset + surface_offset + 4])
+            wall_indices.extend((start, start + 1, start + 2, start, start + 2, start + 3))
+    sim_utils.create_prim("/World/H1CollisionWalls", "Xform")
+    _define_triangle_mesh("/World/H1CollisionWalls/Walls", wall_points, wall_indices, collision=True)
 
 
 @configclass
 class UnifiedH1DirectEnvCfg(TaslabDirectEnvCfg):
     state_space = CRITIC_H1_DIMENSION
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=32, env_spacing=100.0, replicate_physics=True)
+    ray_caster = TaslabDirectEnvCfg.ray_caster.replace(mesh_prim_paths=[H1_RAY_MESH_PATH])
     task_contract_version: str = "unified-h1-v1"
 
 
@@ -34,7 +70,22 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
     def __init__(self, cfg: UnifiedH1DirectEnvCfg, render_mode: str | None = None, **kwargs):
         self._h1_global_policy_step = 0
         self._h1_next_command_b: torch.Tensor | None = None
+        self._b0_command_b: torch.Tensor | None = None
+        self._h1_evaluation_case: str | None = None
         super().__init__(cfg, render_mode, **kwargs)
+
+    def _setup_scene(self) -> None:
+        _spawn_unified_h1_combined_scene(self.scene.env_origins)
+        spawn_ground_plane("/World/ground", GroundPlaneCfg())
+        self._robot = Articulation(self.cfg.robot)
+        self.scene.articulations["taslab"] = self._robot
+        self.scene.clone_environments(copy_from_source=False)
+        self._ray_caster = RayCaster(self.cfg.ray_caster)
+        self.scene.sensors["mid360"] = self._ray_caster
+        self._contact_sensor = ContactSensor(self.cfg.contact_sensor)
+        self.scene.sensors["contact"] = self._contact_sensor
+        if self.device == "cpu":
+            self.scene.filter_collisions(global_prim_paths=["/World/ground", "/World/H1CollisionWalls"])
 
     def set_h1_initial_command(self, command_b: torch.Tensor, global_policy_step: int) -> None:
         if not isinstance(global_policy_step, int) or isinstance(global_policy_step, bool) or global_policy_step < 0:
@@ -59,6 +110,41 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         if not torch.equal(command_b, self._command_b):
             raise ValueError("actor observation and staged c_t differ")
         self._h1_next_command_b = next_command_b.detach().clone()
+
+    def prepare_b0_step(self, *, command_b: torch.Tensor, next_command_b: torch.Tensor) -> None:
+        """Stage the reviewed direct B0 path; actor/governor/anchor/ICS are bypassed."""
+        self._validate_h1_command("command_b", command_b)
+        self._validate_h1_command("next_command_b", next_command_b)
+        self._command_b.copy_(command_b)
+        self._h1_next_command_b = next_command_b.detach().clone()
+        self._b0_command_b = command_b.detach().clone()
+
+    def set_h1_evaluation_case(self, case: str | None) -> None:
+        if case not in {None, "Z", "T", "S", "X", "W"}:
+            raise ValueError("unknown metric-h1 evaluation case")
+        self._h1_evaluation_case = case
+
+    def _pre_physics_step(self, actions: torch.Tensor) -> None:
+        if self._b0_command_b is None:
+            super()._pre_physics_step(actions)
+            return
+        direct = execute_b0_direct_velocity(self._b0_command_b, self._robot.data.root_quat_w, B0DirectConfig())
+        zeros3 = torch.zeros_like(direct.issued_body_velocity_m_s)
+        zeros1 = zeros3[:, :1]
+        ones1 = torch.ones_like(zeros1)
+        self._actions.zero_()
+        self._reward_previous_v_final_b.copy_(self._previous_issued_v_final_b)
+        self._control = ControlCoreResult(
+            ones1, zeros3, direct.issued_body_velocity_m_s, direct.issued_body_velocity_m_s,
+            direct.issued_world_velocity_m_s,
+            {"active": zeros1, "usable_fraction": zeros1, "mean_absolute_error_m": zeros1, "huber_loss": zeros1},
+            {"beta": ones1, "active_beam_count": zeros1, "minimum_clearance_m": zeros1,
+             "worst_margin_m_s": zeros1, "emergency": zeros1},
+        )
+        self._previous_issued_v_final_b.copy_(direct.issued_body_velocity_m_s)
+        self._episode_reset_pending.zero_()
+        self._explicit_reset_pending.zero_()
+        self._b0_command_b = None
 
     def _get_rewards(self) -> torch.Tensor:
         if self._task is None or self._control is None or self._h1_next_command_b is None:
@@ -120,6 +206,23 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
     def _reset_idx(self, env_ids: Sequence[int] | torch.Tensor | None) -> None:
         indices = self._validate_reset_indices(env_ids)
         super()._reset_idx(indices)
+        if indices.numel() and self._h1_evaluation_case is not None:
+            configured = torch.zeros(self.num_envs, 3, device=self.device, dtype=self._actions.dtype)
+            configured[:, 2] = 2.0
+            if self._h1_evaluation_case == "W":
+                lane = torch.arange(self.num_envs, device=self.device)
+                tangent = (lane % 4 - 1.5).to(self._actions.dtype) * .05
+                configured[:16, 0] = 4.6; configured[:16, 1] = tangent[:16]
+                configured[16:, 1] = 4.6; configured[16:, 0] = tangent[16:]
+            else:
+                offsets = torch.tensor([[-.1, -.1], [-.1, .1], [.1, -.1], [.1, .1]], device=self.device, dtype=self._actions.dtype)
+                configured[:, :2] = offsets[torch.arange(self.num_envs, device=self.device) // 8]
+            root = self._robot.data.root_state_w[indices].clone()
+            root[:, :3] = configured[indices] + self.scene.env_origins[indices]
+            root[:, 3:7] = 0.0; root[:, 3] = 1.0; root[:, 7:13] = 0.0
+            self._robot.write_root_pose_to_sim(root[:, :7], indices)
+            self._robot.write_root_velocity_to_sim(root[:, 7:], indices)
+            return
         if indices.numel() == 0 or self._h1_global_policy_step < 1024:
             return
         near = indices[(indices % 8) >= 6]
@@ -137,4 +240,6 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         self._robot.write_root_velocity_to_sim(root[:, 7:], near)
 
 
-__all__ = ["UnifiedH1DirectEnv", "UnifiedH1DirectEnvCfg"]
+__all__ = [
+    "H1_RAY_MESH_PATH", "UnifiedH1DirectEnv", "UnifiedH1DirectEnvCfg",
+]
