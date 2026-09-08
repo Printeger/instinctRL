@@ -16,6 +16,8 @@ from instinctlab.training.checkpoint import CheckpointError
 from instinctlab.training.checkpoint_h1 import load_checkpoint_h1, save_checkpoint_h1
 from instinctlab.training.networks_h1 import PrivilegedCriticH1
 from instinctlab.training.ppo import PPOBatch, compute_gae
+from instinctlab.training.rollout import RolloutConfig
+from instinctlab.training.rollout_h1 import collect_h1_transition
 
 
 def _lidar(batch=1, distance=40.0):
@@ -189,3 +191,26 @@ def test_ppo_h1_accepts_21_and_rejects_18_dimension():
     assert trainer.update(item)["sample_count"] == batch
     bad = PPOBatch(policy, torch.zeros(batch, 18), action, logp, torch.zeros(batch, 1), torch.zeros(batch, 1))
     with pytest.raises(ValueError): trainer.update(bad)
+
+
+def test_h1_rollout_uses_pre_reset_next_command_critic_for_pure_timeout():
+    trainer = _trainer()
+    observation = {"policy": {"lidar_grid": torch.zeros(1, 12, 59, 360), "state_vec": torch.zeros(1, 52)},
+                   "critic": torch.zeros(1, 21)}
+    terminal_critic = torch.zeros(1, 21); terminal_critic[:, 18] = .2
+    reset_critic = torch.zeros(1, 21); reset_critic[:, 18] = -.2
+    class Environment:
+        def step(self, action):
+            next_observation = {"policy": {key: value.clone() for key, value in observation["policy"].items()},
+                                "critic": reset_critic.clone()}
+            return next_observation, torch.tensor([1.0]), torch.tensor([False]), torch.tensor([True]), {"pre_reset": {"critic_h1": terminal_critic.clone()}}
+    transition, _ = collect_h1_transition(Environment(), trainer, observation, RolloutConfig(1, 1))
+    assert torch.equal(transition.timeout_privileged, terminal_critic)
+    assert not torch.equal(transition.timeout_privileged, transition.next_privileged)
+    assert torch.allclose(transition.timeout_value, trainer.critic(terminal_critic))
+
+
+def test_unified_environment_source_retains_a0004_ray_evidence_and_explicit_next_command():
+    source = (Path(__file__).parents[1] / "instinctlab/envs/unified_h1_direct_env.py").read_text()
+    assert "evaluation_ray_source" in source and "accepted_ray_hits_w" in source
+    assert "prepare_h1_step" in source and "_h1_next_command_b" in source

@@ -7,6 +7,7 @@ commands from the frozen single-step contract.
 
 from __future__ import annotations
 
+from collections import OrderedDict
 from collections.abc import Sequence
 
 import torch
@@ -88,6 +89,19 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
             "control": _detached_snapshot(self._control), "reward": _detached_snapshot(reward),
             "task": _detached_snapshot(self._task),
         }
+        if self._evaluation_ray_snapshot is None:
+            raise RuntimeError("same-state evaluation ray source is unavailable")
+        source = self._evaluation_ray_snapshot
+        self.extras["evaluation_ray_source"] = OrderedDict((
+            ("ray_starts_w", source.ray_starts_w.detach().clone()),
+            ("ray_directions_w", source.ray_directions_w.detach().clone()),
+            ("accepted_ray_hits_w", source.accepted_ray_hits_w.detach().clone()),
+            ("accepted_beam_valid", source.accepted_beam_valid.detach().clone()),
+            ("mesh_path", self.cfg.ray_caster.mesh_prim_paths[0]),
+            ("maximum_distance_m", float(self.cfg.ray_caster.max_distance)),
+            ("source_step", source.source_step.detach().clone()),
+            ("reset_mask", self.reset_buf.detach().clone()),
+        ))
         self._command_b.copy_(self._h1_next_command_b)
         self._h1_global_policy_step += 1
         self._h1_next_command_b = None
