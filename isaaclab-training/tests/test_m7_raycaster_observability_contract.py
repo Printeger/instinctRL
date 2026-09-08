@@ -17,6 +17,7 @@ import torch
 import instinctlab.evaluation.raycaster_observability as adapter
 from instinctlab.evaluation.observability import ExactObservabilityResult
 from instinctlab.evaluation.raycaster_observability import (
+    RAYCASTER_GEOMETRY_COMPARISON_STANDARD,
     RaycasterObservabilityConfig,
     RaycasterObservabilityResult,
     acquire_exact_raycaster_observability,
@@ -95,6 +96,7 @@ def test_admitted_nonunit_parameter_is_converted_to_metric_metres(monkeypatch):
     independent_expected_metres = 2.000016
     assert result.ray_distances_m.item() == pytest.approx(independent_expected_metres, abs=3.0e-7)
     assert result.distance_max_error_m.item() <= RaycasterObservabilityConfig().distance_tolerance_m
+    assert result.reconstruction_max_error_m.item() <= RaycasterObservabilityConfig().distance_tolerance_m
     assert result.ray_distances_m.data_ptr() != raw_parameters.data_ptr()
     assert result.ray_distances_m.grad_fn is None and not result.ray_distances_m.requires_grad
 
@@ -111,7 +113,7 @@ def test_direction_error_float32_accepted_and_rejected_neighbors(monkeypatch):
         _run_parameter_case(monkeypatch, rejected_scale)
 
 
-def test_metric_distance_effective_float32_boundary(monkeypatch):
+def test_forward_reconstruction_effective_float32_boundary(monkeypatch):
     base = torch.tensor(2.0, dtype=torch.float32)
     first_rejected = torch.tensor(2.0 + RaycasterObservabilityConfig().distance_tolerance_m, dtype=torch.float32)
     effective_boundary = torch.nextafter(first_rejected, base)
@@ -121,11 +123,11 @@ def test_metric_distance_effective_float32_boundary(monkeypatch):
         returned = torch.tensor([[parameter, 3.0, 4.0, float("inf")]], dtype=torch.float32)
         monkeypatch.setattr(adapter, "_raycast_mesh_with_normals", lambda *_: (hits.clone(), returned.clone(), normals.clone(), None))
         result = acquire_exact_raycaster_observability(starts, directions, SimpleNamespace(id=1, device="cpu"), 40.0, hits, valid)
-        assert result.distance_max_error_m.item() <= RaycasterObservabilityConfig().distance_tolerance_m
+        assert result.reconstruction_max_error_m.item() <= RaycasterObservabilityConfig().distance_tolerance_m
     starts, directions, hits, valid, _, normals = _fixture()
     rejected = torch.tensor([[first_rejected.item(), 3.0, 4.0, float("inf")]], dtype=torch.float32)
     monkeypatch.setattr(adapter, "_raycast_mesh_with_normals", lambda *_: (hits.clone(), rejected.clone(), normals.clone(), None))
-    with pytest.raises(RuntimeError, match="distances disagree"):
+    with pytest.raises(RuntimeError, match="forward-reconstructed hits"):
         acquire_exact_raycaster_observability(starts, directions, SimpleNamespace(id=1, device="cpu"), 40.0, hits, valid)
 
 
@@ -165,9 +167,11 @@ def test_positive_exact_handoff_all_fields_ownership_and_planar_degeneracy(monke
     assert result.raw_surface_normals_w.shape == (1, 4, 3)
     assert result.surface_normals_w.shape == (1, 1, 4, 3)
     assert result.beam_valid.shape == (1, 1, 4)
-    assert result.hit_max_error_m.shape == result.distance_max_error_m.shape == ()
+    assert result.hit_max_error_m.shape == result.distance_max_error_m.shape == result.reconstruction_max_error_m.shape == ()
     assert result.hit_max_error_m.item() == 0.0
     assert result.distance_max_error_m.item() == 0.0
+    assert result.reconstruction_max_error_m.item() == 0.0
+    assert RAYCASTER_GEOMETRY_COMPARISON_STANDARD == "forward-reconstruction-v1"
     assert torch.isinf(result.raw_surface_normals_w[0, 3]).all()
     assert torch.equal(result.surface_normals_w[0, 0, 3], torch.zeros(3))
     exact = result.observability
@@ -234,7 +238,7 @@ def test_official_call_flags_and_argument_order_are_exact(monkeypatch):
         ("normal_dtype", lambda result, *_: result.__setitem__(2, result[2].double()), "normals dtype/device"),
         ("hit_mismatch", lambda result, *_: result[0].__setitem__((0, 0, 0), 2.1), "sensor hits"),
         ("validity_mismatch", lambda result, *_: result[0].__setitem__((0, 3), torch.zeros(3)), "validity disagrees"),
-        ("distance_mismatch", lambda result, *_: result[1].__setitem__((0, 0), 2.1), "distances disagree"),
+        ("distance_mismatch", lambda result, *_: result[1].__setitem__((0, 0), 2.1), "forward-reconstructed hits"),
         ("valid_normal_nonfinite", lambda result, *_: result[2].__setitem__((0, 0, 0), float("nan")), "valid normals"),
         ("valid_normal_nonunit", lambda result, *_: result[2].__setitem__((0, 0), torch.tensor([0.0, 0.0, 2.0])), "unit length"),
         ("miss_distance", lambda result, *_: result[1].__setitem__((0, 3), 40.0), "invalid ray parameters"),

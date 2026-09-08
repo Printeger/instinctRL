@@ -20,6 +20,7 @@ EVALUATION_RAY_SOURCE_KEYS = (
     "ray_starts_w", "ray_directions_w", "accepted_ray_hits_w", "accepted_beam_valid",
     "mesh_path", "maximum_distance_m", "source_step", "reset_mask",
 )
+RAYCASTER_GEOMETRY_COMPARISON_STANDARD = "forward-reconstruction-v1"
 FROZEN_ISAAC_LAB_REPOSITORY = Path("/home/mint/rl_blackwell_test/repos/IsaacLab")
 FROZEN_ISAAC_LAB_HEAD = "37ddf626871758333d6ed89cf64ad702aef127d0"
 FROZEN_ISAAC_LAB_VERSION = "2.3.2"
@@ -61,6 +62,7 @@ class RaycasterObservabilityResult:
     beam_valid: torch.Tensor
     hit_max_error_m: torch.Tensor
     distance_max_error_m: torch.Tensor
+    reconstruction_max_error_m: torch.Tensor
     observability: ExactObservabilityResult
 
 
@@ -315,8 +317,17 @@ def acquire_exact_raycaster_observability(
         raise RuntimeError("converted valid ray distances must be finite and nonnegative")
     distance_error = (valid_metric_distances - accepted_distance[accepted_beam_valid]).abs()
     distance_max_error = distance_error.max() if distance_error.numel() else torch.zeros((), device=ray_starts_w.device)
-    if bool((distance_error > config.distance_tolerance_m).any().item()):
-        raise RuntimeError("returned distances disagree with accepted same-state hit geometry")
+    reconstructed_hits_w = ray_starts_w + ray_parameters.unsqueeze(-1) * ray_directions_w
+    reconstruction_error = torch.linalg.vector_norm(
+        reconstructed_hits_w[accepted_beam_valid] - ray_hits_w[accepted_beam_valid], dim=-1
+    )
+    reconstruction_max_error = (
+        reconstruction_error.max()
+        if reconstruction_error.numel()
+        else torch.zeros((), device=ray_starts_w.device)
+    )
+    if bool((reconstruction_error > config.distance_tolerance_m).any().item()):
+        raise RuntimeError("returned ray parameters disagree with forward-reconstructed hits")
     normal_error = (torch.linalg.vector_norm(raw_normals_w[accepted_beam_valid], dim=-1) - 1.0).abs()
     if bool((normal_error > config.unit_tolerance).any().item()):
         raise RuntimeError("returned valid normals must be unit length within tolerance")
@@ -339,6 +350,7 @@ def acquire_exact_raycaster_observability(
         beam_valid=validity_handoff,
         hit_max_error_m=_owned(hit_max_error),
         distance_max_error_m=_owned(distance_max_error),
+        reconstruction_max_error_m=_owned(reconstruction_max_error),
         observability=observability,
     )
     direct = [getattr(result, field.name) for field in fields(result) if field.name != "observability"]
@@ -354,6 +366,7 @@ __all__ = [
     "FROZEN_ISAAC_LAB_HEAD",
     "FROZEN_ISAAC_LAB_VERSION",
     "FROZEN_SOURCE_SHA256",
+    "RAYCASTER_GEOMETRY_COMPARISON_STANDARD",
     "RaycasterObservabilityConfig",
     "RaycasterObservabilityResult",
     "acquire_exact_raycaster_observability",
