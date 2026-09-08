@@ -29,7 +29,10 @@ def collect_h1_transition(environment: Any, trainer: PPOTrainer, observation: Ma
         raise TypeError("H1 rollout requires a PrivilegedCriticH1 trainer")
     policy, critic = _observation(observation, config); device = critic.device
     with torch.no_grad():
-        action, log_probability, _ = trainer.actor.sample(policy); value = trainer.critic(critic)
+        distribution, actor_output = trainer.actor.distribution(policy)
+        action = distribution.sample()
+        log_probability = trainer.actor.log_probability_from_output(actor_output, action)
+        value = trainer.critic(critic)
     staged = action.detach().clone()
     returned = environment.step(action)
     if not isinstance(returned, tuple) or len(returned) != 5:
@@ -60,6 +63,7 @@ def collect_h1_transition(environment: Any, trainer: PPOTrainer, observation: Ma
         terminated=_clone(terminated), truncated=_clone(truncated), reset_boundary=_clone(reset),
         next_privileged=_clone(next_critic), next_value=_clone(next_value),
         timeout_privileged=_clone(timeout_critic), timeout_value=_clone(timeout_value),
+        actor_mean_action=_clone(actor_output.mean_action),
     )
     return transition, {"policy": {key: _clone(next_policy[key]) for key in ACTOR_KEYS}, "critic": _clone(next_critic)}
 

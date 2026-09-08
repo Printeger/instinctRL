@@ -45,6 +45,7 @@ class RolloutTransition:
     next_value: torch.Tensor
     timeout_privileged: torch.Tensor
     timeout_value: torch.Tensor
+    actor_mean_action: torch.Tensor | None = None
 
 
 @dataclass(frozen=True)
