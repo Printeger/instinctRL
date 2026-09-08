@@ -20,7 +20,7 @@ def combined_scene_triangles(env_origins: torch.Tensor) -> tuple[list[tuple[floa
     surfaces = (("floor", ((-f,-f,0.),(f,-f,0.),(f,f,0.),(-f,f,0.))),
                 ("x_wall", ((w,-w,0.),(w,-w,h),(w,w,h),(w,w,0.))),
                 ("y_wall", ((-w,w,0.),(w,w,0.),(w,w,h),(-w,w,h))))
-    for env_index, origin in enumerate(env_origins.detach().cpu().to(torch.float64).tolist()):
+    for env_index, origin in enumerate(env_origins.to(device="cpu", dtype=torch.float64).tolist()):
         for surface, vertices in surfaces:
             start = len(points)
             points.extend(tuple(float(vertex[axis] + origin[axis]) for axis in range(3)) for vertex in vertices)

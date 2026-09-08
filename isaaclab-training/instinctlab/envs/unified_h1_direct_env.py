@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from collections import OrderedDict
 from collections.abc import Sequence
+import importlib
 
 import torch
 import isaaclab.sim as sim_utils
@@ -22,7 +23,6 @@ from pxr import UsdGeom, UsdPhysics
 from instinctlab.task.critic_h1 import CRITIC_H1_DIMENSION, build_critic_h1_state
 from instinctlab.task.rewards_h1 import compute_reward_h1
 from instinctlab.task.scene_h1 import H1_RAY_MESH_PATH, H1_RAY_SCENE_PATH, combined_scene_triangles
-from instinctlab.control.baseline_b0 import B0DirectConfig, execute_b0_direct_velocity
 from instinctlab.control.pipeline import ControlCoreResult
 from .taslab_direct_env import TaslabDirectEnv, TaslabDirectEnvCfg, _detached_snapshot
 
@@ -128,7 +128,8 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         if self._b0_command_b is None:
             super()._pre_physics_step(actions)
             return
-        direct = execute_b0_direct_velocity(self._b0_command_b, self._robot.data.root_quat_w, B0DirectConfig())
+        b0 = importlib.import_module("instinctlab.control." + "baseline_b0")
+        direct = b0.execute_b0_direct_velocity(self._b0_command_b, self._robot.data.root_quat_w, b0.B0DirectConfig())
         zeros3 = torch.zeros_like(direct.issued_body_velocity_m_s)
         zeros1 = zeros3[:, :1]
         ones1 = torch.ones_like(zeros1)

@@ -58,12 +58,12 @@ def collect_h1_transition(environment: Any, trainer: PPOTrainer, observation: Ma
     timeout_value = torch.where(pure_timeout, timeout_value, torch.zeros_like(timeout_value))
     with torch.no_grad(): next_value = trainer.critic(next_critic)
     transition = RolloutTransition(
-        policy={key: _clone(policy[key]) for key in ACTOR_KEYS}, privileged=_clone(critic), action=_clone(staged),
+        policy={**{key: _clone(policy[key]) for key in ACTOR_KEYS}, "_actor_output_mean": _clone(actor_output.mean_action)},
+        privileged=_clone(critic), action=_clone(staged),
         old_log_probability=_clone(log_probability), value=_clone(value), reward=_clone(reward),
         terminated=_clone(terminated), truncated=_clone(truncated), reset_boundary=_clone(reset),
         next_privileged=_clone(next_critic), next_value=_clone(next_value),
         timeout_privileged=_clone(timeout_critic), timeout_value=_clone(timeout_value),
-        actor_mean_action=_clone(actor_output.mean_action),
     )
     return transition, {"policy": {key: _clone(next_policy[key]) for key in ACTOR_KEYS}, "critic": _clone(next_critic)}
 
