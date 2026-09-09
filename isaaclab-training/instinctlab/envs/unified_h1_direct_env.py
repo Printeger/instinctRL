@@ -99,6 +99,15 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
             raise ValueError("global_policy_step must be a nonnegative integer")
         self._validate_h1_command("command_b", command_b)
         self._command_b.copy_(command_b)
+        # A diagnostic clock jump does not call ``_get_observations``.  Keep
+        # the control pipeline's private actor snapshot on the same c_t as the
+        # externally returned observation without advancing actor history.
+        policy = getattr(self, "_policy", None)
+        if isinstance(policy, dict) and isinstance(policy.get("state_vec"), torch.Tensor):
+            state = policy["state_vec"]
+            if state.shape != (self._command_b.shape[0], 52):
+                raise RuntimeError("internal H1 policy state shape mismatch")
+            state[:, 45:48].copy_(command_b)
         self._h1_global_policy_step = global_policy_step
 
     def _validate_h1_command(self, name: str, value: torch.Tensor) -> None:

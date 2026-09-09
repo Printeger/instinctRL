@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import ast
 import inspect
 from pathlib import Path
 
@@ -214,3 +215,27 @@ def test_unified_environment_source_retains_a0004_ray_evidence_and_explicit_next
     source = (Path(__file__).parents[1] / "instinctlab/envs/unified_h1_direct_env.py").read_text()
     assert "evaluation_ray_source" in source and "accepted_ray_hits_w" in source
     assert "prepare_h1_step" in source and "_h1_next_command_b" in source
+
+
+def test_initial_command_jump_synchronizes_control_policy_without_advancing_history():
+    source_path = Path(__file__).parents[1] / "instinctlab/envs/unified_h1_direct_env.py"
+    tree = ast.parse(source_path.read_text())
+    methods = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)
+               and node.name in {"set_h1_initial_command", "_validate_h1_command"}]
+    namespace = {"torch": torch}
+    exec(compile(ast.Module(body=methods, type_ignores=[]), str(source_path), "exec"), namespace)
+
+    class Environment:
+        set_h1_initial_command = namespace["set_h1_initial_command"]
+        _validate_h1_command = namespace["_validate_h1_command"]
+
+    env = Environment()
+    env._command_b = torch.zeros(32, 3)
+    env._policy = {"state_vec": torch.arange(32 * 52, dtype=torch.float32).reshape(32, 52)}
+    before = env._policy["state_vec"].clone()
+    command = torch.zeros(32, 3); command[:16, 0] = .2
+    env.set_h1_initial_command(command, 1024)
+    assert torch.equal(env._command_b, command)
+    assert torch.equal(env._policy["state_vec"][:, 45:48], command)
+    assert torch.equal(env._policy["state_vec"][:, :45], before[:, :45])
+    assert torch.equal(env._policy["state_vec"][:, 48:], before[:, 48:])
