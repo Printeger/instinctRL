@@ -106,6 +106,52 @@ def test_actual_reward_short_trajectories_and_gae_match_hand_calculation():
     assert result.returns[0].item() == pytest.approx(expected_failed, abs=2e-4)
 
 
+def test_actual_reward_and_gae_cover_safe_motion_height_joint_failure_and_timeout():
+    """Exercise the real H1 reward/GAE functions over the remaining short cases."""
+    steps, lanes = 6, 6
+    zero3 = torch.zeros(steps, lanes, 3); zero1 = torch.zeros(steps, lanes, 1)
+    lidar = torch.zeros(steps, lanes, 12, 59, 360)
+    lidar[..., 0::3, :, :] = 40.; lidar[..., 1::3, :, :] = 1.; lidar[..., 2::3, :, :] = 1.
+    command = zero3.clone(); command[:, 0, 0] = .2; command[:, 1, 1] = .2
+    velocity = command.clone()
+    velocity[:, 2, 2] = .2; velocity[:, 3, 2] = -.2
+    collision = torch.zeros(steps, lanes, 1, dtype=torch.bool)
+    below = torch.zeros_like(collision); above = torch.zeros_like(collision)
+    below[-1, 2] = True; above[-1, 3] = True; collision[-1, 4:] = True; below[-1, 5] = True
+    flat3 = lambda value: value.reshape(steps * lanes, 3)
+    flat1 = lambda value: value.reshape(steps * lanes, 1)
+    computed = compute_reward_h1(
+        lidar_grid=lidar.reshape(steps * lanes, 12, 59, 360), command_b=flat3(command),
+        v_gov_b=flat3(command), v_final_b=flat3(command),
+        previous_issued_v_final_b=flat3(command), actual_velocity_b=flat3(velocity),
+        anchor_loss=flat1(zero1), anchor_active=flat1(zero1),
+        anchor_usable_fraction=flat1(torch.ones_like(zero1)), ics_beta=flat1(torch.ones_like(zero1)),
+        exact_clearance_m=flat1(torch.ones_like(zero1)), collision=flat1(collision),
+        below_height=flat1(below), above_height=flat1(above),
+    )
+    reward = computed.total.reshape(steps, lanes)
+    assert torch.isfinite(reward).all()
+    assert reward[-1, 2] < reward[-2, 2] - 250
+    assert reward[-1, 3] < reward[-2, 3] - 250
+    assert reward[-1, 4] < reward[-2, 4] - 250
+    assert reward[-1, 5] == reward[-1, 4]  # collision+height union is charged exactly once
+
+    values = torch.linspace(0., .5, steps).view(steps, 1, 1).expand(-1, lanes, -1).clone()
+    next_values = torch.cat((values[1:], torch.zeros(1, lanes, 1)))
+    terminated = torch.zeros(steps, lanes, 1, dtype=torch.bool)
+    truncated = torch.zeros_like(terminated); reset = torch.zeros_like(terminated)
+    terminated[-1, 2:5] = True; reset[-1, 2:5] = True
+    truncated[-1, 1] = True; reset[-1, 1] = True
+    timeout = torch.zeros_like(values); timeout[-1, 1] = 2.5
+    gae = compute_gae(reward.unsqueeze(-1), values, next_values,
+        terminated, truncated, reset, timeout_bootstrap_values=timeout,
+        gamma=.99, gae_lambda=.95)
+    expected_timeout_return = reward[-1, 1] + .99 * timeout[-1, 1, 0]
+    assert gae.returns[-1, 1, 0].item() == pytest.approx(float(expected_timeout_return))
+    assert torch.equal(gae.returns[-1, 2:, 0], reward[-1, 2:])
+    assert torch.isfinite(gae.advantages).all() and torch.isfinite(gae.returns).all()
+
+
 def test_cuda_rng_apply_and_rollback_use_no_gpu_substitute(monkeypatch):
     calls=[]
     monkeypatch.setattr(torch.cuda,"set_rng_state_all",lambda values:calls.append([value.clone() for value in values]))

@@ -73,6 +73,13 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         self._b0_command_b: torch.Tensor | None = None
         self._h1_evaluation_case: str | None = None
         super().__init__(cfg, render_mode, **kwargs)
+        # Bind Isaac Sim's own timeline index at the construction boundary,
+        # before this environment performs any explicit reset or policy step.
+        # An unavailable/non-integral counter is retained as None so the future
+        # workload fails closed instead of claiming zero initialization cost.
+        timeline_index = getattr(self.sim, "current_time_step_index", None)
+        self.h1_initialization_physics_ticks = timeline_index if type(timeline_index) is int else None
+        self.h1_initialization_tick_source = "SimulationContext.current_time_step_index"
 
     def _setup_scene(self) -> None:
         _spawn_unified_h1_combined_scene(self.scene.env_origins)
