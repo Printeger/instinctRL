@@ -58,7 +58,10 @@ def _spawn_unified_h1_combined_scene(env_origins: torch.Tensor) -> None:
 class UnifiedH1DirectEnvCfg(TaslabDirectEnvCfg):
     state_space = CRITIC_H1_DIMENSION
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=32, env_spacing=100.0, replicate_physics=True)
-    ray_caster = TaslabDirectEnvCfg.ray_caster.replace(mesh_prim_paths=[H1_RAY_MESH_PATH])
+    # Isaac Lab's configclass turns mutable defaults into instance-only
+    # dataclass fields.  Read the inherited sensor configuration from a fresh
+    # base instance instead of assuming that the field remains on the class.
+    ray_caster = TaslabDirectEnvCfg().ray_caster.replace(mesh_prim_paths=[H1_RAY_MESH_PATH])
     task_contract_version: str = "unified-h1-v1"
 
 
