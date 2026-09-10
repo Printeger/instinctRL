@@ -78,6 +78,25 @@ def test_h1_config_uses_instance_field_with_frozen_configclass_semantics():
 
 
 def test_real_h1_source_uses_fixed_instance_boundary_and_preserves_mesh_contract():
+    configclass = _load_frozen_configclass()
+
+    @configclass
+    class SensorCfg:
+        prim_path: str = "/World/envs/env_.*/TASLAB/base_link"
+        mesh_prim_paths: list[str] = ["/World/MID360StaticScene"]
+
+    @configclass
+    class SceneCfg:
+        num_envs: int = 2
+        env_spacing: float = 4.0
+        replicate_physics: bool = True
+
+    @configclass
+    class BaseCfg:
+        state_space: int = 18
+        scene: SceneCfg = SceneCfg()
+        ray_caster: SensorCfg = SensorCfg()
+
     source = ENV_SOURCE.read_text()
     tree = ast.parse(source, filename=str(ENV_SOURCE))
     h1_config = next(
@@ -97,3 +116,25 @@ def test_real_h1_source_uses_fixed_instance_boundary_and_preserves_mesh_contract
     expression = ast.unparse(ray_assignment.value)
     assert expression == "TaslabDirectEnvCfg().ray_caster.replace(mesh_prim_paths=[H1_RAY_MESH_PATH])"
     assert "mesh_prim_paths=[H1_RAY_MESH_PATH]" in source
+
+    namespace = {
+        "configclass": configclass,
+        "TaslabDirectEnvCfg": BaseCfg,
+        "InteractiveSceneCfg": SceneCfg,
+        "CRITIC_H1_DIMENSION": 21,
+        "H1_RAY_MESH_PATH": H1_MESH_PATH,
+    }
+    exec(
+        compile(ast.Module(body=[h1_config], type_ignores=[]), str(ENV_SOURCE), "exec"),
+        namespace,
+    )
+    first = namespace["UnifiedH1DirectEnvCfg"]()
+    second = namespace["UnifiedH1DirectEnvCfg"]()
+    assert first.state_space == 21
+    assert first.scene.num_envs == 32
+    assert first.scene.env_spacing == 100.0
+    assert first.scene.replicate_physics is True
+    assert first.ray_caster.prim_path == "/World/envs/env_.*/TASLAB/base_link"
+    assert first.ray_caster.mesh_prim_paths == [H1_MESH_PATH]
+    assert first.ray_caster is not second.ray_caster
+    assert first.ray_caster.mesh_prim_paths is not second.ray_caster.mesh_prim_paths
