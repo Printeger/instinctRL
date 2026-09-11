@@ -85,11 +85,15 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         self.h1_initialization_tick_source = "SimulationContext.current_time_step_index"
 
     def _setup_scene(self) -> None:
-        _spawn_unified_h1_combined_scene(self.scene.env_origins)
         spawn_ground_plane("/World/ground", GroundPlaneCfg())
         self._robot = Articulation(self.cfg.robot)
         self.scene.articulations["taslab"] = self._robot
         self.scene.clone_environments(copy_from_source=False)
+        # InteractiveScene initializes env_origins during cloning when
+        # replicate_physics=True.  Author the global translated H1 geometry
+        # only after that lifecycle boundary, while keeping the source robot
+        # available before cloning and the mesh available before RayCaster.
+        _spawn_unified_h1_combined_scene(self.scene.env_origins)
         self._ray_caster = RayCaster(self.cfg.ray_caster)
         self.scene.sensors["mid360"] = self._ray_caster
         self._contact_sensor = ContactSensor(self.cfg.contact_sensor)
