@@ -56,6 +56,7 @@ class RaycasterObservabilityResult:
     """Owned raw acquisition, qualified normal handoff, and exact result."""
 
     ray_hits_w: torch.Tensor
+    ray_parameters: torch.Tensor
     ray_distances_m: torch.Tensor
     raw_surface_normals_w: torch.Tensor
     surface_normals_w: torch.Tensor
@@ -64,6 +65,52 @@ class RaycasterObservabilityResult:
     distance_max_error_m: torch.Tensor
     reconstruction_max_error_m: torch.Tensor
     observability: ExactObservabilityResult
+
+
+@dataclass(frozen=True)
+class RaycasterAcquisitionDiagnostics:
+    """Actual returned values captured before a post-cast validation failure."""
+    ray_hits_w: torch.Tensor
+    ray_parameters: torch.Tensor
+    raw_surface_normals_w: torch.Tensor
+    hit_max_error_m: torch.Tensor
+    reconstruction_max_error_m: torch.Tensor
+    hit_failing_beam: tuple[int, int] | None
+    reconstruction_failing_beam: tuple[int, int] | None
+
+
+class RaycasterAcquisitionError(RuntimeError):
+    def __init__(self, message: str, diagnostics: RaycasterAcquisitionDiagnostics) -> None:
+        super().__init__(message)
+        self.diagnostics = diagnostics
+
+
+def _raise_diagnostic_failure(message: str, diagnostics: RaycasterAcquisitionDiagnostics) -> None:
+    raise RaycasterAcquisitionError(message, diagnostics)
+
+
+def _maximum_and_beam(error: torch.Tensor, valid: torch.Tensor) -> tuple[torch.Tensor, tuple[int, int] | None]:
+    indices = valid.nonzero(as_tuple=False)
+    if indices.numel() == 0:
+        return torch.zeros((), dtype=error.dtype, device=error.device), None
+    values = error[valid]
+    maximum_index = int(torch.nan_to_num(values, nan=math.inf, posinf=math.inf).argmax().item())
+    beam = indices[maximum_index]
+    return values[maximum_index], (int(beam[0].item()), int(beam[1].item()))
+
+
+def _acquisition_diagnostics(ray_starts_w: torch.Tensor, ray_directions_w: torch.Tensor,
+    accepted_ray_hits_w: torch.Tensor, accepted_beam_valid: torch.Tensor,
+    ray_hits_w: torch.Tensor, ray_parameters: torch.Tensor,
+    raw_normals_w: torch.Tensor) -> RaycasterAcquisitionDiagnostics:
+    hit_error = torch.linalg.vector_norm(ray_hits_w - accepted_ray_hits_w, dim=-1)
+    reconstructed = ray_starts_w + ray_parameters.unsqueeze(-1) * ray_directions_w
+    reconstruction_error = torch.linalg.vector_norm(reconstructed - ray_hits_w, dim=-1)
+    hit_max, hit_beam = _maximum_and_beam(hit_error, accepted_beam_valid)
+    reconstruction_max, reconstruction_beam = _maximum_and_beam(reconstruction_error, accepted_beam_valid)
+    return RaycasterAcquisitionDiagnostics(
+        _owned(ray_hits_w), _owned(ray_parameters), _owned(raw_normals_w), _owned(hit_max),
+        _owned(reconstruction_max), hit_beam, reconstruction_beam)
 
 
 def _raycast_mesh_with_normals(
@@ -287,34 +334,42 @@ def acquire_exact_raycaster_observability(
         if not torch.equal(value, snapshot):
             raise RuntimeError(f"raycast_mesh mutated {name}")
 
+    diagnostics = _acquisition_diagnostics(
+        ray_starts_w, ray_directions_w, accepted_ray_hits_w, accepted_beam_valid,
+        ray_hits_w, ray_parameters, raw_normals_w,
+    )
+
     cast_valid = torch.isfinite(ray_hits_w).all(dim=-1)
     if not torch.equal(cast_valid, accepted_beam_valid):
-        raise RuntimeError("returned hit validity disagrees with the accepted MID360 mask")
+        _raise_diagnostic_failure("returned hit validity disagrees with the accepted MID360 mask", diagnostics)
     hit_error = torch.linalg.vector_norm(
         ray_hits_w[accepted_beam_valid] - accepted_ray_hits_w[accepted_beam_valid], dim=-1
     )
     hit_max_error = hit_error.max() if hit_error.numel() else torch.zeros((), device=ray_starts_w.device)
     if bool((hit_error > config.distance_tolerance_m).any().item()):
-        raise RuntimeError(
-            f"returned hits disagree with accepted same-state sensor hits: max error {hit_max_error.item()} m"
+        raise RaycasterAcquisitionError(
+            f"returned hits disagree with accepted same-state sensor hits: max error {hit_max_error.item()} m",
+            diagnostics,
         )
     valid_parameters = ray_parameters[accepted_beam_valid]
     if not bool(torch.isfinite(valid_parameters).all().item()):
-        raise RuntimeError("returned valid ray parameters must be finite")
+        _raise_diagnostic_failure("returned valid ray parameters must be finite", diagnostics)
     if bool((valid_parameters < 0.0).any().item()):
-        raise RuntimeError("returned valid ray parameters must be nonnegative")
+        _raise_diagnostic_failure("returned valid ray parameters must be nonnegative", diagnostics)
     if not bool(torch.isfinite(raw_normals_w[accepted_beam_valid]).all().item()):
-        raise RuntimeError("returned valid normals must be finite")
+        _raise_diagnostic_failure("returned valid normals must be finite", diagnostics)
     for name, value in (("ray parameters", ray_parameters), ("normals", raw_normals_w)):
         invalid = value[~accepted_beam_valid]
         if invalid.numel() and not bool(_positive_infinity(invalid).all().item()):
-            raise RuntimeError(f"returned invalid {name} must preserve the positive-infinity miss convention")
+            _raise_diagnostic_failure(
+                f"returned invalid {name} must preserve the positive-infinity miss convention", diagnostics,
+            )
     ray_distances_m = ray_parameters * direction_norm
     valid_metric_distances = ray_distances_m[accepted_beam_valid]
     if not bool(torch.isfinite(valid_metric_distances).all().item()) or bool(
         (valid_metric_distances < 0.0).any().item()
     ):
-        raise RuntimeError("converted valid ray distances must be finite and nonnegative")
+        _raise_diagnostic_failure("converted valid ray distances must be finite and nonnegative", diagnostics)
     distance_error = (valid_metric_distances - accepted_distance[accepted_beam_valid]).abs()
     distance_max_error = distance_error.max() if distance_error.numel() else torch.zeros((), device=ray_starts_w.device)
     reconstructed_hits_w = ray_starts_w + ray_parameters.unsqueeze(-1) * ray_directions_w
@@ -327,10 +382,10 @@ def acquire_exact_raycaster_observability(
         else torch.zeros((), device=ray_starts_w.device)
     )
     if bool((reconstruction_error > config.distance_tolerance_m).any().item()):
-        raise RuntimeError("returned ray parameters disagree with forward-reconstructed hits")
+        raise RaycasterAcquisitionError("returned ray parameters disagree with forward-reconstructed hits", diagnostics)
     normal_error = (torch.linalg.vector_norm(raw_normals_w[accepted_beam_valid], dim=-1) - 1.0).abs()
     if bool((normal_error > config.unit_tolerance).any().item()):
-        raise RuntimeError("returned valid normals must be unit length within tolerance")
+        _raise_diagnostic_failure("returned valid normals must be unit length within tolerance", diagnostics)
 
     qualified_normals = torch.where(
         accepted_beam_valid.unsqueeze(-1), raw_normals_w, torch.zeros_like(raw_normals_w)
@@ -344,6 +399,7 @@ def acquire_exact_raycaster_observability(
     )
     result = RaycasterObservabilityResult(
         ray_hits_w=_owned(ray_hits_w),
+        ray_parameters=_owned(ray_parameters),
         ray_distances_m=_owned(ray_distances_m),
         raw_surface_normals_w=_owned(raw_normals_w),
         surface_normals_w=normals_handoff,
@@ -367,6 +423,8 @@ __all__ = [
     "FROZEN_ISAAC_LAB_VERSION",
     "FROZEN_SOURCE_SHA256",
     "RAYCASTER_GEOMETRY_COMPARISON_STANDARD",
+    "RaycasterAcquisitionDiagnostics",
+    "RaycasterAcquisitionError",
     "RaycasterObservabilityConfig",
     "RaycasterObservabilityResult",
     "acquire_exact_raycaster_observability",
