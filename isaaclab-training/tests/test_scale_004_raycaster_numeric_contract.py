@@ -39,12 +39,16 @@ def _source(starts: torch.Tensor) -> OrderedDict[str, object]:
 
 
 def _acquire(monkeypatch, source: OrderedDict[str, object], parameter_delta: float = 0.0,
-             accepted_hit_delta: float = 0.0):
+             accepted_hit_delta: float = 0.0, coherent_kernel_roundoff: bool = False):
     accepted_hits = source["accepted_ray_hits_w"]
     assert isinstance(accepted_hits, torch.Tensor)
     if accepted_hit_delta:
         accepted_hits[0, 0, 0] += accepted_hit_delta
     returned_hits = source["ray_starts_w"] + _PARAMETER_M * source["ray_directions_w"]
+    if coherent_kernel_roundoff:
+        rounded = torch.nextafter(returned_hits[0, 0, 0], torch.tensor(float("inf")))
+        returned_hits[0, 0, 0] = rounded
+        accepted_hits[0, 0, 0] = rounded
     parameters = torch.full(
         source["accepted_beam_valid"].shape,
         _PARAMETER_M + parameter_delta,
@@ -96,6 +100,16 @@ def test_large_world_parameter_mismatch_still_fails(monkeypatch):
     source = _source(torch.tensor([[[500.0, 500.0, 1.0]]], dtype=torch.float32))
     with pytest.raises(RuntimeError, match="forward-reconstructed hits"):
         _acquire(monkeypatch, source, parameter_delta=1.0e-3)
+
+
+def test_large_world_float32_kernel_roundoff_does_not_consume_geometry_tolerance(monkeypatch):
+    source = _source(torch.tensor([[[500.0, 500.0, 1.0]]], dtype=torch.float32))
+    result = _acquire(monkeypatch, source, coherent_kernel_roundoff=True)
+    assert result.hit_max_error_m.item() == 0.0
+    assert result.reconstruction_max_error_m.item() == 0.0
+
+    with pytest.raises(RuntimeError, match="forward-reconstructed hits"):
+        _acquire(monkeypatch, source, parameter_delta=1.0e-3, coherent_kernel_roundoff=True)
 
 
 def test_large_world_same_state_hit_mismatch_still_fails_first(monkeypatch):

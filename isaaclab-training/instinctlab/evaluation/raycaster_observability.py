@@ -99,13 +99,43 @@ def _maximum_and_beam(error: torch.Tensor, valid: torch.Tensor) -> tuple[torch.T
     return values[maximum_index], (int(beam[0].item()), int(beam[1].item()))
 
 
+def _float32_forward_reconstruction_residual(
+    ray_starts_w: torch.Tensor,
+    ray_directions_w: torch.Tensor,
+    ray_parameters: torch.Tensor,
+    ray_hits_w: torch.Tensor,
+    geometric_tolerance_m: float,
+) -> torch.Tensor:
+    """Return reconstruction error after the IEEE-754 multiply/add error bound.
+
+    Warp computes each hit coordinate as ``start + parameter * direction`` in
+    float32. Repeating that expression in a separate Torch kernel can differ
+    from Warp's fused/device arithmetic by several absolute micrometres when
+    world coordinates are hundreds of metres from zero. Account only for the
+    standard two-operation roundoff bound; the configured geometric tolerance
+    is applied to the remaining residual unchanged.
+    """
+    product = ray_parameters.unsqueeze(-1) * ray_directions_w
+    reconstructed = ray_starts_w + product
+    epsilon = torch.finfo(torch.float32).eps
+    gamma_two = (2.0 * epsilon) / (1.0 - 2.0 * epsilon)
+    roundoff_bound = gamma_two * (ray_starts_w.abs() + product.abs())
+    # The geometric tolerance already covers smaller float32 errors. Add an
+    # allowance only where the proven arithmetic bound exceeds that tolerance,
+    # preserving the original boundary near the local origin.
+    extra_roundoff = (roundoff_bound - geometric_tolerance_m).clamp_min(0.0)
+    coordinate_residual = (reconstructed - ray_hits_w).abs().sub(extra_roundoff).clamp_min(0.0)
+    return torch.linalg.vector_norm(coordinate_residual, dim=-1)
+
+
 def _acquisition_diagnostics(ray_starts_w: torch.Tensor, ray_directions_w: torch.Tensor,
     accepted_ray_hits_w: torch.Tensor, accepted_beam_valid: torch.Tensor,
     ray_hits_w: torch.Tensor, ray_parameters: torch.Tensor,
-    raw_normals_w: torch.Tensor) -> RaycasterAcquisitionDiagnostics:
+    raw_normals_w: torch.Tensor, geometric_tolerance_m: float) -> RaycasterAcquisitionDiagnostics:
     hit_error = torch.linalg.vector_norm(ray_hits_w - accepted_ray_hits_w, dim=-1)
-    reconstructed = ray_starts_w + ray_parameters.unsqueeze(-1) * ray_directions_w
-    reconstruction_error = torch.linalg.vector_norm(reconstructed - ray_hits_w, dim=-1)
+    reconstruction_error = _float32_forward_reconstruction_residual(
+        ray_starts_w, ray_directions_w, ray_parameters, ray_hits_w, geometric_tolerance_m,
+    )
     hit_max, hit_beam = _maximum_and_beam(hit_error, accepted_beam_valid)
     reconstruction_max, reconstruction_beam = _maximum_and_beam(reconstruction_error, accepted_beam_valid)
     return RaycasterAcquisitionDiagnostics(
@@ -336,7 +366,7 @@ def acquire_exact_raycaster_observability(
 
     diagnostics = _acquisition_diagnostics(
         ray_starts_w, ray_directions_w, accepted_ray_hits_w, accepted_beam_valid,
-        ray_hits_w, ray_parameters, raw_normals_w,
+        ray_hits_w, ray_parameters, raw_normals_w, config.distance_tolerance_m,
     )
 
     cast_valid = torch.isfinite(ray_hits_w).all(dim=-1)
@@ -372,10 +402,9 @@ def acquire_exact_raycaster_observability(
         _raise_diagnostic_failure("converted valid ray distances must be finite and nonnegative", diagnostics)
     distance_error = (valid_metric_distances - accepted_distance[accepted_beam_valid]).abs()
     distance_max_error = distance_error.max() if distance_error.numel() else torch.zeros((), device=ray_starts_w.device)
-    reconstructed_hits_w = ray_starts_w + ray_parameters.unsqueeze(-1) * ray_directions_w
-    reconstruction_error = torch.linalg.vector_norm(
-        reconstructed_hits_w[accepted_beam_valid] - ray_hits_w[accepted_beam_valid], dim=-1
-    )
+    reconstruction_error = _float32_forward_reconstruction_residual(
+        ray_starts_w, ray_directions_w, ray_parameters, ray_hits_w, config.distance_tolerance_m,
+    )[accepted_beam_valid]
     reconstruction_max_error = (
         reconstruction_error.max()
         if reconstruction_error.numel()
