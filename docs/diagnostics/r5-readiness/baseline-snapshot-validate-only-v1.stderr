@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-20261012/training_workloads/unified_h1/formal_unified_h1.py", line 67, in <module>
+    raise SystemExit(finalize_process_exit(main(), sys.argv[1:]))
+                                           ^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-20261012/training_workloads/unified_h1/formal_unified_h1.py", line 36, in main
+    print(validate_only()); return 0
+          ^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-20261012/training_workloads/unified_h1/formal_unified_h1.py", line 17, in validate_only
+    config = load_config()
+             ^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-20261012/training_workloads/unified_h1/config.py", line 109, in load_config
+    _exact_mapping(method, expected_method, "method identity")
+  File "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-20261012/training_workloads/unified_h1/config.py", line 67, in _exact_mapping
+    if value != expected: raise ValueError(f"{label} mismatch")
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: method identity mismatch

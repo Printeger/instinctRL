@@ -49,3 +49,7 @@ Handoff v2 corrects metadata to actual dt=.005, decimation=20, 200Hz control/10H
 The rlflow dispatcher now resolves to the consolidated project implementation; immutable snapshots may use exactly identical reviewed dispatcher bytes at their own path, with complete H1 candidate/pin checks retained. Historical postrun identities remain explicitly distinct; a new caller must verify the new experiment/package identity instead of inheriting old scope. `live-tool-binding-cpu-v1` initially exposed an outdated app.close test stub; v2 fixes the stub to the already used public close kwargs, retaining actual cleanup expectations. v2: 37 tests pass. This failure and its outputs are preserved.
 
 Committed baseline_snapshot_config.json is a new path binding for a future read-only snapshot, not an accepted historical candidate. No snapshot/live release has yet been issued.
+
+## Snapshot preparation boundary
+
+The first read-only snapshot at 81bc968 was prepared without authorization or live execution. Its exact handoff validates, but full config validation fails because proposal_path points to the development tree rather than the snapshot-local approved method. All v1 inputs and outputs are preserved as PRELAUNCH_REJECTED. A v2 input corrects this path with the same approved method bytes/hash. The runner also explicitly binds ISAACSIM_ASSET_ROOT from the exact config instead of relying on the supervisor environment. CPU tool regression v3 passes 38 cases. No live budget was consumed.

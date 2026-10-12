@@ -1,0 +1,36 @@
+{
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONPATH": "/home/mint/rl_dev/instinctRL-dev:/home/mint/rl_dev/instinctRL-dev/isaaclab-training:/home/mint/rl_dev/instinctRL-dev/tools/rlflow:/home/mint/rl_dev/instinctRL-dev/tools/rlflow/tests"
+  },
+  "results": [
+    {
+      "module": "tools/rlflow/tests/test_h1_adapter.py",
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tools/rlflow/tests/test_h1_adapter.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/live-tool-binding-cpu-v3/test_h1_adapter.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5643343580886722
+    },
+    {
+      "module": "tools/rlflow/tests/test_cli_compatibility.py",
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tools/rlflow/tests/test_cli_compatibility.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/live-tool-binding-cpu-v3/test_cli_compatibility.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.11374275386333466
+    }
+  ]
+}

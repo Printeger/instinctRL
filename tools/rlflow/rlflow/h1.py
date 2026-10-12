@@ -77,7 +77,8 @@ def validate(spec,root,*,fresh=True):
 def environment(spec):
     config=json.loads((Path(spec['h1']['workload_root'])/'training_workloads/unified_h1/candidate_config.json').read_text())
     return {'PATH':'/usr/bin:/bin','PYTHONDONTWRITEBYTECODE':'1','PYTHONNOUSERSITE':'1','CUDA_VISIBLE_DEVICES':'0',
-        'PYTHONPATH':os.pathsep.join([spec['h1']['workload_root'],str(Path(config['product']['path'])/'isaaclab-training')])}
+        'PYTHONPATH':os.pathsep.join([spec['h1']['workload_root'],str(Path(config['product']['path'])/'isaaclab-training')]),
+        'ISAACSIM_ASSET_ROOT':config['execution']['isaacsim_asset_root']}
 
 
 POSTRUN_PACKAGE_ID = "INSTINCTRL-R5-READINESS-20261012"

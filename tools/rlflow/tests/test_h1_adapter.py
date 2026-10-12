@@ -55,6 +55,18 @@ def test_exact_h1_binding_and_consumed_attempt(bound):
     (Path(v['h1']['attempt'])/'results/controlled-failure').mkdir()
     with pytest.raises(Conflict,match='already consumed'):h1.validate(v,d)
 
+
+def test_runner_environment_binds_asset_root_without_inheriting_parent(bound):
+    v,observed,_=bound
+    config=copy.deepcopy(observed['config'])
+    config['execution']['isaacsim_asset_root']='/frozen/assets'
+    path=Path(v['h1']['workload_root'])/'training_workloads/unified_h1/candidate_config.json'
+    path.write_text(json.dumps(config))
+    env=h1.environment(v)
+    assert env['ISAACSIM_ASSET_ROOT']=='/frozen/assets'
+    assert env['PYTHONPATH'].split(os.pathsep)==[v['h1']['workload_root'],str(Path(config['product']['path'])/'isaaclab-training')]
+    assert env['CUDA_VISIBLE_DEVICES']=='0' and env['PYTHONDONTWRITEBYTECODE']=='1'
+
 @pytest.mark.parametrize('change',[
     lambda v:v['argv'].append('--extra'),lambda v:v['resources'].update(gpu_seconds=609),
     lambda v:v.update(seed=124),lambda v:v['h1'].update(config_sha256='0'*64),

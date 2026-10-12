@@ -1,0 +1,28 @@
+{
+  "schema_version": "unified-h1-r3-authorization.v2",
+  "status": "AUTHORIZED",
+  "order_id": "UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
+  "method_sha256": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+  "config_sha256": "93e9d246918f4ddc1c6a1e2e797df6353fffc528f160e7a6f736c4ada229072b",
+  "product_commit": "81bc9689467b74a7ae58b289ad50a26b60b02064",
+  "product_tree": "2b78ba3c0493c25a080de3c9f3e1e7ecfe6cebd7",
+  "workload_commit": "81bc9689467b74a7ae58b289ad50a26b60b02064",
+  "workload_tree": "2b78ba3c0493c25a080de3c9f3e1e7ecfe6cebd7",
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
+  "mode": "enhanced-b0-diagnostic",
+  "budgets": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "initialization_ticks": 10,
+    "automatic_resets": 20160,
+    "training_transitions": 0,
+    "nontraining_transitions": 20160,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "explicit_resets": 3,
+    "wall_seconds": 900
+  },
+  "parameters": {
+    "handoff": "/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/inputs/baseline_handoff.json"
+  }
+}
