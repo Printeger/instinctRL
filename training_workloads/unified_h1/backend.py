@@ -403,7 +403,7 @@ class UnifiedH1LiveBackend:
         if target.exists(): raise RuntimeError("enhanced B0 raw output already exists")
         stream = target.open("x", encoding="utf-8")
         written_bytes = written_rows = attempted_rows = validated_rows = 0
-        coverage = observation = receipt = None
+        coverage = observation = receipt = measurement_failure = None
         observer = None
         last_attempted_coordinate = last_written_coordinate = None
         phase = "PREPARED"
@@ -414,7 +414,7 @@ class UnifiedH1LiveBackend:
                     digest.update(chunk); file_rows += chunk.count(b"\n"); file_bytes += len(chunk); last_byte = chunk[-1:]
             atomic_json_replace(self.output, "enhanced_b0_manifest.json", {
                 "schema_version":"instinctrl-enhanced-b0-raw-manifest/2",
-                "experiment_id":"UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
+                "experiment_id":"UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
                 "authorization_sha256":self.authorization["authorization_sha256"],
                 "source_identity":{key:self.authorization[key] for key in
                     ("product_commit","product_tree","workload_commit","workload_tree","config_sha256")},
@@ -431,6 +431,7 @@ class UnifiedH1LiveBackend:
                     "completed_callback_calls":observer.calls,"completed_callback_rows":observer.rows,
                     "coverage_finalized":observation is not None},
                 "primary_error":None if error is None else exception_record(error),
+                "measurement_failure":measurement_failure,
                 "condition":"ENHANCED_B0_ZERO_TARGET",
                 "measurement_sources":{"mass":"Articulation.root_physx_view.get_masses",
                     "inertia":"Articulation.root_physx_view.get_inertias",
@@ -470,6 +471,16 @@ class UnifiedH1LiveBackend:
             phase = "COMPLETE"
             preserve_raw_manifest("COMPLETE")
         except BaseException as primary:
+            if getattr(primary,"measurement_failure",None) is not None:
+                try:
+                    from .b0_enhanced import safe_failure_primitives
+                    context=safe_failure_primitives(primary.measurement_failure)
+                    atomic_json_replace(self.output,"enhanced_b0_measurement_failure.json",context)
+                    failure_path=self.output/"enhanced_b0_measurement_failure.json"
+                    measurement_failure={"path":failure_path.name,"status":"UNVALIDATED",
+                        "sha256":sha256_file(failure_path),"file_bytes":failure_path.stat().st_size}
+                except BaseException as save_error:
+                    primary.add_note("measurement failure artifact save failed: " + repr(save_error))
             try:
                 stream.close()
             except BaseException as close_error:

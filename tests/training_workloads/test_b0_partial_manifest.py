@@ -40,6 +40,12 @@ def backend_fixture(tmp_path,monkeypatch,fault):
         captured['callback']=callback
         return {'boundary':'after_physics_before_reset','ordering_unchanged':True,'read_only':True,'exactly_once':True,'lanes':32}
     def run(**kwargs):
+        if fault=='measurement':
+            error=b0_enhanced.EvidenceError('injected before writer')
+            error.measurement_failure={'status':'UNVALIDATED','normal_physics_row':False,
+                'failure':{'body_index':0,'body_name':'base','failure_branch':'INERTIA_SHAPE_OR_NONFINITE'},
+                'bodies':[{'inertia_at_com_body_kg_m2':[[float('nan'),0.,0.],[0.,1.,0.],[0.,0.,1.]]}]}
+            raise error
         rows=[{'case':'Z','policy_step':0,'physics_step':0,'lane':i,'episode_id':0} for i in range(32)]
         if fault=='encoding':rows[7]['bad']=float('nan')
         captured['callback'](rows)
@@ -124,3 +130,17 @@ def test_failed_flush_distinguishes_stream_acceptance_from_complete_file_rows(tm
     assert manifest['raw']['trailing_partial_row'] and manifest['raw']['last_written_coordinate'] is None
     assert manifest['raw']['sha256']==hashlib.sha256(raw).hexdigest()
     assert any('injected partial flush' in note for note in caught.value.__notes__)
+
+
+def test_measurement_before_writer_saves_separate_unvalidated_artifact(tmp_path,monkeypatch):
+    value,_=backend_fixture(tmp_path,monkeypatch,'measurement')
+    with pytest.raises(b0_enhanced.EvidenceError,match='before writer'):value.run_enhanced_b0_diagnostic({})
+    artifact=tmp_path/'enhanced_b0_measurement_failure.json'
+    raw=artifact.read_bytes();context=json.loads(raw)
+    assert context['status']=='UNVALIDATED' and not context['normal_physics_row']
+    assert context['bodies'][0]['inertia_at_com_body_kg_m2'][0][0]=={'availability':'NONFINITE','representation':'nan'}
+    manifest=json.loads((tmp_path/'enhanced_b0_manifest.json').read_text())
+    assert manifest['primary_error']['message']=='injected before writer'
+    assert manifest['measurement_failure']['sha256']==hashlib.sha256(raw).hexdigest()
+    assert manifest['raw']['written_rows']==manifest['raw']['attempted_rows']==0
+    assert manifest['coverage'] is None and (tmp_path/'enhanced_b0_physics.jsonl').read_bytes()==b''

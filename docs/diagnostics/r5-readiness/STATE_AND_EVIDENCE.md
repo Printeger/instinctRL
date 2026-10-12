@@ -73,3 +73,18 @@ Reviewercall6 PASS independently closes BASELINE-R1/R2; call7 PASS confirms exac
 Existingrlflow J-65769ac9c17a38cb, exact643747a/v3input/approvalA-e1acb8ab5bc0a326. CoexistencePASS (3samples10.030s); actual initialization2physics ticks; explicitreset1settled. Firstpolicyattempt reaches observer andfails reconstruct_com inertia symmetric/positivecheck before firstrawrow. Actualcompletepolicy/transitions/rawrows0. SourceAPI/rowmetadata do not identify the failed body or exact matrix yet; no physicalrootcause established. Rawpartialmanifest retains primaryerror, counters,0rows andhash; source data preserved in live-baseline-v3-failure/INVENTORY.json with copied smallraw artifacts.
 
 Native app.close hardtimeout thenowned cleanupquiescent/no survivors; outerexit-9FAILED. RawstatusFAIL_PENDING_CLOSE remains unchanged. Reconcile retains full20160transitionreservation (notzeroed), settleswall30.39525855s andGPU27.14833330s. Two authorizedpostrunGPUauditqueries show394MiBused/1%util and onlyexistingGNOME desktop164MiB; noownedworkload remains. Approval consumed, no automaticretry;3starts/initializationsremain andfullfailedtransitionreservation remains charged. Training/optimizer/checkpoint counters0. Nextaction is evidence-supported measurement/cleanupboundary repair and independentactualfailureassessment, not repeatunchangedlaunch.
+
+
+Independent actual failure review and measurement candidate
+
+Reviewer call8 MUST_FIX establishes LIVE-R1 (unvalidated body input lost before writer)
+and LIVE-R2 (fixed absolute symmetry check rejects valid float32 rotated inertia).
+Actual failed matrix remains unknown. Cleanup boundary accepted only as failed
+forced termination with no owned survivors; full20160 reservation remains.
+`reviews/review-live-baseline-v3-failure.json`, `INERTIA_MEASUREMENT_CONTRACT.md`,
+`inertia-float32-counterexample.json` preserve the independent assessment and CPU
+precision evidence. New measurement-R1 candidate saves separate UNVALIDATED body
+inputs/coordinate/source/dtype/branch and uses predeclared gamma7 trace rounding
+bound without rewriting raw tensors, controller or plant. CPU final suite passes;
+it is mock integration, no new simulation. Fresh identity/attempt and exact
+readonly snapshot inputs are being prepared; no successor release yet.

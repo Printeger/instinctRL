@@ -351,12 +351,11 @@ def run_main_sequence(*, authorization: Mapping[str, Any], attempt: Path,
     def close_app() -> None:
         resource = resources["app"]
         if resource is not None:
-            # SimulationApp.close(wait_for_replicator=True, skip_cleanup=False)
-            # performs optional Replicator and full Kit cleanup by default.  At
-            # this terminal process boundary those paths are both unnecessary
-            # and can exceed the reserved cleanup allowance.  Use the installed
-            # public keyword contract while retaining the owner-thread alarm and
-            # the independent outer process watchdog.
+            # Installed skip_cleanup=True calls framework shutdown immediately;
+            # it can still enter later cleanup and native calls may hang. These
+            # kwargs do not guarantee graceful close. Keep the bounded owner
+            # alarm and independent pidfd watchdog; forced termination remains
+            # failed cleanup, followed by external descendant settlement.
             _bounded_owner_call(
                 lambda: resource.close(wait_for_replicator=False, skip_cleanup=True),
                 app_cleanup_seconds,

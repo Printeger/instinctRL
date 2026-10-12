@@ -59,3 +59,8 @@ orchestrator 后端已认证或可直接恢复。未通过修改固定版本或�
 - [整理报告与索引](history/consolidation-20261012/README.md)、[验证摘要](history/consolidation-20261012/VERIFICATION_SUMMARY.json)。
 - [真实诊断失败报告](history/consolidation-20261012/r5-live-failure/B0_ENHANCED_LIVE_ROOT_CAUSE_REPORT.md)。
 - [归档清单](history/consolidation-20261012/ARCHIVE_INDEX.md)。旧目录保留，不删除。
+
+2026-10-12 R5 actual first-live review: MUST_FIX LIVE-R1/R2. New measurement-R1
+candidate preserves failed snapshot inputs and corrects float32 symmetry contract;
+CPU passes, fresh exact source/input prereview pending. First live remains failed,
+full20160 reservation retained; no owned survivors. Goal IN_PROGRESS, training0.

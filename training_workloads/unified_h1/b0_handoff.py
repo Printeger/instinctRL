@@ -70,7 +70,7 @@ def validate_handoff(value:Any)->dict[str,Any]:
     budgets={"live_process_starts":1,"simulator_initializations":1,"nontraining_transitions":20160,"physics_rows":403200,"training_transitions":0,"optimizer_updates":0,"checkpoint_writes":0,"p0_plr":0,"policy_evaluations":0,"automatic_retries":0,"wall_seconds":910,"gpu_allocation_seconds":910,"diagnostic_bytes":16*1024**3}
     if value["budgets"]!=budgets: raise PermissionError("enhanced B0 budgets changed")
     outputs=value["output_manifest"]
-    expected_outputs={"raw_physics_jsonl":"enhanced_b0_physics.jsonl","raw_manifest":"enhanced_b0_manifest.json","causal_analysis":"enhanced_b0_causal_analysis.json","budget_ledger":"budget_ledger.json","status":"status.json","cleanup_evidence":"cleanup_evidence.json"}
+    expected_outputs={"raw_physics_jsonl":"enhanced_b0_physics.jsonl","raw_manifest":"enhanced_b0_manifest.json","causal_analysis":"enhanced_b0_causal_analysis.json","measurement_failure":"enhanced_b0_measurement_failure.json","budget_ledger":"budget_ledger.json","status":"status.json","cleanup_evidence":"cleanup_evidence.json"}
     if outputs != expected_outputs: raise PermissionError("output manifest is not exact")
     if value["cleanup"]!={"environment_close":True,"app_close":True,"no_retry_on_failure":True}: raise PermissionError("cleanup/no-retry contract changed")
     return {"status":"VALID","live_authorized":False,"experiment_id":EXPERIMENT_ID,"physics_rows":PHYSICS_ROWS,"candidate_diff_sha256":candidate["diff_sha256"]}

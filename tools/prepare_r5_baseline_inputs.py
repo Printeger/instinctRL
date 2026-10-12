@@ -9,7 +9,7 @@ import argparse
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'docs/diagnostics/r5-readiness/inputs'
-IDENTITY='UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012'
+from training_workloads.unified_h1.b0_enhanced import EXPERIMENT_ID as IDENTITY
 
 
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -28,6 +28,14 @@ def main():
     output=lambda name:OUT/(args.prefix+'_'+name+'.json')
     from rlflow.policy import stopped
     if stopped(ROOT/'coordination/research'):raise RuntimeError('STOP forbids new preparation')
+    ledger=json.loads((ROOT/'docs/diagnostics/r5-readiness/goal_budget.json').read_text())
+    remaining={key:ledger['caps'][key]-ledger['used'][key]-ledger.get('reserved',{}).get(key,0)
+        for key in ('live_starts','simulator_initializations','nontraining_transitions','wall_seconds','gpu_seconds','output_bytes')}
+    if any(remaining[key]<amount for key,amount in
+        {'live_starts':1,'simulator_initializations':1,'nontraining_transitions':20160,'wall_seconds':910,'gpu_seconds':910,'output_bytes':16*1024**3}.items()):
+        raise RuntimeError('current goal remaining envelope cannot fit candidate')
+    if any(output(name).exists() for name in ('handoff','authorization.expected','experiment_spec.draft','input_manifest')):
+        raise RuntimeError('input outputs already exist; preserve them')
     commit=git(ROOT,'rev-parse','HEAD').decode().strip()
     config_origin=args.config_origin
     config_bytes=git(ROOT,'show',commit+':'+config_origin)
@@ -61,7 +69,7 @@ def main():
         'frozen':{'seed':20260909,'cases':['Z','T','S'],'case_policy_steps':{'Z':200,'T':100,'S':330},'lanes':32,'decimation':20,'target_velocity_b_m_s':[0.,0.,0.],
                  'initial_state':'frozen-R4-B0','curriculum':'frozen-Z/T/S','control_frequency_hz':200,'policy_frequency_hz':10,'safety_standards':'unchanged-R4-B0'},
         'budgets':{'live_process_starts':1,'simulator_initializations':1,'nontraining_transitions':20160,'physics_rows':403200,'training_transitions':0,'optimizer_updates':0,'checkpoint_writes':0,'p0_plr':0,'policy_evaluations':0,'automatic_retries':0,'wall_seconds':910,'gpu_allocation_seconds':910,'diagnostic_bytes':16*1024**3},
-        'output_manifest':{'raw_physics_jsonl':'enhanced_b0_physics.jsonl','raw_manifest':'enhanced_b0_manifest.json','causal_analysis':'enhanced_b0_causal_analysis.json','budget_ledger':'budget_ledger.json','status':'status.json','cleanup_evidence':'cleanup_evidence.json'},
+        'output_manifest':{'raw_physics_jsonl':'enhanced_b0_physics.jsonl','raw_manifest':'enhanced_b0_manifest.json','causal_analysis':'enhanced_b0_causal_analysis.json','measurement_failure':'enhanced_b0_measurement_failure.json','budget_ledger':'budget_ledger.json','status':'status.json','cleanup_evidence':'cleanup_evidence.json'},
         'cleanup':{'environment_close':True,'app_close':True,'no_retry_on_failure':True}}
     write(handoff_path,handoff)
     expected_auth={'schema_version':'unified-h1-r3-authorization.v2','status':'AUTHORIZED','order_id':IDENTITY,
@@ -95,7 +103,7 @@ def main():
           'supplemental_limits':{'initialization_ticks':10,'explicit_resets':3,'automatic_reset_lanes':20160,
               'prelaunch_nvidia_smi_calls':6,'runtime_cuda_memory_observations':634,'postrun_nvidia_smi_audit_calls':2},
           'probe_definitions':'prelaunch: 3 coexistence samples x2 commands; runtime: after init +3 explicit reset gates +630 step gates; postrun: max2 external cleanup audit commands, only after terminal ownership settlement',
-          'remaining_goal_live_budget_before_release':{'starts':4,'initializations':4,'nontraining_transitions':80640,'wall_seconds':3640,'gpu_seconds':3640,'output_bytes':64*1024**3},
+          'remaining_goal_live_budget_before_release':remaining,
           'free_disk_bytes_observed':shutil.disk_usage(attempt).free,'generator_sha256':sha(Path(__file__))})
     print(json.dumps({'snapshot':str(snapshot),'commit':commit,'attempt':str(attempt),'status':'PREPARED_NOT_RELEASED'},indent=2))
 

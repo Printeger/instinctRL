@@ -15,8 +15,7 @@ from instinctlab.control.rotor_actuation import ROTOR_NAMES
 from training_workloads.unified_h1.b0_enhanced import reconstruct_com,validate_row,EvidenceError,quaternion_rotate
 
 
-@pytest.mark.parametrize("origin,rotated,misaligned",[(0.,False,False),(100.,False,False),(700.,True,False),(100.,False,True)])
-def test_product_snapshot_uses_link_velocity_once_and_preserves_controller_feedback(origin,rotated,misaligned):
+def snapshot_fixture(origin=0.,rotated=False,misaligned=False):
     path=Path('isaaclab-training/instinctlab/envs/unified_h1_direct_env.py')
     tree=ast.parse(path.read_text())
     selected=[n for n in ast.walk(tree) if isinstance(n,ast.FunctionDef) and n.name in ('_enhanced_b0_physics_rows','_cross3','_tolist')]
@@ -53,6 +52,14 @@ def test_product_snapshot_uses_link_velocity_once_and_preserves_controller_feedb
     env._enhanced_b0_previous_system={};env._enhanced_b0_previous_velocity={};env._enhanced_b0_episode_ids={}
     env._enhanced_b0_last_snapshots={};env._enhanced_b0_reset_boundaries={}
     env._enhanced_b0_cache_unavailable=set();env._enhanced_b0_cache_generation=1
+    before_body=body.clone();before_root=control_root.clone()
+    return env,body,control_root
+
+
+@pytest.mark.parametrize("origin,rotated,misaligned",[(0.,False,False),(100.,False,False),(700.,True,False),(100.,False,True)])
+def test_product_snapshot_uses_link_velocity_once_and_preserves_controller_feedback(origin,rotated,misaligned):
+    env,body,control_root=snapshot_fixture(origin,rotated,misaligned)
+    rotor=env._wrench.rotor
     before_body=body.clone();before_root=control_root.clone()
     rows=env._enhanced_b0_physics_rows()
     assert len(rows)==32
@@ -99,3 +106,22 @@ def test_product_snapshot_uses_link_velocity_once_and_preserves_controller_feedb
         elif kind=='momentum':bad['system']['linear_momentum_kg_m_s']=list(bad['system']['linear_momentum_kg_m_s']);bad['system']['linear_momentum_kg_m_s'][0]+=.001
         else:bad['wrenches']['rotor']['force_n']=list(bad['wrenches']['rotor']['force_n']);bad['wrenches']['rotor']['force_n'][0]+=.001
         with pytest.raises(EvidenceError):validate_row(bad)
+
+
+@pytest.mark.parametrize("bad,branch",[(0.,"INERTIA_NONPOSITIVE_DIAGONAL"),(float('nan'),"INERTIA_SHAPE_OR_NONFINITE")])
+def test_product_first_derivation_failure_preserves_unvalidated_inputs(bad,branch):
+    env,body,root=snapshot_fixture()
+    raw=torch.eye(3).reshape(1,1,9).repeat(32,5,1);raw[0,3,0]=bad
+    env._robot.root_physx_view.get_inertias=lambda:raw
+    rng=torch.get_rng_state().clone();before=body.clone()
+    with pytest.raises(EvidenceError) as caught:env._enhanced_b0_physics_rows()
+    context=caught.value.measurement_failure
+    assert context['status']=='UNVALIDATED' and not context['normal_physics_row']
+    assert context['coordinate']=={'case':'Z','policy_step':0,'physics_step':0,'lane':0}
+    assert context['failure']['body_index']==3 and context['failure']['body_name']==ROTOR_NAMES[2]
+    assert context['failure']['failure_branch']==branch and len(context['bodies'])==5
+    actual=context['bodies'][3]['inertia_at_com_body_kg_m2'][0][0]
+    assert actual==0. if bad==0. else actual=={'availability':'NONFINITE','representation':'nan'}
+    assert context['tensor_metadata']['inertia']=={'dtype':'torch.float32','shape':[32,5,9]}
+    assert not env._enhanced_b0_previous_system and not env._enhanced_b0_last_snapshots
+    assert torch.equal(rng,torch.get_rng_state()) and torch.equal(before,body)

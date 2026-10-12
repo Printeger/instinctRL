@@ -13,7 +13,7 @@ import math
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
-EXPERIMENT_ID = "UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012"
+EXPERIMENT_ID = "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012"
 CASES = ("Z", "T", "S")
 CASE_POLICY_STEPS = {"Z": 200, "T": 100, "S": 330}
 LANES = 32
@@ -25,6 +25,49 @@ SCHEMA = "instinctrl-enhanced-b0-physics-row/2"
 
 class EvidenceError(ValueError):
     """Raw evidence is absent, contradictory, or not mechanically closed."""
+
+# Pinned public PhysX getter supplies float32. A rotated tensor R D R^T
+# uses two three-term dot products plus readback rounding (gamma_7).
+# For positive principal inertia, each absolute dot sum is bounded by tr(D).
+# Account for the same relative uncertainty in the measured trace. This is a
+# source-precision contract, fixed before the next live run, not a data fit.
+FLOAT32_EPSILON = 2.0 ** -23
+INERTIA_GAMMA7 = 7 * FLOAT32_EPSILON / (1 - 7 * FLOAT32_EPSILON)
+INERTIA_SYMMETRY_CONTRACT = "physx-float32-two-dot3-readback-gamma7-trace/1"
+
+def inertia_symmetry_tolerance(inertia):
+    return 2 * INERTIA_GAMMA7 / (1 - INERTIA_GAMMA7) * sum(abs(inertia[i][i]) for i in range(3))
+
+def safe_failure_primitives(value):
+    """Keep unvalidated values JSON-safe without substituting numerical zeros."""
+    if isinstance(value, float) and not math.isfinite(value):
+        return {"availability": "NONFINITE", "representation": repr(value)}
+    if isinstance(value, dict): return {key:safe_failure_primitives(item) for key,item in value.items()}
+    if isinstance(value, (list, tuple)): return [safe_failure_primitives(item) for item in value]
+    return value
+
+def _body_inertia(value, index, body):
+    context={"body_index":index,"body_name":body["name"],"raw_inertia":value,
+             "symmetry_contract":INERTIA_SYMMETRY_CONTRACT}
+    try:
+        inertia=_matrix3(value,"inertia_at_com_body_kg_m2")
+    except EvidenceError as error:
+        context["failure_branch"]="INERTIA_SHAPE_OR_NONFINITE"
+        error.measurement_failure=context
+        raise
+    context["diagonal"]=[inertia[i][i] for i in range(3)]
+    skew=max(abs(inertia[i][j]-inertia[j][i]) for i in range(3) for j in range(3))
+    tolerance=inertia_symmetry_tolerance(inertia)
+    context.update(maximum_skew=skew,symmetry_tolerance=tolerance)
+    branch="INERTIA_NONPOSITIVE_DIAGONAL" if any(inertia[i][i]<=0 for i in range(3)) else (
+        "INERTIA_ASYMMETRIC" if skew>tolerance else None)
+    if branch:
+        error=EvidenceError(f"body[{index}] {body['name']}: {branch}")
+        context["failure_branch"]=branch; error.measurement_failure=context
+        raise error
+    # Preserve raw entries in derived calculations too; no silent averaging,
+    # diagonal repair or principal-axis rotation is performed.
+    return inertia
 
 def _finite_number(x: Any, name: str) -> float:
     if isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(float(x)):
@@ -67,22 +110,26 @@ def reconstruct_com(bodies: Any) -> dict[str, Any]:
     if not isinstance(bodies, list) or not bodies: raise EvidenceError("bodies must be a non-empty exact list")
     names=set(); total=0.0; weighted=(0.0,0.0,0.0); momentum=(0.0,0.0,0.0); parts=[]
     for i,b in enumerate(bodies):
-        required={"name","mass_kg","local_com_m","local_com_quaternion_wxyz","inertia_at_com_body_kg_m2","world_position_m","world_quaternion_wxyz","world_linear_velocity_m_s","world_angular_velocity_rad_s"}
-        if not isinstance(b,dict) or set(b)!=required: raise EvidenceError(f"body[{i}] schema mismatch")
-        if not isinstance(b["name"],str) or not b["name"] or b["name"] in names: raise EvidenceError("body names must be unique")
-        names.add(b["name"]); m=_finite_number(b["mass_kg"],"mass_kg")
-        if m<=0: raise EvidenceError("body mass must be positive")
-        pos=_vec(b["world_position_m"],"world_position_m"); local=_vec(b["local_com_m"],"local_com_m")
-        quaternion_rotate(b["local_com_quaternion_wxyz"],(1.0,0.0,0.0))
-        world_q=b["world_quaternion_wxyz"]; world_com=_add(pos,quaternion_rotate(world_q,local))
-        linear=_vec(b["world_linear_velocity_m_s"],"world_linear_velocity_m_s")
-        angular=_vec(b["world_angular_velocity_rad_s"],"world_angular_velocity_rad_s")
-        com_velocity=_add(linear,_cross(angular,quaternion_rotate(world_q,local)))
-        inertia=_matrix3(b["inertia_at_com_body_kg_m2"],"inertia_at_com_body_kg_m2")
-        if any(not math.isclose(inertia[i][j],inertia[j][i],abs_tol=1e-10) for i in range(3) for j in range(3)) or any(inertia[i][i]<=0 for i in range(3)):
-            raise EvidenceError("body inertia must be symmetric with positive diagonal")
-        total+=m; weighted=_add(weighted,_scale(world_com,m)); momentum=_add(momentum,_scale(com_velocity,m))
-        parts.append((m,world_com,com_velocity,angular,inertia,quaternion_matrix(world_q)))
+        try:
+            required={"name","mass_kg","local_com_m","local_com_quaternion_wxyz","inertia_at_com_body_kg_m2","world_position_m","world_quaternion_wxyz","world_linear_velocity_m_s","world_angular_velocity_rad_s"}
+            if not isinstance(b,dict) or set(b)!=required: raise EvidenceError(f"body[{i}] schema mismatch")
+            if not isinstance(b["name"],str) or not b["name"] or b["name"] in names: raise EvidenceError("body names must be unique")
+            names.add(b["name"]); m=_finite_number(b["mass_kg"],"mass_kg")
+            if m<=0: raise EvidenceError("body mass must be positive")
+            pos=_vec(b["world_position_m"],"world_position_m"); local=_vec(b["local_com_m"],"local_com_m")
+            quaternion_rotate(b["local_com_quaternion_wxyz"],(1.0,0.0,0.0))
+            world_q=b["world_quaternion_wxyz"]; world_com=_add(pos,quaternion_rotate(world_q,local))
+            linear=_vec(b["world_linear_velocity_m_s"],"world_linear_velocity_m_s")
+            angular=_vec(b["world_angular_velocity_rad_s"],"world_angular_velocity_rad_s")
+            com_velocity=_add(linear,_cross(angular,quaternion_rotate(world_q,local)))
+            inertia=_body_inertia(b["inertia_at_com_body_kg_m2"],i,b)
+            total+=m; weighted=_add(weighted,_scale(world_com,m)); momentum=_add(momentum,_scale(com_velocity,m))
+            parts.append((m,world_com,com_velocity,angular,inertia,quaternion_matrix(world_q)))
+        except EvidenceError as error:
+            if not hasattr(error,"measurement_failure"):
+                error.measurement_failure={"body_index":i,"body_name":b.get("name") if isinstance(b,dict) else None,
+                    "failure_branch":"BODY_PRIMITIVE_VALIDATION","message":str(error)}
+            raise
     combined=_scale(weighted,1/total); angular_momentum=(0.0,0.0,0.0)
     for m,world_com,com_velocity,angular,inertia,rotation in parts:
         inertia_world=_mat_mul(_mat_mul(rotation,inertia),_transpose(rotation))

@@ -253,7 +253,24 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
             # otherwise disagrees with independent double-precision rebuilding.
             # These helpers own no simulator/controller/RNG and run only here.
             from training_workloads.unified_h1.b0_enhanced import reconstruct_com, rotor_wrench, quaternion_rotate
-            system = reconstruct_com(bodies)
+            try:
+                system = reconstruct_com(bodies)
+            except Exception as error:
+                # This is an unvalidated input artifact, never a physics row.
+                # Do not advance observer/reset state when deriving it fails.
+                from training_workloads.unified_h1.b0_enhanced import safe_failure_primitives
+                error.measurement_failure = safe_failure_primitives({
+                    "schema_version":"instinctrl-enhanced-b0-measurement-failure/1",
+                    "status":"UNVALIDATED", "normal_physics_row":False,
+                    "coordinate":{"case":case,"policy_step":policy_step,"physics_step":physics_step,"lane":lane},
+                    "failure":getattr(error,"measurement_failure",{"failure_branch":"BODY_DERIVATION","message":str(error)}),
+                    "bodies":bodies,
+                    "getter_sources":{"mass":"Articulation.root_physx_view.get_masses","inertia":"Articulation.root_physx_view.get_inertias","body":"data.body_link_state_w","local_com":"data.body_com_pose_b"},
+                    "tensor_metadata":{name:{"dtype":str(value.dtype),"shape":list(value.shape)} for name,value in
+                        (("mass",mass),("inertia",inertia),("body",body),("local_com",com_pose))},
+                    "root_link_state":self._tolist(root[lane]),"controller_root_state":self._tolist(control_root[lane]),
+                })
+                raise
             total_mass = system["total_mass_kg"]
             combined = system["combined_com_world_m"]
             momentum = system["linear_momentum_kg_m_s"]
@@ -301,7 +318,7 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
                 reset={"mask":True,"reason":str(boundary["reason"]),"initial_boundary":bool(boundary["initial_boundary"]),"last_pre_reset_state":boundary["last_pre_reset_state"],"post_reset_states":[current_snapshot]}
                 next_episode_ids[key]=episode_id+1; consumed_boundaries.append(key)
             next_last_snapshots[key]=current_snapshot
-            rows.append(OrderedDict((("schema_version","instinctrl-enhanced-b0-physics-row/2"),("experiment_id","UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012"),("case",case),("policy_step",policy_step),("physics_step",physics_step),("lane",lane),("episode_id",episode_id),("reset",reset),("root_state",{"pose":self._tolist(root[lane,:7]),"linear_velocity":velocity,"angular_velocity":self._tolist(root[lane,10:13])}),("system",system),("bodies",bodies),("controller",controller),("rotors",rotor_rows),("wrenches",OrderedDict((("gravity",available(gravity_force,gravity_torque)),("rotor",available(rotor_force,rotor_torque)),("drag_aero",dict(unavailable)),("contact",dict(unavailable)),("joint_constraint",dict(unavailable)),("other",dict(unavailable))))),("momentum",{"dt_s":dt,"inferred_wrench":{"force_n":inferred_force,"torque_at_com_nm":inferred_torque}}),("response",{"position_world_m":self._tolist(root[lane,:3]),"velocity_world_m_s":velocity,"acceleration_world_m_s2":acceleration}))))
+            rows.append(OrderedDict((("schema_version","instinctrl-enhanced-b0-physics-row/2"),("experiment_id","UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012"),("case",case),("policy_step",policy_step),("physics_step",physics_step),("lane",lane),("episode_id",episode_id),("reset",reset),("root_state",{"pose":self._tolist(root[lane,:7]),"linear_velocity":velocity,"angular_velocity":self._tolist(root[lane,10:13])}),("system",system),("bodies",bodies),("controller",controller),("rotors",rotor_rows),("wrenches",OrderedDict((("gravity",available(gravity_force,gravity_torque)),("rotor",available(rotor_force,rotor_torque)),("drag_aero",dict(unavailable)),("contact",dict(unavailable)),("joint_constraint",dict(unavailable)),("other",dict(unavailable))))),("momentum",{"dt_s":dt,"inferred_wrench":{"force_n":inferred_force,"torque_at_com_nm":inferred_torque}}),("response",{"position_world_m":self._tolist(root[lane,:3]),"velocity_world_m_s":velocity,"acceleration_world_m_s2":acceleration}))))
         self._enhanced_b0_previous_system = next_previous_system
         self._enhanced_b0_previous_velocity = next_previous_velocity
         self._enhanced_b0_episode_ids = next_episode_ids
