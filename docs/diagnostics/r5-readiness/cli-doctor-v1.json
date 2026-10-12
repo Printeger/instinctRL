@@ -1,0 +1,155 @@
+{
+  "ok": true,
+  "checks": {
+    "codex_version": {
+      "ok": true,
+      "observed": "codex-cli 0.161.0",
+      "historical_pin": "0.153.4",
+      "scope": "new project compatibility candidate; requires all doctor checks"
+    },
+    "chatgpt_login": {
+      "ok": true,
+      "observed": "Logged in using ChatGPT"
+    },
+    "kernel_boundaries": {
+      "ok": true,
+      "checks": {
+        "/tmp/rlflow-doctor-262_lzp8/protected/sentinelr": true,
+        "/tmp/rlflow-doctor-262_lzp8/protected/sentinelw": true,
+        "/tmp/rlflow-doctor-262_lzp8/shared.git/sentinelr": true,
+        "/tmp/rlflow-doctor-262_lzp8/shared.git/sentinelw": true,
+        "/tmp/rlflow-doctor-262_lzp8/control/sentinelr": true,
+        "/tmp/rlflow-doctor-262_lzp8/control/sentinelw": true,
+        "/tmp/rlflow-doctor-262_lzp8/runtime/sentinelr": true,
+        "/tmp/rlflow-doctor-262_lzp8/runtime/sentinelw": true,
+        "symlink": true,
+        "network": true,
+        "nested_codex": true,
+        "process_signal": true
+      },
+      "execution": {
+        "infrastructure_error": null,
+        "command": "/usr/bin/python3 -c 'import os,pathlib,socket,subprocess,json; r={}\npaths=[\"/tmp/rlflow-doctor-262_lzp8/protected/sentinel\", \"/tmp/rlflow-doctor-262_lzp8/shared.git/sentinel\", \"/tmp/rlflow-doctor-262_lzp8/control/sentinel\", \"/tmp/rlflow-doctor-262_lzp8/runtime/sentinel\"]\nfor p in paths:\n for mode in ('\"'\"'r'\"'\"','\"'\"'w'\"'\"'):\n  try:\n   open(p,mode).close();r[p+mode]=False\n  except PermissionError:r[p+mode]=True\n\ntry:\n open('\"'\"'/tmp/rlflow-doctor-262_lzp8/candidate/escape/sentinel'\"'\"','\"'\"'w'\"'\"').close();r['\"'\"'symlink'\"'\"']=False\nexcept PermissionError:r['\"'\"'symlink'\"'\"']=True\n\ntry:\n socket.socket();r['\"'\"'network'\"'\"']=False\nexcept PermissionError:r['\"'\"'network'\"'\"']=True\n\ntry:\n subprocess.run(['\"'\"'/usr/local/bin/codex'\"'\"','\"'\"'--version'\"'\"']);r['\"'\"'nested_codex'\"'\"']=False\nexcept PermissionError:r['\"'\"'nested_codex'\"'\"']=True\n\ntry:\n os.kill(os.getppid(),0);r['\"'\"'process_signal'\"'\"']=False\nexcept PermissionError:r['\"'\"'process_signal'\"'\"']=True\nprint(json.dumps(r))'",
+        "argv": [
+          "/bin/bash",
+          "--noprofile",
+          "--norc",
+          "-c",
+          "/usr/bin/python3 -c 'import os,pathlib,socket,subprocess,json; r={}\npaths=[\"/tmp/rlflow-doctor-262_lzp8/protected/sentinel\", \"/tmp/rlflow-doctor-262_lzp8/shared.git/sentinel\", \"/tmp/rlflow-doctor-262_lzp8/control/sentinel\", \"/tmp/rlflow-doctor-262_lzp8/runtime/sentinel\"]\nfor p in paths:\n for mode in ('\"'\"'r'\"'\"','\"'\"'w'\"'\"'):\n  try:\n   open(p,mode).close();r[p+mode]=False\n  except PermissionError:r[p+mode]=True\n\ntry:\n open('\"'\"'/tmp/rlflow-doctor-262_lzp8/candidate/escape/sentinel'\"'\"','\"'\"'w'\"'\"').close();r['\"'\"'symlink'\"'\"']=False\nexcept PermissionError:r['\"'\"'symlink'\"'\"']=True\n\ntry:\n socket.socket();r['\"'\"'network'\"'\"']=False\nexcept PermissionError:r['\"'\"'network'\"'\"']=True\n\ntry:\n subprocess.run(['\"'\"'/usr/local/bin/codex'\"'\"','\"'\"'--version'\"'\"']);r['\"'\"'nested_codex'\"'\"']=False\nexcept PermissionError:r['\"'\"'nested_codex'\"'\"']=True\n\ntry:\n os.kill(os.getppid(),0);r['\"'\"'process_signal'\"'\"']=False\nexcept PermissionError:r['\"'\"'process_signal'\"'\"']=True\nprint(json.dumps(r))'"
+        ],
+        "cwd": "/tmp/rlflow-doctor-262_lzp8/scratch",
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_seconds": 0.263858,
+        "stdout": "{\"/tmp/rlflow-doctor-262_lzp8/protected/sentinelr\": true, \"/tmp/rlflow-doctor-262_lzp8/protected/sentinelw\": true, \"/tmp/rlflow-doctor-262_lzp8/shared.git/sentinelr\": true, \"/tmp/rlflow-doctor-262_lzp8/shared.git/sentinelw\": true, \"/tmp/rlflow-doctor-262_lzp8/control/sentinelr\": true, \"/tmp/rlflow-doctor-262_lzp8/control/sentinelw\": true, \"/tmp/rlflow-doctor-262_lzp8/runtime/sentinelr\": true, \"/tmp/rlflow-doctor-262_lzp8/runtime/sentinelw\": true, \"symlink\": true, \"network\": true, \"nested_codex\": true, \"process_signal\": true}\n",
+        "stderr": ""
+      }
+    },
+    "engineer_write_scope": {
+      "ok": true,
+      "execution": {
+        "infrastructure_error": null,
+        "command": "echo ok > /tmp/rlflow-doctor-262_lzp8/candidate/role-write; echo scratch > /tmp/rlflow-doctor-262_lzp8/scratch/own",
+        "argv": [
+          "/bin/bash",
+          "--noprofile",
+          "--norc",
+          "-c",
+          "echo ok > /tmp/rlflow-doctor-262_lzp8/candidate/role-write; echo scratch > /tmp/rlflow-doctor-262_lzp8/scratch/own"
+        ],
+        "cwd": "/tmp/rlflow-doctor-262_lzp8/scratch",
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_seconds": 0.263982,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    "evaluator_write_scope": {
+      "ok": true,
+      "execution": {
+        "infrastructure_error": null,
+        "command": "echo ok > /tmp/rlflow-doctor-262_lzp8/candidate/role-write; echo scratch > /tmp/rlflow-doctor-262_lzp8/scratch/own",
+        "argv": [
+          "/bin/bash",
+          "--noprofile",
+          "--norc",
+          "-c",
+          "echo ok > /tmp/rlflow-doctor-262_lzp8/candidate/role-write; echo scratch > /tmp/rlflow-doctor-262_lzp8/scratch/own"
+        ],
+        "cwd": "/tmp/rlflow-doctor-262_lzp8/scratch",
+        "exit_code": 0,
+        "timed_out": false,
+        "wall_seconds": 0.264002,
+        "stdout": "",
+        "stderr": "/bin/bash: line 1: /tmp/rlflow-doctor-262_lzp8/candidate/role-write: Permission denied\n"
+      }
+    },
+    "protected_bytes": {
+      "ok": true
+    },
+    "actual_protected_paths": {
+      "ok": true,
+      "checks": {
+        "/home/mint/rl_dev/worktrees/instinctRL-blackwell/AGENTS.md0": true,
+        "/home/mint/rl_dev/worktrees/instinctRL-blackwell/AGENTS.md1": true,
+        "/home/mint/rl_dev/instinctRL/.git/config0": true,
+        "/home/mint/rl_dev/instinctRL/.git/config1": true,
+        "/home/mint/rl_dev/instinctRL_coordination/ACTIVE_WORKFLOW.json0": true,
+        "/home/mint/rl_dev/instinctRL_coordination/ACTIVE_WORKFLOW.json1": true,
+        "/home/mint/rl_dev/instinctRL_coordination/commander/COMMANDER_STATE.json0": true,
+        "/home/mint/rl_dev/instinctRL_coordination/commander/COMMANDER_STATE.json1": true,
+        "/home/mint/.codex/auth.json0": true,
+        "/home/mint/.codex/auth.json1": true,
+        "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/isolation.py0": true,
+        "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/isolation.py1": true
+      }
+    },
+    "gpu_entry_exec_denied": {
+      "ok": true,
+      "execution": {
+        "infrastructure_error": null,
+        "command": "/usr/bin/nvidia-smi --version",
+        "argv": [
+          "/bin/bash",
+          "--noprofile",
+          "--norc",
+          "-c",
+          "/usr/bin/nvidia-smi --version"
+        ],
+        "cwd": "/tmp/rlflow-doctor-262_lzp8/scratch",
+        "exit_code": 126,
+        "timed_out": false,
+        "wall_seconds": 0.263906,
+        "stdout": "",
+        "stderr": "/bin/bash: line 1: /usr/bin/nvidia-smi: Permission denied\n"
+      }
+    },
+    "native_tool_registry": {
+      "ok": true,
+      "registered_tools": [
+        "functions.list_mcp_resource_templates",
+        "functions.list_mcp_resources",
+        "functions.read_mcp_resource",
+        "mcp__rlflow_cpu.cpu_exec"
+      ],
+      "expected_tools": [
+        "functions.list_mcp_resource_templates",
+        "functions.list_mcp_resources",
+        "functions.read_mcp_resource",
+        "mcp__rlflow_cpu.cpu_exec"
+      ],
+      "source": "installed CLI turn_metadata_includes_tool_info, local rejecting HTTP stub",
+      "real_model_calls": 0,
+      "exit_code": 1,
+      "requests_observed": 1
+    }
+  },
+  "real_backend_enabled": false,
+  "tool_transport": "MCP cpu_exec; Landlock ABI >=3 + seccomp",
+  "native_tool_exposure": "Verified installed CLI registry; only cpu_exec and empty MCP resource interfaces",
+  "isolation_sha256": "4d569cc53cc02502aebc95b1488f198cb9bf7469ace2f5d5701532cd958add49",
+  "codex_version": "0.161.0",
+  "created_at": 1791789583.7606692,
+  "kernel": "7.0.0-28-generic"
+}

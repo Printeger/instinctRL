@@ -1,0 +1,14 @@
+{
+  "candidate_commit": "e6f1ff645d12347e78356c7a28a36e13b777dea3",
+  "reviewer_handle": "/root/pilot_reviewer",
+  "verdict": "MUST_FIX",
+  "scope": "requirements section 5; independent read-only review, no live release",
+  "findings": [
+    {"id":"PILOT-R1","classification":"MUST_FIX","contract":"section 5.2 actual product network collection binding and no-update probability consistency","evidence":"TensorActor ignores policy, fixture bypasses capture/bind; 32-lane to 512-row recomputation not tested","impact":"CPU verification of full gate not established","closure":"Actual HistoryActor and H1 critic, 16x32 capture/bind; time-major rows and clones; mismatches reject before any update at original tolerances"},
+    {"id":"PILOT-R2","classification":"MUST_FIX","contract":"section 5.2 accurate partial failure evidence","evidence":"pre-hook increments _step_count; abort labels it observed_actor_steps even before optimizer body","impact":"attempts misreported as completed updates","closure":"Separate attempted and post-boundary completion counts; retain actual optimizer state; inject pre-hook-only failure without optimizer update"}
+  ],
+  "non_blocking": ["Three-axis product decoder semantics correct at current default GovernorConfig", "Scalar digest fix correct", "Gate called before trainer.update", "Abort releases hooks before writing partial evidence"],
+  "follow_up": ["CPU callback lifecycle normal eight boundaries and exceptional collection cleanup", "Actual first rollout gate pending next authorized pilot"],
+  "review_execution": {"shared_files_written":false,"optimizer_updates":0,"simulation_started":false,"gpu_probe_started":false,"dependencies_installed":false},
+  "record_note": "Structured finding record transcribed from independent Reviewer response; retains contract/evidence/impact/closure. Review verdict applies only to named commit."
+}

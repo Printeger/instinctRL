@@ -1,0 +1,36 @@
+{
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONPATH": "/home/mint/rl_dev/instinctRL-dev:/home/mint/rl_dev/instinctRL-dev/isaaclab-training:/home/mint/rl_dev/instinctRL-dev/tools/rlflow:/home/mint/rl_dev/instinctRL-dev/tools/rlflow/tests"
+  },
+  "results": [
+    {
+      "module": "tests/training_workloads/test_pilot_diagnostic_torch.py",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/training_workloads/test_pilot_diagnostic_torch.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/pilot-cpu-v4/test_pilot_diagnostic_torch.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 3.118554691085592
+    },
+    {
+      "module": "tests/training_workloads/test_paired_pilot_unittest.py",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/training_workloads/test_paired_pilot_unittest.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/pilot-cpu-v4/test_paired_pilot_unittest.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.21396364690735936
+    }
+  ]
+}

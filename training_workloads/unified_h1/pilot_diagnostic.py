@@ -97,7 +97,7 @@ def beta_kl(old_alpha: torch.Tensor, old_beta: torch.Tensor, alpha: torch.Tensor
 class FirstUpdateDiagnostic:
     """Owns the fixed 512-sample gate/probe without sampling policy actions."""
     def __init__(self, output: Path, *, enabled: bool) -> None:
-        self.output=output; self.enabled=bool(enabled); self._probe=None; self._rows=[]; self._handles=[]; self._gradient_handles=[]; self._unclipped_gradients={}; self._before_parameters=None; self._step_count=0
+        self.output=output; self.enabled=bool(enabled); self._probe=None; self._rows=[]; self._handles=[]; self._gradient_handles=[]; self._unclipped_gradients={}; self._before_parameters=None; self._step_count=0; self._completed_step_count=0; self._trainer=None
 
     def _evaluate(self, trainer: Any, batch: Any, boundary: str) -> dict[str,Any]:
         rng=_rng_snapshot()
@@ -162,6 +162,7 @@ class FirstUpdateDiagnostic:
 
     def before_update(self, trainer: Any, batch: Any) -> None:
         if not self.enabled or trainer.update_counter != 0: return
+        self._trainer=trainer
         _batch(batch); before=_state(trainer); rng=_rng_snapshot()
         try:
             with torch.no_grad():
@@ -193,6 +194,7 @@ class FirstUpdateDiagnostic:
                 row["parameter_delta_before"]=float(torch.sqrt(sum(((p.detach()-self._before_parameters[n]).square().sum() for n,p in trainer.actor.named_parameters()),torch.tensor(0.,device=batch.actions.device))).item())
                 if ordinal>1: self._rows.append(row)
             def post_hook(optimizer,args,kwargs):
+                self._completed_step_count += 1
                 ordinal=self._step_count; self._rows[-1]["after"]=self._evaluate(trainer,batch,f"after_minibatch_{ordinal}")
                 self._rows[-1]["parameter_deltas"]={name:(parameter.detach()-self._before_parameters[name]).clone() for name,parameter in trainer.actor.named_parameters()}
                 self._rows[-1]["parameter_delta_after"]=float(torch.sqrt(sum(((p.detach()-self._before_parameters[n]).square().sum() for n,p in trainer.actor.named_parameters()),torch.tensor(0.,device=batch.actions.device))).item())
@@ -230,10 +232,12 @@ class FirstUpdateDiagnostic:
         self.detach_hooks()
         self.output.mkdir(parents=True,exist_ok=True)
         torch.save({"schema_version":"instinctrl-pilot-first-update-probe/2","status":"PARTIAL_FAILURE",
-                    "probe":self._probe,"minibatches":self._rows},self.output/"first_update_partial_probe.pt")
+                    "probe":self._probe,"minibatches":self._rows,
+                    "actual_model_optimizer_state":_state(self._trainer) if self._trainer is not None else None},self.output/"first_update_partial_probe.pt")
         atomic_json_replace(self.output,"first_update_failure.json",{
             "schema_version":"instinctrl-pilot-first-update-failure/1","status":"FAILED",
-            "error_type":type(error).__name__,"error":str(error),"observed_actor_steps":self._step_count})
+            "error_type":type(error).__name__,"error":str(error),"attempted_actor_steps":self._step_count,"completed_actor_steps":self._completed_step_count,
+            "completion_scope":"observed actor post-step hook boundaries; actual model/optimizer state retained in partial probe"})
 
     def retain_rollout(self, update: int, batch: Any, trainer: Any) -> None:
         if not self.enabled or update not in RETAIN_FULL_INPUT_UPDATES: return
