@@ -95,3 +95,9 @@ measurement_r1_static_validation.json; no authorization or live start. Corrected
 r1b input binds product/workload/method paths to its own fresh readonly snapshot.
 Generator now rejects mismatched path bindings before creation. This is solely
 new input provenance, no method document bytes or execution budgets changed.
+
+Independent call9 PASS on source79ccb40/inputsa5929ce closesLIVE-R1/R2;
+priorclosures retained. Actual tool96hashes, readonlyoverlay andformal/handoff
+identity verified. New spec onlyadds exactreviewhashcondition torevieweddraft;
+Commanderbinding includesremainingbudget andentrygate semantics. Noauth/release
+issued byreview. Actual control baseline andGoaltarget remainpending.

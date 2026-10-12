@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "BASELINE_V3_CONSUMED_FAILED_NO_RETRY",
+  "live_release_status": "MEASUREMENT_R1B_REVIEWED_COMMANDER_PENDING",
   "caps": {
     "live_starts": 4,
     "simulator_initializations": 4,
@@ -108,7 +108,7 @@
       "candidate_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
       "handle": "/root/pilot_reviewer",
       "scope": "Independent LIVE-R1/R2 closure and exact measurement-R1b source/input/tool/new-budget pre-live review; no execution release",
-      "status": "REQUESTED"
+      "status": "PASS_PRELIVE_ONLY"
     }
   ],
   "initialization_ticks_resets_gpu_probes": {

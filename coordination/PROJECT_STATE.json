@@ -238,12 +238,19 @@
         "BASELINE-R1",
         "BASELINE-R2"
       ],
-      "open": [
-        "LIVE-R1",
-        "LIVE-R2"
-      ],
+      "open": [],
       "release_order": "INDEPENDENTLY_ACCEPTED_ENTRY_GATE_SEPARATION",
-      "latest_actual_failure_review": "../docs/diagnostics/r5-readiness/reviews/review-live-baseline-v3-failure.json"
+      "latest_actual_failure_review": "../docs/diagnostics/r5-readiness/reviews/review-live-baseline-v3-failure.json",
+      "latest_candidate": {
+        "source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+        "input_pack_commit": "a5929ce7e1832cd0e0bbf2861da69b8b33f1ae32",
+        "verdict": "PASS_PRELIVE_ONLY",
+        "evidence": "../docs/diagnostics/r5-readiness/reviews/review-measurement-r1b.json",
+        "closed": [
+          "LIVE-R1",
+          "LIVE-R2"
+        ]
+      }
     },
     "cli_compatibility": {
       "installed": "0.161.0",
@@ -259,7 +266,7 @@
     "next_candidate": {
       "source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
       "inputs": "../docs/diagnostics/r5-readiness/inputs/measurement_r1b_input_manifest.json",
-      "status": "PENDING_INDEPENDENT_REVIEW",
+      "status": "PASS_PRELIVE_ONLY_COMMANDER_PENDING",
       "experiment_id": "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
       "live_release_issued": false
     }
