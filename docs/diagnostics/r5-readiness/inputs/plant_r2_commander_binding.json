@@ -1,0 +1,41 @@
+{
+  "status": "EXACT_COMMANDER_RELEASE_CANDIDATE_NOT_YET_ISSUED",
+  "experiment_id": "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+  "condition": "ENHANCED_B0_ZERO_TARGET",
+  "source_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+  "source_tree": "9c0cc84e0983806677b40ec714a5ea57314b6a58",
+  "input_pack_commit": "e211b455199f90dfea03e3c9149389b7b4b3462c",
+  "input_manifest_sha256": "ee1e3b6a3c41ae21017a5c4cb1aec2b418df1eb9e12d1231f5025414d93f55de",
+  "spec_sha256": "bac09139fe40f00aa445b7a55c398e222453fc3ec9854b22c7b9cc9edbd8d931",
+  "control_release_content_id": "efc946bee820dfcf4735d994fca2daa248ba9ea8fa5af22f5b5b5d307c1c1167",
+  "independent_conditions": [
+    {
+      "evidence_id": "E-R5-PLANT-R2-PRELIVE-REVIEW",
+      "sha256": "ae8f79b797c6c09d1cb0560bc1661f62591603782b04535e2a948fd9c8577d2c"
+    }
+  ],
+  "supplemental_limits": {
+    "initialization_ticks": 10,
+    "explicit_resets": 3,
+    "automatic_reset_lanes": 20160,
+    "prelaunch_nvidia_smi_calls": 6,
+    "runtime_cuda_memory_observations": 634,
+    "postrun_nvidia_smi_audit_calls": 2
+  },
+  "remaining_envelope": {
+    "live_starts": 1,
+    "simulator_initializations": 1,
+    "nontraining_transitions": 40320,
+    "wall_seconds": 3107.7040958409198,
+    "gpu_seconds": 3117.522312996909,
+    "output_bytes": 67613553770
+  },
+  "retained_failure_reservation": 40320,
+  "entry_release_semantics": {
+    "entry": "consumes1start and910secinclusive static/coex/cleanup,6internalqueries",
+    "simulation": "onlyafterexistingcoexgatePASS"
+  },
+  "training_authorized": false,
+  "command_passthrough_authorized": false,
+  "no_duplicate_external_gpu_probes": true
+}

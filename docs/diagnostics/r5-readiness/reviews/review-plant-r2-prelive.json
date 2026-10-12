@@ -1,0 +1,67 @@
+{
+  "candidate_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+  "input_pack_commit": "e211b455199f90dfea03e3c9149389b7b4b3462c",
+  "role_call": 11,
+  "handle": "/root/pilot_reviewer",
+  "verdict": "PASS",
+  "scope": "ExactPLANT-R2 implementation/fourth zero-target prereview only; not release/controlacceptance/Goalcomplete/trainauthority",
+  "record_type": "transcribed independent agent result; original conversation retained",
+  "findings": [
+    {
+      "id": "THIRD-FAILURE-ACCOUNTING",
+      "classification": "PASS",
+      "evidence": "27 inventoryobjects original/archive sizes/SHA independently match. FinalFAIL, initmeasurementNOT_REACHED, attempted/completed/ticks/resets/transitions0, quiescent/no survivors.",
+      "assessment": "Thirdreleasedentry startandinitreservation charged. FINALzero supports onlythird transitionrefund; firsttwoFULL20160each remainINCOMPLETE. AllocatedGPUwall notactualquery/sim."
+    },
+    {
+      "id": "RESOURCE-BINDING-CLOSURE",
+      "classification": "PASS",
+      "evidence": "Oldfailure inheritedfullSCALEproductSHA. NewH1validatesexactfrozen launcher/app/nvidia/EVALgate bytes staticallyandpassescheckedpins toallactualgate/start/shutdowncalls; legacydefaultstrict.",
+      "assessment": "No oldSCALEconfigretargeting, runtimeedit, omitted resourcecheck orfallbackoldloader."
+    },
+    {
+      "id": "RESOURCE-GATE-BOUNDARY",
+      "classification": "PASS",
+      "evidence": "Independently4actualresourcebindingCPUtestsPASS plusexactload_configPASS. Sixmockqueries/inertlauncher, corruptnvidia prequeryreject, runtime staticreject, legacystrictreject.",
+      "assessment": "Thresholds3samples10sec6queries/gatebeforelauncher/runtimeguard/fast_shutdownFalse/closebounds retained; no actualGPUorSimulationApp."
+    },
+    {
+      "id": "EXACT-SOURCE-INPUT-TOOLS",
+      "classification": "PASS",
+      "evidence": "Exactf726 HEAD/tree9c0cc84e0983806677b40ec714a5ea57314b6a58/diff3d7b1bcf7ce8cd3d3504f579fba5abb99b0d5f1e1d63cde324c959b0242b291c/pins match.96toolhashes contentIDefc946bee820dfcf4735d994fca2daa248ba9ea8fa5af22f5b5b5d307c1c1167 match. AUTH absent expectedbytes match.",
+      "assessment": "CompleteH1manifest includeschangedresources/config. Priorcontrol/cache/reset closures unchanged; newID/source cannotinheritoldfailure acceptance."
+    },
+    {
+      "id": "FOURTH-ENTRY-BUDGET",
+      "classification": "PASS",
+      "evidence": "3starts/initreserved consumed,1start/init40320nontrain remains. Request1entry20160,910outer/GPU16GiB10ticks3reset20160auto6pre634runtime2postaudit.",
+      "assessment": "Withinoldcaps, notfree retry,910inclstatic/coex/cleanup. Fifthseparatecommandentry requires newuserdecision."
+    },
+    {
+      "id": "REGRESSION-AND-CLEANUP",
+      "classification": "PASS",
+      "evidence": "Allphysics retained, resetepisode segments, rootfirstrow displacement clearlynotoriginalsensorT0metric. Actualappclose9.5unchanged.",
+      "assessment": "COMPLETE_NUMERICALLY_VALID notcontrolacceptance; realtrace/process/ownership separatelyjudged. Forcedclose remainsFAILED, nevergraceful."
+    }
+  ],
+  "must_fix": [],
+  "release_conditions": [
+    "Commander exactauth/source/tool/reviewbudget STOP; emptyconditions draftcannotrelease.",
+    "OnlynewPLANT-R2 entry,6internalcoexqueries beforeAppLauncher, noextra probes/automaticrestart.",
+    "Realzerodata completeness/numerics/control/cleanup require separateindependentjudgment."
+  ],
+  "follow_up": [
+    {
+      "classification": "FOLLOW_UP",
+      "item": "Actualrepairedzeroacceptance and separateoriginalcommandZTS pending."
+    },
+    {
+      "classification": "FOLLOW_UP",
+      "item": "Fifthentry requiresconcretereviewablepack andnewuserbudgetdecision; thisreview grantsnone."
+    },
+    {
+      "classification": "NON_BLOCKING",
+      "item": "PreviouslymissedinheritedSCALEloader nowcoveredbystaticbindingandactualgateCPUflow; oldPASS/failure preserved."
+    }
+  ]
+}
