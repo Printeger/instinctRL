@@ -16,7 +16,7 @@ def output(value):
 
 def parser():
     p = argparse.ArgumentParser(description="instinctRL CPU 多 Agent 工作流（真实 backend 关闭）")
-    p.add_argument("--state-dir", type=Path, default=COORDINATION / "research")
+    p.add_argument("--state-dir", type=Path, default=Path(__file__).resolve().parents[3] / "coordination/research")
     sub = p.add_subparsers(dest="command", required=True)
     for name in ("doctor", "status", "pause", "resume", "dispatch", "self-test", "init-demo", "rebuild", "rollback", "_daemon", 'restart-daemon'):
         command = sub.add_parser(name)
