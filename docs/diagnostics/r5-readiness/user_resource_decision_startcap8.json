@@ -1,0 +1,52 @@
+{
+  "schema_version": "instinctrl-r5-user-resource-decision/1",
+  "status": "APPROVED_EXPLICIT_USER_START_INIT_EXTENSION",
+  "user_message_exact": "批准，扩额8-10次",
+  "interpretation": "Cumulative Goal live starts and conservative simulator initialization reservations capped at8, the lower bound of the explicitly approved8–10 range. This is not8additional starts and does not expand any other dimension.",
+  "previous_caps": {
+    "live_starts": 4,
+    "simulator_initializations": 4,
+    "nontraining_transitions": 80640,
+    "wall_seconds": 3640,
+    "gpu_seconds": 3640,
+    "output_bytes": 68719476736,
+    "role_calls": 24,
+    "reserved_critical_role_calls": 6,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0
+  },
+  "approved_caps": {
+    "live_starts": 8,
+    "simulator_initializations": 8,
+    "nontraining_transitions": 80640,
+    "wall_seconds": 3640,
+    "gpu_seconds": 3640,
+    "output_bytes": 68719476736,
+    "role_calls": 24,
+    "reserved_critical_role_calls": 6,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0
+  },
+  "preserved_usage": {
+    "live_starts": 4,
+    "simulator_initializations": 4,
+    "nontraining_transitions": 0,
+    "wall_seconds": 1442.8437948680948,
+    "gpu_seconds": 1431.9166908750776,
+    "output_bytes": 4581264073,
+    "role_calls": 12,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0
+  },
+  "preserved_reservations": {
+    "nontraining_transitions": 60480
+  },
+  "recorded_at_utc": "2026-10-12T11:50:08.504178+00:00",
+  "training_authorized": false,
+  "no_automatic_retry": true,
+  "per_entry_exact_commander_approval_required": true,
+  "original_per_run_noncompliance_preserved": true
+}

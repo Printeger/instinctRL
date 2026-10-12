@@ -3,8 +3,8 @@
 2026-10-12 新用户 Goal：诊断闭环、最小修复与短程训练准入。
 需求：`docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md`。
 目标：`READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE`。
-当前：`BLOCKED_EXTERNAL_AUTHORIZATION`，Goal 已重新标记 blocked，仍未完成。
-本次恢复后的三个回合均核对到相同资源阻塞；恢复与自动续接不构成 4→5 资源批准。
+当前：`CONTROL_DIAGNOSTIC_PENDING`，Goal 持续推进，仍未完成。
+用户明确批准“扩额8-10次”；累计 start/init 保守预留 cap 采用 8，其他总帽、旧用量和失败预留不变。
 
 唯一开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一分支 main，同一目录单写者。
 实现、CPU 验证、工具兼容、证据处理、提交与正常 push 沿用本次授权；历史目录、原始证据和冻结 runtime 保持只读。
@@ -18,13 +18,12 @@
 仅补分析前持久化与 pilot-evaluation 工具 seed 分支。Role12 最终 PASS，两项 finding 关闭。
 准确工具为 74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60。
 
-已集中请求用户仅增加一个启动／初始化保守预留（4→5）；尚无明确答复，不重复请求，不把自动续接当批准。
-具体申请：`docs/diagnostics/r5-readiness/budget_extension_proposal.json`。
+当前资源决定：`docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json`。已用 4 次，剩余 4 次启动槽，但 nontraining 总额仅剩 20,160，不能视为 4 份完整实验预算。
 准确命令直通包：`docs/diagnostics/r5-readiness/inputs/passthrough_r3_input_manifest.json`；
-proposed Commander binding 只是条件式草案，实际 AUTHORIZATION、审批和 release 均未签发。
+实际 AUTHORIZATION 与 `passthrough-r3-commander-approval.json` 已签发，精确源码/配置/工具/独立条件已绑定。
 
-唯一恢复动作：取得明确资源决定后更新 cap（旧用量不重置）→现有 Commander 绑定独立证据与准确输入／剩余预算
-→通过 STOP、coexistence 和所有权检查→释放 fresh PLANT-R3 命令直通一次→原 Z/T/S gate 及最终独立审核。
+唯一下一动作：STOP、无活动 job、已记录所有权清理和内部 coexistence 通过后释放 fresh PLANT-R3 命令直通一次；
+按原 Z/T/S gate 评估真实结果并独立最终审核，旧任务不重启。
 达到技术准入后停止，本 Goal 不开始配对训练。
 
 唯一最新索引：`docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md`。

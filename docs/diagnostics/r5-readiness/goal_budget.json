@@ -1,10 +1,10 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "ALL4CONSUMED_FOURTH_FAILED_NO_SUCCESSOR_RELEASE",
+  "live_release_status": "CAP8_APPROVED_COMMAND_R3_EXACT_RELEASE_PENDING",
   "caps": {
-    "live_starts": 4,
-    "simulator_initializations": 4,
+    "live_starts": 8,
+    "simulator_initializations": 8,
     "nontraining_transitions": 80640,
     "wall_seconds": 3640,
     "gpu_seconds": 3640,
@@ -249,5 +249,23 @@
   "next_exact_approval": null,
   "conservative_nontraining_bound_charged": 60480,
   "completed_nontraining_observed_within_failed_reservations": 6400,
-  "remaining_note": "All4start/initreservation slots consumed; firsttwo40320+fourth20160 remainreserved60480; thirdFINAL0settled. Fifthrequires newexplicitdecision. Fourth910.5478907090146sec chargedwithout rounding; aggregatecaps remainunchanged."
+  "remaining_note": "Explicit user approved cumulative8start/initreservations (lowerbound8–10);4used/4available. Othercaps and60480 priorreservations unchanged; exact fifthcommand20160 uses remainingtransitioncapacity. Everyentryneeds new exactCommanderbinding and independentevidence; noautomaticretry.",
+  "authorization_extensions": [
+    {
+      "decision_path": "user_resource_decision_startcap8.json",
+      "sha256": "e564defa071fd33f1fbdca4c5cdbdd3947a7936127021b1fe3107fd2f44be9ce",
+      "user_message_exact": "批准，扩额8-10次",
+      "caps_delta": {
+        "live_starts": [
+          4,
+          8
+        ],
+        "simulator_initializations": [
+          4,
+          8
+        ]
+      },
+      "other_caps_unchanged": true
+    }
+  ]
 }

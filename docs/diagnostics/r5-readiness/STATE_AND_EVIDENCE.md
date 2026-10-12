@@ -39,3 +39,5 @@ Current independent decision: reviews/review-zero-r2-command-r3-prelive.json PAS
 Requirement audit: pilot_launch_manifest.json contains the current per-section completion evidence and explicit missing command/final-review gates. Automatic Goal continuation does not grant the pending start-cap extension.
 
 The unchanged resource blocker was revalidated across three consecutive Goal turns after all independent work and the requirement audit. Goal management is blocked, not complete. Existing one-entry request remains pending; no duplicate permission request, new role call, GPU audit or live release was issued.
+
+2026-10-12 explicit resource continuation: user “批准，扩额8-10次”; cumulative start/init conservative cap8 chosen, othercaps/oldusage/reservations preserved. Decision user_resource_decision_startcap8.json; exact fifth ef68/PLANT-R3 AUTH bytes and Commander P-54b83059edb8e89f / A-54b83059edb8e89f committed before live. Role12 conditions accepted by Commander; actual command metrics/finalreview pending, no training.
