@@ -208,17 +208,21 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         if physics_step >= 20:
             raise RuntimeError("more than one callback was observed for a physics integration")
         data = self._robot.data
-        required = ("body_state_w", "body_com_pose_b", "default_mass", "default_inertia")
+        required = ("body_link_state_w", "root_link_state_w", "root_state_w", "body_com_pose_b", "default_mass", "default_inertia")
         if any(not isinstance(getattr(data, name, None), torch.Tensor) for name in required):
             raise RuntimeError("public articulation body mechanics are unavailable")
-        body = data.body_state_w
+        # body_state_w already stores COM velocity; reconstruct_com needs link velocity.
+        body = data.body_link_state_w
         com_pose = data.body_com_pose_b
         mass = data.default_mass
         inertia = data.default_inertia
         if body.shape[:2] != (32, 5) or com_pose.shape[:2] != (32, 5) or mass.shape[-1] != 5:
             raise RuntimeError("public articulation body topology changed")
-        root = data.root_state_w
-        actual_b = rotate_world_to_body_wxyz(root[:, 3:7], root[:, 7:10])
+        # Response pose/velocity refer to the same link point. Controller keeps
+        # its existing root COM velocity feedback; this observer changes neither.
+        root = data.root_link_state_w
+        control_root = data.root_state_w
+        actual_b = rotate_world_to_body_wxyz(control_root[:, 3:7], control_root[:, 7:10])
         dt = float(self.cfg.sim.dt)
         rows: list[Mapping[str, Any]] = []
         # Build a complete 32-lane batch against private copies.  A snapshot

@@ -1,0 +1,24 @@
+{
+  "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/assets/articulation/articulation_data.py",
+  "sha256": "d69495c66c409fb20823e4e467f9d90e63163b2050b77d2ac8e433221d1d208a",
+  "verified_lines": {
+    "root_state_w": [
+      538,
+      545
+    ],
+    "body_state_w": [
+      657,
+      665
+    ],
+    "body_link_state_w": [
+      671,
+      678
+    ],
+    "default_inertia": [
+      156,
+      162
+    ]
+  },
+  "conclusion": "body_state_w velocities already at COM; default inertia is expressed in link actor frame; use link-state velocities for explicit omega cross COM reconstruction",
+  "runtime_mutated": false
+}

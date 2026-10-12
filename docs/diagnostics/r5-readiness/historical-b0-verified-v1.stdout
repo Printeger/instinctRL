@@ -1,0 +1,13 @@
+{
+  "schema_version": "instinctrl-r5-historical-b0-verification/1",
+  "timeseries": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-zero-command-baseline-20260927/task_inputs/b0_control_chain_time_series.json",
+  "timeseries_sha256": "d775d2f073f829c1ecb3bcd73d24a1b7626c90ede2bf629e19cd9ccddb75de28",
+  "trace": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R4/UNIFIED-H1-R4-B0-R1/results/control-diagnostic/control_trace",
+  "manifest_sha256": "3ba075269f8138e4f75e3e8c31ab0d3bde28efbdc06ef229588dd11412b0e020",
+  "verified_chunks": 630,
+  "historical_transitions": 20160,
+  "new_transitions": 0,
+  "simulation_initializations": 0,
+  "training_updates": 0,
+  "scope": "Historical aggregate B0 only. Lacks per-body COM/wrenches/reset-instant evidence; not equivalent to enhanced B0 or current repaired plant."
+}

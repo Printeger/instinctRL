@@ -29,3 +29,13 @@ Next: obtain independent focused review of committed pilot changes; close analyz
 - Historical time-series raw path exists and SHA-256 matches `d775d2f073f829c1ecb3bcd73d24a1b7626c90ede2bf629e19cd9ccddb75de28`. Its source points to the R4-B0-R1 control trace, not all 164,800 transitions in its parent collection job; only 20,160 B0 transitions are relevant. Chunk verification is pending.
 
 Product Python lacks a directly importable pxr module; direct CPU asset-stage inspection has not succeeded. This does not authorize dependency installation or replacing mass from a historical decimal. The current articulation config preserves USD masses without a mass override. Full composed asset and actual plant mass remain to bind before a physical correction.
+
+## Actual asset and historical raw verification
+
+`historical-b0-verified-v1.json`: all 630 R4-B0 trace chunk size/SHA-256 checks pass; 20,160 historical transitions; steady window values recomputed from CPU-loaded raw tensors. This confirms provenance, not enhanced-equivalent mechanics or repaired-control acceptance. New verification script preserves source evidence and writes only the new output.
+
+`current-usd-mass-cpu-v2.json`: composed current USD read using existing USD libraries in a CPU process, no SimulationApp or PhysX. Base mass is 1.1583074331 kg; three rotors have authored mass 0.0032754999 kg, rotor_3 has zero/unresolved authored mass and needs runtime collider-derived mass. Total runtime mass is intentionally UNKNOWN. The source asset SHA-256 is 3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99. This is why summing authored numbers or replacing base mass by the historical total would be incorrect. Initial library import failures were resolved by per-process Python/library paths, without installing dependencies or editing runtime.
+
+The frozen installed Isaac Lab articulation_data.py documents body_state_w as link pose plus COM velocities; body_link_state_w provides link pose and link velocities. The observer formerly added omega cross local COM to body_state_w, double-counting the offset. Minimal diagnostic repair selects body_link_state_w, and root_link_state_w for same-point root response, while controller velocity-error evidence retains existing root_state_w feedback. No controller, actor, reward or plant change. `product-mechanics-cpu-v1/`: one executable mocked-articulation real-tensor snapshot regression and 20 existing source/mock wiring cases pass. This is not actual live integration. A spinning body with offset COM demonstrates the defect and repair.
+
+Reviewer call 2 failed with model-capacity error; no verdict or release. Counted in new goal budget. Next call is reserved for the exact committed delta, with 6 critical calls still reserved.

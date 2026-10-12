@@ -1,0 +1,56 @@
+"""Execute the product snapshot method with mocked articulation and real CPU tensors.
+
+This tier is executable mock integration, not actual Isaac Sim integration.
+"""
+import ast
+from collections import OrderedDict
+from pathlib import Path
+from types import SimpleNamespace as NS
+from typing import Any,Mapping
+
+import torch
+from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz
+from instinctlab.control.rotor_actuation import ROTOR_NAMES
+from training_workloads.unified_h1.b0_enhanced import reconstruct_com,validate_row
+
+
+def test_product_snapshot_uses_link_velocity_once_and_preserves_controller_feedback():
+    path=Path('isaaclab-training/instinctlab/envs/unified_h1_direct_env.py')
+    tree=ast.parse(path.read_text())
+    selected=[n for n in ast.walk(tree) if isinstance(n,ast.FunctionDef) and n.name in ('_enhanced_b0_physics_rows','_cross3','_tolist')]
+    wrapper=ast.ClassDef(name='Snapshot',bases=[],keywords=[],decorator_list=[],body=selected)
+    module=ast.fix_missing_locations(ast.Module(body=[wrapper],type_ignores=[]))
+    # Fixture quaternions are exactly identity; no alternative production math is installed.
+    namespace={'torch':torch,'Any':Any,'Mapping':Mapping,'Sequence':list,'OrderedDict':OrderedDict,
+               'ROTOR_NAMES':ROTOR_NAMES,'rotate_world_to_body_wxyz':rotate_world_to_body_wxyz,
+               'quat_apply':lambda q,v:v.clone()}
+    exec(compile(module,str(path),'exec'),namespace)
+    env=namespace['Snapshot']()
+    body=torch.zeros(32,5,13);body[:,:,3]=1;body[:,:,12]=2
+    hybrid=body.clone();hybrid[:,:,8]=.2  # body_state_w: velocities already at COM.
+    com=torch.zeros(32,5,7);com[:,:,0]=.1;com[:,:,3]=1
+    root=torch.zeros(32,13);root[:,3]=1
+    control_root=root.clone();control_root[:,8]=.2
+    data=NS(body_link_state_w=body,body_state_w=hybrid,body_com_pose_b=com,
+            default_mass=torch.ones(32,5),default_inertia=torch.eye(3).reshape(1,1,9).repeat(32,5,1),
+            root_link_state_w=root,root_state_w=control_root)
+    env._robot=NS(data=data,body_names=['base']+list(ROTOR_NAMES))
+    env.device='cpu';env.cfg=NS(sim=NS(dt=.005));env._command_b=torch.zeros(32,3)
+    env._lee=NS(desired_rotation_w=torch.eye(3).repeat(32,1,1),collective_thrust_n=torch.ones(32,1))
+    rotor=NS(normalized_commands=torch.full((32,4),.5),target_throttle=torch.full((32,4),.5),
+             throttle=torch.full((32,4),.5),thrusts_n=torch.ones(32,4),reaction_moments_nm=torch.zeros(32,4))
+    env._wrench=NS(rotor=rotor);env._enhanced_b0_coordinate=('Z',0,0)
+    env._enhanced_b0_previous_system={};env._enhanced_b0_previous_velocity={};env._enhanced_b0_episode_ids={}
+    env._enhanced_b0_last_snapshots={};env._enhanced_b0_reset_boundaries={}
+    env._enhanced_b0_cache_unavailable=set();env._enhanced_b0_cache_generation=1
+    before_body=body.clone();before_root=control_root.clone()
+    rows=env._enhanced_b0_physics_rows()
+    assert len(rows)==32
+    for row in rows:
+        derived=reconstruct_com(row['bodies'])
+        torch.testing.assert_close(torch.tensor(derived['linear_momentum_kg_m_s']),torch.tensor([0.,1.,0.]))
+        assert row['root_state']['linear_velocity']==[0.,0.,0.]
+        assert row['response']['velocity_world_m_s']==[0.,0.,0.]
+        assert abs(row['controller']['velocity_error_b_m_s'][1]+.2)<1e-7
+        validate_row(row)
+    assert torch.equal(before_body,body) and torch.equal(before_root,control_root)

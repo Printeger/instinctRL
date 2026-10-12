@@ -30,7 +30,7 @@
     "wall_seconds": 0,
     "gpu_seconds": 0,
     "output_bytes": 0,
-    "role_calls": 2,
+    "role_calls": 3,
     "training_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0
@@ -47,9 +47,17 @@
     {
       "call": 2,
       "role": "Reviewer",
-      "candidate_commit": "RESOLVED_FROM_NEXT_COMMIT",
+      "candidate_commit": "648d333a74110b5773c957f1bb8b17e275d96606",
       "handle": "/root/pilot_reviewer",
       "scope": "PILOT-R1/R2 closure and analyzer/CLI delta",
+      "status": "FAILED_MODEL_CAPACITY_NO_REVIEW"
+    },
+    {
+      "call": 3,
+      "role": "Reviewer",
+      "candidate_commit": "RESOLVED_FROM_NEXT_COMMIT",
+      "handle": "/root/pilot_reviewer",
+      "scope": "retry independent candidate review after added product snapshot evidence",
       "status": "RESERVED"
     }
   ],

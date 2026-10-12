@@ -1,0 +1,46 @@
+{
+  "schema_version": "instinctrl-composed-usd-cpu/1",
+  "asset": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/assets/taslab_uav/taslab_uav.usd",
+  "sha256": "3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99",
+  "meters_per_unit": 1.0,
+  "kilograms_per_unit": 1.0,
+  "bodies": [
+    {
+      "path": "/taslab_uav/base_link",
+      "mass_kg": 1.158307433128357,
+      "com": "(0.00024477695, -0.00024119182, -0.00049213803)",
+      "inertia": "(0, 0, 0)",
+      "principal_axes": "(0, 0, 0, 0)"
+    },
+    {
+      "path": "/taslab_uav/rotor_0",
+      "mass_kg": 0.003275499911978841,
+      "com": "(0.000002859, -1.5031e-7, 0.0049227)",
+      "inertia": "(0, 0, 0)",
+      "principal_axes": "(0, 0, 0, 0)"
+    },
+    {
+      "path": "/taslab_uav/rotor_1",
+      "mass_kg": 0.003275499911978841,
+      "com": "(0.0000017826, -2.5465e-7, 0.0049227)",
+      "inertia": "(0, 0, 0)",
+      "principal_axes": "(0, 0, 0, 0)"
+    },
+    {
+      "path": "/taslab_uav/rotor_2",
+      "mass_kg": 0.003275499911978841,
+      "com": "(0.000002606, 1.8701e-7, 0.0049227)",
+      "inertia": "(0, 0, 0)",
+      "principal_axes": "(0, 0, 0, 0)"
+    },
+    {
+      "path": "/taslab_uav/rotor_3",
+      "mass_kg": 0.0,
+      "com": "(0, 0, 0)",
+      "inertia": "(0, 0, 0)",
+      "principal_axes": "(0, 0, 0, 0)"
+    }
+  ],
+  "source": "composed USD schema CPU-only; not PhysX effective mass",
+  "simulation_initializations": 0
+}
