@@ -88,3 +88,10 @@ inputs/coordinate/source/dtype/branch and uses predeclared gamma7 trace rounding
 bound without rewriting raw tensors, controller or plant. CPU final suite passes;
 it is mock integration, no new simulation. Fresh identity/attempt and exact
 readonly snapshot inputs are being prepared; no successor release yet.
+
+The first measurement-R1 input snapshot static check rejected a method document
+path still bound to the development directory. Preserved original input and
+measurement_r1_static_validation.json; no authorization or live start. Corrected
+r1b input binds product/workload/method paths to its own fresh readonly snapshot.
+Generator now rejects mismatched path bindings before creation. This is solely
+new input provenance, no method document bytes or execution budgets changed.

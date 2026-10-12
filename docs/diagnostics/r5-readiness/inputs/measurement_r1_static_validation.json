@@ -1,0 +1,34 @@
+{
+  "status": "CPU_STATIC_VALIDATION_ONLY",
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "training_workloads.unified_h1.formal_unified_h1",
+    "--validate-only"
+  ],
+  "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1-20261012",
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONPATH": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1-20261012:/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1-20261012/isaaclab-training"
+  },
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1-20261012/training_workloads/unified_h1/formal_unified_h1.py\", line 67, in <module>\n    raise SystemExit(finalize_process_exit(main(), sys.argv[1:]))\n                                           ^^^^^^\n  File \"/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1-20261012/training_workloads/unified_h1/formal_unified_h1.py\", line 36, in main\n    print(validate_only()); return 0\n          ^^^^^^^^^^^^^^^\n  File \"/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1-20261012/training_workloads/unified_h1/formal_unified_h1.py\", line 17, in validate_only\n    config = load_config()\n             ^^^^^^^^^^^^^\n  File \"/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1-20261012/training_workloads/unified_h1/config.py\", line 109, in load_config\n    _exact_mapping(method, expected_method, \"method identity\")\n  File \"/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1-20261012/training_workloads/unified_h1/config.py\", line 67, in _exact_mapping\n    if value != expected: raise ValueError(f\"{label} mismatch\")\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: method identity mismatch\n",
+  "prior_invocation": {
+    "interpreter": "control venv",
+    "exit_code": 1,
+    "error": "ModuleNotFoundError: No module named torch",
+    "classification": "wrong interpreter selected for product validate-only; no product/source defect or dependency installation"
+  },
+  "handoff_check": {
+    "interpreter": "control venv",
+    "exit_code": 0,
+    "status": "VALID",
+    "physics_rows": 403200,
+    "candidate_diff_sha256": "87e7bde48e064e75bb70706415c94f4fc62711b7be40ba00fb9ca684cdc513e7"
+  },
+  "simulation_starts": 0,
+  "gpu_queries": 0
+}

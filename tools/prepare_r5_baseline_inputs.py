@@ -40,6 +40,8 @@ def main():
     config_origin=args.config_origin
     config_bytes=git(ROOT,'show',commit+':'+config_origin)
     config=json.loads(config_bytes);snapshot=Path(config['workload']['path'])
+    if config['product']['path']!=str(snapshot) or config['method']['proposal_path']!=str(snapshot/'coordination/contracts/R1_UNIFIED_HOVER_TRAINING_PLAN.md'):
+        raise ValueError('snapshot product/workload/method paths must all bind the new snapshot before creation')
     if snapshot.exists():raise ValueError('snapshot already exists; inspect instead of repeating preparation')
     snapshot.parent.mkdir(parents=True,exist_ok=True)
     subprocess.run(['git','-c','core.hooksPath=/dev/null','clone','--no-hardlinks','--local','--single-branch','--branch','main',str(ROOT),str(snapshot)],check=True)
