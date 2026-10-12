@@ -1,0 +1,38 @@
+{
+  "schema_version": "unified-h1-r3-authorization.v2",
+  "status": "AUTHORIZED",
+  "order_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+  "method_sha256": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+  "config_sha256": "e1290ac27c165c815cbd3ea29df71c03dc09eda87ce70642140299eaf80bee12",
+  "product_commit": "bd5cacd56c519fdd5f868f4ba0720b1a437de967",
+  "product_tree": "73dc31ff502e4559fcaa0dee8067ad6653aebbbd",
+  "workload_commit": "bd5cacd56c519fdd5f868f4ba0720b1a437de967",
+  "workload_tree": "73dc31ff502e4559fcaa0dee8067ad6653aebbbd",
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+  "mode": "control-diagnostic",
+  "budgets": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "initialization_ticks": 10,
+    "automatic_resets": 20160,
+    "training_transitions": 0,
+    "nontraining_transitions": 20160,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "explicit_resets": 3,
+    "wall_seconds": 900
+  },
+  "parameters": {
+    "condition": "B0",
+    "experiment_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+    "checkpoint": null,
+    "checkpoint_sha256": null,
+    "checkpoint_source_identity": null,
+    "cases": [
+      "Z",
+      "T",
+      "S"
+    ],
+    "transitions": 20160
+  }
+}

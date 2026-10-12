@@ -1,0 +1,40 @@
+{
+  "schema_version": "instinctrl-r5-baseline-inputs/1",
+  "status": "PREPARED_NOT_RELEASED",
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r1-20261012",
+  "snapshot_commit": "bd5cacd56c519fdd5f868f4ba0720b1a437de967",
+  "snapshot_tree": "73dc31ff502e4559fcaa0dee8067ad6653aebbbd",
+  "input_origin": {
+    "commit": "bd5cacd56c519fdd5f868f4ba0720b1a437de967",
+    "path": "docs/diagnostics/r5-readiness/inputs/plant_r1_snapshot_config.json",
+    "sha256": "e1290ac27c165c815cbd3ea29df71c03dc09eda87ce70642140299eaf80bee12"
+  },
+  "registered_config_overlay": "candidate_config.json is exactly the committed snapshot config input; source commit unchanged, overlay diff explicitly hashed in handoff",
+  "snapshot_diff_sha256": "a8235451174ab92a801b32950725efde2c809dde3d83fcec7f3cfa6c46cb9d23",
+  "handoff_sha256": "46b499ece7fd4c6a31aff90406414f899679fd074763787acf37b5e24e883eea",
+  "expected_authorization_sha256": "f8a54e683d10b28e8ef5ba9aae9619516d0bf5c130e97e5dccad0b07b85b7bdc",
+  "authorization_issued": false,
+  "approval_issued": false,
+  "read_only": true,
+  "role_review": "PENDING_EXACT_INPUT_REVIEW",
+  "condition": "ENHANCED_B0_ZERO_TARGET",
+  "supplemental_limits": {
+    "initialization_ticks": 10,
+    "explicit_resets": 3,
+    "automatic_reset_lanes": 20160,
+    "prelaunch_nvidia_smi_calls": 6,
+    "runtime_cuda_memory_observations": 634,
+    "postrun_nvidia_smi_audit_calls": 2
+  },
+  "probe_definitions": "prelaunch: 3 coexistence samples x2 commands; runtime: after init +3 explicit reset gates +630 step gates; postrun: max2 external cleanup audit commands, only after terminal ownership settlement",
+  "remaining_goal_live_budget_before_release": {
+    "live_starts": 2,
+    "simulator_initializations": 2,
+    "nontraining_transitions": 40320,
+    "wall_seconds": 3112.673133132048,
+    "gpu_seconds": 3119.1919032938313,
+    "output_bytes": 67613621032
+  },
+  "free_disk_bytes_observed": 571857166336,
+  "generator_sha256": "deaa26cba00fe03f3af24eed5191189718f722bb831f753882b981ae8372cb06"
+}

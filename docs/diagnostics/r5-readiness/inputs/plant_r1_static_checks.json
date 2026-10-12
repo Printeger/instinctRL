@@ -1,0 +1,22 @@
+{
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r1-20261012",
+  "scope": "CPU validation only; CUDA_VISIBLE_DEVICES empty; no live release",
+  "results": [
+    {
+      "i": 0,
+      "chunk_id": "5d0eec",
+      "wall_time_seconds": 0.586023518,
+      "exit_code": 0,
+      "original_token_count": 78,
+      "output": "{'status': 'VALID', 'method': 'unified-h1-v1', 'live_authorized': False, 'product_commit': 'bd5cacd56c519fdd5f868f4ba0720b1a437de967', 'future_modes': ['main', 'controlled-failure', 'r4-training', 'evaluation', 'r5-resume', 'control-diagnostic', 'pilot-training', 'pilot-evaluation', 'enhanced-b0-diagnostic']}\n"
+    },
+    {
+      "i": 1,
+      "chunk_id": "b03c08",
+      "wall_time_seconds": 0.865336048,
+      "exit_code": 0,
+      "original_token_count": 57,
+      "output": "{'status': 'VALID', 'live_authorized': False, 'experiment_id': 'UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012', 'physics_rows': 403200, 'candidate_diff_sha256': 'a8235451174ab92a801b32950725efde2c809dde3d83fcec7f3cfa6c46cb9d23'}\n"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": "instinctrl-r5-passthrough-inputs/1",
+  "status": "PREPARED_NOT_RELEASED",
+  "experiment_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r1-20261012",
+  "snapshot_commit": "bd5cacd56c519fdd5f868f4ba0720b1a437de967",
+  "snapshot_tree": "73dc31ff502e4559fcaa0dee8067ad6653aebbbd",
+  "snapshot_diff_sha256": "a8235451174ab92a801b32950725efde2c809dde3d83fcec7f3cfa6c46cb9d23",
+  "config_sha256": "e1290ac27c165c815cbd3ea29df71c03dc09eda87ce70642140299eaf80bee12",
+  "enhanced_input_manifest": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/inputs/plant_r1_input_manifest.json",
+    "sha256": "07ca982b6b851500a1d69f9765001f6ece25a2f09c93348f4b96fb4de054a4c1"
+  },
+  "authorization_issued": false,
+  "approval_issued": false,
+  "read_only": true,
+  "condition": "B0_COMMAND_PASSTHROUGH",
+  "action": [
+    1.0,
+    0.5,
+    0.5,
+    0.5
+  ],
+  "policy_forward_calls": 0,
+  "training_transitions": 0,
+  "optimizer_updates": 0,
+  "checkpoint_writes": 0,
+  "expected_authorization_sha256": "ab28a750c59d402df5f7edd613aeb3a07fe92705c44fc90213359622d2f8495a",
+  "draft_spec_sha256": "291707e262dc691bfe198ddbdc9b4330adffca481fdf7ac9efb86ec88e2899f0",
+  "supplemental_limits": {
+    "initialization_ticks": 10,
+    "explicit_resets": 3,
+    "automatic_reset_lanes": 20160,
+    "prelaunch_nvidia_smi_calls": 6,
+    "runtime_cuda_memory_observations": 634,
+    "postrun_nvidia_smi_audit_calls": 2
+  },
+  "remaining_goal_budget": {
+    "live_starts": 2,
+    "simulator_initializations": 2,
+    "nontraining_transitions": 40320,
+    "wall_seconds": 3112.673133132048,
+    "gpu_seconds": 3119.1919032938313,
+    "output_bytes": 67613621032
+  },
+  "release_dependency": "independent review of completed enhanced regression; separate Commander approval",
+  "free_disk_bytes_observed": 571856990208,
+  "generator_sha256": "9c98e675dcf4b9794b228cb4335348d96e63a872bc7e0d73df9e1da1d02b21a7"
+}
