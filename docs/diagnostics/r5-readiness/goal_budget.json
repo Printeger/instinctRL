@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "ENTRY6_EXACT_APPROVED_PENDING_RELEASE",
+  "live_release_status": "ENTRY6_TERMINAL_FULL_COMMAND_GATES_PASS_PENDING_INDEPENDENT_REVIEW",
   "caps": {
     "live_starts": 8,
     "simulator_initializations": 8,
@@ -24,13 +24,13 @@
     "output_bytes": 17179869184
   },
   "used": {
-    "live_starts": 5,
-    "simulator_initializations": 5,
+    "live_starts": 6,
+    "simulator_initializations": 6,
     "nontraining_transitions": 0,
-    "wall_seconds": 1456.0325917440932,
-    "gpu_seconds": 1442.699172595283,
-    "output_bytes": 4581333538,
-    "role_calls": 14,
+    "wall_seconds": 1608.3564260550775,
+    "gpu_seconds": 1592.547116729198,
+    "output_bytes": 9761277960,
+    "role_calls": 15,
     "training_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0
@@ -151,6 +151,14 @@
       "input_pack_commit": "77a9f59",
       "scope": "Exact unissued ENTRY6 input/pin/identity/counter/evidence-protocol prereview only, conditional on explicit one-entry no-new-repair exception; samephysicalsource/gates, no live authority.",
       "status": "PASS_CONDITIONAL_PRELIVE_ONLY_PENDING_EXPLICIT_EXCEPTION"
+    },
+    {
+      "call": 15,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "scope": "Full actualENTRY6command raw/originalgates/chunkandcompleteinventory/ownedcleanup/reservation + finalrequirements/futuresharedbaseline readiness acceptance; no live/training authority.",
+      "status": "REQUESTED"
     }
   ],
   "initialization_ticks_resets_gpu_probes": {
@@ -166,7 +174,7 @@
   },
   "historical_budgets": "PRESERVED_NOT_RESET",
   "reserved": {
-    "nontraining_transitions": 60480
+    "nontraining_transitions": 80640
   },
   "approval": "plant-r2-commander-approval.json",
   "unknown_or_incomplete": {
@@ -288,12 +296,39 @@
       "ownership_cleanup": "NORMAL_LIFEGUARD_ACK_QUIESCENT_NO_SURVIVORS",
       "postrun_gpu_audit_calls": 2,
       "output_bytes_including_archive": 69465
+    },
+    {
+      "job_id": "J-ad3ac7db1fb82d89",
+      "status": "FAILED",
+      "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "experiment_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-ENTRY6",
+      "starts_charged": 1,
+      "simulator_initialization_reserved": 1,
+      "transitions_settlement": "INCOMPLETE_PASS_PENDING_CLOSE_FULL20160RESERVED",
+      "training_transitions": 0,
+      "optimizer_updates": 0,
+      "checkpoint_writes": 0,
+      "exit_code": -9,
+      "coexistence": "PASS_ORIGINAL3_4_5PERCENT_WINDOW",
+      "actual_AppLauncher_created": true,
+      "initialization_ticks_observed": 2,
+      "explicit_resets_observed": 3,
+      "automatic_resets_observed": 0,
+      "attempted_policy_steps": 630,
+      "completed_policy_steps_observed": 630,
+      "completed_nontraining_observed": 20160,
+      "native_close": "HARD_TIMEOUT9_5SEC_FORCED_OWNER_KILL",
+      "ownership_cleanup": "NORMAL_LIFEGUARD_ACK_QUIESCENT_NO_SURVIVORS",
+      "postrun_gpu_audit_calls": 2,
+      "wall_seconds": 152.32383431098424,
+      "gpu_seconds": 149.847944133915,
+      "output_bytes_including_archive": 5179944422
     }
   ],
   "next_exact_approval": "passthrough-r3-commander-approval.json",
-  "conservative_nontraining_bound_charged": 60480,
+  "conservative_nontraining_bound_charged": 80640,
   "completed_nontraining_observed_within_failed_reservations": 6400,
-  "remaining_note": "Explicit cumulativecap8;5starts/initreservationscharged,3slotsavailable. Fifthpre-AppcoexistenceFAIL formally settledtransitions0; old60480 reservations unchanged, remaining20160. No blindretry orrelaxed5%gate; independent resourcefailure/nextaction reviewpending.",
+  "remaining_note": "Cap8/6startinitused. Firsttwo40320+fourth20160+ENTRY6PENDING_CLOSE20160reserved=80640; observedENTRY6full20160 is subsetofitsreservation, notdoublecharged/finalsettled. CompletecommandZTSgates passpendingindependentreview; no furtherlive/nontrainingcapacity oroneentryexception remaining. Training0.",
   "authorization_extensions": [
     {
       "decision_path": "user_resource_decision_startcap8.json",
@@ -317,6 +352,7 @@
     "sha256": "f29d6cfff0a97b303a297820a21a018d006525d887c3dd9b67ab15dd043ea8ae",
     "additional_entries_max": 1,
     "entry6_approval": "entry6-commander-approval.json",
-    "status": "APPROVED_UNCONSUMED"
+    "status": "CONSUMED_ONE_ENTRY",
+    "job_id": "J-ad3ac7db1fb82d89"
   }
 }

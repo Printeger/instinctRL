@@ -1,6 +1,6 @@
 # Fix and regression record
 
-Current status: ZERO_TARGET_PHYSICAL_REGRESSION_ACCEPTED_COMMAND_PENDING. Exact next source ef68ebb5682b85aa83044fdea1c13b7d0edbf325 with physical code unchanged from f726 actual regression; final Role12 prereview PASS. No training acceptance or authority.
+Current status: ZERO_TARGET_PHYSICAL_REGRESSION_ACCEPTED_ORIGINAL_COMMAND_GATES_PASS_PENDING_FINAL_REVIEW. Exact next source ef68ebb5682b85aa83044fdea1c13b7d0edbf325 with physical code unchanged from f726 actual regression; final Role12 prereview PASS. No training acceptance or authority.
 
 | Defect and actual evidence | Minimal repair | Verification and remaining boundary |
 | --- | --- | --- |
@@ -23,3 +23,5 @@ Actual repaired zero regression:403200validated physicalrows/96segments. Oldpers
 R2resourcecompatibility was independently reviewed and actualcoexistencepassed. Follow-on DIAGNOSTIC_DURABILITY_REPAIR.md records two minimal findings: persist closedraw/coverage/observedcounters beforeanalysis; classifypilot-evaluation withoriginalevaluationseed.32CPUtestsPASS, abruptforkdeath137 retention includesnocloseclaim. Newef68sourcephysical/controller/methodbytes matchf726,96filetoolrelease74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60. Exactfifthcommand andfuturepilotpacksrefreshonthatidentity; newstartdecision/Commander needed.
 
 Actual fifthcommandentry J-1f1d10a06a0e0632 failedpre-Appcoexistence: GPUutilization4/6/1%, second6aboveoriginal5threshold. This is externalresource refusal, not proof ofphysical/controlfailure or a newimplementationdefect. FINALzero counters settledfifthtransitionreservation only; start/initstillcharged. Originalraw/window/normalownedcleanup and twoallowedpostrunaudits preserved. IndependentRole13 classificationPASS; Role14 exactENTRY6 prereviewPASSconditionalon explicituserexception; no repeatedjob/thresholdchanges.
+
+ENTRY6 realregression: full630chunks/all32ZTS raw, originalevaluation96episodes anddirectiongroupsallPASS; summary entry6-command-regression-summary.json. Completejob andentireattempt/results inventory contains667regularobjects,5174803621originalbytes; large630tensorchunks retainedoriginalreadonly, allhashes matchmanifest. Appclosehardtimeout stillFAILED/-9/PASS_PENDING_CLOSE, normalownedcleanupACK and2allowedpostaudits verified; H1INCOMPLETE/null and20160fullreservation retained. No newrepair needed to explain controls; no furtherlive ortraining performed. FinalRole15 acceptancepending. ExistingCONTROLinterpreter lackedTorch for offline evaluator; preservedimportfailure, then originalPRODUCTinterpreter withCUDA_VISIBLE_DEVICES empty succeeded; noinstall/GPUprobe.

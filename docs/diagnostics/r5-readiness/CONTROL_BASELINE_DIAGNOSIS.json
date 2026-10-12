@@ -52,5 +52,115 @@
     "reservation": 20160,
     "analysis": "plant-r2-zero-regression-analysis.json"
   },
-  "next_shared_baseline": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325"
+  "next_shared_baseline": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "actual_command_regression": {
+    "schema_version": "instinctrl-r5-real-command-regression-summary/1",
+    "job_id": "J-ad3ac7db1fb82d89",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "source_tree": "b735eafac3888415eded7c6684ed385706871acf",
+    "condition": "B0_COMMAND_PASSTHROUGH",
+    "scientific_order_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+    "control_plane_spec_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-ENTRY6",
+    "actual_original_case_steps": {
+      "Z": 200,
+      "T": 100,
+      "S": 330
+    },
+    "lanes": 32,
+    "actual_complete_chunks": 630,
+    "original_gates": "entry6-command-original-gates.json",
+    "all_original_gates_pass": true,
+    "all_subgroups_pass": true,
+    "startup_included": true,
+    "initial_reference": "Originalmounted-sensor T0; raw evaluator validatesinitialroot/sensor/velocity/quat/seed and32lanes",
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actual_runtime_memory_observations": 634,
+    "native_process_status": "FAILED_MINUS9",
+    "native_close": "HARD_TIMEOUT9_5SEC_OWNER_KILLED",
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_H1_counter_completeness": "INCOMPLETE",
+    "formal_H1_transitions": null,
+    "observed_complete_policy_steps": 630,
+    "observed_nontraining": 20160,
+    "conservative_transition_reservation_retained": 20160,
+    "ownership": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
+    "complete_original_inventory": "live-entry6-command-regression/INVENTORY.json",
+    "scientific_acceptance": "PENDING_INDEPENDENT_ROLE15",
+    "no_further_live_allowed": "Exceptionconsumed andnontrainingcap80640fullyreserved; no automaticretry.",
+    "metric_ranges_all32lanes": {
+      "Z": {
+        "speed": {
+          "min": 0.01047908328473568,
+          "max": 0.010481974110007286
+        },
+        "drift": {
+          "min": 0.0,
+          "max": 0.006700953934341669
+        },
+        "height": {
+          "min": 0.0485076904296875,
+          "max": 0.04852557182312012
+        }
+      },
+      "T": {
+        "rmse": {
+          "min": 0.035300128161907196,
+          "max": 0.037160031497478485
+        },
+        "stable_rmse": {
+          "min": 0.0003307712322566658,
+          "max": 0.0005728255491703749
+        },
+        "vz_rms": {
+          "min": 0.00031103260698728263,
+          "max": 0.00032326209475286305
+        },
+        "height": {
+          "min": 0.05281877517700195,
+          "max": 0.053401827812194824
+        }
+      },
+      "S": {
+        "incoming_rmse": {
+          "min": 0.035300128161907196,
+          "max": 0.037160031497478485
+        },
+        "incoming_stable_rmse": {
+          "min": 0.0003307712322566658,
+          "max": 0.0005728255491703749
+        },
+        "stop_time": {
+          "min": 1.5,
+          "max": 1.5
+        },
+        "drift": {
+          "min": 1.52587890625e-05,
+          "max": 0.007121894042938948
+        },
+        "speed": {
+          "min": 0.00014912765966185613,
+          "max": 0.0004598363332697005
+        },
+        "height": {
+          "min": 3.6835670471191406e-05,
+          "max": 5.543231964111328e-05
+        },
+        "braking_displacement": {
+          "min": 0.089080810546875,
+          "max": 0.0953749492764473
+        },
+        "zero_block_drift": {
+          "min": 0.089111328125,
+          "max": 0.09950529783964157
+        }
+      }
+    }
+  },
+  "control_admission_status": "ORIGINAL_ZTS_GATES_PASS_PENDING_FINAL_INDEPENDENT_REVIEW",
+  "D7_R_decision": {
+    "status": "NOT_REQUIRED_FOR_CURRENT_ADMISSION",
+    "reason": "Repairedzero-target response independently accepted, actualfixedcommand originalZTS all32/subgroups PASS. No unresolvedlowercontrol execution failure remains requiringfrozenpolicyprobe before zerowarmup pilot. OldR4 policy belongsoldbaseline; nextrealpolicy probabilitygate mandatory."
+  }
 }

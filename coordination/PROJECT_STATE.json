@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_ENTRY6_EXACT_APPROVED_PENDING_RELEASE",
+  "phase": "R5_FINAL_INDEPENDENT_READINESS_REVIEW",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -261,7 +261,8 @@
           "PILOT-FUTURE-R1"
         ],
         "open": []
-      }
+      },
+      "latest_actual_command_review": "PENDING_ROLE15"
     },
     "cli_compatibility": {
       "installed": "0.161.0",
@@ -271,8 +272,8 @@
       "result": "PASS_KERNEL_AND_INSTALLED_REGISTRY_CHECKS"
     },
     "exact_live_approval": "../docs/diagnostics/r5-readiness/plant-r2-commander-approval.json",
-    "live_entry_status": "FIFTH_TERMINAL_COEXISTENCE_FAILED_FINAL_ZERO",
-    "latest_live_job": "J-1f1d10a06a0e0632",
+    "live_entry_status": "ENTRY6_TERMINAL_FULL_COMMAND_ZTS_PASS_PROCESS_FAILED_MINUS9",
+    "latest_live_job": "J-ad3ac7db1fb82d89",
     "current_live_release_effective": false,
     "next_candidate": {
       "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
@@ -280,8 +281,8 @@
       "live_release_issued": false,
       "inputs": "../docs/diagnostics/r5-readiness/inputs/passthrough_entry6_input_manifest.json"
     },
-    "next_exact_live_approval": "../docs/diagnostics/r5-readiness/entry6-commander-approval.json",
-    "latest_actual_diagnostic": "../docs/diagnostics/r5-readiness/passthrough-r3-coexistence-analysis.json",
+    "next_exact_live_approval": null,
+    "latest_actual_diagnostic": "../docs/diagnostics/r5-readiness/entry6-command-regression-summary.json",
     "resource_decision": {
       "status": "APPROVED_EXPLICIT_USER_START_INIT_CAP8",
       "decision": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json",
@@ -290,7 +291,7 @@
       "caps_delta": "cumulative live starts/initreservation4to8 only",
       "other_caps_unchanged": true
     },
-    "readiness": "CONTROL_DIAGNOSTIC_PENDING",
+    "readiness": "CONTROL_GATES_PASSED_PENDING_FINAL_INDEPENDENT_REVIEW",
     "blocking_kind": null,
     "blocked_audit": {
       "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
@@ -319,7 +320,7 @@
       "resolved_by": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json"
     },
     "prelaunch_retry_exception": {
-      "status": "APPROVED_EXPLICIT_USER_ONE_ENTRY_EXCEPTION",
+      "status": "CONSUMED_ONE_ENTRY_NO_FURTHER_REPEAT",
       "proposal": "../docs/diagnostics/r5-readiness/inputs/passthrough_entry6_input_manifest.json",
       "requested_additional_entries": 1,
       "no_new_implementation_repair": true,

@@ -1,6 +1,6 @@
 {
   "schema_version": "instinctrl-r5-pilot-readiness/1",
-  "status": "CONTROL_DIAGNOSTIC_PENDING",
+  "status": "CONTROL_GATES_PASSED_PENDING_FINAL_INDEPENDENT_REVIEW",
   "goal_status": "ACTIVE",
   "training_authorization_issued": false,
   "shared_repaired_baseline_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
@@ -67,10 +67,9 @@
   "current_goal_training_checkpoint_writes": 0,
   "argv_status": "EXACT_FUTURE_PROPOSALS_GENERATED_NOT_AUTHORIZED",
   "blocking_evidence": [
-    "Explicituser oneENTRY6 exception and exactCommanderapprovalbound; newentrynotyetreleased. OriginalinternalcoexistencePASS requiredbeforeAppLauncher.",
-    "Noactualcommandtrajectory ororiginalsensorT0/32laneZTSgate yet; finalindependentreadinesspending."
+    "FinalindependentRole15 actualcommand/originalgates/completearchive/nativefailedclose/ownedcleanup/budget and requirements readiness acceptancepending. No controlgate failure found."
   ],
-  "baseline_acceptance": "ZERO_TARGET_PHYSICAL_REGRESSION_ACCEPTED_COMMAND_ORIGINAL_ZTS_PENDING",
+  "baseline_acceptance": "ZERO_TARGET_PHYSICAL_REGRESSION_ACCEPTED_COMMAND_GATES_PASS_PENDING_FINAL_INDEPENDENT_ACCEPTANCE",
   "shared_baseline": {
     "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
     "snapshot_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
@@ -175,9 +174,13 @@
           "plant-r2-postrun-gpu-0.json",
           "plant-r2-postrun-gpu-1.json",
           "durability-seed-cpu-v2/results.xml",
-          "goal_budget.json"
+          "goal_budget.json",
+          "entry6-final-job.json",
+          "live-entry6-command-regression/INVENTORY.json",
+          "entry6-postrun-gpu-0.json",
+          "entry6-postrun-gpu-1.json"
         ],
-        "notes": "Actual FAILED137/PREPARED/no normalclose. All60480 incomplete reservations retained; supplementalknownownership accepted by independent Reviewer. Preanalysis durability minimum repair tested with abruptprocessdeath."
+        "notes": "Actual FAILED137/PREPARED/no normalclose. All60480 incomplete reservations retained; supplementalknownownership accepted by independent Reviewer. Preanalysis durability minimum repair tested with abruptprocessdeath. ENTRY6FAILEDnativeclose/PASS_PENDING_CLOSE/full20160reserved; normalownedACK/2emptyscans/fulljob+allresultsarchive667objects."
       },
       {
         "requirement": "4.B4: causal analyzer segmentation/units/precision and score limitations",
@@ -202,16 +205,19 @@
       },
       {
         "requirement": "6.1/6.2: distinct conditions and exact prereview/release",
-        "status": "FIFTH_EXACT_ENTRY_REFUSED_BY_RESOURCE_GATE",
+        "status": "BOTH_CONDITIONS_DISTINCT_ACTUAL_COMMAND_COMPLETE",
         "evidence": [
           "plant-r2-commander-approval.json",
           "plant-r2-final-job.json",
           "inputs/passthrough_r3_input_manifest.json",
           "inputs/passthrough_r3_commander_binding.proposed.json",
           "passthrough-r3-commander-approval.json",
-          "passthrough-r3-final-job.json"
+          "passthrough-r3-final-job.json",
+          "user_entry6_prelaunch_exception.json",
+          "entry6-commander-approval.json",
+          "entry6-command-regression-summary.json"
         ],
-        "notes": "Authorized exactcommandentry executed onlyprelaunchsixqueries; utilization6% secondof3 exceeds5% originalthreshold. No AppLauncher/physics/action. FAILEDjob neverreopened."
+        "notes": "Actualzero andcommand separate. Exactuseronceexception/Role12/13/14/CommanderENTRY6approved; internaloriginalcoexistence3/4/5%PASSbeforeAppLauncher, fullcommandraw noactorforward/checkpoint."
       },
       {
         "requirement": "6.3/6.4/7.D1/D2: actual plant, axis mechanism, minimal correction and falsification",
@@ -228,16 +234,17 @@
       },
       {
         "requirement": "7.D3/D4: original sensor-T0 command Z/T/S gate and control admission",
-        "status": "INCOMPLETE_REQUIRES_NEW_AUTHORIZED_COMMAND_LIVE",
+        "status": "REAL_ORIGINAL_ZTS_ALL32_PASS_PENDING_FINAL_INDEPENDENT_REVIEW",
         "evidence": [
-          "inputs/passthrough_r3_input_manifest.json",
-          "budget_extension_proposal.json"
+          "entry6-command-original-gates.json",
+          "entry6-command-regression-summary.json",
+          "live-entry6-command-regression/INVENTORY.json"
         ],
-        "notes": "Noactualcommandmetrics exist. All32lane/startup/reset/safety and originalsubgroup rules required. D7-R conditional, no evidence requiring it before this commandtest; no speculative extra launch."
+        "notes": "96realepisodes/allstartup/initialsensorT0/reset/safety retained; ZTS each32/32 andd0-d7 each4/4. D7-R unnecessary for currentadmission givenmeasuredzero+commandbaseline."
       },
       {
         "requirement": "8.E1/E2/E3: shared baseline, singlevariable and exact future entry",
-        "status": "PACKAGE_PROVEN_CONDITIONAL_ON_CONTROL_ADMISSION",
+        "status": "EXACT_SHARED_PACKAGE_PENDING_FINAL_ACCEPTANCE",
         "evidence": [
           "pilot_future_proposals.r3.json",
           "pilot-r3-input-cpu/future-package-verification.json",
@@ -248,12 +255,12 @@
       },
       {
         "requirement": "9.1/9.2: independent final readiness and required success state",
-        "status": "INCOMPLETE_CONTROL_GATE_AND_FINAL_REVIEW",
+        "status": "FINAL_INDEPENDENT_REVIEW_PENDING_ROLE15",
         "evidence": [
           "reviews/review-zero-r2-command-r3-prelive.json",
           "pilot_launch_manifest.json"
         ],
-        "notes": "Role12 physicalacceptance/prereview is not commandgate orfinalGoalacceptance. BLOCKED_EXTERNAL_AUTHORIZATION is the requirements state; READY cannot be claimed."
+        "notes": "No READYclaimbeforeactualRole15acceptance; requestedreview ofallrequirements/actualcommand/evidence/futuregate."
       },
       {
         "requirement": "10: exact caps, charge old failures, roles reserve and zero training",
@@ -264,11 +271,11 @@
           "inputs/passthrough_r3_input_manifest.json",
           "user_resource_decision_startcap8.json"
         ],
-        "notes": "Explicitstart/initcap8;5used.13rolescharged inclpendingindependentreview;60480priorreservations retained. FifthFINALzero settledonlyits20160. Othercaps unchanged; training/optimizer/checkpoint0."
+        "notes": "Explicitcap8/6starts/initcharged;15rolesinclrequestedfinal.80640fullyreserved fromincompletefirst/second/fourth/ENTRY6; fifth/thirdFINAL0 only. Actualallwall1608.3564260550775/GPU1592.547116729198/output9761277960 charged; training/update/checkpoint0."
       },
       {
         "requirement": "11: required deliverables and current project state",
-        "status": "DELIVERED_FOR_BLOCKED_STATE_FINAL_ACCEPTANCE_PENDING",
+        "status": "ALL_DELIVERABLES_UPDATED_FINAL_ACCEPTANCE_PENDING",
         "evidence": [
           "STATE_AND_EVIDENCE.md",
           "CONTROL_BASELINE_DIAGNOSIS.md",
@@ -281,13 +288,12 @@
           "../../PROJECT_STATUS.md",
           "../../../coordination/CURRENT_TASK.md"
         ],
-        "notes": "Singlecurrentindex retained; large raw staysoriginalhoststore plus exacthash, independentlyread. Standardblockedstate and unique nextaction synchronized."
+        "notes": "Originalrequirementsfullscope preserved; currentrealcommand/control evidence and failurelimitsindexed, exactsharedfuturepack frozen; independentfinalreviewneeded."
       }
     ],
     "remaining_required_work": [
-      "Release the exact user-exception-approved ENTRY6 through existing Commander after STOP/ownedcleanup/internalcoexistence, then collect/archive actual result; no secondretry iffailure.",
-      "Existing Commander exact release then real separatecommand Z/T/S evaluation and ownership/accounting.",
-      "Independent final readiness review and state update to READY onlyif actualgates satisfy originalcriteria."
+      "IndependentRole15 fullactualcommand/originalgates/entirearchive/ownedcleanup/failednativeclose/reservations plus priorrepair/diagnostic/futurepackage acceptance.",
+      "AfterindependentPASS only, update currenttechnicalstatus READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE, commit/push andstop beforetraining."
     ]
   },
   "blocked_audit": {
@@ -317,15 +323,110 @@
     "resolved_by": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json"
   },
   "latest_command_entry": {
-    "job": "J-1f1d10a06a0e0632",
-    "process_status": "FAILED",
-    "AppLauncher_created": false,
-    "physics_rows": 0,
-    "counter_completeness": "FINAL",
-    "transitions": 0,
-    "cleanup": "NORMAL_LIFEGUARD_ACK_QUIESCENT_NO_SURVIVORS",
-    "analysis": "passthrough-r3-coexistence-analysis.json",
-    "independent_review": "reviews/review-command-r3-coexistence-failure.json"
+    "schema_version": "instinctrl-r5-real-command-regression-summary/1",
+    "job_id": "J-ad3ac7db1fb82d89",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "source_tree": "b735eafac3888415eded7c6684ed385706871acf",
+    "condition": "B0_COMMAND_PASSTHROUGH",
+    "scientific_order_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+    "control_plane_spec_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-ENTRY6",
+    "actual_original_case_steps": {
+      "Z": 200,
+      "T": 100,
+      "S": 330
+    },
+    "lanes": 32,
+    "actual_complete_chunks": 630,
+    "original_gates": "entry6-command-original-gates.json",
+    "all_original_gates_pass": true,
+    "all_subgroups_pass": true,
+    "startup_included": true,
+    "initial_reference": "Originalmounted-sensor T0; raw evaluator validatesinitialroot/sensor/velocity/quat/seed and32lanes",
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actual_runtime_memory_observations": 634,
+    "native_process_status": "FAILED_MINUS9",
+    "native_close": "HARD_TIMEOUT9_5SEC_OWNER_KILLED",
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_H1_counter_completeness": "INCOMPLETE",
+    "formal_H1_transitions": null,
+    "observed_complete_policy_steps": 630,
+    "observed_nontraining": 20160,
+    "conservative_transition_reservation_retained": 20160,
+    "ownership": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
+    "complete_original_inventory": "live-entry6-command-regression/INVENTORY.json",
+    "scientific_acceptance": "PENDING_INDEPENDENT_ROLE15",
+    "no_further_live_allowed": "Exceptionconsumed andnontrainingcap80640fullyreserved; no automaticretry.",
+    "metric_ranges_all32lanes": {
+      "Z": {
+        "speed": {
+          "min": 0.01047908328473568,
+          "max": 0.010481974110007286
+        },
+        "drift": {
+          "min": 0.0,
+          "max": 0.006700953934341669
+        },
+        "height": {
+          "min": 0.0485076904296875,
+          "max": 0.04852557182312012
+        }
+      },
+      "T": {
+        "rmse": {
+          "min": 0.035300128161907196,
+          "max": 0.037160031497478485
+        },
+        "stable_rmse": {
+          "min": 0.0003307712322566658,
+          "max": 0.0005728255491703749
+        },
+        "vz_rms": {
+          "min": 0.00031103260698728263,
+          "max": 0.00032326209475286305
+        },
+        "height": {
+          "min": 0.05281877517700195,
+          "max": 0.053401827812194824
+        }
+      },
+      "S": {
+        "incoming_rmse": {
+          "min": 0.035300128161907196,
+          "max": 0.037160031497478485
+        },
+        "incoming_stable_rmse": {
+          "min": 0.0003307712322566658,
+          "max": 0.0005728255491703749
+        },
+        "stop_time": {
+          "min": 1.5,
+          "max": 1.5
+        },
+        "drift": {
+          "min": 1.52587890625e-05,
+          "max": 0.007121894042938948
+        },
+        "speed": {
+          "min": 0.00014912765966185613,
+          "max": 0.0004598363332697005
+        },
+        "height": {
+          "min": 3.6835670471191406e-05,
+          "max": 5.543231964111328e-05
+        },
+        "braking_displacement": {
+          "min": 0.089080810546875,
+          "max": 0.0953749492764473
+        },
+        "zero_block_drift": {
+          "min": 0.089111328125,
+          "max": 0.09950529783964157
+        }
+      }
+    },
+    "independent_review": "PENDING_ROLE15"
   },
   "prelaunch_retry_exception": {
     "status": "APPROVED_EXPLICIT_USER_ONE_ENTRY_EXCEPTION",
@@ -336,5 +437,53 @@
     "binding": "inputs/passthrough_entry6_commander_binding.proposed.json",
     "decision": "docs/diagnostics/r5-readiness/user_entry6_prelaunch_exception.json",
     "sha256": "f29d6cfff0a97b303a297820a21a018d006525d887c3dd9b67ab15dd043ea8ae"
+  },
+  "proposed_final_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
+  "live_first_rollout_gate": "PENDING_NEXT_PILOT",
+  "current_goal_budget": {
+    "path": "goal_budget.json",
+    "caps": {
+      "live_starts": 8,
+      "simulator_initializations": 8,
+      "nontraining_transitions": 80640,
+      "wall_seconds": 3640,
+      "gpu_seconds": 3640,
+      "output_bytes": 68719476736,
+      "role_calls": 24,
+      "reserved_critical_role_calls": 6,
+      "training_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0
+    },
+    "used": {
+      "live_starts": 6,
+      "simulator_initializations": 6,
+      "nontraining_transitions": 0,
+      "wall_seconds": 1608.3564260550775,
+      "gpu_seconds": 1592.547116729198,
+      "output_bytes": 9761277960,
+      "role_calls": 15,
+      "training_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0
+    },
+    "reserved": {
+      "nontraining_transitions": 80640
+    },
+    "nontraining_bound_charged": 80640,
+    "native_close_failure": "Known9.5sec hardtimeout; preservedFAILED, finalcountersettlementincomplete. No additionalGoalnontrainingcapacity."
+  },
+  "control_admission_evidence": {
+    "zero_target": "plant-r2-zero-regression-analysis.json",
+    "zero_independent_review": "reviews/review-zero-r2-command-r3-prelive.json",
+    "command_original_gates": "entry6-command-original-gates.json",
+    "command_summary": "entry6-command-regression-summary.json",
+    "command_full_inventory": "live-entry6-command-regression/INVENTORY.json",
+    "command_final_job": "entry6-final-job.json",
+    "command_independent_review": "PENDING_ROLE15"
+  },
+  "D7_R_decision": {
+    "status": "NOT_REQUIRED_FOR_CURRENT_CONTROL_ADMISSION",
+    "reason": "Realrepairedzero andfixedcommand originalZTS pass; no remaininglowercontrol failure requiringpolicycounterfactual. OldR4notnewbaselinecontrol; futurefirstrolloutgate mandatory."
   }
 }

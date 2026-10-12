@@ -41,3 +41,11 @@ Fourth source f726c019339494e74fbc6e7c90ec6d0fa7a45ff8/jobJ-afe4bda51f5206e5 pro
 Measured mass remains1.1815179230179638kg; late collective11.5906896–11.5906908N matches actualmass×9.81=11.5906908248N. The previous persistent xyz bias disappears under the measured mass/actualallocation intervention without plant/gain changes. This jointly verifies changed intermediates and physical response, supporting the specific originalsource mechanism. Startup maximum instantaneous speed0.1003273m/s and height drop0.0483251m remain included. These diagnostics use root-first-physics reference, not original mounted-sensor T0; they do not claim formal command gates.
 
 Process verdict remains FAILED/137: expensive CPUanalysis exhausted supervisor deadline, actual910.5478907090146s/GPU909.4390038719866s charged. OriginalPREPAREDmanifest and missingfinalreward counters are immutable; full20160 remainsreserved. Fullphysicalcoverage cannot prove final completedreward policy count. Existing-tool supplemental known-owned-identity closure/twoGPUaudits are separate from missingnormalcloseack. Minimal durability/seed successor ef68ebb preserves allphysicalproductcode; its acceptance requires exactindependentreview. Generic analyzer hypothesis ranking remains no causal conclusion. Drag/contact/joint/other individualwrenches stay unavailable; their separate attribution and alloldR4failures remainunknown, but do not alter the next required fixed-command discrimination.
+
+## 真实命令直通回归（ENTRY6）
+
+准确 ef68 基线，J-ad3ac7db1fb82d89；原 Z200/T100/S330、32 lanes、mounted-sensor T0 和所有启动／安全样本保留。原 metric-h1-v1 的 Z/T/S 各 32/32 PASS，d0–d7 各 4/4。Z 最大 speed RMS 0.010481975m/s、drift 0.006700954m、高度变化0.048525572m；T 最大全窗 RMSE0.037160032m/s、稳态0.000572826m/s、vz RMS0.000323263m/s、高度0.053401828m；S 全 lane stop_time1.5s，最大稳态 drift0.007121895m，刹车位移0.095374950m、zero-block总位移0.099505298m保留。完整逐 lane 数值及原 gate 在 entry6-command-original-gates.json，范围在 entry6-command-regression-summary.json。
+
+这证明固定命令经原 governor/ICS/Lee/rotor 路径可执行；不把未恢复先前位移误说成位置外环职责，不向 actor 提供位姿或实际速度。未观察到需要额外 D7-R 来解释的下层跟踪失败；旧 R4 策略仅作旧基线历史，下一次真实 rollout 概率 gate 仍强制。
+
+进程因 app.close 9.5s 超时被终止，FAILED/-9、原 status PASS_PENDING_CLOSE；完整现场计数630/20160不改写成 FINAL。H1 collector INCOMPLETE/null，20160全额预留保留；正常 lifeguard ack 两次稳定空扫描，无所属残留。真实控制 gate 与进程/清理判定分开。最终独立 Role15 审核待完成。

@@ -1,0 +1,8 @@
+{
+  "status": "FAILED_IMPORT_NO_RUNTIME_ACTION",
+  "interpreter": "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+  "error": "ModuleNotFoundError: No module named torch",
+  "action": "Use existing frozen product interpreter with CUDA_VISIBLE_DEVICES empty; no dependency installation",
+  "gpu_queries": 0,
+  "training_updates": 0
+}

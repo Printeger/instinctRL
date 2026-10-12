@@ -9,11 +9,11 @@
 
 诊断闭环、最小修复与短程训练准入正在推进。需求见
 [需求](goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md)，最新证据见
-[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。当前为 `CONTROL_DIAGNOSTIC_PENDING`：用户已明确批准恰好一次 ENTRY6 纯 coexistence 拒绝后的新入口例外。
-累计启动／初始化保守预留 cap 8，已用 5 次；其他总帽、旧 60,480 transitions 预留和零训练限制不变。
-Role12 零目标物理回归、Role13 第五次真实资源拒绝与清理、Role14 准确 ENTRY6 输入均已独立通过；Commander A-7b50c8e3ccc99a27 已绑定实际许可和用户例外。
-目前尚未释放新入口；仍须 STOP、所有权及原内部 coexistence 检查，命令直通原 Z/T/S gate 和最终准入审核未完成。
-再次拒绝／失败即保全、结算并停止，不重开旧 job、不增加探测、不放宽门槛。训练、optimizer updates 和训练 checkpoint writes 均为零。
+[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。当前为 `CONTROL_GATES_PASSED_PENDING_FINAL_INDEPENDENT_REVIEW`：真实 ENTRY6 命令直通 Z/T/S 各32/32、所有方向子组4/4通过，原 sensor-T0、启动段、安全与门槛保留。
+修复后的零目标物理回归已独立验收；Role15 正在对真实命令数据、完整归档、退出／清理、计账、诊断和未来共同基线做最终独立审核。
+ENTRY6 进程 FAILED/-9：app.close 9.5s超时，原 PASS_PENDING_CLOSE 与 INCOMPLETE/null collector 保留。现场630/20160完整，但20160仍全额预留；正常所有权 ACK 无残留。
+累计 start/init cap8、已用6；nontraining保守预留80640已满，无进一步Goal live许可。训练、optimizer和训练checkpoint写入均0。
+最终独立通过后才写 READY，并停止在下一轮训练前。
 以下历史状态与迁移记录保留，不继承旧 receipt 验收。
 
 ## 历史阶段及结论
