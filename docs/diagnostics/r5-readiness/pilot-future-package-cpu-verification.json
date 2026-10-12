@@ -1,0 +1,70 @@
+{
+  "schema_version": "instinctrl-r5-future-package-cpu-verification/1",
+  "scope": "CPU_PROPOSAL_VALIDATION_ONLY_NOT_TRAINING_OR_BASELINE_ACCEPTANCE",
+  "status": "PASS",
+  "exact_generator_reproduction": true,
+  "proposal_path": "/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/pilot_future_proposals.r2.json",
+  "proposal_sha256": "aa73b6eeaa24d8e5477fd14ae9b2571de9ba89ea06be7b19a4a05ff1be9c9627",
+  "generator_sha256": "c045feab2b9b6df49e6b855dfb662cff3dbfacefee8f5981ef09b9ad410da88a",
+  "groups": [
+    {
+      "group": "P0",
+      "mode": "pilot-training",
+      "attempt_absent": true,
+      "authorization_absent": true,
+      "real_file_pins_match": true,
+      "resources": {
+        "starts": 1,
+        "wall_seconds": 3610,
+        "gpu_seconds": 3610,
+        "transitions": 32768
+      },
+      "runtime_resource_checks_maximum": 1225
+    },
+    {
+      "group": "P0",
+      "mode": "pilot-evaluation",
+      "attempt_absent": true,
+      "authorization_absent": true,
+      "real_file_pins_match": true,
+      "resources": {
+        "starts": 1,
+        "wall_seconds": 1810,
+        "gpu_seconds": 1810,
+        "transitions": 12800
+      },
+      "runtime_resource_checks_maximum": 403
+    },
+    {
+      "group": "PLR",
+      "mode": "pilot-training",
+      "attempt_absent": true,
+      "authorization_absent": true,
+      "real_file_pins_match": true,
+      "resources": {
+        "starts": 1,
+        "wall_seconds": 3610,
+        "gpu_seconds": 3610,
+        "transitions": 32768
+      },
+      "runtime_resource_checks_maximum": 1225
+    },
+    {
+      "group": "PLR",
+      "mode": "pilot-evaluation",
+      "attempt_absent": true,
+      "authorization_absent": true,
+      "real_file_pins_match": true,
+      "resources": {
+        "starts": 1,
+        "wall_seconds": 1810,
+        "gpu_seconds": 1810,
+        "transitions": 12800
+      },
+      "runtime_resource_checks_maximum": 403
+    }
+  ],
+  "current_goal_training_transitions": 0,
+  "current_goal_optimizer_updates": 0,
+  "current_goal_training_checkpoint_writes": 0
+}
