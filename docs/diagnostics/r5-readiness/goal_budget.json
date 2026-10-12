@@ -142,9 +142,9 @@
   "reserved": {
     "nontraining_transitions": 60480
   },
-  "approval": "baseline-v3-commander-approval.json",
+  "approval": "plant-r2-commander-approval.json",
   "unknown_or_incomplete": {
-    "nontraining_transitions": "Both failedjobs retain FULL20160 each. observed completed6400 is subset of second reservedallocation, not additiveextra6400 forremainingcapacity; finalcounter incomplete afterforcedapp.close. Remaining bound40320 for2futurestarts."
+    "nontraining_transitions": "Firsttwo failedjobs retain FULL20160 each (40320). Observed6400 is a subset of secondreservation. Currentfourth20160 reserved until existingcollector settles; totalbound60480."
   },
   "live_runs": [
     {
@@ -221,8 +221,8 @@
       "checkpoint_writes": 0
     }
   ],
-  "next_exact_approval": "measurement-r1b-commander-approval.json",
-  "conservative_nontraining_bound_charged": 60320,
+  "next_exact_approval": null,
+  "conservative_nontraining_bound_charged": 60480,
   "completed_nontraining_observed_within_failed_reservations": 6400,
-  "remaining_note": "Existing collect formally settles thirdentry transitions0, but live start and initialization reservation stay charged. Only1live entry left; oldfirsttwo full40320 remainreserved."
+  "remaining_note": "All4live entries and4conservative initialization reservations consumed. Existing H1collect formally settled third0transitions; firsttwo incomplete40320 and currentfourth20160 remainreserved (60480). Further command entry requires explicit new user start/init reservation authorization; no other caps automatically expand."
 }

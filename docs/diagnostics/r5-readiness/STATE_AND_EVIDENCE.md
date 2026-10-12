@@ -1,108 +1,33 @@
 # R5 diagnostic closure — current evidence index
 
-Started 2026-10-12 at main `ebc27e2e47d4190efccac9a9179d4e291bd933da`; remote main was the same commit (git ls-remote). Development cwd is `/home/mint/rl_dev/instinctRL-dev`. Initial untracked `docs/goal/` is retained; its supplied requirements are copied without changes to `docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md`.
+Goal IN_PROGRESS; target READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE. Current execution: fourth entry J-afe4bda51f5206e5 RUNNING on exact read-only source f726c019339494e74fbc6e7c90ec6d0fa7a45ff8. Coexistence PASS; actual repaired zero-target rows are being collected, not yet independently accepted. Command-passthrough and technical readiness remain pending. No training transitions, optimizer updates or training checkpoint writes are authorized or performed.
 
-Goal remains IN_PROGRESS. Target is READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE. No technical readiness or live release is claimed by this index.
+Started at main ebc27e2e47d4190efccac9a9179d4e291bd933da, matching remote. Unique development directory /home/mint/rl_dev/instinctRL-dev, branch main. User-supplied untracked docs/goal/ retained; requirements copied unchanged into docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md. All source/input changes are additive commits; snapshots and archived original paths retain exact identities. Historical and frozen runtime directories remain read-only.
 
-| Evidence | Identity / conclusion | Treatment |
-| --- | --- | --- |
-| `docs/history/consolidation-20261012/r5/task_inputs/prior/ZERO_COMMAND_BASELINE_FIX_AND_VALIDATION_REPORT.md` | Historical B0: 20,160 interactions; vertical mass mechanism supported; horizontal unresolved | Raw data and asset binding still to verify; no repeat launch justified yet |
-| `docs/history/consolidation-20261012/r5-live-failure/B0_ENHANCED_LIVE_ROOT_CAUSE_REPORT.md` | Most recent enhanced B0 failed at first reset; zero physics rows/transitions | Failure preserved; not a control baseline |
-| `docs/history/consolidation-20261012/r5/r5_delivery/R5_CONTROL_CHAIN_DIAGNOSIS.md` | NOT_STARTED template | Not a result |
-| `coordination/PROJECT_STATE.json` historical review | BUDGET_EXHAUSTED; MUST_FIX result schema rejected | Not resumed or relabelled accepted |
-| `pilot-cpu-v1/` | Real-tensor regression initially failed: scalar tensor byte view in state digest | Failure retained; prompted a minimal diagnostic digest fix |
-| `pilot-cpu-v2/` | 5 real CPU tensor cases and 10 existing pilot cases pass | No optimizer steps, no live simulation; not full §5 or technical acceptance |
+| Object | Actual evidence and current treatment |
+| --- | --- |
+| E0 | Existing collection/probability/GAE scope accepted; not restarted or reported as new training |
+| Historical B0 | historical-b0-verified-v1.json independently hashes630 real chunks,20,160 transitions. Vertical source mismatch supported, horizontal unresolved under old system; cannot accept repaired candidate |
+| Historical enhanced failure | docs/history/consolidation-20261012/r5-live-failure/B0_ENHANCED_LIVE_ROOT_CAUSE_REPORT.md: initial reset failure,0rows/transitions; preserved |
+| Historical R5 diagnosis | docs/history/consolidation-20261012/r5/r5_delivery/R5_CONTROL_CHAIN_DIAGNOSIS.md is NOT_STARTED template; not a result |
+| Historical review task | BUDGET_EXHAUSTED, output rejected for incomplete MUST_FIX protocol; not resumed or relabelled |
+| Actual complete asset | current-usd-mass-cpu-v2.json: full composed USD SHA3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99. Authored rotor3 unresolved; actual measurement-r1b PhysX resolves five masses summing1.181517923kg. No plant/base mass replaced |
+| CLI compatibility | cli-doctor-v1.json, cli-isolation-cpu-v1:18testsPASS, real installed0.161.0 registry census with zero model calls and actual Landlock/seccomp/protected scopes/GPU denial. New compatibility candidate; old0.153.4 contract preserved |
+| First-update diagnostic | pilot-cpu-v3/v4, plant-r1-cpu-final-v2: real CPU tensors and actual HistoryActor/PrivilegedCriticH1,512 inputs/actions/oldBeta/logp indices, clone and mismatch/RNG/hook/partial evidence tests. Physical heads1:4, actual governor v_corr m/s, all4 sample-minus-mean dimensionless. No optimizer bodies executed. PILOT-R1/R2 independently closed |
+| Mechanics/analyzer | product-mechanics-cpu-v2, measurement-source-cpu-v1, reaction-frame-cpu-v1, analyzer-cpu-v1: link/COM distinction, actual mass/inertia, same serialized double reconstruction, base reaction vs rotor thrust, percondition/case/lane/reset segments and no cross-reset differences. Scores remain clues, no heuristic causal winner. MECHANICS-R1 independently closed |
+| First Goal live | J-65769ac9c17a38cb source643747a: firstphysics inertia validation beforewriter,0rows/completedsteps. Bounded nativeclose failed, ownedquiescence proved; FULL20160 reservation retained. live-baseline-v3-failure/INVENTORY.json |
+| Measurement repair | INERTIA_MEASUREMENT_CONTRACT.md, inertia-float32-counterexample.json: predeclared gamma7 trace float32 symmetry bound, no raw averaging/rewriting or physical repair; separate UNVALIDATED input failure artifact. LIVE-R1/R2 independent closure review-measurement-r1b.json |
+| Second Goal live | J-fcbe37739d942e3c source79ccb40:128640 actual valid physicsrows,200completedpolicy/6400transitions, fullzeroZ plus firstTphysics then reward coveragefailure. Nativecloseforced, ownedquiescent. FULL20160 reservation retained. live-measurement-r1b-failure/INVENTORY.json verifies original1.104GBraw SHAad9aacb7a659cfc6095844fa224afc2e7ed37622862eb0cdeb86907cdee810b4 |
+| Actual current mechanism | CONTROL_BASELINE_DIAGNOSIS.md/.json, measurement-r1b-partial-mechanics-analysis.json: validates all128640rows without grantingfullprotocol. Original unchanged Lee plus measured wrench geometry predicts observed xyz steadybias. Minimum wholemass/actualallocation repair supported, not allR4unknownforces explained |
+| Physical/reset/cache candidate | sourcebd5cacd: production reads actual five-body totalmass and actual rotorlink-origin/localZ/baseZreaction matrix about wholeCOM; solves original desiredwrench. Publiccase reset rebuilds actual observations without physicswarmup. Exact byte SHA cache and batchserialization. plant-r1-cpu-final-v2:137PASS; plant-runtime-cpu-v2:17PASS1GPU-requireddeselected. Fulltiers and preservedinitialfailures in FIX_AND_REGRESSION.md |
+| Third Goal entry | J-896207577f20e77f sourcebd5cacd: inherited SCALE productSHA failure before anyquery/AppLauncher. ActualfinalFAIL/0steps/ticks/reset/transitions. ExistingH1collectorFINALzero formally settledthirdreservation only; start/initreservation staycharged. live-plant-r1-prelaunch-failure/INVENTORY.json27originalobjects, plant-r1-final-job.json |
+| Resource compatibility | sourcef726c01, RESOURCE_BINDING_REPAIR.md: H1 ownstaticchecked frozenresourcepins supplied toexistinggate/start/shutdown; legacy SCALE config unchanged andstrict. plant-r2-resource-cpu4actualgate/inertresource tests plusregressionsPASS; plant-r2-product-cpuPASS. review-plant-r2-prelive.json independent exactPASS |
+| Fourth Goal entry | J-afe4bda51f5206e5, sourcef726c01/inputse211b45/tools efc946bee820dfcf4735d994fca2daa248ba9ea8fa5af22f5b5b5d307c1c1167, approvalA-0b20be680df1a46c. Separate ENHANCED_B0_ZERO_TARGET, currentlyRUNNING, no automaticretry. plant-r2-submit.json andexactinputs/approval |
+| Command condition | inputs/passthrough_r2_*: samef726readonlybaseline, fresh empty attempt, B0_COMMAND_PASSTHROUGH [1,.5,.5,.5], no policyload/forward. Actualmounted-sensorT0/all32 metric traces, unchangedoriginalZ/T/S/subgroups. Unissued proposal outsidecurrent4startcap; newuserdecision plusrealzeroacceptance/independentprereview required |
+| Next training package | PILOT_START_READINESS.md, pilot_launch_manifest.json, pilot_future_proposals.r2.json, tools/prepare_r5_pilot_proposals.py: actual future argv/config/source/tool/seed/modes/outputs/resources/templates. P0/PLR sharef726candidate, onlyactorLRdiffers. TrainingauthorizationUNISSUED. Firstrealrolloutgate remainsPENDING_NEXT_PILOT beforeeitheroptimizer |
 
-Actual tools: Python shell interpreter 3.14.6; Codex CLI 0.161.0. CPU tests use existing product interpreter from tools/run_cpu_checks.py with CUDA_VISIBLE_DEVICES empty. The frozen isolation contract remains 0.153.4; installed-CLI compatibility is not yet certified. No dependencies installed or frozen runtime changed.
+Independent reviews are in reviews/. Roles1–11 and all failures/capacity errors are charged in goal_budget.json. Critical review reserve6 retained within24calls. Pre-live PASS is a conditional input check, not a scientific verdict or release. Commander release records and actual store state are separate; Builder verdicts do not replace independent review.
 
-Observed additional open defects: analyzer crosses reset boundaries, groups only case/lane, compares root acceleration to articulated momentum, and promotes heuristic ranking to causal verdict. Product observer response is root-based; changing the analyzer must explicitly distinguish this from COM. These findings do not establish any physical drift cause.
+Current envelope:4entries/4conservative initialization reservations; perentry20160nontraining/910secincludingcleanup/910GPU/16GiB; total80640/3640sec/64GiB. Firsttwo incompletefailures retain40320. ThirdFINALzero is formally settled; fourth20160 is reserved. Allfourstart slots consumed. A fifth separatecommandentry requires a new explicit decision; transitions/wall/GPU/output totals are not silently increased or reset. No training is allowed in this Goal.
 
-Next: obtain independent focused review of committed pilot changes; close analyzer semantics and CLI compatibility; verify raw historical evidence and current full asset; then exact-candidate live pre-review/Commander release if required. Enhanced zero-target and command-passthrough are separate conditions.
-
-## Added CPU evidence and independent findings
-
-- `pilot-cpu-v3/`: 7 real-tensor tests pass, including default HistoryActor and PrivilegedCriticH1, sixteen 32-lane distribution captures bound to 512 rows, clone isolation and wrong input/order/concentration rejection at unchanged tolerances. No optimizer body is executed.
-- `pilot-cpu-v4/`: 8 real-tensor cases plus 10 existing cases pass. Includes manual callback lifecycle of eight boundaries; simulated callbacks are not actual optimizer updates.
-- `reviews/pilot-review-e6f1ff6.json`: independent MUST_FIX on missing real network collection coverage and attempted/completed step semantics. Implementation closure is awaiting next exact-candidate review; no self-approval.
-- `analyzer-cpu-v1/`: 6 boundary/COM/causal-clue unit fixtures and 29 existing enhanced protocol tests pass. Fixtures using a mock validator are explicitly not full live coverage. Analyzer schema v2 reports separate segments and never promotes heuristic scores to a root cause.
-- `cli-doctor-v1.json`: installed 0.161.0 candidate passes installed registry census (local rejecting endpoint, zero model calls), Landlock/seccomp, role write scopes, protected paths and GPU execution denial. This is a new project compatibility check, not historical release certification. `cli-isolation-cpu-v1.*`: 18 tests pass, including both previously failing installation checks. Invocation used existing control Python, PYTHONPATH=.:tools/rlflow:tools/rlflow/tests, pytest test_cli_compatibility.py and test_isolation.py with CUDA invisible.
-- Historical time-series raw path exists and SHA-256 matches `d775d2f073f829c1ecb3bcd73d24a1b7626c90ede2bf629e19cd9ccddb75de28`. Its source points to the R4-B0-R1 control trace, not all 164,800 transitions in its parent collection job; only 20,160 B0 transitions are relevant. Chunk verification is pending.
-
-Product Python lacks a directly importable pxr module; direct CPU asset-stage inspection has not succeeded. This does not authorize dependency installation or replacing mass from a historical decimal. The current articulation config preserves USD masses without a mass override. Full composed asset and actual plant mass remain to bind before a physical correction.
-
-## Actual asset and historical raw verification
-
-`historical-b0-verified-v1.json`: all 630 R4-B0 trace chunk size/SHA-256 checks pass; 20,160 historical transitions; steady window values recomputed from CPU-loaded raw tensors. This confirms provenance, not enhanced-equivalent mechanics or repaired-control acceptance. New verification script preserves source evidence and writes only the new output.
-
-`current-usd-mass-cpu-v2.json`: composed current USD read using existing USD libraries in a CPU process, no SimulationApp or PhysX. Base mass is 1.1583074331 kg; three rotors have authored mass 0.0032754999 kg, rotor_3 has zero/unresolved authored mass and needs runtime collider-derived mass. Total runtime mass is intentionally UNKNOWN. The source asset SHA-256 is 3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99. This is why summing authored numbers or replacing base mass by the historical total would be incorrect. Initial library import failures were resolved by per-process Python/library paths, without installing dependencies or editing runtime.
-
-The frozen installed Isaac Lab articulation_data.py documents body_state_w as link pose plus COM velocities; body_link_state_w provides link pose and link velocities. The observer formerly added omega cross local COM to body_state_w, double-counting the offset. Minimal diagnostic repair selects body_link_state_w, and root_link_state_w for same-point root response, while controller velocity-error evidence retains existing root_state_w feedback. No controller, actor, reward or plant change. `product-mechanics-cpu-v1/`: one executable mocked-articulation real-tensor snapshot regression and 20 existing source/mock wiring cases pass. This is not actual live integration. A spinning body with offset COM demonstrates the defect and repair.
-
-Reviewer call 2 failed with model-capacity error; no verdict or release. Counted in new goal budget. Next call is reserved for the exact committed delta, with 6 critical calls still reserved.
-
-## Independent numeric finding closure candidate and live-input compatibility
-
-`reviews/review-5da1439.json` closes PILOT-R1/R2 independently, but raises MECHANICS-R1. The new candidate retains the 1e-8 consistency bound and derives system/rotor quantities from the same serialized primitives; no precision threshold was widened. `product-mechanics-cpu-v2/` adds 0/100/700m origins, rotated nonzero COM/omega, next-physics momentum difference, and corrupt COM/momentum/wrench rejection. Current plant mass and inertia now use public root_physx_view.get_masses/get_inertias rather than initialization defaults; `measurement-source-cpu-v1/` verifies that poisoned defaults cannot replace actual measurements. These are executable mock integrations, still not real simulation.
-
-Handoff v2 corrects metadata to actual dt=.005, decimation=20, 200Hz control/10Hz policy. Enhanced zero-target binds no policy checkpoint; schema rejects checkpoint use. New experiment ID is UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012, distinct from failed historical tasks. New per-source hashes and formal validate-only CPU result are recorded; candidate remains not live authorized.
-
-The rlflow dispatcher now resolves to the consolidated project implementation; immutable snapshots may use exactly identical reviewed dispatcher bytes at their own path, with complete H1 candidate/pin checks retained. Historical postrun identities remain explicitly distinct; a new caller must verify the new experiment/package identity instead of inheriting old scope. `live-tool-binding-cpu-v1` initially exposed an outdated app.close test stub; v2 fixes the stub to the already used public close kwargs, retaining actual cleanup expectations. v2: 37 tests pass. This failure and its outputs are preserved.
-
-Committed baseline_snapshot_config.json is a new path binding for a future read-only snapshot, not an accepted historical candidate. No snapshot/live release has yet been issued.
-
-## Snapshot preparation boundary
-
-The first read-only snapshot at 81bc968 was prepared without authorization or live execution. Its exact handoff validates, but full config validation fails because proposal_path points to the development tree rather than the snapshot-local approved method. All v1 inputs and outputs are preserved as PRELAUNCH_REJECTED. A v2 input corrects this path with the same approved method bytes/hash. The runner also explicitly binds ISAACSIM_ASSET_ROOT from the exact config instead of relying on the supervisor environment. CPU tool regression v3 passes 38 cases. No live budget was consumed.
-
-The corrected v2 read-only snapshot is main@918fec6f8f37a3700d47cf615168eb9cad2603b1, with only the committed baseline_v2_snapshot_config.json overlay, diff SHA e610de483653a7332a5c160bae7184b25963cf51cab3597317a96c85ffbe0c35. Both formal validate-only and handoff checks PASS. Input manifest specifies per-run initialization/reset/probe/output and remaining-envelope bounds. Expected authorization is a proposed byte file under docs; actual attempt commands/AUTHORIZATION.json is absent. Independent pre-review is pending; no live release is implied.
-
-## Independent baseline-v2 findings and implementation closure candidate
-
-Review call4 failed model capacity (counted); call5 independently closed MECHANICS-R1, but MUST_FIX BASELINE-R1 (failure partialmanifest/progress) and BASELINE-R2 (reaction applied on base localZ vs reported rotoraxis). See reviews/review-baseline-v2.json. No launch has occurred. V2 snapshot remains unchanged and notaccepted.
-
-Candidate now writes raw manifest v2 before collection and on failure, with attempted/validated/written rows, closed file bytes/hash, last coordinates, completed observer callbacks, finalized coverage separately, exact authorization/source identity, actual counters and primary error. Evidence-save errors add notes to the original error. partial-manifest-cpu-v3:9 executable extracted backend JSON failure/success cases pass; protocol/coverage explicitly mocked. Initial v1 missing test module namespace and v2 mock report errors retained, no simulator. reaction-frame-cpu-v1:4 tensor mock integrations,29 protocol cases,20 hook cases,6 analyzer boundary cases pass. Physics row v2 explicitly records reaction body/direction while thrust retains rotor link origin/axis; actual adapter buffers are independently reconstructed under different base/rotor axes and nonzero reaction. Control, plant, reward and actor unchanged. Closure still requires independent review of new exact candidate.
-
-Partial manifest now independently counts complete newline-terminated rows from actual file bytes, separately from accepted stream writes; records hash and truncated-tail flag. partial-manifest-cpu-final:10cases pass, including injected partial-flush failure preserving original environment error, 32accepted vs31complete rows and exact file hash. This closes a specific buffering ambiguity without claiming durability for unpersisted rows.
-
-## Baseline-v3 independent pre-live acceptance
-
-Reviewercall6 PASS independently closes BASELINE-R1/R2; call7 PASS confirms exact formal-entry release for boundprelaunchprobes, with simulator creation separately gated by existing start_after_coexistence_gate. No externalduplicateGPUqueries. Formal entry consumes1start andits910secouter/GPU budget evenifcoexistencefails. Reviewed runtime643747a, inputpack1689d3c; files reviews/review-baseline-v3*.json. Finalexperiment spec differs fromreviewed draftonlyby two exactacceptedreviewhashpredicates. Commanderbinding pins currentcontrolreleasecontentID andallsubbudgets; noactualreleaseyet. Current controlreadiness remainsblocked, notGoalDONE.
-
-## Actual current baseline-v3 live failure
-
-Existingrlflow J-65769ac9c17a38cb, exact643747a/v3input/approvalA-e1acb8ab5bc0a326. CoexistencePASS (3samples10.030s); actual initialization2physics ticks; explicitreset1settled. Firstpolicyattempt reaches observer andfails reconstruct_com inertia symmetric/positivecheck before firstrawrow. Actualcompletepolicy/transitions/rawrows0. SourceAPI/rowmetadata do not identify the failed body or exact matrix yet; no physicalrootcause established. Rawpartialmanifest retains primaryerror, counters,0rows andhash; source data preserved in live-baseline-v3-failure/INVENTORY.json with copied smallraw artifacts.
-
-Native app.close hardtimeout thenowned cleanupquiescent/no survivors; outerexit-9FAILED. RawstatusFAIL_PENDING_CLOSE remains unchanged. Reconcile retains full20160transitionreservation (notzeroed), settleswall30.39525855s andGPU27.14833330s. Two authorizedpostrunGPUauditqueries show394MiBused/1%util and onlyexistingGNOME desktop164MiB; noownedworkload remains. Approval consumed, no automaticretry;3starts/initializationsremain andfullfailedtransitionreservation remains charged. Training/optimizer/checkpoint counters0. Nextaction is evidence-supported measurement/cleanupboundary repair and independentactualfailureassessment, not repeatunchangedlaunch.
-
-
-Independent actual failure review and measurement candidate
-
-Reviewer call8 MUST_FIX establishes LIVE-R1 (unvalidated body input lost before writer)
-and LIVE-R2 (fixed absolute symmetry check rejects valid float32 rotated inertia).
-Actual failed matrix remains unknown. Cleanup boundary accepted only as failed
-forced termination with no owned survivors; full20160 reservation remains.
-`reviews/review-live-baseline-v3-failure.json`, `INERTIA_MEASUREMENT_CONTRACT.md`,
-`inertia-float32-counterexample.json` preserve the independent assessment and CPU
-precision evidence. New measurement-R1 candidate saves separate UNVALIDATED body
-inputs/coordinate/source/dtype/branch and uses predeclared gamma7 trace rounding
-bound without rewriting raw tensors, controller or plant. CPU final suite passes;
-it is mock integration, no new simulation. Fresh identity/attempt and exact
-readonly snapshot inputs are being prepared; no successor release yet.
-
-The first measurement-R1 input snapshot static check rejected a method document
-path still bound to the development directory. Preserved original input and
-measurement_r1_static_validation.json; no authorization or live start. Corrected
-r1b input binds product/workload/method paths to its own fresh readonly snapshot.
-Generator now rejects mismatched path bindings before creation. This is solely
-new input provenance, no method document bytes or execution budgets changed.
-
-Independent call9 PASS on source79ccb40/inputsa5929ce closesLIVE-R1/R2;
-priorclosures retained. Actual tool96hashes, readonlyoverlay andformal/handoff
-identity verified. New spec onlyadds exactreviewhashcondition torevieweddraft;
-Commanderbinding includesremainingbudget andentrygate semantics. Noauth/release
-issued byreview. Actual control baseline andGoaltarget remainpending.
-
-New measurement-R1b entry approved byexistingCommander exactA-57c4e523722982cb,
-then submitted once asJ-fcbe37739d942e3c onsource79ccb40/inputsa5929ce/tools980ad8d8.
-Secondlive startcharged; old20160 plusnew20160 transitionreservations retained.
-Stillno training. Actualcoexistence/init/row/cleanup results pending.
+Native app.close hard timeout remains a process failure even with scientificdata. Existing owned pidfd/descendant lifeguard must independently prove quiescence/no survivors before another release. Actual forced cleanup is never labelled graceful PASS; evidence counters and conservative reservations remain. Only bound postrun audit queries may be used, after ownership settlement.
