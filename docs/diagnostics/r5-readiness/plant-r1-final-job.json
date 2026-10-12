@@ -1,0 +1,164 @@
+{
+  "approval_id": "A-3aa8fe370e60ab11",
+  "h1_evidence": {
+    "allocation_basis": "allocated_device_wall_seconds",
+    "allocation_gpu_seconds": 1.6695902969222516,
+    "counter_completeness": "FINAL",
+    "counters": {
+      "actor_optimizer_steps": 0,
+      "attempted_policy_steps": 0,
+      "attempted_updates": 0,
+      "automatic_resets": 0,
+      "completed_policy_steps": 0,
+      "completed_updates": 0,
+      "critic_optimizer_steps": 0,
+      "explicit_resets": 0,
+      "initialization_physics_ticks": 0,
+      "live_process_starts": 1,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 0,
+      "real_environment_transitions": 0,
+      "real_optimizer_updates": 0,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 0
+    },
+    "exit_fact": "FAILED",
+    "formal_verdict": "NOT_GRANTED",
+    "manifest": {
+      "budget_ledger.json": {
+        "bytes": 646,
+        "sha256": "cd99629689dbd00715a685a6a6a92661647d977599fd16318e79245218463b56"
+      },
+      "cleanup_evidence.json": {
+        "bytes": 160,
+        "sha256": "680a6805fadd01650367dd9def6ff5297e759a0b95a03e7d51b2b9854a89e080"
+      },
+      "process_identity.json": {
+        "bytes": 293,
+        "sha256": "9ea63976afbe4fb9c270d72e7c50f0ca21de27d8e469fbd96976e8e29fa4fc0a"
+      },
+      "process_start.json": {
+        "bytes": 1352,
+        "sha256": "23b7f9dc1bb2cf59ded53aba57eaa13f46a94f62cb8210c197b1297ed6797818"
+      },
+      "status.json": {
+        "bytes": 992,
+        "sha256": "8fec50eccef19db08c4ff574ca7e0d19c6595572fa651ba08749b59814603c44"
+      }
+    },
+    "raw_status": "FAIL",
+    "scientific_validity": "UNASSESSED",
+    "scope": "H1_RAW_EXECUTION",
+    "transitions": 0
+  },
+  "id": "J-896207577f20e77f",
+  "identity": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pgid": 1722541,
+    "pid": 1722541,
+    "starttime": "174824864"
+  },
+  "receipt": {
+    "allocated_seconds": 1.6695902969222516,
+    "definitely_not_released": false,
+    "elapsed_seconds": 4.969037291128188,
+    "error": null,
+    "exit_code": 1,
+    "job_id": "J-896207577f20e77f",
+    "released": true,
+    "spec_sha256": "b2b4d1a82ec516c3e422391d078512323b217805b8e461a47de687bc7f606052",
+    "status": "FAILED"
+  },
+  "reserved_resources": {},
+  "spec": {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--authorization",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012/commands/AUTHORIZATION.json",
+      "--attempt",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012",
+      "--mode",
+      "enhanced-b0-diagnostic"
+    ],
+    "backend": "real",
+    "conditions": [
+      {
+        "evidence_id": "E-R5-PLANT-R1-PRELIVE-REVIEW",
+        "sha256": "eb723c6140d4c7dd08a736edd467d659fc1c8b1aadfeba7dcca39c95d3e6d00d"
+      }
+    ],
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r1-20261012",
+    "evaluation": "metric-h1-v1",
+    "h1": {
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012",
+      "config_sha256": "e1290ac27c165c815cbd3ea29df71c03dc09eda87ce70642140299eaf80bee12",
+      "gpu_accounting": "allocated_device_wall_seconds",
+      "gpu_devices": [
+        "0"
+      ],
+      "mode": "enhanced-b0-diagnostic",
+      "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r1-20261012"
+    },
+    "id": "UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012",
+    "method": "unified-h1-v1",
+    "observations": [
+      "status",
+      "counters",
+      "process_identity",
+      "process_start",
+      "raw_physics",
+      "cleanup",
+      "partial_failure"
+    ],
+    "pins": {
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012/commands/AUTHORIZATION.json",
+        "sha256": "f8a54e683d10b28e8ef5ba9aae9619516d0bf5c130e97e5dccad0b07b85b7bdc"
+      },
+      "dispatcher": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r1-20261012/training_workloads/unified_h1/local_dispatch.py",
+        "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+      },
+      "executable": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "product": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r1-20261012/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+        "sha256": "a05e36adda74498e7ea890b11b4bb7517c296c7e8c6e9479a71aa0e6c5bb8e99"
+      },
+      "runtime": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "workload": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r1-20261012/training_workloads/unified_h1/formal_unified_h1.py",
+        "sha256": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896"
+      }
+    },
+    "resources": {
+      "gpu_seconds": 910,
+      "starts": 1,
+      "transitions": 20160,
+      "wall_seconds": 910
+    },
+    "runtime": "/home/mint/rl_blackwell_test",
+    "seed": 20260909,
+    "stage_id": "R5-READINESS-20261012"
+  },
+  "stage": "R5-READINESS-20261012",
+  "status": "FAILED",
+  "used_resources": {
+    "gpu_seconds": 1.6695902969222516,
+    "starts": 1,
+    "transitions": 0,
+    "wall_seconds": 4.969037291128188
+  }
+}

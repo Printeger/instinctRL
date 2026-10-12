@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "PLANT_R1_ENTRY_SUBMITTED_NO_RETRY",
+  "live_release_status": "PLANT_R1_PRELAUNCH_FAILED_CONSUMED_NO_RETRY",
   "caps": {
     "live_starts": 4,
     "simulator_initializations": 4,
@@ -27,9 +27,9 @@
     "live_starts": 3,
     "simulator_initializations": 3,
     "nontraining_transitions": 0,
-    "wall_seconds": 527.326866867952,
-    "gpu_seconds": 520.8080967061687,
-    "output_bytes": 1105855704,
+    "wall_seconds": 532.2959041590802,
+    "gpu_seconds": 522.477687003091,
+    "output_bytes": 1105922966,
     "role_calls": 10,
     "training_transitions": 0,
     "optimizer_updates": 0,
@@ -132,7 +132,7 @@
   },
   "historical_budgets": "PRESERVED_NOT_RESET",
   "reserved": {
-    "nontraining_transitions": 60480
+    "nontraining_transitions": 40320
   },
   "approval": "baseline-v3-commander-approval.json",
   "unknown_or_incomplete": {
@@ -181,17 +181,29 @@
     },
     {
       "job_id": "J-896207577f20e77f",
-      "status": "RUNNING",
+      "status": "FAILED",
       "source_commit": "bd5cacd56c519fdd5f868f4ba0720b1a437de967",
       "experiment_id": "UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012",
       "starts_charged": 1,
       "initialization": "RESERVED_UNTIL_ACTUAL_EVIDENCE",
       "training_transitions": 0,
       "optimizer_updates": 0,
-      "checkpoint_writes": 0
+      "checkpoint_writes": 0,
+      "attempted_policy_steps": 0,
+      "completed_policy_steps": 0,
+      "physics_rows": 0,
+      "coexistence": "NOT_REACHED",
+      "simulator_initialization_reserved": 1,
+      "actual_AppLauncher_created": false,
+      "explicit_resets_observed": 0,
+      "initialization_ticks_observed": 0,
+      "transitions_settlement": "FINAL_ZERO_BY_EXISTING_H1_COLLECT",
+      "primary_error": "legacy SCALE003 pinned product source mismatch before resource gate",
+      "owned_cleanup": "QUIESCENT_NO_SURVIVORS"
     }
   ],
   "next_exact_approval": "measurement-r1b-commander-approval.json",
-  "conservative_nontraining_bound_charged": 60320,
-  "completed_nontraining_observed_within_failed_reservations": 6400
+  "conservative_nontraining_bound_charged": 40320,
+  "completed_nontraining_observed_within_failed_reservations": 6400,
+  "remaining_note": "Existing collect formally settles thirdentry transitions0, but live start and initialization reservation stay charged. Only1live entry left; oldfirsttwo full40320 remainreserved."
 }
