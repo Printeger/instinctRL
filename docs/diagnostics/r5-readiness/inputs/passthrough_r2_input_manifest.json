@@ -1,0 +1,44 @@
+{
+  "schema_version": "instinctrl-r5-passthrough-inputs/2",
+  "status": "PROPOSAL_ONLY_OUTSIDE_CURRENT_MAX_STARTS_NOT_RELEASED",
+  "budget_scope": "fifth entry requires explicit new user decision; current fourth entry remains pending independent prereview",
+  "experiment_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r2-20261012",
+  "snapshot_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+  "snapshot_tree": "9c0cc84e0983806677b40ec714a5ea57314b6a58",
+  "snapshot_diff_sha256": "3d7b1bcf7ce8cd3d3504f579fba5abb99b0d5f1e1d63cde324c959b0242b291c",
+  "config_sha256": "09d297c08dc8178e4beb8bc62b1c0a405b8beff0713bd3754d0586a89bda97f5",
+  "condition": "B0_COMMAND_PASSTHROUGH",
+  "action": [
+    1.0,
+    0.5,
+    0.5,
+    0.5
+  ],
+  "policy_forward_calls": 0,
+  "training_transitions": 0,
+  "optimizer_updates": 0,
+  "checkpoint_writes": 0,
+  "expected_authorization_sha256": "2144fd24086422176ebe5b2647d7cbdfa80d0f5cf18b8071d4fd15754e42e441",
+  "draft_spec_sha256": "735f99170be4ad0ad2907f285131ba4a4e2b26cb2690389a61f549b16b363822",
+  "authorization_issued": false,
+  "approval_issued": false,
+  "read_only": true,
+  "supplemental_limits": {
+    "initialization_ticks": 10,
+    "explicit_resets": 3,
+    "automatic_reset_lanes": 20160,
+    "prelaunch_nvidia_smi_calls": 6,
+    "runtime_cuda_memory_observations": 634,
+    "postrun_nvidia_smi_audit_calls": 2
+  },
+  "output_limit_bytes": 17179869184,
+  "release_dependencies": [
+    "Actual repaired zero-target regression accepted independently",
+    "Exact command input/tool/source prereview",
+    "Explicit user authorization of one further live start (conservative initialization reservation); no automatic retry or budget reset",
+    "Existing Commander exact proposal and approval, STOP/coexistence and owned cleanup"
+  ],
+  "free_disk_bytes_observed": 571229450240,
+  "preparation": "new Goal-scoped CPU input generation only, fresh empty attempt; old unissued bd5passthrough pack preserved"
+}

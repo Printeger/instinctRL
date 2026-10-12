@@ -1,9 +1,9 @@
 {
   "schema_version": "instinctrl-r5-pilot-readiness/1",
-  "status": "BLOCKED_CONTROL_BASELINE",
+  "status": "BLOCKED_IMPLEMENTATION",
   "goal_status": "IN_PROGRESS",
   "training_authorization_issued": false,
-  "shared_repaired_baseline_commit": null,
+  "shared_repaired_baseline_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
   "groups": {
     "P0": {
       "actor_lr": 0.0003,
@@ -20,19 +20,83 @@
     "minibatch": 64,
     "epoch": 1,
     "updates": 64,
-    "training_transitions": 32768
+    "training_transitions": 32768,
+    "policy_steps": 1024,
+    "checkpoint_nodes": [
+      "init0000",
+      "u1",
+      "u2",
+      "u8",
+      "u16",
+      "u32",
+      "u64"
+    ],
+    "evaluation_nodes": [
+      16,
+      64
+    ],
+    "evaluation_case": "Z",
+    "training_seed": 20260908,
+    "evaluation_seed": 20260909
   },
   "first_rollout_gate": {
     "implemented_and_cpu_verified": true,
     "live_first_rollout_gate": "PENDING_NEXT_PILOT",
-    "first_optimizer_step_requires_gate": true
+    "first_optimizer_step_requires_gate": true,
+    "sample_count": 512,
+    "action_shape": [
+      512,
+      4
+    ],
+    "logp_shape": [
+      512,
+      1
+    ],
+    "old_alpha_beta_shape": [
+      512,
+      4
+    ],
+    "atol": 1e-06,
+    "rtol": 1e-05,
+    "gate_failure_optimizer_steps": 0,
+    "probability_source": "collection-time actual Beta concentrations/logp paired by policy/action/index",
+    "diagnostic_schema": "instinctrl-pilot-first-update-probe/2"
   },
   "current_goal_training_transitions": 0,
   "current_goal_optimizer_updates": 0,
   "current_goal_training_checkpoint_writes": 0,
-  "argv_status": "PENDING_REPAIRED_BASELINE_AND_CONTROL_ACCEPTANCE",
+  "argv_status": "EXACT_FUTURE_PROPOSALS_GENERATED_NOT_AUTHORIZED",
   "blocking_evidence": [
-    "Current live zero-target baseline and physical regression absent",
-    "Command-passthrough on accepted shared baseline absent"
-  ]
+    "Third live entry failed inherited SCALE product pins before any coexistence probe or AppLauncher. R2 minimum resource binding compatibility awaits exact review and live regression.",
+    "Only1 current-envelope live entry remains; separate repaired command condition requires a further live-start authorization after successful repaired zero regression."
+  ],
+  "baseline_acceptance": "R1_ENTRY_FAILED_BEFORE_APP_PENDING_RESOURCE_BINDING_R2",
+  "shared_baseline": {
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r2-20261012",
+    "snapshot_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+    "snapshot_tree": "9c0cc84e0983806677b40ec714a5ea57314b6a58",
+    "snapshot_diff_sha256": "3d7b1bcf7ce8cd3d3504f579fba5abb99b0d5f1e1d63cde324c959b0242b291c",
+    "config_sha256": "09d297c08dc8178e4beb8bc62b1c0a405b8beff0713bd3754d0586a89bda97f5"
+  },
+  "tools_release_content_id": "efc946bee820dfcf4735d994fca2daa248ba9ea8fa5af22f5b5b5d307c1c1167",
+  "future_proposals": {
+    "path": "pilot_future_proposals.r2.json",
+    "sha256": "aa73b6eeaa24d8e5477fd14ae9b2571de9ba89ea06be7b19a4a05ff1be9c9627",
+    "status": "UNISSUED",
+    "generator": "../../../tools/prepare_r5_pilot_proposals.py"
+  },
+  "single_variable": "actor learning rate only; lower LR remains unproved hypothesis",
+  "stop_paths": [
+    "/home/mint/rl_dev/instinctRL_coordination/commander/STOP",
+    "/home/mint/rl_dev/instinctRL_coordination/executor/STOP",
+    "/home/mint/rl_dev/instinctRL_coordination/STOP",
+    "/home/mint/rl_dev/STOP",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/STOP"
+  ],
+  "cleanup": {
+    "environment_seconds": 0.5,
+    "app_seconds": 9.5,
+    "ownership": "existing pidfd/descendant lifeguard, require quiescence/no survivors before next release",
+    "forced_termination_status": "FAILED; scientific trace independent of process verdict"
+  }
 }
