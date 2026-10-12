@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_FINAL_INDEPENDENT_READINESS_REVIEW",
+  "phase": "R5_PAIRED_PILOT_TECHNICALLY_READY_STOPPED_BEFORE_TRAINING",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -13,36 +13,45 @@
     "path": "../docs/history/consolidation-20261012/r5/review_evidence/HOST_CPU_EVIDENCE.json"
   },
   "latest_independent_review": {
-    "status": "PASS_ZERO_PHYSICAL_AND_EXACT_PRELIVE_ONLY",
-    "role_call": 12,
+    "path": "reviews/review-entry6-final-readiness.json",
+    "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
+    "verdict": "PASS",
+    "role_call": 15,
+    "independent_handle": "/root/pilot_reviewer",
+    "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "evidence_commit": "b7820f8",
+    "state_sync_condition": "SATISFIED_CURRENT_VS_HISTORICAL_FIELDS",
+    "training_authority": false,
+    "evidence": "../docs/diagnostics/r5-readiness/reviews/review-entry6-final-readiness.json",
+    "status": "PASS_FINAL_TECHNICAL_READINESS",
     "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
-    "input_pack_commit": "b0b8df0c66d4a562e2cb6b4aa269bbf5d4fcfb99",
-    "evidence": "../docs/diagnostics/r5-readiness/reviews/review-zero-r2-command-r3-prelive.json",
     "closed": [
-      "DIAGNOSTIC-DURABILITY-R1",
-      "PILOT-FUTURE-R1"
+      "DIAGNOSTIC_CLOSURE",
+      "CONTROL_BASELINE_REGRESSION",
+      "PILOT_TECHNICAL_READINESS"
     ],
     "open": []
   },
   "latest_real_diagnostic": {
-    "status": "PHYSICAL_REGRESSION_ACCEPTED_INDEPENDENT_ROLE12_PROCESS_FAILED",
-    "job_id": "J-afe4bda51f5206e5",
-    "source_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
-    "physical_rows": 403200,
-    "final_policy_counters": "UNAVAILABLE",
-    "transitions_reservation": 20160,
+    "job_id": "J-ad3ac7db1fb82d89",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "scientific_status": "ACCEPTED_ORIGINAL_ZTS_ROLE15",
     "process": "FAILED",
+    "exit_code": -9,
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_nontraining_transitions": null,
+    "completed_policy_steps_observed": 630,
+    "nontraining_transitions_observed": 20160,
+    "transitions_reservation": 20160,
+    "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
     "training_updates": 0
   },
   "new_live_execution_authorized": false,
   "new_training_authorized": false,
   "migration_is_product_acceptance": false,
   "current_candidate_config": "../docs/diagnostics/r5-readiness/inputs/pilot_r3_snapshot_config.json",
-  "blocking_followups": [
-    "Explicituserone-start/initreservationdecision for exactcommandR3; original4slotcap consumed, allothercaps unchanged.",
-    "Commander exactrelease and actualcommandoriginalZTSgates.",
-    "Finalindependent readiness review; no training inGoal."
-  ],
+  "blocking_followups": [],
   "migration_verification": {
     "scope": "MIGRATION_CPU_REGRESSION_ONLY_NOT_INDEPENDENT_PRODUCT_ACCEPTANCE",
     "product": {
@@ -232,10 +241,97 @@
     "evidence_index": "../docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md",
     "budget": "../docs/diagnostics/r5-readiness/goal_budget.json",
     "target": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
-    "status": "IN_PROGRESS",
+    "status": "COMPLETE",
     "live_release_issued": false,
     "training_authorized": false,
     "independent_review": {
+      "path": "reviews/review-entry6-final-readiness.json",
+      "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
+      "verdict": "PASS",
+      "role_call": 15,
+      "independent_handle": "/root/pilot_reviewer",
+      "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "evidence_commit": "b7820f8",
+      "state_sync_condition": "SATISFIED_CURRENT_VS_HISTORICAL_FIELDS",
+      "training_authority": false,
+      "evidence": "../docs/diagnostics/r5-readiness/reviews/review-entry6-final-readiness.json",
+      "status": "PASS_FINAL_TECHNICAL_READINESS",
+      "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "closed": [
+        "DIAGNOSTIC_CLOSURE",
+        "CONTROL_BASELINE_REGRESSION",
+        "PILOT_TECHNICAL_READINESS"
+      ],
+      "open": []
+    },
+    "cli_compatibility": {
+      "installed": "0.161.0",
+      "scope": "new project compatibility candidate only",
+      "doctor": "../docs/diagnostics/r5-readiness/cli-doctor-v1.json",
+      "historical_pin": "0.153.4",
+      "result": "PASS_KERNEL_AND_INSTALLED_REGISTRY_CHECKS"
+    },
+    "exact_live_approval": "../docs/diagnostics/r5-readiness/entry6-commander-approval.json",
+    "live_entry_status": "ENTRY6_TERMINAL_FULL_COMMAND_ZTS_PASS_PROCESS_FAILED_MINUS9",
+    "latest_live_job": "J-ad3ac7db1fb82d89",
+    "current_live_release_effective": false,
+    "next_candidate": {
+      "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
+      "live_release_issued": false,
+      "future_proposals": "../docs/diagnostics/r5-readiness/pilot_future_proposals.r3.json",
+      "training_authorization": "UNISSUED",
+      "first_real_rollout_gate": "PENDING_NEXT_PILOT"
+    },
+    "next_exact_live_approval": null,
+    "latest_actual_diagnostic": "../docs/diagnostics/r5-readiness/entry6-command-regression-summary.json",
+    "resource_decision": {
+      "status": "APPROVED_EXPLICIT_USER_START_INIT_CAP8",
+      "decision": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json",
+      "sha256": "e564defa071fd33f1fbdca4c5cdbdd3947a7936127021b1fe3107fd2f44be9ce",
+      "user_message_exact": "批准，扩额8-10次",
+      "caps_delta": "cumulative live starts/initreservation4to8 only",
+      "other_caps_unchanged": true
+    },
+    "readiness": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
+    "blocking_kind": null,
+    "prelaunch_retry_exception": {
+      "status": "CONSUMED_ONE_ENTRY_NO_FURTHER_REPEAT",
+      "proposal": "../docs/diagnostics/r5-readiness/inputs/passthrough_entry6_input_manifest.json",
+      "requested_additional_entries": 1,
+      "no_new_implementation_repair": true,
+      "independent_pre_review": "../docs/diagnostics/r5-readiness/reviews/review-entry6-conditional-prelive.json",
+      "decision": "docs/diagnostics/r5-readiness/user_entry6_prelaunch_exception.json",
+      "sha256": "f29d6cfff0a97b303a297820a21a018d006525d887c3dd9b67ab15dd043ea8ae"
+    },
+    "historical_blocked_audit": {
+      "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
+      "consecutive_goal_turns": 3,
+      "audit_epoch": "RESUMED_GOAL_FRESH_BLOCKED_AUDIT",
+      "resume_authority": "User resumed Goal active; no new live-start or initialization cap authorization received.",
+      "previous_blocked_audit": {
+        "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
+        "consecutive_goal_turns": 3,
+        "previous_goal_turn": "PROGRESS: requirement evidence audit and stale state corrections committed; resource blocker remained.",
+        "current_verification": "No active jobs or live process handle; fifth attempt has no files or actual AUTHORIZATION. Caps remain4 with4used; user resource decision is pending.",
+        "independent_work_exhausted": true,
+        "remaining_actions_require_user_decision": true,
+        "goal_achieved": false,
+        "resume_action": "Obtain explicit decision on existing one-start/init reservation4to5 proposal; then existing Commander exact release and original command gates/final review.",
+        "budget_reset": false
+      },
+      "current_verification": "main and origin/main at 4d6314e5431c442e90bff0d0b36aa8abc4644cfe; all four jobs FAILED, STOP absent, fifth attempt empty and actual AUTHORIZATION absent. Caps4/used4, retained60480 and pending user decision unchanged. Exact input and independent review hashes match.",
+      "independent_work_exhausted": true,
+      "remaining_actions_require_user_decision": false,
+      "goal_achieved": false,
+      "resume_action": "Obtain explicit decision on existing one-start/init reservation4to5 proposal; then existing Commander exact release and original command gates/final review.",
+      "budget_reset": false,
+      "previous_goal_turn_classification": "NO_PROGRESS",
+      "resumed_turns": "Turn1: UI-resume bookkeeping only, cap decision absent. Turn2: authoritative cap/job/auth revalidation only, no live handle. Turn3: same authority and resource blocker verified; no independent action can complete missing command gates.",
+      "resolved_by": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json",
+      "scope": "HISTORICAL_RESOLVED_BLOCKER_NOT_CURRENT_STATE"
+    },
+    "historical_previous_independent_review": {
       "candidate_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
       "input_pack_commit": "1689d3cecb438f25cfe28d6689b3406e1ded9a85",
       "verdict": "PASS_PRELIVE_ONLY",
@@ -263,75 +359,33 @@
         "open": []
       },
       "latest_actual_command_review": "PENDING_ROLE15"
-    },
-    "cli_compatibility": {
-      "installed": "0.161.0",
-      "scope": "new project compatibility candidate only",
-      "doctor": "../docs/diagnostics/r5-readiness/cli-doctor-v1.json",
-      "historical_pin": "0.153.4",
-      "result": "PASS_KERNEL_AND_INSTALLED_REGISTRY_CHECKS"
-    },
-    "exact_live_approval": "../docs/diagnostics/r5-readiness/plant-r2-commander-approval.json",
-    "live_entry_status": "ENTRY6_TERMINAL_FULL_COMMAND_ZTS_PASS_PROCESS_FAILED_MINUS9",
-    "latest_live_job": "J-ad3ac7db1fb82d89",
-    "current_live_release_effective": false,
-    "next_candidate": {
-      "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
-      "status": "EXACT_ENTRY6_APPROVED_PENDING_INTERNAL_COEXISTENCE",
-      "live_release_issued": false,
-      "inputs": "../docs/diagnostics/r5-readiness/inputs/passthrough_entry6_input_manifest.json"
-    },
-    "next_exact_live_approval": null,
-    "latest_actual_diagnostic": "../docs/diagnostics/r5-readiness/entry6-command-regression-summary.json",
-    "resource_decision": {
-      "status": "APPROVED_EXPLICIT_USER_START_INIT_CAP8",
-      "decision": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json",
-      "sha256": "e564defa071fd33f1fbdca4c5cdbdd3947a7936127021b1fe3107fd2f44be9ce",
-      "user_message_exact": "批准，扩额8-10次",
-      "caps_delta": "cumulative live starts/initreservation4to8 only",
-      "other_caps_unchanged": true
-    },
-    "readiness": "CONTROL_GATES_PASSED_PENDING_FINAL_INDEPENDENT_REVIEW",
-    "blocking_kind": null,
-    "blocked_audit": {
-      "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
-      "consecutive_goal_turns": 3,
-      "audit_epoch": "RESUMED_GOAL_FRESH_BLOCKED_AUDIT",
-      "resume_authority": "User resumed Goal active; no new live-start or initialization cap authorization received.",
-      "previous_blocked_audit": {
-        "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
-        "consecutive_goal_turns": 3,
-        "previous_goal_turn": "PROGRESS: requirement evidence audit and stale state corrections committed; resource blocker remained.",
-        "current_verification": "No active jobs or live process handle; fifth attempt has no files or actual AUTHORIZATION. Caps remain4 with4used; user resource decision is pending.",
-        "independent_work_exhausted": true,
-        "remaining_actions_require_user_decision": true,
-        "goal_achieved": false,
-        "resume_action": "Obtain explicit decision on existing one-start/init reservation4to5 proposal; then existing Commander exact release and original command gates/final review.",
-        "budget_reset": false
-      },
-      "current_verification": "main and origin/main at 4d6314e5431c442e90bff0d0b36aa8abc4644cfe; all four jobs FAILED, STOP absent, fifth attempt empty and actual AUTHORIZATION absent. Caps4/used4, retained60480 and pending user decision unchanged. Exact input and independent review hashes match.",
-      "independent_work_exhausted": true,
-      "remaining_actions_require_user_decision": false,
-      "goal_achieved": false,
-      "resume_action": "Obtain explicit decision on existing one-start/init reservation4to5 proposal; then existing Commander exact release and original command gates/final review.",
-      "budget_reset": false,
-      "previous_goal_turn_classification": "NO_PROGRESS",
-      "resumed_turns": "Turn1: UI-resume bookkeeping only, cap decision absent. Turn2: authoritative cap/job/auth revalidation only, no live handle. Turn3: same authority and resource blocker verified; no independent action can complete missing command gates.",
-      "resolved_by": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json"
-    },
-    "prelaunch_retry_exception": {
-      "status": "CONSUMED_ONE_ENTRY_NO_FURTHER_REPEAT",
-      "proposal": "../docs/diagnostics/r5-readiness/inputs/passthrough_entry6_input_manifest.json",
-      "requested_additional_entries": 1,
-      "no_new_implementation_repair": true,
-      "independent_pre_review": "../docs/diagnostics/r5-readiness/reviews/review-entry6-conditional-prelive.json",
-      "decision": "docs/diagnostics/r5-readiness/user_entry6_prelaunch_exception.json",
-      "sha256": "f29d6cfff0a97b303a297820a21a018d006525d887c3dd9b67ab15dd043ea8ae"
     }
   },
   "historical_pre_goal_independent_review": {
     "status": "NOT_ACCEPTED",
     "task_status": "BUDGET_EXHAUSTED",
     "reason": "Evaluator output rejected: MUST_FIX requires contract, evidence, impact and closure"
+  },
+  "historical_previous_independent_review": {
+    "status": "PASS_ZERO_PHYSICAL_AND_EXACT_PRELIVE_ONLY",
+    "role_call": 12,
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "input_pack_commit": "b0b8df0c66d4a562e2cb6b4aa269bbf5d4fcfb99",
+    "evidence": "../docs/diagnostics/r5-readiness/reviews/review-zero-r2-command-r3-prelive.json",
+    "closed": [
+      "DIAGNOSTIC-DURABILITY-R1",
+      "PILOT-FUTURE-R1"
+    ],
+    "open": []
+  },
+  "historical_previous_real_diagnostic": {
+    "status": "PHYSICAL_REGRESSION_ACCEPTED_INDEPENDENT_ROLE12_PROCESS_FAILED",
+    "job_id": "J-afe4bda51f5206e5",
+    "source_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+    "physical_rows": 403200,
+    "final_policy_counters": "UNAVAILABLE",
+    "transitions_reservation": 20160,
+    "process": "FAILED",
+    "training_updates": 0
   }
 }

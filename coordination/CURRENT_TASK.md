@@ -1,18 +1,13 @@
 # 当前任务
 
-R5 Goal：诊断闭环、最小修复与短程训练准入。目标 READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE。
-当前 CONTROL_GATES_PASSED_PENDING_FINAL_INDEPENDENT_REVIEW，未完成。
+R5 Goal 已完成：**`READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE`**。独立 Role15 PASS，无阻塞性 MUST_FIX；当前／历史状态同步已完成。技术准入后停止，未启动任何训练。
 
-唯一开发目录 /home/mint/rl_dev/instinctRL-dev、main、单写者；历史与冻结runtime只读。
-真实修复后零目标403200物理行已独立Role12验收；ENTRY6 J-ad3ac7db1fb82d89 命令直通Z200/T100/S330、32lanes、630chunks完整。
-原评价器Z/T/S各32/32、每方向子组4/4 PASS，startup和原sensor-T0/安全/门槛保留。
+唯一开发目录 /home/mint/rl_dev/instinctRL-dev、main、单写者；历史和冻结runtime只读。共同修复基线 `ef68ebb5682b85aa83044fdea1c13b7d0edbf325`；未来 proposal 在 docs/diagnostics/r5-readiness/pilot_future_proposals.r3.json。P0/PLR仅actor LR3e-4/1e-4不同，未来训练AUTH未签发。
 
-ENTRY6 native app.close9.5s超时、FAILED/-9；原PASS_PENDING_CLOSE/H1INCOMPLETE/null、20160全额预留不改写。
-正常 lifeguard ACK 两次稳定空扫描无残留；两次授权 postrun审计已用，完整667对象原job/entireattemptresults inventory已保全。
-资源：用户累计cap8，6start/init已扣；80640nontraining全额保守预留，15roles已扣含最终独立Role15；训练/update/checkpoint0。
-一次资源拒绝重试例外已消费，不再live或GPU探测。
+实测零目标403200物理行已独立验收；ENTRY6 `J-ad3ac7db1fb82d89` 命令直通630chunks/96episodes，原 Z/T/S各32/32、各方向子组4/4通过，原sensor-T0/startup/safety/门槛保留。完整667对象独立核验。
 
-唯一下一动作：Role15对真实command/originalgates/全量归档/清理计账以及需求全项与未来包做独立最终审核。
-通过后更新READY状态、commit/push、停止；首次真实rollout概率gate留给下一轮任一optimizer前，训练须另行Commander授权。
-准确共同baseline ef68ebb5682b85aa83044fdea1c13b7d0edbf325，未来4proposal在pilot_future_proposals.r3.json。
-唯一索引 docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md。
+ENTRY6 native app.close9.5s超时、FAILED/-9，原PASS_PENDING_CLOSE/H1 INCOMPLETE/null和20160全额预留保持；正常 lifeguard ACK 两次稳定空扫描，无所属残留。历史第四次超时和缺失最终reward计数保持。6start/init已扣cap8，80640nontraining全额预留，15roles；训练/update/checkpoint0。一次重试例外已消费，不再Goal live或GPU探测。
+
+下一轮恢复动作：使用已验收启动包，另行明确训练资源授权并经现有 Commander 精确 release；首次真实512样本 old Beta/logp/action/input/index gate 必须在任一 optimizer 前按固定atol1e-6/rtol1e-5通过，失败零更新停止。此门槛当前为PENDING_NEXT_PILOT，不是假装实跑通过。
+
+唯一证据索引 docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md；技术启动包 PILOT_START_READINESS.md / pilot_launch_manifest.json；最终独立审核 reviews/review-entry6-final-readiness.json，SHA `5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620`。

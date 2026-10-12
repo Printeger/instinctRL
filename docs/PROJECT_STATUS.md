@@ -7,14 +7,15 @@
 
 ## 当前 Goal（2026-10-12 新授权）
 
-诊断闭环、最小修复与短程训练准入正在推进。需求见
-[需求](goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md)，最新证据见
-[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。当前为 `CONTROL_GATES_PASSED_PENDING_FINAL_INDEPENDENT_REVIEW`：真实 ENTRY6 命令直通 Z/T/S 各32/32、所有方向子组4/4通过，原 sensor-T0、启动段、安全与门槛保留。
-修复后的零目标物理回归已独立验收；Role15 正在对真实命令数据、完整归档、退出／清理、计账、诊断和未来共同基线做最终独立审核。
-ENTRY6 进程 FAILED/-9：app.close 9.5s超时，原 PASS_PENDING_CLOSE 与 INCOMPLETE/null collector 保留。现场630/20160完整，但20160仍全额预留；正常所有权 ACK 无残留。
-累计 start/init cap8、已用6；nontraining保守预留80640已满，无进一步Goal live许可。训练、optimizer和训练checkpoint写入均0。
-最终独立通过后才写 READY，并停止在下一轮训练前。
-以下历史状态与迁移记录保留，不继承旧 receipt 验收。
+诊断闭环、最小修复与短程训练准入已完成，终态 **`READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE`**。需求见 [需求](goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md)，唯一证据见 [索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)，[启动包](diagnostics/r5-readiness/PILOT_START_READINESS.md)。独立 Role15 [最终审核](diagnostics/r5-readiness/reviews/review-entry6-final-readiness.json) PASS，无阻塞性 MUST_FIX，当前／历史状态同步已完成。
+
+实测五体总质量／真实 rotor allocation 的最小修复、公开 reset、observer 与诊断持久性均有测试和真实回归。零目标403200物理行已独立验收；独立命令直通 ENTRY6 原 Z/T/S 各32/32、各方向子组4/4通过，保留 sensor-T0、所有启动／安全与原门槛。
+
+ENTRY6 进程仍 FAILED/-9：app.close9.5s超时，原 PASS_PENDING_CLOSE 与 INCOMPLETE/null collector 保留。630完成steps/20160现场记录不替代正式结算，20160仍全额预留；正常 owned ACK 无残留，667原件独立核验。原第四次超时仍原样计账。当前6start/init扣账、cap8；80640nontraining全额保守预留，15角色调用。训练 transitions、optimizer updates、训练 checkpoint writes 均0；本 Goal 停止。
+
+下一轮两组共享 `ef68ebb5682b85aa83044fdea1c13b7d0edbf325`，只比较 actor LR3e-4/1e-4。真实首次512样本概率 gate 留作下一轮任一 optimizer 前的强制门槛；未来训练资源授权和 Commander release 未签发。历史 R4 全部失败原因与未记录惯量仍未知，已界定为不阻塞本次有限准入。
+
+以下历史状态、迁移验证和续接记录只作历史，不继承旧 receipt 验收或执行授权。
 
 ## 历史阶段及结论
 
@@ -31,7 +32,7 @@ physics rows 和 transitions 均为 0。`app.close` 超时及脱离进程组的 
 进程后代清理。保留 R3 `903afc5` 的 float32 ray 重建舍入修复，避免旧 R5 快照将其回退。
 actor、reward、控制器、质量/COM、物理参数及方法不因整理改变。
 
-## 本次验证
+## 历史迁移验证
 
 | 检查 | 结果 |
 | --- | --- |
@@ -47,7 +48,7 @@ actor、reward、控制器、质量/COM、物理参数及方法不因整理改�
 rlflow 的隔离协议固定 Codex CLI `0.153.4`，本机为 `0.161.0`，因此不能宣称真实
 orchestrator 后端已认证或可直接恢复。未通过修改固定版本或跳过实际安装检查伪造 PASS。
 
-## 下一步
+## 历史迁移后的下一步（已由当前 Goal 续接）
 
 先对统一目录上的精确候选补齐独立审核；如需真实诊断，再固定提交/配置/工具/输入哈希，
 核对新预算与启动授权。历史失败、未验收和源路径均保留，不继承旧 receipt 的通过状态。

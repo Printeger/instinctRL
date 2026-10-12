@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "ENTRY6_TERMINAL_FULL_COMMAND_GATES_PASS_PENDING_INDEPENDENT_REVIEW",
+  "live_release_status": "GOAL_TECHNICALLY_READY_CLOSED_NO_FURTHER_LIVE",
   "caps": {
     "live_starts": 8,
     "simulator_initializations": 8,
@@ -158,7 +158,10 @@
       "handle": "/root/pilot_reviewer",
       "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
       "scope": "Full actualENTRY6command raw/originalgates/chunkandcompleteinventory/ownedcleanup/reservation + finalrequirements/futuresharedbaseline readiness acceptance; no live/training authority.",
-      "status": "REQUESTED"
+      "status": "PASS_FINAL_TECHNICAL_READINESS",
+      "evidence": "reviews/review-entry6-final-readiness.json",
+      "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
+      "state_sync_condition": "SATISFIED"
     }
   ],
   "initialization_ticks_resets_gpu_probes": {
@@ -176,9 +179,9 @@
   "reserved": {
     "nontraining_transitions": 80640
   },
-  "approval": "plant-r2-commander-approval.json",
+  "approval": "entry6-commander-approval.json",
   "unknown_or_incomplete": {
-    "nontraining_transitions": "Firsttwo failedjobs retain FULL20160 each (40320). Observed6400 is a subset of secondreservation. Currentfourth20160 reserved until existingcollector settles; totalbound60480."
+    "nontraining_transitions": "First/second/fourth/ENTRY6 each retain FULL20160, aggregate80640. Second6400 and ENTRY6 observed20160 are subsets, not formal settlement. Third/fifth FINAL0 settle only their own transitions; all6 starts/init reservations remain charged."
   },
   "live_runs": [
     {
@@ -325,10 +328,10 @@
       "output_bytes_including_archive": 5179944422
     }
   ],
-  "next_exact_approval": "passthrough-r3-commander-approval.json",
+  "next_exact_approval": null,
   "conservative_nontraining_bound_charged": 80640,
-  "completed_nontraining_observed_within_failed_reservations": 6400,
-  "remaining_note": "Cap8/6startinitused. Firsttwo40320+fourth20160+ENTRY6PENDING_CLOSE20160reserved=80640; observedENTRY6full20160 is subsetofitsreservation, notdoublecharged/finalsettled. CompletecommandZTSgates passpendingindependentreview; no furtherlive/nontrainingcapacity oroneentryexception remaining. Training0.",
+  "completed_nontraining_observed_within_failed_reservations": 26560,
+  "remaining_note": "Goal technical readiness accepted by independent Role15; cap8/6starts/init used. All80640 nontraining conservatively reserved; no further Goal live. Historical FAILED statuses, fourth wall overrun and native-close failures preserved. Role calls15/24. Training/update/training-checkpoint0. Future pilot requires separate authorization.",
   "authorization_extensions": [
     {
       "decision_path": "user_resource_decision_startcap8.json",
@@ -354,5 +357,16 @@
     "entry6_approval": "entry6-commander-approval.json",
     "status": "CONSUMED_ONE_ENTRY",
     "job_id": "J-ad3ac7db1fb82d89"
+  },
+  "independent_final_review": {
+    "path": "reviews/review-entry6-final-readiness.json",
+    "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
+    "verdict": "PASS",
+    "role_call": 15,
+    "independent_handle": "/root/pilot_reviewer",
+    "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "evidence_commit": "b7820f8",
+    "state_sync_condition": "SATISFIED_CURRENT_VS_HISTORICAL_FIELDS",
+    "training_authority": false
   }
 }

@@ -1,0 +1,168 @@
+{
+  "schema_version": "instinctrl-r5-final-readiness-verification/1",
+  "result": "PASS",
+  "status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
+  "independent_review_sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
+  "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "current_state_sync_condition": "SATISFIED",
+  "requirements_checks": 13,
+  "evidence_paths_resolved": 48,
+  "future_proposals_sha256": "0154b4b2c9a693c99bf590e91256e092a22ba8fb07599dd66ca71d564b03113a",
+  "future_attempts_absent": [
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012"
+  ],
+  "first_real_rollout_gate": "PENDING_NEXT_PILOT_REQUIRED_BEFORE_EITHER_OPTIMIZER",
+  "native_job_status": "FAILED_MINUS9",
+  "counter_completeness": "INCOMPLETE",
+  "formal_nontraining_transitions": null,
+  "retained_nontraining_reservation": 80640,
+  "live_starts_and_initialization_reservations_used": 6,
+  "role_calls_used": 15,
+  "active_or_uncertain_jobs": 0,
+  "owned_processes_alive": 0,
+  "STOP": [],
+  "original_inventory_objects": 667,
+  "postreview_small_objects_rehashed": 37,
+  "postreview_large_original_size_checks": 630,
+  "large_raw_sha_and_content_validation": "INDEPENDENT_ROLE15_ALL667_OBJECTS_AND_ALL630_TENSOR_CHUNKS; NOT_RERUN_IN_THIS_STATE_SYNC",
+  "existing_cpu_record_checks": [
+    {
+      "path": "plant-r1-cpu-final-v2/test_actor_fingerprint_cache.xml",
+      "sha256": "3ab45ce646fb893b63ad87026eb726feee6c7c946f8d06088327144d45c4434f",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_b0_analyzer_boundaries.xml",
+      "sha256": "d1e199af0cce075aabd341bd8c4f21d2c41692a0758a8fbe22109d1d4d5889b7",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_b0_enhanced_stage1.xml",
+      "sha256": "cb7864cfa4570d96205bb51fa585ab16c0954f8ac1efcf6ea3820fe49500fa67",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_b0_partial_manifest.xml",
+      "sha256": "352d8db2d21c52c939a96ec12eeb0856f9c736352205e6dcc5a49c6286a634e9",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_b0_product_mechanics_torch.xml",
+      "sha256": "abc7c60fd60604bbb1d8be606eb9ed39615fbf55676243dcd00207f909cd1526",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_command_passthrough_backend.xml",
+      "sha256": "d158f75d9179de9ea0d2bb0e4c695ab6847482e24cf0161560ab99307e8c1890",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_d7_cleanup_unittest.xml",
+      "sha256": "bf033e0bc616d3e12e70ed3eae739e711a0ad74920969c8d7876e3bf1063ea85",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_d7_cpu_unittest.xml",
+      "sha256": "5e47d19cd724c6b0605f7fd4da4cd54e43bef63dbfa34d39214f0f8007b7ac73",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_enhanced_case_reset_lifecycle.xml",
+      "sha256": "c06d7381c159d3b3e9604297dd1a591a2052c573f7742b55385cbe27771c12d7",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_h1_adapter.xml",
+      "sha256": "82f144640263e1cfb872b8b9f81b48d64e547f99f894fc33f8a2fa9902122ed4",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_measured_control_plant.xml",
+      "sha256": "a453f1f9df873fe3604172cf8eaf2dca770176bc658f0939c6399cecbeef783f",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_paired_pilot_unittest.xml",
+      "sha256": "6a1ab2d13f773abd9a350e70bb45b594390a7ab0b3e4796dfa83e979c90a17b0",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_pilot_diagnostic_torch.xml",
+      "sha256": "72d1fc2f5bd1edfd8c9dffa52f712df077013e8cd2d48921358e4c43eaaf31ea",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_unified_h1_control_diagnostic.xml",
+      "sha256": "582455bdfa3a9c7954a4659e0a420c8a70b73fd7dc387f7029bff6534153e0d4",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-r1-cpu-final-v2/test_unified_h1_product_hook.xml",
+      "sha256": "c4310ef350e8e09643ac631ea3f349cff78d5b77e5b5b6b665ae8a332916a57a",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "plant-runtime-cpu-v2/m5-runtime.xml",
+      "sha256": "8ab2c20419c087a58545931a8277eca76f5c8fb8f51d38751312fc942e827051",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "pilot-cpu-v4/test_paired_pilot_unittest.xml",
+      "sha256": "ca21d4606c143df02f02cf21f98426b2ed6bd2bb8503719a18321438afe82e53",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "pilot-cpu-v4/test_pilot_diagnostic_torch.xml",
+      "sha256": "8c40f05370694d80bfc68847c7fa660200ac67f7440040c069b2d28e4b847381",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "durability-seed-cpu-v2/results.xml",
+      "sha256": "643fed608a6d6b263e41e6729a2b4a29747c4c7a3ebf481518f65e3bc05a19c1",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "analyzer-cpu-v1/test_b0_analyzer_boundaries.xml",
+      "sha256": "3d6d4781e353387cebb03e4400ca1719ffe2faf3d2766c6a00a55ca588ae145a",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    },
+    {
+      "path": "analyzer-cpu-v1/test_b0_enhanced_stage1.xml",
+      "sha256": "3e58d673929c7bb5ed7372a4469a3383f5f90edb263ee7030b9332bb0156a31c",
+      "tests": null,
+      "scope": "EXISTING_CPU_RECORD_NO_NEW_TEST_RUN"
+    }
+  ],
+  "training_transitions": 0,
+  "optimizer_updates": 0,
+  "training_checkpoint_writes": 0,
+  "new_live_calls": 0,
+  "new_GPU_queries": 0,
+  "new_role_calls": 0,
+  "new_test_runs": 0,
+  "future_training_authorization": "UNISSUED",
+  "current_goal_action": "STOP_AT_TECHNICAL_READINESS_COMMIT_NORMAL_PUSH_ONLY"
+}

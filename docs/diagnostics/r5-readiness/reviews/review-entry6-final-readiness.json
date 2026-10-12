@@ -1,0 +1,157 @@
+{
+  "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "candidate_tree": "b735eafac3888415eded7c6684ed385706871acf",
+  "evidence_commit": "b7820f8",
+  "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+  "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+  "actual_job": "J-ad3ac7db1fb82d89",
+  "verdict": "PASS",
+  "ready_status_allowed": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
+  "scope": {
+    "accepted": [
+      "当前精确候选的诊断、测量、生产质量与分配修复以及工具绑定",
+      "第四次实际全量零指令物理回归的有限科学验收",
+      "ENTRY6 实际原始 Z/T/S command-passthrough 控制验收",
+      "配对 pilot 的技术启动准备，保留第一次真实 rollout gate"
+    ],
+    "not_granted": [
+      "实际训练授权",
+      "未来 pilot 资源预算或 Commander release",
+      "原生关闭成功或本次进程成功",
+      "所有历史失败原因已经确定",
+      "未来策略性能或第一次真实 rollout 概率一致性已经验收"
+    ]
+  },
+  "independent_checks": {
+    "inventory": {
+      "objects": 667,
+      "original_bytes": 5174803621,
+      "result": "PASS",
+      "details": "独立逐对象验证实际原件及可用归档的 bytes/SHA，并递归枚举原始 job 和整个 attempt/results；枚举集合与 inventory 完全一致，无遗漏或哈希错误。未声称 specialized seal 已执行。"
+    },
+    "original_metric_replay": {
+      "episodes": 96,
+      "result": "PASS",
+      "details": "使用既有 evaluate_episode/case_outcome 从实际 mounted-sensor T0 和原始轨迹重新计算。经 JSON 表示规范化后，与保存的原始 gates 完全一致。"
+    },
+    "tensor_trace_validation": {
+      "chunks": 630,
+      "lanes": 32,
+      "transitions": 20160,
+      "result": "COMPLETE_VALID_EVIDENCE",
+      "invalid_downstream_cache_samples": 0,
+      "fully_invalid_chunks": 0,
+      "missing_evidence_filled": false,
+      "details": "独立读取全部实际 tensor chunks，核验完整坐标、哈希、固定 action、未评估 actor 状态、数据形状、有限值、控制与终止一致性及 Lee/wrench 证据。"
+    },
+    "boundary_intermediates": {
+      "chunks": 14,
+      "result": "PASS",
+      "details": "独立检查 Z/T/S 起点、阶段边界和终点全部 32 lanes：action=[1,0.5,0.5,0.5]，alpha=1，v_corr_b=0，v_gov_b/v_final_b 与实际指令一致，ICS beta=1，cache 有效，无 terminated/truncated；S 第100步起实际指令归零。"
+    },
+    "identity_and_ownership": {
+      "result": "PASS",
+      "details": "实际 spec pins 和 approval 绑定匹配；Commander decision 为 APPROVED。owner、guard、child 的准确身份均不再 owns；正常 lifeguard ACK 为两次稳定空扫描，无 surviving descendants。"
+    },
+    "future_package": {
+      "sha256": "0154b4b2c9a693c99bf590e91256e092a22ba8fb07599dd66ca71d564b03113a",
+      "result": "PASS",
+      "details": "四个未来 argv/proposal 行和文件 pins 可重现；训练/评估 seeds 正确，P0 与 PLR 仅 actor LR 不同。未来 attempts、实际 AUTH 和实际 checkpoint hashes 均未签发或产生。"
+    }
+  },
+  "scientific_control_acceptance": {
+    "Z": {
+      "passed": "32/32",
+      "speed_rms_max": 0.010481974110007286,
+      "drift_max": 0.006700953934341669,
+      "height_deviation_max": 0.04852557182312012
+    },
+    "T": {
+      "passed": "32/32",
+      "full_rmse_max": 0.037160031497478485,
+      "steady_rmse_max": 0.0005728255491703749,
+      "vertical_velocity_rms_max": 0.00032326209475286305,
+      "height_deviation_max": 0.053401827812194824
+    },
+    "S": {
+      "passed": "32/32",
+      "stop_time_seconds": 1.5,
+      "steady_drift_max": 0.007121894042938948,
+      "braking_displacement_max": 0.0953749492764473,
+      "zero_block_total_displacement_max": 0.09950529783964157
+    },
+    "subgroups": "Z/T/S 各 d0–d7 全部 4/4，通过原始 startup、安全及 subgroup gates。",
+    "limits": "保留真实 T0 和所有原始步骤，没有删除启动或刹车过渡。固定 command 验收不代表策略性能验收；通用 signature ranking 不作为因果证明。"
+  },
+  "requirements_evidence": [
+    {
+      "contract": "版本、授权、STOP、coexistence、资源与证据边界",
+      "assessment": "PASS",
+      "evidence": "精确只读 source/config/tool 绑定；用户 ENTRY6 单次例外与 Commander approval 在执行前固定；实际原始 coexistence 为 3/4/5%，10.027373884 秒，通过既有阈值后才创建模拟器；完整原件及归档核验。"
+    },
+    {
+      "contract": "§5 pilot 概率一致性与第一次 optimizer 前 gate",
+      "assessment": "PASS_FOR_READINESS_WITH_PENDING_REAL_GATE",
+      "evidence": "此前真实 torch CPU 测试覆盖 HistoryActor/PrivilegedCriticH1 的16×32 capture/bind、scalar hash、实际 optimizer state、attempted/completed hooks 及失败证据。未来首次真实512样本 old Beta/logp/action/input/index gate 尚未运行，必须在任一 optimizer 前按 atol=1e-6、rtol=1e-5通过；失败保持零更新。"
+    },
+    {
+      "contract": "测量、实际 mass/allocation、reset 与 observer 语义",
+      "assessment": "PASS_WITH_SCIENTIFIC_LIMITS",
+      "evidence": "当前生产代码使用实际五体质量与实际 link geometry/whole COM 分配；rotor thrust 和 base-frame reaction 对应实际 staged wrench；observer link-state 与惯量测量契约修复及 CPU 反例保留。第四次实际全量403200行、96 reset rows/segments 的严格物理验证通过；ef68 相关物理代码与该精确回归源字节一致。"
+    },
+    {
+      "contract": "必要控制回归与是否仍需 D7-R",
+      "assessment": "PASS",
+      "evidence": "实际修复后零指令回归与实际原始 fixed-action command Z/T/S 均通过，已解除本次 zero-warmup pilot 前的底层执行歧义。按照必要性边界，无需再增加 D7-R live；不将历史 R4 策略结果转为当前验收。"
+    },
+    {
+      "contract": "诊断持久性与关闭/失败证据真实性",
+      "assessment": "PASS_WITH_DISCLOSED_FAILURE",
+      "evidence": "ef68 在昂贵分析前持久化 collection-complete 证据，CPU abrupt-exit137 测试验证存续。ENTRY6 原件明确保留 PASS_PENDING_CLOSE、native close timeout、FAILED/-9 和 generic collector INCOMPLETE；完整科学证据及正常 owned-cleanup ACK 可独立验证，没有合成 FINAL counters。"
+    },
+    {
+      "contract": "配对 pilot 包和 readiness 边界",
+      "assessment": "PASS",
+      "evidence": "未来 r3 配对包同一 ef68 baseline，只有 actor LR3e-4与1e-4为变量，原始 train/eval seeds、groups、argv、pins 和首次 rollout gate 保留。全部未来授权仍未签发。"
+    }
+  ],
+  "must_fix": [],
+  "state_sync_condition": {
+    "required_before_recording_final_ready": true,
+    "action": "按 root 已接受的范围，统一更新当前 CONTROL_BASELINE_DIAGNOSIS.json、STATE_AND_EVIDENCE、PILOT_START_READINESS 与 readiness 状态：当前 source/job 应指向 ef68/ENTRY6，将旧79/measurement来源明确移入历史字段；删除当前 COMMAND_PENDING/NOT_PERFORMED 等过时状态。",
+    "preserve": "全部历史原件及历史评审、FAILED/native-close 事实、INCOMPLETE/null counters、保守 reservation 和第四次超时记录。",
+    "classification": "状态文档同步条件；不是新增物理或实现阻塞，不要求新增 live 或独立角色调用。"
+  },
+  "non_blocking": [
+    {
+      "id": "NATIVE-CLOSE-FAILURE",
+      "evidence": "ENTRY6 app.close 达9.5秒硬限，进程 FAILED/-9；wall152.32383431098424秒，GPU149.847944133915秒。",
+      "assessment": "在完整科学证据、准确拥有者清理和失败/预算真实性成立时，不阻塞本次技术 readiness。不得描述为 graceful close 或 process PASS；未来批准材料须披露该限制。"
+    },
+    {
+      "id": "CONSERVATIVE-RESOURCE-ACCOUNTING",
+      "evidence": "first/second/fourth/ENTRY6 各保留20160，共80640；third/fifth为实际FINAL零。used starts/init6，wall1608.3564260550775，GPU1592.547116729198，output9761277960。",
+      "assessment": "完整保守 reservation 正确；当前 Goal 非训练额度已耗尽，不因 cap8 尚余启动槽而允许进一步 live。"
+    },
+    {
+      "id": "HISTORICAL-OVERRUN",
+      "evidence": "第四次 wall910.547890709秒，超过910秒0.547890709秒。",
+      "assessment": "保持历史失败和实际收费，不隐去、不倒推为合规成功。"
+    },
+    {
+      "id": "REAL-FIRST-ROLLOUT-PENDING",
+      "assessment": "这是允许 readiness 的明确后续 gate，不能以 CPU/mock 或 command 测试代替真实512样本验收。"
+    },
+    {
+      "id": "CAUSAL-LIMITS",
+      "assessment": "旧第一次惯量失败的实际矩阵未保存，原因仍 UNKNOWN；未验证所有外力与所有历史漂移原因。当前修复、独立物理回归和控制 gates 支持本次有限 readiness，无需扩大为历史全因果结论。"
+    }
+  ],
+  "release_constraints": [
+    "本评审只提供独立技术验收，不签发训练 AUTH 或 release。",
+    "ENTRY6 用户单次无新修复例外已经消耗，不能复用或重启原 job。",
+    "当前 Goal 不再允许 live；未来配对 pilot 必须另有明确资源授权及既有 Commander 精确审批。",
+    "未来训练必须保持同一已批准 baseline、配对变量边界和第一次真实 rollout gate；任一 optimizer 前失败即零更新并保全证据。",
+    "不得将未来 AUTH/checkpoint 占位字段、进程 FAILED 或 INCOMPLETE counters 改写为已发生的成功。"
+  ]
+}

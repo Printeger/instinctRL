@@ -1,44 +1,20 @@
 {
-  "status": "ZERO_TARGET_PHYSICAL_REGRESSION_ACCEPTED_COMMAND_PENDING",
+  "status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "current_runtime_total_mass_kg": 1.1815179230179638,
   "current_asset_sha256": "3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99",
   "historical_verified_transitions": 20160,
   "historical_vertical_mechanism": "SUPPORTED_IN_HISTORICAL_BINDING",
   "horizontal_cause": "SUPPORTED_NOMINAL_VS_ACTUAL_WRENCH_ALLOCATION_GEOMETRY",
-  "new_live_transitions": "second6400observed; fourthfinalcountersunavailable; bothfull20160reservations preserved",
-  "new_condition": "ENHANCED_B0_ZERO_TARGET",
-  "command_passthrough_acceptance": "NOT_PERFORMED",
-  "physical_fix": "REAL_ZERO_PHYSICAL_RESPONSE_ACCEPTED_COMMAND_GATE_PENDING",
-  "scientific_control_acceptance": "NOT_GRANTED",
-  "current_source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
-  "current_job_id": "J-fcbe37739d942e3c",
-  "current_validated_physics_rows": 128640,
-  "current_completed_transitions_observed": 6400,
-  "partial_protocol": true,
-  "current_vertical_mechanism": "SUPPORTED_ACTUAL_MASS_VS_CONTROLLER_BASE_MASS",
-  "mechanism_prediction": [
-    {
-      "example": "Z_lane0_policy100",
-      "scope": "source-and-measured-geometry equilibrium prediction; not new simulation",
-      "predicted_velocity_world_m_s": [
-        0.19355434828183254,
-        -0.055579059498888195,
-        -0.08938204506107636
-      ],
-      "observed_velocity_world_m_s": [
-        0.19352911412715912,
-        -0.05558815598487854,
-        -0.08938680589199066
-      ],
-      "equation_residual_torque_xy_nm_and_vertical_force_n": [
-        5.551115123125783e-17,
-        2.7755575615628914e-17,
-        0.0
-      ],
-      "mass_only_vertical_prediction_m_s": -0.08938170547990508,
-      "nominal_rotor_origin_is_not_actual_system_com": true
-    }
-  ],
+  "new_live_transitions": {
+    "second_observed": 6400,
+    "fourth_final_counters": null,
+    "entry6_observed": 20160,
+    "observed_counts_are_subsets_of_retained_reservations": true,
+    "aggregate_retained_reservation": 80640
+  },
+  "command_passthrough_acceptance": "ACCEPTED_ORIGINAL_ZTS_ALL32_AND_ALL_SUBGROUPS_ROLE15",
+  "physical_fix": "ACCEPTED_REAL_ZERO_TARGET_AND_SEPARATE_COMMAND_REGRESSION",
+  "scientific_control_acceptance": "GRANTED_FOR_CURRENT_PAIRED_PILOT_TECHNICAL_READINESS",
   "zero_target_regression": {
     "job": "J-afe4bda51f5206e5",
     "source": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
@@ -50,7 +26,8 @@
     "process": "FAILED",
     "final_policy_counters": "UNAVAILABLE",
     "reservation": 20160,
-    "analysis": "plant-r2-zero-regression-analysis.json"
+    "analysis": "plant-r2-zero-regression-analysis.json",
+    "independent_status": "ACCEPTED_ROLE12_AND_FINAL_ROLE15"
   },
   "next_shared_baseline": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
   "actual_command_regression": {
@@ -87,7 +64,7 @@
     "conservative_transition_reservation_retained": 20160,
     "ownership": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
     "complete_original_inventory": "live-entry6-command-regression/INVENTORY.json",
-    "scientific_acceptance": "PENDING_INDEPENDENT_ROLE15",
+    "scientific_acceptance": "ACCEPTED_INDEPENDENT_ROLE15",
     "no_further_live_allowed": "Exceptionconsumed andnontrainingcap80640fullyreserved; no automaticretry.",
     "metric_ranges_all32lanes": {
       "Z": {
@@ -156,11 +133,80 @@
           "max": 0.09950529783964157
         }
       }
+    },
+    "independent_review": {
+      "path": "reviews/review-entry6-final-readiness.json",
+      "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
+      "verdict": "PASS",
+      "role_call": 15,
+      "independent_handle": "/root/pilot_reviewer",
+      "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "evidence_commit": "b7820f8",
+      "state_sync_condition": "SATISFIED_CURRENT_VS_HISTORICAL_FIELDS",
+      "training_authority": false
     }
   },
-  "control_admission_status": "ORIGINAL_ZTS_GATES_PASS_PENDING_FINAL_INDEPENDENT_REVIEW",
+  "control_admission_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "D7_R_decision": {
     "status": "NOT_REQUIRED_FOR_CURRENT_ADMISSION",
     "reason": "Repairedzero-target response independently accepted, actualfixedcommand originalZTS all32/subgroups PASS. No unresolvedlowercontrol execution failure remains requiringfrozenpolicyprobe before zerowarmup pilot. OldR4 policy belongsoldbaseline; nextrealpolicy probabilitygate mandatory."
+  },
+  "historical_measurement": {
+    "current_source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+    "current_job_id": "J-fcbe37739d942e3c",
+    "current_validated_physics_rows": 128640,
+    "current_completed_transitions_observed": 6400,
+    "partial_protocol": true,
+    "current_vertical_mechanism": "SUPPORTED_ACTUAL_MASS_VS_CONTROLLER_BASE_MASS",
+    "mechanism_prediction": [
+      {
+        "example": "Z_lane0_policy100",
+        "scope": "source-and-measured-geometry equilibrium prediction; not new simulation",
+        "predicted_velocity_world_m_s": [
+          0.19355434828183254,
+          -0.055579059498888195,
+          -0.08938204506107636
+        ],
+        "observed_velocity_world_m_s": [
+          0.19352911412715912,
+          -0.05558815598487854,
+          -0.08938680589199066
+        ],
+        "equation_residual_torque_xy_nm_and_vertical_force_n": [
+          5.551115123125783e-17,
+          2.7755575615628914e-17,
+          0.0
+        ],
+        "mass_only_vertical_prediction_m_s": -0.08938170547990508,
+        "nominal_rotor_origin_is_not_actual_system_com": true
+      }
+    ],
+    "scope": "SECOND_ENTRY_PRE_REPAIR_PARTIAL_MEASUREMENT_ONLY",
+    "analysis": "measurement-r1b-partial-mechanics-analysis.json",
+    "process_status": "FAILED",
+    "reservation_retained": 20160
+  },
+  "current_source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "current_job_id": "J-ad3ac7db1fb82d89",
+  "current_validated_control_tensor_chunks": 630,
+  "current_completed_policy_steps_observed": 630,
+  "current_completed_transitions_observed": 20160,
+  "current_condition": "B0_COMMAND_PASSTHROUGH",
+  "current_native_process_status": "FAILED_MINUS9",
+  "current_native_close": "HARD_TIMEOUT9_5SEC_OWNER_KILLED",
+  "current_formal_counter_completeness": "INCOMPLETE",
+  "current_formal_nontraining_transitions": null,
+  "current_transition_reservation_retained": 20160,
+  "current_collection_protocol_complete": true,
+  "independent_final_review": {
+    "path": "reviews/review-entry6-final-readiness.json",
+    "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
+    "verdict": "PASS",
+    "role_call": 15,
+    "independent_handle": "/root/pilot_reviewer",
+    "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "evidence_commit": "b7820f8",
+    "state_sync_condition": "SATISFIED_CURRENT_VS_HISTORICAL_FIELDS",
+    "training_authority": false
   }
 }
