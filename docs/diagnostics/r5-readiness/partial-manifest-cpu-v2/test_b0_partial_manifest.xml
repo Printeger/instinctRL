@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="9" time="0.164" timestamp="2026-10-12T16:17:30.335323+08:00" hostname="mint-MS-7E30"><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[setup-0-0-0-PREPARED-None]" time="0.019" /><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[first_row-0-1-0-COLLECTION-0]" time="0.014" /><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[mid_validation-7-8-7-COLLECTION-0]" time="0.014" /><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[encoding-7-8-8-COLLECTION-0]" time="0.014" /><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[environment-32-32-32-COLLECTION-1]" time="0.014" /><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[finalization-32-32-32-FINALIZATION-1]" time="0.014"><failure message="AssertionError: assert ('PARTIAL_FAILURE' == 'PARTIAL_FAILURE'&#10;  &#10;    PARTIAL_FAILURE and 'COLLECTION' == 'FINALIZATION'&#10;  &#10;  - FINALIZATION&#10;  + COLLECTION)">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1001/test_failure_retains_actual_ra5')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7d11154b92b0&gt;
+fault = 'finalization', written = 32, attempted = 32, validated = 32
+phase = 'FINALIZATION', calls = 1
+
+    @pytest.mark.parametrize('fault,written,attempted,validated,phase,calls',[
+        ('setup',0,0,0,'PREPARED',None),('first_row',0,1,0,'COLLECTION',0),
+        ('mid_validation',7,8,7,'COLLECTION',0),('encoding',7,8,8,'COLLECTION',0),
+        ('environment',32,32,32,'COLLECTION',1),('finalization',32,32,32,'FINALIZATION',1),
+        ('analysis',32,32,32,'ANALYSIS',1)])
+    def test_failure_retains_actual_raw_progress_and_primary_error(tmp_path,monkeypatch,fault,written,attempted,validated,phase,calls):
+        value,_=backend_fixture(tmp_path,monkeypatch,fault)
+        with pytest.raises((RuntimeError,ValueError)) as caught:value.run_enhanced_b0_diagnostic({})
+        manifest=json.loads((tmp_path/'enhanced_b0_manifest.json').read_text());raw=(tmp_path/'enhanced_b0_physics.jsonl').read_bytes()
+&gt;       assert manifest['status']=='PARTIAL_FAILURE' and manifest['phase']==phase
+E       AssertionError: assert ('PARTIAL_FAILURE' == 'PARTIAL_FAILURE'
+E         
+E           PARTIAL_FAILURE and 'COLLECTION' == 'FINALIZATION'
+E         
+E         - FINALIZATION
+E         + COLLECTION)
+
+tests/training_workloads/test_b0_partial_manifest.py:69: AssertionError</failure></testcase><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[analysis-32-32-32-ANALYSIS-1]" time="0.014"><failure message="AssertionError: assert ('PARTIAL_FAILURE' == 'PARTIAL_FAILURE'&#10;  &#10;    PARTIAL_FAILURE and 'COLLECTION' == 'ANALYSIS'&#10;  &#10;  - ANALYSIS&#10;  + COLLECTION)">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1001/test_failure_retains_actual_ra6')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7d11154bb4d0&gt;
+fault = 'analysis', written = 32, attempted = 32, validated = 32
+phase = 'ANALYSIS', calls = 1
+
+    @pytest.mark.parametrize('fault,written,attempted,validated,phase,calls',[
+        ('setup',0,0,0,'PREPARED',None),('first_row',0,1,0,'COLLECTION',0),
+        ('mid_validation',7,8,7,'COLLECTION',0),('encoding',7,8,8,'COLLECTION',0),
+        ('environment',32,32,32,'COLLECTION',1),('finalization',32,32,32,'FINALIZATION',1),
+        ('analysis',32,32,32,'ANALYSIS',1)])
+    def test_failure_retains_actual_raw_progress_and_primary_error(tmp_path,monkeypatch,fault,written,attempted,validated,phase,calls):
+        value,_=backend_fixture(tmp_path,monkeypatch,fault)
+        with pytest.raises((RuntimeError,ValueError)) as caught:value.run_enhanced_b0_diagnostic({})
+        manifest=json.loads((tmp_path/'enhanced_b0_manifest.json').read_text());raw=(tmp_path/'enhanced_b0_physics.jsonl').read_bytes()
+&gt;       assert manifest['status']=='PARTIAL_FAILURE' and manifest['phase']==phase
+E       AssertionError: assert ('PARTIAL_FAILURE' == 'PARTIAL_FAILURE'
+E         
+E           PARTIAL_FAILURE and 'COLLECTION' == 'ANALYSIS'
+E         
+E         - ANALYSIS
+E         + COLLECTION)
+
+tests/training_workloads/test_b0_partial_manifest.py:69: AssertionError</failure></testcase><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_manifest_save_failure_does_not_replace_collection_error" time="0.009" /><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_complete_manifest_has_finalized_coverage_and_no_error" time="0.014"><failure message="RuntimeError: formal enhanced B0 execution report is incomplete">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1001/test_complete_manifest_has_fin0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7d111549ae40&gt;
+
+    def test_complete_manifest_has_finalized_coverage_and_no_error(tmp_path,monkeypatch):
+&gt;       value,_=backend_fixture(tmp_path,monkeypatch,None);value.run_enhanced_b0_diagnostic({})
+
+tests/training_workloads/test_b0_partial_manifest.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/backend.py:457: in run_enhanced_b0_diagnostic
+    formal_environment.run_frozen_enhanced_b0_zts(seed=20260909, cases=("Z", "T", "S"), target_velocity_b_m_s=(0.0, 0.0, 0.0), retries=0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;training_workloads.unified_h1.b0_observer.FormalEnhancedB0EnvironmentAdapter object at 0x7d11154baf00&gt;
+parameters = {'cases': ('Z', 'T', 'S'), 'retries': 0, 'seed': 20260909, 'target_velocity_b_m_s': (0.0, 0.0, 0.0)}
+expected = {'cases': ('Z', 'T', 'S'), 'retries': 0, 'seed': 20260909, 'target_velocity_b_m_s': (0.0, 0.0, 0.0)}
+report = None
+
+    def run_frozen_enhanced_b0_zts(self, **parameters: Any) -&gt; None:
+        expected={"seed":20260909,"cases":("Z","T","S"),"target_velocity_b_m_s":(0.0,0.0,0.0),"retries":0}
+        if parameters!=expected or not self._registered or not self._accounted: raise RuntimeError("frozen enhanced B0 invocation changed or observer/accounting absent")
+        report=self._protocol["run"](**parameters)
+        if report!={"physics_callback_batches":12600,"physics_rows":PHYSICS_ROWS,"control_physics_reset_observation_order":"UNCHANGED"}:
+&gt;           raise RuntimeError("formal enhanced B0 execution report is incomplete")
+E           RuntimeError: formal enhanced B0 execution report is incomplete
+
+training_workloads/unified_h1/b0_observer.py:104: RuntimeError</failure></testcase></testsuite></testsuites>

@@ -15,8 +15,8 @@ from instinctlab.control.rotor_actuation import ROTOR_NAMES
 from training_workloads.unified_h1.b0_enhanced import reconstruct_com,validate_row,EvidenceError,quaternion_rotate
 
 
-@pytest.mark.parametrize("origin,rotated",[(0.,False),(100.,False),(700.,True)])
-def test_product_snapshot_uses_link_velocity_once_and_preserves_controller_feedback(origin,rotated):
+@pytest.mark.parametrize("origin,rotated,misaligned",[(0.,False,False),(100.,False,False),(700.,True,False),(100.,False,True)])
+def test_product_snapshot_uses_link_velocity_once_and_preserves_controller_feedback(origin,rotated,misaligned):
     path=Path('isaaclab-training/instinctlab/envs/unified_h1_direct_env.py')
     tree=ast.parse(path.read_text())
     selected=[n for n in ast.walk(tree) if isinstance(n,ast.FunctionDef) and n.name in ('_enhanced_b0_physics_rows','_cross3','_tolist')]
@@ -32,6 +32,8 @@ def test_product_snapshot_uses_link_velocity_once_and_preserves_controller_feedb
     body[:,:,0]=origin
     if rotated:
         body[:,:,3]=2**-.5;body[:,:,6]=2**-.5
+    if misaligned:
+        body[:,1:,3]=2**-.5;body[:,1:,5]=2**-.5
     hybrid=body.clone();hybrid[:,:,8]=.2  # body_state_w: velocities already at COM.
     com=torch.zeros(32,5,7);com[:,:,0]=.1;com[:,:,3]=1
     root=torch.zeros(32,13);root[:,3]=1
@@ -46,6 +48,7 @@ def test_product_snapshot_uses_link_velocity_once_and_preserves_controller_feedb
     env._lee=NS(desired_rotation_w=torch.eye(3).repeat(32,1,1),collective_thrust_n=torch.ones(32,1))
     rotor=NS(normalized_commands=torch.full((32,4),.5),target_throttle=torch.full((32,4),.5),
              throttle=torch.full((32,4),.5),thrusts_n=torch.ones(32,4),reaction_moments_nm=torch.zeros(32,4))
+    if misaligned:rotor.reaction_moments_nm[:]=torch.tensor([.01,.02,.03,.04])
     env._wrench=NS(rotor=rotor);env._enhanced_b0_coordinate=('Z',0,0)
     env._enhanced_b0_previous_system={};env._enhanced_b0_previous_velocity={};env._enhanced_b0_episode_ids={}
     env._enhanced_b0_last_snapshots={};env._enhanced_b0_reset_boundaries={}
@@ -55,12 +58,31 @@ def test_product_snapshot_uses_link_velocity_once_and_preserves_controller_feedb
     assert len(rows)==32
     for row in rows:
         derived=reconstruct_com(row['bodies'])
-        expected=torch.tensor([-1.,0.,0.] if rotated else [0.,1.,0.])
+        expected=torch.tensor([0.,.2,0.] if misaligned else ([-1.,0.,0.] if rotated else [0.,1.,0.]))
         torch.testing.assert_close(torch.tensor(derived['linear_momentum_kg_m_s']),expected,atol=1e-6,rtol=1e-6)
         assert row['root_state']['linear_velocity']==[0.,0.,0.]
         assert row['response']['velocity_world_m_s']==[0.,0.,0.]
         assert abs(row['controller']['velocity_error_b_m_s'][1]+.2)<1e-7
         validate_row(row)
+    if misaligned:
+        from instinctlab.control.runtime_adapter import TaslabArticulationWrenchAdapter
+        adapter=object.__new__(TaslabArticulationWrenchAdapter)
+        adapter._forces=torch.zeros(32,5,3);adapter._torques=torch.zeros_like(adapter._forces)
+        forces,torques=adapter._wrench_buffers(rotor)
+        # Independently reconstruct the actual adapter's staged body wrenches.
+        force_total=torch.zeros(3,dtype=torch.float64);torque_total=force_total.clone()
+        center=torch.tensor(rows[0]['system']['combined_com_world_m'],dtype=torch.float64)
+        for index in range(5):
+            q=body[0,index,3:7].double().tolist()
+            f=torch.tensor(quaternion_rotate(q,forces[0,index].double().tolist()))
+            t=torch.tensor(quaternion_rotate(q,torques[0,index].double().tolist()))
+            force_total+=f;torque_total+=torch.cross(body[0,index,:3].double()-center,f.double(),dim=0)+t
+        torch.testing.assert_close(torch.tensor(rows[0]['wrenches']['rotor']['force_n'],dtype=torch.float64),force_total,atol=1e-7,rtol=1e-7)
+        torch.testing.assert_close(torch.tensor(rows[0]['wrenches']['rotor']['torque_at_com_nm'],dtype=torch.float64),torque_total,atol=1e-7,rtol=1e-7)
+        assert abs(rows[0]['wrenches']['rotor']['torque_at_com_nm'][2]-.1)<1e-7
+        import copy
+        bad=copy.deepcopy(rows[0]);bad['rotors'][0]['reaction_direction_world']=[1.,0.,0.]
+        with pytest.raises(EvidenceError,match='reaction direction'):validate_row(bad)
     assert torch.equal(before_body,body) and torch.equal(before_root,control_root)
     # A continuous next physics sample must match serialized momentum differencing.
     body[:,:,7]+=.01

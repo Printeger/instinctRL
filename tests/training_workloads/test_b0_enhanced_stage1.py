@@ -16,7 +16,7 @@ from training_workloads.unified_h1.budget import ExecutionCounters, required_mod
 
 def row():
     body={"name":"base","mass_kg":2.0,"local_com_m":[0.5,0,0],"local_com_quaternion_wxyz":[1,0,0,0],"inertia_at_com_body_kg_m2":[[1,0,0],[0,2,0],[0,0,3]],"world_position_m":[1,2,3],"world_quaternion_wxyz":[1,0,0,0],"world_linear_velocity_m_s":[0,0,0],"world_angular_velocity_rad_s":[0,0,0]}
-    rotor={"name":"r0","command":0.5,"target_throttle":0.5,"actual_throttle":0.5,"thrust_n":2.0,"reaction_moment_nm":0.1,"application_point_world_m":[1.5,3,3],"direction_world":[0,0,1]}
+    rotor={"name":"r0","command":0.5,"target_throttle":0.5,"actual_throttle":0.5,"thrust_n":2.0,"reaction_moment_nm":0.1,"application_point_world_m":[1.5,3,3],"direction_world":[0,0,1],"reaction_body":"base","reaction_direction_world":[0,0,1]}
     available=lambda f,t:{"availability":"AVAILABLE","force_n":f,"torque_at_com_nm":t}
     return OrderedDict((
       ("schema_version",SCHEMA),("experiment_id",EXPERIMENT_ID),("case","Z"),("policy_step",0),("physics_step",0),("lane",0),("episode_id",0),

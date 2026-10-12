@@ -21,7 +21,7 @@ DECIMATION = 20
 PHYSICS_ROWS = sum(CASE_POLICY_STEPS.values()) * LANES * DECIMATION
 UNAVAILABLE = "UNAVAILABLE"
 WRENCH_CLASSES = ("gravity", "rotor", "drag_aero", "contact", "joint_constraint", "other")
-SCHEMA = "instinctrl-enhanced-b0-physics-row/1"
+SCHEMA = "instinctrl-enhanced-b0-physics-row/2"
 
 class EvidenceError(ValueError):
     """Raw evidence is absent, contradictory, or not mechanically closed."""
@@ -93,15 +93,18 @@ def rotor_wrench(rotors: Any, com: Any) -> dict[str, tuple[float,float,float]]:
     if not isinstance(rotors,list) or not rotors: raise EvidenceError("rotors must be non-empty")
     com=_vec(com,"combined_com_world_m"); force=(0.,0.,0.); torque=(0.,0.,0.); names=set()
     for i,r in enumerate(rotors):
-        required={"name","command","target_throttle","actual_throttle","thrust_n","reaction_moment_nm","application_point_world_m","direction_world"}
+        required={"name","command","target_throttle","actual_throttle","thrust_n","reaction_moment_nm","application_point_world_m","direction_world","reaction_body","reaction_direction_world"}
         if not isinstance(r,dict) or set(r)!=required: raise EvidenceError(f"rotor[{i}] schema mismatch")
         if r["name"] in names: raise EvidenceError("rotor names must be unique")
         names.add(r["name"])
         for key in ("command","target_throttle","actual_throttle","thrust_n","reaction_moment_nm"): _finite_number(r[key],key)
         direction=_vec(r["direction_world"],"direction_world")
         if not math.isclose(_norm(direction),1.0,rel_tol=0,abs_tol=1e-5): raise EvidenceError("rotor direction must be unit length")
+        reaction_direction=_vec(r["reaction_direction_world"],"reaction_direction_world")
+        if not isinstance(r["reaction_body"],str) or not r["reaction_body"] or not math.isclose(_norm(reaction_direction),1.0,rel_tol=0,abs_tol=1e-5):
+            raise EvidenceError("reaction body/direction must be explicit and unit length")
         f=_scale(direction,float(r["thrust_n"])); arm=_sub(_vec(r["application_point_world_m"],"application_point_world_m"),com)
-        t=_add(_cross(arm,f),_scale(direction,float(r["reaction_moment_nm"])))
+        t=_add(_cross(arm,f),_scale(reaction_direction,float(r["reaction_moment_nm"])))
         force=_add(force,f); torque=_add(torque,t)
     return {"force_n":force,"torque_at_com_nm":torque}
 
@@ -169,6 +172,11 @@ def validate_row(row: Any) -> dict[str,Any]:
     if _norm(_sub(_vec(declared["linear_momentum_kg_m_s"],"declared linear momentum"),system["linear_momentum_kg_m_s"]))>1e-8: raise EvidenceError("body-derived linear momentum mismatch")
     if _norm(_sub(_vec(declared["angular_momentum_at_com_kg_m2_s"],"declared angular momentum"),system["angular_momentum_at_com_kg_m2_s"]))>1e-8: raise EvidenceError("body-derived angular momentum mismatch")
     derived=rotor_wrench(row["rotors"],system["combined_com_world_m"])
+    body_by_name={b["name"]:b for b in row["bodies"]}
+    for rotor in row["rotors"]:
+        reaction_body=body_by_name.get(rotor["reaction_body"])
+        if reaction_body is None or _norm(_sub(_vec(rotor["reaction_direction_world"],"reaction direction"),quaternion_rotate(reaction_body["world_quaternion_wxyz"],(0.,0.,1.))))>1e-8:
+            raise EvidenceError("reaction direction disagrees with declared body local-Z frame")
     wrenchmap=row["wrenches"]
     if not isinstance(wrenchmap,dict) or tuple(wrenchmap)!=WRENCH_CLASSES: raise EvidenceError("wrench class schema mismatch")
     for wrench_name in WRENCH_CLASSES: _wrench(wrenchmap[wrench_name], wrench_name)

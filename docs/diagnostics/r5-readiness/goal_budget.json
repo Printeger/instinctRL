@@ -30,7 +30,7 @@
     "wall_seconds": 0,
     "gpu_seconds": 0,
     "output_bytes": 0,
-    "role_calls": 4,
+    "role_calls": 5,
     "training_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0
@@ -66,7 +66,16 @@
       "candidate_commit": "918fec6f8f37a3700d47cf615168eb9cad2603b1",
       "handle": "/root/pilot_reviewer",
       "scope": "MECHANICS-R1 closure and exact readonly baseline_v2 input pre-review; no live authorization",
-      "status": "REQUESTED"
+      "status": "FAILED_MODEL_CAPACITY_NO_REVIEW"
+    },
+    {
+      "call": 5,
+      "role": "Reviewer",
+      "candidate_commit": "918fec6f8f37a3700d47cf615168eb9cad2603b1",
+      "input_pack_commit": "d9033a0",
+      "handle": "/root/pilot_reviewer",
+      "scope": "same exact input pre-review after capacity failure; no live",
+      "status": "MUST_FIX"
     }
   ],
   "initialization_ticks_resets_gpu_probes": "UNBOUND_NO_LIVE_RELEASE",

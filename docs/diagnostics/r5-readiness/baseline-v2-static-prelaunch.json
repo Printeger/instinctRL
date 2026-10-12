@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-c",
+    "from training_workloads.unified_h1.config import load_config,validate_prelaunch_environment;c=load_config();validate_prelaunch_environment(c);print(\"STATIC_PRELAUNCH_PASS_NO_GPU_CALLS\")"
+  ],
+  "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-v2-20261012",
+  "env": {
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "CUDA_VISIBLE_DEVICES": "0",
+    "PYTHONPATH": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-v2-20261012:/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-v2-20261012/isaaclab-training",
+    "ISAACSIM_ASSET_ROOT": "/home/mint/rl_dev/instinctRL-dev/runtime_assets/Assets/Isaac/5.1"
+  },
+  "exit_code": 0,
+  "gpu_calls": 0,
+  "simulator_initializations": 0
+}

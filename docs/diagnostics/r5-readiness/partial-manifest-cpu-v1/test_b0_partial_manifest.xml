@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="9" skipped="0" tests="9" time="0.130" timestamp="2026-10-12T16:17:07.580985+08:00" hostname="mint-MS-7E30"><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[setup-0-0-0-PREPARED-None]" time="0.005"><failure message="KeyError: &quot;'__name__' not in globals&quot;">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1000/test_failure_retains_actual_ra0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7af69b8e9c70&gt;
+fault = 'setup', written = 0, attempted = 0, validated = 0, phase = 'PREPARED'
+calls = None
+
+    @pytest.mark.parametrize('fault,written,attempted,validated,phase,calls',[
+        ('setup',0,0,0,'PREPARED',None),('first_row',0,1,0,'COLLECTION',0),
+        ('mid_validation',7,8,7,'COLLECTION',0),('encoding',7,8,8,'COLLECTION',0),
+        ('environment',32,32,32,'COLLECTION',1),('finalization',32,32,32,'FINALIZATION',1),
+        ('analysis',32,32,32,'ANALYSIS',1)])
+    def test_failure_retains_actual_raw_progress_and_primary_error(tmp_path,monkeypatch,fault,written,attempted,validated,phase,calls):
+        value,_=backend_fixture(tmp_path,monkeypatch,fault)
+&gt;       with pytest.raises((RuntimeError,ValueError)) as caught:value.run_enhanced_b0_diagnostic({})
+
+tests/training_workloads/test_b0_partial_manifest.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Backend object at 0x7af69b95fc20&gt;, parameters = {}
+
+    def run_enhanced_b0_diagnostic(self, parameters: Mapping[str, Any]) -&gt; None:
+        """Attach the read-only observer before the exact environment-owned Z/T/S run."""
+        import json
+&gt;       from .b0_enhanced import TraceValidator
+E       KeyError: "'__name__' not in globals"
+
+training_workloads/unified_h1/backend.py:399: KeyError</failure></testcase><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[first_row-0-1-0-COLLECTION-0]" time="0.004"><failure message="KeyError: &quot;'__name__' not in globals&quot;">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1000/test_failure_retains_actual_ra1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7af69b717890&gt;
+fault = 'first_row', written = 0, attempted = 1, validated = 0
+phase = 'COLLECTION', calls = 0
+
+    @pytest.mark.parametrize('fault,written,attempted,validated,phase,calls',[
+        ('setup',0,0,0,'PREPARED',None),('first_row',0,1,0,'COLLECTION',0),
+        ('mid_validation',7,8,7,'COLLECTION',0),('encoding',7,8,8,'COLLECTION',0),
+        ('environment',32,32,32,'COLLECTION',1),('finalization',32,32,32,'FINALIZATION',1),
+        ('analysis',32,32,32,'ANALYSIS',1)])
+    def test_failure_retains_actual_raw_progress_and_primary_error(tmp_path,monkeypatch,fault,written,attempted,validated,phase,calls):
+        value,_=backend_fixture(tmp_path,monkeypatch,fault)
+&gt;       with pytest.raises((RuntimeError,ValueError)) as caught:value.run_enhanced_b0_diagnostic({})
+
+tests/training_workloads/test_b0_partial_manifest.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Backend object at 0x7af69b717e60&gt;, parameters = {}
+
+    def run_enhanced_b0_diagnostic(self, parameters: Mapping[str, Any]) -&gt; None:
+        """Attach the read-only observer before the exact environment-owned Z/T/S run."""
+        import json
+&gt;       from .b0_enhanced import TraceValidator
+E       KeyError: "'__name__' not in globals"
+
+training_workloads/unified_h1/backend.py:399: KeyError</failure></testcase><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[mid_validation-7-8-7-COLLECTION-0]" time="0.004"><failure message="KeyError: &quot;'__name__' not in globals&quot;">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1000/test_failure_retains_actual_ra2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7af69b724710&gt;
+fault = 'mid_validation', written = 7, attempted = 8, validated = 7
+phase = 'COLLECTION', calls = 0
+
+    @pytest.mark.parametrize('fault,written,attempted,validated,phase,calls',[
+        ('setup',0,0,0,'PREPARED',None),('first_row',0,1,0,'COLLECTION',0),
+        ('mid_validation',7,8,7,'COLLECTION',0),('encoding',7,8,8,'COLLECTION',0),
+        ('environment',32,32,32,'COLLECTION',1),('finalization',32,32,32,'FINALIZATION',1),
+        ('analysis',32,32,32,'ANALYSIS',1)])
+    def test_failure_retains_actual_raw_progress_and_primary_error(tmp_path,monkeypatch,fault,written,attempted,validated,phase,calls):
+        value,_=backend_fixture(tmp_path,monkeypatch,fault)
+&gt;       with pytest.raises((RuntimeError,ValueError)) as caught:value.run_enhanced_b0_diagnostic({})
+
+tests/training_workloads/test_b0_partial_manifest.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Backend object at 0x7af69b724e30&gt;, parameters = {}
+
+    def run_enhanced_b0_diagnostic(self, parameters: Mapping[str, Any]) -&gt; None:
+        """Attach the read-only observer before the exact environment-owned Z/T/S run."""
+        import json
+&gt;       from .b0_enhanced import TraceValidator
+E       KeyError: "'__name__' not in globals"
+
+training_workloads/unified_h1/backend.py:399: KeyError</failure></testcase><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[encoding-7-8-8-COLLECTION-0]" time="0.004"><failure message="KeyError: &quot;'__name__' not in globals&quot;">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1000/test_failure_retains_actual_ra3')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7af69b725fa0&gt;
+fault = 'encoding', written = 7, attempted = 8, validated = 8
+phase = 'COLLECTION', calls = 0
+
+    @pytest.mark.parametrize('fault,written,attempted,validated,phase,calls',[
+        ('setup',0,0,0,'PREPARED',None),('first_row',0,1,0,'COLLECTION',0),
+        ('mid_validation',7,8,7,'COLLECTION',0),('encoding',7,8,8,'COLLECTION',0),
+        ('environment',32,32,32,'COLLECTION',1),('finalization',32,32,32,'FINALIZATION',1),
+        ('analysis',32,32,32,'ANALYSIS',1)])
+    def test_failure_retains_actual_raw_progress_and_primary_error(tmp_path,monkeypatch,fault,written,attempted,validated,phase,calls):
+        value,_=backend_fixture(tmp_path,monkeypatch,fault)
+&gt;       with pytest.raises((RuntimeError,ValueError)) as caught:value.run_enhanced_b0_diagnostic({})
+
+tests/training_workloads/test_b0_partial_manifest.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Backend object at 0x7af69b726600&gt;, parameters = {}
+
+    def run_enhanced_b0_diagnostic(self, parameters: Mapping[str, Any]) -&gt; None:
+        """Attach the read-only observer before the exact environment-owned Z/T/S run."""
+        import json
+&gt;       from .b0_enhanced import TraceValidator
+E       KeyError: "'__name__' not in globals"
+
+training_workloads/unified_h1/backend.py:399: KeyError</failure></testcase><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[environment-32-32-32-COLLECTION-1]" time="0.004"><failure message="KeyError: &quot;'__name__' not in globals&quot;">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1000/test_failure_retains_actual_ra4')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7af69b717c50&gt;
+fault = 'environment', written = 32, attempted = 32, validated = 32
+phase = 'COLLECTION', calls = 1
+
+    @pytest.mark.parametrize('fault,written,attempted,validated,phase,calls',[
+        ('setup',0,0,0,'PREPARED',None),('first_row',0,1,0,'COLLECTION',0),
+        ('mid_validation',7,8,7,'COLLECTION',0),('encoding',7,8,8,'COLLECTION',0),
+        ('environment',32,32,32,'COLLECTION',1),('finalization',32,32,32,'FINALIZATION',1),
+        ('analysis',32,32,32,'ANALYSIS',1)])
+    def test_failure_retains_actual_raw_progress_and_primary_error(tmp_path,monkeypatch,fault,written,attempted,validated,phase,calls):
+        value,_=backend_fixture(tmp_path,monkeypatch,fault)
+&gt;       with pytest.raises((RuntimeError,ValueError)) as caught:value.run_enhanced_b0_diagnostic({})
+
+tests/training_workloads/test_b0_partial_manifest.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Backend object at 0x7af69b717230&gt;, parameters = {}
+
+    def run_enhanced_b0_diagnostic(self, parameters: Mapping[str, Any]) -&gt; None:
+        """Attach the read-only observer before the exact environment-owned Z/T/S run."""
+        import json
+&gt;       from .b0_enhanced import TraceValidator
+E       KeyError: "'__name__' not in globals"
+
+training_workloads/unified_h1/backend.py:399: KeyError</failure></testcase><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[finalization-32-32-32-FINALIZATION-1]" time="0.004"><failure message="KeyError: &quot;'__name__' not in globals&quot;">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1000/test_failure_retains_actual_ra5')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7af69b724890&gt;
+fault = 'finalization', written = 32, attempted = 32, validated = 32
+phase = 'FINALIZATION', calls = 1
+
+    @pytest.mark.parametrize('fault,written,attempted,validated,phase,calls',[
+        ('setup',0,0,0,'PREPARED',None),('first_row',0,1,0,'COLLECTION',0),
+        ('mid_validation',7,8,7,'COLLECTION',0),('encoding',7,8,8,'COLLECTION',0),
+        ('environment',32,32,32,'COLLECTION',1),('finalization',32,32,32,'FINALIZATION',1),
+        ('analysis',32,32,32,'ANALYSIS',1)])
+    def test_failure_retains_actual_raw_progress_and_primary_error(tmp_path,monkeypatch,fault,written,attempted,validated,phase,calls):
+        value,_=backend_fixture(tmp_path,monkeypatch,fault)
+&gt;       with pytest.raises((RuntimeError,ValueError)) as caught:value.run_enhanced_b0_diagnostic({})
+
+tests/training_workloads/test_b0_partial_manifest.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Backend object at 0x7af69b725490&gt;, parameters = {}
+
+    def run_enhanced_b0_diagnostic(self, parameters: Mapping[str, Any]) -&gt; None:
+        """Attach the read-only observer before the exact environment-owned Z/T/S run."""
+        import json
+&gt;       from .b0_enhanced import TraceValidator
+E       KeyError: "'__name__' not in globals"
+
+training_workloads/unified_h1/backend.py:399: KeyError</failure></testcase><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_failure_retains_actual_raw_progress_and_primary_error[analysis-32-32-32-ANALYSIS-1]" time="0.004"><failure message="KeyError: &quot;'__name__' not in globals&quot;">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1000/test_failure_retains_actual_ra6')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7af69b7251c0&gt;
+fault = 'analysis', written = 32, attempted = 32, validated = 32
+phase = 'ANALYSIS', calls = 1
+
+    @pytest.mark.parametrize('fault,written,attempted,validated,phase,calls',[
+        ('setup',0,0,0,'PREPARED',None),('first_row',0,1,0,'COLLECTION',0),
+        ('mid_validation',7,8,7,'COLLECTION',0),('encoding',7,8,8,'COLLECTION',0),
+        ('environment',32,32,32,'COLLECTION',1),('finalization',32,32,32,'FINALIZATION',1),
+        ('analysis',32,32,32,'ANALYSIS',1)])
+    def test_failure_retains_actual_raw_progress_and_primary_error(tmp_path,monkeypatch,fault,written,attempted,validated,phase,calls):
+        value,_=backend_fixture(tmp_path,monkeypatch,fault)
+&gt;       with pytest.raises((RuntimeError,ValueError)) as caught:value.run_enhanced_b0_diagnostic({})
+
+tests/training_workloads/test_b0_partial_manifest.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Backend object at 0x7af69b8df320&gt;, parameters = {}
+
+    def run_enhanced_b0_diagnostic(self, parameters: Mapping[str, Any]) -&gt; None:
+        """Attach the read-only observer before the exact environment-owned Z/T/S run."""
+        import json
+&gt;       from .b0_enhanced import TraceValidator
+E       KeyError: "'__name__' not in globals"
+
+training_workloads/unified_h1/backend.py:399: KeyError</failure></testcase><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_manifest_save_failure_does_not_replace_collection_error" time="0.004"><failure message="KeyError: &quot;'__name__' not in globals&quot;">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1000/test_manifest_save_failure_doe0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7af69b7372f0&gt;
+
+    def test_manifest_save_failure_does_not_replace_collection_error(tmp_path,monkeypatch):
+        value,namespace=backend_fixture(tmp_path,monkeypatch,'environment')
+        def fail_terminal(output,name,contents):
+            if name=='enhanced_b0_manifest.json' and contents['status']=='PARTIAL_FAILURE':raise OSError('injected evidence error')
+            atomic_json_replace(output,name,contents)
+        namespace['atomic_json_replace']=fail_terminal
+&gt;       with pytest.raises(RuntimeError,match='injected environment') as caught:value.run_enhanced_b0_diagnostic({})
+
+tests/training_workloads/test_b0_partial_manifest.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Backend object at 0x7af69b737470&gt;, parameters = {}
+
+    def run_enhanced_b0_diagnostic(self, parameters: Mapping[str, Any]) -&gt; None:
+        """Attach the read-only observer before the exact environment-owned Z/T/S run."""
+        import json
+&gt;       from .b0_enhanced import TraceValidator
+E       KeyError: "'__name__' not in globals"
+
+training_workloads/unified_h1/backend.py:399: KeyError</failure></testcase><testcase classname="tests.training_workloads.test_b0_partial_manifest" name="test_complete_manifest_has_finalized_coverage_and_no_error" time="0.004"><failure message="KeyError: &quot;'__name__' not in globals&quot;">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1000/test_complete_manifest_has_fin0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7af69b727b90&gt;
+
+    def test_complete_manifest_has_finalized_coverage_and_no_error(tmp_path,monkeypatch):
+&gt;       value,_=backend_fixture(tmp_path,monkeypatch,None);value.run_enhanced_b0_diagnostic({})
+
+tests/training_workloads/test_b0_partial_manifest.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Backend object at 0x7af69b95ec60&gt;, parameters = {}
+
+    def run_enhanced_b0_diagnostic(self, parameters: Mapping[str, Any]) -&gt; None:
+        """Attach the read-only observer before the exact environment-owned Z/T/S run."""
+        import json
+&gt;       from .b0_enhanced import TraceValidator
+E       KeyError: "'__name__' not in globals"
+
+training_workloads/unified_h1/backend.py:399: KeyError</failure></testcase></testsuite></testsuites>

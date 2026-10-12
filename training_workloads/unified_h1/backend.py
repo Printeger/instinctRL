@@ -402,40 +402,79 @@ class UnifiedH1LiveBackend:
         target = self.output / "enhanced_b0_physics.jsonl"
         if target.exists(): raise RuntimeError("enhanced B0 raw output already exists")
         stream = target.open("x", encoding="utf-8")
-        written_bytes = 0
+        written_bytes = written_rows = attempted_rows = validated_rows = 0
+        coverage = observation = receipt = None
+        observer = None
+        last_attempted_coordinate = last_written_coordinate = None
+        phase = "PREPARED"
+        def preserve_raw_manifest(status, error=None):
+            atomic_json_replace(self.output, "enhanced_b0_manifest.json", {
+                "schema_version":"instinctrl-enhanced-b0-raw-manifest/2",
+                "experiment_id":"UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
+                "authorization_sha256":self.authorization["authorization_sha256"],
+                "source_identity":{key:self.authorization[key] for key in
+                    ("product_commit","product_tree","workload_commit","workload_tree","config_sha256")},
+                "status":status,"phase":phase,"hook_receipt":receipt,
+                "coverage":coverage,"observation":observation,
+                "raw":{"path":target.name,"attempted_rows":attempted_rows,
+                    "validated_rows":validated_rows,"written_rows":written_rows,
+                    "encoded_bytes":written_bytes,"file_bytes":target.stat().st_size,
+                    "sha256":sha256_file(target),
+                    "last_attempted_coordinate":last_attempted_coordinate,
+                    "last_written_coordinate":last_written_coordinate,
+                    "stream_closed":stream.closed},
+                "observer_progress":None if observer is None else {
+                    "completed_callback_calls":observer.calls,"completed_callback_rows":observer.rows,
+                    "coverage_finalized":observation is not None},
+                "primary_error":None if error is None else exception_record(error),
+                "condition":"ENHANCED_B0_ZERO_TARGET",
+                "measurement_sources":{"mass":"Articulation.root_physx_view.get_masses",
+                    "inertia":"Articulation.root_physx_view.get_inertias",
+                    "body":"data.body_link_state_w","root_response":"data.root_link_state_w",
+                    "controller_feedback":"data.root_state_w"},
+                "automatic_retries":0,"training_transitions":0,"optimizer_updates":0,
+                "checkpoint_writes":0,"policy_evaluations":0,
+                "execution_counters":self.counters.snapshot()})
         def write(row):
-            nonlocal written_bytes
+            nonlocal written_bytes, written_rows, attempted_rows, validated_rows, last_attempted_coordinate, last_written_coordinate
+            attempted_rows += 1
+            last_attempted_coordinate={key:row.get(key) for key in ("case","policy_step","physics_step","lane","episode_id")}
             validator.append(row)
+            validated_rows += 1
             encoded=json.dumps(row, sort_keys=False, separators=(",", ":"), allow_nan=False) + "\n"
             size=len(encoded.encode("utf-8"))
             if written_bytes + size > 16 * 1024**3: raise RuntimeError("enhanced B0 16 GiB diagnostic ceiling exhausted")
-            stream.write(encoded); written_bytes += size
-        formal_environment = FormalEnhancedB0EnvironmentAdapter(self.environment)
-        observer = ReadOnlyObserver(write, formal_environment.read_only_diagnostic_state_fingerprints)
-        accounting = EnhancedB0ExecutionAccounting(self.counters, self.authorization["budgets"], self.resource_check)
-        formal_environment.configure_execution_accounting(accounting)
-        receipt = attach_supported_post_physics(formal_environment, observer)
+            stream.write(encoded); written_bytes += size; written_rows += 1
+            last_written_coordinate=dict(last_attempted_coordinate)
         try:
+            preserve_raw_manifest("PREPARED")
+            formal_environment = FormalEnhancedB0EnvironmentAdapter(self.environment)
+            observer = ReadOnlyObserver(write, formal_environment.read_only_diagnostic_state_fingerprints)
+            accounting = EnhancedB0ExecutionAccounting(self.counters, self.authorization["budgets"], self.resource_check)
+            formal_environment.configure_execution_accounting(accounting)
+            receipt = attach_supported_post_physics(formal_environment, observer)
+            phase = "COLLECTION"
             formal_environment.run_frozen_enhanced_b0_zts(seed=20260909, cases=("Z", "T", "S"), target_velocity_b_m_s=(0.0, 0.0, 0.0), retries=0)
+            phase = "FINALIZATION"
             coverage = validator.finalize(); observation = observer.finalize()
             stream.flush(); os.fsync(stream.fileno())
-        finally:
             stream.close()
-        from .b0_causal_analyzer import analyze_jsonl
-        analysis = analyze_jsonl(target)
-        atomic_json_replace(self.output, "enhanced_b0_causal_analysis.json", analysis)
-        atomic_json_replace(self.output, "enhanced_b0_manifest.json", {
-            "schema_version":"instinctrl-enhanced-b0-raw-manifest/1",
-            "experiment_id":"UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
-            "hook_receipt":receipt,"coverage":coverage,"observation":observation,
-            "condition":"ENHANCED_B0_ZERO_TARGET",
-            "measurement_sources":{"mass":"Articulation.root_physx_view.get_masses",
-                "inertia":"Articulation.root_physx_view.get_inertias",
-                "body":"data.body_link_state_w","root_response":"data.root_link_state_w",
-                "controller_feedback":"data.root_state_w"},
-            "automatic_retries":0,"training_transitions":0,"optimizer_updates":0,
-            "checkpoint_writes":0,"policy_evaluations":0,
-            "execution_counters":self.counters.snapshot()})
+            phase = "ANALYSIS"
+            from .b0_causal_analyzer import analyze_jsonl
+            analysis = analyze_jsonl(target)
+            atomic_json_replace(self.output, "enhanced_b0_causal_analysis.json", analysis)
+            phase = "COMPLETE"
+            preserve_raw_manifest("COMPLETE")
+        except BaseException as primary:
+            try:
+                stream.close()
+            except BaseException as close_error:
+                primary.add_note("raw stream close failed: " + repr(close_error))
+            try:
+                preserve_raw_manifest("PARTIAL_FAILURE", primary)
+            except BaseException as evidence_error:
+                primary.add_note("partial raw manifest failed: " + repr(evidence_error))
+            raise
 
     def run_control_diagnostic(self, parameters: Mapping[str, Any]) -> None:
         """Run one independently authorized Z/T/S control-chain condition.

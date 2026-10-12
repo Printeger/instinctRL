@@ -265,15 +265,13 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
                 inferred_force = [(momentum[i]-previous["linear_momentum_kg_m_s"][i])/dt for i in range(3)]
                 inferred_torque = [(angular[i]-previous["angular_momentum_at_com_kg_m2_s"][i])/dt for i in range(3)]
             next_previous_system[key] = system
-            rotor_rows=[]; rotor_force=[0.0,0.0,0.0]; rotor_torque=[0.0,0.0,0.0]
+            rotor_rows=[]
+            reaction_direction=quaternion_rotate(bodies[0]["world_quaternion_wxyz"],(0.,0.,1.))
             rotor = self._wrench.rotor
             for rotor_index, name in enumerate(ROTOR_NAMES):
                 body_index=rotor_index+1; direction=self._tolist(quat_apply(body[lane,body_index,3:7].unsqueeze(0), torch.tensor([[0.,0.,1.]],device=self.device,dtype=body.dtype))[0])
                 point=self._tolist(body[lane,body_index,:3]); thrust=float(rotor.thrusts_n[lane,rotor_index]); reaction=float(rotor.reaction_moments_nm[lane,rotor_index])
-                force=[thrust*x for x in direction]; arm=[point[i]-combined[i] for i in range(3)]; torque=self._cross3(arm,force)
-                torque=[torque[i]+reaction*direction[i] for i in range(3)]
-                rotor_force=[rotor_force[i]+force[i] for i in range(3)]; rotor_torque=[rotor_torque[i]+torque[i] for i in range(3)]
-                rotor_rows.append({"name":name,"command":float(rotor.normalized_commands[lane,rotor_index]),"target_throttle":float(rotor.target_throttle[lane,rotor_index]),"actual_throttle":float(rotor.throttle[lane,rotor_index]),"thrust_n":thrust,"reaction_moment_nm":reaction,"application_point_world_m":point,"direction_world":direction})
+                rotor_rows.append({"name":name,"command":float(rotor.normalized_commands[lane,rotor_index]),"target_throttle":float(rotor.target_throttle[lane,rotor_index]),"actual_throttle":float(rotor.throttle[lane,rotor_index]),"thrust_n":thrust,"reaction_moment_nm":reaction,"application_point_world_m":point,"direction_world":direction,"reaction_body":bodies[0]["name"],"reaction_direction_world":reaction_direction})
             rotor_total = rotor_wrench(rotor_rows, combined)
             rotor_force = rotor_total["force_n"]; rotor_torque = rotor_total["torque_at_com_nm"]
             gravity_force=[0.0,0.0,-total_mass*9.81]; gravity_torque=[0.0,0.0,0.0]
@@ -303,7 +301,7 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
                 reset={"mask":True,"reason":str(boundary["reason"]),"initial_boundary":bool(boundary["initial_boundary"]),"last_pre_reset_state":boundary["last_pre_reset_state"],"post_reset_states":[current_snapshot]}
                 next_episode_ids[key]=episode_id+1; consumed_boundaries.append(key)
             next_last_snapshots[key]=current_snapshot
-            rows.append(OrderedDict((("schema_version","instinctrl-enhanced-b0-physics-row/1"),("experiment_id","UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012"),("case",case),("policy_step",policy_step),("physics_step",physics_step),("lane",lane),("episode_id",episode_id),("reset",reset),("root_state",{"pose":self._tolist(root[lane,:7]),"linear_velocity":velocity,"angular_velocity":self._tolist(root[lane,10:13])}),("system",system),("bodies",bodies),("controller",controller),("rotors",rotor_rows),("wrenches",OrderedDict((("gravity",available(gravity_force,gravity_torque)),("rotor",available(rotor_force,rotor_torque)),("drag_aero",dict(unavailable)),("contact",dict(unavailable)),("joint_constraint",dict(unavailable)),("other",dict(unavailable))))),("momentum",{"dt_s":dt,"inferred_wrench":{"force_n":inferred_force,"torque_at_com_nm":inferred_torque}}),("response",{"position_world_m":self._tolist(root[lane,:3]),"velocity_world_m_s":velocity,"acceleration_world_m_s2":acceleration}))))
+            rows.append(OrderedDict((("schema_version","instinctrl-enhanced-b0-physics-row/2"),("experiment_id","UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012"),("case",case),("policy_step",policy_step),("physics_step",physics_step),("lane",lane),("episode_id",episode_id),("reset",reset),("root_state",{"pose":self._tolist(root[lane,:7]),"linear_velocity":velocity,"angular_velocity":self._tolist(root[lane,10:13])}),("system",system),("bodies",bodies),("controller",controller),("rotors",rotor_rows),("wrenches",OrderedDict((("gravity",available(gravity_force,gravity_torque)),("rotor",available(rotor_force,rotor_torque)),("drag_aero",dict(unavailable)),("contact",dict(unavailable)),("joint_constraint",dict(unavailable)),("other",dict(unavailable))))),("momentum",{"dt_s":dt,"inferred_wrench":{"force_n":inferred_force,"torque_at_com_nm":inferred_torque}}),("response",{"position_world_m":self._tolist(root[lane,:3]),"velocity_world_m_s":velocity,"acceleration_world_m_s2":acceleration}))))
         self._enhanced_b0_previous_system = next_previous_system
         self._enhanced_b0_previous_velocity = next_previous_velocity
         self._enhanced_b0_episode_ids = next_episode_ids
@@ -508,11 +506,13 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         body=self._robot.data.body_state_w; root=self._robot.data.root_state_w
         actual_b=rotate_world_to_body_wxyz(root[:,3:7],root[:,7:10])
         controller={"target_velocity_b_m_s":self._tolist(self._command_b[lane]),"velocity_error_b_m_s":self._tolist(self._command_b[lane]-actual_b[lane]),"desired_rotation_w":self._tolist(self._lee.desired_rotation_w[lane]),"collective_n":float(self._lee.collective_thrust_n[lane,0])}
+        from training_workloads.unified_h1.b0_enhanced import quaternion_rotate
+        reaction_direction=quaternion_rotate(self._tolist(body[lane,0,3:7]),(0.,0.,1.))
         rotor=self._wrench.rotor; rotors=[]
         for rotor_index,name in enumerate(ROTOR_NAMES):
             body_index=rotor_index+1
             direction=self._tolist(quat_apply(body[lane,body_index,3:7].unsqueeze(0),torch.tensor([[0.,0.,1.]],device=self.device,dtype=body.dtype))[0])
-            rotors.append({"name":name,"command":float(rotor.normalized_commands[lane,rotor_index]),"target_throttle":float(rotor.target_throttle[lane,rotor_index]),"actual_throttle":float(rotor.throttle[lane,rotor_index]),"thrust_n":float(rotor.thrusts_n[lane,rotor_index]),"reaction_moment_nm":float(rotor.reaction_moments_nm[lane,rotor_index]),"application_point_world_m":self._tolist(body[lane,body_index,:3]),"direction_world":direction})
+            rotors.append({"name":name,"command":float(rotor.normalized_commands[lane,rotor_index]),"target_throttle":float(rotor.target_throttle[lane,rotor_index]),"actual_throttle":float(rotor.throttle[lane,rotor_index]),"thrust_n":float(rotor.thrusts_n[lane,rotor_index]),"reaction_moment_nm":float(rotor.reaction_moments_nm[lane,rotor_index]),"application_point_world_m":self._tolist(body[lane,body_index,:3]),"direction_world":direction,"reaction_body":str(self._robot.body_names[0]),"reaction_direction_world":reaction_direction})
         return {"controller":controller,"rotors":rotors}
 
     def _reset_idx(self, env_ids: Sequence[int] | torch.Tensor | None) -> None:

@@ -1,0 +1,62 @@
+{
+  "candidate_commit": "918fec6f8f37a3700d47cf615168eb9cad2603b1",
+  "input_pack_commit": "d9033a041c180756694f281c909bfc8bf80a2766",
+  "role_call": 5,
+  "handle": "/root/pilot_reviewer",
+  "verdict": "MUST_FIX",
+  "record_type": "transcribed independent agent result; original conversation retained",
+  "closed_findings": [
+    {
+      "id": "MECHANICS-R1",
+      "status": "CLOSED",
+      "evidence": "Shared serialized primitive COM/momentum reconstruction retains1e-8; origins100/700m rotated and continuous differences plus tamper negatives reviewed."
+    }
+  ],
+  "findings": [
+    {
+      "id": "BASELINE-R1",
+      "classification": "MUST_FIX",
+      "contract": "Requirements4B3 failure partial manifest actual rows and primary error",
+      "evidence": "backend writes raw manifest only after successful run/finalize/analyze; failure closes raw stream only",
+      "impact": "Partial collection failure cannot identify validated/written rows and coverage boundary",
+      "closure": "Initialize partial manifest; preserve actual row/byte progress, last coordinate, observer progress, error and counters on all failures; never finalize partial coverage. CPU setup/first/mid/analysis failure injections."
+    },
+    {
+      "id": "BASELINE-R2",
+      "classification": "MUST_FIX",
+      "contract": "Requirements4B2/B4 and6.3 actual staged wrench frame/object/application point",
+      "evidence": "runtime_adapter stages sumreaction on base localZ; observer uses each rotor localZ for reactions",
+      "impact": "When axes differ net torque and diagnostic residual incorrectly represent actual execution",
+      "closure": "Onlydiagnostic repair: explicit base reaction frame or reconstruct staged buffers; test different base/rotor axes nonzero reactions; preserve adapter/plant/control"
+    }
+  ],
+  "non_blocking": [
+    {
+      "id": "APPLICATION-N1",
+      "evidence": "Installed ArticulationView API: position_data=None uses link transforms location; is_globalFalse link local frame. Rotor link origin correct; no COM plant change justified."
+    },
+    {
+      "id": "SOURCE-N1",
+      "evidence": "Actual get_masses/get_inertias source confirmed; COM inertia expressed in rigidbodyprim frame. Linkstate velocity and preserved controller COM feedback correct."
+    },
+    {
+      "id": "INPUT-N1",
+      "evidence": "V2 exact snapshot+registered overlay, tags and pins independently checked; expected docs authorization only. conditionsdraftempty correctly not executable."
+    },
+    {
+      "id": "BUDGET-N1",
+      "evidence": "20160 nontraining/403200rows/200Hz10Hz/900+10sec/16GiB, explicit init/reset/probe limits and remaining ledger consistent."
+    },
+    {
+      "id": "RUNNER-N1",
+      "evidence": "Exact dispatcher snapshot bytes, h1.env assetroot and lifeguard ownership cleanup mechanisms reviewed. Actual release still pending independent acceptedcondition/Commander/STOP/coexistence."
+    }
+  ],
+  "review_execution": {
+    "shared_files_written": false,
+    "simulation_started": false,
+    "gpu_queries_executed": false,
+    "optimizer_bodies_executed": false,
+    "live_release_issued": false
+  }
+}
