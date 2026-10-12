@@ -1,0 +1,24 @@
+{
+  "postrun_gpu_queries": 2,
+  "bound": 2,
+  "owner_dead": true,
+  "no_owned_survivors": true,
+  "records": [
+    {
+      "argv": [
+        "/usr/bin/nvidia-smi",
+        "--query-gpu=index,name,driver_version,memory.total,memory.used,utilization.gpu",
+        "--format=csv,noheader,nounits"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/usr/bin/nvidia-smi",
+        "--query-compute-apps=pid,process_name,used_gpu_memory",
+        "--format=csv,noheader,nounits"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

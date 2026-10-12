@@ -12,9 +12,9 @@
   "history_rewrite_authorized": false,
   "migration_cpu_checks_authorized": true,
   "migration_normal_push_authorized": true,
-  "new_live_execution_authorized": true,
+  "new_live_execution_authorized": false,
   "new_training_authorized": false,
   "diagnostic_goal_envelope_authorized": true,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "Only exact baselinev3 nontraining formalentry via bound Commander approval; simulator creation still requires actual coex gate PASS. No training authorized."
+  "live_permission_note": "Baselinev3 singleentry approval consumed by failedjob; no successor release. Newenvelope remains; no training."
 }

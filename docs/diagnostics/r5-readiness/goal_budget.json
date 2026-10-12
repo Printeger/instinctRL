@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "EXACT_BASELINE_V3_ENTRY_APPROVED_NOT_STARTED",
+  "live_release_status": "BASELINE_V3_CONSUMED_FAILED_NO_RETRY",
   "caps": {
     "live_starts": 4,
     "simulator_initializations": 4,
@@ -24,13 +24,13 @@
     "output_bytes": 17179869184
   },
   "used": {
-    "live_starts": 0,
-    "simulator_initializations": 0,
+    "live_starts": 1,
+    "simulator_initializations": 1,
     "nontraining_transitions": 0,
-    "wall_seconds": 0,
-    "gpu_seconds": 0,
-    "output_bytes": 0,
-    "role_calls": 7,
+    "wall_seconds": 30.395258554955944,
+    "gpu_seconds": 27.148333297111094,
+    "output_bytes": 446034,
+    "role_calls": 8,
     "training_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0
@@ -93,6 +93,14 @@
       "handle": "/root/pilot_reviewer",
       "scope": "narrow release-order clarification, no new source; satisfy user coex-before simulation release with existing runner",
       "status": "PASS_RELEASE_ORDER_ONLY"
+    },
+    {
+      "call": 8,
+      "role": "Reviewer",
+      "candidate_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Independent actual first-live failure assessment and minimum next repair/data/cleanup boundary",
+      "status": "REQUESTED"
     }
   ],
   "initialization_ticks_resets_gpu_probes": {
@@ -108,12 +116,28 @@
   },
   "historical_budgets": "PRESERVED_NOT_RESET",
   "reserved": {
-    "live_starts": 1,
-    "simulator_initializations": 1,
-    "nontraining_transitions": 20160,
-    "wall_seconds": 910,
-    "gpu_seconds": 910,
-    "output_bytes": 17179869184
+    "nontraining_transitions": 20160
   },
-  "approval": "baseline-v3-commander-approval.json"
+  "approval": "baseline-v3-commander-approval.json",
+  "unknown_or_incomplete": {
+    "nontraining_transitions": "Full20160reservation retained because statusFAIL_PENDING_CLOSE and notfinal counters. Attempted1policy,completed0,raw0; do not reset or silently release unknown."
+  },
+  "live_runs": [
+    {
+      "job_id": "J-65769ac9c17a38cb",
+      "status": "FAILED",
+      "source_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
+      "experiment_id": "UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
+      "coexistence": "PASS",
+      "initialization_ticks_observed": 2,
+      "explicit_resets_observed": 1,
+      "attempted_policy_steps": 1,
+      "completed_policy_steps": 0,
+      "physics_rows": 0,
+      "primary_error": "body inertia must be symmetric with positive diagonal",
+      "app_close": "HARD_TIMEOUT",
+      "ownership_cleanup": "QUIESCENT_NO_SURVIVORS",
+      "transitions_settlement": "INCOMPLETE_FULL20160RESERVED"
+    }
+  ]
 }

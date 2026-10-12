@@ -25,14 +25,14 @@
     "failure": "controller/rotor reset state unavailable; app.close hard timeout and detached telemetry child",
     "horizontal_drift_cause": "NOT_PROVEN"
   },
-  "new_live_execution_authorized": true,
+  "new_live_execution_authorized": false,
   "new_training_authorized": false,
   "migration_is_product_acceptance": false,
   "current_candidate_config": "../training_workloads/unified_h1/candidate_config.json",
   "blocking_followups": [
-    "Commander release of exact baselinev3 entry, then actualcoexistence/STOP/ownership gate before simulator creation.",
-    "Freeze and independently pre-review baseline snapshot/handoff; bind initialization, reset, probe and remaining budget before Commander release.",
-    "Real current control diagnosis and runtime mass binding, minimal evidenced repair and nontraining regression remain required."
+    "Actual firstphysics inertia validation fails before rawprimitives are written; diagnose precision vspositiveinertia with preserved actualdata, no blindrepeat.",
+    "app.close hardtimeout; ownership cleanup independently confirms quiescence/no survivors and GPU back to allowed desktop. Must preserve nativefailure and full incomplete transitionreservation.",
+    "Current control mechanism, minimalrepair and true zero/passthroughregressions remain required."
   ],
   "migration_verification": {
     "scope": "MIGRATION_CPU_REGRESSION_ONLY_NOT_INDEPENDENT_PRODUCT_ACCEPTANCE",
@@ -249,6 +249,8 @@
       "result": "PASS_KERNEL_AND_INSTALLED_REGISTRY_CHECKS"
     },
     "exact_live_approval": "../docs/diagnostics/r5-readiness/baseline-v3-commander-approval.json",
-    "live_entry_status": "APPROVED_NOT_STARTED"
+    "live_entry_status": "FAILED_FIRST_PHYSICS_OBSERVER_INERTIA_VALIDATION",
+    "latest_live_job": "J-65769ac9c17a38cb",
+    "current_live_release_effective": false
   }
 }
