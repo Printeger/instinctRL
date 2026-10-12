@@ -1,0 +1,16 @@
+{
+  "status": "COMPLETE",
+  "job_id": "J-1f1d10a06a0e0632",
+  "authorized_command_index": 0,
+  "argv": [
+    "/usr/bin/nvidia-smi",
+    "--query-gpu=index,name,driver_version,memory.total,memory.used,utilization.gpu",
+    "--format=csv,noheader,nounits"
+  ],
+  "returncode": 0,
+  "stdout": "0, NVIDIA GeForce RTX 5070, 580.173.02, 12227, 395, 3\n",
+  "stderr": "",
+  "after_terminal_ownership_settlement": true,
+  "observed_at_utc": "2026-10-12T11:54:33.239378+00:00",
+  "scope": "authorized2postruncommands; singlecurrentobservation is not a futurethree-samplecoexistencePASS"
+}

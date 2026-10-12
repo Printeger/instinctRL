@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "CAP8_APPROVED_COMMAND_R3_EXACT_RELEASE_PENDING",
+  "live_release_status": "FIFTH_COMMAND_R3_COEXISTENCE_FAILED_FINAL_ZERO",
   "caps": {
     "live_starts": 8,
     "simulator_initializations": 8,
@@ -24,13 +24,13 @@
     "output_bytes": 17179869184
   },
   "used": {
-    "live_starts": 4,
-    "simulator_initializations": 4,
+    "live_starts": 5,
+    "simulator_initializations": 5,
     "nontraining_transitions": 0,
-    "wall_seconds": 1442.8437948680948,
-    "gpu_seconds": 1431.9166908750776,
-    "output_bytes": 4581264073,
-    "role_calls": 12,
+    "wall_seconds": 1456.0325917440932,
+    "gpu_seconds": 1442.699172595283,
+    "output_bytes": 4581333538,
+    "role_calls": 13,
     "training_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0
@@ -134,6 +134,14 @@
       "handle": "/root/pilot_reviewer",
       "scope": "Independent fourth actual zero regression/resource/cleanup judgment plus exact fifth command prereview and future paired-pilot package. Begin small-file prereview; actual terminal/analysis evidence to follow. No release or cap extension.",
       "status": "PASS_ZERO_PHYSICAL_REGRESSION_AND_EXACT_COMMAND_PRELIVE_ONLY"
+    },
+    {
+      "call": 13,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "scope": "Actual fifthcoexistence-onlyfailure/finalzero accounting and cleanup; currentexplicitcap8 decision; classify genuine resource blocker vs implementation defect and minimal permitted nextaction; no newlive ortraining authorization.",
+      "status": "PASS_RESOURCE_FAILURE_CLASSIFICATION_ONLY"
     }
   ],
   "initialization_ticks_resets_gpu_probes": {
@@ -244,12 +252,39 @@
       "gpu_seconds": 909.4390038719866,
       "per_run_wall_overrun_seconds": 0.5478907090146095,
       "output_bytes_including_archive": 3475341107
+    },
+    {
+      "job_id": "J-1f1d10a06a0e0632",
+      "status": "FAILED",
+      "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "experiment_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+      "starts_charged": 1,
+      "simulator_initialization_reserved": 1,
+      "transitions_settlement": "FINAL_ZERO_BY_EXISTING_H1_COLLECT",
+      "training_transitions": 0,
+      "optimizer_updates": 0,
+      "checkpoint_writes": 0,
+      "coexistence": "FAIL_GPU_UTILIZATION_ABOVE5_PERCENT",
+      "actual_AppLauncher_created": false,
+      "initialization_ticks_observed": 0,
+      "explicit_resets_observed": 0,
+      "automatic_resets_observed": 0,
+      "attempted_policy_steps": 0,
+      "completed_policy_steps": 0,
+      "physics_rows": 0,
+      "primary_error": "GPU utilization exceeds5percent before AppLauncher",
+      "wall_seconds": 13.188796875998378,
+      "gpu_seconds": 10.782481720205396,
+      "output_bytes": 35425,
+      "ownership_cleanup": "NORMAL_LIFEGUARD_ACK_QUIESCENT_NO_SURVIVORS",
+      "postrun_gpu_audit_calls": 2,
+      "output_bytes_including_archive": 69465
     }
   ],
-  "next_exact_approval": null,
+  "next_exact_approval": "passthrough-r3-commander-approval.json",
   "conservative_nontraining_bound_charged": 60480,
   "completed_nontraining_observed_within_failed_reservations": 6400,
-  "remaining_note": "Explicit user approved cumulative8start/initreservations (lowerbound8–10);4used/4available. Othercaps and60480 priorreservations unchanged; exact fifthcommand20160 uses remainingtransitioncapacity. Everyentryneeds new exactCommanderbinding and independentevidence; noautomaticretry.",
+  "remaining_note": "Explicit cumulativecap8;5starts/initreservationscharged,3slotsavailable. Fifthpre-AppcoexistenceFAIL formally settledtransitions0; old60480 reservations unchanged, remaining20160. No blindretry orrelaxed5%gate; independent resourcefailure/nextaction reviewpending.",
   "authorization_extensions": [
     {
       "decision_path": "user_resource_decision_startcap8.json",

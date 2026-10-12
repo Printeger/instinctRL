@@ -1,0 +1,41 @@
+{
+  "schema_version": "instinctrl-r5-command-prelaunch-failure-analysis/1",
+  "job_id": "J-1f1d10a06a0e0632",
+  "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "status": "FAIL_RESOURCE_GATE_IMPLEMENTATION_DEFECT_NOT_ESTABLISHED",
+  "gpu_utilization_samples": [
+    4,
+    6,
+    1
+  ],
+  "span_seconds": 10.030832815,
+  "memory_used_mib": [
+    395,
+    395,
+    395
+  ],
+  "compute_apps": [
+    {
+      "name": "/usr/libexec/gnome-remote-desktop-daemon",
+      "pid": 3950,
+      "used_memory_mib": 164
+    }
+  ],
+  "AppLauncher_created": false,
+  "physics_rows": 0,
+  "transitions_settlement": "FINAL_ZERO_BY_EXISTING_H1_COLLECT",
+  "conservative_start_init_charge_retained": 1,
+  "normal_lifeguard_ack_quiescent": true,
+  "formal_run_status": "FAILED",
+  "gate_threshold_percent": 5,
+  "resource_checks": {
+    "gpu_identity": "PASS",
+    "memory": "PASS",
+    "compute_app_allowlist": "PASS",
+    "utilization": "FAIL_second_sample6greaterthan5"
+  },
+  "no_inferred_physical_verdict": true,
+  "control_cause": "UNASSESSED_NO_COMMAND_TRAJECTORY",
+  "nontraining_reservations_retained": 60480,
+  "original_no_blind_retry_rule": "No repeatentry without newrepair evidence; capextensionalone does not relaxresource gate or authorize reopeningoldjob. Independent failure classification/nextaction assessmentpending."
+}

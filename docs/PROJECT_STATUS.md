@@ -9,10 +9,10 @@
 
 诊断闭环、最小修复与短程训练准入正在推进。需求见
 [需求](goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md)，最新证据见
-[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。当前为 `CONTROL_DIAGNOSTIC_PENDING`。用户明确批准“扩额8-10次”，本 Goal 累计启动／初始化保守预留上限采用 8 次；其他总帽和旧扣账保持不变。
-已用 4 次，无活动 job；零目标物理回归及准确候选已独立通过，命令直通原 Z/T/S gate 和最终审核仍待实测。
-准确第五次 `ef68ebb` / PLANT-R3 输入已由现有 Commander 批准，尚待 STOP、所有权与内部 coexistence 检查后释放。
-训练、optimizer updates 和训练 checkpoint writes 均为零。
+[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。当前为 `BLOCKED_EXTERNAL_AUTHORIZATION`：第五次命令直通入口在仿真前被原 coexistence 规则拒绝，三次利用率 4%、6%、1%，第二次超过 5%。
+用户明确批准累计启动／初始化保守预留 cap 8；已用 5 次，其他总帽和旧失败扣账不变。第五次正式 FINAL/0 transitions，原 60,480 预留仍保留。
+零目标物理回归及准确候选已独立通过；命令直通原 Z/T/S gate 和最终审核仍待实测。没有活动 job；Role13 正在独立复核失败、计账、清理和可执行下一动作。
+未发现资源拒绝属于实现缺陷，不据此放宽门槛或盲目重试。训练、optimizer updates 和训练 checkpoint writes 均为零。
 以下历史状态与迁移记录保留，不继承旧 receipt 验收。
 
 ## 历史阶段及结论

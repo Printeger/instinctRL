@@ -1,0 +1,9 @@
+{
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/authorization.py\", line 118, in load_r3_authorization\n    if not attempt.is_absolute() or attempt.is_symlink() or not attempt.is_dir(): raise PermissionError(\"attempt directory is invalid\")\n                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: attempt directory is invalid\n",
+  "actual_attempt_exists": false,
+  "actualAUTHissued": false,
+  "gpu_queries": 0,
+  "training": 0
+}

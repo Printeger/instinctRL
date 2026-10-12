@@ -1,0 +1,10 @@
+{
+  "returncode": 0,
+  "stdout": "{\"order_id\": \"UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012\", \"mode\": \"control-diagnostic\", \"budgets\": {\"automatic_resets\": 20160, \"checkpoint_writes\": 0, \"explicit_resets\": 3, \"initialization_ticks\": 10, \"live_process_starts\": 1, \"nontraining_transitions\": 20160, \"optimizer_updates\": 0, \"simulator_initializations\": 1, \"training_transitions\": 0, \"wall_seconds\": 900}}\n",
+  "stderr": "",
+  "actual_attempt_exists": true,
+  "actual_attempt_files": [],
+  "actualAUTHissued": false,
+  "gpu_queries": 0,
+  "training": 0
+}

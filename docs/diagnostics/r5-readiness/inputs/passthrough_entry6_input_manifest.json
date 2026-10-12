@@ -1,0 +1,53 @@
+{
+  "schema_version": "instinctrl-r5-prelaunch-exception-inputs/1",
+  "status": "UNISSUED_REQUIRES_EXPLICIT_NO_NEW_REPAIR_EXCEPTION_AND_INDEPENDENT_PREVIEW",
+  "exception_requested": "Exactlyone fresh entry after fifth purelypre-Appcoexistence refusal, evenwithout newimplementationrepair; do not interpret cap8 aloneas exception.",
+  "previous_job": "J-1f1d10a06a0e0632",
+  "previous_job_status": "FAILED_FINAL_ZERO_NO_APP_LAUNCHER",
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-ENTRY6",
+  "actual_attempt_exists": true,
+  "actual_authorization_issued": false,
+  "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "source_tree": "b735eafac3888415eded7c6684ed385706871acf",
+  "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+  "tools_release_content_id": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+  "scientific_condition_order_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+  "runner_spec_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-ENTRY6",
+  "identity_note": "Originalscientificcondition/formalordermode unchanged; fresh control-plane specid andattempt distinguishconsumed entry from proposedone. ExistinggenericH1collect validatescounters but specializedseal whitelist excludesENTRY6; complete original job/results inventory/hashed archive required independently. No platform/product changes.",
+  "authorization_expected_path": "inputs/passthrough_entry6_authorization.expected.json",
+  "authorization_expected_sha256": "d9ad47c04d9da65520660d1b406383887ee5b5a6fd0f6a8552e012ab30c134cd",
+  "spec_path": "inputs/passthrough_entry6_experiment_spec.proposed.json",
+  "spec_sha256": "b929988bbf61731f5d2f178cf7d29bff6291886ee9d20899237fc50b2cd9575b",
+  "resource_limits": {
+    "nontraining_transitions": 20160,
+    "wall_seconds_including_cleanup": 910,
+    "gpu_seconds": 910,
+    "output_bytes": 17179869184,
+    "live_starts": 1,
+    "simulator_initializations_conservative_reservations": 1,
+    "initialization_ticks": 10,
+    "explicit_resets": 3,
+    "automatic_reset_lanes": 20160,
+    "prelaunch_nvidia_smi_calls": 6,
+    "runtime_cuda_memory_observations": 634,
+    "postrun_nvidia_smi_audit_calls": 2
+  },
+  "original_coexistence": "exactlythree samples spanning>=10sec, everyutilization<=5%, sameidentity/memory/appallowlist; noaddedprobes orsearchforpassingwindow",
+  "training_transitions": 0,
+  "optimizer_updates": 0,
+  "training_checkpoint_writes": 0,
+  "command_original_ZTS_gates_unchanged": true,
+  "remaining_transition_budget": 20160,
+  "old_transition_reservations_retained": 60480,
+  "independent_failure_review": {
+    "path": "reviews/review-command-r3-coexistence-failure.json",
+    "sha256": "b0a71b8eb99a78c0e67d5a3e293e6f7d8f79dc207e3763afecd28714d5fb98b8"
+  },
+  "release_dependencies": [
+    "Explicitnarrowuserexception",
+    "Exactfreshinputindependentprereview",
+    "ExistingCommander remainingbudget/exactapproval",
+    "STOP/knownownedquiescence/internaloriginalcoexistencePASS"
+  ],
+  "actual_attempt_files": []
+}
