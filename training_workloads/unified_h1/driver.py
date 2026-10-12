@@ -155,6 +155,10 @@ class UnifiedH1TrainingLoop:
                 self.checkpoint_writer(checkpoint_label, self.trainer, self.driver)
             return result
         except BaseException as error:
+            if self.diagnostic is not None:
+                try: self.diagnostic.abort(error)
+                except BaseException as diagnostic_error:
+                    error.add_note(f"diagnostic failure preservation failed: {diagnostic_error}")
             self.journal.record_partial_episodes(self.driver.evidence_buffer)
             self.journal.record_partial_rollout_boundary(
                 attempted_policy_steps=counters.attempted_policy_steps,

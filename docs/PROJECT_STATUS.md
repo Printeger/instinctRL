@@ -5,7 +5,14 @@
 代码、状态、workload、必要工具和测试已整理到本仓库。源历史完整继承到 `903afc5`，
 其后产品集成提交为 `91c6997`，workload/工具集成为 `e7d58d2`。
 
-## 当前阶段及结论
+## 当前 Goal（2026-10-12 新授权）
+
+诊断闭环、最小修复与短程训练准入正在推进。需求见
+[需求](goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md)，最新证据见
+[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。新诊断包络已登记，尚未签发准确 live release；
+训练权限仍为零。以下历史状态与迁移记录保留，不继承旧 receipt 验收。
+
+## 历史阶段及结论
 
 R5 Stage 1 的 B0 诊断工程修复候选，尚未获得最终独立验收；水平漂移根因仍未证明。
 历史 receipt 记录 132 项 CPU 测试通过；这份记录不是迁移后新路径和新候选的验收。

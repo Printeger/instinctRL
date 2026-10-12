@@ -1,0 +1,143 @@
+FFFF.                                                                    [100%]
+=================================== FAILURES ===================================
+__________________ test_probe_head_units_and_product_decoder ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-991/test_probe_head_units_and_prod0')
+
+    def test_probe_head_units_and_product_decoder(tmp_path):
+        trainer, batch = fixture()
+        diagnostic = FirstUpdateDiagnostic(tmp_path, enabled=True)
+        rng = torch.get_rng_state().clone()
+>       before = _digest(_state(trainer))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_pilot_diagnostic_torch.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/pilot_diagnostic.py:44: in _digest
+    add(value); return digest.hexdigest()
+    ^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+item = tensor(2.)
+
+    def add(item: Any) -> None:
+        if isinstance(item, torch.Tensor):
+>           tensor=item.detach().cpu().contiguous(); digest.update(str(tensor.dtype).encode()); digest.update(repr(tuple(tensor.shape)).encode()); digest.update(tensor.view(torch.uint8).numpy().tobytes()); return
+                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E           RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)
+
+training_workloads/unified_h1/pilot_diagnostic.py:36: RuntimeError
+_____ test_gate_mismatch_before_update_keeps_all_state_and_rng[old_alpha] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-991/test_gate_mismatch_before_upda0')
+field = 'old_alpha'
+
+    @pytest.mark.parametrize("field", ["old_alpha", "old_beta", "old_log_probabilities"])
+    def test_gate_mismatch_before_update_keeps_all_state_and_rng(tmp_path, field):
+        trainer, batch = fixture()
+        getattr(batch, field)[71, 0] += .2
+>       before = _digest(_state(trainer))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_pilot_diagnostic_torch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/pilot_diagnostic.py:44: in _digest
+    add(value); return digest.hexdigest()
+    ^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+item = tensor(2.)
+
+    def add(item: Any) -> None:
+        if isinstance(item, torch.Tensor):
+>           tensor=item.detach().cpu().contiguous(); digest.update(str(tensor.dtype).encode()); digest.update(repr(tuple(tensor.shape)).encode()); digest.update(tensor.view(torch.uint8).numpy().tobytes()); return
+                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E           RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)
+
+training_workloads/unified_h1/pilot_diagnostic.py:36: RuntimeError
+______ test_gate_mismatch_before_update_keeps_all_state_and_rng[old_beta] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-991/test_gate_mismatch_before_upda1')
+field = 'old_beta'
+
+    @pytest.mark.parametrize("field", ["old_alpha", "old_beta", "old_log_probabilities"])
+    def test_gate_mismatch_before_update_keeps_all_state_and_rng(tmp_path, field):
+        trainer, batch = fixture()
+        getattr(batch, field)[71, 0] += .2
+>       before = _digest(_state(trainer))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_pilot_diagnostic_torch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/pilot_diagnostic.py:44: in _digest
+    add(value); return digest.hexdigest()
+    ^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+item = tensor(2.)
+
+    def add(item: Any) -> None:
+        if isinstance(item, torch.Tensor):
+>           tensor=item.detach().cpu().contiguous(); digest.update(str(tensor.dtype).encode()); digest.update(repr(tuple(tensor.shape)).encode()); digest.update(tensor.view(torch.uint8).numpy().tobytes()); return
+                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E           RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)
+
+training_workloads/unified_h1/pilot_diagnostic.py:36: RuntimeError
+_ test_gate_mismatch_before_update_keeps_all_state_and_rng[old_log_probabilities] _
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-991/test_gate_mismatch_before_upda2')
+field = 'old_log_probabilities'
+
+    @pytest.mark.parametrize("field", ["old_alpha", "old_beta", "old_log_probabilities"])
+    def test_gate_mismatch_before_update_keeps_all_state_and_rng(tmp_path, field):
+        trainer, batch = fixture()
+        getattr(batch, field)[71, 0] += .2
+>       before = _digest(_state(trainer))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_pilot_diagnostic_torch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/pilot_diagnostic.py:44: in _digest
+    add(value); return digest.hexdigest()
+    ^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+item = tensor(2.)
+
+    def add(item: Any) -> None:
+        if isinstance(item, torch.Tensor):
+>           tensor=item.detach().cpu().contiguous(); digest.update(str(tensor.dtype).encode()); digest.update(repr(tuple(tensor.shape)).encode()); digest.update(tensor.view(torch.uint8).numpy().tobytes()); return
+                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E           RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)
+
+training_workloads/unified_h1/pilot_diagnostic.py:36: RuntimeError
+=========================== short test summary info ============================
+FAILED tests/training_workloads/test_pilot_diagnostic_torch.py::test_probe_head_units_and_product_decoder
+FAILED tests/training_workloads/test_pilot_diagnostic_torch.py::test_gate_mismatch_before_update_keeps_all_state_and_rng[old_alpha]
+FAILED tests/training_workloads/test_pilot_diagnostic_torch.py::test_gate_mismatch_before_update_keeps_all_state_and_rng[old_beta]
+FAILED tests/training_workloads/test_pilot_diagnostic_torch.py::test_gate_mismatch_before_update_keeps_all_state_and_rng[old_log_probabilities]
+4 failed, 1 passed in 1.02s

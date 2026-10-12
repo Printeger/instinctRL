@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="5" time="1.020" timestamp="2026-10-12T15:14:59.142984+08:00" hostname="mint-MS-7E30"><testcase classname="tests.training_workloads.test_pilot_diagnostic_torch" name="test_probe_head_units_and_product_decoder" time="0.426"><failure message="RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-991/test_probe_head_units_and_prod0')
+
+    def test_probe_head_units_and_product_decoder(tmp_path):
+        trainer, batch = fixture()
+        diagnostic = FirstUpdateDiagnostic(tmp_path, enabled=True)
+        rng = torch.get_rng_state().clone()
+&gt;       before = _digest(_state(trainer))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_pilot_diagnostic_torch.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/pilot_diagnostic.py:44: in _digest
+    add(value); return digest.hexdigest()
+    ^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+item = tensor(2.)
+
+    def add(item: Any) -&gt; None:
+        if isinstance(item, torch.Tensor):
+&gt;           tensor=item.detach().cpu().contiguous(); digest.update(str(tensor.dtype).encode()); digest.update(repr(tuple(tensor.shape)).encode()); digest.update(tensor.view(torch.uint8).numpy().tobytes()); return
+                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E           RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)
+
+training_workloads/unified_h1/pilot_diagnostic.py:36: RuntimeError</failure></testcase><testcase classname="tests.training_workloads.test_pilot_diagnostic_torch" name="test_gate_mismatch_before_update_keeps_all_state_and_rng[old_alpha]" time="0.001"><failure message="RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-991/test_gate_mismatch_before_upda0')
+field = 'old_alpha'
+
+    @pytest.mark.parametrize("field", ["old_alpha", "old_beta", "old_log_probabilities"])
+    def test_gate_mismatch_before_update_keeps_all_state_and_rng(tmp_path, field):
+        trainer, batch = fixture()
+        getattr(batch, field)[71, 0] += .2
+&gt;       before = _digest(_state(trainer))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_pilot_diagnostic_torch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/pilot_diagnostic.py:44: in _digest
+    add(value); return digest.hexdigest()
+    ^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+item = tensor(2.)
+
+    def add(item: Any) -&gt; None:
+        if isinstance(item, torch.Tensor):
+&gt;           tensor=item.detach().cpu().contiguous(); digest.update(str(tensor.dtype).encode()); digest.update(repr(tuple(tensor.shape)).encode()); digest.update(tensor.view(torch.uint8).numpy().tobytes()); return
+                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E           RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)
+
+training_workloads/unified_h1/pilot_diagnostic.py:36: RuntimeError</failure></testcase><testcase classname="tests.training_workloads.test_pilot_diagnostic_torch" name="test_gate_mismatch_before_update_keeps_all_state_and_rng[old_beta]" time="0.001"><failure message="RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-991/test_gate_mismatch_before_upda1')
+field = 'old_beta'
+
+    @pytest.mark.parametrize("field", ["old_alpha", "old_beta", "old_log_probabilities"])
+    def test_gate_mismatch_before_update_keeps_all_state_and_rng(tmp_path, field):
+        trainer, batch = fixture()
+        getattr(batch, field)[71, 0] += .2
+&gt;       before = _digest(_state(trainer))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_pilot_diagnostic_torch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/pilot_diagnostic.py:44: in _digest
+    add(value); return digest.hexdigest()
+    ^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+item = tensor(2.)
+
+    def add(item: Any) -&gt; None:
+        if isinstance(item, torch.Tensor):
+&gt;           tensor=item.detach().cpu().contiguous(); digest.update(str(tensor.dtype).encode()); digest.update(repr(tuple(tensor.shape)).encode()); digest.update(tensor.view(torch.uint8).numpy().tobytes()); return
+                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E           RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)
+
+training_workloads/unified_h1/pilot_diagnostic.py:36: RuntimeError</failure></testcase><testcase classname="tests.training_workloads.test_pilot_diagnostic_torch" name="test_gate_mismatch_before_update_keeps_all_state_and_rng[old_log_probabilities]" time="0.001"><failure message="RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-991/test_gate_mismatch_before_upda2')
+field = 'old_log_probabilities'
+
+    @pytest.mark.parametrize("field", ["old_alpha", "old_beta", "old_log_probabilities"])
+    def test_gate_mismatch_before_update_keeps_all_state_and_rng(tmp_path, field):
+        trainer, batch = fixture()
+        getattr(batch, field)[71, 0] += .2
+&gt;       before = _digest(_state(trainer))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_pilot_diagnostic_torch.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/pilot_diagnostic.py:44: in _digest
+    add(value); return digest.hexdigest()
+    ^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+training_workloads/unified_h1/pilot_diagnostic.py:38: in add
+    for key in sorted(item): digest.update(str(key).encode()); add(item[key])
+                                                               ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+item = tensor(2.)
+
+    def add(item: Any) -&gt; None:
+        if isinstance(item, torch.Tensor):
+&gt;           tensor=item.detach().cpu().contiguous(); digest.update(str(tensor.dtype).encode()); digest.update(repr(tuple(tensor.shape)).encode()); digest.update(tensor.view(torch.uint8).numpy().tobytes()); return
+                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+E           RuntimeError: self.dim() cannot be 0 to view Float as Byte (different element sizes)
+
+training_workloads/unified_h1/pilot_diagnostic.py:36: RuntimeError</failure></testcase><testcase classname="tests.training_workloads.test_pilot_diagnostic_torch" name="test_disabled_observer_is_noop" time="0.000" /></testsuite></testsuites>

@@ -142,7 +142,7 @@ class PairedPilotTests(unittest.TestCase):
     def test_actual_update_path_and_required_probe_fields_are_wired(self):
         driver=(ROOT/"training_workloads/unified_h1/driver.py").read_text(); diagnostic=(ROOT/"training_workloads/unified_h1/pilot_diagnostic.py").read_text()
         tree=ast.parse(driver); self.assertIn("diagnostic.before_update",driver); self.assertIn("diagnostic.after_update",driver); self.assertIn("diagnostic.retain_rollout",driver)
-        for field in ("analytic_beta_kl","legacy_ppo_approximate_kl","action_mean","action_std","xyz_correction","clipped_gradients","unclipped_gradients","clipped_gradient_norm","unclipped_gradient_norm","parameter_deltas","parameter_delta_after","advantage","return","value"):
+        for field in ("analytic_beta_kl","legacy_ppo_approximate_kl","action_mean","action_std","issued_v_corr_b","mean_v_corr_b","sample_minus_mean_action","clipped_gradients","unclipped_gradients","clipped_gradient_norm","unclipped_gradient_norm","parameter_deltas","parameter_delta_after","advantage","return","value"):
             self.assertIn(field,diagnostic)
         self.assertIn("register_step_pre_hook",diagnostic); self.assertIn("register_step_post_hook",diagnostic)
     def test_diagnostic_off_is_explicit_noop(self):

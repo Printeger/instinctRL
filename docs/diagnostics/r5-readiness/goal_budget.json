@@ -1,0 +1,11 @@
+{
+  "schema_version": "instinctrl-r5-goal-budget/1",
+  "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
+  "live_release_status": "NOT_ISSUED",
+  "caps": {"live_starts": 4, "simulator_initializations": 4, "nontraining_transitions": 80640, "wall_seconds": 3640, "gpu_seconds": 3640, "output_bytes": 68719476736, "role_calls": 24, "reserved_critical_role_calls": 6, "training_transitions": 0, "optimizer_updates": 0, "training_checkpoint_writes": 0},
+  "per_live_caps": {"live_starts": 1, "simulator_initializations": 1, "nontraining_transitions": 20160, "wall_seconds_including_cleanup": 910, "gpu_seconds": 910, "output_bytes": 17179869184},
+  "used": {"live_starts": 0, "simulator_initializations": 0, "nontraining_transitions": 0, "wall_seconds": 0, "gpu_seconds": 0, "output_bytes": 0, "role_calls": 0, "training_transitions": 0, "optimizer_updates": 0, "training_checkpoint_writes": 0},
+  "role_calls": [],
+  "initialization_ticks_resets_gpu_probes": "UNBOUND_NO_LIVE_RELEASE",
+  "historical_budgets": "PRESERVED_NOT_RESET"
+}

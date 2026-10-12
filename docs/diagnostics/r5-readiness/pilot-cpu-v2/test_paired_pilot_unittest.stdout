@@ -1,0 +1,8 @@
+..........                                                               [100%]
+=============================== warnings summary ===============================
+tests/training_workloads/test_paired_pilot_unittest.py::PairedPilotTests::test_distribution_only_mismatch_is_zero_state_change
+  /home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/pilot_diagnostic.py:11: UserWarning: The NumPy module was reloaded (imported a second time). This can in some cases result in small but subtle issues and is discouraged.
+    import numpy as np
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+10 passed, 1 warning in 0.11s

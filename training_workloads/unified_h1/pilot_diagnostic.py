@@ -33,7 +33,7 @@ def _digest(value: Any) -> str:
     digest=hashlib.sha256()
     def add(item: Any) -> None:
         if isinstance(item, torch.Tensor):
-            tensor=item.detach().cpu().contiguous(); digest.update(str(tensor.dtype).encode()); digest.update(repr(tuple(tensor.shape)).encode()); digest.update(tensor.view(torch.uint8).numpy().tobytes()); return
+            tensor=item.detach().cpu().contiguous(); digest.update(str(tensor.dtype).encode()); digest.update(repr(tuple(tensor.shape)).encode()); digest.update(tensor.reshape(-1).view(torch.uint8).numpy().tobytes()); return
         if isinstance(item, Mapping):
             for key in sorted(item): digest.update(str(key).encode()); add(item[key])
             return
@@ -109,9 +109,15 @@ class FirstUpdateDiagnostic:
                 mean=alpha/(alpha+beta); std=torch.sqrt(alpha*beta/((alpha+beta).square()*(alpha+beta+1)))
                 if logp.shape != (SAMPLES,1) or mean.shape != (SAMPLES,4) or value.shape != (SAMPLES,1): raise ValueError("probe output shape permits broadcasting")
                 ratio=torch.exp(logp-self._probe["old_log_probabilities"])
+                # Use the product decoder and its bounds, including the vertical head.
+                from instinctlab.control.governor import decode_governor
+                issued_correction=decode_governor(self._probe["actions"],self._probe["policy"]["state_vec"]).v_corr_b
+                mean_correction=decode_governor(mean,self._probe["policy"]["state_vec"]).v_corr_b
                 row={"boundary":boundary,"indices":self._probe["indices"],"analytic_beta_kl":beta_kl(self._probe["old_alpha"],self._probe["old_beta"],alpha,beta),
                      "legacy_ppo_approximate_kl":self._probe["old_log_probabilities"]-logp,"log_probability":logp,"ratio":ratio,
-                     "action":self._probe["actions"],"action_mean":mean,"action_std":std,"xyz_correction":self._probe["actions"][:,:3]-mean[:,:3],
+                     "action":self._probe["actions"],"action_mean":mean,"action_std":std,
+                     "issued_v_corr_b":issued_correction,"mean_v_corr_b":mean_correction,
+                     "sample_minus_mean_action":self._probe["actions"]-mean,
                      "advantage":self._probe["advantages"],"return":self._probe["returns"],"value":value}
                 return _clone(row)
         finally:
@@ -193,8 +199,7 @@ class FirstUpdateDiagnostic:
                 self._unclipped_gradients={}
             self._handles=[trainer.actor_optimizer.register_step_pre_hook(pre_hook),trainer.actor_optimizer.register_step_post_hook(post_hook)]
         except BaseException:
-            for handle in self._handles: handle.remove()
-            self._handles=[]
+            self.detach_hooks()
             if _digest(before) != _digest(_state(trainer)): raise RuntimeError("gate failure changed model or optimizer state")
             if not _rng_equal(rng,_rng_snapshot()): _restore_rng(rng); raise RuntimeError("gate failure consumed policy RNG")
             raise
@@ -202,17 +207,33 @@ class FirstUpdateDiagnostic:
 
     def after_update(self, trainer: Any, batch: Any, result: Mapping[str,Any]) -> None:
         if not self.enabled or self._probe is None: return
-        for handle in self._handles+self._gradient_handles: handle.remove()
-        self._handles=[]; self._gradient_handles=[]
+        self.detach_hooks()
         if len(self._rows) != MINIBATCHES: raise RuntimeError("pilot first update did not execute exactly eight actor minibatches")
         records=result.get("records",[])
         if len(records) != MINIBATCHES: raise RuntimeError("pilot result did not report eight minibatches")
         for row,record in zip(self._rows,records,strict=True): row["unclipped_gradient_norm"]=record["actor_pre_clip_gradient_norm"]
         self.output.mkdir(parents=True,exist_ok=True)
-        torch.save({"schema_version":"instinctrl-pilot-first-update-probe/1","sample_count":SAMPLES,"minibatches":self._rows},self.output/"first_update_probe.pt")
+        torch.save({"schema_version":"instinctrl-pilot-first-update-probe/2","sample_count":SAMPLES,
+                    "correction_heads":[1,2,3],"correction_frame":"body","correction_units":"m/s",
+                    "sample_minus_mean_action_units":"dimensionless","minibatches":self._rows},self.output/"first_update_probe.pt")
         atomic_json_replace(self.output,"first_update_gate.json",{"schema_version":"instinctrl-pilot-first-update-gate/1","status":"PASS","sample_count":SAMPLES,
             "float32_atol":FLOAT32_ATOL,"float32_rtol":FLOAT32_RTOL,"policy_rng_consumed":False,"minibatches":MINIBATCHES})
         self._probe=None
+
+    def detach_hooks(self) -> None:
+        for handle in self._handles+self._gradient_handles: handle.remove()
+        self._handles=[]; self._gradient_handles=[]
+
+    def abort(self, error: BaseException) -> None:
+        """Release observers and preserve partial diagnostic evidence on loop failure."""
+        if not self.enabled: return
+        self.detach_hooks()
+        self.output.mkdir(parents=True,exist_ok=True)
+        torch.save({"schema_version":"instinctrl-pilot-first-update-probe/2","status":"PARTIAL_FAILURE",
+                    "probe":self._probe,"minibatches":self._rows},self.output/"first_update_partial_probe.pt")
+        atomic_json_replace(self.output,"first_update_failure.json",{
+            "schema_version":"instinctrl-pilot-first-update-failure/1","status":"FAILED",
+            "error_type":type(error).__name__,"error":str(error),"observed_actor_steps":self._step_count})
 
     def retain_rollout(self, update: int, batch: Any, trainer: Any) -> None:
         if not self.enabled or update not in RETAIN_FULL_INPUT_UPDATES: return

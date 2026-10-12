@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_STAGE1_ENGINEERING_REPAIR_PENDING_INDEPENDENT_ACCEPTANCE",
+  "phase": "R5_DIAGNOSTIC_CLOSURE_IN_PROGRESS",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -217,5 +217,14 @@
     "simulation_starts": 0,
     "training_starts": 0
   },
-  "code_integration_commit": "e7d58d2bf2352eb9d91a0170de580ca9792e3366"
+  "code_integration_commit": "e7d58d2bf2352eb9d91a0170de580ca9792e3366",
+  "current_goal": {
+    "requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
+    "evidence_index": "../docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md",
+    "budget": "../docs/diagnostics/r5-readiness/goal_budget.json",
+    "target": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
+    "status": "IN_PROGRESS",
+    "live_release_issued": false,
+    "training_authorized": false
+  }
 }
