@@ -2,17 +2,29 @@
 
 2026-10-12 新用户 Goal：诊断闭环、最小修复与短程训练准入。
 需求：`docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md`。
-唯一开发目录和分支不变；本任务允许必要 CPU 实现、测试、工具兼容、证据处理、提交与正常 push，
-及证据支持的最小底层实现修复。历史失败任务不恢复，冻结 runtime 和历史目录只读。
+目标：`READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE`。
+当前：`BLOCKED_EXTERNAL_AUTHORIZATION`，Goal 未完成。
 
-目标：READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE。当前 IN_PROGRESS，尚未技术准入。
-本 Goal 不执行 P0/PLR，不进行训练 transitions、optimizer updates 或训练 checkpoint writes。
-新包络与用量见 `docs/diagnostics/r5-readiness/goal_budget.json`；每次 live 仍需现有 Commander
-机制绑定准确候选、工具、输入、预算和初始化/reset/probe 细项，经独立预审、STOP、coexistence
-及清理检查后 release。包络不是现成 release，Builder 不自我审批。
+唯一开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一分支 main，同一目录单写者。
+实现、CPU 验证、工具兼容、证据处理、提交与正常 push 沿用本次授权；历史目录、原始证据和冻结 runtime 保持只读。
+本 Goal 的训练 transitions、optimizer updates 和训练 checkpoint writes 均为零。
 
-最新索引：`docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md`。
+原 4 次 live／初始化保守预留已消耗，无活动 job。第四次 J-afe4bda51f5206e5 的完整 403,200 行物理轨迹
+已独立验收为零目标物理回归；进程仍为 FAILED/137，最终 reward 计数缺失，20,160 全额预留保留。
+累计保守 transitions 预留 60,480，真实 wall/GPU/输出与角色用量见 `docs/diagnostics/r5-readiness/goal_budget.json`。
 
-当前准确续接：4次live已消耗且无activejob。第四次完整物理轨迹403200行已独立复核并接受零目标物理回归，但进程FAILED/137、最终reward计数缺失、20160全额预留。新只读候选ef68ebb5682b85aa83044fdea1c13b7d0edbf325保留相同控制plant，仅补诊断持久化和pilot-eval工具seed分支；Role12精确预审待结论。下一唯一live是不同条件的命令直通B0，准确包inputs/passthrough_r3_input_manifest.json；需用户仅将start/init保守预留4→5的明确决定，再经Commander批准，其他80640/3640/64GiB/24帽不变。budget_extension_proposal.json已完成具体申请包。训练仍为零，目标未完成。
+准确只读候选 ef68ebb5682b85aa83044fdea1c13b7d0edbf325 保留已回归的控制器和 plant，
+仅补分析前持久化与 pilot-evaluation 工具 seed 分支。Role12 最终 PASS，两项 finding 关闭。
+准确工具为 74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60。
 
-Role12已最终PASS，durability与pilot-eval seed两项finding关闭，准确命令输入及工具预审通过。已集中请求用户仅增加一个start/init保守预留，等待明确答复；不能把未答复当批准。本Goal未DONE、未开始第五次或训练。得到批准后唯一恢复动作：更新新cap（不重置旧用量）→按Role12证据/准确ef68候选与工具74a6进行现有Commander绑定、STOP/coexistence/所有权检查→释放freshPLANT-R3命令直通一次→原ZTS验收与最终独立审核。
+已集中请求用户仅增加一个启动／初始化保守预留（4→5）；尚无明确答复，不重复请求，不把自动续接当批准。
+具体申请：`docs/diagnostics/r5-readiness/budget_extension_proposal.json`。
+准确命令直通包：`docs/diagnostics/r5-readiness/inputs/passthrough_r3_input_manifest.json`；
+proposed Commander binding 只是条件式草案，实际 AUTHORIZATION、审批和 release 均未签发。
+
+唯一恢复动作：取得明确资源决定后更新 cap（旧用量不重置）→现有 Commander 绑定独立证据与准确输入／剩余预算
+→通过 STOP、coexistence 和所有权检查→释放 fresh PLANT-R3 命令直通一次→原 Z/T/S gate 及最终独立审核。
+达到技术准入后停止，本 Goal 不开始配对训练。
+
+唯一最新索引：`docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md`。
+准入 manifest 内 `requirements_completion_audit` 逐项区分已证明范围与剩余工作。

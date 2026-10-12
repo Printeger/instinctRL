@@ -9,8 +9,11 @@
 
 诊断闭环、最小修复与短程训练准入正在推进。需求见
 [需求](goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md)，最新证据见
-[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。新诊断包络已登记；两次精确授权入口均已消耗，下一候选尚未 release；
-训练权限仍为零。以下历史状态与迁移记录保留，不继承旧 receipt 验收。
+[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。当前为 `BLOCKED_EXTERNAL_AUTHORIZATION`，Goal 未完成。
+原 4 次 live／初始化保守预留均已消耗，无活动 job；完整零目标物理回归与准确后继候选已独立通过，
+命令直通原 Z/T/S gate 及最终准入审核未完成。已集中请求仅将启动／初始化预留上限 4→5，等待明确答复；
+其他总帽和旧失败预留不变。训练、optimizer updates 和训练 checkpoint writes 均为零。
+以下历史状态与迁移记录保留，不继承旧 receipt 验收。
 
 ## 历史阶段及结论
 

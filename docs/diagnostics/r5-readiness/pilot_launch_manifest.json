@@ -1,6 +1,6 @@
 {
   "schema_version": "instinctrl-r5-pilot-readiness/1",
-  "status": "BLOCKED_RESOURCE_AUTHORIZATION",
+  "status": "BLOCKED_EXTERNAL_AUTHORIZATION",
   "goal_status": "IN_PROGRESS",
   "training_authorization_issued": false,
   "shared_repaired_baseline_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
@@ -119,5 +119,170 @@
     "proposal": "budget_extension_proposal.json",
     "requested_caps_delta": "live starts/initreservation4to5 only",
     "other_caps_unchanged": true
+  },
+  "blocking_kind": "RESOURCE_START_AND_INITIALIZATION_RESERVATION_CAP",
+  "requirements_completion_audit": {
+    "scope": "Requirements 2.1 and sections3\u201311; inspected current artifacts and independent review, no new runtime/optimizer actions",
+    "completion_proven": false,
+    "previous_goal_turn_classification": "PROGRESS",
+    "scope_limits": [
+      "403200physicalrows do not establish missing terminalrewardcompleted counters.",
+      "Original fourth910.547890709s wall noncompliance preserved; no retroactive acceptance.",
+      "Supplemental knownownedidentity settlement is not normalcloseack.",
+      "Futurefirstrolloutgate belongs to next authorizedpilot and remains mandatory."
+    ],
+    "checks": [
+      {
+        "requirement": "3.A1/A3: execution context, provenance, immutable candidate and preserved history",
+        "status": "PROVEN_FOR_SCOPE",
+        "evidence": [
+          "STATE_AND_EVIDENCE.md",
+          "inputs/pilot_r3_baseline_input_manifest.json",
+          "reviews/review-zero-r2-command-r3-prelive.json"
+        ],
+        "notes": "main snapshots/tags and source/config/tool identities verified; docs/goal preserved. Old failure/receipt identity never promoted."
+      },
+      {
+        "requirement": "3.A2: CLI compatibility, protected isolation and independent evidence access",
+        "status": "PROVEN_FOR_SCOPE",
+        "evidence": [
+          "cli-doctor-v1.json",
+          "cli-isolation-cpu-v1.xml",
+          "reviews/review-zero-r2-command-r3-prelive.json"
+        ],
+        "notes": "18 CPU isolation checks; actual independent fullraw/hash and288primitive samples. Newtoolrelease does not claim historical certification."
+      },
+      {
+        "requirement": "4.B1/B2/B5: reset, observer ordering/nonmutation and data counter boundary",
+        "status": "PROVEN_WITH_RECORDED_LIMITS",
+        "evidence": [
+          "plant-r1-cpu-final-v2/test_enhanced_case_reset_lifecycle.xml",
+          "plant-r1-cpu-final-v2/test_b0_enhanced_stage1.xml",
+          "plant-r2-zero-regression-analysis.json",
+          "reviews/review-zero-r2-command-r3-prelive.json"
+        ],
+        "notes": "Actual32lanes403200rows/96resetboundaries; noextra integration or hiddenwarmup. Terminalrewardcounts unavailable and reserved, not inferred fromphysicalcoverage."
+      },
+      {
+        "requirement": "4.B3: owned cleanup, failure artifacts and conservative settlement",
+        "status": "PROVEN_WITH_RECORDED_FAILURES",
+        "evidence": [
+          "plant-r2-final-job.json",
+          "live-plant-r2-regression/INVENTORY.json",
+          "plant-r2-recovery-ownership-settlement.json",
+          "plant-r2-postrun-gpu-0.json",
+          "plant-r2-postrun-gpu-1.json",
+          "durability-seed-cpu-v2/results.xml",
+          "goal_budget.json"
+        ],
+        "notes": "Actual FAILED137/PREPARED/no normalclose. All60480 incomplete reservations retained; supplementalknownownership accepted by independent Reviewer. Preanalysis durability minimum repair tested with abruptprocessdeath."
+      },
+      {
+        "requirement": "4.B4: causal analyzer segmentation/units/precision and score limitations",
+        "status": "PROVEN_FOR_SCOPE",
+        "evidence": [
+          "analyzer-cpu-v1/test_b0_analyzer_boundaries.xml",
+          "plant-r1-cpu-final-v2/test_b0_product_mechanics_torch.xml",
+          "INERTIA_MEASUREMENT_CONTRACT.md",
+          "CONTROL_BASELINE_DIAGNOSIS.md"
+        ],
+        "notes": "No crossreset momentum differencing; root/COM/sensor objects distinguished; unknownwrenches unavailable; sourceequilibrium plus intervention supports mechanism, heuristicwinner absent."
+      },
+      {
+        "requirement": "5.1/5.2: physical xyz diagnostic, probability/index/clone/RNG/hooks/noop/error gate",
+        "status": "IMPLEMENTED_CPU_VERIFIED_PENDING_NEXT_REAL_ROLLOUT",
+        "evidence": [
+          "pilot-cpu-v4/test_pilot_diagnostic_torch.xml",
+          "plant-r1-cpu-final-v2/test_paired_pilot_unittest.xml",
+          "reviews/review-zero-r2-command-r3-prelive.json"
+        ],
+        "notes": "ActualTorchHistoryActor/PrivilegedCritic,512oldBeta/logp/action/input/index capture; beforeeitheroptimizer fixedtolerance/mismatchzero steps. No currentGoal trainingupdate."
+      },
+      {
+        "requirement": "6.1/6.2: distinct conditions and exact prereview/release",
+        "status": "PROVEN_FOR_COMPLETED_ENTRIES_FIFTH_UNISSUED",
+        "evidence": [
+          "plant-r2-commander-approval.json",
+          "plant-r2-final-job.json",
+          "inputs/passthrough_r3_input_manifest.json",
+          "inputs/passthrough_r3_commander_binding.proposed.json"
+        ],
+        "notes": "Enhancedtargetalwayszero; separatefixedcommand [1,.5,.5,.5] pending. Old directB0 is not substituted. No new live withoutuser capdecision and existingCommander."
+      },
+      {
+        "requirement": "6.3/6.4/7.D1/D2: actual plant, axis mechanism, minimal correction and falsification",
+        "status": "PROVEN_FOR_ZERO_TARGET_PHYSICAL_REGRESSION",
+        "evidence": [
+          "current-usd-mass-cpu-v2.json",
+          "measurement-r1b-partial-mechanics-analysis.json",
+          "plant-r2-zero-regression-analysis.json",
+          "CONTROL_BASELINE_DIAGNOSIS.md",
+          "FIX_AND_REGRESSION.md",
+          "reviews/review-zero-r2-command-r3-prelive.json"
+        ],
+        "notes": "Actualwholemass1.181517923kg and actualrotorallocation; original equations predict oldxyz bias; measuredintermediates and response improve withoutplant/gain/COMmove. EntireoldR4 and unavailableindividualforces remain outside conclusion."
+      },
+      {
+        "requirement": "7.D3/D4: original sensor-T0 command Z/T/S gate and control admission",
+        "status": "INCOMPLETE_REQUIRES_NEW_AUTHORIZED_COMMAND_LIVE",
+        "evidence": [
+          "inputs/passthrough_r3_input_manifest.json",
+          "budget_extension_proposal.json"
+        ],
+        "notes": "Noactualcommandmetrics exist. All32lane/startup/reset/safety and originalsubgroup rules required. D7-R conditional, no evidence requiring it before this commandtest; no speculative extra launch."
+      },
+      {
+        "requirement": "8.E1/E2/E3: shared baseline, singlevariable and exact future entry",
+        "status": "PACKAGE_PROVEN_CONDITIONAL_ON_CONTROL_ADMISSION",
+        "evidence": [
+          "pilot_future_proposals.r3.json",
+          "pilot-r3-input-cpu/future-package-verification.json",
+          "PILOT_START_READINESS.md",
+          "reviews/review-zero-r2-command-r3-prelive.json"
+        ],
+        "notes": "P0/PLR sameef68source/config/tools; onlyactorLR3e-4 vs1e-4; originalcritic/32env/16rollout/64minibatch/1epoch/64updates/7saves/Zeval retained. Futureauthorizationunissued andcheckpointSHA deferred tofutureactualfiles."
+      },
+      {
+        "requirement": "9.1/9.2: independent final readiness and required success state",
+        "status": "INCOMPLETE_CONTROL_GATE_AND_FINAL_REVIEW",
+        "evidence": [
+          "reviews/review-zero-r2-command-r3-prelive.json",
+          "pilot_launch_manifest.json"
+        ],
+        "notes": "Role12 physicalacceptance/prereview is not commandgate orfinalGoalacceptance. BLOCKED_EXTERNAL_AUTHORIZATION is the requirements state; READY cannot be claimed."
+      },
+      {
+        "requirement": "10: exact caps, charge old failures, roles reserve and zero training",
+        "status": "BLOCKED_ORIGINAL_START_CAP_EXHAUSTED",
+        "evidence": [
+          "goal_budget.json",
+          "budget_extension_proposal.json",
+          "inputs/passthrough_r3_input_manifest.json"
+        ],
+        "notes": "4starts/initreserved used;60480reserved nontrain;12rolesused/6criticalreserve within24. Explicitone-capdecision pending; no automaticreset/retry. Training/optimizer/trainingcheckpoint0."
+      },
+      {
+        "requirement": "11: required deliverables and current project state",
+        "status": "DELIVERED_FOR_BLOCKED_STATE_FINAL_ACCEPTANCE_PENDING",
+        "evidence": [
+          "STATE_AND_EVIDENCE.md",
+          "CONTROL_BASELINE_DIAGNOSIS.md",
+          "CONTROL_BASELINE_DIAGNOSIS.json",
+          "FIX_AND_REGRESSION.md",
+          "PILOT_START_READINESS.md",
+          "pilot_launch_manifest.json",
+          "reviews/review-zero-r2-command-r3-prelive.json",
+          "../../../coordination/PROJECT_STATE.json",
+          "../../PROJECT_STATUS.md",
+          "../../../coordination/CURRENT_TASK.md"
+        ],
+        "notes": "Singlecurrentindex retained; large raw staysoriginalhoststore plus exacthash, independentlyread. Standardblockedstate and unique nextaction synchronized."
+      }
+    ],
+    "remaining_required_work": [
+      "Explicit user start/initreservationcap decision; preserveallothercaps and oldcharges.",
+      "Existing Commander exact release then real separatecommand Z/T/S evaluation and ownership/accounting.",
+      "Independent final readiness review and state update to READY onlyif actualgates satisfy originalcriteria."
+    ]
   }
 }

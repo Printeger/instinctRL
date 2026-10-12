@@ -1,6 +1,6 @@
 # Paired pilot start readiness
 
-Status: BLOCKED_RESOURCE_AUTHORIZATION; Goal IN_PROGRESS. Technical admission is not complete: original command Z/T/S gates and final independent review remain pending. Training authorization is UNISSUED. Fourth exact repaired zero-target entry J-afe4bda51f5206e5 FAILED/137 at analysisdeadline; fullphysicalcoverage/regression independentlyaccepted separately from missingfinalcounters andclose. Separate command-passthrough B0 is still required under the unchanged original Z/T/S gates. Enhanced zero-target T/S cannot certify command tracking.
+Status: BLOCKED_EXTERNAL_AUTHORIZATION; Goal IN_PROGRESS. Technical admission is not complete: original command Z/T/S gates and final independent review remain pending. Training authorization is UNISSUED. Fourth exact repaired zero-target entry J-afe4bda51f5206e5 FAILED/137 at analysisdeadline; fullphysicalcoverage/regression independentlyaccepted separately from missingfinalcounters andclose. Separate command-passthrough B0 is still required under the unchanged original Z/T/S gates. Enhanced zero-target T/S cannot certify command tracking.
 
 Both future P0/PLR groups use read-only baseline ef68ebb5682b85aa83044fdea1c13b7d0edbf325, configd9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c and tool release 74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60. The exact future argv, pins, modes, seeds, output paths, templates and budget proposals are already in pilot_future_proposals.r3.json, referenced by pilot_launch_manifest.json. Their existence does not authorize training or accept this baseline.
 
@@ -15,3 +15,5 @@ After both real control conditions and final independent review pass, technical 
 The exact one-entry resource proposal is budget_extension_proposal.json. It requests onlystart/initreservation4→5, preserving60480oldreservations and allremainingcaps; remaining20160transitions/2197.156205wall/2208.083309GPU/59.7GiB cancontainfifth20160/910/910/16GiB. Original fourth910.5478907090146wall noncompliance isrecorded/charged, not rounded orretroactivelydeclaredwithinlimit. No fifth AUTH/approval ortraining authority has been issued.
 
 Role12 final independent PASS is in reviews/review-zero-r2-command-r3-prelive.json: fullzero physicalregression and accurate successor/command/futurepackage accepted, DIAGNOSTIC-DURABILITY-R1 andPILOT-FUTURE-R1closed, noopenMUST_FIX. One explicitstart/initreservationdecision has been requested; noanswer is assumed and no furtherreleaseexists.
+
+Requirement audit: pilot_launch_manifest.json contains the current per-section completion evidence and explicit missing command/final-review gates. Automatic Goal continuation does not grant the pending start-cap extension.
