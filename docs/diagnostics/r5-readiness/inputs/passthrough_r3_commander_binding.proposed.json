@@ -1,0 +1,49 @@
+{
+  "status": "PROPOSED_BINDING_ONLY_PENDING_EXPLICIT_USER_CAP_DECISION_NOT_APPROVAL",
+  "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "candidate_tree": "b735eafac3888415eded7c6684ed385706871acf",
+  "input_pack_commit": "b0b8df0c66d4a562e2cb6b4aa269bbf5d4fcfb99",
+  "input_manifest_sha256": "2fd60c56bec19f2b1deaa1ebea7d6e58f0160bf2eb54861b382941221bc1b5c4",
+  "tools_release_content_id": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+  "authorization_expected_sha256": "580207a02313958463f1f66c2be7452371aca6c121a3df892ca2dcaede8c1b4c",
+  "proposed_spec_sha256": "2a0b5b67e057b742adb2f224abd30784bccccbe471eef435d82517db94e0abe7",
+  "independent_conditions": [
+    {
+      "evidence_id": "E-R5-ZERO-R2-PHYSICAL-REVIEW",
+      "sha256": "8e2fd1bc7d54a1860261813e8c5a72910eb885e7f21f0daca914e5d55e11b2f2"
+    },
+    {
+      "evidence_id": "E-R5-COMMAND-R3-PRELIVE-REVIEW",
+      "sha256": "8e2fd1bc7d54a1860261813e8c5a72910eb885e7f21f0daca914e5d55e11b2f2"
+    }
+  ],
+  "independent_review_sha256": "8e2fd1bc7d54a1860261813e8c5a72910eb885e7f21f0daca914e5d55e11b2f2",
+  "remaining_envelope_IF_USER_APPROVES_ONLY_REQUESTED_CAP_CHANGE": {
+    "live_starts": 1,
+    "simulator_initializations": 1,
+    "nontraining_transitions": 20160,
+    "wall_seconds": 2197.156205131905,
+    "gpu_seconds": 2208.0833091249224,
+    "output_bytes": 64138212663,
+    "role_calls": 12
+  },
+  "supplemental_limits": {
+    "automatic_reset_lanes": 20160,
+    "explicit_resets": 3,
+    "initialization_ticks": 10,
+    "postrun_nvidia_smi_audit_calls": 2,
+    "prelaunch_nvidia_smi_calls": 6,
+    "runtime_cuda_memory_observations": 634
+  },
+  "actual_authorization_issued": false,
+  "actual_commander_approval_issued": false,
+  "entry_release_issued": false,
+  "training_authorized": false,
+  "retained_transition_reservation": 60480,
+  "release_dependencies": [
+    "Explicituserstart/initcapdecision",
+    "Actualauthorizationexactexpectedbytes, Commander validate/propose/show/decide exacthash",
+    "STOP/noactiveownedjob/coexistenceinternal6/ownedcleanupbefore release"
+  ],
+  "postrun_audit_limit": 2
+}

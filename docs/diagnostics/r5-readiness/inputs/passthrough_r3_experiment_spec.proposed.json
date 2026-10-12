@@ -1,0 +1,84 @@
+{
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "training_workloads.unified_h1.formal_unified_h1",
+    "--authorization",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-PLANT-R3/commands/AUTHORIZATION.json",
+    "--attempt",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-PLANT-R3",
+    "--mode",
+    "control-diagnostic"
+  ],
+  "backend": "real",
+  "conditions": [
+    {
+      "evidence_id": "E-R5-ZERO-R2-PHYSICAL-REVIEW",
+      "sha256": "8e2fd1bc7d54a1860261813e8c5a72910eb885e7f21f0daca914e5d55e11b2f2"
+    },
+    {
+      "evidence_id": "E-R5-COMMAND-R3-PRELIVE-REVIEW",
+      "sha256": "8e2fd1bc7d54a1860261813e8c5a72910eb885e7f21f0daca914e5d55e11b2f2"
+    }
+  ],
+  "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+  "evaluation": "metric-h1-v1",
+  "h1": {
+    "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-PLANT-R3",
+    "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+    "gpu_accounting": "allocated_device_wall_seconds",
+    "gpu_devices": [
+      "0"
+    ],
+    "mode": "control-diagnostic",
+    "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012"
+  },
+  "id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+  "method": "unified-h1-v1",
+  "observations": [
+    "status",
+    "counters",
+    "process_identity",
+    "process_start",
+    "control_trace",
+    "evaluation_raw",
+    "cleanup",
+    "partial_failure"
+  ],
+  "pins": {
+    "authorization": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-PLANT-R3/commands/AUTHORIZATION.json",
+      "sha256": "580207a02313958463f1f66c2be7452371aca6c121a3df892ca2dcaede8c1b4c"
+    },
+    "dispatcher": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+    },
+    "executable": {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+    },
+    "product": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+      "sha256": "5aa3e3f14c0cd2e754d26eb437cc270dda4914e8c63e4758b12ddeacf6a41e90"
+    },
+    "runtime": {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+    },
+    "workload": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/formal_unified_h1.py",
+      "sha256": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896"
+    }
+  },
+  "resources": {
+    "gpu_seconds": 910,
+    "starts": 1,
+    "transitions": 20160,
+    "wall_seconds": 910
+  },
+  "runtime": "/home/mint/rl_blackwell_test",
+  "seed": 20260909,
+  "stage_id": "R5-READINESS-20261012"
+}
