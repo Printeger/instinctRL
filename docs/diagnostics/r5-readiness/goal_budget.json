@@ -30,7 +30,7 @@
     "wall_seconds": 1456.0325917440932,
     "gpu_seconds": 1442.699172595283,
     "output_bytes": 4581333538,
-    "role_calls": 13,
+    "role_calls": 14,
     "training_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0
@@ -142,6 +142,15 @@
       "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
       "scope": "Actual fifthcoexistence-onlyfailure/finalzero accounting and cleanup; currentexplicitcap8 decision; classify genuine resource blocker vs implementation defect and minimal permitted nextaction; no newlive ortraining authorization.",
       "status": "PASS_RESOURCE_FAILURE_CLASSIFICATION_ONLY"
+    },
+    {
+      "call": 14,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "input_pack_commit": "77a9f59",
+      "scope": "Exact unissued ENTRY6 input/pin/identity/counter/evidence-protocol prereview only, conditional on explicit one-entry no-new-repair exception; samephysicalsource/gates, no live authority.",
+      "status": "REQUESTED"
     }
   ],
   "initialization_ticks_resets_gpu_probes": {
