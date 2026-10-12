@@ -13,9 +13,16 @@
     "path": "../docs/history/consolidation-20261012/r5/review_evidence/HOST_CPU_EVIDENCE.json"
   },
   "latest_independent_review": {
-    "status": "ROLE12_IN_PROGRESS",
-    "scope": "zero physical regression accepted interim; exactsuccessorprereviewpending",
-    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325"
+    "status": "PASS_ZERO_PHYSICAL_AND_EXACT_PRELIVE_ONLY",
+    "role_call": 12,
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "input_pack_commit": "b0b8df0c66d4a562e2cb6b4aa269bbf5d4fcfb99",
+    "evidence": "../docs/diagnostics/r5-readiness/reviews/review-zero-r2-command-r3-prelive.json",
+    "closed": [
+      "DIAGNOSTIC-DURABILITY-R1",
+      "PILOT-FUTURE-R1"
+    ],
+    "open": []
   },
   "latest_real_diagnostic": {
     "status": "PHYSICAL_REGRESSION_ACCEPTED_INTERIM_INDEPENDENT_ROLE12_PROCESS_FAILED",
@@ -32,9 +39,9 @@
   "migration_is_product_acceptance": false,
   "current_candidate_config": "../docs/diagnostics/r5-readiness/inputs/pilot_r3_snapshot_config.json",
   "blocking_followups": [
-    "ExactR3durability/seed/tool/input independentreview.",
-    "Explicituserone-start/initreservationdecision for separatecommand; current4startcap fullyconsumed, allothercaps unchanged.",
-    "ActualcommandoriginalZTSgates andfinalindependentreadinessreview."
+    "Explicituserone-start/initreservationdecision for exactcommandR3; original4slotcap consumed, allothercaps unchanged.",
+    "Commander exactrelease and actualcommandoriginalZTSgates.",
+    "Finalindependent readiness review; no training inGoal."
   ],
   "migration_verification": {
     "scope": "MIGRATION_CPU_REGRESSION_ONLY_NOT_INDEPENDENT_PRODUCT_ACCEPTANCE",
@@ -244,11 +251,16 @@
       "release_order": "INDEPENDENTLY_ACCEPTED_ENTRY_GATE_SEPARATION",
       "latest_actual_failure_review": "../docs/diagnostics/r5-readiness/reviews/review-live-baseline-v3-failure.json",
       "latest_candidate": {
-        "source_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
-        "input_pack_commit": "e211b455199f90dfea03e3c9149389b7b4b3462c",
-        "verdict": "PASS_PRELIVE_ONLY",
-        "evidence": "../docs/diagnostics/r5-readiness/reviews/review-plant-r2-prelive.json",
-        "scope": "R2 resource compatibility and fourth exact input prereview, no scientific acceptance"
+        "status": "PASS_ZERO_PHYSICAL_AND_EXACT_PRELIVE_ONLY",
+        "role_call": 12,
+        "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "input_pack_commit": "b0b8df0c66d4a562e2cb6b4aa269bbf5d4fcfb99",
+        "evidence": "../docs/diagnostics/r5-readiness/reviews/review-zero-r2-command-r3-prelive.json",
+        "closed": [
+          "DIAGNOSTIC-DURABILITY-R1",
+          "PILOT-FUTURE-R1"
+        ],
+        "open": []
       }
     },
     "cli_compatibility": {
@@ -264,7 +276,7 @@
     "current_live_release_effective": false,
     "next_candidate": {
       "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
-      "status": "EXACT_R3_PREREVIEW_PENDING_USER_STARTCAP_DECISION_REQUIRED",
+      "status": "INDEPENDENTLY_REVIEWED_PENDING_USER_STARTCAP_DECISION",
       "live_release_issued": false,
       "inputs": "../docs/diagnostics/r5-readiness/inputs/passthrough_r3_input_manifest.json"
     },

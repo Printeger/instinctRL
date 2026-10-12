@@ -1,6 +1,6 @@
 {
   "schema_version": "instinctrl-r5-one-entry-extension-proposal/1",
-  "status": "PREPARED_REQUIRES_USER_DECISION_INDEPENDENT_REVIEW_AND_COMMANDER_NO_RELEASE",
+  "status": "INDEPENDENTLY_REVIEWED_REQUIRES_EXPLICIT_USER_DECISION_AND_COMMANDER_NO_RELEASE",
   "reason": "Separate B0_COMMAND_PASSTHROUGH required for original H1 Z/T/S admission; original4entries consumed, never reusefailedjob. Thirdpre-appzeroentry stillchargedstart/initreservation.",
   "requested_caps_delta": {
     "live_starts": {
@@ -102,5 +102,11 @@
     "automaticretry",
     "oldjobresume",
     "dependency/runtime/methodchanges"
-  ]
+  ],
+  "independent_review": {
+    "path": "docs/diagnostics/r5-readiness/reviews/review-zero-r2-command-r3-prelive.json",
+    "sha256": "8e2fd1bc7d54a1860261813e8c5a72910eb885e7f21f0daca914e5d55e11b2f2",
+    "verdict": "PASS",
+    "role_call": 12
+  }
 }
