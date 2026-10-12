@@ -1,0 +1,98 @@
+{
+  "approval_id": "A-0b20be680df1a46c",
+  "id": "J-afe4bda51f5206e5",
+  "identity": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pgid": 1724665,
+    "pid": 1724665,
+    "starttime": "174921404"
+  },
+  "reserved_resources": {
+    "gpu_seconds": 910,
+    "starts": 1,
+    "transitions": 20160,
+    "wall_seconds": 910
+  },
+  "spec": {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--authorization",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012/commands/AUTHORIZATION.json",
+      "--attempt",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+      "--mode",
+      "enhanced-b0-diagnostic"
+    ],
+    "backend": "real",
+    "conditions": [
+      {
+        "evidence_id": "E-R5-PLANT-R2-PRELIVE-REVIEW",
+        "sha256": "ae8f79b797c6c09d1cb0560bc1661f62591603782b04535e2a948fd9c8577d2c"
+      }
+    ],
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r2-20261012",
+    "evaluation": "metric-h1-v1",
+    "h1": {
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+      "config_sha256": "09d297c08dc8178e4beb8bc62b1c0a405b8beff0713bd3754d0586a89bda97f5",
+      "gpu_accounting": "allocated_device_wall_seconds",
+      "gpu_devices": [
+        "0"
+      ],
+      "mode": "enhanced-b0-diagnostic",
+      "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r2-20261012"
+    },
+    "id": "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+    "method": "unified-h1-v1",
+    "observations": [
+      "status",
+      "counters",
+      "process_identity",
+      "process_start",
+      "raw_physics",
+      "cleanup",
+      "partial_failure"
+    ],
+    "pins": {
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012/commands/AUTHORIZATION.json",
+        "sha256": "de40adb7be771134bd1b70e9d1775debc7790b57f416889d22215bd3dd3b0cf6"
+      },
+      "dispatcher": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r2-20261012/training_workloads/unified_h1/local_dispatch.py",
+        "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+      },
+      "executable": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "product": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r2-20261012/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+        "sha256": "5aa3e3f14c0cd2e754d26eb437cc270dda4914e8c63e4758b12ddeacf6a41e90"
+      },
+      "runtime": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "workload": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r2-20261012/training_workloads/unified_h1/formal_unified_h1.py",
+        "sha256": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896"
+      }
+    },
+    "resources": {
+      "gpu_seconds": 910,
+      "starts": 1,
+      "transitions": 20160,
+      "wall_seconds": 910
+    },
+    "runtime": "/home/mint/rl_blackwell_test",
+    "seed": 20260909,
+    "stage_id": "R5-READINESS-20261012"
+  },
+  "stage": "R5-READINESS-20261012",
+  "status": "RUNNING",
+  "used_resources": {}
+}
