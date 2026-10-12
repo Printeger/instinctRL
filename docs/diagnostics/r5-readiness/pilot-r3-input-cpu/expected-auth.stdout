@@ -1,0 +1,31 @@
+{
+  "scope": "CPU_EXPECTED_PROPOSAL_VALIDATION_NOT_ACTUAL_AUTHORIZATION",
+  "source": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "config": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+  "parameters": {
+    "cases": [
+      "Z",
+      "T",
+      "S"
+    ],
+    "checkpoint": null,
+    "checkpoint_sha256": null,
+    "checkpoint_source_identity": null,
+    "condition": "B0",
+    "experiment_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+    "transitions": 20160
+  },
+  "budgets": {
+    "automatic_resets": 20160,
+    "checkpoint_writes": 0,
+    "explicit_resets": 3,
+    "initialization_ticks": 10,
+    "live_process_starts": 1,
+    "nontraining_transitions": 20160,
+    "optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "training_transitions": 0,
+    "wall_seconds": 900
+  },
+  "actual_auth_absent": true
+}

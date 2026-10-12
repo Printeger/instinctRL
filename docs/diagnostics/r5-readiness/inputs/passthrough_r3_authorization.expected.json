@@ -1,0 +1,38 @@
+{
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-PLANT-R3",
+  "budgets": {
+    "automatic_resets": 20160,
+    "checkpoint_writes": 0,
+    "explicit_resets": 3,
+    "initialization_ticks": 10,
+    "live_process_starts": 1,
+    "nontraining_transitions": 20160,
+    "optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "training_transitions": 0,
+    "wall_seconds": 900
+  },
+  "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+  "method_sha256": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+  "mode": "control-diagnostic",
+  "order_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+  "parameters": {
+    "cases": [
+      "Z",
+      "T",
+      "S"
+    ],
+    "checkpoint": null,
+    "checkpoint_sha256": null,
+    "checkpoint_source_identity": null,
+    "condition": "B0",
+    "experiment_id": "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012",
+    "transitions": 20160
+  },
+  "product_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "product_tree": "b735eafac3888415eded7c6684ed385706871acf",
+  "schema_version": "unified-h1-r3-authorization.v2",
+  "status": "AUTHORIZED",
+  "workload_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "workload_tree": "b735eafac3888415eded7c6684ed385706871acf"
+}

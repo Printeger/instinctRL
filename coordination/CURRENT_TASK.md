@@ -12,3 +12,5 @@
 及清理检查后 release。包络不是现成 release，Builder 不自我审批。
 
 最新索引：`docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md`。
+
+当前准确续接：4次live已消耗且无activejob。第四次完整物理轨迹403200行已独立复核并接受零目标物理回归，但进程FAILED/137、最终reward计数缺失、20160全额预留。新只读候选ef68ebb5682b85aa83044fdea1c13b7d0edbf325保留相同控制plant，仅补诊断持久化和pilot-eval工具seed分支；Role12精确预审待结论。下一唯一live是不同条件的命令直通B0，准确包inputs/passthrough_r3_input_manifest.json；需用户仅将start/init保守预留4→5的明确决定，再经Commander批准，其他80640/3640/64GiB/24帽不变。budget_extension_proposal.json已完成具体申请包。训练仍为零，目标未完成。

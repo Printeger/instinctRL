@@ -1,0 +1,106 @@
+{
+  "schema_version": "instinctrl-r5-one-entry-extension-proposal/1",
+  "status": "PREPARED_REQUIRES_USER_DECISION_INDEPENDENT_REVIEW_AND_COMMANDER_NO_RELEASE",
+  "reason": "Separate B0_COMMAND_PASSTHROUGH required for original H1 Z/T/S admission; original4entries consumed, never reusefailedjob. Thirdpre-appzeroentry stillchargedstart/initreservation.",
+  "requested_caps_delta": {
+    "live_starts": {
+      "from": 4,
+      "to": 5
+    },
+    "simulator_initializations_conservative_reservations": {
+      "from": 4,
+      "to": 5
+    }
+  },
+  "all_other_caps_unchanged": {
+    "nontraining_transitions": 80640,
+    "wall_seconds": 3640,
+    "gpu_seconds": 3640,
+    "output_bytes": 68719476736,
+    "role_calls": 24,
+    "reserved_critical_role_calls": 6,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0
+  },
+  "current_used": {
+    "live_starts": 4,
+    "simulator_initializations": 4,
+    "nontraining_transitions": 0,
+    "wall_seconds": 1442.8437948680948,
+    "gpu_seconds": 1431.9166908750776,
+    "output_bytes": 4581264073,
+    "role_calls": 12,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0
+  },
+  "preserved_transition_reservations": 60480,
+  "requested_fifth": {
+    "baseline": {
+      "authority": "none; old4entrycap consumed; fifthneeds explicit newdecision",
+      "config_overlay": "/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/inputs/pilot_r3_snapshot_config.json",
+      "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+      "physical_code_unchanged_from_regression": true,
+      "physics_regression_job": "J-afe4bda51f5206e5",
+      "physics_regression_source_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+      "remaining_changes": "backend durable preanalysis checkpoint; toolpilot-eval seedclassification only; no product/control/method changes",
+      "schema_version": "instinctrl-r5-repaired-baseline-inputs/3",
+      "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+      "snapshot_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "snapshot_diff_sha256": "5e9e11b2ba79aaf2f0ac64851b622c26d1562322f07808b8252d1acd5297f690",
+      "snapshot_tree": "b735eafac3888415eded7c6684ed385706871acf",
+      "status": "UNACCEPTED_PREREVIEW_CANDIDATE_NO_RELEASE",
+      "tools_release_content_id": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+      "tools_release_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/control-releases/74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60"
+    },
+    "input_manifest": "inputs/passthrough_r3_input_manifest.json",
+    "input_manifest_sha256": "2fd60c56bec19f2b1deaa1ebea7d6e58f0160bf2eb54861b382941221bc1b5c4",
+    "expected_auth": "inputs/passthrough_r3_authorization.expected.json",
+    "draft_spec": "inputs/passthrough_r3_experiment_spec.draft.json",
+    "resources": {
+      "live_starts": 1,
+      "simulator_initializations_conservative_reservations": 1,
+      "nontraining_transitions": 20160,
+      "wall_seconds_including_cleanup": 910,
+      "gpu_seconds": 910,
+      "output_bytes": 17179869184,
+      "training_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0
+    },
+    "supplemental_limits": {
+      "automatic_reset_lanes": 20160,
+      "explicit_resets": 3,
+      "initialization_ticks": 10,
+      "postrun_nvidia_smi_audit_calls": 2,
+      "prelaunch_nvidia_smi_calls": 6,
+      "runtime_cuda_memory_observations": 634
+    }
+  },
+  "remaining_under_unchanged_caps": {
+    "nontraining_transitions": 20160,
+    "wall_seconds": 2197.156205131905,
+    "gpu_seconds": 2208.0833091249224,
+    "output_bytes": 64138212663,
+    "role_calls": 12
+  },
+  "fourth_per_run_wall_noncompliance": {
+    "nominal_cap": 910,
+    "actual": 910.5478907090146,
+    "overrun": 0.5478907090146,
+    "treatment": "charged actualfull amount; notretroactively relabelled withinlimit"
+  },
+  "prerequisites": [
+    "Role12 exactsuccessor source/tools/input closure and physicalregressionaccepted",
+    "new explicit userstart/initreservationdecision",
+    "Commander exactacceptedreviewpredicate/config/source/tools/input/remainingbudget",
+    "STOP/coexistence/ownedcleanupbefore release"
+  ],
+  "not_authorized": [
+    "training",
+    "automaticretry",
+    "oldjobresume",
+    "dependency/runtime/methodchanges"
+  ]
+}

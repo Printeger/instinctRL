@@ -3,7 +3,7 @@
   "status": "BLOCKED_CONTROL_BASELINE",
   "goal_status": "IN_PROGRESS",
   "training_authorization_issued": false,
-  "shared_repaired_baseline_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+  "shared_repaired_baseline_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
   "groups": {
     "P0": {
       "actor_lr": 0.0003,
@@ -67,21 +67,21 @@
   "current_goal_training_checkpoint_writes": 0,
   "argv_status": "EXACT_FUTURE_PROPOSALS_GENERATED_NOT_AUTHORIZED",
   "blocking_evidence": [
-    "Fourth exact repaired zero-target entry J-afe4bda51f5206e5 is RUNNING; coexistencePASS but complete trace/cleanup and independent scientific acceptance remain pending.",
-    "All4start/initreservation slots consumed. Exact fifth command-passthrough proposal prepared; independent pre-review and explicit user start/initreservation extension required before Commander release."
+    "FourthprocessFAILED/137 inCPUanalysis with original PREPAREDmanifest and nofinalcounters; full403200physicalrows independentlyaccepted, full20160reservationpreserved. Diagnosticdurability/seedrouting successor exactprereviewpending.",
+    "All4live starts/initreservations consumed. ExactcommandR3 proposal requires explicit newuserdecision ononly start/initcap and existingCommander release beforeoriginalZ/T/S live gates."
   ],
-  "baseline_acceptance": "REPAIRED_ZERO_TARGET_RUNNING_SEPARATE_COMMAND_PENDING",
+  "baseline_acceptance": "ZERO_TARGET_PHYSICAL_REGRESSION_INDEPENDENTLY_ACCEPTED_COMMAND_PENDING",
   "shared_baseline": {
-    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r2-20261012",
-    "snapshot_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
-    "snapshot_tree": "9c0cc84e0983806677b40ec714a5ea57314b6a58",
-    "snapshot_diff_sha256": "3d7b1bcf7ce8cd3d3504f579fba5abb99b0d5f1e1d63cde324c959b0242b291c",
-    "config_sha256": "09d297c08dc8178e4beb8bc62b1c0a405b8beff0713bd3754d0586a89bda97f5"
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+    "snapshot_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "snapshot_tree": "b735eafac3888415eded7c6684ed385706871acf",
+    "snapshot_diff_sha256": "5e9e11b2ba79aaf2f0ac64851b622c26d1562322f07808b8252d1acd5297f690",
+    "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c"
   },
-  "tools_release_content_id": "efc946bee820dfcf4735d994fca2daa248ba9ea8fa5af22f5b5b5d307c1c1167",
+  "tools_release_content_id": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
   "future_proposals": {
-    "path": "pilot_future_proposals.r2.json",
-    "sha256": "aa73b6eeaa24d8e5477fd14ae9b2571de9ba89ea06be7b19a4a05ff1be9c9627",
+    "path": "pilot_future_proposals.r3.json",
+    "sha256": "0154b4b2c9a693c99bf590e91256e092a22ba8fb07599dd66ca71d564b03113a",
     "status": "UNISSUED",
     "generator": "../../../tools/prepare_r5_pilot_proposals.py"
   },
@@ -98,5 +98,14 @@
     "app_seconds": 9.5,
     "ownership": "existing pidfd/descendant lifeguard, require quiescence/no survivors before next release",
     "forced_termination_status": "FAILED; scientific trace independent of process verdict"
+  },
+  "zero_target_physics_regression": {
+    "source_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+    "job": "J-afe4bda51f5206e5",
+    "independent_status": "ACCEPTED_REPAIRED_ZERO_TARGET_PHYSICAL_MECHANISM_REGRESSION_INTERIM_ROLE12",
+    "physical_code_unchanged_on_new_baseline": true,
+    "process_status": "FAILED",
+    "counter_settlement": "INCOMPLETE_FULL20160RESERVED",
+    "analysis": "plant-r2-zero-regression-analysis.json"
   }
 }

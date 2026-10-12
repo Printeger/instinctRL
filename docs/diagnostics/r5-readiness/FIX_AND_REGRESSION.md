@@ -1,6 +1,6 @@
 # Fix and regression record
 
-Current status: CPU_VERIFIED_EXACT_LIVE_PREREVIEW_PENDING. Source bd5cacd56c519fdd5f868f4ba0720b1a437de967; two distinct input packs eb45831. This report does not grant control or training acceptance.
+Current status: ZERO_TARGET_PHYSICAL_REGRESSION_ACCEPTED_COMMAND_PENDING. Exact next source ef68ebb5682b85aa83044fdea1c13b7d0edbf325 with physical code unchanged from f726 actual regression; final Role12 prereview pending. No training acceptance or authority.
 
 | Defect and actual evidence | Minimal repair | Verification and remaining boundary |
 | --- | --- | --- |
@@ -17,3 +17,7 @@ Current CPU result: plant-r1-cpu-final-v2 contains137 tests,0failures/errors/ski
 Native app.close remains bounded0.5sec environment +9.5sec app. Forced termination must remain FAILED, with original pending-close state and full incomplete transition reservation preserved. Owned lifeguard quiescence/no survivors and authorized external GPU audit govern subsequent releases. The repair does not claim to have fixed native close. A scientific regression conclusion requires independently assessed real trace, resource and cleanup evidence.
 
 Planned falsification: zero-target raw must contain403200 lane-physics rows,630 completed policy steps,20160 nontraining transitions,3 actual explicit resets with initial ticks separately observed. The old late velocity [+.1935,-.0556,-.0894]m/s should disappear with matching compensation/allocation intermediates. Separate command B0 must include every original Z200/T100/S330 step and all32 lanes, with mounted-sensor initial reference, startup errors, resets and safety failures included in unchanged gates. No new live is repeated merely because a result is inconvenient; no optimizer or training checkpoint is allowed in this Goal.
+
+Actual repaired zero regression:403200validated physicalrows/96segments. Oldpersistentxyz bias disappeared, maxallphysicslaneRMS0.0161006683m/s, maxrootfirstrowhorizontal0.0090503361m/maxheight0.0483250618m, allstartupretained. Role12independentfullstream confirms. ActualT/Sreset boundaries produced fullphysicalcoverage; terminal rewardcounters unavailable, not inferred. ProcessFAILED/137 duringheavyanalysis, actual910.5478907090146s charged, nativecloseNOT_REACHED; full20160reserved. Supplementalknownidentityquiescence/twoGPUaudits do not counterfeitnormalclose.
+
+R2resourcecompatibility was independently reviewed and actualcoexistencepassed. Follow-on DIAGNOSTIC_DURABILITY_REPAIR.md records two minimal findings: persist closedraw/coverage/observedcounters beforeanalysis; classifypilot-evaluation withoriginalevaluationseed.32CPUtestsPASS, abruptforkdeath137 retention includesnocloseclaim. Newef68sourcephysical/controller/methodbytes matchf726,96filetoolrelease74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60. Exactfifthcommand andfuturepilotpacksrefreshonthatidentity; newstartdecision/Commander needed.

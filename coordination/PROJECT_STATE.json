@@ -13,27 +13,28 @@
     "path": "../docs/history/consolidation-20261012/r5/review_evidence/HOST_CPU_EVIDENCE.json"
   },
   "latest_independent_review": {
-    "status": "NOT_ACCEPTED",
-    "task_status": "BUDGET_EXHAUSTED",
-    "reason": "Evaluator output rejected: MUST_FIX requires contract, evidence, impact and closure"
+    "status": "ROLE12_IN_PROGRESS",
+    "scope": "zero physical regression accepted interim; exactsuccessorprereviewpending",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325"
   },
   "latest_real_diagnostic": {
-    "status": "RUNNING_UNACCEPTED",
+    "status": "PHYSICAL_REGRESSION_ACCEPTED_INTERIM_INDEPENDENT_ROLE12_PROCESS_FAILED",
     "job_id": "J-afe4bda51f5206e5",
     "source_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
-    "condition": "ENHANCED_B0_ZERO_TARGET",
-    "coexistence": "PASS",
-    "training_updates": 0,
-    "evidence": "../docs/diagnostics/r5-readiness/plant-r2-submit.json"
+    "physical_rows": 403200,
+    "final_policy_counters": "UNAVAILABLE",
+    "transitions_reservation": 20160,
+    "process": "FAILED",
+    "training_updates": 0
   },
   "new_live_execution_authorized": false,
   "new_training_authorized": false,
   "migration_is_product_acceptance": false,
-  "current_candidate_config": "../training_workloads/unified_h1/candidate_config.json",
+  "current_candidate_config": "../docs/diagnostics/r5-readiness/inputs/pilot_r3_snapshot_config.json",
   "blocking_followups": [
-    "Complete fourth actual zero-target trace/cleanup and independent regression acceptance.",
-    "Separate command-passthrough B0 original Z/T/S gates on identical repaired source; all4start slots consumed, exact unissued fifth proposal requires one new user resource decision.",
-    "Final independent readiness review; exact future P0/PLR package already generated, first real rollout probability gate remains next-run mandatory."
+    "ExactR3durability/seed/tool/input independentreview.",
+    "Explicituserone-start/initreservationdecision for separatecommand; current4startcap fullyconsumed, allothercaps unchanged.",
+    "ActualcommandoriginalZTSgates andfinalindependentreadinessreview."
   ],
   "migration_verification": {
     "scope": "MIGRATION_CPU_REGRESSION_ONLY_NOT_INDEPENDENT_PRODUCT_ACCEPTANCE",
@@ -225,7 +226,7 @@
     "budget": "../docs/diagnostics/r5-readiness/goal_budget.json",
     "target": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
     "status": "IN_PROGRESS",
-    "live_release_issued": true,
+    "live_release_issued": false,
     "training_authorized": false,
     "independent_review": {
       "candidate_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
@@ -258,17 +259,21 @@
       "result": "PASS_KERNEL_AND_INSTALLED_REGISTRY_CHECKS"
     },
     "exact_live_approval": "../docs/diagnostics/r5-readiness/plant-r2-commander-approval.json",
-    "live_entry_status": "PLANT_R2_FOURTH_RUNNING",
+    "live_entry_status": "ALL4CONSUMED_FOURTH_FAILED_PHYSICAL_REGRESSION_ACCEPTED_COMMAND_PENDING",
     "latest_live_job": "J-afe4bda51f5206e5",
-    "current_live_release_effective": true,
+    "current_live_release_effective": false,
     "next_candidate": {
-      "experiment_id": "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
-      "status": "FOURTH_EXACT_ENTRY_RUNNING",
-      "live_release_issued": true,
-      "source_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
-      "inputs": "../docs/diagnostics/r5-readiness/inputs/plant_r2_input_manifest.json"
+      "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "status": "EXACT_R3_PREREVIEW_PENDING_USER_STARTCAP_DECISION_REQUIRED",
+      "live_release_issued": false,
+      "inputs": "../docs/diagnostics/r5-readiness/inputs/passthrough_r3_input_manifest.json"
     },
-    "next_exact_live_approval": "../docs/diagnostics/r5-readiness/plant-r2-commander-approval.json",
-    "latest_actual_diagnostic": "../docs/diagnostics/r5-readiness/measurement-r1b-partial-mechanics-analysis.json"
+    "next_exact_live_approval": null,
+    "latest_actual_diagnostic": "../docs/diagnostics/r5-readiness/plant-r2-zero-regression-analysis.json"
+  },
+  "historical_pre_goal_independent_review": {
+    "status": "NOT_ACCEPTED",
+    "task_status": "BUDGET_EXHAUSTED",
+    "reason": "Evaluator output rejected: MUST_FIX requires contract, evidence, impact and closure"
   }
 }

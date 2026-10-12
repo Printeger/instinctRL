@@ -1,6 +1,6 @@
 # Current control baseline diagnosis
 
-Status: MECHANISM_SUPPORTED_REPAIRED_LIVE_REGRESSION_PENDING. No control or pilot readiness acceptance yet.
+Status: ZERO_TARGET_PHYSICAL_MECHANISM_REGRESSION_ACCEPTED_INTERIM_ROLE12; separate command Z/T/S and complete pilot readiness remain pending.
 
 Historical B0 contains 20,160 verified real transitions; it was not an unrun template. Both current Goal failures remain separate immutable evidence. First baseline-v3 failed before its first accepted row. Measurement-r1b (source 79ccb40d52a347f0f17466c7f0bdbac8206354c1, job J-fcbe37739d942e3c) produced 128,640 valid physics rows: complete zero-target Z (200 policy steps, 6,400 completed transitions), plus all 20 integrations of the first attempted T step before reward rejected reliable coverage below 0.1. T/S protocol was not completed. The primary failure was reward coverage, not timeout. Cleanup then required bounded forced termination; lifeguard independently reports quiescence/no survivors. Each failed task retains its full 20,160 reservation. Training transitions, optimizer updates and training checkpoint writes are zero.
 
@@ -27,3 +27,17 @@ The actual first-T failure follows a bare _reset_idx that clears policy/history 
 Observed runtime cost also warrants a bounded diagnostic implementation repair: old probes copy/hash the full roughly 32.6 MB actor history twice per integration. New private leaf cache reuses SHA256 only after exact GPU byte equality, including signed zero and NaN bit patterns; changed bytes, even through Tensor.data without a version increment, force rehash. Other protected state probes remain strict. Primitive physics serialization batches small transfers instead of synchronizing hundreds of individual scalars. These diagnostic changes do not advance controller, history, RNG, simulator or reset state. CPU faults and regressions are preserved in plant-r1-cpu-final and plant-r1-cpu-final-v2.
 
 The native app.close boundary remains a bounded forced-cleanup failure, not graceful close success. A completed scientific trace, safe ownership settlement and independent evidence judgment must be recorded separately from process status. No old FAILED job is resumed; no next live is released merely by this report.
+
+## Actual repaired physical regression
+
+Fourth source f726c019339494e74fbc6e7c90ec6d0fa7a45ff8/jobJ-afe4bda51f5206e5 provides403200 independently validated physical rows,96reset boundaries and96condition/case/lane/episode segments. No physics startup rows are removed. RawSHA c89e44bbf0039e9c647f4232d4029ab00f446b81ba775790d9097c4157ffb92d. Root analyzer and independent Reviewer fullstream scan agree exactly on coverage/statistics; Reviewer also samples288primitive COM/rotorwrench reconstructions.
+
+| Zero-target case | Maximum lane RMS speed, all physics (m/s) | Max root horizontal displacement from first physics row (m) | Max height change from first physics row (m) | Max absolute after5s mean xyz velocity across lanes (m/s) |
+| --- | --- | --- | --- | --- |
+| Z | 0.0113864287 | 0.0067021551 | 0.0483250618 | [.00033210,.00018148,.000000877] |
+| T | 0.0161006683 | 0.0036493149 | 0.0483250618 | [.00039035,.00034340,.000000840] |
+| S | 0.0088686329 | 0.0090503361 | 0.0483250618 | [.00025686,.00024047,.000000887] |
+
+Measured mass remains1.1815179230179638kg; late collective11.5906896–11.5906908N matches actualmass×9.81=11.5906908248N. The previous persistent xyz bias disappears under the measured mass/actualallocation intervention without plant/gain changes. This jointly verifies changed intermediates and physical response, supporting the specific originalsource mechanism. Startup maximum instantaneous speed0.1003273m/s and height drop0.0483251m remain included. These diagnostics use root-first-physics reference, not original mounted-sensor T0; they do not claim formal command gates.
+
+Process verdict remains FAILED/137: expensive CPUanalysis exhausted supervisor deadline, actual910.5478907090146s/GPU909.4390038719866s charged. OriginalPREPAREDmanifest and missingfinalreward counters are immutable; full20160 remainsreserved. Fullphysicalcoverage cannot prove final completedreward policy count. Existing-tool supplemental known-owned-identity closure/twoGPUaudits are separate from missingnormalcloseack. Minimal durability/seed successor ef68ebb preserves allphysicalproductcode; its acceptance requires exactindependentreview. Generic analyzer hypothesis ranking remains no causal conclusion. Drag/contact/joint/other individualwrenches stay unavailable; their separate attribution and alloldR4failures remainunknown, but do not alter the next required fixed-command discrimination.

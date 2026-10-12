@@ -1,0 +1,535 @@
+{
+  "schema_version": "instinctrl-r5-future-pilot-proposals/1",
+  "status": "PROPOSALS_ONLY_NOT_AUTHORIZED",
+  "baseline": {
+    "authority": "none; old4entrycap consumed; fifthneeds explicit newdecision",
+    "config_overlay": "/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/inputs/pilot_r3_snapshot_config.json",
+    "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+    "physical_code_unchanged_from_regression": true,
+    "physics_regression_job": "J-afe4bda51f5206e5",
+    "physics_regression_source_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+    "remaining_changes": "backend durable preanalysis checkpoint; toolpilot-eval seedclassification only; no product/control/method changes",
+    "schema_version": "instinctrl-r5-repaired-baseline-inputs/3",
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+    "snapshot_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "snapshot_diff_sha256": "5e9e11b2ba79aaf2f0ac64851b622c26d1562322f07808b8252d1acd5297f690",
+    "snapshot_tree": "b735eafac3888415eded7c6684ed385706871acf",
+    "status": "UNACCEPTED_PREREVIEW_CANDIDATE_NO_RELEASE",
+    "tools_release_content_id": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+    "tools_release_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/control-releases/74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60"
+  },
+  "generator_sha256": "c045feab2b9b6df49e6b855dfb662cff3dbfacefee8f5981ef09b9ad410da88a",
+  "current_goal_execution_authority": {
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0
+  },
+  "future_total": {
+    "process_starts": 4,
+    "simulator_initializations": 4,
+    "training_transitions": 65536,
+    "nontraining_evaluation_transitions": 25600,
+    "updates": 128,
+    "training_checkpoint_writes": 14,
+    "outer_wall_seconds_including_cleanup": 10840,
+    "gpu_allocation_seconds": 10840
+  },
+  "groups": [
+    {
+      "group": "P0",
+      "mode": "pilot-training",
+      "authorization_issued": false,
+      "authorization_proposal": {
+        "schema_version": "unified-h1-r3-authorization.v2",
+        "status": "UNISSUED_REQUIRES_COMMANDER_APPROVAL",
+        "order_id": "UNIFIED-H1-R5-P0-PILOT-TRAIN",
+        "method_sha256": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+        "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+        "product_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "product_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "workload_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "workload_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012",
+        "mode": "pilot-training",
+        "budgets": {
+          "live_process_starts": 1,
+          "simulator_initializations": 1,
+          "initialization_ticks": 10,
+          "automatic_resets": 32768,
+          "training_transitions": 32768,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 64,
+          "checkpoint_writes": 7,
+          "explicit_resets": 1,
+          "wall_seconds": 3600
+        },
+        "parameters": {
+          "group": "P0"
+        }
+      },
+      "experiment_proposal": {
+        "id": "UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012",
+        "stage_id": "R5-PAIRED-PILOT-NEXT-AUTHORIZATION",
+        "backend": "real",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-B",
+          "-m",
+          "training_workloads.unified_h1.formal_unified_h1",
+          "--authorization",
+          "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012/commands/AUTHORIZATION.json",
+          "--attempt",
+          "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012",
+          "--mode",
+          "pilot-training"
+        ],
+        "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+        "pins": {
+          "dispatcher": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/local_dispatch.py",
+            "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+          },
+          "executable": {
+            "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+            "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+          },
+          "product": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+            "sha256": "5aa3e3f14c0cd2e754d26eb437cc270dda4914e8c63e4758b12ddeacf6a41e90"
+          },
+          "workload": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/formal_unified_h1.py",
+            "sha256": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896"
+          },
+          "runtime": {
+            "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+            "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+          },
+          "authorization": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012/commands/AUTHORIZATION.json",
+            "sha256": null
+          }
+        },
+        "method": "unified-h1-v1",
+        "evaluation": "metric-h1-v1",
+        "runtime": "/home/mint/rl_blackwell_test",
+        "seed": 20260908,
+        "resources": {
+          "starts": 1,
+          "wall_seconds": 3610,
+          "gpu_seconds": 3610,
+          "transitions": 32768
+        },
+        "conditions": [],
+        "observations": [
+          "status",
+          "counters",
+          "process_identity",
+          "process_start",
+          "cleanup",
+          "pilot_diagnostic"
+        ],
+        "h1": {
+          "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+          "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012",
+          "mode": "pilot-training",
+          "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+          "gpu_devices": [
+            "0"
+          ],
+          "gpu_accounting": "allocated_device_wall_seconds"
+        }
+      },
+      "output": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012/results/pilot-training",
+      "runtime_resource_checks_maximum": 1225,
+      "prelaunch_nvidia_smi_calls": 6,
+      "automatic_retries": 0,
+      "missing_bindings": [
+        "new user training/evaluation envelope and Commander approval",
+        "accepted final readiness evidence predicate",
+        "actual authorization bytes/hash"
+      ]
+    },
+    {
+      "group": "P0",
+      "mode": "pilot-evaluation",
+      "authorization_issued": false,
+      "authorization_proposal": {
+        "schema_version": "unified-h1-r3-authorization.v2",
+        "status": "UNISSUED_REQUIRES_COMMANDER_APPROVAL",
+        "order_id": "UNIFIED-H1-R5-P0-PILOT-EVAL",
+        "method_sha256": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+        "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+        "product_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "product_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "workload_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "workload_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012",
+        "mode": "pilot-evaluation",
+        "budgets": {
+          "live_process_starts": 1,
+          "simulator_initializations": 1,
+          "initialization_ticks": 10,
+          "automatic_resets": 12800,
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "checkpoint_writes": 0,
+          "explicit_resets": 2,
+          "wall_seconds": 1800
+        },
+        "parameters": {
+          "group": "P0",
+          "checkpoints": [
+            {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012/results/pilot-training/checkpoints/u16.pt",
+              "sha256": null,
+              "update": 16
+            },
+            {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012/results/pilot-training/checkpoints/u64.pt",
+              "sha256": null,
+              "update": 64
+            }
+          ]
+        }
+      },
+      "experiment_proposal": {
+        "id": "UNIFIED-H1-R5-P0-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012",
+        "stage_id": "R5-PAIRED-PILOT-NEXT-AUTHORIZATION",
+        "backend": "real",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-B",
+          "-m",
+          "training_workloads.unified_h1.formal_unified_h1",
+          "--authorization",
+          "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012/commands/AUTHORIZATION.json",
+          "--attempt",
+          "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012",
+          "--mode",
+          "pilot-evaluation"
+        ],
+        "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+        "pins": {
+          "dispatcher": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/local_dispatch.py",
+            "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+          },
+          "executable": {
+            "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+            "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+          },
+          "product": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+            "sha256": "5aa3e3f14c0cd2e754d26eb437cc270dda4914e8c63e4758b12ddeacf6a41e90"
+          },
+          "workload": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/formal_unified_h1.py",
+            "sha256": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896"
+          },
+          "runtime": {
+            "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+            "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+          },
+          "authorization": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012/commands/AUTHORIZATION.json",
+            "sha256": null
+          }
+        },
+        "method": "unified-h1-v1",
+        "evaluation": "metric-h1-v1",
+        "runtime": "/home/mint/rl_blackwell_test",
+        "seed": 20260909,
+        "resources": {
+          "starts": 1,
+          "wall_seconds": 1810,
+          "gpu_seconds": 1810,
+          "transitions": 12800
+        },
+        "conditions": [],
+        "observations": [
+          "status",
+          "counters",
+          "process_identity",
+          "process_start",
+          "cleanup",
+          "evaluation_raw"
+        ],
+        "h1": {
+          "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+          "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012",
+          "mode": "pilot-evaluation",
+          "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+          "gpu_devices": [
+            "0"
+          ],
+          "gpu_accounting": "allocated_device_wall_seconds"
+        }
+      },
+      "output": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012/results/pilot-evaluation",
+      "runtime_resource_checks_maximum": 403,
+      "prelaunch_nvidia_smi_calls": 6,
+      "automatic_retries": 0,
+      "missing_bindings": [
+        "new user training/evaluation envelope and Commander approval",
+        "accepted final readiness evidence predicate",
+        "actual authorization bytes/hash",
+        "accepted future u16/u64 checkpoint bytes/hashes/source identity"
+      ]
+    },
+    {
+      "group": "PLR",
+      "mode": "pilot-training",
+      "authorization_issued": false,
+      "authorization_proposal": {
+        "schema_version": "unified-h1-r3-authorization.v2",
+        "status": "UNISSUED_REQUIRES_COMMANDER_APPROVAL",
+        "order_id": "UNIFIED-H1-R5-PLR-PILOT-TRAIN",
+        "method_sha256": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+        "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+        "product_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "product_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "workload_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "workload_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012",
+        "mode": "pilot-training",
+        "budgets": {
+          "live_process_starts": 1,
+          "simulator_initializations": 1,
+          "initialization_ticks": 10,
+          "automatic_resets": 32768,
+          "training_transitions": 32768,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 64,
+          "checkpoint_writes": 7,
+          "explicit_resets": 1,
+          "wall_seconds": 3600
+        },
+        "parameters": {
+          "group": "PLR"
+        }
+      },
+      "experiment_proposal": {
+        "id": "UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012",
+        "stage_id": "R5-PAIRED-PILOT-NEXT-AUTHORIZATION",
+        "backend": "real",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-B",
+          "-m",
+          "training_workloads.unified_h1.formal_unified_h1",
+          "--authorization",
+          "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012/commands/AUTHORIZATION.json",
+          "--attempt",
+          "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012",
+          "--mode",
+          "pilot-training"
+        ],
+        "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+        "pins": {
+          "dispatcher": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/local_dispatch.py",
+            "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+          },
+          "executable": {
+            "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+            "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+          },
+          "product": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+            "sha256": "5aa3e3f14c0cd2e754d26eb437cc270dda4914e8c63e4758b12ddeacf6a41e90"
+          },
+          "workload": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/formal_unified_h1.py",
+            "sha256": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896"
+          },
+          "runtime": {
+            "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+            "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+          },
+          "authorization": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012/commands/AUTHORIZATION.json",
+            "sha256": null
+          }
+        },
+        "method": "unified-h1-v1",
+        "evaluation": "metric-h1-v1",
+        "runtime": "/home/mint/rl_blackwell_test",
+        "seed": 20260908,
+        "resources": {
+          "starts": 1,
+          "wall_seconds": 3610,
+          "gpu_seconds": 3610,
+          "transitions": 32768
+        },
+        "conditions": [],
+        "observations": [
+          "status",
+          "counters",
+          "process_identity",
+          "process_start",
+          "cleanup",
+          "pilot_diagnostic"
+        ],
+        "h1": {
+          "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+          "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012",
+          "mode": "pilot-training",
+          "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+          "gpu_devices": [
+            "0"
+          ],
+          "gpu_accounting": "allocated_device_wall_seconds"
+        }
+      },
+      "output": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012/results/pilot-training",
+      "runtime_resource_checks_maximum": 1225,
+      "prelaunch_nvidia_smi_calls": 6,
+      "automatic_retries": 0,
+      "missing_bindings": [
+        "new user training/evaluation envelope and Commander approval",
+        "accepted final readiness evidence predicate",
+        "actual authorization bytes/hash"
+      ]
+    },
+    {
+      "group": "PLR",
+      "mode": "pilot-evaluation",
+      "authorization_issued": false,
+      "authorization_proposal": {
+        "schema_version": "unified-h1-r3-authorization.v2",
+        "status": "UNISSUED_REQUIRES_COMMANDER_APPROVAL",
+        "order_id": "UNIFIED-H1-R5-PLR-PILOT-EVAL",
+        "method_sha256": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+        "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+        "product_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "product_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "workload_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "workload_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012",
+        "mode": "pilot-evaluation",
+        "budgets": {
+          "live_process_starts": 1,
+          "simulator_initializations": 1,
+          "initialization_ticks": 10,
+          "automatic_resets": 12800,
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "checkpoint_writes": 0,
+          "explicit_resets": 2,
+          "wall_seconds": 1800
+        },
+        "parameters": {
+          "group": "PLR",
+          "checkpoints": [
+            {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012/results/pilot-training/checkpoints/u16.pt",
+              "sha256": null,
+              "update": 16
+            },
+            {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261012/results/pilot-training/checkpoints/u64.pt",
+              "sha256": null,
+              "update": 64
+            }
+          ]
+        }
+      },
+      "experiment_proposal": {
+        "id": "UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012",
+        "stage_id": "R5-PAIRED-PILOT-NEXT-AUTHORIZATION",
+        "backend": "real",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-B",
+          "-m",
+          "training_workloads.unified_h1.formal_unified_h1",
+          "--authorization",
+          "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012/commands/AUTHORIZATION.json",
+          "--attempt",
+          "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012",
+          "--mode",
+          "pilot-evaluation"
+        ],
+        "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+        "pins": {
+          "dispatcher": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/local_dispatch.py",
+            "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+          },
+          "executable": {
+            "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+            "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+          },
+          "product": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+            "sha256": "5aa3e3f14c0cd2e754d26eb437cc270dda4914e8c63e4758b12ddeacf6a41e90"
+          },
+          "workload": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/formal_unified_h1.py",
+            "sha256": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896"
+          },
+          "runtime": {
+            "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+            "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+          },
+          "authorization": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012/commands/AUTHORIZATION.json",
+            "sha256": null
+          }
+        },
+        "method": "unified-h1-v1",
+        "evaluation": "metric-h1-v1",
+        "runtime": "/home/mint/rl_blackwell_test",
+        "seed": 20260909,
+        "resources": {
+          "starts": 1,
+          "wall_seconds": 1810,
+          "gpu_seconds": 1810,
+          "transitions": 12800
+        },
+        "conditions": [],
+        "observations": [
+          "status",
+          "counters",
+          "process_identity",
+          "process_start",
+          "cleanup",
+          "evaluation_raw"
+        ],
+        "h1": {
+          "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+          "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012",
+          "mode": "pilot-evaluation",
+          "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+          "gpu_devices": [
+            "0"
+          ],
+          "gpu_accounting": "allocated_device_wall_seconds"
+        }
+      },
+      "output": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261012/results/pilot-evaluation",
+      "runtime_resource_checks_maximum": 403,
+      "prelaunch_nvidia_smi_calls": 6,
+      "automatic_retries": 0,
+      "missing_bindings": [
+        "new user training/evaluation envelope and Commander approval",
+        "accepted final readiness evidence predicate",
+        "actual authorization bytes/hash",
+        "accepted future u16/u64 checkpoint bytes/hashes/source identity"
+      ]
+    }
+  ],
+  "issue_sequence": [
+    "Obtain new explicit training/evaluation envelope; preserve this Goal zero-training boundary.",
+    "Verify exact shared readonly baseline/config/tools and accepted final readiness evidence.",
+    "Create fresh train attempt commands/results directories; never reuse prior run.",
+    "Only Commander after approval sets authorization status AUTHORIZED and writes actual byte file; bind its SHA256 to proposal.",
+    "Add accepted independent evidence predicates; experiments.validate/propose; policy.show_proposal/decide; experiments.submit once.",
+    "Entry checks STOP/ownership and six coexistence probes before AppLauncher; first real rollout probability gate must pass before first optimizer step.",
+    "After accepted training, mechanically SHA256 u16/u64 and bind checkpoint source identities; separately approve each evaluation.",
+    "Preserve partial failures and settle owned cleanup and actual resources before another release."
+  ]
+}

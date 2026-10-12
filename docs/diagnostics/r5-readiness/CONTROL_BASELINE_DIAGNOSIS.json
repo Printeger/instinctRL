@@ -1,14 +1,14 @@
 {
-  "status": "CURRENT_MECHANISM_SUPPORTED_REPAIR_PENDING_REAL_REGRESSION",
+  "status": "ZERO_TARGET_PHYSICAL_REGRESSION_ACCEPTED_COMMAND_PENDING",
   "current_runtime_total_mass_kg": 1.1815179230179638,
   "current_asset_sha256": "3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99",
   "historical_verified_transitions": 20160,
   "historical_vertical_mechanism": "SUPPORTED_IN_HISTORICAL_BINDING",
   "horizontal_cause": "SUPPORTED_NOMINAL_VS_ACTUAL_WRENCH_ALLOCATION_GEOMETRY",
-  "new_live_transitions": "6400 observed completed; failed collection final settlement incomplete, FULL20160 reserved",
+  "new_live_transitions": "second6400observed; fourthfinalcountersunavailable; bothfull20160reservations preserved",
   "new_condition": "ENHANCED_B0_ZERO_TARGET",
   "command_passthrough_acceptance": "NOT_PERFORMED",
-  "physical_fix": "IMPLEMENTED_CPU_VERIFIED_NOT_YET_REAL_REGRESSED",
+  "physical_fix": "REAL_ZERO_PHYSICAL_RESPONSE_ACCEPTED_COMMAND_GATE_PENDING",
   "scientific_control_acceptance": "NOT_GRANTED",
   "current_source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
   "current_job_id": "J-fcbe37739d942e3c",
@@ -38,5 +38,19 @@
       "mass_only_vertical_prediction_m_s": -0.08938170547990508,
       "nominal_rotor_origin_is_not_actual_system_com": true
     }
-  ]
+  ],
+  "zero_target_regression": {
+    "job": "J-afe4bda51f5206e5",
+    "source": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+    "rows": 403200,
+    "reset_rows": 96,
+    "segments": 96,
+    "raw_sha256": "c89e44bbf0039e9c647f4232d4029ab00f446b81ba775790d9097c4157ffb92d",
+    "independent_interim_verdict": "ACCEPTED_REPAIRED_ZERO_TARGET_PHYSICAL_MECHANISM_REGRESSION",
+    "process": "FAILED",
+    "final_policy_counters": "UNAVAILABLE",
+    "reservation": 20160,
+    "analysis": "plant-r2-zero-regression-analysis.json"
+  },
+  "next_shared_baseline": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325"
 }
