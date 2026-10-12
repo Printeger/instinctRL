@@ -267,7 +267,10 @@ class TaslabDirectEnv(DirectRLEnv):
         if self._control is None:
             raise RuntimeError("control output is unavailable before action preprocessing")
         root_state_w = self._validated_root_state()
-        self._lee = taslab_velocity_control(root_state_w, self._control.v_final_w)
+        from instinctlab.control.runtime_adapter import measured_control_plant
+        mass,allocation = measured_control_plant(self._robot,root_state_w)
+        self._lee = taslab_velocity_control(root_state_w, self._control.v_final_w,
+            measured_mass_kg=mass,measured_allocation=allocation)
         self._wrench = self._wrench_adapter.apply(self._robot, self._lee.normalized_rotor_commands)
 
     def _validated_root_state(self) -> torch.Tensor:

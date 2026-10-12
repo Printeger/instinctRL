@@ -119,10 +119,18 @@ def _validate_inputs(root_state_w: torch.Tensor, target_velocity_w: torch.Tensor
 
 
 def taslab_velocity_control(
-    root_state_w: torch.Tensor, target_velocity_w: torch.Tensor
+    root_state_w: torch.Tensor, target_velocity_w: torch.Tensor, *,
+    measured_mass_kg: torch.Tensor | None = None, measured_allocation: torch.Tensor | None = None
 ) -> LeeControllerResult:
     """Hold current position/yaw and map world velocity target to raw rotor coordinates."""
     quaternion = _validate_inputs(root_state_w, target_velocity_w)
+    if (measured_mass_kg is None) != (measured_allocation is None):
+        raise ValueError("measured control mass and allocation must be supplied together")
+    if measured_mass_kg is not None:
+        for value,shape in ((measured_mass_kg,(root_state_w.shape[0],1)),(measured_allocation,(root_state_w.shape[0],4,4))):
+            if not isinstance(value,torch.Tensor) or value.shape!=shape or value.device!=root_state_w.device or value.dtype!=root_state_w.dtype or not bool(torch.isfinite(value).all()):
+                raise ValueError("measured control plant tensor contract mismatch")
+        if bool((measured_mass_kg<=0).any()): raise ValueError("measured whole-vehicle mass must be positive")
     position_w = root_state_w[:, :3]
     velocity_w = root_state_w[:, 7:10]
     angular_velocity_w = root_state_w[:, 10:13]
@@ -159,9 +167,16 @@ def taslab_velocity_control(
     attitude_gain = _constant_tensor(TASLAB_UAV.lee_gains.attitude, root_state_w) / inertia
     angular_rate_gain = _constant_tensor(TASLAB_UAV.lee_gains.angular_rate, root_state_w) / inertia
     angular_acceleration = -attitude_error * attitude_gain - angular_velocity_b * angular_rate_gain
-    collective_thrust = -TASLAB_UAV.mass * (acceleration * rotation[:, :, 2]).sum(dim=-1, keepdim=True)
+    # Unbound standalone kernel fixtures retain their historical nominal model.
+    # The actual product environment always supplies checked plant measurements.
+    control_mass = TASLAB_UAV.mass if measured_mass_kg is None else measured_mass_kg
+    collective_thrust = -control_mass * (acceleration * rotation[:, :, 2]).sum(dim=-1, keepdim=True)
     acceleration_thrust = torch.cat((angular_acceleration, collective_thrust), dim=-1)
-    command = torch.matmul(taslab_mixer(root_state_w), acceleration_thrust.T).T
+    if measured_allocation is None:
+        command = torch.matmul(taslab_mixer(root_state_w), acceleration_thrust.T).T
+    else:
+        inertia4 = torch.cat((inertia,torch.ones(1,device=root_state_w.device,dtype=root_state_w.dtype)))
+        command = torch.linalg.solve(measured_allocation,(acceleration_thrust*inertia4).unsqueeze(-1)).squeeze(-1)
     rotor = TASLAB_UAV.rotors
     maximum_thrust = _constant_tensor(
         tuple(kf * omega * omega for kf, omega in zip(rotor.force_constants, rotor.max_angular_velocities, strict=True)),

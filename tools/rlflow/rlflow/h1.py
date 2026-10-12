@@ -84,15 +84,19 @@ def environment(spec):
 POSTRUN_PACKAGE_ID = "INSTINCTRL-R5-READINESS-20261012"
 POSTRUN_EXPERIMENT_ID = "UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012"
 POSTRUN_IDENTITIES = {
+    "UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012": POSTRUN_PACKAGE_ID,
+    "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012": POSTRUN_PACKAGE_ID,
     "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012": POSTRUN_PACKAGE_ID,
     POSTRUN_EXPERIMENT_ID: POSTRUN_PACKAGE_ID,
     "UNIFIED-H1-R5-STAGE1-B0-RESET-AVAILABILITY-CLEANUP-R1-20260929": "INSTINCTRL-R5-STAGE1-RESET-AVAILABILITY-CLEANUP-SUCCESSOR-20260929",
 }
+POSTRUN_MODES = {identity:"enhanced-b0-diagnostic" for identity in POSTRUN_IDENTITIES}
+POSTRUN_MODES["UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012"] = "control-diagnostic"
 
 def seal_postrun_manifest(spec, directory, output):
     """Seal every regular production job/report byte without copying large raw evidence."""
     d=Path(directory).resolve(); output=Path(output).resolve()
-    if spec.get("id") not in POSTRUN_IDENTITIES or spec.get("h1",{}).get("mode") != "enhanced-b0-diagnostic":
+    if spec.get("id") not in POSTRUN_IDENTITIES or spec.get("h1",{}).get("mode") != POSTRUN_MODES[spec['id']]:
         return None
     rows=[]
     for kind,root in (("job",d),("report",output)):

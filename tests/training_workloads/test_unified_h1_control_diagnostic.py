@@ -59,3 +59,16 @@ def test_chunk_writer_rejects_gaps_and_hashes_lossless_payload(tmp_path):
     assert hashlib.sha256(first.read_bytes()).hexdigest() == manifest["chunks"][0]["sha256"]
     restored=torch.load(first,map_location="cpu",weights_only=True)
     assert torch.equal(restored["issued_action"],payload["issued_action"])
+
+
+def test_new_command_passthrough_has_exact_identity_and_no_policy_checkpoint(tmp_path):
+    params={'condition':'B0','experiment_id':diagnostic.COMMAND_PASSTHROUGH_ID,
+        'checkpoint':None,'checkpoint_sha256':None,'checkpoint_source_identity':None,
+        'cases':['Z','T','S'],'transitions':20160}
+    assert diagnostic.validate_parameters(params)==params
+    wrong=dict(params,checkpoint='/tmp/old-policy.pt')
+    with pytest.raises(PermissionError,match='must not load'):diagnostic.validate_parameters(wrong)
+    with pytest.raises(PermissionError,match='identity'):diagnostic.validate_parameters(dict(params,experiment_id='unbound-ID'))
+    writer=diagnostic.DiagnosticChunkWriter(tmp_path/'new_trace',condition='B0',experiment_id=diagnostic.COMMAND_PASSTHROUGH_ID)
+    assert writer.experiment_id==diagnostic.COMMAND_PASSTHROUGH_ID
+    assert not diagnostic.valid_identity('D7-R',diagnostic.COMMAND_PASSTHROUGH_ID)

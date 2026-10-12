@@ -1,0 +1,36 @@
+{
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONPATH": "/home/mint/rl_dev/instinctRL-dev:/home/mint/rl_dev/instinctRL-dev/isaaclab-training:/home/mint/rl_dev/instinctRL-dev/tools/rlflow:/home/mint/rl_dev/instinctRL-dev/tools/rlflow/tests"
+  },
+  "results": [
+    {
+      "module": "tests/training_workloads/test_enhanced_case_reset_lifecycle.py",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/training_workloads/test_enhanced_case_reset_lifecycle.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/case-reset-cpu-v1/test_enhanced_case_reset_lifecycle.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.8148791228886694
+    },
+    {
+      "module": "tests/training_workloads/test_unified_h1_product_hook.py",
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/training_workloads/test_unified_h1_product_hook.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/case-reset-cpu-v1/test_unified_h1_product_hook.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.16388678806833923
+    }
+  ]
+}

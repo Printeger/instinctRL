@@ -21,6 +21,50 @@ class WrenchResult:
     torques_body_nm: torch.Tensor
 
 
+def measured_control_plant(articulation: Any, reference: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+    """Measure total mass and the actual rotor wrench allocation about system COM.
+
+    All inputs are public plant measurements for the privileged flight control
+    boundary. No body mass, transform, rotor state or actor input is modified.
+    """
+    from .lee_velocity_controller import quaternion_to_rotation_matrix_wxyz
+    from instinctlab.assets.taslab_uav.config import TASLAB_UAV
+    if tuple(articulation.body_names) != EXPECTED_BODY_NAMES:
+        raise ValueError("control mass/geometry requires exact five-body topology without duplicates")
+    mass = articulation.root_physx_view.get_masses()
+    body = articulation.data.body_link_state_w
+    local = articulation.data.body_com_pose_b
+    n = reference.shape[0]
+    if not all(isinstance(x,torch.Tensor) for x in (mass,body,local)):
+        raise RuntimeError("actual control plant mass/geometry unavailable")
+    if mass.shape != (n,5) or body.shape != (n,5,13) or local.shape != (n,5,7):
+        raise ValueError("actual control plant mass/geometry shape mismatch")
+    if any(not bool(torch.isfinite(x).all()) for x in (mass,body,local)) or bool((mass<=0).any()):
+        raise ValueError("actual control plant measurements must be finite with positive per-body mass")
+    mass = mass.to(device=reference.device,dtype=torch.float64)
+    body = body.to(device=reference.device,dtype=torch.float64)
+    local = local.to(device=reference.device,dtype=torch.float64)
+    q = body[:,:,3:7]
+    norms = torch.linalg.vector_norm(q,dim=-1,keepdim=True)
+    if bool(((norms-1).abs()>1e-5).any()): raise ValueError("actual body orientations must be normalized")
+    rotation = quaternion_to_rotation_matrix_wxyz((q/norms).reshape(-1,4)).reshape(n,5,3,3)
+    coms = body[:,:,:3]+torch.matmul(rotation,local[:,:,:3].unsqueeze(-1)).squeeze(-1)
+    total = mass.sum(dim=-1,keepdim=True)
+    combined = (coms*mass.unsqueeze(-1)).sum(dim=1)/total
+    base_inverse = rotation[:,0].transpose(1,2)
+    arms = torch.matmul(base_inverse[:,None],(body[:,1:,:3]-combined[:,None]).unsqueeze(-1)).squeeze(-1)
+    directions = torch.matmul(base_inverse[:,None],rotation[:,1:,:,2].unsqueeze(-1)).squeeze(-1)
+    torque = torch.linalg.cross(arms,directions,dim=-1)
+    # Runtime adapter applies each reaction moment to base local Z.
+    rotors = TASLAB_UAV.rotors
+    reaction = torch.tensor([-d*km/kf for d,km,kf in zip(rotors.directions,rotors.moment_constants,rotors.force_constants,strict=True)],device=reference.device,dtype=torch.float64)
+    torque[:,:,2] += reaction
+    allocation = torch.cat((torque.transpose(1,2),directions[:,:,2].unsqueeze(1)),dim=1)
+    if not bool(torch.isfinite(allocation).all()) or bool((torch.linalg.svdvals(allocation)[:,-1]<=1e-8).any()):
+        raise ValueError("actual rotor wrench allocation must be finite and nonsingular")
+    return total.to(reference.dtype), allocation.to(reference.dtype)
+
+
 class TaslabArticulationWrenchAdapter:
     """Validate complete topology, stage local wrenches, then commit rotor state."""
 
@@ -96,5 +140,5 @@ class TaslabArticulationWrenchAdapter:
 
 __all__ = [
     "BASE_BODY_INDEX", "EXPECTED_BODY_NAMES", "ROTOR_BODY_INDICES",
-    "TaslabArticulationWrenchAdapter", "WrenchResult",
+    "TaslabArticulationWrenchAdapter", "WrenchResult", "measured_control_plant",
 ]

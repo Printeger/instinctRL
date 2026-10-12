@@ -20,6 +20,15 @@ LANES = (0, 1, 2, 3, 4, 5, 6, 7)
 TRANSITIONS = 20_160
 FIXED_B0_ACTION = (1.0, 0.5, 0.5, 0.5)
 SCHEMA = "unified-h1-control-diagnostic.v2"
+COMMAND_PASSTHROUGH_ID = "UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012"
+PASSTHROUGH_SCHEMA = "unified-h1-control-diagnostic.v3"
+ACTOR_NOT_EVALUATED = {"availability":"NOT_EVALUATED","reason":"FIXED_B0_ACTION"}
+
+def is_command_passthrough(condition, experiment_id):
+    return condition == "B0" and experiment_id == COMMAND_PASSTHROUGH_ID
+
+def valid_identity(condition, experiment_id):
+    return condition in CONDITIONS and (experiment_id == f"UNIFIED-H1-R4-{condition}" or is_command_passthrough(condition,experiment_id))
 AGGREGATE_DISK_LIMIT_BYTES = 16 * 1024**3
 LEDGER_SCHEMA = "unified-h1-control-diagnostic-disk-ledger.v1"
 TIMING_SEMANTICS = "pre_step is captured before environment.step; post_step and reset/cache validity are returned or observed from that same step"
@@ -32,8 +41,12 @@ def validate_parameters(value: object) -> dict[str, Any]:
         raise PermissionError("control diagnostic parameter schema mismatch")
     if value["condition"] not in CONDITIONS or value["cases"] != list(CASES) or value["transitions"] != TRANSITIONS:
         raise PermissionError("control diagnostic condition/case/transition binding mismatch")
-    if value["experiment_id"] != f"UNIFIED-H1-R4-{value['condition']}":
+    if not valid_identity(value["condition"],value["experiment_id"]):
         raise PermissionError("control diagnostic experiment identity mismatch")
+    if is_command_passthrough(value['condition'],value['experiment_id']):
+        if any(value[key] is not None for key in ('checkpoint','checkpoint_sha256','checkpoint_source_identity')):
+            raise PermissionError("new fixed command-passthrough must not load/bind a policy checkpoint")
+        return dict(value)
     checkpoint = Path(value["checkpoint"])
     if not checkpoint.is_absolute() or checkpoint.is_symlink() or not checkpoint.is_file():
         raise PermissionError("control diagnostic checkpoint is not an exact regular file")
@@ -114,7 +127,7 @@ class AggregateDiskLedger:
 class DiagnosticChunkWriter:
     def __init__(self, root: Path, *, condition: str, experiment_id: str,
                  aggregate_ledger: Path | None = None, maximum_bytes: int = AGGREGATE_DISK_LIMIT_BYTES) -> None:
-        if condition not in CONDITIONS or experiment_id != f"UNIFIED-H1-R4-{condition}": raise ValueError("writer identity mismatch")
+        if not valid_identity(condition,experiment_id): raise ValueError("writer identity mismatch")
         self.root=Path(root); self.condition=condition; self.experiment_id=experiment_id
         self.root.mkdir(parents=True,exist_ok=False); self.rows=[]
         ledger_path = aggregate_ledger or self.root.parent / ".d7_control_diagnostic_disk_ledger.json"
@@ -136,7 +149,7 @@ class DiagnosticChunkWriter:
 
     def finalize(self) -> dict[str, Any]:
         if len(self.rows)!=sum(CASE_STEPS.values()): raise RuntimeError("diagnostic trace is incomplete")
-        value={"schema_version":SCHEMA,"condition":self.condition,"experiment_id":self.experiment_id,
+        value={"schema_version":PASSTHROUGH_SCHEMA if is_command_passthrough(self.condition,self.experiment_id) else SCHEMA,"condition":self.condition,"experiment_id":self.experiment_id,
                "cases":list(CASES),"case_steps":CASE_STEPS,"policy_steps":len(self.rows),"transitions":len(self.rows)*32,
                "lanes":32,"selected_actor_input_lanes":list(LANES),"timing_semantics":TIMING_SEMANTICS,
                "aggregate_disk_limit_bytes":self.ledger.maximum_bytes,"chunks":self.rows}
@@ -261,10 +274,11 @@ def _validate_wrench(value: Any) -> None:
 
 def analyze_trace(root: Path, *, condition: str, experiment_id: str) -> dict[str, Any]:
     root=Path(root); manifest_path=root/"manifest.json"
-    if condition not in CONDITIONS or experiment_id != f"UNIFIED-H1-R4-{condition}": raise ValueError("analysis identity mismatch")
+    if not valid_identity(condition,experiment_id): raise ValueError("analysis identity mismatch")
+    passthrough=is_command_passthrough(condition,experiment_id)
     if not manifest_path.is_file() or manifest_path.is_symlink(): raise ValueError("manifest evidence is missing")
     manifest=json.loads(manifest_path.read_text())
-    expected={"schema_version":SCHEMA,"condition":condition,"experiment_id":experiment_id,"cases":list(CASES),
+    expected={"schema_version":PASSTHROUGH_SCHEMA if passthrough else SCHEMA,"condition":condition,"experiment_id":experiment_id,"cases":list(CASES),
               "case_steps":CASE_STEPS,"policy_steps":630,"transitions":TRANSITIONS,"lanes":32,
               "selected_actor_input_lanes":list(LANES),"timing_semantics":TIMING_SEMANTICS,
               "aggregate_disk_limit_bytes":AGGREGATE_DISK_LIMIT_BYTES}
@@ -286,14 +300,18 @@ def analyze_trace(root: Path, *, condition: str, experiment_id: str) -> dict[str
         keys=("schema_version","condition","case","step","ordinal","timing_semantics","pre_step","post_step")
         if not isinstance(payload,dict) or tuple(payload)!=keys: raise ValueError("chunk evidence schema mismatch")
         identity=(payload["condition"],payload["case"],payload["step"],payload["ordinal"],payload["timing_semantics"])
-        if payload["schema_version"]!="unified-h1-control-diagnostic.step.v2" or identity!=(condition,case,step,ordinal,TIMING_SEMANTICS):
+        if payload["schema_version"]!=("unified-h1-control-diagnostic.step.v3" if passthrough else "unified-h1-control-diagnostic.step.v2") or identity!=(condition,case,step,ordinal,TIMING_SEMANTICS):
             raise ValueError("chunk identity/time semantics mismatch")
         pre=_exact_mapping(payload["pre_step"],"pre_step",("actor_input","actor_alpha","actor_beta","actor_mean","issued_action","command_b","root_state_w"))
         post=_exact_mapping(payload["post_step"],"post_step",("reward","terminated","truncated","pre_reset","lee","wrench","downstream_cache_valid"))
         actor=_exact_mapping(pre["actor_input"],"actor_input",("lanes","lidar_grid","state_vec"))
         if _tensor(actor["lanes"],"actor_input.lanes",(8,)).tolist()!=list(LANES): raise ValueError("selected actor lane identity mismatch")
         _tensor(actor["lidar_grid"],"actor_input.lidar_grid",(8,12,59,360)); _tensor(actor["state_vec"],"actor_input.state_vec",(8,52))
-        for key,shape in (("actor_alpha",(32,4)),("actor_beta",(32,4)),("actor_mean",(32,4)),("issued_action",(32,4)),("command_b",(32,3)),("root_state_w",(32,13))): _tensor(pre[key],key,shape)
+        for key in ('actor_alpha','actor_beta','actor_mean'):
+            if passthrough:
+                if not isinstance(pre[key],dict) or pre[key]!=ACTOR_NOT_EVALUATED: raise ValueError("fixed passthrough actor statistics must be explicitly unavailable")
+            else: _tensor(pre[key],key,(32,4))
+        for key,shape in (("issued_action",(32,4)),("command_b",(32,3)),("root_state_w",(32,13))): _tensor(pre[key],key,shape)
         if condition=="B0" and not torch.equal(pre["issued_action"],fixed_b0_action(32,dtype=pre["issued_action"].dtype)): raise ValueError("B0 issued action is not exactly fixed")
         _tensor(post["reward"],"reward",(32,)); terminated=_tensor(post["terminated"],"terminated",(32,)); truncated=_tensor(post["truncated"],"truncated",(32,))
         valid=_tensor(post["downstream_cache_valid"],"downstream_cache_valid",(32,))

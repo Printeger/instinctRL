@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="6" time="11.780" timestamp="2026-10-12T17:36:53.961501+08:00" hostname="mint-MS-7E30"><testcase classname="tests.training_workloads.test_d7_cpu_unittest.D7WriterAnalyzerTests" name="test_b0_nonconstant_nan_and_bad_cache_mask_are_rejected" time="0.009" /><testcase classname="tests.training_workloads.test_d7_cpu_unittest.D7WriterAnalyzerTests" name="test_complete_b0_trace_requires_exact_fixed_action" time="5.773" /><testcase classname="tests.training_workloads.test_d7_cpu_unittest.D7WriterAnalyzerTests" name="test_complete_trace_and_fail_closed_invalid_or_missing_evidence" time="5.919" /><testcase classname="tests.training_workloads.test_d7_cpu_unittest.D7WriterAnalyzerTests" name="test_shared_durable_ledger_checks_before_limit_and_accumulates" time="0.009" /><testcase classname="tests.training_workloads.test_d7_cpu_unittest.HandoffBindingTests" name="test_load_config_post_adoption_projection_uses_real_repository_identity" time="0.008"><failure message="ValueError: workload source changed: training_workloads/unified_h1/backend.py">self = &lt;test_d7_cpu_unittest.HandoffBindingTests testMethod=test_load_config_post_adoption_projection_uses_real_repository_identity&gt;
+
+    def test_load_config_post_adoption_projection_uses_real_repository_identity(self):
+        from training_workloads.unified_h1 import asset_closure, config
+        value=json.loads((ROOT/'training_workloads/unified_h1/candidate_config.json').read_text())
+        self.assertEqual(value['workload']['branch'],'main')
+        self.assertEqual(value['product']['branch'],'main')
+        self.assertEqual(value['workload']['path'],value['product']['path'])
+        actual_git=config._git; actual_sha256_file=config.sha256_file; actual_validate_repository=config._validate_repository
+        def accessible_sha256_file(path):
+            if Path(path).resolve()==Path(value['execution']['python_path']).resolve():
+                return value['execution']['python_sha256']
+            return actual_sha256_file(path)
+        def validate_workload_repository(spec,**kwargs):
+            if kwargs.get('label')=='product':
+                return {'commit':spec['candidate_commit'],'tree':spec['candidate_tree'],'branch':spec['branch']}
+            return actual_validate_repository(spec,**kwargs)
+        def adopted_cleanliness_only(root,*args):
+            if Path(root).resolve()==ROOT.resolve() and args==('status','--porcelain=v1'):
+                return ''
+            return actual_git(root,*args)
+        with tempfile.TemporaryDirectory() as td:
+            method=Path(td)/'method.md';method.write_text('bounded CPU method fixture\n')
+            method_sha=hashlib.sha256(method.read_bytes()).hexdigest()
+            value['method']['proposal_path']=str(method);value['method']['proposal_sha256']=method_sha
+            value['method']['hashes']['method']=method_sha
+            config_path=Path(td)/'candidate_config.json';config_path.write_text(json.dumps(value))
+            with mock.patch.object(config,'METHOD_PATH',method), mock.patch.object(config,'METHOD_SHA256',method_sha), \
+                 mock.patch.object(config,'_git',side_effect=adopted_cleanliness_only), \
+                 mock.patch.object(config,'sha256_file',side_effect=accessible_sha256_file), \
+                 mock.patch.object(config,'_validate_repository',side_effect=validate_workload_repository), \
+                 mock.patch.object(config.sys,'executable',value['execution']['python_path']), \
+                 mock.patch.object(asset_closure,'validate_asset_closure'), \
+                 mock.patch.object(config,'validate_loaded_module_origins'):
+&gt;               loaded=config.load_config(config_path)
+
+tests/training_workloads/test_d7_cpu_unittest.py:243: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/config.py:134: in load_config
+    workload = _validate_repository(value["workload"], label="workload", required_sources=WORKLOAD_SOURCES, self_identity=True)
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1199: in _execute_mock_call
+    result = effect(*args, **kwargs)
+tests/training_workloads/test_d7_cpu_unittest.py:225: in validate_workload_repository
+    return actual_validate_repository(spec,**kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+spec = {'base_commit': '903afc5abd0fbf82297527e5790c2cd40827b0b2', 'branch': 'main', 'candidate_commit': 'SELF', 'candidate_tree': 'SELF', ...}
+
+    def _validate_repository(spec: object, *, label: str, required_sources: set[str], self_identity: bool = False) -&gt; dict[str, str]:
+        required = {"path", "base_commit", "candidate_commit", "candidate_tree", "branch", "source_sha256"}
+        if not isinstance(spec, dict) or set(spec) != required: raise ValueError(f"{label} repository schema mismatch")
+        root = Path(spec["path"])
+        if not root.is_absolute() or root.is_symlink() or root.resolve() != root or not root.is_dir():
+            raise ValueError(f"{label} repository path is not an exact checkout")
+        try: repository_root=Path(_git(root,"rev-parse","--show-toplevel")).resolve()
+        except (OSError,subprocess.CalledProcessError) as error: raise ValueError(f"{label} repository is unavailable") from error
+        if repository_root not in (root,*root.parents): raise ValueError(f"{label} repository root mismatch")
+        actual = {"commit": _git(root, "rev-parse", "HEAD"), "tree": _git(root, "rev-parse", "HEAD^{tree}"),
+                  "branch": _git(root, "branch", "--show-current")}
+        if _git(root, "merge-base", "--is-ancestor", spec["base_commit"], actual["commit"]) != "":
+            raise AssertionError("git merge-base emitted unexpected output")
+        expected_commit = actual["commit"] if self_identity and spec["candidate_commit"] == "SELF" else spec["candidate_commit"]
+        expected_tree = actual["tree"] if self_identity and spec["candidate_tree"] == "SELF" else spec["candidate_tree"]
+        if actual != {"commit": expected_commit, "tree": expected_tree, "branch": spec["branch"]}:
+            raise ValueError(f"{label} candidate identity mismatch")
+        sources = spec["source_sha256"]
+        if not isinstance(sources, dict) or set(sources) != required_sources: raise ValueError(f"{label} source manifest set mismatch")
+        for relative, expected_hash in sources.items():
+            if not isinstance(relative, str) or relative.startswith("/") or ".." in Path(relative).parts:
+                raise ValueError(f"{label} source path is invalid")
+            source = (root / relative).resolve()
+            if root not in source.parents or source.is_symlink() or not source.is_file() or sha256_file(source) != expected_hash:
+&gt;               raise ValueError(f"{label} source changed: {relative}")
+E               ValueError: workload source changed: training_workloads/unified_h1/backend.py
+
+training_workloads/unified_h1/config.py:94: ValueError</failure></testcase><testcase classname="tests.training_workloads.test_d7_cpu_unittest.SeedBindingTests" name="test_control_diagnostic_accepts_only_evaluation_seed" time="0.003" /></testsuite></testsuites>

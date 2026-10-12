@@ -414,7 +414,7 @@ class UnifiedH1LiveBackend:
                     digest.update(chunk); file_rows += chunk.count(b"\n"); file_bytes += len(chunk); last_byte = chunk[-1:]
             atomic_json_replace(self.output, "enhanced_b0_manifest.json", {
                 "schema_version":"instinctrl-enhanced-b0-raw-manifest/2",
-                "experiment_id":"UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+                "experiment_id":"UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012",
                 "authorization_sha256":self.authorization["authorization_sha256"],
                 "source_identity":{key:self.authorization[key] for key in
                     ("product_commit","product_tree","workload_commit","workload_tree","config_sha256")},
@@ -499,22 +499,36 @@ class UnifiedH1LiveBackend:
         which is the legacy direct-controller comparison and a different test.
         """
         condition = str(parameters["condition"])
-        checkpoint = Path(str(parameters["checkpoint"]))
-        if sha256_file(checkpoint) != parameters["checkpoint_sha256"]:
-            raise ValueError("diagnostic checkpoint hash changed after authorization")
-        metadata = self._load_evaluation_checkpoint(checkpoint)
-        if self.trainer.update_counter != 256:
-            raise ValueError("control diagnostic is bound to the R4 u0256 checkpoint")
-        self.trainer.actor.eval(); self.trainer.critic.eval()
+        from .control_diagnostic import is_command_passthrough, ACTOR_NOT_EVALUATED
+        passthrough=is_command_passthrough(condition,parameters['experiment_id'])
+        checkpoint=None; metadata=None
+        if not passthrough:
+            checkpoint = Path(str(parameters["checkpoint"]))
+            if sha256_file(checkpoint) != parameters["checkpoint_sha256"]:
+                raise ValueError("diagnostic checkpoint hash changed after authorization")
+            metadata = self._load_evaluation_checkpoint(checkpoint)
+            if self.trainer.update_counter != 256:
+                raise ValueError("control diagnostic is bound to the R4 u0256 checkpoint")
+            self.trainer.actor.eval(); self.trainer.critic.eval()
         writer = DiagnosticChunkWriter(self.output / "control_trace", condition=condition,
                                        experiment_id=str(parameters["experiment_id"]),
-                                       aggregate_ledger=self.attempt.parent / ".d7_control_diagnostic_disk_ledger.json")
+                                       aggregate_ledger=(self.output / ".command_passthrough_disk_ledger.json" if passthrough else self.attempt.parent / ".d7_control_diagnostic_disk_ledger.json"))
+        metric_log = LearningLog(self.output / "evaluation_raw") if passthrough else None
         for case in DIAGNOSTIC_CASES:
             self.environment.set_h1_evaluation_case(case)
             commands = case_commands(case).to(self.environment.device)
             self.environment.set_h1_initial_command(commands[0], 0)
             self.resource_check("before_control_diagnostic_reset", self.counters.explicit_resets + 1)
             observation, _ = self._preserving_reset(seed=20260909)
+            if passthrough:
+                self.environment._refresh_task_snapshot()
+                initial_sensor=self.environment._evaluation_ray_snapshot.ray_starts_w[:,0].detach().cpu()
+                metric_relative=f"command_passthrough/{case}.jsonl"
+                metric_log.append(metric_relative,{"schema_version":"metric-h1-v1.raw-trace.v1","kind":"T0",
+                    "case":case,"seed":20260909,"initial_sensor_position_w_m":initial_sensor,
+                    "initial_root_state_w":self.environment._robot.data.root_state_w.detach().cpu().clone(),
+                    "env_origins_w_m":self.environment.scene.env_origins.detach().cpu()})
+                episode_ids=torch.zeros(32,dtype=torch.int64)
             for step in range(CASES[case].steps):
                 self.resource_check("before_control_diagnostic_step", step)
                 self.counters.require_step_capacity(kind="nontraining", lanes=32,
@@ -525,12 +539,14 @@ class UnifiedH1LiveBackend:
                 self.environment.prepare_h1_step(global_policy_step=step, command_b=current,
                                                  next_command_b=following)
                 actor_input = select_actor_input(observation["policy"])
-                with torch.no_grad(): actor_output = self.trainer.actor(observation["policy"])
+                actor_output=None
+                if not passthrough:
+                    with torch.no_grad(): actor_output = self.trainer.actor(observation["policy"])
                 action = (actor_output.mean_action.detach() if condition == "D7-R" else
                           fixed_b0_action(32, device=self.environment.device,
                                           dtype=observation["policy"]["state_vec"].dtype))
-                pre_step = {"actor_input": actor_input, "actor_alpha": actor_output.alpha,
-                            "actor_beta": actor_output.beta, "actor_mean": actor_output.mean_action,
+                pre_step = {"actor_input": actor_input, "actor_alpha": dict(ACTOR_NOT_EVALUATED) if passthrough else actor_output.alpha,
+                            "actor_beta": dict(ACTOR_NOT_EVALUATED) if passthrough else actor_output.beta, "actor_mean": dict(ACTOR_NOT_EVALUATED) if passthrough else actor_output.mean_action,
                             "issued_action": action, "command_b": current,
                             "root_state_w": self.environment._robot.data.root_state_w.detach().clone()}
                 self.counters.attempt_step()
@@ -539,11 +555,22 @@ class UnifiedH1LiveBackend:
                 reset_mask = terminated | truncated
                 self.counters.reserve_reset(automatic=True, lanes=int(reset_mask.sum()),
                     maximum=self.authorization["budgets"]["automatic_resets"])
+                if passthrough:
+                    pre=extras['pre_reset'];source=extras['evaluation_ray_source']
+                    metric_log.append(metric_relative,{"schema_version":"metric-h1-v1.raw-trace.v1","kind":"STEP",
+                        "case":case,"step":step,"command_b":current,"actual_velocity_b":pre['task']['actual_velocity_b'],
+                        "sensor_positions_w_m":source['ray_starts_w'][:,0],"episode_ids":episode_ids,
+                        "collision":pre['task']['termination']['masks']['collision'][:,0],
+                        "below_height":pre['task']['termination']['masks']['below_height'][:,0],
+                        "above_height":pre['task']['termination']['masks']['above_height'][:,0],
+                        "reset_mask":reset_mask,"ray_clearance_m":pre['task']['exact_clearance_m'][:,0],
+                        "q":extras['reward_diagnostics']['q'][:,0],"ics_beta":pre['control']['ics_metrics']['beta'][:,0]})
+                    episode_ids+=reset_mask.detach().cpu().to(torch.int64)
                 # UnifiedH1's durable pre_reset owns the action->ICS/task state.
                 # Lee/wrench caches are observable after step only for lanes not
                 # reset by DirectRLEnv; validity makes that limitation explicit.
                 ordinal = sum(CASES[name].steps for name in DIAGNOSTIC_CASES[:DIAGNOSTIC_CASES.index(case)]) + step
-                writer.append(case, step, {"schema_version":"unified-h1-control-diagnostic.step.v2",
+                writer.append(case, step, {"schema_version":"unified-h1-control-diagnostic.step.v3" if passthrough else "unified-h1-control-diagnostic.step.v2",
                     "condition":condition, "case":case, "step":step, "ordinal":ordinal,
                     "timing_semantics":TIMING_SEMANTICS, "pre_step":pre_step,
                     "post_step":{"reward":reward, "terminated":terminated, "truncated":truncated,
@@ -555,7 +582,8 @@ class UnifiedH1LiveBackend:
             raise RuntimeError("control diagnostic transition settlement mismatch")
         atomic_json_replace(self.output, "control_diagnostic.json", {
             "schema_version":"unified-h1-control-diagnostic.summary.v1", "condition":condition,
-            "experiment_id":parameters["experiment_id"], "checkpoint":str(checkpoint),
+            "experiment_id":parameters["experiment_id"], "checkpoint":None if checkpoint is None else str(checkpoint),
+            "condition_semantics":"B0_COMMAND_PASSTHROUGH" if passthrough else ("D7_R_FROZEN_POLICY" if condition=="D7-R" else "HISTORICAL_B0_COMMAND_PASSTHROUGH"),
             "checkpoint_sha256":parameters["checkpoint_sha256"], "checkpoint_metadata":metadata,
             "transitions":manifest["transitions"], "automatic_retries":0,
             "downstream_reset_lane_limitation":"Lee/wrench post-step caches are invalid for lanes reset in that step"})

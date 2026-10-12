@@ -1,0 +1,28 @@
+..............F..                                                        [100%]
+=================================== FAILURES ===================================
+__ test_root_state_remains_controller_private_and_accepted_surfaces_unchanged __
+
+    def test_root_state_remains_controller_private_and_accepted_surfaces_unchanged():
+        actor = (ROOT / "instinctlab/observations/actor.py").read_text()
+        audit = (ROOT / "instinctlab/observations/audit.py").read_text()
+        governor = (ROOT / "instinctlab/control/governor.py").read_text()
+        anchor = (ROOT / "instinctlab/control/anchor.py").read_text()
+        ics = (ROOT / "instinctlab/control/ics.py").read_text()
+        pipeline = (ROOT / "instinctlab/control/pipeline.py").read_text()
+        command_adapter = (ROOT / "instinctlab/control/command_adapter.py").read_text()
+        actor_clean_sources = (governor, anchor, ics, command_adapter, pipeline)
+        forbidden = ("isaaclab", "omni.", "surface_normal", "odometry", "slam", "root_state", "privileged_height")
+        for source in actor_clean_sources:
+            for token in forbidden:
+                assert token not in source.lower()
+        assert "root_state_w" not in actor and "root_state_w" not in audit
+>       assert tuple(inspect.signature(taslab_velocity_control).parameters) == ("root_state_w", "target_velocity_w")
+E       AssertionError: assert ('root_state_...d_allocation') == ('root_state_...t_velocity_w')
+E         
+E         Left contains 2 more items, first extra item: 'measured_mass_kg'
+E         Use -v to get more diff
+
+isaaclab-training/tests/test_m5_runtime_control.py:264: AssertionError
+=========================== short test summary info ============================
+FAILED isaaclab-training/tests/test_m5_runtime_control.py::test_root_state_remains_controller_private_and_accepted_surfaces_unchanged
+1 failed, 16 passed, 1 deselected in 0.58s

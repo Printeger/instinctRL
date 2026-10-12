@@ -261,7 +261,11 @@ def test_root_state_remains_controller_private_and_accepted_surfaces_unchanged()
         for token in forbidden:
             assert token not in source.lower()
     assert "root_state_w" not in actor and "root_state_w" not in audit
-    assert tuple(inspect.signature(taslab_velocity_control).parameters) == ("root_state_w", "target_velocity_w")
+    parameters = inspect.signature(taslab_velocity_control).parameters
+    assert tuple(parameters) == ("root_state_w", "target_velocity_w", "measured_mass_kg", "measured_allocation")
+    for name in ("measured_mass_kg", "measured_allocation"):
+        assert parameters[name].kind == inspect.Parameter.KEYWORD_ONLY
+        assert parameters[name].default is None
     assert "root_state_w" in LEE.read_text()
     assert "target_velocity_w" in LEE.read_text()
     assert "root_state_w" not in ADAPTER.read_text()

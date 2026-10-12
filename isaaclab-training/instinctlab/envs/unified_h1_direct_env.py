@@ -123,6 +123,40 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         update(value)
         return digest.hexdigest()
 
+    def _diagnostic_cached_actor_digest(self, value: Any) -> str:
+        """Reuse leaf SHA only after exact device byte equality to private clones.
+
+        Actor history is unchanged between physics substeps. Copying/hashing its
+        entire lidar history twice per substep transfers hundreds of GB.
+        Equality is over uint8 views, including signed zero and NaN payloads;
+        tensor version counters or approximate checksums are insufficient.
+        """
+        cache = getattr(self, "_enhanced_b0_actor_digest_cache", {})
+        next_cache = {}; digest = hashlib.sha256()
+        def update(item: Any, path: tuple) -> None:
+            if isinstance(item, torch.Tensor):
+                current = item.detach().contiguous()
+                metadata = {"shape":list(current.shape),"dtype":str(current.dtype)}
+                old = cache.get(path)
+                if (old is not None and old[0] == metadata and old[1].device == current.device
+                        and torch.equal(old[1].view(torch.uint8), current.view(torch.uint8))):
+                    entry = old
+                else:
+                    snapshot = current.clone()
+                    leaf = hashlib.sha256(snapshot.cpu().numpy().tobytes()).hexdigest()
+                    entry = (metadata, snapshot, leaf)
+                next_cache[path] = entry
+                digest.update(json.dumps(metadata,sort_keys=True).encode()); digest.update(entry[2].encode())
+            elif isinstance(item, Mapping):
+                for key,nested in item.items():
+                    digest.update(repr(key).encode()); update(nested,(*path,("key",key)))
+            elif isinstance(item,(list,tuple)):
+                for index,nested in enumerate(item): update(nested,(*path,("index",index)))
+            else: digest.update(repr(item).encode())
+        update(value,())
+        self._enhanced_b0_actor_digest_cache = next_cache
+        return digest.hexdigest()
+
     def read_only_diagnostic_state_fingerprints(self) -> OrderedDict[str, Mapping[str, Any]]:
         """Return JSON-only fingerprints for the exact protected live state."""
         digest = self._diagnostic_tensor_digest
@@ -140,7 +174,8 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
             ("dynamics", {"digest": digest([*dynamics, pending_force, pending_torque])}),
             ("rng", {"torch_cpu": digest(torch.random.get_rng_state())}),
             ("reset", {"digest": digest(reset)}),
-            ("actor_history", {"digest": digest(actor)}),
+            ("actor_history", {"digest": self._diagnostic_cached_actor_digest(actor),
+                "algorithm":"sha256-structure-leafsha256-exact-cached-bytes/1"}),
             ("simulator", {"time_step_index": timeline if type(timeline) is int else "UNAVAILABLE"}),
         ))
 
@@ -227,6 +262,22 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         root = data.root_link_state_w
         control_root = data.root_state_w
         actual_b = rotate_world_to_body_wxyz(control_root[:, 3:7], control_root[:, 7:10])
+        # Detach each small batch once, rather than synchronizing hundreds of
+        # individual GPU scalars per integration. The serialized source values
+        # and subsequent double-precision derivations are unchanged.
+        body_values=self._tolist(body);com_values=self._tolist(com_pose)
+        mass_values=self._tolist(mass)
+        inertia_values=self._tolist(inertia.reshape(*inertia.shape[:-1],3,3))
+        root_values=self._tolist(root);control_root_values=self._tolist(control_root)
+        command_values=self._tolist(self._command_b)
+        error_values=self._tolist(self._command_b-actual_b)
+        desired_values=self._tolist(self._lee.desired_rotation_w)
+        collective_values=self._tolist(self._lee.collective_thrust_n)
+        directions_values=self._tolist(quat_apply(body[:,:,3:7].reshape(-1,4),
+            torch.tensor([0.,0.,1.],device=self.device,dtype=body.dtype).expand(160,3)).reshape(32,5,3))
+        rotor=self._wrench.rotor
+        rotor_values={name:self._tolist(getattr(rotor,name)) for name in
+            ('normalized_commands','target_throttle','throttle','thrusts_n','reaction_moments_nm')}
         dt = float(self.cfg.sim.dt)
         rows: list[Mapping[str, Any]] = []
         # Build a complete 32-lane batch against private copies.  A snapshot
@@ -240,12 +291,12 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         for lane in range(32):
             bodies = []
             for index, name in enumerate(self._robot.body_names):
-                state = self._tolist(body[lane, index]); local = self._tolist(com_pose[lane, index])
-                m = float(mass[lane, index] if mass.ndim == 2 else mass[index])
-                tensor_inertia = inertia[lane, index] if inertia.ndim == 3 else inertia[index]
+                state = body_values[lane][index]; local = com_values[lane][index]
+                m = float(mass_values[lane][index] if mass.ndim == 2 else mass_values[index])
+                matrix = inertia_values[lane][index] if inertia.ndim == 3 else inertia_values[index]
                 bodies.append({"name": str(name), "mass_kg": m, "local_com_m": local[:3],
                     "local_com_quaternion_wxyz": local[3:7],
-                    "inertia_at_com_body_kg_m2": self._tolist(tensor_inertia.reshape(3, 3)),
+                    "inertia_at_com_body_kg_m2": matrix,
                     "world_position_m": state[:3], "world_quaternion_wxyz": state[3:7],
                     "world_linear_velocity_m_s": state[7:10], "world_angular_velocity_rad_s": state[10:13]})
             # Derive diagnostics from the same serialized primitives as the
@@ -268,7 +319,7 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
                     "getter_sources":{"mass":"Articulation.root_physx_view.get_masses","inertia":"Articulation.root_physx_view.get_inertias","body":"data.body_link_state_w","local_com":"data.body_com_pose_b"},
                     "tensor_metadata":{name:{"dtype":str(value.dtype),"shape":list(value.shape)} for name,value in
                         (("mass",mass),("inertia",inertia),("body",body),("local_com",com_pose))},
-                    "root_link_state":self._tolist(root[lane]),"controller_root_state":self._tolist(control_root[lane]),
+                    "root_link_state":root_values[lane],"controller_root_state":control_root_values[lane],
                 })
                 raise
             total_mass = system["total_mass_kg"]
@@ -284,11 +335,10 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
             next_previous_system[key] = system
             rotor_rows=[]
             reaction_direction=quaternion_rotate(bodies[0]["world_quaternion_wxyz"],(0.,0.,1.))
-            rotor = self._wrench.rotor
             for rotor_index, name in enumerate(ROTOR_NAMES):
-                body_index=rotor_index+1; direction=self._tolist(quat_apply(body[lane,body_index,3:7].unsqueeze(0), torch.tensor([[0.,0.,1.]],device=self.device,dtype=body.dtype))[0])
-                point=self._tolist(body[lane,body_index,:3]); thrust=float(rotor.thrusts_n[lane,rotor_index]); reaction=float(rotor.reaction_moments_nm[lane,rotor_index])
-                rotor_rows.append({"name":name,"command":float(rotor.normalized_commands[lane,rotor_index]),"target_throttle":float(rotor.target_throttle[lane,rotor_index]),"actual_throttle":float(rotor.throttle[lane,rotor_index]),"thrust_n":thrust,"reaction_moment_nm":reaction,"application_point_world_m":point,"direction_world":direction,"reaction_body":bodies[0]["name"],"reaction_direction_world":reaction_direction})
+                body_index=rotor_index+1; direction=directions_values[lane][body_index]
+                point=body_values[lane][body_index][:3]; thrust=rotor_values['thrusts_n'][lane][rotor_index]; reaction=rotor_values['reaction_moments_nm'][lane][rotor_index]
+                rotor_rows.append({"name":name,"command":rotor_values['normalized_commands'][lane][rotor_index],"target_throttle":rotor_values['target_throttle'][lane][rotor_index],"actual_throttle":rotor_values['throttle'][lane][rotor_index],"thrust_n":thrust,"reaction_moment_nm":reaction,"application_point_world_m":point,"direction_world":direction,"reaction_body":bodies[0]["name"],"reaction_direction_world":reaction_direction})
             rotor_total = rotor_wrench(rotor_rows, combined)
             rotor_force = rotor_total["force_n"]; rotor_torque = rotor_total["torque_at_com_nm"]
             gravity_force=[0.0,0.0,-total_mass*9.81]; gravity_torque=[0.0,0.0,0.0]
@@ -298,11 +348,11 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
                 com=[entry["world_position_m"][i]+offset[i] for i in range(3)]
                 part=self._cross3([com[i]-combined[i] for i in range(3)],[0.0,0.0,-m*9.81])
                 gravity_torque=[gravity_torque[i]+part[i] for i in range(3)]
-            velocity=self._tolist(root[lane,7:10]); prior_velocity=next_previous_velocity.get(key)
+            velocity=root_values[lane][7:10]; prior_velocity=next_previous_velocity.get(key)
             acceleration=[0.0,0.0,0.0] if prior_velocity is None else [(velocity[i]-prior_velocity[i])/dt for i in range(3)]
             next_previous_velocity[key]=tuple(velocity)
             available=lambda force,torque:{"availability":"AVAILABLE","force_n":force,"torque_at_com_nm":torque}
-            controller={"target_velocity_b_m_s":self._tolist(self._command_b[lane]),"velocity_error_b_m_s":self._tolist(self._command_b[lane]-actual_b[lane]),"desired_rotation_w":self._tolist(self._lee.desired_rotation_w[lane]),"collective_n":float(self._lee.collective_thrust_n[lane,0])}
+            controller={"target_velocity_b_m_s":command_values[lane],"velocity_error_b_m_s":error_values[lane],"desired_rotation_w":desired_values[lane],"collective_n":collective_values[lane][0]}
             current_snapshot={"controller":controller,"rotors":rotor_rows}
             boundary=self._enhanced_b0_reset_boundaries.get(key)
             if key in self._enhanced_b0_cache_unavailable:
@@ -318,7 +368,7 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
                 reset={"mask":True,"reason":str(boundary["reason"]),"initial_boundary":bool(boundary["initial_boundary"]),"last_pre_reset_state":boundary["last_pre_reset_state"],"post_reset_states":[current_snapshot]}
                 next_episode_ids[key]=episode_id+1; consumed_boundaries.append(key)
             next_last_snapshots[key]=current_snapshot
-            rows.append(OrderedDict((("schema_version","instinctrl-enhanced-b0-physics-row/2"),("experiment_id","UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012"),("case",case),("policy_step",policy_step),("physics_step",physics_step),("lane",lane),("episode_id",episode_id),("reset",reset),("root_state",{"pose":self._tolist(root[lane,:7]),"linear_velocity":velocity,"angular_velocity":self._tolist(root[lane,10:13])}),("system",system),("bodies",bodies),("controller",controller),("rotors",rotor_rows),("wrenches",OrderedDict((("gravity",available(gravity_force,gravity_torque)),("rotor",available(rotor_force,rotor_torque)),("drag_aero",dict(unavailable)),("contact",dict(unavailable)),("joint_constraint",dict(unavailable)),("other",dict(unavailable))))),("momentum",{"dt_s":dt,"inferred_wrench":{"force_n":inferred_force,"torque_at_com_nm":inferred_torque}}),("response",{"position_world_m":self._tolist(root[lane,:3]),"velocity_world_m_s":velocity,"acceleration_world_m_s2":acceleration}))))
+            rows.append(OrderedDict((("schema_version","instinctrl-enhanced-b0-physics-row/2"),("experiment_id","UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012"),("case",case),("policy_step",policy_step),("physics_step",physics_step),("lane",lane),("episode_id",episode_id),("reset",reset),("root_state",{"pose":root_values[lane][:7],"linear_velocity":velocity,"angular_velocity":root_values[lane][10:13]}),("system",system),("bodies",bodies),("controller",controller),("rotors",rotor_rows),("wrenches",OrderedDict((("gravity",available(gravity_force,gravity_torque)),("rotor",available(rotor_force,rotor_torque)),("drag_aero",dict(unavailable)),("contact",dict(unavailable)),("joint_constraint",dict(unavailable)),("other",dict(unavailable))))),("momentum",{"dt_s":dt,"inferred_wrench":{"force_n":inferred_force,"torque_at_com_nm":inferred_torque}}),("response",{"position_world_m":root_values[lane][:3],"velocity_world_m_s":velocity,"acceleration_world_m_s2":acceleration}))))
         self._enhanced_b0_previous_system = next_previous_system
         self._enhanced_b0_previous_velocity = next_previous_velocity
         self._enhanced_b0_episode_ids = next_episode_ids
@@ -335,7 +385,6 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         horizons = {"Z": 200, "T": 100, "S": 330}
         zero_command = torch.zeros_like(self._command_b)
         zero_action = torch.zeros_like(self._actions)
-        all_lanes = torch.arange(self.num_envs, device=self.device, dtype=torch.long)
         accounting = self._enhanced_b0_accounting
         self._enhanced_b0_active = True
         try:
@@ -344,8 +393,12 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
                 accounting["before_reset"](case)
                 self._enhanced_b0_explicit_reset = True
                 try:
-                    if case == "Z": self.reset(seed=20260909)
-                    else: self._reset_idx(all_lanes)
+                    # Public reset flushes articulation kinematics via forward
+                    # and rebuilds actual sensor/history observations. A bare
+                    # _reset_idx leaves the cleared policy invalid at first
+                    # reward. Only Z seeds; later resets do not reseed. The
+                    # installed reset contract performs no physics integration.
+                    self.reset(seed=20260909 if case == "Z" else None)
                 finally:
                     self._enhanced_b0_explicit_reset = False
                 for policy_step in range(horizons[case]):
