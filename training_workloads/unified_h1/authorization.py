@@ -18,7 +18,7 @@ MODE_ORDERS = {"main": "UNIFIED-H1-R3", "controlled-failure": "UNIFIED-H1-R3",
                "r4-training": "UNIFIED-H1-R4", "evaluation": None,
                "r5-resume": "UNIFIED-H1-R5", "control-diagnostic": None,
                "pilot-training": None, "pilot-evaluation": None,
-               "enhanced-b0-diagnostic": "UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012"}
+               "enhanced-b0-diagnostic": "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012"}
 
 
 def _parameters(mode: str, value: object) -> dict[str, Any]:
@@ -112,7 +112,7 @@ def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any
     if mode == "control-diagnostic": expected_order = parameters["experiment_id"]
     if mode == "pilot-training": expected_order = f"UNIFIED-H1-R5-{parameters['group']}-PILOT-TRAIN"
     if mode == "pilot-evaluation": expected_order = f"UNIFIED-H1-R5-{parameters['group']}-PILOT-EVAL"
-    if mode == "enhanced-b0-diagnostic": expected_order = "UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012"
+    if mode == "enhanced-b0-diagnostic": expected_order = "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012"
     if value["order_id"] != expected_order or value["mode"] != mode or Path(value["attempt"]).resolve() != attempt.resolve():
         raise PermissionError("R3 order/attempt/mode binding mismatch")
     if not attempt.is_absolute() or attempt.is_symlink() or not attempt.is_dir(): raise PermissionError("attempt directory is invalid")

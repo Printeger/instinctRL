@@ -1,0 +1,242 @@
+{
+  "actor": {
+    "keys": [
+      "lidar_grid",
+      "state_vec"
+    ],
+    "lidar_shape": [
+      12,
+      59,
+      360
+    ],
+    "state_dimension": 52
+  },
+  "execution": {
+    "cuda_visible_devices_required": "0",
+    "frozen_runtime_root": "/home/mint/rl_blackwell_test",
+    "isaacsim_asset_manifest_sha256": "f64a0561477efcc612761f6b3034f9612f2d3cb42832138e86ff7a4c18e1ef52",
+    "isaacsim_asset_root": "/home/mint/rl_dev/instinctRL-dev/runtime_assets/Assets/Isaac/5.1",
+    "isaacsim_asset_root_env": "ISAACSIM_ASSET_ROOT",
+    "outer_timeout_required": true,
+    "python_path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "python_sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+  },
+  "future_entry": {
+    "budget_fields": [
+      "live_process_starts",
+      "simulator_initializations",
+      "training_transitions",
+      "nontraining_transitions",
+      "optimizer_updates",
+      "checkpoint_writes",
+      "initialization_ticks",
+      "explicit_resets",
+      "automatic_resets",
+      "wall_seconds"
+    ],
+    "modes": [
+      "main",
+      "controlled-failure",
+      "r4-training",
+      "evaluation",
+      "r5-resume",
+      "control-diagnostic",
+      "pilot-training",
+      "pilot-evaluation",
+      "enhanced-b0-diagnostic"
+    ],
+    "module": "training_workloads.unified_h1.formal_unified_h1",
+    "required_argv": [
+      "--authorization",
+      "--attempt",
+      "--mode"
+    ],
+    "resource_checks": [
+      "prelaunch-static-inputs",
+      "prelaunch-coexistence",
+      "before-resource-construction",
+      "after-initialization-before-reset",
+      "before-each-reset",
+      "before-each-rollout",
+      "before-each-environment-step",
+      "before-each-optimizer-update",
+      "before-each-checkpoint",
+      "before-reload-rollout",
+      "independent-bounded-environment-close",
+      "independent-bounded-app-close",
+      "mandatory-outer-watchdog-with-cleanup-margin"
+    ],
+    "sequences": {
+      "enhanced-b0-diagnostic": [
+        "validate-only-handoff",
+        "one-process-init",
+        "Z",
+        "T",
+        "S",
+        "zero-target",
+        "no-retry",
+        "read-only-post-physics"
+      ],
+      "evaluation": [
+        "one-process-multi-checkpoint",
+        "independent-RNG",
+        "Z",
+        "T",
+        "S",
+        "X",
+        "W",
+        "durable-raw-parser"
+      ],
+      "main": [
+        "preflight",
+        "B0-ZTSXW",
+        "cold-start",
+        "4-explicit-diagnostic-smoke-profiles",
+        "checkpoint-reload",
+        "fresh-reset",
+        "mixed-rollout-16"
+      ],
+      "pilot-evaluation": [
+        "development-only",
+        "Z",
+        "u16",
+        "u64"
+      ],
+      "pilot-training": [
+        "cold-start",
+        "init0000",
+        "u1",
+        "u2",
+        "u8",
+        "u16",
+        "u32",
+        "u64"
+      ],
+      "r4-training": [
+        "cold-start",
+        "init0000",
+        "u64",
+        "u128",
+        "u192",
+        "u256"
+      ],
+      "r5-resume": [
+        "strict-hash-bound-load",
+        "fresh-reset",
+        "64-update-nodes"
+      ]
+    },
+    "status": "PREPARED_NOT_AUTHORIZED"
+  },
+  "method": {
+    "hashes": {
+      "checkpoint": "checkpoint-h1-v2",
+      "critic": "critic-h1-v2",
+      "curriculum": "curriculum-h1-v1",
+      "logging": "learning-log-h1-v1",
+      "method": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+      "metric": "metric-h1-v1",
+      "reward": "reward-h1-v2"
+    },
+    "proposal_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r2-20261012/coordination/contracts/R1_UNIFIED_HOVER_TRAINING_PLAN.md",
+    "proposal_sha256": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+    "version": "unified-h1-v1"
+  },
+  "product": {
+    "base_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
+    "branch": "main",
+    "candidate_commit": "SELF",
+    "candidate_tree": "SELF",
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r2-20261012",
+    "source_sha256": {
+      "isaaclab-training/instinctlab/assets/taslab_uav/articulation.py": "080eb6a30c76a63395effe2da38f0ffab22642b494651d0e195f74e14473598d",
+      "isaaclab-training/instinctlab/control/baseline_b0.py": "5fa2b8d746eb231a1bb12f331fe1a76e8f988005e9a315e1dbf622e0bf1ed3d1",
+      "isaaclab-training/instinctlab/control/governor.py": "cd5cf6c73578bc69dc5f696ac6d294d9d4c8db0baaf12265e6715646554b7197",
+      "isaaclab-training/instinctlab/control/ics.py": "87dba0e3f4d2e252b74fb8b89954b0673e07fe07748cf8b3a36dea6f7c03b6ac",
+      "isaaclab-training/instinctlab/control/lee_velocity_controller.py": "3818c21ff2550b7c10ad15a1e1d167ba8f20486b882a3944fff956692b915f95",
+      "isaaclab-training/instinctlab/control/pipeline.py": "dd1e81f51f76422d7dfc6673dbf59c3c082b7fd9ceb12ff84a56272c745d1d2b",
+      "isaaclab-training/instinctlab/control/runtime_adapter.py": "dfb10aa31275e39b871f050397b8c941216c17b73c0dd6926521fe5434227e0f",
+      "isaaclab-training/instinctlab/envs/__init__.py": "35fe24c13b1fea52f4eff09b29187dc642cf175bd054f2b86538879952843ef3",
+      "isaaclab-training/instinctlab/envs/taslab_direct_env.py": "35be09e97c24424e4cb5bb046d16302a4c49901825bf2eb61278a650e6cce639",
+      "isaaclab-training/instinctlab/envs/unified_h1_direct_env.py": "5aa3e3f14c0cd2e754d26eb437cc270dda4914e8c63e4758b12ddeacf6a41e90",
+      "isaaclab-training/instinctlab/evaluation/raycaster_observability.py": "3d4433d33940baa4e413606cded6851440ec2c66fc10a4386930bd1a43312aa4",
+      "isaaclab-training/instinctlab/observations/actor.py": "dfc339233e146e585493bfcc1893b5ee87c46c827963e36d6f9ec79e4b81ce44",
+      "isaaclab-training/instinctlab/sensors/mid360.py": "a37a1c423d8818194f23023ba969f55025dc867d2280579633a699807a5aea44",
+      "isaaclab-training/instinctlab/task/__init__.py": "5ca71c76eede74601a11dc1b73acc7e5e0b33664896e52df8746599d364ec3f6",
+      "isaaclab-training/instinctlab/task/critic_h1.py": "ea00315e8ca67ba8cdb1c3a22bf11a466b06d98bdd46b2bc55d437c6758cbddf",
+      "isaaclab-training/instinctlab/task/rewards_h1.py": "2ccee5439ec1709521912ae40806c95c93c64cbf1d970827203628354a8a8bec",
+      "isaaclab-training/instinctlab/task/scene_h1.py": "e94dd2e9614e8dae380f298650edc5cc91fcaacc7ca9ed80b678581bba087d59",
+      "isaaclab-training/instinctlab/task/termination.py": "90be9cf7d68d54f520866737a1aef3c449f5b3b52bfe62a9666d405756b59d89",
+      "isaaclab-training/instinctlab/training/__init__.py": "43ed3f2b45c7678d09c05275e73ee669161ccae0caab9d09f35039f8560e1d24",
+      "isaaclab-training/instinctlab/training/checkpoint.py": "d04f77d3e443ed8466db5dc6f0c05d633fd012b799eedf4d6047d4e395e9b37b",
+      "isaaclab-training/instinctlab/training/checkpoint_h1.py": "7ea46cdbb83aaed9ea9ce3f455b19472a51a405bc7fffb14f20a288a62cf21fa",
+      "isaaclab-training/instinctlab/training/networks.py": "a0790d5f80c8a9f2f06d05fc80bcdcfe8fd3e1a5c71a482443f1b3f5769dc129",
+      "isaaclab-training/instinctlab/training/networks_h1.py": "e2039982cdd8249116ef8910c2ba0d28646d0ad17e35a5fe4b09afc3b8b0a0db",
+      "isaaclab-training/instinctlab/training/ppo.py": "b8b33fcfc35ce0d3b7e9f58e2334ad3709c7f0ea43f6d8340c767ce3a9b68510",
+      "isaaclab-training/instinctlab/training/rollout.py": "a1d04a84a6099a711cab1d8cb8b6a550addf292dde4682ea82d3a9a0d32ab58d",
+      "isaaclab-training/instinctlab/training/rollout_h1.py": "99368e65552960680e2fbf860fdf726ec51ab3671c420719cdec90b6992cdabc"
+    }
+  },
+  "runtime": {
+    "gpu_probes": 0,
+    "live_process_starts": 0,
+    "real_checkpoints": 0,
+    "real_environment_transitions": 0,
+    "real_training_updates": 0,
+    "simulator_initializations": 0
+  },
+  "schema_version": "unified-h1-r2-config.v3",
+  "status": "R2_CPU_CANDIDATE_NOT_AUTHORIZED_FOR_LIVE_EXECUTION",
+  "training": {
+    "evaluation_seed": 20260909,
+    "horizon": 16,
+    "minibatch": 64,
+    "num_envs": 32,
+    "optimizer_steps_per_model_per_update": 8,
+    "samples_per_update": 512,
+    "seed": 20260908
+  },
+  "versions": {
+    "checkpoint": "checkpoint-h1-v2",
+    "critic": "critic-h1-v2",
+    "curriculum": "curriculum-h1-v1",
+    "logging": "learning-log-h1-v1",
+    "metric": "metric-h1-v1",
+    "reward": "reward-h1-v2"
+  },
+  "workload": {
+    "base_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
+    "branch": "main",
+    "candidate_commit": "SELF",
+    "candidate_tree": "SELF",
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-plant-r2-20261012",
+    "source_sha256": {
+      "training_workloads/scale_003/lifecycle.py": "0ea28f1b6fea550dd7630054871ae302887b44d05b7b36abc3b23a49636a1978",
+      "training_workloads/scale_003/persistence.py": "04a9170506a9ecfa2c2e5f5e382e9e85eaca59968c20fc65ff2e93f4639205dc",
+      "training_workloads/scale_003/resources.py": "1f47704f37134e02f24999dac5c6aba89e69b3b21ab74d0b230c875ebb92ac8c",
+      "training_workloads/unified_h1/__init__.py": "bff20b35d35477d6aafde01e55ff7de70df148b0925f91d93e22812006dc83ec",
+      "training_workloads/unified_h1/asset_closure.py": "99971d2daf7162874e29c42a3a1a3e54df13f5b4dcb5a06380bc10002be063e6",
+      "training_workloads/unified_h1/authorization.py": "0f6c423b037e20760f18639601b7600022438668ae95fce7c6061001063f7a88",
+      "training_workloads/unified_h1/b0_causal_analyzer.py": "9172255d8f15ec93b055d4e094ddc56a4358993619e94602d9cb4519982f9f59",
+      "training_workloads/unified_h1/b0_enhanced.py": "ded9db1f6fce21cd5a3b6cb1ea228ac11da2c97130e1d1a0d073e16465302079",
+      "training_workloads/unified_h1/b0_handoff.py": "a04bb8cdc64f1bebd24ef0fabaa0bc3a30f853cd69c033d5f480d4f0c463f2aa",
+      "training_workloads/unified_h1/b0_observer.py": "14b6410ccc778bfabbf842a9d9511a4382af444c79f389ed5d3b380390c2f625",
+      "training_workloads/unified_h1/backend.py": "6a2db60beac89c8a61eed3f7cb0aaf6a88088ebac0c04a15724efd1137d6d612",
+      "training_workloads/unified_h1/budget.py": "bbef68563e37562896897dd0387e2e476d517154ec5e20883d698020d0377189",
+      "training_workloads/unified_h1/config.py": "016d05edf6cea9ab8daccb5fc405c785afb6c3d83edbbd655f11898d435d9357",
+      "training_workloads/unified_h1/control_diagnostic.py": "0825540779cf217d5a60b79a4e8d62b6e6724129aaba76a42dfec91aad098a61",
+      "training_workloads/unified_h1/driver.py": "a4659352272a9a98ddfefc060157bf081d7280f30f66eca013de36cd1f543438",
+      "training_workloads/unified_h1/evaluation.py": "a6caedb36a5ddb408a9a9b8c6e073808b480252f6cc3ec12d201b69ab5e5583c",
+      "training_workloads/unified_h1/evidence_boundary.py": "3ee5a6c285eae6a0344807d74f67009c2cc9a7b0aea02a2119f606f894917b24",
+      "training_workloads/unified_h1/formal_unified_h1.py": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896",
+      "training_workloads/unified_h1/live_adapter.py": "66faec39575b8db73141874550925f7bcdd5d9719d2dadfd9873dd3eedc3702c",
+      "training_workloads/unified_h1/local_dispatch.py": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65",
+      "training_workloads/unified_h1/logging.py": "19d857dcc95e4ac6507276fb9d9cefeb6e36ff117d351d24525004fa3c41d03b",
+      "training_workloads/unified_h1/pilot_contract.py": "85261b5b0a54717787517146cbcc61094f138673d73b901332409867795b3eb0",
+      "training_workloads/unified_h1/pilot_diagnostic.py": "de3b0522e65c3a7bd2808c4190536fb5925ce8dde5c619e7dd28879276119c87",
+      "training_workloads/unified_h1/preflight.py": "d4add8a45bde7959e0771ddb8bfbd8db2bd434871ae3c1137a880faf46dda5cd",
+      "training_workloads/unified_h1/r3_sequence.py": "d612632bdf016fcaff4f9bd90a7cbf8b1a29fb951dd93c3f923fbf859efc8233",
+      "training_workloads/unified_h1/schedule.py": "f3cd6a5a4dd7d66773a42e477fbc67c1f6d96b208d85271f4597c74c831c006b"
+    }
+  }
+}

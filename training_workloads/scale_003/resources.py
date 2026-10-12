@@ -22,9 +22,9 @@ ALLOWED_COMPUTE_APP = "gnome-remote-desktop-daemon"
 ALLOWED_COMPUTE_APP_MAX_MIB = 256
 
 
-def validate_shutdown_runtime_sources() -> dict[str, dict[str, Any]]:
+def validate_shutdown_runtime_sources(*, resource_pins: Mapping[str, Any] | None = None) -> dict[str, dict[str, Any]]:
     """Bind the public graceful-shutdown configuration to the frozen runtime sources."""
-    pins = load_config()["pins"]
+    pins = load_config()["pins"] if resource_pins is None else resource_pins
     result: dict[str, dict[str, Any]] = {}
     for name in ("app_launcher", "simulation_app"):
         path = Path(pins[f"{name}_path"])
@@ -39,8 +39,11 @@ def _integer(value: str) -> int:
     return int(value.strip().replace(" MiB", "").replace(" %", ""))
 
 
-def collect_resource_sample() -> dict[str, Any]:
-    config = load_config(); executable = config["pins"]["nvidia_smi_path"]
+def collect_resource_sample(*, resource_pins: Mapping[str, Any] | None = None) -> dict[str, Any]:
+    pins = load_config()["pins"] if resource_pins is None else resource_pins
+    executable = pins["nvidia_smi_path"]
+    if sha256_file(Path(executable)) != pins["nvidia_smi_sha256"]:
+        raise ValueError("nvidia-smi identity changed")
     gpu = subprocess.run(
         [executable, "--query-gpu=index,name,driver_version,memory.total,memory.used,utilization.gpu", "--format=csv,noheader,nounits"],
         check=False, capture_output=True, text=True, timeout=15,
@@ -142,8 +145,12 @@ def collect_coexistence_window(
 
 
 def run_prelaunch_gate(output_root: Path, *, mode: str, attempt_id: str, authorization_sha256: str,
-                       collector: Callable[[], dict[str, Any]] = collect_coexistence_window) -> dict[str, Any]:
-    config = load_config(); pins = config["pins"]
+                       collector: Callable[[], dict[str, Any]] | None = None,
+                       resource_pins: Mapping[str, Any] | None = None) -> dict[str, Any]:
+    pins = load_config()["pins"] if resource_pins is None else resource_pins
+    if collector is None:
+        collector = (collect_coexistence_window if resource_pins is None else
+            lambda: collect_coexistence_window(sample_provider=lambda: collect_resource_sample(resource_pins=resource_pins)))
     window: Mapping[str, Any] | None = None
     try:
         if sha256_file(Path(pins["eval_002_gpu_gate_path"])) != pins["eval_002_gpu_gate_sha256"]:
@@ -211,13 +218,15 @@ def start_after_coexistence_gate(
     gate_runner: Callable[..., dict[str, Any]] = run_prelaunch_gate,
     launcher_factory: Callable[[Path], Any] | None = None,
     asset_root: Path | None = None,
+    resource_pins: Mapping[str, Any] | None = None,
 ) -> tuple[dict[str, Any], Any, Any]:
     """Make the resource gate a mandatory predecessor of AppLauncher creation."""
     gate = gate_runner(
         output_root, mode=mode, attempt_id=attempt_id,
         authorization_sha256=authorization_sha256,
     )
-    validate_shutdown_runtime_sources()
+    if resource_pins is None: validate_shutdown_runtime_sources()
+    else: validate_shutdown_runtime_sources(resource_pins=resource_pins)
     kit_asset_settings: tuple[str, ...] = ()
     if asset_root is not None:
         observed = os.environ.get("ISAACSIM_ASSET_ROOT")
@@ -248,7 +257,7 @@ def start_after_coexistence_gate(
     return gate, launcher, launcher.app
 
 
-def validate_graceful_shutdown_configuration(simulation_app: Any) -> dict[str, Any]:
+def validate_graceful_shutdown_configuration(simulation_app: Any, *, resource_pins: Mapping[str, Any] | None = None) -> dict[str, Any]:
     """Fail closed unless SimulationApp is configured for a returning cleanup path."""
     config = getattr(simulation_app, "config", None)
     if not isinstance(config, Mapping) or config.get("fast_shutdown") is not False:
@@ -256,5 +265,6 @@ def validate_graceful_shutdown_configuration(simulation_app: Any) -> dict[str, A
     return {
         "fast_shutdown": False,
         "shutdown_mode": "GRACEFUL_RETURN_REQUIRED",
-        "runtime_sources": validate_shutdown_runtime_sources(),
+        "runtime_sources": (validate_shutdown_runtime_sources() if resource_pins is None else
+                            validate_shutdown_runtime_sources(resource_pins=resource_pins)),
     }

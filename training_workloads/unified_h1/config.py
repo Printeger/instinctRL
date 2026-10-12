@@ -59,6 +59,28 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def resource_binding_pins() -> dict[str, str]:
+    """Bind reused resource tools independently of the old SCALE product.
+
+    These are the same frozen sources and thresholds; H1 source identity is
+    already checked by its own complete product/workload manifests.
+    """
+    pins = {
+        'app_launcher_path':'/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/app/app_launcher.py',
+        'app_launcher_sha256':'7ab2c742cfa64e2c4e2ea4601d9441e5e8c9bb8f556a121b0d10c337f9b6093e',
+        'simulation_app_path':'/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/exts/isaacsim.simulation_app/isaacsim/simulation_app/simulation_app.py',
+        'simulation_app_sha256':'7cbaa6f00e935a6f14bf1c28ec0db089fd924e931f3b0deee07a822f9b7d0090',
+        'nvidia_smi_path':'/usr/bin/nvidia-smi',
+        'nvidia_smi_sha256':'22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be',
+        'eval_002_gpu_gate_path':str(Path(__file__).resolve().parents[2]/'evaluation_workloads/eval_002/gpu_gate.py'),
+        'eval_002_gpu_gate_sha256':'29fd12bec882ac0b2b0ac8a81142f0102927b63da6aa351328d02fbfe4ed581a'}
+    for name in ('app_launcher','simulation_app','nvidia_smi','eval_002_gpu_gate'):
+        path = Path(pins[name+'_path'])
+        if path.is_symlink() or not path.is_file() or sha256_file(path) != pins[name+'_sha256']:
+            raise ValueError('H1 frozen resource source identity mismatch: '+name)
+    return pins
+
+
 def _git(root: Path, *args: str) -> str:
     return subprocess.run(["git", *args], cwd=root, check=True, capture_output=True, text=True).stdout.strip()
 
@@ -143,6 +165,7 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
     result["resolved_identity"] = {"product_commit": product["commit"], "product_tree": product["tree"],
         "workload_commit": workload["commit"], "workload_tree": workload["tree"], "config_sha256": sha256_file(path)}
     validate_loaded_module_origins(result)
+    resource_binding_pins()
     return result
 
 

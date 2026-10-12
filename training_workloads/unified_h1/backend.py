@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+from functools import partial
 import os
 from pathlib import Path
 import random
@@ -14,7 +15,7 @@ import torch
 
 from training_workloads.scale_003.lifecycle import LifecycleOutcome, exception_record
 from training_workloads.scale_003.persistence import atomic_json_replace
-from training_workloads.scale_003.resources import RuntimeResourceGuard, start_after_coexistence_gate, validate_graceful_shutdown_configuration
+from training_workloads.scale_003.resources import RuntimeResourceGuard, run_prelaunch_gate, start_after_coexistence_gate, validate_graceful_shutdown_configuration
 
 from .budget import ExecutionCounters
 from .config import load_config, sha256_file, validate_live_environment
@@ -414,7 +415,7 @@ class UnifiedH1LiveBackend:
                     digest.update(chunk); file_rows += chunk.count(b"\n"); file_bytes += len(chunk); last_byte = chunk[-1:]
             atomic_json_replace(self.output, "enhanced_b0_manifest.json", {
                 "schema_version":"instinctrl-enhanced-b0-raw-manifest/2",
-                "experiment_id":"UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012",
+                "experiment_id":"UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
                 "authorization_sha256":self.authorization["authorization_sha256"],
                 "source_identity":{key:self.authorization[key] for key in
                     ("product_commit","product_tree","workload_commit","workload_tree","config_sha256")},
@@ -627,7 +628,7 @@ def create_live_backend(*, authorization: Mapping[str, Any], attempt: Path,
                         resources: dict[str, Any] | None = None,
                         counters: ExecutionCounters | None = None) -> UnifiedH1LiveBackend:
     """Start live resources only after formal authorization/config checks have succeeded."""
-    from .config import validate_prelaunch_environment
+    from .config import validate_prelaunch_environment, resource_binding_pins
     config = load_config(); validate_prelaunch_environment(config); attempt = attempt.resolve()
     results = attempt / "results"
     if not attempt.is_dir() or not results.is_dir(): raise ValueError("authorized attempt/results directory is absent")
@@ -635,11 +636,13 @@ def create_live_backend(*, authorization: Mapping[str, Any], attempt: Path,
     gate_output = (results / "evaluation" / "prelaunch" if authorization["mode"] == "evaluation"
                    else results / "prelaunch")
     gate_output.mkdir(exist_ok=False)
+    resource_pins = resource_binding_pins()
     gate, launcher, app = start_after_coexistence_gate(gate_output, mode=str(authorization["mode"]),
         attempt_id=attempt.name, authorization_sha256=str(authorization["authorization_sha256"]),
+        gate_runner=partial(run_prelaunch_gate, resource_pins=resource_pins), resource_pins=resource_pins,
         asset_root=Path(config["execution"]["isaacsim_asset_root"]))
     if resources is not None: resources.update(launcher=launcher, app=app)
-    validate_graceful_shutdown_configuration(app)
+    validate_graceful_shutdown_configuration(app, resource_pins=resource_pins)
     from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv, UnifiedH1DirectEnvCfg
     validate_live_environment(config)
     environment = UnifiedH1DirectEnv(UnifiedH1DirectEnvCfg())

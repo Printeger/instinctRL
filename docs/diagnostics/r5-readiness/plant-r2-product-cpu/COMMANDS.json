@@ -1,0 +1,101 @@
+{
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONPATH": "/home/mint/rl_dev/instinctRL-dev:/home/mint/rl_dev/instinctRL-dev/isaaclab-training:/home/mint/rl_dev/instinctRL-dev/tools/rlflow:/home/mint/rl_dev/instinctRL-dev/tools/rlflow/tests"
+  },
+  "results": [
+    {
+      "module": "tests/training_workloads/test_measured_control_plant.py",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/training_workloads/test_measured_control_plant.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/plant-r2-product-cpu/test_measured_control_plant.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.8149000438861549
+    },
+    {
+      "module": "tests/training_workloads/test_actor_fingerprint_cache.py",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/training_workloads/test_actor_fingerprint_cache.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/plant-r2-product-cpu/test_actor_fingerprint_cache.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.8148993230424821
+    },
+    {
+      "module": "tests/training_workloads/test_enhanced_case_reset_lifecycle.py",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/training_workloads/test_enhanced_case_reset_lifecycle.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/plant-r2-product-cpu/test_enhanced_case_reset_lifecycle.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.8148524428252131
+    },
+    {
+      "module": "tests/training_workloads/test_unified_h1_product_hook.py",
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/training_workloads/test_unified_h1_product_hook.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/plant-r2-product-cpu/test_unified_h1_product_hook.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1638024770654738
+    },
+    {
+      "module": "tests/training_workloads/test_command_passthrough_backend.py",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/training_workloads/test_command_passthrough_backend.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/plant-r2-product-cpu/test_command_passthrough_backend.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 3.7194171010050923
+    },
+    {
+      "module": "tests/training_workloads/test_unified_h1_control_diagnostic.py",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/training_workloads/test_unified_h1_control_diagnostic.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/plant-r2-product-cpu/test_unified_h1_control_diagnostic.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 6.471796914935112
+    },
+    {
+      "module": "tests/training_workloads/test_b0_analyzer_boundaries.py",
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/training_workloads/test_b0_analyzer_boundaries.py",
+        "--junitxml=/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/plant-r2-product-cpu/test_b0_analyzer_boundaries.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.11370092490687966
+    }
+  ]
+}

@@ -13,7 +13,7 @@ import math
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
-EXPERIMENT_ID = "UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012"
+EXPERIMENT_ID = "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012"
 CASES = ("Z", "T", "S")
 CASE_POLICY_STEPS = {"Z": 200, "T": 100, "S": 330}
 LANES = 32
