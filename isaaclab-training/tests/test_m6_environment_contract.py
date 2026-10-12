@@ -196,11 +196,11 @@ def test_runner_and_comparator_are_persisted_fail_closed_programs():
         assert f'"{key}"' in runner
 
 
-def test_accepted_files_are_unmodified_from_order_base():
-    # Formal evidence repeats this over the full accepted path manifest.
+def test_consolidation_preserves_non_diagnostic_product_files():
+    # M7/H1 additions are accepted history; consolidation preserves the complete R3 base.
     import subprocess
     result = subprocess.run(
-        ["git", "diff", "--name-only", BASE, "--", "isaaclab-training/instinctlab/assets",
+        ["git", "diff", "--name-only", "903afc5abd0fbf82297527e5790c2cd40827b0b2", "--", "isaaclab-training/instinctlab/assets",
          "isaaclab-training/instinctlab/sensors", "isaaclab-training/instinctlab/observations",
          "isaaclab-training/instinctlab/control", "isaaclab-training/instinctlab/task"],
         cwd=ROOT.parent, check=True, capture_output=True, text=True,

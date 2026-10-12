@@ -55,12 +55,13 @@ class RaycasterDiagnosticsTests(unittest.TestCase):
         unfused = starts + parameters.unsqueeze(-1) * directions
         self.assertGreater(float(torch.linalg.vector_norm(unfused - returned)), 1e-5)
         with patch.object(ray, "_raycast_mesh_with_normals", return_value=(returned, parameters, normals, None)):
-            with self.assertRaises(ray.RaycasterAcquisitionError) as caught:
-                ray.acquire_exact_raycaster_observability(
-                    starts, directions, Mesh(), 40.0, returned.clone(), valid
-                )
-        self.assertEqual(caught.exception.diagnostics.reconstruction_failing_beam, (0, 0))
-        self.assertGreater(float(caught.exception.diagnostics.reconstruction_max_error_m), 1e-5)
+            # 903afc5 accounts for proven float32 multiply/add roundoff. This
+            # genuine fused kernel hit must pass; wrong parameters/hits below
+            # remain negative controls against weakening the geometry check.
+            result = ray.acquire_exact_raycaster_observability(
+                starts, directions, Mesh(), 40.0, returned.clone(), valid
+            )
+        self.assertLessEqual(float(result.reconstruction_max_error_m), 1e-5)
 
     def test_genuine_wrong_hit_control_is_distinct(self):
         starts, directions, accepted, valid, normals = self.inputs()
