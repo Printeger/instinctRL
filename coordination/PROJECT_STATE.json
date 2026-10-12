@@ -30,7 +30,7 @@
   "migration_is_product_acceptance": false,
   "current_candidate_config": "../training_workloads/unified_h1/candidate_config.json",
   "blocking_followups": [
-    "Independently close MECHANICS-R1 on the exact new candidate and input binding.",
+    "Independently close BASELINE-R1/R2 on the new exact source/input candidate before any live release.",
     "Freeze and independently pre-review baseline snapshot/handoff; bind initialization, reset, probe and remaining budget before Commander release.",
     "Real current control diagnosis and runtime mass binding, minimal evidenced repair and nontraining regression remain required."
   ],
@@ -227,16 +227,19 @@
     "live_release_issued": false,
     "training_authorized": false,
     "independent_review": {
-      "candidate_commit": "5da1439506854a606da8fcac39d87f71c079a8c5",
+      "candidate_commit": "918fec6f8f37a3700d47cf615168eb9cad2603b1",
+      "input_pack_commit": "d9033a041c180756694f281c909bfc8bf80a2766",
       "verdict": "MUST_FIX",
       "closed": [
         "PILOT-R1",
-        "PILOT-R2"
-      ],
-      "open": [
+        "PILOT-R2",
         "MECHANICS-R1"
       ],
-      "closure_candidate": "serialized-primitive shared mechanics, awaiting independent review"
+      "open": [
+        "BASELINE-R1",
+        "BASELINE-R2"
+      ],
+      "closure_candidate": "partial raw manifest and base reaction frame implemented CPU verified, awaiting exact candidate independent review"
     },
     "cli_compatibility": {
       "installed": "0.161.0",

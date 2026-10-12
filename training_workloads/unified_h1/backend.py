@@ -408,6 +408,10 @@ class UnifiedH1LiveBackend:
         last_attempted_coordinate = last_written_coordinate = None
         phase = "PREPARED"
         def preserve_raw_manifest(status, error=None):
+            digest = hashlib.sha256(); file_rows = file_bytes = 0; last_byte = b""
+            with target.open("rb") as raw:
+                for chunk in iter(lambda:raw.read(1024*1024),b""):
+                    digest.update(chunk); file_rows += chunk.count(b"\n"); file_bytes += len(chunk); last_byte = chunk[-1:]
             atomic_json_replace(self.output, "enhanced_b0_manifest.json", {
                 "schema_version":"instinctrl-enhanced-b0-raw-manifest/2",
                 "experiment_id":"UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
@@ -417,11 +421,11 @@ class UnifiedH1LiveBackend:
                 "status":status,"phase":phase,"hook_receipt":receipt,
                 "coverage":coverage,"observation":observation,
                 "raw":{"path":target.name,"attempted_rows":attempted_rows,
-                    "validated_rows":validated_rows,"written_rows":written_rows,
-                    "encoded_bytes":written_bytes,"file_bytes":target.stat().st_size,
-                    "sha256":sha256_file(target),
+                    "validated_rows":validated_rows,"written_rows":file_rows,"stream_accepted_rows":written_rows,
+                    "encoded_bytes":written_bytes,"file_bytes":file_bytes,
+                    "sha256":digest.hexdigest(),"trailing_partial_row":bool(last_byte and last_byte!=b"\n"),
                     "last_attempted_coordinate":last_attempted_coordinate,
-                    "last_written_coordinate":last_written_coordinate,
+                    "last_written_coordinate":last_written_coordinate if file_rows==written_rows else None,
                     "stream_closed":stream.closed},
                 "observer_progress":None if observer is None else {
                     "completed_callback_calls":observer.calls,"completed_callback_rows":observer.rows,

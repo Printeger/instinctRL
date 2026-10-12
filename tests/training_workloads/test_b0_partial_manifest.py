@@ -23,7 +23,7 @@ def backend_fixture(tmp_path,monkeypatch,fault):
     method=next(n for n in ast.walk(ast.parse(source.read_text())) if isinstance(n,ast.FunctionDef) and n.name=='run_enhanced_b0_diagnostic')
     tree=ast.fix_missing_locations(ast.Module(body=[ast.ClassDef(name='Backend',bases=[],keywords=[],decorator_list=[],body=[method])],type_ignores=[]))
     def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
-    ns={'__name__':'training_workloads.unified_h1._cpu_extracted_backend','__package__':'training_workloads.unified_h1','Path':Path,'Mapping':Mapping,'Any':Any,'os':os,'atomic_json_replace':atomic_json_replace,'exception_record':exception_record,'sha256_file':digest}
+    ns={'__name__':'training_workloads.unified_h1._cpu_extracted_backend','__package__':'training_workloads.unified_h1','Path':Path,'Mapping':Mapping,'Any':Any,'os':os,'hashlib':hashlib,'atomic_json_replace':atomic_json_replace,'exception_record':exception_record,'sha256_file':digest}
     exec(compile(tree,str(source),'exec'),ns)
     class Validator:
         def __init__(self):self.count=0
@@ -72,6 +72,7 @@ def test_failure_retains_actual_raw_progress_and_primary_error(tmp_path,monkeypa
     assert manifest['primary_error']['message']==str(caught.value)
     assert manifest['raw']['written_rows']==written==len(raw.splitlines())
     assert manifest['raw']['attempted_rows']==attempted and manifest['raw']['validated_rows']==validated
+    assert manifest['raw']['stream_accepted_rows']==written and not manifest['raw']['trailing_partial_row']
     assert manifest['raw']['encoded_bytes']==manifest['raw']['file_bytes']==len(raw)
     assert manifest['raw']['sha256']==hashlib.sha256(raw).hexdigest() and manifest['raw']['stream_closed']
     if calls is None:assert manifest['observer_progress'] is None
@@ -98,3 +99,28 @@ def test_complete_manifest_has_finalized_coverage_and_no_error(tmp_path,monkeypa
     assert manifest['status']=='COMPLETE' and manifest['phase']=='COMPLETE'
     assert manifest['coverage']['status']=='MOCK_32_ROWS_ONLY' and manifest['observation']['fixture_only']
     assert manifest['raw']['written_rows']==32 and manifest['primary_error'] is None
+
+
+def test_failed_flush_distinguishes_stream_acceptance_from_complete_file_rows(tmp_path,monkeypatch):
+    value,_=backend_fixture(tmp_path,monkeypatch,'environment')
+    class Output(type(tmp_path)):
+        def open(self,mode='r',*args,**kwargs):
+            stream=super().open(mode,*args,**kwargs)
+            if mode!='x' or self.name!='enhanced_b0_physics.jsonl':return stream
+            class PartialClose:
+                @property
+                def closed(self):return stream.closed
+                def write(self,text):return stream.write(text)
+                def close(inner):
+                    stream.close()
+                    raw=Path(self).read_bytes();Path(self).write_bytes(raw[:-5])
+                    raise OSError('injected partial flush')
+            return PartialClose()
+    value.output=Output(tmp_path)
+    with pytest.raises(RuntimeError,match='injected environment') as caught:value.run_enhanced_b0_diagnostic({})
+    manifest=json.loads((tmp_path/'enhanced_b0_manifest.json').read_text());raw=(tmp_path/'enhanced_b0_physics.jsonl').read_bytes()
+    assert manifest['raw']['stream_accepted_rows']==32 and manifest['raw']['written_rows']==31
+    assert manifest['raw']['file_bytes']==len(raw)<manifest['raw']['encoded_bytes']
+    assert manifest['raw']['trailing_partial_row'] and manifest['raw']['last_written_coordinate'] is None
+    assert manifest['raw']['sha256']==hashlib.sha256(raw).hexdigest()
+    assert any('injected partial flush' in note for note in caught.value.__notes__)
