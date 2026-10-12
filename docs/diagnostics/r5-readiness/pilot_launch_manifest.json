@@ -1,6 +1,6 @@
 {
   "schema_version": "instinctrl-r5-pilot-readiness/1",
-  "status": "BLOCKED_CONTROL_BASELINE",
+  "status": "BLOCKED_RESOURCE_AUTHORIZATION",
   "goal_status": "IN_PROGRESS",
   "training_authorization_issued": false,
   "shared_repaired_baseline_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
@@ -67,10 +67,10 @@
   "current_goal_training_checkpoint_writes": 0,
   "argv_status": "EXACT_FUTURE_PROPOSALS_GENERATED_NOT_AUTHORIZED",
   "blocking_evidence": [
-    "FourthprocessFAILED/137 inCPUanalysis with original PREPAREDmanifest and nofinalcounters; full403200physicalrows independentlyaccepted, full20160reservationpreserved. Diagnosticdurability/seedrouting successor exactprereviewpending.",
-    "All4live starts/initreservations consumed. ExactcommandR3 proposal requires explicit newuserdecision ononly start/initcap and existingCommander release beforeoriginalZ/T/S live gates."
+    "Original4start/initreservationcaps exhausted; concrete one-entry extension requested fromuser and pending. No additional AUTH/approval/release.",
+    "IndependentRole12 accepts fullzero-target physicalregression and exactsuccessor/command/futurepackage; command originalmounted-sensorT0/all32laneZTSgates and finalreadinessreview still require actualexecution."
   ],
-  "baseline_acceptance": "ZERO_TARGET_PHYSICAL_REGRESSION_INDEPENDENTLY_ACCEPTED_COMMAND_PENDING",
+  "baseline_acceptance": "ZERO_TARGET_PHYSICAL_REGRESSION_ACCEPTED_COMMAND_ORIGINAL_ZTS_PENDING",
   "shared_baseline": {
     "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
     "snapshot_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
@@ -102,10 +102,22 @@
   "zero_target_physics_regression": {
     "source_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
     "job": "J-afe4bda51f5206e5",
-    "independent_status": "ACCEPTED_REPAIRED_ZERO_TARGET_PHYSICAL_MECHANISM_REGRESSION_INTERIM_ROLE12",
+    "independent_status": "ACCEPTED_REPAIRED_ZERO_TARGET_PHYSICAL_MECHANISM_REGRESSION",
     "physical_code_unchanged_on_new_baseline": true,
     "process_status": "FAILED",
     "counter_settlement": "INCOMPLETE_FULL20160RESERVED",
     "analysis": "plant-r2-zero-regression-analysis.json"
+  },
+  "independent_prereview": {
+    "path": "reviews/review-zero-r2-command-r3-prelive.json",
+    "verdict": "PASS_PRELIVE_ONLY",
+    "role_call": 12,
+    "no_open_must_fix": true
+  },
+  "resource_decision": {
+    "status": "REQUESTED_PENDING_USER_REPLY",
+    "proposal": "budget_extension_proposal.json",
+    "requested_caps_delta": "live starts/initreservation4to5 only",
+    "other_caps_unchanged": true
   }
 }

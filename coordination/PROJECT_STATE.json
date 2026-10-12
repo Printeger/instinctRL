@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_DIAGNOSTIC_CLOSURE_IN_PROGRESS",
+  "phase": "R5_COMMAND_RESOURCE_AUTHORIZATION_PENDING",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -281,7 +281,13 @@
       "inputs": "../docs/diagnostics/r5-readiness/inputs/passthrough_r3_input_manifest.json"
     },
     "next_exact_live_approval": null,
-    "latest_actual_diagnostic": "../docs/diagnostics/r5-readiness/plant-r2-zero-regression-analysis.json"
+    "latest_actual_diagnostic": "../docs/diagnostics/r5-readiness/plant-r2-zero-regression-analysis.json",
+    "resource_decision": {
+      "status": "REQUESTED_PENDING_USER_REPLY",
+      "proposal": "../docs/diagnostics/r5-readiness/budget_extension_proposal.json",
+      "delta": "start/initreservation4to5 only; othercaps unchanged"
+    },
+    "readiness": "BLOCKED_RESOURCE_AUTHORIZATION"
   },
   "historical_pre_goal_independent_review": {
     "status": "NOT_ACCEPTED",

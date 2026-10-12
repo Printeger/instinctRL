@@ -14,3 +14,5 @@
 最新索引：`docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md`。
 
 当前准确续接：4次live已消耗且无activejob。第四次完整物理轨迹403200行已独立复核并接受零目标物理回归，但进程FAILED/137、最终reward计数缺失、20160全额预留。新只读候选ef68ebb5682b85aa83044fdea1c13b7d0edbf325保留相同控制plant，仅补诊断持久化和pilot-eval工具seed分支；Role12精确预审待结论。下一唯一live是不同条件的命令直通B0，准确包inputs/passthrough_r3_input_manifest.json；需用户仅将start/init保守预留4→5的明确决定，再经Commander批准，其他80640/3640/64GiB/24帽不变。budget_extension_proposal.json已完成具体申请包。训练仍为零，目标未完成。
+
+Role12已最终PASS，durability与pilot-eval seed两项finding关闭，准确命令输入及工具预审通过。已集中请求用户仅增加一个start/init保守预留，等待明确答复；不能把未答复当批准。本Goal未DONE、未开始第五次或训练。得到批准后唯一恢复动作：更新新cap（不重置旧用量）→按Role12证据/准确ef68候选与工具74a6进行现有Commander绑定、STOP/coexistence/所有权检查→释放freshPLANT-R3命令直通一次→原ZTS验收与最终独立审核。

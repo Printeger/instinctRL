@@ -1,6 +1,6 @@
 # Fix and regression record
 
-Current status: ZERO_TARGET_PHYSICAL_REGRESSION_ACCEPTED_COMMAND_PENDING. Exact next source ef68ebb5682b85aa83044fdea1c13b7d0edbf325 with physical code unchanged from f726 actual regression; final Role12 prereview pending. No training acceptance or authority.
+Current status: ZERO_TARGET_PHYSICAL_REGRESSION_ACCEPTED_COMMAND_PENDING. Exact next source ef68ebb5682b85aa83044fdea1c13b7d0edbf325 with physical code unchanged from f726 actual regression; final Role12 prereview PASS. No training acceptance or authority.
 
 | Defect and actual evidence | Minimal repair | Verification and remaining boundary |
 | --- | --- | --- |
