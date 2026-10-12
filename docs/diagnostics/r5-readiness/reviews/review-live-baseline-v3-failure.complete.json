@@ -1,0 +1,45 @@
+{
+  "candidate_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
+  "evidence_commit": "a57be7b",
+  "job_id": "J-65769ac9c17a38cb",
+  "verdict": "MUST_FIX",
+  "role_call": 8,
+  "handle": "/root/pilot_reviewer",
+  "record_type": "complete transcription of original independent result fields; prior shorter summary preserved",
+  "scope": "Actual first live failure and minimum next diagnostic repairs; no restart approval",
+  "findings": [
+    {
+      "id": "LIVE-R1",
+      "classification": "MUST_FIX",
+      "evidence": "First product snapshot reconstruct_com fails before writer; actual failed body/matrix absent. Raw0, coverage null.",
+      "closure": "Save separate UNVALIDATED input artifact, coordinate/lane, failed body index/name, untouched full serialized body primitives, actual getter names/dtype/shape and specific failure branch. Preserve primary error and zero normal rows. CPU first-body failure injection.",
+      "contract": "Requirements B3/B4 measurement failure must preserve actual raw inputs",
+      "impact": "Failure branch/actual body cannot be determined; an unrecorded matrix cannot support cause-specific repair"
+    },
+    {
+      "id": "LIVE-R2",
+      "classification": "MUST_FIX",
+      "evidence": "Independent float32 Rz(5/37)Ry(5/53) rotation of diag(.003,.009,.014) produces positive inertia with skew1.1641532182693481e-10, rejected by fixed1e-10. Actual live cause unestablished.",
+      "closure": "Predeclare source precision and scale dependent symmetry rule; preserve raw matrix, split failure branches; CPU positive and significant asymmetry/nonpositive/NaN negative cases. Close LIVE-R1 simultaneously.",
+      "contract": "Requirements B4.7 numerical tolerances must derive from source precision and scale",
+      "impact": "Existing validator can reject a legitimate float32 rotated inertia; actual live cause remains unestablished"
+    }
+  ],
+  "cleanup_assessment": {
+    "verdict": "BOUNDARY_ACCEPTABLE_WITH_FAILED_STATUS",
+    "app_close": "9.5sec HARD_TIMEOUT, owner exit-9",
+    "ownership_cleanup": "quiescent true, stable_scans2, no_survivors true",
+    "postrun_audit": "Two authorized queries, GPU394MiB/1percent, existing GNOME only164MiB",
+    "interpretation": "Safe failed terminal settlement; no gracefulPASS or rewritten original FAIL_PENDING_CLOSE. Native hang location unestablished; frozen runtime unchanged."
+  },
+  "accounting": "Keep full20160reservation because post-physics failure and final counters incomplete; raw0 does not mean no physics.",
+  "next": "New source commit, new experiment ID/fresh attempt, independent exact pre-review. No control/plant/gain change based on this failure.",
+  "review_execution": {
+    "original_evidence_read": true,
+    "shared_files_written": false,
+    "gpu_queries": 0,
+    "simulation_started": false,
+    "optimizer_updates": 0,
+    "live_release_issued": false
+  }
+}

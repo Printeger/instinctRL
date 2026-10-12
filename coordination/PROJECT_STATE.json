@@ -18,21 +18,23 @@
     "reason": "Evaluator output rejected: MUST_FIX requires contract, evidence, impact and closure"
   },
   "latest_real_diagnostic": {
-    "status": "FAILED",
-    "transitions": 0,
-    "physics_rows": 0,
+    "status": "PARTIAL_FAILURE",
+    "job_id": "J-fcbe37739d942e3c",
+    "source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+    "completed_nontraining_observed": 6400,
+    "physics_rows": 128640,
     "training_updates": 0,
-    "failure": "controller/rotor reset state unavailable; app.close hard timeout and detached telemetry child",
-    "horizontal_drift_cause": "NOT_PROVEN"
+    "failure": "first T reward measurement coverage below0.1; forced app.close cleanup",
+    "mechanism": "mass source and actual rotor allocation supported; repaired regression pending"
   },
   "new_live_execution_authorized": false,
   "new_training_authorized": false,
   "migration_is_product_acceptance": false,
   "current_candidate_config": "../training_workloads/unified_h1/candidate_config.json",
   "blocking_followups": [
-    "Actual firstphysics inertia validation fails before rawprimitives are written; diagnose precision vspositiveinertia with preserved actualdata, no blindrepeat.",
-    "app.close hardtimeout; ownership cleanup independently confirms quiescence/no survivors and GPU back to allowed desktop. Must preserve nativefailure and full incomplete transitionreservation.",
-    "Current control mechanism, minimalrepair and true zero/passthroughregressions remain required."
+    "Exact repaired control candidate independent prereview and real zero-target regression.",
+    "Separate command-passthrough B0 original Z/T/S gates on same repaired source.",
+    "Final independent readiness review and exact future P0/PLR start package; first real rollout probability gate remains next-run mandatory."
   ],
   "migration_verification": {
     "scope": "MIGRATION_CPU_REGRESSION_ONLY_NOT_INDEPENDENT_PRODUCT_ACCEPTANCE",
@@ -260,16 +262,15 @@
       "result": "PASS_KERNEL_AND_INSTALLED_REGISTRY_CHECKS"
     },
     "exact_live_approval": "../docs/diagnostics/r5-readiness/baseline-v3-commander-approval.json",
-    "live_entry_status": "MEASUREMENT_R1B_RUNNING",
+    "live_entry_status": "MEASUREMENT_R1B_FAILED_FIRST_T_REWARD_COVERAGE",
     "latest_live_job": "J-fcbe37739d942e3c",
     "current_live_release_effective": false,
     "next_candidate": {
-      "source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
-      "inputs": "../docs/diagnostics/r5-readiness/inputs/measurement_r1b_input_manifest.json",
-      "status": "ENTRY_APPROVAL_CONSUMED_RUNNING",
-      "experiment_id": "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+      "experiment_id": "UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012",
+      "status": "CPU_IMPLEMENTATION_PENDING_EXACT_REVIEW",
       "live_release_issued": false
     },
-    "next_exact_live_approval": "../docs/diagnostics/r5-readiness/measurement-r1b-commander-approval.json"
+    "next_exact_live_approval": "../docs/diagnostics/r5-readiness/measurement-r1b-commander-approval.json",
+    "latest_actual_diagnostic": "../docs/diagnostics/r5-readiness/measurement-r1b-partial-mechanics-analysis.json"
   }
 }

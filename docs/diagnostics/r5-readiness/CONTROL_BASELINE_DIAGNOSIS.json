@@ -1,13 +1,42 @@
 {
-  "status": "PENDING_CURRENT_REAL_DIAGNOSTIC",
-  "current_runtime_total_mass_kg": null,
+  "status": "CURRENT_MECHANISM_SUPPORTED_REPAIR_PENDING_REAL_REGRESSION",
+  "current_runtime_total_mass_kg": 1.1815179230179638,
   "current_asset_sha256": "3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99",
   "historical_verified_transitions": 20160,
   "historical_vertical_mechanism": "SUPPORTED_IN_HISTORICAL_BINDING",
-  "horizontal_cause": "NOT_PROVEN",
-  "new_live_transitions": 0,
+  "horizontal_cause": "SUPPORTED_NOMINAL_VS_ACTUAL_WRENCH_ALLOCATION_GEOMETRY",
+  "new_live_transitions": "6400 observed completed; failed collection final settlement incomplete, FULL20160 reserved",
   "new_condition": "ENHANCED_B0_ZERO_TARGET",
   "command_passthrough_acceptance": "NOT_PERFORMED",
-  "physical_fix": "NOT_PERFORMED",
-  "scientific_control_acceptance": "NOT_GRANTED"
+  "physical_fix": "IMPLEMENTED_CPU_VERIFIED_NOT_YET_REAL_REGRESSED",
+  "scientific_control_acceptance": "NOT_GRANTED",
+  "current_source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+  "current_job_id": "J-fcbe37739d942e3c",
+  "current_validated_physics_rows": 128640,
+  "current_completed_transitions_observed": 6400,
+  "partial_protocol": true,
+  "current_vertical_mechanism": "SUPPORTED_ACTUAL_MASS_VS_CONTROLLER_BASE_MASS",
+  "mechanism_prediction": [
+    {
+      "example": "Z_lane0_policy100",
+      "scope": "source-and-measured-geometry equilibrium prediction; not new simulation",
+      "predicted_velocity_world_m_s": [
+        0.19355434828183254,
+        -0.055579059498888195,
+        -0.08938204506107636
+      ],
+      "observed_velocity_world_m_s": [
+        0.19352911412715912,
+        -0.05558815598487854,
+        -0.08938680589199066
+      ],
+      "equation_residual_torque_xy_nm_and_vertical_force_n": [
+        5.551115123125783e-17,
+        2.7755575615628914e-17,
+        0.0
+      ],
+      "mass_only_vertical_prediction_m_s": -0.08938170547990508,
+      "nominal_rotor_origin_is_not_actual_system_com": true
+    }
+  ]
 }

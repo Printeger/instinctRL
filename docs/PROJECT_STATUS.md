@@ -9,7 +9,7 @@
 
 诊断闭环、最小修复与短程训练准入正在推进。需求见
 [需求](goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md)，最新证据见
-[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。新诊断包络已登记，尚未签发准确 live release；
+[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。新诊断包络已登记；两次精确授权入口均已消耗，下一候选尚未 release；
 训练权限仍为零。以下历史状态与迁移记录保留，不继承旧 receipt 验收。
 
 ## 历史阶段及结论
@@ -64,3 +64,5 @@ orchestrator 后端已认证或可直接恢复。未通过修改固定版本或�
 candidate preserves failed snapshot inputs and corrects float32 symmetry contract;
 CPU passes, fresh exact source/input prereview pending. First live remains failed,
 full20160 reservation retained; no owned survivors. Goal IN_PROGRESS, training0.
+
+当前 Goal 实测更新：measurement-r1b 的 128,640 条物理行及 6,400 条已完成 nontraining transitions 已保全并离线验证。质量来源与实际 rotor allocation 机制有定量证据，最小修复尚待独立预审和真实回归；T 首步 reward coverage 失败及强制 app.close 清理仍为 FAILED，不作为准入。完整失败额度保留，剩余最多两次 live／初始化、40,320 transitions；训练为零。详见当前控制诊断与 Goal 账本。

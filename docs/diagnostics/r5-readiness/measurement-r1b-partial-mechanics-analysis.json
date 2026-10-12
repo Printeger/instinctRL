@@ -1,0 +1,3024 @@
+{
+  "status": "VALIDATED_PARTIAL_PREFIX_NOT_COMPLETE_PROTOCOL",
+  "source_identity": {
+    "config_sha256": "3976171bdd6092494b66c94b97b17fcb503d8baa0c7c2051d142fbd8d4f5f003",
+    "product_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+    "product_tree": "3916ac45e9f2c357d513c14ca62beed1cdbae5c5",
+    "workload_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+    "workload_tree": "3916ac45e9f2c357d513c14ca62beed1cdbae5c5"
+  },
+  "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012/results/enhanced-b0-diagnostic/enhanced_b0_physics.jsonl",
+  "raw_sha256": "ad9aacb7a659cfc6095844fa224afc2e7ed37622862eb0cdeb86907cdee810b4",
+  "validated_physics_rows": 128640,
+  "expected_full_protocol_rows": 403200,
+  "formal_control_acceptance": "NOT_GRANTED",
+  "segments": [
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        0,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        299.8999938964844,
+        -200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        303.07183837890625,
+        -200.99185180664062,
+        0.49474626779556274
+      ],
+      "minimum_root_height_m": 0.49474626779556274,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.1934985257876225,
+        -0.05561643116430849,
+        -0.08938594468128987
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.746594152638347e-05,
+        -8.572628355868069e-05,
+        2.536295576836787e-07
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.1839067429126497e-05,
+        -4.077065656002303e-06,
+        -1.3816883097726896e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        1,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        299.8999938964844,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        303.07098388671875,
+        -100.9988784790039,
+        0.4947429299354553
+      ],
+      "minimum_root_height_m": 0.4947429299354553,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19352152517590768,
+        -0.05553130340945517,
+        -0.08938590168761901
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.1953182902810662e-05,
+        -7.118025534937696e-05,
+        -7.551217601114468e-09
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.303095346596277e-05,
+        -2.8916761491349946e-06,
+        -1.3925332041396023e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        2,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        299.8999938964844,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        303.07098388671875,
+        -0.9996549487113953,
+        0.4947437047958374
+      ],
+      "minimum_root_height_m": 0.4947437047958374,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.1935209148332604,
+        -0.05553429140749141,
+        -0.0893859807943177
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.2671093336466035e-05,
+        -7.139554420117982e-05,
+        3.6248926737751475e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        6.914766932087478e-07,
+        -2.887513457643739e-06,
+        -1.3882680256268774e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        3,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        299.8999938964844,
+        99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        303.07098388671875,
+        99.0009994506836,
+        0.49474552273750305
+      ],
+      "minimum_root_height_m": 0.49474552273750305,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19352246675099063,
+        -0.055531861996039364,
+        -0.08938588923496059
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.1768140647522002e-05,
+        -7.08350995617234e-05,
+        2.900588793369598e-09
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.3028913556685033e-05,
+        -2.897746293533152e-06,
+        -1.3930302628637922e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        4,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        299.8999938964844,
+        199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        303.07183837890625,
+        199.0087890625,
+        0.49474406242370605
+      ],
+      "minimum_root_height_m": 0.49474406242370605,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.1934979382997904,
+        -0.055616967948392416,
+        -0.08938592403617679
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.8603640209641974e-05,
+        -8.57527119356201e-05,
+        2.670334347209426e-07
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.1840462861248357e-05,
+        -4.075992220996676e-06,
+        -1.383926887414084e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        5,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        199.89999389648438,
+        -200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        203.02484130859375,
+        -200.99143981933594,
+        0.4947398006916046
+      ],
+      "minimum_root_height_m": 0.4947398006916046,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19349481716879413,
+        -0.05559884286684613,
+        -0.08938587277045107
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.389603988639806e-05,
+        -8.38843333281202e-05,
+        1.35252906762594e-07
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.190506970278027e-05,
+        -3.951549363988235e-06,
+        -1.3785179988250456e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        6,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        199.89999389648438,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        203.0247344970703,
+        -100.99797058105469,
+        0.49474596977233887
+      ],
+      "minimum_root_height_m": 0.49474596977233887,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.1935179206996392,
+        -0.055512789953659235,
+        -0.08938593816362385
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.8995206321628632e-05,
+        -6.868952745763667e-05,
+        5.7802933688324146e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.331866271264895e-05,
+        -2.6027906735220076e-06,
+        -1.3799891823444272e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        7,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        199.89999389648438,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        203.024658203125,
+        -0.999442458152771,
+        0.4947410821914673
+      ],
+      "minimum_root_height_m": 0.4947410821914673,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.1935182605862108,
+        -0.055517211419522254,
+        -0.08938605192189034
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.972053024946864e-05,
+        -6.934947843136706e-05,
+        7.897579411785706e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        7.092699547632281e-07,
+        -2.6193597576904126e-06,
+        -1.3834180682439413e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        8,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        199.89999389648438,
+        100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        203.024658203125,
+        99.20226287841797,
+        0.49474531412124634
+      ],
+      "minimum_root_height_m": 0.49474531412124634,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19351790928178364,
+        -0.05551409899997405,
+        -0.08938592434820966
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.949026900362894e-05,
+        -6.887382347631531e-05,
+        6.664478380008451e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.3266525411548034e-05,
+        -2.614966429555162e-06,
+        -1.3797904224539364e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        9,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        199.89999389648438,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        203.02505493164062,
+        199.20916748046875,
+        0.4947391152381897
+      ],
+      "minimum_root_height_m": 0.4947391152381897,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19349537864964234,
+        -0.05559874443639802,
+        -0.08938588378075352
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.390503101648448e-05,
+        -8.370251570170862e-05,
+        1.341971311757428e-07
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.1888821962806756e-05,
+        -3.963073003074445e-06,
+        -1.3801643384025024e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        10,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        99.9000015258789,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        103.04178619384766,
+        -200.79165649414062,
+        0.4947429299354553
+      ],
+      "minimum_root_height_m": 0.4947429299354553,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19349603376582136,
+        -0.055590582861859576,
+        -0.08938588707620262
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.22713874492314e-05,
+        -8.540827429182763e-05,
+        7.61895560850669e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.2361472576380844e-05,
+        -3.8890992416504144e-06,
+        -1.3739211277210145e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        11,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        99.9000015258789,
+        -99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        103.04202270507812,
+        -100.7967529296875,
+        0.49474504590034485
+      ],
+      "minimum_root_height_m": 0.49474504590034485,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.1935238309140898,
+        -0.055492048748792745,
+        -0.08938599557448657
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.943628503382743e-05,
+        -6.612186538650243e-05,
+        8.978047633681841e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.354886139340344e-05,
+        -2.260398704054019e-06,
+        -1.3911726279732105e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        12,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        99.9000015258789,
+        0.10000000894069672,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        103.04181671142578,
+        -0.7992567420005798,
+        0.4947456419467926
+      ],
+      "minimum_root_height_m": 0.4947456419467926,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19352298409510882,
+        -0.05550144985318184,
+        -0.08938612978045757
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.9936031224624574e-05,
+        -6.753845014689643e-05,
+        1.039130433077369e-07
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        7.183419436207626e-07,
+        -2.3483942749582408e-06,
+        -1.383874610018145e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        13,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        99.9000015258789,
+        100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        103.04202270507812,
+        99.2029800415039,
+        0.49474862217903137
+      ],
+      "minimum_root_height_m": 0.49474862217903137,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19352399649528357,
+        -0.055491120694603165,
+        -0.08938599641824889
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.9540025691899928e-05,
+        -6.640844106593923e-05,
+        8.840090726269315e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.3543308304733077e-05,
+        -2.255400869296777e-06,
+        -1.388387647078955e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        14,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        99.9000015258789,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        103.04178619384766,
+        199.20913696289062,
+        0.49474453926086426
+      ],
+      "minimum_root_height_m": 0.49474453926086426,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.1934943037219027,
+        -0.05559275718007842,
+        -0.08938588643940086
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.2762320967409355e-05,
+        -8.53660299419469e-05,
+        7.989814223691587e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.210491751308463e-05,
+        -3.934328629906206e-06,
+        -1.3676894276848539e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        15,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -0.09999999403953552,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        3.0434913635253906,
+        -200.7913818359375,
+        0.49474233388900757
+      ],
+      "minimum_root_height_m": 0.49474233388900757,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.1934951921686148,
+        -0.055589175649369375,
+        -0.08938586369602598
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.3134303642084088e-05,
+        -8.6099491177572e-05,
+        5.789069256731038e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.2386668110019906e-05,
+        2.1249756121893707e-05,
+        -1.371347638949126e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        16,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        0.10000000149011612,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        3.243779182434082,
+        -100.99739837646484,
+        0.49474257230758667
+      ],
+      "minimum_root_height_m": 0.49474257230758667,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19351787329611614,
+        -0.055497847436967056,
+        -0.08938595477141376
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.9277359159889745e-05,
+        -6.742416309533608e-05,
+        5.9405131369594244e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.365933742567116e-05,
+        2.1282856612508476e-05,
+        -1.385216091002015e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        17,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        3.243736743927002,
+        -0.9993332624435425,
+        0.4947469234466553
+      ],
+      "minimum_root_height_m": 0.4947469234466553,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19351543286799366,
+        -0.05550794589022796,
+        -0.0893861441880974
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.9531022641123527e-05,
+        -6.814449119482156e-05,
+        7.307280760539305e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        7.129452417757053e-07,
+        2.128338802421721e-05,
+        -1.3820642800079285e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        18,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        0.10000000149011612,
+        99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        3.2437801361083984,
+        99.00293731689453,
+        0.4947446286678314
+      ],
+      "minimum_root_height_m": 0.4947446286678314,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.1935178238293554,
+        -0.05549770038192853,
+        -0.08938597133144355
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.9223231614526066e-05,
+        -6.730636908984381e-05,
+        5.0747564239633256e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.3664763660601253e-05,
+        2.1278508364979993e-05,
+        -1.3868150375986687e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        19,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        0.10000000149011612,
+        199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        3.2435009479522705,
+        199.00851440429688,
+        0.4947458803653717
+      ],
+      "minimum_root_height_m": 0.4947458803653717,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19349459561909366,
+        -0.055591277493179866,
+        -0.08938589142237463
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.3013321614743885e-05,
+        -8.589216415567295e-05,
+        6.128919281277713e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.2226708069142765e-05,
+        2.1341528102665095e-05,
+        -1.3663149587959006e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        20,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -99.9000015258789,
+        -200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -96.7579345703125,
+        -200.99143981933594,
+        0.49474331736564636
+      ],
+      "minimum_root_height_m": 0.49474331736564636,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19349504699691747,
+        -0.055591320587147,
+        -0.0893859049034679
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.265187703794448e-05,
+        -8.54826312543593e-05,
+        8.485865305905897e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.2236515134501928e-05,
+        -3.886924021300336e-06,
+        -1.3703996255844973e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        21,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -99.9000015258789,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -96.75794982910156,
+        -100.99738311767578,
+        0.494747519493103
+      ],
+      "minimum_root_height_m": 0.494747519493103,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19352426120103933,
+        -0.05549133171956254,
+        -0.08938595455490117
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.9755323553119938e-05,
+        -6.60970033217e-05,
+        9.164789577646157e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.354458707850888e-05,
+        -2.248520824938216e-06,
+        -1.3891821233312803e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        22,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -99.9000015258789,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -96.75794982910156,
+        -0.9992532134056091,
+        0.49474430084228516
+      ],
+      "minimum_root_height_m": 0.49474430084228516,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19352303041606886,
+        -0.05550149595762929,
+        -0.08938614637869545
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.0146851218109857e-05,
+        -6.754221897467834e-05,
+        9.45748048144854e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        7.150360864548284e-07,
+        -2.3361545608214467e-06,
+        -1.3837561610487324e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        23,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -99.9000015258789,
+        99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -96.75794982910156,
+        99.00321960449219,
+        0.4947451651096344
+      ],
+      "minimum_root_height_m": 0.4947451651096344,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19352371148191966,
+        -0.05549164882455117,
+        -0.08938595610232944
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.9326407999513986e-05,
+        -6.614251918768126e-05,
+        8.534148643466693e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.35448555452856e-05,
+        -2.2540385372104266e-06,
+        -1.3895608156350243e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        24,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -99.9000015258789,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -96.7579345703125,
+        199.20913696289062,
+        0.4947449564933777
+      ],
+      "minimum_root_height_m": 0.4947449564933777,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19349473141706908,
+        -0.05559324557041256,
+        -0.08938587862265925
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.284060213648478e-05,
+        -8.536743229330515e-05,
+        9.337390372532545e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.2149303569160085e-05,
+        -3.959767939700714e-06,
+        -1.3696724091151776e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        25,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -199.89999389648438,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -196.77432250976562,
+        -200.7913818359375,
+        0.49474531412124634
+      ],
+      "minimum_root_height_m": 0.49474531412124634,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19349484091513178,
+        -0.05559858287342338,
+        -0.08938587027737219
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.3837347679633858e-05,
+        -8.360699956180853e-05,
+        1.2811161779691294e-07
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.190799674105664e-05,
+        -3.944152408614994e-06,
+        -1.3808377557103228e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        26,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -199.89999389648438,
+        -99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -196.7753143310547,
+        -100.79784393310547,
+        0.494743287563324
+      ],
+      "minimum_root_height_m": 0.494743287563324,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19351725717130888,
+        -0.05551358919718072,
+        -0.08938593170008598
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.9443499515372838e-05,
+        -6.889765060700166e-05,
+        6.984070836021762e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.328579742534061e-05,
+        -2.6203157244307603e-06,
+        -1.379955275539357e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        27,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -199.89999389648438,
+        0.10000000894069672,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -196.7753143310547,
+        -0.7994590997695923,
+        0.4947427213191986
+      ],
+      "minimum_root_height_m": 0.4947427213191986,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19351800517776074,
+        -0.05551827674747532,
+        -0.08938603934505557
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.983341419959529e-05,
+        -6.93878437156131e-05,
+        7.530536618902816e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        7.200393278220591e-07,
+        -2.631445646932872e-06,
+        -1.3827007131354889e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        28,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -199.89999389648438,
+        100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -196.7753143310547,
+        99.20217895507812,
+        0.4947436451911926
+      ],
+      "minimum_root_height_m": 0.4947436451911926,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19351806010191258,
+        -0.055513465129093734,
+        -0.0893859195881165
+      ],
+      "late_inferred_net_force_mean_n": [
+        -1.9544494462820658e-05,
+        -6.899894268148755e-05,
+        6.204413711192242e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.3287508267586868e-05,
+        -2.6119118061299596e-06,
+        -1.3802646239601086e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        29,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -199.89999389648438,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -196.77432250976562,
+        199.2090301513672,
+        0.49474039673805237
+      ],
+      "minimum_root_height_m": 0.49474039673805237,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.1934954127885847,
+        -0.05560025802184629,
+        -0.08938585320153297
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.4406272309270185e-05,
+        -8.357051514045194e-05,
+        1.5807897399790916e-07
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.1889201525751663e-05,
+        -3.947266638983686e-06,
+        -1.3790619109178208e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        30,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -299.8999938964844,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -296.7286682128906,
+        -200.7917022705078,
+        0.49474459886550903
+      ],
+      "minimum_root_height_m": 0.49474459886550903,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19349794277013876,
+        -0.05561601114101135,
+        -0.08938592878034991
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.6537354561410414e-05,
+        -8.579458492510707e-05,
+        2.0524981215698831e-07
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.1855907015351755e-05,
+        -4.08981564825799e-06,
+        -1.38204381398497e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        31,
+        1
+      ],
+      "physics_rows": 3340,
+      "duration_s": 16.7,
+      "root_start_m": [
+        -299.8999938964844,
+        -99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -296.7281188964844,
+        -100.79873657226562,
+        0.4947446286678314
+      ],
+      "minimum_root_height_m": 0.4947446286678314,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": [
+        0.19352383344856083,
+        -0.05553137003165534,
+        -0.08938588328404813
+      ],
+      "late_inferred_net_force_mean_n": [
+        -2.1874979803460663e-05,
+        -7.137453433854812e-05,
+        2.521945618981372e-08
+      ],
+      "late_rotor_torque_at_com_mean_nm": [
+        -2.30336551945322e-05,
+        -2.8923527397983334e-06,
+        -1.3918845516213005e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        0,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        299.8999938964844,
+        -200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        300.4528503417969,
+        -200.25624084472656,
+        1.6924821138381958
+      ],
+      "minimum_root_height_m": 1.6924821138381958,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        1,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        299.8999938964844,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        300.4528503417969,
+        -100.25625610351562,
+        1.6924773454666138
+      ],
+      "minimum_root_height_m": 1.6924773454666138,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        2,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        299.8999938964844,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        300.4528503417969,
+        -0.2561917006969452,
+        1.6924785375595093
+      ],
+      "minimum_root_height_m": 1.6924785375595093,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        3,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        299.8999938964844,
+        99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        300.4528503417969,
+        99.74369812011719,
+        1.6924773454666138
+      ],
+      "minimum_root_height_m": 1.6924773454666138,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        4,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        299.8999938964844,
+        199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        300.4528503417969,
+        199.74383544921875,
+        1.6924818754196167
+      ],
+      "minimum_root_height_m": 1.6924818754196167,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        5,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        199.89999389648438,
+        -200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        200.44786071777344,
+        -200.25624084472656,
+        1.6924734115600586
+      ],
+      "minimum_root_height_m": 1.6924734115600586,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        6,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        199.89999389648438,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        200.44786071777344,
+        -100.25611877441406,
+        1.6924763917922974
+      ],
+      "minimum_root_height_m": 1.6924763917922974,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        7,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        199.89999389648438,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        200.44786071777344,
+        -0.2561928629875183,
+        1.6924763917922974
+      ],
+      "minimum_root_height_m": 1.6924763917922974,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        8,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        199.89999389648438,
+        100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        200.44786071777344,
+        99.94398498535156,
+        1.6924763917922974
+      ],
+      "minimum_root_height_m": 1.6924763917922974,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        9,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        199.89999389648438,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        200.44786071777344,
+        199.94386291503906,
+        1.692475438117981
+      ],
+      "minimum_root_height_m": 1.692475438117981,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        10,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        99.9000015258789,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        100.45008850097656,
+        -200.05625915527344,
+        1.692475438117981
+      ],
+      "minimum_root_height_m": 1.692475438117981,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        11,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        99.9000015258789,
+        -99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        100.45008850097656,
+        -100.05587768554688,
+        1.6924810409545898
+      ],
+      "minimum_root_height_m": 1.6924810409545898,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        12,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        99.9000015258789,
+        0.10000000894069672,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        100.45008850097656,
+        -0.056190334260463715,
+        1.6924818754196167
+      ],
+      "minimum_root_height_m": 1.6924818754196167,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        13,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        99.9000015258789,
+        100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        100.45008850097656,
+        99.94398498535156,
+        1.6924810409545898
+      ],
+      "minimum_root_height_m": 1.6924810409545898,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        14,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        99.9000015258789,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        100.45008850097656,
+        199.94386291503906,
+        1.6924803256988525
+      ],
+      "minimum_root_height_m": 1.6924803256988525,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        15,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -0.09999999403953552,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        0.4504462480545044,
+        -200.05625915527344,
+        1.6924792528152466
+      ],
+      "minimum_root_height_m": 1.6924792528152466,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        16,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        0.10000000149011612,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        0.6504542827606201,
+        -100.25625610351562,
+        1.6924768686294556
+      ],
+      "minimum_root_height_m": 1.6924768686294556,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        17,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        0.6504561901092529,
+        -0.25619038939476013,
+        1.692480444908142
+      ],
+      "minimum_root_height_m": 1.692480444908142,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        18,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        0.10000000149011612,
+        99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        0.6504561901092529,
+        99.74381256103516,
+        1.6924768686294556
+      ],
+      "minimum_root_height_m": 1.6924768686294556,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        19,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        0.10000000149011612,
+        199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        0.6504459977149963,
+        199.74383544921875,
+        1.6924773454666138
+      ],
+      "minimum_root_height_m": 1.6924773454666138,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        20,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -99.9000015258789,
+        -200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -99.34979248046875,
+        -200.25624084472656,
+        1.692475438117981
+      ],
+      "minimum_root_height_m": 1.692475438117981,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        21,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -99.9000015258789,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -99.34979248046875,
+        -100.25625610351562,
+        1.6924833059310913
+      ],
+      "minimum_root_height_m": 1.6924833059310913,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        22,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -99.9000015258789,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -99.34979248046875,
+        -0.2561899721622467,
+        1.6924818754196167
+      ],
+      "minimum_root_height_m": 1.6924818754196167,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        23,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -99.9000015258789,
+        99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -99.34979248046875,
+        99.74381256103516,
+        1.6924833059310913
+      ],
+      "minimum_root_height_m": 1.6924833059310913,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        24,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -99.9000015258789,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -99.34979248046875,
+        199.94386291503906,
+        1.6924793720245361
+      ],
+      "minimum_root_height_m": 1.6924793720245361,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        25,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -199.89999389648438,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -199.3524932861328,
+        -200.05625915527344,
+        1.6924773454666138
+      ],
+      "minimum_root_height_m": 1.6924773454666138,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        26,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -199.89999389648438,
+        -99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -199.35269165039062,
+        -100.05587768554688,
+        1.6924763917922974
+      ],
+      "minimum_root_height_m": 1.6924763917922974,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        27,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -199.89999389648438,
+        0.10000000894069672,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -199.35269165039062,
+        -0.056192535907030106,
+        1.6924763917922974
+      ],
+      "minimum_root_height_m": 1.6924763917922974,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        28,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -199.89999389648438,
+        100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -199.35269165039062,
+        99.94398498535156,
+        1.6924763917922974
+      ],
+      "minimum_root_height_m": 1.6924763917922974,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        29,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -199.89999389648438,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -199.3524932861328,
+        199.94386291503906,
+        1.692475438117981
+      ],
+      "minimum_root_height_m": 1.692475438117981,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        30,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -299.8999938964844,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -299.3465881347656,
+        -200.05625915527344,
+        1.6924818754196167
+      ],
+      "minimum_root_height_m": 1.6924818754196167,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        31,
+        2
+      ],
+      "physics_rows": 660,
+      "duration_s": 3.3000000000000003,
+      "root_start_m": [
+        -299.8999938964844,
+        -99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -299.3463439941406,
+        -100.05596923828125,
+        1.6924773454666138
+      ],
+      "minimum_root_height_m": 1.6924773454666138,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        0,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        299.8999938964844,
+        -200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -200.10000610351562,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        1,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        299.8999938964844,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -100.10003662109375,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        2,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        299.8999938964844,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -0.10003969073295593,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        3,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        299.8999938964844,
+        99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        99.89996337890625,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        4,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        299.8999938964844,
+        199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        199.89999389648438,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        5,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        199.89999389648438,
+        -200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        199.9001007080078,
+        -200.10000610351562,
+        1.9901312589645386
+      ],
+      "minimum_root_height_m": 1.9901312589645386,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        6,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        199.89999389648438,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        199.9001007080078,
+        -100.10003662109375,
+        1.9901313781738281
+      ],
+      "minimum_root_height_m": 1.9901313781738281,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        7,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        199.89999389648438,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        199.9001007080078,
+        -0.10003971308469772,
+        1.9901312589645386
+      ],
+      "minimum_root_height_m": 1.9901312589645386,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        8,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        199.89999389648438,
+        100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        199.9001007080078,
+        100.0999755859375,
+        1.9901313781738281
+      ],
+      "minimum_root_height_m": 1.9901313781738281,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        9,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        199.89999389648438,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        199.9001007080078,
+        200.1000213623047,
+        1.9901312589645386
+      ],
+      "minimum_root_height_m": 1.9901312589645386,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        10,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        99.9000015258789,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        99.90013122558594,
+        -199.89999389648438,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        11,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        99.9000015258789,
+        -99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        99.90013122558594,
+        -99.90003967285156,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        12,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        99.9000015258789,
+        0.10000000894069672,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        99.90013122558594,
+        0.09996029734611511,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        13,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        99.9000015258789,
+        100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        99.90013122558594,
+        100.0999755859375,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        14,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        99.9000015258789,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        99.90013122558594,
+        200.1000213623047,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        15,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -0.09999999403953552,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -0.09987596422433853,
+        -199.89999389648438,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        16,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        0.10000000149011612,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        0.10012403130531311,
+        -100.10003662109375,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        17,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        0.10012400895357132,
+        -0.10003969073295593,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        18,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        0.10000000149011612,
+        99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        0.10012403130531311,
+        99.89996337890625,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        19,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        0.10000000149011612,
+        199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        0.10012400150299072,
+        199.89999389648438,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        20,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -99.9000015258789,
+        -200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -99.89989471435547,
+        -200.10000610351562,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        21,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -99.9000015258789,
+        -100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -99.89989471435547,
+        -100.10003662109375,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        22,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -99.9000015258789,
+        -0.10000000149011612,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -99.89989471435547,
+        -0.10003971308469772,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        23,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -99.9000015258789,
+        99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -99.89989471435547,
+        99.89996337890625,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        24,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -99.9000015258789,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -99.89989471435547,
+        200.1000213623047,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        25,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -199.89999389648438,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -199.89990234375,
+        -199.89999389648438,
+        1.9901312589645386
+      ],
+      "minimum_root_height_m": 1.9901312589645386,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        26,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -199.89999389648438,
+        -99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -199.89990234375,
+        -99.90003967285156,
+        1.9901313781738281
+      ],
+      "minimum_root_height_m": 1.9901313781738281,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        27,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -199.89999389648438,
+        0.10000000894069672,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -199.89990234375,
+        0.0999603122472763,
+        1.9901312589645386
+      ],
+      "minimum_root_height_m": 1.9901312589645386,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        28,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -199.89999389648438,
+        100.0999984741211,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -199.89990234375,
+        100.0999755859375,
+        1.9901313781738281
+      ],
+      "minimum_root_height_m": 1.9901313781738281,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        29,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -199.89999389648438,
+        200.10000610351562,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -199.89990234375,
+        200.1000213623047,
+        1.9901312589645386
+      ],
+      "minimum_root_height_m": 1.9901312589645386,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        30,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -299.8999938964844,
+        -199.89999389648438,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -299.89990234375,
+        -199.89999389648438,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        31,
+        1
+      ],
+      "physics_rows": 20,
+      "duration_s": 0.1,
+      "root_start_m": [
+        -299.8999938964844,
+        -99.9000015258789,
+        1.9997988939285278
+      ],
+      "root_end_m": [
+        -299.89990234375,
+        -99.90003967285156,
+        1.9901319742202759
+      ],
+      "minimum_root_height_m": 1.9901319742202759,
+      "mass_kg": 1.1815179230179638,
+      "late_window": "within this episode only, after first5sec; formal startup samples remain in raw",
+      "late_root_velocity_mean_m_s": null,
+      "late_inferred_net_force_mean_n": null,
+      "late_rotor_torque_at_com_mean_nm": null
+    }
+  ],
+  "equilibrium_predictions": [
+    {
+      "example": "Z_lane0_policy100",
+      "scope": "source-and-measured-geometry equilibrium prediction; not new simulation",
+      "predicted_velocity_world_m_s": [
+        0.19355434828183254,
+        -0.055579059498888195,
+        -0.08938204506107636
+      ],
+      "observed_velocity_world_m_s": [
+        0.19352911412715912,
+        -0.05558815598487854,
+        -0.08938680589199066
+      ],
+      "equation_residual_torque_xy_nm_and_vertical_force_n": [
+        5.551115123125783e-17,
+        2.7755575615628914e-17,
+        0.0
+      ],
+      "mass_only_vertical_prediction_m_s": -0.08938170547990508,
+      "nominal_rotor_origin_is_not_actual_system_com": true
+    }
+  ],
+  "mechanism_support": "Source mass/actual wrench geometry can be quantitatively checked by predictions; real repaired regression still required",
+  "unavailable_wrenches": [
+    "drag_aero",
+    "contact",
+    "joint_constraint",
+    "other"
+  ],
+  "analysis_tool_sha256": "22e57002068cf656ac3a1b790318cd531b55171246e76cd74c530bc22264f3a4"
+}

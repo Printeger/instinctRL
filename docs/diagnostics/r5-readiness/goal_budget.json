@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "MEASUREMENT_R1B_ENTRY_RUNNING_APPROVAL_CONSUMED",
+  "live_release_status": "MEASUREMENT_R1B_CONSUMED_FAILED_NO_RETRY",
   "caps": {
     "live_starts": 4,
     "simulator_initializations": 4,
@@ -25,11 +25,11 @@
   },
   "used": {
     "live_starts": 2,
-    "simulator_initializations": 1,
+    "simulator_initializations": 2,
     "nontraining_transitions": 0,
-    "wall_seconds": 30.395258554955944,
-    "gpu_seconds": 27.148333297111094,
-    "output_bytes": 446034,
+    "wall_seconds": 527.326866867952,
+    "gpu_seconds": 520.8080967061687,
+    "output_bytes": 1105855704,
     "role_calls": 9,
     "training_transitions": 0,
     "optimizer_updates": 0,
@@ -124,15 +124,11 @@
   },
   "historical_budgets": "PRESERVED_NOT_RESET",
   "reserved": {
-    "nontraining_transitions": 40320,
-    "simulator_initializations": 1,
-    "wall_seconds": 910,
-    "gpu_seconds": 910,
-    "output_bytes": 17179869184
+    "nontraining_transitions": 40320
   },
   "approval": "baseline-v3-commander-approval.json",
   "unknown_or_incomplete": {
-    "nontraining_transitions": "Full20160reservation retained because statusFAIL_PENDING_CLOSE and notfinal counters. Attempted1policy,completed0,raw0; do not reset or silently release unknown."
+    "nontraining_transitions": "Both failedjobs retain FULL20160 each. observed completed6400 is subset of second reservedallocation, not additiveextra6400 forremainingcapacity; finalcounter incomplete afterforcedapp.close. Remaining bound40320 for2futurestarts."
   },
   "live_runs": [
     {
@@ -153,15 +149,30 @@
     },
     {
       "job_id": "J-fcbe37739d942e3c",
-      "status": "RUNNING",
+      "status": "FAILED",
       "source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
       "experiment_id": "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
       "starts_charged": 1,
       "initialization": "RESERVED_UNTIL_ACTUAL_EVIDENCE",
       "training_transitions": 0,
       "optimizer_updates": 0,
-      "checkpoint_writes": 0
+      "checkpoint_writes": 0,
+      "coexistence": "PASS",
+      "initialization_ticks_observed": 2,
+      "explicit_resets_observed": 2,
+      "automatic_reset_lanes_observed": 32,
+      "attempted_policy_steps": 201,
+      "completed_policy_steps": 200,
+      "completed_nontraining_observed": 6400,
+      "physics_rows": 128640,
+      "raw_sha256": "ad9aacb7a659cfc6095844fa224afc2e7ed37622862eb0cdeb86907cdee810b4",
+      "primary_error": "MeasurementCoverageUnavailable: reliable fraction below0.1 at firstT reward",
+      "app_close": "HARD_TIMEOUT",
+      "ownership_cleanup": "QUIESCENT_NO_SURVIVORS",
+      "transitions_settlement": "INCOMPLETE_FULL20160RESERVED"
     }
   ],
-  "next_exact_approval": "measurement-r1b-commander-approval.json"
+  "next_exact_approval": "measurement-r1b-commander-approval.json",
+  "conservative_nontraining_bound_charged": 40320,
+  "completed_nontraining_observed_within_failed_reservations": 6400
 }
