@@ -232,7 +232,7 @@
     "evidence_index": "../docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md",
     "budget": "../docs/diagnostics/r5-readiness/goal_budget.json",
     "target": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
-    "status": "IN_PROGRESS",
+    "status": "BLOCKED",
     "live_release_issued": false,
     "training_authorized": false,
     "independent_review": {
@@ -291,7 +291,7 @@
     "blocking_kind": "RESOURCE_START_AND_INITIALIZATION_RESERVATION_CAP",
     "blocked_audit": {
       "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
-      "consecutive_goal_turns": 1,
+      "consecutive_goal_turns": 3,
       "audit_epoch": "RESUMED_GOAL_FRESH_BLOCKED_AUDIT",
       "resume_authority": "User resumed Goal active; no new live-start or initialization cap authorization received.",
       "previous_blocked_audit": {
@@ -305,12 +305,14 @@
         "resume_action": "Obtain explicit decision on existing one-start/init reservation4to5 proposal; then existing Commander exact release and original command gates/final review.",
         "budget_reset": false
       },
-      "current_verification": "main and origin/main at 2ee2d49483875e3bf762e9b59adf752988428ce8; all four existing jobs FAILED, STOP absent, fresh fifth attempt empty and actual AUTHORIZATION absent. Caps4/used4 and pending user resource decision unchanged.",
+      "current_verification": "main and origin/main at 4d6314e5431c442e90bff0d0b36aa8abc4644cfe; all four jobs FAILED, STOP absent, fifth attempt empty and actual AUTHORIZATION absent. Caps4/used4, retained60480 and pending user decision unchanged. Exact input and independent review hashes match.",
       "independent_work_exhausted": true,
       "remaining_actions_require_user_decision": true,
       "goal_achieved": false,
       "resume_action": "Obtain explicit decision on existing one-start/init reservation4to5 proposal; then existing Commander exact release and original command gates/final review.",
-      "budget_reset": false
+      "budget_reset": false,
+      "previous_goal_turn_classification": "NO_PROGRESS",
+      "resumed_turns": "Turn1: UI-resume bookkeeping only, cap decision absent. Turn2: authoritative cap/job/auth revalidation only, no live handle. Turn3: same authority and resource blocker verified; no independent action can complete missing command gates."
     }
   },
   "historical_pre_goal_independent_review": {
