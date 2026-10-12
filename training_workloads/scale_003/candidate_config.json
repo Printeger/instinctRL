@@ -1,0 +1,221 @@
+{
+  "schema_version": "scale-003-workload-config.v1",
+  "status": "SOURCE_CANDIDATE_NOT_AUTHORIZED_FOR_LIVE_EXECUTION",
+  "order": {
+    "order_id": "SCALE-003",
+    "order_revision": 0,
+    "training_authorized": false,
+    "evaluation_authorized": false,
+    "runtime_process_starts": 0,
+    "environment_transitions": 0,
+    "optimizer_updates": 0,
+    "real_checkpoint_writes": false
+  },
+  "proposal": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/scale003-proposal.json",
+    "sha256": "6de79fb7cf6d2ae85fbd338e037c29cc9b63cd25e30ed84ccd1ecf2a37561a4b"
+  },
+  "paths": {
+    "candidate_repository": "/home/mint/rl_dev/instinctRL-dev",
+    "candidate_source_root": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003",
+    "training_entry": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/formal_scale_training.py",
+    "evaluation_entry": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/formal_evaluation.py",
+    "station_evaluation_entry": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/formal_station_evaluation.py",
+    "tracking_evaluation_entry": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/formal_tracking_evaluation.py",
+    "station_evaluation_config": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/evaluation_station.json",
+    "tracking_evaluation_config": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/evaluation_tracking.json",
+    "product_repository": "/home/mint/rl_dev/instinctRL-dev",
+    "coordination_repository": "/home/mint/rl_dev/instinctRL-dev",
+    "python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11"
+  },
+  "pins": {
+    "product_commit": "de9d6b8c03274a11760a3f06ca68d38cc0058f10",
+    "product_tree": "afb386b0ccc0a023d77afaf20aab0f39c888fb46",
+    "raycaster_geometry_comparison_standard": "forward-reconstruction-v1",
+    "python_sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a",
+    "checkpoint_path": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/SCALE-001/SCALE-001-D0002/formal/checkpoints/update_0250.pt",
+    "checkpoint_sha256": "d58450a99e43cb2178f49840ed91787714c42042f78cfeafddd9df5f553307b3",
+    "checkpoint_counter": 250,
+    "checkpoint_optimizer_step": 2000,
+    "tooling_commit": "eff00ea9d339c66913ea472a30142406888ca1ca",
+    "tooling_tree": "dc192ef3b1f2efbdcf497ebce4d1616a4bda4e42",
+    "app_launcher_path": "/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/app/app_launcher.py",
+    "app_launcher_sha256": "7ab2c742cfa64e2c4e2ea4601d9441e5e8c9bb8f556a121b0d10c337f9b6093e",
+    "simulation_app_path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/exts/isaacsim.simulation_app/isaacsim/simulation_app/simulation_app.py",
+    "simulation_app_sha256": "7cbaa6f00e935a6f14bf1c28ec0db089fd924e931f3b0deee07a822f9b7d0090",
+    "eval_002_scene_path": "/home/mint/rl_dev/instinctRL-dev/evaluation_workloads/eval_002/scene.py",
+    "eval_002_scene_sha256": "d68b1d2b938ee368cf3cc7a0b394fe63d3aa205102fc831c8f2d715b050f7761",
+    "eval_002_gpu_gate_path": "/home/mint/rl_dev/instinctRL-dev/evaluation_workloads/eval_002/gpu_gate.py",
+    "eval_002_gpu_gate_sha256": "29fd12bec882ac0b2b0ac8a81142f0102927b63da6aa351328d02fbfe4ed581a",
+    "nvidia_smi_path": "/usr/bin/nvidia-smi",
+    "nvidia_smi_sha256": "22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be",
+    "eval_002_collector_path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/evaluation/runtime.py",
+    "eval_002_collector_sha256": "7abaa594a63b0a90d9a0bb5b1ec66a9f71d3c91aa464f2890001a2040384cde3",
+    "eval_002_metrics_path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/evaluation/metrics.py",
+    "eval_002_metrics_sha256": "a37cf88a04d55ac4e32fee93f5504a6ff446f8804694a310013fb704438a3960",
+    "product_source_sha256": {
+      "instinctlab/envs/taslab_direct_env.py": "e4099b8085e2fe1cf69aac6d249e86d14f0d06ad6dfedc400f717eb14af161b7",
+      "instinctlab/evaluation/observability.py": "cffc5e57b92ca51ffe721972db3084e18bc968a486c670aaca11f5960484afb7",
+      "instinctlab/evaluation/raycaster_observability.py": "3d4433d33940baa4e413606cded6851440ec2c66fc10a4386930bd1a43312aa4",
+      "instinctlab/evaluation/runtime.py": "7abaa594a63b0a90d9a0bb5b1ec66a9f71d3c91aa464f2890001a2040384cde3",
+      "instinctlab/evaluation/metrics.py": "a37cf88a04d55ac4e32fee93f5504a6ff446f8804694a310013fb704438a3960",
+      "instinctlab/training/checkpoint.py": "d04f77d3e443ed8466db5dc6f0c05d633fd012b799eedf4d6047d4e395e9b37b",
+      "instinctlab/training/ppo.py": "b8b33fcfc35ce0d3b7e9f58e2334ad3709c7f0ea43f6d8340c767ce3a9b68510",
+      "instinctlab/training/rollout.py": "a1d04a84a6099a711cab1d8cb8b6a550addf292dde4682ea82d3a9a0d32ab58d"
+    }
+  },
+  "training": {
+    "bootstrap_seed": 20260907,
+    "environment_reset_seed": 20260907,
+    "num_envs": 32,
+    "env_spacing_m": 100.0,
+    "decimation": 20,
+    "initial_transitions": 128000,
+    "additional_transitions": 872000,
+    "target_cumulative_transitions": 1000000,
+    "full_rollout_horizon": 16,
+    "full_rollout_count": 1703,
+    "tail_rollout_horizon": 2,
+    "tail_samples": 64,
+    "new_updates": 1704,
+    "initial_update_counter": 250,
+    "target_update_counter": 1954,
+    "initial_optimizer_step": 2000,
+    "new_optimizer_steps": 13625,
+    "target_optimizer_step": 15625,
+    "policy_steps_per_environment": 27250,
+    "physics_steps_per_environment": 545000,
+    "checkpoint_counters": {
+      "regular_first": 275,
+      "regular_last": 1950,
+      "regular_interval": 25,
+      "pre_tail": 1953,
+      "final": 1954,
+      "total": 70
+    },
+    "maximum_process_starts": 1,
+    "maximum_wall_time_seconds": 7200,
+    "automatic_retries": 0,
+    "minimum_runtime_free_cuda_memory_bytes": 1073741824
+  },
+  "scene": {
+    "mesh_prim_path": "/World/MID360StaticScene/Scale003CombinedMesh",
+    "wall_collider_root": "/World/Scale003WallColliders",
+    "global_ground_path": "/World/ground",
+    "floor_min_m": -42.0,
+    "floor_max_m": 42.0,
+    "floor_spacing_m": 2.0,
+    "wall_coordinate_m": 6.0,
+    "wall_min_m": -42.0,
+    "wall_max_m": 6.0,
+    "wall_height_m": 8.0,
+    "mid360_max_range_m": 40.0,
+    "sensed_mesh_collision": false,
+    "floor_collision": "single_global_ground_plane",
+    "wall_colliders": 64,
+    "normal_jacobian_rank_required": 3,
+    "sigma_min_positive_finite_required": true,
+    "point_cloud_affine_rank_is_gate": false
+  },
+  "commands": {
+    "phase_1_policy_steps": 8000,
+    "hold_policy_steps": 32,
+    "phase_2_complete_cycles": 75,
+    "phase_2_final_partial_steps": 50,
+    "phase_2_cycle": [
+      [
+        0.2,
+        0.0,
+        0.0
+      ],
+      [
+        -0.2,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.2,
+        0.0
+      ],
+      [
+        0.0,
+        -0.2,
+        0.0
+      ],
+      [
+        0.15,
+        0.15,
+        0.0
+      ],
+      [
+        -0.15,
+        0.15,
+        0.0
+      ],
+      [
+        0.15,
+        -0.15,
+        0.0
+      ],
+      [
+        -0.15,
+        -0.15,
+        0.0
+      ]
+    ],
+    "domain_randomization": "none",
+    "clock_owner": "process_global_policy_step",
+    "reset_restarts_clock": false
+  },
+  "evaluation": {
+    "cases": [
+      "station",
+      "tracking"
+    ],
+    "num_envs": 2,
+    "env_spacing_m": 4.0,
+    "environment_seed": 20260905,
+    "inference_seed": 20260905,
+    "action_mode": "deterministic_mean",
+    "policy_steps_per_process": 256,
+    "transitions_per_process": 512,
+    "process_starts": 2,
+    "total_transitions": 1024,
+    "maximum_wall_time_per_process_seconds": 1800,
+    "automatic_retries": 0,
+    "target_checkpoint_counter": 1954,
+    "fixture": "EVAL-002 global floor-plus-corner at 4m spacing",
+    "performance_gate": false
+  },
+  "actor_boundary": {
+    "keys": [
+      "lidar_grid",
+      "state_vec"
+    ],
+    "lidar_shape": [
+      12,
+      59,
+      360
+    ],
+    "state_dimension": 52,
+    "action_dimension": 4,
+    "forbidden_inputs": [
+      "pose",
+      "odometry",
+      "actual_or_estimated_velocity",
+      "map_or_slam",
+      "scene_normals_or_observability",
+      "obstacle_ground_truth",
+      "simulator_private_state"
+    ]
+  },
+  "outputs": {
+    "training_root": "results/training",
+    "training_semantic": "results/training/semantic.json",
+    "training_progress": "results/training/progress.json",
+    "training_checkpoints": "results/training/checkpoints",
+    "evaluation_station_root": "results/station",
+    "evaluation_tracking_root": "results/tracking"
+  }
+}

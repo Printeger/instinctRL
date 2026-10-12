@@ -1,0 +1,27 @@
+{
+  "actor_learning_rate": 0.0001,
+  "checkpoints": [
+    "init0000",
+    "u1",
+    "u2",
+    "u8",
+    "u16",
+    "u32",
+    "u64"
+  ],
+  "critic_learning_rate": 0.0003,
+  "development_evaluation": {
+    "case": "Z",
+    "updates": [
+      16,
+      64
+    ]
+  },
+  "minibatch_size": 64,
+  "samples_per_update": 512,
+  "schema_version": "instinctrl-paired-pilot-config/1",
+  "seed": 20260908,
+  "status": "NOT_AUTHORIZED_NOT_STARTED",
+  "training_transitions": 32768,
+  "updates": 64
+}

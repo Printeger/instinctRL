@@ -1,0 +1,247 @@
+{
+  "schema_version": "scale-002-training-proposal.v1",
+  "status": "PROPOSAL_REQUIRES_USER_APPROVAL",
+  "authorization": {
+    "training_authorized": false,
+    "simulator_process_starts_authorized": 0,
+    "environment_transitions_authorized": 0,
+    "optimizer_updates_authorized": 0,
+    "checkpoint_writes_authorized": false
+  },
+  "target": {
+    "recommended_definition": "cumulative_total_1000000",
+    "completed_transitions": 128000,
+    "additional_transitions": 872000,
+    "target_cumulative_transitions": 1000000,
+    "alternative_new_transitions": 1000000,
+    "alternative_cumulative_transitions": 1128000
+  },
+  "initialization": {
+    "mode": "resume_exact_checkpoint",
+    "checkpoint_path": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/SCALE-001/SCALE-001-D0002/formal/checkpoints/update_0250.pt",
+    "checkpoint_sha256": "d58450a99e43cb2178f49840ed91787714c42042f78cfeafddd9df5f553307b3",
+    "initial_update_counter": 250,
+    "initial_optimizer_steps_per_actor_and_critic": 2000,
+    "restored_state": [
+      "actor",
+      "critic",
+      "actor_optimizer",
+      "critic_optimizer",
+      "update_counter",
+      "cpu_rng",
+      "cuda_rng"
+    ],
+    "environment_state_restored": false,
+    "bootstrap_seed": 20260907,
+    "environment_reset_seed": 20260907,
+    "training_rng_source": "checkpoint_after_environment_reset"
+  },
+  "environment": {
+    "num_envs": 32,
+    "decimation": 20,
+    "scene_id": "per_environment_observable_corner_v1",
+    "env_spacing_m": 100.0,
+    "raycaster_mesh_prim_path": "/World/MID360StaticScene",
+    "raycaster_geometry": {
+      "layout": "one_combined_mesh_with_32_translated_local_copies",
+      "local_floor_m": {
+        "x": [-42.0, 42.0],
+        "y": [-42.0, 42.0],
+        "z": 0.0
+      },
+      "local_wall_x_m": 6.0,
+      "local_wall_y_m": 6.0,
+      "wall_local_min_m": -42.0,
+      "wall_local_max_m": 6.0,
+      "wall_height_m": 8.0,
+      "origin_owner": "InteractiveScene.env_origins",
+      "runtime_requirement": "assert all 32 actual env_origins match geometry translations and each initial accepted-hit cloud has affine rank 3"
+    },
+    "collision_geometry": {
+      "floor": "one global ground plane",
+      "walls": "64 collision-enabled wall quads matching the two local ray walls for every env origin"
+    },
+    "observation_boundary": "TaslabDirectEnv._get_observations performs the sole measured MID360 update and history insertion once per policy step",
+    "actor_keys": ["lidar_grid", "state_vec"],
+    "forbidden_actor_inputs": [
+      "pose",
+      "odometry",
+      "actual_or_estimated_velocity",
+      "map_or_slam",
+      "obstacle_ground_truth",
+      "simulator_private_state"
+    ],
+    "reset_semantics": "robot root position is translated by its env_origin; task and history reset per selected environment; reset does not restart the global command clock"
+  },
+  "command_curriculum": {
+    "owner": "future_order_scoped_training_entry_global_policy_step_clock",
+    "domain_randomization": "none",
+    "phase_1": {
+      "additional_transitions": 256000,
+      "full_rollouts": 500,
+      "policy_steps_per_environment": 8000,
+      "commanded_body_velocity_m_s": [0.0, 0.0, 0.0]
+    },
+    "phase_2": {
+      "additional_transitions": 616000,
+      "full_rollouts": 1203,
+      "tail_horizon": 2,
+      "policy_steps_per_environment": 19250,
+      "hold_policy_steps": 32,
+      "ordered_cycle_body_velocity_m_s": [
+        [0.2, 0.0, 0.0],
+        [-0.2, 0.0, 0.0],
+        [0.0, 0.2, 0.0],
+        [0.0, -0.2, 0.0],
+        [0.15, 0.15, 0.0],
+        [-0.15, 0.15, 0.0],
+        [0.15, -0.15, 0.0],
+        [-0.15, -0.15, 0.0]
+      ],
+      "complete_cycles": 75,
+      "final_partial_cycle_policy_steps": 50,
+      "final_partial_cycle": [
+        {"cycle_index": 0, "policy_steps": 32},
+        {"cycle_index": 1, "policy_steps": 18}
+      ]
+    }
+  },
+  "rollout": {
+    "full_horizon": 16,
+    "full_samples": 512,
+    "tail_horizon": 2,
+    "tail_samples": 64,
+    "sample_rounding": "forbidden"
+  },
+  "network_config": {
+    "lidar_channels": [8, 16, 16],
+    "state_hidden": 32,
+    "actor_hidden": 128,
+    "critic_hidden": [64, 64],
+    "concentration_min": 1.0,
+    "concentration_max": 30.0,
+    "action_log_epsilon": 1e-06
+  },
+  "ppo_config": {
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip_ratio": 0.2,
+    "value_loss_coefficient": 0.5,
+    "entropy_coefficient": 0.01,
+    "actor_learning_rate": 0.0003,
+    "critic_learning_rate": 0.0003,
+    "maximum_gradient_norm": 0.5,
+    "advantage_epsilon": 1e-08,
+    "minibatch_size": 64,
+    "epoch_count": 1,
+    "permutation_seed": 1701
+  },
+  "checkpoint_plan": {
+    "interval_new_updates": 25,
+    "regular_last_new_update": 1700,
+    "save_pre_tail_new_update": 1703,
+    "save_final_new_update": 1704,
+    "expected_new_checkpoint_count": 70,
+    "filename_counter_basis": "restored_global_update_counter",
+    "retain": "all 70 new atomic checkpoints plus immutable input checkpoint"
+  },
+  "end_condition": {
+    "exact_additional_transitions": 872000,
+    "exact_cumulative_transitions": 1000000,
+    "target_update_counter": 1954,
+    "target_optimizer_steps_per_actor_and_critic": 15625,
+    "performance_early_stop": false
+  },
+  "future_execution": {
+    "proposed_order_id": "SCALE-003",
+    "proposed_attempt_id": "SCALE-003-D0001",
+    "input_proposal_path": "/home/mint/rl_dev/worktrees/instinctRL-scale-002-prep/training_preparation/scale_002/proposal.json",
+    "output_attempt_path": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/SCALE-003/SCALE-003-D0001",
+    "required_entry_path": "/home/mint/rl_dev/instinctRL_coordination/training_workloads/scale_003/formal_scale_training.py",
+    "entry_status": "NOT_IMPLEMENTED_OR_AUTHORIZED",
+    "command_status": "NOT_RUNNABLE_UNTIL_SUCCESSOR_ORDER",
+    "proposed_argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "/home/mint/rl_dev/instinctRL_coordination/training_workloads/scale_003/formal_scale_training.py",
+      "--proposal",
+      "/home/mint/rl_dev/worktrees/instinctRL-scale-002-prep/training_preparation/scale_002/proposal.json",
+      "--attempt-dir",
+      "/home/mint/rl_dev/instinctRL_coordination/attempts/development/SCALE-003/SCALE-003-D0001"
+    ],
+    "cwd": "/home/mint/rl_dev/worktrees/instinctRL-blackwell",
+    "required_environment": {
+      "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "maximum_process_starts": 1,
+    "automatic_retries": 0,
+    "maximum_wall_time_seconds": 7200,
+    "minimum_free_cuda_memory_bytes": 1073741824,
+    "abnormal_stop": "atomically preserve completed checkpoints, progress, stdout, stderr and failure receipt; perform no automatic retry"
+  },
+  "future_evaluation": {
+    "status": "REQUIRES_SEPARATE_AUTHORIZATION",
+    "process_starts": 2,
+    "automatic_retries": 0,
+    "transitions_per_process": 512,
+    "total_environment_transitions": 1024,
+    "cases": ["station", "tracking"],
+    "checkpoint_counter": 1954,
+    "maximum_wall_time_per_process_seconds": 1800
+  },
+  "resource_estimate": {
+    "source_attempt": "SCALE-001-D0002",
+    "source_transitions": 128000,
+    "source_elapsed_seconds": 631.586571,
+    "linear_scale_factor": 6.8125,
+    "estimated_elapsed_seconds": 4302.6835149375,
+    "estimated_elapsed_minutes": 71.711391915625,
+    "source_peak_cuda_allocated_bytes": 2978465280,
+    "source_minimum_free_cuda_memory_bytes": 5419106304,
+    "source_checkpoint_size_bytes": 1492651,
+    "estimated_new_checkpoint_bytes": 104485570,
+    "uncertainty": "linear time extrapolation does not measure the proposed 32-copy corner mesh, changed command distribution, startup, checkpoint I/O or contention; successor preflight and a 7200-second hard cap are required"
+  },
+  "pins": {
+    "product_repository": "/home/mint/rl_dev/worktrees/instinctRL-blackwell",
+    "product_branch": "blackwell-migration",
+    "product_commit": "e438c4ccef72b088c95db6f01b049f74a1921180",
+    "product_tree": "75173a1c42af0196162de3a02dacca55c5e7c365",
+    "python_path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "python_sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a",
+    "runtime_id": "BLACKWELL_BASELINE_V2_R580",
+    "certified_tooling_commit": "eff00ea9d339c66913ea472a30142406888ca1ca",
+    "certified_tooling_tree": "dc192ef3b1f2efbdcf497ebce4d1616a4bda4e42",
+    "source_sha256": {
+      "isaaclab-training/instinctlab/envs/taslab_direct_env.py": "e4099b8085e2fe1cf69aac6d249e86d14f0d06ad6dfedc400f717eb14af161b7",
+      "isaaclab-training/instinctlab/training/networks.py": "a0790d5f80c8a9f2f06d05fc80bcdcfe8fd3e1a5c71a482443f1b3f5769dc129",
+      "isaaclab-training/instinctlab/training/ppo.py": "796f8bcb2309cea09fd229784f6b8c6b154b01be69ec5605b793952db89ec189",
+      "isaaclab-training/instinctlab/training/checkpoint.py": "d04f77d3e443ed8466db5dc6f0c05d633fd012b799eedf4d6047d4e395e9b37b",
+      "isaaclab-training/instinctlab/training/rollout.py": "a1d04a84a6099a711cab1d8cb8b6a550addf292dde4682ea82d3a9a0d32ab58d"
+    },
+    "scale_001_manifest_sha256": "e672f0766bf7b9d2645b7c132c23692b8186587c03a4e50bec256e475c1aee54",
+    "scale_001_entry_sha256": "61df86dbe2886048a3d33bd5368b6668ce6767a82522dba75ca9b025be35550f",
+    "scale_001_postrun_audit_sha256": "8d328beec423aafcbb629cc37f7df6cc5b6bb97599133c7ba8e2b7d46096816d",
+    "eval_002_scene_sha256": "d68b1d2b938ee368cf3cc7a0b394fe63d3aa205102fc831c8f2d715b050f7761",
+    "eval_002_terminal_manifest_sha256": "2fa9d8e1f2f15cf8b1fabc48c6e4721c365151c3e82d9f22fcc3e8696e415dfe",
+    "eval_002_analysis_sha256": "8fadc420e781055ecdef8c5ae72856c6d3ce4dfd7422076933af559ebabdc184",
+    "eval_002_approval_sha256": "10b6f6bfe209f68215ee1d4d55b51a3ea92f0d3548ae149e058510024a2b3400"
+  },
+  "required_successor_implementation": [
+    "a new order-scoped entry that loads and validates this proposal without importing the old AppLauncher entry",
+    "a public command setter or schedule interface owned by the environment/training method; no direct mutation of private _command_b",
+    "32 translated ray-mesh copies and matching collision walls with an all-environment origin/rank preflight before the first training step",
+    "a segment scheduler for 1703 horizon-16 rollouts followed by one horizon-2 rollout",
+    "counter-based atomic checkpointing and exact transition/optimizer/sample coverage audit",
+    "a reviewed attempt manifest or explicit lifecycle-tooling decision for training evidence"
+  ],
+  "user_decisions_required": [
+    "approve cumulative 1,000,000 as the target definition and exact 872,000-transition training budget",
+    "approve resuming the exact 128k checkpoint with a fresh environment reset rather than training from scratch",
+    "approve the per-environment observable-corner scene and 100 m spacing as a method/input change",
+    "approve the two-phase zero-to-deterministic-nonzero command curriculum as a method/input change",
+    "authorize the one-process training resource budget and separately authorize the two-process post-training evaluation budget"
+  ]
+}

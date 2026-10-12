@@ -110,3 +110,12 @@ isaac-training/training/scripts/outputs/
 isaac-training/third_party/warp/_build/
 
 isaac-training/outputs/
+
+# Single-branch development: runtime output is separate from source.
+.venv/
+coordination/research/
+artifacts/
+checkpoints/
+raw_logs/
+*.pt
+*.pth

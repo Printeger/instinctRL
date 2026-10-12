@@ -1,0 +1,13 @@
+{
+  "schema_version": "scale-003-evaluation-case.v1",
+  "case": "tracking",
+  "fixture": "EVAL-002 global floor-plus-corner at 4m spacing",
+  "environment_seed": 20260905,
+  "inference_seed": 20260905,
+  "num_envs": 2,
+  "policy_steps": 256,
+  "environment_transitions": 512,
+  "action_mode": "deterministic_mean",
+  "checkpoint_counter": 1954,
+  "performance_gate": false
+}

@@ -1,0 +1,38 @@
+{
+  "asset_root": "/home/mint/rl_dev/instinctRL-dev/runtime_assets/Assets/Isaac/5.1",
+  "created_at": 1789635676.4802146,
+  "entrypoint": "Isaac/Environments/Grid/default_environment.usd",
+  "external_local_materials": {
+    "OmniPBR.mdl": {
+      "bytes": 15591,
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/mdl/core/Base/OmniPBR.mdl",
+      "resolution": "Isaac Sim 5.1 built-in MDL search path",
+      "sha256": "685a82c18b381f1cd29831490e4c356e61dbeac2d86803babc115cd6a4a845db"
+    }
+  },
+  "files": {
+    "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_basecolor.png": {
+      "bytes": 436257,
+      "sha256": "deab39088eaf39ed7be951966c5e6bd5e58b90ab64743b0cdc8e5579fd5a99d9",
+      "source_url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/WireframeBlur_basecolor.png"
+    },
+    "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_blue.png": {
+      "bytes": 1474958,
+      "sha256": "44fc0e82007bb0bd94631cd7ec45986a71ed74b9413899fbffac13efe151be4b",
+      "source_url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/WireframeBlur_blue.png"
+    },
+    "Isaac/Environments/Grid/Materials/Textures/Wireframe_blue.png": {
+      "bytes": 111895,
+      "sha256": "940b96ee8c8e53bd1acbc770d4ca0ac98bed9c96439ab386d1b27dbc9790cc4e",
+      "source_url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/Wireframe_blue.png"
+    },
+    "Isaac/Environments/Grid/default_environment.usd": {
+      "bytes": 13622,
+      "sha256": "8a21c317d638d33a4e6c20c958a7ed8f4d8c5195efd7e20f1b85178b4a15638a",
+      "source_url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/default_environment.usd"
+    }
+  },
+  "remote_fallback_allowed": false,
+  "schema_version": "isaac-sim-5.1-h1-ground-closure/1",
+  "source_root": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1"
+}
