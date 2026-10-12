@@ -1,0 +1,26 @@
+{
+  "status": "EXACT_ENTRY6_APPROVED_SIMULATION_STILL_REQUIRES_COEXISTENCE",
+  "proposal_id": "P-7b50c8e3ccc99a27",
+  "proposal_sha256": "7b50c8e3ccc99a27136ce627479611565dc830fc8097ee759f94c8611ae06a44",
+  "approval_id": "A-7b50c8e3ccc99a27",
+  "spec_canonical_sha256": "b58b446f7aba91bf73a1d0f685bf28b7ad821e979606dfac6f9eada46b20aeb6",
+  "authorization_sha256": "d9ad47c04d9da65520660d1b406383887ee5b5a6fd0f6a8552e012ab30c134cd",
+  "control_release_content_id": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+  "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "input_pack_commit": "77a9f59d0c2d087e0dd6f88143079b4c9def6fd6",
+  "commander_binding_file_sha256": "68d364d6c3db243f00feafe2319b1b149c836172d3714137bcbda89148a9a668",
+  "user_exception_sha256": "f29d6cfff0a97b303a297820a21a018d006525d887c3dd9b67ab15dd043ea8ae",
+  "remaining_envelope": {
+    "live_starts": 3,
+    "simulator_initializations": 3,
+    "nontraining_transitions": 20160,
+    "wall_seconds": 2183.967408255907,
+    "gpu_seconds": 2197.300827404717,
+    "output_bytes": 64138143198,
+    "role_calls": 10
+  },
+  "gpu_queries_executed": 0,
+  "simulator_initializations": 0,
+  "live_entry_not_started": true,
+  "postrun_complete_job_and_entire_attempt_results_archive_required": true
+}

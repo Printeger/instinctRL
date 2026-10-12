@@ -1,0 +1,55 @@
+{
+  "schema_version": "instinctrl-r5-entry6-conditionally-reviewed-binding/1",
+  "status": "EXACT_USER_EXCEPTION_AND_INDEPENDENT_REVIEWS_BOUND_COMMANDER_APPROVED_PENDING_ENTRY",
+  "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "input_pack_commit": "77a9f59d0c2d087e0dd6f88143079b4c9def6fd6",
+  "source_unchanged": true,
+  "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+  "tools_release_content_id": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+  "reviewed_proposed_spec_sha256": "b929988bbf61731f5d2f178cf7d29bff6291886ee9d20899237fc50b2cd9575b",
+  "review_bound_spec_path": "inputs/passthrough_entry6_experiment_spec.review-bound.json",
+  "review_bound_spec_sha256": "1ab8402a82c16224ccf943365d366417b7a76fbb451dd416c835f216f6e12cbc",
+  "authorization_expected_sha256": "d9ad47c04d9da65520660d1b406383887ee5b5a6fd0f6a8552e012ab30c134cd",
+  "input_manifest_path": "inputs/passthrough_entry6_input_manifest.json",
+  "input_manifest_sha256": "e955c5a72168d796242db032a9261adfe67517a2f106c1c60a7db7e3cc46b6d4",
+  "independent_conditions": [
+    {
+      "evidence_id": "E-R5-ZERO-R2-PHYSICAL-REVIEW",
+      "sha256": "8e2fd1bc7d54a1860261813e8c5a72910eb885e7f21f0daca914e5d55e11b2f2"
+    },
+    {
+      "evidence_id": "E-R5-COMMAND-R3-PRELIVE-REVIEW",
+      "sha256": "8e2fd1bc7d54a1860261813e8c5a72910eb885e7f21f0daca914e5d55e11b2f2"
+    },
+    {
+      "evidence_id": "E-R5-COMMAND-R3-COEXISTENCE-FAILURE-REVIEW",
+      "sha256": "b0a71b8eb99a78c0e67d5a3e293e6f7d8f79dc207e3763afecd28714d5fb98b8"
+    },
+    {
+      "evidence_id": "E-R5-COMMAND-ENTRY6-CONDITIONAL-PRELIVE-REVIEW",
+      "sha256": "36ec62cf58be64e7913683fd527f7cadfe823fae3445b8d584d75ee2099c6945"
+    }
+  ],
+  "role14_review_path": "reviews/review-entry6-conditional-prelive.json",
+  "role14_review_sha256": "36ec62cf58be64e7913683fd527f7cadfe823fae3445b8d584d75ee2099c6945",
+  "remaining_envelope": {
+    "live_starts": 3,
+    "simulator_initializations": 3,
+    "nontraining_transitions": 20160,
+    "wall_seconds": 2183.967408255907,
+    "gpu_seconds": 2197.300827404717,
+    "output_bytes": 64138143198,
+    "role_calls": 10
+  },
+  "prior_transition_reservation_retained": 60480,
+  "no_blind_retry": "OneENTRY6 exception explicitlyapproved. No secondrepeat, oldjobresume, addedqueries orgatechanges. Stopuponanotherrefusal/failure.",
+  "evidence_archive": "Entireoriginaljob andattempt/results allregularbytes+SHA/inventory/hashedarchive independentlyverifiedafterterminal; genericcollectonly, specializedsealnotavailableforENTRY6.",
+  "actual_authorization_issued": true,
+  "actual_commander_approval_issued": true,
+  "entry_release_issued": false,
+  "training_authorized": false,
+  "user_exception": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/user_entry6_prelaunch_exception.json",
+    "sha256": "f29d6cfff0a97b303a297820a21a018d006525d887c3dd9b67ab15dd043ea8ae"
+  }
+}

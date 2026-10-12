@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_REVIEWED_ENTRY6_USER_EXCEPTION_PENDING",
+  "phase": "R5_ENTRY6_EXACT_APPROVED_PENDING_RELEASE",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -276,11 +276,11 @@
     "current_live_release_effective": false,
     "next_candidate": {
       "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
-      "status": "EXACT_CANDIDATE_COMMAND_NOT_EXECUTED_NO_RETRY_RELEASE",
+      "status": "EXACT_ENTRY6_APPROVED_PENDING_INTERNAL_COEXISTENCE",
       "live_release_issued": false,
-      "inputs": "../docs/diagnostics/r5-readiness/inputs/passthrough_r3_input_manifest.json"
+      "inputs": "../docs/diagnostics/r5-readiness/inputs/passthrough_entry6_input_manifest.json"
     },
-    "next_exact_live_approval": null,
+    "next_exact_live_approval": "../docs/diagnostics/r5-readiness/entry6-commander-approval.json",
     "latest_actual_diagnostic": "../docs/diagnostics/r5-readiness/passthrough-r3-coexistence-analysis.json",
     "resource_decision": {
       "status": "APPROVED_EXPLICIT_USER_START_INIT_CAP8",
@@ -290,8 +290,8 @@
       "caps_delta": "cumulative live starts/initreservation4to8 only",
       "other_caps_unchanged": true
     },
-    "readiness": "BLOCKED_EXTERNAL_AUTHORIZATION",
-    "blocking_kind": "ORIGINAL_NO_REPEAT_WITHOUT_NEW_REPAIR_RULE_AFTER_EXTERNAL_COEXISTENCE_REFUSAL",
+    "readiness": "CONTROL_DIAGNOSTIC_PENDING",
+    "blocking_kind": null,
     "blocked_audit": {
       "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
       "consecutive_goal_turns": 3,
@@ -319,11 +319,13 @@
       "resolved_by": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json"
     },
     "prelaunch_retry_exception": {
-      "status": "REVIEWED_REQUIRES_EXPLICIT_USER_EXCEPTION",
+      "status": "APPROVED_EXPLICIT_USER_ONE_ENTRY_EXCEPTION",
       "proposal": "../docs/diagnostics/r5-readiness/inputs/passthrough_entry6_input_manifest.json",
       "requested_additional_entries": 1,
       "no_new_implementation_repair": true,
-      "independent_pre_review": "../docs/diagnostics/r5-readiness/reviews/review-entry6-conditional-prelive.json"
+      "independent_pre_review": "../docs/diagnostics/r5-readiness/reviews/review-entry6-conditional-prelive.json",
+      "decision": "docs/diagnostics/r5-readiness/user_entry6_prelaunch_exception.json",
+      "sha256": "f29d6cfff0a97b303a297820a21a018d006525d887c3dd9b67ab15dd043ea8ae"
     }
   },
   "historical_pre_goal_independent_review": {

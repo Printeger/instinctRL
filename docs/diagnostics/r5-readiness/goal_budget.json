@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "FIFTH_COMMAND_R3_COEXISTENCE_FAILED_FINAL_ZERO",
+  "live_release_status": "ENTRY6_EXACT_APPROVED_PENDING_RELEASE",
   "caps": {
     "live_starts": 8,
     "simulator_initializations": 8,
@@ -311,5 +311,12 @@
       },
       "other_caps_unchanged": true
     }
-  ]
+  ],
+  "prelaunch_refusal_exception": {
+    "decision_path": "user_entry6_prelaunch_exception.json",
+    "sha256": "f29d6cfff0a97b303a297820a21a018d006525d887c3dd9b67ab15dd043ea8ae",
+    "additional_entries_max": 1,
+    "entry6_approval": "entry6-commander-approval.json",
+    "status": "APPROVED_UNCONSUMED"
+  }
 }

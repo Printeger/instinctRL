@@ -9,10 +9,11 @@
 
 诊断闭环、最小修复与短程训练准入正在推进。需求见
 [需求](goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md)，最新证据见
-[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。当前为 `BLOCKED_EXTERNAL_AUTHORIZATION`：第五次命令直通入口在仿真前被原 coexistence 规则拒绝，三次利用率 4%、6%、1%，第二次超过 5%。
-用户明确批准累计启动／初始化保守预留 cap 8；已用 5 次，其他总帽和旧失败扣账不变。第五次正式 FINAL/0 transitions，原 60,480 预留仍保留。
-零目标物理回归及准确候选已独立通过；命令直通原 Z/T/S gate 和最终审核仍待实测。没有活动 job；Role13 已独立确认正确资源拒绝、正式零结算及清理；Role14 已通过准确 ENTRY6 条件预审，仍须用户明确一次无新修复的资源重试例外。
-未发现资源拒绝属于实现缺陷，不据此放宽门槛或盲目重试。训练、optimizer updates 和训练 checkpoint writes 均为零。
+[索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)。当前为 `CONTROL_DIAGNOSTIC_PENDING`：用户已明确批准恰好一次 ENTRY6 纯 coexistence 拒绝后的新入口例外。
+累计启动／初始化保守预留 cap 8，已用 5 次；其他总帽、旧 60,480 transitions 预留和零训练限制不变。
+Role12 零目标物理回归、Role13 第五次真实资源拒绝与清理、Role14 准确 ENTRY6 输入均已独立通过；Commander A-7b50c8e3ccc99a27 已绑定实际许可和用户例外。
+目前尚未释放新入口；仍须 STOP、所有权及原内部 coexistence 检查，命令直通原 Z/T/S gate 和最终准入审核未完成。
+再次拒绝／失败即保全、结算并停止，不重开旧 job、不增加探测、不放宽门槛。训练、optimizer updates 和训练 checkpoint writes 均为零。
 以下历史状态与迁移记录保留，不继承旧 receipt 验收。
 
 ## 历史阶段及结论
