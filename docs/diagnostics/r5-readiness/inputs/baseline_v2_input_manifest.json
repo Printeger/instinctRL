@@ -1,0 +1,40 @@
+{
+  "schema_version": "instinctrl-r5-baseline-inputs/1",
+  "status": "PREPARED_NOT_RELEASED",
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-v2-20261012",
+  "snapshot_commit": "918fec6f8f37a3700d47cf615168eb9cad2603b1",
+  "snapshot_tree": "b331dd9751f40141ec20048fe8e7df85bb26e8d1",
+  "input_origin": {
+    "commit": "918fec6f8f37a3700d47cf615168eb9cad2603b1",
+    "path": "docs/diagnostics/r5-readiness/inputs/baseline_v2_snapshot_config.json",
+    "sha256": "383f0ad2ffd8b5ba32e0691580b0923ae533a0c73d018af5e61bf057d418cdf2"
+  },
+  "registered_config_overlay": "candidate_config.json is exactly the committed snapshot config input; source commit unchanged, overlay diff explicitly hashed in handoff",
+  "snapshot_diff_sha256": "e610de483653a7332a5c160bae7184b25963cf51cab3597317a96c85ffbe0c35",
+  "handoff_sha256": "6b51a8d7a3a63c02bd71e2fb6bd1465c424fc8f0864baca45230e2e0c8e51544",
+  "expected_authorization_sha256": "0268bf143e4142f28a0eda59221791a7f6bee9d267744b73bc782f5634df4c0c",
+  "authorization_issued": false,
+  "approval_issued": false,
+  "read_only": true,
+  "role_review": "PENDING_EXACT_INPUT_REVIEW",
+  "condition": "ENHANCED_B0_ZERO_TARGET",
+  "supplemental_limits": {
+    "initialization_ticks": 10,
+    "explicit_resets": 3,
+    "automatic_reset_lanes": 20160,
+    "prelaunch_nvidia_smi_calls": 6,
+    "runtime_cuda_memory_observations": 634,
+    "postrun_nvidia_smi_audit_calls": 2
+  },
+  "probe_definitions": "prelaunch: 3 coexistence samples x2 commands; runtime: after init +3 explicit reset gates +630 step gates; postrun: max2 external cleanup audit commands, only after terminal ownership settlement",
+  "remaining_goal_live_budget_before_release": {
+    "starts": 4,
+    "initializations": 4,
+    "nontraining_transitions": 80640,
+    "wall_seconds": 3640,
+    "gpu_seconds": 3640,
+    "output_bytes": 68719476736
+  },
+  "free_disk_bytes_observed": 575454109696,
+  "generator_sha256": "2e04a1682ec6d3d01d8d0d4ab7a532ef78dc91bfd6bc83b00b96c9c4ae1f0d80"
+}

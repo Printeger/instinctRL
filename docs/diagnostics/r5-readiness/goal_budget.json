@@ -30,7 +30,7 @@
     "wall_seconds": 0,
     "gpu_seconds": 0,
     "output_bytes": 0,
-    "role_calls": 3,
+    "role_calls": 4,
     "training_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0
@@ -59,6 +59,14 @@
       "handle": "/root/pilot_reviewer",
       "scope": "retry independent candidate review after added product snapshot evidence",
       "status": "MUST_FIX"
+    },
+    {
+      "call": 4,
+      "role": "Reviewer",
+      "candidate_commit": "918fec6f8f37a3700d47cf615168eb9cad2603b1",
+      "handle": "/root/pilot_reviewer",
+      "scope": "MECHANICS-R1 closure and exact readonly baseline_v2 input pre-review; no live authorization",
+      "status": "REQUESTED"
     }
   ],
   "initialization_ticks_resets_gpu_probes": "UNBOUND_NO_LIVE_RELEASE",

@@ -1,0 +1,91 @@
+{
+  "schema_version": "instinctrl-enhanced-b0-handoff/2",
+  "status": "VALIDATE_ONLY_NOT_AUTHORIZED",
+  "experiment_id": "UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "training_workloads.unified_h1.formal_unified_h1",
+    "--authorization",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012/commands/AUTHORIZATION.json",
+    "--attempt",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
+    "--mode",
+    "enhanced-b0-diagnostic"
+  ],
+  "authorization": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012/commands/AUTHORIZATION.json",
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
+  "checkpoint": null,
+  "source_identity": {
+    "product_repository": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-v2-20261012",
+    "product_commit": "918fec6f8f37a3700d47cf615168eb9cad2603b1",
+    "product_tree": "b331dd9751f40141ec20048fe8e7df85bb26e8d1",
+    "workload_repository": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-v2-20261012",
+    "workload_base_commit": "918fec6f8f37a3700d47cf615168eb9cad2603b1",
+    "workload_base_tree": "b331dd9751f40141ec20048fe8e7df85bb26e8d1",
+    "runtime_python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "runtime_python_sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a",
+    "asset_manifest": "/home/mint/rl_dev/instinctRL-dev/runtime_assets/Assets/Isaac/5.1/ASSET_MANIFEST.json",
+    "asset_manifest_sha256": "f64a0561477efcc612761f6b3034f9612f2d3cb42832138e86ff7a4c18e1ef52"
+  },
+  "candidate": {
+    "repository": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-v2-20261012",
+    "base_commit": "918fec6f8f37a3700d47cf615168eb9cad2603b1",
+    "commit": "918fec6f8f37a3700d47cf615168eb9cad2603b1",
+    "diff_sha256": "e610de483653a7332a5c160bae7184b25963cf51cab3597317a96c85ffbe0c35"
+  },
+  "frozen": {
+    "seed": 20260909,
+    "cases": [
+      "Z",
+      "T",
+      "S"
+    ],
+    "case_policy_steps": {
+      "Z": 200,
+      "T": 100,
+      "S": 330
+    },
+    "lanes": 32,
+    "decimation": 20,
+    "target_velocity_b_m_s": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "initial_state": "frozen-R4-B0",
+    "curriculum": "frozen-Z/T/S",
+    "control_frequency_hz": 200,
+    "policy_frequency_hz": 10,
+    "safety_standards": "unchanged-R4-B0"
+  },
+  "budgets": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "nontraining_transitions": 20160,
+    "physics_rows": 403200,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "p0_plr": 0,
+    "policy_evaluations": 0,
+    "automatic_retries": 0,
+    "wall_seconds": 910,
+    "gpu_allocation_seconds": 910,
+    "diagnostic_bytes": 17179869184
+  },
+  "output_manifest": {
+    "raw_physics_jsonl": "enhanced_b0_physics.jsonl",
+    "raw_manifest": "enhanced_b0_manifest.json",
+    "causal_analysis": "enhanced_b0_causal_analysis.json",
+    "budget_ledger": "budget_ledger.json",
+    "status": "status.json",
+    "cleanup_evidence": "cleanup_evidence.json"
+  },
+  "cleanup": {
+    "environment_close": true,
+    "app_close": true,
+    "no_retry_on_failure": true
+  }
+}

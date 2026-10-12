@@ -1,0 +1,26 @@
+[
+  {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--validate-only"
+    ],
+    "exit_code": 0,
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-v2-20261012"
+  },
+  {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--validate-enhanced-b0-handoff",
+      "--handoff",
+      "/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/inputs/baseline_v2_handoff.json"
+    ],
+    "exit_code": 0,
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-baseline-v2-20261012"
+  }
+]
