@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "NOT_ISSUED",
+  "live_release_status": "EXACT_INPUTS_AND_INDEPENDENT_CONDITIONS_BOUND_PENDING_COMMANDER",
   "caps": {
     "live_starts": 4,
     "simulator_initializations": 4,
@@ -30,7 +30,7 @@
     "wall_seconds": 0,
     "gpu_seconds": 0,
     "output_bytes": 0,
-    "role_calls": 6,
+    "role_calls": 7,
     "training_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0
@@ -83,9 +83,36 @@
       "candidate_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
       "handle": "/root/pilot_reviewer",
       "scope": "BASELINE-R1/R2 closure on exact v3 source and inputs pre-live",
-      "status": "REQUESTED"
+      "status": "PASS_PRELIVE_ONLY"
+    },
+    {
+      "call": 7,
+      "role": "Reviewer",
+      "candidate_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
+      "input_pack_commit": "1689d3cecb438f25cfe28d6689b3406e1ded9a85",
+      "handle": "/root/pilot_reviewer",
+      "scope": "narrow release-order clarification, no new source; satisfy user coex-before simulation release with existing runner",
+      "status": "PASS_RELEASE_ORDER_ONLY"
     }
   ],
-  "initialization_ticks_resets_gpu_probes": "UNBOUND_NO_LIVE_RELEASE",
-  "historical_budgets": "PRESERVED_NOT_RESET"
+  "initialization_ticks_resets_gpu_probes": {
+    "source": "inputs/baseline_v3_input_manifest.json",
+    "per_run": {
+      "initialization_ticks": 10,
+      "explicit_resets": 3,
+      "automatic_reset_lanes": 20160,
+      "prelaunch_nvidia_smi_calls": 6,
+      "runtime_cuda_memory_observations": 634,
+      "postrun_nvidia_smi_audit_calls": 2
+    }
+  },
+  "historical_budgets": "PRESERVED_NOT_RESET",
+  "reserved": {
+    "live_starts": 1,
+    "simulator_initializations": 1,
+    "nontraining_transitions": 20160,
+    "wall_seconds": 910,
+    "gpu_seconds": 910,
+    "output_bytes": 17179869184
+  }
 }

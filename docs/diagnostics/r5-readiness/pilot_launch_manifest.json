@@ -1,0 +1,38 @@
+{
+  "schema_version": "instinctrl-r5-pilot-readiness/1",
+  "status": "BLOCKED_CONTROL_BASELINE",
+  "goal_status": "IN_PROGRESS",
+  "training_authorization_issued": false,
+  "shared_repaired_baseline_commit": null,
+  "groups": {
+    "P0": {
+      "actor_lr": 0.0003,
+      "critic_lr": 0.0003
+    },
+    "PLR": {
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003
+    }
+  },
+  "future_per_group": {
+    "envs": 32,
+    "rollout": 16,
+    "minibatch": 64,
+    "epoch": 1,
+    "updates": 64,
+    "training_transitions": 32768
+  },
+  "first_rollout_gate": {
+    "implemented_and_cpu_verified": true,
+    "live_first_rollout_gate": "PENDING_NEXT_PILOT",
+    "first_optimizer_step_requires_gate": true
+  },
+  "current_goal_training_transitions": 0,
+  "current_goal_optimizer_updates": 0,
+  "current_goal_training_checkpoint_writes": 0,
+  "argv_status": "PENDING_REPAIRED_BASELINE_AND_CONTROL_ACCEPTANCE",
+  "blocking_evidence": [
+    "Current live zero-target baseline and physical regression absent",
+    "Command-passthrough on accepted shared baseline absent"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "candidate_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
+  "input_pack_commit": "1689d3cecb438f25cfe28d6689b3406e1ded9a85",
+  "role_call": 7,
+  "handle": "/root/pilot_reviewer",
+  "verdict": "PASS",
+  "scope": "Independent release-order clarification only, not actual release",
+  "findings": [],
+  "interpretation": {
+    "accepted": true,
+    "entry_release": "Exact formal entry for static checks and six bound prelaunch GPUqueries; consumes one live start and910secouter/GPU accounting",
+    "simulation_release": "Only start_after_coexistence_gate after three samples/minimum10sec and runtime/shutdown/asset checks may createAppLauncher; failure prevents init",
+    "contract_basis": "Requirements6.2 through existingformalrunner checks permit entry to perform gate; no external duplicateprobe requirement"
+  },
+  "release_conditions": [
+    "Exact accepted review/source/input/tool/remainingbudget; STOP andownershipclear",
+    "No externalduplicate6probes; failure consumes actualstartedresources and noautoretry",
+    "910secincludesprelaunchwork+cleanup; noextension",
+    "No training/optimizer/checkpoint permission"
+  ],
+  "review_execution": {
+    "shared_files_written": false,
+    "gpu_queries_executed": false,
+    "simulation_started": false,
+    "optimizer_bodies_executed": false,
+    "live_release_issued": false
+  }
+}

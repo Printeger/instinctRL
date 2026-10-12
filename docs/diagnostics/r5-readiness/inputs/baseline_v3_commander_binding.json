@@ -1,0 +1,39 @@
+{
+  "status": "EXACT_COMMANDER_RELEASE_CANDIDATE_NOT_YET_ISSUED",
+  "experiment_id": "UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
+  "condition": "ENHANCED_B0_ZERO_TARGET",
+  "source_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
+  "source_tree": "1946f46292aea4f3e04e6cfce6faf7b80b90ba00",
+  "input_pack_commit": "1689d3cecb438f25cfe28d6689b3406e1ded9a85",
+  "input_manifest_sha256": "56d6ea2716872cd2ba7cd0a7758a51bb62e97c849db515829243b78d75043d97",
+  "spec_sha256": "982b5cdf2d16f656a1c60966468e34543e38b2fb3dd1cce6d9a1a2c1ca2deb07",
+  "control_release_content_id": "0aa19c81847353ff111e10b83798742ef98af622b18f47b66f3739c312487229",
+  "independent_conditions": [
+    {
+      "evidence_id": "E-R5-BASELINE-V3-PRELIVE-REVIEW",
+      "sha256": "d6308a1b5990025aec254d5473be4010afbe68ea622690751f376a6a2c884ac7"
+    },
+    {
+      "evidence_id": "E-R5-BASELINE-V3-RELEASE-ORDER",
+      "sha256": "2c6462047f749970326750945b274b3f76b4729e0c45fcf8ce1582c4406db292"
+    }
+  ],
+  "supplemental_limits": {
+    "initialization_ticks": 10,
+    "explicit_resets": 3,
+    "automatic_reset_lanes": 20160,
+    "prelaunch_nvidia_smi_calls": 6,
+    "runtime_cuda_memory_observations": 634,
+    "postrun_nvidia_smi_audit_calls": 2
+  },
+  "entry_release_semantics": {
+    "accepted": true,
+    "entry_release": "Exact formal entry for static checks and six bound prelaunch GPUqueries; consumes one live start and910secouter/GPU accounting",
+    "simulation_release": "Only start_after_coexistence_gate after three samples/minimum10sec and runtime/shutdown/asset checks may createAppLauncher; failure prevents init",
+    "contract_basis": "Requirements6.2 through existingformalrunner checks permit entry to perform gate; no external duplicateprobe requirement"
+  },
+  "budget_ledger_before_release": "docs/diagnostics/r5-readiness/goal_budget.json",
+  "training_authorized": false,
+  "simulation_creation_requires_coexistence_pass": true,
+  "no_duplicate_external_gpu_probes": true
+}

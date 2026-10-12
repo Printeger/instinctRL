@@ -1,0 +1,57 @@
+{
+  "candidate_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
+  "input_pack_commit": "1689d3cecb438f25cfe28d6689b3406e1ded9a85",
+  "role_call": 6,
+  "handle": "/root/pilot_reviewer",
+  "verdict": "PASS",
+  "scope": "Independent exact readonly baseline-v3 CPU/source/input pre-live review only. Not live release, scientific control acceptance or Goal completion.",
+  "record_type": "transcribed independent agent result; original conversation retained",
+  "findings": [],
+  "closed_findings": [
+    {
+      "id": "BASELINE-R1",
+      "status": "CLOSED",
+      "evidence": "Raw manifest before adapter setup, all failure/normal phases preserve actual newline-complete rows separately from acceptedstreamrows, bytes/hash/partialtail, coordinates, observerprogress, coverage and source/auth/counter identity;10CPU JSON tests passed; secondary errors retain primary."
+    },
+    {
+      "id": "BASELINE-R2",
+      "status": "CLOSED",
+      "evidence": "Strict physicsrow2 base reaction body/direction separates rotor thrustaxis; reset fallback updated. Reviewer independently executed four tensorfixtures on exactsnapshot, including misalignedaxes nonzero reactions against actualadapterbuffers, allPASS; plant/control unchanged."
+    },
+    {
+      "id": "MECHANICS-R1",
+      "status": "REMAINS_CLOSED",
+      "evidence": "Shared primitive arithmetic unchanged1e-8; translation/rotation/difference/tamper cases retained."
+    }
+  ],
+  "non_blocking": [
+    {
+      "id": "BINDING-N1",
+      "evidence": "Exact v3snapshot overlay and all pins/handoff/expectedauth hashes independently verified;3staticvalidationreceiptsPASS; actualauthabsentandconditionsdraftempty."
+    },
+    {
+      "id": "MEASUREMENT-N1",
+      "evidence": "Actual PhysX mass/inertia and linkstate/read-onlyCOM derivation correct; installed API confirms linkoriginforceapplication. Liveinitialization/reset/coverage stillrequired."
+    },
+    {
+      "id": "RUNNER-N1",
+      "evidence": "Exactdispatcher/argv/snapshotPYTHONPATH/assetroot with STOP,freshattempt,authority,resourcechecks; boundedownerclose/lifeguard descendantquiescence. Actualcoexistence and Commanderrelease remainrequired."
+    },
+    {
+      "id": "BUDGET-N1",
+      "evidence": "Explicit newenvelope and sublimits matchcurrentzero live/trainingusage; sixcriticalrolecallsreserved."
+    }
+  ],
+  "follow_up": [
+    "Commander separately binds acceptedreviewhash andexactinputs/tool/remainingbudget afterSTOP,ownership,coexistencegate",
+    "Physicalcausalmechanism notestablished by internalconsistency orscores",
+    "Enhancedzerotarget cannot substitute commandpassthrough orrepairedplantregression"
+  ],
+  "review_execution": {
+    "shared_files_written": false,
+    "gpu_queries_executed": false,
+    "simulation_started": false,
+    "optimizer_bodies_executed": false,
+    "live_release_issued": false
+  }
+}
