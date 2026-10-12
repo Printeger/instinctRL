@@ -1,0 +1,44 @@
+{
+  "schema_version": "instinctrl-r5-future-package-cpu-verification/2",
+  "scope": "CPU_PROPOSAL_ONLY_NOT_TRAINING_OR_BASELINE_ACCEPTANCE",
+  "status": "PASS",
+  "exact_generator_reproduction": true,
+  "proposal_sha256": "0154b4b2c9a693c99bf590e91256e092a22ba8fb07599dd66ca71d564b03113a",
+  "groups": [
+    {
+      "group": "P0",
+      "mode": "pilot-training",
+      "seed": 20260908,
+      "attempt_absent": true,
+      "authorization_absent": true,
+      "real_file_pins_match": true
+    },
+    {
+      "group": "P0",
+      "mode": "pilot-evaluation",
+      "seed": 20260909,
+      "attempt_absent": true,
+      "authorization_absent": true,
+      "real_file_pins_match": true
+    },
+    {
+      "group": "PLR",
+      "mode": "pilot-training",
+      "seed": 20260908,
+      "attempt_absent": true,
+      "authorization_absent": true,
+      "real_file_pins_match": true
+    },
+    {
+      "group": "PLR",
+      "mode": "pilot-evaluation",
+      "seed": 20260909,
+      "attempt_absent": true,
+      "authorization_absent": true,
+      "real_file_pins_match": true
+    }
+  ],
+  "current_goal_training_transitions": 0,
+  "current_goal_optimizer_updates": 0,
+  "current_goal_training_checkpoint_writes": 0
+}
