@@ -101,3 +101,8 @@ priorclosures retained. Actual tool96hashes, readonlyoverlay andformal/handoff
 identity verified. New spec onlyadds exactreviewhashcondition torevieweddraft;
 Commanderbinding includesremainingbudget andentrygate semantics. Noauth/release
 issued byreview. Actual control baseline andGoaltarget remainpending.
+
+New measurement-R1b entry approved byexistingCommander exactA-57c4e523722982cb,
+then submitted once asJ-fcbe37739d942e3c onsource79ccb40/inputsa5929ce/tools980ad8d8.
+Secondlive startcharged; old20160 plusnew20160 transitionreservations retained.
+Stillno training. Actualcoexistence/init/row/cleanup results pending.

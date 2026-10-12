@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "MEASUREMENT_R1B_EXACT_ENTRY_APPROVED_NOT_STARTED",
+  "live_release_status": "MEASUREMENT_R1B_ENTRY_RUNNING_APPROVAL_CONSUMED",
   "caps": {
     "live_starts": 4,
     "simulator_initializations": 4,
@@ -24,7 +24,7 @@
     "output_bytes": 17179869184
   },
   "used": {
-    "live_starts": 1,
+    "live_starts": 2,
     "simulator_initializations": 1,
     "nontraining_transitions": 0,
     "wall_seconds": 30.395258554955944,
@@ -124,7 +124,11 @@
   },
   "historical_budgets": "PRESERVED_NOT_RESET",
   "reserved": {
-    "nontraining_transitions": 20160
+    "nontraining_transitions": 40320,
+    "simulator_initializations": 1,
+    "wall_seconds": 910,
+    "gpu_seconds": 910,
+    "output_bytes": 17179869184
   },
   "approval": "baseline-v3-commander-approval.json",
   "unknown_or_incomplete": {
@@ -146,6 +150,17 @@
       "app_close": "HARD_TIMEOUT",
       "ownership_cleanup": "QUIESCENT_NO_SURVIVORS",
       "transitions_settlement": "INCOMPLETE_FULL20160RESERVED"
+    },
+    {
+      "job_id": "J-fcbe37739d942e3c",
+      "status": "RUNNING",
+      "source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+      "experiment_id": "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+      "starts_charged": 1,
+      "initialization": "RESERVED_UNTIL_ACTUAL_EVIDENCE",
+      "training_transitions": 0,
+      "optimizer_updates": 0,
+      "checkpoint_writes": 0
     }
   ],
   "next_exact_approval": "measurement-r1b-commander-approval.json"
