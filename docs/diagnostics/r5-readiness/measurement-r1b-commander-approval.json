@@ -1,0 +1,16 @@
+{
+  "status": "EXACT_ENTRY_APPROVED_SIMULATION_STILL_REQUIRES_COEXISTENCE",
+  "proposal_id": "P-57c4e523722982cb",
+  "proposal_sha256": "57c4e523722982cbffdd7860bb268c7e16b4821a1cebeb6f3e287a8ef010f461",
+  "approval_id": "A-57c4e523722982cb",
+  "spec_canonical_sha256": "ad337d28268fc973c4170882187c86c329b2457ab3de1a5857bfeb43894f4171",
+  "authorization_sha256": "26b2cef353a30f0a655813de8b2538c3a35682c695fdd0c6f5e2011df73fb142",
+  "control_release_content_id": "980ad8d8e6c037a4b68bc7cf93300d25917fd27f089d5f836b80fa5fa0042b52",
+  "source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+  "input_pack_commit": "a5929ce7e1832cd0e0bbf2861da69b8b33f1ae32",
+  "commander_binding_file_sha256": "aec2d783801653fd2a195d6dbc62f2ca6c99de48dc0943c93860bacb7db9f5c8",
+  "gpu_queries_executed": 0,
+  "simulator_initializations": 0,
+  "live_entry_not_started": true,
+  "precheck_correction": "First read-only precheck used wrong cleanup JSON key and stopped before issuing auth. Correct actual no_survivors/descendant_cleanup keys now verified; no resource action."
+}

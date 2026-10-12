@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "MEASUREMENT_R1B_REVIEWED_COMMANDER_PENDING",
+  "live_release_status": "MEASUREMENT_R1B_EXACT_ENTRY_APPROVED_NOT_STARTED",
   "caps": {
     "live_starts": 4,
     "simulator_initializations": 4,
@@ -147,5 +147,6 @@
       "ownership_cleanup": "QUIESCENT_NO_SURVIVORS",
       "transitions_settlement": "INCOMPLETE_FULL20160RESERVED"
     }
-  ]
+  ],
+  "next_exact_approval": "measurement-r1b-commander-approval.json"
 }

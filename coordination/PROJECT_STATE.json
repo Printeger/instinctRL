@@ -262,13 +262,14 @@
     "exact_live_approval": "../docs/diagnostics/r5-readiness/baseline-v3-commander-approval.json",
     "live_entry_status": "FAILED_FIRST_PHYSICS_OBSERVER_INERTIA_VALIDATION",
     "latest_live_job": "J-65769ac9c17a38cb",
-    "current_live_release_effective": false,
+    "current_live_release_effective": true,
     "next_candidate": {
       "source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
       "inputs": "../docs/diagnostics/r5-readiness/inputs/measurement_r1b_input_manifest.json",
-      "status": "PASS_PRELIVE_ONLY_COMMANDER_PENDING",
+      "status": "EXACT_ENTRY_APPROVED_SIMULATION_GATED",
       "experiment_id": "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
       "live_release_issued": false
-    }
+    },
+    "next_exact_live_approval": "../docs/diagnostics/r5-readiness/measurement-r1b-commander-approval.json"
   }
 }
