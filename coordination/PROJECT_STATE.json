@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_COMMAND_COEXISTENCE_FAILURE_REVIEW",
+  "phase": "R5_REVIEWED_ENTRY6_USER_EXCEPTION_PENDING",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -291,7 +291,7 @@
       "other_caps_unchanged": true
     },
     "readiness": "BLOCKED_EXTERNAL_AUTHORIZATION",
-    "blocking_kind": "EXTERNAL_GPU_COEXISTENCE_FAILURE_NO_IMPLEMENTATION_REPAIR_ESTABLISHED",
+    "blocking_kind": "ORIGINAL_NO_REPEAT_WITHOUT_NEW_REPAIR_RULE_AFTER_EXTERNAL_COEXISTENCE_REFUSAL",
     "blocked_audit": {
       "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
       "consecutive_goal_turns": 3,
@@ -319,10 +319,11 @@
       "resolved_by": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json"
     },
     "prelaunch_retry_exception": {
-      "status": "REQUIRES_EXPLICIT_USER_EXCEPTION",
+      "status": "REVIEWED_REQUIRES_EXPLICIT_USER_EXCEPTION",
       "proposal": "../docs/diagnostics/r5-readiness/inputs/passthrough_entry6_input_manifest.json",
       "requested_additional_entries": 1,
-      "no_new_implementation_repair": true
+      "no_new_implementation_repair": true,
+      "independent_pre_review": "../docs/diagnostics/r5-readiness/reviews/review-entry6-conditional-prelive.json"
     }
   },
   "historical_pre_goal_independent_review": {

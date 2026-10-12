@@ -23,7 +23,7 @@
 实际 AUTHORIZATION 与 `passthrough-r3-commander-approval.json` 已执行一次，J-1f1d10a06a0e0632 终态 FAILED；不能重用。
 
 第五次真实窗口利用率 [4,6,1]%/10.030832815s，395MiB，仅既存 GNOME164MiB；原 5% gate 正确拒绝。AppLauncher/physics/transitions 均未到达，H1 FINAL0 正式结算第五次预留。正常 lifeguard ack 两次稳定空扫描，无所属残留；授权两次 postrun 审计已用完。
-唯一下一动作：完成 Role13 对资源失败、下一步权限和必要缺口的独立评估；没有新修复证据不重复启动，不改变门槛。
+唯一下一动作：取得一次纯 coexistence 拒绝后新入口的明确规则例外，再按 Role14 准确 ENTRY6 包由 Commander 单独绑定和批准。无例外不重复启动，不改变门槛。
 达到技术准入后停止，本 Goal 不开始配对训练。
 
 唯一最新索引：`docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md`。

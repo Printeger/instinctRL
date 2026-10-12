@@ -122,7 +122,7 @@
     "caps_delta": "cumulative live starts/initreservation4to8 only",
     "other_caps_unchanged": true
   },
-  "blocking_kind": "EXTERNAL_GPU_COEXISTENCE_FAILURE_NO_IMPLEMENTATION_REPAIR_ESTABLISHED",
+  "blocking_kind": "ORIGINAL_NO_REPEAT_WITHOUT_NEW_REPAIR_RULE_AFTER_EXTERNAL_COEXISTENCE_REFUSAL",
   "requirements_completion_audit": {
     "scope": "Requirements 2.1 and sections3–11; inspected current artifacts and independent review, no new runtime/optimizer actions",
     "completion_proven": false,
@@ -325,6 +325,14 @@
     "transitions": 0,
     "cleanup": "NORMAL_LIFEGUARD_ACK_QUIESCENT_NO_SURVIVORS",
     "analysis": "passthrough-r3-coexistence-analysis.json",
-    "independent_review": "PENDING_ROLE13"
+    "independent_review": "reviews/review-command-r3-coexistence-failure.json"
+  },
+  "prelaunch_retry_exception": {
+    "status": "REVIEWED_REQUIRES_EXPLICIT_USER_EXCEPTION",
+    "proposal": "../docs/diagnostics/r5-readiness/inputs/passthrough_entry6_input_manifest.json",
+    "requested_additional_entries": 1,
+    "no_new_implementation_repair": true,
+    "independent_pre_review": "../docs/diagnostics/r5-readiness/reviews/review-entry6-conditional-prelive.json",
+    "binding": "inputs/passthrough_entry6_commander_binding.proposed.json"
   }
 }
