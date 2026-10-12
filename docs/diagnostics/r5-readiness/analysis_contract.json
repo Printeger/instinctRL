@@ -1,0 +1,27 @@
+{
+  "schema_version": "instinctrl-r5-analysis-contract/1",
+  "condition": "ENHANCED_B0_ZERO_TARGET",
+  "input_precision": "Actual measured float32 primitives serialized exactly to Python numbers; all declared system and rotor wrench quantities reconstructed from those serialized primitives in shared stdlib arithmetic.",
+  "numeric_consistency_absolute_tolerance": 1e-08,
+  "quaternion_norm_absolute_tolerance": 1e-05,
+  "physics_dt_s": 0.005,
+  "decimation": 20,
+  "policy_dt_s": 0.1,
+  "diff_scope": "same condition/case/lane/effective episode; boundary row starts new segment",
+  "response_reference": "root link pose/velocity; controller uses root COM feedback; articulated momentum/COM computed separately",
+  "numeric_consistency_is_physical_force_closure": false,
+  "signature_scores_are_causal_proof": false,
+  "mechanism_establishment_requires": [
+    "actual asset/runtime binding",
+    "mechanism model/code support",
+    "falsifiable repair regression"
+  ],
+  "negative_tests": [
+    "COM .001m corruption",
+    "momentum .001 kg m/s corruption",
+    "rotor force .001N corruption",
+    "cross reset difference",
+    "opposite lane pooled endpoints"
+  ],
+  "tolerance_history": "Original internal consistency bound retained; repair unifies arithmetic rather than increasing acceptance tolerance."
+}

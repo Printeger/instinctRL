@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any
 from .b0_enhanced import CASES, CASE_POLICY_STEPS, EXPERIMENT_ID, PHYSICS_ROWS
 
-SCHEMA="instinctrl-enhanced-b0-handoff/1"
+SCHEMA="instinctrl-enhanced-b0-handoff/2"
 FIELDS=("schema_version","status","experiment_id","argv","authorization","attempt","checkpoint","source_identity","candidate","frozen","budgets","output_manifest","cleanup")
 HEX=lambda value,size: isinstance(value,str) and len(value)==size and all(c in "0123456789abcdef" for c in value)
 def _regular(path:Any,label:str)->Path:
@@ -46,10 +46,8 @@ def validate_handoff(value:Any)->dict[str,Any]:
         if not isinstance(value[name],str) or not Path(value[name]).is_absolute(): raise PermissionError(f"{name} path is not absolute")
     if Path(value["authorization"]) != Path(value["attempt"]) / "commands" / "AUTHORIZATION.json":
         raise PermissionError("authorization is not bound to the exact attempt")
-    checkpoint=value["checkpoint"]
-    if not isinstance(checkpoint,dict) or set(checkpoint)!={"path","sha256","source_identity"} or not HEX(checkpoint.get("sha256"),64): raise PermissionError("checkpoint binding is incomplete")
-    checkpoint_path=_regular(checkpoint["path"],"checkpoint")
-    if _digest(checkpoint_path)!=checkpoint["sha256"]: raise PermissionError("checkpoint bytes changed")
+    if value["checkpoint"] is not None:
+        raise PermissionError("enhanced zero-target diagnostic must not bind/load a policy checkpoint")
     source=value["source_identity"]
     source_fields={"product_repository","product_commit","product_tree","workload_repository","workload_base_commit","workload_base_tree","runtime_python","runtime_python_sha256","asset_manifest","asset_manifest_sha256"}
     if not isinstance(source,dict) or set(source)!=source_fields: raise PermissionError("source identity is incomplete")
@@ -60,7 +58,6 @@ def validate_handoff(value:Any)->dict[str,Any]:
     for path_key,hash_key in (("runtime_python","runtime_python_sha256"),("asset_manifest","asset_manifest_sha256")):
         path=_regular(source[path_key],path_key)
         if not HEX(source[hash_key],64) or _digest(path)!=source[hash_key]: raise PermissionError(f"{path_key} bytes changed")
-    if checkpoint["source_identity"]!=source: raise PermissionError("checkpoint/source identity mismatch")
     candidate=value["candidate"]
     if not isinstance(candidate,dict) or set(candidate)!={"repository","base_commit","commit","diff_sha256"} or not HEX(candidate.get("base_commit"),40) or not HEX(candidate.get("diff_sha256"),64): raise PermissionError("candidate diff binding is incomplete")
     candidate_root=Path(candidate["repository"])
@@ -68,7 +65,7 @@ def validate_handoff(value:Any)->dict[str,Any]:
     if _git(candidate_root,"rev-parse","HEAD").strip()!=candidate["commit"]: raise PermissionError("candidate commit changed")
     actual_diff=hashlib.sha256(_candidate_diff(candidate_root,candidate["base_commit"])).hexdigest()
     if actual_diff!=candidate["diff_sha256"]: raise PermissionError("candidate diff bytes changed")
-    frozen={"seed":20260909,"cases":list(CASES),"case_policy_steps":CASE_POLICY_STEPS,"lanes":32,"decimation":20,"target_velocity_b_m_s":[0.0,0.0,0.0],"initial_state":"frozen-R4-B0","curriculum":"frozen-Z/T/S","control_frequency_hz":100,"policy_frequency_hz":5,"safety_standards":"unchanged-R4-B0"}
+    frozen={"seed":20260909,"cases":list(CASES),"case_policy_steps":CASE_POLICY_STEPS,"lanes":32,"decimation":20,"target_velocity_b_m_s":[0.0,0.0,0.0],"initial_state":"frozen-R4-B0","curriculum":"frozen-Z/T/S","control_frequency_hz":200,"policy_frequency_hz":10,"safety_standards":"unchanged-R4-B0"}
     if value["frozen"]!=frozen: raise PermissionError("frozen experiment parameters changed")
     budgets={"live_process_starts":1,"simulator_initializations":1,"nontraining_transitions":20160,"physics_rows":403200,"training_transitions":0,"optimizer_updates":0,"checkpoint_writes":0,"p0_plr":0,"policy_evaluations":0,"automatic_retries":0,"wall_seconds":910,"gpu_allocation_seconds":910,"diagnostic_bytes":16*1024**3}
     if value["budgets"]!=budgets: raise PermissionError("enhanced B0 budgets changed")

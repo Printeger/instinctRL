@@ -131,7 +131,10 @@ def test_reviewed_controlled_failure_closes_both_resources_and_collects_final(bo
         h1_initialization_physics_ticks=0
         h1_initialization_tick_source='CPU fixture'
         def __init__(self,name):self.name=name
-        def close(self):calls.append(self.name+'.close')
+        def close(self, **kwargs):
+            if self.name == 'app': assert kwargs == {'wait_for_replicator':False,'skip_cleanup':True}
+            else: assert not kwargs
+            calls.append(self.name+'.close')
     class Backend:
         def resource_check(self,stage,ordinal):calls.append(stage)
         def initial_raw_rays(self):self.counters.reserve_reset(automatic=False,maximum=1);calls.append('initial_raw_rays')

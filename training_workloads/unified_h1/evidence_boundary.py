@@ -49,9 +49,9 @@ def verify_predecessor(manifest_path:Path,predecessor_root:Path)->dict[str,Any]:
     if not required<=set(files):raise PermissionError("predecessor live job/report boundary is incomplete")
     return {"status":"VERIFIED","files":files,"future_postrun":value["future_postrun"]}
 
-def verify_postrun(manifest_path:Path,postrun_root:Path|None=None)->dict[str,Any]:
+def verify_postrun(manifest_path:Path,postrun_root:Path|None=None,*,expected_experiment_id:str=EXPERIMENT_ID,expected_package_id:str=PREDECESSOR_PACKAGE_ID)->dict[str,Any]:
     value=_load(Path(manifest_path))
-    if not isinstance(value,dict) or set(value)!={"schema_version","package_id","experiment_id","roots","files"} or value["schema_version"]!=POSTRUN_SCHEMA or value["package_id"]!=PREDECESSOR_PACKAGE_ID or value["experiment_id"]!=EXPERIMENT_ID:raise PermissionError("postrun evidence identity mismatch")
+    if not isinstance(value,dict) or set(value)!={"schema_version","package_id","experiment_id","roots","files"} or value["schema_version"]!=POSTRUN_SCHEMA or value["package_id"]!=expected_package_id or value["experiment_id"]!=expected_experiment_id:raise PermissionError("postrun evidence identity mismatch")
     roots=value["roots"]
     if not isinstance(roots,dict) or set(roots)!={"job","report"}:raise PermissionError("postrun evidence roots are incomplete")
     root_paths={kind:Path(path) for kind,path in roots.items()}

@@ -426,8 +426,13 @@ class UnifiedH1LiveBackend:
         atomic_json_replace(self.output, "enhanced_b0_causal_analysis.json", analysis)
         atomic_json_replace(self.output, "enhanced_b0_manifest.json", {
             "schema_version":"instinctrl-enhanced-b0-raw-manifest/1",
-            "experiment_id":"UNIFIED-H1-R5-STAGE1-B0-RESET-AVAILABILITY-CLEANUP-R1-20260929",
+            "experiment_id":"UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012",
             "hook_receipt":receipt,"coverage":coverage,"observation":observation,
+            "condition":"ENHANCED_B0_ZERO_TARGET",
+            "measurement_sources":{"mass":"Articulation.root_physx_view.get_masses",
+                "inertia":"Articulation.root_physx_view.get_inertias",
+                "body":"data.body_link_state_w","root_response":"data.root_link_state_w",
+                "controller_feedback":"data.root_state_w"},
             "automatic_retries":0,"training_transitions":0,"optimizer_updates":0,
             "checkpoint_writes":0,"policy_evaluations":0,
             "execution_counters":self.counters.snapshot()})

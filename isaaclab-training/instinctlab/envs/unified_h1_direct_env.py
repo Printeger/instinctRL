@@ -208,14 +208,18 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         if physics_step >= 20:
             raise RuntimeError("more than one callback was observed for a physics integration")
         data = self._robot.data
-        required = ("body_link_state_w", "root_link_state_w", "root_state_w", "body_com_pose_b", "default_mass", "default_inertia")
+        required = ("body_link_state_w", "root_link_state_w", "root_state_w", "body_com_pose_b")
         if any(not isinstance(getattr(data, name, None), torch.Tensor) for name in required):
             raise RuntimeError("public articulation body mechanics are unavailable")
         # body_state_w already stores COM velocity; reconstruct_com needs link velocity.
         body = data.body_link_state_w
         com_pose = data.body_com_pose_b
-        mass = data.default_mass
-        inertia = data.default_inertia
+        view = self._robot.root_physx_view
+        # Measure the current controlled plant, rather than initialization defaults.
+        mass = view.get_masses()
+        inertia = view.get_inertias()
+        if not isinstance(mass, torch.Tensor) or not isinstance(inertia, torch.Tensor):
+            raise RuntimeError("actual articulation mass/inertia are unavailable")
         if body.shape[:2] != (32, 5) or com_pose.shape[:2] != (32, 5) or mass.shape[-1] != 5:
             raise RuntimeError("public articulation body topology changed")
         # Response pose/velocity refer to the same link point. Controller keeps
@@ -235,45 +239,25 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         unavailable = {"availability": "UNAVAILABLE"}
         for lane in range(32):
             bodies = []
-            total_mass = 0.0
-            weighted = [0.0, 0.0, 0.0]
-            momentum = [0.0, 0.0, 0.0]
-            body_coms = []
             for index, name in enumerate(self._robot.body_names):
                 state = self._tolist(body[lane, index]); local = self._tolist(com_pose[lane, index])
                 m = float(mass[lane, index] if mass.ndim == 2 else mass[index])
-                q = body[lane, index, 3:7]
-                local_world = quat_apply(q.unsqueeze(0), com_pose[lane, index, :3].unsqueeze(0))[0]
-                com = self._tolist(body[lane, index, :3] + local_world)
-                com_velocity = self._tolist(body[lane, index, 7:10] + torch.linalg.cross(body[lane, index, 10:13], local_world))
                 tensor_inertia = inertia[lane, index] if inertia.ndim == 3 else inertia[index]
-                matrix = self._tolist(tensor_inertia.reshape(3, 3))
                 bodies.append({"name": str(name), "mass_kg": m, "local_com_m": local[:3],
-                    "local_com_quaternion_wxyz": local[3:7], "inertia_at_com_body_kg_m2": matrix,
+                    "local_com_quaternion_wxyz": local[3:7],
+                    "inertia_at_com_body_kg_m2": self._tolist(tensor_inertia.reshape(3, 3)),
                     "world_position_m": state[:3], "world_quaternion_wxyz": state[3:7],
                     "world_linear_velocity_m_s": state[7:10], "world_angular_velocity_rad_s": state[10:13]})
-                total_mass += m; body_coms.append((m, com, com_velocity))
-                for axis in range(3): weighted[axis] += m*com[axis]; momentum[axis] += m*com_velocity[axis]
-            combined = [value/total_mass for value in weighted]
-            angular = [0.0, 0.0, 0.0]
-            # Preserve the full body-derived angular momentum schema.  The
-            # analyzer independently recomputes this from the raw body rows.
-            for index, (m, com, velocity) in enumerate(body_coms):
-                orbital = self._cross3([com[i]-combined[i] for i in range(3)], [m*x for x in velocity])
-                omega = body[lane, index, 10:13]
-                q = body[lane, index, 3:7]
-                w, x, y, z = q.unbind()
-                rotation = torch.stack((
-                    torch.stack((1-2*(y*y+z*z), 2*(x*y-z*w), 2*(x*z+y*w))),
-                    torch.stack((2*(x*y+z*w), 1-2*(x*x+z*z), 2*(y*z-x*w))),
-                    torch.stack((2*(x*z-y*w), 2*(y*z+x*w), 1-2*(x*x+y*y))),
-                ))
-                local_inertia = inertia[lane, index] if inertia.ndim == 3 else inertia[index]
-                world_inertia = rotation @ local_inertia.reshape(3, 3) @ rotation.T
-                spin = self._tolist(world_inertia @ omega)
-                angular = [angular[i]+orbital[i]+spin[i] for i in range(3)]
-            system = {"total_mass_kg": total_mass, "combined_com_world_m": combined,
-                "linear_momentum_kg_m_s": momentum, "angular_momentum_at_com_kg_m2_s": angular}
+            # Derive diagnostics from the same serialized primitives as the
+            # verifier. Float32 world-position addition at 100m lane origins
+            # otherwise disagrees with independent double-precision rebuilding.
+            # These helpers own no simulator/controller/RNG and run only here.
+            from training_workloads.unified_h1.b0_enhanced import reconstruct_com, rotor_wrench, quaternion_rotate
+            system = reconstruct_com(bodies)
+            total_mass = system["total_mass_kg"]
+            combined = system["combined_com_world_m"]
+            momentum = system["linear_momentum_kg_m_s"]
+            angular = system["angular_momentum_at_com_kg_m2_s"]
             key = (case, lane); previous = next_previous_system.get(key)
             if previous is None:
                 inferred_force = [0.0, 0.0, 0.0]; inferred_torque = [0.0, 0.0, 0.0]
@@ -290,9 +274,15 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
                 torque=[torque[i]+reaction*direction[i] for i in range(3)]
                 rotor_force=[rotor_force[i]+force[i] for i in range(3)]; rotor_torque=[rotor_torque[i]+torque[i] for i in range(3)]
                 rotor_rows.append({"name":name,"command":float(rotor.normalized_commands[lane,rotor_index]),"target_throttle":float(rotor.target_throttle[lane,rotor_index]),"actual_throttle":float(rotor.throttle[lane,rotor_index]),"thrust_n":thrust,"reaction_moment_nm":reaction,"application_point_world_m":point,"direction_world":direction})
+            rotor_total = rotor_wrench(rotor_rows, combined)
+            rotor_force = rotor_total["force_n"]; rotor_torque = rotor_total["torque_at_com_nm"]
             gravity_force=[0.0,0.0,-total_mass*9.81]; gravity_torque=[0.0,0.0,0.0]
-            for m, com, _ in body_coms:
-                part=self._cross3([com[i]-combined[i] for i in range(3)],[0.0,0.0,-m*9.81]); gravity_torque=[gravity_torque[i]+part[i] for i in range(3)]
+            for entry in bodies:
+                m=entry["mass_kg"]
+                offset=quaternion_rotate(entry["world_quaternion_wxyz"],entry["local_com_m"])
+                com=[entry["world_position_m"][i]+offset[i] for i in range(3)]
+                part=self._cross3([com[i]-combined[i] for i in range(3)],[0.0,0.0,-m*9.81])
+                gravity_torque=[gravity_torque[i]+part[i] for i in range(3)]
             velocity=self._tolist(root[lane,7:10]); prior_velocity=next_previous_velocity.get(key)
             acceleration=[0.0,0.0,0.0] if prior_velocity is None else [(velocity[i]-prior_velocity[i])/dt for i in range(3)]
             next_previous_velocity[key]=tuple(velocity)
@@ -313,7 +303,7 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
                 reset={"mask":True,"reason":str(boundary["reason"]),"initial_boundary":bool(boundary["initial_boundary"]),"last_pre_reset_state":boundary["last_pre_reset_state"],"post_reset_states":[current_snapshot]}
                 next_episode_ids[key]=episode_id+1; consumed_boundaries.append(key)
             next_last_snapshots[key]=current_snapshot
-            rows.append(OrderedDict((("schema_version","instinctrl-enhanced-b0-physics-row/1"),("experiment_id","UNIFIED-H1-R5-STAGE1-B0-RESET-AVAILABILITY-CLEANUP-R1-20260929"),("case",case),("policy_step",policy_step),("physics_step",physics_step),("lane",lane),("episode_id",episode_id),("reset",reset),("root_state",{"pose":self._tolist(root[lane,:7]),"linear_velocity":velocity,"angular_velocity":self._tolist(root[lane,10:13])}),("system",system),("bodies",bodies),("controller",controller),("rotors",rotor_rows),("wrenches",OrderedDict((("gravity",available(gravity_force,gravity_torque)),("rotor",available(rotor_force,rotor_torque)),("drag_aero",dict(unavailable)),("contact",dict(unavailable)),("joint_constraint",dict(unavailable)),("other",dict(unavailable))))),("momentum",{"dt_s":dt,"inferred_wrench":{"force_n":inferred_force,"torque_at_com_nm":inferred_torque}}),("response",{"position_world_m":self._tolist(root[lane,:3]),"velocity_world_m_s":velocity,"acceleration_world_m_s2":acceleration}))))
+            rows.append(OrderedDict((("schema_version","instinctrl-enhanced-b0-physics-row/1"),("experiment_id","UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012"),("case",case),("policy_step",policy_step),("physics_step",physics_step),("lane",lane),("episode_id",episode_id),("reset",reset),("root_state",{"pose":self._tolist(root[lane,:7]),"linear_velocity":velocity,"angular_velocity":self._tolist(root[lane,10:13])}),("system",system),("bodies",bodies),("controller",controller),("rotors",rotor_rows),("wrenches",OrderedDict((("gravity",available(gravity_force,gravity_torque)),("rotor",available(rotor_force,rotor_torque)),("drag_aero",dict(unavailable)),("contact",dict(unavailable)),("joint_constraint",dict(unavailable)),("other",dict(unavailable))))),("momentum",{"dt_s":dt,"inferred_wrench":{"force_n":inferred_force,"torque_at_com_nm":inferred_torque}}),("response",{"position_world_m":self._tolist(root[lane,:3]),"velocity_world_m_s":velocity,"acceleration_world_m_s2":acceleration}))))
         self._enhanced_b0_previous_system = next_previous_system
         self._enhanced_b0_previous_velocity = next_previous_velocity
         self._enhanced_b0_episode_ids = next_episode_ids

@@ -13,3 +13,15 @@ def test_historical_contract_retained_and_explicit_new_candidate():
 def test_unknown_or_malformed_cli_fails_closed(output,code):
     with pytest.raises(IsolationError):
         cli_version(SimpleNamespace(returncode=code,stdout=output))
+
+
+def test_snapshot_dispatcher_requires_exact_reviewed_bytes(tmp_path):
+    from rlflow import experiments
+    path=tmp_path/'dispatcher.py'
+    path.write_bytes(experiments.DISPATCHER.read_bytes())
+    value={'pins':{'dispatcher':experiments.file_pin(path)}}
+    experiments.check_pins(value)
+    path.write_text('different dispatcher')
+    value['pins']['dispatcher']=experiments.file_pin(path)
+    with pytest.raises(Exception,match='reviewed H1 dispatcher'):
+        experiments.check_pins(value)

@@ -16,7 +16,7 @@ from .store import Conflict, canonical, atomic, sha, Store
 from .policy import stopped, STOP_PATHS
 from .jobs import identity, owns, _kill_owned
 
-DISPATCHER = Path('/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0009-workload/training_workloads/unified_h1/local_dispatch.py')
+DISPATCHER = Path('/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/local_dispatch.py')
 
 
 def file_pin(path):
@@ -29,7 +29,8 @@ def check_pins(spec):
     for name,pin in spec['pins'].items():
         if not isinstance(pin,dict) or set(pin)!={'path','sha256'} or file_pin(pin['path'])!=pin:
             raise Conflict('experiment input drift: '+name)
-    if spec['pins']['dispatcher']!=file_pin(DISPATCHER):
+    # Immutable candidate snapshots use a different path to the same reviewed bytes.
+    if spec['pins']['dispatcher']['sha256']!=file_pin(DISPATCHER)['sha256']:
         raise Conflict('experiment must use the reviewed H1 dispatcher')
 
 

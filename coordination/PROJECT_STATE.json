@@ -30,9 +30,9 @@
   "migration_is_product_acceptance": false,
   "current_candidate_config": "../training_workloads/unified_h1/candidate_config.json",
   "blocking_followups": [
-    "Obtain independent acceptance on the new exact candidate, without inheriting old receipts.",
-    "Resolve/revalidate installed Codex CLI 0.161.0 against tool isolation pinned to 0.153.4 before using the real orchestrator backend.",
-    "Any future simulation/training needs separately checked exact inputs and budgets."
+    "Independently close MECHANICS-R1 on the exact new candidate and input binding.",
+    "Freeze and independently pre-review baseline snapshot/handoff; bind initialization, reset, probe and remaining budget before Commander release.",
+    "Real current control diagnosis and runtime mass binding, minimal evidenced repair and nontraining regression remain required."
   ],
   "migration_verification": {
     "scope": "MIGRATION_CPU_REGRESSION_ONLY_NOT_INDEPENDENT_PRODUCT_ACCEPTANCE",
@@ -225,6 +225,25 @@
     "target": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
     "status": "IN_PROGRESS",
     "live_release_issued": false,
-    "training_authorized": false
+    "training_authorized": false,
+    "independent_review": {
+      "candidate_commit": "5da1439506854a606da8fcac39d87f71c079a8c5",
+      "verdict": "MUST_FIX",
+      "closed": [
+        "PILOT-R1",
+        "PILOT-R2"
+      ],
+      "open": [
+        "MECHANICS-R1"
+      ],
+      "closure_candidate": "serialized-primitive shared mechanics, awaiting independent review"
+    },
+    "cli_compatibility": {
+      "installed": "0.161.0",
+      "scope": "new project compatibility candidate only",
+      "doctor": "../docs/diagnostics/r5-readiness/cli-doctor-v1.json",
+      "historical_pin": "0.153.4",
+      "result": "PASS_KERNEL_AND_INSTALLED_REGISTRY_CHECKS"
+    }
   }
 }

@@ -251,11 +251,11 @@ class HandoffTests(unittest.TestCase):
         source={"product_repository":str(self.repo),"product_commit":self.commit,"product_tree":self.tree,"workload_repository":str(self.repo),"workload_base_commit":self.commit,"workload_base_tree":self.tree,"runtime_python":str(self.runtime),"runtime_python_sha256":self.digest(self.runtime),"asset_manifest":str(self.assets),"asset_manifest_sha256":self.digest(self.assets)}
         auth=str(self.root/"attempt"/"commands"/"AUTHORIZATION.json"); attempt=str(self.root/"attempt")
         return OrderedDict((
-          ("schema_version","instinctrl-enhanced-b0-handoff/1"),("status","VALIDATE_ONLY_NOT_AUTHORIZED"),("experiment_id",EXPERIMENT_ID),
+          ("schema_version","instinctrl-enhanced-b0-handoff/2"),("status","VALIDATE_ONLY_NOT_AUTHORIZED"),("experiment_id",EXPERIMENT_ID),
           ("argv",["/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11","-B","-m","training_workloads.unified_h1.formal_unified_h1","--authorization",auth,"--attempt",attempt,"--mode","enhanced-b0-diagnostic"]),
-          ("authorization",auth),("attempt",attempt),("checkpoint",{"path":str(self.checkpoint),"sha256":self.digest(self.checkpoint),"source_identity":source}),("source_identity",source),
+          ("authorization",auth),("attempt",attempt),("checkpoint",None),("source_identity",source),
           ("candidate",{"repository":str(self.repo),"base_commit":self.commit,"commit":self.commit,"diff_sha256":hashlib.sha256(diff).hexdigest()}),
-          ("frozen",{"seed":20260909,"cases":["Z","T","S"],"case_policy_steps":{"Z":200,"T":100,"S":330},"lanes":32,"decimation":20,"target_velocity_b_m_s":[0.,0.,0.],"initial_state":"frozen-R4-B0","curriculum":"frozen-Z/T/S","control_frequency_hz":100,"policy_frequency_hz":5,"safety_standards":"unchanged-R4-B0"}),
+          ("frozen",{"seed":20260909,"cases":["Z","T","S"],"case_policy_steps":{"Z":200,"T":100,"S":330},"lanes":32,"decimation":20,"target_velocity_b_m_s":[0.,0.,0.],"initial_state":"frozen-R4-B0","curriculum":"frozen-Z/T/S","control_frequency_hz":200,"policy_frequency_hz":10,"safety_standards":"unchanged-R4-B0"}),
           ("budgets",{"live_process_starts":1,"simulator_initializations":1,"nontraining_transitions":20160,"physics_rows":403200,"training_transitions":0,"optimizer_updates":0,"checkpoint_writes":0,"p0_plr":0,"policy_evaluations":0,"automatic_retries":0,"wall_seconds":910,"gpu_allocation_seconds":910,"diagnostic_bytes":17179869184}),
           ("output_manifest",OrderedDict((("raw_physics_jsonl","enhanced_b0_physics.jsonl"),("raw_manifest","enhanced_b0_manifest.json"),("causal_analysis","enhanced_b0_causal_analysis.json"),("budget_ledger","budget_ledger.json"),("status","status.json"),("cleanup_evidence","cleanup_evidence.json")))),
           ("cleanup",{"environment_close":True,"app_close":True,"no_retry_on_failure":True})))
@@ -268,17 +268,21 @@ class HandoffTests(unittest.TestCase):
     def test_provided_predecessor_candidate_hash_is_rejected_after_rework(self):
         h=self.handoff(); h["candidate"]["diff_sha256"]="f223be389f2b0a835cf03d8892a171b9ea3376cf2accbb28a9b0da3011c7d5d6"
         with self.assertRaises(PermissionError): validate_handoff(h)
-    def test_checkpoint_source_and_candidate_bytes_are_recomputed(self):
-        for target in ("checkpoint","runtime","assets","candidate"):
+    def test_zero_target_has_no_policy_checkpoint_and_uses_actual_frequencies(self):
+        h=self.handoff();h["checkpoint"]={"path":str(self.checkpoint)}
+        with self.assertRaisesRegex(PermissionError,"must not bind/load"):validate_handoff(h)
+        h=self.handoff();h["frozen"]["control_frequency_hz"]=100
+        with self.assertRaisesRegex(PermissionError,"parameters changed"):validate_handoff(h)
+
+    def test_runtime_asset_and_candidate_bytes_are_recomputed(self):
+        for target in ("runtime","assets","candidate"):
             h=self.handoff()
-            if target=="checkpoint": self.checkpoint.write_bytes(b"changed")
-            elif target=="runtime": self.runtime.write_bytes(b"changed")
+            if target=="runtime": self.runtime.write_bytes(b"changed")
             elif target=="assets": self.assets.write_bytes(b"changed")
             else: h["candidate"]["diff_sha256"]="0"*64
             with self.assertRaises(PermissionError): validate_handoff(h)
             if target != "candidate":
-                if target=="checkpoint": self.checkpoint.write_bytes(b"checkpoint")
-                elif target=="runtime": self.runtime.write_bytes(b"runtime")
+                if target=="runtime": self.runtime.write_bytes(b"runtime")
                 else: self.assets.write_bytes(b"assets")
 
 if __name__ == "__main__": unittest.main()

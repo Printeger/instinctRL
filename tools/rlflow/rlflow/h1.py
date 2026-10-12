@@ -80,13 +80,17 @@ def environment(spec):
         'PYTHONPATH':os.pathsep.join([spec['h1']['workload_root'],str(Path(config['product']['path'])/'isaaclab-training')])}
 
 
-POSTRUN_PACKAGE_ID = "INSTINCTRL-R5-STAGE1-RESET-AVAILABILITY-CLEANUP-SUCCESSOR-20260929"
-POSTRUN_EXPERIMENT_ID = "UNIFIED-H1-R5-STAGE1-B0-RESET-AVAILABILITY-CLEANUP-R1-20260929"
+POSTRUN_PACKAGE_ID = "INSTINCTRL-R5-READINESS-20261012"
+POSTRUN_EXPERIMENT_ID = "UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012"
+POSTRUN_IDENTITIES = {
+    POSTRUN_EXPERIMENT_ID: POSTRUN_PACKAGE_ID,
+    "UNIFIED-H1-R5-STAGE1-B0-RESET-AVAILABILITY-CLEANUP-R1-20260929": "INSTINCTRL-R5-STAGE1-RESET-AVAILABILITY-CLEANUP-SUCCESSOR-20260929",
+}
 
 def seal_postrun_manifest(spec, directory, output):
     """Seal every regular production job/report byte without copying large raw evidence."""
     d=Path(directory).resolve(); output=Path(output).resolve()
-    if spec.get("id") != POSTRUN_EXPERIMENT_ID or spec.get("h1",{}).get("mode") != "enhanced-b0-diagnostic":
+    if spec.get("id") not in POSTRUN_IDENTITIES or spec.get("h1",{}).get("mode") != "enhanced-b0-diagnostic":
         return None
     rows=[]
     for kind,root in (("job",d),("report",output)):
@@ -98,8 +102,8 @@ def seal_postrun_manifest(spec, directory, output):
                 rows.append({"kind":kind,"path":path.relative_to(root).as_posix(),"sha256":digest(path),"bytes":path.stat().st_size})
     if not any(row["kind"]=="job" for row in rows) or not any(row["kind"]=="report" for row in rows):
         raise Conflict("enhanced B0 postrun job/report inventory incomplete")
-    value={"schema_version":"instinctrl-enhanced-b0-postrun-evidence/2","package_id":POSTRUN_PACKAGE_ID,
-           "experiment_id":POSTRUN_EXPERIMENT_ID,"roots":{"job":str(d),"report":str(output)},"files":rows}
+    value={"schema_version":"instinctrl-enhanced-b0-postrun-evidence/2","package_id":POSTRUN_IDENTITIES[spec["id"]],
+           "experiment_id":spec["id"],"roots":{"job":str(d),"report":str(output)},"files":rows}
     path=d/"postrun-evidence-manifest.json"
     if path.exists() and json.loads(path.read_text())!=value:raise Conflict("enhanced B0 postrun manifest drift")
     if not path.exists():atomic(path,canonical(value))

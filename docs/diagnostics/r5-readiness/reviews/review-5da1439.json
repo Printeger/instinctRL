@@ -1,0 +1,12 @@
+{
+  "candidate_commit": "5da1439506854a606da8fcac39d87f71c079a8c5",
+  "reviewer_handle": "/root/pilot_reviewer",
+  "role_call": 3,
+  "verdict": "MUST_FIX",
+  "findings": [{"id":"MECHANICS-R1","classification":"MUST_FIX","contract":"requirements B2/B4 numerical measurement consistency, pre-fixed precision contract with positive/negative fixtures","evidence":"Independent CPU reproduction moved product-mechanics fixture body origin to x=100m and got articulated COM reconstruction mismatch; float32 world COM sum differs about 1.53e-6m from serialized primitive double reconstruction under original 1e-8 bound","impact":"Legitimate 100m lane data can fail evidence writing before useful live diagnosis","closure":"Unify derivation from serialized primitives or pre-fix justified precision tolerances; add 100m/larger origins, rotations, nonzero COM/omega, dt differences and reject corrupt COM/momentum/wrench"}],
+  "closed_findings": [{"id":"PILOT-R1","status":"CLOSED","evidence":"Actual HistoryActor/H1 critic 16x32 capture/bind to 512 inputs, clone/order/RNG/mismatch tests at unchanged tolerance"},{"id":"PILOT-R2","status":"CLOSED","evidence":"Attempted vs post-step completion boundaries separated; actual optimizer state retained; pre-hook only failure shows completed=0"}],
+  "non_blocking": ["Analyzer reset/episode boundaries correct and opposite response segments retained", "Root vs COM difference not closure; heuristic scores not root cause", "COM/link source fix matches frozen IsaacLab source", "0.161.0 compatibility checks bind exact isolation hash, actual CLI and kernel; not historical release certification", "Authored USD zero rotor mass correctly remains runtime UNKNOWN"],
+  "follow_up": ["Close MECHANICS-R1 before exact live-input independent pre-review", "Actual control baseline, runtime mass and repair regression remain incomplete", "Actual first rollout gate remains pending next authorized pilot"],
+  "review_execution": {"shared_files_written":false,"optimizer_updates":0,"simulation_started":false,"gpu_probe_started":false,"dependencies_installed":false},
+  "record_note": "Structured finding record transcribed from independent Reviewer response. No live release."
+}

@@ -35,7 +35,7 @@ class ProductHookSourceTests(unittest.TestCase):
   self.assertNotIn('"availability":"AVAILABLE","force_n":[0',rows)
  def test_successor_identity_and_math_binding_are_exact(self):
   self.assertIn("from isaaclab.utils.math import quat_apply",self.text)
-  self.assertIn('"UNIFIED-H1-R5-STAGE1-B0-RESET-AVAILABILITY-CLEANUP-R1-20260929"',self.text)
+  self.assertIn('"UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012"',self.text)
   self.assertNotIn("UNIFIED-H1-R5-STAGE1-B0-ENHANCED-20260927",self.text)
  def test_reset_episode_mapping_is_state_derived_and_three_resets_only(self):
   rows=ast.get_source_segment(self.text,self.methods["_enhanced_b0_physics_rows"]); run=ast.get_source_segment(self.text,self.methods["run_frozen_enhanced_b0_zts"]); reset=ast.get_source_segment(self.text,self.methods["_reset_idx"] )
