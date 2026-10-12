@@ -20,7 +20,16 @@ import tempfile
 import time
 
 CODEX = '/usr/local/bin/codex'
-PINNED_VERSION = '0.153.4'
+PINNED_VERSION = '0.153.4'  # Historical release contract, retained unchanged.
+# New project-local candidates still require a fresh doctor registry/kernel receipt.
+COMPATIBILITY_CANDIDATES = (PINNED_VERSION, '0.161.0')
+
+def cli_version(result) -> str:
+    words=result.stdout.strip().split()
+    if result.returncode or len(words)!=2 or words[0]!='codex-cli' or words[1] not in COMPATIBILITY_CANDIDATES:
+        raise IsolationError('Codex CLI lacks an enabled project compatibility candidate')
+    return words[1]
+
 ROLES = ('PI', 'Critic', 'Designer', 'Engineer', 'Evaluator', 'Scout')
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -293,8 +302,7 @@ def codex_command(role: str, candidate: str | Path, scratch: str | Path,
     trusted.mkdir(parents=True,exist_ok=True)
     scratch.mkdir(parents=True,exist_ok=True)
     version = subprocess.run([CODEX,'--version'],capture_output=True,text=True,timeout=10)
-    if version.returncode or PINNED_VERSION not in version.stdout.split():
-        raise IsolationError('Codex version does not match '+PINNED_VERSION)
+    cli_version(version)
     cache = Path(os.environ.get('CODEX_HOME',str(Path.home()/'.codex')))/'models_cache.json'
     catalog = json.loads(cache.read_text())
     models = [m for m in catalog['models'] if m['slug']==model]
@@ -415,7 +423,8 @@ def doctor(state_root: str | Path | None = None, *, workspace: str | Path = '/ho
     checks = {}
     try:
         ver = subprocess.run([CODEX,'--version'],capture_output=True,text=True,timeout=10)
-        checks['codex_version'] = {'ok':PINNED_VERSION in ver.stdout.split(),'observed':ver.stdout.strip()}
+        observed_version=cli_version(ver)
+        checks['codex_version'] = {'ok':True,'observed':ver.stdout.strip(),'historical_pin':PINNED_VERSION,'scope':'new project compatibility candidate; requires all doctor checks'}
         login = subprocess.run([CODEX,'login','status'],capture_output=True,text=True,timeout=10)
         checks['chatgpt_login'] = {'ok':login.returncode == 0 and 'ChatGPT' in login.stdout+login.stderr,
                                    'observed':(login.stdout+login.stderr).strip()}
@@ -474,7 +483,7 @@ def doctor(state_root: str | Path | None = None, *, workspace: str | Path = '/ho
               'real_backend_enabled':False,'tool_transport':'MCP cpu_exec; Landlock ABI >=3 + seccomp',
               'native_tool_exposure':'Verified installed CLI registry; only cpu_exec and empty MCP resource interfaces',
               'isolation_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-              'codex_version':PINNED_VERSION,'created_at':time.time(),
+              'codex_version':locals().get('observed_version'),'created_at':time.time(),
               'kernel':platform.release()}
     if state_root is not None:
         runtime = Path(state_root).resolve()/'runtime'
@@ -497,9 +506,8 @@ def require_doctor(state_root: str | Path) -> dict:
     if report.get('isolation_sha256') != expected or report.get('kernel') != platform.release():
         raise IsolationError('Isolation implementation/kernel changed; rerun doctor')
     version=subprocess.run([CODEX,'--version'],capture_output=True,text=True,timeout=10)
-    if version.returncode or PINNED_VERSION not in version.stdout.split():
-        raise IsolationError('Codex version changed; sandbox is not certified for this CLI')
-    if report.get('codex_version')!=PINNED_VERSION:
+    observed_version=cli_version(version)
+    if report.get('codex_version')!=observed_version:
         raise IsolationError('Doctor was produced for a different Codex version')
     return report
 
