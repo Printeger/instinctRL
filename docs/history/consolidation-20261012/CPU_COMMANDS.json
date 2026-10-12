@@ -1,0 +1,42 @@
+{
+  "cwd": "/home/mint/rl_dev/instinctRL-dev",
+  "commands": [
+    {
+      "name": "product-cpu-final",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-m",
+        "pytest",
+        "-q",
+        "isaaclab-training/tests",
+        "--deselect=isaaclab-training/tests/test_m5_runtime_control.py::test_lee_rejects_missing_non_tensor_and_cross_device_inputs",
+        "--deselect=isaaclab-training/tests/test_m6_task_contract.py::test_termination_and_critic_reject_cross_device_inputs",
+        "--junitxml=docs/history/consolidation-20261012/product-cpu-final.xml"
+      ],
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+        "CUDA_VISIBLE_DEVICES": "",
+        "PYTHONPATH": "isaaclab-training"
+      },
+      "exit_code": 0
+    },
+    {
+      "name": "tool-tests",
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tools/rlflow/tests",
+        "--junitxml=docs/history/consolidation-20261012/tool-tests.xml"
+      ],
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+        "PYTHONPATH": ".:tools/rlflow:tools/rlflow/tests"
+      },
+      "exit_code": 1
+    }
+  ]
+}

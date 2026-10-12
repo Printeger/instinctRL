@@ -24,7 +24,7 @@ actor、reward、控制器、质量/COM、物理参数及方法不因整理改�
 
 | 检查 | 结果 |
 | --- | --- |
-| 完整产品树和源码/配置迁移检查 | PASS：3,476 个基线文件保留，339 个 Python 文件可解析，52 个配置源码哈希匹配 |
+| 完整产品树和源码/配置迁移检查 | PASS：3,476 个基线文件保留，328 个 Python 文件可解析，52 个配置源码哈希匹配 |
 | 产品 CPU 单测 | 1,264 passed，40 subtests passed；8 项 GPU 用例 skipped，2 项 GPU 必需用例 deselected |
 | workload 分模块 CPU 单测 | 239 passed，22 个模块，无失败或跳过 |
 | 项目随附 rlflow 工具检查 | 310 passed；2 项安装环境检查失败，CLI 版本与历史固定契约不一致 |
