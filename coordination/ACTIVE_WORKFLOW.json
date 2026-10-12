@@ -1,0 +1,17 @@
+{
+  "schema_version": "instinctrl-single-branch-workflow/1",
+  "effective_date": "2026-10-12",
+  "development_repository": "/home/mint/rl_dev/instinctRL-dev",
+  "branch": "main",
+  "remote": "git@github.com:Printeger/instinctRL.git",
+  "policy_path": "protocols/SINGLE_BRANCH_WORKFLOW.md",
+  "status_path": "../docs/PROJECT_STATUS.md",
+  "machine_state_path": "PROJECT_STATE.json",
+  "default_new_task_branch": false,
+  "runtime_snapshot_mode": "READ_ONLY_EXACT_COMMIT_OR_DETACHED_HEAD",
+  "history_rewrite_authorized": false,
+  "migration_cpu_checks_authorized": true,
+  "migration_normal_push_authorized": true,
+  "new_live_execution_authorized": false,
+  "new_training_authorized": false
+}
