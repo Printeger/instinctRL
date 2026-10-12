@@ -238,8 +238,12 @@
         "BASELINE-R1",
         "BASELINE-R2"
       ],
-      "open": [],
-      "release_order": "INDEPENDENTLY_ACCEPTED_ENTRY_GATE_SEPARATION"
+      "open": [
+        "LIVE-R1",
+        "LIVE-R2"
+      ],
+      "release_order": "INDEPENDENTLY_ACCEPTED_ENTRY_GATE_SEPARATION",
+      "latest_actual_failure_review": "../docs/diagnostics/r5-readiness/reviews/review-live-baseline-v3-failure.json"
     },
     "cli_compatibility": {
       "installed": "0.161.0",
@@ -251,6 +255,13 @@
     "exact_live_approval": "../docs/diagnostics/r5-readiness/baseline-v3-commander-approval.json",
     "live_entry_status": "FAILED_FIRST_PHYSICS_OBSERVER_INERTIA_VALIDATION",
     "latest_live_job": "J-65769ac9c17a38cb",
-    "current_live_release_effective": false
+    "current_live_release_effective": false,
+    "next_candidate": {
+      "source_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+      "inputs": "../docs/diagnostics/r5-readiness/inputs/measurement_r1b_input_manifest.json",
+      "status": "PENDING_INDEPENDENT_REVIEW",
+      "experiment_id": "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+      "live_release_issued": false
+    }
   }
 }

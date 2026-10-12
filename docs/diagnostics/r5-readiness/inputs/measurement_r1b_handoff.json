@@ -1,0 +1,92 @@
+{
+  "schema_version": "instinctrl-enhanced-b0-handoff/2",
+  "status": "VALIDATE_ONLY_NOT_AUTHORIZED",
+  "experiment_id": "UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "training_workloads.unified_h1.formal_unified_h1",
+    "--authorization",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012/commands/AUTHORIZATION.json",
+    "--attempt",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+    "--mode",
+    "enhanced-b0-diagnostic"
+  ],
+  "authorization": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012/commands/AUTHORIZATION.json",
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012",
+  "checkpoint": null,
+  "source_identity": {
+    "product_repository": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1b-20261012",
+    "product_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+    "product_tree": "3916ac45e9f2c357d513c14ca62beed1cdbae5c5",
+    "workload_repository": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1b-20261012",
+    "workload_base_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+    "workload_base_tree": "3916ac45e9f2c357d513c14ca62beed1cdbae5c5",
+    "runtime_python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "runtime_python_sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a",
+    "asset_manifest": "/home/mint/rl_dev/instinctRL-dev/runtime_assets/Assets/Isaac/5.1/ASSET_MANIFEST.json",
+    "asset_manifest_sha256": "f64a0561477efcc612761f6b3034f9612f2d3cb42832138e86ff7a4c18e1ef52"
+  },
+  "candidate": {
+    "repository": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1b-20261012",
+    "base_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+    "commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+    "diff_sha256": "a5f96f0f5f7eaf88c4e46aa430ff5facffa6423733ee36149458efaad1e41da5"
+  },
+  "frozen": {
+    "seed": 20260909,
+    "cases": [
+      "Z",
+      "T",
+      "S"
+    ],
+    "case_policy_steps": {
+      "Z": 200,
+      "T": 100,
+      "S": 330
+    },
+    "lanes": 32,
+    "decimation": 20,
+    "target_velocity_b_m_s": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "initial_state": "frozen-R4-B0",
+    "curriculum": "frozen-Z/T/S",
+    "control_frequency_hz": 200,
+    "policy_frequency_hz": 10,
+    "safety_standards": "unchanged-R4-B0"
+  },
+  "budgets": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "nontraining_transitions": 20160,
+    "physics_rows": 403200,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "p0_plr": 0,
+    "policy_evaluations": 0,
+    "automatic_retries": 0,
+    "wall_seconds": 910,
+    "gpu_allocation_seconds": 910,
+    "diagnostic_bytes": 17179869184
+  },
+  "output_manifest": {
+    "raw_physics_jsonl": "enhanced_b0_physics.jsonl",
+    "raw_manifest": "enhanced_b0_manifest.json",
+    "causal_analysis": "enhanced_b0_causal_analysis.json",
+    "measurement_failure": "enhanced_b0_measurement_failure.json",
+    "budget_ledger": "budget_ledger.json",
+    "status": "status.json",
+    "cleanup_evidence": "cleanup_evidence.json"
+  },
+  "cleanup": {
+    "environment_close": true,
+    "app_close": true,
+    "no_retry_on_failure": true
+  }
+}

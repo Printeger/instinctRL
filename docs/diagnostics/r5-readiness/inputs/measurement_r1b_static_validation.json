@@ -1,0 +1,38 @@
+{
+  "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1b-20261012",
+  "env_overrides": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1b-20261012:/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-measurement-r1b-20261012/isaaclab-training"
+  },
+  "invocations": [
+    {
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-B",
+        "-m",
+        "training_workloads.unified_h1.formal_unified_h1",
+        "--validate-only"
+      ],
+      "exit_code": 0,
+      "stdout": "{'status': 'VALID', 'method': 'unified-h1-v1', 'live_authorized': False, 'product_commit': '79ccb40d52a347f0f17466c7f0bdbac8206354c1', 'future_modes': ['main', 'controlled-failure', 'r4-training', 'evaluation', 'r5-resume', 'control-diagnostic', 'pilot-training', 'pilot-evaluation', 'enhanced-b0-diagnostic']}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-B",
+        "-m",
+        "training_workloads.unified_h1.formal_unified_h1",
+        "--validate-enhanced-b0-handoff",
+        "--handoff",
+        "/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/inputs/measurement_r1b_handoff.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{'status': 'VALID', 'live_authorized': False, 'experiment_id': 'UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012', 'physics_rows': 403200, 'candidate_diff_sha256': 'a5f96f0f5f7eaf88c4e46aa430ff5facffa6423733ee36149458efaad1e41da5'}\n",
+      "stderr": ""
+    }
+  ],
+  "simulation_starts": 0,
+  "gpu_queries": 0
+}

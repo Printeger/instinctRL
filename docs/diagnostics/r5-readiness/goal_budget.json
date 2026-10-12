@@ -30,7 +30,7 @@
     "wall_seconds": 30.395258554955944,
     "gpu_seconds": 27.148333297111094,
     "output_bytes": 446034,
-    "role_calls": 8,
+    "role_calls": 9,
     "training_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0
@@ -101,6 +101,14 @@
       "handle": "/root/pilot_reviewer",
       "scope": "Independent actual first-live failure assessment and minimum next repair/data/cleanup boundary",
       "status": "MUST_FIX_LIVE_R1_R2"
+    },
+    {
+      "call": 9,
+      "role": "Reviewer",
+      "candidate_commit": "79ccb40d52a347f0f17466c7f0bdbac8206354c1",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Independent LIVE-R1/R2 closure and exact measurement-R1b source/input/tool/new-budget pre-live review; no execution release",
+      "status": "REQUESTED"
     }
   ],
   "initialization_ticks_resets_gpu_probes": {
