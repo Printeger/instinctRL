@@ -1,0 +1,21 @@
+{
+  "scope": "CPU only; empty CUDA visibility; no query or simulator. H1 load_config now includes exact reused resource source hash validation.",
+  "results": [
+    {
+      "i": 0,
+      "chunk_id": "638a31",
+      "wall_time_seconds": 0.585711216,
+      "exit_code": 0,
+      "original_token_count": 78,
+      "output": "{'status': 'VALID', 'method': 'unified-h1-v1', 'live_authorized': False, 'product_commit': 'f726c019339494e74fbc6e7c90ec6d0fa7a45ff8', 'future_modes': ['main', 'controlled-failure', 'r4-training', 'evaluation', 'r5-resume', 'control-diagnostic', 'pilot-training', 'pilot-evaluation', 'enhanced-b0-diagnostic']}\n"
+    },
+    {
+      "i": 1,
+      "chunk_id": "77b535",
+      "wall_time_seconds": 0.859609969,
+      "exit_code": 0,
+      "original_token_count": 57,
+      "output": "{'status': 'VALID', 'live_authorized': False, 'experiment_id': 'UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012', 'physics_rows': 403200, 'candidate_diff_sha256': '3d7b1bcf7ce8cd3d3504f579fba5abb99b0d5f1e1d63cde324c959b0242b291c'}\n"
+    }
+  ]
+}

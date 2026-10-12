@@ -30,7 +30,7 @@
     "wall_seconds": 532.2959041590802,
     "gpu_seconds": 522.477687003091,
     "output_bytes": 1105922966,
-    "role_calls": 10,
+    "role_calls": 11,
     "training_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0
@@ -117,6 +117,14 @@
       "handle": "/root/pilot_reviewer",
       "scope": "actual partial mechanics/minimal measured plant and reset/cache repair; exact enhanced and separate passthrough prereview; no live release",
       "status": "PASS_PRELIVE_ONLY"
+    },
+    {
+      "call": 11,
+      "role": "Reviewer",
+      "candidate_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Actual third pre-coexistence failure and formal zero settlement; minimal explicit H1 resource pin repair and fresh fourth zero-target input/tool pre-review. No release or envelope increase.",
+      "status": "REQUESTED"
     }
   ],
   "initialization_ticks_resets_gpu_probes": {
