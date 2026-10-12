@@ -25,7 +25,7 @@
     "failure": "controller/rotor reset state unavailable; app.close hard timeout and detached telemetry child",
     "horizontal_drift_cause": "NOT_PROVEN"
   },
-  "new_live_execution_authorized": false,
+  "new_live_execution_authorized": true,
   "new_training_authorized": false,
   "migration_is_product_acceptance": false,
   "current_candidate_config": "../training_workloads/unified_h1/candidate_config.json",
@@ -224,7 +224,7 @@
     "budget": "../docs/diagnostics/r5-readiness/goal_budget.json",
     "target": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
     "status": "IN_PROGRESS",
-    "live_release_issued": false,
+    "live_release_issued": true,
     "training_authorized": false,
     "independent_review": {
       "candidate_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
@@ -247,6 +247,8 @@
       "doctor": "../docs/diagnostics/r5-readiness/cli-doctor-v1.json",
       "historical_pin": "0.153.4",
       "result": "PASS_KERNEL_AND_INSTALLED_REGISTRY_CHECKS"
-    }
+    },
+    "exact_live_approval": "../docs/diagnostics/r5-readiness/baseline-v3-commander-approval.json",
+    "live_entry_status": "APPROVED_NOT_STARTED"
   }
 }

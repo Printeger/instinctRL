@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-goal-budget/1",
   "authorization_source": "user goal prompt 2026-10-12; docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md section 10",
-  "live_release_status": "EXACT_INPUTS_AND_INDEPENDENT_CONDITIONS_BOUND_PENDING_COMMANDER",
+  "live_release_status": "EXACT_BASELINE_V3_ENTRY_APPROVED_NOT_STARTED",
   "caps": {
     "live_starts": 4,
     "simulator_initializations": 4,
@@ -114,5 +114,6 @@
     "wall_seconds": 910,
     "gpu_seconds": 910,
     "output_bytes": 17179869184
-  }
+  },
+  "approval": "baseline-v3-commander-approval.json"
 }
