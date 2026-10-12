@@ -1,0 +1,64 @@
+{
+  "candidate_commit": "bd5cacd56c519fdd5f868f4ba0720b1a437de967",
+  "input_pack_commit": "eb4583125431a9f580fc5101c093771d075cb5ba",
+  "role_call": 10,
+  "handle": "/root/pilot_reviewer",
+  "verdict": "PASS",
+  "scope": "Exact implementation and two future input prereview only; not live release, scientific acceptance, pilot readiness or training authority",
+  "record_type": "transcribed independent agent result; original conversation retained",
+  "findings": [
+    {
+      "id": "PLANT-MEASUREMENT",
+      "classification": "PASS",
+      "evidence": "All33 original inventory objects including1104908362byte raw independently size/SHA verified. Actual128640rows,200completedpolicy,6400transitions; firstT coverage failure, incompleteZTS.",
+      "assessment": "Actual five-body masses and wrench geometry support minimum repair. Prediction uses measured attitude/geometry; unavailableaero/contact/constraint prevent claims about allR4 failures or complete scientific acceptance."
+    },
+    {
+      "id": "PLANT-CONTROL",
+      "classification": "PASS",
+      "evidence": "Production alwayssupplies measured wholemass/allocation aboutsystemCOM usingrotorlinkorigin/localZthrust andbaseZreaction; invalidmass/topology/nonfinite/orientation/singular fail.",
+      "assessment": "Existing Lee torque gains/feedback retained. No plant/asset/massconfig/actor/reward/curriculum/globalmass change; unbound default only historicalmath."
+    },
+    {
+      "id": "DIAGNOSTIC-LIFECYCLE",
+      "classification": "PASS",
+      "evidence": "Public reset eachcase Zseed/laterNone. Exactuint8comparison ownclone cache; Tensor.data/signedzero/NaN/structure negatives PASS. Sharedprimitive reconstruction retained.",
+      "assessment": "Independently11exact snapshot CPU allocation/cache/reset testsPASS; no hiddenphysicswarmup/protectedstateweakening. Mock/tensor tier notliveperformance/resetacceptance."
+    },
+    {
+      "id": "COMMAND-PASSTHROUGH",
+      "classification": "PASS",
+      "evidence": "NewIDthreecheckpoint fieldsnull; no trainerload/actorforward; fixed[1,.5,.5,.5] throughH1governorICSLeeplant. v3statsNOT_EVALUATED. Mounted-sensorT0/all32rawmetricsteps; originalevaluate_episode/case_outcome d0..7gates.",
+      "assessment": "ExactbackendCPUmock rerunPASS. Completenessparse preservesstartup/resetandstepcounts; notliveacceptance."
+    },
+    {
+      "id": "EXACT-INPUTS-TOOLS-BUDGET",
+      "classification": "PASS",
+      "evidence": "SnapshotHEAD/tree/overlaydiff, bothexistingpins/expectedbytes verified;96toolhashes contentID55e3d79209912f119bd914de6f4ea7b4ac6fed1190f0860d86fd12c4f81f8100 match. ActualAUTH absent.",
+      "assessment": "FULL40320oldfailedreserve retained;2starts2init40320remaining; each910inclentry/coex/cleanup GPU910 output16GiB;10ticks3reset20160auto6pre634runtime2postaudit."
+    },
+    {
+      "id": "CLEANUP-RELEASE",
+      "classification": "PASS",
+      "evidence": "OldfailuresactualFAIL_PENDING_CLOSE, appcloseforcedtimeout andlifeguardquiescent/no_survivors. Close9.5secunchanged. Existingformalentry bound6queries, AppLauncheronlyaftercoexPASS.",
+      "assessment": "Scientifictrace/processfailure/safeownership canrecordseparately; neverlabel forcedclosegraceful/PASS, extraqueries/free retry forbidden."
+    }
+  ],
+  "must_fix": [],
+  "release_conditions": [
+    "Commander separately binds actualauthorization/input/tools/reviewcondition/STOP/budget; emptyconditions draft notrelease.",
+    "EnhancedPLANT-R1 releasedalone; real trace/accounting/cleanup independently judged.",
+    "COMMAND-PASSTHROUGH requires independent acceptance of actual repaired zero regression and separate Commander approval.",
+    "Nativeclosetimeout remainsFAILED and externalownershipproof; no blindretry."
+  ],
+  "follow_up": [
+    {
+      "classification": "FOLLOW_UP",
+      "item": "Real zero response/full commandZTS originalgates/alllanes/startup pending."
+    },
+    {
+      "classification": "NON_BLOCKING",
+      "item": "Mechanics/CPU support candidate selection, not fulloutsideforce identifiability or Goal/Pilot completion."
+    }
+  ]
+}
