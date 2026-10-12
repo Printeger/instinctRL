@@ -1,7 +1,7 @@
 {
   "schema_version": "instinctrl-r5-pilot-readiness/1",
   "status": "BLOCKED_EXTERNAL_AUTHORIZATION",
-  "goal_status": "IN_PROGRESS",
+  "goal_status": "BLOCKED",
   "training_authorization_issued": false,
   "shared_repaired_baseline_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
   "groups": {
@@ -284,5 +284,16 @@
       "Existing Commander exact release then real separatecommand Z/T/S evaluation and ownership/accounting.",
       "Independent final readiness review and state update to READY onlyif actualgates satisfy originalcriteria."
     ]
+  },
+  "blocked_audit": {
+    "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
+    "consecutive_goal_turns": 3,
+    "previous_goal_turn": "PROGRESS: requirement evidence audit and stale state corrections committed; resource blocker remained.",
+    "current_verification": "No active jobs or live process handle; fifth attempt has no files or actual AUTHORIZATION. Caps remain4 with4used; user resource decision is pending.",
+    "independent_work_exhausted": true,
+    "remaining_actions_require_user_decision": true,
+    "goal_achieved": false,
+    "resume_action": "Obtain explicit decision on existing one-start/init reservation4to5 proposal; then existing Commander exact release and original command gates/final review.",
+    "budget_reset": false
   }
 }

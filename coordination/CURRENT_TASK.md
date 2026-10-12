@@ -3,7 +3,7 @@
 2026-10-12 新用户 Goal：诊断闭环、最小修复与短程训练准入。
 需求：`docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md`。
 目标：`READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE`。
-当前：`BLOCKED_EXTERNAL_AUTHORIZATION`，Goal 未完成。
+当前：`BLOCKED_EXTERNAL_AUTHORIZATION`，Goal 标记为 blocked，未完成。
 
 唯一开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一分支 main，同一目录单写者。
 实现、CPU 验证、工具兼容、证据处理、提交与正常 push 沿用本次授权；历史目录、原始证据和冻结 runtime 保持只读。

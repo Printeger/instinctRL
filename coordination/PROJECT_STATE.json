@@ -232,7 +232,7 @@
     "evidence_index": "../docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md",
     "budget": "../docs/diagnostics/r5-readiness/goal_budget.json",
     "target": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
-    "status": "IN_PROGRESS",
+    "status": "BLOCKED",
     "live_release_issued": false,
     "training_authorized": false,
     "independent_review": {
@@ -288,7 +288,18 @@
       "delta": "start/initreservation4to5 only; othercaps unchanged"
     },
     "readiness": "BLOCKED_EXTERNAL_AUTHORIZATION",
-    "blocking_kind": "RESOURCE_START_AND_INITIALIZATION_RESERVATION_CAP"
+    "blocking_kind": "RESOURCE_START_AND_INITIALIZATION_RESERVATION_CAP",
+    "blocked_audit": {
+      "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
+      "consecutive_goal_turns": 3,
+      "previous_goal_turn": "PROGRESS: requirement evidence audit and stale state corrections committed; resource blocker remained.",
+      "current_verification": "No active jobs or live process handle; fifth attempt has no files or actual AUTHORIZATION. Caps remain4 with4used; user resource decision is pending.",
+      "independent_work_exhausted": true,
+      "remaining_actions_require_user_decision": true,
+      "goal_achieved": false,
+      "resume_action": "Obtain explicit decision on existing one-start/init reservation4to5 proposal; then existing Commander exact release and original command gates/final review.",
+      "budget_reset": false
+    }
   },
   "historical_pre_goal_independent_review": {
     "status": "NOT_ACCEPTED",
