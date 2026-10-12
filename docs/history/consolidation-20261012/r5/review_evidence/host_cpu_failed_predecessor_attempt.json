@@ -1,0 +1,16 @@
+{
+  "classification": "executor-environment-implementation-finding",
+  "exit_code": 1,
+  "failure": "ModuleNotFoundError: No module named 'referencing'",
+  "first_module": "control_snapshot/tests/test_process_recovery.py",
+  "host_argv": [
+    "/usr/bin/python3",
+    "-m",
+    "training_workloads.unified_h1.host_cpu_evidence_v2"
+  ],
+  "package_id": "INSTINCTRL-R5-STAGE1-PYTEST-DISCOVERY-SUCCESSOR-20260929",
+  "receipt_created": false,
+  "schema_version": "instinctrl-host-cpu-failed-attempt/1",
+  "setup_errors": 8,
+  "source": "frozen-orchestration-input"
+}

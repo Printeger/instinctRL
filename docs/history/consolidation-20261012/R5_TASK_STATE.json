@@ -1,0 +1,41 @@
+{
+  "id": "T-a2b452d3b59b07ef",
+  "package_id": "INSTINCTRL-R5-STAGE1-PRODUCT-PIN-FIXTURE-SUCCESSOR-20260929",
+  "stage_id": "INSTINCTRL-R5-STAGE1-PRODUCT-PIN-FIXTURE-SUCCESSOR-20260929",
+  "status": "BUDGET_EXHAUSTED",
+  "completion": {
+    "behavior": false,
+    "cpu": false,
+    "formal": false,
+    "implementation": false,
+    "real_run": false
+  },
+  "next_role": "Evaluator",
+  "last_error": "MUST_FIX requires contract, evidence, impact and closure",
+  "last_failure": {
+    "blocked": false,
+    "code": null,
+    "fingerprint": "d953551310c223f28b1b0de76c0defe3c7e5f44f212e80a272eaf5ed64de3833",
+    "kind": "ROLE_OUTPUT",
+    "repeated": false
+  },
+  "findings": [],
+  "requested_actions": [
+    {
+      "action": "REQUEST_REWORK",
+      "evidence_ids": [],
+      "fields": [
+        "tests/training_workloads/test_b0_enhanced_stage1.py",
+        "candidate_config.product.path",
+        "current failed-attempt provenance",
+        "new receipt/manifest/runner identity",
+        "84-source closure",
+        "dependency-complete executor",
+        "truthful reset cache state",
+        "detached cleanup",
+        "evidence boundary"
+      ],
+      "purpose": "Apply only the authorized mechanical CPU fixture correction so WallMarginContractTests.test_enhanced_workload_900_and_real_rlflow_reservation_910 derives spec.pins.product from config['product']['path']; preserve frozen product identity, h1.validate semantics, wall budgets, live semantics, predecessor artifacts, and all other contracts. Then run the authorized CPU-only manifest tests and sole current host command, record truthful outputs and cleanup audit in the immutable receipt, and return the resulting candidate and evidence for independent final CPU review."
+    }
+  ]
+}

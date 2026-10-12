@@ -1,0 +1,47 @@
+{
+  "authorization_contract": {
+    "loader_path": "training_workloads/unified_h1/authorization.py",
+    "loader_sha256": "1ad673b6847b6605ddfadc4090e908d2a58d95e54aa432468e03016fc50c3450",
+    "verification": "CPU unittest rejects the non-authorized preimage and validates an authority-materialized fixture through load_r3_authorization"
+  },
+  "base_commit": "a496e9f2585c3e942a3bd176cca31961a4a2f913",
+  "candidate_representation": "exact base commit plus the files_sha256 overlay; control plane supplies the resulting commit/tree and verifies the final diff SHA-256",
+  "files_sha256": {
+    "control_snapshot/rlflow/h1.py": "54cfb8693aef6b5ba85057e50011ca07f286031dc037bd0bf3201d21729d2c58",
+    "control_snapshot/tests/test_h1_adapter.py": "cfa046e1c3b26a84cfd86e83d633ff4ea202cafed18108ffe233da87d0adbf19",
+    "r5_delivery/INSTALLED_SIMULATION_APP_CLOSE_EVIDENCE.json": "6a0716ed46bf8e983985f6cab473ebcdeae95f6ab9aba11a31718256fbc78c00",
+    "tests/training_workloads/test_d7_cleanup_unittest.py": "1bd56e47f4f35a128031c723546661387df1b80351c6695fc9eddcdf0389a05c",
+    "tests/training_workloads/test_d7_cpu_unittest.py": "f449af2eecc848efce24d6b9a8f398aa72fc17758dfbb4b253da92ce2877ebbb",
+    "tests/training_workloads/test_d7_handoff_bindings_unittest.py": "ed367cf0d501eb44a7f3f02a598cb88d050ff8f997b00d68265f95c9cda8f72f",
+    "tests/training_workloads/test_paired_pilot_unittest.py": "dd8607c4a910a875806d91075224e3e5fcb078d972c25bdcf693edc4026406e3",
+    "tests/training_workloads/test_r4_evaluation_start.py": "50b5c50dc8ae4260cdfadb233ce32e2a908faeac2f1c9224301a4982c28f4bb8",
+    "tests/training_workloads/test_unified_h1_a0002.py": "0b905a9dbfb07cdea6f06bc546a67ec5ec6c11ef0e6c7f7594ed145ce0590f53",
+    "tests/training_workloads/test_unified_h1_a0003.py": "005a94568e788761cd25761f660b995dc7725168e4b13f161bbd49017eec35bf",
+    "tests/training_workloads/test_unified_h1_rework.py": "bf4df12dc232ae7d62677d907a984deeeba5dca55debc2e03cbcde8d0d525b16",
+    "training_workloads/unified_h1/authorization.py": "1ad673b6847b6605ddfadc4090e908d2a58d95e54aa432468e03016fc50c3450",
+    "training_workloads/unified_h1/backend.py": "47f22f3f32b99ca1a8782ab94c20dc47d78482a00776deb1ce76e550fd734a41",
+    "training_workloads/unified_h1/budget.py": "3ff2356eef8ea0dca774337d40ba4c73b75f0902bbf9e9163130f69dd9bb922d",
+    "training_workloads/unified_h1/candidate_config.json": "01f988d08b8eb559aaa8de73690ceb0244ddb5a54db42d18d6547521d1f5fef7",
+    "training_workloads/unified_h1/config.py": "322bbd5e9dbbcaa6ae42c2a232b4689cdf04dc9fa135063fe15e12ed3c97d4d8",
+    "training_workloads/unified_h1/control_diagnostic.py": "53c4696d800509c29ee9cc8c50770ba5b8ca045dadf8beb8400ea7754ee36218",
+    "training_workloads/unified_h1/driver.py": "340ab208e257c91881b9b5a29f00dc922370d8b2d809dfb34f7e707b02e751a0",
+    "training_workloads/unified_h1/formal_unified_h1.py": "9779cef063dbf0d007884f34a6598d523b1c259a95da4368faf23b2e05222e45",
+    "training_workloads/unified_h1/live_adapter.py": "14ab97dc397676ed14f7ef8d962ba231e66972a07765a55ecb6988c8c0f61bdc",
+    "training_workloads/unified_h1/pilot_contract.py": "85261b5b0a54717787517146cbcc61094f138673d73b901332409867795b3eb0",
+    "training_workloads/unified_h1/pilot_diagnostic.py": "58e0d4f64eaa0e3da4677c98fb5f8cbb4b05d5ca906d2b010dde30524aff11c9",
+    "training_workloads/unified_h1/pilot_p0.json": "e100aa55ba22f2e001e6c126a0574b69a13ac039cfd5da6892b7308f8a3d418f",
+    "training_workloads/unified_h1/pilot_plr.json": "9fdd44ffbbbc7ecc926e073ab656439d7bdd8ea9cd1f8028728c77c48073307f"
+  },
+  "frozen_history": {
+    "completed_d7_r_job_id": "J-44f25963c38ad089",
+    "d7_r_authorization_preimage_sha256": "1ce854eccfea011682d191a2ee1ea58f3fb7d48d7bc474c67fb4aec6d568c179",
+    "d7_r_spec_preimage_sha256": "af9899a594456f64e9d3af2c9f8419be6946388f1fb861f1430d5da5a46ae3f8",
+    "mutation_policy": "immutable; offline comparison only; no D7-R rerun"
+  },
+  "product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
+  "product_tree": "a887c20a900e65039b1b761adf0a623b45f61269",
+  "repository": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-d7-postrun-repair-20260927",
+  "schema_version": "instinctrl-d7-postrun-repair-source-manifest/1",
+  "source_e0_sha256": "4210375fac4a16dd83a023e5fc4c3750474bfe80355634b969088ec411b6ea1f",
+  "source_proposal_sha256": "62992b2242e6aca4a9d4d999aab59f57a3c2e650f5208c132c8cebcd3825d703"
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": "instinctrl-h1-r3-readiness-inputs/1",
+  "created_date": "2026-09-15",
+  "source_candidate": {
+    "workload_commit": "fd47dd321d571c4d6c983048f77bb3913e7e7b01",
+    "workload_tree": "f2ccbe684e9d0fb56a861152b91ea4b4870500ee",
+    "workload_diff_sha256": "82b56cecc7680f8d57f23353c1caf5c53898ac55f1b76327ab3f8c703a194672",
+    "product_commit": "2248ebb380260af86536f78b70e1235fcb401a7a",
+    "product_tree": "e44363a4b8504fda9e8f1b58a1fb942ef75c586e",
+    "config_sha256": "824feeb87fccb33ddb5b56b401b6591688b042606fda7d45f4d5f92c041f110b"
+  },
+  "evidence": {
+    "a0009_cpu": {
+      "relative_path": "review_bundle/evidence/a0009/EVIDENCE.json",
+      "sha256": "c9f1ed80093556ac53f010b185e64886a0c4e7ece33a6e07df325b7ad97d0cb4"
+    },
+    "d0005": {
+      "relative_path": "review_bundle/evidence/d0005/EVIDENCE.json",
+      "sha256": "c87d7725c5047dbd5080fabf410e8852869c6ed7445aeac5e6e7ee8856500a26"
+    },
+    "method_freeze": {
+      "source_path": "/home/mint/rl_dev/instinctRL_coordination/commander/review_artifacts/UNIFIED-H1-A0009/METHOD_FREEZE_PACKAGE.json",
+      "sha256": "513dab7a9d4db25de8d8db2adbcdaae4efb9368226aca0547834fda76dd615df"
+    },
+    "latest_real_long_task_acceptance": {
+      "source_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/recovery-h1-20260915/long-task-state/commissioning/acceptance.json",
+      "passed": true,
+      "used_sol_calls": 35,
+      "used_model_activity_seconds": 4392.213253037888,
+      "control_release": "43d44b3f98820f792e516c41e1f7d7f3bae6640db05ab56f39cd5d2102bc497f"
+    }
+  },
+  "control_snapshot": {
+    "relative_path": "control_snapshot",
+    "release": "43d44b3f98820f792e516c41e1f7d7f3bae6640db05ab56f39cd5d2102bc497f",
+    "snapshot_note": "All release source, schemas, roles and tests are present; generated __pycache__ bytecode from the release directory is intentionally excluded.",
+    "prior_acceptance_limits": [
+      "fully unattended execution was not proven",
+      "no GPU qualification",
+      "no real H1 run"
+    ]
+  },
+  "baseline_known_gap": "The preserved source config points at the historical A0009 checkout, which currently has a pre-existing untracked bytecode cache and therefore fails the exact-clean identity check. Final integration must bind the isolated final candidate without deleting that source artifact and without changing scientific config values.",
+  "budgets_inherited": false,
+  "real_run_authorized": false,
+  "training_authorized": false,
+  "d0006_authorized": false
+}

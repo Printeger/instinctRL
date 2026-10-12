@@ -1,0 +1,23 @@
+{
+  "schema_version": "instinctrl-continuity-state/1",
+  "stage": "STAGE_1",
+  "gate": "LIVE_DIAGNOSTIC_FAILED",
+  "package_id": "INSTINCTRL-R5-STAGE1-HANDOFF-SEAL-SUCCESSOR-20260928",
+  "task_id": "T-e9988179e9ce892a",
+  "proposal_id": "P-915664a4e3d15561",
+  "job_id": "J-fe6a5d53ec4177b7",
+  "evidence_id": "E-J-fe6a5d53ec4177b7",
+  "terminal_evaluator_session": "S-3471ac95c995408a",
+  "terminal_evaluator_verdict": "INCONCLUSIVE",
+  "terminal_evaluator_finding": "F-LIVE-EVIDENCE-NOT-AVAILABLE",
+  "candidate_diff_sha256": "dd95d3f64d903bae131da7cf7d05be5d3718fef579027eed7d8f6e826185917b",
+  "budget": {"live_starts_used": 1, "simulator_initializations_used": 1, "transitions_actual": 0, "gpu_seconds": 27.176286880043335, "wall_seconds": 27.714272305951454, "retries": 0},
+  "tests": {
+    "control_release": "393 passed",
+    "cpu_evaluator": "PASS",
+    "terminal_evaluator": "INCONCLUSIVE: frozen evidence boundary omitted live evidence/report contents",
+    "terminal_evaluator_cpu_tests": "60 passed"
+  },
+  "resources": {"task_processes": 0, "task_gpu_processes": 0, "cleanup": "FAILED_THEN_EXPLICITLY_CLEANED"},
+  "unique_next_action": "Create a CPU-only additive successor for initial reset-state availability and detached-child cleanup; do not run Stage 2 or Stage 3."
+}

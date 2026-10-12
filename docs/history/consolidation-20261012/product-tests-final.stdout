@@ -1,0 +1,56 @@
+............................................................................................................... [  8%]
+........................................................................ [ 14%]
+........................................................................ [ 20%]
+........................................................................ [ 25%]
+........................................................................ [ 31%]
+........................................................................ [ 36%]
+........................................................................ [ 42%]
+........................................................................ [ 48%]
+........................................................................ [ 53%]
+........................................................................ [ 59%]
+........................................................................ [ 65%]
+........................................................................ [ 70%]
+........................................................................ [ 76%]
+........................................................................ [ 82%]
+........................................................................ [ 87%]
+........................................................................ [ 93%]
+...........................................................................F.......                                                       [100%]
+=================================== FAILURES ===================================
+_ RaycasterDiagnosticsTests.test_true_fused_reference_differs_from_multiply_then_add _
+
+self = <tests.test_unified_h1_r3_raycaster_diagnostics.RaycasterDiagnosticsTests testMethod=test_true_fused_reference_differs_from_multiply_then_add>
+
+    def test_true_fused_reference_differs_from_multiply_then_add(self):
+        f32 = self.f32
+        start_x = f32(280.94110107421875)
+        direction_x = f32(0.23474282026290894)
+        parameter = f32(20.336639404296875)
+        direction_y = f32(math.sqrt(1.0 - direction_x * direction_x))
+        libm = ctypes.CDLL("libm.so.6")
+        libm.fmaf.argtypes = (ctypes.c_float, ctypes.c_float, ctypes.c_float)
+        libm.fmaf.restype = ctypes.c_float
+        fused_x = libm.fmaf(parameter, direction_x, start_x)
+        fused_y = libm.fmaf(parameter, direction_y, 0.0)
+        starts = torch.tensor([[[start_x, 0.0, 0.0]]], dtype=torch.float32)
+        directions = torch.tensor([[[direction_x, direction_y, 0.0]]], dtype=torch.float32)
+        parameters = torch.tensor([[parameter]], dtype=torch.float32)
+        returned = torch.tensor([[[fused_x, fused_y, 0.0]]], dtype=torch.float32)
+        valid = torch.tensor([[True]])
+        normals = torch.tensor([[[1.0, 0.0, 0.0]]], dtype=torch.float32)
+        unfused = starts + parameters.unsqueeze(-1) * directions
+        self.assertGreater(float(torch.linalg.vector_norm(unfused - returned)), 1e-5)
+        with patch.object(ray, "_raycast_mesh_with_normals", return_value=(returned, parameters, normals, None)):
+            # 903afc5 accounts for proven float32 multiply/add roundoff. This
+            # genuine fused kernel hit must pass; wrong parameters/hits below
+            # remain negative controls against weakening the geometry check.
+            result = ray.acquire_exact_raycaster_observability(
+                starts, directions, Mesh(), 40.0, returned.clone(), valid
+            )
+>       self.assertLessEqual(float(result.diagnostics.reconstruction_max_error_m), 1e-5)
+                                   ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'RaycasterObservabilityResult' object has no attribute 'diagnostics'
+
+isaaclab-training/tests/test_unified_h1_r3_raycaster_diagnostics.py:64: AttributeError
+=========================== short test summary info ============================
+FAILED isaaclab-training/tests/test_unified_h1_r3_raycaster_diagnostics.py::RaycasterDiagnosticsTests::test_true_fused_reference_differs_from_multiply_then_add
+1 failed, 1273 passed, 40 subtests passed in 7.13s

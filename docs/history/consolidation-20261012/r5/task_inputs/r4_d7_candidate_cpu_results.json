@@ -1,0 +1,41 @@
+{
+  "schema_version": "instinctrl-r4-d7-candidate-cpu-results/1",
+  "status": "CPU_PREPARED_NOT_AUTHORIZED_FOR_LIVE_EXECUTION",
+  "candidate": {
+    "path": "/home/mint/rl_dev/worktrees/instinctrl-r4-d7-control-diagnostic-20260923",
+    "commit": "c7a4d79e35916ce2711085674b9cd37f1054a1ab",
+    "tree": "1e06553c95d9f34725179919165b28086d81778d",
+    "branch": "r4-d7-control-diagnostic-20260923",
+    "config_sha256": "97e2345cc9cd5637659eea3218b5c68fd914fbf8cea0c24f2fdbc2d8b0fe47c0",
+    "base_commit": "df87b279e7cace6b7589c5bef7359d96f5769f47"
+  },
+  "tests": [
+    {
+      "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 -m pytest -q tests/training_workloads/test_unified_h1_control_diagnostic.py tests/training_workloads/test_unified_h1_final_readiness.py",
+      "result": "8 passed in 0.59s",
+      "exit_code": 0,
+      "gpu_or_simulator_used": false
+    },
+    {
+      "command": "PYTHONPATH=. /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 -m training_workloads.unified_h1.formal_unified_h1 --validate-only",
+      "result": "VALID; live_authorized=False; product_commit=903afc5abd0fbf82297527e5790c2cd40827b0b2",
+      "exit_code": 0,
+      "gpu_or_simulator_used": false
+    }
+  ],
+  "verified_contracts": [
+    "exact D7-R/B0 experiment identities and 20160 transitions per condition",
+    "fixed B0 normalized action [1,0.5,0.5,0.5]",
+    "B0 uses prepare_h1_step and never the legacy prepare_b0_step bypass",
+    "lossless selected-lane actor inputs and SHA256 chunk manifest",
+    "zero training transitions, optimizer updates, checkpoint writes, and automatic retries",
+    "candidate configuration remains PREPARED_NOT_AUTHORIZED"
+  ],
+  "not_tested": [
+    "Isaac Sim construction or initialization",
+    "GPU inference or coexistence gate",
+    "real environment transitions",
+    "live Lee/wrench/reset-lane signal availability",
+    "rlflow registration, approval, release, or submission"
+  ]
+}

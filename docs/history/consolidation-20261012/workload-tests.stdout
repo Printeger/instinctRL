@@ -1,0 +1,76 @@
+
+==================================== ERRORS ====================================
+_________ ERROR collecting tests/training_workloads/test_unified_h1.py _________
+ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1.py:8: in <module>
+    import torch
+E   ModuleNotFoundError: No module named 'torch'
+______ ERROR collecting tests/training_workloads/test_unified_h1_a0004.py ______
+ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_a0004.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_a0004.py:10: in <module>
+    import torch
+E   ModuleNotFoundError: No module named 'torch'
+______ ERROR collecting tests/training_workloads/test_unified_h1_a0005.py ______
+ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_a0005.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_a0005.py:6: in <module>
+    import torch
+E   ModuleNotFoundError: No module named 'torch'
+______ ERROR collecting tests/training_workloads/test_unified_h1_a0006.py ______
+ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_a0006.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_a0006.py:5: in <module>
+    import torch
+E   ModuleNotFoundError: No module named 'torch'
+_ ERROR collecting tests/training_workloads/test_unified_h1_control_diagnostic.py _
+ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_control_diagnostic.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_control_diagnostic.py:9: in <module>
+    import torch
+E   ModuleNotFoundError: No module named 'torch'
+_ ERROR collecting tests/training_workloads/test_unified_h1_r3_preflight_diagnostics.py _
+ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_r3_preflight_diagnostics.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_r3_preflight_diagnostics.py:7: in <module>
+    import torch
+E   ModuleNotFoundError: No module named 'torch'
+_____ ERROR collecting tests/training_workloads/test_unified_h1_rework.py ______
+ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_rework.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_rework.py:9: in <module>
+    import torch
+E   ModuleNotFoundError: No module named 'torch'
+- generated xml file: /home/mint/rl_dev/instinctRL-dev/docs/history/consolidation-20261012/workload-tests.xml -
+=========================== short test summary info ============================
+ERROR tests/training_workloads/test_unified_h1.py
+ERROR tests/training_workloads/test_unified_h1_a0004.py
+ERROR tests/training_workloads/test_unified_h1_a0005.py
+ERROR tests/training_workloads/test_unified_h1_a0006.py
+ERROR tests/training_workloads/test_unified_h1_control_diagnostic.py
+ERROR tests/training_workloads/test_unified_h1_r3_preflight_diagnostics.py
+ERROR tests/training_workloads/test_unified_h1_rework.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 7 errors during collection !!!!!!!!!!!!!!!!!!!!
+7 errors in 0.30s

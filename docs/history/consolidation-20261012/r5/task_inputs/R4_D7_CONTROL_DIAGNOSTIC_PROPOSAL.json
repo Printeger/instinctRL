@@ -1,0 +1,93 @@
+{
+  "schema_version": "instinctrl-r4-d7-control-diagnostic-proposal/1",
+  "status": "PROPOSED_NOT_REGISTERED_NOT_APPROVED_NOT_STARTED",
+  "purpose": "D7-R versus fixed-action B0 control-chain diagnosis only; no training, checkpoint writes, formal evaluation, threshold decision, or R5 transition",
+  "candidate": {
+    "workload_path": "/home/mint/rl_dev/worktrees/instinctrl-r4-d7-control-diagnostic-20260923",
+    "workload_commit": "c7a4d79e35916ce2711085674b9cd37f1054a1ab",
+    "workload_tree": "1e06553c95d9f34725179919165b28086d81778d",
+    "config_sha256": "97e2345cc9cd5637659eea3218b5c68fd914fbf8cea0c24f2fdbc2d8b0fe47c0",
+    "product_path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-d0011-product",
+    "product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
+    "product_tree": "a887c20a900e65039b1b761adf0a623b45f61269",
+    "checkpoint_path": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R4/UNIFIED-H1-R4-D0001/results/r4-training/checkpoints/u0256.pt",
+    "checkpoint_sha256": "39ad6806332376b655ee2b37bcf573997a804ef6f9324a2fe0c367fcaaa9886c"
+  },
+  "checkpoint_source_identity": {
+    "product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
+    "product_tree": "a887c20a900e65039b1b761adf0a623b45f61269",
+    "workload_commit": "eb3f9460a914f4a7bf65d894f73b6df30d128d51",
+    "workload_tree": "4f37d60c43a82fcb8f04ca22692660d4db518531",
+    "config_sha256": "74ac41ad400d5082fbc09e50e44a16017e7d7b3642db437f0f494ab962dadd4b"
+  },
+  "conditions": [
+    {
+      "experiment_id": "UNIFIED-H1-R4-D7-R",
+      "condition": "D7-R",
+      "attempt": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R4/UNIFIED-H1-R4-D7-R",
+      "authorization": "/home/mint/rl_dev/instinctRL_coordination/commander/authorizations/UNIFIED-H1-R4_D7_R_CONTROL_DIAGNOSTIC_AUTHORIZATION.json",
+      "cases": ["Z", "T", "S"],
+      "policy_steps": 630,
+      "nontraining_transitions": 20160,
+      "action": "u0256 deterministic Beta mean",
+      "automatic_retries": 0
+    },
+    {
+      "experiment_id": "UNIFIED-H1-R4-B0",
+      "condition": "B0",
+      "attempt": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R4/UNIFIED-H1-R4-B0",
+      "authorization": "/home/mint/rl_dev/instinctRL_coordination/commander/authorizations/UNIFIED-H1-R4_B0_CONTROL_DIAGNOSTIC_AUTHORIZATION.json",
+      "cases": ["Z", "T", "S"],
+      "policy_steps": 630,
+      "nontraining_transitions": 20160,
+      "action": [1.0, 0.5, 0.5, 0.5],
+      "action_semantics": "fixed action through unchanged H1 governor, ICS, Lee, and rotor chain; not legacy direct-B0",
+      "automatic_retries": 0
+    }
+  ],
+  "aggregate_hard_caps": {
+    "live_process_starts": 2,
+    "simulator_initializations": 2,
+    "initialization_ticks": 20,
+    "training_transitions": 0,
+    "nontraining_transitions": 40320,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "explicit_resets": 6,
+    "action_gpu_seconds": 1800,
+    "outer_wall_seconds_including_cleanup": 1820,
+    "disk_bytes": 17179869184,
+    "automatic_retries": 0
+  },
+  "cap_basis": {
+    "time": "900 action seconds plus 10 cleanup seconds per separately identified condition; historical E0002 used 825.336833 allocated GPU seconds and 862.959676 wall seconds for 164800 transitions, leaving conservative headroom for lossless evidence I/O",
+    "disk": "Eight selected lanes x 630 steps x 12x59x360 float32 actor lidar input is about 4.79 GiB per condition before metadata; 16 GiB aggregate is a fail-closed ceiling, not a target",
+    "starts": "one independent identity, authorization, attempt, process, and simulator initialization per condition"
+  },
+  "signal_contract": {
+    "all_32_lanes": ["command_b", "issued_action", "actor_alpha", "actor_beta", "actor_mean", "root_state_w", "reward", "terminated", "truncated", "pre_reset.task", "pre_reset.control"],
+    "selected_lanes_0_through_7": ["exact pre-action lidar_grid [8,12,59,360]", "exact pre-action state_vec [8,52]"],
+    "post_step": ["Lee result", "rotor/wrench result", "downstream_cache_valid"],
+    "known_limit": "Lee/wrench post-step caches are invalid for lanes reset in that step because frozen product pre_reset does not retain them; those lanes are explicitly masked and remain NOT PROVEN"
+  },
+  "preconditions": [
+    "A Commander/user approval must bind this exact proposal hash, both new experiment identities, aggregate caps, and zero retry",
+    "rlflow must be explicitly enabled by authorized control-plane action; current enabled=false is not changed by this proposal",
+    "two exact authorization JSON files must bind candidate commit/tree/config, product commit/tree, u0256 hash/source identity, condition, cases, attempt, and per-condition budget",
+    "both attempts must be fresh, results-empty, and non-symlinked; all STOP and coexistence gates must pass",
+    "candidate and frozen product/checkpoint must remain byte-exact and clean",
+    "submit D7-R and B0 at most once each; any uncertain launch, hash drift, cap breach, cleanup failure, or missing manifest stops without retry",
+    "no result may authorize R5 or modify acceptance thresholds"
+  ],
+  "entry_argv_template": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11", "-B", "-m",
+    "training_workloads.unified_h1.formal_unified_h1", "--authorization", "<condition authorization absolute path>",
+    "--attempt", "<condition attempt absolute path>", "--mode", "control-diagnostic"
+  ],
+  "rlflow_handoff": {
+    "not_performed": true,
+    "reason": "No proposal registration, approval, authorization materialization, GPU query, pilot invocation, or submission is authorized in this turn",
+    "after_registration": "./pilot proposal show <P-ID>; ./pilot approve <P-ID> --sha256 <EXACT-PROPOSAL-SHA256>; ./pilot resume --package <APPROVED-PACKAGE-ID>",
+    "observation": "./pilot package-status <APPROVED-PACKAGE-ID>; ./pilot job-status <JOB-ID>"
+  }
+}

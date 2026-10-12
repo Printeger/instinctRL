@@ -1,0 +1,60 @@
+{
+  "action": [
+    1.0,
+    0.5,
+    0.5,
+    0.5
+  ],
+  "candidate_binding": {
+    "accepted_commit_tree": "control plane must substitute and verify the accepted additive candidate commit/tree before materialization",
+    "base_commit": "a496e9f2585c3e942a3bd176cca31961a4a2f913",
+    "config_sha256": "01f988d08b8eb559aaa8de73690ceb0244ddb5a54db42d18d6547521d1f5fef7",
+    "repository": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-d7-postrun-repair-20260927",
+    "source_manifest_path": "r5_delivery/CANDIDATE_SOURCE_MANIFEST.json",
+    "source_manifest_sha256": "44fdb595477bdd8ddeeb33a658eb8e9ca209339ad21f783fc1e400c4f7e6411a"
+  },
+  "cases": [
+    "Z",
+    "T",
+    "S"
+  ],
+  "condition": "B0",
+  "execution_scope": "B0_ONLY_ONE_SHOT",
+  "experiment_id": "UNIFIED-H1-R4-B0",
+  "identity_separation": "one fresh B0 attempt, process start, and simulator initialization; no D7-R execution",
+  "offline_comparison": {
+    "frozen_d7_r_authorization_preimage_sha256": "1ce854eccfea011682d191a2ee1ea58f3fb7d48d7bc474c67fb4aec6d568c179",
+    "frozen_d7_r_spec_preimage_sha256": "af9899a594456f64e9d3af2c9f8419be6946388f1fb861f1430d5da5a46ae3f8",
+    "request_d7_r_rerun": false,
+    "reuse_job_id": "J-44f25963c38ad089",
+    "reuse_mode": "immutable completed trajectory, offline comparison only"
+  },
+  "order_id": "UNIFIED-H1-R4-B0",
+  "per_condition": {
+    "action_gpu_seconds": 900,
+    "allocated_gpu_seconds": 910,
+    "automatic_retries": 0,
+    "checkpoint_writes": 0,
+    "disk_bytes": 8589934592,
+    "lanes": 32,
+    "live_process_starts": 1,
+    "nontraining_transitions": 20160,
+    "optimizer_updates": 0,
+    "outer_wall_seconds": 910,
+    "policy_steps": 630,
+    "simulator_initializations": 1,
+    "training_transitions": 0
+  },
+  "schema_version": "instinctrl-d7-b0-only-postrun-repair-spec-preimage/1",
+  "source_e0": "4210375fac4a16dd83a023e5fc4c3750474bfe80355634b969088ec411b6ea1f",
+  "source_proposal": "62992b2242e6aca4a9d4d999aab59f57a3c2e650f5208c132c8cebcd3825d703",
+  "status": "PREIMAGE_NOT_REGISTERED_NOT_AUTHORIZED_NOT_STARTED",
+  "submission": "unsubmitted; independent Evaluator review and separate control-plane authorization required",
+  "workload": {
+    "branch": "r5-d7-postrun-repair-20260927",
+    "config_sha256": "01f988d08b8eb559aaa8de73690ceb0244ddb5a54db42d18d6547521d1f5fef7",
+    "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-d7-postrun-repair-20260927",
+    "source_manifest_path": "r5_delivery/CANDIDATE_SOURCE_MANIFEST.json",
+    "source_manifest_sha256": "44fdb595477bdd8ddeeb33a658eb8e9ca209339ad21f783fc1e400c4f7e6411a"
+  }
+}

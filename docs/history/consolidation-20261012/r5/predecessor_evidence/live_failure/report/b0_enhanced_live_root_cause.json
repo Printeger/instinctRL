@@ -1,0 +1,81 @@
+{
+  "schema_version": "instinctrl-r5-stage1-enhanced-b0-terminal/1",
+  "final_state": "LIVE_DIAGNOSTIC_FAILED",
+  "root_cause_established": false,
+  "stage2_allowed": false,
+  "stage3_allowed": false,
+  "failure": {
+    "boundary": "initial explicit reset before first policy step",
+    "type": "RuntimeError",
+    "message": "enhanced B0 controller/rotor reset state is unavailable",
+    "status": "FAIL_PENDING_CLOSE",
+    "physics_rows": 0,
+    "causal_analysis": "UNAVAILABLE_NO_ROWS"
+  },
+  "identity": {
+    "package_id": "INSTINCTRL-R5-STAGE1-HANDOFF-SEAL-SUCCESSOR-20260928",
+    "cpu_task_id": "T-ec9addeea721e9f9",
+    "live_task_id": "T-e9988179e9ce892a",
+    "candidate_commit": "a0816149ced88bd46c1e0104413b73050626a7e9",
+    "candidate_diff_sha256": "dd95d3f64d903bae131da7cf7d05be5d3718fef579027eed7d8f6e826185917b",
+    "control_release": "fd27a8db14ee1200c2ec090e5d8c8bf1345b13596aaa17a0e1a2439333527aed",
+    "cpu_evaluator_session": "S-5acacc1cefe2475c",
+    "cpu_evidence_id": "E-S-5acacc1cefe2475c",
+    "experiment_proposal_id": "P-915664a4e3d15561",
+    "experiment_proposal_sha256": "915664a4e3d155613497d7d2b010d9a0430331d3b747ac9dfb28bdf26c09c054",
+    "approval_id": "A-915664a4e3d15561",
+    "job_id": "J-fe6a5d53ec4177b7",
+    "evidence_id": "E-J-fe6a5d53ec4177b7",
+    "terminal_evaluator_session": "S-3471ac95c995408a",
+    "attempt": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R5/UNIFIED-H1-R5-STAGE1-B0-HANDOFF-SEAL-R1-20260928"
+  },
+  "terminal_review": {
+    "verdict": "INCONCLUSIVE",
+    "finding": "F-LIVE-EVIDENCE-NOT-AVAILABLE",
+    "candidate_identity_reproduced": true,
+    "cpu_tests_passed": 60,
+    "reason": "The frozen Evaluator evidence boundary omitted E-J-fe6a5d53ec4177b7 and did not expose the external final report contents.",
+    "live_task_criteria_accepted": false,
+    "role_calls_aggregate_used": 33,
+    "role_calls_aggregate_limit": 33
+  },
+  "argv": ["/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11", "-B", "-m", "training_workloads.unified_h1.formal_unified_h1", "--authorization", "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R5/UNIFIED-H1-R5-STAGE1-B0-HANDOFF-SEAL-R1-20260928/commands/AUTHORIZATION.json", "--attempt", "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R5/UNIFIED-H1-R5-STAGE1-B0-HANDOFF-SEAL-R1-20260928", "--mode", "enhanced-b0-diagnostic"],
+  "frozen": {"seed": 20260909, "cases": ["Z", "T", "S"], "target_velocity_b_m_s": [0.0, 0.0, 0.0]},
+  "usage": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "initialization_physics_ticks": 2,
+    "nontraining_transitions_actual": 0,
+    "nontraining_transitions_reserved_unsettled": 20160,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "physics_rows": 0,
+    "wall_seconds": 27.714272305951454,
+    "gpu_allocation_seconds": 27.176286880043335,
+    "attempt_output_bytes": 406438,
+    "job_output_bytes": 32124,
+    "automatic_retries": 0,
+    "rlflow_role_calls_aggregate": 33
+  },
+  "cleanup": {
+    "environment_close_errors": [],
+    "app_close": "HARD_TIMEOUT",
+    "app_close_timeout_seconds": 9.5,
+    "owner_pid": 615502,
+    "owner_action": "SIGKILL_OWNER_PROCESS",
+    "escaped_telemetry_pid": 615694,
+    "escaped_telemetry_cleanup": "TERMINATED_EXPLICITLY",
+    "final_task_processes": 0,
+    "final_task_gpu_processes": 0,
+    "unrelated_gpu_process": {"pid": 3950, "name": "gnome-remote-desktop-daemon", "memory_mib": 164}
+  },
+  "raw_evidence": {
+    "job_collection": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/jobs/J-fe6a5d53ec4177b7/h1-collection.json",
+    "status": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R5/UNIFIED-H1-R5-STAGE1-B0-HANDOFF-SEAL-R1-20260928/results/enhanced-b0-diagnostic/status.json",
+    "cleanup_timeout": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R5/UNIFIED-H1-R5-STAGE1-B0-HANDOFF-SEAL-R1-20260928/results/enhanced-b0-diagnostic/cleanup_timeout.json",
+    "physics_jsonl_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "unresolved_risks": ["initial reset controller/rotor state unavailable", "app.close hard timeout", "detached Isaac telemetry escapes owned process group", "horizontal drift root cause unobserved", "transition reservation remains conservative and unsettled"],
+  "next_action": "CPU-only additive successor; no live or training without fresh authorization"
+}

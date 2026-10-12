@@ -1,0 +1,80 @@
+{
+  "schema_version": "dual-agent-workflow-pointer/1",
+  "workflow_version": 3,
+  "effective_date": "2026-09-07",
+  "policy_path": "protocols/DUAL_AGENT_WORKFLOW_V3.md",
+  "authorization_path": "commander/authorizations/USER-20260907-WORKFLOW-V3.md",
+  "usage_guide_path": "../DUAL_AGENT_GUIDE.md",
+  "order_template_path": "templates/ORDER_V3.md",
+  "commander_entry_path": "commander/COMMANDER.md",
+  "builder_entry_path": "executor/BUILDER.md",
+  "state_storage_version": 2,
+  "canonical_state_paths": {
+    "commander": "commander/COMMANDER_STATE.json",
+    "executor": "executor/EXECUTOR_STATE.json",
+    "order": "commander/CURRENT_ORDER.md",
+    "report": "executor/LAST_REPORT.md"
+  },
+  "defaults": {
+    "evidence_level": "STANDARD",
+    "plan_approval_required": false,
+    "scope_model": "MODULE_ROOTS_WITH_PROTECTED_PATHS",
+    "local_contract_preserving_bug_repair_authorized": true,
+    "exact_commit_count_required": false,
+    "max_additive_repair_commits": null,
+    "null_repair_limit_means": "NO_COMMIT_COUNT_LIMIT_NOT_UNLIMITED_SCOPE_OR_RUNTIME",
+    "local_rework_requires_new_order": false,
+    "review_finding_classes": [
+      "MUST_FIX",
+      "NON_BLOCKING",
+      "FOLLOW_UP",
+      "CONTRACT_DECISION"
+    ],
+    "immutable_run_offline_reanalysis_authorized_within_scope": true,
+    "runtime_budget_increase_authorized": false,
+    "history_rewrite_authorized": false
+  },
+  "active_order_overlay": {
+    "applies_only_to_order_id": "EVAL-002",
+    "applies_only_to_order_revision": 0,
+    "archived_order_path": "commander/orders/EVAL-002.md",
+    "archived_order_sha256": "a568f459c686cf3b78adffeb0197f67fa83c802ebbed97b25dbfd61478771d19",
+    "purpose": "PROSPECTIVE_REVIEW_AND_ONLY_IF_NEEDED_IN_SCOPE_REPAIR",
+    "existing_delivery_must_be_reviewed_first": true,
+    "existing_sealed_attempt_reopened": false,
+    "review_verdict_changed_by_migration": false,
+    "module_write_roots": [
+      "evaluation_workloads/eval_002/"
+    ],
+    "test_write_patterns": [
+      "tests/evaluation_workloads/test_eval_002*.py",
+      "tests/evaluation_workloads/eval_002/**"
+    ],
+    "original_executor_report_state_and_fresh_attempt_paths_retained": true,
+    "analysis_record_root": "analyses/EVAL-002/",
+    "new_analysis_records_only": true,
+    "isolated_repair_checkout_authorized_for_same_repository_relative_modules": true,
+    "isolated_checkout_parent": "/home/mint/rl_dev/worktrees/",
+    "pinned_original_source_paths_preserved": true,
+    "product_changes_authorized": false,
+    "shared_tooling_changes_authorized": false,
+    "acceptance_contract_changes_authorized": false,
+    "training_authorized": false,
+    "formal_qualification_authorized": false,
+    "maximum_diagnostic_process_starts_total": 4,
+    "maximum_environment_transitions_total": 2048,
+    "observed_executor_report_counts_at_migration": {
+      "diagnostic_process_starts": 2,
+      "environment_transitions": 1024,
+      "source": "executor/EXECUTOR_STATE.json",
+      "independently_requalified": false
+    },
+    "runtime_limits_and_retry_purposes_from_original_order_still_apply": true,
+    "additional_run_authorized_by_migration": false,
+    "original_certified_seal_and_inspection_requirements_retained": true,
+    "original_input_pins_unchanged": true,
+    "exact_commit_count_required": false,
+    "max_additive_repair_commits": null,
+    "historical_state_counters_and_attempt_metadata_are_not_live_permission_limits": true
+  }
+}

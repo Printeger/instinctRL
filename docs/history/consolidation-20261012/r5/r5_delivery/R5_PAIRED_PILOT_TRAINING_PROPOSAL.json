@@ -1,0 +1,52 @@
+{
+  "admission_gate": {
+    "on_failure": "DO_NOT_AUTHORIZE_OR_START",
+    "required": "independently reviewed real D7-R/B0 analysis",
+    "status": "NOT_SATISFIED"
+  },
+  "authority_inheritance": "NONE_FROM_D7_OR_R4",
+  "groups": [
+    {
+      "cold_start": true,
+      "config": "training_workloads/unified_h1/pilot_p0.json",
+      "group": "P0"
+    },
+    {
+      "cold_start": true,
+      "config": "training_workloads/unified_h1/pilot_plr.json",
+      "group": "PLR"
+    }
+  ],
+  "per_group": {
+    "actor_minibatch_steps": 512,
+    "checkpoints": [
+      "init0000",
+      "u1",
+      "u2",
+      "u8",
+      "u16",
+      "u32",
+      "u64"
+    ],
+    "critic_minibatch_steps": 512,
+    "ppo_updates": 64,
+    "training_transitions": 32768
+  },
+  "retry_policy": "ZERO_RETRIES",
+  "schema_version": "instinctrl-paired-pilot-training-proposal/1",
+  "status": "PROPOSAL_NOT_REGISTERED_NOT_AUTHORIZED_NOT_STARTED",
+  "symmetric_hard_caps": {
+    "actor_minibatch_steps": 1024,
+    "allocated_gpu_seconds": 7200,
+    "automatic_retries": 0,
+    "checkpoint_writes": 14,
+    "critic_minibatch_steps": 1024,
+    "disk_bytes": 17179869184,
+    "live_process_starts": 2,
+    "model_calls": 0,
+    "outer_wall_seconds": 7220,
+    "ppo_updates": 128,
+    "simulator_initializations": 2,
+    "training_transitions": 65536
+  }
+}

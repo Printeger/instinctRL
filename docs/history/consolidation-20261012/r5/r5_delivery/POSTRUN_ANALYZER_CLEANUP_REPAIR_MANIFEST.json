@@ -1,0 +1,22 @@
+{
+  "schema_version": "instinctrl-postrun-analyzer-cleanup-repair-manifest/1",
+  "base_commit": "0c1a7c05ee8a721590ddf2427c557dc4fecd6434",
+  "executed_b0_job": "J-ea67539f3baab11d",
+  "executed_b0_workload_commit": "0c1a7c05ee8a721590ddf2427c557dc4fecd6434",
+  "scope": "CPU-only postrun repair after the single authorized B0; no historical evidence mutation",
+  "live_rerun_authorized": false,
+  "changes": [
+    "accept lee/wrench None only when every downstream_cache_valid lane is false",
+    "retain strict rejection when any valid lane lacks downstream cache evidence",
+    "add a forked hard cleanup watchdog that persists a timeout marker and kills only its exact parent process",
+    "preserve the owner-thread SimulationApp.close call and existing soft alarm"
+  ],
+  "files_sha256": {
+    "training_workloads/unified_h1/control_diagnostic.py": "dee6bd97690f0844eff4c5b3cd7bea757ba94e10aa3f3cbc233d3d708173ecbe",
+    "training_workloads/unified_h1/live_adapter.py": "33a8f980e3c76f38e1cb318258fb764a6d10628d532ef70ccb2b8c7c1901f9f4",
+    "training_workloads/unified_h1/candidate_config.json": "ccf19826d9578ea4812e025294c991005e32b97b0d66f42c00d772104f7a6387",
+    "tests/training_workloads/test_d7_cpu_unittest.py": "effd0ba27d986b4f875554fed7961f14ceeb8ffad7d6b2ec9b22a4844095cef1",
+    "tests/training_workloads/test_d7_cleanup_unittest.py": "9c9fa2e781af44c937c25f1f38e33bef7eaf8bf768a8ed484d5fe30f5c105790",
+    "tests/training_workloads/test_d7_handoff_bindings_unittest.py": "6a16aa309674733307d003689c32ba96d82fbf06f7bac94c8688d845a342c2f4"
+  }
+}

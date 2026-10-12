@@ -1,0 +1,37 @@
+.....................F..                                                 [100%]
+=================================== FAILURES ===================================
+_____ test_runtime_support_paths_config_and_manifest_are_attempt_confined ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7328ce66dad0>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-977/test_runtime_support_paths_con0')
+
+    def test_runtime_support_paths_config_and_manifest_are_attempt_confined(monkeypatch, tmp_path):
+        attempt = tmp_path / "SCALE-004-INERT"; (attempt / "results").mkdir(parents=True)
+        expected = runtime_environment(attempt)
+        for name, value in expected.items(): monkeypatch.setenv(name, value)
+        receipt = prepare_runtime_support(attempt, mode="training")
+        paths = runtime_support_paths(attempt)
+        assert all(path.is_dir() for path in paths.values())
+        assert receipt["external_inventories_required"] is False
+        cfg = SimpleNamespace(sim=SimpleNamespace(log_dir=None))
+        configured = configure_simulation_logging(cfg, attempt)
+        assert configured == str(paths["logs"].resolve()) == cfg.sim.log_dir
+    
+        authorization = tmp_path / "authorization.json"; authorization.write_text("{}\n")
+        config = load_config()
+        manifest, _ = build_attempt_documents(
+            mode="training", attempt_id=attempt.name, attempt_dir=attempt,
+            execution_authorization=authorization, checkpoint=Path(config["pins"]["checkpoint_path"]),
+            source_dependencies=[], candidate_commit="a" * 40, candidate_tree="b" * 40,
+        )
+        environment = manifest["commands"][0]["environment"]
+        assert all(environment[name] == value for name, value in expected.items())
+        assert manifest["external_inventories"] == []
+>       assert str(ROOT / "training_workloads/scale_003/runtime_support.py") in {row["path"] for row in manifest["commands"] and _["files"]}
+E       AssertionError: assert '/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/runtime_support.py' in {'/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11', '/home/mint/miniconda3/envs/navrl_blackwell_test/li...te_0250.pt', '/home/mint/rl_dev/worktrees/instinctRL-scale-002-prep/training_preparation/scale_002/proposal.json', ...}
+E        +  where '/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/runtime_support.py' = str((PosixPath('/home/mint/rl_dev/instinctRL-dev') / 'training_workloads/scale_003/runtime_support.py'))
+
+tests/training_workloads/test_scale_003_repair.py:454: AssertionError
+=========================== short test summary info ============================
+FAILED tests/training_workloads/test_scale_003_repair.py::test_runtime_support_paths_config_and_manifest_are_attempt_confined
+1 failed, 23 passed in 2.02s

@@ -1,0 +1,1403 @@
+..........................................FF..F...................... [ 29%]
+................................................F......FF............... [ 59%]
+.............................................................FFFFFFFF [ 88%]
+FFFF..........FF.F........                                            [100%]
+=================================== FAILURES ===================================
+_ EvidenceBoundaryTests.test_active_successor_delivery_identity_is_consistent_and_fails_closed _
+PermissionError: evidence manifest is absent or not regular
+
+During handling of the above exception, another exception occurred:
+
+self = <test_evaluator_evidence_boundary.EvidenceBoundaryTests testMethod=test_active_successor_delivery_identity_is_consistent_and_fails_closed>
+
+    def test_active_successor_delivery_identity_is_consistent_and_fails_closed(self):
+     current_package='INSTINCTRL-R5-STAGE1-IDENTITY-BOUNDARY-SUCCESSOR-20260929'
+     current_task='T-d219cc10961c75be'
+     predecessor_diff='e58bfa16aa6ca448fb730e42582369b427a7454daec1fae3e351b0597c185f97'
+     source=ROOT/'b0_enhanced_delivery'
+     # The immutable delivery is predecessor evidence.  Materialize a current
+     # identity representation to exercise the successor's fail-closed reader.
+>    with self.assertRaisesRegex(PermissionError,'identity mismatch'):
+E    AssertionError: "identity mismatch" does not match "evidence manifest is absent or not regular"
+
+tests/training_workloads/test_evaluator_evidence_boundary.py:13: AssertionError
+________ EvidenceBoundaryTests.test_missing_future_postrun_fails_closed ________
+PermissionError: evidence manifest is absent or not regular
+
+During handling of the above exception, another exception occurred:
+
+self = <test_evaluator_evidence_boundary.EvidenceBoundaryTests testMethod=test_missing_future_postrun_fails_closed>
+
+    def test_missing_future_postrun_fails_closed(self):
+>    with self.assertRaisesRegex(PermissionError,'postrun evidence is absent'):
+E    AssertionError: "postrun evidence is absent" does not match "evidence manifest is absent or not regular"
+
+tests/training_workloads/test_evaluator_evidence_boundary.py:47: AssertionError
+_ EvidenceBoundaryTests.test_protected_predecessor_bytes_are_readable_and_hash_bound _
+
+self = <test_evaluator_evidence_boundary.EvidenceBoundaryTests testMethod=test_protected_predecessor_bytes_are_readable_and_hash_bound>
+
+    def test_protected_predecessor_bytes_are_readable_and_hash_bound(self):
+>    result=verify_predecessor(ROOT/'b0_enhanced_delivery/evaluator_evidence_boundary.json',ROOT/'predecessor_evidence')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_evaluator_evidence_boundary.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/evidence_boundary.py:43: in verify_predecessor
+    value=_load(Path(manifest_path))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/home/mint/rl_dev/instinctRL-dev/b0_enhanced_delivery/evaluator_evidence_boundary.json')
+
+    def _load(path:Path)->Any:
+>       if path.is_symlink() or not path.is_file():raise PermissionError("evidence manifest is absent or not regular")
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: evidence manifest is absent or not regular
+
+training_workloads/unified_h1/evidence_boundary.py:28: PermissionError
+_____ test_runtime_support_paths_config_and_manifest_are_attempt_confined ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74714f7a20d0>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-972/test_runtime_support_paths_con0')
+
+    def test_runtime_support_paths_config_and_manifest_are_attempt_confined(monkeypatch, tmp_path):
+        attempt = tmp_path / "SCALE-004-INERT"; (attempt / "results").mkdir(parents=True)
+        expected = runtime_environment(attempt)
+        for name, value in expected.items(): monkeypatch.setenv(name, value)
+        receipt = prepare_runtime_support(attempt, mode="training")
+        paths = runtime_support_paths(attempt)
+        assert all(path.is_dir() for path in paths.values())
+        assert receipt["external_inventories_required"] is False
+        cfg = SimpleNamespace(sim=SimpleNamespace(log_dir=None))
+        configured = configure_simulation_logging(cfg, attempt)
+        assert configured == str(paths["logs"].resolve()) == cfg.sim.log_dir
+    
+        authorization = tmp_path / "authorization.json"; authorization.write_text("{}\n")
+        config = load_config()
+        manifest, _ = build_attempt_documents(
+            mode="training", attempt_id=attempt.name, attempt_dir=attempt,
+            execution_authorization=authorization, checkpoint=Path(config["pins"]["checkpoint_path"]),
+            source_dependencies=[], candidate_commit="a" * 40, candidate_tree="b" * 40,
+        )
+        environment = manifest["commands"][0]["environment"]
+        assert all(environment[name] == value for name, value in expected.items())
+        assert manifest["external_inventories"] == []
+>       assert str(ROOT / "training_workloads/scale_003/runtime_support.py") in {row["path"] for row in manifest["commands"] and _["files"]}
+E       AssertionError: assert '/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/runtime_support.py' in {'/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11', '/home/mint/miniconda3/envs/navrl_blackwell_test/li...te_0250.pt', '/home/mint/rl_dev/worktrees/instinctRL-scale-002-prep/training_preparation/scale_002/proposal.json', ...}
+E        +  where '/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/runtime_support.py' = str((PosixPath('/home/mint/rl_dev/instinctRL-dev') / 'training_workloads/scale_003/runtime_support.py'))
+
+tests/training_workloads/test_scale_003_repair.py:454: AssertionError
+_ test_driver_pairs_obs_action_reward_next_command_and_attempt_first_accounting _
+
+    def test_driver_pairs_obs_action_reward_next_command_and_attempt_first_accounting():
+        observation = _observation(1023); env = FakeEnvironment(observation); counters = ExecutionCounters()
+        driver = UnifiedH1Driver(env, observation, clock=ScheduleClock(1023), counters=counters)
+>       returned = driver.step(torch.zeros(32, 4))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x74714f631510>
+action = tensor([[0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0..., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+>       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError
+_____________ test_driver_failure_keeps_attempt_without_completion _____________
+
+    def test_driver_failure_keeps_attempt_without_completion():
+        class Failing(FakeEnvironment):
+            def step(self, action): raise RuntimeError("step failed")
+        observation = _observation(0); counters = ExecutionCounters(); driver = UnifiedH1Driver(Failing(observation), observation, counters=counters)
+>       with pytest.raises(RuntimeError): driver.step(torch.zeros(32, 4))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x74715211a510>
+action = tensor([[0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0..., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+>       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError
+_ OfflineResourceSettlementTests.test_cpu_fixture_cannot_fill_real_run_dimensions _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_cpu_fixture_cannot_fill_real_run_dimensions>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+_ OfflineResourceSettlementTests.test_estimates_second_start_and_conflicting_observations_fail_closed _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_estimates_second_start_and_conflicting_observations_fail_closed>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+_ OfflineResourceSettlementTests.test_late_evidence_is_append_only_idempotent_and_keeps_one_start _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_late_evidence_is_append_only_idempotent_and_keeps_one_start>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+_ OfflineResourceSettlementTests.test_missing_dimensions_remain_unknown_or_reserved _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_missing_dimensions_remain_unknown_or_reserved>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+_ OfflineResourceSettlementTests.test_missing_or_forged_source_manifest_fails_closed _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_missing_or_forged_source_manifest_fails_closed>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+_ OfflineResourceSettlementTests.test_nonfinite_event_fails_closed_during_settlement _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_nonfinite_event_fails_closed_during_settlement>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+_ OfflineResourceSettlementTests.test_nonfinite_source_manifest_fails_closed_during_source_review _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_nonfinite_source_manifest_fails_closed_during_source_review>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+_ OfflineResourceSettlementTests.test_nonfinite_wall_and_per_device_gpu_seconds_fail_closed_on_append _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_nonfinite_wall_and_per_device_gpu_seconds_fail_closed_on_append>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+_ OfflineResourceSettlementTests.test_signature_rejects_candidate_and_observation_identity_relabeling _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_signature_rejects_candidate_and_observation_identity_relabeling>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+_ OfflineResourceSettlementTests.test_source_manifest_bytes_remain_required_at_settlement _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_source_manifest_bytes_remain_required_at_settlement>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+_ OfflineResourceSettlementTests.test_trusted_start_wall_per_device_gpu_seconds_and_transitions_settle _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_trusted_start_wall_per_device_gpu_seconds_and_transitions_settle>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+_ OfflineResourceSettlementTests.test_two_independent_primary_starts_fail_closed_and_retry_is_derived _
+
+self = <test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_two_independent_primary_starts_fail_closed_and_retry_is_derived>
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+>           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+fatal: bad object 524e738a65dc6954fec797899b5e9e21d27d0324
+__________ test_actual_driver_rollout_ppo_logging_and_durable_attempt __________
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-972/test_actual_driver_rollout_ppo0')
+
+    def test_actual_driver_rollout_ppo_logging_and_durable_attempt(tmp_path):
+>       loop,trainer,counters=_training(tmp_path); result=loop.run_update()
+                                                          ^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1_rework.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/driver.py:137: in run_update
+    rollout = collect_h1_rollout(self.driver, self.trainer, self.driver.observation, RolloutConfig(16, 32))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:99: in collect_h1_rollout
+    transition, current = collect_h1_transition(environment, trainer, current, config); transitions.append(transition)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:37: in collect_h1_transition
+    returned = environment.step(action)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x7471327b6410>
+action = tensor([[0.4055, 0.5600, 0.6451, 0.4621],
+        [0.3826, 0.5968, 0.6460, 0.4760],
+        [0.6110, 0.4615, 0.5064, 0... [0.4197, 0.5479, 0.6628, 0.4023],
+        [0.4727, 0.4894, 0.5577, 0.4658],
+        [0.4586, 0.3660, 0.6375, 0.5562]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+>       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError
+_____ test_env_and_partial_critic_optimizer_failures_keep_actual_counters ______
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-972/test_env_and_partial_critic_op0')
+
+    def test_env_and_partial_critic_optimizer_failures_keep_actual_counters(tmp_path):
+        loop,trainer,counters=_training(tmp_path/"env",fail_step=3)
+>       with pytest.raises(RuntimeError,match="env.step"): loop.run_update()
+                                                           ^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1_rework.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/driver.py:137: in run_update
+    rollout = collect_h1_rollout(self.driver, self.trainer, self.driver.observation, RolloutConfig(16, 32))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:99: in collect_h1_rollout
+    transition, current = collect_h1_transition(environment, trainer, current, config); transitions.append(transition)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:37: in collect_h1_transition
+    returned = environment.step(action)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x747133063e10>
+action = tensor([[0.4600, 0.8137, 0.1978, 0.4145],
+        [0.3519, 0.7699, 0.2982, 0.7928],
+        [0.4667, 0.7156, 0.3300, 0... [0.1598, 0.8466, 0.2375, 0.6191],
+        [0.4152, 0.7379, 0.3298, 0.7345],
+        [0.2294, 0.8355, 0.3452, 0.4521]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+>       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError
+_____ test_step_budget_and_resource_decline_stop_before_environment_action _____
+
+    def test_step_budget_and_resource_decline_stop_before_environment_action():
+        observation={"policy":{"state_vec":torch.zeros(32,52)}}
+        class Env:
+            calls=[]
+            def prepare_h1_step(self,**kwargs): self.calls.append("prepare")
+            def step(self,action): self.calls.append("step")
+        env=Env(); counters=ExecutionCounters()
+        driver=UnifiedH1Driver(env,observation,counters=counters,transition_limit=0)
+>       with pytest.raises(RuntimeError,match="training-transition"): driver.step(torch.zeros(32,4))
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1_rework.py:208: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x747133067e90>
+action = tensor([[0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0..., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+>       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError
+=========================== short test summary info ============================
+FAILED tests/training_workloads/test_evaluator_evidence_boundary.py::EvidenceBoundaryTests::test_active_successor_delivery_identity_is_consistent_and_fails_closed
+FAILED tests/training_workloads/test_evaluator_evidence_boundary.py::EvidenceBoundaryTests::test_missing_future_postrun_fails_closed
+FAILED tests/training_workloads/test_evaluator_evidence_boundary.py::EvidenceBoundaryTests::test_protected_predecessor_bytes_are_readable_and_hash_bound
+FAILED tests/training_workloads/test_scale_003_repair.py::test_runtime_support_paths_config_and_manifest_are_attempt_confined
+FAILED tests/training_workloads/test_unified_h1.py::test_driver_pairs_obs_action_reward_next_command_and_attempt_first_accounting
+FAILED tests/training_workloads/test_unified_h1.py::test_driver_failure_keeps_attempt_without_completion
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_cpu_fixture_cannot_fill_real_run_dimensions
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_estimates_second_start_and_conflicting_observations_fail_closed
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_late_evidence_is_append_only_idempotent_and_keeps_one_start
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_missing_dimensions_remain_unknown_or_reserved
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_missing_or_forged_source_manifest_fails_closed
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_nonfinite_event_fails_closed_during_settlement
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_nonfinite_source_manifest_fails_closed_during_source_review
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_nonfinite_wall_and_per_device_gpu_seconds_fail_closed_on_append
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_signature_rejects_candidate_and_observation_identity_relabeling
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_source_manifest_bytes_remain_required_at_settlement
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_trusted_start_wall_per_device_gpu_seconds_and_transitions_settle
+FAILED tests/training_workloads/test_unified_h1_r3_local_dispatch.py::OfflineResourceSettlementTests::test_two_independent_primary_starts_fail_closed_and_retry_is_derived
+FAILED tests/training_workloads/test_unified_h1_rework.py::test_actual_driver_rollout_ppo_logging_and_durable_attempt
+FAILED tests/training_workloads/test_unified_h1_rework.py::test_env_and_partial_critic_optimizer_failures_keep_actual_counters
+FAILED tests/training_workloads/test_unified_h1_rework.py::test_step_budget_and_resource_decline_stop_before_environment_action
+21 failed, 215 passed, 9 subtests passed in 45.73s

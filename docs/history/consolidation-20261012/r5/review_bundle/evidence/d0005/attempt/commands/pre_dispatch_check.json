@@ -1,0 +1,19 @@
+{
+  "adapter_sha256": "fc089a87d14d14750cf45fec5a77d266dde6bc82506f99be52581ee3ba6e4dac",
+  "authorization_sha256": "28390ce44fc0d3d22d045287b1c8fa4044502477f032b76e5ffc6ee595dac8bb",
+  "checked_at": "2026-09-14T19:31:18.096967+08:00",
+  "current_order_sha256": "7042093bacaf6a627050cbdcd4e6fd4a072e3f316a28d30a3684920322655d6d",
+  "dispatch_request_sha256": "fbf07c308b683afd60f70210b6de9f5c60bcc9ac69c5e0625db00199e94a2495",
+  "errors": [],
+  "linked_inputs_checked": 7,
+  "package_sha256": "cbb4b066dab4e46bd2999ffb86cb8b555b2c9a3810c4ecbd48d07215b79bfb7e",
+  "schema_version": "unified-h1-r3-pre-dispatch-check.v3",
+  "source_files_checked": 48,
+  "status": "PASS",
+  "stop_paths": {
+    "/home/mint/rl_dev/STOP": false,
+    "/home/mint/rl_dev/instinctRL_coordination/STOP": false,
+    "/home/mint/rl_dev/instinctRL_coordination/commander/STOP": false,
+    "/home/mint/rl_dev/instinctRL_coordination/executor/STOP": false
+  }
+}

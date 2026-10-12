@@ -1,0 +1,145 @@
+{
+  "schema_version": "instinctrl.zero_command_baseline_fix_and_validation/1.0",
+  "created_at": "2026-09-27T16:59:57+08:00",
+  "final_decision": "DIAGNOSIS_INCONCLUSIVE",
+  "p0_plr_allowed": false,
+  "plain_language_root_cause": "The vertical drift is deterministic: the P-only Lee controller uses 1.1583 kg while the articulated plant weighs 1.1815179586 kg, so a steady downward velocity error is required to command the missing hover force. The available evidence does not identify the cause of the simultaneous horizontal drift, so no complete safe repair is established.",
+  "imu_noise": {
+    "direct_cause_supported": false,
+    "conclusion": "Excluded from the direct B0 Lee feedback path by source and frozen evidence: the controller reads Isaac articulation root_state_w directly and no IMU value enters this path."
+  },
+  "mass_balance": {
+    "gravity_m_s2": 9.81,
+    "controller_mass_kg": 1.1583,
+    "runtime_base_mass_kg": 1.1583074331,
+    "runtime_total_articulated_mass_kg": 1.1815179586,
+    "controller_weight_n": 11.362923000000002,
+    "plant_weight_n": 11.590691173866,
+    "vertical_gain_s_inv": 2.2,
+    "predicted_steady_vz_m_s": -0.08938184245956034,
+    "observed_pre_reset_steady_vz_m_s": -0.0893858325551264,
+    "prediction_error_m_s": -0.000003990095566064333
+  },
+  "time_series": {
+    "source_job_id": "J-880cd798ee89d6eb",
+    "artifact": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-zero-command-baseline-20260927/task_inputs/b0_control_chain_time_series.json",
+    "sha256": "d775d2f073f829c1ecb3bcd73d24a1b7626c90ede2bf629e19cd9ccddb75de28",
+    "verified_chunks": 630,
+    "steps": {"Z": 200, "T": 100, "S": 330},
+    "lanes": 32,
+    "historical_transitions_analyzed": 20160,
+    "invalid_not_zero_filled": [{"case": "Z", "step": 166}],
+    "reset_boundaries": {
+      "Z": [{"step": 166, "lanes": 32}],
+      "T": [],
+      "S": [{"step": 165, "lanes": 16}, {"step": 166, "lanes": 16}]
+    },
+    "steady_pre_reset_windows": {
+      "Z": {"steps": [146, 165], "velocity_w_m_s": [0.19342518255580216, -0.05584377073100768, -0.08938575509237126], "collective_requested_n": 11.59069066643715, "rotor_thrust_sum_n": 11.590690393000841, "height_w_m": 0.5885956842452288},
+      "T": {"steps": [80, 99], "velocity_w_m_s": [0.19361145383882103, -0.05546098378254101, -0.08938582419650629], "collective_requested_n": 11.59069102704525, "rotor_thrust_sum_n": 11.590690797939896, "height_w_m": 1.173888823017478},
+      "S": {"steps": [145, 164], "velocity_w_m_s": [0.19340205583721398, -0.055919087532674897, -0.08938591837650164], "collective_requested_n": 11.590690933167934, "rotor_thrust_sum_n": 11.590690677985549, "height_w_m": 0.5925885469652712}
+    }
+  },
+  "control_chain": {
+    "zero_target_to_lee": "Verified; direct root-state velocity feedback, proportional-only gain 2.2 and gravity 9.81.",
+    "desired_attitude_and_collective": "Vertical steady error closes the controller/plant mass gap; horizontal desired tilt exists but its plant cause is unresolved.",
+    "mixer_rotor_directions_frames_signs": "Consistent in static source and the trace; no supported sign defect found.",
+    "normalized_command_to_target_and_actual_throttle": "Verified for all 629 valid downstream steps.",
+    "thrust_and_wrench": "Rotor thrust matches local +Z applied-force slots; alternating moments and collective allocation pass numerical checks.",
+    "plant_acceleration_and_velocity": "Finite-difference acceleration was reconstructed; steady acceleration approaches zero at nonzero x/y/z velocity.",
+    "held_position_in_feedback": false,
+    "integral_term_present": false,
+    "instantaneous_zero_throttle_reset_observed": false,
+    "post_reset_replay_supported": true,
+    "vertical_horizontal_common_defect_established": false
+  },
+  "repair": {
+    "product_changed": false,
+    "reason": "Vertical mass mismatch is established, but a z-only edit is barred because horizontal causality and instantaneous reset state are incomplete.",
+    "changed_artifacts": [
+      "zero_command_delivery/analyze_b0.py",
+      "zero_command_delivery/diagnosis.json",
+      "zero_command_delivery/REPORT.md",
+      "zero_command_delivery/changed_files.json",
+      "zero_command_delivery/live_validation_handoff.json",
+      "zero_command_delivery/test_record.json",
+      "tests/training_workloads/test_zero_command_diagnosis.py"
+    ],
+    "prepared_base_commit": "5c4a5e9dfba0cdebfb3478a3f32dc36962337cdb",
+    "candidate_head_commit": "5c4a5e9dfba0cdebfb3478a3f32dc36962337cdb",
+    "candidate_git_tree": "a6126cb92b76bc6d5f89a5987d18925863e24233",
+    "accepted_candidate_tree_sha256": "091af87fd4efcd01f6e99166e793cb4b04473b003a2b814cf0fd4905b0689d4d",
+    "candidate_diff_sha256": "4ae286207adcc60ca99b0cff0838dc657d622e7b5dc82d1e5517a86496de976a",
+    "product_tracked_diff_empty": true,
+    "cleanup_candidate_commit_present": "02a45b44fc5ec8facd31ad3c4fbbfb15ece977f1"
+  },
+  "tests": {
+    "argv": ["/usr/bin/python3", "-m", "unittest", "-v", "tests/training_workloads/test_zero_command_diagnosis.py"],
+    "engineer": {"passed": 5, "failed": 0, "exit_code": 0},
+    "independent_evaluator": {"passed": 5, "failed": 0, "exit_code": 0},
+    "final_outer_replay": {"passed": 5, "failed": 0, "exit_code": 0, "elapsed_seconds": 0.044}
+  },
+  "independent_review": {
+    "session_id": "S-9cb2f28e6bb247da",
+    "verdict": "PASS",
+    "conclusion_layer": "CPU",
+    "missing_evidence": [],
+    "scope": "Acceptance of the terminal diagnosis package only; no code repair or real-run behavior is approved.",
+    "follow_up_findings": ["F-HORIZONTAL-CAUSE", "F-RESET-INSTANT-STATE"]
+  },
+  "rlflow": {
+    "package_id": "INSTINCTRL-ZERO-COMMAND-BASELINE-20260927",
+    "task_id": "T-30b901b95e0b5eb1",
+    "proposal_id": "P-2a01ad99bc4360ca",
+    "proposal_sha256": "2a01ad99bc4360caca027da3c62777b76ae9924cdc00fc26e1b1b27c91076bba",
+    "package_status": "ACTIVE",
+    "package_paused": true,
+    "task_status": "CONTRACT_DECISION",
+    "scientific_evaluator_verdict": "PASS",
+    "semantic_classifier_status": "UNRESOLVED",
+    "semantic_classifier_note": "Evaluator suggested unsupported ENGINEERING_DIAGNOSIS for diagnosis/test artifacts; no additional role call or retry was authorized.",
+    "role_calls_used": 3,
+    "role_calls_budget": 3,
+    "summed_role_elapsed_seconds": 714.8545637479983,
+    "summed_model_active_seconds": 708.2652344040107
+  },
+  "live_validation": {
+    "eligible": false,
+    "executed": false,
+    "argv": null,
+    "new_job_id": null,
+    "new_evidence_id": null,
+    "reason": "Complete root cause and minimal repair gates were not met.",
+    "cleanup_commit_real_run_validated": false
+  },
+  "usage": {
+    "live_process_starts": 0,
+    "simulator_initializations": 0,
+    "new_nontraining_transitions": 0,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "p0_plr_registrations_or_submissions": 0,
+    "z_policy_evaluations": 0,
+    "automatic_retries": 0,
+    "task_gpu_compute_used": false
+  },
+  "cleanup": {
+    "audited_at": "2026-09-27T16:59:57+08:00",
+    "simulator_processes": 0,
+    "workload_processes": 0,
+    "rlflow_daemons": 0,
+    "rlflow_workers": 0,
+    "rlflow_lifeguards": 0,
+    "task_gpu_processes": 0,
+    "unrelated_gpu_processes": [{"pid": 3950, "name": "/usr/libexec/gnome-remote-desktop-daemon", "used_memory_mib": 164}]
+  },
+  "unresolved_risks": [
+    "The source of the stable horizontal x/y drift is not causally identified.",
+    "Per-physics-step articulated-COM and decomposed plant wrench observations are missing.",
+    "Rotor/controller internal state is not observed exactly at lane reset.",
+    "The plausible mass correction was not implemented because it would be only a partial repair.",
+    "Cleanup/pidfd commit 02a45b44fc5ec8facd31ad3c4fbbfb15ece977f1 was not revalidated in a new real run."
+  ],
+  "minimal_next_diagnostic": "Under separate authorization only: one no-retry B0 Z/T/S diagnostic with unchanged frozen contracts, adding per-physics-step per-lane articulated-COM state, per-body mass/COM transforms, decomposed gravity/rotor/drag/contact/joint/other wrenches, and rotor/controller state immediately before and after reset."
+}

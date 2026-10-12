@@ -1,0 +1,67 @@
+{
+  "action": "u0256 deterministic Beta mean",
+  "aggregate_caps": {
+    "action_gpu_seconds": 1800,
+    "allocated_gpu_seconds": 1820,
+    "automatic_retries": 0,
+    "checkpoint_writes": 0,
+    "disk_bytes": 17179869184,
+    "live_process_starts": 2,
+    "nontraining_transitions": 40320,
+    "optimizer_updates": 0,
+    "outer_wall_seconds": 1820,
+    "simulator_initializations": 2,
+    "training_transitions": 0
+  },
+  "candidate_binding": {
+    "base_commit": "896ec3d21c64babffe6f3d9c7286a2e7ed206fc2",
+    "config_sha256": "78e31113d78cb88719828aa9cf13bafef7d7f22c1bf35c0417432f206d76e714",
+    "post_adoption_commit_tree": "must match the accepted candidate derived from this manifest before materialization",
+    "repository": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-e0-d7-r5-20260923",
+    "source_manifest_path": "r5_delivery/CANDIDATE_SOURCE_MANIFEST.json",
+    "source_manifest_sha256": "e4ea96311752b35dfea485da1fc994d14fb7381485cfc06daf061d5d4207b27c"
+  },
+  "cases": [
+    "Z",
+    "T",
+    "S"
+  ],
+  "condition": "D7-R",
+  "experiment_id": "UNIFIED-H1-R4-D7-R",
+  "identity_separation": "one fresh attempt, process start, and simulator initialization exclusively for this condition",
+  "order_id": "UNIFIED-H1-R4-D7-R",
+  "per_condition": {
+    "action_gpu_seconds": 900,
+    "allocated_gpu_seconds": 910,
+    "automatic_retries": 0,
+    "lanes": 32,
+    "live_process_starts": 1,
+    "nontraining_transitions": 20160,
+    "outer_wall_seconds": 910,
+    "policy_steps": 630,
+    "simulator_initializations": 1
+  },
+  "schema_version": "instinctrl-d7-control-diagnostic-spec-preimage/1",
+  "shared_disk_ledger": ".d7_control_diagnostic_disk_ledger.json",
+  "source_e0": {
+    "path": "task_inputs/r4_review_e0.json",
+    "probability_replay": "NOT_PROVEN",
+    "sha256": "4210375fac4a16dd83a023e5fc4c3750474bfe80355634b969088ec411b6ea1f",
+    "status": "PASS_WITH_NOT_PROVEN"
+  },
+  "source_proposal": {
+    "path": "task_inputs/R4_D7_CONTROL_DIAGNOSTIC_PROPOSAL.json",
+    "sha256": "62992b2242e6aca4a9d4d999aab59f57a3c2e650f5208c132c8cebcd3825d703"
+  },
+  "status": "PREIMAGE_NOT_REGISTERED_NOT_AUTHORIZED_NOT_STARTED",
+  "time_accounting": {
+    "action_gpu_seconds": "900 per condition inside workload action boundary; 1800 aggregate",
+    "allocated_gpu_seconds": "910 per condition including cleanup allocation; 1820 aggregate",
+    "outer_wall_seconds": "910 per condition including cleanup; 1820 aggregate"
+  },
+  "workload": {
+    "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-e0-d7-r5-20260923",
+    "source_manifest_path": "r5_delivery/CANDIDATE_SOURCE_MANIFEST.json",
+    "source_manifest_sha256": "e4ea96311752b35dfea485da1fc994d14fb7381485cfc06daf061d5d4207b27c"
+  }
+}

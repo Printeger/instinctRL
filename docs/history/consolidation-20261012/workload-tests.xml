@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="7" failures="0" skipped="0" tests="7" time="0.297" timestamp="2026-10-12T14:07:42.543116+08:00" hostname="mint-MS-7E30"><testcase classname="" name="tests.training_workloads.test_unified_h1" time="0.000"><error message="collection failure">ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1.py:8: in &lt;module&gt;
+    import torch
+E   ModuleNotFoundError: No module named 'torch'</error></testcase><testcase classname="" name="tests.training_workloads.test_unified_h1_a0004" time="0.000"><error message="collection failure">ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_a0004.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_a0004.py:10: in &lt;module&gt;
+    import torch
+E   ModuleNotFoundError: No module named 'torch'</error></testcase><testcase classname="" name="tests.training_workloads.test_unified_h1_a0005" time="0.000"><error message="collection failure">ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_a0005.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_a0005.py:6: in &lt;module&gt;
+    import torch
+E   ModuleNotFoundError: No module named 'torch'</error></testcase><testcase classname="" name="tests.training_workloads.test_unified_h1_a0006" time="0.000"><error message="collection failure">ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_a0006.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_a0006.py:5: in &lt;module&gt;
+    import torch
+E   ModuleNotFoundError: No module named 'torch'</error></testcase><testcase classname="" name="tests.training_workloads.test_unified_h1_control_diagnostic" time="0.000"><error message="collection failure">ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_control_diagnostic.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_control_diagnostic.py:9: in &lt;module&gt;
+    import torch
+E   ModuleNotFoundError: No module named 'torch'</error></testcase><testcase classname="" name="tests.training_workloads.test_unified_h1_r3_preflight_diagnostics" time="0.000"><error message="collection failure">ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_r3_preflight_diagnostics.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_r3_preflight_diagnostics.py:7: in &lt;module&gt;
+    import torch
+E   ModuleNotFoundError: No module named 'torch'</error></testcase><testcase classname="" name="tests.training_workloads.test_unified_h1_rework" time="0.000"><error message="collection failure">ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_rework.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/training_workloads/test_unified_h1_rework.py:9: in &lt;module&gt;
+    import torch
+E   ModuleNotFoundError: No module named 'torch'</error></testcase></testsuite></testsuites>

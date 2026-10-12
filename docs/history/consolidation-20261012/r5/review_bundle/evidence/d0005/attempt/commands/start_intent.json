@@ -1,0 +1,32 @@
+{
+  "attempt_id": "UNIFIED-H1-R3-D0005",
+  "authorization": {
+    "path": "/home/mint/rl_dev/instinctRL_coordination/commander/authorizations/UNIFIED-H1-R3_POST_A0007_MAIN_AUTHORIZATION.json",
+    "sha256": "28390ce44fc0d3d22d045287b1c8fa4044502477f032b76e5ffc6ee595dac8bb"
+  },
+  "automatic_or_manual_retries": 0,
+  "current_order_sha256": "7042093bacaf6a627050cbdcd4e6fd4a072e3f316a28d30a3684920322655d6d",
+  "dispatch_request": {
+    "path": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R3/UNIFIED-H1-R3-D0005/commands/dispatch_request.json",
+    "sha256": "fbf07c308b683afd60f70210b6de9f5c60bcc9ac69c5e0625db00199e94a2495"
+  },
+  "execution_package": {
+    "path": "/home/mint/rl_dev/instinctRL_coordination/commander/authorizations/UNIFIED-H1-R3_POST_A0007_EXECUTION_PACKAGE.json",
+    "sha256": "cbb4b066dab4e46bd2999ffb86cb8b555b2c9a3810c4ecbd48d07215b79bfb7e"
+  },
+  "historical_accounting": {
+    "D0002_created": false,
+    "D0002_released": false,
+    "cumulative_applauncher": 3,
+    "cumulative_live_starts": 3,
+    "cumulative_simulator_initialization_slots": 3
+  },
+  "mode": "main",
+  "order_id": "UNIFIED-H1-R3",
+  "persisted_at": "2026-09-14T19:31:18.096967+08:00",
+  "schema_version": "unified-h1-r3-single-use-start-intent.v3",
+  "single_use": true,
+  "starts_authorized": 1,
+  "starts_used_before_invocation": 0,
+  "status": "PERSISTED_BEFORE_INVOCATION"
+}

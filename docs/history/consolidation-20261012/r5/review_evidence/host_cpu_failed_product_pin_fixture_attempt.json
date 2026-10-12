@@ -1,0 +1,20 @@
+{
+  "schema_version": "instinctrl-host-cpu-failed-attempt/1",
+  "package_id": "INSTINCTRL-R5-STAGE1-PRODUCT-PIN-FIXTURE-SUCCESSOR-20260929",
+  "task_id": "T-a2b452d3b59b07ef",
+  "host_argv": [
+    "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+    "-m",
+    "training_workloads.unified_h1.host_cpu_evidence_reset_state_rerun_successor"
+  ],
+  "exit_code": 1,
+  "receipt_created": false,
+  "first_failing_module": "tests/training_workloads/test_d7_cleanup_unittest.py",
+  "full_sequence_failure": "runner reported pytest execution failed for test_d7_cleanup_unittest.py",
+  "isolated_follow_up": {"passed": 7, "failed": 0, "duration_seconds": 0.54},
+  "classification": "order-or-process-state-interaction-not-yet-established",
+  "automatic_retry": false,
+  "simulator_starts": 0,
+  "gpu_seconds": 0,
+  "training_transitions": 0
+}

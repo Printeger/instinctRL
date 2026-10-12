@@ -1,0 +1,43 @@
+{
+  "argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=15s",
+    "3610s",
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "training_workloads.unified_h1.formal_unified_h1",
+    "--authorization",
+    "/home/mint/rl_dev/instinctRL_coordination/commander/authorizations/UNIFIED-H1-R3_POST_A0007_MAIN_AUTHORIZATION.json",
+    "--attempt",
+    "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R3/UNIFIED-H1-R3-D0005",
+    "--mode",
+    "main"
+  ],
+  "completion_timeout_seconds": 3625,
+  "coordination_root": "/home/mint/rl_dev/instinctRL_coordination",
+  "cwd": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0007-workload",
+  "environment": {
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "CUDA_VISIBLE_DEVICES": "0",
+    "HOME": "/home/mint",
+    "MKL_NUM_THREADS": "2",
+    "NVIDIA_TF32_OVERRIDE": "0",
+    "OMNI_KIT_ACCEPT_EULA": "YES",
+    "OMP_NUM_THREADS": "2",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "20260908",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONPATH": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0007-workload:/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0007-product/isaaclab-training",
+    "TEMP": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R3/UNIFIED-H1-R3-D0005/results/runtime_support/tmp",
+    "TMP": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R3/UNIFIED-H1-R3-D0005/results/runtime_support/tmp",
+    "TMPDIR": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R3/UNIFIED-H1-R3-D0005/results/runtime_support/tmp",
+    "XDG_CACHE_HOME": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R3/UNIFIED-H1-R3-D0005/results/runtime_support/cache"
+  },
+  "handshake_timeout_seconds": 5,
+  "identity_path": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R3/UNIFIED-H1-R3-D0005/commands/dispatch_identity.json",
+  "result_path": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R3/UNIFIED-H1-R3-D0005/commands/dispatch_result.json",
+  "schema_version": "unified-h1-local-dispatch-request.v1"
+}

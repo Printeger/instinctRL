@@ -1,0 +1,334 @@
+{
+  "candidate": {
+    "accepted_input_candidate_diff_sha256": "2d81995dccf0beb9b10bb9c9286463f312bf8f8833be4f6d0312fd4d2703ac01",
+    "accepted_input_candidate_tree_sha256": "80a9a894743ee92f08dcdd154c9b64046006872dbeb781376192d42ce99dc6d5",
+    "base_commit": "524e738a65dc6954fec797899b5e9e21d27d0324",
+    "base_tree": "32ce0160af61a9d6641e82f4d043d74874c143b0",
+    "binding_contract": {
+      "dossier_path": "readiness_artifacts/FINAL_READINESS_DOSSIER.json",
+      "external_seal": "rlflow immutable accepted Engineer and Evaluator envelopes seal the final whole-candidate diff_sha256, tree_sha256, input_state_version, evidence-index hash, and history-index hash after dossier bytes are frozen",
+      "id": "FINAL_DOSSIER_NONSELF_EXTERNAL_SEAL_V1",
+      "manifest_scope": "all candidate payload files except the dossier itself",
+      "single_excluded_self_referential_file": "readiness_artifacts/FINAL_READINESS_DOSSIER.json"
+    },
+    "candidate_tree_binding": "accepted pre-edit candidate tree from frozen orchestration state 397; the final whole-candidate tree and diff are sealed externally after dossier bytes are frozen under FINAL_DOSSIER_NONSELF_EXTERNAL_SEAL_V1",
+    "changed_file_sha256": {
+      "tests/training_workloads/test_unified_h1_failure_evidence.py": "cbe319ea3ad0ac2b08a20e1ba07d4a3ec8b5362166e946a7c7cd27534ef31088",
+      "tests/training_workloads/test_unified_h1_final_readiness.py": "cbc42734ae470df28268fe41ea7abb1a6ab7747c9ac155ab0d3f9038ce4f97ad",
+      "tests/training_workloads/test_unified_h1_offline_supervision.py": "9ea7605b08d71c24100a4fb760581b73d6202af118d7c4df4eac8810cfe847da",
+      "tests/training_workloads/test_unified_h1_r3_local_dispatch.py": "64838813edbc2ca3d8c86aebc2dd7f0ac803cf682f47dfb7395d4f7aa0c2a567",
+      "training_workloads/unified_h1/budget.py": "603e20cfdfc58f45d08265f42dba55c68941b859d1c324bad0e69ea401b180b9",
+      "training_workloads/unified_h1/candidate_config.json": "9384e4a092c4f4a0fe251d9f7a5426670cb070746ca3c944aecbd6ce4147ba26",
+      "training_workloads/unified_h1/failure_evidence.py": "ad31660d5fcc330e2b89163d3e644af0693db47f621899e2550eb4b9c41c25f0",
+      "training_workloads/unified_h1/live_adapter.py": "2712354ef13aa9cd62b65aca5e68d2fe599f5b4e1fdabeedf89e0f7b149bbdfa",
+      "training_workloads/unified_h1/local_dispatch.py": "b60008e1b1d5cffd4857fcc6798d838f200dc55cfb4bb7ffdced7a487b335469",
+      "training_workloads/unified_h1/offline_supervision.py": "fde9371377932366ceb9b6e752c9ffa3d98d0a47f3da0bea90cfc42c4b70aebf"
+    },
+    "changed_files": [
+      "readiness_artifacts/FINAL_READINESS_DOSSIER.json",
+      "tests/training_workloads/test_unified_h1_failure_evidence.py",
+      "tests/training_workloads/test_unified_h1_final_readiness.py",
+      "tests/training_workloads/test_unified_h1_offline_supervision.py",
+      "tests/training_workloads/test_unified_h1_r3_local_dispatch.py",
+      "training_workloads/unified_h1/budget.py",
+      "training_workloads/unified_h1/candidate_config.json",
+      "training_workloads/unified_h1/failure_evidence.py",
+      "training_workloads/unified_h1/live_adapter.py",
+      "training_workloads/unified_h1/local_dispatch.py",
+      "training_workloads/unified_h1/offline_supervision.py"
+    ],
+    "config_sha256": "9384e4a092c4f4a0fe251d9f7a5426670cb070746ca3c944aecbd6ce4147ba26",
+    "control_recovery_input": {
+      "candidate_diff_sha256": "dd10fe5193694c05afb308384d5e7db59627889a6f367f8d0016ee727f8ee074",
+      "candidate_tree_sha256": "96d9d75ff087722fa8b6f476a51faccddfb77c5a02ec868852231f885d0454df",
+      "kind": "RESOLVE_NONSELF_FINAL_DOSSIER_BINDING",
+      "source_sessions": [
+        "S-5619e3a3094e4c0e",
+        "S-7648a368f7ea46a9"
+      ]
+    },
+    "final_commit": "524e738a65dc6954fec797899b5e9e21d27d0324",
+    "identity_source": {
+      "binding": "frozen orchestration input current candidate",
+      "input_state_version": 397,
+      "session_id": "S-1f7693929ceb480c",
+      "task_version": 16
+    },
+    "input_candidate_diff_sha256": "2d81995dccf0beb9b10bb9c9286463f312bf8f8833be4f6d0312fd4d2703ac01",
+    "input_candidate_tree_sha256": "80a9a894743ee92f08dcdd154c9b64046006872dbeb781376192d42ce99dc6d5",
+    "input_hashes": {
+      "evidence_index_sha256": "ee4cde58614019e1a17c1fad47778af301730845a21498dc88d6a9b70b1a199b",
+      "frozen_orchestration_packet_sha256": "2529ee674f59413dec0ba1abf8ce6913cec01e3567ab00e452ef04fcf95437a7",
+      "history_index_file_sha256": "83ead237ae5d581a01a113e673ea0964792545bc09c51e017a012974e25bb0c9",
+      "history_index_sha256": "a6581fe01a9860044a69410b77a3e1035d24b07836c377956a426ee98a6d6e2b"
+    },
+    "non_self_payload_manifest": {
+      "algorithm": "sha256(file bytes)",
+      "entries": [
+        {
+          "path": "tests/training_workloads/test_unified_h1_failure_evidence.py",
+          "sha256": "cbe319ea3ad0ac2b08a20e1ba07d4a3ec8b5362166e946a7c7cd27534ef31088"
+        },
+        {
+          "path": "tests/training_workloads/test_unified_h1_final_readiness.py",
+          "sha256": "cbc42734ae470df28268fe41ea7abb1a6ab7747c9ac155ab0d3f9038ce4f97ad"
+        },
+        {
+          "path": "tests/training_workloads/test_unified_h1_offline_supervision.py",
+          "sha256": "9ea7605b08d71c24100a4fb760581b73d6202af118d7c4df4eac8810cfe847da"
+        },
+        {
+          "path": "tests/training_workloads/test_unified_h1_r3_local_dispatch.py",
+          "sha256": "64838813edbc2ca3d8c86aebc2dd7f0ac803cf682f47dfb7395d4f7aa0c2a567"
+        },
+        {
+          "path": "training_workloads/unified_h1/budget.py",
+          "sha256": "603e20cfdfc58f45d08265f42dba55c68941b859d1c324bad0e69ea401b180b9"
+        },
+        {
+          "path": "training_workloads/unified_h1/candidate_config.json",
+          "sha256": "9384e4a092c4f4a0fe251d9f7a5426670cb070746ca3c944aecbd6ce4147ba26"
+        },
+        {
+          "path": "training_workloads/unified_h1/failure_evidence.py",
+          "sha256": "ad31660d5fcc330e2b89163d3e644af0693db47f621899e2550eb4b9c41c25f0"
+        },
+        {
+          "path": "training_workloads/unified_h1/live_adapter.py",
+          "sha256": "2712354ef13aa9cd62b65aca5e68d2fe599f5b4e1fdabeedf89e0f7b149bbdfa"
+        },
+        {
+          "path": "training_workloads/unified_h1/local_dispatch.py",
+          "sha256": "b60008e1b1d5cffd4857fcc6798d838f200dc55cfb4bb7ffdced7a487b335469"
+        },
+        {
+          "path": "training_workloads/unified_h1/offline_supervision.py",
+          "sha256": "fde9371377932366ceb9b6e752c9ffa3d98d0a47f3da0bea90cfc42c4b70aebf"
+        }
+      ],
+      "excluded_paths": [
+        "readiness_artifacts/FINAL_READINESS_DOSSIER.json"
+      ],
+      "ordering": "lexicographic UTF-8 repository-relative path"
+    },
+    "repository": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-r3-readiness-long",
+    "working_head_commit": "524e738a65dc6954fec797899b5e9e21d27d0324",
+    "working_head_tree": "32ce0160af61a9d6641e82f4d043d74874c143b0"
+  },
+  "conclusion": "NOT_READY_PENDING_INDEPENDENT_EVALUATION",
+  "cpu_checks": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "review_bundle.task_tests.test_resource_window"
+      ],
+      "cwd": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-r3-readiness-long",
+      "exit_code": 0,
+      "result": "2 tests passed on frozen state 394 candidate before final dossier byte freeze",
+      "stderr_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-f3bdc57931e84130/scratch/a0009-targeted.stderr.log",
+      "stdout_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-f3bdc57931e84130/scratch/a0009-targeted.stdout.log"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "tests.training_workloads.test_unified_h1_failure_evidence",
+        "tests.training_workloads.test_unified_h1_offline_supervision",
+        "tests.training_workloads.test_unified_h1_r3_local_dispatch",
+        "tests.training_workloads.test_unified_h1_final_readiness"
+      ],
+      "cwd": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-r3-readiness-long",
+      "exit_code": 0,
+      "result": "53 tests passed on frozen state 394 candidate before final dossier byte freeze",
+      "stderr_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-f3bdc57931e84130/scratch/affected-new.stderr.log",
+      "stdout_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-f3bdc57931e84130/scratch/affected-new.stdout.log"
+    },
+    {
+      "adapter_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-17863a319de44a4c/scratch/affected_pytest_unittest_adapter.py",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "affected_pytest_unittest_adapter"
+      ],
+      "cwd": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-17863a319de44a4c/scratch",
+      "environment": {
+        "PYTHONPATH": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-r3-readiness-long:."
+      },
+      "exit_code": 0,
+      "result": "5 unittest adapter cases executed 12 CPU-safe existing pytest functions; per-module function counts were 4, 1, 3, 2, and 2, so every named existing module executed a non-zero test count.",
+      "stderr_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-17863a319de44a4c/scratch/affected-existing.stderr.log",
+      "stdout_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-17863a319de44a4c/scratch/affected-existing.stdout.log"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_final_dossier_binding"
+      ],
+      "cwd": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-f3bdc57931e84130/scratch",
+      "environment": {
+        "PYTHONPATH": "."
+      },
+      "exit_code": 0,
+      "result": "3 dossier binding and canonical non-self manifest tests passed after final dossier byte freeze",
+      "stderr_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-f3bdc57931e84130/scratch/final-dossier-binding.stderr.log",
+      "stdout_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-f3bdc57931e84130/scratch/final-dossier-binding.stdout.log"
+    }
+  ],
+  "created_date": "2026-09-16",
+  "d0005_preservation": {
+    "applauncher_constructions": 0,
+    "checkpoints": 0,
+    "gate": "G1_PRELAUNCH_RESOURCE_WINDOW",
+    "live_starts": 1,
+    "observed_window": "UNKNOWN_NOT_RECONSTRUCTED",
+    "optimizer_steps": 0,
+    "physics_ticks": 0,
+    "ppo_updates": 0,
+    "remaining_owned_processes": [],
+    "retries": 0,
+    "simulator_initialization_slots_reserved": 1,
+    "status": "SEALED_FAILURE",
+    "transitions": 0
+  },
+  "failed_checks_and_rework": [
+    {
+      "cause": "CPU interpreter lacks torch; 53 other tests passed before the import error",
+      "check": "broader command including tests.training_workloads.test_unified_h1_r3_preflight_diagnostics",
+      "exit_code": 1,
+      "resolution": "Excluded the torch-dependent module from the bounded standard-library CPU suite; the failed log is preserved and is not used as pass evidence.",
+      "stderr_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-f3c2a0d531074580/scratch/affected-unified-h1.stderr.log",
+      "stdout_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-f3c2a0d531074580/scratch/affected-unified-h1.stdout.log"
+    },
+    {
+      "finding_ids": [
+        "F-SNAPSHOT-SELF-ASSERTION",
+        "F-CPU-LABEL-SPOOF"
+      ],
+      "independent_evidence": "E-S-d52a3f02d6f3461b",
+      "resolution": "Fixed exact protected snapshot binding and replaced caller-supplied factories with an inert built-in CPU substitute."
+    },
+    {
+      "finding_ids": [
+        "F-RESOURCE-SOURCE-TRUST",
+        "F-RESOURCE-SECOND-START",
+        "F-RESOURCE-CONTEXT-MIXING",
+        "F-RESOURCE-NONFINITE-OBSERVED"
+      ],
+      "independent_evidence": "E-S-2237a28c81e245f6",
+      "resolution": "Bound signed raw manifests, immutable launch identity and context, derived retries, and finite non-negative resource values."
+    },
+    {
+      "finding_ids": [
+        "NBF-CANDIDATE-FIXTURE-001"
+      ],
+      "independent_recheck": "pending with this final candidate",
+      "resolution": "Replaced the stale historical candidate hash in the failure-evidence fixture with an explicit all-zero test sentinel."
+    },
+    {
+      "check": "Initial unittest invocation used an absolute module path",
+      "exit_code": 1,
+      "resolution": "Invoked the scratch adapter by importable module name from its directory; later recorded pass is authoritative."
+    },
+    {
+      "check": "Full unfiltered execution of the five legacy pytest modules through the adapter",
+      "exit_code": 1,
+      "resolution": "Preserved failure diagnostics separately; selected every CPU-safe affected test relevant to this integration. Unselected failures require inaccessible historical pins/external interpreters, torch, or start_new_session, none authorized in this CPU sandbox.",
+      "stderr_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-5838d8fa022b4bf1/scratch/affected-existing-full.stderr.log",
+      "stdout_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-5838d8fa022b4bf1/scratch/affected-existing-full.stdout.log"
+    },
+    {
+      "check": "Torch import occurred before caller-provided backend factory failure paths",
+      "exit_code": 1,
+      "resolution": "Made live backend and controlled-failure sequence imports lazy; refreshed the permitted source identity hash and reran affected CPU tests successfully."
+    },
+    {
+      "check": "Full execution of all five existing pytest-style affected modules under the compatibility adapter",
+      "exit_code": 1,
+      "resolution": "Preserved diagnostics. The managed sandbox denies historical pinned files and external interpreter/process operations. A bounded CPU-safe selection then executed non-zero tests from every module (4, 1, 3, 2, 2) successfully.",
+      "stderr_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-d4653f6b28cd4ba1/scratch/affected-existing.stderr.log",
+      "stdout_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-d4653f6b28cd4ba1/scratch/affected-existing.stdout.log"
+    },
+    {
+      "check": "Initial current-session unittest invocation passed an absolute file path as a module name",
+      "exit_code": 1,
+      "resolution": "Reran from the adapter directory by importable module name with repository PYTHONPATH; the later zero exit is authoritative."
+    },
+    {
+      "cause": "Syntax error in the scratch-only audit test dictionary comprehension",
+      "check": "Initial current-session scratch dossier-binding unittest import",
+      "exit_code": 1,
+      "resolution": "Corrected the scratch audit test and reran the same three binding checks successfully; no candidate source or runtime code was changed by this correction.",
+      "stderr_path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/roles/S-f3bdc57931e84130/scratch/final-dossier-binding-initial.stderr.log"
+    }
+  ],
+  "freeze_checks": {
+    "config_changes": "workload repository path/base identity and changed workload source hashes only",
+    "product_method_actor_runtime_thresholds_unchanged": true,
+    "resource_gate": {
+      "maximum_used_memory_mib": 1024,
+      "maximum_utilization_percent": 5,
+      "minimum_free_memory_mib": 10240,
+      "minimum_span_seconds": 10,
+      "samples": 3
+    },
+    "scientific_values_unchanged": true
+  },
+  "independent_predecessor_condition_evidence": {
+    "C-A0009-INDEPENDENT": "E-S-fb3e63dc0d494608",
+    "C-FAILURE-EVIDENCE_and_C-RESOURCE-SETTLEMENT": "E-S-145eccfaee44453b",
+    "C-H1-SUPERVISION-OFFLINE": "E-S-ed7a5d6ac584440a"
+  },
+  "limits": [
+    "R3 remains HOLD.",
+    "No D0006, real run, GPU, AppLauncher, simulator, training, merge, push, or runtime modification is authorized.",
+    "CPU success does not alter budgets, prior findings, or formal/behavioral status.",
+    "The final_commit is the immutable repository HEAD; candidate changes remain an uncommitted control-plane diff as required.",
+    "State 397 fixes the accepted pre-edit candidate tree and diff. FINAL_DOSSIER_NONSELF_EXTERNAL_SEAL_V1 requires the final whole-candidate tree and diff to be sealed outside this candidate by immutable accepted Engineer and Evaluator envelopes after these dossier bytes are frozen.",
+    "The dossier is the sole self-referential manifest exclusion; every other candidate payload file is listed with its SHA-256 digest.",
+    "Full legacy pytest modules are not claimed as passing: tests requiring inaccessible historical pins, torch, or external process/session operations remain outside this CPU sandbox. The standard-library unittest adapter executed 12 CPU-safe affected functions with non-zero execution in every named module."
+  ],
+  "not_ready_reason": {
+    "conditions": [
+      "C-CPU-REGRESSION",
+      "C-FINAL-INTEGRATION"
+    ],
+    "detail": "Current-session CPU checks pass for A0009 (2 tests), 53 new affected unittest tests, and 12 existing CPU-safe pytest functions through five standard-library unittest adapter cases, with non-zero execution in each named legacy module. Independent Evaluator must judge C-CPU-REGRESSION and C-FINAL-INTEGRATION. This dossier does not approve a real run.",
+    "required_next_authority": "independent Evaluator dispatched automatically by the control plane"
+  },
+  "protected_inputs": {
+    "LONG_GOAL_CONTRACT.md": "90db666b6f29a54e259f833ec2b7c252c51903844f600d457f88405f22c56b46",
+    "READINESS_INPUTS.json": "ffa454857db84f54339958ef7548c33f198fec71ce0efc4ee995b4a589d0ef72",
+    "method": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+    "product_commit": "2248ebb380260af86536f78b70e1235fcb401a7a",
+    "product_tree": "e44363a4b8504fda9e8f1b58a1fb942ef75c586e",
+    "review_bundle/evidence/a0009/EVIDENCE.json": "c9f1ed80093556ac53f010b185e64886a0c4e7ece33a6e07df325b7ad97d0cb4",
+    "review_bundle/evidence/d0005/EVIDENCE.json": "c87d7725c5047dbd5080fabf410e8852869c6ed7445aeac5e6e7ee8856500a26",
+    "source_config_sha256": "824feeb87fccb33ddb5b56b401b6591688b042606fda7d45f4d5f92c041f110b"
+  },
+  "resource_accounting": {
+    "app_launcher_constructed": false,
+    "gpu_queried": false,
+    "late_evidence": "append-only, parent-bound, idempotent; no second start",
+    "missing_dimensions": "UNKNOWN_OR_RESERVED",
+    "real_run_started": false,
+    "simulator_started": false,
+    "training_started": false,
+    "verification_context": "CPU_OFFLINE_FIXTURE_NOT_REAL_GPU_OR_TRAINING_USAGE"
+  },
+  "schema_version": "instinctrl-h1-r3-final-readiness-dossier/1",
+  "scope": "CPU_ONLY_NO_REAL_RUN"
+}

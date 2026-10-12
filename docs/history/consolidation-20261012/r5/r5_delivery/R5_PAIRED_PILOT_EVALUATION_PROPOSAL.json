@@ -1,0 +1,41 @@
+{
+  "admission_gate": {
+    "required": "training proposal completed under separate authority and checkpoints hash-bound",
+    "status": "NOT_SATISFIED"
+  },
+  "authority_inheritance": "NONE_FROM_D7_OR_R4",
+  "cases": [
+    "Z"
+  ],
+  "checkpoints": [
+    "u16",
+    "u64"
+  ],
+  "development_only": true,
+  "groups": [
+    "P0",
+    "PLR"
+  ],
+  "pre_result_criteria": {
+    "decision_rule": "all improvement and safety clauses must pass; missing data is failure",
+    "improvement": "PLR u64 median Z tracking error must be strictly lower than P0 u64",
+    "safety": [
+      "PLR u16 and u64 collision count must not exceed corresponding P0 count",
+      "PLR u16 and u64 nonfinite count must equal zero"
+    ]
+  },
+  "retry_policy": "ZERO_RETRIES",
+  "schema_version": "instinctrl-paired-pilot-evaluation-proposal/1",
+  "status": "PROPOSAL_NOT_REGISTERED_NOT_AUTHORIZED_NOT_STARTED",
+  "symmetric_hard_caps": {
+    "allocated_gpu_seconds": 3600,
+    "automatic_retries": 0,
+    "checkpoint_writes": 0,
+    "disk_bytes": 17179869184,
+    "live_process_starts": 2,
+    "model_calls": 0,
+    "nontraining_transitions": 25600,
+    "outer_wall_seconds": 3620,
+    "simulator_initializations": 2
+  }
+}

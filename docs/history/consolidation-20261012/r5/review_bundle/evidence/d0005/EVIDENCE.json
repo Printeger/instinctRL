@@ -1,0 +1,147 @@
+{
+  "accounting": {
+    "D0002_created": false,
+    "D0002_released": false,
+    "R4_R5_authorized": false,
+    "attempt_id": "UNIFIED-H1-R3-D0005",
+    "cumulative_after": {
+      "applauncher_constructions": 3,
+      "live_starts": 4,
+      "simulator_initialization_slots": 4
+    },
+    "d0005": {
+      "actor_optimizer_steps": 0,
+      "applauncher_constructions": 0,
+      "checkpoint_writes": 0,
+      "critic_optimizer_steps": 0,
+      "initialization_physics_ticks": 0,
+      "live_starts": 1,
+      "ppo_updates": 0,
+      "retries": 0,
+      "simulator_initialization_slots_reserved": 1,
+      "transitions": 0
+    },
+    "historical_before": {
+      "applauncher_constructions": 3,
+      "live_starts": 3,
+      "simulator_initialization_slots": 3
+    },
+    "runtime_counters": {
+      "actor_optimizer_steps": 0,
+      "attempted_policy_steps": 0,
+      "attempted_updates": 0,
+      "automatic_resets": 0,
+      "completed_policy_steps": 0,
+      "completed_updates": 0,
+      "critic_optimizer_steps": 0,
+      "explicit_resets": 0,
+      "initialization_physics_ticks": 0,
+      "live_process_starts": 1,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 0,
+      "real_environment_transitions": 0,
+      "real_optimizer_updates": 0,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 0
+    },
+    "schema_version": "unified-h1-r3-d0005-accounting.v1",
+    "status": "FAILED_PRELAUNCH_RESOURCE_GATE",
+    "training_authorized": false
+  },
+  "attempt_id": "UNIFIED-H1-R3-D0005",
+  "authorization": {
+    "sha256": "28390ce44fc0d3d22d045287b1c8fa4044502477f032b76e5ffc6ee595dac8bb"
+  },
+  "candidate": {
+    "config_sha256": "ff26ba046eecb8bb09d69d69210f2ee668f11f5cf134085134f4b94f01d9c284",
+    "product_commit": "2248ebb380260af86536f78b70e1235fcb401a7a",
+    "product_tree": "e44363a4b8504fda9e8f1b58a1fb942ef75c586e",
+    "workload_commit": "dd578e2ebbf281a52be492926a8a80c0e2030589",
+    "workload_tree": "59824c6a2c07da04eabbd18db29e0c82576f95f5"
+  },
+  "evidence_gap": "The failing implementation discarded the three observed samples when its collector raised; their actual timestamps and GPU values cannot be reconstructed.",
+  "files": {
+    "commands/AUTHORIZATION.json": {
+      "bytes": 1021,
+      "sha256": "28390ce44fc0d3d22d045287b1c8fa4044502477f032b76e5ffc6ee595dac8bb"
+    },
+    "commands/EXECUTION_PACKAGE.json": {
+      "bytes": 15016,
+      "sha256": "cbb4b066dab4e46bd2999ffb86cb8b555b2c9a3810c4ecbd48d07215b79bfb7e"
+    },
+    "commands/accounting.json": {
+      "bytes": 1516,
+      "sha256": "7c0de6b08173af6a66c5c65b984955edfafc7a6e9aeb63f522a1b61a037e1407"
+    },
+    "commands/dispatch_identity.json": {
+      "bytes": 1046,
+      "sha256": "f3d5505d991a7fb8eec6d469e9d0b36a807cd7276d6d44d6283e919f04d166db"
+    },
+    "commands/dispatch_request.json": {
+      "bytes": 2240,
+      "sha256": "fbf07c308b683afd60f70210b6de9f5c60bcc9ac69c5e0625db00199e94a2495"
+    },
+    "commands/dispatch_result.json": {
+      "bytes": 40,
+      "sha256": "293223cd8f5bf74018eab643e973f83e3546317c50bdd41d6d87e4142ef89407"
+    },
+    "commands/invocation_started.json": {
+      "bytes": 307,
+      "sha256": "d7c1ef16577cd580881b633913deaff733c89d4c8033de516f9a2a5545064867"
+    },
+    "commands/post_exit_observation.json": {
+      "bytes": 551,
+      "sha256": "b18eb88da01a92d10a314826fde353d3468f4c6e0fa5ab8bd3f7905a0784d99e"
+    },
+    "commands/pre_dispatch_check.json": {
+      "bytes": 932,
+      "sha256": "d0f0fd7e786b8773e39613cb0c75cee6bfbd8b235c0365b26ed230944c2613c6"
+    },
+    "commands/start_intent.json": {
+      "bytes": 1408,
+      "sha256": "83389a7d6688bf42bb2643e5cf9d60d8587e5bdcdc0e7f92511718a1959050ea"
+    },
+    "commands/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "commands/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "results/main/process_identity.json": {
+      "bytes": 293,
+      "sha256": "6175c3d870262b1000ed68fc27a8586450889085f2cfeb2b259622854bdcfee1"
+    },
+    "results/main/process_start.json": {
+      "bytes": 1271,
+      "sha256": "576602364e263625bcbcf664a5f504f62e23b6eef5ff480b764bccb3f1fd204c"
+    },
+    "results/main/status.json": {
+      "bytes": 974,
+      "sha256": "a77c3d4e9affb31852561f2415cc7a0701832b4a199d45cee3be58f3cf518309"
+    },
+    "results/prelaunch/prelaunch_resource_gate_failure.json": {
+      "bytes": 308,
+      "sha256": "fe302304021f41dbf4bb69ae490378a9059fe7eaf52a655b99a7190e1eb981d6"
+    }
+  },
+  "outcome": {
+    "B0_reached": false,
+    "PPO_reached": false,
+    "app_launcher_reached": false,
+    "cleanup_errors": [],
+    "dispatch_exit_code": 1,
+    "error_type": "ValueError",
+    "gate": "G1_PRELAUNCH_RESOURCE_WINDOW",
+    "message": "coexistence window must span at least ten seconds",
+    "ray_preflight_reached": false,
+    "remaining_owned_processes": []
+  },
+  "schema_version": "unified-h1-r3-d0005-evidence.v1",
+  "status": "SEALED_FAILURE"
+}

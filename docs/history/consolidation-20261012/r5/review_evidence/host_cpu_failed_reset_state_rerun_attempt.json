@@ -1,0 +1,17 @@
+{
+  "classification": "successor-product-pin-fixture-implementation-finding",
+  "exit_code": 1,
+  "failure": "WallMarginContractTests used current root/product_snapshot instead of frozen candidate_config.product.path",
+  "first_failing_module": "tests/training_workloads/test_b0_enhanced_stage1.py",
+  "host_argv": [
+    "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+    "-m",
+    "training_workloads.unified_h1.host_cpu_evidence_reset_state_rerun_successor"
+  ],
+  "package_id": "INSTINCTRL-R5-STAGE1-RESET-STATE-RERUN-SUCCESSOR-20260929",
+  "receipt_created": false,
+  "schema_version": "instinctrl-host-cpu-failed-attempt/1",
+  "source": "frozen-orchestration-input",
+  "targeted_result": {"failed": 1, "passed": 28, "duration_seconds": 1.10},
+  "task_id": "T-f5bf463e364b8b81"
+}

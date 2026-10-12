@@ -1,0 +1,54 @@
+{
+  "authority_notice": "This preimage does not grant authority or create an attempt, experiment, approval, package, or job.",
+  "authorization_payload": {
+    "attempt": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R4/UNIFIED-H1-R4-D7-R",
+    "budgets": {
+      "automatic_resets": 20160,
+      "checkpoint_writes": 0,
+      "explicit_resets": 3,
+      "initialization_ticks": 10,
+      "live_process_starts": 1,
+      "nontraining_transitions": 20160,
+      "optimizer_updates": 0,
+      "simulator_initializations": 1,
+      "training_transitions": 0,
+      "wall_seconds": 900
+    },
+    "config_sha256": "78e31113d78cb88719828aa9cf13bafef7d7f22c1bf35c0417432f206d76e714",
+    "method_sha256": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+    "mode": "control-diagnostic",
+    "order_id": "UNIFIED-H1-R4-D7-R",
+    "parameters": {
+      "cases": [
+        "Z",
+        "T",
+        "S"
+      ],
+      "checkpoint": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R4/UNIFIED-H1-R4-D0001/results/r4-training/checkpoints/u0256.pt",
+      "checkpoint_sha256": "39ad6806332376b655ee2b37bcf573997a804ef6f9324a2fe0c367fcaaa9886c",
+      "checkpoint_source_identity": {
+        "config_sha256": "74ac41ad400d5082fbc09e50e44a16017e7d7b3642db437f0f494ab962dadd4b",
+        "product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
+        "product_tree": "a887c20a900e65039b1b761adf0a623b45f61269",
+        "workload_commit": "eb3f9460a914f4a7bf65d894f73b6df30d128d51",
+        "workload_tree": "4f37d60c43a82fcb8f04ca22692660d4db518531"
+      },
+      "condition": "D7-R",
+      "experiment_id": "UNIFIED-H1-R4-D7-R",
+      "transitions": 20160
+    },
+    "product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
+    "product_tree": "a887c20a900e65039b1b761adf0a623b45f61269",
+    "schema_version": "unified-h1-r3-authorization.v2",
+    "status": "NOT_AUTHORIZED_PREIMAGE_ONLY",
+    "workload_commit": "896ec3d21c64babffe6f3d9c7286a2e7ed206fc2",
+    "workload_tree": "aa2cc1b73feded87b8c31b73b8e0c925ca71a7b8"
+  },
+  "automatic_retries": 0,
+  "candidate_source_manifest_path": "r5_delivery/CANDIDATE_SOURCE_MANIFEST.json",
+  "candidate_source_manifest_sha256": "e4ea96311752b35dfea485da1fc994d14fb7381485cfc06daf061d5d4207b27c",
+  "materialization_rule": "After adoption, control plane must replace workload_commit/workload_tree with the accepted clean release identity, preserve all other exact fields, set status AUTHORIZED only under separate authority, and then load_r3_authorization must validate it.",
+  "schema_version": "instinctrl-d7-authorization-preimage/2",
+  "spec_preimage_sha256": "af9899a594456f64e9d3af2c9f8419be6946388f1fb861f1430d5da5a46ae3f8",
+  "status": "NOT_AUTHORIZED_NOT_MATERIALIZED"
+}

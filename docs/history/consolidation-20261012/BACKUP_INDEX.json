@@ -1,0 +1,535 @@
+{
+  "created_at": "2026-10-12T06:03:04.609343+00:00",
+  "repositories": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL",
+      "inventory": "000-instinctRL/inventory.json",
+      "head": "6f6dee3da72d0b0202846b330adcaeeec8ee7bc3",
+      "branch": "main",
+      "files": 3129
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_coordination",
+      "inventory": "001-instinctRL_coordination/inventory.json",
+      "head": "d13564992b5ee0fcb102d83a9a47f1a598e6b009",
+      "branch": "main",
+      "files": 40585
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator",
+      "inventory": "002-instinctRL_orchestrator/inventory.json",
+      "head": "1acf7d34d32a76a2fdd2fe489d3b754334166f52",
+      "branch": "main",
+      "files": 124146
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r2-a0006-workload",
+      "inventory": "003-instinctRL-unified-h1-r2-a0006-workload/inventory.json",
+      "head": "34c677a2611a530bf71c903b8b17a78ec2fd1054",
+      "branch": "unified-h1-r2-a0006-workload",
+      "files": 138
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-scale-003",
+      "inventory": "004-instinctRL-scale-003/inventory.json",
+      "head": "ee65e489b492321e3b315dac3d28a6b564511d38",
+      "branch": "DETACHED",
+      "files": 112
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-scale-004-exit",
+      "inventory": "005-instinctRL-scale-004-exit/inventory.json",
+      "head": "b432081c0bd3d9f8723585ff7839972dc4b7b5ab",
+      "branch": "scale-004-exit",
+      "files": 119
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0002-product",
+      "inventory": "006-instinctRL-unified-h1-r3-a0002-product/inventory.json",
+      "head": "948bed8658dfb736f06d618c6b3c261ccff127eb",
+      "branch": "unified-h1-r3-a0002-product",
+      "files": 3474
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-scale-003-f2",
+      "inventory": "007-instinctRL-scale-003-f2/inventory.json",
+      "head": "dc12d23c0d1831a0bb3974d846f1fdeeb43794dd",
+      "branch": "scale-003-f2-rework",
+      "files": 115
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0007-workload",
+      "inventory": "008-instinctRL-unified-h1-r3-a0007-workload/inventory.json",
+      "head": "dd578e2ebbf281a52be492926a8a80c0e2030589",
+      "branch": "unified-h1-r3-a0007-workload",
+      "files": 144
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-blackwell",
+      "inventory": "009-instinctRL-blackwell/inventory.json",
+      "head": "e438c4ccef72b088c95db6f01b049f74a1921180",
+      "branch": "blackwell-migration",
+      "files": 3463
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-scale-004-f1-workload",
+      "inventory": "010-instinctRL-scale-004-f1-workload/inventory.json",
+      "head": "ee6956b463eb70549f21c4348310a1d483ccbc3a",
+      "branch": "scale-004-f1-workload",
+      "files": 119
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctrl-r4-evaluation-fix-20260922",
+      "inventory": "011-instinctrl-r4-evaluation-fix-20260922/inventory.json",
+      "head": "df87b279e7cace6b7589c5bef7359d96f5769f47",
+      "branch": "r4-evaluation-start-fix",
+      "files": 360
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/rlflow-role-transport-daemon-fix-20260923",
+      "inventory": "012-rlflow-role-transport-daemon-fix-20260923/inventory.json",
+      "head": "4abbacf18de8687726a21cb190c6a0721e44bf80",
+      "branch": "rlflow-role-transport-daemon-fix-20260923",
+      "files": 98
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0005-workload",
+      "inventory": "013-instinctRL-unified-h1-r3-a0005-workload/inventory.json",
+      "head": "4537e88947c5807787a8505e8debb46a7663c788",
+      "branch": "unified-h1-r3-a0005-workload",
+      "files": 141
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctrl-r4-d7-control-diagnostic-20260923",
+      "inventory": "014-instinctrl-r4-d7-control-diagnostic-20260923/inventory.json",
+      "head": "c7a4d79e35916ce2711085674b9cd37f1054a1ab",
+      "branch": "r4-d7-control-diagnostic-20260923",
+      "files": 362
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0005-product",
+      "inventory": "015-instinctRL-unified-h1-r3-a0005-product/inventory.json",
+      "head": "f895363b9b2f13fbefb087e5a75a4ec6288362a1",
+      "branch": "unified-h1-r3-a0005-product",
+      "files": 3475
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-scale-002-prep",
+      "inventory": "016-instinctRL-scale-002-prep/inventory.json",
+      "head": "97ed97d7a4b684193dcbf471488e27d008b5cddb",
+      "branch": "scale-002-prep",
+      "files": 90
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-d0011-product",
+      "inventory": "017-instinctRL-unified-h1-r3-d0011-product/inventory.json",
+      "head": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
+      "branch": "unified-h1-r3-d0011-product",
+      "files": 3476
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r2-a0004-product",
+      "inventory": "018-instinctRL-unified-h1-r2-a0004-product/inventory.json",
+      "head": "108d8c721247593a066287b22349c6f166b493e1",
+      "branch": "unified-h1-r2-a0004-product",
+      "files": 3473
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/rlflow-a-cli-repair",
+      "inventory": "019-rlflow-a-cli-repair/inventory.json",
+      "head": "b8215504eb942b56d164e61f17f29f2fd0fc6f18",
+      "branch": "hybrid-a-cli-repair",
+      "files": 1176
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-scale-004-repair",
+      "inventory": "020-instinctRL-scale-004-repair/inventory.json",
+      "head": "b6a442c3bf77fc0a819a6296e52f7c85e63e962b",
+      "branch": "scale-004-repair",
+      "files": 119
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r2-a0003-workload",
+      "inventory": "021-instinctRL-unified-h1-r2-a0003-workload/inventory.json",
+      "head": "08c5990705b2ffec304f54266abc717f93b9744e",
+      "branch": "unified-h1-r2-a0003-workload",
+      "files": 135
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r2-a0003-product",
+      "inventory": "022-instinctRL-unified-h1-r2-a0003-product/inventory.json",
+      "head": "da3afb8bb8669019049a77762f8ff46858403e7c",
+      "branch": "unified-h1-r2-a0003-product",
+      "files": 3473
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0007-product",
+      "inventory": "023-instinctRL-unified-h1-r3-a0007-product/inventory.json",
+      "head": "2248ebb380260af86536f78b70e1235fcb401a7a",
+      "branch": "unified-h1-r3-a0007-product",
+      "files": 3476
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0003-workload",
+      "inventory": "024-instinctRL-unified-h1-r3-a0003-workload/inventory.json",
+      "head": "9f1b6054a0442801054be1d34ae52aaf995e6105",
+      "branch": "unified-h1-r3-a0003-workload",
+      "files": 140
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/rlflow-a-renewal-repair",
+      "inventory": "025-rlflow-a-renewal-repair/inventory.json",
+      "head": "b26e81da161d4574d947f1123b56e0001fcf39cf",
+      "branch": "hybrid-a-renewal-repair",
+      "files": 1198
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/rlflow-reliability-20260916",
+      "inventory": "026-rlflow-reliability-20260916/inventory.json",
+      "head": "c3d469b7e7a823a753089c0c326b01be3291560a",
+      "branch": "master",
+      "files": 221
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-scale-004-f1-product",
+      "inventory": "027-instinctRL-scale-004-f1-product/inventory.json",
+      "head": "de9d6b8c03274a11760a3f06ca68d38cc0058f10",
+      "branch": "scale-004-f1-product",
+      "files": 3464
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0002-workload",
+      "inventory": "028-instinctRL-unified-h1-r3-a0002-workload/inventory.json",
+      "head": "6cc5c42ddd881ebe0f1eac13be59fa0932a78b08",
+      "branch": "unified-h1-r3-a0002-workload",
+      "files": 139
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r2-a0004-workload",
+      "inventory": "029-instinctRL-unified-h1-r2-a0004-workload/inventory.json",
+      "head": "4e9638adadb8120a2f411d7154bc410f10cd88fb",
+      "branch": "unified-h1-r2-a0004-workload",
+      "files": 136
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r2-product",
+      "inventory": "030-instinctRL-unified-h1-r2-product/inventory.json",
+      "head": "87a6d9306fc799312371c3873c488e98a00c6218",
+      "branch": "unified-h1-r2-product",
+      "files": 3473
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-scale-003-a0002",
+      "inventory": "031-instinctRL-scale-003-a0002/inventory.json",
+      "head": "5635fc917bed187825f1db64305e035d48d20c65",
+      "branch": "DETACHED",
+      "files": 115
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r2-a0005-workload",
+      "inventory": "032-instinctRL-unified-h1-r2-a0005-workload/inventory.json",
+      "head": "9cb992529c90a4e556cf58360527c84c33c60f2b",
+      "branch": "unified-h1-r2-a0005-workload",
+      "files": 137
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/rlflow-a-bounded-retry",
+      "inventory": "033-rlflow-a-bounded-retry/inventory.json",
+      "head": "a3100b4ecd44fabecbe1e1b4a2bfb4cf642eba37",
+      "branch": "hybrid-a-bounded-retry",
+      "files": 1209
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0009-workload",
+      "inventory": "034-instinctRL-unified-h1-r3-a0009-workload/inventory.json",
+      "head": "fd47dd321d571c4d6c983048f77bb3913e7e7b01",
+      "branch": "unified-h1-r3-a0009-workload",
+      "files": 145
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r2-workload",
+      "inventory": "035-instinctRL-unified-h1-r2-workload/inventory.json",
+      "head": "af91e17f83cff679dbca1aa4a4fb3c3a3568738d",
+      "branch": "unified-h1-r2-workload",
+      "files": 134
+    },
+    {
+      "path": "/home/mint/rl_dev/worktrees/instinctRL-eval-002-f1",
+      "inventory": "036-instinctRL-eval-002-f1/inventory.json",
+      "head": "75215c2213b1bcf5eb232365ec212d88df73a7f3",
+      "branch": "eval-002-f1-builder",
+      "files": 84
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-reset-accounting-successor-20260928",
+      "inventory": "037-instinctrl-r5-stage1-reset-accounting-successor-20260928/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-reset-accounting-successor-20260928",
+      "files": 406
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-local-assets-d0009",
+      "inventory": "038-instinctrl-h1-local-assets-d0009/inventory.json",
+      "head": "d38355cc87796934f9b6d23b9cfa1de80cd91379",
+      "branch": "h1-local-assets-d0009",
+      "files": 359
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-reset-availability-cleanup-successor-20260929",
+      "inventory": "039-instinctrl-r5-stage1-reset-availability-cleanup-successor-20260929/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-reset-availability-cleanup-successor-20260929",
+      "files": 436
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-zero-command-baseline-20260927",
+      "inventory": "040-instinctrl-zero-command-baseline-20260927/inventory.json",
+      "head": "5c4a5e9dfba0cdebfb3478a3f32dc36962337cdb",
+      "branch": "zero-command-baseline-fix-20260927",
+      "files": 403
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-pytest-discovery-successor-20260929",
+      "inventory": "041-instinctrl-r5-stage1-pytest-discovery-successor-20260929/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-pytest-discovery-successor-20260929",
+      "files": 447
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-local-assets-d0011",
+      "inventory": "042-instinctrl-h1-local-assets-d0011/inventory.json",
+      "head": "8d47ec9b7c5729f7463f9c89e586a099ccddad07",
+      "branch": "h1-local-assets-d0011",
+      "files": 359
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-reset-cache-successor-20260928",
+      "inventory": "043-instinctrl-r5-stage1-reset-cache-successor-20260928/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-reset-cache-successor-20260928",
+      "files": 406
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-identity-boundary-successor-20260929",
+      "inventory": "044-instinctrl-r5-stage1-identity-boundary-successor-20260929/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-identity-boundary-successor-20260929",
+      "files": 436
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-e0-d7-r5-20260923",
+      "inventory": "045-instinctrl-e0-d7-r5-20260923/inventory.json",
+      "head": "a496e9f2585c3e942a3bd176cca31961a4a2f913",
+      "branch": "e0-d7-r5-rlflow-20260923",
+      "files": 389
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-reset-state-rerun-successor-20260929",
+      "inventory": "046-instinctrl-r5-stage1-reset-state-rerun-successor-20260929/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-reset-state-rerun-successor-20260929",
+      "files": 458
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-package-delta-seal-successor-20260928",
+      "inventory": "047-instinctrl-r5-stage1-package-delta-seal-successor-20260928/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-package-delta-seal-successor-20260928",
+      "files": 409
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-r3-readiness-long",
+      "inventory": "048-instinctrl-h1-r3-readiness-long/inventory.json",
+      "head": "fb41cb93245f49b7efe914d6c4bf90f2c1b17795",
+      "branch": "unified-h1-r3-a0009-workload",
+      "files": 343
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-d0007-training-readiness",
+      "inventory": "049-instinctrl-h1-d0007-training-readiness/inventory.json",
+      "head": "99ee4990608100b83d07bce8e66af53762880d5d",
+      "branch": "master",
+      "files": 13
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-normal-cleanup-manifest-successor-20260929",
+      "inventory": "050-instinctrl-r5-stage1-normal-cleanup-manifest-successor-20260929/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-normal-cleanup-manifest-successor-20260929",
+      "files": 436
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-source-closure-successor-20260929",
+      "inventory": "051-instinctrl-r5-stage1-source-closure-successor-20260929/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-source-closure-successor-20260929",
+      "files": 454
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-quiescent-cleanup-successor-20260929",
+      "inventory": "052-instinctrl-r5-stage1-quiescent-cleanup-successor-20260929/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-quiescent-cleanup-successor-20260929",
+      "files": 436
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-wall-margin-successor-20260928",
+      "inventory": "053-instinctrl-r5-stage1-wall-margin-successor-20260928/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-wall-margin-successor-20260928",
+      "files": 409
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-local-assets-d0008",
+      "inventory": "054-instinctrl-h1-local-assets-d0008/inventory.json",
+      "head": "5826513ddff59d57fe363b4f100f1fe63b93247c",
+      "branch": "h1-local-assets-d0008",
+      "files": 359
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-product-hook-successor-20260928",
+      "inventory": "055-instinctrl-r5-stage1-product-hook-successor-20260928/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-product-hook-successor-20260928",
+      "files": 406
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-host-executor-successor-20260929",
+      "inventory": "056-instinctrl-r5-stage1-host-executor-successor-20260929/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-host-executor-successor-20260929",
+      "files": 451
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-local-assets-d0014",
+      "inventory": "057-instinctrl-h1-local-assets-d0014/inventory.json",
+      "head": "eb3f9460a914f4a7bf65d894f73b6df30d128d51",
+      "branch": "h1-local-assets-d0014",
+      "files": 359
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-local-assets-d0010",
+      "inventory": "058-instinctrl-h1-local-assets-d0010/inventory.json",
+      "head": "dd577abfc3ac7062f0a7c998eefe5072fe51b141",
+      "branch": "h1-local-assets-d0010",
+      "files": 359
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-local-assets-d0013",
+      "inventory": "059-instinctrl-h1-local-assets-d0013/inventory.json",
+      "head": "6ce090b076479f484933c3b2fefb1103a24f15b3",
+      "branch": "h1-local-assets-d0013",
+      "files": 359
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-review-evidence-process-successor-20260929",
+      "inventory": "060-instinctrl-r5-stage1-review-evidence-process-successor-20260929/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-review-evidence-process-successor-20260929",
+      "files": 444
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-validation-seal-successor-20260928",
+      "inventory": "061-instinctrl-r5-stage1-validation-seal-successor-20260928/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-validation-seal-successor-20260928",
+      "files": 409
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-product-pin-fixture-successor-20260929",
+      "inventory": "062-instinctrl-r5-stage1-product-pin-fixture-successor-20260929/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-product-pin-fixture-successor-20260929",
+      "files": 460
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-d0006-smoke-long",
+      "inventory": "063-instinctrl-h1-d0006-smoke-long/inventory.json",
+      "head": "ab45b4eef316a01c99850e5b88c437114eaa1247",
+      "branch": "master",
+      "files": 13
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-h1-local-assets-d0012",
+      "inventory": "064-instinctrl-h1-local-assets-d0012/inventory.json",
+      "head": "e3edf44e908420a3a4a85a9532f979bb0d891ce5",
+      "branch": "h1-local-assets-d0012",
+      "files": 359
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-d7-postrun-repair-20260927",
+      "inventory": "065-instinctrl-r5-d7-postrun-repair-20260927/inventory.json",
+      "head": "02a45b44fc5ec8facd31ad3c4fbbfb15ece977f1",
+      "branch": "r5-d7-postrun-repair-20260927",
+      "files": 392
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-b0-horizontal-successor-20260927",
+      "inventory": "066-instinctrl-b0-horizontal-successor-20260927/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "b0-horizontal-successor-20260927",
+      "files": 401
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-handoff-seal-successor-20260928",
+      "inventory": "067-instinctrl-r5-stage1-handoff-seal-successor-20260928/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-handoff-seal-successor-20260928",
+      "files": 409
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-b0-horizontal-successor-20260927-hardlink-backup",
+      "inventory": "068-instinctrl-b0-horizontal-successor-20260927-hardlink-backup/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "b0-horizontal-successor-20260927",
+      "files": 398
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-enhanced-b0-20260927",
+      "inventory": "069-instinctrl-r5-stage1-enhanced-b0-20260927/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-enhanced-b0-20260927",
+      "files": 405
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/a0009-cpu",
+      "inventory": "070-a0009-cpu/inventory.json",
+      "head": "824b811b5b7e17de5c09b08a2ad0e42705e6ef89",
+      "branch": "main",
+      "files": 28
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/workspaces/instinctrl-r5-stage1-reset-accounting-seal-successor-20260928",
+      "inventory": "071-instinctrl-r5-stage1-reset-accounting-seal-successor-20260928/inventory.json",
+      "head": "a0816149ced88bd46c1e0104413b73050626a7e9",
+      "branch": "r5-stage1-reset-accounting-seal-successor-20260928",
+      "files": 408
+    }
+  ],
+  "workspace_records": [
+    {
+      "path": "/home/mint/rl_dev/AGENTS.md",
+      "sha256": "2a21a7331ce0a026a0fcfc5a605c5da53b3fd1227360a91a6da7631bec92a9b6"
+    },
+    {
+      "path": "/home/mint/rl_dev/DUAL_AGENT_GUIDE.md",
+      "sha256": "bf58c236e54bcaf9af314f7f04dc24fa4c61f5492446b23758fdf9cfccd44a60"
+    },
+    {
+      "path": "/home/mint/rl_dev/INSTINCTRL_TRAINING_ROADMAP.md",
+      "sha256": "ef6e71298353a04f78e25f5080590ce68b18702396fbaa22fb2459fb35ab0f97"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_coordination/ACTIVE_WORKFLOW.json",
+      "sha256": "9da87dca9392c97c720ab5ec8f7398b582f42153e7fdd1d7c09c09f74810e0ea"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_coordination/protocols/DUAL_AGENT_WORKFLOW_V3.md",
+      "sha256": "6ff98175d2838174acb5364935fc29e4d750de55d969c40840408fe3a394abf6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL_orchestrator/implementation_records/instinctrl-first-use-20260915/state/state/RESEARCH_STATE.json",
+      "sha256": "abea85706f10400112d67c99a644811d8418e60656652a44bc721354911f833b"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "candidate": {
+    "base_commit": "dd578e2ebbf281a52be492926a8a80c0e2030589",
+    "branch": "unified-h1-r3-a0009-workload",
+    "clean": true,
+    "commit": "fd47dd321d571c4d6c983048f77bb3913e7e7b01",
+    "config_sha256": "824feeb87fccb33ddb5b56b401b6591688b042606fda7d45f4d5f92c041f110b",
+    "diff_sha256": "82b56cecc7680f8d57f23353c1caf5c53898ac55f1b76327ab3f8c703a194672",
+    "path": "/home/mint/rl_dev/worktrees/instinctRL-unified-h1-r3-a0009-workload",
+    "resources_sha256": "fe2d0ea13331f0ce0314fcda1388be056912e3acf0c1da0ec6e3af17b0053a17",
+    "tree": "f2ccbe684e9d0fb56a861152b91ea4b4870500ee"
+  },
+  "created_at": "2026-09-14T19:37:57.218438+08:00",
+  "diagnosis": {
+    "actor_changes": false,
+    "failure": "entry-anchored sampling can yield a first-to-last timestamp span below 10 seconds because the first sample records after two nvidia-smi queries",
+    "method_changes": false,
+    "repair": "anchor the schedule after the first completed sample; validate in run_prelaunch_gate and persist observed_window on rejection",
+    "runtime_changes": false,
+    "threshold_changes": false
+  },
+  "predecessor_attempt": {
+    "evidence_sha256": "c87d7725c5047dbd5080fabf410e8852869c6ed7445aeac5e6e7ee8856500a26",
+    "path": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R3/UNIFIED-H1-R3-D0005"
+  },
+  "real_runtime": {
+    "new_applauncher": 0,
+    "new_checkpoints": 0,
+    "new_gpu_queries": 0,
+    "new_live_starts": 0,
+    "new_ppo_updates": 0,
+    "new_transitions": 0
+  },
+  "schema_version": "unified-h1-r3-a0009-resource-window-cpu.v1",
+  "status": "CPU_PASS_PENDING_INDEPENDENT_EVALUATOR",
+  "tests": [
+    {
+      "result": "2 passed, 15 deselected",
+      "scope": "targeted resource gate"
+    },
+    {
+      "result": "83 passed, 11 subtests passed",
+      "scope": "scale_003 plus unified_h1 affected suite"
+    }
+  ]
+}

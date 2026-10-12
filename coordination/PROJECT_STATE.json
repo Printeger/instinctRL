@@ -1,0 +1,221 @@
+{
+  "schema_version": "instinctrl-project-state/1",
+  "as_of": "2026-10-12",
+  "development_repository": "/home/mint/rl_dev/instinctRL-dev",
+  "branch": "main",
+  "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
+  "phase": "R5_STAGE1_ENGINEERING_REPAIR_PENDING_INDEPENDENT_ACCEPTANCE",
+  "historical_cpu_receipt": {
+    "tests_run": 132,
+    "errors": 0,
+    "failures": 0,
+    "scope": "HISTORICAL_RECEIPT_ONLY",
+    "path": "../docs/history/consolidation-20261012/r5/review_evidence/HOST_CPU_EVIDENCE.json"
+  },
+  "latest_independent_review": {
+    "status": "NOT_ACCEPTED",
+    "task_status": "BUDGET_EXHAUSTED",
+    "reason": "Evaluator output rejected: MUST_FIX requires contract, evidence, impact and closure"
+  },
+  "latest_real_diagnostic": {
+    "status": "FAILED",
+    "transitions": 0,
+    "physics_rows": 0,
+    "training_updates": 0,
+    "failure": "controller/rotor reset state unavailable; app.close hard timeout and detached telemetry child",
+    "horizontal_drift_cause": "NOT_PROVEN"
+  },
+  "new_live_execution_authorized": false,
+  "new_training_authorized": false,
+  "migration_is_product_acceptance": false,
+  "current_candidate_config": "../training_workloads/unified_h1/candidate_config.json",
+  "blocking_followups": [
+    "Obtain independent acceptance on the new exact candidate, without inheriting old receipts.",
+    "Resolve/revalidate installed Codex CLI 0.161.0 against tool isolation pinned to 0.153.4 before using the real orchestrator backend.",
+    "Any future simulation/training needs separately checked exact inputs and budgets."
+  ],
+  "migration_verification": {
+    "scope": "MIGRATION_CPU_REGRESSION_ONLY_NOT_INDEPENDENT_PRODUCT_ACCEPTANCE",
+    "product": {
+      "passed": 1264,
+      "skipped_gpu_tests": 8,
+      "deselected_gpu_required_tests": 2,
+      "subtests_passed": 40,
+      "record": "product-cpu-final.xml"
+    },
+    "workload": {
+      "modules": 22,
+      "tests": 239,
+      "failures": 0,
+      "errors": 0,
+      "modules_records": {
+        "test_evaluator_evidence_boundary.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_evaluator_evidence_boundary.xml",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_failure_evidence.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_failure_evidence.xml",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_a0004.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_a0004.xml",
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_control_diagnostic.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_control_diagnostic.xml",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_paired_pilot_unittest.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v2/test_paired_pilot_unittest.xml",
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_r4_evaluation_start.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_r4_evaluation_start.xml",
+          "tests": 21,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_rework.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_rework.xml",
+          "tests": 16,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_asset_closure.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_asset_closure.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_scale_003.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v2/test_scale_003.xml",
+          "tests": 17,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_r3_local_dispatch.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_r3_local_dispatch.xml",
+          "tests": 22,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_scale_003_repair.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v2/test_scale_003_repair.xml",
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1.xml",
+          "tests": 17,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_r3_process_identity.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_r3_process_identity.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_a0002.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_a0002.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_d7_cleanup_unittest.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_d7_cleanup_unittest.xml",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_a0003.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_a0003.xml",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_d7_cpu_unittest.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_d7_cpu_unittest.xml",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_a0005.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_a0005.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_r3_preflight_diagnostics.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_r3_preflight_diagnostics.xml",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_a0006.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_a0006.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_b0_enhanced_stage1.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_b0_enhanced_stage1.xml",
+          "tests": 29,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_product_hook.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_product_hook.xml",
+          "tests": 20,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      }
+    },
+    "scoped_tools": {
+      "passed": 310,
+      "failed": 2,
+      "record": "tool-tests.xml",
+      "limitation": "installed Codex CLI 0.161.0 mismatches the frozen isolation contract 0.153.4; real backend remains disabled"
+    },
+    "initial_failures_retained": true,
+    "initial_product_broad_tests_included_cuda_dependent_unit_checks": true,
+    "final_product_run_forces_cuda_invisible": true,
+    "simulation_starts": 0,
+    "training_starts": 0
+  },
+  "code_integration_commit": "e7d58d2bf2352eb9d91a0170de580ca9792e3366"
+}

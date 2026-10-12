@@ -1,0 +1,134 @@
+....FF....                                                               [100%]
+=================================== FAILURES ===================================
+________ PairedPilotTests.test_disabled_diagnostic_learning_equivalence ________
+
+self = <test_paired_pilot_unittest.PairedPilotTests testMethod=test_disabled_diagnostic_learning_equivalence>
+
+    def test_disabled_diagnostic_learning_equivalence(self):
+        fake_torch=ModuleType("torch")
+        fake_torch.Tensor=type("Tensor",(),{}); fake_torch.float32="float32"; fake_torch.optim=NS(Optimizer=type("Optimizer",(),{})); fake_torch.cuda=NS(is_available=lambda:False)
+        with patch.dict(sys.modules,{"torch":fake_torch}):
+            driver_module=importlib.reload(importlib.import_module("training_workloads.unified_h1.driver"))
+>           diagnostic_module=importlib.reload(importlib.import_module("training_workloads.unified_h1.pilot_diagnostic"))
+
+tests/training_workloads/test_paired_pilot_unittest.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:935: in _load_unlocked
+    ???
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Fail-closed first-update diagnostics for the bounded P0/PLR pilot."""
+    from __future__ import annotations
+    
+    from copy import deepcopy
+    from contextlib import contextmanager
+    import hashlib
+    from pathlib import Path
+    import random
+    from typing import Any, Mapping
+    
+>   import numpy as np
+E   ModuleNotFoundError: No module named 'numpy'
+
+training_workloads/unified_h1/pilot_diagnostic.py:11: ModuleNotFoundError
+____ PairedPilotTests.test_distribution_only_mismatch_is_zero_state_change _____
+
+self = <test_paired_pilot_unittest.PairedPilotTests testMethod=test_distribution_only_mismatch_is_zero_state_change>
+
+    def test_distribution_only_mismatch_is_zero_state_change(self):
+        class Tensor:
+            def __init__(self, values, shape): self.values=list(values); self.shape=tuple(shape)
+            @property
+            def ndim(self): return len(self.shape)
+            def detach(self): return self
+            def cpu(self): return self
+            def clone(self): return Tensor(self.values,self.shape)
+            def reshape(self,*shape): return Tensor(self.values,shape)
+            def tolist(self): return list(self.values)
+        class Truth:
+            def all(self): return self
+            def item(self): return True
+        fake_torch=ModuleType("torch")
+        fake_torch.Tensor=Tensor; fake_torch.float32="float32"; fake_torch.uint8="uint8"
+        fake_torch.optim=NS(Optimizer=type("Optimizer",(),{}))
+        fake_torch.cuda=NS(is_available=lambda:False)
+        fake_torch.isfinite=lambda value:Truth()
+        fake_torch.no_grad=lambda:nullcontext()
+        fake_torch.get_rng_state=lambda:Tensor([20260908],(1,))
+        fake_torch.equal=lambda left,right:left.shape==right.shape and left.values==right.values
+    
+        class Model:
+            def __init__(self, state): self.state=state
+            def state_dict(self): return frozen_copy(self.state)
+        class Actor(Model):
+            def __init__(self): super().__init__({"weight":[2.0]})
+            def __call__(self, policy):
+                return NS(alpha=Tensor([2.0]*(512*4),(512,4)),beta=Tensor([3.0]*(512*4),(512,4)))
+            def log_probability_from_output(self, output, actions): return Tensor([-0.75]*512,(512,1))
+        class Optimizer:
+            def __init__(self): self.state={"state":{"step":7,"momentum":[0.125]}}; self.step_calls=0
+            def state_dict(self): return frozen_copy(self.state)
+            def step(self): self.step_calls+=1
+        class PPOTrainer:
+            update_counter=0
+            def __init__(self):
+                self.actor=Actor(); self.critic=Model({"weight":[1.0]})
+                self.actor_optimizer=Optimizer(); self.critic_optimizer=Optimizer(); self.update_calls=0
+            def update(self, batch):
+                self.update_calls+=1; self.actor_optimizer.step(); self.critic_optimizer.step()
+    
+        policy={"history":Tensor([0.0]*512,(512,1))}
+        common=dict(policy=policy,privileged=Tensor([0.0]*512,(512,1)),actions=Tensor([0.5]*(512*4),(512,4)),
+                    old_log_probabilities=Tensor([-0.75]*512,(512,1)),advantages=Tensor([1.0]*512,(512,1)),returns=Tensor([1.0]*512,(512,1)))
+        with patch.dict(sys.modules,{"torch":fake_torch}):
+>           diagnostic_module=importlib.reload(importlib.import_module("training_workloads.unified_h1.pilot_diagnostic"))
+
+tests/training_workloads/test_paired_pilot_unittest.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:935: in _load_unlocked
+    ???
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Fail-closed first-update diagnostics for the bounded P0/PLR pilot."""
+    from __future__ import annotations
+    
+    from copy import deepcopy
+    from contextlib import contextmanager
+    import hashlib
+    from pathlib import Path
+    import random
+    from typing import Any, Mapping
+    
+>   import numpy as np
+E   ModuleNotFoundError: No module named 'numpy'
+
+training_workloads/unified_h1/pilot_diagnostic.py:11: ModuleNotFoundError
+- generated xml file: /home/mint/rl_dev/instinctRL-dev/docs/history/consolidation-20261012/workload-isolated-v1/test_paired_pilot_unittest.xml -
+=========================== short test summary info ============================
+FAILED tests/training_workloads/test_paired_pilot_unittest.py::PairedPilotTests::test_disabled_diagnostic_learning_equivalence
+FAILED tests/training_workloads/test_paired_pilot_unittest.py::PairedPilotTests::test_distribution_only_mismatch_is_zero_state_change
+2 failed, 8 passed in 0.05s

@@ -1,0 +1,10 @@
+{
+  "reason": "Tests of one-use predecessor receipts and independently certified historical packages keep their original source/expectations in history. They are not current-candidate acceptance tests. Generic functionality and current product/reset/cleanup tests remain active.",
+  "archived_d7_methods": [
+    "test_preimages_bind_manifest_and_exact_authorization_contract",
+    "test_preimages_materialize_against_actual_authorization_loader_contract"
+  ],
+  "historical_host_tests": "historical-host-tests/",
+  "historical_package_tests": "historical-package-tests/",
+  "historical_control_plane_tests": "historical-control-plane-tests/ (sealed CP2-VAL-001 identity/qualification checks, not the current runtime)"
+}

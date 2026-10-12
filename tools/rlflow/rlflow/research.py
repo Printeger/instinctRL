@@ -79,7 +79,7 @@ def route(state, task, session, result):
                 for condition in task.get('criteria',[]):
                     bindings=[e for e in state['evidence'].values() if e.get('job_id')==job['id'] and e.get('independent_verifier')==session['id'] and condition['id'] in e.get('verified_conditions',[e.get('verified_condition')])]
                     if condition['layer']=='cpu' and condition['id'] in payload['evidence_coverage'] and bindings:
-                        cycle.setdefault('completion_evidence',{})[condition['id']]={'session_id':session['id'],'evidence_id':bindings[0]['id'],'candidate':result['candidate']} 
+                        cycle.setdefault('completion_evidence',{})[condition['id']]={'session_id':session['id'],'evidence_id':bindings[0]['id'],'candidate':result['candidate']}
         if payload['verdict']!='PASS':
             cycle['negative_results'].append(outcome)
             cycle.setdefault('counterevidence',[]).append({**outcome,'findings':payload.get('findings',[]),'missing_evidence':payload['missing_evidence']})

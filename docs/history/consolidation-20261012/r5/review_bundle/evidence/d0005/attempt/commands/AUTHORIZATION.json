@@ -1,0 +1,26 @@
+{
+  "attempt": "/home/mint/rl_dev/instinctRL_coordination/attempts/development/UNIFIED-H1-R3/UNIFIED-H1-R3-D0005",
+  "budgets": {
+    "automatic_resets": 35520,
+    "checkpoint_writes": 2,
+    "explicit_resets": 8,
+    "initialization_ticks": 10,
+    "live_process_starts": 1,
+    "nontraining_transitions": 33472,
+    "optimizer_updates": 4,
+    "simulator_initializations": 1,
+    "training_transitions": 2048,
+    "wall_seconds": 3600
+  },
+  "config_sha256": "ff26ba046eecb8bb09d69d69210f2ee668f11f5cf134085134f4b94f01d9c284",
+  "method_sha256": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+  "mode": "main",
+  "order_id": "UNIFIED-H1-R3",
+  "parameters": {},
+  "product_commit": "2248ebb380260af86536f78b70e1235fcb401a7a",
+  "product_tree": "e44363a4b8504fda9e8f1b58a1fb942ef75c586e",
+  "schema_version": "unified-h1-r3-authorization.v2",
+  "status": "AUTHORIZED",
+  "workload_commit": "dd578e2ebbf281a52be492926a8a80c0e2030589",
+  "workload_tree": "59824c6a2c07da04eabbd18db29e0c82576f95f5"
+}

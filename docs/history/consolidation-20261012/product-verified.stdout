@@ -1,0 +1,47 @@
+............................s..................................................F............................... [  8%]
+...........s.......................................................s.... [ 14%]
+.......................................F................................ [ 20%]
+...................................s.................................... [ 25%]
+........................................................................ [ 31%]
+........................................................................ [ 36%]
+........................................................................ [ 42%]
+........................................................................ [ 48%]
+........................................................................ [ 53%]
+.........s.............................................................. [ 59%]
+........................................................................ [ 65%]
+........................................................................ [ 70%]
+........................................................................ [ 76%]
+........................................................................ [ 82%]
+.................................................s...................s.. [ 87%]
+.................................s...................................... [ 93%]
+...................................................................................                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_lee_rejects_missing_non_tensor_and_cross_device_inputs __________
+
+    def test_lee_rejects_missing_non_tensor_and_cross_device_inputs():
+        root = _root()
+        with pytest.raises(TypeError):
+            taslab_velocity_control(root)  # type: ignore[call-arg]
+        with pytest.raises(TypeError):
+            taslab_velocity_control(root.tolist(), torch.zeros(1, 3, dtype=root.dtype))  # type: ignore[arg-type]
+>       assert torch.cuda.is_available()
+E       AssertionError: assert False
+E        +  where False = <function is_available at 0x75fdfe79fa60>()
+E        +    where <function is_available at 0x75fdfe79fa60> = <module 'torch.cuda' from '/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/torch/cuda/__init__.py'>.is_available
+E        +      where <module 'torch.cuda' from '/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/torch/cuda/__init__.py'> = torch.cuda
+
+isaaclab-training/tests/test_m5_runtime_control.py:156: AssertionError
+____________ test_termination_and_critic_reject_cross_device_inputs ____________
+
+    def test_termination_and_critic_reject_cross_device_inputs():
+>       assert torch.cuda.is_available()
+E       AssertionError: assert False
+E        +  where False = <function is_available at 0x75fdfe79fa60>()
+E        +    where <function is_available at 0x75fdfe79fa60> = <module 'torch.cuda' from '/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/torch/cuda/__init__.py'>.is_available
+E        +      where <module 'torch.cuda' from '/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/torch/cuda/__init__.py'> = torch.cuda
+
+isaaclab-training/tests/test_m6_task_contract.py:472: AssertionError
+=========================== short test summary info ============================
+FAILED isaaclab-training/tests/test_m5_runtime_control.py::test_lee_rejects_missing_non_tensor_and_cross_device_inputs
+FAILED isaaclab-training/tests/test_m6_task_contract.py::test_termination_and_critic_reject_cross_device_inputs
+2 failed, 1264 passed, 8 skipped, 40 subtests passed in 7.94s

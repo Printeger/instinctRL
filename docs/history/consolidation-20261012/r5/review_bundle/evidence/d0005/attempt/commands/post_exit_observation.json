@@ -1,0 +1,18 @@
+{
+  "app_launcher_constructed": false,
+  "automatic_or_manual_retries": 0,
+  "basis": [
+    "prelaunch_resource_gate_failure.json exists",
+    "no prelaunch_resource_gate.json",
+    "no kit.log",
+    "initialization measurement NOT_REACHED"
+  ],
+  "dispatch_exit_code": 1,
+  "held_pid": 3632181,
+  "observed_at": "2026-09-14T19:37:57.187815+08:00",
+  "outer_timeout_triggered": false,
+  "owned_process_group_id": 3632181,
+  "owned_session_id": 3632181,
+  "remaining_owned_processes": [],
+  "schema_version": "unified-h1-r3-post-exit-observation.v1"
+}

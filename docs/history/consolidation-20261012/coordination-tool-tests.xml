@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="2" failures="0" skipped="0" tests="2" time="0.061" timestamp="2026-10-12T14:17:59.298232+08:00" hostname="mint-MS-7E30"><testcase classname="" name="tests.control_plane_v2.test_manifest_matrix" time="0.000"><error message="collection failure">ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/control_plane_v2/test_manifest_matrix.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/control_plane_v2/test_manifest_matrix.py:10: in &lt;module&gt;
+    from qualification.runner import manifest as manifest_mod
+E   ModuleNotFoundError: No module named 'qualification'</error></testcase><testcase classname="" name="tests.control_plane_v2.test_runner_matrix" time="0.000"><error message="collection failure">ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tests/control_plane_v2/test_runner_matrix.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/control_plane_v2/test_runner_matrix.py:14: in &lt;module&gt;
+    from qualification.runner import runner
+E   ModuleNotFoundError: No module named 'qualification'</error></testcase></testsuite></testsuites>

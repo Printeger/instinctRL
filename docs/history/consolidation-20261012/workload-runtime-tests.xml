@@ -1,0 +1,1291 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="21" skipped="0" tests="245" time="45.720" timestamp="2026-10-12T14:08:08.688262+08:00" hostname="mint-MS-7E30"><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.MechanicsTests" name="test_adjacent_momentum" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.MechanicsTests" name="test_analyzer_independently_derives_primitives" time="0.001" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.MechanicsTests" name="test_causal_signatures_are_distinct_and_unavailable_fails_closed" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.MechanicsTests" name="test_exact_403200_coordinate_coverage" time="0.091" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.MechanicsTests" name="test_positive_com_rotor_and_exact_row" time="0.001" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_1_missing_required" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_2_out_of_range_lane" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_3_nonfinite" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_4_bad_com" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_5_bad_rotor_wrench" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_6_zero_fill_without_availability" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_7_incomplete_reset_boundary" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_initial_and_later_reset_mapping_and_reasons_are_exact" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_initial_reset_accepts_only_absent_pre_cache_and_real_post_cache" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_mid_z_and_wrong_later_explicit_boundaries_are_rejected" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_missing_initial_boundary_and_duplicate_reorder_fail_at_append" time="0.001" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.FrozenNegativeTests" name="test_reset_requires_real_post_reset_snapshot_without_zero_substitution" time="0.001" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.IntegrationSourceTests" name="test_formal_backend_dispatch_and_post_physics_boundary_are_wired" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.ObserverTests" name="test_mutation_fails" time="0.002" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.ObserverTests" name="test_production_adapter_exact_batches_and_order" time="0.003" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.ObserverTests" name="test_supported_hook_and_no_write" time="0.002" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.ResetAndBudgetRegressionTests" name="test_all_false_reset_trace_fails_closed" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.ResetAndBudgetRegressionTests" name="test_exact_accounting_and_every_ceiling_fails_before_action" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.ResetAndBudgetRegressionTests" name="test_reset_row_advances_exact_lane_episode" time="0.000" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.WallMarginContractTests" name="test_enhanced_workload_900_and_real_rlflow_reservation_910" time="0.005" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.HandoffTests" name="test_checkpoint_source_and_candidate_bytes_are_recomputed" time="5.182" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.HandoffTests" name="test_no_retry_and_identity_fail_closed" time="7.248" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.HandoffTests" name="test_provided_predecessor_candidate_hash_is_rejected_after_rework" time="2.081" /><testcase classname="tests.training_workloads.test_b0_enhanced_stage1.HandoffTests" name="test_validate_only_exact" time="2.085" /><testcase classname="tests.training_workloads.test_d7_cleanup_unittest.D7CleanupTests" name="test_cleanup_rejects_secondary_thread" time="0.000" /><testcase classname="tests.training_workloads.test_d7_cleanup_unittest.D7CleanupTests" name="test_close_keywords_and_fail_closed_status" time="0.059" /><testcase classname="tests.training_workloads.test_d7_cleanup_unittest.D7CleanupTests" name="test_hard_watchdog_bounds_native_style_hang_and_persists_marker" time="0.082" /><testcase classname="tests.training_workloads.test_d7_cleanup_unittest.D7CleanupTests" name="test_hard_watchdog_is_disarmed_and_reaped_after_quick_return" time="0.089" /><testcase classname="tests.training_workloads.test_d7_cleanup_unittest.D7CleanupTests" name="test_owner_thread_success_exception_deadlines_and_timer_restoration" time="0.041" /><testcase classname="tests.training_workloads.test_d7_cleanup_unittest.D7CleanupTests" name="test_reparenting_check_is_immediately_before_kill" time="0.000" /><testcase classname="tests.training_workloads.test_d7_cleanup_unittest.D7CleanupTests" name="test_success_path_cleanup_failure_cannot_become_pass_and_outer_margin_is_ten_seconds" time="0.112" /><testcase classname="tests.training_workloads.test_d7_cpu_unittest.D7WriterAnalyzerTests" name="test_b0_nonconstant_nan_and_bad_cache_mask_are_rejected" time="0.010" /><testcase classname="tests.training_workloads.test_d7_cpu_unittest.D7WriterAnalyzerTests" name="test_complete_b0_trace_requires_exact_fixed_action" time="5.838" /><testcase classname="tests.training_workloads.test_d7_cpu_unittest.D7WriterAnalyzerTests" name="test_complete_trace_and_fail_closed_invalid_or_missing_evidence" time="5.976" /><testcase classname="tests.training_workloads.test_d7_cpu_unittest.D7WriterAnalyzerTests" name="test_shared_durable_ledger_checks_before_limit_and_accumulates" time="0.009" /><testcase classname="tests.training_workloads.test_d7_cpu_unittest.HandoffBindingTests" name="test_load_config_post_adoption_projection_uses_real_repository_identity" time="0.008" /><testcase classname="tests.training_workloads.test_d7_cpu_unittest.SeedBindingTests" name="test_control_diagnostic_accepts_only_evaluation_seed" time="0.001" /><testcase classname="tests.training_workloads.test_evaluator_evidence_boundary.EvidenceBoundaryTests" name="test_active_successor_delivery_identity_is_consistent_and_fails_closed" time="0.000"><failure message="AssertionError: &quot;identity mismatch&quot; does not match &quot;evidence manifest is absent or not regular&quot;">PermissionError: evidence manifest is absent or not regular
+
+During handling of the above exception, another exception occurred:
+
+self = &lt;test_evaluator_evidence_boundary.EvidenceBoundaryTests testMethod=test_active_successor_delivery_identity_is_consistent_and_fails_closed&gt;
+
+    def test_active_successor_delivery_identity_is_consistent_and_fails_closed(self):
+     current_package='INSTINCTRL-R5-STAGE1-IDENTITY-BOUNDARY-SUCCESSOR-20260929'
+     current_task='T-d219cc10961c75be'
+     predecessor_diff='e58bfa16aa6ca448fb730e42582369b427a7454daec1fae3e351b0597c185f97'
+     source=ROOT/'b0_enhanced_delivery'
+     # The immutable delivery is predecessor evidence.  Materialize a current
+     # identity representation to exercise the successor's fail-closed reader.
+&gt;    with self.assertRaisesRegex(PermissionError,'identity mismatch'):
+E    AssertionError: "identity mismatch" does not match "evidence manifest is absent or not regular"
+
+tests/training_workloads/test_evaluator_evidence_boundary.py:13: AssertionError</failure></testcase><testcase classname="tests.training_workloads.test_evaluator_evidence_boundary.EvidenceBoundaryTests" name="test_missing_future_postrun_fails_closed" time="0.000"><failure message="AssertionError: &quot;postrun evidence is absent&quot; does not match &quot;evidence manifest is absent or not regular&quot;">PermissionError: evidence manifest is absent or not regular
+
+During handling of the above exception, another exception occurred:
+
+self = &lt;test_evaluator_evidence_boundary.EvidenceBoundaryTests testMethod=test_missing_future_postrun_fails_closed&gt;
+
+    def test_missing_future_postrun_fails_closed(self):
+&gt;    with self.assertRaisesRegex(PermissionError,'postrun evidence is absent'):
+E    AssertionError: "postrun evidence is absent" does not match "evidence manifest is absent or not regular"
+
+tests/training_workloads/test_evaluator_evidence_boundary.py:47: AssertionError</failure></testcase><testcase classname="tests.training_workloads.test_evaluator_evidence_boundary.EvidenceBoundaryTests" name="test_postrun_job_and_report_bytes_are_hash_verified" time="0.001" /><testcase classname="tests.training_workloads.test_evaluator_evidence_boundary.EvidenceBoundaryTests" name="test_production_sealer_binds_complete_job_and_report_inventory" time="0.006" /><testcase classname="tests.training_workloads.test_evaluator_evidence_boundary.EvidenceBoundaryTests" name="test_protected_predecessor_bytes_are_readable_and_hash_bound" time="0.000"><failure message="PermissionError: evidence manifest is absent or not regular">self = &lt;test_evaluator_evidence_boundary.EvidenceBoundaryTests testMethod=test_protected_predecessor_bytes_are_readable_and_hash_bound&gt;
+
+    def test_protected_predecessor_bytes_are_readable_and_hash_bound(self):
+&gt;    result=verify_predecessor(ROOT/'b0_enhanced_delivery/evaluator_evidence_boundary.json',ROOT/'predecessor_evidence')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_evaluator_evidence_boundary.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/evidence_boundary.py:43: in verify_predecessor
+    value=_load(Path(manifest_path))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/home/mint/rl_dev/instinctRL-dev/b0_enhanced_delivery/evaluator_evidence_boundary.json')
+
+    def _load(path:Path)-&gt;Any:
+&gt;       if path.is_symlink() or not path.is_file():raise PermissionError("evidence manifest is absent or not regular")
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: evidence manifest is absent or not regular
+
+training_workloads/unified_h1/evidence_boundary.py:28: PermissionError</failure></testcase><testcase classname="tests.training_workloads.test_evaluator_evidence_boundary.EvidenceBoundaryTests" name="test_reserved_basename_is_excluded_only_for_canonical_job_manifest" time="0.007" /><testcase classname="tests.training_workloads.test_paired_pilot_unittest.PairedPilotTests" name="test_action_index_mismatch_and_broadcasting" time="0.000" /><testcase classname="tests.training_workloads.test_paired_pilot_unittest.PairedPilotTests" name="test_actual_update_path_and_required_probe_fields_are_wired" time="0.001" /><testcase classname="tests.training_workloads.test_paired_pilot_unittest.PairedPilotTests" name="test_configs_differ_only_actor_lr_and_exact_caps" time="0.000" /><testcase classname="tests.training_workloads.test_paired_pilot_unittest.PairedPilotTests" name="test_diagnostic_off_is_explicit_noop" time="0.000" /><testcase classname="tests.training_workloads.test_paired_pilot_unittest.PairedPilotTests" name="test_disabled_diagnostic_learning_equivalence" time="0.004" /><testcase classname="tests.training_workloads.test_paired_pilot_unittest.PairedPilotTests" name="test_distribution_only_mismatch_is_zero_state_change" time="0.004" /><testcase classname="tests.training_workloads.test_paired_pilot_unittest.PairedPilotTests" name="test_evaluation_loader_binds_each_group_learning_rate" time="0.000" /><testcase classname="tests.training_workloads.test_paired_pilot_unittest.PairedPilotTests" name="test_history_snapshot_does_not_mutate" time="0.000" /><testcase classname="tests.training_workloads.test_paired_pilot_unittest.PairedPilotTests" name="test_identical_distribution_analytic_kl" time="0.000" /><testcase classname="tests.training_workloads.test_paired_pilot_unittest.PairedPilotTests" name="test_no_update_probability_consistency_and_mismatch" time="0.000" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_formal_entry_evaluates_after_training_and_refuses_second_start" time="0.043" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_predecessor_and_duplicate_fail_closed_before_backend[fail]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_predecessor_and_duplicate_fail_closed_before_backend[pending]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_predecessor_and_duplicate_fail_closed_before_backend[missing]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_predecessor_and_duplicate_fail_closed_before_backend[other-start]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_predecessor_and_duplicate_fail_closed_before_backend[symlink]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_predecessor_and_duplicate_fail_closed_before_backend[dangling-output]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_real_authorization_still_checks_hashes_and_budget[checkpoint]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_real_authorization_still_checks_hashes_and_budget[budget]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_real_authorization_still_checks_hashes_and_budget[order]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_real_authorization_still_checks_hashes_and_budget[stage]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_explicit_checkpoint_origin_must_keep_product_identity" time="0.041" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_checkpoint_origin_drift_is_rejected[product]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_checkpoint_origin_drift_is_rejected[missing]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_checkpoint_origin_drift_is_rejected[malformed]" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_evaluation_gate_does_not_overwrite_training_gate" time="0.001" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_real_checkpoints_pass_provenance_before_gpu_rng_boundary[init0000-0]" time="0.427" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_real_checkpoints_pass_provenance_before_gpu_rng_boundary[u0064-64]" time="0.014" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_real_checkpoints_pass_provenance_before_gpu_rng_boundary[u0128-128]" time="0.013" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_real_checkpoints_pass_provenance_before_gpu_rng_boundary[u0192-192]" time="0.014" /><testcase classname="tests.training_workloads.test_r4_evaluation_start" name="test_real_checkpoints_pass_provenance_before_gpu_rng_boundary[u0256-256]" time="0.013" /><testcase classname="tests.training_workloads.test_scale_003" name="test_strict_config_and_source_pins" time="0.003" /><testcase classname="tests.training_workloads.test_scale_003" name="test_entries_are_import_safe_and_current_order_rejects_live" time="0.310" /><testcase classname="tests.training_workloads.test_scale_003" name="test_exact_schedule_command_clock_and_checkpoint_coverage" time="0.010" /><testcase classname="tests.training_workloads.test_scale_003" name="test_geometry_exact_counts_normals_readback_and_negative_cases" time="0.343" /><testcase classname="tests.training_workloads.test_scale_003" name="test_exact_observability_gate_and_affine_rank_negative_control" time="0.001" /><testcase classname="tests.training_workloads.test_scale_003" name="test_fake_training_executes_all_1704_segments_losslessly" time="0.035" /><testcase classname="tests.training_workloads.test_scale_003" name="test_training_semantic_rejects_missing_or_tampered_evidence" time="0.060" /><testcase classname="tests.training_workloads.test_scale_003" name="test_fake_training_interruption_preserves_partial_state" time="0.006" /><testcase classname="tests.training_workloads.test_scale_003" name="test_persisted_training_failure_accounting_mid_rollout_and_partial_update" time="0.084" /><testcase classname="tests.training_workloads.test_scale_003" name="test_fake_evaluation_exact_two_environment_campaign[station]" time="0.031" /><testcase classname="tests.training_workloads.test_scale_003" name="test_fake_evaluation_exact_two_environment_campaign[tracking]" time="0.107" /><testcase classname="tests.training_workloads.test_scale_003" name="test_evaluation_semantic_and_post_step_failure_are_strict" time="0.357" /><testcase classname="tests.training_workloads.test_scale_003" name="test_evaluation_float32_and_json_object_roundtrip" time="0.158" /><testcase classname="tests.training_workloads.test_scale_003" name="test_atomic_persistence_is_confined" time="0.019" /><testcase classname="tests.training_workloads.test_scale_003" name="test_resource_gates_order_thresholds_and_failure_persistence" time="0.033" /><testcase classname="tests.training_workloads.test_scale_003" name="test_coexistence_collection_anchors_after_slow_first_sample" time="0.000" /><testcase classname="tests.training_workloads.test_scale_003" name="test_two_stage_manifests_preserve_training_inputs_and_bind_sealed_handoff" time="0.158" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_failure_lifecycle_subprocess_returns_nonzero_and_retains_cleanup_errors" time="0.040" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_default_launcher_disables_immediate_shutdown_in_cpu_subprocess" time="0.028" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_existing_runner_reads_failure_semantic_instead_of_reporting_it_missing" time="0.425" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_training_live_initialization_failure_is_runner_readable" time="0.037" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_training_live_collects_all_cleanup_failures_without_overwriting_primary" time="0.043" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_training_live_success_persists_pending_result_then_pass_after_app_close" time="0.032" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_training_live_app_cleanup_error_cannot_leave_false_pass" time="0.035" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_evaluation_live_shutdown_wiring[success-0]" time="0.034" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_evaluation_live_shutdown_wiring[operation_failure-1]" time="0.040" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_evaluation_live_shutdown_wiring[initialization_failure-1]" time="0.035" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_evaluation_live_shutdown_wiring[cleanup_failure-1]" time="0.037" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_live_entry_shutdown_matrix_in_cpu_subprocess[success-0-training]" time="0.067" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_live_entry_shutdown_matrix_in_cpu_subprocess[success-0-evaluation]" time="0.067" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_live_entry_shutdown_matrix_in_cpu_subprocess[operation_failure-1-training]" time="0.075" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_live_entry_shutdown_matrix_in_cpu_subprocess[operation_failure-1-evaluation]" time="0.077" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_live_entry_shutdown_matrix_in_cpu_subprocess[initialization_failure-1-training]" time="0.069" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_live_entry_shutdown_matrix_in_cpu_subprocess[initialization_failure-1-evaluation]" time="0.070" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_live_entry_shutdown_matrix_in_cpu_subprocess[cleanup_failure-1-training]" time="0.071" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_live_entry_shutdown_matrix_in_cpu_subprocess[cleanup_failure-1-evaluation]" time="0.072" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_late_preflight_failure_preserves_geometry_and_raw_source" time="0.019" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_gate_validation_failure_preserves_completed_acquisition" time="0.032" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_runtime_support_paths_config_and_manifest_are_attempt_confined" time="0.021"><failure message="AssertionError: assert '/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/runtime_support.py' in {'/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11', '/home/mint/miniconda3/envs/navrl_blackwell_test/li...te_0250.pt', '/home/mint/rl_dev/worktrees/instinctRL-scale-002-prep/training_preparation/scale_002/proposal.json', ...}&#10; +  where '/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/runtime_support.py' = str((PosixPath('/home/mint/rl_dev/instinctRL-dev') / 'training_workloads/scale_003/runtime_support.py'))">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x74714f7a20d0&gt;
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-972/test_runtime_support_paths_con0')
+
+    def test_runtime_support_paths_config_and_manifest_are_attempt_confined(monkeypatch, tmp_path):
+        attempt = tmp_path / "SCALE-004-INERT"; (attempt / "results").mkdir(parents=True)
+        expected = runtime_environment(attempt)
+        for name, value in expected.items(): monkeypatch.setenv(name, value)
+        receipt = prepare_runtime_support(attempt, mode="training")
+        paths = runtime_support_paths(attempt)
+        assert all(path.is_dir() for path in paths.values())
+        assert receipt["external_inventories_required"] is False
+        cfg = SimpleNamespace(sim=SimpleNamespace(log_dir=None))
+        configured = configure_simulation_logging(cfg, attempt)
+        assert configured == str(paths["logs"].resolve()) == cfg.sim.log_dir
+    
+        authorization = tmp_path / "authorization.json"; authorization.write_text("{}\n")
+        config = load_config()
+        manifest, _ = build_attempt_documents(
+            mode="training", attempt_id=attempt.name, attempt_dir=attempt,
+            execution_authorization=authorization, checkpoint=Path(config["pins"]["checkpoint_path"]),
+            source_dependencies=[], candidate_commit="a" * 40, candidate_tree="b" * 40,
+        )
+        environment = manifest["commands"][0]["environment"]
+        assert all(environment[name] == value for name, value in expected.items())
+        assert manifest["external_inventories"] == []
+&gt;       assert str(ROOT / "training_workloads/scale_003/runtime_support.py") in {row["path"] for row in manifest["commands"] and _["files"]}
+E       AssertionError: assert '/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/runtime_support.py' in {'/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11', '/home/mint/miniconda3/envs/navrl_blackwell_test/li...te_0250.pt', '/home/mint/rl_dev/worktrees/instinctRL-scale-002-prep/training_preparation/scale_002/proposal.json', ...}
+E        +  where '/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/runtime_support.py' = str((PosixPath('/home/mint/rl_dev/instinctRL-dev') / 'training_workloads/scale_003/runtime_support.py'))
+
+tests/training_workloads/test_scale_003_repair.py:454: AssertionError</failure></testcase><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_evaluation_temp_default_resolves_under_precreated_attempt_root" time="0.015" /><testcase classname="tests.training_workloads.test_scale_003_repair" name="test_large_world_float32_diagnostic_has_negative_controls" time="0.001" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_schedule_boundaries_role_swap_and_direction_counts" time="0.030" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_every_mixed_rollout_is_256_zero_and_256_nonzero_samples" time="0.002" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_clock_reset_and_resume_do_not_restart_curriculum" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_reset_distribution_is_24_center_4_x_4_y_after_warmup" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_driver_pairs_obs_action_reward_next_command_and_attempt_first_accounting" time="0.002"><failure message="AttributeError: module 'torch' has no attribute 'equal'">def test_driver_pairs_obs_action_reward_next_command_and_attempt_first_accounting():
+        observation = _observation(1023); env = FakeEnvironment(observation); counters = ExecutionCounters()
+        driver = UnifiedH1Driver(env, observation, clock=ScheduleClock(1023), counters=counters)
+&gt;       returned = driver.step(torch.zeros(32, 4))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x74714f631510&gt;
+action = tensor([[0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0..., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+&gt;       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1" name="test_driver_failure_keeps_attempt_without_completion" time="0.002"><failure message="AttributeError: module 'torch' has no attribute 'equal'">def test_driver_failure_keeps_attempt_without_completion():
+        class Failing(FakeEnvironment):
+            def step(self, action): raise RuntimeError("step failed")
+        observation = _observation(0); counters = ExecutionCounters(); driver = UnifiedH1Driver(Failing(observation), observation, counters=counters)
+&gt;       with pytest.raises(RuntimeError): driver.step(torch.zeros(32, 4))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x74715211a510&gt;
+action = tensor([[0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0..., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+&gt;       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1" name="test_stop_confirmation_uses_11_samples_and_never_splices_reset" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_wall_cannot_pass_by_never_moving_and_geometry_distance_is_independent" time="0.001" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_denominators_subgroups_wilson_and_loss_penalties" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_budget_and_evaluation_arithmetic" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_continuation_and_checkpoint_selection_are_frozen" time="0.003" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_learning_log_keeps_every_minibatch_and_partial_optimizer_counters" time="0.024" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_lifecycle_preserves_primary_and_cleanup_failure_order" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_config_validate_only_and_future_live_entry_fail_closed" time="0.246" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_live_adapter_statically_selects_unified_environment_and_b0_direct" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_r3_main_and_controlled_failure_sequence_contracts" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1" name="test_one_complete_512_sample_ppo_update_and_updated_checkpoint_roundtrip" time="0.457" /><testcase classname="tests.training_workloads.test_unified_h1_a0002" name="test_owner_thread_cleanup_success_exception_timeout_and_timer_restoration" time="0.061" /><testcase classname="tests.training_workloads.test_unified_h1_a0002" name="test_cleanup_rejects_secondary_thread_instead_of_moving_kit_resource" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_a0002" name="test_main_sequence_preserves_primary_and_independent_cleanup_failures" time="0.065" /><testcase classname="tests.training_workloads.test_unified_h1_a0003" name="test_swallowed_deadline_then_immediate_return_remains_timeout_failure" time="0.021" /><testcase classname="tests.training_workloads.test_unified_h1_a0003" name="test_live_entry_uses_durable_exit_code_without_python_native_finalizers" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_a0003" name="test_swallowed_deadline_cannot_promote_lifecycle_to_pass" time="0.076" /><testcase classname="tests.training_workloads.test_unified_h1_a0003" name="test_default_cleanup_split_preserves_ten_second_outer_margin" time="0.052" /><testcase classname="tests.training_workloads.test_unified_h1_a0004" name="test_actual_backend_and_raw_replay_use_product_q_ics_scalar_lanes" time="0.862" /><testcase classname="tests.training_workloads.test_unified_h1_a0004" name="test_t0_post_step_and_x_deadline_boundaries_are_not_backdated" time="0.002" /><testcase classname="tests.training_workloads.test_unified_h1_a0004" name="test_continuation_rejects_empty_or_inconsistent_episode_evidence" time="0.004" /><testcase classname="tests.training_workloads.test_unified_h1_a0004" name="test_legal_ray_misses_are_durable_compact_and_distinct_from_bad_valid_samples" time="0.009" /><testcase classname="tests.training_workloads.test_unified_h1_a0004" name="test_reset_splits_command_block_and_cannot_confirm_across_episodes" time="0.092" /><testcase classname="tests.training_workloads.test_unified_h1_a0004" name="test_resource_decline_after_rollout_stops_before_optimizer" time="0.001" /><testcase classname="tests.training_workloads.test_unified_h1_a0004" name="test_invalid_visibility_is_rejected_before_prelaunch_resource_start" time="0.001" /><testcase classname="tests.training_workloads.test_unified_h1_a0004" name="test_wrong_statically_resolved_product_source_is_rejected_before_start" time="0.002" /><testcase classname="tests.training_workloads.test_unified_h1_a0004" name="test_backend_wall_clock_includes_preconstruction_elapsed_time" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_a0004" name="test_reload_fingerprint_is_deterministic_and_detects_tensor_or_optimizer_changes" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_a0005" name="test_actual_parser_missing_and_invalid_timing_fail_engineering_gate" time="0.075" /><testcase classname="tests.training_workloads.test_unified_h1_a0005" name="test_continuation_blocks_invalid_evidence_but_allows_valid_behavior_failure" time="0.446" /><testcase classname="tests.training_workloads.test_unified_h1_a0005" name="test_checkpoint_selection_requires_consistent_complete_evidence_and_keeps_ordering" time="0.079" /><testcase classname="tests.training_workloads.test_unified_h1_a0006" name="test_r4_early_safety_failures_are_retained_but_only_latest_nodes_gate_safety" time="0.221" /><testcase classname="tests.training_workloads.test_unified_h1_a0006" name="test_r4_latest_safety_failures_and_invalid_evidence_at_any_node_are_rejected" time="0.368" /><testcase classname="tests.training_workloads.test_unified_h1_a0006" name="test_r5_early_safety_failure_is_allowed_but_latest_safety_failure_is_not" time="0.159" /><testcase classname="tests.training_workloads.test_unified_h1_asset_closure" name="test_exact_local_ground_closure_opens_without_network" time="0.002" /><testcase classname="tests.training_workloads.test_unified_h1_asset_closure" name="test_environment_binding_is_exact" time="0.001" /><testcase classname="tests.training_workloads.test_unified_h1_asset_closure" name="test_manifest_and_file_drift_fail_closed" time="0.003" /><testcase classname="tests.training_workloads.test_unified_h1_control_diagnostic" name="test_exact_conditions_and_budget_binding" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_control_diagnostic" name="test_b0_is_fixed_normalized_action_through_h1_contract" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_control_diagnostic" name="test_actor_input_is_exact_lossless_selected_lanes" time="0.002" /><testcase classname="tests.training_workloads.test_unified_h1_control_diagnostic" name="test_chunk_writer_rejects_gaps_and_hashes_lossless_payload" time="6.401" /><testcase classname="tests.training_workloads.test_unified_h1_failure_evidence.OfflineFailureEvidenceTests" name="test_all_five_failure_paths_preserve_raw_artifacts_and_hash_manifest" time="0.084" /><testcase classname="tests.training_workloads.test_unified_h1_failure_evidence.OfflineFailureEvidenceTests" name="test_d0005_gap_is_verified_without_reconstruction_or_mutation" time="0.001" /><testcase classname="tests.training_workloads.test_unified_h1_failure_evidence.OfflineFailureEvidenceTests" name="test_existing_evidence_cannot_be_overwritten_or_silently_tampered" time="0.019" /><testcase classname="tests.training_workloads.test_unified_h1_failure_evidence.OfflineFailureEvidenceTests" name="test_late_evidence_is_append_only_and_requires_parent_binding" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_failure_evidence.OfflineFailureEvidenceTests" name="test_missing_artifacts_and_any_retry_claim_fail_closed" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductHookSourceTests" name="test_all_lane_reset_window_is_explicit_and_generation_gated" time="0.011" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductHookSourceTests" name="test_driver_is_exact_zero_target_no_retry" time="0.003" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductHookSourceTests" name="test_event_log_has_exact_order_and_coverage" time="0.037" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductHookSourceTests" name="test_exact_supported_protocol_is_product_owned" time="0.003" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductHookSourceTests" name="test_observer_is_after_scene_refresh_and_before_reset_path" time="0.003" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductHookSourceTests" name="test_protected_state_and_fail_closed_unavailable_wrenches" time="0.005" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductHookSourceTests" name="test_reset_cache_lifecycle_is_fail_closed_on_actual_wrapper_methods" time="0.009" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductHookSourceTests" name="test_reset_episode_mapping_is_state_derived_and_three_resets_only" time="0.006" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductHookSourceTests" name="test_successor_identity_and_math_binding_are_exact" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductResetLifecycleExecutionTests" name="test_accounting_binding_requires_the_automatic_boundary_callback" time="0.004" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductResetLifecycleExecutionTests" name="test_automatic_full_reset_failure_settles_once" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductResetLifecycleExecutionTests" name="test_automatic_full_reset_success_settles_once" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductResetLifecycleExecutionTests" name="test_automatic_partial_reset_exception_settles_at_boundary" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductResetLifecycleExecutionTests" name="test_empty_reset_does_not_settle_or_create_cross_episode_rows" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductResetLifecycleExecutionTests" name="test_full_lane_reset_preserves_last_valid_state_and_unavailable_window" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductResetLifecycleExecutionTests" name="test_initial_reset_exception_settles_once_without_invented_cache" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductResetLifecycleExecutionTests" name="test_initial_reset_truthfully_has_no_pre_cache_and_never_snapshots_cleared_state" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductResetLifecycleExecutionTests" name="test_real_action_rebuild_is_required_before_window_closes" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductResetLifecycleExecutionTests" name="test_reset_exception_is_settled_once_and_mapping_is_not_lost_or_duplicated" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_product_hook.ProductResetLifecycleExecutionTests" name="test_successful_automatic_reset_then_step_diagnostic_failure_is_not_double_counted" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.EnvironmentFilterTests" name="test_explicit_allowlist_preserves_home_and_rejects_credentials" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.InertProductionDispatcherTests" name="test_authorization_drift_in_protected_style_gate_prevents_release" time="0.005" /><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.InertProductionDispatcherTests" name="test_handshake_early_exit_and_completion_timeout_are_bounded_and_owned" time="0.019" /><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.InertProductionDispatcherTests" name="test_identity_is_durable_before_release_and_environment_is_filtered" time="0.008" /><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.InertProductionDispatcherTests" name="test_reclaim_refuses_nonowned_group" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.InertProductionDispatcherTests" name="test_stop_before_spawn_and_at_both_release_transitions" time="0.015" /><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.ProtectedExperimentWorkerGateTests" name="test_production_worker_cleanup_failure_writes_truthful_failed_receipt" time="0.043" /><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.ProtectedExperimentWorkerGateTests" name="test_protected_submit_rejects_duplicate_start_by_reconciling_existing_job" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.ProtectedExperimentWorkerGateTests" name="test_protected_worker_gate_nested_auth_drift_reclaims_without_release" time="0.018" /><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.ProtectedExperimentWorkerGateTests" name="test_protected_worker_gate_persists_identity_then_releases_once" time="0.044" /><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_cpu_fixture_cannot_fill_real_run_dimensions" time="0.001"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_cpu_fixture_cannot_fill_real_run_dimensions&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_estimates_second_start_and_conflicting_observations_fail_closed" time="0.002"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_estimates_second_start_and_conflicting_observations_fail_closed&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_late_evidence_is_append_only_idempotent_and_keeps_one_start" time="0.001"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_late_evidence_is_append_only_idempotent_and_keeps_one_start&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_missing_dimensions_remain_unknown_or_reserved" time="0.002"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_missing_dimensions_remain_unknown_or_reserved&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_missing_or_forged_source_manifest_fails_closed" time="0.001"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_missing_or_forged_source_manifest_fails_closed&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_nonfinite_event_fails_closed_during_settlement" time="0.001"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_nonfinite_event_fails_closed_during_settlement&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_nonfinite_source_manifest_fails_closed_during_source_review" time="0.001"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_nonfinite_source_manifest_fails_closed_during_source_review&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_nonfinite_wall_and_per_device_gpu_seconds_fail_closed_on_append" time="0.002"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_nonfinite_wall_and_per_device_gpu_seconds_fail_closed_on_append&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_signature_rejects_candidate_and_observation_identity_relabeling" time="0.001"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_signature_rejects_candidate_and_observation_identity_relabeling&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_source_manifest_bytes_remain_required_at_settlement" time="0.001"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_source_manifest_bytes_remain_required_at_settlement&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_trusted_start_wall_per_device_gpu_seconds_and_transitions_settle" time="0.001"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_trusted_start_wall_per_device_gpu_seconds_and_transitions_settle&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests" name="test_two_independent_primary_starts_fail_closed_and_retry_is_derived" time="0.001"><failure message="subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.">self = &lt;test_unified_h1_r3_local_dispatch.OfflineResourceSettlementTests testMethod=test_two_independent_primary_starts_fail_closed_and_retry_is_derived&gt;
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        repository = Path(__file__).resolve().parents[2]
+        diff_sha256 = os.environ.get("RL_CANDIDATE_DIFF_SHA256")
+        if diff_sha256 is None:
+&gt;           raw_diff = subprocess.run(
+                ["git", "diff", "524e738a65dc6954fec797899b5e9e21d27d0324", "--"],
+                cwd=repository, check=True, stdout=subprocess.PIPE).stdout
+
+tests/training_workloads/test_unified_h1_r3_local_dispatch.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '524e738a65dc6954fec797899b5e9e21d27d0324', '--']' returned non-zero exit status 128.
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py:571: CalledProcessError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_r3_preflight_diagnostics.PreflightPersistenceTests" name="test_actual_post_cast_failure_paths_are_persisted" time="0.037" /><testcase classname="tests.training_workloads.test_unified_h1_r3_preflight_diagnostics.PreflightPersistenceTests" name="test_failure_is_atomic_and_primary_error_escapes" time="0.014" /><testcase classname="tests.training_workloads.test_unified_h1_r3_preflight_diagnostics.PreflightPersistenceTests" name="test_success_writes_only_pass_record" time="0.011" /><testcase classname="tests.training_workloads.test_unified_h1_r3_process_identity" name="test_process_identity_uses_kernel_values_in_current_process" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_r3_process_identity" name="test_short_lived_new_session_process_reports_own_pid_and_pgid" time="0.028" /><testcase classname="tests.training_workloads.test_unified_h1_r3_process_identity" name="test_failure_path_persists_identity_before_backend_construction" time="0.029" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_commander_stop_and_finite_geometry_counterexamples_are_closed" time="0.001" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_complete_raw_episode_parser_denominators_penalties_and_safety" time="0.074" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_r4_r5_continuation_requires_all_nodes_safety_forgetting_and_complete_cases" time="0.003" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_new_sequence_preserves_primary_cleanup_double_failure_and_exact_injection" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_actual_driver_rollout_ppo_logging_and_durable_attempt" time="0.025"><failure message="AttributeError: module 'torch' has no attribute 'equal'">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-972/test_actual_driver_rollout_ppo0')
+
+    def test_actual_driver_rollout_ppo_logging_and_durable_attempt(tmp_path):
+&gt;       loop,trainer,counters=_training(tmp_path); result=loop.run_update()
+                                                          ^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1_rework.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/driver.py:137: in run_update
+    rollout = collect_h1_rollout(self.driver, self.trainer, self.driver.observation, RolloutConfig(16, 32))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:99: in collect_h1_rollout
+    transition, current = collect_h1_transition(environment, trainer, current, config); transitions.append(transition)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:37: in collect_h1_transition
+    returned = environment.step(action)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x7471327b6410&gt;
+action = tensor([[0.4055, 0.5600, 0.6451, 0.4621],
+        [0.3826, 0.5968, 0.6460, 0.4760],
+        [0.6110, 0.4615, 0.5064, 0... [0.4197, 0.5479, 0.6628, 0.4023],
+        [0.4727, 0.4894, 0.5577, 0.4658],
+        [0.4586, 0.3660, 0.6375, 0.5562]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+&gt;       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_env_and_partial_critic_optimizer_failures_keep_actual_counters" time="0.024"><failure message="AttributeError: module 'torch' has no attribute 'equal'">tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-972/test_env_and_partial_critic_op0')
+
+    def test_env_and_partial_critic_optimizer_failures_keep_actual_counters(tmp_path):
+        loop,trainer,counters=_training(tmp_path/"env",fail_step=3)
+&gt;       with pytest.raises(RuntimeError,match="env.step"): loop.run_update()
+                                                           ^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1_rework.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/driver.py:137: in run_update
+    rollout = collect_h1_rollout(self.driver, self.trainer, self.driver.observation, RolloutConfig(16, 32))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:99: in collect_h1_rollout
+    transition, current = collect_h1_transition(environment, trainer, current, config); transitions.append(transition)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:37: in collect_h1_transition
+    returned = environment.step(action)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x747133063e10&gt;
+action = tensor([[0.4600, 0.8137, 0.1978, 0.4145],
+        [0.3519, 0.7699, 0.2982, 0.7928],
+        [0.4667, 0.7156, 0.3300, 0... [0.1598, 0.8466, 0.2375, 0.6191],
+        [0.4152, 0.7379, 0.3298, 0.7345],
+        [0.2294, 0.8355, 0.3452, 0.4521]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+&gt;       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_nonfinite_log_values_are_explicitly_unavailable_and_keep_counts" time="0.000" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_step_budget_and_resource_decline_stop_before_environment_action" time="0.000"><failure message="AttributeError: module 'torch' has no attribute 'equal'">def test_step_budget_and_resource_decline_stop_before_environment_action():
+        observation={"policy":{"state_vec":torch.zeros(32,52)}}
+        class Env:
+            calls=[]
+            def prepare_h1_step(self,**kwargs): self.calls.append("prepare")
+            def step(self,action): self.calls.append("step")
+        env=Env(); counters=ExecutionCounters()
+        driver=UnifiedH1Driver(env,observation,counters=counters,transition_limit=0)
+&gt;       with pytest.raises(RuntimeError,match="training-transition"): driver.step(torch.zeros(32,4))
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1_rework.py:208: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x747133067e90&gt;
+action = tensor([[0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0..., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+&gt;       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError</failure></testcase><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_raw_evaluation_trace_is_read_only_replayable_and_incomplete_input_rejected" time="0.845" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_authorization_exact_budget_order_and_checkpoint_bytes" time="0.305" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_config_rejects_method_version_source_set_versions_and_candidate_identity" time="0.030" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_live_adapter_dispatches_both_r3_modes_through_real_sequence" time="0.052" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_a0002_metric_counterexamples_fail_closed_and_w_proactive_stop_passes" time="0.002" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_diagnostic_smoke_profiles_drive_real_schedule_roles" time="0.021" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_live_construction_and_independent_bounded_cleanup_are_one_boundary" time="0.113" /><testcase classname="tests.training_workloads.test_unified_h1_rework" name="test_initialization_tick_budget_and_repeated_start_fail_closed" time="0.047" /></testsuite></testsuites>

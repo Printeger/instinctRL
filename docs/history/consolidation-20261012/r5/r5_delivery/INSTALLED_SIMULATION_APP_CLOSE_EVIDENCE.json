@@ -1,0 +1,42 @@
+{
+  "schema_version": "instinctrl-installed-source-inspection/1",
+  "status": "READ_ONLY_SOURCE_INSPECTION_NO_IMPORT_NO_RUNTIME_INITIALIZATION",
+  "producer": "outer-control-window",
+  "inspected_at": "2026-09-27T13:50:00+08:00",
+  "source": {
+    "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/exts/isaacsim.simulation_app/isaacsim/simulation_app/simulation_app.py",
+    "sha256": "7cbaa6f00e935a6f14bf1c28ec0db089fd924e931f3b0deee07a822f9b7d0090",
+    "bytes": 41239,
+    "mode": "0664",
+    "mtime": "2026-08-15 17:50:42.359196139 +0800"
+  },
+  "inspection": {
+    "method": "sha256sum plus sed over the installed Python source; the module was not imported",
+    "signature_line": 763,
+    "signature": "def close(self, wait_for_replicator=True, skip_cleanup=False) -> None:",
+    "excerpt_lines": [
+      763,
+      815
+    ],
+    "excerpt_sha256": "9cfd36148f077dc1c8c22ebe03407a96f340e4095f7c20101b4b708b76ea12bd",
+    "branch_excerpt_lines": [
+      788,
+      805
+    ],
+    "branch_excerpt_sha256": "91ea91b16b05f6ae0fd0e4c3175ea9b51f3a647b7a822072ad0a0aef9a1e7975",
+    "facts": [
+      "skip_cleanup=True sets _exiting, disables logging, and calls self._app.shutdown_and_release_framework().",
+      "wait_for_replicator gates rep.orchestrator.wait_until_complete() and the following one-second sleep.",
+      "The installed implementation continues into its guarded replicator and stage-close code after the skip_cleanup branch; the workload therefore must retain its bounded owner-thread alarm and independent outer watchdog instead of treating the keyword as an unconditional Python-level deadline."
+    ]
+  },
+  "runtime_effects": {
+    "python_imports": 0,
+    "app_launcher_starts": 0,
+    "simulator_initializations": 0,
+    "gpu_jobs": 0,
+    "training_transitions": 0,
+    "nontraining_transitions": 0
+  },
+  "purpose": "Close F-INSTALLED-CLOSE-SOURCE-EVIDENCE after the rlflow CPU sandbox correctly denied direct reads outside its candidate/evidence roots. This record supplies only the requested installed-source identity and semantics; it does not claim a live cleanup success."
+}
