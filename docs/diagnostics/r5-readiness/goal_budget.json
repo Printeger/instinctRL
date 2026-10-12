@@ -30,7 +30,7 @@
     "wall_seconds": 0,
     "gpu_seconds": 0,
     "output_bytes": 0,
-    "role_calls": 5,
+    "role_calls": 6,
     "training_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0
@@ -76,6 +76,14 @@
       "handle": "/root/pilot_reviewer",
       "scope": "same exact input pre-review after capacity failure; no live",
       "status": "MUST_FIX"
+    },
+    {
+      "call": 6,
+      "role": "Reviewer",
+      "candidate_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
+      "handle": "/root/pilot_reviewer",
+      "scope": "BASELINE-R1/R2 closure on exact v3 source and inputs pre-live",
+      "status": "REQUESTED"
     }
   ],
   "initialization_ticks_resets_gpu_probes": "UNBOUND_NO_LIVE_RELEASE",
