@@ -466,6 +466,10 @@ class UnifiedH1LiveBackend:
             stream.flush(); os.fsync(stream.fileno())
             stream.close()
             phase = "ANALYSIS"
+            # A watchdog may kill the process during the expensive CPU analysis.
+            # Persist the successfully returned collection and observed counters
+            # first; this is neither an analysis verdict nor a close receipt.
+            preserve_raw_manifest("COLLECTION_COMPLETE_ANALYSIS_PENDING")
             from .b0_causal_analyzer import analyze_jsonl
             analysis = analyze_jsonl(target)
             atomic_json_replace(self.output, "enhanced_b0_causal_analysis.json", analysis)

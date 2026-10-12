@@ -1,0 +1,39 @@
+.........................F......                                         [100%]
+=================================== FAILURES ===================================
+___ test_late_raw_evidence_settles_reserved_dimensions_without_second_start ____
+
+bound = ({'cwd': '/tmp/pytest-of-mint/pytest-1023/test_late_raw_evidence_settles0/work', 'h1': {'workload_root': '/tmp/pytest-...e94fb4fc21fe77e8310c060f61caaff8a'}}, PosixPath('/tmp/pytest-of-mint/pytest-1023/test_late_raw_evidence_settles0/job'))
+adapter = (<module '_offline_h1.live_adapter' from '/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/live_adapter.py'>, <module '_offline_h1.budget' from '/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/budget.py'>)
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1023/test_late_raw_evidence_settles0')
+
+    def test_late_raw_evidence_settles_reserved_dimensions_without_second_start(bound,adapter,tmp_path):
+        from rlflow.store import Store,sha
+        v,observed,d=bound;live,_=adapter;store=Store(tmp_path/'state');jid='J-h1-offline';jobdir=store.root/'jobs'/jid
+        jobdir.mkdir(parents=True);atomic(jobdir/'h1-authority.json',canonical(observed));atomic(jobdir/'process-identity.json',canonical(identity(os.getpid())))
+        v.update(backend='real');receipt={'job_id':jid,'spec_sha256':sha(v),'status':'FAILED','released':True,'elapsed_seconds':.5,'allocated_seconds':.25}
+        atomic(jobdir/'receipt.json',canonical(receipt))
+>       store.transact('OFFLINE_FIXTURE','h1',lambda s:s['jobs'].update({jid:{'id':jid,'spec':v,'status':'RUNNING','identity':None,'reserved_resources':v['resources'],'used_resources':{}}}))
+
+tools/rlflow/tests/test_h1_adapter.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/rlflow/rlflow/store.py:113: in transact
+    before = self.replay(db)
+             ^^^^^^^^^^^^^^^
+tools/rlflow/rlflow/store.py:92: in replay
+    from .contracts import validate_runtime_event, validate_runtime_state
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Versioned role contracts. Classification never infers semantics from file names."""
+    from __future__ import annotations
+    import hashlib
+    import importlib.metadata
+    import json
+    from pathlib import Path
+    from typing import Any
+>   import jsonschema
+E   ModuleNotFoundError: No module named 'jsonschema'
+
+tools/rlflow/rlflow/contracts.py:8: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tools/rlflow/tests/test_h1_adapter.py::test_late_raw_evidence_settles_reserved_dimensions_without_second_start
+1 failed, 31 passed in 0.85s

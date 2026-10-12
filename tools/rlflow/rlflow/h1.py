@@ -63,7 +63,7 @@ def validate(spec,root,*,fresh=True):
     budget=auth['budgets'];limit=budget['wall_seconds']+10
     if spec['resources']!={'starts':1,'wall_seconds':limit,'gpu_seconds':limit,'transitions':budget['training_transitions']+budget['nontraining_transitions']}:
         raise Conflict('H1 resources must bind exact mode budget and two five-second cleanup margins')
-    expected_seed = (config['training']['evaluation_seed'] if h['mode'] in {'evaluation', 'control-diagnostic', 'enhanced-b0-diagnostic'}
+    expected_seed = (config['training']['evaluation_seed'] if h['mode'] in {'evaluation', 'pilot-evaluation', 'control-diagnostic', 'enhanced-b0-diagnostic'}
                      else config['training']['seed'])
     if spec['seed']!=expected_seed or spec['method']!=config['method']['version'] or spec['evaluation']!=config['versions']['metric'] or spec['runtime']!=config['execution']['frozen_runtime_root']:
         raise Conflict('H1 seed/method/evaluation/runtime mismatch')

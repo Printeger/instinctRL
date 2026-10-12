@@ -1,0 +1,52 @@
+{
+  "schema_version": "instinctrl-r5-offline-recovered-raw/1",
+  "status": "UNVALIDATED_RAW_OBSERVED_AFTER_TERMINAL_RECOVERY",
+  "scope": "new evidence only; original PREPARED manifest remains immutable; physical coverage does not prove final reward-completed counters",
+  "original_manifest": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012/results/enhanced-b0-diagnostic/enhanced_b0_manifest.json",
+  "original_manifest_sha256": "af6692bd968efaff040fdcf0c7b83a8414441017218ec5441484038dba0eda6f",
+  "original_status": "PREPARED",
+  "original_execution_counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 0,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 0,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 0,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 0,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 0,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "source_identity": {
+    "config_sha256": "09d297c08dc8178e4beb8bc62b1c0a405b8beff0713bd3754d0586a89bda97f5",
+    "product_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+    "product_tree": "9c0cc84e0983806677b40ec714a5ea57314b6a58",
+    "workload_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+    "workload_tree": "9c0cc84e0983806677b40ec714a5ea57314b6a58"
+  },
+  "authorization_sha256": "de40adb7be771134bd1b70e9d1775debc7790b57f416889d22215bd3dd3b0cf6",
+  "job_id": "J-afe4bda51f5206e5",
+  "raw": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012/results/enhanced-b0-diagnostic/enhanced_b0_physics.jsonl",
+    "file_bytes": 3474215080,
+    "written_rows": 403200,
+    "sha256": "c89e44bbf0039e9c647f4232d4029ab00f446b81ba775790d9097c4157ffb92d",
+    "trailing_partial_row": false
+  },
+  "terminal_counters": "UNAVAILABLE_KEEP_FULL20160RESERVATION",
+  "training_authority": {
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0
+  }
+}

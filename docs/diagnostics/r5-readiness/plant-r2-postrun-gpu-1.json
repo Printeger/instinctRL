@@ -1,0 +1,15 @@
+{
+  "status": "COMPLETE",
+  "job_id": "J-afe4bda51f5206e5",
+  "authorized_command_index": 1,
+  "argv": [
+    "/usr/bin/nvidia-smi",
+    "--query-compute-apps=pid,process_name,used_gpu_memory",
+    "--format=csv,noheader,nounits"
+  ],
+  "returncode": 0,
+  "stdout": "3950, /usr/libexec/gnome-remote-desktop-daemon, 164\n",
+  "stderr": "",
+  "after_terminal_ownership_settlement": true,
+  "observed_at_utc": "2026-10-12T10:56:00.240849+00:00"
+}

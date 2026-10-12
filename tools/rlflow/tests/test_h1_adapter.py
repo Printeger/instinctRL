@@ -162,10 +162,11 @@ def test_reviewed_controlled_failure_closes_both_resources_and_collects_final(bo
     assert result['formal_verdict']=='NOT_GRANTED'
 
 
-def test_control_diagnostic_uses_only_evaluation_seed(bound):
+@pytest.mark.parametrize('mode',['control-diagnostic','enhanced-b0-diagnostic','evaluation','pilot-evaluation'])
+def test_control_diagnostic_uses_only_evaluation_seed(bound,mode):
     v,observed,d=bound
-    v['h1']['mode']='control-diagnostic'
-    v['argv'][-1]='control-diagnostic'
+    v['h1']['mode']=mode
+    v['argv'][-1]=mode
     v['seed']=456
     assert h1.validate(v,d)==observed
     for wrong in (123,457):
@@ -174,3 +175,12 @@ def test_control_diagnostic_uses_only_evaluation_seed(bound):
             h1.validate(v,d)
     v['h1']['mode']='controlled-failure';v['argv'][-1]='controlled-failure';v['seed']=123
     assert h1.validate(v,d)==observed
+
+
+def test_pilot_training_keeps_training_seed(bound):
+    v,observed,d=bound
+    v['h1']['mode']='pilot-training';v['argv'][-1]='pilot-training'
+    v['seed']=123
+    assert h1.validate(v,d)==observed
+    v['seed']=456
+    with pytest.raises(Conflict,match='seed'):h1.validate(v,d)

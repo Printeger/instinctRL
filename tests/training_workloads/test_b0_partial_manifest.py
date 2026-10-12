@@ -6,6 +6,7 @@ No simulator or backend construction is performed.
 import ast
 import hashlib
 import json
+import multiprocessing
 import os
 from collections import OrderedDict
 from pathlib import Path
@@ -105,6 +106,33 @@ def test_complete_manifest_has_finalized_coverage_and_no_error(tmp_path,monkeypa
     assert manifest['status']=='COMPLETE' and manifest['phase']=='COMPLETE'
     assert manifest['coverage']['status']=='MOCK_32_ROWS_ONLY' and manifest['observation']['fixture_only']
     assert manifest['raw']['written_rows']==32 and manifest['primary_error'] is None
+
+
+def test_analyzer_process_death_retains_durable_collection_without_close_claim(tmp_path,monkeypatch):
+    value,_=backend_fixture(tmp_path,monkeypatch,None)
+    observed={'completed_policy_steps':1,'attempted_policy_steps':1,
+              'nontraining_transitions':32,'training_transitions':0,
+              'real_optimizer_updates':0,'real_checkpoint_writes':0}
+    value.counters=SimpleNamespace(snapshot=lambda:dict(observed))
+    def abrupt_analyzer(path):
+        manifest=json.loads((tmp_path/'enhanced_b0_manifest.json').read_text())
+        assert manifest['status']=='COLLECTION_COMPLETE_ANALYSIS_PENDING'
+        assert manifest['raw']['stream_closed'] and manifest['execution_counters']==observed
+        os._exit(137)  # No exception/finally can save a terminal manifest.
+    monkeypatch.setattr(b0_causal_analyzer,'analyze_jsonl',abrupt_analyzer)
+    process=multiprocessing.get_context('fork').Process(target=value.run_enhanced_b0_diagnostic,args=({},))
+    process.start();process.join(timeout=5)
+    if process.is_alive():process.kill();process.join();pytest.fail('CPU substitute did not exit')
+    assert process.exitcode==137
+    manifest=json.loads((tmp_path/'enhanced_b0_manifest.json').read_text())
+    raw=(tmp_path/'enhanced_b0_physics.jsonl').read_bytes()
+    assert manifest['status']=='COLLECTION_COMPLETE_ANALYSIS_PENDING' and manifest['phase']=='ANALYSIS'
+    assert manifest['coverage']['status']=='MOCK_32_ROWS_ONLY'
+    assert manifest['raw']['written_rows']==manifest['raw']['validated_rows']==manifest['raw']['attempted_rows']==32
+    assert manifest['raw']['sha256']==hashlib.sha256(raw).hexdigest()
+    assert manifest['raw']['last_written_coordinate']['lane']==31
+    assert manifest['execution_counters']==observed and manifest['primary_error'] is None
+    assert not (tmp_path/'status.json').exists() and not (tmp_path/'cleanup_evidence.json').exists()
 
 
 def test_failed_flush_distinguishes_stream_acceptance_from_complete_file_rows(tmp_path,monkeypatch):

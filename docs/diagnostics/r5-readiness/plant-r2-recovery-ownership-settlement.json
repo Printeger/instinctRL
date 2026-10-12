@@ -1,0 +1,71 @@
+{
+  "job_id": "J-afe4bda51f5206e5",
+  "scope": "NEW_BOUNDED_EXISTING_TOOL_POSTRECOVERY_KNOWN_OWNED_IDENTITY_SETTLEMENT",
+  "normal_completion_ack_present": false,
+  "native_close": "NOT_REACHED",
+  "original_recovery": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-afe4bda51f5206e5/recovery.json",
+  "owner_dead": true,
+  "guard_dead": true,
+  "child_dead": true,
+  "observed_owned_ledger": [
+    {
+      "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+      "pgid": 1724792,
+      "pid": 1724792,
+      "starttime": "174921630"
+    }
+  ],
+  "descendant_cleanup": {
+    "actions": [
+      {
+        "identity": {
+          "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+          "pgid": 1724792,
+          "pid": 1724792,
+          "starttime": "174921630"
+        },
+        "signal": "SIGTERM",
+        "identity_matched": false
+      },
+      {
+        "identity": {
+          "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+          "pgid": 1724792,
+          "pid": 1724792,
+          "starttime": "174921630"
+        },
+        "signal": "SIGKILL",
+        "identity_matched": false
+      }
+    ],
+    "discovered": [
+      {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pgid": 1724792,
+        "pid": 1724792,
+        "starttime": "174921630"
+      }
+    ],
+    "rounds": [
+      {
+        "discovered": [],
+        "new": [],
+        "survivors": [],
+        "stable_scans": 1
+      },
+      {
+        "discovered": [],
+        "new": [],
+        "survivors": [],
+        "stable_scans": 2
+      }
+    ],
+    "survivors": [],
+    "stable_scans": 2,
+    "required_stable_scans": 2,
+    "quiescent": true,
+    "timed_out": false
+  },
+  "no_known_owned_survivors": true,
+  "limitation": "postrecovery scans validate continuously recorded owned identities; cannot reconstruct unrecorded fork after owner death; not a normal-close handshake"
+}

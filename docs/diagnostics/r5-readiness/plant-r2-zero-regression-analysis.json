@@ -1,0 +1,5223 @@
+{
+  "schema_version": "instinctrl-r5-zero-target-regression/1",
+  "status": "COMPLETE_NUMERICALLY_VALID_INDEPENDENT_CONTROL_ACCEPTANCE_REQUIRED",
+  "condition": "ENHANCED_B0_ZERO_TARGET",
+  "coverage": {
+    "status": "VALID",
+    "physics_rows": 403200,
+    "lanes": 32,
+    "decimation": 20,
+    "cases": [
+      "Z",
+      "T",
+      "S"
+    ],
+    "reset_rows": 96
+  },
+  "source_identity": {
+    "config_sha256": "09d297c08dc8178e4beb8bc62b1c0a405b8beff0713bd3754d0586a89bda97f5",
+    "product_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+    "product_tree": "9c0cc84e0983806677b40ec714a5ea57314b6a58",
+    "workload_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+    "workload_tree": "9c0cc84e0983806677b40ec714a5ea57314b6a58"
+  },
+  "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012/results/enhanced-b0-diagnostic/enhanced_b0_physics.jsonl",
+  "raw_sha256": "c89e44bbf0039e9c647f4232d4029ab00f446b81ba775790d9097c4157ffb92d",
+  "segments": [
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        0,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        -200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -200.10000610351562,
+        1.9514844417572021
+      ],
+      "all_physics_speed_rms_m_s": 0.011384966703248863,
+      "max_speed_m_s": 0.10032716415796657,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04831504821777344,
+      "all_velocity_mean_m_s": [
+        -0.00014379569322103513,
+        -0.000180507565592622,
+        -0.002425910879855547
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949449535606505,
+        -6.177470702144806e-05,
+        -0.04330346832983196
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012227461647571877,
+        -0.0001490166893696975,
+        6.507488563679924e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.324144356323051e-05,
+        7.821472682153903e-06,
+        2.2239978658758487e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690166155497,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.000313893222482875,
+        -0.00020286801736801863,
+        4.108913174150075e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        1,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -100.0999984741211,
+        1.9514765739440918
+      ],
+      "all_physics_speed_rms_m_s": 0.01138510992246722,
+      "max_speed_m_s": 0.10032710455332369,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832291603088379,
+      "all_velocity_mean_m_s": [
+        -0.00015138259690865928,
+        -0.00018500662675514812,
+        -0.0024260876859336466
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949280858324585,
+        -6.177478150493299e-05,
+        -0.04330329679418355
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00013175210660647707,
+        -0.00015533895435570837,
+        3.879603299571007e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3299447726253974e-05,
+        7.85772362476513e-06,
+        2.775235671360898e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690700213115,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00032992844353429973,
+        -0.000250073877396062,
+        3.758952402677096e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        2,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -0.09923094511032104,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.011383769469822336,
+      "max_speed_m_s": 0.10032726101534266,
+      "max_horizontal_from_first_physics_row_m": 0.0007690563797950745,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.00022687904634850398,
+        3.8456177494668254e-05,
+        -0.002425662171044177
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011188362570301536,
+        1.6885778397576768e-07,
+        -0.04330306198913604
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0002123655909478354,
+        4.921168267234558e-05,
+        8.762650990424466e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.281149804999406e-07,
+        7.469698522676556e-06,
+        4.452800798418014e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689743359883,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00012602216156665236,
+        8.313268335768953e-05,
+        6.443219717766624e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        3,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        99.9000015258789,
+        1.9514765739440918
+      ],
+      "all_physics_speed_rms_m_s": 0.011385103568333261,
+      "max_speed_m_s": 0.10032710455332369,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832291603088379,
+      "all_velocity_mean_m_s": [
+        -0.00015160630754699155,
+        -0.0001845273235861994,
+        -0.0024257801324759853
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949280739180779,
+        -6.17747818871206e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00013205039435458825,
+        -0.00015469986110110766,
+        7.980163345848723e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3261895325594675e-05,
+        7.849671457658247e-06,
+        2.5014852947276752e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689819653829,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.000335890770656988,
+        -0.00023084234271664172,
+        8.275407026303583e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        4,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        199.89999389648438,
+        1.9514782428741455
+      ],
+      "all_physics_speed_rms_m_s": 0.011385156523002858,
+      "max_speed_m_s": 0.10032716415796657,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832124710083008,
+      "all_velocity_mean_m_s": [
+        -0.00015169654371218044,
+        -0.00018467744431797627,
+        -0.0024259797881901173
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949449568348314,
+        -6.177469955345627e-05,
+        -0.04330346710048616
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0001321069446009299,
+        -0.00015487201691394148,
+        5.784192002640983e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.328709438429073e-05,
+        7.845201495795372e-06,
+        2.689948034424276e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690311431885,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00033384349080733955,
+        -0.00023468327708542347,
+        3.8329528706526617e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        5,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        -200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        -200.10000610351562,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.011385065308612292,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830753803253174,
+      "all_velocity_mean_m_s": [
+        -0.00014832608758443477,
+        -0.00018628786972420443,
+        -0.0024259407956239835
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948367833923612,
+        -6.177508091029127e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012783084633997296,
+        -0.00015676550862917793,
+        5.912242324891774e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.324479545893357e-05,
+        7.868530579685515e-06,
+        2.3072551267530607e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690298716227,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00033310838625766337,
+        -0.00020944270363543183,
+        6.36370145912224e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        6,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        -100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.011384911315314005,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00014923009551837653,
+        -0.00017633819864405209,
+        -0.00242587447038641
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.000129950227263663,
+        -0.00014349027628001446,
+        6.504628519330425e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.326372360675516e-05,
+        7.822082437936232e-06,
+        2.3763264931225825e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690186500549,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00031552877044305205,
+        -0.0002112282527377829,
+        6.7485069621398e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        7,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        -0.09936563670635223,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.01138390491436785,
+      "max_speed_m_s": 0.10032726101530678,
+      "max_horizontal_from_first_physics_row_m": 0.0006343647837638855,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.0002346015395324379,
+        3.1725631161424366e-05,
+        -0.002425756872647869
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187450840346003,
+        1.689790072692543e-07,
+        -0.04330310772638768
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00022115550096107956,
+        4.04672524794781e-05,
+        7.770325470879413e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.249383061895432e-07,
+        7.481509381213632e-06,
+        4.8158154584398055e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689925511677,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00013434802531264722,
+        6.799041148042306e-05,
+        7.809213116161118e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        8,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.011384913055745306,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.0001488229175721223,
+        -0.00017685375873926145,
+        -0.002425834433632466
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012940732333532404,
+        -0.00014417768974029363,
+        7.03845190525243e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.329618350084319e-05,
+        7.839878208336963e-06,
+        2.47326517237532e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690043449403,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.0003307515580672771,
+        -0.00021114767878316343,
+        1.0497810762899462e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        9,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        200.10000610351562,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.011384905900320753,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.0001421846864838887,
+        -0.00017975995478170643,
+        -0.0024259730201239994
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366082236816,
+        -6.177510356745519e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00011962111111467048,
+        -0.0001480697086675112,
+        5.546694749488286e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.323949649514257e-05,
+        7.844419145187843e-06,
+        2.1625985708988624e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690340995788,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00032894546166062355,
+        -0.00017387296247761697,
+        4.461149103462958e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        10,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        -199.89999389648438,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.011385065308612292,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830753803253174,
+      "all_velocity_mean_m_s": [
+        -0.00014832608758443477,
+        -0.00018628786972420443,
+        -0.0024259407956239835
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948367833923612,
+        -6.177508091029127e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012783084633997296,
+        -0.00015676550862917793,
+        5.912242324891774e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3244795500551407e-05,
+        7.868530718978787e-06,
+        2.3072551272896685e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690298716227,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00033310838625766337,
+        -0.00020944270363543183,
+        6.36370145912224e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        11,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        -99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        -99.9000015258789,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.011385239273820916,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00015859164591070041,
+        -0.0001842970006219482,
+        -0.002425883352821102
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477131264375e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0001424654614793563,
+        -0.00015400668319489342,
+        6.499478071203176e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.333435284675828e-05,
+        7.8586250425171e-06,
+        2.6781784232797942e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59069023100535,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.000330331880832091,
+        -0.00025591198937036097,
+        9.96285280052689e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        12,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        0.10063374042510986,
+        1.9514753818511963
+      ],
+      "all_physics_speed_rms_m_s": 0.011383903007801012,
+      "max_speed_m_s": 0.10032727591646708,
+      "max_horizontal_from_first_physics_row_m": 0.0006337389349937439,
+      "max_height_from_first_physics_row_m": 0.0483241081237793,
+      "all_velocity_mean_m_s": [
+        -0.00023464738287375654,
+        3.1705925900295e-05,
+        -0.0024257638244565014
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187441168480916,
+        1.6897366018897575e-07,
+        -0.04330308781936765
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0002212158446588243,
+        4.044106473277983e-05,
+        7.591505534610595e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.489340807287897e-07,
+        7.488373211426461e-06,
+        4.814585125588004e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689995765686,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00013438357564155012,
+        6.800000119255856e-05,
+        6.488077133326442e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        13,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.011384913055745306,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.0001488229175721223,
+        -0.00017685375873926145,
+        -0.002425834433632466
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012940732333532404,
+        -0.00014417768974029363,
+        7.03845190525243e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.329618350084319e-05,
+        7.839878150302618e-06,
+        2.473265172113955e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690043449403,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.0003307515580672771,
+        -0.00021114767878316343,
+        1.0497810762899462e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        14,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        200.10000610351562,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.011384905900320753,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.0001421846864838887,
+        -0.00017975995478170643,
+        -0.0024259730201239994
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366082236816,
+        -6.177510356745519e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00011962111111467048,
+        -0.0001480697086675112,
+        5.546694749488286e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.323949649514257e-05,
+        7.844419204759238e-06,
+        2.162598571028388e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690340995788,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00032894546166062355,
+        -0.00017387296247761697,
+        4.461149103462958e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        15,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -0.10000000149011612,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -0.10372976213693619,
+        -199.89999389648438,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.011385879779407021,
+      "max_speed_m_s": 0.10032711945468852,
+      "max_horizontal_from_first_physics_row_m": 0.0037297606468200684,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.00018650025373266387,
+        -0.00020333850458478147,
+        -0.0024258015253771836
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015223662691347785,
+        -8.161585477047484e-05,
+        -0.04330337160266936
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00015178912935395297,
+        -0.00017487954027577265,
+        7.798811593673349e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3143365471583394e-05,
+        2.1158198346838086e-05,
+        1.276731541402972e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689778327942,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00034956008312292397,
+        -7.660523260710761e-05,
+        9.047009257301397e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        16,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.096406489610672,
+        -100.0999984741211,
+        1.9514747858047485
+      ],
+      "all_physics_speed_rms_m_s": 0.01138566844117522,
+      "max_speed_m_s": 0.1003270747512088,
+      "max_horizontal_from_first_physics_row_m": 0.0035935118794441223,
+      "max_height_from_first_physics_row_m": 0.04832470417022705,
+      "all_velocity_mean_m_s": [
+        -0.00017968906476853875,
+        -0.0001966306963756953,
+        -0.0024258377768184227
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015224101711652338,
+        -8.150730559044251e-05,
+        -0.043303397381678224
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0001439521034505257,
+        -0.0001659620146025797,
+        7.573755052826906e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.312490358001084e-05,
+        2.114027643158038e-05,
+        1.0796026902922436e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689867019654,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.0003230814472772181,
+        -5.0245980673935264e-05,
+        7.606246299474151e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        17,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.09332286566495895,
+        -0.0994214341044426,
+        1.9514753818511963
+      ],
+      "all_physics_speed_rms_m_s": 0.011386428715257059,
+      "max_speed_m_s": 0.10032725356497155,
+      "max_horizontal_from_first_physics_row_m": 0.006702155104692994,
+      "max_height_from_first_physics_row_m": 0.0483241081237793,
+      "all_velocity_mean_m_s": [
+        -0.00033382391511054265,
+        2.8946264433702308e-05,
+        -0.0024258579353008286
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011188318075710412,
+        1.689157333009672e-07,
+        -0.04330309354700148
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00033209752998664046,
+        3.707811539000734e-05,
+        6.100550059464637e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.209208715004117e-07,
+        2.107263317846795e-05,
+        4.88941740469743e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690375963847,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00024482462322339416,
+        6.253562605706975e-05,
+        6.911020022926095e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        18,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.09636551141738892,
+        99.9000015258789,
+        1.9514744281768799
+      ],
+      "all_physics_speed_rms_m_s": 0.011385839128611595,
+      "max_speed_m_s": 0.1003270747512088,
+      "max_horizontal_from_first_physics_row_m": 0.0036344900727272034,
+      "max_height_from_first_physics_row_m": 0.0483250617980957,
+      "all_velocity_mean_m_s": [
+        -0.00018174592126270285,
+        -0.00020632176821542737,
+        -0.0024258284484016926
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015224135510294445,
+        -8.150727474762087e-05,
+        -0.0433033738238737
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00014538791207329875,
+        -0.00017907234393290612,
+        7.411202696268048e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.31286831562824e-05,
+        2.1150386065296725e-05,
+        1.104883875328866e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689926783243,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.0003250552690587938,
+        -4.959531725035049e-05,
+        6.372844723046001e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        19,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.09646277129650116,
+        199.89999389648438,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.011385769595904037,
+      "max_speed_m_s": 0.10032711200410806,
+      "max_horizontal_from_first_physics_row_m": 0.0035372301936149597,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.00017687441181539397,
+        -0.00020801878449212003,
+        -0.0024259412523115033
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015223592025115807,
+        -8.161560821310255e-05,
+        -0.04330334740225226
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00013840182495065772,
+        -0.00018148435099889562,
+        6.067543068487188e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.311715616178113e-05,
+        2.11266539749649e-05,
+        1.3766316628976058e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690222740173,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00030043110018596053,
+        -6.324348942143843e-05,
+        7.077231884977664e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        20,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        -200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        -200.10000610351562,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.011384875436929379,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830741882324219,
+      "all_velocity_mean_m_s": [
+        -0.00014278376371608381,
+        -0.0001778988271279644,
+        -0.0024260309426726457
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366074960859,
+        -6.177510406649823e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012123759393978398,
+        -0.000145572371894256,
+        4.5463721779626096e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.326012752249791e-05,
+        7.854886433226997e-06,
+        2.133498534435026e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59069065952301,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00033512525260448456,
+        -0.00019564774993341416,
+        5.282325332700566e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        21,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        -100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.011385026661385689,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00015110532658424346,
+        -0.00017969951084285485,
+        -0.0024257900798248305
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177478061323738e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00013248212899281004,
+        -0.00014788188266053718,
+        7.746207417724804e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.328518898672086e-05,
+        7.862133559648498e-06,
+        2.3617048478206485e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689901034038,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00032645868486724794,
+        -0.00022499277838505805,
+        8.352216127605061e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        22,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        -0.09936580061912537,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.011383905068582716,
+      "max_speed_m_s": 0.10032726101530678,
+      "max_horizontal_from_first_physics_row_m": 0.0006342008709907532,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.00023460481199055394,
+        3.1732689036447616e-05,
+        -0.0024257676500552563
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187450843529234,
+        1.6897900128626243e-07,
+        -0.04330310772638768
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00022115974389210654,
+        4.047664559766417e-05,
+        7.591919627429889e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.209261898740698e-07,
+        7.478344688152246e-06,
+        4.776417133913376e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59068995920817,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00013416049478109926,
+        6.806769670220092e-05,
+        9.807615697354777e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        23,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        99.9000015258789,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.011385025314159114,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00015102851179023524,
+        -0.0001797427197124778,
+        -0.0024257584739570772
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.17747804417701e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00013237971120287048,
+        -0.00014793948124618812,
+        8.167458474837019e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3289840320156686e-05,
+        7.855491340130158e-06,
+        2.2902047947734317e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59068981107076,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00032612684299238026,
+        -0.00022527137480210513,
+        1.0203876854575356e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        24,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        200.10000610351562,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.011384863039565499,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830729961395264,
+      "all_velocity_mean_m_s": [
+        -0.00013817623079012442,
+        -0.00018129897707283872,
+        -0.0024259211723886257
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948369014447735,
+        -6.177507791072623e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00011445060393432271,
+        -0.00015056582786201033,
+        6.048181060892925e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3246280094628995e-05,
+        7.817667320160232e-06,
+        2.2245303590249604e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59069025739034,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00031885740463621914,
+        -0.00018704227113630623,
+        7.354538524850796e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        25,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        -199.89999389648438,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.011385065308612292,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830753803253174,
+      "all_velocity_mean_m_s": [
+        -0.00014832608758443477,
+        -0.00018628786972420443,
+        -0.0024259407956239835
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948367833923612,
+        -6.177508091029127e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012783084633997296,
+        -0.00015676550862917793,
+        5.912242324891774e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3244795500551407e-05,
+        7.868530685761414e-06,
+        2.307255127303546e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690298716227,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00033310838625766337,
+        -0.00020944270363543183,
+        6.36370145912224e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        26,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        -99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        -99.9000015258789,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.011385239273820916,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00015859164591070041,
+        -0.0001842970006219482,
+        -0.002425883352821102
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477131264375e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0001424654614793563,
+        -0.00015400668319489342,
+        6.499478071203176e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.333435284675828e-05,
+        7.858625030492913e-06,
+        2.678178423295985e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59069023100535,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.000330331880832091,
+        -0.00025591198937036097,
+        9.96285280052689e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        27,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        0.10063374042510986,
+        1.9514753818511963
+      ],
+      "all_physics_speed_rms_m_s": 0.011383903007801012,
+      "max_speed_m_s": 0.10032727591646708,
+      "max_horizontal_from_first_physics_row_m": 0.0006337389349937439,
+      "max_height_from_first_physics_row_m": 0.0483241081237793,
+      "all_velocity_mean_m_s": [
+        -0.00023464738287375654,
+        3.1705925900295e-05,
+        -0.0024257638244565014
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187441168480916,
+        1.6897366018897575e-07,
+        -0.04330308781936765
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0002212158446588243,
+        4.044106473277983e-05,
+        7.591505534610595e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.489340807287897e-07,
+        7.488373338146874e-06,
+        4.8145851255440575e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689995765686,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00013438357564155012,
+        6.800000119255856e-05,
+        6.488077133326442e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        28,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.011384913055745306,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.0001488229175721223,
+        -0.00017685375873926145,
+        -0.002425834433632466
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012940732333532404,
+        -0.00014417768974029363,
+        7.03845190525243e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.329618350084319e-05,
+        7.839878197575265e-06,
+        2.4732651723891977e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690043449403,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.0003307515580672771,
+        -0.00021114767878316343,
+        1.0497810762899462e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        29,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        200.10000610351562,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.011384905900320753,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.0001421846864838887,
+        -0.00017975995478170643,
+        -0.0024259730201239994
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366082236816,
+        -6.177510356745519e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00011962111111467048,
+        -0.0001480697086675112,
+        5.546694749488286e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.323949649514257e-05,
+        7.84441918351105e-06,
+        2.162598570917366e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690340995788,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00032894546166062355,
+        -0.00017387296247761697,
+        4.461149103462958e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        30,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -299.8999938964844,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -299.8999938964844,
+        -199.89999389648438,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.01138512306328304,
+      "max_speed_m_s": 0.10032716415796657,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830741882324219,
+      "all_velocity_mean_m_s": [
+        -0.00015230121008572085,
+        -0.00018374222107266381,
+        -0.00242579974046157
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949446741638781,
+        -6.177470531442353e-05,
+        -0.04330347304232419
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0001338914513673378,
+        -0.000153742598931179,
+        7.853707564713375e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.330258727211495e-05,
+        7.890162808114359e-06,
+        2.543209231924137e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689946174622,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.0003297091170679778,
+        -0.00024448789190500975,
+        1.0769618938866188e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "Z",
+        31,
+        1
+      ],
+      "physics_rows": 4000,
+      "duration_s": 20.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -299.8999938964844,
+        -99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -299.8999938964844,
+        -99.9000015258789,
+        1.9514765739440918
+      ],
+      "all_physics_speed_rms_m_s": 0.011384954060882113,
+      "max_speed_m_s": 0.10032710455332369,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832291603088379,
+      "all_velocity_mean_m_s": [
+        -0.00014788003906611991,
+        -0.00017748955592102235,
+        -0.002425969897153798
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949279975205229,
+        -6.177479111034056e-05,
+        -0.04330329679418355
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012708208980744947,
+        -0.0001453161890719154,
+        5.450117481882917e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.322531117575331e-05,
+        7.838819934432362e-06,
+        2.1167280778305874e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690385818482,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00033442085259594023,
+        -0.00019493213039822876,
+        1.1760910183511442e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        0,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        -200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -200.10000610351562,
+        1.9514844417572021
+      ],
+      "all_physics_speed_rms_m_s": 0.016099047184900087,
+      "max_speed_m_s": 0.10032716415796657,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04831504821777344,
+      "all_velocity_mean_m_s": [
+        -0.00010572308596723445,
+        -0.0002751145170798316,
+        -0.004852570257579067
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949449535606505,
+        -6.177470702144806e-05,
+        -0.04330346832983196
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -3.0872484774846496e-06,
+        -0.00027524883989826776,
+        4.552508331556737e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.2724435452393924e-05,
+        7.338847131556442e-06,
+        -2.328742506205184e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690402030944,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        2.1290821678121574e-05,
+        -0.00013804105401504785,
+        7.896645115579304e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        1,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -100.0999984741211,
+        1.9514765739440918
+      ],
+      "all_physics_speed_rms_m_s": 0.016098980365168113,
+      "max_speed_m_s": 0.10032710455332369,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832291603088379,
+      "all_velocity_mean_m_s": [
+        -0.00010699592994819796,
+        -0.00027294082320513513,
+        -0.004852646290439519
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949280858324585,
+        -6.177478150493299e-05,
+        -0.04330329679418355
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -3.7177920811899414e-06,
+        -0.00027187200245680287,
+        2.2204384541879563e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.27248245892558e-05,
+        7.386160820877536e-06,
+        -2.416991548799541e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690821647645,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.4274753084464464e-05,
+        -0.0001295446272706613,
+        7.061341875669314e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        2,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -0.09983392059803009,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.016097883698829883,
+      "max_speed_m_s": 0.10032726101534266,
+      "max_horizontal_from_first_physics_row_m": 0.00016608089208602905,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.00027034614905807787,
+        1.6616579840420793e-05,
+        -0.004852273662506853
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011188362570301536,
+        1.6885778397576768e-07,
+        -0.04330306198913604
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.000270272885565646,
+        2.7043497719205333e-05,
+        7.301544601290288e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.397782038022384e-07,
+        7.47759355023242e-06,
+        4.535673474748147e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690004348755,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00024150482204277068,
+        3.795226075453684e-05,
+        9.3730477601639e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        3,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        99.9000015258789,
+        1.9514765739440918
+      ],
+      "all_physics_speed_rms_m_s": 0.016098988346187906,
+      "max_speed_m_s": 0.10032710455332369,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832291603088379,
+      "all_velocity_mean_m_s": [
+        -0.00010658531594571486,
+        -0.0002737554512594411,
+        -0.004852487723578662
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949280739180779,
+        -6.17747818871206e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -2.8965847672282053e-06,
+        -0.0002735011914774077,
+        5.391317503722348e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.272075581710629e-05,
+        7.3613377158273655e-06,
+        -2.433062372311778e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690222740173,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.0688479051168542e-05,
+        -0.00013561105879489332,
+        7.348322696998366e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        4,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        199.89999389648438,
+        1.9514782428741455
+      ],
+      "all_physics_speed_rms_m_s": 0.01609903940461793,
+      "max_speed_m_s": 0.10032716415796657,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832124710083008,
+      "all_velocity_mean_m_s": [
+        -0.00010666109920435929,
+        -0.0002738821192307472,
+        -0.00485256240373084
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949449568348314,
+        -6.177469955345627e-05,
+        -0.04330346710048616
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -2.8568573627865135e-06,
+        -0.00027367051193141376,
+        5.296028995829261e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.2710615003032547e-05,
+        7.351421908180944e-06,
+        -1.945401290816273e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690227508546,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.0275575732521247e-05,
+        -0.00013523793313652277,
+        4.853891368838958e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        5,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        -200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        -200.10000610351562,
+        1.9514919519424438
+      ],
+      "all_physics_speed_rms_m_s": 0.016099060604516782,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830753803253174,
+      "all_velocity_mean_m_s": [
+        -0.00010765280078562967,
+        -0.0002780693086540549,
+        -0.004852459370743326
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948367833923612,
+        -6.177508091029127e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -5.493790253439102e-06,
+        -0.0002812836642988259,
+        6.181137067500231e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.2779866692166174e-05,
+        7.251545033510775e-06,
+        -1.0276192176361664e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690039634705,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        2.4273325834656134e-05,
+        -0.0001473827287554741,
+        3.4654092928576574e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        6,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        -100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.01609887690815796,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.000105209445801556,
+        -0.0002671683327065864,
+        -0.004852533153356928
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -3.3491913205949686e-06,
+        -0.00025945469967700774,
+        3.8296338758314617e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.2699559464752005e-05,
+        7.281971802949455e-06,
+        -1.8210885066316518e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690607070924,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        4.913320026389556e-06,
+        -0.00012000161223113537,
+        5.173096724320203e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        7,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        -0.09985993802547455,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.016098012084174367,
+      "max_speed_m_s": 0.10032726101530678,
+      "max_horizontal_from_first_physics_row_m": 0.00014006346464157104,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.00027705741882176225,
+        1.4020767833278463e-05,
+        -0.004852359508929941
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187450840346003,
+        1.689790072692543e-07,
+        -0.04330310772638768
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00027917518239701166,
+        2.2540768459293758e-05,
+        6.395703728578894e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.185877924461737e-07,
+        7.496993865669099e-06,
+        4.665819453839038e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690253257751,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00025030551478266716,
+        3.1312105420511216e-05,
+        6.422962428587198e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        8,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.016098876911783855,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00010518687362135637,
+        -0.00026716526333295286,
+        -0.004852520580259677
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -3.304046960195706e-06,
+        -0.00025944856092974077,
+        4.0810958208581385e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.270567592217477e-05,
+        7.28390917362362e-06,
+        -1.7712004004716286e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690536499023,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        5.0900966925837565e-06,
+        -0.00011996899411315098,
+        4.2992252247131546e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        9,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        200.10000610351562,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.016099063603909305,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.00010789486107140788,
+        -0.00027818798242146693,
+        -0.004852636282097937
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366082236816,
+        -6.177510356745519e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -5.9143095512723676e-06,
+        -0.00028154527171864174,
+        2.835247249706185e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.279711033738794e-05,
+        7.2591776776156635e-06,
+        -7.345841312386692e-10
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.5906907081604,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.9649069145089015e-05,
+        -0.00014398476923815906,
+        6.64858021082182e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        10,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        -199.89999389648438,
+        1.9514919519424438
+      ],
+      "all_physics_speed_rms_m_s": 0.016099060604516782,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830753803253174,
+      "all_velocity_mean_m_s": [
+        -0.00010765280078562967,
+        -0.0002780693086540549,
+        -0.004852459370743326
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948367833923612,
+        -6.177508091029127e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -5.493790253439102e-06,
+        -0.0002812836642988259,
+        6.181137067500231e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.277986677320602e-05,
+        7.251545054264896e-06,
+        -1.0276192170047272e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690039634705,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        2.4273325834656134e-05,
+        -0.0001473827287554741,
+        3.4654092928576574e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        11,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        -99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        -99.9000015258789,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.01609891508199374,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.0001042542316297883,
+        -0.00026919457967973856,
+        -0.004852501471690273
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477131264375e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -1.5382640548438077e-06,
+        -0.0002632212064563646,
+        4.803113252229707e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.274864175418576e-05,
+        7.351133084366246e-06,
+        -2.7217933405709883e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690396308899,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.0450244189996738e-06,
+        -0.00011932235793210566,
+        3.163623034652119e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        12,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        0.10013999044895172,
+        1.9514753818511963
+      ],
+      "all_physics_speed_rms_m_s": 0.016098008439917308,
+      "max_speed_m_s": 0.10032727591646708,
+      "max_horizontal_from_first_physics_row_m": 0.0001399889588356018,
+      "max_height_from_first_physics_row_m": 0.0483241081237793,
+      "all_velocity_mean_m_s": [
+        -0.00027706800837932376,
+        1.4017588112944567e-05,
+        -0.004852345269026838
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187441168480916,
+        1.6897366018897575e-07,
+        -0.04330308781936765
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00027919401924009435,
+        2.253466682304861e-05,
+        6.422114327122586e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.458786220566228e-07,
+        7.508620194956545e-06,
+        4.698616614021156e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690242767334,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.0002504086587578058,
+        3.127743548247963e-05,
+        4.263807795723551e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        13,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.016098876911783855,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00010518687362135637,
+        -0.00026716526333295286,
+        -0.004852520580259677
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -3.304046960195706e-06,
+        -0.00025944856092974077,
+        4.0810958208581385e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.270567592217477e-05,
+        7.2839092859579015e-06,
+        -1.771200401040618e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690536499023,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        5.0900966925837565e-06,
+        -0.00011996899411315098,
+        4.2992252247131546e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        14,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        200.10000610351562,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.016099063603909305,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.00010789486107140788,
+        -0.00027818798242146693,
+        -0.004852636282097937
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366082236816,
+        -6.177510356745519e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -5.9143095512723676e-06,
+        -0.00028154527171864174,
+        2.835247249706185e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.279711033738794e-05,
+        7.259177688652141e-06,
+        -7.345841312664247e-10
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.5906907081604,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.9649069145089015e-05,
+        -0.00014398476923815906,
+        6.64858021082182e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        15,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -0.10000000149011612,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -0.10205432027578354,
+        -199.89999389648438,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.016100530765767125,
+      "max_speed_m_s": 0.10032711945468852,
+      "max_horizontal_from_first_physics_row_m": 0.0020543187856674194,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.00020544304645634526,
+        -0.000311984168108303,
+        -0.004852454738559348
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015223662691347785,
+        -8.161585477047484e-05,
+        -0.04330337160266936
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012025246604389395,
+        -0.000335252938704798,
+        6.362678681384182e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.302824971001325e-05,
+        2.0737484619996444e-05,
+        2.891833658154319e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689930915833,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -5.31666046299506e-05,
+        -0.00023995456285774708,
+        9.268123903893866e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        16,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.09796903282403946,
+        -100.0999984741211,
+        1.9514747858047485
+      ],
+      "all_physics_speed_rms_m_s": 0.01610042085320347,
+      "max_speed_m_s": 0.1003270747512088,
+      "max_horizontal_from_first_physics_row_m": 0.00203096866607666,
+      "max_height_from_first_physics_row_m": 0.04832470417022705,
+      "all_velocity_mean_m_s": [
+        -0.00020311538926617346,
+        -0.00030837084259886826,
+        -0.004852591186020284
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015224101711652338,
+        -8.150730559044251e-05,
+        -0.043303397381678224
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00011933082980976906,
+        -0.0003281049435026944,
+        4.408617489701783e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.299848627420118e-05,
+        2.0718577104944623e-05,
+        2.629251900435059e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690358161925,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -5.2148549002595246e-05,
+        -0.00023336867161560804,
+        9.735954336065333e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        17,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.09635283797979355,
+        -0.09987471252679825,
+        1.9514753818511963
+      ],
+      "all_physics_speed_rms_m_s": 0.016099889228566026,
+      "max_speed_m_s": 0.10032725356497155,
+      "max_horizontal_from_first_physics_row_m": 0.00364931486656848,
+      "max_height_from_first_physics_row_m": 0.0483241081237793,
+      "all_velocity_mean_m_s": [
+        -0.0003646750766451987,
+        1.254522410460515e-05,
+        -0.004852310055527196
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011188318075710412,
+        1.689157333009672e-07,
+        -0.04330309354700148
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0003903470828081481,
+        2.05397366444231e-05,
+        6.417951667607725e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.288866916993099e-07,
+        2.103569836639138e-05,
+        4.9002428335886975e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690257072449,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00036158529110252857,
+        2.862836845451966e-05,
+        9.586744909029221e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        18,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.09790665656328201,
+        99.9000015258789,
+        1.9514744281768799
+      ],
+      "all_physics_speed_rms_m_s": 0.016100575111252166,
+      "max_speed_m_s": 0.1003270747512088,
+      "max_horizontal_from_first_physics_row_m": 0.0020933449268341064,
+      "max_height_from_first_physics_row_m": 0.0483250617980957,
+      "all_velocity_mean_m_s": [
+        -0.0002093730874770756,
+        -0.00031296025888271674,
+        -0.004852348800146368
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015224135510294445,
+        -8.150727474762087e-05,
+        -0.0433033738238737
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012792622612323612,
+        -0.0003378504767024424,
+        8.395541229155867e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3109531403270025e-05,
+        2.0766503106980803e-05,
+        2.667858581717475e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689609527589,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -5.3788444347446784e-05,
+        -0.00025019588065333664,
+        1.3335883295439999e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        19,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.09785866737365723,
+        199.89999389648438,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.016100668313087034,
+      "max_speed_m_s": 0.10032711200410806,
+      "max_horizontal_from_first_physics_row_m": 0.002141334116458893,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.00021411819543221356,
+        -0.00031550879783010866,
+        -0.004852507359252377
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015223592025115807,
+        -8.161560821310255e-05,
+        -0.04330334740225226
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00013594421845482428,
+        -0.0003433955106884241,
+        5.70553661805917e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.306985300127227e-05,
+        2.0745587088007168e-05,
+        3.702433868192634e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690183639527,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -6.914613186381757e-05,
+        -0.000253906735451892,
+        8.679318739268638e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        20,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        -200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        -200.10000610351562,
+        1.9514920711517334
+      ],
+      "all_physics_speed_rms_m_s": 0.01609897065231224,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830741882324219,
+      "all_velocity_mean_m_s": [
+        -0.00010436409637193122,
+        -0.00027362382948451224,
+        -0.004852576882616193
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366074960859,
+        -6.177510406649823e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -1.3059196988791655e-06,
+        -0.000272369466139935,
+        3.3391711158614613e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.273020592396517e-05,
+        7.285920662973261e-06,
+        -1.4118179753538906e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59069079208374,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        8.347667062480468e-06,
+        -0.00013801114982925355,
+        1.8682676738990267e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        21,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        -100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.01609889658047358,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00010387769379881107,
+        -0.00026827842229500365,
+        -0.004852380158355264
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177478061323738e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -7.804682390784024e-07,
+        -0.00026140444920019946,
+        7.238648141125737e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.2717942025657226e-05,
+        7.315520642293405e-06,
+        -2.34172621314116e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689888000488,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        5.2834934649581555e-06,
+        -0.00011790393182309344,
+        1.0320359251636546e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        22,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        -0.09986008703708649,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.016098012123471003,
+      "max_speed_m_s": 0.10032726101530678,
+      "max_horizontal_from_first_physics_row_m": 0.00013991445302963257,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.00027706067081420115,
+        1.4020417000527502e-05,
+        -0.004852346475295775
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187450843529234,
+        1.6897900128626243e-07,
+        -0.04330310772638768
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00027918132534250617,
+        2.2540014648257055e-05,
+        6.552255177041388e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.179885213815963e-07,
+        7.493834950224848e-06,
+        4.9314617926662916e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690149307251,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.0002503842697478831,
+        3.1303599826060236e-05,
+        6.75299077101954e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        23,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        99.9000015258789,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.016098896581477087,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00010387768794889141,
+        -0.0002682784953066435,
+        -0.004852380099370313
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.17747804417701e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -7.804623454532588e-07,
+        -0.0002614045555019402,
+        7.239346301339822e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.271794200177394e-05,
+        7.315520642293405e-06,
+        -2.3417262132174875e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689887046814,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        5.283507107378682e-06,
+        -0.00011790403368650004,
+        1.032107661558257e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        24,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        200.10000610351562,
+        1.951492190361023
+      ],
+      "all_physics_speed_rms_m_s": 0.01609905556237732,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830729961395264,
+      "all_velocity_mean_m_s": [
+        -0.00010752578993916017,
+        -0.0002786050520434957,
+        -0.004852552137401878
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948369014447735,
+        -6.177507791072623e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -5.698468520790812e-06,
+        -0.00028371167938166764,
+        3.9486906901586847e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.278232574744419e-05,
+        7.238025007308968e-06,
+        -6.621433832343371e-10
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690634727478,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.9100434656138532e-05,
+        -0.00015572334814351052,
+        5.271449481369928e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        25,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        -199.89999389648438,
+        1.9514919519424438
+      ],
+      "all_physics_speed_rms_m_s": 0.016099060604516782,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830753803253174,
+      "all_velocity_mean_m_s": [
+        -0.00010765280078562967,
+        -0.0002780693086540549,
+        -0.004852459370743326
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948367833923612,
+        -6.177508091029127e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -5.493790253439102e-06,
+        -0.0002812836642988259,
+        6.181137067500231e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.277986677320602e-05,
+        7.251545030215855e-06,
+        -1.0276192167549269e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690039634705,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        2.4273325834656134e-05,
+        -0.0001473827287554741,
+        3.4654092928576574e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        26,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        -99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        -99.9000015258789,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.01609891508199374,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.0001042542316297883,
+        -0.00026919457967973856,
+        -0.004852501471690273
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477131264375e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -1.5382640548438077e-06,
+        -0.0002632212064563646,
+        4.803113252229707e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.274864175418576e-05,
+        7.351133105282737e-06,
+        -2.7217933406334383e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690396308899,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.0450244189996738e-06,
+        -0.00011932235793210566,
+        3.163623034652119e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        27,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        0.10013999044895172,
+        1.9514753818511963
+      ],
+      "all_physics_speed_rms_m_s": 0.016098008439917308,
+      "max_speed_m_s": 0.10032727591646708,
+      "max_horizontal_from_first_physics_row_m": 0.0001399889588356018,
+      "max_height_from_first_physics_row_m": 0.0483241081237793,
+      "all_velocity_mean_m_s": [
+        -0.00027706800837932376,
+        1.4017588112944567e-05,
+        -0.004852345269026838
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187441168480916,
+        1.6897366018897575e-07,
+        -0.04330308781936765
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00027919401924009435,
+        2.253466682304861e-05,
+        6.422114327122586e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.458786220566228e-07,
+        7.50862038470787e-06,
+        4.6986166139795226e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690242767334,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.0002504086587578058,
+        3.127743548247963e-05,
+        4.263807795723551e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        28,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.016098876911783855,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00010518687362135637,
+        -0.00026716526333295286,
+        -0.004852520580259677
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -3.304046960195706e-06,
+        -0.00025944856092974077,
+        4.0810958208581385e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.270567592217477e-05,
+        7.283909154845836e-06,
+        -1.7712004004646898e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690536499023,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        5.0900966925837565e-06,
+        -0.00011996899411315098,
+        4.2992252247131546e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        29,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        200.10000610351562,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.016099063603909305,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.00010789486107140788,
+        -0.00027818798242146693,
+        -0.004852636282097937
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366082236816,
+        -6.177510356745519e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -5.9143095512723676e-06,
+        -0.00028154527171864174,
+        2.835247249706185e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.279711033738794e-05,
+        7.259177652578608e-06,
+        -7.345841311692802e-10
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.5906907081604,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.9649069145089015e-05,
+        -0.00014398476923815906,
+        6.64858021082182e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        30,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -299.8999938964844,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -299.8999938964844,
+        -199.89999389648438,
+        1.9514920711517334
+      ],
+      "all_physics_speed_rms_m_s": 0.016098951223734087,
+      "max_speed_m_s": 0.10032716415796657,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830741882324219,
+      "all_velocity_mean_m_s": [
+        -0.00010432470442914621,
+        -0.0002696239075299349,
+        -0.004852432204954679
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949446741638781,
+        -6.177470531442353e-05,
+        -0.04330347304232419
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -1.1189226174224132e-06,
+        -0.0002655067275627516,
+        6.906642063349011e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.2741545983234396e-05,
+        7.443734699576793e-06,
+        -2.4368162227228486e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689992904663,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        6.298728294495959e-06,
+        -0.0001257612311746925,
+        1.0561664112174185e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "T",
+        31,
+        1
+      ],
+      "physics_rows": 2000,
+      "duration_s": 10.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -299.8999938964844,
+        -99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -299.8999938964844,
+        -99.9000015258789,
+        1.9514765739440918
+      ],
+      "all_physics_speed_rms_m_s": 0.016098982436987222,
+      "max_speed_m_s": 0.10032710455332369,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832291603088379,
+      "all_velocity_mean_m_s": [
+        -0.00010704975771239234,
+        -0.0002731420619901885,
+        -0.00485260620921761
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949279975205229,
+        -6.177479111034056e-05,
+        -0.04330329679418355
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -3.825628582653451e-06,
+        -0.0002722744675120339,
+        3.022054245356287e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.2713459921031195e-05,
+        7.359683372935966e-06,
+        -2.075110355818921e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690663337707,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        9.709670848678797e-06,
+        -0.00013130427396390587,
+        5.510165692612645e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        0,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        -200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -200.10000610351562,
+        1.9514844417572021
+      ],
+      "all_physics_speed_rms_m_s": 0.00886656154711527,
+      "max_speed_m_s": 0.10032716415796657,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04831504821777344,
+      "all_velocity_mean_m_s": [
+        -0.0001527308626379675,
+        -0.00023990209449349116,
+        -0.0014699983004537625
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949449535606505,
+        -6.177470702144806e-05,
+        -0.04330346832983196
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00014279728034885736,
+        -0.0002336381481063654,
+        6.441041065105172e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.337891764854509e-05,
+        7.5677077892966764e-06,
+        5.072929780153973e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690080268043,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.3202623449615203e-05,
+        -0.0002563360030762851,
+        1.7221456971583393e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        1,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -100.0999984741211,
+        1.9514765739440918
+      ],
+      "all_physics_speed_rms_m_s": 0.008866374547169096,
+      "max_speed_m_s": 0.10032710455332369,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832291603088379,
+      "all_velocity_mean_m_s": [
+        -0.00014045535910392975,
+        -0.00023914562876537566,
+        -0.0014700585450741082
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949280858324585,
+        -6.177478150493299e-05,
+        -0.04330329679418355
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012798773254834472,
+        -0.00023291991176750213,
+        5.586120063113701e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3351755222386323e-05,
+        7.569266588746711e-06,
+        4.610900478633505e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59069027696337,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        3.164027657476254e-05,
+        -0.00018654380983207375,
+        3.450732322107797e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        2,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        -0.09783034026622772,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.00886261938186576,
+      "max_speed_m_s": 0.10032726101534266,
+      "max_horizontal_from_first_physics_row_m": 0.002169661223888397,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.0001611110305462552,
+        6.574166871040521e-05,
+        -0.001469743839898912
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011188362570301536,
+        1.6885778397576768e-07,
+        -0.04330306198913604
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00014159167661692402,
+        7.637595562982824e-05,
+        8.871671680386685e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.507973235910818e-07,
+        7.469957410031287e-06,
+        4.707845455403231e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59068967291287,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -5.06612632307224e-05,
+        8.866903954185545e-05,
+        5.231644877312647e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        3,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        99.9000015258789,
+        1.9514765739440918
+      ],
+      "all_physics_speed_rms_m_s": 0.008866526137052987,
+      "max_speed_m_s": 0.10032710455332369,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832291603088379,
+      "all_velocity_mean_m_s": [
+        -0.0001492420943785713,
+        -0.0002415154573019736,
+        -0.0014699273622449296
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949280739180779,
+        -6.17747818871206e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0001383435313882802,
+        -0.00023571291199134847,
+        7.132121591357787e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3351601519459364e-05,
+        7.572976646580811e-06,
+        4.80430448031013e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689923422676,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        2.6458532374817878e-05,
+        -0.00021559579181484878,
+        5.787905479337496e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        4,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        299.8999938964844,
+        199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        299.8999938964844,
+        199.89999389648438,
+        1.9514782428741455
+      ],
+      "all_physics_speed_rms_m_s": 0.008866783451308919,
+      "max_speed_m_s": 0.10032716415796657,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832124710083008,
+      "all_velocity_mean_m_s": [
+        -0.00015497105038497582,
+        -0.0002446444258955758,
+        -0.0014699795849036357
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949449568348314,
+        -6.177469955345627e-05,
+        -0.04330346710048616
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0001450613556240908,
+        -0.00023938562221084274,
+        6.766339280834493e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.338375994158364e-05,
+        7.579690694183696e-06,
+        5.078326216356137e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690056596484,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        2.7240408599027433e-05,
+        -0.00024321051023434848,
+        1.0036558251158567e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        5,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        -200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        -200.10000610351562,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.008866851773243542,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830753803253174,
+      "all_velocity_mean_m_s": [
+        -0.00016106174246106756,
+        -0.00024567894162188137,
+        -0.0014699467691444373
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948367833923612,
+        -6.177508091029127e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00015235637302236173,
+        -0.00024046893958841662,
+        6.943176500203865e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.340198896350504e-05,
+        7.593193107210479e-06,
+        5.485430349382136e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59068999869483,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        7.27890937923803e-06,
+        -0.0003092237748205662,
+        5.460240117827198e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        6,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        -100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.008866786590552204,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00016331434030790476,
+        -0.00024173864898672332,
+        -0.001469940843222932
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00015550088316958113,
+        -0.00023582019956718017,
+        6.856615768015471e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.339718028715367e-05,
+        7.589132945101608e-06,
+        5.249209099124501e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690028497152,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -1.323266769759357e-05,
+        -0.00028994327294640243,
+        1.1067493232985726e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        7,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        -0.09815415740013123,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.008862672788584103,
+      "max_speed_m_s": 0.10032726101530678,
+      "max_horizontal_from_first_physics_row_m": 0.0018458440899848938,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.0001654125457454954,
+        5.5942050253051836e-05,
+        -0.0014698455752656357
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187450840346003,
+        1.689790072692543e-07,
+        -0.04330310772638768
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00014585413333459941,
+        6.494942222551409e-05,
+        7.81748478490155e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.547133109472768e-07,
+        7.445676855516839e-06,
+        4.791920256154288e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689879996436,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -8.339373636090386e-08,
+        0.00010851664410438389,
+        6.931149414413085e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        8,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.008866548051807976,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00015750254328066168,
+        -0.00023745555237821814,
+        -0.001469882951050667
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00014865126524461606,
+        -0.00023077226427858477,
+        7.53891636970927e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3411644379177996e-05,
+        7.572329382190045e-06,
+        5.405071596851704e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689857346671,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.7932594346348196e-05,
+        -0.00029299382003955543,
+        7.532069616900117e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        9,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        199.89999389648438,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        199.89999389648438,
+        200.10000610351562,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.00886689399210903,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.00016753233586932803,
+        -0.00024128416281226907,
+        -0.0014700223780775197
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366082236816,
+        -6.177510356745519e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00015997107216893244,
+        -0.0002352937109708364,
+        6.086417159309069e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.34439916034283e-05,
+        7.629357977084675e-06,
+        5.645218156993022e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690184491022,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -3.9601651224074885e-05,
+        -0.0003538823511917144,
+        1.12858981538011e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        10,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        -199.89999389648438,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.008866851773243542,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830753803253174,
+      "all_velocity_mean_m_s": [
+        -0.00016106174246106756,
+        -0.00024567894162188137,
+        -0.0014699467691444373
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948367833923612,
+        -6.177508091029127e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00015235637302236173,
+        -0.00024046893958841662,
+        6.943176500203865e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3401989002977795e-05,
+        7.5931932120093275e-06,
+        5.485430349771209e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59068999869483,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        7.27890937923803e-06,
+        -0.0003092237748205662,
+        5.460240117827198e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        11,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        -99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        -99.9000015258789,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.008866674650112538,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.000147291477629013,
+        -0.00024530979565473993,
+        -0.001469996840922596
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477131264375e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00013663456306192018,
+        -0.0002399779818603877,
+        6.257329672562254e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.338872609437101e-05,
+        7.578760898115487e-06,
+        5.009444047543047e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690168312618,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        7.586405445181299e-06,
+        -0.00022204112610779703,
+        4.925082066620234e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        12,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        0.10184833407402039,
+        1.9514753818511963
+      ],
+      "all_physics_speed_rms_m_s": 0.008862673543425428,
+      "max_speed_m_s": 0.10032727591646708,
+      "max_horizontal_from_first_physics_row_m": 0.0018483325839042664,
+      "max_height_from_first_physics_row_m": 0.0483241081237793,
+      "all_velocity_mean_m_s": [
+        -0.00016571768593354105,
+        5.601377751867546e-05,
+        -0.0014699306063107207
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187441168480916,
+        1.6897366018897575e-07,
+        -0.04330308781936765
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0001462133445790746,
+        6.50340039679317e-05,
+        6.769192563625483e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.796105867004153e-07,
+        7.4794848847316645e-06,
+        4.806167962408175e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690160138266,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -3.396106649233843e-07,
+        0.00010988230496877804,
+        8.303468916892598e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        13,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.008866548051807976,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00015750254328066168,
+        -0.00023745555237821814,
+        -0.001469882951050667
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00014865126524461606,
+        -0.00023077226427858477,
+        7.53891636970927e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3411644379177996e-05,
+        7.572329350894469e-06,
+        5.40507159698057e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689857346671,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.7932594346348196e-05,
+        -0.00029299382003955543,
+        7.532069616900117e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        14,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        99.9000015258789,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        99.9000015258789,
+        200.10000610351562,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.00886689399210903,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.00016753233586932803,
+        -0.00024128416281226907,
+        -0.0014700223780775197
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366082236816,
+        -6.177510356745519e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00015997107216893244,
+        -0.0002352937109708364,
+        6.086417159309069e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.34439916034283e-05,
+        7.629358078265788e-06,
+        5.6452181571417115e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690184491022,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -3.9601651224074885e-05,
+        -0.0003538823511917144,
+        1.12858981538011e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        15,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -0.10000000149011612,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -0.10857662558555603,
+        -199.89999389648438,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.008868632943820537,
+      "max_speed_m_s": 0.10032711945468852,
+      "max_horizontal_from_first_physics_row_m": 0.008576624095439911,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.00025990338452904616,
+        -0.00022176801872694492,
+        -0.001469862714637153
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015223662691347785,
+        -8.161585477047484e-05,
+        -0.04330337160266936
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0002544158412540907,
+        -0.00020981312965821937,
+        7.949693538617758e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.344288608578665e-05,
+        2.112378625796018e-05,
+        5.2762581744081824e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689814771924,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00024365790886804461,
+        -0.0003723885165527463,
+        4.845754801863222e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        16,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.09149626642465591,
+        -100.0999984741211,
+        1.9514747858047485
+      ],
+      "all_physics_speed_rms_m_s": 0.008868277668400225,
+      "max_speed_m_s": 0.1003270747512088,
+      "max_horizontal_from_first_physics_row_m": 0.008503735065460205,
+      "max_height_from_first_physics_row_m": 0.04832470417022705,
+      "all_velocity_mean_m_s": [
+        -0.00025770409408913724,
+        -0.00020722213545883012,
+        -0.0014699577610946131
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015224101711652338,
+        -8.150730559044251e-05,
+        -0.043303397381678224
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00025249054861888,
+        -0.00019268381291664939,
+        6.967876009096002e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3426571563682385e-05,
+        2.1130328648113077e-05,
+        4.990126539534411e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59069006374904,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00026324467035010457,
+        -0.00036058947443962097,
+        -2.465669695084216e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        17,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.09111184626817703,
+        -0.09829434007406235,
+        1.9514753818511963
+      ],
+      "all_physics_speed_rms_m_s": 0.008865178068778807,
+      "max_speed_m_s": 0.10032725356497155,
+      "max_horizontal_from_first_physics_row_m": 0.009050336132735492,
+      "max_height_from_first_physics_row_m": 0.0483241081237793,
+      "all_velocity_mean_m_s": [
+        -0.00026931012781529495,
+        5.168881371462018e-05,
+        -0.001469947996359632
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011188318075710412,
+        1.689157333009672e-07,
+        -0.04330309354700148
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00025686495948191025,
+        6.0106331955661774e-05,
+        6.437732584967699e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.68084097043654e-07,
+        2.1036679742382525e-05,
+        4.816773256097543e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690242903573,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -9.526424400974065e-05,
+        0.00011186132178409025,
+        3.8111542721708247e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        18,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.09169257432222366,
+        99.9000015258789,
+        1.9514744281768799
+      ],
+      "all_physics_speed_rms_m_s": 0.008868279251313208,
+      "max_speed_m_s": 0.1003270747512088,
+      "max_horizontal_from_first_physics_row_m": 0.008307427167892456,
+      "max_height_from_first_physics_row_m": 0.0483250617980957,
+      "all_velocity_mean_m_s": [
+        -0.00025174334873317625,
+        -0.00021776119706024645,
+        -0.0014699066578420545
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015224135510294445,
+        -8.150727474762087e-05,
+        -0.0433033738238737
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0002447653844300086,
+        -0.00020520604634547063,
+        7.416451175165253e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.342684009828702e-05,
+        2.1134464449197825e-05,
+        5.113076136169088e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689966848919,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.0002457612717989832,
+        -0.0003658606729004532,
+        5.354259542400541e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        19,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        0.10000000149011612,
+        199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        0.09145030379295349,
+        199.89999389648438,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.008868369680624717,
+      "max_speed_m_s": 0.10032711200410806,
+      "max_horizontal_from_first_physics_row_m": 0.008549697697162628,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.00025911533485369265,
+        -0.00021007351387937053,
+        -0.0014699813973822608
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00015223592025115807,
+        -8.161560821310255e-05,
+        -0.04330334740225226
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00025319089957585156,
+        -0.0001962255547557236,
+        6.621516863637909e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3416150451170436e-05,
+        2.1154245193910675e-05,
+        4.992675728187237e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690158435276,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -0.00032798474421724677,
+        -0.000372755661373958,
+        8.207151722672279e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        20,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        -200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        -200.10000610351562,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.008866695929708708,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830741882324219,
+      "all_velocity_mean_m_s": [
+        -0.0001583091033085828,
+        -0.00024060296128614956,
+        -0.0014700262882866907
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366074960859,
+        -6.177510406649823e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00014953889442708272,
+        -0.0002344823842249103,
+        5.918177949666109e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.340637800745583e-05,
+        7.616298371534381e-06,
+        5.170523379144861e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690273216792,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -3.0893854273017496e-05,
+        -0.00029181779245845973,
+        1.0129389238500153e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        21,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        -100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        -100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.008866558935303439,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00015307537534707668,
+        -0.00023896854180851585,
+        -0.001469906586520684
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177478061323738e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0001434504567736004,
+        -0.00023250713938328512,
+        7.322697300222407e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3383323025237197e-05,
+        7.598470717831206e-06,
+        4.906027610513288e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689887148994,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.9295037418487482e-05,
+        -0.00024128712539095432,
+        9.799507552088471e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        22,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        -0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        -0.09815198183059692,
+        1.9514750242233276
+      ],
+      "all_physics_speed_rms_m_s": 0.008862673360227061,
+      "max_speed_m_s": 0.10032726101530678,
+      "max_horizontal_from_first_physics_row_m": 0.0018480196595191956,
+      "max_height_from_first_physics_row_m": 0.04832446575164795,
+      "all_velocity_mean_m_s": [
+        -0.0001653930427188776,
+        5.5999761897413395e-05,
+        -0.0014698309688960685
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187450843529234,
+        1.6897900128626243e-07,
+        -0.04330310772638768
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00014583108315333856,
+        6.501743020895187e-05,
+        7.971038205718221e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.445393897766616e-07,
+        7.441636753410208e-06,
+        4.829513979603515e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689867224013,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        2.732482755618548e-07,
+        0.0001089375582523644,
+        9.172627528641897e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        23,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        99.9000015258789,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.008866681307644307,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00015515651183992674,
+        -0.00024206121350286666,
+        -0.00146980571711851
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.17747804417701e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0001459032258198548,
+        -0.00023615206678706663,
+        8.511429265345428e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.33910719659322e-05,
+        7.5823936039583104e-06,
+        5.083098838580398e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689666952406,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.3733741980104242e-05,
+        -0.00024888565531000495,
+        7.295270165741385e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        24,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -99.9000015258789,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -99.9000015258789,
+        200.10000610351562,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.00886652403595288,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830729961395264,
+      "all_velocity_mean_m_s": [
+        -0.0001530281737907248,
+        -0.00023866908004298879,
+        -0.0014699189488852718
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948369014447735,
+        -6.177507791072623e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00014297014922522397,
+        -0.00023244955421042896,
+        7.203716482103875e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.339558910424544e-05,
+        7.567468421047387e-06,
+        5.221883353162884e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689931426729,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.7465645214542747e-05,
+        -0.00027829676400870085,
+        5.567902121583757e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        25,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        -199.89999389648438,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.008866851773243542,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830753803253174,
+      "all_velocity_mean_m_s": [
+        -0.00016106174246106756,
+        -0.00024567894162188137,
+        -0.0014699467691444373
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948367833923612,
+        -6.177508091029127e-05,
+        -0.04330330237746239
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00015235637302236173,
+        -0.00024046893958841662,
+        6.943176500203865e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3401989002977795e-05,
+        7.59319318350796e-06,
+        5.485430349874054e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59068999869483,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        7.27890937923803e-06,
+        -0.0003092237748205662,
+        5.460240117827198e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        26,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        -99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        -99.9000015258789,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.008866674650112538,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.000147291477629013,
+        -0.00024530979565473993,
+        -0.001469996840922596
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477131264375e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00013663456306192018,
+        -0.0002399779818603877,
+        6.257329672562254e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.338872609437101e-05,
+        7.578760909351108e-06,
+        5.009444047540568e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690168312618,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        7.586405445181299e-06,
+        -0.00022204112610779703,
+        4.925082066620234e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        27,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        0.10000000149011612,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        0.10184833407402039,
+        1.9514753818511963
+      ],
+      "all_physics_speed_rms_m_s": 0.008862673543425428,
+      "max_speed_m_s": 0.10032727591646708,
+      "max_horizontal_from_first_physics_row_m": 0.0018483325839042664,
+      "max_height_from_first_physics_row_m": 0.0483241081237793,
+      "all_velocity_mean_m_s": [
+        -0.00016571768593354105,
+        5.601377751867546e-05,
+        -0.0014699306063107207
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011187441168480916,
+        1.6897366018897575e-07,
+        -0.04330308781936765
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.0001462133445790746,
+        6.50340039679317e-05,
+        6.769192563625483e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        8.796105867004153e-07,
+        7.479485002326081e-06,
+        4.806167962377198e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690160138266,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -3.396106649233843e-07,
+        0.00010988230496877804,
+        8.303468916892598e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        28,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        100.0999984741211,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        100.0999984741211,
+        1.951481580734253
+      ],
+      "all_physics_speed_rms_m_s": 0.008866548051807976,
+      "max_speed_m_s": 0.10032714925676976,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.048317909240722656,
+      "all_velocity_mean_m_s": [
+        -0.00015750254328066168,
+        -0.00023745555237821814,
+        -0.001469882951050667
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948579487906841,
+        -6.177477055115288e-05,
+        -0.043303324710577726
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00014865126524461606,
+        -0.00023077226427858477,
+        7.53891636970927e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.3411644379177996e-05,
+        7.5723294085444595e-06,
+        5.4050715969768525e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689857346671,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        1.7932594346348196e-05,
+        -0.00029299382003955543,
+        7.532069616900117e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        29,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -199.89999389648438,
+        200.10000610351562,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -199.89999389648438,
+        200.10000610351562,
+        1.951476812362671
+      ],
+      "all_physics_speed_rms_m_s": 0.00886689399210903,
+      "max_speed_m_s": 0.10032712690502905,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832267761230469,
+      "all_velocity_mean_m_s": [
+        -0.00016753233586932803,
+        -0.00024128416281226907,
+        -0.0014700223780775197
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011948366082236816,
+        -6.177510356745519e-05,
+        -0.043303296761587264
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00015997107216893244,
+        -0.0002352937109708364,
+        6.086417159309069e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.34439916034283e-05,
+        7.629358051146825e-06,
+        5.645218157085953e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590690184491022,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -3.9601651224074885e-05,
+        -0.0003538823511917144,
+        1.12858981538011e-06
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        30,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -299.8999938964844,
+        -199.89999389648438,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -299.8999938964844,
+        -199.89999389648438,
+        1.9514923095703125
+      ],
+      "all_physics_speed_rms_m_s": 0.00886659376088524,
+      "max_speed_m_s": 0.10032716415796657,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04830741882324219,
+      "all_velocity_mean_m_s": [
+        -0.00015034634463468853,
+        -0.0002422567092913553,
+        -0.0014698462538335114
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949446741638781,
+        -6.177470531442353e-05,
+        -0.04330347304232419
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00014013489077644182,
+        -0.00023663449889746907,
+        8.160355025926031e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.336543385310588e-05,
+        7.61323728665694e-06,
+        4.761087495942735e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.590689804213387,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -9.65907111094566e-06,
+        -0.00021816555818077177,
+        5.661131581291556e-07
+      ]
+    },
+    {
+      "segment": [
+        "UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
+        "ENHANCED_B0_ZERO_TARGET",
+        "S",
+        31,
+        1
+      ],
+      "physics_rows": 6600,
+      "duration_s": 33.0,
+      "mass_kg": 1.1815179230179638,
+      "root_start_first_physics_row_m": [
+        -299.8999938964844,
+        -99.9000015258789,
+        1.9997994899749756
+      ],
+      "root_end_m": [
+        -299.8999938964844,
+        -99.9000015258789,
+        1.9514765739440918
+      ],
+      "all_physics_speed_rms_m_s": 0.008866105473464574,
+      "max_speed_m_s": 0.10032710455332369,
+      "max_horizontal_from_first_physics_row_m": 0.0,
+      "max_height_from_first_physics_row_m": 0.04832291603088379,
+      "all_velocity_mean_m_s": [
+        -0.00013855320759950147,
+        -0.00023354798996118732,
+        -0.00146998553742123
+      ],
+      "first_1s_velocity_mean_m_s": [
+        -0.00011949279975205229,
+        -6.177479111034056e-05,
+        -0.04330329679418355
+      ],
+      "after_5s_velocity_mean_m_s": [
+        -0.00012574594344903187,
+        -0.00022632269237062377,
+        6.4465658564978e-07
+      ],
+      "after_5s_rotor_torque_at_com_mean_nm": [
+        -3.335172348830015e-05,
+        7.585157955792516e-06,
+        4.725528192396633e-09
+      ],
+      "first_collective_n": 11.590691566467285,
+      "after_5s_collective_mean_n": 11.59069011586053,
+      "actual_mass_times_gravity_n": 11.590690824806225,
+      "last_velocity_m_s": [
+        -1.886042628029827e-05,
+        -0.0002239907335024327,
+        4.535594939625298e-07
+      ]
+    }
+  ],
+  "statistics_reference": "root link; diagnostic displacement starts at first physics row, not original metric sensor T0",
+  "window_semantics": "all physics retained; first1s and after5s are supplemental perepisode statistics only",
+  "formal_ZTS_gate": "separate command passthrough must use unchanged original sensor-origin evaluate_episode",
+  "mechanism_verdict": "not inferred from heuristic scores",
+  "unavailable_wrenches": [
+    "drag_aero",
+    "contact",
+    "joint_constraint",
+    "other"
+  ],
+  "analysis_tool_sha256": "fe887ce622ed3b09c2744b72c46c49b85e9b36a36fa322d518c93a5e318262c0"
+}
