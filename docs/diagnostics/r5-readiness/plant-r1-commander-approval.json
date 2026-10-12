@@ -1,0 +1,16 @@
+{
+  "status": "EXACT_ENTRY_APPROVED_SIMULATION_STILL_REQUIRES_COEXISTENCE",
+  "proposal_id": "P-3aa8fe370e60ab11",
+  "proposal_sha256": "3aa8fe370e60ab11669ca5badeaaf7c12a73031969edd8c19db8d1ad422c4e3f",
+  "approval_id": "A-3aa8fe370e60ab11",
+  "spec_canonical_sha256": "b2b4d1a82ec516c3e422391d078512323b217805b8e461a47de687bc7f606052",
+  "authorization_sha256": "f8a54e683d10b28e8ef5ba9aae9619516d0bf5c130e97e5dccad0b07b85b7bdc",
+  "control_release_content_id": "55e3d79209912f119bd914de6f4ea7b4ac6fed1190f0860d86fd12c4f81f8100",
+  "source_commit": "bd5cacd56c519fdd5f868f4ba0720b1a437de967",
+  "input_pack_commit": "eb4583125431a9f580fc5101c093771d075cb5ba",
+  "commander_binding_file_sha256": "4db340dc85344e035d34e7e272fbdcffb46f60ee3a1f26521c0b26a8a55a01ec",
+  "gpu_queries_executed": 0,
+  "simulator_initializations": 0,
+  "live_entry_not_started": true,
+  "recording_correction": "First metadata writer accessed approval_id on policy.decide returned full state and failed after single approval was durably recorded. Read exact existing approval; no second decision or entry, no budget consumed."
+}
