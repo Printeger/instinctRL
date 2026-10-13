@@ -1,0 +1,30 @@
+{
+  "schema_version": "unified-h1-r3-authorization.v2",
+  "status": "AUTHORIZED",
+  "order_id": "UNIFIED-H1-R5-C1-PILOT-TRAIN",
+  "method_sha256": "ecc75a8e3d581ca1bd43e8c3e34326a5f18dd55cfa1739fe3b26f4e25fe1c14e",
+  "config_sha256": "c91f82106446f9e4e072eac3a6dc89585545b501432bc9dbb013c85911af6cb4",
+  "product_commit": "abc647eb48d19bd812a8341c83951872496d0fc7",
+  "product_tree": "f0d1f27ea23a98fe19b5037d85495d6e366b268d",
+  "workload_commit": "abc647eb48d19bd812a8341c83951872496d0fc7",
+  "workload_tree": "f0d1f27ea23a98fe19b5037d85495d6e366b268d",
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-abc647eb48d1-20261014",
+  "mode": "pilot-training",
+  "budgets": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "initialization_ticks": 10,
+    "automatic_resets": 32768,
+    "training_transitions": 32768,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 64,
+    "checkpoint_writes": 7,
+    "explicit_resets": 1,
+    "wall_seconds": 3600
+  },
+  "parameters": {
+    "group": "C1",
+    "residual_neutrality_weight": 0.05,
+    "output_cap_bytes": 17179869184
+  }
+}

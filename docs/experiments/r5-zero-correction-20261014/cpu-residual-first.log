@@ -1,0 +1,48 @@
+........F.                                                               [100%]
+=================================== FAILURES ===================================
+_ test_cpu_cold_start_same_seed_actual_lr_coefficient_and_checkpoint_identity __
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1027/test_cpu_cold_start_same_seed_0')
+
+    def test_cpu_cold_start_same_seed_actual_lr_coefficient_and_checkpoint_identity(tmp_path):
+        from training_workloads.unified_h1.backend import UnifiedH1LiveBackend
+        states=[]
+        config={'method':{'hashes':{'method':'a'*64}},'resolved_identity':dict(product_commit='b'*40,product_tree='c'*40,workload_commit='b'*40,workload_tree='c'*40,config_sha256='d'*64)}
+        for g in ['C0','C1']:
+            out=tmp_path/g/'results/pilot-training';out.mkdir(parents=True)
+            env=NS(device='cpu',set_h1_evaluation_case=lambda c:None,set_h1_initial_command=lambda c,s:None,reset=lambda seed: ({},{}))
+            env.set_h1_residual_neutrality_weight=lambda w:setattr(env,'_h1_residual_neutrality_weight',w)
+            auth={'mode':'pilot-training','parameters':{'group':g,'residual_neutrality_weight':pilot_residual_weight(g)},'authorization_sha256':'e'*64,
+                  'budgets':dict(wall_seconds=3600,explicit_resets=1,training_transitions=32768,automatic_resets=32768,optimizer_updates=64,checkpoint_writes=7)}
+            backend=UnifiedH1LiveBackend(authorization=auth,attempt=tmp_path/g,app=None,environment=env,resource_guard=NS(check=lambda **k:None))
+            with patch('training_workloads.unified_h1.backend.load_config',return_value=config):
+>               backend.cold_start(pilot_group=g); backend.save_checkpoint('init0000')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+isaaclab-training/tests/test_residual_neutrality.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/backend.py:226: in cold_start
+    self.driver = UnifiedH1Driver(self.environment, self.observation, clock=ScheduleClock(0), counters=self.counters, journal=journal,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x791285abcf10>
+environment = namespace(device='cpu', set_h1_evaluation_case=<function test_cpu_cold_start_same_seed_actual_lr_coefficient_and_check...actual_lr_coefficient_and_checkpoint_identity.<locals>.<lambda> at 0x791290740d60>, _h1_residual_neutrality_weight=0.0)
+observation = {}
+clock = <training_workloads.unified_h1.schedule.ScheduleClock object at 0x791286033590>
+counters = ExecutionCounters(live_process_starts=0, simulator_initializations=0, attempted_policy_steps=0, completed_policy_steps...orary_checkpoint_writes=0, attempted_updates=0, completed_updates=0, actor_optimizer_steps=0, critic_optimizer_steps=0)
+journal = <training_workloads.unified_h1.logging.LearningLog object at 0x791286fb2450>
+before_step = <function UnifiedH1LiveBackend.cold_start.<locals>.<lambda> at 0x7912863cc900>
+transition_limit = 32768, automatic_reset_limit = 32768, step_kind = 'training'
+
+    def __init__(self, environment: Any, observation: Mapping[str, Any], *, clock: ScheduleClock | None = None,
+                 counters: ExecutionCounters | None = None, journal: Any | None = None,
+                 before_step: Any | None = None, transition_limit: int | None = None,
+                 automatic_reset_limit: int | None = None, step_kind: str = "training") -> None:
+        if not callable(getattr(environment, "prepare_h1_step", None)) or not callable(getattr(environment, "step", None)):
+>           raise TypeError("environment must expose prepare_h1_step and step")
+E           TypeError: environment must expose prepare_h1_step and step
+
+training_workloads/unified_h1/driver.py:22: TypeError
+=========================== short test summary info ============================
+FAILED isaaclab-training/tests/test_residual_neutrality.py::test_cpu_cold_start_same_seed_actual_lr_coefficient_and_checkpoint_identity
+1 failed, 9 passed in 1.07s

@@ -29,7 +29,7 @@
     "allocated_gpu_seconds": 0,
     "output_bytes": 0,
     "automatic_retries": 0,
-    "role_calls": 0
+    "role_calls": 1
   },
   "reserved": {
     "training_transitions": 0,
@@ -45,7 +45,15 @@
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0
   },
-  "role_calls": [],
+  "role_calls": [
+    {
+      "call": 1,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "NewGoalPhaseA/B CPU attribution, solemethodvariable/C0equivalence, exactabc647snapshot/profile/AUTH/resource/output/firstgate/evaldeferredbinding; prerelease only",
+      "status": "REQUESTED"
+    }
+  ],
   "runs": [],
   "training_authorizations_issued": 0,
   "evaluation_authorizations_issued": 0,
