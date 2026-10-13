@@ -1,0 +1,140 @@
+{
+  "scope": "CPU fixed actual u1 policy inputs, init/u1/u2/u16/u64 checkpoints. Different from actuallaterrollout conditionalKL; not reconstructedclosedloop/counterfactual.",
+  "groups": {
+    "P0": {
+      "input_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/results/pilot-training/pilot_diagnostic/update_1_full_input.pt",
+      "input_sha256": "e04de97ae52d86b5920faa5c6c64ed68cc7fc911cf7f4212b3ea5b73bc7e197e",
+      "fixed_input_results": [
+        {
+          "checkpoint": "init0000",
+          "checkpoint_sha256": "cdb3af23fb43c8f4d7ada6d1f587fff97579071645933f9615fabcdf47fe1480",
+          "fixed_sample_indices": "0..511 matchedactualu1",
+          "analytic_Beta_KL_vs_actual_u1_old_distribution_mean": 3.061766267187238e-07,
+          "KL_p95": 2.0794603642571016e-05,
+          "mean_residual_xyz_body_m_s": [
+            0.0015739919617772102,
+            -0.029941675951704383,
+            0.0643361551919952
+          ]
+        },
+        {
+          "checkpoint": "u1",
+          "checkpoint_sha256": "dbb0361710664f6eb1310092042cfb2e3f9daa0df492d63c7aa5f5ac76871c94",
+          "fixed_sample_indices": "0..511 matchedactualu1",
+          "analytic_Beta_KL_vs_actual_u1_old_distribution_mean": 15.012776775285602,
+          "KL_p95": 17.302042388916014,
+          "mean_residual_xyz_body_m_s": [
+            0.09070383850485086,
+            0.001834933354984969,
+            -0.18329005205305293
+          ]
+        },
+        {
+          "checkpoint": "u2",
+          "checkpoint_sha256": "7fb2e7239e7fd45753155275cdaae093c1fde545158a91ef8e0c699d87574c68",
+          "fixed_sample_indices": "0..511 matchedactualu1",
+          "analytic_Beta_KL_vs_actual_u1_old_distribution_mean": 15.659146504476666,
+          "KL_p95": 17.39082279205322,
+          "mean_residual_xyz_body_m_s": [
+            0.06252020882675424,
+            -0.05341734871035442,
+            -0.20003966125659645
+          ]
+        },
+        {
+          "checkpoint": "u16",
+          "checkpoint_sha256": "d656aac06d19410bba440192da680725a057a656309be355b7811c6bda966e72",
+          "fixed_sample_indices": "0..511 matchedactualu1",
+          "analytic_Beta_KL_vs_actual_u1_old_distribution_mean": 15.267988704144955,
+          "KL_p95": 17.38721694946289,
+          "mean_residual_xyz_body_m_s": [
+            0.1290713039925322,
+            -0.07526802824577317,
+            -0.1488943555741571
+          ]
+        },
+        {
+          "checkpoint": "u64",
+          "checkpoint_sha256": "ee0c9ff9c7342287221885f1e1fc0f3631941aed86e2e12d8df0d2c5fa77b19d",
+          "fixed_sample_indices": "0..511 matchedactualu1",
+          "analytic_Beta_KL_vs_actual_u1_old_distribution_mean": 13.815796006470919,
+          "KL_p95": 15.695643424987793,
+          "mean_residual_xyz_body_m_s": [
+            0.08670378057286143,
+            -0.0765510777127929,
+            -0.040789570775814354
+          ]
+        }
+      ]
+    },
+    "PLR": {
+      "input_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/results/pilot-training/pilot_diagnostic/update_1_full_input.pt",
+      "input_sha256": "e04de97ae52d86b5920faa5c6c64ed68cc7fc911cf7f4212b3ea5b73bc7e197e",
+      "fixed_input_results": [
+        {
+          "checkpoint": "init0000",
+          "checkpoint_sha256": "27cac4f19b7cc059c674748d2c48448bf83bb5572581d1db7bb4272eeb432677",
+          "fixed_sample_indices": "0..511 matchedactualu1",
+          "analytic_Beta_KL_vs_actual_u1_old_distribution_mean": 3.061766267187238e-07,
+          "KL_p95": 2.0794603642571016e-05,
+          "mean_residual_xyz_body_m_s": [
+            0.0015739919617772102,
+            -0.029941675951704383,
+            0.0643361551919952
+          ]
+        },
+        {
+          "checkpoint": "u1",
+          "checkpoint_sha256": "baed6634ffdee60cd58b8067e50356b49bdcf7fb6835f3c17627090cf5cd981b",
+          "fixed_sample_indices": "0..511 matchedactualu1",
+          "analytic_Beta_KL_vs_actual_u1_old_distribution_mean": 0.27619227627292275,
+          "KL_p95": 1.3517804145812988,
+          "mean_residual_xyz_body_m_s": [
+            0.011449934914708138,
+            -0.017608553695026785,
+            0.07349277706816792
+          ]
+        },
+        {
+          "checkpoint": "u2",
+          "checkpoint_sha256": "abeb526d616345259e45d4d7a00858a8f91c8ac9120f72fd57bd272335f51530",
+          "fixed_sample_indices": "0..511 matchedactualu1",
+          "analytic_Beta_KL_vs_actual_u1_old_distribution_mean": 0.24918327620252967,
+          "KL_p95": 1.553200626373291,
+          "mean_residual_xyz_body_m_s": [
+            -0.004033468198031187,
+            -0.015262601780705154,
+            0.07598306983709335
+          ]
+        },
+        {
+          "checkpoint": "u16",
+          "checkpoint_sha256": "b9007b5820b3c98072dbfb0bbb16552995aaacd15aaa2383167ecfe976e56938",
+          "fixed_sample_indices": "0..511 matchedactualu1",
+          "analytic_Beta_KL_vs_actual_u1_old_distribution_mean": 0.4380272338166833,
+          "KL_p95": 0.8235869765281677,
+          "mean_residual_xyz_body_m_s": [
+            0.024469236144796014,
+            -0.009614636888727546,
+            0.03591528325341642
+          ]
+        },
+        {
+          "checkpoint": "u64",
+          "checkpoint_sha256": "49509911b598dbcfae19e0732a4bb1715a352b2534f73cb74ec38fa8b815cfbd",
+          "fixed_sample_indices": "0..511 matchedactualu1",
+          "analytic_Beta_KL_vs_actual_u1_old_distribution_mean": 1.738109361846,
+          "KL_p95": 2.614968872070312,
+          "mean_residual_xyz_body_m_s": [
+            -0.019273769692517817,
+            -0.05324750888394192,
+            -0.0015012205694802105
+          ]
+        }
+      ]
+    }
+  },
+  "GPU_queries": 0,
+  "new_optimizer_updates": 0,
+  "new_simulator_starts": 0
+}

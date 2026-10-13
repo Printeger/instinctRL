@@ -56,15 +56,19 @@ def reserve_output_bytes(path: Path, amount: int) -> None:
 
 
 class _QuotaStream:
-    def __init__(self, stream): self.stream = stream
+    def __init__(self, stream, path: Path): self.stream = stream; self.path = path
     def write(self, data):
-        reserve_output_bytes(Path(self.stream.name), len(data))
+        reserve_output_bytes(self.path, len(data))
         return self.stream.write(data)
     def __getattr__(self, name): return getattr(self.stream, name)
 
 
-def guard_stream(stream):
-    return stream if _output_quota is None else _QuotaStream(stream)
+def guard_stream(stream, path: Path | None = None):
+    if _output_quota is None: return stream
+    target = path if path is not None else getattr(stream, "name", None)
+    if not isinstance(target, (str, Path)):
+        raise PersistenceError("quota-enabled fd stream requires an explicit output path")
+    return _QuotaStream(stream, Path(target))
 
 
 def save_tensor_evidence(value, path: Path):
@@ -95,7 +99,7 @@ def atomic_json_replace(root: Path, relative: str, value: Any) -> Path:
     descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
     try:
         with os.fdopen(descriptor, "wb") as stream:
-            guard_stream(stream).write(data)
+            guard_stream(stream, Path(temporary)).write(data)
             stream.flush()
             os.fsync(stream.fileno())
         os.replace(temporary, path)
@@ -122,7 +126,7 @@ def atomic_torch_replace(root: Path, relative: str, value: Any) -> Path:
     descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
     try:
         with os.fdopen(descriptor, "wb") as stream:
-            torch.save(value, guard_stream(stream))
+            torch.save(value, guard_stream(stream, Path(temporary)))
             stream.flush()
             os.fsync(stream.fileno())
         os.replace(temporary, path)

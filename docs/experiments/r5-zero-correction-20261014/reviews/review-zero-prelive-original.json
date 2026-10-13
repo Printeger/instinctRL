@@ -1,0 +1,43 @@
+{
+  "verdict": "MUST_FIX",
+  "scope": "原始准确候选的独立 pre-live 审核；不批准启动。未来评估只接受条件性设计，不接受占位 checkpoint 发行。",
+  "identities": {
+    "input_commit": "6e3ac669702b4a9cbd5b4802a6a17718c38d4d40",
+    "source_commit": "abc647eb48d19bd812a8341c83951872496d0fc7",
+    "source_tree": "f0d1f27ea23a98fe19b5037d85495d6e366b268d",
+    "launch_sha256": "472e614a13a48eeff90e3d6f3c83115cca0bd8b1efe8dd02f776e9bd2edd6b82",
+    "config_sha256": "c91f82106446f9e4e072eac3a6dc89585545b501432bc9dbb013c85911af6cb4",
+    "snapshot_overlay_sha256": "3deb2b4d431a1d50e74360e7f58915ddcc2c05f90c41ca77056d48cb0424c9d5",
+    "method_sha256": "ecc75a8e3d581ca1bd43e8c3e34326a5f18dd55cfa1739fe3b26f4e25fe1c14e",
+    "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+    "expected_training_AUTH_sha256": {"C0": "84507bb7297c93801051c57d8c2c2b9e416106d74ac9ccf3cdb3f8054d979806", "C1": "059d83892e8cd088349c86c83098493a6714284711ecbee4f7fcb68b8479e4c1"}
+  },
+  "must_fix": [{
+    "id": "QUOTA-FD-PATH-R1",
+    "contract": "新入口必须能在模拟器创建前记录准确 quota/process 证据；累计 before-write quota 必须兼容实际原子 JSON/tensor 持久化路径。",
+    "evidence": "准确只读快照中，_QuotaStream.write 调用 Path(self.stream.name)，但 atomic_json_replace 和 atomic_torch_replace 使用 os.fdopen(descriptor)，其 stream.name 为整数文件描述符。独立在/tmp安装 quota 后调用实际 atomic_json_replace，复现 TypeError: argument should be a str or an os.PathLike object where __fspath__ returns a str, not 'int'。run_main_sequence 安装 quota 后立即执行 output_quota_binding.json 原子写入，因此首次入口记录即失败。现有quota测试只覆盖Path.open产生的字符串name，未覆盖实际fd原子写入。",
+    "impact": "C0/C1训练及评估均无法越过入口初始化，可能消耗启动额度但不产生预期准确入口记录；不能以29+10 CPU通过或静态pins通过批准本候选。",
+    "closure": "让guard_stream/_QuotaStream接收明确路径，实际fd原子JSON/tensor调用传入临时文件或准确目标路径；保留无quota历史行为。补quota已安装时的实际atomic JSON、atomic tensor、超额拒写、失败临时文件清理与不退款检查。提交后重新固定source/config/overlay/input与AUTH哈希，独立复核新准确候选后才可发行。root未冻结的修复不计入本次原候选验收。"
+  }],
+  "completed_checks": [
+    {"contract": "Phase A实际证据归因", "result": "PASS_WITH_CAUSAL_LIMITS", "evidence": "独立调用有限CPU归因函数重算P0/PLR的u1/u2/u16/u64窗口与已保存梯度/优势证据，逐字段匹配归因JSON；实际compact raw重新验证旧inventory SHA。支持持续残差偏置作为近端假设和固定w=.05实验，不证明完整闭环因果或历史COM原因。未保存的u16/u64条件Beta状态明确UNKNOWN。"},
+    {"contract": "预注册单变量公式与actor边界", "result": "PASS_CODE_REVIEW", "evidence": "新reward仅使用实际decoded body-frame v_corr_b；零命令掩码沿用norm<=.001，xyz平方和按0.1m/s归一，w0使用literal zeros并保留原component/sum顺序。没有hard override或新增actor特权字段；controller、PPO、课程、termination和原评估语义未改。"},
+    {"contract": "明确C0/C1方法、LR与checkpoint身份", "result": "PASS_PRELIVE", "evidence": "两组显式映射actor LR1e-4、critic3e-4及w0/.05；AUTH schema验证准确系数和output cap，method/profile不一致拒绝。checkpoint方法哈希包含group/系数binding SHA。CPU实际cold-start/init checkpoint覆盖已记录；真实两组初始化、首次采样对应仍须执行后独立验收。"},
+    {"contract": "首次真实512 gate", "result": "PASS_IMPLEMENTATION_PENDING_LIVE", "evidence": "既有capture/bind/retain/before_update仍先于trainer.update和两类optimizer；原atol1e-6/rtol1e-5不变。新组均启用真实诊断。quota修复不得损害gate失败证据和零更新边界。"},
+    {"contract": "准确静态发行绑定", "result": "PASS_STATIC_ONLY", "evidence": "使用绑定的navrl解释器实际load_config通过，核验完整source manifest；96工具文件全部SHA匹配。四入口执行pins、config/method哈希及两个预期AUTH字节均匹配；四个fresh attempts及实际AUTH均不存在。"},
+    {"contract": "资源、清理与评估准入", "result": "PASS_DESIGN_WITH_RELEASE_DEPENDENCIES", "evidence": "新账本4starts/init、65536训练、25600评估、128updates、14writes、10840秒wall/GPU、64GiBoutput及0retry，旧账不重置。每入口16GiB预留、13GiB累计workload quota及3GiB allowance设计明确；原STOP/coexistence/normal owned cleanup、native FAILED与INCOMPLETE完整reservation边界保留。评估checkpoint SHA仍null，须真实训练独立接受后再固定发行。"}
+  ],
+  "follow_up": [
+    {"id": "OUTPUT-ALLOWANCE-BINDING", "assessment": "新候选应将root提出的before-copy archive cap及剩余native/control allowance边界具体固定，证明四次16GiB预留不越过64GiB总帽；不要只在最终接受时发现超额。"},
+    {"id": "ACTUAL-COMPARABILITY", "assessment": "C1改变reward会改变advantages/returns，不能要求它们与C0相同。应独立比较共同init及首次更新前policy/action/oldBeta/logp对应，并保留随后受方法影响的真实差异。"},
+    {"id": "SCIENTIFIC-SCOPE", "assessment": "w=.05是预先指定候选；实际旧奖励尺度核对支持实验可行性，未证明最优或已修复漂移。u64是预注册主比较，u16诊断，旧PLR只作历史参考。"}
+  ],
+  "release_conditions": [
+    "原abc647/6e3ac66候选保持MUST_FIX，不发行实际AUTH或启动。",
+    "修复必须成为新准确提交及只读快照，更新所有受影响hash/pins并取得新独立接受；随后由Commander固定准确review predicate和实际AUTH字节。",
+    "任何真实首次gate失败、NaN、身份/额度/owned cleanup问题按fail-closed停止，无自动重试。",
+    "未来评估需真实u16/u64 checkpoint来源/SHA及独立训练验收，不能发布null绑定模板。",
+    "保持native FAILED/-9及collector INCOMPLETE/full reservation，科学证据接受不改写原进程状态。"
+  ],
+  "review_actions": {"shared_writes": 0, "gpu_queries": 0, "simulation_or_live_starts": 0, "optimizer_calls": 0, "delegations": 0, "temporary_CPU_reproduction": "仅/tmp，验证准确原候选的quota-enabled atomic JSON失败；未改共享文件。"}
+}

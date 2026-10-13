@@ -128,3 +128,17 @@ def test_output_quota_stops_before_overflow_and_never_refunds(tmp_path):
         assert path.stat().st_size==40 and quota.used==60
         with pytest.raises(persistence.PersistenceError): persistence.reserve_output_bytes(tmp_path/'append.log',5)
         assert quota.used==60
+
+
+def test_quota_enabled_actual_atomic_json_and_tensor_fd_streams(tmp_path):
+    with patch.object(persistence,'_output_quota',None):
+        quota=persistence.install_output_write_quota(tmp_path,8192)
+        path=persistence.atomic_json_replace(tmp_path,'output_quota_binding.json',{'bound':True})
+        assert path.read_text() == '{"bound":true}\n'
+        target=persistence.atomic_torch_replace(tmp_path,'initial.pt',{'x':torch.arange(3)})
+        assert torch.equal(torch.load(target,weights_only=True)['x'],torch.arange(3))
+        assert quota.used >= path.stat().st_size+target.stat().st_size
+        with pytest.raises(persistence.PersistenceError):
+            persistence.atomic_json_replace(tmp_path,'overflow.json',{'raw':'x'*8192})
+        assert not (tmp_path/'overflow.json').exists()
+        assert not list(tmp_path.glob('.overflow.json.*'))

@@ -5,3 +5,5 @@ Current IN_PROGRESS, PhaseB CPU. NewactiveGoal source/requirements andCommanderc
 R5_ZERO_COMMAND_ATTRIBUTION.md/.json and tools/analyze_r5_zero_command_attribution.py are finiteCPU actualoldlog/gradient/retainedinput attribution; supportedproximalbias, notcausalproof. Originalphysicalcontrols32/32ZTS andoldP0/PLR receipts reused. Newmethodpreregistered coordination/contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md, w0/.05 atsameactorLR1e-4.
 
 Pending: CPU regressions/exactnewsource/inputsnapshot andbefore-write outputbinding, independentprelive/Commander, actual4newjobs/firstgate/checkpoints/originalZ, fullinventory/science/finalindependentreview. No oldapprovalreuse orautomaticretry.
+
+Originalabc647/6e3ac66candidate prereview identifiedactualbefore-simulator quota fdpathfailure; notapproved/released andnopaidretry. Minimalfdpathfix30CPUchecksPASS; freshcandidatepending. CPU_FIXED_INPUT_CONDITIONAL_KL.json isonefinitefixedactualu1inputprobe, keptdistinctfromlateractualsamplingKL.
