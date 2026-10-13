@@ -1,0 +1,15 @@
+{
+  "previous_turn": "PROGRESS",
+  "this_turn": "PROGRESS",
+  "same_blocker_consecutive_turns": 2,
+  "live_starts": 0,
+  "GPU_queries": 0,
+  "optimizer_updates": 0,
+  "new_user_resource_decision_received": false,
+  "proposal_sha256": "ef1f8b31c86fb22acb9ac0a1935fb95e99d0fa01a96eef622b4b5f3d4d7f12e7",
+  "cpu_regression": "9PASS",
+  "actual_C0_replay": "IDENTICAL_METRICS_AND_COVERAGE",
+  "goal_complete": false,
+  "required_action": "One alreadyrequestedexplicitresourceexception",
+  "recovery_route": "EXTRA_EVALUATION_RECOVERY_COMMANDS.md"
+}

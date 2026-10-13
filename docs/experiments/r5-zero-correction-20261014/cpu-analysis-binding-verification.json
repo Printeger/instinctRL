@@ -1,0 +1,18 @@
+{
+  "status": "PASS_IDENTICAL_ORIGINAL_C0_METRICS_AND_COVERAGE",
+  "new_explicit_binding": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/inputs/C0-evaluation-spec.authorized.json",
+    "sha256": "0eaef18b9f3926cb421148944eab60d05bc02efadafddd81c234d8010a65e362",
+    "spec_id": "UNIFIED-H1-R5-C0-PILOT-EVAL-ZERO-d257f9ca8ec8-20261014",
+    "authorization_sha256": "01f3fae8e8bc50cb412f7550cdc74fae44173df71d7759387c6909597a2ca9d6",
+    "job_id": "J-4be233e84359e5c5",
+    "actual_request_sha256": "a2c9f61108de593282b68a6168aa3d913fa7d54c99d9567f22598da5697eb867"
+  },
+  "cpu_tests": "cpu-analysis-binding-final.xml",
+  "new_results": "cpu-analysis-binding-C0-replay.json",
+  "original_preserved_SHA256": "81b2cb4fdc2415231f58a9a84f82028f11fa8f4b0a3272bdcdc5af352c23ab90",
+  "scientific_classifier": "PENDING_INDEPENDENT_ASSESSMENT; no10percentheuristicpositive/negative rule",
+  "GPU_queries": 0,
+  "simulator_starts": 0,
+  "optimizer_updates": 0
+}
