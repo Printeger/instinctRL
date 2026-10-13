@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_PAIRED_PILOT_P0_EVALUATION_TERMINAL_PENDING_ACTUAL_REVIEW",
+  "phase": "R5_PAIRED_PILOT_FINAL_SCIENTIFIC_REVIEW",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -397,17 +397,36 @@
     "user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
     "shared_baseline_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
     "baseline_readiness": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
-    "first_real_rollout_gate": "PENDING_ACTUAL_PAIR_FIRST_ROLLOUT_BEFORE_ANY_OPTIMIZER",
-    "current_exact_release": "A-9ba9510d6b79b45b",
+    "first_real_rollout_gate": {
+      "P0": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS",
+      "PLR": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS"
+    },
+    "current_exact_release": null,
     "training_authorization_issued": true,
     "training_execution_requested_by_user": true,
     "current_job": null,
-    "next_action": "Two bound postrun audit calls after ownedquiescence; CPU actualdataanalysis; independent scientificacceptance. Noresubmit.",
+    "next_action": "Role4independentfinalbothZ/scientificdecision/completionaudit; then state+commit/push+stop, no morelive.",
     "independent_review": {
       "status": "PASS_PRELIVE_ONLY",
       "role_call": 1,
       "path": "../docs/experiments/r5-paired-pilot-20261013/reviews/review-pair-prelive.json",
       "sha256": "95badf6f17f1f9d212e70b981d5378763b0c2bae619e8f00435a01915edee088"
-    }
+    },
+    "actual_pair_data_collection_complete": true,
+    "observed_training_updates": 128,
+    "observed_training_transitions": 65536,
+    "observed_evaluation_transitions": 25600,
+    "observed_training_checkpoint_writes": 14,
+    "original_Z_u16_u64": {
+      "P0": [
+        "0/32",
+        "0/32"
+      ],
+      "PLR": [
+        "0/32",
+        "0/32"
+      ]
+    },
+    "scientific_decision": "NEITHER_LR_ESTABLISHES_ORIGINAL_Z_ADMISSION_DO_NOT_EXTEND_TRAINING"
   }
 }

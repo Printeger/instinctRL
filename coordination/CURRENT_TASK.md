@@ -1,13 +1,7 @@
 # 当前任务
 
-R5 P0/PLR短程配对 Goal：当前 EXACT_COMMANDER_APPROVED_NOT_SUBMITTED，未完成。新用户任务要求取得新的 Commander 精确授权后，各64updates；u16/u64各做原Z评估，交付完整配对科学结果。旧诊断Goal READY已完成，保留原失败与全部额度。
+R5-P0/PLR配对：两组各64updates与u16/u64原Z均真实完成，当前 FINAL_SCIENTIFIC_REVIEW，未宣布Goal完成。真实first512samplegate两组PASS、init与firstrollout逐位相同；原Z四节点全部0/32。降低actorLR显著减小本对首更新KL，但不建立原Z准入；不扩256updates。
 
-固定main/单写者，readonly ef68ebb5682b85aa83044fdea1c13b7d0edbf325共同基线；不重做E0/质量/ZTS诊断，不改reward/network/controller/curriculum/算法或门槛。P0actorLR3e-4、PLR1e-4，其他设置相同。任何optimizer前必须过真实首次512sample oldBeta/logp/action/input/index gate，失败零更新保全证据。
+Readonly shared ef68/configd9e/tool74a，原reward/network/controller/curriculum/算法/门槛不变。四个freshjob均terminalFAILED/-9 nativeclose timeout；完整科学数据、normalownedACK两次空扫描、无所属残留。各2postrun审计完成，不再GPU探测。观察65536train/25600eval/128updates/14训练checkpoint；同额保守reservation全保留，正式H1INCOMPLETE/null不伪造FINAL。旧diagnostic80640reservation保留。
 
-本轮4fresh入口，训练65536、评估25600、128updates、14训练checkpoint，outer/GPU10840s；6prelaunchqueries和2postrunqueries/entry，禁止自动重试。旧6jobs终态且无所属残留，STOP无。P0/PLR actualAUTH和准确Commander approval已签发，尚未live或GPUquery。
-
-唯一索引 docs/experiments/r5-paired-pilot-20261013/STATE_AND_EVIDENCE.md；合同 EXPERIMENT_CONTRACT.md；准确待审 launch_inputs.proposed.json；账本 goal_budget.json。Role1独立预审PASS，已扣账。下一动作：提交/tag/push准确授权输入，然后STOP/预算/磁盘/工具复核，P0单次release；PLR等P0清理结账。评估checkpoint哈希留待实际训练独立验收，不伪造占位许可。
-
-P0已实际完成64updates/32768train/7checkpoint，真实512samplegatePASS。关闭FAILED/-9，INCOMPLETE/null，完整reservation保留；正常ownedACK无残留，两次postrunaudit已用。Role2正在独立核验真实P0数据和checkpoint评估准入。下一项PLR用原准确授权与共同ef68基线，在P0清理结账后单次release；不调整方法。
-
-PLR亦已实际完成64updates，真实512samplegatePASS；FAILED/-9关闭事实和完整reservation保留，ownedACK无残留，2postaudits完成。Role3独立实际审核待完成；P0真实u16/u64评估已经独立训练验收及准确Commander A-9ba9510d6b79b45b批准，提交输入后单次release。
+唯一索引 docs/experiments/r5-paired-pilot-20261013/STATE_AND_EVIDENCE.md；报告 PAIR_REPORT.md，机器 pair_results.json，账本 goal_budget.json。Role1预审、Role2P0实际、Role3PLR实际PASS；Role4最终分别审核两组原Z与完整科学结论/任务完成，已扣账4calls。下一动作：仅最终独立验收后同步状态、commit/push并结束。无进一步live/update/训练授权。

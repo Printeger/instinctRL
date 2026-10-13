@@ -1,0 +1,320 @@
+{
+  "schema_version": "instinctrl-r5-pair-complete-original-inventory/1",
+  "job_id": "J-9e7fc7e96356ac0c",
+  "group": "PLR",
+  "mode": "pilot-evaluation",
+  "roots": {
+    "job": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c",
+    "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013"
+  },
+  "files": [
+    {
+      "category": "job",
+      "relative": "descendant-cleanup.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/descendant-cleanup.json",
+      "bytes": 675,
+      "sha256": "a3c8ba575a7bac506cf9145bd28be340d6923669c00ccb60be8a5beeb0776f0b",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/descendant-cleanup.json"
+    },
+    {
+      "category": "job",
+      "relative": "descendant-ledger.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/descendant-ledger.json",
+      "bytes": 164,
+      "sha256": "0861866047b607fe33d5498debeb38e1c2fac359dd08394bae44978303875b69",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/descendant-ledger.json"
+    },
+    {
+      "category": "job",
+      "relative": "h1-authority.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/h1-authority.json",
+      "bytes": 12179,
+      "sha256": "5574bb4e6ee0bb367f2a52491e21957a39467c474154904d1ef989101de9c89a",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/h1-authority.json"
+    },
+    {
+      "category": "job",
+      "relative": "h1-collection.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/h1-collection.json",
+      "bytes": 2290,
+      "sha256": "6a9fce68b1be66dbfacc47e96f6cf672c8444a16a9404cb6c9ae67f676157d92",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/h1-collection.json"
+    },
+    {
+      "category": "job",
+      "relative": "h1-collections/6a9fce68b1be66dbfacc47e96f6cf672c8444a16a9404cb6c9ae67f676157d92.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/h1-collections/6a9fce68b1be66dbfacc47e96f6cf672c8444a16a9404cb6c9ae67f676157d92.json",
+      "bytes": 2290,
+      "sha256": "6a9fce68b1be66dbfacc47e96f6cf672c8444a16a9404cb6c9ae67f676157d92",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/h1-collections/6a9fce68b1be66dbfacc47e96f6cf672c8444a16a9404cb6c9ae67f676157d92.json"
+    },
+    {
+      "category": "job",
+      "relative": "h1-evidence/07ff8e7d1194bfbd256f41cae1f5efbab9fd9d999ce80043b4a89035670e81ec/status.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/h1-evidence/07ff8e7d1194bfbd256f41cae1f5efbab9fd9d999ce80043b4a89035670e81ec/status.json",
+      "bytes": 943,
+      "sha256": "07ff8e7d1194bfbd256f41cae1f5efbab9fd9d999ce80043b4a89035670e81ec",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/h1-evidence/07ff8e7d1194bfbd256f41cae1f5efbab9fd9d999ce80043b4a89035670e81ec/status.json"
+    },
+    {
+      "category": "job",
+      "relative": "h1-evidence/152b563c25047edf230c5d98f436e423ee2d22ff7e3ba2f7a600860b5d3c15f5/process_start.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/h1-evidence/152b563c25047edf230c5d98f436e423ee2d22ff7e3ba2f7a600860b5d3c15f5/process_start.json",
+      "bytes": 1348,
+      "sha256": "152b563c25047edf230c5d98f436e423ee2d22ff7e3ba2f7a600860b5d3c15f5",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/h1-evidence/152b563c25047edf230c5d98f436e423ee2d22ff7e3ba2f7a600860b5d3c15f5/process_start.json"
+    },
+    {
+      "category": "job",
+      "relative": "h1-evidence/831115d3a9fdb028f82a0b8d381962635b4d020a3a1383f36a7556ce84c4c656/process_identity.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/h1-evidence/831115d3a9fdb028f82a0b8d381962635b4d020a3a1383f36a7556ce84c4c656/process_identity.json",
+      "bytes": 292,
+      "sha256": "831115d3a9fdb028f82a0b8d381962635b4d020a3a1383f36a7556ce84c4c656",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/h1-evidence/831115d3a9fdb028f82a0b8d381962635b4d020a3a1383f36a7556ce84c4c656/process_identity.json"
+    },
+    {
+      "category": "job",
+      "relative": "held-child.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/held-child.json",
+      "bytes": 915,
+      "sha256": "c4f5ac289f87a8e36fdef35fe7e773ca393c3ed4b1ea64d662bb2e7e4c314f2b",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/held-child.json"
+    },
+    {
+      "category": "job",
+      "relative": "lifeguard-ack.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/lifeguard-ack.json",
+      "bytes": 830,
+      "sha256": "a5bfbd94d342fe2ef9b664268ebb66c5e65fdd41b5bf81a9bb4e83cc0b754e8a",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/lifeguard-ack.json"
+    },
+    {
+      "category": "job",
+      "relative": "lifeguard-done",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/lifeguard-done",
+      "bytes": 4,
+      "sha256": "a4c3ed04a95a3da14a9d235c83d868bed7c0f45cf7f3faa751ee8f50598d2211",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/lifeguard-done"
+    },
+    {
+      "category": "job",
+      "relative": "lifeguard-ready.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/lifeguard-ready.json",
+      "bytes": 200,
+      "sha256": "8d99c312f48783093099926eee1a9a15ec011346fe912c9f55a107e90bc6aaff",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/lifeguard-ready.json"
+    },
+    {
+      "category": "job",
+      "relative": "lifeguard-request.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/lifeguard-request.json",
+      "bytes": 3534,
+      "sha256": "96c3dd39f40ff9c7be9e0349228f0a99f68ac49554e9eee39cd79381bf2731de",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/lifeguard-request.json"
+    },
+    {
+      "category": "job",
+      "relative": "lifeguard.log",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/lifeguard.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/lifeguard.log"
+    },
+    {
+      "category": "job",
+      "relative": "owner-subreaper.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/owner-subreaper.json",
+      "bytes": 128,
+      "sha256": "50f2658a7250fa7db44741fd47fce6de6f34c3348d35203ff93ea17a33bc6550",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/owner-subreaper.json"
+    },
+    {
+      "category": "job",
+      "relative": "process-identity.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/process-identity.json",
+      "bytes": 103,
+      "sha256": "09fccaf12620e39d19e80d02f8271819b28eeb7971d34633dae24ae692fc266a",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/process-identity.json"
+    },
+    {
+      "category": "job",
+      "relative": "receipt.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/receipt.json",
+      "bytes": 280,
+      "sha256": "a30c1bff73e9f981d562eeb7b1bf8dca0347bcf6bafe409c10d4fde781543af9",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/receipt.json"
+    },
+    {
+      "category": "job",
+      "relative": "release-intent.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/release-intent.json",
+      "bytes": 151,
+      "sha256": "76fa60aff608cb29073862ea4492cc7375016f27f0bedef45e5a898884a97ccf",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/release-intent.json"
+    },
+    {
+      "category": "job",
+      "relative": "request.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/request.json",
+      "bytes": 3228,
+      "sha256": "98a2b4fd36e38423c92bdcf78b3c0a28f307c68849926bbc48b7be3b84b84ee5",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/request.json"
+    },
+    {
+      "category": "job",
+      "relative": "supervisor-release.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/supervisor-release.json",
+      "bytes": 231,
+      "sha256": "25a0d29369255a23e6861468b191f346f123ccd485de6c2d011a6c7dc7dc8d52",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/supervisor-release.json"
+    },
+    {
+      "category": "job",
+      "relative": "supervisor.log",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-9e7fc7e96356ac0c/supervisor.log",
+      "bytes": 8501,
+      "sha256": "a3a8ba876a050b3b078e24afe3fdaa52915131adb2eb64eead6cb1dbf4d02c7f",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/job/supervisor.log"
+    },
+    {
+      "category": "attempt",
+      "relative": "commands/AUTHORIZATION.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/commands/AUTHORIZATION.json",
+      "bytes": 1741,
+      "sha256": "6ab316cb0c6cd0b0033547103f98c38ab7f07bad5105c4c26a6692f35d40eb08",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/commands/AUTHORIZATION.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/cleanup_timeout.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/cleanup_timeout.json",
+      "bytes": 200,
+      "sha256": "77dbf1f07700c4d701ce2f4bef33aef3cd05817088f28f9c88a8d3f8f3a2128b",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/cleanup_timeout.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/evaluation_progress.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/evaluation_progress.json",
+      "bytes": 112,
+      "sha256": "f962fd6e611d3bcb229c5558c631701704f8343d68d652b524d7385eaa3818a0",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/evaluation_progress.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/evaluation_raw/pilot_PLR_u16/Z.jsonl",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/evaluation_raw/pilot_PLR_u16/Z.jsonl",
+      "bytes": 1270426,
+      "sha256": "d6778c4ea35a14c76743967be77d698f0aaad08c14ecb81c34d8e748f2d0f3a9",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/evaluation_raw/pilot_PLR_u16/Z.jsonl"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/evaluation_raw/pilot_PLR_u64/Z.jsonl",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/evaluation_raw/pilot_PLR_u64/Z.jsonl",
+      "bytes": 1281742,
+      "sha256": "73941956d127c8f5fe2c09fbb329585f02f1b9544cf43dcd2dc2729847f389af",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/evaluation_raw/pilot_PLR_u64/Z.jsonl"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/initialization_accounting.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/initialization_accounting.json",
+      "bytes": 269,
+      "sha256": "61d33061293905bf9cf69e78083b6310aaafb6b060780015d3bef60151f6ef21",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/initialization_accounting.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/pilot_PLR_u16_Z.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/pilot_PLR_u16_Z.json",
+      "bytes": 9405,
+      "sha256": "771ea1d63205e334477355fd43d80ff0efa1e95c26d2a62f3e829644a14a23b2",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/pilot_PLR_u16_Z.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/pilot_PLR_u16_policy_Z.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/pilot_PLR_u16_policy_Z.json",
+      "bytes": 9346,
+      "sha256": "9a4ed570bd8c992731fcb63451e686c76d9af3bc62e5aebe87d2fd1f8417c70a",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/pilot_PLR_u16_policy_Z.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/pilot_PLR_u64_Z.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/pilot_PLR_u64_Z.json",
+      "bytes": 9435,
+      "sha256": "08f70d7faffa6ef13e750a7fe956f42d43e06c2731d64fcabced5ef94c2137e5",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/pilot_PLR_u64_Z.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/pilot_PLR_u64_policy_Z.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/pilot_PLR_u64_policy_Z.json",
+      "bytes": 9376,
+      "sha256": "078435ac518a30c6ea3a0ef4d236ec25f0921e275a2b34b85a127beeb5d42965",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/pilot_PLR_u64_policy_Z.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/process_identity.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/process_identity.json",
+      "bytes": 293,
+      "sha256": "1b6da2388105cc8e990c71ba17e96b5aaa1df6375567092d3936e3022e5fe0a5",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/process_identity.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/process_start.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/process_start.json",
+      "bytes": 1349,
+      "sha256": "e2b61c70cd1a634581e9424663c38bf5b90ba90c7ea8bc9eeba25bbb319c1f9e",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/process_start.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/pilot-evaluation/status.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/pilot-evaluation/status.json",
+      "bytes": 944,
+      "sha256": "8bcdf2f3d05f73d34256bb46fb3fa2eeab4afd01a0968f6bb708cadbd2f6ad8e",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/pilot-evaluation/status.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/prelaunch/asset_root_runtime.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/prelaunch/asset_root_runtime.json",
+      "bytes": 387,
+      "sha256": "1c4ec2a7e242b94b5a96d91a7e88eef50a6bce22ffc177be2dd8058db7e18f19",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/prelaunch/asset_root_runtime.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/prelaunch/kit.log",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/prelaunch/kit.log",
+      "bytes": 399190,
+      "sha256": "969d2c15c3b38c6431e53a5a76cc7b12f2c468780b7388c5a6d87e18b4a1679e",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/prelaunch/kit.log"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/prelaunch/prelaunch_resource_gate.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/prelaunch/prelaunch_resource_gate.json",
+      "bytes": 1419,
+      "sha256": "519350b16433c1a3599ba2b74d40f3244cb1f017d30cfdbf640a19b91b67857e",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/prelaunch/prelaunch_resource_gate.json"
+    },
+    {
+      "category": "attempt",
+      "relative": "results/prelaunch/runtime_resources.json",
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/results/prelaunch/runtime_resources.json",
+      "bytes": 75215,
+      "sha256": "197bf3fea4787b70ae76318d3b063eae16f8c8a977b29f1544db9f1358138085",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/live-PLR-evaluation/attempt/results/prelaunch/runtime_resources.json"
+    }
+  ],
+  "coverage": "Every regular file in actual original job and whole attempt including entire results, prelaunch and actualAUTH; big files retained at original paths with SHA/bytes.",
+  "specialized_B0_seal_claimed": false,
+  "total_original_bytes": 3109135,
+  "total_archive_copy_bytes": 3109135
+}

@@ -1,0 +1,201 @@
+{
+  "approval_id": "A-007f7b04266ab506",
+  "h1_evidence": {
+    "allocation_basis": "allocated_device_wall_seconds",
+    "allocation_gpu_seconds": 94.61625608988106,
+    "counter_completeness": "INCOMPLETE",
+    "counters": {
+      "actor_optimizer_steps": 0,
+      "attempted_policy_steps": 400,
+      "attempted_updates": 0,
+      "automatic_resets": 0,
+      "completed_policy_steps": 400,
+      "completed_updates": 0,
+      "critic_optimizer_steps": 0,
+      "explicit_resets": 2,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 12800,
+      "real_checkpoint_writes": 0,
+      "real_environment_transitions": 12800,
+      "real_optimizer_updates": 0,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 0
+    },
+    "exit_fact": "FAILED",
+    "formal_verdict": "NOT_GRANTED",
+    "manifest": {
+      "cleanup_timeout.json": {
+        "bytes": 200,
+        "sha256": "77dbf1f07700c4d701ce2f4bef33aef3cd05817088f28f9c88a8d3f8f3a2128b"
+      },
+      "evaluation_progress.json": {
+        "bytes": 112,
+        "sha256": "f962fd6e611d3bcb229c5558c631701704f8343d68d652b524d7385eaa3818a0"
+      },
+      "evaluation_raw/pilot_PLR_u16/Z.jsonl": {
+        "bytes": 1270426,
+        "sha256": "d6778c4ea35a14c76743967be77d698f0aaad08c14ecb81c34d8e748f2d0f3a9"
+      },
+      "evaluation_raw/pilot_PLR_u64/Z.jsonl": {
+        "bytes": 1281742,
+        "sha256": "73941956d127c8f5fe2c09fbb329585f02f1b9544cf43dcd2dc2729847f389af"
+      },
+      "initialization_accounting.json": {
+        "bytes": 269,
+        "sha256": "61d33061293905bf9cf69e78083b6310aaafb6b060780015d3bef60151f6ef21"
+      },
+      "pilot_PLR_u16_Z.json": {
+        "bytes": 9405,
+        "sha256": "771ea1d63205e334477355fd43d80ff0efa1e95c26d2a62f3e829644a14a23b2"
+      },
+      "pilot_PLR_u16_policy_Z.json": {
+        "bytes": 9346,
+        "sha256": "9a4ed570bd8c992731fcb63451e686c76d9af3bc62e5aebe87d2fd1f8417c70a"
+      },
+      "pilot_PLR_u64_Z.json": {
+        "bytes": 9435,
+        "sha256": "08f70d7faffa6ef13e750a7fe956f42d43e06c2731d64fcabced5ef94c2137e5"
+      },
+      "pilot_PLR_u64_policy_Z.json": {
+        "bytes": 9376,
+        "sha256": "078435ac518a30c6ea3a0ef4d236ec25f0921e275a2b34b85a127beeb5d42965"
+      },
+      "process_identity.json": {
+        "bytes": 293,
+        "sha256": "1b6da2388105cc8e990c71ba17e96b5aaa1df6375567092d3936e3022e5fe0a5"
+      },
+      "process_start.json": {
+        "bytes": 1349,
+        "sha256": "e2b61c70cd1a634581e9424663c38bf5b90ba90c7ea8bc9eeba25bbb319c1f9e"
+      },
+      "status.json": {
+        "bytes": 944,
+        "sha256": "8bcdf2f3d05f73d34256bb46fb3fa2eeab4afd01a0968f6bb708cadbd2f6ad8e"
+      }
+    },
+    "raw_status": "PASS_PENDING_CLOSE",
+    "scientific_validity": "UNASSESSED",
+    "scope": "H1_RAW_EXECUTION",
+    "transitions": null
+  },
+  "id": "J-9e7fc7e96356ac0c",
+  "identity": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pgid": 1754454,
+    "pid": 1754454,
+    "starttime": "182166934"
+  },
+  "receipt": {
+    "allocated_seconds": 94.61625608988106,
+    "definitely_not_released": false,
+    "elapsed_seconds": 95.17805161094293,
+    "error": null,
+    "exit_code": -9,
+    "job_id": "J-9e7fc7e96356ac0c",
+    "released": true,
+    "spec_sha256": "507cec717b95abf5f2d578307cfa9a4ad3c9018ee051cee473be464a90e7c15e",
+    "status": "FAILED"
+  },
+  "reserved_resources": {
+    "transitions": 12800
+  },
+  "spec": {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--authorization",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/commands/AUTHORIZATION.json",
+      "--attempt",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013",
+      "--mode",
+      "pilot-evaluation"
+    ],
+    "backend": "real",
+    "conditions": [
+      {
+        "evidence_id": "E-R5-ENTRY6-FINAL-INDEPENDENT-READINESS",
+        "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620"
+      },
+      {
+        "evidence_id": "E-R5-PAIR-PRELIVE-20261013",
+        "sha256": "95badf6f17f1f9d212e70b981d5378763b0c2bae619e8f00435a01915edee088"
+      },
+      {
+        "evidence_id": "E-R5-PAIR-PLR-ACTUAL-TRAINING-20261013",
+        "sha256": "1c02351f08394401ace7c9d8258a83a9732d046fea90c32ea4ab0ab3e7a2dbbd"
+      }
+    ],
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+    "evaluation": "metric-h1-v1",
+    "h1": {
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013",
+      "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+      "gpu_accounting": "allocated_device_wall_seconds",
+      "gpu_devices": [
+        "0"
+      ],
+      "mode": "pilot-evaluation",
+      "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012"
+    },
+    "id": "UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013",
+    "method": "unified-h1-v1",
+    "observations": [
+      "status",
+      "counters",
+      "process_identity",
+      "process_start",
+      "cleanup",
+      "evaluation_raw"
+    ],
+    "pins": {
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/commands/AUTHORIZATION.json",
+        "sha256": "6ab316cb0c6cd0b0033547103f98c38ab7f07bad5105c4c26a6692f35d40eb08"
+      },
+      "dispatcher": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/local_dispatch.py",
+        "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+      },
+      "executable": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "product": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+        "sha256": "5aa3e3f14c0cd2e754d26eb437cc270dda4914e8c63e4758b12ddeacf6a41e90"
+      },
+      "runtime": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "workload": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/formal_unified_h1.py",
+        "sha256": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896"
+      }
+    },
+    "resources": {
+      "gpu_seconds": 1810,
+      "starts": 1,
+      "transitions": 12800,
+      "wall_seconds": 1810
+    },
+    "runtime": "/home/mint/rl_blackwell_test",
+    "seed": 20260909,
+    "stage_id": "INSTINCTRL-R5-PAIRED-PILOT-20261013"
+  },
+  "stage": "INSTINCTRL-R5-PAIRED-PILOT-20261013",
+  "status": "FAILED",
+  "used_resources": {
+    "gpu_seconds": 94.61625608988106,
+    "starts": 1,
+    "transitions": null,
+    "wall_seconds": 95.17805161094293
+  }
+}

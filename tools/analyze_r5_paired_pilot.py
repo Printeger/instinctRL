@@ -210,7 +210,7 @@ def pair(analyses):
     first_inputs = [torch.load(Path(row['checkpoints'][0]['path']).parents[1] / 'pilot_diagnostic/update_1_full_input.pt',
                                map_location='cpu', weights_only=True) for row in training_rows.values()]
     input_comparison = {}
-    for field in ('actions', 'old_log_probabilities', 'old_alpha', 'old_beta'):
+    for field in ('actions', 'old_log_probabilities', 'old_alpha', 'old_beta', 'privileged'):
         left, right = first_inputs[0][field], first_inputs[1][field]
         assert left.shape == right.shape
         input_comparison[field] = {'shape': list(left.shape), 'bit_exact_equal': torch.equal(left, right),
