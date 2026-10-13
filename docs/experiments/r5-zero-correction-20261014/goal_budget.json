@@ -29,7 +29,7 @@
     "allocated_gpu_seconds": 638.3072259749752,
     "output_bytes": 4276139846,
     "automatic_retries": 0,
-    "role_calls": 3
+    "role_calls": 4
   },
   "reserved": {
     "training_transitions": 65536,
@@ -72,6 +72,13 @@
       "status": "PASS",
       "evidence": "reviews/review-C0-training-actual.json",
       "sha256": "9bdc7e42eaa50affcbe57132455f6f40efe072a15b7f33100ea2c0e506d74412"
+    },
+    {
+      "call": 4,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Actual C1 scientifictraining/realgate/sevencheckpoints/fullinventory/realcoef, actualpairedinit+first512; acceptedactualu16/u64evalbindings",
+      "status": "REQUESTED"
     }
   ],
   "runs": [
