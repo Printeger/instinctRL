@@ -1,0 +1,149 @@
+{
+  "verdict": "PASS",
+  "role": "Reviewer",
+  "goal_role_call": 4,
+  "evidence_commit": "52cd7701499508956fe9721426dec45f80cb476b",
+  "completion_status_allowed": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+  "scope": "接受两组实际原Z负结果、配对科学结论和本轮目标完成；不接受策略原Z准入，不将进程失败改写为成功。",
+  "shared_identity": {
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+    "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60"
+  },
+  "must_fix": [],
+  "evaluation_checks": {
+    "P0": {
+      "verdict": "PASS_COMPLETE_NEGATIVE_EVIDENCE",
+      "job_id": "J-a063fd710a007b35",
+      "approval_id": "A-9ba9510d6b79b45b",
+      "authorization_sha256": "d8686a0f771d2445953a0c83bd10ce0801ee4ae55c38671ea82c1fa9ed152ea5",
+      "inventory": {
+        "objects": 38,
+        "original_bytes": 3092048,
+        "all_original_and_archive_hashes": "PASS",
+        "complete_job_and_attempt_enumeration": "PASS"
+      },
+      "actual_spec_auth_checkpoint_pins": "PASS",
+      "original_evaluator_replay_and_producer_match": "PASS_EXACT",
+      "coverage": "两个节点各T0+200连续STEP记录、全部32lanes；共400步/12800非训练transitions。无optimizer或checkpoint写入。",
+      "u16": {
+        "original_successes": "0/32",
+        "subgroups": "d0–d7各0/4",
+        "failure": "32lane实际高度failure及RESET_INTERRUPTED_NO_SPLICE",
+        "missing_raw_episodes": 0,
+        "engineering_evidence_valid_episodes": 0,
+        "raw_sha256": "88b7ae6f403984a5fa5381f5b94ad161368e401bef4c8c6f5a33a256748a9429"
+      },
+      "u64": {
+        "original_successes": "0/32",
+        "subgroups": "d0–d7各0/4",
+        "failure": "Z_THRESHOLD_FAILED",
+        "missing_raw_episodes": 0,
+        "engineering_evidence_valid_episodes": 32,
+        "raw_sha256": "be1ad7c97af812391ebad305d1aa538e0f14883790d57800715910cdc8bada47"
+      },
+      "process": "FAILED/-9；raw PASS_PENDING_CLOSE；collector INCOMPLETE/null，完整12800 reservation保留。",
+      "cleanup": "正常ACK两次稳定空扫描、无survivors；准确owner/guard/child均不存在；实际两次postrun审计仅见既有GNOME。"
+    },
+    "PLR": {
+      "verdict": "PASS_COMPLETE_NEGATIVE_EVIDENCE",
+      "job_id": "J-9e7fc7e96356ac0c",
+      "approval_id": "A-007f7b04266ab506",
+      "authorization_sha256": "6ab316cb0c6cd0b0033547103f98c38ab7f07bad5105c4c26a6692f35d40eb08",
+      "inventory": {
+        "objects": 38,
+        "original_bytes": 3109135,
+        "all_original_and_archive_hashes": "PASS",
+        "complete_job_and_attempt_enumeration": "PASS"
+      },
+      "actual_spec_auth_checkpoint_pins": "PASS",
+      "original_evaluator_replay_and_producer_match": "PASS_EXACT",
+      "coverage": "两个节点各T0+200连续STEP记录、全部32lanes；共400步/12800非训练transitions。无optimizer或checkpoint写入。",
+      "u16": {
+        "original_successes": "0/32",
+        "subgroups": "d0–d7各0/4",
+        "failure": "漂移与高度超过原Z阈值",
+        "missing_raw_episodes": 0,
+        "engineering_evidence_valid_episodes": 32,
+        "raw_sha256": "d6778c4ea35a14c76743967be77d698f0aaad08c14ecb81c34d8e748f2d0f3a9"
+      },
+      "u64": {
+        "original_successes": "0/32",
+        "subgroups": "d0–d7各0/4",
+        "failure": "漂移超过原Z阈值",
+        "missing_raw_episodes": 0,
+        "engineering_evidence_valid_episodes": 32,
+        "raw_sha256": "73941956d127c8f5fe2c09fbb329585f02f1b9544cf43dcd2dc2729847f389af"
+      },
+      "process": "FAILED/-9；raw PASS_PENDING_CLOSE；collector INCOMPLETE/null，完整12800 reservation保留。",
+      "cleanup": "正常ACK两次稳定空扫描、无survivors；准确owner/guard/child均不存在；实际两次postrun审计仅见既有GNOME。"
+    }
+  },
+  "pair_scientific_assessment": {
+    "verdict": "PASS",
+    "evidence": [
+      "Role2/3已独立接受两组完整64-update训练、真实首次gate、七个checkpoint和初始化身份。",
+      "实际init actor/critic及首次512样本逐位相同，配置唯一变量为actor LR。",
+      "本轮再次核验pair_results首次更新KL、实际body-frame修正及全部Z聚合统计、工程失败计数和原分母，与实际分析精确一致。",
+      "四节点128个episode全部保留，原sensor-T0、startup、安全、阈值和方向子组未修改；没有补样、删除失败或拼接reset窗口。"
+    ],
+    "accepted_conclusion": "在这一精确配对的首次输入上，降低actor LR减少首次更新分布偏移；两组u16/u64均未建立原Z准入。停止本轮，不自动扩至256updates。",
+    "limits": [
+      "P0u16虽有完整raw，但reset-interrupted窗口不能解释为连续稳态漂移；其失败保留在原分母。",
+      "首次更新mb8后analytic Beta KL均值15.012777835130692与0.2761918883770704是本对实际描述性结果，不是多seed统计显著性或一般优劣证明。",
+      "PLR部分指标改善不能替代原成功门槛，也不能证明训练问题已修复。",
+      "后续CPU梯度、目标信号和零指令偏置分解目前只是下一阶段提案，未执行。"
+    ]
+  },
+  "objective_and_deliverables": {
+    "assessment": "COMPLETE_SCIENTIFIC_NEGATIVE_RESULT",
+    "contract": "用户要求的两组各64updates、各u16/u64原Z、独立实际证据审核、配对报告和下一阶段科学决策均有实际交付。",
+    "deliverables": [
+      "PAIR_REPORT.md",
+      "pair_results.json",
+      "STATE_AND_EVIDENCE.md",
+      "四入口完整原始inventory、授权/审批/运行和关闭证据",
+      "Role1–4独立审核及资源账本"
+    ],
+    "final_state_sync": "记录本次准确评审后，将当前pending-review状态同步为完成负结果，并正常提交/push；保留全部原FAILED、PASS_PENDING_CLOSE、INCOMPLETE/null及历史评审身份。该普通状态同步不要求新增live或角色调用。"
+  },
+  "accounting": {
+    "starts_and_initialization_reservations_used": 4,
+    "observed_training_transitions": 65536,
+    "observed_nontraining_transitions": 25600,
+    "observed_logical_updates": 128,
+    "observed_training_checkpoint_writes": 14,
+    "observed_actor_adam_steps": 1024,
+    "observed_critic_adam_steps": 1024,
+    "wall_seconds": 815.8738663156983,
+    "allocated_gpu_seconds": 813.7702312869951,
+    "output_bytes_including_archives": 4288720528,
+    "independent_run_sum_check": "PASS",
+    "reservations": "四入口均INCOMPLETE；65536训练、25600评估、128updates、14writes完整保守预留保留。观察值是预留子集，不双扣、不伪造退款。",
+    "prior_goal": "旧80640 reservation保持不变。",
+    "further_goal_live_allowed": false
+  },
+  "non_blocking": [
+    {
+      "id": "NATIVE-CLOSE-FAILURES",
+      "assessment": "四次native-close失败不否定已独立核验的完整科学数据及安全owned cleanup；所有进程仍FAILED，不授予process PASS、graceful close或正式FINAL。"
+    },
+    {
+      "id": "REPORT-SIGNIFICANCE-WORDING",
+      "assessment": "报告中“显著减少”应理解为本对数值幅度变化；最终简述宜用“大幅减少本对首次更新偏移”，避免被误读为统计显著性。现有一对seed限制已明确，不构成科学阻塞。"
+    }
+  ],
+  "authorization_limits": [
+    "本次允许结束科学负结果Goal，不允许放宽原Z门槛或宣布策略验收通过。",
+    "四入口审批与资源包已消耗，不允许重试、追加探测、继续256updates或改变方法。",
+    "下一阶段CPU工作及任何后续live、方法或资源变更须有相应独立任务范围与授权。"
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "live_or_simulation_starts": 0,
+    "optimizer_calls": 0,
+    "delegations": 0,
+    "cpu_work": "原件读取/哈希、完整枚举、原评价器重放、聚合统计及账本重算。"
+  }
+}

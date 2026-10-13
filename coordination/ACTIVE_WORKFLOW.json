@@ -16,8 +16,9 @@
   "new_training_authorized": false,
   "diagnostic_goal_envelope_authorized": false,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "All4pairentryapprovals consumed, terminalFAILEDnativeclose withcompleteactualtraining/evaldata andnormalownedquiescence. BothrealfirstgatesPASS;all4originalZnodes0/32. Entire65536train/25600eval/128update/14write reservationsretained. FinalRole4science/completionpending; nofurtherlive/probes or256updates.",
+  "live_permission_note": "PairGoalcomplete withindependentRole4PASS/fullscientificnegativeevidence. All4approvals consumed/nativeFAILED/incompletecapsreserved; actualboth64updates andrealfirstgatesPASS, originalZ0/32allfour. No newlive/probes/update or256extension; nextscope proposalonly.",
   "diagnostic_goal_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "paired_pilot_task_requested": true,
-  "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json"
+  "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
+  "paired_pilot_goal_status": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS"
 }

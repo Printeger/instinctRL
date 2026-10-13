@@ -1,6 +1,6 @@
 # R5 P0 / PLR 配对实验报告
 
-当前：两组64updates及四次原Z评估已真实完成，完整科学结果待Role4最终独立审核。结论为 **降低actor LR显著减少本对首更新的分布偏移，但两组u16/u64均未通过原Z；不扩至256updates**。负结果按原门槛保留，没有删启动段、失败lane或重跑结果。
+当前：**PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS**。两组64updates及四次原Z评估已真实完成；独立Role4最终审核PASS、无MUST_FIX，科学负结果Goal完成并停止。结论为 **降低actor LR大幅减少本对首更新的分布偏移，但两组u16/u64均未通过原Z；不扩至256updates**。负结果按原门槛保留，没有删启动段、失败lane或重跑结果。
 
 共同只读生产基线 ef68ebb5682b85aa83044fdea1c13b7d0edbf325，tree b735eafac3888415eded7c6684ed385706871acf；config SHA d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c；工具74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60。P0 actorLR3e-4、PLR1e-4，critic均3e-4；32env/16rollout/64minibatch/1epoch，训练seed20260908、评估seed20260909，其余reward/network/controller/curriculum/算法/原metric-h1-v1全部不变。没有重做E0、质量补偿或控制ZTS诊断。
 
@@ -36,4 +36,4 @@ PLR的较低首更新KL是受控首次输入下的本对结果；它在u64改善
 
 下一阶段科学决策：停止于本轮负结果，不自动256updates。保留修复后控制基线，先用已有u1/u2输入、首更新probe和u16/u64 checkpoint做CPU离线的actor/critic梯度、目标信号与持续零命令修正分解，解释PLRu64水平偏置及u16垂直偏置，再提出一个有依据的单变量实验。LR1e-4可作首更新较平缓的研究候选，不能称已经修复了训练问题；不在本Goal改变reward、actor输入、network、controller、curriculum或算法。
 
-机器结果 [pair_results.json](pair_results.json)，完整 [证据索引](STATE_AND_EVIDENCE.md)，[账本](goal_budget.json)。原训练/评估逐lane结果、梯度、参数和全部失败记录通过四个live inventory与独立评审定位。最终独立Role4应分别验收两组原Z结果、配对科学范围、关闭/计账以及本Goal完成条件；通过后只同步状态和正常提交/push，不启动下一阶段。
+机器结果 [pair_results.json](pair_results.json)，完整 [证据索引](STATE_AND_EVIDENCE.md)，[账本](goal_budget.json)。原训练/评估逐lane结果、梯度、参数和全部失败记录通过四个live inventory与独立评审定位。最终独立Role4已分别验收两组原Z负结果、配对科学范围、关闭/计账及完整目标交付。当前普通状态同步已完成；仅提交/push并停止，不启动下一阶段。[最终审核](reviews/review-pair-final-scientific.json)，SHA `6810e089f658f430b31ceead64605239fc7b46647467858e9bf2070b306657f5`；[完整目标完成核对](COMPLETION_AUDIT.json)。

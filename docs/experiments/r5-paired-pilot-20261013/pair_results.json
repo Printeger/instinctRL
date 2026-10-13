@@ -1,6 +1,6 @@
 {
   "schema_version": "instinctrl-r5-pair-actual-data-analysis/1",
-  "status": "COMPLETE_ACTUAL_PAIR_PENDING_FINAL_INDEPENDENT_REVIEW",
+  "status": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
   "shared_source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
   "init_actor_and_critic_bit_exact_equal": {
     "actor": true,
@@ -1449,7 +1449,8 @@
         "allocated_gpu_seconds": 309.4876573861111,
         "output_bytes_including_archive": 2137160365,
         "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
-        "inventory": "live-P0-training/INVENTORY.json"
+        "inventory": "live-P0-training/INVENTORY.json",
+        "scientific_acceptance": "ACCEPTED_ACTUAL_TRAINING_ROLE2_OR3"
       },
       {
         "group": "PLR",
@@ -1482,7 +1483,8 @@
         "allocated_gpu_seconds": 314.3097850459162,
         "output_bytes_including_archive": 2139157797,
         "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
-        "inventory": "live-PLR-training/INVENTORY.json"
+        "inventory": "live-PLR-training/INVENTORY.json",
+        "scientific_acceptance": "ACCEPTED_ACTUAL_TRAINING_ROLE2_OR3"
       },
       {
         "group": "P0",
@@ -1515,7 +1517,8 @@
         "allocated_gpu_seconds": 95.35653276508674,
         "output_bytes_including_archive": 6184096,
         "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
-        "inventory": "live-P0-evaluation/INVENTORY.json"
+        "inventory": "live-P0-evaluation/INVENTORY.json",
+        "scientific_acceptance": "ACCEPTED_ORIGINAL_Z_NEGATIVE_ROLE4"
       },
       {
         "group": "PLR",
@@ -1548,7 +1551,8 @@
         "allocated_gpu_seconds": 94.61625608988106,
         "output_bytes_including_archive": 6218270,
         "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
-        "inventory": "live-PLR-evaluation/INVENTORY.json"
+        "inventory": "live-PLR-evaluation/INVENTORY.json",
+        "scientific_acceptance": "ACCEPTED_ORIGINAL_Z_NEGATIVE_ROLE4"
       }
     ],
     "actual_wall_seconds_including_cleanup": 815.8738663156983,
@@ -1571,14 +1575,25 @@
     "formal_H1_completeness_all_four": "INCOMPLETE_WITH_NULL_FORMAL_TRANSITIONS",
     "owned_cleanup_all_four": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
     "authorized_postrun_audit_calls_total": 8,
-    "automatic_retries": 0
+    "automatic_retries": 0,
+    "independent_final_review": {
+      "path": "reviews/review-pair-final-scientific.json",
+      "sha256": "6810e089f658f430b31ceead64605239fc7b46647467858e9bf2070b306657f5",
+      "verdict": "PASS",
+      "role_call": 4,
+      "independent_handle": "/root/pilot_reviewer",
+      "evidence_commit": "52cd7701499508956fe9721426dec45f80cb476b",
+      "scope": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+      "ordinary_state_sync": "SATISFIED",
+      "not_future_training_authority": true
+    }
   },
   "actual_pair_data_collection_complete": true,
   "independent_reviews": {
     "prelive": "reviews/review-pair-prelive.json",
     "P0_actual_training": "reviews/review-P0-training-actual.json",
     "PLR_actual_training": "reviews/review-PLR-training-actual.json",
-    "final_pair": "PENDING_ROLE4"
+    "final_pair": "reviews/review-pair-final-scientific.json"
   },
   "next_stage_decision": {
     "action": "STOP_BEFORE_ANY256_UPDATE_EXTENSION",
@@ -1586,5 +1601,26 @@
     "next_proposed_work": "CPU-only analysis of retained u1/u2/probes and u16/u64 policy snapshots: explain persistent zero-command horizontal correction and u16 vertical bias using existing actor/critic gradients and objective signals, then define one evidence-based single-variable test.",
     "permission_boundary": "No new live,256updates, reward/network/controller/curriculum/algorithm changes authorized by this Goal; next experimental or method proposal needs its own explicit task/resource approval.",
     "research_candidate": "LR1e-4 is a less abrupt first-update candidate in this one pair, not an accepted long-training policy or proven general winner."
+  },
+  "goal_status": "COMPLETE",
+  "policy_original_Z_admission": false,
+  "independent_final_review": {
+    "path": "reviews/review-pair-final-scientific.json",
+    "sha256": "6810e089f658f430b31ceead64605239fc7b46647467858e9bf2070b306657f5",
+    "verdict": "PASS",
+    "role_call": 4,
+    "independent_handle": "/root/pilot_reviewer",
+    "evidence_commit": "52cd7701499508956fe9721426dec45f80cb476b",
+    "scope": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+    "ordinary_state_sync": "SATISFIED",
+    "not_future_training_authority": true
+  },
+  "completion_audit": {
+    "path": "COMPLETION_AUDIT.json",
+    "sha256": "459bea25912fd87fade06dc9f6c44e29f18ec21220695a463c65afc73a86b21a"
+  },
+  "final_store_evidence": {
+    "path": "final-scientific-store-evidence.json",
+    "sha256": "d5bc17c8c732b9ab863e47c5f5d086dae10b044c85058189605b5bbd06123803"
   }
 }

@@ -1,0 +1,209 @@
+{
+  "schema_version": "instinctrl-r5-pair-completion-audit/1",
+  "result": "PASS_FULL_USER_OBJECTIVE",
+  "status": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+  "completion_proven": true,
+  "independent_final_review": {
+    "path": "reviews/review-pair-final-scientific.json",
+    "sha256": "6810e089f658f430b31ceead64605239fc7b46647467858e9bf2070b306657f5",
+    "verdict": "PASS",
+    "role_call": 4,
+    "independent_handle": "/root/pilot_reviewer",
+    "evidence_commit": "52cd7701499508956fe9721426dec45f80cb476b",
+    "scope": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+    "ordinary_state_sync": "SATISFIED",
+    "not_future_training_authority": true
+  },
+  "checks": [
+    {
+      "requirement": "Read accepted readiness/current repository and previous jobs",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "preparation-verification.json; launch_inputs.proposed.json; source beginningdf13111; alloldjobs terminal; originalfutureSHAunchanged"
+    },
+    {
+      "requirement": "Reuse exact ef68 baseline and avoid E0/control rerun",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "Source/config/tools bytebindings and protectedscope gitdiff empty; fouronlypilotmodes; Role1/4"
+    },
+    {
+      "requirement": "New exact Commander training and evaluation authorizations",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "Fouractual AUTH/spec/approval/release-admission records; accepted independent predicates; eachapproval consumed once"
+    },
+    {
+      "requirement": "P0 actorLR3e-4 and PLR1e-4 only variable",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "Role3 initparameters/PPO/source/seed comparison bitexact; pair_results identity checks"
+    },
+    {
+      "requirement": "Each64 actual training updates",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "Role2/3 full64update/512minibatch/1024step/7checkpoint actualdata/counters"
+    },
+    {
+      "requirement": "Real first512sample gate before either optimizer",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "ActualGPUgatePASS both; capturedoldBeta/action/logp/index andacceptedsource ordering; Role2/3"
+    },
+    {
+      "requirement": "Unchanged reward/network/controller/curriculum/algorithm",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "Protectedsource diff fromstartingdf13111 empty; sameef68readonly snapshots"
+    },
+    {
+      "requirement": "Unchanged original Z at actualu16/u64",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "Role2/3actualcheckpointSHA/source accepted then4 exactnodes; Role4 separateoriginalreplays/producer/hash"
+    },
+    {
+      "requirement": "KL and physical velocity correction records",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "8actualpre/post probes plus64updateKL and1024returned32lanev_corr/v_final/velocity rows/group"
+    },
+    {
+      "requirement": "Horizontal drift and height deviation with all failures",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "128originalepisodes/all32denominators/startup/safety/reset flags; no removal/splice; Role4"
+    },
+    {
+      "requirement": "Native close failures preserved",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "All4originalFAILED/-9/PASS_PENDING_CLOSE/H1INCOMPLETE/null immutable, no formalFINALmanufactured"
+    },
+    {
+      "requirement": "Conservative resources and owned cleanup",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "Observed65536/25600/128/14 fullreserved, wall/GPU/output exactrunsums; normalACK2empty/noowners; Role4"
+    },
+    {
+      "requirement": "Complete report and machine results",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "PAIR_REPORT.md and pair_results.json fullnegative actualdata plus scope limits"
+    },
+    {
+      "requirement": "Complete source/job/evidence index and independent reviews",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "STATE_AND_EVIDENCE.md;194originalobjects/fourinventories; Role1–4"
+    },
+    {
+      "requirement": "Next scientific decision without assuming PLR superiority",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "LowerLRreduces firstshift inonepair, originalZfailsboth; CPU gradient/bias decomposition proposed only"
+    },
+    {
+      "requirement": "No256update/method expansion or further execution",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "Fourentries consumed, no extrajobs/probes/retries, no future AUTH; next stage not initiated"
+    },
+    {
+      "requirement": "Final current-state sync and stop",
+      "assessment": "PROVEN_FOR_REQUESTED_SCOPE",
+      "evidence": "IndependentRole4 permitsnegativeclosure; exact finalstatus; no remainingGoalwork"
+    }
+  ],
+  "inventories": [
+    {
+      "path": "live-P0-training/INVENTORY.json",
+      "sha256": "86274d437f98371404da782f1dd648be865e0e4d947512a3a30794a87efc478a",
+      "objects": 59,
+      "original_bytes": 2125461807,
+      "archive_bytes": 11698558,
+      "independent_fullhash_verification": "Role2/P0train,Role3/PLRtrain,Role4/separateboth-eval PASS; largefiles not rehashed in ordinary state sync."
+    },
+    {
+      "path": "live-PLR-training/INVENTORY.json",
+      "sha256": "7f496a7e1c1871b65b7e4d9a6d99903b939759947689a92a49d4002b53ea8b45",
+      "objects": 59,
+      "original_bytes": 2127733226,
+      "archive_bytes": 11424571,
+      "independent_fullhash_verification": "Role2/P0train,Role3/PLRtrain,Role4/separateboth-eval PASS; largefiles not rehashed in ordinary state sync."
+    },
+    {
+      "path": "live-P0-evaluation/INVENTORY.json",
+      "sha256": "c3a2441e8d4c17c36cc71ecb15f8277fb8c3818f91c32e0dc5978c056acfdee9",
+      "objects": 38,
+      "original_bytes": 3092048,
+      "archive_bytes": 3092048,
+      "independent_fullhash_verification": "Role2/P0train,Role3/PLRtrain,Role4/separateboth-eval PASS; largefiles not rehashed in ordinary state sync."
+    },
+    {
+      "path": "live-PLR-evaluation/INVENTORY.json",
+      "sha256": "32a6b0157d7158b12bdcfc399807aaadc64bf699127413398092deb62ea0016d",
+      "objects": 38,
+      "original_bytes": 3109135,
+      "archive_bytes": 3109135,
+      "independent_fullhash_verification": "Role2/P0train,Role3/PLRtrain,Role4/separateboth-eval PASS; largefiles not rehashed in ordinary state sync."
+    }
+  ],
+  "unique_original_objects": 194,
+  "release_and_resource_observations": [
+    {
+      "job_id": "J-37539ea96bd4c509",
+      "samples_percent": [
+        2,
+        2,
+        3
+      ],
+      "span_seconds": 10.031481288,
+      "runtime_memory_observations": 1225,
+      "postrun_audits": 2
+    },
+    {
+      "job_id": "J-ef6ec97c642bf4ac",
+      "samples_percent": [
+        1,
+        3,
+        3
+      ],
+      "span_seconds": 10.026711023,
+      "runtime_memory_observations": 1225,
+      "postrun_audits": 2
+    },
+    {
+      "job_id": "J-a063fd710a007b35",
+      "samples_percent": [
+        4,
+        2,
+        1
+      ],
+      "span_seconds": 10.028103516,
+      "runtime_memory_observations": 403,
+      "postrun_audits": 2
+    },
+    {
+      "job_id": "J-9e7fc7e96356ac0c",
+      "samples_percent": [
+        4,
+        2,
+        3
+      ],
+      "span_seconds": 10.039583875,
+      "runtime_memory_observations": 403,
+      "postrun_audits": 2
+    }
+  ],
+  "protected_scope_changes": [],
+  "STOP": [],
+  "active_or_uncertain_jobs": 0,
+  "owned_processes_alive": 0,
+  "observed": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "actor_optimizer_steps": 1024,
+    "critic_optimizer_steps": 1024
+  },
+  "retained_reservations": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14
+  },
+  "original_native_statuses_preserved": true,
+  "old_goal_nontraining_reservation_unchanged": 80640,
+  "new_execution_in_finalization": 0,
+  "new_role_calls_in_finalization": 0,
+  "remaining_required_goal_work": [],
+  "future_scope": "Not authorized or started; proposal only."
+}

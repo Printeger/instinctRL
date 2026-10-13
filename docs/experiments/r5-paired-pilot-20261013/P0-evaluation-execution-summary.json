@@ -28,9 +28,20 @@
   "original_bytes": 3092048,
   "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
   "postrun_GPU_queries_performed": 2,
-  "scientific_acceptance": "PENDING_INDEPENDENT_ACTUAL_DATA_REVIEW",
+  "scientific_acceptance": "ACCEPTED_COMPLETE_NEGATIVE_EVIDENCE_INDEPENDENT_ROLE4",
   "postrun_audit_receipts": [
     "P0-evaluation-postrun-gpu-0.json",
     "P0-evaluation-postrun-gpu-1.json"
-  ]
+  ],
+  "independent_review": {
+    "path": "reviews/review-pair-final-scientific.json",
+    "sha256": "6810e089f658f430b31ceead64605239fc7b46647467858e9bf2070b306657f5",
+    "verdict": "PASS",
+    "role_call": 4,
+    "independent_handle": "/root/pilot_reviewer",
+    "evidence_commit": "52cd7701499508956fe9721426dec45f80cb476b",
+    "scope": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+    "ordinary_state_sync": "SATISFIED",
+    "not_future_training_authority": true
+  }
 }

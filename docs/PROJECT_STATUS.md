@@ -5,11 +5,13 @@
 代码、状态、workload、必要工具和测试已整理到本仓库。源历史完整继承到 `903afc5`，
 其后产品集成提交为 `91c6997`，workload/工具集成为 `e7d58d2`。
 
-## 当前 Goal（2026-10-13 短程配对实验）
+## 最新完成 Goal（2026-10-13 短程配对实验）
 
-两组P0/PLR各64updates及u16/u64原Z已真实完成，当前 FINAL_SCIENTIFIC_REVIEW。两组真实首次512samplegate均PASS；实际初始化与首次采样逐位相同，唯一变量actorLR3e-4/1e-4。首更新最终analyticBetaKL15.012778/0.276192；原Z四节点全部0/32。较低LR减少本对首更新震荡，仍不支持原Z准入或256updates扩展。
+**PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS**。独立Role4最终PASS，无阻塞性MUST_FIX，用户完整目标17项核对通过，已停止。两组各64updates与u16/u64原Z真实完成；共享ef68且只actorLR3e-4/1e-4不同，init和首次512采样逐位相同，真实首次gate均先于两类optimizer通过。
 
-[报告](experiments/r5-paired-pilot-20261013/PAIR_REPORT.md)、[机器结果](experiments/r5-paired-pilot-20261013/pair_results.json)、[唯一证据索引](experiments/r5-paired-pilot-20261013/STATE_AND_EVIDENCE.md)。训练观察65536、评估25600、128updates、14writes；四个nativecloseFAILED/-9，normalownedACK无残留，H1INCOMPLETE/null与全部reservation保持。4freshentries已用，不再live或探测；Role4最终独立审核待完成。旧诊断READY、修复和历史失败/额度保留。
+首更新mb8后analyticBetaKL均值P0=15.012778、PLR=0.276192；原Z四节点全部0/32。较低LR大幅减少本对首更新震荡，PLRu64速度/高度满足原门槛但水平漂移1.088824m超0.30m，仍不支持原Z准入或256updates扩展。一对seed不证明一般优劣。
+
+[报告](experiments/r5-paired-pilot-20261013/PAIR_REPORT.md)、[机器结果](experiments/r5-paired-pilot-20261013/pair_results.json)、[唯一证据索引](experiments/r5-paired-pilot-20261013/STATE_AND_EVIDENCE.md)、[最终独立审核](experiments/r5-paired-pilot-20261013/reviews/review-pair-final-scientific.json)。观察训练65536、评估25600、128logicalupdates、14writes；四个nativeclose仍FAILED/-9，normalownedACK无残留，H1INCOMPLETE/null与全部reservation保留。4freshentries/4roles已用，未重做控制诊断，未改方法；不再live或探测。下一阶段CPU科学分解仅为提案，未开始。
 
 ## 已完成诊断 Goal（2026-10-12 新授权）
 

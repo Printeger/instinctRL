@@ -83,7 +83,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Separately validate bothactualu16/u64originalZ evaluations, original128episodes/raw/checkpoint+auth/inventories/failedclose+cleanup+budget; completepair report/machine/scientificdecision and userGoal completion audit",
-      "status": "REQUESTED"
+      "status": "PASS_FINAL_SCIENTIFIC_CLOSURE",
+      "evidence": "reviews/review-pair-final-scientific.json",
+      "sha256": "6810e089f658f430b31ceead64605239fc7b46647467858e9bf2070b306657f5"
     }
   ],
   "runs": [
@@ -118,7 +120,8 @@
       "allocated_gpu_seconds": 309.4876573861111,
       "output_bytes_including_archive": 2137160365,
       "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
-      "inventory": "live-P0-training/INVENTORY.json"
+      "inventory": "live-P0-training/INVENTORY.json",
+      "scientific_acceptance": "ACCEPTED_ACTUAL_TRAINING_ROLE2_OR3"
     },
     {
       "group": "PLR",
@@ -151,7 +154,8 @@
       "allocated_gpu_seconds": 314.3097850459162,
       "output_bytes_including_archive": 2139157797,
       "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
-      "inventory": "live-PLR-training/INVENTORY.json"
+      "inventory": "live-PLR-training/INVENTORY.json",
+      "scientific_acceptance": "ACCEPTED_ACTUAL_TRAINING_ROLE2_OR3"
     },
     {
       "group": "P0",
@@ -184,7 +188,8 @@
       "allocated_gpu_seconds": 95.35653276508674,
       "output_bytes_including_archive": 6184096,
       "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
-      "inventory": "live-P0-evaluation/INVENTORY.json"
+      "inventory": "live-P0-evaluation/INVENTORY.json",
+      "scientific_acceptance": "ACCEPTED_ORIGINAL_Z_NEGATIVE_ROLE4"
     },
     {
       "group": "PLR",
@@ -217,11 +222,25 @@
       "allocated_gpu_seconds": 94.61625608988106,
       "output_bytes_including_archive": 6218270,
       "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
-      "inventory": "live-PLR-evaluation/INVENTORY.json"
+      "inventory": "live-PLR-evaluation/INVENTORY.json",
+      "scientific_acceptance": "ACCEPTED_ORIGINAL_Z_NEGATIVE_ROLE4"
     }
   ],
   "no_blind_retry": true,
   "training_authorizations_issued": 2,
   "evaluation_authorizations_issued": 2,
-  "status": "ALL_FOUR_ENTRIES_TERMINAL_FULL_ACTUAL_PAIR_PENDING_FINAL_INDEPENDENT_REVIEW"
+  "status": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+  "independent_final_review": {
+    "path": "reviews/review-pair-final-scientific.json",
+    "sha256": "6810e089f658f430b31ceead64605239fc7b46647467858e9bf2070b306657f5",
+    "verdict": "PASS",
+    "role_call": 4,
+    "independent_handle": "/root/pilot_reviewer",
+    "evidence_commit": "52cd7701499508956fe9721426dec45f80cb476b",
+    "scope": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+    "ordinary_state_sync": "SATISFIED",
+    "not_future_training_authority": true
+  },
+  "future_live_authorization": false,
+  "used_field_scope": "Formal FINAL-settled transitions/updates/checkpoint counts only; zero values here do not mean no actual training. Observed complete counts and full retained reservations are both recorded separately."
 }
