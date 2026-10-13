@@ -19,8 +19,8 @@
     "role_calls": 12
   },
   "used": {
-    "live_starts": 1,
-    "simulator_initialization_reservations": 1,
+    "live_starts": 2,
+    "simulator_initialization_reservations": 2,
     "training_transitions": 0,
     "nontraining_transitions": 0,
     "optimizer_updates": 0,
@@ -32,10 +32,10 @@
     "role_calls": 3
   },
   "reserved": {
-    "training_transitions": 32768,
+    "training_transitions": 65536,
     "nontraining_transitions": 0,
-    "optimizer_updates": 64,
-    "training_checkpoint_writes": 7
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14
   },
   "observed": {
     "training_transitions": 32768,
@@ -69,7 +69,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Actual C0 scientifictraining/realgate/sevencheckpoints/wholeinventory/source/coef/nativeFAILEDcleanup andacceptedactualu16/u64evalbindings",
-      "status": "REQUESTED"
+      "status": "PASS",
+      "evidence": "reviews/review-C0-training-actual.json",
+      "sha256": "9bdc7e42eaa50affcbe57132455f6f40efe072a15b7f33100ea2c0e506d74412"
     }
   ],
   "runs": [
@@ -106,12 +108,29 @@
       "output_bytes_including_archive": 2138436473,
       "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
       "inventory": "live-C0-training/INVENTORY.json"
+    },
+    {
+      "group": "C1",
+      "mode": "pilot-training",
+      "spec_id": "UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014",
+      "job_id": "J-3083020018e55362",
+      "status": "RUNNING",
+      "starts_charged": 1,
+      "simulator_initialization_reserved": 1,
+      "training_transitions_reserved": 32768,
+      "nontraining_transitions_reserved": 0,
+      "optimizer_updates_reserved": 64,
+      "training_checkpoint_writes_reserved": 7,
+      "output_bytes_reserved": 17179869184,
+      "postrun_nvidia_smi_calls_used": 0,
+      "observed": {},
+      "settlement": "PENDING_ACTUAL_FINAL_COLLECTOR"
     }
   ],
   "training_authorizations_issued": 2,
-  "evaluation_authorizations_issued": 0,
+  "evaluation_authorizations_issued": 1,
   "no_blind_retry": true,
-  "output_reservations_bytes": 17179869184,
+  "output_reservations_bytes": 34359738368,
   "prior_completed_goals": [
     "../../diagnostics/r5-readiness/goal_budget.json",
     "../r5-paired-pilot-20261013/goal_budget.json"

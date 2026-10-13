@@ -27,6 +27,21 @@
   "original_inventory_objects": 61,
   "original_bytes": 2127005798,
   "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
-  "postrun_GPU_queries_performed": 0,
-  "scientific_acceptance": "PENDING_INDEPENDENT_ACTUAL_DATA_REVIEW"
+  "postrun_GPU_queries_performed": 2,
+  "scientific_acceptance": "ACCEPTED_INDEPENDENT_ACTUAL_DATA_REVIEW",
+  "independent_review": {
+    "id": "E-R5-ZERO-C0-ACTUAL-TRAINING-20261014",
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-C0-training-actual.json",
+    "sha256": "9bdc7e42eaa50affcbe57132455f6f40efe072a15b7f33100ea2c0e506d74412",
+    "accepted": true,
+    "independent_handle": "/root/pilot_reviewer",
+    "scope": "Actual C0 scientific training/checkpoint acceptance; conditional exact originalZ evaluation admission only",
+    "source_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+    "job_id": "J-08bc17b874c978ea",
+    "not_live_or_training_authority": true
+  },
+  "postrun_audit_receipts": [
+    "C0-training-postrun-gpu-0.json",
+    "C0-training-postrun-gpu-1.json"
+  ]
 }

@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_ZERO_CORRECTION_C0_TRAINING_TERMINAL_PENDING_ACTUAL_REVIEW",
+  "phase": "R5_ZERO_CORRECTION_C1_TRAINING_LIVE",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -386,11 +386,11 @@
     "evidence_index": "../docs/experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md",
     "budget": "../docs/experiments/r5-zero-correction-20261014/goal_budget.json",
     "user_authority": "../docs/experiments/r5-zero-correction-20261014/user_task_authority.json",
-    "current_job": null,
+    "current_job": "J-3083020018e55362",
     "training_execution_requested_by_user": true,
     "training_authorization_issued": true,
-    "current_exact_release": "A-5dfb0a67d7b17e55",
-    "next_action": "Two bound postrun audit calls after ownedquiescence; CPU actualdataanalysis; independent scientificacceptance. Noresubmit.",
+    "current_exact_release": "A-6e1d2608d1097fde",
+    "next_action": "Poll exactlivejob; realgate/data/status/ownedcleanup then settle resources, noresubmit.",
     "independent_review": {
       "status": "PASS_PRELIVE_ONLY",
       "role_call": 2,
