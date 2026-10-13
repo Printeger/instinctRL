@@ -29,7 +29,7 @@
     "allocated_gpu_seconds": 0,
     "output_bytes": 0,
     "automatic_retries": 0,
-    "role_calls": 1
+    "role_calls": 2
   },
   "reserved": {
     "training_transitions": 0,
@@ -54,6 +54,13 @@
       "status": "MUST_FIX",
       "evidence": "reviews/review-zero-prelive-original.json",
       "sha256": "2cc493aed43fc7e05c49e8d91bdbb046b34c2c68815c4e8e5f4f4cf31521f1f5"
+    },
+    {
+      "call": 2,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Freshfd-fixcandidate exactprelive; closesQUOTA-FD-PATH-R1; preservesoriginalrejection/firstgate/solew/resource/Commanderconditions",
+      "status": "REQUESTED"
     }
   ],
   "runs": [],
