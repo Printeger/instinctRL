@@ -1,0 +1,123 @@
+{
+  "group": "C0",
+  "mode": "pilot-training",
+  "proposal_id": "P-5dfb0a67d7b17e55",
+  "proposal_sha256": "5dfb0a67d7b17e556b7d0b30537af6becb0df87e2ad2424e1eb8551a5b118d59",
+  "approval": {
+    "approval_id": "A-5dfb0a67d7b17e55",
+    "approver": "local-user-cli",
+    "budget": {
+      "fake_starts": 0,
+      "role_calls": 0,
+      "wall_seconds": 3610
+    },
+    "decision": "APPROVED",
+    "preconditions": [
+      "exact pins",
+      "accepted condition hashes",
+      "STOP clear",
+      "single submission"
+    ],
+    "proposal_id": "P-5dfb0a67d7b17e55",
+    "proposal_sha256": "5dfb0a67d7b17e556b7d0b30537af6becb0df87e2ad2424e1eb8551a5b118d59",
+    "proposal_version": 1,
+    "reason": "Commander exact approval under new user R5 zero-correction Goal; independent Role2 accepted. Same d257f9 quota-fixed newmethod baseline; solew0/.05 atsharedactorLR1e-4, group C0,64updates/32768transitions, first actual512samplegate before BOTH optimizers, no retries. User task authority SHA a087ced4c935b307a5e8133bccfa7d1dcdd834c9c1e7a4c985e66e90dd3e8753; require committed input pack and idle/STOP/budget/disk/coexistence/ownedcleanup before single release. Approval is not submission.",
+    "scope": "EXPERIMENT",
+    "stage_id": "INSTINCTRL-R5-ZERO-CORRECTION-20261014",
+    "time": 1791916218.7364757
+  },
+  "actual_authorization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C0-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+    "sha256": "381df451ed0629a7ddc27c99ea15223369a95933de381c2c9ace0008c616b96f"
+  },
+  "independent_pre_review": {
+    "id": "E-R5-ZERO-PRELIVE-20261014",
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-zero-prelive.json",
+    "sha256": "3d3b54d0fd6e8a0cc8b3dc3196bdb97054cb3b418deeef1db1c923f98cef95f3",
+    "accepted": true,
+    "role_call": 2,
+    "independent_handle": "/root/pilot_reviewer",
+    "candidate_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+    "input_commit": "7ab511b5a8f55e88652df37658a26f3c3ad6501d",
+    "scope": "Exact C0/C1 training prelive; conditional evaluation template only",
+    "not_live_or_training_authority": true
+  },
+  "user_task_authority_sha256": "a087ced4c935b307a5e8133bccfa7d1dcdd834c9c1e7a4c985e66e90dd3e8753",
+  "remaining_budget_before_submission": {
+    "schema_version": "instinctrl-r5-pair-resource-ledger/1",
+    "goal_id": "INSTINCTRL-R5-ZERO-CORRECTION-20261014",
+    "authority": {
+      "path": "user_task_authority.json",
+      "sha256": "a087ced4c935b307a5e8133bccfa7d1dcdd834c9c1e7a4c985e66e90dd3e8753"
+    },
+    "caps": {
+      "live_starts": 4,
+      "simulator_initialization_reservations": 4,
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14,
+      "wall_seconds_including_cleanup": 10840,
+      "allocated_gpu_seconds": 10840,
+      "output_bytes": 68719476736,
+      "automatic_retries": 0,
+      "role_calls": 12
+    },
+    "used": {
+      "live_starts": 0,
+      "simulator_initialization_reservations": 0,
+      "training_transitions": 0,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0,
+      "wall_seconds_including_cleanup": 0,
+      "allocated_gpu_seconds": 0,
+      "output_bytes": 0,
+      "automatic_retries": 0,
+      "role_calls": 2
+    },
+    "reserved": {
+      "training_transitions": 0,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0
+    },
+    "observed": {
+      "training_transitions": 0,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0,
+      "actor_optimizer_steps": 0,
+      "critic_optimizer_steps": 0
+    },
+    "role_calls": [
+      {
+        "call": 1,
+        "role": "Reviewer",
+        "handle": "/root/pilot_reviewer",
+        "scope": "NewGoalPhaseA/B CPU attribution, solemethodvariable/C0equivalence, exactabc647snapshot/profile/AUTH/resource/output/firstgate/evaldeferredbinding; prerelease only",
+        "status": "MUST_FIX",
+        "evidence": "reviews/review-zero-prelive-original.json",
+        "sha256": "2cc493aed43fc7e05c49e8d91bdbb046b34c2c68815c4e8e5f4f4cf31521f1f5"
+      },
+      {
+        "call": 2,
+        "role": "Reviewer",
+        "handle": "/root/pilot_reviewer",
+        "scope": "Freshfd-fixcandidate exactprelive; closesQUOTA-FD-PATH-R1; preservesoriginalrejection/firstgate/solew/resource/Commanderconditions",
+        "status": "REQUESTED"
+      }
+    ],
+    "runs": [],
+    "training_authorizations_issued": 0,
+    "evaluation_authorizations_issued": 0,
+    "no_blind_retry": true,
+    "output_reservations_bytes": 0,
+    "prior_completed_goals": [
+      "../../diagnostics/r5-readiness/goal_budget.json",
+      "../r5-paired-pilot-20261013/goal_budget.json"
+    ],
+    "note": "Observed logicalcounts subset of conservative reservations until formalFINAL, never doublecharged/refunded onINCOMPLETE. Perentry16GiB reserved before release; cumulativebeforewrite13GiB workloads plus3GiB finitecontrol/native/archive allowance; 4reservations<=64GiB."
+  },
+  "submitted": false
+}

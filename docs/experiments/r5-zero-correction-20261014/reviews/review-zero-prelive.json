@@ -1,0 +1,39 @@
+{
+  "verdict": "PASS",
+  "scope": "新准确C0/C1训练输入的条件性pre-live验收；未来原Z评估仅接受设计与准入规则，不签发release。",
+  "identities": {
+    "launch_sha256": "1fea1ccb4190c3f7eb9f7f1cf31270e1db860254cc41680b149a0476644ffca7",
+    "source_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+    "source_tree": "04cd069bada7cd0b838cd1539e916296d67f70ac",
+    "input_commit": "7ab511b5a8f55e88652df37658a26f3c3ad6501d",
+    "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3",
+    "snapshot_overlay_sha256": "57604f29cf88edc0be22a1d0dda1f9fc44771fa6027496ae91d5e09072adc9b7",
+    "method_sha256": "ecc75a8e3d581ca1bd43e8c3e34326a5f18dd55cfa1739fe3b26f4e25fe1c14e",
+    "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+    "expected_training_AUTH_sha256": {"C0": "381df451ed0629a7ddc27c99ea15223369a95933de381c2c9ace0008c616b96f", "C1": "05df1f8e2f74d06d655edc0e01a6f9f82b708c4bfac6d9f0dddbf6ec39a268b0"}
+  },
+  "must_fix": [],
+  "closed_findings": [{"id": "QUOTA-FD-PATH-R1", "contract": "实际fd原子持久化必须兼容累计before-write quota。", "evidence": "新准确源码使guard_stream接收明确路径，atomic_json_replace/atomic_torch_replace传入真实临时路径。独立在/tmp使用精确只读快照执行quota-enabled原子JSON、原子tensor和直接tensor写入均通过；超额JSON在写入前拒绝、目标及临时文件不存在、拒绝预留不增加计数。新增实际fd回归及30PASS receipt覆盖原测试遗漏。", "assessment": "CLOSED_FOR_THIS_EXACT_CANDIDATE", "historical_boundary": "旧abc647/6e3ac66仍保持MUST_FIX历史身份，未授权或运行，不继承新候选验收。"}],
+  "verified": [
+    {"contract": "准确源码、配置、工具与AUTH字节", "assessment": "PASS_STATIC_ONLY", "evidence": "绑定的navrl解释器实际load_config验证完整52-source配置通过；96工具release文件SHA全部匹配。四入口执行pins及两个训练AUTH预期字节与新packet匹配，四个fresh attempts和实际AUTH均不存在。"},
+    {"contract": "单变量方法与首次optimizer前gate", "assessment": "PASS_PRELIVE", "evidence": "新候选相对于原候选的生产修复限于quota路径；此前已核验的C0w0/C1w.05、共享actorLR1e-4/critic3e-4、reward公式、系数method SHA、w0等价性及actor边界不变。真实capture/bind/gate仍位于trainer.update和两类optimizer之前，原容差不变。", "limit": "共同真实init、首次512采样对应、实际gate和实际checkpoint仍待运行后的独立审核。CPU回归不替代这些证据。"},
+    {"contract": "大型写入与资源额度", "assessment": "PASS_FOR_BOUNDED_ENTRY_DESIGN", "evidence": "实际JSON原子写入、LearningLog追加、retained inputs/probes、checkpoint临时写入均连接quota；无quota历史路径保留。新入口13GiB累计预写计账、不退覆盖或失败额度；2GiB kernel per-file上限保留。submit在调用现有experiments.submit前累计预留16GiB，四次预留不超过64GiB。settle在每次归档copy前检查256MiB总帽，只复制单件<=4MiB的小文件，并核对原件及含归档入口总量。"},
+    {"contract": "既有Commander流程与清理/计账", "assessment": "PASS_CONDITIONAL", "evidence": "薄脚本复用现有validate/propose/show/decide/submit/reconcile；STOP、无active/uncertain job、准确tool/spec、磁盘及剩余额度先行检查，无新launch渠道。原内部coexistence、正常owned ACK、两次postrun额度及INCOMPLETE保守reservation边界保留。"},
+    {"contract": "归因与新增fixed-input KL范围", "assessment": "PASS_WITH_LIMITS", "evidence": "Role1已独立重算实际旧窗口、梯度与优势归因。新增CPU_FIXED_INPUT_CONDITIONAL_KL明确使用真实u1固定输入比较init/u1/u2/u16/u64 checkpoint，分别列出输入和checkpoint SHA，并明确不同于实际后续rollout条件KL。", "limit": "P0/PLR u64固定输入KL约13.8158/1.7381仅描述checkpoint迁移，不是实际u64采样KL、闭环反事实或零漂移因果证明；本轮没有重新执行模型前向。"},
+    {"contract": "评估延期绑定", "assessment": "PASS_TEMPLATE_ONLY", "evidence": "u16/u64真实checkpoint SHA仍为空，实际训练独立接受前不得发行评估。后续脚本要求准确source/config、实际checkpoint SHA及独立训练review predicate后才创建评估AUTH/spec。"}
+  ],
+  "non_blocking": [
+    {"id": "APPROVAL-NARRATIVE", "assessment": "训练authorize脚本的批准理由文字仍提到“Role1 accepted / abc647 baseline”。发行时应改为本次Role2与d257f9准确身份；实际机器绑定已经使用新packet和review identities，此文字残留不影响本次技术预审。"},
+    {"id": "OUTPUT-ACCOUNTING-LIMIT", "assessment": "16GiB预留不能代替实际输出计账。每入口需继续证明native/control/metadata和归档在3GiB allowance内，并将分析证据及其他任务输出计入64GiB总帽；超额不得退款或以科学完成掩盖。"},
+    {"id": "SCIENTIFIC-SCOPE", "assessment": "w=.05为预先固定候选，未证明最优或已修复漂移。u64为主比较、u16诊断，旧PLR仅历史参考；C1的advantages/returns可以因奖励改变而不同。"}
+  ],
+  "release_conditions": [
+    "将本次准确accepted review SHA predicate绑定至最终训练spec，发行AUTH字节必须匹配上述预期哈希，提交固定后再由Commander准确审批。",
+    "保持当前source/config/method/argv/pins及w0/.05不变；不将旧被拒候选或未冻结代码替代本候选。",
+    "每入口预留资源后执行既有单次release；原内部coexistence PASS后才创建模拟器，无自动重试。",
+    "真实首次512 gate须在两类optimizer前按原容差通过；失败零更新并保存实际证据。",
+    "评估仅在真实训练数据、gate及u16/u64 checkpoint来源/SHA被独立接受后发行，并保持原Z全部样本、阈值、seed及安全门槛。",
+    "native FAILED/-9与collector INCOMPLETE/full reservation如实保留；技术pre-live PASS不是科学有效性或进程成功验收。"
+  ],
+  "review_actions": {"shared_writes": 0, "gpu_queries": 0, "simulation_or_live_starts": 0, "optimizer_calls": 0, "model_forward_calls": 0, "delegations": 0, "temporary_CPU_checks": "仅/tmp实际持久化、quota溢出与清理验证；共享快照只读。"}
+}

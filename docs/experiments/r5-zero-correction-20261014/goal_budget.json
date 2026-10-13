@@ -60,11 +60,13 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Freshfd-fixcandidate exactprelive; closesQUOTA-FD-PATH-R1; preservesoriginalrejection/firstgate/solew/resource/Commanderconditions",
-      "status": "REQUESTED"
+      "status": "PASS",
+      "evidence": "reviews/review-zero-prelive.json",
+      "sha256": "3d3b54d0fd6e8a0cc8b3dc3196bdb97054cb3b418deeef1db1c923f98cef95f3"
     }
   ],
   "runs": [],
-  "training_authorizations_issued": 0,
+  "training_authorizations_issued": 2,
   "evaluation_authorizations_issued": 0,
   "no_blind_retry": true,
   "output_reservations_bytes": 0,

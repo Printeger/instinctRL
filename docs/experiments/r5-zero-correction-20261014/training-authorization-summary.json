@@ -1,0 +1,30 @@
+{
+  "status": "EXACT_COMMANDER_APPROVED_NOT_SUBMITTED",
+  "training_groups": [
+    {
+      "group": "C0",
+      "proposal_id": "P-5dfb0a67d7b17e55",
+      "proposal_sha256": "5dfb0a67d7b17e556b7d0b30537af6becb0df87e2ad2424e1eb8551a5b118d59",
+      "actual_authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C0-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+        "sha256": "381df451ed0629a7ddc27c99ea15223369a95933de381c2c9ace0008c616b96f"
+      }
+    },
+    {
+      "group": "C1",
+      "proposal_id": "P-6e1d2608d1097fde",
+      "proposal_sha256": "6e1d2608d1097fdea22fc5516d6978aac8f66bbdbee554312976eb282e570b31",
+      "actual_authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+        "sha256": "05df1f8e2f74d06d655edc0e01a6f9f82b708c4bfac6d9f0dddbf6ec39a268b0"
+      }
+    }
+  ],
+  "production_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+  "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3",
+  "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+  "actual_training_starts": 0,
+  "actual_optimizer_updates": 0,
+  "gpu_queries": 0,
+  "simulation_starts": 0
+}

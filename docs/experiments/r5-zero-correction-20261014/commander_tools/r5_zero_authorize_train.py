@@ -40,7 +40,7 @@ for row in packet['entries']:
  experiments.validate(spec,control)
  pid=experiments.propose(store,spec);shown=policy.show_proposal(store,pid)
  after=policy.decide(store,pid,shown['sha256'],'APPROVED',
-  'Commander exact approval under new user R5 zero-correction Goal; independent Role1 accepted. Same abc647 newmethod baseline; solew0/.05 atsharedactorLR1e-4, group '+group+
+  'Commander exact approval under new user R5 zero-correction Goal; independent Role2 accepted. Same d257f9 quota-fixed newmethod baseline; solew0/.05 atsharedactorLR1e-4, group '+group+
   ',64updates/32768transitions, first actual512samplegate before BOTH optimizers, no retries. User task authority SHA '+sha(base/'user_task_authority.json')+
   '; require committed input pack and idle/STOP/budget/disk/coexistence/ownedcleanup before single release. Approval is not submission.')
  approvals=[a for a in after['approvals'].values() if a['proposal_id']==pid]

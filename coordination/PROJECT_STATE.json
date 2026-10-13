@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_ZERO_CORRECTION_PHASE_B_CPU",
+  "phase": "R5_ZERO_CORRECTION_EXACT_TRAINING_APPROVALS_ISSUED_NOT_SUBMITTED",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -391,9 +391,16 @@
     "user_authority": "../docs/experiments/r5-zero-correction-20261014/user_task_authority.json",
     "current_job": null,
     "training_execution_requested_by_user": true,
-    "training_authorization_issued": false,
-    "current_exact_release": null,
-    "next_action": "PhaseB CPU regressions andnewexactcandidate/inputsnapshot, independent prelive thenCommander."
+    "training_authorization_issued": true,
+    "current_exact_release": "C0-training-commander-approval.json",
+    "next_action": "Commit/tag/push exactapprovedinputs; singleC0release afterexistingSTOP/idle/budget/disk/pins/internalcoexistence.",
+    "independent_review": {
+      "status": "PASS_PRELIVE_ONLY",
+      "role_call": 2,
+      "path": "../docs/experiments/r5-zero-correction-20261014/reviews/review-zero-prelive.json",
+      "sha256": "3d3b54d0fd6e8a0cc8b3dc3196bdb97054cb3b418deeef1db1c923f98cef95f3"
+    },
+    "shared_baseline_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90"
   },
   "historical_prior_independent_review": {
     "path": "reviews/review-entry6-final-readiness.json",
