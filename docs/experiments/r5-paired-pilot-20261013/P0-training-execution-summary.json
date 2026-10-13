@@ -27,6 +27,22 @@
   "original_inventory_objects": 59,
   "original_bytes": 2125461807,
   "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
-  "postrun_GPU_queries_performed": 0,
-  "scientific_acceptance": "PENDING_INDEPENDENT_ACTUAL_DATA_REVIEW"
+  "postrun_GPU_queries_performed": 2,
+  "scientific_acceptance": "ACCEPTED_INDEPENDENT_ACTUAL_DATA_REVIEW",
+  "postrun_audit_receipts": [
+    "P0-training-postrun-gpu-0.json",
+    "P0-training-postrun-gpu-1.json"
+  ],
+  "postrun_scope": "Two authorized terminal/ownedquiescent GPU and computeapp queries; original execution facts unchanged.",
+  "independent_review": {
+    "id": "E-R5-PAIR-P0-ACTUAL-TRAINING-20261013",
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/reviews/review-P0-training-actual.json",
+    "sha256": "365fa0256eb88b2b21c8f1adc9194c0e9a6663f1bbbbde0a086e7c542af72dc0",
+    "accepted": true,
+    "independent_handle": "/root/pilot_reviewer",
+    "scope": "Actual P0 scientific training/checkpoint acceptance; conditional exact originalZ evaluation admission only",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "job_id": "J-37539ea96bd4c509",
+    "not_live_or_training_authority": true
+  }
 }

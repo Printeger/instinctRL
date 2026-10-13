@@ -1,0 +1,104 @@
+{
+  "verdict": "PASS",
+  "scope": "独立接受 P0 实际训练科学证据及真实 u16/u64 checkpoint 身份；条件性允许准备原Z评估审批，不签发 release。",
+  "identities": {
+    "evidence_commit": "4da6d28047aafa51e65fe7fca3c859520c3d1b6f",
+    "job_id": "J-37539ea96bd4c509",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+    "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+    "actual_authorization_sha256": "e3d36470554f42e7fb610a03a755c3acc11254c454cd9a24b9fb65c96ad5b554"
+  },
+  "must_fix": [],
+  "actual_evidence_checks": [
+    {
+      "contract": "完整原始证据及准确执行绑定",
+      "result": "PASS",
+      "evidence": "独立验证59个对象、2125461807原始字节及全部可用归档的bytes/SHA；递归枚举原始job和整个attempt，与inventory完全一致，无遗漏或错误。实际job request spec与提交的授权spec对象一致，各实际pins匹配。"
+    },
+    {
+      "contract": "完整训练覆盖",
+      "result": "PASS",
+      "evidence": "独立从原始文件重算分析，结果与保存分析逐字段一致：64个连续update、512个minibatch、全部1024×32实际返回样本、零命令warmup、实际body-frame控制向量和8个首次更新pre/post probe。无故障或partial记录补样。"
+    },
+    {
+      "contract": "首次真实512样本gate",
+      "result": "PASS_ACTUAL_SAME_DEVICE_GATE",
+      "evidence": "实际gate记录PASS。全部8个probe的512索引和action对应捕获rollout；第一次更新前probe logp与采样时old logp逐位相等，ratio全部为1。已接受源码中的capture/bind/gate发生于trainer.update及两类optimizer之前。",
+      "independent_reproduction_limit": "CPU从实际init checkpoint前向重建alpha/beta通过原容差；跨CPU与原执行设备的logp重建未通过同一容差，因此不声称CPU完整重演了GPU概率gate，也不据此否定真实同设备gate。未放宽容差。"
+    },
+    {
+      "contract": "真实checkpoint与训练参数身份",
+      "result": "PASS",
+      "evidence": "独立CPU读取全部七个实际checkpoint，严格验证update、transition、global_policy_step、两类Adam步数、curriculum、训练seed、source/config身份和实际P0 actor/critic LR3e-4。"
+    },
+    {
+      "contract": "失败关闭、拥有者清理及保守计账",
+      "result": "PASS_WITH_DISCLOSED_PROCESS_FAILURE",
+      "evidence": "实际receipt为FAILED/-9；raw为PASS_PENDING_CLOSE。generic collector保持INCOMPLETE/null。正常lifeguard ACK两次稳定空扫描、无survivors；owner/guard/child当前均不存在。两次授权postrun原始审计为395MiB/5%及仅既有GNOME164MiB。",
+      "retained_reservations": {
+        "training_transitions": 32768,
+        "optimizer_updates": 64,
+        "training_checkpoint_writes": 7
+      }
+    }
+  ],
+  "accepted_observed_training": {
+    "updates": 64,
+    "training_transitions": 32768,
+    "checkpoint_writes": 7,
+    "actor_adam_steps": 512,
+    "critic_adam_steps": 512,
+    "policy_steps": 1024,
+    "explicit_resets": 1,
+    "automatic_reset_lanes": 230,
+    "initialization_ticks": 2,
+    "wall_seconds": 309.98664175882004,
+    "allocated_gpu_seconds": 309.4876573861111
+  },
+  "accepted_evaluation_checkpoints": [
+    {
+      "update": 16,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/results/pilot-training/checkpoints/u16.pt",
+      "sha256": "d656aac06d19410bba440192da680725a057a656309be355b7811c6bda966e72",
+      "transition": 8192,
+      "actor_and_critic_adam_steps_each": 128
+    },
+    {
+      "update": 64,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/results/pilot-training/checkpoints/u64.pt",
+      "sha256": "ee0c9ff9c7342287221885f1e1fc0f3631941aed86e2e12d8df0d2c5fa77b19d",
+      "transition": 32768,
+      "actor_and_critic_adam_steps_each": 512
+    }
+  ],
+  "non_blocking": [
+    {
+      "id": "NATIVE-CLOSE",
+      "assessment": "9.5秒native-close timeout属于真实进程失败。完整训练数据与安全owned cleanup支持独立科学接受，但不得改写为process PASS、graceful close或FINAL counters，也不得释放保守预留。"
+    },
+    {
+      "id": "CURRENT-SUMMARY-AUDIT-COUNT",
+      "assessment": "P0-training-execution-summary.json仍写postrun_GPU_queries_performed=0，与两个实际审计文件不一致。最终状态同步应改为2；这是当前摘要修正，不是训练科学证据阻塞。"
+    },
+    {
+      "id": "SCIENTIFIC-COMPARISON-PENDING",
+      "assessment": "P0首次更新较大的实际KL是描述性结果；尚不能推断LR效应、PLR优劣或原Z表现。负策略结果不使完整训练证据失效。"
+    }
+  ],
+  "evaluation_release_conditions": [
+    "将上述真实u16/u64路径、SHA和准确source身份绑定至P0评估AUTH/spec，加入本次独立接受的准确hash predicate，并提交固定后获得新Commander审批。",
+    "保持原评估seed20260909、原Z200步×32lanes×2、mounted-sensor T0、startup/safety/全部失败样本及方向子组；不得修改阈值。",
+    "评估模板目前未发行，本次PASS不是评估release；仍须STOP、剩余额度、磁盘和原内部coexistence gate。",
+    "P0的FAILED/INCOMPLETE及完整reservation必须继续披露。",
+    "PLR只能在P0拥有者和计账settlement成立后按自身准确批准启动；不得复用P0评审作为PLR实际训练科学验收。"
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "optimizer_calls": 0,
+    "delegations": 0,
+    "cpu_analysis": "读取、哈希、重算日志统计及无梯度checkpoint前向；未执行更新。"
+  }
+}

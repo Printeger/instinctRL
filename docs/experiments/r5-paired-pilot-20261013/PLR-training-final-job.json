@@ -1,0 +1,281 @@
+{
+  "approval_id": "A-3f8afd9a42e1569e",
+  "h1_evidence": {
+    "allocation_basis": "allocated_device_wall_seconds",
+    "allocation_gpu_seconds": 314.3097850459162,
+    "counter_completeness": "INCOMPLETE",
+    "counters": {
+      "actor_optimizer_steps": 512,
+      "attempted_policy_steps": 1024,
+      "attempted_updates": 64,
+      "automatic_resets": 32,
+      "completed_policy_steps": 1024,
+      "completed_updates": 64,
+      "critic_optimizer_steps": 512,
+      "explicit_resets": 1,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 7,
+      "real_environment_transitions": 32768,
+      "real_optimizer_updates": 64,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 32768
+    },
+    "exit_fact": "FAILED",
+    "formal_verdict": "NOT_GRANTED",
+    "manifest": {
+      "checkpoints/init0000.json": {
+        "bytes": 274,
+        "sha256": "ed12bac549c95b3c3a0ae8d50b464b36eb69ac71f8fa6f0a22cc890fc7e34593"
+      },
+      "checkpoints/init0000.pt": {
+        "bytes": 516748,
+        "sha256": "27cac4f19b7cc059c674748d2c48448bf83bb5572581d1db7bb4272eeb432677"
+      },
+      "checkpoints/u1.json": {
+        "bytes": 269,
+        "sha256": "402afd280a4a41ef0efb300e0852b5617b3275bbde021c405132ee48bc4b70c9"
+      },
+      "checkpoints/u1.pt": {
+        "bytes": 1509865,
+        "sha256": "baed6634ffdee60cd58b8067e50356b49bdcf7fb6835f3c17627090cf5cd981b"
+      },
+      "checkpoints/u16.json": {
+        "bytes": 270,
+        "sha256": "45d4f4918f82cf4fca10050393b3789fa325e2d47bfea72a7d3066ee1b64de4f"
+      },
+      "checkpoints/u16.pt": {
+        "bytes": 1509865,
+        "sha256": "b9007b5820b3c98072dbfb0bbb16552995aaacd15aaa2383167ecfe976e56938"
+      },
+      "checkpoints/u2.json": {
+        "bytes": 269,
+        "sha256": "2cbbdd8efc8c88890cda419fcd87d2d08c81ff564f8c687baf53adc0d75b0a08"
+      },
+      "checkpoints/u2.pt": {
+        "bytes": 1509865,
+        "sha256": "abeb526d616345259e45d4d7a00858a8f91c8ac9120f72fd57bd272335f51530"
+      },
+      "checkpoints/u32.json": {
+        "bytes": 270,
+        "sha256": "a032fd21c1cea2ffc4fcb8f32e9046285418ffd8792eca9eb523e0b256e07e64"
+      },
+      "checkpoints/u32.pt": {
+        "bytes": 1509865,
+        "sha256": "d39428e854e7d96a734a5eeb2d8a4336b2a77b9618cb773f703bf0597f31f60a"
+      },
+      "checkpoints/u64.json": {
+        "bytes": 270,
+        "sha256": "14ae8284ac06077e54a5da5fa58269c3c2fcc8d12827cb52ddbdff3cc6487970"
+      },
+      "checkpoints/u64.pt": {
+        "bytes": 1509865,
+        "sha256": "49509911b598dbcfae19e0732a4bb1715a352b2534f73cb74ec38fa8b815cfbd"
+      },
+      "checkpoints/u8.json": {
+        "bytes": 269,
+        "sha256": "2a7f2a01eee0f498ac6b115224112bf287e9463388a4aedf18383e32c2dd0eb2"
+      },
+      "checkpoints/u8.pt": {
+        "bytes": 1509865,
+        "sha256": "50e835b233fb4213945c1635ceb676761188580d2bb802220ed34255bfa5508f"
+      },
+      "cleanup_timeout.json": {
+        "bytes": 200,
+        "sha256": "6bd08f945502672104c2e0629e467b8155e08935fac9ecdcfdc22e02d3f98708"
+      },
+      "initialization_accounting.json": {
+        "bytes": 269,
+        "sha256": "61d33061293905bf9cf69e78083b6310aaafb6b060780015d3bef60151f6ef21"
+      },
+      "learning_log/accounting.jsonl": {
+        "bytes": 313432,
+        "sha256": "4cb1f50ba0e1e8a08bd44cc3c9a0da32e38a3b76b3dbdd35bc8a132b03fa2a39"
+      },
+      "learning_log/command_blocks.jsonl": {
+        "bytes": 36704,
+        "sha256": "1f8146ba91d9a905819f51435e68809289ab06c1a16fcc7dec6d08709c832fc3"
+      },
+      "learning_log/compact_rollouts.jsonl": {
+        "bytes": 71030983,
+        "sha256": "547679af2c221aa2a99eab47b2c4d5167723029562ad811bd2063696b6b3af37"
+      },
+      "learning_log/episodes.jsonl": {
+        "bytes": 70698,
+        "sha256": "c758cd575b5775b2579933c2b62009ec475b62565304bfeb33d82f0eeaeb87f7"
+      },
+      "learning_log/measurement_windows.jsonl": {
+        "bytes": 915176544,
+        "sha256": "707d8a913dee2dcab1ee078b55b33d9a5b031f102a897ee6126251bd81723c69"
+      },
+      "learning_log/minibatches.jsonl": {
+        "bytes": 218501,
+        "sha256": "4a5e0f7b466d887bbb848295915daa0117e8605631e9af500aabae54e27950cb"
+      },
+      "learning_log/partial_rollout_steps.jsonl": {
+        "bytes": 73447085,
+        "sha256": "ef49d3412a9c0c3353295afd6b36cfd0cc8d2f3ba084fdbb2b8c88814e0e7b27"
+      },
+      "learning_log/rollouts.jsonl": {
+        "bytes": 361803,
+        "sha256": "5a7ca5402b91350a8b60d51859ad70e09b55e530bb274b5377c57f2f54499770"
+      },
+      "learning_log/updates.jsonl": {
+        "bytes": 163146,
+        "sha256": "b86cb8acb53fc9e6c4901cde2cdf9369cc4ea6cdf3146abe7d86f746aaebd557"
+      },
+      "pilot_diagnostic/first_update_gate.json": {
+        "bytes": 179,
+        "sha256": "aed1dc5112c3f937bef1d15f06c4eccc64601db4b0b643fa202ca3eb7855bed8"
+      },
+      "pilot_diagnostic/first_update_probe.pt": {
+        "bytes": 12296929,
+        "sha256": "43edf5c786ccdbe6b446bb8d9167e55fb4e7f29aaa50d17a328780ff2a76688b"
+      },
+      "pilot_diagnostic/update_1_full_input.pt": {
+        "bytes": 522178557,
+        "sha256": "e04de97ae52d86b5920faa5c6c64ed68cc7fc911cf7f4212b3ea5b73bc7e197e"
+      },
+      "pilot_diagnostic/update_2_full_input.pt": {
+        "bytes": 522178557,
+        "sha256": "1961a4eb7d6653d0f7bb4f698cf7aae73942cbf85ab30ca0e891a3d70958e621"
+      },
+      "pilot_optimizer_lrs.json": {
+        "bytes": 114,
+        "sha256": "6bb41f0c382ff51d8ac0d68cb36e961dc3e16975f04ac04698efe5be0e1c672d"
+      },
+      "process_identity.json": {
+        "bytes": 293,
+        "sha256": "fd8db3922891d72e11e0342b253e2719ed47ee90cb9647171fc4f9c101dd4d7e"
+      },
+      "process_start.json": {
+        "bytes": 1348,
+        "sha256": "b0e08ac22941e51b6cbdca003635eae253a416853aebf5816f7ca3ee5290cdb3"
+      },
+      "status.json": {
+        "bytes": 954,
+        "sha256": "d4d200e801d1367d2e878c4ce591853bce0386a0b676290d053d7512674699f1"
+      }
+    },
+    "raw_status": "PASS_PENDING_CLOSE",
+    "scientific_validity": "UNASSESSED",
+    "scope": "H1_RAW_EXECUTION",
+    "transitions": null
+  },
+  "id": "J-ef6ec97c642bf4ac",
+  "identity": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pgid": 1752869,
+    "pid": 1752869,
+    "starttime": "182088115"
+  },
+  "receipt": {
+    "allocated_seconds": 314.3097850459162,
+    "definitely_not_released": false,
+    "elapsed_seconds": 314.8233371740207,
+    "error": null,
+    "exit_code": -9,
+    "job_id": "J-ef6ec97c642bf4ac",
+    "released": true,
+    "spec_sha256": "1ad356ffb478e63455501305ed47b4e249c7b4ec05c077c7aa67e2fc0f1d1c37",
+    "status": "FAILED"
+  },
+  "reserved_resources": {
+    "transitions": 32768
+  },
+  "spec": {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--authorization",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/commands/AUTHORIZATION.json",
+      "--attempt",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013",
+      "--mode",
+      "pilot-training"
+    ],
+    "backend": "real",
+    "conditions": [
+      {
+        "evidence_id": "E-R5-ENTRY6-FINAL-INDEPENDENT-READINESS",
+        "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620"
+      },
+      {
+        "evidence_id": "E-R5-PAIR-PRELIVE-20261013",
+        "sha256": "95badf6f17f1f9d212e70b981d5378763b0c2bae619e8f00435a01915edee088"
+      }
+    ],
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012",
+    "evaluation": "metric-h1-v1",
+    "h1": {
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013",
+      "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+      "gpu_accounting": "allocated_device_wall_seconds",
+      "gpu_devices": [
+        "0"
+      ],
+      "mode": "pilot-training",
+      "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012"
+    },
+    "id": "UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013",
+    "method": "unified-h1-v1",
+    "observations": [
+      "status",
+      "counters",
+      "process_identity",
+      "process_start",
+      "cleanup",
+      "pilot_diagnostic"
+    ],
+    "pins": {
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/commands/AUTHORIZATION.json",
+        "sha256": "65c7209459a89eb9206725573cf0677ff3be947d5bf02a05df228b5933add809"
+      },
+      "dispatcher": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/local_dispatch.py",
+        "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+      },
+      "executable": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "product": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+        "sha256": "5aa3e3f14c0cd2e754d26eb437cc270dda4914e8c63e4758b12ddeacf6a41e90"
+      },
+      "runtime": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "workload": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-pilot-r3-20261012/training_workloads/unified_h1/formal_unified_h1.py",
+        "sha256": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896"
+      }
+    },
+    "resources": {
+      "gpu_seconds": 3610,
+      "starts": 1,
+      "transitions": 32768,
+      "wall_seconds": 3610
+    },
+    "runtime": "/home/mint/rl_blackwell_test",
+    "seed": 20260908,
+    "stage_id": "INSTINCTRL-R5-PAIRED-PILOT-20261013"
+  },
+  "stage": "INSTINCTRL-R5-PAIRED-PILOT-20261013",
+  "status": "FAILED",
+  "used_resources": {
+    "gpu_seconds": 314.3097850459162,
+    "starts": 1,
+    "transitions": null,
+    "wall_seconds": 314.8233371740207
+  }
+}

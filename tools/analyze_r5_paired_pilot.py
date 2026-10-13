@@ -176,7 +176,7 @@ def evaluation(attempt, group):
         assert producer and producer['episodes'] == normalized_rows
         cases[str(update)] = {'status': 'ACTUAL_ORIGINAL_Z_REPLAYED', 'raw_path': str(raw), 'raw_sha256': digest(raw),
                               'episodes': rows, 'original_gate': gate,
-                              'evidence_valid_episodes': sum(row['evidence_valid'] for row in rows)}
+                              'evidence_valid_episodes': sum(row['engineering']['evidence_valid'] for row in rows)}
     return {'group': group, 'mode': 'pilot-evaluation', 'source_commit': SOURCE,
             'actual_raw_status': read(output / 'status.json'), 'u16_u64': cases,
             'coverage_complete': all(row['status'] == 'ACTUAL_ORIGINAL_Z_REPLAYED' for row in cases.values()),

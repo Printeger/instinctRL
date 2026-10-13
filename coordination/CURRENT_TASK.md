@@ -9,3 +9,5 @@ R5 P0/PLR短程配对 Goal：当前 EXACT_COMMANDER_APPROVED_NOT_SUBMITTED，未
 唯一索引 docs/experiments/r5-paired-pilot-20261013/STATE_AND_EVIDENCE.md；合同 EXPERIMENT_CONTRACT.md；准确待审 launch_inputs.proposed.json；账本 goal_budget.json。Role1独立预审PASS，已扣账。下一动作：提交/tag/push准确授权输入，然后STOP/预算/磁盘/工具复核，P0单次release；PLR等P0清理结账。评估checkpoint哈希留待实际训练独立验收，不伪造占位许可。
 
 P0已实际完成64updates/32768train/7checkpoint，真实512samplegatePASS。关闭FAILED/-9，INCOMPLETE/null，完整reservation保留；正常ownedACK无残留，两次postrunaudit已用。Role2正在独立核验真实P0数据和checkpoint评估准入。下一项PLR用原准确授权与共同ef68基线，在P0清理结账后单次release；不调整方法。
+
+PLR亦已实际完成64updates，真实512samplegatePASS；FAILED/-9关闭事实和完整reservation保留，ownedACK无残留，2postaudits完成。Role3独立实际审核待完成；P0真实u16/u64评估已经独立训练验收及准确Commander A-9ba9510d6b79b45b批准，提交输入后单次release。

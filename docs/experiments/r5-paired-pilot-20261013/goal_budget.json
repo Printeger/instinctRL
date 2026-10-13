@@ -17,30 +17,30 @@
     "automatic_retries": 0
   },
   "used": {
-    "live_starts": 1,
-    "simulator_initialization_reservations": 1,
+    "live_starts": 2,
+    "simulator_initialization_reservations": 2,
     "training_transitions": 0,
     "nontraining_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0,
-    "wall_seconds_including_cleanup": 309.98664175882004,
-    "allocated_gpu_seconds": 309.4876573861111,
-    "output_bytes": 2137160365,
-    "role_calls": 2
+    "wall_seconds_including_cleanup": 624.8099789328407,
+    "allocated_gpu_seconds": 623.7974424320273,
+    "output_bytes": 4276318162,
+    "role_calls": 3
   },
   "reserved": {
-    "training_transitions": 32768,
+    "training_transitions": 65536,
     "nontraining_transitions": 0,
-    "optimizer_updates": 64,
-    "training_checkpoint_writes": 7
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14
   },
   "observed": {
-    "training_transitions": 32768,
+    "training_transitions": 65536,
     "nontraining_transitions": 0,
-    "optimizer_updates": 64,
-    "training_checkpoint_writes": 7,
-    "actor_optimizer_steps": 512,
-    "critic_optimizer_steps": 512
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "actor_optimizer_steps": 1024,
+    "critic_optimizer_steps": 1024
   },
   "note": "Observed complete counters are subsets of conservative reservations until existing collector FINAL; no double charge or invented refund. Logical PPO updates are distinct from per-model Adam steps.",
   "prior_completed_goal": {
@@ -65,6 +65,15 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Actual P0 fulltraining/512samplelivegate/7checkpoints/1024steps/512minibatches/inventory/hash/close+ownedcleanup+retainedbudget and conditional actual P0 evaluation checkpoint admission",
+      "status": "PASS",
+      "evidence": "reviews/review-P0-training-actual.json",
+      "sha256": "365fa0256eb88b2b21c8f1adc9194c0e9a6663f1bbbbde0a086e7c542af72dc0"
+    },
+    {
+      "call": 3,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Actual PLR fulltraining/live512gate/7checkpoints/1024steps/512minibatches/completeinventory/close+ownedcleanup+budget; conditional originalZ checkpoint admission; compare true pair initialization identity",
       "status": "REQUESTED"
     }
   ],
@@ -101,9 +110,42 @@
       "output_bytes_including_archive": 2137160365,
       "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
       "inventory": "live-P0-training/INVENTORY.json"
+    },
+    {
+      "group": "PLR",
+      "mode": "pilot-training",
+      "spec_id": "UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013",
+      "job_id": "J-ef6ec97c642bf4ac",
+      "status": "FAILED",
+      "starts_charged": 1,
+      "simulator_initialization_reserved": 1,
+      "training_transitions_reserved": 32768,
+      "nontraining_transitions_reserved": 0,
+      "optimizer_updates_reserved": 64,
+      "training_checkpoint_writes_reserved": 7,
+      "postrun_nvidia_smi_calls_used": 2,
+      "observed": {
+        "training_transitions": 32768,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 64,
+        "training_checkpoint_writes": 7,
+        "actor_optimizer_steps": 512,
+        "critic_optimizer_steps": 512
+      },
+      "settlement": "INCOMPLETE_FULL_ENTRY_RESERVATION_RETAINED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "actual_accounting_completed": true,
+      "wall_seconds": 314.8233371740207,
+      "allocated_gpu_seconds": 314.3097850459162,
+      "output_bytes_including_archive": 2139157797,
+      "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
+      "inventory": "live-PLR-training/INVENTORY.json"
     }
   ],
   "no_blind_retry": true,
   "training_authorizations_issued": 2,
-  "evaluation_authorizations_issued": 0
+  "evaluation_authorizations_issued": 1
 }
