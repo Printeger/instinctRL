@@ -107,17 +107,50 @@ def training(attempt, group):
                            'approximate_kl': stats([record['approximate_kl'] for record in records]),
                            'actor_pre_clip_gradient_norm': stats([record['actor_pre_clip_gradient_norm'] for record in records]),
                            'statistics': row['statistics'], 'coverage': row['coverage']})
+    # Actual executed corrections from all returned training steps, rather
+    # than substituting action-space sample-minus-mean for a physical vector.
+    executed = {}
+    coordinates = set()
+    compact_path = output / 'learning_log/compact_rollouts.jsonl'
+    if compact_path.is_file():
+        with compact_path.open() as stream:
+            for line in stream:
+                row = json.loads(line)
+                coordinate = (row['update'], row['step'])
+                assert coordinate not in coordinates
+                coordinates.add(coordinate)
+                assert 1 <= coordinate[0] <= 64 and 0 <= coordinate[1] < 16
+                pre = row['pre_reset']; control = pre['control']
+                sample = executed.setdefault(row['update'], {'correction': [], 'final_command': [],
+                                                            'velocity': [], 'alpha': [], 'ics_beta': [], 'resets': 0})
+                for target, value in [('correction', control['v_corr_b']), ('final_command', control['v_final_b']),
+                                      ('velocity', pre['task']['actual_velocity_b'])]:
+                    assert torch.as_tensor(value).shape == (32, 3)
+                    sample[target].extend(value)
+                assert torch.as_tensor(row['command_b']).shape == (32, 3)
+                assert not bool(torch.as_tensor(row['command_b']).ne(0).any()), 'original1024-stepzero warmup changed'
+                sample['alpha'].extend(torch.as_tensor(control['alpha']).reshape(-1).tolist())
+                sample['ics_beta'].extend(torch.as_tensor(control['ics_metrics']['beta']).reshape(-1).tolist())
+                sample['resets'] += int(torch.as_tensor(row['terminated']).logical_or(torch.as_tensor(row['truncated'])).sum())
+    executed_rows = [{'update': update, 'actual_step_lane_samples': len(row['correction']),
+                      'issued_v_corr_b': vectors(row['correction']), 'executed_v_final_b': vectors(row['final_command']),
+                      'actual_velocity_b': vectors(row['velocity']), 'alpha': stats(row['alpha']),
+                      'ics_beta': stats(row['ics_beta']), 'reset_lanes': row['resets']}
+                     for update, row in sorted(executed.items())]
     complete = (len(updates) == 64 and [row['completed_updates'] for row in updates] == list(range(1, 65))
                 and all(row['status'] == 'VERIFIED_ACTUAL' for row in checkpoint_rows)
                 and bool(gate and gate['status'] == 'PASS' and gate['sample_count'] == 512)
                 and len(probes) == 8)
     if complete:
         assert len(minibatches) == 512
+        assert len(coordinates) == 1024 and len(executed_rows) == 64
+        assert all(row['actual_step_lane_samples'] == 512 for row in executed_rows)
     return {'group': group, 'mode': 'pilot-training', 'source_commit': SOURCE,
             'actual_raw_status': status, 'first_real_rollout_gate': gate, 'diagnostic_failure': failure,
             'scientific_training_coverage_complete': complete, 'completed_update_records': len(updates),
             'completed_minibatch_records': len(minibatches), 'checkpoints': checkpoint_rows,
             'actual_first_update_probe': probes, 'per_update': per_update,
+            'executed_training_corrections': executed_rows,
             'learning_failure_records': jsonl(output / 'learning_log/failures.jsonl'),
             'episodes': jsonl(output / 'learning_log/episodes.jsonl'),
             'partial_episode_records': jsonl(output / 'learning_log/partial_episodes.jsonl'),
