@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_ZERO_CORRECTION_EXACT_TRAINING_APPROVALS_ISSUED_NOT_SUBMITTED",
+  "phase": "R5_ZERO_CORRECTION_C0_TRAINING_LIVE",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -13,17 +13,14 @@
     "path": "../docs/history/consolidation-20261012/r5/review_evidence/HOST_CPU_EVIDENCE.json"
   },
   "latest_independent_review": {
-    "path": "reviews/review-pair-final-scientific.json",
-    "sha256": "6810e089f658f430b31ceead64605239fc7b46647467858e9bf2070b306657f5",
     "verdict": "PASS",
-    "role_call": 4,
+    "role_call": 2,
     "independent_handle": "/root/pilot_reviewer",
-    "evidence_commit": "52cd7701499508956fe9721426dec45f80cb476b",
-    "scope": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
-    "ordinary_state_sync": "SATISFIED",
-    "not_future_training_authority": true,
-    "evidence": "../docs/experiments/r5-paired-pilot-20261013/reviews/review-pair-final-scientific.json",
-    "status": "PASS_COMPLETE_SCIENTIFIC_NEGATIVE_RESULT"
+    "candidate_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+    "input_commit": "7ab511b5a8f55e88652df37658a26f3c3ad6501d",
+    "path": "../docs/experiments/r5-zero-correction-20261014/reviews/review-zero-prelive.json",
+    "sha256": "3d3b54d0fd6e8a0cc8b3dc3196bdb97054cb3b418deeef1db1c923f98cef95f3",
+    "scope": "EXACT_PRELIVE_ONLY_PENDING_ACTUAL_SCIENCE"
   },
   "latest_real_diagnostic": {
     "job_id": "J-ad3ac7db1fb82d89",
@@ -384,23 +381,27 @@
   "current_goal": {
     "target": "R5_ZERO_COMMAND_SINGLE_VARIABLE_SCIENTIFIC_CLOSURE",
     "status": "IN_PROGRESS",
-    "contract": "../contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md",
+    "contract": "contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md",
     "requirements": "../docs/goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md",
     "evidence_index": "../docs/experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md",
     "budget": "../docs/experiments/r5-zero-correction-20261014/goal_budget.json",
     "user_authority": "../docs/experiments/r5-zero-correction-20261014/user_task_authority.json",
-    "current_job": null,
+    "current_job": "J-08bc17b874c978ea",
     "training_execution_requested_by_user": true,
     "training_authorization_issued": true,
-    "current_exact_release": "C0-training-commander-approval.json",
-    "next_action": "Commit/tag/push exactapprovedinputs; singleC0release afterexistingSTOP/idle/budget/disk/pins/internalcoexistence.",
+    "current_exact_release": "A-5dfb0a67d7b17e55",
+    "next_action": "Poll exactlivejob; realgate/data/status/ownedcleanup then settle resources, noresubmit.",
     "independent_review": {
       "status": "PASS_PRELIVE_ONLY",
       "role_call": 2,
       "path": "../docs/experiments/r5-zero-correction-20261014/reviews/review-zero-prelive.json",
       "sha256": "3d3b54d0fd6e8a0cc8b3dc3196bdb97054cb3b418deeef1db1c923f98cef95f3"
     },
-    "shared_baseline_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90"
+    "shared_baseline_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+    "first_real_rollout_gate": {
+      "C0": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS",
+      "C1": "PENDING_NOT_RELEASED"
+    }
   },
   "historical_prior_independent_review": {
     "path": "reviews/review-entry6-final-readiness.json",
@@ -496,5 +497,18 @@
     "final_report": "../docs/experiments/r5-paired-pilot-20261013/PAIR_REPORT.md",
     "machine_results": "../docs/experiments/r5-paired-pilot-20261013/pair_results.json",
     "completion_audit": "../docs/experiments/r5-paired-pilot-20261013/COMPLETION_AUDIT.json"
+  },
+  "historical_previous_pair_review": {
+    "path": "reviews/review-pair-final-scientific.json",
+    "sha256": "6810e089f658f430b31ceead64605239fc7b46647467858e9bf2070b306657f5",
+    "verdict": "PASS",
+    "role_call": 4,
+    "independent_handle": "/root/pilot_reviewer",
+    "evidence_commit": "52cd7701499508956fe9721426dec45f80cb476b",
+    "scope": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+    "ordinary_state_sync": "SATISFIED",
+    "not_future_training_authority": true,
+    "evidence": "../docs/experiments/r5-paired-pilot-20261013/reviews/review-pair-final-scientific.json",
+    "status": "PASS_COMPLETE_SCIENTIFIC_NEGATIVE_RESULT"
   }
 }

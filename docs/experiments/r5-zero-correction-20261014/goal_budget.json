@@ -19,8 +19,8 @@
     "role_calls": 12
   },
   "used": {
-    "live_starts": 0,
-    "simulator_initialization_reservations": 0,
+    "live_starts": 1,
+    "simulator_initialization_reservations": 1,
     "training_transitions": 0,
     "nontraining_transitions": 0,
     "optimizer_updates": 0,
@@ -32,10 +32,10 @@
     "role_calls": 2
   },
   "reserved": {
-    "training_transitions": 0,
+    "training_transitions": 32768,
     "nontraining_transitions": 0,
-    "optimizer_updates": 0,
-    "training_checkpoint_writes": 0
+    "optimizer_updates": 64,
+    "training_checkpoint_writes": 7
   },
   "observed": {
     "training_transitions": 0,
@@ -65,11 +65,29 @@
       "sha256": "3d3b54d0fd6e8a0cc8b3dc3196bdb97054cb3b418deeef1db1c923f98cef95f3"
     }
   ],
-  "runs": [],
+  "runs": [
+    {
+      "group": "C0",
+      "mode": "pilot-training",
+      "spec_id": "UNIFIED-H1-R5-C0-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014",
+      "job_id": "J-08bc17b874c978ea",
+      "status": "RUNNING",
+      "starts_charged": 1,
+      "simulator_initialization_reserved": 1,
+      "training_transitions_reserved": 32768,
+      "nontraining_transitions_reserved": 0,
+      "optimizer_updates_reserved": 64,
+      "training_checkpoint_writes_reserved": 7,
+      "output_bytes_reserved": 17179869184,
+      "postrun_nvidia_smi_calls_used": 0,
+      "observed": {},
+      "settlement": "PENDING_ACTUAL_FINAL_COLLECTOR"
+    }
+  ],
   "training_authorizations_issued": 2,
   "evaluation_authorizations_issued": 0,
   "no_blind_retry": true,
-  "output_reservations_bytes": 0,
+  "output_reservations_bytes": 17179869184,
   "prior_completed_goals": [
     "../../diagnostics/r5-readiness/goal_budget.json",
     "../r5-paired-pilot-20261013/goal_budget.json"

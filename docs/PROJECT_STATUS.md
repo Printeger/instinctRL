@@ -7,7 +7,7 @@
 
 ## 当前 Goal（2026-10-14 零命令残差单变量）
 
-**IN_PROGRESS，PhaseB CPU回归。** 新用户Goal已一次授权有界PhaseA→D；旧P0/PLR真实离线归因支持检验零命令残差偏置。新C0/C1共用actorLR1e-4，唯一变量w=0/.05；精确候选、独立预审、Commander输入/资源授权未完成前不live。不是CPU_READY即结束，不自动256updates。
+**IN_PROGRESS，PhaseC C0实际训练。** 新用户Goal已一次授权有界PhaseA→D；旧P0/PLR真实离线归因支持检验零命令残差偏置。新C0/C1共用actorLR1e-4，唯一变量w=0/.05；30CPU产品/10pilot回归通过；quota-fd路径缺陷已修复，精确d257f9候选Role2独立预审PASS，Commander签发训练AUTH。C0J-08bc17b874c978ea已single-release，真实首次512gatePASS；C1及评估未启动。不是CPU_READY即结束，不自动256updates。
 
 [需求](goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md)、[当前证据](experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md)、[有限归因](experiments/r5-zero-correction-20261014/R5_ZERO_COMMAND_ATTRIBUTION.md)。新包4starts/init、65536train/25600eval、128updates/14writes、wall/GPU10840s/output64GiB，旧预算与nativeFAILED/negative不改。
 
