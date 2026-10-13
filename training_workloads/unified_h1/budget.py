@@ -161,11 +161,11 @@ def required_mode_budget(mode: str, parameters: Mapping[str, object]) -> dict[st
         return {**common, "training_transitions":0, "nontraining_transitions":20160,
                 "optimizer_updates":0, "checkpoint_writes":0, "explicit_resets":3,
                 "automatic_resets":20160, "wall_seconds":900}
-    if mode == "pilot-training" and parameters.get("group") in {"P0", "PLR"}:
+    if mode == "pilot-training" and parameters.get("group") in {"P0", "PLR", "C0", "C1"}:
         return {**common, "training_transitions": 32768, "nontraining_transitions": 0,
                 "optimizer_updates": 64, "checkpoint_writes": 7,
                 "explicit_resets": 1, "automatic_resets": 32768, "wall_seconds": 3600}
-    if mode == "pilot-evaluation" and parameters.get("group") in {"P0", "PLR"}:
+    if mode == "pilot-evaluation" and parameters.get("group") in {"P0", "PLR", "C0", "C1"}:
         return {**common, "training_transitions": 0, "nontraining_transitions": 12800,
                 "optimizer_updates": 0, "checkpoint_writes": 0,
                 "explicit_resets": 2, "automatic_resets": 12800, "wall_seconds": 1800}

@@ -45,7 +45,7 @@ def vectors(value):
     return {'units': 'm/s', 'frame': 'body', 'xyz': [stats(tensor[:, i]) for i in range(3)],
             'horizontal_norm': stats(tensor[:, :2].norm(dim=-1)), 'norm': stats(tensor.norm(dim=-1))}
 
-def training(attempt, group):
+def training(attempt, group, *, source_commit=SOURCE):
     output = attempt / 'results/pilot-training'
     status = read(output / 'status.json')
     gate = read(output / 'pilot_diagnostic/first_update_gate.json')
@@ -64,7 +64,14 @@ def training(attempt, group):
         assert payload['counters']['transition'] == expected_update * 512
         assert payload['counters']['global_policy_step'] == expected_update * 16
         assert payload['counters']['actor_optimizer'] == payload['counters']['critic_optimizer'] == expected_update * 8
-        assert payload['source_identity']['product_commit'] == payload['source_identity']['workload_commit'] == SOURCE
+        assert payload['source_identity']['product_commit'] == payload['source_identity']['workload_commit'] == source_commit
+        if group in {'C0', 'C1'}:
+            from training_workloads.unified_h1.config import NEUTRALITY_METHOD_SHA256, NEUTRALITY_VERSIONS
+            from training_workloads.unified_h1.pilot_contract import pilot_method_hashes, pilot_residual_weight
+            binding = read(output / 'pilot_reward_binding.json')
+            assert binding['group'] == group and binding['actual_residual_neutrality_weight'] == pilot_residual_weight(group)
+            method = {'method': {'hashes': {'method': NEUTRALITY_METHOD_SHA256, **NEUTRALITY_VERSIONS}}}
+            assert payload['method_hashes'] == binding['method_hashes'] == pilot_method_hashes(method, group)
         assert payload['training_seed'] == 20260908
         assert payload['ppo_config']['actor_learning_rate'] == (3e-4 if group == 'P0' else 1e-4)
         assert payload['ppo_config']['critic_learning_rate'] == 3e-4
@@ -145,7 +152,7 @@ def training(attempt, group):
         assert len(minibatches) == 512
         assert len(coordinates) == 1024 and len(executed_rows) == 64
         assert all(row['actual_step_lane_samples'] == 512 for row in executed_rows)
-    return {'group': group, 'mode': 'pilot-training', 'source_commit': SOURCE,
+    return {'group': group, 'mode': 'pilot-training', 'source_commit': source_commit,
             'actual_raw_status': status, 'first_real_rollout_gate': gate, 'diagnostic_failure': failure,
             'scientific_training_coverage_complete': complete, 'completed_update_records': len(updates),
             'completed_minibatch_records': len(minibatches), 'checkpoints': checkpoint_rows,
@@ -158,7 +165,7 @@ def training(attempt, group):
             'process_acceptance': 'NOT_GRANTED_BY_THIS_CPU_DATA_ANALYSIS',
             'gate_scope': 'Actual production beforebothoptimizers gate and first-update recorded probe. No CPU gate replaces it.'}
 
-def evaluation(attempt, group):
+def evaluation(attempt, group, *, source_commit=SOURCE):
     output = attempt / 'results/pilot-evaluation'
     cases = {}
     for update in (16, 64):
@@ -177,7 +184,7 @@ def evaluation(attempt, group):
         cases[str(update)] = {'status': 'ACTUAL_ORIGINAL_Z_REPLAYED', 'raw_path': str(raw), 'raw_sha256': digest(raw),
                               'episodes': rows, 'original_gate': gate,
                               'evidence_valid_episodes': sum(row['engineering']['evidence_valid'] for row in rows)}
-    return {'group': group, 'mode': 'pilot-evaluation', 'source_commit': SOURCE,
+    return {'group': group, 'mode': 'pilot-evaluation', 'source_commit': source_commit,
             'actual_raw_status': read(output / 'status.json'), 'u16_u64': cases,
             'coverage_complete': all(row['status'] == 'ACTUAL_ORIGINAL_Z_REPLAYED' for row in cases.values()),
             'all_original_gates_pass': all(row.get('original_gate', {}).get('pass', False) for row in cases.values()),
@@ -275,7 +282,8 @@ def pair(analyses):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', choices=['training', 'evaluation', 'pair'], required=True)
-    parser.add_argument('--group', choices=['P0', 'PLR'])
+    parser.add_argument('--group', choices=['P0', 'PLR', 'C0', 'C1'])
+    parser.add_argument('--source-commit', default=SOURCE)
     parser.add_argument('--attempt', type=Path)
     parser.add_argument('--analyses-dir', type=Path)
     parser.add_argument('--output', type=Path, required=True)
@@ -288,7 +296,7 @@ def main():
         result = pair(args.analyses_dir)
     else:
         assert args.attempt is not None and args.group is not None
-        result = (training if args.mode == 'training' else evaluation)(args.attempt.resolve(), args.group)
+        result = (training if args.mode == 'training' else evaluation)(args.attempt.resolve(), args.group, source_commit=args.source_commit)
     result.update(schema_version='instinctrl-r5-pair-actual-data-analysis/1',
                   analysis_tool_sha256=digest(Path(__file__)), CPU_only=True,
                   analysis_optimizer_updates=0, missing_samples_filled=False)

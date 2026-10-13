@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 import torch
+from training_workloads.scale_003.persistence import reserve_output_bytes
 
 
 def _statistics(values: torch.Tensor) -> dict[str, float | int | str]:
@@ -114,6 +115,7 @@ class LearningLog:
         if self.root not in target.parents or ".." in Path(relative).parts: raise ValueError("log path escapes root")
         target.parent.mkdir(parents=True, exist_ok=True)
         data = json.dumps(_jsonable(dict(record)), sort_keys=True, separators=(",", ":"), allow_nan=False) + "\n"
+        reserve_output_bytes(target, len(data.encode("utf-8")))
         with target.open("a", encoding="utf-8") as stream:
             stream.write(data); stream.flush(); os.fsync(stream.fileno())
 

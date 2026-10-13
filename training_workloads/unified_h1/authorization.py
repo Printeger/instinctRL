@@ -36,6 +36,14 @@ def _parameters(mode: str, value: object) -> dict[str, Any]:
                 "evaluation": {"stage", "checkpoints"},
                 "r5-resume": {"checkpoint", "checkpoint_sha256", "target_update"},
                 "pilot-training": {"group"}, "pilot-evaluation": {"group", "checkpoints"}}[mode]
+    if mode in {"pilot-training", "pilot-evaluation"} and value.get("group") in {"C0", "C1"}:
+        from .pilot_contract import PILOT_OUTPUT_CAP_BYTES, pilot_residual_weight
+        expected |= {"residual_neutrality_weight", "output_cap_bytes"}
+        weight = value.get("residual_neutrality_weight")
+        if type(weight) not in (int, float) or weight != pilot_residual_weight(value["group"]):
+            raise PermissionError("new pilot coefficient differs from preregistration")
+        if type(value.get("output_cap_bytes")) is not int or value["output_cap_bytes"] != PILOT_OUTPUT_CAP_BYTES:
+            raise PermissionError("new pilot output cap differs from preregistration")
     if mode == "evaluation" and "checkpoint_source_identity" in value:
         expected = expected | {"checkpoint_source_identity"}
         origin = value["checkpoint_source_identity"]
@@ -45,7 +53,7 @@ def _parameters(mode: str, value: object) -> dict[str, Any]:
                        or any(c not in "0123456789abcdef" for c in v) for k, v in origin.items())):
             raise PermissionError("evaluation checkpoint source identity is invalid")
     if set(value) != expected: raise PermissionError("R3 mode parameter schema mismatch")
-    if mode in {"pilot-training", "pilot-evaluation"} and value.get("group") not in {"P0", "PLR"}: raise PermissionError("pilot group must be P0 or PLR")
+    if mode in {"pilot-training", "pilot-evaluation"} and value.get("group") not in {"P0", "PLR", "C0", "C1"}: raise PermissionError("pilot group must be P0 or PLR")
     if mode == "pilot-evaluation":
         rows=value["checkpoints"]
         if not isinstance(rows,list) or len(rows)!=2 or [row.get("update") for row in rows if isinstance(row,dict)] != [16,64]: raise PermissionError("pilot evaluation checkpoints must be u16/u64")
@@ -87,11 +95,14 @@ def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any
     if not isinstance(value, dict) or set(value) != required or value["schema_version"] != "unified-h1-r3-authorization.v2" or value["status"] != "AUTHORIZED":
         raise PermissionError("missing exact R3 machine authorization")
     identity = config["resolved_identity"]
-    expected_identity = {"method_sha256": METHOD_SHA256, "config_sha256": sha256_file(CONFIG_PATH),
+    expected_identity = {"method_sha256": config["method"]["proposal_sha256"], "config_sha256": sha256_file(CONFIG_PATH),
         "product_commit": identity["product_commit"], "product_tree": identity["product_tree"],
         "workload_commit": identity["workload_commit"], "workload_tree": identity["workload_tree"]}
     if any(value[key] != expected for key, expected in expected_identity.items()): raise PermissionError("R3 method/config/candidate binding mismatch")
     parameters = _parameters(mode, value["parameters"])
+    new_method = config["method"]["version"] == "unified-h1-zero-neutrality-v1"
+    if new_method != (mode in {"pilot-training", "pilot-evaluation"} and parameters.get("group") in {"C0", "C1"}):
+        raise PermissionError("pilot group and method profile disagree")
     if mode == "enhanced-b0-diagnostic":
         handoff_path=Path(parameters["handoff"]); handoff=json.loads(handoff_path.read_text(encoding="utf-8"))
         source=handoff["source_identity"]; candidate=handoff["candidate"]

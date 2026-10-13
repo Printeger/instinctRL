@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 
 import torch
 
 from instinctlab.control.ics import ICSConfig, attenuate_command, extract_lidar_history, mounted_mid360_rays_body
 
 REWARD_H1_VERSION = "reward-h1-v2"
+RESIDUAL_NEUTRALITY_VERSION = "reward-h1-zero-neutrality-v1"
 REWARD_H1_COMPONENT_KEYS = (
     "reward_velocity", "reward_zero_extra", "reward_anchor", "reward_clearance",
     "reward_intervention", "reward_smooth", "reward_governor_proxy", "reward_final_proxy",
@@ -93,9 +95,20 @@ def compute_reward_h1(
     anchor_usable_fraction: torch.Tensor, ics_beta: torch.Tensor, exact_clearance_m: torch.Tensor,
     collision: torch.Tensor, below_height: torch.Tensor, above_height: torch.Tensor,
     rays_body: torch.Tensor | None = None,
+    v_corr_b: torch.Tensor | None = None, residual_neutrality_weight: float = 0.0,
 ) -> RewardH1Result:
+    if (isinstance(residual_neutrality_weight, bool) or not isinstance(residual_neutrality_weight, (int, float))
+            or not math.isfinite(residual_neutrality_weight) or residual_neutrality_weight < 0):
+        raise ValueError("residual neutrality weight must be finite and nonnegative")
     command = _vector("command_b", command_b)
     batch = command.shape[0]
+    correction = None
+    if v_corr_b is not None:
+        correction = _vector("v_corr_b", v_corr_b, batch)
+        if correction.dtype != command.dtype or correction.device != command.device:
+            raise TypeError("v_corr_b must share command dtype/device")
+    if residual_neutrality_weight > 0 and correction is None:
+        raise ValueError("positive residual neutrality requires decoded v_corr_b")
     vectors = {
         name: _vector(name, value, batch) for name, value in (
             ("v_gov_b", v_gov_b), ("v_final_b", v_final_b),
@@ -134,7 +147,8 @@ def compute_reward_h1(
     anchor_gate = h * (anchor_active == 1.0).to(dtype) * (anchor_usable_fraction >= 0.1).to(dtype)
     components = {
         "reward_velocity": -(1.0 - q) * torch.linalg.vector_norm(actual - command, dim=-1, keepdim=True) - q * torch.linalg.vector_norm(actual, dim=-1, keepdim=True),
-        "reward_zero_extra": torch.zeros_like(command_norm),
+        "reward_zero_extra": (torch.zeros_like(command_norm) if residual_neutrality_weight == 0 else
+                              -residual_neutrality_weight * h * (correction / 0.1).square().sum(dim=-1, keepdim=True)),
         "reward_anchor": -4.0 * anchor_gate * anchor_loss,
         "reward_clearance": -0.5 * torch.relu(1.0 - clearance),
         "reward_intervention": -0.05 * ((1.0 - beta) + torch.linalg.vector_norm(governor - final, dim=-1, keepdim=True)),

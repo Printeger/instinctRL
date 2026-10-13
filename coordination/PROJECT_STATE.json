@@ -1,10 +1,10 @@
 {
   "schema_version": "instinctrl-project-state/1",
-  "as_of": "2026-10-13",
+  "as_of": "2026-10-14",
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_PAIRED_PILOT_COMPLETE_NEGATIVE_Z_STOPPED",
+  "phase": "R5_ZERO_CORRECTION_PHASE_B_CPU",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -382,6 +382,63 @@
     }
   },
   "current_goal": {
+    "target": "R5_ZERO_COMMAND_SINGLE_VARIABLE_SCIENTIFIC_CLOSURE",
+    "status": "IN_PROGRESS",
+    "contract": "../contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md",
+    "requirements": "../docs/goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md",
+    "evidence_index": "../docs/experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md",
+    "budget": "../docs/experiments/r5-zero-correction-20261014/goal_budget.json",
+    "user_authority": "../docs/experiments/r5-zero-correction-20261014/user_task_authority.json",
+    "current_job": null,
+    "training_execution_requested_by_user": true,
+    "training_authorization_issued": false,
+    "current_exact_release": null,
+    "next_action": "PhaseB CPU regressions andnewexactcandidate/inputsnapshot, independent prelive thenCommander."
+  },
+  "historical_prior_independent_review": {
+    "path": "reviews/review-entry6-final-readiness.json",
+    "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
+    "verdict": "PASS",
+    "role_call": 15,
+    "independent_handle": "/root/pilot_reviewer",
+    "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "evidence_commit": "b7820f8",
+    "state_sync_condition": "SATISFIED_CURRENT_VS_HISTORICAL_FIELDS",
+    "training_authority": false,
+    "evidence": "../docs/diagnostics/r5-readiness/reviews/review-entry6-final-readiness.json",
+    "status": "PASS_FINAL_TECHNICAL_READINESS",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "closed": [
+      "DIAGNOSTIC_CLOSURE",
+      "CONTROL_BASELINE_REGRESSION",
+      "PILOT_TECHNICAL_READINESS"
+    ],
+    "open": []
+  },
+  "latest_pair_scientific_result": {
+    "status": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "training_gate_P0_PLR": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS",
+    "original_Z_u16_u64_both": "ALL0_OF32",
+    "policy_original_Z_admission": false,
+    "observed": {
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14,
+      "actor_optimizer_steps": 1024,
+      "critic_optimizer_steps": 1024
+    },
+    "reservations_retained": {
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14
+    },
+    "report": "../docs/experiments/r5-paired-pilot-20261013/PAIR_REPORT.md",
+    "next_stage_authorized": false
+  },
+  "completed_p0_plr_goal": {
     "target": "R5_P0_PLR_PAIRED_PILOT_SCIENTIFIC_CLOSURE",
     "status": "COMPLETE",
     "contract": "../docs/experiments/r5-paired-pilot-20261013/EXPERIMENT_CONTRACT.md",
@@ -432,48 +489,5 @@
     "final_report": "../docs/experiments/r5-paired-pilot-20261013/PAIR_REPORT.md",
     "machine_results": "../docs/experiments/r5-paired-pilot-20261013/pair_results.json",
     "completion_audit": "../docs/experiments/r5-paired-pilot-20261013/COMPLETION_AUDIT.json"
-  },
-  "historical_prior_independent_review": {
-    "path": "reviews/review-entry6-final-readiness.json",
-    "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
-    "verdict": "PASS",
-    "role_call": 15,
-    "independent_handle": "/root/pilot_reviewer",
-    "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
-    "evidence_commit": "b7820f8",
-    "state_sync_condition": "SATISFIED_CURRENT_VS_HISTORICAL_FIELDS",
-    "training_authority": false,
-    "evidence": "../docs/diagnostics/r5-readiness/reviews/review-entry6-final-readiness.json",
-    "status": "PASS_FINAL_TECHNICAL_READINESS",
-    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
-    "closed": [
-      "DIAGNOSTIC_CLOSURE",
-      "CONTROL_BASELINE_REGRESSION",
-      "PILOT_TECHNICAL_READINESS"
-    ],
-    "open": []
-  },
-  "latest_pair_scientific_result": {
-    "status": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
-    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
-    "training_gate_P0_PLR": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS",
-    "original_Z_u16_u64_both": "ALL0_OF32",
-    "policy_original_Z_admission": false,
-    "observed": {
-      "training_transitions": 65536,
-      "nontraining_transitions": 25600,
-      "optimizer_updates": 128,
-      "training_checkpoint_writes": 14,
-      "actor_optimizer_steps": 1024,
-      "critic_optimizer_steps": 1024
-    },
-    "reservations_retained": {
-      "training_transitions": 65536,
-      "nontraining_transitions": 25600,
-      "optimizer_updates": 128,
-      "training_checkpoint_writes": 14
-    },
-    "report": "../docs/experiments/r5-paired-pilot-20261013/PAIR_REPORT.md",
-    "next_stage_authorized": false
   }
 }

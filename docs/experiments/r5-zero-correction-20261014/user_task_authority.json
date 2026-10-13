@@ -1,0 +1,43 @@
+{
+  "schema_version": "instinctrl-r5-zero-user-authority/1",
+  "goal_id": "INSTINCTRL-R5-ZERO-CORRECTION-20261014",
+  "started_from_commit": "436db8033ff4e0bb6e3659daf9265c4d47946023",
+  "source": {
+    "active_goal_attachment": "/home/mint/.codex/attachments/6b45e40a-ba5a-496d-ad47-d824b71175ed/pasted-text-1.txt",
+    "sha256": "65299e148e14b29965cdcd6fb2099a0b3df63eeb325f8fb8c5ce35626d5865cf",
+    "requirements_path": "/home/mint/rl_dev/instinctRL-dev/docs/goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md",
+    "requirements_sha256": "70ccc275cf726bdddad4baafbd126a5660ea00f680fdb0bc34e2b2d27abe14ed",
+    "prompt_path": "/home/mint/rl_dev/instinctRL-dev/docs/goals/InstinctRL_R5_Autonomous_Followup_Goal_Prompt.md",
+    "prompt_sha256": "df38ac84daf504dcd03d0e2d35e4a7254a8c10bd2a6ea2d9855e8cdbde7ee61d"
+  },
+  "user_authorization": "One Goal Phase A/B/C/D, explicit new single-variable reward method; two contemporaneous groups each64updates and originalu16/u64Z. No routine stage confirmation. Exact Commander plus independent prereview required, not bypassed.",
+  "commander_resource_envelope": {
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "wall_seconds_including_cleanup": 10840,
+    "allocated_gpu_seconds": 10840,
+    "output_bytes": 68719476736,
+    "automatic_retries": 0,
+    "role_calls": 12
+  },
+  "per_entry_output_bytes": 17179869184,
+  "per_training_outer_seconds": 3610,
+  "per_evaluation_outer_seconds": 1810,
+  "disk_free_bytes_at_registration": 557547896832,
+  "scope_exclusions": [
+    "256updates",
+    "extraweights",
+    "newphysicaldiagnostic",
+    "frozenruntimechange",
+    "dependencyinstall",
+    "actorboundarychange",
+    "metricthresholdchange"
+  ],
+  "history": "All old10nativeFAILED/jobs/observations/reservations/negative results retained; no budget reset or reused approval.",
+  "gpu_query_allowance": "6internalprelaunchcalls +2postrun auditcalls per entry; runtimeCUDA checks existing stages only, no exploration.",
+  "role_authority": "Reuse independentread-only /root/pilot_reviewer, root solewriter/Commander after acceptance. Roles counted beforecall; reservefinalreview."
+}

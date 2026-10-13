@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import tempfile
+import threading
 from typing import Any
 
 from .config import canonical_bytes
@@ -13,6 +14,66 @@ from .config import canonical_bytes
 
 class PersistenceError(RuntimeError):
     pass
+
+
+class OutputWriteQuota:
+    """Conservative cumulative bytes, charged before every controlled write.
+
+    Rewrites and failed serialization are never refunded. This bounds disk
+    growth without estimating tensor archive sizes or buffering huge inputs.
+    Installation is explicit; historical workloads retain their old behavior.
+    """
+    def __init__(self, root: Path, maximum: int):
+        if type(maximum) is not int or maximum <= 0:
+            raise ValueError("output write quota must be a positive integer")
+        self.root = root.resolve(); self.maximum = maximum
+        self.used = sum(p.stat().st_size for p in self.root.rglob("*") if p.is_file())
+        self.lock = threading.Lock()
+        if self.used > maximum: raise PersistenceError("existing output exceeds write quota")
+
+    def reserve(self, amount: int) -> None:
+        if type(amount) is not int or amount < 0: raise ValueError("invalid write size")
+        with self.lock:
+            if self.used + amount > self.maximum:
+                raise PersistenceError("authorized output write quota exhausted before write")
+            self.used += amount
+
+
+_output_quota: OutputWriteQuota | None = None
+
+
+def install_output_write_quota(root: Path, maximum: int) -> OutputWriteQuota:
+    global _output_quota
+    if _output_quota is not None: raise PersistenceError("output quota is already installed")
+    _output_quota = OutputWriteQuota(root, maximum)
+    return _output_quota
+
+
+def reserve_output_bytes(path: Path, amount: int) -> None:
+    quota = _output_quota
+    if quota is not None and quota.root in path.resolve().parents:
+        quota.reserve(amount)
+
+
+class _QuotaStream:
+    def __init__(self, stream): self.stream = stream
+    def write(self, data):
+        reserve_output_bytes(Path(self.stream.name), len(data))
+        return self.stream.write(data)
+    def __getattr__(self, name): return getattr(self.stream, name)
+
+
+def guard_stream(stream):
+    return stream if _output_quota is None else _QuotaStream(stream)
+
+
+def save_tensor_evidence(value, path: Path):
+    import torch
+    if _output_quota is None:
+        return torch.save(value, path)
+    with path.open("wb") as stream:
+        torch.save(value, guard_stream(stream))
+        stream.flush(); os.fsync(stream.fileno())
 
 
 def _confined(root: Path, relative: str) -> Path:
@@ -34,7 +95,7 @@ def atomic_json_replace(root: Path, relative: str, value: Any) -> Path:
     descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
     try:
         with os.fdopen(descriptor, "wb") as stream:
-            stream.write(data)
+            guard_stream(stream).write(data)
             stream.flush()
             os.fsync(stream.fileno())
         os.replace(temporary, path)
@@ -61,7 +122,7 @@ def atomic_torch_replace(root: Path, relative: str, value: Any) -> Path:
     descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
     try:
         with os.fdopen(descriptor, "wb") as stream:
-            torch.save(value, stream)
+            torch.save(value, guard_stream(stream))
             stream.flush()
             os.fsync(stream.fileno())
         os.replace(temporary, path)

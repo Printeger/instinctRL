@@ -15,6 +15,9 @@ METHOD_PATH = Path(__file__).resolve().parents[2] / "coordination/contracts/R1_U
 METHOD_SHA256 = "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612"
 VERSIONS = {"curriculum": "curriculum-h1-v1", "reward": "reward-h1-v2", "critic": "critic-h1-v2",
             "checkpoint": "checkpoint-h1-v2", "logging": "learning-log-h1-v1", "metric": "metric-h1-v1"}
+NEUTRALITY_METHOD_PATH = Path(__file__).resolve().parents[2] / "coordination/contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md"
+NEUTRALITY_METHOD_SHA256 = "ecc75a8e3d581ca1bd43e8c3e34326a5f18dd55cfa1739fe3b26f4e25fe1c14e"
+NEUTRALITY_VERSIONS = {**VERSIONS, "reward": "reward-h1-zero-neutrality-v1"}
 PRODUCT_SOURCES = {
     "isaaclab-training/instinctlab/assets/taslab_uav/articulation.py",
     "isaaclab-training/instinctlab/control/baseline_b0.py", "isaaclab-training/instinctlab/control/pipeline.py",
@@ -128,9 +131,14 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
     method = value["method"]
     expected_method = {"version": "unified-h1-v1", "proposal_path": str(METHOD_PATH), "proposal_sha256": METHOD_SHA256,
                        "hashes": {"method": METHOD_SHA256, **VERSIONS}}
+    method_path, method_sha, versions = METHOD_PATH, METHOD_SHA256, VERSIONS
+    if isinstance(method, dict) and method.get("version") == "unified-h1-zero-neutrality-v1":
+        method_path, method_sha, versions = NEUTRALITY_METHOD_PATH, NEUTRALITY_METHOD_SHA256, NEUTRALITY_VERSIONS
+        expected_method = {"version": "unified-h1-zero-neutrality-v1", "proposal_path": str(method_path),
+                           "proposal_sha256": method_sha, "hashes": {"method": method_sha, **versions}}
     _exact_mapping(method, expected_method, "method identity")
-    if sha256_file(METHOD_PATH) != METHOD_SHA256: raise ValueError("approved method bytes changed")
-    _exact_mapping(value["versions"], VERSIONS, "method component versions")
+    if sha256_file(method_path) != method_sha: raise ValueError("approved method bytes changed")
+    _exact_mapping(value["versions"], versions, "method component versions")
     _exact_mapping(value["runtime"], {"live_process_starts": 0, "simulator_initializations": 0, "gpu_probes": 0,
         "real_environment_transitions": 0, "real_training_updates": 0, "real_checkpoints": 0}, "R2 runtime budget")
     execution = value["execution"]

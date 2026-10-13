@@ -1,0 +1,7 @@
+# New Goal authority and resource bindings
+
+The newactiveGoal attachment explicitly authorizes this single-variablew0/.05 method andfourboundedfreshjobs afterexactCommander/independentapproval. Its unchangedbytes andrequirements are hashed in user_task_authority.json. Commander fixes oneoverall10840s wall/GPU and64GiBoutput envelope before release, not inherited fromoldbudget.
+
+4starts/init;65536train;25600eval;128logicalPPOupdates;14trainingcheckpointwrites;0autoretries. Pertraining3610s/eval1810s includesunchanged10scleanup. Eachentry reserves16GiB before release:13GiBconservativebefore-writequota plus3GiBnative/control/archiveallowance. Mergednativeoutput receives2GiBkernel per-fileceiling; finiteotherreceipts/audits/archivecopiesmustfitremaining1GiBbeforeacceptance. CPUevidence/manifest allowance boundedwithinaggregate64GiB. No quota refund foroverwrites/partialfailures. Freecapacity recordedatregistration andcheckedagainbeforeeveryrelease.
+
+Exactcommit/tree/config/method/source/tool/inputSHA/argv, actualAUTH andCommanderapproval willberecordedbeforeeachsubmission. Evaluations remainconditionalonacceptedactualu16/u64. ExistingSTOP/coexistence/ownedcleanup/genericcollector retained; no fabricateduserapproval. NativeFAILED/-9 may coexistwithindependentlytrustworthycompletedscience;collectorINCOMPLETE retainsfulllogicalreservations. Roles countedbeforecall andfinalreviewreserved.

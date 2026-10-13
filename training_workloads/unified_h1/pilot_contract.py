@@ -30,8 +30,26 @@ def probability_distribution_gate(old_logp:Sequence[float],new_logp:Sequence[flo
 
 def pilot_actor_learning_rate(group:str)->float:
     if group=="P0": return 3.0e-4
-    if group=="PLR": return 1.0e-4
-    raise ValueError("pilot group must be P0 or PLR")
+    if group in {"PLR", "C0", "C1"}: return 1.0e-4
+    raise ValueError("pilot group must be P0, PLR, C0 or C1")
+
+RESIDUAL_WEIGHTS = {"C0": 0.0, "C1": 0.05}
+PILOT_OUTPUT_CAP_BYTES = 16 * 1024**3
+PILOT_WORKLOAD_WRITE_CAP_BYTES = 13 * 1024**3
+
+def pilot_residual_weight(group: str) -> float:
+    pilot_actor_learning_rate(group)
+    return RESIDUAL_WEIGHTS.get(group, 0.0)
+
+def pilot_method_hashes(config, group: str | None):
+    result = dict(config["method"]["hashes"])
+    if group in RESIDUAL_WEIGHTS:
+        import hashlib
+        # Preserve checkpoint-h1-v2 metadata: the exact coefficient/group
+        # receive an explicit SHA instead of relaxing its hash validation.
+        binding = f"{group}:residual_neutrality_weight={pilot_residual_weight(group).hex()}"
+        result["pilot_reward_binding"] = hashlib.sha256(binding.encode()).hexdigest()
+    return result
 
 def frozen_copy(value): return deepcopy(value)
 

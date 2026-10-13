@@ -286,6 +286,26 @@ def run_main_sequence(*, authorization: Mapping[str, Any], attempt: Path,
         backend_factory = create_live_backend
     factory = backend_factory
     output.mkdir(mode=0o755)
+    if authorization.get("parameters", {}).get("group") in {"C0", "C1"}:
+        from .pilot_contract import PILOT_OUTPUT_CAP_BYTES, PILOT_WORKLOAD_WRITE_CAP_BYTES
+        from training_workloads.scale_003.persistence import install_output_write_quota
+        import resource
+        if authorization["parameters"]["output_cap_bytes"] != PILOT_OUTPUT_CAP_BYTES:
+            raise PermissionError("new pilot output cap differs from exact authorization")
+        install_output_write_quota(output, PILOT_WORKLOAD_WRITE_CAP_BYTES)
+        # Inherited stdout/native files have a kernel before-write ceiling.
+        # The separate 3-GiB allowance includes the 2-GiB merged native log
+        # and bounded controller/metadata/archive outputs.
+        soft, hard = resource.getrlimit(resource.RLIMIT_FSIZE)
+        ceiling = 2 * 1024**3
+        resource.setrlimit(resource.RLIMIT_FSIZE, (min(ceiling, soft) if soft >= 0 else ceiling,
+                                                 min(ceiling, hard) if hard >= 0 else ceiling))
+        atomic_json_replace(output, "output_quota_binding.json", {
+            "entry_output_cap_bytes": PILOT_OUTPUT_CAP_BYTES,
+            "workload_cumulative_write_cap_bytes": PILOT_WORKLOAD_WRITE_CAP_BYTES,
+            "native_control_archive_reserved_bytes": 3 * 1024**3,
+            "per_file_kernel_ceiling_bytes": ceiling,
+            "accounting": "charge_before_write; no overwrite or failure refund"})
     # Persist synchronously from inside the actual entry process.  An external
     # ps sample can miss short-lived failures; getpgid/getsid record the
     # kernel identities before configuration or backend construction begins.

@@ -23,7 +23,7 @@ from .control_diagnostic import CASES as DIAGNOSTIC_CASES, DiagnosticChunkWriter
 from .driver import UnifiedH1Driver, UnifiedH1TrainingLoop
 from .evaluation import CASES, EpisodeTrace, case_commands, evaluate_checkpoint, evaluate_episode
 from .logging import LearningLog
-from .pilot_contract import pilot_actor_learning_rate
+from .pilot_contract import pilot_actor_learning_rate, pilot_residual_weight, pilot_method_hashes
 from .preflight import initial_source, live_geometry_readback, persist_initial_source, validate_initial_observability
 from .schedule import ScheduleClock, command_at
 
@@ -206,8 +206,15 @@ class UnifiedH1LiveBackend:
 
         torch.manual_seed(20260908)
         network = NetworkConfig()
-        if pilot_group not in {None, "P0", "PLR"}: raise ValueError("unknown pilot group")
-        actor_lr = 3.0e-4 if pilot_group in {None, "P0"} else 1.0e-4
+        actor_lr = 3.0e-4 if pilot_group is None else pilot_actor_learning_rate(pilot_group)
+        if pilot_group in {"C0", "C1"}:
+            self.environment.set_h1_residual_neutrality_weight(pilot_residual_weight(pilot_group))
+            if self.environment._h1_residual_neutrality_weight != self.authorization["parameters"]["residual_neutrality_weight"]:
+                raise RuntimeError("actual reward coefficient differs from authorization")
+            atomic_json_replace(self.output, "pilot_reward_binding.json", {
+                "group": pilot_group, "actual_residual_neutrality_weight": self.environment._h1_residual_neutrality_weight,
+                "authorization_sha256": self.authorization["authorization_sha256"],
+                "method_hashes": pilot_method_hashes(load_config(), pilot_group)})
         ppo = PPOConfig(minibatch_size=64, epoch_count=1, actor_learning_rate=actor_lr, critic_learning_rate=3.0e-4)
         self.trainer = PPOTrainer(HistoryActor(network).to(self.environment.device), PrivilegedCriticH1(network).to(self.environment.device), ppo)
         self.environment.set_h1_evaluation_case(None)
@@ -236,7 +243,8 @@ class UnifiedH1LiveBackend:
         self.resource_check("before_checkpoint_write", self.counters.real_checkpoint_writes + 1)
         self.counters.reserve_checkpoint(self.authorization["budgets"]["checkpoint_writes"])
         config = load_config(); target = (self.output / "checkpoints" / f"{label}.pt").resolve(); target.parent.mkdir(parents=True, exist_ok=True)
-        save_checkpoint_h1(target, trainer, method_hashes=config["method"]["hashes"],
+        save_checkpoint_h1(target, trainer, method_hashes=pilot_method_hashes(config, self.authorization["parameters"].get("group")),
+            write_guard=__import__("training_workloads.scale_003.persistence", fromlist=["guard_stream"]).guard_stream,
             source_identity=config["resolved_identity"], transition_counter=trainer.update_counter * 512,
             global_policy_step=trainer.update_counter * 16,
             curriculum={"version": "curriculum-h1-v1", "completed_policy_steps": trainer.update_counter * 16},
@@ -326,7 +334,13 @@ class UnifiedH1LiveBackend:
 
     def evaluate_pilot_z(self, group: str, checkpoints: list[Mapping[str, Any]]) -> None:
         """Development-only Z evaluation at u16/u64; no other case is exposed."""
-        if group not in {"P0","PLR"} or [row.get("update") for row in checkpoints] != [16,64]: raise ValueError("pilot evaluation is exactly group Z at u16/u64")
+        if group not in {"P0","PLR","C0","C1"} or [row.get("update") for row in checkpoints] != [16,64]: raise ValueError("pilot evaluation is exactly group Z at u16/u64")
+        if group in {"C0", "C1"}:
+            self.environment.set_h1_residual_neutrality_weight(pilot_residual_weight(group))
+            atomic_json_replace(self.output, "pilot_reward_binding.json", {
+                "group": group, "actual_residual_neutrality_weight": self.environment._h1_residual_neutrality_weight,
+                "authorization_sha256": self.authorization["authorization_sha256"],
+                "method_hashes": pilot_method_hashes(load_config(), group)})
         for row in checkpoints:
             path=Path(str(row["path"])); update=int(row["update"])
             if sha256_file(path) != row["sha256"]: raise ValueError("pilot evaluation checkpoint hash changed")
@@ -380,7 +394,7 @@ class UnifiedH1LiveBackend:
         config = load_config(); network = NetworkConfig()
         trainer = PPOTrainer(HistoryActor(network).to(self.environment.device), PrivilegedCriticH1(network).to(self.environment.device), PPOConfig(minibatch_size=64, epoch_count=1, actor_learning_rate=actor_learning_rate, critic_learning_rate=3.0e-4))
         metadata = load_checkpoint_h1(checkpoint.resolve(), trainer,
-            expected_method_hashes=config["method"]["hashes"],
+            expected_method_hashes=pilot_method_hashes(config, self.authorization["parameters"].get("group")),
             expected_source_identity=self.authorization["parameters"].get("checkpoint_source_identity", config["resolved_identity"]),
             curriculum_generator=torch.Generator(device="cpu"))
         self.trainer = trainer

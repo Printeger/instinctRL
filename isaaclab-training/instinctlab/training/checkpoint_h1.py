@@ -182,7 +182,7 @@ def save_checkpoint_h1(
     path: str | Path, trainer: PPOTrainer, *, method_hashes: Mapping[str, str],
     source_identity: Mapping[str, str], transition_counter: int, global_policy_step: int,
     curriculum: Mapping[str, Any], training_seed: int, reset_number: int,
-    curriculum_generator: torch.Generator,
+    curriculum_generator: torch.Generator, write_guard=None,
 ) -> Path:
     if not isinstance(trainer, PPOTrainer) or not isinstance(trainer.actor, HistoryActor) or not isinstance(trainer.critic, PrivilegedCriticH1):
         raise TypeError("checkpoint-h1 requires HistoryActor/PPOTrainer/PrivilegedCriticH1")
@@ -225,7 +225,7 @@ def save_checkpoint_h1(
     try:
         with tempfile.NamedTemporaryFile(mode="wb", prefix=f".{destination.name}.", suffix=".tmp", dir=destination.parent, delete=False) as stream:
             temporary = stream.name
-            torch.save(payload, stream); stream.flush(); os.fsync(stream.fileno())
+            torch.save(payload, stream if write_guard is None else write_guard(stream)); stream.flush(); os.fsync(stream.fileno())
         os.replace(temporary, destination); temporary = None
         descriptor = os.open(destination.parent, os.O_RDONLY)
         try:

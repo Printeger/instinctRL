@@ -77,6 +77,7 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
     cfg: UnifiedH1DirectEnvCfg
 
     def __init__(self, cfg: UnifiedH1DirectEnvCfg, render_mode: str | None = None, **kwargs):
+        self._h1_residual_neutrality_weight = 0.0
         self._h1_global_policy_step = 0
         self._h1_next_command_b: torch.Tensor | None = None
         self._b0_command_b: torch.Tensor | None = None
@@ -513,6 +514,12 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         self._explicit_reset_pending.zero_()
         self._b0_command_b = None
 
+    def set_h1_residual_neutrality_weight(self, weight: float) -> None:
+        import math
+        if isinstance(weight, bool) or not isinstance(weight, (int, float)) or not math.isfinite(weight) or weight < 0:
+            raise ValueError("residual neutrality weight must be finite and nonnegative")
+        self._h1_residual_neutrality_weight = float(weight)
+
     def _get_rewards(self) -> torch.Tensor:
         if self._task is None or self._control is None or self._h1_next_command_b is None:
             raise RuntimeError("H1 task/control/next-command state is unavailable")
@@ -520,6 +527,7 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         reward = compute_reward_h1(
             lidar_grid=self._policy["lidar_grid"], command_b=self._command_b,
             v_gov_b=self._control.v_gov_b, v_final_b=self._control.v_final_b,
+            v_corr_b=self._control.v_corr_b, residual_neutrality_weight=self._h1_residual_neutrality_weight,
             previous_issued_v_final_b=self._reward_previous_v_final_b,
             actual_velocity_b=self._task.actual_velocity_b,
             anchor_loss=self._control.anchor_metrics["huber_loss"],

@@ -1,0 +1,59 @@
+{
+  "schema_version": "instinctrl-r5-pair-resource-ledger/1",
+  "goal_id": "INSTINCTRL-R5-ZERO-CORRECTION-20261014",
+  "authority": {
+    "path": "user_task_authority.json",
+    "sha256": "a087ced4c935b307a5e8133bccfa7d1dcdd834c9c1e7a4c985e66e90dd3e8753"
+  },
+  "caps": {
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "wall_seconds_including_cleanup": 10840,
+    "allocated_gpu_seconds": 10840,
+    "output_bytes": 68719476736,
+    "automatic_retries": 0,
+    "role_calls": 12
+  },
+  "used": {
+    "live_starts": 0,
+    "simulator_initialization_reservations": 0,
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "wall_seconds_including_cleanup": 0,
+    "allocated_gpu_seconds": 0,
+    "output_bytes": 0,
+    "automatic_retries": 0,
+    "role_calls": 0
+  },
+  "reserved": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0
+  },
+  "observed": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0
+  },
+  "role_calls": [],
+  "runs": [],
+  "training_authorizations_issued": 0,
+  "evaluation_authorizations_issued": 0,
+  "no_blind_retry": true,
+  "output_reservations_bytes": 0,
+  "prior_completed_goals": [
+    "../../diagnostics/r5-readiness/goal_budget.json",
+    "../r5-paired-pilot-20261013/goal_budget.json"
+  ],
+  "note": "Observed logicalcounts subset of conservative reservations until formalFINAL, never doublecharged/refunded onINCOMPLETE. Perentry16GiB reserved before release; cumulativebeforewrite13GiB workloads plus3GiB finitecontrol/native/archive allowance; 4reservations<=64GiB."
+}
