@@ -1,0 +1,119 @@
+{
+  "source_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+  "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3",
+  "init_actor_critic_equal": {
+    "actor": true,
+    "critic": true
+  },
+  "first_rollout": {
+    "actions": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true,
+      "max_abs_difference": 0.0,
+      "rms_difference": 0.0,
+      "within_probability_gate_reference_tolerance": true,
+      "required_learning_signal_equal": null
+    },
+    "old_log_probabilities": {
+      "shape": [
+        512,
+        1
+      ],
+      "bit_exact_equal": true,
+      "max_abs_difference": 0.0,
+      "rms_difference": 0.0,
+      "within_probability_gate_reference_tolerance": true,
+      "required_learning_signal_equal": null
+    },
+    "old_alpha": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true,
+      "max_abs_difference": 0.0,
+      "rms_difference": 0.0,
+      "within_probability_gate_reference_tolerance": true,
+      "required_learning_signal_equal": null
+    },
+    "old_beta": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true,
+      "max_abs_difference": 0.0,
+      "rms_difference": 0.0,
+      "within_probability_gate_reference_tolerance": true,
+      "required_learning_signal_equal": null
+    },
+    "privileged": {
+      "shape": [
+        512,
+        21
+      ],
+      "bit_exact_equal": true,
+      "max_abs_difference": 0.0,
+      "rms_difference": 0.0,
+      "within_probability_gate_reference_tolerance": true,
+      "required_learning_signal_equal": null
+    },
+    "advantages": {
+      "shape": [
+        512,
+        1
+      ],
+      "bit_exact_equal": false,
+      "max_abs_difference": 2.4573442935943604,
+      "rms_difference": 1.1317038808501474,
+      "within_probability_gate_reference_tolerance": false,
+      "required_learning_signal_equal": false
+    },
+    "returns": {
+      "shape": [
+        512,
+        1
+      ],
+      "bit_exact_equal": false,
+      "max_abs_difference": 2.4573442935943604,
+      "rms_difference": 1.131703881913856,
+      "within_probability_gate_reference_tolerance": false,
+      "required_learning_signal_equal": false
+    },
+    "policy.lidar_grid": {
+      "shape": [
+        512,
+        12,
+        59,
+        360
+      ],
+      "bit_exact_equal": true,
+      "max_abs_difference": 0.0,
+      "rms_difference": 0.0,
+      "within_probability_gate_reference_tolerance": true,
+      "required_learning_signal_equal": null
+    },
+    "policy.state_vec": {
+      "shape": [
+        512,
+        52
+      ],
+      "bit_exact_equal": true,
+      "max_abs_difference": 0.0,
+      "rms_difference": 0.0,
+      "within_probability_gate_reference_tolerance": true,
+      "required_learning_signal_equal": null
+    }
+  },
+  "comparison_scope": "Actualinitandretainedbefore-first-update512samples; learningadvantages/returns areallowed different dueonlyw. No modelforward/optimizer/GPUquery.",
+  "init_rng_torch_cpu_equal": true,
+  "init_rng_torch_cuda_equal": true,
+  "actual_before_optimizer_input_paths": [
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C0-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/results/pilot-training/pilot_diagnostic/update_1_full_input.pt",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/results/pilot-training/pilot_diagnostic/update_1_full_input.pt"
+  ],
+  "first_probability_inputs_bit_exact_equal": true
+}

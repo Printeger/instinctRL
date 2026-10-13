@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_ZERO_CORRECTION_C1_TRAINING_LIVE",
+  "phase": "R5_ZERO_CORRECTION_C1_TRAINING_TERMINAL_PENDING_ACTUAL_REVIEW",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -386,11 +386,11 @@
     "evidence_index": "../docs/experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md",
     "budget": "../docs/experiments/r5-zero-correction-20261014/goal_budget.json",
     "user_authority": "../docs/experiments/r5-zero-correction-20261014/user_task_authority.json",
-    "current_job": "J-3083020018e55362",
+    "current_job": null,
     "training_execution_requested_by_user": true,
     "training_authorization_issued": true,
     "current_exact_release": "A-6e1d2608d1097fde",
-    "next_action": "Poll exactlivejob; realgate/data/status/ownedcleanup then settle resources, noresubmit.",
+    "next_action": "Two bound postrun audit calls after ownedquiescence; CPU actualdataanalysis; independent scientificacceptance. Noresubmit.",
     "independent_review": {
       "status": "PASS_PRELIVE_ONLY",
       "role_call": 2,
@@ -400,8 +400,11 @@
     "shared_baseline_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
     "first_real_rollout_gate": {
       "C0": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS",
-      "C1": "PENDING_NOT_RELEASED"
-    }
+      "C1": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS"
+    },
+    "actual_init_and_first512_comparison": "BIT_EXACT_MATCH_ACTOR_CRITIC_POLICY_PRIVILEGED_ACTION_OLD_BETA_LOGP",
+    "learning_signals_comparison": "ADVANTAGES_RETURNS_DIFFER_AS_ALLOWED_BY_W",
+    "C0_actual_training_acceptance": "ROLE3_PASS_COMPLETE64_AND_REAL_U16_U64"
   },
   "historical_prior_independent_review": {
     "path": "reviews/review-entry6-final-readiness.json",

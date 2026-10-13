@@ -1,0 +1,285 @@
+{
+  "approval_id": "A-6e1d2608d1097fde",
+  "h1_evidence": {
+    "allocation_basis": "allocated_device_wall_seconds",
+    "allocation_gpu_seconds": 320.86797532602213,
+    "counter_completeness": "INCOMPLETE",
+    "counters": {
+      "actor_optimizer_steps": 512,
+      "attempted_policy_steps": 1024,
+      "attempted_updates": 64,
+      "automatic_resets": 32,
+      "completed_policy_steps": 1024,
+      "completed_updates": 64,
+      "critic_optimizer_steps": 512,
+      "explicit_resets": 1,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 7,
+      "real_environment_transitions": 32768,
+      "real_optimizer_updates": 64,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 32768
+    },
+    "exit_fact": "FAILED",
+    "formal_verdict": "NOT_GRANTED",
+    "manifest": {
+      "checkpoints/init0000.json": {
+        "bytes": 269,
+        "sha256": "73124b2c478eb8e9d1fa975845dd246b3acc3cc93d421e3fbaeadf3a67aa1827"
+      },
+      "checkpoints/init0000.pt": {
+        "bytes": 516876,
+        "sha256": "7e19ebb31d1e3bd9e4359f3e155ffd529067bf4aa8ad69db571d8c233a056500"
+      },
+      "checkpoints/u1.json": {
+        "bytes": 264,
+        "sha256": "165b43499baa595ee1b9b06a8a36103a9f9d7278fffd4822d7a70d526a1e76a6"
+      },
+      "checkpoints/u1.pt": {
+        "bytes": 1509929,
+        "sha256": "dd869917110d4a7302e1321087163c5959b03fddb35f64c8bf0937b0cedaca43"
+      },
+      "checkpoints/u16.json": {
+        "bytes": 265,
+        "sha256": "8d00dfbcebef8481d36d6ade088050228934a055fde4af966e1237b0ea0cb7af"
+      },
+      "checkpoints/u16.pt": {
+        "bytes": 1509993,
+        "sha256": "f623e41245a7b3b498677560d59c3af5124542216dd0fb527601f7a85961e9f5"
+      },
+      "checkpoints/u2.json": {
+        "bytes": 264,
+        "sha256": "f66468110b5291b1a68a26c03d092dad033028a920d4dd97e716a6b2843d184b"
+      },
+      "checkpoints/u2.pt": {
+        "bytes": 1509929,
+        "sha256": "ddd1792a62027bfb16b5a5b2b57820d1227082ed5bb1e9ba00edda7ab95d8a16"
+      },
+      "checkpoints/u32.json": {
+        "bytes": 265,
+        "sha256": "46400a1857a0f3d5915f0f8547e590075c9f0e87150b58c8e2f01374a42cc833"
+      },
+      "checkpoints/u32.pt": {
+        "bytes": 1509993,
+        "sha256": "d9c9e5ba24005b67c70a12152bb83d5a710f7d83f97893f1ba365d5d3890ff18"
+      },
+      "checkpoints/u64.json": {
+        "bytes": 265,
+        "sha256": "488df46ccb73a6c28d56eb66f88de56138c80168f9d4fa13ae1b94837c7f8b08"
+      },
+      "checkpoints/u64.pt": {
+        "bytes": 1509993,
+        "sha256": "d931a6f49701a5b0e881967f9cf0ce31a6d701f6322b1c002c03822954a2cd8d"
+      },
+      "checkpoints/u8.json": {
+        "bytes": 264,
+        "sha256": "e1de57fc1c8cd07dffb197b1f4b20e99a96144a0629d20a4585bd2bac0893835"
+      },
+      "checkpoints/u8.pt": {
+        "bytes": 1509929,
+        "sha256": "c7ccc6e35508eff0ea79dcf6ba456a479577eeae6b9844cbe6058cac23502fd1"
+      },
+      "cleanup_timeout.json": {
+        "bytes": 200,
+        "sha256": "2baa95f16f90d64f206dc8feaaf90f1ece480d35132b710462b98b2991fb82cf"
+      },
+      "initialization_accounting.json": {
+        "bytes": 269,
+        "sha256": "61d33061293905bf9cf69e78083b6310aaafb6b060780015d3bef60151f6ef21"
+      },
+      "learning_log/accounting.jsonl": {
+        "bytes": 313432,
+        "sha256": "4cb1f50ba0e1e8a08bd44cc3c9a0da32e38a3b76b3dbdd35bc8a132b03fa2a39"
+      },
+      "learning_log/command_blocks.jsonl": {
+        "bytes": 36665,
+        "sha256": "84a9f3fbf238c56029853e3e7a190b5be1e8067111914436d07cc6b2a3f03c0d"
+      },
+      "learning_log/compact_rollouts.jsonl": {
+        "bytes": 72196622,
+        "sha256": "f8a9e4c9a1743c62a10344891aa3e02356a04218fc66dd9c60383c79d11e80f0"
+      },
+      "learning_log/episodes.jsonl": {
+        "bytes": 72365,
+        "sha256": "6fdbf3e5b49c670f07ebfff30d0630b4fa6b8122ccb7fdcaf271a20bac613bf9"
+      },
+      "learning_log/measurement_windows.jsonl": {
+        "bytes": 911379579,
+        "sha256": "b528164acfc42fd2cb35b7f746f487d9845e58cd9174410d4e187653d7d3efa4"
+      },
+      "learning_log/minibatches.jsonl": {
+        "bytes": 218490,
+        "sha256": "5a9f2ad0df17ea8189cc0047c4981cc1c2413ebb29b6422858d90403e0bbc2bd"
+      },
+      "learning_log/partial_rollout_steps.jsonl": {
+        "bytes": 74616523,
+        "sha256": "19fd6a39737bb355bd0ad6b9aac27cf2e9344e2b449fe7dc28258b97ea033199"
+      },
+      "learning_log/rollouts.jsonl": {
+        "bytes": 364768,
+        "sha256": "98cbdc88d8faae7188c04a9901d1657823e377aa046167031ffd9e034181fa14"
+      },
+      "learning_log/updates.jsonl": {
+        "bytes": 163076,
+        "sha256": "17575cd4b48e2839ebb108467a562f7beaaf99222bae5224b110c00ea633ce49"
+      },
+      "output_quota_binding.json": {
+        "bytes": 250,
+        "sha256": "9814f1db236e942e003d62d3f6f6b9c73047facb0c1818538141d742b022e49a"
+      },
+      "pilot_diagnostic/first_update_gate.json": {
+        "bytes": 179,
+        "sha256": "aed1dc5112c3f937bef1d15f06c4eccc64601db4b0b643fa202ca3eb7855bed8"
+      },
+      "pilot_diagnostic/first_update_probe.pt": {
+        "bytes": 12289599,
+        "sha256": "e8f6802e884612a853d8422721f0858622f8ac4446d15a28506375607495e2f0"
+      },
+      "pilot_diagnostic/update_1_full_input.pt": {
+        "bytes": 522177865,
+        "sha256": "012dd61783f7a749a59136d2339dc43e78e987150c46614a10df2cf99d86c5f6"
+      },
+      "pilot_diagnostic/update_2_full_input.pt": {
+        "bytes": 522177865,
+        "sha256": "c157573e43896759a3114609d316cf42fa79792289f5742e0007a02886a17f7e"
+      },
+      "pilot_optimizer_lrs.json": {
+        "bytes": 113,
+        "sha256": "e80ffcd495ee02a76abd16860e53356f9d0246f0aa7a79be66cc40d5379e3357"
+      },
+      "pilot_reward_binding.json": {
+        "bytes": 513,
+        "sha256": "ea2ebc4e9dd25285554999d09b10461cebc545ccba1c62069b15823fc01e426a"
+      },
+      "process_identity.json": {
+        "bytes": 293,
+        "sha256": "4d2a4dcc498243868e22d9f5af8bb19543559ce71406776dd3be75fd887feb0c"
+      },
+      "process_start.json": {
+        "bytes": 1348,
+        "sha256": "e8c5070fcf4ab737e4413c1bd5256069a12f4497e230b8af4432ef60525955b4"
+      },
+      "status.json": {
+        "bytes": 954,
+        "sha256": "d4d200e801d1367d2e878c4ce591853bce0386a0b676290d053d7512674699f1"
+      }
+    },
+    "raw_status": "PASS_PENDING_CLOSE",
+    "scientific_validity": "UNASSESSED",
+    "scope": "H1_RAW_EXECUTION",
+    "transitions": null
+  },
+  "id": "J-3083020018e55362",
+  "identity": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pgid": 1773774,
+    "pid": 1773774,
+    "starttime": "186453942"
+  },
+  "receipt": {
+    "allocated_seconds": 320.86797532602213,
+    "definitely_not_released": false,
+    "elapsed_seconds": 321.46309984102845,
+    "error": null,
+    "exit_code": -9,
+    "job_id": "J-3083020018e55362",
+    "released": true,
+    "spec_sha256": "a9b1e65aa81033ca11616abb13ca513e298f8d06a30e291503649de2d7397e08",
+    "status": "FAILED"
+  },
+  "reserved_resources": {
+    "transitions": 32768
+  },
+  "spec": {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--authorization",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+      "--attempt",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014",
+      "--mode",
+      "pilot-training"
+    ],
+    "backend": "real",
+    "conditions": [
+      {
+        "evidence_id": "E-R5-ZERO-PRELIVE-20261014",
+        "sha256": "3d3b54d0fd6e8a0cc8b3dc3196bdb97054cb3b418deeef1db1c923f98cef95f3"
+      }
+    ],
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014",
+    "evaluation": "metric-h1-v1",
+    "h1": {
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014",
+      "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3",
+      "gpu_accounting": "allocated_device_wall_seconds",
+      "gpu_devices": [
+        "0"
+      ],
+      "mode": "pilot-training",
+      "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014"
+    },
+    "id": "UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014",
+    "method": "unified-h1-zero-neutrality-v1",
+    "observations": [
+      "status",
+      "counters",
+      "process_identity",
+      "process_start",
+      "cleanup",
+      "pilot_diagnostic"
+    ],
+    "pins": {
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+        "sha256": "05df1f8e2f74d06d655edc0e01a6f9f82b708c4bfac6d9f0dddbf6ec39a268b0"
+      },
+      "dispatcher": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014/training_workloads/unified_h1/local_dispatch.py",
+        "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+      },
+      "executable": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "product": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+        "sha256": "f06b81b0a334dae1cf96738d21ec6bb29860c436917e4e6f1e15ddcb81116f28"
+      },
+      "runtime": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "workload": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014/training_workloads/unified_h1/formal_unified_h1.py",
+        "sha256": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896"
+      }
+    },
+    "resources": {
+      "gpu_seconds": 3610,
+      "starts": 1,
+      "transitions": 32768,
+      "wall_seconds": 3610
+    },
+    "runtime": "/home/mint/rl_blackwell_test",
+    "seed": 20260908,
+    "stage_id": "INSTINCTRL-R5-ZERO-CORRECTION-20261014"
+  },
+  "stage": "INSTINCTRL-R5-ZERO-CORRECTION-20261014",
+  "status": "FAILED",
+  "used_resources": {
+    "gpu_seconds": 320.86797532602213,
+    "starts": 1,
+    "transitions": null,
+    "wall_seconds": 321.46309984102845
+  }
+}
