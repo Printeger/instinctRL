@@ -56,11 +56,13 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Exact fresh paired prelive inputs/firstgate/authority/envelope/counter+cleanup/evaluation deferredbinding and scientificcontract",
-      "status": "REQUESTED"
+      "status": "PASS",
+      "evidence": "reviews/review-pair-prelive.json",
+      "sha256": "95badf6f17f1f9d212e70b981d5378763b0c2bae619e8f00435a01915edee088"
     }
   ],
   "runs": [],
   "no_blind_retry": true,
-  "training_authorizations_issued": 0,
+  "training_authorizations_issued": 2,
   "evaluation_authorizations_issued": 0
 }

@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_PAIRED_PILOT_EXACT_AUTHORIZATION_PREPARATION",
+  "phase": "R5_PAIRED_PILOT_EXACT_TRAINING_APPROVALS_ISSUED_NOT_SUBMITTED",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -398,15 +398,16 @@
     "shared_baseline_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
     "baseline_readiness": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
     "first_real_rollout_gate": "PENDING_ACTUAL_PAIR_FIRST_ROLLOUT_BEFORE_ANY_OPTIMIZER",
-    "current_exact_release": null,
-    "training_authorization_issued": false,
+    "current_exact_release": "P0-training-commander-approval.json",
+    "training_authorization_issued": true,
     "training_execution_requested_by_user": true,
     "current_job": null,
-    "next_action": "Independent exactpair prereview; Commander approves actualP0 input afterPASS; submit only aftercommitted inputs.",
+    "next_action": "Commit/tag/push exactauthorizedinputs; validate idle/STOP/budget/disk then submit P0 once.",
     "independent_review": {
-      "status": "REQUESTED",
+      "status": "PASS_PRELIVE_ONLY",
       "role_call": 1,
-      "handle": "/root/pilot_reviewer"
+      "path": "../docs/experiments/r5-paired-pilot-20261013/reviews/review-pair-prelive.json",
+      "sha256": "95badf6f17f1f9d212e70b981d5378763b0c2bae619e8f00435a01915edee088"
     }
   }
 }

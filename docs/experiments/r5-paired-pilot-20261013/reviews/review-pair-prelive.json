@@ -1,0 +1,88 @@
+{
+  "role": "Reviewer",
+  "goal_role_call": 1,
+  "verdict": "PASS",
+  "scope": "P0/PLR 精确训练输入的条件性 pre-live 验收；未来评估仅接受模板和准入规则，不签发训练或评估 release。",
+  "identities": {
+    "input_commit": "e6fadea31147be0fbe0eac185c1db0f3706fb409",
+    "launch_input_sha256": "7a517e3ea84ccc09323dd2516342c9700b562275e17bc88ffd603885f1760b11",
+    "production_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "production_tree": "b735eafac3888415eded7c6684ed385706871acf",
+    "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+    "snapshot_overlay_sha256": "5e9e11b2ba79aaf2f0ac64851b622c26d1562322f07808b8252d1acd5297f690",
+    "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+    "prospective_training_auth_sha256": {
+      "P0": "e3d36470554f42e7fb610a03a755c3acc11254c454cd9a24b9fb65c96ad5b554",
+      "PLR": "65c7209459a89eb9206725573cf0677ff3be947d5bf02a05df228b5933add809"
+    }
+  },
+  "must_fix": [],
+  "verified": [
+    {
+      "contract": "准确输入、源码与工具绑定",
+      "evidence": "独立核验52个源码文件、96个工具 release 文件、四入口执行 pins、实际 candidate_config 哈希、既有 readiness review 与冻结 future packet 哈希；全部匹配。两个训练 AUTH 预期文件与提案参数完全一致，仅 status 按预期发行字节为 AUTHORIZED。",
+      "assessment": "PASS"
+    },
+    {
+      "contract": "fresh attempt 与未签发状态",
+      "evidence": "四个20261013 attempt 均不存在，实际 AUTH 文件均不存在。文档中的 AUTHORIZED 是预期字节内容，不是已发行授权。",
+      "assessment": "PASS"
+    },
+    {
+      "contract": "真实512样本 gate 必须先于两类 optimizer",
+      "evidence": "实际 cold_start 对两个 pilot group 都启用 FirstUpdateDiagnostic；driver 完成 capture/bind/retain/before_update 后才调用 trainer.update。因此首次 gate 位于 actor 与 critic 的更新之前。实际 gate 使用采样时 old logp/alpha/beta、对应 action/input，严格形状及 atol1e-6/rtol1e-5。",
+      "assessment": "PASS_PRELIVE_ONLY",
+      "limit": "第一次真实 rollout 仍待本轮执行；此前 CPU 验收不替代它。失败必须保持零 optimizer 更新并保存实际故障证据。"
+    },
+    {
+      "contract": "配对变量与执行计划",
+      "evidence": "实际生产 backend 的 P0 actor LR 为3e-4、PLR为1e-4，critic均3e-4；相同网络、训练seed20260908、32env/16rollout/64minibatch/1epoch、64updates、32768 transitions及七个 checkpoint 节点。原1024步零命令 warmup 和其余方法边界沿用已接受源。",
+      "assessment": "PASS"
+    },
+    {
+      "contract": "新 Goal 资源与旧账隔离",
+      "evidence": "四入口合计4starts/4初始化预留、65536训练、25600评估、128updates、14训练checkpoint writes、10840秒 outer/GPU；训练每入口3610秒、评估1810秒含清理。旧诊断80640 reservation及失败历史保留，没有重置。当前新 Goal 使用量为零，无自动重试。",
+      "assessment": "PASS"
+    },
+    {
+      "contract": "探测、清理与证据边界",
+      "evidence": "每入口原六次 prelaunch 查询，训练/评估 runtime 观察上限1225/403；terminal与 owned quiescence 后最多两次 postrun audit。STOP 路径、原 coexistence 阈值、generic H1 collector及完整 job/整个 attempt-results 手工 bytes/SHA inventory 均已登记。",
+      "assessment": "PASS",
+      "limit": "release 前核对实际磁盘余量；没有声称存在训练输出写入前硬帽或 specialized B0 seal。"
+    },
+    {
+      "contract": "未来评估的实际 checkpoint 准入",
+      "evidence": "评估模板仅绑定各组实际训练输出路径 u16/u64，checkpoint SHA及评估 AUTH pin为null。实际 evaluate_pilot_z 检查 checkpoint SHA和update身份，只暴露原Z。评估seed20260909沿用已修复工具映射。",
+      "assessment": "PASS_CONDITIONAL_TEMPLATE",
+      "limit": "模板当前不可发布。须先独立接受真实训练 gate、完整训练证据及真实 checkpoint 来源与哈希，再固定评估 AUTH/spec和新的独立接受 predicate。"
+    }
+  ],
+  "non_blocking": [
+    {
+      "id": "NATIVE-CLOSE",
+      "assessment": "已披露原生 close 可能9.5秒超时。若发生，进程必须保持FAILED；generic INCOMPLETE/null保留完整 reservation，科学数据可另行独立验收。不得据科学数据完成伪造FINAL或graceful close。"
+    },
+    {
+      "id": "SCIENTIFIC-INFERENCE",
+      "assessment": "这是一个训练seed的配对开发实验；原Z不是完整策略验收，不预设PLR更好。完整负结果可以成立，但未执行提案不能作为完成结果。"
+    },
+    {
+      "id": "PRIOR-READINESS",
+      "assessment": "本次沿用已接受的 Role15 物理与控制范围，不要求 E0 或控制回归重跑，也未重新分析历史巨大原始流。"
+    }
+  ],
+  "release_conditions": [
+    "将本次独立评审的准确 accepted hash predicate 加入最终训练 specs，并固定发行文件后再执行既有 Commander propose/show/decide。",
+    "实际训练 AUTH 必须逐字节匹配上述已核验预期哈希；不得改变其余 reviewed source/config/argv/parameters/pins。",
+    "在每个入口 release 前核对 STOP、剩余资源、磁盘容量与准确工具绑定；模拟器创建仍必须晚于内部原 coexistence PASS。",
+    "本 PASS 不允许发布带null checkpoint/AUTH绑定的评估模板；评估必须等待真实训练输出的独立验收与准确新审批。",
+    "任何失败均不得自动重试、重开原 job、扩大64updates或改变baseline/method/runtime；预算不足或实现阻塞应保全证据并明确报告。"
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_starts": 0,
+    "model_or_optimizer_execution": 0,
+    "delegations": 0
+  }
+}

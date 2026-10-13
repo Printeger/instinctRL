@@ -1,0 +1,113 @@
+{
+  "group": "P0",
+  "mode": "pilot-training",
+  "proposal_id": "P-aa3ecc8e9bd73465",
+  "proposal_sha256": "aa3ecc8e9bd73465c492425655d053a8135ed19e0424d34d3222de7c4d4b1098",
+  "approval": {
+    "approval_id": "A-aa3ecc8e9bd73465",
+    "approver": "local-user-cli",
+    "budget": {
+      "fake_starts": 0,
+      "role_calls": 0,
+      "wall_seconds": 3610
+    },
+    "decision": "APPROVED",
+    "preconditions": [
+      "exact pins",
+      "accepted condition hashes",
+      "STOP clear",
+      "single submission"
+    ],
+    "proposal_id": "P-aa3ecc8e9bd73465",
+    "proposal_sha256": "aa3ecc8e9bd73465c492425655d053a8135ed19e0424d34d3222de7c4d4b1098",
+    "proposal_version": 1,
+    "reason": "Commander exact approval under new user R5 pair Goal; independent Role1 accepted. Same ef68 baseline, group P0,64updates/32768transitions, first actual512samplegate before BOTH optimizers, no retries. User task authority SHA 5241a8c77fd486739450cfd4554d77e3acd93468a45d00e07c7998567c26f7ba; require committed input pack and idle/STOP/budget/disk/coexistence/ownedcleanup before single release. Approval is not submission.",
+    "scope": "EXPERIMENT",
+    "stage_id": "INSTINCTRL-R5-PAIRED-PILOT-20261013",
+    "time": 1791872511.9033482
+  },
+  "actual_authorization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/commands/AUTHORIZATION.json",
+    "sha256": "e3d36470554f42e7fb610a03a755c3acc11254c454cd9a24b9fb65c96ad5b554"
+  },
+  "independent_pre_review": {
+    "id": "E-R5-PAIR-PRELIVE-20261013",
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/reviews/review-pair-prelive.json",
+    "sha256": "95badf6f17f1f9d212e70b981d5378763b0c2bae619e8f00435a01915edee088",
+    "accepted": true,
+    "role_call": 1,
+    "independent_handle": "/root/pilot_reviewer",
+    "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "input_commit": "e6fadea31147be0fbe0eac185c1db0f3706fb409",
+    "scope": "Exact P0/PLR training prelive; conditional evaluation template only",
+    "not_live_or_training_authority": true
+  },
+  "user_task_authority_sha256": "5241a8c77fd486739450cfd4554d77e3acd93468a45d00e07c7998567c26f7ba",
+  "remaining_budget_before_submission": {
+    "schema_version": "instinctrl-r5-pair-resource-ledger/1",
+    "goal_id": "INSTINCTRL-R5-PAIRED-PILOT-20261013",
+    "authority": {
+      "path": "user_task_authority.json",
+      "sha256": "5241a8c77fd486739450cfd4554d77e3acd93468a45d00e07c7998567c26f7ba"
+    },
+    "caps": {
+      "live_starts": 4,
+      "simulator_initialization_reservations": 4,
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14,
+      "wall_seconds_including_cleanup": 10840,
+      "allocated_gpu_seconds": 10840,
+      "automatic_retries": 0
+    },
+    "used": {
+      "live_starts": 0,
+      "simulator_initialization_reservations": 0,
+      "training_transitions": 0,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0,
+      "wall_seconds_including_cleanup": 0.0,
+      "allocated_gpu_seconds": 0.0,
+      "output_bytes": 0,
+      "role_calls": 1
+    },
+    "reserved": {
+      "training_transitions": 0,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0
+    },
+    "observed": {
+      "training_transitions": 0,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0,
+      "actor_optimizer_steps": 0,
+      "critic_optimizer_steps": 0
+    },
+    "note": "Observed complete counters are subsets of conservative reservations until existing collector FINAL; no double charge or invented refund. Logical PPO updates are distinct from per-model Adam steps.",
+    "prior_completed_goal": {
+      "budget": "../../diagnostics/r5-readiness/goal_budget.json",
+      "live_starts_used": 6,
+      "nontraining_reservation_retained": 80640,
+      "role_calls_used": 15,
+      "immutable_history": true
+    },
+    "role_calls": [
+      {
+        "call": 1,
+        "role": "Reviewer",
+        "handle": "/root/pilot_reviewer",
+        "scope": "Exact fresh paired prelive inputs/firstgate/authority/envelope/counter+cleanup/evaluation deferredbinding and scientificcontract",
+        "status": "REQUESTED"
+      }
+    ],
+    "runs": [],
+    "no_blind_retry": true,
+    "training_authorizations_issued": 0,
+    "evaluation_authorizations_issued": 0
+  },
+  "submitted": false
+}

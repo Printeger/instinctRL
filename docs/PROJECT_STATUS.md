@@ -7,7 +7,7 @@
 
 ## 当前 Goal（2026-10-13 短程配对实验）
 
-新任务为 R5-P0/PLR 各64updates及u16/u64原Z开发评估。复用已验收ef68共同基线，仅actorLR3e-4/1e-4不同；真实首次512sample概率gate必须在任一optimizer前通过。当前准确输入与资源包已生成，Role1独立预审待完成；尚无actualAUTH/Commanderrelease，尚未训练或GPU探测。
+新任务为 R5-P0/PLR 各64updates及u16/u64原Z开发评估。复用已验收ef68共同基线，仅actorLR3e-4/1e-4不同；真实首次512sample概率gate必须在任一optimizer前通过。准确输入已通过Role1独立预审PASS；P0/PLR actualAUTH与现有Commander精确approval已签发。当前提交输入后先P0 release；尚未训练或GPU探测，评估仍未授权。
 
 唯一当前[证据索引](experiments/r5-paired-pilot-20261013/STATE_AND_EVIDENCE.md)与[实验合同](experiments/r5-paired-pilot-20261013/EXPERIMENT_CONTRACT.md)。本轮预算按现有精确mode固定，旧诊断Goal的全部失败和额度保留，技术READY不替代本轮准确审批。负结果也需形成完整科学结论，不自动扩至256updates。
 
