@@ -1,0 +1,48 @@
+{
+  "schema_version": "instinctrl-r5-zero-attributable-output-accounting/1",
+  "as_of_commit": "890381a40e856a0b7d30c85d6ff696424fea0d0b",
+  "original_job_attempt_and_archives_bytes": 4282373184,
+  "inventories": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/live-C0-training/INVENTORY.json",
+      "sha256": "5e83d067256eee112afa9bc09069f44a6acf9d03df244d3f8eedc423c0cddc09"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/live-C0-evaluation/INVENTORY.json",
+      "sha256": "d7368cd0f89d28c5e902e02c0bf8ca3288e86eb5b1cd7b3b8798d7c00be17201"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/live-C1-training/INVENTORY.json",
+      "sha256": "ecbd3e2af4ba669c6e400a395aec040cb1489fbadcf9a3236a95c82950ccac02"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/live-C1-evaluation/INVENTORY.json",
+      "sha256": "694bf09da2850cb46a1c75c438373b5ca8d6c44bc1cb1b979c860f6b2490a5e9"
+    }
+  ],
+  "goal_evidence_metadata_excluding_counted_archives_bytes": 3645009,
+  "goal_metadata_files": 89,
+  "fresh_source_input_snapshots": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-20261014",
+      "regular_file_bytes": 617844892,
+      "file_count": 8789,
+      "immutable_input_snapshot_conservatively_charged": true
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014",
+      "regular_file_bytes": 618012334,
+      "file_count": 8855,
+      "immutable_input_snapshot_conservatively_charged": true
+    }
+  ],
+  "other_touched_source_status_requirements_input_bytes": 377458,
+  "output_bytes_observed_conservatively": 5522252877,
+  "aggregate_cap_bytes": 68719476736,
+  "all_four_entry_output_reservations_retained_bytes": 68719476736,
+  "metadata_completion_allowance_bytes": 67108864,
+  "bounded_total_including_final_metadata_allowance": 5589361741,
+  "not_double_charged": "Actualoutput isasubsetofthefour16GiBreservations. Originals/archivecopies countedonce, inventoryJSON/analyses/sourceinputs addedseparately. No attempt toderivequota.used fromfilebytes orrefundrewrites. Failedentry reservation retained.",
+  "no_future_live_writes": true,
+  "next_extra_entry_reservation_requires_explicit80GiB_resource_exception": true
+}

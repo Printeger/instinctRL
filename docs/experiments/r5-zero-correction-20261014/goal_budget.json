@@ -27,7 +27,7 @@
     "training_checkpoint_writes": 0,
     "wall_seconds_including_cleanup": 747.3987863801885,
     "allocated_gpu_seconds": 744.9036658930127,
-    "output_bytes": 4282373184,
+    "output_bytes": 5522252877,
     "automatic_retries": 0,
     "role_calls": 5
   },
@@ -87,7 +87,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "ActualC0originalZ scientificdata/C1coexistencefailure27objectFINAL0/partialscienceblock/exactfreshC1preliveconditionalresourceexception; noGoalcompletion",
-      "status": "REQUESTED"
+      "status": "PASS_PARTIAL_AND_CONDITIONAL_PRELIVE_ONLY",
+      "evidence": "reviews/review-C0-Z-C1-failure-extra-prelive.json",
+      "sha256": "0cf841431c6e0d6e61c531b5e4b03aa032db7dd4b164d3c8fac8f1ab3d8514b8"
     }
   ],
   "runs": [
@@ -236,5 +238,11 @@
     "../../diagnostics/r5-readiness/goal_budget.json",
     "../r5-paired-pilot-20261013/goal_budget.json"
   ],
-  "note": "Observed logicalcounts subset of conservative reservations until formalFINAL, never doublecharged/refunded onINCOMPLETE. Perentry16GiB reserved before release; cumulativebeforewrite13GiB workloads plus3GiB finitecontrol/native/archive allowance; 4reservations<=64GiB."
+  "note": "Observed logicalcounts subset of conservative reservations until formalFINAL, never doublecharged/refunded onINCOMPLETE. Perentry16GiB reserved before release; cumulativebeforewrite13GiB workloads plus3GiB finitecontrol/native/archive allowance; 4reservations<=64GiB.",
+  "output_accounting": {
+    "path": "OUTPUT_ACCOUNTING_BEFORE_RESOURCE_DECISION.json",
+    "snapshot_of_counts_before_this_record_and_ledger_update": true,
+    "remaining_metadata_allowance_bytes": 67108864,
+    "all_prior_output_reservations_retained": true
+  }
 }

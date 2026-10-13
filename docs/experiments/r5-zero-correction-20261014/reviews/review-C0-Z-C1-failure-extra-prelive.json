@@ -1,0 +1,53 @@
+{
+  "verdict": "PASS",
+  "scope": "接受C0实际原Z负结果、C1实际启动前资源失败及准确追加入口提案的条件性预审；不接受Goal完成，不签发追加资源或release。",
+  "current_goal_status": "BLOCKED_BY_SPECIFIC_DEFECT",
+  "specific_blocker": "C1原Z评价未执行；当前4个start/init及64GiB输出预留均已消耗。阻塞属于实际资源准入与新增授权缺口，没有建立新的实现缺陷。",
+  "identities": {
+    "evidence_commit": "890381a40e856a0b7d30c85d6ff696424fea0d0b", "source_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90", "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3", "method_sha256": "ecc75a8e3d581ca1bd43e8c3e34326a5f18dd55cfa1739fe3b26f4e25fe1c14e", "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60", "extra_resource_proposal_sha256": "ef1f8b31c86fb22acb9ac0a1935fb95e99d0fa01a96eef622b4b5f3d4d7f12e7", "extra_spec_draft_sha256": "8d8768bc3b35a1700e81fa0ac7d1bb3febda1feb39ac3ff34e58a0c0352de5f6", "extra_expected_AUTH_sha256": "9d732b78569d3d5e5ff8328447e1300a70102240d809cc7e91c95f6028c6ddf3"
+  },
+  "must_fix": [],
+  "C0_evaluation": {
+    "verdict": "PASS_COMPLETE_NEGATIVE_EVIDENCE", "job_id": "J-4be233e84359e5c5", "inventory_objects": 40, "original_bytes": 3083754,
+    "independent_checks": "全部原件/归档bytes与SHA、完整job及整个attempt枚举、实际spec/pins、原evaluate_episode/case_outcome重放及producer匹配均通过。",
+    "coverage": "各节点T0+200步、全部32lanes，共400steps/12800非训练transitions；无optimizer或checkpoint写入。",
+    "u16": {"successes": "0/32", "subgroups": "d0–d7各0/4", "engineering_valid_episodes": 32, "raw_sha256": "b2a5195381d9e1774e87c23b10b42a573ca4dc3fae58e187972544341852702f"},
+    "u64": {"successes": "0/32", "subgroups": "d0–d7各0/4", "engineering_valid_episodes": 32, "raw_sha256": "0cda3e21ba50a240ac8b2ada9a1ee2ee42c4c4aceac60bf47de9b97abc5a72aa"},
+    "process_and_accounting": "FAILED/-9，raw PASS_PENDING_CLOSE，collector INCOMPLETE/null；完整12800评价reservation保留。",
+    "cleanup": "正常ACK两次稳定空扫描、无survivors，准确owner/guard/child不存在；两次实际授权postrun审计已核验。"
+  },
+  "C1_failed_evaluation": {
+    "verdict": "PASS_TRUTHFUL_PREAPP_RESOURCE_FAILURE", "job_id": "J-c28f721ecfa2d171", "approval_id": "A-fadcc824d6f4562f", "inventory_objects": 27, "original_bytes": 32915,
+    "independent_checks": "全部原件/归档bytes与SHA、完整枚举、实际spec/pins、raw失败、原prelaunch observed window及collector计数通过。",
+    "coexistence_samples_percent": [4, 6, 2], "observed_window_seconds": 10.026097934, "unchanged_threshold_percent": 5,
+    "failure": "第二样本6%触发原门槛拒绝；没有App创建、policy attempt、reset、transition、optimizer或checkpoint写入。",
+    "formal_counters": "FINAL 0",
+    "initialization_boundary": "initialization_measurement NOT_REACHED；simulator_initializations=1是预留/收费，不是已创建App的证明。",
+    "settlement": "仅该入口未使用的12800非训练reservation根据实际FINAL零合法结清；start/init和16GiB输出预留继续保留。",
+    "cleanup": "正常ACK两次稳定空扫描、无survivors，准确owner/guard/child不存在。",
+    "postrun": "恰好两次授权审计：521MiB/7%，compute列表仅既有GNOME164MiB。",
+    "causal_limit": "compute列表不能证明GPU利用率升高由GNOME造成；postrun不是未来coexistence PASS，不允许放宽门槛或终止无关进程。"
+  },
+  "partial_science": {"assessment": "PASS_AS_INCOMPLETE_REPORT", "evidence": "PAIR_ANALYSIS.md、pair_analysis.blocked.json与NEXT_RESEARCH_DECISION.md将C1评价记为NOT_EXECUTED/UNKNOWN，并明确主比较无法完成。", "limits": "C1训练残差缩小及首次KL变化支持继续完成预注册评价，但不能代替确定性原Z，不能宣称VALID_EXPERIMENT_POSITIVE或VALID_EXPERIMENT_NEGATIVE。旧PLR不是同时代替代对照。", "goal_complete_allowed": false},
+  "conditional_extra_entry": {
+    "assessment": "PASS_PROPOSAL_ONLY", "spec_id": "UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014", "formal_order_id": "UNIFIED-H1-R5-C1-PILOT-EVAL", "fresh_attempt_exists": false, "actual_AUTH_exists": false, "new_approval_issued": false,
+    "verified": "提案、draft及expected AUTH字节哈希匹配；实际执行pins、准确source/config/method、argv/attempt对应及已接受真实checkpoint SHA匹配。fresh控制平面ID与原科学order身份分离可接受，不能重开旧ID。",
+    "requested_resource_change": "仅start/init caps4→5及输出预留64→80GiB；其他caps不变，完整旧预留保留。",
+    "entry_limits": "0训练/0updates/0checkpoint writes；12800原Z评价，1810秒outer/GPU含清理，16GiB输出预留，原6次prelaunch与2次postrun，无自动重试。",
+    "checkpoints": [
+      {"update": 16, "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/results/pilot-training/checkpoints/u16.pt", "sha256": "f623e41245a7b3b498677560d59c3af5124542216dd0fb527601f7a85961e9f5"},
+      {"update": 64, "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/results/pilot-training/checkpoints/u64.pt", "sha256": "d931a6f49701a5b0e881967f9cf0ce31a6d701f6322b1c002c03822954a2cd8d"}
+    ]
+  },
+  "accounting": {"independent_run_sums": "PASS", "starts_and_init_charged": 4, "wall_seconds": 747.3987863801885, "allocated_gpu_seconds": 744.9036658930127, "original_and_archive_bytes": 4282373184, "retained_output_reservations_bytes": 68719476736, "retained_logical_reservations": {"training_transitions": 65536, "nontraining_transitions": 12800, "optimizer_updates": 128, "training_checkpoint_writes": 14}},
+  "release_constraints": [
+    "必须先取得针对本准确提案的一次明确新用户资源例外；旧诊断8-start批准不适用于本Goal，也不自动允许无新修复证据的再次入口。",
+    "用户决定须明确只准一个fresh C1原Z入口及上述caps变更；未取得决定前不得创建实际AUTH、批准或release。",
+    "随后Commander绑定本次准确review SHA及用户决定SHA，固定实际AUTH/spec，提交/tag/正常push后执行既有审批与launch流程。",
+    "使用fresh spec/attempt，不覆盖旧spec/AUTH或复用旧job；若薄脚本固定旧文件名，须明确适配新输入路径，不静默替换已审历史。",
+    "STOP、idle/owned cleanup、pins、磁盘、剩余资源与输出预留检查仍必需；内部原5% coexistence通过后才创建模拟器，不增加额外探测。",
+    "不得修改权重、阈值、控制器、PPO、课程、runtime或无关进程；追加入口也无自动重试。",
+    "只有实际C1原Z完整并独立审核后，才能形成预注册主比较与正/负科学终态。"
+  ],
+  "review_actions": {"shared_writes": 0, "gpu_queries": 0, "live_or_simulation_starts": 0, "model_forward_calls": 0, "optimizer_calls": 0, "delegations": 0}
+}

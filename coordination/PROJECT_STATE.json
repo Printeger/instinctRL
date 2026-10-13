@@ -13,14 +13,17 @@
     "path": "../docs/history/consolidation-20261012/r5/review_evidence/HOST_CPU_EVIDENCE.json"
   },
   "latest_independent_review": {
-    "verdict": "PASS",
-    "role_call": 2,
+    "id": "E-R5-ZERO-C0-Z-C1-FAILURE-CONDITIONAL-EXTRA-20261014",
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-C0-Z-C1-failure-extra-prelive.json",
+    "sha256": "0cf841431c6e0d6e61c531b5e4b03aa032db7dd4b164d3c8fac8f1ab3d8514b8",
+    "accepted": true,
+    "role_call": 5,
     "independent_handle": "/root/pilot_reviewer",
-    "candidate_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
-    "input_commit": "7ab511b5a8f55e88652df37658a26f3c3ad6501d",
-    "path": "../docs/experiments/r5-zero-correction-20261014/reviews/review-zero-prelive.json",
-    "sha256": "3d3b54d0fd6e8a0cc8b3dc3196bdb97054cb3b418deeef1db1c923f98cef95f3",
-    "scope": "EXACT_PRELIVE_ONLY_PENDING_ACTUAL_SCIENCE"
+    "scope": "接受C0实际原Z负结果、C1实际启动前资源失败及准确追加入口提案的条件性预审；不接受Goal完成，不签发追加资源或release。",
+    "completion_allowed": false,
+    "live_resource_exception_granted": false,
+    "evidence_commit": "890381a40e856a0b7d30c85d6ff696424fea0d0b",
+    "candidate_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90"
   },
   "latest_real_diagnostic": {
     "job_id": "J-ad3ac7db1fb82d89",
@@ -390,12 +393,19 @@
     "training_execution_requested_by_user": true,
     "training_authorization_issued": false,
     "current_exact_release": null,
-    "next_action": "Obtainoneexplicitresourceexception4to5starts/initand64to80GiBoutput; independentconditionalprelive andnewCommanderexactapprovalbeforefreshC1evaluation. Noauto retry.",
+    "next_action": "OneexplicituserresourceexceptionforreviewedfreshC1Z: start/init4to5/output64to80GiB; allothercapsunchanged. ThennewCommander exactapproval,commit/push,originalSTOP/coexistence/cleanup,singlerelease,realZ/finalscience. NotDONE.",
     "independent_review": {
-      "status": "PASS_PRELIVE_ONLY",
-      "role_call": 2,
-      "path": "../docs/experiments/r5-zero-correction-20261014/reviews/review-zero-prelive.json",
-      "sha256": "3d3b54d0fd6e8a0cc8b3dc3196bdb97054cb3b418deeef1db1c923f98cef95f3"
+      "id": "E-R5-ZERO-C0-Z-C1-FAILURE-CONDITIONAL-EXTRA-20261014",
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-C0-Z-C1-failure-extra-prelive.json",
+      "sha256": "0cf841431c6e0d6e61c531b5e4b03aa032db7dd4b164d3c8fac8f1ab3d8514b8",
+      "accepted": true,
+      "role_call": 5,
+      "independent_handle": "/root/pilot_reviewer",
+      "scope": "接受C0实际原Z负结果、C1实际启动前资源失败及准确追加入口提案的条件性预审；不接受Goal完成，不签发追加资源或release。",
+      "completion_allowed": false,
+      "live_resource_exception_granted": false,
+      "evidence_commit": "890381a40e856a0b7d30c85d6ff696424fea0d0b",
+      "candidate_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90"
     },
     "shared_baseline_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
     "first_real_rollout_gate": {

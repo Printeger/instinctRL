@@ -1,0 +1,38 @@
+{
+  "status": "REVIEWED_CONCRETE_PACKAGE_WAITING_ONE_USER_DECISION",
+  "proposal_sha256": "ef1f8b31c86fb22acb9ac0a1935fb95e99d0fa01a96eef622b4b5f3d4d7f12e7",
+  "independent_review": {
+    "id": "E-R5-ZERO-C0-Z-C1-FAILURE-CONDITIONAL-EXTRA-20261014",
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-C0-Z-C1-failure-extra-prelive.json",
+    "sha256": "0cf841431c6e0d6e61c531b5e4b03aa032db7dd4b164d3c8fac8f1ab3d8514b8",
+    "accepted": true,
+    "role_call": 5,
+    "independent_handle": "/root/pilot_reviewer",
+    "scope": "接受C0实际原Z负结果、C1实际启动前资源失败及准确追加入口提案的条件性预审；不接受Goal完成，不签发追加资源或release。",
+    "completion_allowed": false,
+    "live_resource_exception_granted": false
+  },
+  "no_active_or_uncertain_jobs": true,
+  "all_old_and_new_jobs_terminal": 14,
+  "STOP": [],
+  "new_extra_actualAUTH_exists": false,
+  "new_extra_approval_issued": false,
+  "fresh_attempt_exists": false,
+  "caps_unchanged": {
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "wall_seconds_including_cleanup": 10840,
+    "allocated_gpu_seconds": 10840,
+    "output_bytes": 68719476736,
+    "automatic_retries": 0,
+    "role_calls": 12
+  },
+  "goal_complete": false,
+  "thin_extra_tools_prepared_syntax_only": true,
+  "output_accounting": "OUTPUT_ACCOUNTING_BEFORE_RESOURCE_DECISION.json",
+  "future_review_calls_reserved_available": 7
+}
