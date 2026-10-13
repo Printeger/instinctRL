@@ -184,17 +184,111 @@ def evaluation(attempt, group):
             'metric': 'Original metric-h1-v1 including sensorT0/startup/safety/resets/all32lanes/subgroups; no threshold edits.',
             'scope': 'Z development evaluations only; process acceptance is separate.'}
 
+def pair(analyses):
+    """Compare the full requested experiment, without presuming an LR winner."""
+    from collections import Counter
+    training_rows = {group: read(analyses / f'{group}-training-data-analysis.json') for group in ('P0', 'PLR')}
+    evaluation_rows = {group: read(analyses / f'{group}-evaluation-data-analysis.json') for group in ('P0', 'PLR')}
+    assert all(row and row['scientific_training_coverage_complete'] for row in training_rows.values())
+    assert all(row and row['coverage_complete'] for row in evaluation_rows.values())
+    initial = [torch.load(Path(row['checkpoints'][0]['path']), map_location='cpu', weights_only=True)
+               for row in training_rows.values()]
+    equality = {}
+    for section in ('actor', 'critic'):
+        left, right = initial[0][section], initial[1][section]
+        assert left.keys() == right.keys()
+        equality[section] = all(torch.equal(left[name], right[name]) for name in left)
+        assert equality[section], 'paired initialization differs'
+    for key in ('source_identity', 'network_config', 'method_hashes', 'training_seed', 'curriculum', 'counters'):
+        assert initial[0][key] == initial[1][key], key
+    ppo_left, ppo_right = [dict(checkpoint['ppo_config']) for checkpoint in initial]
+    assert ppo_left.pop('actor_learning_rate') == 3e-4 and ppo_right.pop('actor_learning_rate') == 1e-4
+    assert ppo_left == ppo_right
+    assert initial[0]['actor_optimizer']['state'] == initial[1]['actor_optimizer']['state'] == {}
+    assert initial[0]['critic_optimizer']['state'] == initial[1]['critic_optimizer']['state'] == {}
+    del initial
+    first_inputs = [torch.load(Path(row['checkpoints'][0]['path']).parents[1] / 'pilot_diagnostic/update_1_full_input.pt',
+                               map_location='cpu', weights_only=True) for row in training_rows.values()]
+    input_comparison = {}
+    for field in ('actions', 'old_log_probabilities', 'old_alpha', 'old_beta'):
+        left, right = first_inputs[0][field], first_inputs[1][field]
+        assert left.shape == right.shape
+        input_comparison[field] = {'shape': list(left.shape), 'bit_exact_equal': torch.equal(left, right),
+                                   'max_abs_difference': float((left - right).abs().max())}
+    for name in first_inputs[0]['policy']:
+        left, right = first_inputs[0]['policy'][name], first_inputs[1]['policy'][name]
+        assert left.shape == right.shape
+        input_comparison['policy.' + name] = {'shape': list(left.shape), 'bit_exact_equal': torch.equal(left, right),
+                                            'max_abs_difference': float((left - right).abs().max())}
+    del first_inputs
+    groups = {}
+    for group in ('P0', 'PLR'):
+        train, evaluate = training_rows[group], evaluation_rows[group]
+        probes = train['actual_first_update_probe']
+        nodes = {}
+        for update in (16, 64):
+            node = evaluate['u16_u64'][str(update)]
+            rows = node['episodes']
+            assert len(rows) == 32
+            nodes[str(update)] = {'original_gate': node['original_gate'],
+                                  'raw_path': node['raw_path'], 'raw_sha256': node['raw_sha256'],
+                                  'original_sensor_T0_startup_and_all32_denominator': True,
+                                  'speed_rms_m_s': stats([row['metrics']['speed'] for row in rows]),
+                                  'horizontal_drift_m': stats([row['metrics']['drift'] for row in rows]),
+                                  'height_deviation_m': stats([row['metrics']['height'] for row in rows]),
+                                  'failure_reasons': dict(Counter(row['reason'] for row in rows)),
+                                  'engineering': {key: sum(bool(row['engineering'][key]) for row in rows)
+                                                  for key in ('collision', 'height_failure', 'missing', 'reset_interrupted', 'evidence_valid')},
+                                  'metric_window_limit': 'Original evaluator values retained; reset-interrupted trajectories are original failures, not steady uninterrupted behavior estimates.'}
+        groups[group] = {'actor_lr': 3e-4 if group == 'P0' else 1e-4, 'critic_lr': 3e-4,
+                         'actual_training_updates': 64, 'actual_training_transitions': 32768,
+                         'actual_training_checkpoint_writes': 7, 'live_first_rollout_gate': train['first_real_rollout_gate'],
+                         'first_update': {'analytic_beta_kl_mean_by_minibatch': [row['analytic_beta_kl_post']['mean'] for row in probes],
+                                          'parameter_delta_l2_by_minibatch': [row['parameter_delta_l2_post'] for row in probes],
+                                          'mean_v_corr_b_after_by_minibatch': [[axis['mean'] for axis in row['mean_v_corr_b_post']['xyz']] for row in probes]},
+                         'training_reset_lanes': sum(row['reset_lanes'] for row in train['executed_training_corrections']),
+                         'actual_training_correction_u16': train['executed_training_corrections'][15],
+                         'actual_training_correction_u64': train['executed_training_corrections'][63],
+                         'Z_u16_u64': nodes, 'all_original_Z_nodes_pass': evaluate['all_original_gates_pass']}
+    p0_pass, plr_pass = [groups[group]['all_original_Z_nodes_pass'] for group in ('P0', 'PLR')]
+    kl_lower = groups['PLR']['first_update']['analytic_beta_kl_mean_by_minibatch'][-1] < groups['P0']['first_update']['analytic_beta_kl_mean_by_minibatch'][-1]
+    if not p0_pass and not plr_pass:
+        decision = 'NEITHER_LR_ESTABLISHES_ORIGINAL_Z_ADMISSION_DO_NOT_EXTEND_TRAINING'
+    elif plr_pass and not p0_pass:
+        decision = 'LOW_LR_SUPPORTED_FOR_SINGLE_PAIR_Z_REPLICATION_NOT_LONG_TRAINING_AUTHORIZATION'
+    elif p0_pass and not plr_pass:
+        decision = 'LOW_LR_DOES_NOT_IMPROVE_SINGLE_PAIR_Z_ADMISSION'
+    else:
+        decision = 'BOTH_LR_PASS_Z_SINGLE_PAIR_DOES_NOT_ESTABLISH_GENERAL_LR_WINNER'
+    return {'schema_version': 'instinctrl-r5-paired-pilot-results/1', 'status': 'COMPLETE_ACTUAL_PAIR_PENDING_FINAL_INDEPENDENT_REVIEW',
+            'shared_source_commit': SOURCE, 'init_actor_and_critic_bit_exact_equal': equality,
+            'only_PPO_config_difference': 'actor_learning_rate', 'actual_first_rollout_pair_comparison': input_comparison,
+            'groups': groups, 'scientific_decision': decision, 'lower_LR_reduced_first_update_KL_in_this_pair': kl_lower,
+            'training_transitions_observed': 65536, 'logical_updates_observed': 128, 'training_checkpoint_writes_observed': 14,
+            'nontraining_evaluation_transitions_observed': 25600,
+            'complete_negative_results_are_retained': True, 'automatic_extension_to256_updates': False,
+            'limits': ['One paired trainingseed, not a multi-seed causal/generalization conclusion.',
+                       'Original Z development evaluations are not fullpolicy acceptance.',
+                       'Native FAILED close and generic INCOMPLETE reservations remain separate from complete scientific data.',
+                       'No reward/network/controller/curriculum/algorithm/threshold changes; no missing or failed samples removed.']}
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--mode', choices=['training', 'evaluation'], required=True)
-    parser.add_argument('--group', choices=['P0', 'PLR'], required=True)
-    parser.add_argument('--attempt', type=Path, required=True)
+    parser.add_argument('--mode', choices=['training', 'evaluation', 'pair'], required=True)
+    parser.add_argument('--group', choices=['P0', 'PLR'])
+    parser.add_argument('--attempt', type=Path)
+    parser.add_argument('--analyses-dir', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError('preserve existing analysis: ' + str(args.output))
     torch.set_num_threads(2)
-    result = (training if args.mode == 'training' else evaluation)(args.attempt.resolve(), args.group)
+    if args.mode == 'pair':
+        assert args.analyses_dir is not None
+        result = pair(args.analyses_dir)
+    else:
+        assert args.attempt is not None and args.group is not None
+        result = (training if args.mode == 'training' else evaluation)(args.attempt.resolve(), args.group)
     result.update(schema_version='instinctrl-r5-pair-actual-data-analysis/1',
                   analysis_tool_sha256=digest(Path(__file__)), CPU_only=True,
                   analysis_optimizer_updates=0, missing_samples_filled=False)

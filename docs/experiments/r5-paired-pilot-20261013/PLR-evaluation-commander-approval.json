@@ -1,0 +1,333 @@
+{
+  "group": "PLR",
+  "mode": "pilot-evaluation",
+  "proposal_id": "P-007f7b04266ab506",
+  "proposal_sha256": "007f7b04266ab506d7f3cdef32b75c3ab1d37d432d2f727c10633d8400dac469",
+  "approval": {
+    "approval_id": "A-007f7b04266ab506",
+    "approver": "local-user-cli",
+    "budget": {
+      "fake_starts": 0,
+      "role_calls": 0,
+      "wall_seconds": 1810
+    },
+    "decision": "APPROVED",
+    "preconditions": [
+      "exact pins",
+      "accepted condition hashes",
+      "STOP clear",
+      "single submission"
+    ],
+    "proposal_id": "P-007f7b04266ab506",
+    "proposal_sha256": "007f7b04266ab506d7f3cdef32b75c3ab1d37d432d2f727c10633d8400dac469",
+    "proposal_version": 1,
+    "reason": "Commander new exact PLR u16/u64 originalZ evaluation approval under user pair Goal; independent actualtraining/checkpoint acceptance 1c02351f08394401ace7c9d8258a83a9732d046fea90c32ea4ab0ab3e7a2dbbd. Correct actualcheckpoint source/config/hash, evalseed20260909,12800nontraining/0updates/0checkpointwrites. Trainingprocess remainsFAILED/INCOMPLETE withfullreservation; noautorerun. Commitinputs then STOP/idle/budget/disk/internalcoexistence before single release.",
+    "scope": "EXPERIMENT",
+    "stage_id": "INSTINCTRL-R5-PAIRED-PILOT-20261013",
+    "time": 1791873845.7754793
+  },
+  "actual_authorization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/commands/AUTHORIZATION.json",
+    "sha256": "6ab316cb0c6cd0b0033547103f98c38ab7f07bad5105c4c26a6692f35d40eb08"
+  },
+  "accepted_actual_training_review": {
+    "id": "E-R5-PAIR-PLR-ACTUAL-TRAINING-20261013",
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-paired-pilot-20261013/reviews/review-PLR-training-actual.json",
+    "sha256": "1c02351f08394401ace7c9d8258a83a9732d046fea90c32ea4ab0ab3e7a2dbbd",
+    "accepted": true,
+    "independent_handle": "/root/pilot_reviewer",
+    "scope": "Actual PLR scientific training/checkpoint acceptance; conditional exact originalZ evaluation admission only",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "job_id": "J-ef6ec97c642bf4ac",
+    "not_live_or_training_authority": true
+  },
+  "checkpoint_source_binding": [
+    {
+      "label": "u16",
+      "status": "VERIFIED_ACTUAL",
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/results/pilot-training/checkpoints/u16.pt",
+      "sha256": "b9007b5820b3c98072dbfb0bbb16552995aaacd15aaa2383167ecfe976e56938",
+      "bytes": 1509865,
+      "counters": {
+        "update": 16,
+        "transition": 8192,
+        "global_policy_step": 256,
+        "actor_optimizer": 128,
+        "critic_optimizer": 128
+      },
+      "source_identity": {
+        "product_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "product_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "workload_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "workload_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c"
+      },
+      "network_config": {
+        "lidar_channels": [
+          8,
+          16,
+          16
+        ],
+        "state_hidden": 32,
+        "actor_hidden": 128,
+        "critic_hidden": [
+          64,
+          64
+        ],
+        "concentration_min": 1.0,
+        "concentration_max": 30.0,
+        "action_log_epsilon": 1e-06
+      },
+      "ppo_config": {
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_ratio": 0.2,
+        "value_loss_coefficient": 0.5,
+        "entropy_coefficient": 0.01,
+        "actor_learning_rate": 0.0001,
+        "critic_learning_rate": 0.0003,
+        "maximum_gradient_norm": 0.5,
+        "advantage_epsilon": 1e-08,
+        "minibatch_size": 64,
+        "epoch_count": 1,
+        "permutation_seed": 1701
+      }
+    },
+    {
+      "label": "u64",
+      "status": "VERIFIED_ACTUAL",
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/results/pilot-training/checkpoints/u64.pt",
+      "sha256": "49509911b598dbcfae19e0732a4bb1715a352b2534f73cb74ec38fa8b815cfbd",
+      "bytes": 1509865,
+      "counters": {
+        "update": 64,
+        "transition": 32768,
+        "global_policy_step": 1024,
+        "actor_optimizer": 512,
+        "critic_optimizer": 512
+      },
+      "source_identity": {
+        "product_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "product_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "workload_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "workload_tree": "b735eafac3888415eded7c6684ed385706871acf",
+        "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c"
+      },
+      "network_config": {
+        "lidar_channels": [
+          8,
+          16,
+          16
+        ],
+        "state_hidden": 32,
+        "actor_hidden": 128,
+        "critic_hidden": [
+          64,
+          64
+        ],
+        "concentration_min": 1.0,
+        "concentration_max": 30.0,
+        "action_log_epsilon": 1e-06
+      },
+      "ppo_config": {
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "clip_ratio": 0.2,
+        "value_loss_coefficient": 0.5,
+        "entropy_coefficient": 0.01,
+        "actor_learning_rate": 0.0001,
+        "critic_learning_rate": 0.0003,
+        "maximum_gradient_norm": 0.5,
+        "advantage_epsilon": 1e-08,
+        "minibatch_size": 64,
+        "epoch_count": 1,
+        "permutation_seed": 1701
+      }
+    }
+  ],
+  "submitted": false,
+  "remaining_budget_at_approval": {
+    "schema_version": "instinctrl-r5-pair-resource-ledger/1",
+    "goal_id": "INSTINCTRL-R5-PAIRED-PILOT-20261013",
+    "authority": {
+      "path": "user_task_authority.json",
+      "sha256": "5241a8c77fd486739450cfd4554d77e3acd93468a45d00e07c7998567c26f7ba"
+    },
+    "caps": {
+      "live_starts": 4,
+      "simulator_initialization_reservations": 4,
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14,
+      "wall_seconds_including_cleanup": 10840,
+      "allocated_gpu_seconds": 10840,
+      "automatic_retries": 0
+    },
+    "used": {
+      "live_starts": 3,
+      "simulator_initialization_reservations": 3,
+      "training_transitions": 0,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0,
+      "wall_seconds_including_cleanup": 720.6958147047553,
+      "allocated_gpu_seconds": 719.153975197114,
+      "output_bytes": 4282502258,
+      "role_calls": 3
+    },
+    "reserved": {
+      "training_transitions": 65536,
+      "nontraining_transitions": 12800,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14
+    },
+    "observed": {
+      "training_transitions": 65536,
+      "nontraining_transitions": 12800,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14,
+      "actor_optimizer_steps": 1024,
+      "critic_optimizer_steps": 1024
+    },
+    "note": "Observed complete counters are subsets of conservative reservations until existing collector FINAL; no double charge or invented refund. Logical PPO updates are distinct from per-model Adam steps.",
+    "prior_completed_goal": {
+      "budget": "../../diagnostics/r5-readiness/goal_budget.json",
+      "live_starts_used": 6,
+      "nontraining_reservation_retained": 80640,
+      "role_calls_used": 15,
+      "immutable_history": true
+    },
+    "role_calls": [
+      {
+        "call": 1,
+        "role": "Reviewer",
+        "handle": "/root/pilot_reviewer",
+        "scope": "Exact fresh paired prelive inputs/firstgate/authority/envelope/counter+cleanup/evaluation deferredbinding and scientificcontract",
+        "status": "PASS",
+        "evidence": "reviews/review-pair-prelive.json",
+        "sha256": "95badf6f17f1f9d212e70b981d5378763b0c2bae619e8f00435a01915edee088"
+      },
+      {
+        "call": 2,
+        "role": "Reviewer",
+        "handle": "/root/pilot_reviewer",
+        "scope": "Actual P0 fulltraining/512samplelivegate/7checkpoints/1024steps/512minibatches/inventory/hash/close+ownedcleanup+retainedbudget and conditional actual P0 evaluation checkpoint admission",
+        "status": "PASS",
+        "evidence": "reviews/review-P0-training-actual.json",
+        "sha256": "365fa0256eb88b2b21c8f1adc9194c0e9a6663f1bbbbde0a086e7c542af72dc0"
+      },
+      {
+        "call": 3,
+        "role": "Reviewer",
+        "handle": "/root/pilot_reviewer",
+        "scope": "Actual PLR fulltraining/live512gate/7checkpoints/1024steps/512minibatches/completeinventory/close+ownedcleanup+budget; conditional originalZ checkpoint admission; compare true pair initialization identity",
+        "status": "REQUESTED"
+      }
+    ],
+    "runs": [
+      {
+        "group": "P0",
+        "mode": "pilot-training",
+        "spec_id": "UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013",
+        "job_id": "J-37539ea96bd4c509",
+        "status": "FAILED",
+        "starts_charged": 1,
+        "simulator_initialization_reserved": 1,
+        "training_transitions_reserved": 32768,
+        "nontraining_transitions_reserved": 0,
+        "optimizer_updates_reserved": 64,
+        "training_checkpoint_writes_reserved": 7,
+        "postrun_nvidia_smi_calls_used": 2,
+        "observed": {
+          "training_transitions": 32768,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 64,
+          "training_checkpoint_writes": 7,
+          "actor_optimizer_steps": 512,
+          "critic_optimizer_steps": 512
+        },
+        "settlement": "INCOMPLETE_FULL_ENTRY_RESERVATION_RETAINED",
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "actual_accounting_completed": true,
+        "wall_seconds": 309.98664175882004,
+        "allocated_gpu_seconds": 309.4876573861111,
+        "output_bytes_including_archive": 2137160365,
+        "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
+        "inventory": "live-P0-training/INVENTORY.json"
+      },
+      {
+        "group": "PLR",
+        "mode": "pilot-training",
+        "spec_id": "UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013",
+        "job_id": "J-ef6ec97c642bf4ac",
+        "status": "FAILED",
+        "starts_charged": 1,
+        "simulator_initialization_reserved": 1,
+        "training_transitions_reserved": 32768,
+        "nontraining_transitions_reserved": 0,
+        "optimizer_updates_reserved": 64,
+        "training_checkpoint_writes_reserved": 7,
+        "postrun_nvidia_smi_calls_used": 2,
+        "observed": {
+          "training_transitions": 32768,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 64,
+          "training_checkpoint_writes": 7,
+          "actor_optimizer_steps": 512,
+          "critic_optimizer_steps": 512
+        },
+        "settlement": "INCOMPLETE_FULL_ENTRY_RESERVATION_RETAINED",
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "actual_accounting_completed": true,
+        "wall_seconds": 314.8233371740207,
+        "allocated_gpu_seconds": 314.3097850459162,
+        "output_bytes_including_archive": 2139157797,
+        "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
+        "inventory": "live-PLR-training/INVENTORY.json"
+      },
+      {
+        "group": "P0",
+        "mode": "pilot-evaluation",
+        "spec_id": "UNIFIED-H1-R5-P0-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013",
+        "job_id": "J-a063fd710a007b35",
+        "status": "FAILED",
+        "starts_charged": 1,
+        "simulator_initialization_reserved": 1,
+        "training_transitions_reserved": 0,
+        "nontraining_transitions_reserved": 12800,
+        "optimizer_updates_reserved": 0,
+        "training_checkpoint_writes_reserved": 0,
+        "postrun_nvidia_smi_calls_used": 0,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "settlement": "INCOMPLETE_FULL_ENTRY_RESERVATION_RETAINED",
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "actual_accounting_completed": true,
+        "wall_seconds": 95.88583577191457,
+        "allocated_gpu_seconds": 95.35653276508674,
+        "output_bytes_including_archive": 6184096,
+        "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
+        "inventory": "live-P0-evaluation/INVENTORY.json"
+      }
+    ],
+    "no_blind_retry": true,
+    "training_authorizations_issued": 2,
+    "evaluation_authorizations_issued": 1
+  }
+}

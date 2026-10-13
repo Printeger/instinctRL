@@ -1,0 +1,103 @@
+{
+  "verdict": "PASS",
+  "scope": "独立接受 PLR 完整实际训练证据、配对初始化一致性及真实 u16/u64 checkpoint 身份；评估准入有条件，不签发 release。",
+  "identities": {
+    "evidence_commit": "e29d1bc9f626ab7a353914d3dde4ec4c29262f1d",
+    "job_id": "J-ef6ec97c642bf4ac",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+    "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+    "actual_auth_sha256": "65c7209459a89eb9206725573cf0677ff3be947d5bf02a05df228b5933add809"
+  },
+  "must_fix": [],
+  "actual_evidence_checks": [
+    {
+      "contract": "完整原件、归档及执行身份",
+      "result": "PASS",
+      "evidence": "独立验证59个对象、2127733226原始字节及可用归档的bytes/SHA；原始job和整个attempt递归枚举完全匹配inventory，无遗漏或错误。实际job request spec与已提交授权spec一致，全部实际pins匹配。"
+    },
+    {
+      "contract": "训练覆盖及checkpoint身份",
+      "result": "PASS",
+      "evidence": "独立从原件重算训练分析，与保存结果逐字段一致：64连续updates、512minibatches、1024×32实际返回样本及控制向量、8个首次更新pre/post probes。CPU读取全部七个checkpoint，严格检查source/config、seed、LR、update/transition、Adam步数和curriculum。"
+    },
+    {
+      "contract": "首次真实512样本gate先于两类optimizer",
+      "result": "PASS",
+      "evidence": "实际同设备gate为PASS，原atol1e-6/rtol1e-5不变。首次probe logp与捕获old logp逐位相等，初始ratio全部为1；全部八个probe的action及512索引与实际捕获rollout一致。此前已接受源码的capture/bind/gate在trainer.update和两类optimizer之前。",
+      "limit": "本轮没有调用模型前向或重演GPU gate；验收依据真实捕获数据、真实同设备gate及已接受代码顺序。"
+    },
+    {
+      "contract": "配对实验仅actor LR不同",
+      "result": "PASS",
+      "evidence": "P0/PLR实际init0000的actor与critic参数逐位相同；network、method hashes、source/config身份、seed、curriculum和初始counters相同。两类optimizer初始state均为空；critic配置相同，actor optimizer和PPO配置唯一差异是LR3e-4与1e-4。"
+    },
+    {
+      "contract": "首次采样的配对对应",
+      "result": "PASS",
+      "evidence": "两组真实首次512样本的lidar_grid、state_vec、privileged、actions、old_alpha、old_beta、old_log_probabilities全部逐位相等，最大绝对差均为0。",
+      "limit": "这支持首次更新的配对解释，不表示更新后的轨迹继续相同，也不证明多seed泛化或最终策略优劣。"
+    },
+    {
+      "contract": "关闭失败、owned cleanup与计账真实性",
+      "result": "PASS_WITH_DISCLOSED_PROCESS_FAILURE",
+      "evidence": "原始receipt仍FAILED/-9，raw PASS_PENDING_CLOSE；collector INCOMPLETE/null、formal verdict NOT_GRANTED。正常ACK两次稳定空扫描、无survivors，owner/guard/child当前均不存在。实际两次postrun审计为395MiB/1%及仅既有GNOME164MiB；摘要count=2。"
+    }
+  ],
+  "accepted_observed_training": {
+    "updates": 64,
+    "training_transitions": 32768,
+    "training_checkpoint_writes": 7,
+    "actor_adam_steps": 512,
+    "critic_adam_steps": 512,
+    "wall_seconds": 314.8233371740207,
+    "allocated_gpu_seconds": 314.3097850459162
+  },
+  "retained_conservative_reservations": {
+    "training_transitions": 32768,
+    "optimizer_updates": 64,
+    "training_checkpoint_writes": 7
+  },
+  "accepted_evaluation_checkpoints": [
+    {
+      "update": 16,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/results/pilot-training/checkpoints/u16.pt",
+      "sha256": "b9007b5820b3c98072dbfb0bbb16552995aaacd15aaa2383167ecfe976e56938",
+      "transition": 8192,
+      "actor_and_critic_adam_steps_each": 128
+    },
+    {
+      "update": 64,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/results/pilot-training/checkpoints/u64.pt",
+      "sha256": "49509911b598dbcfae19e0732a4bb1715a352b2534f73cb74ec38fa8b815cfbd",
+      "transition": 32768,
+      "actor_and_critic_adam_steps_each": 512
+    }
+  ],
+  "non_blocking": [
+    {
+      "id": "NATIVE-CLOSE",
+      "assessment": "实际native-close timeout不阻塞完整训练科学证据及checkpoint接受，但进程必须保持FAILED，不能宣称graceful close、FINAL或释放完整reservation。"
+    },
+    {
+      "id": "LR-COMPARISON-SCOPE",
+      "assessment": "独立重算PLR首次更新analytic Beta KL mean：mb1后0.39987336040940136、mb8后0.2761918883770704。在相同初始化和首次采样前提下可与P0作本对seed的描述性比较；不能据此宣称PLR总体更好，实际原Z结果尚待评估。"
+    }
+  ],
+  "evaluation_release_conditions": [
+    "固定上述真实u16/u64路径、SHA及准确source/config身份至PLR评估AUTH/spec，加入本评审的准确accepted hash predicate，提交后获得独立的新Commander批准。",
+    "保持原seed20260909、原Z200步×32lanes×2、mounted-sensor T0、startup/safety、失败样本和方向子组及原阈值。",
+    "执行前核对STOP、剩余资源、磁盘和准确工具绑定，原内部coexistence通过后才创建模拟器。",
+    "PLR原FAILED/INCOMPLETE及全额训练reservation继续保留；本评审不是评估release或未来额外预算授权。",
+    "P0评估及PLR评估实际结果仍需分别独立审核；不据训练完整性提前宣布配对Goal完成。"
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0,
+    "cpu_analysis": "原件读取、哈希、日志统计重算及实际checkpoint/捕获tensor比较。"
+  }
+}

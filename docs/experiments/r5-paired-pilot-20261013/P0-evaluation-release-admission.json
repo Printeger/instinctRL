@@ -1,0 +1,50 @@
+{
+  "status": "PASS_EXACT_SINGLE_ENTRY_ADMISSION",
+  "group": "P0",
+  "mode": "evaluation",
+  "job_id": "J-a063fd710a007b35",
+  "spec_id": "UNIFIED-H1-R5-P0-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013",
+  "approval_id": "A-9ba9510d6b79b45b",
+  "authorization_sha256": "d8686a0f771d2445953a0c83bd10ce0801ee4ae55c38671ea82c1fa9ed152ea5",
+  "input_commit": "e29d1bc9f626ab7a353914d3dde4ec4c29262f1d",
+  "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+  "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+  "STOP": [],
+  "active_or_uncertain_jobs": 0,
+  "owned_previous_supervisors_alive": 0,
+  "available_disk_bytes": 557616246784,
+  "GPU_queries": 0,
+  "coexistence": "DEFERRED_TO_EXISTING_INTERNAL_SIX_CALL_GATE_BEFORE_APP",
+  "remaining_budget_before_reservation": {
+    "caps": {
+      "live_starts": 4,
+      "simulator_initialization_reservations": 4,
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14,
+      "wall_seconds_including_cleanup": 10840,
+      "allocated_gpu_seconds": 10840,
+      "automatic_retries": 0
+    },
+    "used": {
+      "live_starts": 2,
+      "simulator_initialization_reservations": 2,
+      "training_transitions": 0,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0,
+      "wall_seconds_including_cleanup": 624.8099789328407,
+      "allocated_gpu_seconds": 623.7974424320273,
+      "output_bytes": 4276318162,
+      "role_calls": 3
+    },
+    "reserved": {
+      "training_transitions": 65536,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14
+    }
+  }
+}

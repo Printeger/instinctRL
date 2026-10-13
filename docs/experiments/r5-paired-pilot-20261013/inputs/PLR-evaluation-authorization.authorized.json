@@ -1,0 +1,40 @@
+{
+  "schema_version": "unified-h1-r3-authorization.v2",
+  "status": "AUTHORIZED",
+  "order_id": "UNIFIED-H1-R5-PLR-PILOT-EVAL",
+  "method_sha256": "4d0186ecef8d1feda7af6d27766e50bbf78c9db9f4446ab224c074736f71b612",
+  "config_sha256": "d9e61f95a65d424e5d0d2cbba7dee24ab8788209519bc90862a03f42f675cf7c",
+  "product_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "product_tree": "b735eafac3888415eded7c6684ed385706871acf",
+  "workload_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "workload_tree": "b735eafac3888415eded7c6684ed385706871acf",
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013",
+  "mode": "pilot-evaluation",
+  "budgets": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "initialization_ticks": 10,
+    "automatic_resets": 12800,
+    "training_transitions": 0,
+    "nontraining_transitions": 12800,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "explicit_resets": 2,
+    "wall_seconds": 1800
+  },
+  "parameters": {
+    "group": "PLR",
+    "checkpoints": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/results/pilot-training/checkpoints/u16.pt",
+        "sha256": "b9007b5820b3c98072dbfb0bbb16552995aaacd15aaa2383167ecfe976e56938",
+        "update": 16
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/results/pilot-training/checkpoints/u64.pt",
+        "sha256": "49509911b598dbcfae19e0732a4bb1715a352b2534f73cb74ec38fa8b815cfbd",
+        "update": 64
+      }
+    ]
+  }
+}

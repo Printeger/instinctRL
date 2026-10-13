@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_PAIRED_PILOT_PLR_TRAINING_TERMINAL_PENDING_ACTUAL_REVIEW",
+  "phase": "R5_PAIRED_PILOT_P0_EVALUATION_TERMINAL_PENDING_ACTUAL_REVIEW",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -398,7 +398,7 @@
     "shared_baseline_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
     "baseline_readiness": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
     "first_real_rollout_gate": "PENDING_ACTUAL_PAIR_FIRST_ROLLOUT_BEFORE_ANY_OPTIMIZER",
-    "current_exact_release": "A-3f8afd9a42e1569e",
+    "current_exact_release": "A-9ba9510d6b79b45b",
     "training_authorization_issued": true,
     "training_execution_requested_by_user": true,
     "current_job": null,
