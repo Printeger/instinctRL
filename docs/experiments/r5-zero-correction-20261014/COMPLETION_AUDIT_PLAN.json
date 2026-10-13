@@ -1,0 +1,87 @@
+{
+  "schema_version": "instinctrl-r5-zero-completion-audit-plan/1",
+  "requires_real_science_not_CPU_READY": true,
+  "mandatory_deliverables": [
+    "R5_ZERO_COMMAND_ATTRIBUTION.md",
+    "R5_ZERO_COMMAND_ATTRIBUTION.json",
+    "METHOD_DIFF_AND_CPU_TESTS.md",
+    "AUTHORITY_AND_RESOURCE_BINDINGS.md",
+    "PAIR_ANALYSIS.md",
+    "pair_analysis.json",
+    "EVIDENCE_INDEX.md",
+    "NEXT_RESEARCH_DECISION.md"
+  ],
+  "live_caps": {
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "wall_seconds_including_cleanup": 10840,
+    "allocated_gpu_seconds": 10840,
+    "output_bytes": 68719476736,
+    "automatic_retries": 0,
+    "role_calls": 12
+  },
+  "checks": [
+    {
+      "id": "A1",
+      "scope": "CPU actualP0/PLR u1/u2/u16/u64 attribution, signedbody/world/resetsegments/rewardscale/gradientadvantage/conditionalKLlimits",
+      "evidence": "R5_ZERO_COMMAND_ATTRIBUTION.json +CPU_FIXED_INPUT_CONDITIONAL_KL.json",
+      "status": "DONE_INDEPENDENTLY_ACCEPTED"
+    },
+    {
+      "id": "B1",
+      "scope": "Preregisteredw0/.05 solesinglevariable, sharedactorLR1e-4/critic3e-4, actor/controller/PPO/curriculum/evalunchanged",
+      "evidence": "readonlyd257f9+contract+Role2",
+      "status": "DONE_PRELIVE"
+    },
+    {
+      "id": "B2",
+      "scope": "w0frozencomponentequivalence/xyzsign/maskfinite/dynamic/sameinitCPU, actualfdquota minimalfix",
+      "evidence": "cpu-product-fd-fix.xml30PASS+cpu-pilot-final.xml10PASS",
+      "status": "DONE_PRELIVE"
+    },
+    {
+      "id": "C1",
+      "scope": "FourfreshsinglecommittedexactCommander releases, STOP/pins/remainingbudgets/coexistence/ownedcleanup",
+      "status": "PENDING_ACTUAL_ALL4"
+    },
+    {
+      "id": "C2",
+      "scope": "Bothrealfirst512oldBeta/logp/action/input/index gates beforeeitheroptimizer, actualinit/firstrollout comparability",
+      "status": "PENDING_BOTH"
+    },
+    {
+      "id": "C3",
+      "scope": "Bothactual64updates32768transitions7checkpoint/512permodelAdamsteps, actualrewardformulabinding",
+      "status": "PENDING_BOTH"
+    },
+    {
+      "id": "C4",
+      "scope": "Bothacceptedactualu16/u64originalZ32lanes200steps/T0startupallfailures/subgroups0updates0writes",
+      "status": "PENDING_BOTH"
+    },
+    {
+      "id": "D1",
+      "scope": "Contemporaneousu64primarycomparison/u16diagnostics/oldPLRhistoricalonly, signedbiasrewards/KL/gradients",
+      "status": "PENDING_ACTUAL"
+    },
+    {
+      "id": "D2",
+      "scope": "Sciencevalidpositive/negativewithconcretenextfactor/no256, independentcompleteevidence andfinalreview",
+      "status": "PENDING_FINAL"
+    },
+    {
+      "id": "D3",
+      "scope": "NativeFAILED/INCOMPLETE/fullreservations/oldbudgets/jobs retained, actualoutputallowance+CPUmetadata under64GiB, zeroautoretries",
+      "status": "PENDING_FINAL"
+    },
+    {
+      "id": "D4",
+      "scope": "Allcurrentprojectstatescorrect, commitnormalpush, activeGoalstoponlyfullachieved",
+      "status": "PENDING_FINAL"
+    }
+  ]
+}

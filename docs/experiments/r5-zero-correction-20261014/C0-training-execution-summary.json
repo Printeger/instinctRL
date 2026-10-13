@@ -1,0 +1,32 @@
+{
+  "group": "C0",
+  "mode": "pilot-training",
+  "job_id": "J-08bc17b874c978ea",
+  "native_status": "FAILED",
+  "exit_code": -9,
+  "raw_status": "PASS_PENDING_CLOSE",
+  "primary_error": null,
+  "observed": {
+    "training_transitions": 32768,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 64,
+    "training_checkpoint_writes": 7,
+    "actor_optimizer_steps": 512,
+    "critic_optimizer_steps": 512
+  },
+  "formal_counter_completeness": "INCOMPLETE",
+  "formal_transitions": null,
+  "retained_reservations": {
+    "training_transitions": 32768,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 64,
+    "training_checkpoint_writes": 7
+  },
+  "wall_seconds": 318.02146024117246,
+  "allocated_gpu_seconds": 317.439250648953,
+  "original_inventory_objects": 61,
+  "original_bytes": 2127005798,
+  "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
+  "postrun_GPU_queries_performed": 0,
+  "scientific_acceptance": "PENDING_INDEPENDENT_ACTUAL_DATA_REVIEW"
+}
