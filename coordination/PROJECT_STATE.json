@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_ZERO_CORRECTION_C0_EVALUATION_TERMINAL_PENDING_ACTUAL_REVIEW",
+  "phase": "R5_ZERO_CORRECTION_C1_Z_RESOURCE_EXCEPTION_REQUIRED",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -380,7 +380,7 @@
   },
   "current_goal": {
     "target": "R5_ZERO_COMMAND_SINGLE_VARIABLE_SCIENTIFIC_CLOSURE",
-    "status": "IN_PROGRESS",
+    "status": "IN_PROGRESS_AWAITING_REQUIRED_RESOURCE_DECISION",
     "contract": "contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md",
     "requirements": "../docs/goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md",
     "evidence_index": "../docs/experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md",
@@ -388,9 +388,9 @@
     "user_authority": "../docs/experiments/r5-zero-correction-20261014/user_task_authority.json",
     "current_job": null,
     "training_execution_requested_by_user": true,
-    "training_authorization_issued": true,
-    "current_exact_release": "A-58af7b5900acbcc8",
-    "next_action": "Two bound postrun audit calls after ownedquiescence; CPU actualdataanalysis; independent scientificacceptance. Noresubmit.",
+    "training_authorization_issued": false,
+    "current_exact_release": null,
+    "next_action": "Obtainoneexplicitresourceexception4to5starts/initand64to80GiBoutput; independentconditionalprelive andnewCommanderexactapprovalbeforefreshC1evaluation. Noauto retry.",
     "independent_review": {
       "status": "PASS_PRELIVE_ONLY",
       "role_call": 2,
@@ -404,7 +404,30 @@
     },
     "actual_init_and_first512_comparison": "BIT_EXACT_MATCH_ACTOR_CRITIC_POLICY_PRIVILEGED_ACTION_OLD_BETA_LOGP",
     "learning_signals_comparison": "ADVANTAGES_RETURNS_DIFFER_AS_ALLOWED_BY_W",
-    "C0_actual_training_acceptance": "ROLE3_PASS_COMPLETE64_AND_REAL_U16_U64"
+    "C0_actual_training_acceptance": "ROLE3_PASS_COMPLETE64_AND_REAL_U16_U64",
+    "evaluation_authorization_issued": false,
+    "scientific_result_status": "BLOCKED_BY_SPECIFIC_DEFECT",
+    "completion_proven": false,
+    "remaining_required_work": [
+      "C1actualu16/u64originalZ",
+      "independentfinalscientificreview/fullpairdecision"
+    ],
+    "specific_blocker": {
+      "failed_job": "J-c28f721ecfa2d171",
+      "coexistence_utilization_percent": [
+        4,
+        6,
+        2
+      ],
+      "unchanged_limit_percent": 5,
+      "failed_entry_native_status": "FAILED/1",
+      "formal_counter": "FINAL0",
+      "start_init_caps_used": "4/4",
+      "budget_reset": false,
+      "proposal": "../docs/experiments/r5-zero-correction-20261014/C1_EXTRA_EVALUATION_RESOURCE_PROPOSAL.json",
+      "user_decision": "PENDING",
+      "goal_tool_status": "ACTIVE_NOT_COMPLETE"
+    }
   },
   "historical_prior_independent_review": {
     "path": "reviews/review-entry6-final-readiness.json",

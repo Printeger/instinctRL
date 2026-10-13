@@ -7,9 +7,11 @@
 
 ## 当前 Goal（2026-10-14 零命令残差单变量）
 
-**IN_PROGRESS，PhaseC C0实际训练。** 新用户Goal已一次授权有界PhaseA→D；旧P0/PLR真实离线归因支持检验零命令残差偏置。新C0/C1共用actorLR1e-4，唯一变量w=0/.05；30CPU产品/10pilot回归通过；quota-fd路径缺陷已修复，精确d257f9候选Role2独立预审PASS，Commander签发训练AUTH。C0J-08bc17b874c978ea已single-release，真实首次512gatePASS；C1及评估未启动。不是CPU_READY即结束，不自动256updates。
+**未完成：BLOCKED_BY_SPECIFIC_DEFECT，等待唯一资源决定。** C0/C1真实各64updates/32768train/7checkpoint，first512gate均PASS；init和首输入动作/oldBeta/logp逐位一致，Role3/4独立接受。C0原Z u16/u64均0/32。C1原Z尚无数据：第四入口coexistence样本4/6/2%，6>原5%，FAILED/1 beforeApp、collectorFINAL/0；4starts/init和64GiBoutputreservations已用尽，不自动重试。
 
-[需求](goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md)、[当前证据](experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md)、[有限归因](experiments/r5-zero-correction-20261014/R5_ZERO_COMMAND_ATTRIBUTION.md)。新包4starts/init、65536train/25600eval、128updates/14writes、wall/GPU10840s/output64GiB，旧预算与nativeFAILED/negative不改。
+[实际部分结果](experiments/r5-zero-correction-20261014/PAIR_ANALYSIS.md)、[当前索引](experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md)、[唯一补充提案](experiments/r5-zero-correction-20261014/C1_EXTRA_EVALUATION_RESOURCE_PROPOSAL.json)。请求freshC1原Z入口start/init4→5、output预留64→80GiB，其他总帽/方法/门槛不变；未批准/未签AUTH/未release。已有训练残差减小不能替代候选原Z，不宣称validpositive/negative，不扩256updates。
+
+前三entry nativeFAILED/-9/INCOMPLETE/full65536train+12800eval+128updates+14writes保留；第四FINAL0仅结算实际零transitions，start/init仍扣账。旧全部物理/P0PLR历史原样保留。
 
 ## 最新完成 Goal（2026-10-13 短程配对实验）
 

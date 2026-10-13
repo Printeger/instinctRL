@@ -1,0 +1,40 @@
+{
+  "group": "C1",
+  "mode": "pilot-evaluation",
+  "job_id": "J-c28f721ecfa2d171",
+  "native_status": "FAILED",
+  "exit_code": 1,
+  "raw_status": "FAIL",
+  "primary_error": {
+    "error_module": "builtins",
+    "error_type": "RuntimeError",
+    "message": "GPU utilization exceeds 5 percent"
+  },
+  "observed": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0
+  },
+  "formal_counter_completeness": "FINAL",
+  "formal_transitions": 0,
+  "retained_reservations": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0
+  },
+  "wall_seconds": 11.484299367060885,
+  "allocated_gpu_seconds": 10.81020885007456,
+  "original_inventory_objects": 27,
+  "original_bytes": 32915,
+  "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
+  "postrun_GPU_queries_performed": 2,
+  "scientific_acceptance": "PENDING_INDEPENDENT_ACTUAL_DATA_REVIEW",
+  "postrun_audit_receipts": [
+    "C1-evaluation-postrun-gpu-0.json",
+    "C1-evaluation-postrun-gpu-1.json"
+  ]
+}

@@ -16,12 +16,12 @@
   "new_training_authorized": false,
   "diagnostic_goal_envelope_authorized": false,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "CurrentnewGoalexactC0/C1trainingAUTH approvedafterindependentRole2; C0J-08bc17b874c978ea runningreadonlyd257f9, firstactual512gatePASS. C1notreleased; evalAUTHunissueduntilactualcheckpointacceptance. Fournewstarts/overallcaps nooldreset/duplicateapproval.",
+  "live_permission_note": "BothCtraining complete/realfirstgatesPASS/Role3,4actualacceptance. C0originalZ0/32bothcomplete. C1evalfailedcoexistencemax6>5beforeApp, formalFINAL0, all4starts/initcharged/noauto retry. Newextraresourceproposalonly/notapproved; nofutureAUTH/release/newprobes. Goalunfinished, C1Zmissing.",
   "diagnostic_goal_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "paired_pilot_task_requested": true,
   "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
   "paired_pilot_goal_status": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
   "zero_correction_task_requested": true,
   "zero_correction_user_authority": "../docs/experiments/r5-zero-correction-20261014/user_task_authority.json",
-  "zero_correction_goal_status": "IN_PROGRESS"
+  "zero_correction_goal_status": "IN_PROGRESS_AWAITING_REQUIRED_RESOURCE_DECISION"
 }

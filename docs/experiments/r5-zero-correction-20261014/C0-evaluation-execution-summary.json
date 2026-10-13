@@ -27,6 +27,10 @@
   "original_inventory_objects": 40,
   "original_bytes": 3083754,
   "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
-  "postrun_GPU_queries_performed": 0,
-  "scientific_acceptance": "PENDING_INDEPENDENT_ACTUAL_DATA_REVIEW"
+  "postrun_GPU_queries_performed": 2,
+  "scientific_acceptance": "PENDING_INDEPENDENT_ACTUAL_DATA_REVIEW",
+  "postrun_audit_receipts": [
+    "C0-evaluation-postrun-gpu-0.json",
+    "C0-evaluation-postrun-gpu-1.json"
+  ]
 }

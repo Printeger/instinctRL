@@ -1,0 +1,146 @@
+{
+  "schema_version": "instinctrl-r5-zero-extra-evaluation-resource-proposal/1",
+  "status": "PROPOSED_UNAUTHORIZED_NO_RELEASE",
+  "unique_required_decision": "Authorize one freshC1u16/u64 originalZ evaluation exception: starts4to5/initreservations4to5/output64to80GiB, preservealloldreservations, allothercaps/method/gates unchanged. No oldjobresume/autoretry.",
+  "root_cause_for_missing_evaluation": "Fourthentry originalcoexistence3samplesGPU4,6,2percent; max6>unchanged5limit. OnlyexistingGNOME3950/164MiB, noownedlive/othercomputeapps. GPUsource cannotbeassignedcausallyfromthreeutilizationsamples. No simulatorAppconstructed/noevaluationraw.",
+  "failed_entry": {
+    "job_id": "J-c28f721ecfa2d171",
+    "process_status": "FAILED",
+    "exit_code": 1,
+    "formal_counter_completeness": "FINAL",
+    "formal_transitions": 0,
+    "observed_nontraining_transitions": 0,
+    "normal_owned_ACK": "2stableempty/no_survivors",
+    "inventory": "live-C1-evaluation/INVENTORY.json",
+    "inventory_sha256": "694bf09da2850cb46a1c75c438373b5ca8d6c44bc1cb1b979c860f6b2490a5e9"
+  },
+  "current_caps_unchanged": {
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "wall_seconds_including_cleanup": 10840,
+    "allocated_gpu_seconds": 10840,
+    "output_bytes": 68719476736,
+    "automatic_retries": 0,
+    "role_calls": 12
+  },
+  "used_before_request": {
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "wall_seconds_including_cleanup": 747.3987863801885,
+    "allocated_gpu_seconds": 744.9036658930127,
+    "output_bytes": 4282373184,
+    "automatic_retries": 0,
+    "role_calls": 4
+  },
+  "retained_logical_reservations": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 12800,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14
+  },
+  "all4output_reservations_retained_bytes": 68719476736,
+  "proposed_caps_only_if_user_approves": {
+    "live_starts": 5,
+    "simulator_initialization_reservations": 5,
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "wall_seconds_including_cleanup": 10840,
+    "allocated_gpu_seconds": 10840,
+    "output_bytes": 85899345920,
+    "automatic_retries": 0,
+    "role_calls": 12
+  },
+  "existing_remaining_nontraining_transitions": 12800,
+  "existing_remaining_wall_seconds": 10092.601213619811,
+  "existing_remaining_GPU_seconds": 10095.096334106987,
+  "new_single_entry": {
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "nontraining_transitions": 12800,
+    "live_starts": 1,
+    "simulator_initialization_reservations": 1,
+    "outer_wall_seconds": 1810,
+    "allocated_gpu_seconds": 1810,
+    "output_reserved_bytes": 17179869184,
+    "cases": [
+      "Z"
+    ],
+    "checkpoints": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/results/pilot-training/checkpoints/u16.pt",
+        "sha256": "f623e41245a7b3b498677560d59c3af5124542216dd0fb527601f7a85961e9f5",
+        "update": 16
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/results/pilot-training/checkpoints/u64.pt",
+        "sha256": "d931a6f49701a5b0e881967f9cf0ce31a6d701f6322b1c002c03822954a2cd8d",
+        "update": 64
+      }
+    ],
+    "seed": 20260909,
+    "steps_per_checkpoint": 200,
+    "lanes": 32,
+    "prelaunch_nvidia_calls": 6,
+    "postrun_nvidia_calls": 2,
+    "automatic_retries": 0
+  },
+  "exact_candidate": {
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014",
+    "snapshot_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+    "snapshot_tree": "04cd069bada7cd0b838cd1539e916296d67f70ac",
+    "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3",
+    "snapshot_diff_sha256": "57604f29cf88edc0be22a1d0dda1f9fc44771fa6027496ae91d5e09072adc9b7",
+    "tools_release_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/control-releases/74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+    "physical_baseline": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "read_only": true
+  },
+  "method_sha256": "ecc75a8e3d581ca1bd43e8c3e34326a5f18dd55cfa1739fe3b26f4e25fe1c14e",
+  "reward_coefficient": 0.05,
+  "actor_lr": 0.0001,
+  "critic_lr": 0.0003,
+  "tools_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+  "exact_spec": {
+    "path": "inputs/C1-extra-evaluation-spec.draft.json",
+    "sha256": "8d8768bc3b35a1700e81fa0ac7d1bb3febda1feb39ac3ff34e58a0c0352de5f6"
+  },
+  "expected_AUTH_unissued": {
+    "path": "inputs/C1-extra-evaluation-authorization.proposed.json",
+    "sha256": "9d732b78569d3d5e5ff8328447e1300a70102240d809cc7e91c95f6028c6ddf3",
+    "actual_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json"
+  },
+  "remaining_release_dependencies": [
+    "Independentfailure/C0eval/newconditionalprelivereview",
+    "Explicituser resourceexception decision, notold8startdiagnosticapproval",
+    "Commandernewacceptedreview+userdecisionSHA predicates/exactproposal approval",
+    "Committed/tagged/normalpushed exactauthorizedinputs",
+    "Idle/STOP/disk/remainingbudget/pins and unchangedinternalcoexistence"
+  ],
+  "not_permission_to_modify": [
+    "GPU5percentthreshold",
+    "gnome/unrelatedprocesses",
+    "rewardweight",
+    "network/actorinput",
+    "controller",
+    "PPO",
+    "curriculum",
+    "termination",
+    "evaluationgates",
+    "frozenruntime/dependencies"
+  ],
+  "fresh_attempt_exists": false,
+  "actual_AUTH_exists": false,
+  "new_proposal_approval_issued": false,
+  "disk_free_bytes": 551944101888,
+  "generator_sha256": "2b8e57611a196ba48eff9c6443641958b885e60b201ae1412b7dd6ac506c4f66"
+}

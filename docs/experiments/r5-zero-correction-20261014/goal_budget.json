@@ -19,17 +19,17 @@
     "role_calls": 12
   },
   "used": {
-    "live_starts": 3,
-    "simulator_initialization_reservations": 3,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
     "training_transitions": 0,
     "nontraining_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0,
-    "wall_seconds_including_cleanup": 735.9144870131277,
-    "allocated_gpu_seconds": 734.0934570429381,
-    "output_bytes": 4282307354,
+    "wall_seconds_including_cleanup": 747.3987863801885,
+    "allocated_gpu_seconds": 744.9036658930127,
+    "output_bytes": 4282373184,
     "automatic_retries": 0,
-    "role_calls": 4
+    "role_calls": 5
   },
   "reserved": {
     "training_transitions": 65536,
@@ -81,6 +81,13 @@
       "status": "PASS",
       "evidence": "reviews/review-C1-training-actual.json",
       "sha256": "61d1e97d68b78f4d0f9b7920ccc8427391f395bcc2b89529269cbd7b72f5400d"
+    },
+    {
+      "call": 5,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "ActualC0originalZ scientificdata/C1coexistencefailure27objectFINAL0/partialscienceblock/exactfreshC1preliveconditionalresourceexception; noGoalcompletion",
+      "status": "REQUESTED"
     }
   ],
   "runs": [
@@ -185,12 +192,46 @@
       "output_bytes_including_archive": 6167508,
       "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
       "inventory": "live-C0-evaluation/INVENTORY.json"
+    },
+    {
+      "group": "C1",
+      "mode": "pilot-evaluation",
+      "spec_id": "UNIFIED-H1-R5-C1-PILOT-EVAL-ZERO-d257f9ca8ec8-20261014",
+      "job_id": "J-c28f721ecfa2d171",
+      "status": "FAILED",
+      "starts_charged": 1,
+      "simulator_initialization_reserved": 1,
+      "training_transitions_reserved": 0,
+      "nontraining_transitions_reserved": 0,
+      "optimizer_updates_reserved": 0,
+      "training_checkpoint_writes_reserved": 0,
+      "output_bytes_reserved": 17179869184,
+      "postrun_nvidia_smi_calls_used": 2,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "settlement": "FINAL_BY_EXISTING_H1_COLLECTOR",
+      "native_exit_code": 1,
+      "raw_status": "FAIL",
+      "formal_counter_completeness": "FINAL",
+      "formal_transitions": 0,
+      "actual_accounting_completed": true,
+      "wall_seconds": 11.484299367060885,
+      "allocated_gpu_seconds": 10.81020885007456,
+      "output_bytes_including_archive": 65830,
+      "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
+      "inventory": "live-C1-evaluation/INVENTORY.json"
     }
   ],
   "training_authorizations_issued": 2,
   "evaluation_authorizations_issued": 2,
   "no_blind_retry": true,
-  "output_reservations_bytes": 51539607552,
+  "output_reservations_bytes": 68719476736,
   "prior_completed_goals": [
     "../../diagnostics/r5-readiness/goal_budget.json",
     "../r5-paired-pilot-20261013/goal_budget.json"
