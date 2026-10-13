@@ -1,11 +1,17 @@
 # instinctRL 当前状态
 
-更新：2026-10-12。唯一日常开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一开发分支 `main`，
+更新：2026-10-13。唯一日常开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一开发分支 `main`，
 远端 [Printeger/instinctRL](https://github.com/Printeger/instinctRL)。当前精确版本以 `git rev-parse HEAD` 为准。
 代码、状态、workload、必要工具和测试已整理到本仓库。源历史完整继承到 `903afc5`，
 其后产品集成提交为 `91c6997`，workload/工具集成为 `e7d58d2`。
 
-## 当前 Goal（2026-10-12 新授权）
+## 当前 Goal（2026-10-13 短程配对实验）
+
+新任务为 R5-P0/PLR 各64updates及u16/u64原Z开发评估。复用已验收ef68共同基线，仅actorLR3e-4/1e-4不同；真实首次512sample概率gate必须在任一optimizer前通过。当前准确输入与资源包已生成，Role1独立预审待完成；尚无actualAUTH/Commanderrelease，尚未训练或GPU探测。
+
+唯一当前[证据索引](experiments/r5-paired-pilot-20261013/STATE_AND_EVIDENCE.md)与[实验合同](experiments/r5-paired-pilot-20261013/EXPERIMENT_CONTRACT.md)。本轮预算按现有精确mode固定，旧诊断Goal的全部失败和额度保留，技术READY不替代本轮准确审批。负结果也需形成完整科学结论，不自动扩至256updates。
+
+## 已完成诊断 Goal（2026-10-12 新授权）
 
 诊断闭环、最小修复与短程训练准入已完成，终态 **`READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE`**。需求见 [需求](goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md)，唯一证据见 [索引](diagnostics/r5-readiness/STATE_AND_EVIDENCE.md)，[启动包](diagnostics/r5-readiness/PILOT_START_READINESS.md)。独立 Role15 [最终审核](diagnostics/r5-readiness/reviews/review-entry6-final-readiness.json) PASS，无阻塞性 MUST_FIX，当前／历史状态同步已完成。
 

@@ -1,13 +1,9 @@
 # 当前任务
 
-R5 Goal 已完成：**`READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE`**。独立 Role15 PASS，无阻塞性 MUST_FIX；当前／历史状态同步已完成。技术准入后停止，未启动任何训练。
+R5 P0/PLR短程配对 Goal：当前 PREPARING_EXACT_PAIR_AUTHORIZATIONS，未完成。新用户任务要求取得新的 Commander 精确授权后，各64updates；u16/u64各做原Z评估，交付完整配对科学结果。旧诊断Goal READY已完成，保留原失败与全部额度。
 
-唯一开发目录 /home/mint/rl_dev/instinctRL-dev、main、单写者；历史和冻结runtime只读。共同修复基线 `ef68ebb5682b85aa83044fdea1c13b7d0edbf325`；未来 proposal 在 docs/diagnostics/r5-readiness/pilot_future_proposals.r3.json。P0/PLR仅actor LR3e-4/1e-4不同，未来训练AUTH未签发。
+固定main/单写者，readonly ef68ebb5682b85aa83044fdea1c13b7d0edbf325共同基线；不重做E0/质量/ZTS诊断，不改reward/network/controller/curriculum/算法或门槛。P0actorLR3e-4、PLR1e-4，其他设置相同。任何optimizer前必须过真实首次512sample oldBeta/logp/action/input/index gate，失败零更新保全证据。
 
-实测零目标403200物理行已独立验收；ENTRY6 `J-ad3ac7db1fb82d89` 命令直通630chunks/96episodes，原 Z/T/S各32/32、各方向子组4/4通过，原sensor-T0/startup/safety/门槛保留。完整667对象独立核验。
+本轮4fresh入口，训练65536、评估25600、128updates、14训练checkpoint，outer/GPU10840s；6prelaunchqueries和2postrunqueries/entry，禁止自动重试。旧6jobs终态且无所属残留，STOP无。尚无actualAUTH/Commanderapproval/live/GPUquery。
 
-ENTRY6 native app.close9.5s超时、FAILED/-9，原PASS_PENDING_CLOSE/H1 INCOMPLETE/null和20160全额预留保持；正常 lifeguard ACK 两次稳定空扫描，无所属残留。历史第四次超时和缺失最终reward计数保持。6start/init已扣cap8，80640nontraining全额预留，15roles；训练/update/checkpoint0。一次重试例外已消费，不再Goal live或GPU探测。
-
-下一轮恢复动作：使用已验收启动包，另行明确训练资源授权并经现有 Commander 精确 release；首次真实512样本 old Beta/logp/action/input/index gate 必须在任一 optimizer 前按固定atol1e-6/rtol1e-5通过，失败零更新停止。此门槛当前为PENDING_NEXT_PILOT，不是假装实跑通过。
-
-唯一证据索引 docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md；技术启动包 PILOT_START_READINESS.md / pilot_launch_manifest.json；最终独立审核 reviews/review-entry6-final-readiness.json，SHA `5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620`。
+唯一索引 docs/experiments/r5-paired-pilot-20261013/STATE_AND_EVIDENCE.md；合同 EXPERIMENT_CONTRACT.md；准确待审 launch_inputs.proposed.json；账本 goal_budget.json。Role1独立预审已扣账，下一动作仅预审后Commander精确绑定并提交P0输入，再release。评估checkpoint哈希留待实际训练独立验收，不伪造占位许可。

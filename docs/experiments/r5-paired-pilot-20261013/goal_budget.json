@@ -1,0 +1,66 @@
+{
+  "schema_version": "instinctrl-r5-pair-resource-ledger/1",
+  "goal_id": "INSTINCTRL-R5-PAIRED-PILOT-20261013",
+  "authority": {
+    "path": "user_task_authority.json",
+    "sha256": "5241a8c77fd486739450cfd4554d77e3acd93468a45d00e07c7998567c26f7ba"
+  },
+  "caps": {
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "wall_seconds_including_cleanup": 10840,
+    "allocated_gpu_seconds": 10840,
+    "automatic_retries": 0
+  },
+  "used": {
+    "live_starts": 0,
+    "simulator_initialization_reservations": 0,
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "wall_seconds_including_cleanup": 0.0,
+    "allocated_gpu_seconds": 0.0,
+    "output_bytes": 0,
+    "role_calls": 1
+  },
+  "reserved": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0
+  },
+  "observed": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0
+  },
+  "note": "Observed complete counters are subsets of conservative reservations until existing collector FINAL; no double charge or invented refund. Logical PPO updates are distinct from per-model Adam steps.",
+  "prior_completed_goal": {
+    "budget": "../../diagnostics/r5-readiness/goal_budget.json",
+    "live_starts_used": 6,
+    "nontraining_reservation_retained": 80640,
+    "role_calls_used": 15,
+    "immutable_history": true
+  },
+  "role_calls": [
+    {
+      "call": 1,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Exact fresh paired prelive inputs/firstgate/authority/envelope/counter+cleanup/evaluation deferredbinding and scientificcontract",
+      "status": "REQUESTED"
+    }
+  ],
+  "runs": [],
+  "no_blind_retry": true,
+  "training_authorizations_issued": 0,
+  "evaluation_authorizations_issued": 0
+}

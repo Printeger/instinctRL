@@ -1,0 +1,22 @@
+{
+  "schema_version": "instinctrl-r5-pair-user-authority/1",
+  "source": "New active thread Goal on2026-10-13",
+  "task": "Execute P0 and PLR each64updates on accepted ef68 shared baseline, after new exact Commander approvals and first real512sample gate before either optimizer; independently bind and evaluate actualu16/u64 with originalZ.",
+  "accepted_prior_readiness": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
+  "baseline_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+  "launch_input_packet_sha256": "7a517e3ea84ccc09323dd2516342c9700b562275e17bc88ffd603885f1760b11",
+  "existing_frozen_future_packet_sha256": "0154b4b2c9a693c99bf590e91256e092a22ba8fb07599dd66ca71d564b03113a",
+  "new_goal_resources_derived_from_requested_groups_and_existing_exact_mode_budgets": {
+    "process_starts": 4,
+    "simulator_initializations": 4,
+    "training_transitions": 65536,
+    "nontraining_evaluation_transitions": 25600,
+    "updates": 128,
+    "training_checkpoint_writes": 14,
+    "outer_wall_seconds_including_cleanup": 10840,
+    "gpu_allocation_seconds": 10840
+  },
+  "authorization_scope": "Current user request authorizes this new paired task and obtaining new Commander exact release; does not authorize256updates, baseline/method changes, dependency/runtime changes or automatic retries.",
+  "old_goal_budgets_and_failures": "PRESERVED_NOT_RESET",
+  "standalone_gpu_queries": "Only six internal prelaunch calls and two postrun audit calls per released entry after owned cleanup; no exploratory probes."
+}
