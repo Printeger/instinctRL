@@ -1,0 +1,35 @@
+{
+  "verdict": "PASS",
+  "scope": "独立接受C1完整实际训练、C0/C1真实初始化与首次采样对应及C1 checkpoint身份；未来原Z评估准入有条件，不签发release。",
+  "identities": {
+    "evidence_commit": "b287cc60a063313e998d46a330574c1a70efec18", "source_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90", "source_tree": "04cd069bada7cd0b838cd1539e916296d67f70ac", "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3", "method_sha256": "ecc75a8e3d581ca1bd43e8c3e34326a5f18dd55cfa1739fe3b26f4e25fe1c14e", "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60", "job_id": "J-3083020018e55362", "approval_id": "A-6e1d2608d1097fde", "authorization_sha256": "05df1f8e2f74d06d655edc0e01a6f9f82b708c4bfac6d9f0dddbf6ec39a268b0"
+  },
+  "must_fix": [],
+  "actual_evidence_checks": [
+    {"contract": "完整原件及执行绑定", "result": "PASS", "evidence": "独立验证61个对象、2126270713原始字节及11432660归档字节的bytes/SHA；原始job与整个attempt递归枚举完全匹配inventory。实际request spec与提交spec一致，各实际pins及AUTH字节匹配。"},
+    {"contract": "训练、奖励与checkpoint覆盖", "result": "PASS", "evidence": "独立重算训练分析及奖励验证，逐字段匹配保存结果：64连续updates、512minibatches、1024×32实际返回样本、8个首次更新probe及七个实际checkpoint。全部32768样本符合w=.05公式，最大绝对误差1.0081334833600408e-7，在原atol1e-6/rtol1e-5内。checkpoint实际LR、source/config、系数method SHA、update/transition/Adam/curriculum身份通过。"},
+    {"contract": "真实首次512样本gate", "result": "PASS", "evidence": "实际同设备gate按原容差通过；首次probe logp与捕获old logp逐位相等、ratio全部为1，全部八个probe的action与512索引对应捕获rollout。已接受的准确源码确保gate先于trainer.update及两类optimizer。", "limit": "没有执行模型前向、optimizer或跨设备概率重演。"},
+    {"contract": "共同初始化与首采样对应", "result": "PASS_BIT_EXACT", "evidence": "独立读取C0/C1真实init0000：actor/critic参数逐位相同，network/PPO/source/config/seed/curriculum/counters相同，两类optimizer初始state为空。method hashes除准确group/系数binding SHA外相同。首次512样本的两项policy、privileged、actions、old_alpha、old_beta、old_logp全部逐位相同。"},
+    {"contract": "奖励改变后的学习信号边界", "result": "PASS_EXPECTED_DIFFERENCE", "evidence": "实际首次advantages和returns不再逐位相同，最大差均为2.4573442935943604；不将预注册奖励引起的真实差异误判为采样错位，也不要求它们被强制对齐。"},
+    {"contract": "输出额度与清理计账", "result": "PASS_WITH_PROCESS_FAILURE", "evidence": "原件加归档2137703373字节低于16GiB入口预留，小归档低于256MiB。receipt仍FAILED/-9、raw PASS_PENDING_CLOSE、H1 INCOMPLETE/null，完整reservation保留。正常ACK两次稳定空扫描、无survivors；准确owner/guard/child不存在。两次实际postrun审计为521MiB/2%及仅既有GNOME164MiB。"}
+  ],
+  "accepted_observed_training": {"updates": 64, "training_transitions": 32768, "training_checkpoint_writes": 7, "actor_adam_steps": 512, "critic_adam_steps": 512, "wall_seconds": 321.46309984102845, "allocated_gpu_seconds": 320.86797532602213},
+  "retained_reservations": {"training_transitions": 32768, "optimizer_updates": 64, "training_checkpoint_writes": 7, "output_bytes": 17179869184},
+  "accepted_evaluation_checkpoints": [
+    {"update": 16, "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/results/pilot-training/checkpoints/u16.pt", "sha256": "f623e41245a7b3b498677560d59c3af5124542216dd0fb527601f7a85961e9f5", "transition": 8192, "actor_and_critic_adam_steps_each": 128},
+    {"update": 64, "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/results/pilot-training/checkpoints/u64.pt", "sha256": "d931a6f49701a5b0e881967f9cf0ce31a6d701f6322b1c002c03822954a2cd8d", "transition": 32768, "actor_and_critic_adam_steps_each": 512}
+  ],
+  "non_blocking": [
+    {"id": "NATIVE-CLOSE", "assessment": "完整科学训练证据及安全owned cleanup可接受；原生关闭失败、INCOMPLETE/null与完整reservation仍须保留，不授予process PASS或FINAL。"},
+    {"id": "SUMMARY-POSTRUN-COUNT", "assessment": "当前C1-training-execution-summary.json仍记postrun_GPU_queries_performed=0；两个实际receipt已核验。最终当前状态同步应改为2并列出receipt路径。"},
+    {"id": "METHOD-EFFECT-PENDING", "assessment": "训练及首输入比较通过支持同时代单变量实验的可信性，不证明中性奖励有效。预注册主判断仍是实际u64原Z，u16仅过程诊断；旧PLR只作历史参考。"}
+  ],
+  "evaluation_release_conditions": [
+    "将上述实际checkpoint路径/SHA及C1 source/config/系数method身份固定至评估AUTH/spec，加入本次准确accepted review predicate后获得新Commander审批。",
+    "保持原seed20260909、原Z200步×32lanes×2、sensor-T0、startup、安全、失败分母、方向子组与原阈值。",
+    "执行前完成STOP、剩余资源、磁盘、输出预留及工具绑定检查；内部原coexistence通过后才创建模拟器，无自动重试。",
+    "C1实际FAILED/INCOMPLETE/full reservation继续披露；本PASS不是评估release、下一阶段授权或Goal完成结论。",
+    "C0与C1评估及最终科学决策仍须独立审核。"
+  ],
+  "review_actions": {"shared_writes": 0, "gpu_queries": 0, "simulation_or_live_starts": 0, "model_forward_calls": 0, "optimizer_calls": 0, "delegations": 0, "cpu_analysis": "实际原件哈希/枚举、训练和奖励统计重算、checkpoint/probe及两组真实初始化和捕获tensor比较。"}
+}

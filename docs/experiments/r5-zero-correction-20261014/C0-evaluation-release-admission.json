@@ -1,0 +1,53 @@
+{
+  "status": "PASS_EXACT_SINGLE_ENTRY_ADMISSION",
+  "group": "C0",
+  "mode": "evaluation",
+  "job_id": "J-4be233e84359e5c5",
+  "spec_id": "UNIFIED-H1-R5-C0-PILOT-EVAL-ZERO-d257f9ca8ec8-20261014",
+  "approval_id": "A-58af7b5900acbcc8",
+  "authorization_sha256": "01f3fae8e8bc50cb412f7550cdc74fae44173df71d7759387c6909597a2ca9d6",
+  "input_commit": "b287cc60a063313e998d46a330574c1a70efec18",
+  "source_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+  "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3",
+  "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+  "STOP": [],
+  "active_or_uncertain_jobs": 0,
+  "owned_previous_supervisors_alive": 0,
+  "available_disk_bytes": 551953166336,
+  "GPU_queries": 0,
+  "coexistence": "DEFERRED_TO_EXISTING_INTERNAL_SIX_CALL_GATE_BEFORE_APP",
+  "remaining_budget_before_reservation": {
+    "caps": {
+      "live_starts": 4,
+      "simulator_initialization_reservations": 4,
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14,
+      "wall_seconds_including_cleanup": 10840,
+      "allocated_gpu_seconds": 10840,
+      "output_bytes": 68719476736,
+      "automatic_retries": 0,
+      "role_calls": 12
+    },
+    "used": {
+      "live_starts": 2,
+      "simulator_initialization_reservations": 2,
+      "training_transitions": 0,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 0,
+      "training_checkpoint_writes": 0,
+      "wall_seconds_including_cleanup": 639.4845600822009,
+      "allocated_gpu_seconds": 638.3072259749752,
+      "output_bytes": 4276139846,
+      "automatic_retries": 0,
+      "role_calls": 4
+    },
+    "reserved": {
+      "training_transitions": 65536,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14
+    }
+  }
+}

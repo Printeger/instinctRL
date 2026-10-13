@@ -84,6 +84,8 @@ def pair():
             'live_first_rollout_gate':trains[g]['first_real_rollout_gate'],'training_reward_validation':trains[g]['actual_reward_validation'],
             'first_update_analytic_beta_kl_by_minibatch':[r['analytic_beta_kl_post']['mean'] for r in probes],
             'first_update_parameter_delta_l2_by_minibatch':[r['parameter_delta_l2_post'] for r in probes],
+            'first_update_actor_gradient_norms_by_minibatch':[{'unclipped':r['unclipped_gradient_norm'],'clipped':r['clipped_gradient_norm']} for r in probes],
+            'per_update_actor_gradient_norms':[r['actor_pre_clip_gradient_norm'] for r in trains[g]['per_update']],
             'first_update_mean_residual_xyz_by_minibatch':[[a['mean'] for a in r['mean_v_corr_b_post']['xyz']] for r in probes],
             'actual_training_correction_u16':trains[g]['executed_training_corrections'][15], 'actual_training_correction_u64':trains[g]['executed_training_corrections'][63],
             'Z_u16_u64':nodes,'all_original_Z_nodes_pass':evaluations[g]['all_original_gates_pass']}
@@ -98,7 +100,7 @@ def pair():
         'first_actual_rollout_comparability':comparison,'init_actor_critic_bit_exact_equal':True,'PPO_config_equal':True,
         'groups':groups,'primary_u64_max_lane_deltas':delta,'primary_u64_successes':{'C0':successes[0],'C1':successes[1]},
         'historical_PLR_only':{'speed':.0565321147441864,'drift':1.0888241529464722,'height':.04665946960449219,'not_contemporaneous_control':True},
-        'original_Z_policy_admission_C1':groups['C1']['all_original_Z_nodes_pass'],'long_training_authorized':False,'automatic_retries':0,
+        'original_Z_both_pilot_nodes_pass_C1':groups['C1']['all_original_Z_nodes_pass'], 'u64_original_Z_gate_pass_C1':b['original_gate']['pass'],'long_training_authorized':False,'automatic_retries':0,
         'limits':['One pairedseed, notstatistical/generalizationproof','Newreward objectiveexperiment, notpaperinnovation','Actualtrainingresidual anddeterministicZ areseparatetrajectories','No missingfailures dropped orresetsplicing','NativeFAILED/INCOMPLETE/fullreservations preservedseparately','OriginalZonly; T/S/X/W andfulltrainingnotvalidated']}
 
 def main():
