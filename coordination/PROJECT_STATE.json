@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_ZERO_CORRECTION_C1_Z_RESOURCE_EXCEPTION_REQUIRED",
+  "phase": "R5_ZERO_CORRECTION_BLOCKED_PENDING_USER_RESOURCE_EXCEPTION",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -383,7 +383,7 @@
   },
   "current_goal": {
     "target": "R5_ZERO_COMMAND_SINGLE_VARIABLE_SCIENTIFIC_CLOSURE",
-    "status": "IN_PROGRESS_AWAITING_REQUIRED_RESOURCE_DECISION",
+    "status": "BLOCKED_AWAITING_REQUIRED_USER_RESOURCE_DECISION",
     "contract": "contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md",
     "requirements": "../docs/goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md",
     "evidence_index": "../docs/experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md",
@@ -440,14 +440,17 @@
     },
     "resource_blocked_audit": {
       "condition": "ExplicitnewuserresourceexceptionforonefreshC1originalZabsent; all4start/initand64GiBoutputreservationsconsumed.",
-      "consecutive_goal_turns": 2,
+      "consecutive_goal_turns": 3,
       "original_turn_classification": "PROGRESS_ACTUAL_TRAINING_CONTROL_Z_FAILURE_REVIEW_AND_EXACT_RESOURCE_PROPOSAL",
-      "current_turn_classification": "PROGRESS_CPU_POSTPROCESS_BINDING_AND_SCIENCE_BOUNDARY_REGRESSIONS",
-      "verification": "No extrauserdecision/AUTH/attempt/approval/job; Store14terminal/noowned/STOPclear; main9ad2483matchedorigin atturnstart.",
+      "current_turn_classification": "NO_PROGRESS_REQUIRED_RESOURCE_APPROVAL_ABSENT",
+      "verification": "main/origin at a433fdea3e31cf09a2a27f60d827dbd73f717989; Store14jobs terminal/noowned/STOPclear; userexception/AUTH/freshattempt/extra proposal+job absent; caps4starts/initused4/output64GiBfullyreserved; remaining12800nontrainingcannotrunwithoutnewentryauthority.",
       "goal_achieved": false,
       "independent_work_completed_this_turn": "Newexplicitactualevaluationbinding andnewartifactpath; unregisteredheuristicclassificationremoved;9CPUregressions andC0metricreplayPASS; exactpost-grant recoveryroute prepared.",
-      "next_required_action": "Existingoneconsolidateduserresourceexception decision. Continuation is notapproval."
-    }
+      "next_required_action": "One alreadyrequestedexplicituserresourceexception: freshC1originalZ only, starts/init4to5 andoutputreservation64to80GiB; no otherbudget/method/gatechanges.",
+      "independent_work_exhausted": true,
+      "blocked_threshold_satisfied": true
+    },
+    "goal_achieved": false
   },
   "historical_prior_independent_review": {
     "path": "reviews/review-entry6-final-readiness.json",

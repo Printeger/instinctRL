@@ -7,7 +7,7 @@
 
 ## 当前 Goal（2026-10-14 零命令残差单变量）
 
-**未完成：BLOCKED_BY_SPECIFIC_DEFECT，等待唯一资源决定。** C0/C1真实各64updates/32768train/7checkpoint，first512gate均PASS；init和首输入动作/oldBeta/logp逐位一致，Role3/4独立接受。C0原Z u16/u64均0/32。C1原Z尚无数据：第四入口coexistence样本4/6/2%，6>原5%，FAILED/1 beforeApp、collectorFINAL/0；4starts/init和64GiBoutputreservations已用尽，不自动重试。
+**未完成：Goal BLOCKED（同一阻塞连续三轮核验），等待唯一资源决定。** C0/C1真实各64updates/32768train/7checkpoint，first512gate均PASS；init和首输入动作/oldBeta/logp逐位一致，Role3/4独立接受。C0原Z u16/u64均0/32。C1原Z尚无数据：第四入口coexistence样本4/6/2%，6>原5%，FAILED/1 beforeApp、collectorFINAL/0；4starts/init和64GiBoutputreservations已用尽，不自动重试。
 
 [实际部分结果](experiments/r5-zero-correction-20261014/PAIR_ANALYSIS.md)、[当前索引](experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md)、[唯一补充提案](experiments/r5-zero-correction-20261014/C1_EXTRA_EVALUATION_RESOURCE_PROPOSAL.json)。请求freshC1原Z入口start/init4→5、output预留64→80GiB，其他总帽/方法/门槛不变；未批准/未签AUTH/未release。已有训练残差减小不能替代候选原Z，不宣称validpositive/negative，不扩256updates。
 
