@@ -296,6 +296,15 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Actual R0 RECOVERY1 training/checkpoint acceptance + exact recovery evaluation binding + real pairinit/first512 comparison. Existing same-source methods/prelive unchanged. Metadata audit separately disclosed, no qualification.",
+      "status": "PASS_R0_ACTUAL_TRAINING_PAIRINIT_CHECKPOINTS",
+      "evidence": "reviews/H128-R0-actual-training.json",
+      "sha256": "d5e780a7aa599dd3cec62a29436a04c9dc5c2920ebdef13a3fa789b627dce0b8"
+    },
+    {
+      "call": 8,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Exactfresh R1 originalZ RECOVERY1 identity only after beforeAppresourcefailure; source/method/profile/actualacceptedcheckpoints unchanged. Boundedincident recovery with originalgates, noqualification.",
       "status": "REQUESTED"
     }
   ],
