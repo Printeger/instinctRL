@@ -1,0 +1,17 @@
+{
+  "scope": "Independent read-only finite scientific investigation by /root/pilot_reviewer; root preserves a concise structured transcription. No experimental prelive/release approval.",
+  "source_main": "56f996d996b83ced3312d44e204b8df6b4f80a9d",
+  "finding": "Existing anchor is XY-sensitive but pose-confounded; not weak/disabled, not explicit actor-reference feedback.",
+  "sources": [
+    {"path":"isaaclab-training/instinctlab/control/anchor.py:143","finding":"Same-beam raw-range subtraction, weighted Huber scalar, no attitude alignment/signed XY decomposition."},
+    {"path":"isaaclab-training/instinctlab/control/anchor.py:152","finding":"Reset/command exit/invalidity clear reference; capture occurs next eligible step, not guaranteed original evaluation sensorT0."},
+    {"path":"isaaclab-training/instinctlab/observations/actor.py:33","finding":"Four-frame raw range/validity/reliability, angular velocity/gravity/commands/previous issued velocity/time; no explicit captured reference or long reference memory. Partial information remains via opticalflow and fixed-scene ranges."},
+    {"path":"isaaclab-training/instinctlab/control/pipeline.py:106","finding":"Anchor scalar reaches reward/logs, not governor/ICS corrective feedback."},
+    {"path":"isaaclab-training/instinctlab/task/critic_h1.py:12","finding":"Privileged21-field critic contains localGT pose/velocity; this does not make it actor-visible."}
+  ],
+  "actual_C1_u64_training_512_samples": {"active":"all1","reset_code":"all0","usable_fraction_mean":0.5697613192023709,"huber_mean":0.10689669637520183,"reward_anchor_mean":-0.4275867855008073,"reward_velocity_mean":-0.04221452884848986,"reward_zero_extra_mean":-0.07190103124003144},
+  "finite_CPU_probe": {"method":"Analytic actual finite floor/xwall/ywall intersections using product mountedray directions, sensor[-.1,-.1,2.05], actual MeasurementAnchor; ideal noise-free geometry, fixed sensor origin for rotations.","huber":{"x_plus_0_35m":0.030478203643063244,"y_plus_0_35m":0.03724557091626851,"z_plus_0_095m":0.011724382895584258,"roll_1degree":0.028843515758133854,"pitch_1degree":0.012558804230099373,"yaw_1degree":0.00367470934407432,"x_plus_0_01m":0.00014115429559160875},"lifecycle":"Resetstep inactive; nexteligible capture atnewposition givesloss0.","limit":"Probe supports geometric confounding, not attribution of actual C1 loss to attitude; no simulator/model forward/GPU/optimizer/writes."},
+  "recommendation":"Reference-aware deployable measurement representation is more defensible than default4to8. Need finiteCPU information probe before that substantive change. Coefficient sensitivity can be empirical but not described as proven effectiveXYfeedback strengthening.",
+  "boundaries":"Separate representation, capture timing, reward coefficient and network factors; never inject GT, estimated velocity or simulator state. Real evaluation anchor/v_corr missing staysUNKNOWN. No unique drift cause or generalization proved.",
+  "actions":{"shared_writes":0,"GPU_queries":0,"simulation_starts":0,"model_forward_or_training":0,"optimizer_calls":0,"delegations":0}
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": "instinctrl-r5-formal-master-authority/1",
+  "id": "R5-FORMAL-READINESS-AUTO-01",
+  "status": "REGISTERED_USER_DELEGATION",
+  "user_prompt": {
+    "original_path": "/home/mint/.codex/attachments/2b1879b7-1581-436b-87e4-eeb79ed71fb6/pasted-text-1.txt",
+    "preserved_path": "USER_GOAL_PROMPT.txt",
+    "sha256": "392c30bd7faf4854ac897fa3654aa3fd4840256526dd6f20d5a860cca0d73fad"
+  },
+  "requirements": {
+    "path": "docs/goals/InstinctRL_R5_Formal_Training_Readiness_Autonomous_Goal.md",
+    "sha256": "cc9cbf35b387e4c4519ea403ba1291321748331001465cd69003824e6b5bfa26"
+  },
+  "initial_main": "56f996d996b83ced3312d44e204b8df6b4f80a9d",
+  "delegated_roles": {
+    "Coordinator_Commander": "Existing root Supervisor-Commander under explicit user delegation; allocate/extend stage budgets and exact approvals within master caps",
+    "Builder": "Root sole main writer; cannot substitute own PASS for independent review",
+    "Reviewer": "Existing independent /root/pilot_reviewer read-only method prelive, actual qualification, confirmations and final package"
+  },
+  "master_caps": {
+    "training_transitions": 2097152,
+    "nontraining_transitions": 1048576,
+    "live_starts": 64,
+    "simulator_initialization_reservations": 64,
+    "optimizer_updates": 4096,
+    "actor_optimizer_steps": 65536,
+    "critic_optimizer_steps": 65536,
+    "training_checkpoint_writes": 256,
+    "allocated_gpu_seconds": 86400,
+    "wall_seconds_including_cleanup": 86400,
+    "output_peak_and_reservations_bytes": 519680897024,
+    "parallel_GPU_jobs": 1,
+    "paid_cloud_resources": 0
+  },
+  "initial_disk_free_bytes": 551893151744,
+  "disk_safety_margin_bytes": 32212254720,
+  "initial_stage_allocation": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "allocated_gpu_seconds": 10840,
+    "wall_seconds_including_cleanup": 10840,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "delegation_scope": [
+    "finite CPU attribution",
+    "task-related reward/reference/history/optimization/action/curriculum research with rationale",
+    "read-only exact snapshots, tests, commits/tag/normalpush",
+    "exact per-entry delegated Commander issuance after independent prelive",
+    "reasoned fresh-identity recoveries, at most3 increasing-backoff attempts per persistent coexistence refusal",
+    "confirmationseeds and finite nonzero transition tests",
+    "conditional exact formal first-segment authorization; no formal full-job submission in this Goal"
+  ],
+  "immutable_boundaries": [
+    "OriginalZscoring/all32/T0/startup/thresholds/subgroups/resetdenominators",
+    "STOP/coexistence/cleanup/actor deployable measurement boundary",
+    "frozen runtime and historical directories read-only",
+    "all previous jobs/nativeFAIL/INCOMPLETE/reservations preserved",
+    "first actual512 probability gate before eitheroptimizer unchanged",
+    "no hardzero/actionoverride/GTinjection/no unrelatedprocesskill"
+  ],
+  "formal_initial_reservation": {
+    "training_transitions": 262144,
+    "nontraining_transitions": 329600,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 512,
+    "actor_optimizer_steps": 4096,
+    "critic_optimizer_steps": 4096,
+    "training_checkpoint_writes": 10,
+    "allocated_gpu_seconds": 21680,
+    "wall_seconds_including_cleanup": 21680,
+    "output_peak_and_reservations_bytes": 34359738368
+  },
+  "confirmation_and_transition_training_reservation_minimum": 524288,
+  "formal_reservations_not_executed": true,
+  "normal_target": "READY_FOR_FORMAL_R5_TRAINING",
+  "role_call_caps": "No separate user role hardcap; count actual calls and reuse existing roles, avoid process inflation."
+}

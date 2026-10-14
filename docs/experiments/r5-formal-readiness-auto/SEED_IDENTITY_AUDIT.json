@@ -1,0 +1,124 @@
+{
+  "scope": "Actual accepted checkpoint metadata/hash and raw T0; not inferred from labels",
+  "groups": {
+    "C0": {
+      "training_seed": 20260908,
+      "checkpoint": {
+        "label": "u64",
+        "status": "VERIFIED_ACTUAL",
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C0-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/results/pilot-training/checkpoints/u64.pt",
+        "sha256": "be74340908464bb06fb9815e366b642731a1c7214767a4fc53c1a2f660566207",
+        "bytes": 1509993,
+        "counters": {
+          "update": 64,
+          "transition": 32768,
+          "global_policy_step": 1024,
+          "actor_optimizer": 512,
+          "critic_optimizer": 512
+        },
+        "source_identity": {
+          "product_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+          "product_tree": "04cd069bada7cd0b838cd1539e916296d67f70ac",
+          "workload_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+          "workload_tree": "04cd069bada7cd0b838cd1539e916296d67f70ac",
+          "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3"
+        },
+        "network_config": {
+          "lidar_channels": [
+            8,
+            16,
+            16
+          ],
+          "state_hidden": 32,
+          "actor_hidden": 128,
+          "critic_hidden": [
+            64,
+            64
+          ],
+          "concentration_min": 1.0,
+          "concentration_max": 30.0,
+          "action_log_epsilon": 1e-06
+        },
+        "ppo_config": {
+          "gamma": 0.99,
+          "gae_lambda": 0.95,
+          "clip_ratio": 0.2,
+          "value_loss_coefficient": 0.5,
+          "entropy_coefficient": 0.01,
+          "actor_learning_rate": 0.0001,
+          "critic_learning_rate": 0.0003,
+          "maximum_gradient_norm": 0.5,
+          "advantage_epsilon": 1e-08,
+          "minibatch_size": 64,
+          "epoch_count": 1,
+          "permutation_seed": 1701
+        }
+      },
+      "evaluation_seeds": {
+        "16": 20260909,
+        "64": 20260909
+      }
+    },
+    "C1": {
+      "training_seed": 20260908,
+      "checkpoint": {
+        "label": "u64",
+        "status": "VERIFIED_ACTUAL",
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/results/pilot-training/checkpoints/u64.pt",
+        "sha256": "d931a6f49701a5b0e881967f9cf0ce31a6d701f6322b1c002c03822954a2cd8d",
+        "bytes": 1509993,
+        "counters": {
+          "update": 64,
+          "transition": 32768,
+          "global_policy_step": 1024,
+          "actor_optimizer": 512,
+          "critic_optimizer": 512
+        },
+        "source_identity": {
+          "product_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+          "product_tree": "04cd069bada7cd0b838cd1539e916296d67f70ac",
+          "workload_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+          "workload_tree": "04cd069bada7cd0b838cd1539e916296d67f70ac",
+          "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3"
+        },
+        "network_config": {
+          "lidar_channels": [
+            8,
+            16,
+            16
+          ],
+          "state_hidden": 32,
+          "actor_hidden": 128,
+          "critic_hidden": [
+            64,
+            64
+          ],
+          "concentration_min": 1.0,
+          "concentration_max": 30.0,
+          "action_log_epsilon": 1e-06
+        },
+        "ppo_config": {
+          "gamma": 0.99,
+          "gae_lambda": 0.95,
+          "clip_ratio": 0.2,
+          "value_loss_coefficient": 0.5,
+          "entropy_coefficient": 0.01,
+          "actor_learning_rate": 0.0001,
+          "critic_learning_rate": 0.0003,
+          "maximum_gradient_norm": 0.5,
+          "advantage_epsilon": 1e-08,
+          "minibatch_size": 64,
+          "epoch_count": 1,
+          "permutation_seed": 1701
+        }
+      },
+      "evaluation_seeds": {
+        "16": 20260909,
+        "64": 20260909
+      }
+    }
+  },
+  "training_seed": 20260908,
+  "evaluation_seed": 20260909,
+  "CPU_only": true
+}

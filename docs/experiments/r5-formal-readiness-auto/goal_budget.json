@@ -1,0 +1,80 @@
+{
+  "schema_version": "instinctrl-formal-research-budget/1",
+  "goal_id": "R5-FORMAL-READINESS-AUTO-01",
+  "master_authority": {
+    "path": "MASTER_AUTHORITY.json",
+    "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+  },
+  "caps": {
+    "training_transitions": 2097152,
+    "nontraining_transitions": 1048576,
+    "live_starts": 64,
+    "simulator_initialization_reservations": 64,
+    "optimizer_updates": 4096,
+    "actor_optimizer_steps": 65536,
+    "critic_optimizer_steps": 65536,
+    "training_checkpoint_writes": 256,
+    "allocated_gpu_seconds": 86400,
+    "wall_seconds_including_cleanup": 86400,
+    "output_peak_and_reservations_bytes": 519680897024,
+    "parallel_GPU_jobs": 1,
+    "paid_cloud_resources": 0
+  },
+  "stage_allocation": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "allocated_gpu_seconds": 10840,
+    "wall_seconds_including_cleanup": 10840,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "used": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "live_starts": 0,
+    "simulator_initialization_reservations": 0,
+    "optimizer_updates": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0,
+    "training_checkpoint_writes": 0,
+    "allocated_gpu_seconds": 0,
+    "wall_seconds_including_cleanup": 0,
+    "output_peak_and_reservations_bytes": 0
+  },
+  "observed": {},
+  "reservations": {
+    "confirmation_and_transition_training_transitions": 524288,
+    "formal_initial_segment": {
+      "training_transitions": 262144,
+      "nontraining_transitions": 329600,
+      "live_starts": 4,
+      "simulator_initialization_reservations": 4,
+      "optimizer_updates": 512,
+      "actor_optimizer_steps": 4096,
+      "critic_optimizer_steps": 4096,
+      "training_checkpoint_writes": 10,
+      "allocated_gpu_seconds": 21680,
+      "wall_seconds_including_cleanup": 21680,
+      "output_peak_and_reservations_bytes": 34359738368
+    },
+    "live_entries": [],
+    "source_snapshots": []
+  },
+  "role_calls": [
+    {
+      "call": 1,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Finite read-only independent anchor information/lifecycle/geometry/actor visibility analysis; no exactcandidate preliveapproval",
+      "status": "COMPLETE_INFORMATION_FINDINGS_NOT_PRELIVE_APPROVAL",
+      "evidence": "reviews/anchor-information-findings.json",
+      "sha256": "89978d990edd32694faeeeb3c79877f50ee8ce8bc447813c65261a58ae890d7c"
+    }
+  ],
+  "decisions": [],
+  "runs": [],
+  "old_budgets": "Read-only, not inherited or refunded; previous INCOMPLETE observations remain conservatively reserved in their own ledgers."
+}

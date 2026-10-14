@@ -5,7 +5,13 @@
 代码、状态、workload、必要工具和测试已整理到本仓库。源历史完整继承到 `903afc5`，
 其后产品集成提交为 `91c6997`，workload/工具集成为 `e7d58d2`。
 
-## 当前 Goal（2026-10-14 零命令残差单变量）
+## 当前 Goal（2026-10-14 自主正式训练准入）
+
+**IN_PROGRESS，目标 READY_FOR_FORMAL_R5_TRAINING。** 新用户已一次性委托完整有界研究、阶段扩额、方法调整、配对训练、确认seed及条件式正式启动包，由现有Coordinator/Commander准确授权；不自动提交正式完整训练。主授权和新总账已登记，确认/衔接至少25%训练与正式首段资源已保护预留。当前先从旧C1真实轨迹定位启动/持续漂移和anchor的信息与尺度，未启动新live。
+
+当前进展与下一动作见[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)，[主授权](experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json)和[新总账](experiments/r5-formal-readiness-auto/goal_budget.json)。15旧jobs terminal/noowned/STOPclear；原Z阈值、actor部署信息边界及全部历史FAILED/INCOMPLETE保留。
+
+## 已完成 Goal（2026-10-14 零命令残差单变量）
 
 **Goal已完成：`VALID_EXPERIMENT_POSITIVE`。** 独立Role6最终PASS，无阻塞性MUST_FIX；全需求审计通过。两组各64updates，真实首512gate先于两类optimizer通过；实际初始化和首输入/动作/oldBeta/logp逐位一致。新方法只比较零命令残差软代价w0/.05，两组actorLR均1e-4。
 

@@ -1,0 +1,19 @@
+/goal 将 InstinctRL 从当前 C1 正结果但原Z未通过的状态，自主推进到 READY_FOR_FORMAL_R5_TRAINING。完整要求见 docs/goals/InstinctRL_R5_Formal_Training_Readiness_Autonomous_Goal.md。不要只做离线报告、单次负结果或CPU准备就结束。
+
+先读取最新 docs/PROJECT_STATUS.md、coordination/CURRENT_TASK.md、本需求书，以及 docs/experiments/r5-zero-correction-20261014/ 的 PAIR_ANALYSIS.md、NEXT_RESEARCH_DECISION.md、pair_analysis.complete.json 和最终独立审核。核对HEAD/现有作业，复用已有有效结果，不重复E0、质量修复或已验收控制ZTS。
+
+已知审阅提交56f996d；C0/C1共同运行源码d257f9c，C1使用actor LR1e-4、critic3e-4、零命令残差权重.05，原anchor系数4。C1 u64最大速度.020413m/s、漂移.347792m、高度.095134m；所有lane漂移仍>.30m。保留原科学正结果、原Z失败及原生FAILED记录，不能将C1称为已达标。
+
+我一次性授权本需求书的完整有界研究范围，并委托现有Coordinator/Commander代表我登记主授权、分配和扩展阶段预算、批准准确实验身份与release；Builder实现、Reviewer独立审查。离线分析、代码修改、必要隔离依赖、测试、记录、提交/正常push、配对训练、复验、方法方向调整与有原因的恢复均可自主完成，不逐阶段、逐参数、逐入口要求我再次批准。不得伪造外部权限、用户签名或审核结果。
+
+主包络上限：training 2,097,152；evaluation/nontraining 1,048,576；64次live启动和64次sim初始化；4096 logical updates；actor/critic各65536 optimizer steps；256次checkpoint写入；累计GPU秒和实验进程wall秒各86400；单GPU作业串行；新增证据/快照/临时峰值及预留不超过min(512GiB,启动可用空间减30GiB)；不购买云资源。初始65536训练/25600评价/4次启动是可自行扩展的阶段额度，不是每次触达就暂停的总界限。预留确认及正式首段资源，严禁用完研究额度后才将普通启动审批重新推给我。
+
+自主推进：先从真实轨迹区分启动偏差、持续漂移、参考恢复，并核查anchor有效性、XY敏感性、奖励尺度与actor可利用的信息。优先考虑anchor单变量；若证据不支持，可记录后转向测量空间参考表征、历史、优化/分布、残差约束或课程/训练时域。每次实验开始前冻结问题、基线、主要变化、seed、预算、节点和判定，重要变更先独立预审，不事后改实验定义。
+
+允许新Goal内的纯悬停训练从64扩至128、必要时256 updates并公平比较，但必须显式保持相应命令分布，不能自动进入旧mixed课程。允许负结果后选择新方法并继续，不无原因盲重试、不同时乱改多个变量。真实首次rollout gate保留；gate/非有限值失败停止该次更新，能局部修复则保留失败后创建新实验继续，不能放宽gate。所有旧STOP/阈值/分母/启动窗口/actor部署信息边界不变，禁止硬零策略或真值注入过关。
+
+正常完成条件：最终候选在开发seed两个预定后段节点通过完整原Z；方法冻结后再有两个未参与调参的训练seed在相同主节点通过；原Z按32lane/全部方向/完整启动/0.08m/s、0.30m、0.20m及原函数判定。完成有限非零衔接的实现验证，不要求未训练的T/S/X/W提前达到完整性能。冻结正式训练方法、课程、预算、对照、seed、初始或恢复方式、准确argv和条件式授权，并通过独立最终审核，无阻塞MUST_FIX。
+
+只有真实异常STOP、无法解决的证据/权限/进程所有权问题、硬件/磁盘风险或总硬上限耗尽才暂停。一般负结果、阶段额度不足、方法转向、可修评审意见和已知native-close但证据完整/owned清理通过都自主处理。外部STOP不得自行清除；持续资源拒绝只作有界恢复，不杀无关进程、不改coexistence。已知FAILED/INCOMPLETE及旧保守账本不改写。
+
+最终交付READINESS_REPORT.md、EXPERIMENT_RESULTS.json、CONFIRMATION_SEEDS.json、FORMAL_R5_TRAINING_PLAN.md、formal_r5_launch_manifest.json、START_FORMAL_R5.md、独立审核和证据索引。终态只有READY_FOR_FORMAL_R5_TRAINING或准确STOP原因；预算内仍未达标不能伪称READY。成功后正式方案和可执行入口必须就绪，但本Goal不自动提交正式完整训练作业。
