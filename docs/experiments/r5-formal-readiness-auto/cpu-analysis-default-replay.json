@@ -1,0 +1,28 @@
+{
+  "status": "PASS_EXACT_ALL_DEFAULT_TRAINING_FIELDS_MATCH_ACCEPTED_C0",
+  "fields": [
+    "group",
+    "mode",
+    "source_commit",
+    "actual_raw_status",
+    "first_real_rollout_gate",
+    "diagnostic_failure",
+    "scientific_training_coverage_complete",
+    "completed_update_records",
+    "completed_minibatch_records",
+    "checkpoints",
+    "actual_first_update_probe",
+    "per_update",
+    "executed_training_corrections",
+    "learning_failure_records",
+    "episodes",
+    "partial_episode_records",
+    "partial_rollout_boundaries",
+    "process_acceptance",
+    "gate_scope"
+  ],
+  "original_complete_training": true,
+  "new_simulator": 0,
+  "GPU_queries": 0,
+  "optimizer_calls": 0
+}

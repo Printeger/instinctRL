@@ -29,7 +29,7 @@ def verify_reward(attempt,group):
             'recorded_actor_mean_residual':vectors(torch.tensor(means)), 'actual_velocity_b':vectors(torch.tensor(velocities)),
             'new_reward_zero_extra':stats(terms),'reset_lanes':resets}
 
-def compare_inputs(train_rows):
+def compare_inputs(train_rows, *, method_binding_key="pilot_reward_binding"):
     initial=[torch.load(Path(r['checkpoints'][0]['path']),map_location='cpu',weights_only=True) for r in train_rows.values()]
     for section in ['actor','critic']:
         assert initial[0][section].keys()==initial[1][section].keys()
@@ -40,7 +40,7 @@ def compare_inputs(train_rows):
         assert r['actor_optimizer']['state']==r['critic_optimizer']['state']=={}
         assert r['ppo_config']['actor_learning_rate']==1e-4 and r['ppo_config']['critic_learning_rate']==3e-4
     left,right=[dict(r['method_hashes']) for r in initial]
-    assert left.pop('pilot_reward_binding')!=right.pop('pilot_reward_binding') and left==right
+    assert left.pop(method_binding_key)!=right.pop(method_binding_key) and left==right
     del initial
     first=[torch.load(Path(r['checkpoints'][0]['path']).parents[1]/'pilot_diagnostic/update_1_full_input.pt',map_location='cpu',weights_only=True) for r in train_rows.values()]
     result={}

@@ -1,0 +1,65 @@
+{
+  "verdict": "PASS",
+  "scope": "仅接受准确修复后的薄Commander适配器；沿用方法Role2预审，不授予实际科学资格或正式训练准入。",
+  "identities": {
+    "adapter_commit": "d5a9f45b5d5bdc98d2d6f8027f7c973fdb52cfcb",
+    "script": "tools/r5_formal_commander.py",
+    "script_sha256": "1525ec2442e17c502b9b08a8732aad98bad22508390957c3d7b59f3d65f9ec99",
+    "packet_sha256": "fe77bc508583668d4ab593877429170a63f4849938a513b941c64ba55db8074a",
+    "method_source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02"
+  },
+  "must_fix": [],
+  "closed_findings": [
+    {
+      "id": "ADMISSION-STAGE-TIME-R1",
+      "assessment": "CLOSED",
+      "evidence": "remaining_check现分别检查stage wall/GPU的已用量、全部现有入口时间预留及下一入口wall+10。CPU回归覆盖阶段零额度拒绝，以及used100+reserved200+next3610在3910通过、3909拒绝。"
+    },
+    {
+      "id": "ADMISSION-QUIESCENCE-R1",
+      "assessment": "CLOSED",
+      "evidence": "idle调用previous_quiescence；正常路径要求明确ACK、quiescent、至少两次稳定扫描、非timed_out、无survivors，并重新检查owner、guard、child、ACK discovered及连续ledger descendants均不owned。缺失ACK和活guard/child/descendant等反例被拒绝。"
+    }
+  ],
+  "historical_recovery_boundary": {
+    "assessment": "PASS_EXACT_EXCEPTION",
+    "job_id": "J-afe4bda51f5206e5",
+    "evidence": "例外限定准确CONTROL与该唯一旧job，核对固定历史review/settlement/recovery/ledger SHA及Store中accepted review的路径和SHA；明确normal_completion_ack_present=false，并重新检查所有已知身份不owned。",
+    "limit": "该路径不是normal ACK，也不是新job通用fallback。其他job仍须正常ACK；缺失或不确定清理必须拒绝新入口。"
+  },
+  "validation": {
+    "bounded_CPU_tests": "29 PASS",
+    "actual_previous_jobs": "15 PASS；14正常ACK，唯一旧J-afe4使用准确独立接受的历史recovery边界。",
+    "packet_unchanged": true,
+    "event_read_check": "使用sqlite mode=ro读取现有事件并核对payload哈希及版本链，再对实际状态执行previous_quiescence。",
+    "environment_limit": "初次Store.replay读取因现有解释器缺少jsonschema中止；未安装依赖，未变更任何事件、授权、审批或作业。"
+  },
+  "non_blocking": [
+    {
+      "id": "EVIDENCE-OBJECT-BINDING",
+      "assessment": "原评审关于明确JSON键和checkpoint对象绑定的维护建议保留；不构成本次两个修复的阻塞。"
+    },
+    {
+      "id": "RECOVERY-AND-NATIVE-FAILURE",
+      "assessment": "后续真实native-close失败仍须按准确证据处理；不能仅因这次旧job例外通过而忽略新job的cleanup失败。"
+    }
+  ],
+  "local_validation_adequate_before_exact_use": true,
+  "use_conditions": [
+    "归档本次准确accepted review，固定此脚本SHA；完成正常commit/push并核对真实remote身份后再使用。",
+    "仅通过已接受准确packet/source/预期AUTH及master Store predicate发行；由受托Commander执行现有审批，不需要逐入口再向用户请求一般权限。",
+    "每次submit仍须运行全部stage/master/confirmation/formal预留、STOP、准确pins、磁盘和previous_quiescence检查。",
+    "实际coexistence通过后才创建App，真实首次512 gate先于两类optimizer；任何失败不放宽门槛。",
+    "本PASS不表示已发行AUTH、已释放作业、实际训练通过或READY_FOR_FORMAL_R5_TRAINING。"
+  ],
+  "review_actions": {
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0,
+    "shared_evidence_edits": 0,
+    "control_plane_event_mutations": 0,
+    "test_outputs": "/tmp/r5-commander-review-r1"
+  }
+}

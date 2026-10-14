@@ -117,7 +117,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Limited closure recheck only stagewall/GPU and priorjobcleanup; exact newscript andhistoricalRole12pin exception. Method/source/packet unchanged.",
-      "status": "REQUESTED"
+      "status": "PASS_TWO_ADMISSION_FINDINGS_CLOSED",
+      "evidence": "reviews/H128-commander-fixed.json",
+      "sha256": "50ab13af53d5fb49337bdefc4cf8f2e09f602288cabc3060c30be1fdf2a45e1a"
     }
   ],
   "decisions": [

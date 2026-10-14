@@ -45,15 +45,26 @@ def vectors(value):
     return {'units': 'm/s', 'frame': 'body', 'xyz': [stats(tensor[:, i]) for i in range(3)],
             'horizontal_norm': stats(tensor[:, :2].norm(dim=-1)), 'norm': stats(tensor.norm(dim=-1))}
 
-def training(attempt, group, *, source_commit=SOURCE):
-    output = attempt / 'results/pilot-training'
+def training(attempt, group, *, source_commit=SOURCE, research_profile=None, research_config=None):
+    mode = 'research-training' if research_profile is not None else 'pilot-training'
+    maximum = 64
+    checkpoint_labels = CHECKPOINTS
+    training_seed = 20260908
+    if research_profile is not None:
+        from training_workloads.unified_h1.research_contract import validate_parameters, method_hashes
+        research_profile = validate_parameters(mode, research_profile)
+        assert group == research_profile['group'] and research_config is not None
+        maximum = research_profile['max_updates']
+        checkpoint_labels = ('init0000',) + tuple(f'u{u}' for u in research_profile['checkpoint_updates'])
+        training_seed = research_profile['training_seed']
+    output = attempt / 'results' / mode
     status = read(output / 'status.json')
     gate = read(output / 'pilot_diagnostic/first_update_gate.json')
     failure = read(output / 'pilot_diagnostic/first_update_failure.json')
     updates = jsonl(output / 'learning_log/updates.jsonl')
     minibatches = jsonl(output / 'learning_log/minibatches.jsonl')
     checkpoint_rows = []
-    for name in CHECKPOINTS:
+    for name in checkpoint_labels:
         path = output / 'checkpoints' / (name + '.pt')
         if not path.is_file():
             checkpoint_rows.append({'label': name, 'status': 'MISSING'})
@@ -72,8 +83,15 @@ def training(attempt, group, *, source_commit=SOURCE):
             assert binding['group'] == group and binding['actual_residual_neutrality_weight'] == pilot_residual_weight(group)
             method = {'method': {'hashes': {'method': NEUTRALITY_METHOD_SHA256, **NEUTRALITY_VERSIONS}}}
             assert payload['method_hashes'] == binding['method_hashes'] == pilot_method_hashes(method, group)
-        assert payload['training_seed'] == 20260908
-        assert payload['ppo_config']['actor_learning_rate'] == (3e-4 if group == 'P0' else 1e-4)
+        if research_profile is not None:
+            binding = read(output / 'research_profile_binding.json')
+            assert binding['parameters'] == research_profile and binding['pure_hover'] is True
+            assert payload['method_hashes'] == binding['method_hashes'] == method_hashes(research_config, research_profile)
+            assert payload['curriculum']['version'] == 'curriculum-h1-research-pure-hover-v1'
+            assert binding['actual_anchor_weight'] == research_profile['anchor_weight']
+            assert binding['actual_residual_neutrality_weight'] == research_profile['residual_neutrality_weight']
+        assert payload['training_seed'] == training_seed
+        assert payload['ppo_config']['actor_learning_rate'] == (research_profile['actor_lr'] if research_profile else (3e-4 if group == 'P0' else 1e-4))
         assert payload['ppo_config']['critic_learning_rate'] == 3e-4
         assert payload['curriculum']['completed_policy_steps'] == expected_update * 16
         checkpoint_rows.append({'label': name, 'status': 'VERIFIED_ACTUAL', 'path': str(path),
@@ -126,7 +144,7 @@ def training(attempt, group, *, source_commit=SOURCE):
                 coordinate = (row['update'], row['step'])
                 assert coordinate not in coordinates
                 coordinates.add(coordinate)
-                assert 1 <= coordinate[0] <= 64 and 0 <= coordinate[1] < 16
+                assert 1 <= coordinate[0] <= maximum and 0 <= coordinate[1] < 16
                 pre = row['pre_reset']; control = pre['control']
                 sample = executed.setdefault(row['update'], {'correction': [], 'final_command': [],
                                                             'velocity': [], 'alpha': [], 'ics_beta': [], 'resets': 0})
@@ -135,7 +153,7 @@ def training(attempt, group, *, source_commit=SOURCE):
                     assert torch.as_tensor(value).shape == (32, 3)
                     sample[target].extend(value)
                 assert torch.as_tensor(row['command_b']).shape == (32, 3)
-                assert not bool(torch.as_tensor(row['command_b']).ne(0).any()), 'original1024-stepzero warmup changed'
+                assert not bool(torch.as_tensor(row['command_b']).ne(0).any()), 'explicit all-zero training command distribution changed'
                 sample['alpha'].extend(torch.as_tensor(control['alpha']).reshape(-1).tolist())
                 sample['ics_beta'].extend(torch.as_tensor(control['ics_metrics']['beta']).reshape(-1).tolist())
                 sample['resets'] += int(torch.as_tensor(row['terminated']).logical_or(torch.as_tensor(row['truncated'])).sum())
@@ -144,15 +162,15 @@ def training(attempt, group, *, source_commit=SOURCE):
                       'actual_velocity_b': vectors(row['velocity']), 'alpha': stats(row['alpha']),
                       'ics_beta': stats(row['ics_beta']), 'reset_lanes': row['resets']}
                      for update, row in sorted(executed.items())]
-    complete = (len(updates) == 64 and [row['completed_updates'] for row in updates] == list(range(1, 65))
+    complete = (len(updates) == maximum and [row['completed_updates'] for row in updates] == list(range(1, maximum + 1))
                 and all(row['status'] == 'VERIFIED_ACTUAL' for row in checkpoint_rows)
                 and bool(gate and gate['status'] == 'PASS' and gate['sample_count'] == 512)
                 and len(probes) == 8)
     if complete:
-        assert len(minibatches) == 512
-        assert len(coordinates) == 1024 and len(executed_rows) == 64
+        assert len(minibatches) == maximum * 8
+        assert len(coordinates) == maximum * 16 and len(executed_rows) == maximum
         assert all(row['actual_step_lane_samples'] == 512 for row in executed_rows)
-    return {'group': group, 'mode': 'pilot-training', 'source_commit': source_commit,
+    return {'group': group, 'mode': mode, 'source_commit': source_commit,
             'actual_raw_status': status, 'first_real_rollout_gate': gate, 'diagnostic_failure': failure,
             'scientific_training_coverage_complete': complete, 'completed_update_records': len(updates),
             'completed_minibatch_records': len(minibatches), 'checkpoints': checkpoint_rows,
