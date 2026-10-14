@@ -1,6 +1,6 @@
 """CPU-only actual research evidence: exact jobs, all data and original Z gates."""
 from pathlib import Path
-import argparse,json
+import argparse,json,math
 from collections import Counter
 import torch
 from tools.analyze_r5_paired_pilot import training,stats,vectors,digest,read,jsonl
@@ -64,6 +64,60 @@ def evaluation_analysis(D,group):
  result={'group':group,'mode':'research-evaluation','source_commit':auth['product_commit'],'actual_parameters':p,'binding':binding,'nodes':nodes,'coverage_complete':all(len(n['episodes'])==32 for n in nodes.values()),'all_original_gates_pass':all(n['original_gate']['pass'] for n in nodes.values()),'metric':'Unchanged originalZ sensorT0/startup/200steps32lanes/allsubgroups/allfailures','CPU_only':True,'optimizer_calls':0,'missing_samples_filled':False}
  return result
 
+def replay_transition_rows(rows):
+ """Replay saved compact fields; never invent unrecorded dense actor inputs."""
+ from training_workloads.unified_h1.transition_diagnostic import transition_commands
+ from instinctlab.control.governor import decode_governor
+ assert len(rows)==113 and rows[0]['kind']=='T0','exact T0+112 required'
+ expected=transition_commands();checks=[]
+ for name,shape in [('root_state_w',(32,13)),('sensor_position_w_m',(32,3)),('env_origins_w_m',(32,3))]:
+  x=torch.tensor(rows[0][name],dtype=torch.float32);assert x.shape==shape and torch.isfinite(x).all(),name
+ for step,row in enumerate(rows[1:]):
+  assert row['kind']=='STEP' and row['step']==step,'transition missing/reordered step'
+  current=expected[step];following=expected[min(step+1,111)]
+  tensor=lambda key:torch.tensor(row[key],dtype=torch.float32)
+  command=tensor('command_b');nxt=tensor('following_command_b');state=tensor('actor_state_vec');returned=tensor('returned_state_vec')
+  assert torch.equal(command,current) and torch.equal(nxt,following),'transition command protocol drift'
+  assert state.shape==returned.shape==(32,52) and torch.isfinite(state).all() and torch.isfinite(returned).all()
+  assert torch.equal(state[:,45:48],current),'transition obs_t current command mismatch'
+  assert torch.equal(returned[:,45:48],following),'transition obs_t+1 following command mismatch'
+  action=tensor('issued_action');assert action.shape==(32,4) and torch.isfinite(action).all()
+  decoded=decode_governor(action,state);control=row['control']
+  for name,shape,value in [('root_state_w',(32,13),row['root_state_w'])]+[(k,(32,3),control[k]) for k in ['v_corr_b','v_final_b','v_final_w']]:
+   value=torch.tensor(value,dtype=torch.float32);assert value.shape==shape and torch.isfinite(value).all(),name
+  assert torch.equal(decoded.v_corr_b,torch.tensor(control['v_corr_b'],dtype=torch.float32)),'transition actual xyz decoder mismatch'
+  reward=tensor('reward');assert reward.shape in [(32,),(32,1)] and torch.isfinite(reward).all()
+  velocity=tensor('actual_velocity_b');assert velocity.shape==(32,3) and torch.isfinite(velocity).all()
+  mask=row['reset_mask'];assert isinstance(mask,list) and len(mask)==32 and all(type(x) is bool for x in mask),'actual boolean reset mask required'
+  anchor=control['anchor_metrics'];metrics={k:torch.tensor(anchor[k],dtype=torch.float32) for k in ['active','reset_code','usable_fraction','mean_absolute_error_m','huber_loss']}
+  assert all(v.shape==(32,1) and torch.isfinite(v).all() for v in metrics.values())
+  nonzero=current.norm(dim=-1)>=.15
+  assert not torch.any(metrics['active'].reshape(32)[nonzero]!=0),'transition nonzero reference remains active'
+  checks.append({'samples':32,'actual_reset_lanes':sum(mask),'zero_command_lanes':int((current.norm(dim=-1)<=.001).sum()),'active_anchor_lanes':int((metrics['active']>0).sum()),'shape_command_decoder_reference_checks':'PASS','performance_scoring':'NOT_AN_ORIGINAL_TASK_ACCEPTANCE'})
+ for start,end in [(0,16),(80,112)]:assert any(c['active_anchor_lanes']>0 for c in checks[start:end]),'zero segment reference not active'
+ return checks
+
+def transition_analysis(D,group):
+ attempt,auth,config,binding=bound_entry(D,group,'research-transition');p=auth['parameters'];output=attempt/'results/research-transition'
+ inventory=read(D/'live'/(group+'-research-transition')/'INVENTORY.json');assert inventory['job_id']==binding['job_id']
+ for row in inventory['files']:
+  f=Path(row['original']);assert f.is_file() and f.stat().st_size==row['bytes'] and digest(f)==row['sha256']
+  if row['archived']:assert digest(Path(row['archived']))==row['sha256']
+ raw=output/'finite_transition/trace.jsonl';rows=jsonl(raw);assert rows[0]['seed']==p['evaluation_seed'];checks=replay_transition_rows(rows)
+ summary=read(output/'finite_transition_summary.json');assert summary['status']=='PASS_IMPLEMENTATION_ONLY' and summary['steps']==112 and summary['nontraining_transitions']==3584
+ assert checks==summary['checks'] and summary['actual_reset_lanes']==sum(c['actual_reset_lanes'] for c in checks)
+ assert summary['model_optimizer_unchanged'] and summary['optimizer_calls']==0 and summary['original_task_performance']=='NOT_ASSERTED'
+ rec=read(output/'checkpoint_actor_recalculation.json');assert rec['status']=='PASS' and rec['samples']==512 and rec['atol']==1e-6 and rec['rtol']==1e-5
+ assert rec['actual_inputs']==p['recalculation'] and rec['original_source_identity']==p['checkpoint_source_identity'] and rec['model_optimizer_unchanged'] and not rec['policy_rng_consumed'] and rec['optimizer_calls']==0
+ assert torch.device(rec['device']).type=='cuda' and rec['reference_boundary']=='ACTOR_AFTER_FIRST_UPDATE_MINIBATCH8' and rec['critic_value_comparison']=='EXCLUDED_DIFFERENT_OBSERVER_BOUNDARY'
+ reload=summary['checkpoint_reload_check'];assert reload['status']=='PASS' and reload['checkpoint']==p['checkpoints'][0] and reload['samples']==32 and reload['atol']==1e-6 and reload['rtol']==1e-5 and reload['optimizer_calls']==0 and not reload['policy_rng_consumed'] and torch.device(reload['device']).type=='cuda'
+ for ck in [*p['checkpoints'],p['recalculation']['checkpoint'],p['recalculation']['input'],p['recalculation']['probe']]:assert digest(Path(ck['path']))==ck['sha256']
+ cp=torch.load(p['checkpoints'][0]['path'],map_location='cpu',weights_only=True);assert cp['source_identity']==p['checkpoint_source_identity'] and cp['training_seed']==p['training_seed']
+ assert reload['metadata']=={k:cp[k] for k in ['counters','curriculum','training_seed','reset_number']}
+ for result,keys in [(rec,{'action_mean','action_std','log_probability'}),(reload,{'alpha','beta','mean','logp'})]:
+  errors=result['maximum_absolute_errors'];assert set(errors)==keys and all(type(v) in (int,float) and math.isfinite(v) and v>=0 for v in errors.values())
+ return {'status':'PASS_IMPLEMENTATION_ONLY','binding':binding,'actual_parameters':p,'coverage_complete':True,'raw_path':str(raw),'raw_sha256':digest(raw),'steps':112,'nontraining_transitions':3584,'actual_reset_lanes':summary['actual_reset_lanes'],'CPU_replayed_checks':checks,'actual_same_device_recalculation':rec,'actual_final_reload':reload,'unrecorded_dense_policy_fields':'Not recreated; production full-policy shape validator ran at each actualstep and its summary is crosschecked against compact replay.','original_task_performance':'NOT_ASSERTED','CPU_only':True,'CPU_analysis_tool_sha256':digest(Path(__file__)),'optimizer_calls':0,'missing_samples_filled':False}
+
 def paired_results(D, directories, evaluation_directories=None):
  evaluation_directories=directories if evaluation_directories is None else evaluation_directories
  cardpath=D/'EXPERIMENT_CARD.json';card=read(cardpath)
@@ -94,9 +148,9 @@ def paired_results(D, directories, evaluation_directories=None):
  return {'status':'COMPLETE_ACTUAL_PAIR_PENDING_INDEPENDENT_SCIENCE','experiment_id':card['experiment_id'],'source_commit':source,'first_actual_rollout_comparison':compare,'training_analyses':{g:str(directories[g]/(g+'-training-analysis.json')) for g in trains},'evaluation_analyses':{g:str(evaluation_directories[g]/(g+'-evaluation-analysis.json')) for g in trains},'groups':ev,'candidate_both_predefined_nodes_pass':ev['R1']['all_original_gates_pass'],'primary_node':card['primary_node'],'scientific_scope':'One developmentseed; notREADY beforecandidatefreeze/twonewtrainingseeds/nonzerotransition/formalpackage/finalreview','old_C1_reference':'Historicalonly; same-versionR0 isstrictcontemporaneousreference','optimizer_calls':0}
 
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('experiment_id');ap.add_argument('mode',choices=['training','evaluation','pair']);ap.add_argument('--group',choices=['R0','R1']);ap.add_argument('--r0-entry');ap.add_argument('--r1-entry');ap.add_argument('--r0-evaluation-entry');ap.add_argument('--r1-evaluation-entry');args=ap.parse_args();torch.set_num_threads(2);D=BASE/'experiments'/args.experiment_id
- if args.mode in ['training','evaluation']:
-  assert args.group;r=(training_analysis if args.mode=='training' else evaluation_analysis)(D,args.group);target=D/(args.group+'-'+args.mode+'-analysis.json')
+ ap=argparse.ArgumentParser();ap.add_argument('experiment_id');ap.add_argument('mode',choices=['training','evaluation','transition','pair']);ap.add_argument('--group',choices=['R0','R1']);ap.add_argument('--r0-entry');ap.add_argument('--r1-entry');ap.add_argument('--r0-evaluation-entry');ap.add_argument('--r1-evaluation-entry');args=ap.parse_args();torch.set_num_threads(2);D=BASE/'experiments'/args.experiment_id
+ if args.mode in ['training','evaluation','transition']:
+  assert args.group;r={'training':training_analysis,'evaluation':evaluation_analysis,'transition':transition_analysis}[args.mode](D,args.group);target=D/(args.group+'-'+args.mode+'-analysis.json')
  else:
   directories={g:(BASE/'experiments'/entry if entry else D) for g,entry in [('R0',args.r0_entry),('R1',args.r1_entry)]}
   evaluation_directories={g:(BASE/'experiments'/entry if entry else directories[g]) for g,entry in [('R0',args.r0_evaluation_entry),('R1',args.r1_evaluation_entry)]}

@@ -1,0 +1,118 @@
+{
+  "status": "PASS_ACTUAL_INIT_FIRST512_ONLY",
+  "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+  "pins": {
+    "R0": {
+      "init": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/init0000.pt",
+        "sha256": "8bf2c24616c4f6dfe72efdce65f18cec751efd1ea71b9c90e48410fa01b1b3be"
+      },
+      "first512": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+        "sha256": "012dd61783f7a749a59136d2339dc43e78e987150c46614a10df2cf99d86c5f6"
+      },
+      "gate": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/first_update_gate.json",
+        "sha256": "aed1dc5112c3f937bef1d15f06c4eccc64601db4b0b643fa202ca3eb7855bed8"
+      }
+    },
+    "R1": {
+      "init": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/init0000.pt",
+        "sha256": "cfb8fd82333944c1dab509f0ac914f89506b4b359b41c86ba774bf08ae6b9940"
+      },
+      "first512": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+        "sha256": "012dd61783f7a749a59136d2339dc43e78e987150c46614a10df2cf99d86c5f6"
+      },
+      "gate": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/first_update_gate.json",
+        "sha256": "aed1dc5112c3f937bef1d15f06c4eccc64601db4b0b643fa202ca3eb7855bed8"
+      }
+    }
+  },
+  "comparison": {
+    "actions": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true
+    },
+    "old_log_probabilities": {
+      "shape": [
+        512,
+        1
+      ],
+      "bit_exact_equal": true
+    },
+    "old_alpha": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true
+    },
+    "old_beta": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true
+    },
+    "privileged": {
+      "shape": [
+        512,
+        21
+      ],
+      "bit_exact_equal": true
+    },
+    "policy.lidar_grid": {
+      "shape": [
+        512,
+        12,
+        59,
+        360
+      ],
+      "bit_exact_equal": true
+    },
+    "policy.state_vec": {
+      "shape": [
+        512,
+        52
+      ],
+      "bit_exact_equal": true
+    },
+    "advantages": {
+      "bit_exact_equal": true,
+      "difference_C1_minus_C0": {
+        "status": "AVAILABLE",
+        "count": 512,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "p95": 0.0,
+        "rms": 0.0
+      },
+      "scope": "Same reward and preaux firstrollout; bit-exact equality required, no oldreward difference exemption."
+    },
+    "returns": {
+      "bit_exact_equal": true,
+      "difference_C1_minus_C0": {
+        "status": "AVAILABLE",
+        "count": 512,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "p95": 0.0,
+        "rms": 0.0
+      },
+      "scope": "Same reward and preaux firstrollout; bit-exact equality required, no oldreward difference exemption."
+    }
+  },
+  "scope": "Both actual immutable init/first512 files andrealgates; R0training stilllive, notfullR0training orZ acceptance. Nooptimizer/actorforward/GPUqueries.",
+  "full_R0_training_accepted": false,
+  "CPU_only": true
+}
