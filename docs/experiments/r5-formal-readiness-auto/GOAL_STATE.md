@@ -17,3 +17,5 @@ G6_G7_INTEGRATION_DESIGN.md: finite112step/3584nontraining zero/plus/minus/zero,
 最新H256：R0原入口J-98c4c0af48d17d1a在App前原GPU门槛4/10/16%>5失败，FINAL0/无训练数据，正常ACK/settle/2postrun并保留启动/init/output收费。无live。下一R1原准确A-56b453060fda4459退避≥60秒已实录，提交当前状态/输入并push后单次release。R0 fresh RECOVERY1packet1e38a94b.../expectedAUTHb00a62ee...独立Role11预审待回，只能R1终止/正常清理后发行。D010 stage12slots/112GiB，其余资源和master/confirmation/formal保护不变；当前未解决事件1/3，下一R1为attempt2/3，若仍拒第三次至少180秒且不第四次。
 
 当前唯一LIVE：H256R1 J-a4a37087b4d84996，准确A-56b453060fda4459，input44bc785已push后release；原coexistence2/1/2%及真实first512gate PASS，65updates lastobserved。仅poll此handle，终止+正常ACK后settle/postrun/CPU。R0freshRECOVERY1独立Role11条件PASS，实际AUTH仍未发行，须R1终态/清理/结算后才能issue；不重开旧失败。main-only G6/G7核心CPU6+6PASS，尚无真实入口或完成证据。
+
+最新：H256R1 J-a4a37087b4d84996完成256updates/131072train/2048Adam每类/11writes、全4096policy步零命令，CPU训练完整覆盖PASS；nativeFAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE fullreservation保留，正常ACK/settle/2postrun完成。无live。R0freshRECOVERY1准确A-6c257ca91ac2a1a0已发行，须提交/tag/push后一次release，不能重开旧R0。G6/G7 main-only CPU核心8/6PASS、warmfirstgate11PASS，未接入新真实入口，不能替代准入。H256R1与H128R1初始化/首512完全相同，但u1actor有1.19e-7差异、后段权重不相等，不宣称跨入口精确训练前缀；原因未由本有限核查定论。

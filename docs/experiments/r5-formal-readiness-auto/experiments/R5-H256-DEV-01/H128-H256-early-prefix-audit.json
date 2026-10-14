@@ -1,0 +1,71 @@
+{
+  "scope": "CPUonlyfinite early actualdata audit. Same-source/seed entries, not claimdeterministic trajectory or free continuation. H256stillLIVE, newR0pairnotyetavailable. No attributionofobserveddifferences tohardware/source withoutcauseevidence.",
+  "roots": [
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training"
+  ],
+  "checkpoints": {
+    "init0000": {
+      "actor": {
+        "bit_exact_equal": true,
+        "maximum_abs_difference": 0.0
+      },
+      "critic": {
+        "bit_exact_equal": true,
+        "maximum_abs_difference": 0.0
+      }
+    },
+    "u1": {
+      "actor": {
+        "bit_exact_equal": false,
+        "maximum_abs_difference": 1.1920928955078125e-07
+      },
+      "critic": {
+        "bit_exact_equal": true,
+        "maximum_abs_difference": 0.0
+      }
+    },
+    "u2": {
+      "actor": {
+        "bit_exact_equal": false,
+        "maximum_abs_difference": 3.878958523273468e-07
+      },
+      "critic": {
+        "bit_exact_equal": false,
+        "maximum_abs_difference": 2.086162567138672e-07
+      }
+    }
+  },
+  "first512": {
+    "actions": {
+      "bit_exact_equal": true,
+      "maximum_abs_difference": 0.0
+    },
+    "old_alpha": {
+      "bit_exact_equal": true,
+      "maximum_abs_difference": 0.0
+    },
+    "old_beta": {
+      "bit_exact_equal": true,
+      "maximum_abs_difference": 0.0
+    },
+    "old_log_probabilities": {
+      "bit_exact_equal": true,
+      "maximum_abs_difference": 0.0
+    },
+    "privileged": {
+      "bit_exact_equal": true,
+      "maximum_abs_difference": 0.0
+    },
+    "policy.lidar_grid": {
+      "bit_exact_equal": true,
+      "maximum_abs_difference": 0.0
+    },
+    "policy.state_vec": {
+      "bit_exact_equal": true,
+      "maximum_abs_difference": 0.0
+    }
+  },
+  "GPU_queries": 0,
+  "optimizer_calls": 0
+}

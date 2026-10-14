@@ -1,0 +1,29 @@
+{
+  "scope": "Finite actualcompletedu128 weight comparison only; currentH256stillLIVE, nofulltraining/evaluationacceptance or historicaltrajectoryequivalence implied.",
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u128.pt",
+      "sha256": "a165cbaa75113bfa9e6e7e5b681fa10cb84e4f91110ccc29f9d6351c1b10d78f",
+      "source": "R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u128.pt",
+      "sha256": "cd5280b4ff61469859347eb7e2f3fa01be168aa9c46837a9cbb018d916444d43",
+      "source": "R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47"
+    }
+  ],
+  "comparison": {
+    "actor": {
+      "all_tensors_bit_exact": false,
+      "tensors": 16,
+      "maximum_abs_difference": 0.015190469101071358
+    },
+    "critic": {
+      "all_tensors_bit_exact": false,
+      "tensors": 10,
+      "maximum_abs_difference": 0.14052045345306396
+    }
+  },
+  "optimizer_calls": 0,
+  "GPU_queries": 0
+}
