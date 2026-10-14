@@ -1,0 +1,36 @@
+{
+  "spec_id": "R5-MEAN10-INTEGRATION-02-R1-RESEARCH-TRANSITION-feb1e96f97e4",
+  "job_id": "J-0daf4f4bbd3ab33d",
+  "experiment_id": "R5-MEAN10-INTEGRATION-02",
+  "group": "R1",
+  "mode": "research-transition",
+  "status": "FAILED",
+  "reserved": {
+    "training_transitions": 0,
+    "nontraining_transitions": 3584,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0,
+    "allocated_gpu_seconds": 0,
+    "wall_seconds_including_cleanup": 0
+  },
+  "output_cap_bytes": 8589934592,
+  "observed": {
+    "training_transitions": 0,
+    "nontraining_transitions": 3584,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0
+  },
+  "postrun_queries_used": 2,
+  "settled": true,
+  "native_exit_code": -9,
+  "raw_status": "PASS_PENDING_CLOSE",
+  "formal_counter_completeness": "INCOMPLETE",
+  "formal_transitions": null,
+  "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+  "output_observed_bytes": 10762633,
+  "inventory": "experiments/R5-MEAN10-INTEGRATION-02/live/R1-research-transition/INVENTORY.json"
+}

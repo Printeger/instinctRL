@@ -1,6 +1,6 @@
 # Evidence index
 
-Current authoritative state: 当前唯一LIVE真实G6G7 R5-MEAN10-INTEGRATION-02/R1 J-0daf4f4bbd3ab33d/A-86647b710bc0825e，准确inputs4420fda/tag/push，sourceS3feb1e96/configd263/controlc468/actualAUTH3d749754；已绑定Role31真实G4及四DEV02u1/input/probe/u256，3584nontraining、0训练/optimizer/写checkpoint。旧15新方法原Z实际32/32/all8groups4/4及清理结算CPU完成；旧16准确Z A-bef3481b00c09c72后续串行。Role32最终实际验证/包审核已启动，但G6G7未完成、非READY。只poll本句柄，formal0。
+Current authoritative state: 当前无live。真实G6G7 J-0daf4f4bbd3ab33d已完整112steps/3584nontraining/0autoreset/0训练optimizerwrites，CPU完整重放PASS_IMPLEMENTATION_ONLY；actualCUDA u1真实512 mean/std/logp及finalu256独立重载alpha/beta/mean/logp误差全部0，原atol1e-6/rtol1e-5、模型AdamRNG不变。normalACK/settle/exact2postrun完成，nativeFAILED/-9/INCOMPLETE/null/full3584+8GiB保持；Role32正在独立最终核验。G4已Role31接受、旧15原Z32/32已Role32实审通过待final。下一commit/push后单次release旧16准确Z A-bef3481b00c09c72，6400nontraining/0训练更新writes；随后冻结最终manifest/G9，formal0。
 
 Current scientific source617af4d/config2e9a7284 and compatible controlc4688ba7 bind four prospectively fixed instances: R5-MEAN10-CONFIRM-01 (new17), -02 (new18), R5-MEAN10-REGRESSION-15 and -16 (oldfailures, excluded G4). [CPU input audit](MEAN_PRIOR_CONFIRMATION_CPU_INPUT_AUDIT.json) distinguishes exact training inputs from nonexecutable generated evaluation templates. [Control integration CPU](CONTROL_INTEGRATION_CPU.json):52PASS, wrong seed/early formal submit/full spec mutation rejected; independentRole25controlimplementationPASS, finalG9pending. All old native failures and frozen sources are preserved.
 
@@ -38,6 +38,7 @@ Newmeanprior scientificsource617af4d/config2e9a7284; R1actualtraining andfullspe
 Role26 currentMUSTFIX G6-ORDER-ID: oldINTEGRATION01 CPUdraft refused exactorderbinding, noactualAUTH/live/init. Oldpacket/card/proposal retained, [newCPUcandidate02](experiments/R5-MEAN10-INTEGRATION-02/EXPERIMENT_CARD.json) changesidentity/orderonly. [FullfrozenAUTHloader fixtureaudit](experiments/R5-MEAN10-INTEGRATION-02/CPU_FULL_AUTH_LOADER_AUDIT.json) preservesoldexpectedrejection andcorrectedG6/twoformaltrainingfull-loaderPASS; ONLY attempt directory rebound to/tmp, noactualreleaseclaim. Independentclosurepending.
 
 [Role26preparation](reviews/mean-prior-integration02-formal-preparation.json) independentlyclosesORDER-ID fornew02, exactS3/compat/ownu1+u256/input/probe andformaltemplateschecked. ConditionalG6issue stillrequiresacceptedactualG4/currentfreeze/allfourdiagnosticpins evidence; preparationcannotreplaceit. NoactualCONFIRM01trainingacceptedbyRole26.
+
 
 
 

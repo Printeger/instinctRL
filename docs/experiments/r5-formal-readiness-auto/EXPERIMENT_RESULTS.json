@@ -2118,12 +2118,19 @@
       "experiment_id": "R5-MEAN10-INTEGRATION-02",
       "group": "R1",
       "mode": "research-transition",
-      "native_status": "RUNNING",
-      "native_exit_code": null,
-      "raw_status": null,
-      "formal_counter_completeness": null,
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
       "formal_transitions": null,
-      "observed": {},
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 3584,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
       "retained_reservations": {
         "training_transitions": 0,
         "nontraining_transitions": 3584,
@@ -2131,13 +2138,13 @@
         "training_checkpoint_writes": 0,
         "actor_optimizer_steps": 0,
         "critic_optimizer_steps": 0,
-        "allocated_gpu_seconds": 910,
-        "wall_seconds_including_cleanup": 910
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
       },
       "output_reserved_bytes": 8589934592,
-      "owned_cleanup": null,
-      "postrun_queries": 0,
-      "inventory": null
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-INTEGRATION-02/live/R1-research-transition/INVENTORY.json"
     }
   ],
   "master_ledger": "goal_budget.json",
@@ -2282,13 +2289,7 @@
       20261016
     ],
     "formal_submitted": false,
-    "current_only_live": {
-      "experiment_id": "R5-MEAN10-INTEGRATION-02",
-      "job_id": "J-0daf4f4bbd3ab33d",
-      "group": "R1",
-      "mode": "research-transition",
-      "note": "当前唯一LIVE真实G6G7 R5-MEAN10-INTEGRATION-02/R1 J-0daf4f4bbd3ab33d/A-86647b710bc0825e，准确inputs4420fda/tag/push，sourceS3feb1e96/configd263/controlc468/actualAUTH3d749754；已绑定Role31真实G4及四DEV02u1/input/probe/u256，3584nontraining、0训练/optimizer/写checkpoint。旧15新方法原Z实际32/32/all8groups4/4及清理结算CPU完成；旧16准确Z A-bef3481b00c09c72后续串行。Role32最终实际验证/包审核已启动，但G6G7未完成、非READY。只poll本句柄，formal0。"
-    }
+    "current_only_live": null
   },
   "current_mean_confirmation_training": [
     {
@@ -2443,5 +2444,5 @@
       "independent_original_Z_review": "reviews/mean-prior-G4-regression16-training.json"
     }
   ],
-  "entry_inventory_as_of_ledger_sha256": "59b24c1ffc3d1e46414ddf5c15f5d402f7ffc79f434a291399681a0d8ae0a3a3"
+  "entry_inventory_as_of_ledger_sha256": "7077f915c4a8e4835857fcd6b5798b8a4fe40f4fade7fc66cae59255e6d136d5"
 }
