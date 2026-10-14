@@ -7,11 +7,11 @@
 
 ## 当前 Goal（2026-10-14 零命令残差单变量）
 
-**未完成：Goal BLOCKED（同一阻塞连续三轮核验），等待唯一资源决定。** C0/C1真实各64updates/32768train/7checkpoint，first512gate均PASS；init和首输入动作/oldBeta/logp逐位一致，Role3/4独立接受。C0原Z u16/u64均0/32。C1原Z尚无数据：第四入口coexistence样本4/6/2%，6>原5%，FAILED/1 beforeApp、collectorFINAL/0；4starts/init和64GiBoutputreservations已用尽，不自动重试。
+**执行中：用户已批准单次 C1 原 Z 补充评估资源例外。** start/init cap4→5、output预留64→80GiB，其他预算、方法和原门槛保持。原四入口、FAILED 和完整保守预留保留；不恢复旧失败任务，不自动重试，不增加训练更新。现有 Commander 精确签发、输入提交/tag/正常push 后仅执行新 C1 u16/u64 评估。
 
-[实际部分结果](experiments/r5-zero-correction-20261014/PAIR_ANALYSIS.md)、[当前索引](experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md)、[唯一补充提案](experiments/r5-zero-correction-20261014/C1_EXTRA_EVALUATION_RESOURCE_PROPOSAL.json)。请求freshC1原Z入口start/init4→5、output预留64→80GiB，其他总帽/方法/门槛不变；未批准/未签AUTH/未release。已有训练残差减小不能替代候选原Z，不宣称validpositive/negative，不扩256updates。
+两组实际各64updates/32768train/7checkpoint，真实首512 gate PASS，初始化和首采样逐位一致，Role3/4已独立接受。C0原Z均0/32；C1旧入口coexistence失败、尚无轨迹。补充实测和最终独立科学审核完成后才能结束 Goal。
 
-前三entry nativeFAILED/-9/INCOMPLETE/full65536train+12800eval+128updates+14writes保留；第四FINAL0仅结算实际零transitions，start/init仍扣账。旧全部物理/P0PLR历史原样保留。
+[证据索引](experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md)、[新资源决定](experiments/r5-zero-correction-20261014/user_resource_decision_extra_evaluation.json)。
 
 ## 最新完成 Goal（2026-10-13 短程配对实验）
 

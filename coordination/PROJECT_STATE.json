@@ -383,7 +383,7 @@
   },
   "current_goal": {
     "target": "R5_ZERO_COMMAND_SINGLE_VARIABLE_SCIENTIFIC_CLOSURE",
-    "status": "BLOCKED_AWAITING_REQUIRED_USER_RESOURCE_DECISION",
+    "status": "IN_PROGRESS_EXTRA_EVALUATION_RESOURCE_APPROVED",
     "contract": "contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md",
     "requirements": "../docs/goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md",
     "evidence_index": "../docs/experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md",
@@ -393,7 +393,7 @@
     "training_execution_requested_by_user": true,
     "training_authorization_issued": false,
     "current_exact_release": null,
-    "next_action": "OneexplicituserresourceexceptionforreviewedfreshC1Z: start/init4to5/output64to80GiB; allothercapsunchanged. ThennewCommander exactapproval,commit/push,originalSTOP/coexistence/cleanup,singlerelease,realZ/finalscience. NotDONE.",
+    "next_action": "Commander exact issuance; commit/tag/push actual authorization and spec, single fresh C1 original-Z release under original gates; final independent scientific assessment.",
     "independent_review": {
       "id": "E-R5-ZERO-C0-Z-C1-FAILURE-CONDITIONAL-EXTRA-20261014",
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-C0-Z-C1-failure-extra-prelive.json",
@@ -416,7 +416,7 @@
     "learning_signals_comparison": "ADVANTAGES_RETURNS_DIFFER_AS_ALLOWED_BY_W",
     "C0_actual_training_acceptance": "ROLE3_PASS_COMPLETE64_AND_REAL_U16_U64",
     "evaluation_authorization_issued": false,
-    "scientific_result_status": "BLOCKED_BY_SPECIFIC_DEFECT",
+    "scientific_result_status": "PENDING_C1_ORIGINAL_Z",
     "completion_proven": false,
     "remaining_required_work": [
       "C1actualu16/u64originalZ",
@@ -435,10 +435,11 @@
       "start_init_caps_used": "4/4",
       "budget_reset": false,
       "proposal": "../docs/experiments/r5-zero-correction-20261014/C1_EXTRA_EVALUATION_RESOURCE_PROPOSAL.json",
-      "user_decision": "PENDING",
+      "user_decision": "APPROVED_SINGLE_FRESH_ENTRY",
       "goal_tool_status": "ACTIVE_NOT_COMPLETE"
     },
-    "resource_blocked_audit": {
+    "goal_achieved": false,
+    "historical_resource_blocked_audit": {
       "condition": "ExplicitnewuserresourceexceptionforonefreshC1originalZabsent; all4start/initand64GiBoutputreservationsconsumed.",
       "consecutive_goal_turns": 3,
       "original_turn_classification": "PROGRESS_ACTUAL_TRAINING_CONTROL_Z_FAILURE_REVIEW_AND_EXACT_RESOURCE_PROPOSAL",
@@ -448,9 +449,13 @@
       "independent_work_completed_this_turn": "Newexplicitactualevaluationbinding andnewartifactpath; unregisteredheuristicclassificationremoved;9CPUregressions andC0metricreplayPASS; exactpost-grant recoveryroute prepared.",
       "next_required_action": "One alreadyrequestedexplicituserresourceexception: freshC1originalZ only, starts/init4to5 andoutputreservation64to80GiB; no otherbudget/method/gatechanges.",
       "independent_work_exhausted": true,
-      "blocked_threshold_satisfied": true
+      "blocked_threshold_satisfied": true,
+      "resolved_by": "docs/experiments/r5-zero-correction-20261014/user_resource_decision_extra_evaluation.json"
     },
-    "goal_achieved": false
+    "resource_decision": {
+      "path": "docs/experiments/r5-zero-correction-20261014/user_resource_decision_extra_evaluation.json",
+      "sha256": "f16b801199b8eb03bda7d7681b6f30c6b41652c503b5111fba6851d40c1c1d60"
+    }
   },
   "historical_prior_independent_review": {
     "path": "reviews/review-entry6-final-readiness.json",

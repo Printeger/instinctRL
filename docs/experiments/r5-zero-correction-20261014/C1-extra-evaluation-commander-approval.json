@@ -1,0 +1,36 @@
+{
+  "group": "C1",
+  "mode": "pilot-evaluation",
+  "proposal_id": "P-859f34b1f384dcdb",
+  "proposal_sha256": "859f34b1f384dcdbf5bbd5971cc7c81ac4ef82ca8a2abbecb87336af79ab7220",
+  "approval": {
+    "approval_id": "A-859f34b1f384dcdb",
+    "approver": "local-user-cli",
+    "budget": {
+      "fake_starts": 0,
+      "role_calls": 0,
+      "wall_seconds": 1810
+    },
+    "decision": "APPROVED",
+    "preconditions": [
+      "exact pins",
+      "accepted condition hashes",
+      "STOP clear",
+      "single submission"
+    ],
+    "proposal_id": "P-859f34b1f384dcdb",
+    "proposal_sha256": "859f34b1f384dcdbf5bbd5971cc7c81ac4ef82ca8a2abbecb87336af79ab7220",
+    "proposal_version": 1,
+    "reason": "New explicit user resourceexception SHA f16b801199b8eb03bda7d7681b6f30c6b41652c503b5111fba6851d40c1c1d60; independentRole5 SHA 0cf841431c6e0d6e61c531b5e4b03aa032db7dd4b164d3c8fac8f1ab3d8514b8. ExactlyonefreshC1originalZ u16/u64 entry; d257f9/w.05/checkpoints fixed,0training/update/writes,12800eval1810s16GiB, original5percentGPUgate, no automaticretry/no oldjobresume. Allpriorreservations/history retained. Commit/tag/push before single release.",
+    "scope": "EXPERIMENT",
+    "stage_id": "INSTINCTRL-R5-ZERO-CORRECTION-20261014",
+    "time": 1791957653.646255
+  },
+  "actual_authorization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+    "sha256": "9d732b78569d3d5e5ff8328447e1300a70102240d809cc7e91c95f6028c6ddf3"
+  },
+  "user_resource_decision_sha256": "f16b801199b8eb03bda7d7681b6f30c6b41652c503b5111fba6851d40c1c1d60",
+  "independent_extra_conditional_review_sha256": "0cf841431c6e0d6e61c531b5e4b03aa032db7dd4b164d3c8fac8f1ab3d8514b8",
+  "submitted": false
+}

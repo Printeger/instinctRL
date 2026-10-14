@@ -6,15 +6,15 @@
     "sha256": "a087ced4c935b307a5e8133bccfa7d1dcdd834c9c1e7a4c985e66e90dd3e8753"
   },
   "caps": {
-    "live_starts": 4,
-    "simulator_initialization_reservations": 4,
+    "live_starts": 5,
+    "simulator_initialization_reservations": 5,
     "training_transitions": 65536,
     "nontraining_transitions": 25600,
     "optimizer_updates": 128,
     "training_checkpoint_writes": 14,
     "wall_seconds_including_cleanup": 10840,
     "allocated_gpu_seconds": 10840,
-    "output_bytes": 68719476736,
+    "output_bytes": 85899345920,
     "automatic_retries": 0,
     "role_calls": 12
   },
@@ -244,5 +244,37 @@
     "snapshot_of_counts_before_this_record_and_ledger_update": true,
     "remaining_metadata_allowance_bytes": 67108864,
     "all_prior_output_reservations_retained": true
-  }
+  },
+  "resource_decisions": [
+    {
+      "path": "user_resource_decision_extra_evaluation.json",
+      "sha256": "f16b801199b8eb03bda7d7681b6f30c6b41652c503b5111fba6851d40c1c1d60",
+      "previous_caps": {
+        "live_starts": 4,
+        "simulator_initialization_reservations": 4,
+        "training_transitions": 65536,
+        "nontraining_transitions": 25600,
+        "optimizer_updates": 128,
+        "training_checkpoint_writes": 14,
+        "wall_seconds_including_cleanup": 10840,
+        "allocated_gpu_seconds": 10840,
+        "output_bytes": 68719476736,
+        "automatic_retries": 0,
+        "role_calls": 12
+      },
+      "approved_caps": {
+        "live_starts": 5,
+        "simulator_initialization_reservations": 5,
+        "training_transitions": 65536,
+        "nontraining_transitions": 25600,
+        "optimizer_updates": 128,
+        "training_checkpoint_writes": 14,
+        "wall_seconds_including_cleanup": 10840,
+        "allocated_gpu_seconds": 10840,
+        "output_bytes": 85899345920,
+        "automatic_retries": 0,
+        "role_calls": 12
+      }
+    }
+  ]
 }

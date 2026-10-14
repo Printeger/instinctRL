@@ -1,0 +1,23 @@
+{
+  "schema_version": "instinctrl-explicit-resource-decision/1",
+  "decision": "APPROVED",
+  "user_message_exact": "批准",
+  "provenance": "Latest user reply approving the already independently reviewed single fresh C1 original-Z resource exception; not the historical diagnostic 8-start approval.",
+  "proposal_sha256": "ef1f8b31c86fb22acb9ac0a1935fb95e99d0fa01a96eef622b4b5f3d4d7f12e7",
+  "approved_caps": {
+    "live_starts": 5,
+    "simulator_initialization_reservations": 5,
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "wall_seconds_including_cleanup": 10840,
+    "allocated_gpu_seconds": 10840,
+    "output_bytes": 85899345920,
+    "automatic_retries": 0,
+    "role_calls": 12
+  },
+  "fresh_entries_authorized": 1,
+  "automatic_retries": 0,
+  "scope": "C1 existing u16/u64 original Z evaluation only; zero added training, optimizer updates or training checkpoint writes; all other caps, method and original gates unchanged; retain every previous charge and reservation."
+}
