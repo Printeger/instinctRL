@@ -40,17 +40,17 @@
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 8465.126976294909,
-    "wall_seconds_including_cleanup": 8496.570153519744,
-    "output_peak_and_reservations_bytes": 21056959188
+    "allocated_gpu_seconds": 9383.443189394893,
+    "wall_seconds_including_cleanup": 9416.842499198625,
+    "output_peak_and_reservations_bytes": 23053209894
   },
   "observed": {
-    "training_transitions": 1048576,
+    "training_transitions": 1179648,
     "nontraining_transitions": 96000,
-    "optimizer_updates": 2048,
-    "training_checkpoint_writes": 95,
-    "actor_optimizer_steps": 16384,
-    "critic_optimizer_steps": 16384
+    "optimizer_updates": 2304,
+    "training_checkpoint_writes": 106,
+    "actor_optimizer_steps": 18432,
+    "critic_optimizer_steps": 18432
   },
   "reservations": {
     "formal_initial_segment": {
@@ -973,7 +973,7 @@
         "experiment_id": "R5-MEAN10-CONFIRM-02-RECOVERY1",
         "group": "R1",
         "mode": "research-training",
-        "status": "RUNNING",
+        "status": "FAILED",
         "reserved": {
           "training_transitions": 131072,
           "nontraining_transitions": 0,
@@ -981,13 +981,27 @@
           "training_checkpoint_writes": 11,
           "actor_optimizer_steps": 2048,
           "critic_optimizer_steps": 2048,
-          "allocated_gpu_seconds": 7210,
-          "wall_seconds_including_cleanup": 7210
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
         },
         "output_cap_bytes": 8589934592,
-        "observed": {},
-        "postrun_queries_used": 0,
-        "settled": false
+        "observed": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 11,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 1996250706,
+        "inventory": "experiments/R5-MEAN10-CONFIRM-02-RECOVERY1/live/R1-research-training/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -1299,6 +1313,13 @@
       "status": "PASS_FIRST_NEW_CONFIRMATION_Z_AND_EXACT_SAME_SEED18_RECOVERY_PRELIVE",
       "evidence": "reviews/mean-prior-confirmation01-Z-confirmation02-recovery-prelive.json",
       "sha256": "8d861a153d320f0a4a8211783079becd55621b2285af1ded6473a12c163aee1f"
+    },
+    {
+      "call": 29,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Actualfreshsamefrozenseed18 confirmation02 recovery1 complete256/firstgate/loss/realPTs/lifecycle andexactprimary256originalZ prelive only; noG4beforeactualZ.",
+      "status": "IN_PROGRESS"
     }
   ],
   "decisions": [

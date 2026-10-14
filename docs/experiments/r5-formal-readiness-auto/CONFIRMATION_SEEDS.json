@@ -170,13 +170,24 @@
           "real_updates": 0,
           "real_checkpoint_writes": 0,
           "start_init_output_charged": true
+        },
+        {
+          "case": "R5-MEAN10-CONFIRM-02-RECOVERY1",
+          "job": "J-0ffa8e246076922b",
+          "status": "COMPLETE256_NATIVE_FAILED_CLOSE_INCOMPLETE_FULL_RESERVED",
+          "first_real_gate": "PASS_BEFORE_BOTH_OPTIMIZERS",
+          "observed_training_transitions": 131072,
+          "observed_updates": 256,
+          "observed_checkpoint_writes": 11,
+          "normal_owned_cleanup_settle_two_postrun": true
         }
       ],
       "recovery_candidate": "R5-MEAN10-CONFIRM-02-RECOVERY1",
-      "recovery_status": "ONLY_LIVE_J_0ffa8e246076922b_ACTUAL_FIRST512_PASS",
+      "recovery_status": "ACTUAL_COMPLETE256_PENDING_ROLE29_INDEPENDENT_CHECKPOINT",
       "original_Z_status": "PENDING_NOT_RUN",
       "original_Z": null,
-      "recovery_actual_job": "J-0ffa8e246076922b"
+      "recovery_actual_job": "J-0ffa8e246076922b",
+      "actual_u256_sha256": "47796b6c3804f7bf41a16ef95bb8d0a7c62ebd6a47a3fcb2bda24d1d26b8c54f"
     }
   ],
   "old_failed_seed_regressions": [
