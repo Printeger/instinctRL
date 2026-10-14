@@ -1,0 +1,17 @@
+{
+  "status": "MEASURED_BACKOFF_MINIMUM_SATISFIED_BEFORE_NEXT_RELEASE",
+  "initial_record": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/RESOURCE_INCIDENT_MEAN_CONFIRM02_BACKOFF.json",
+    "sha256": "313250dd993d48c80e50f665255cd5d428441ac92386bfac25f9a96d67ad1844"
+  },
+  "begin_UTC": "2026-10-14T18:02:38.218147+00:00",
+  "completed_UTC": "2026-10-14T18:05:04.595979+00:00",
+  "observed_monotonic_elapsed_seconds": 146.377770093,
+  "required_seconds": 60,
+  "method": "CPU preparation/evidence preservation elapsed; no extra GPU query, no intervening live launch",
+  "sleep_seconds_claimed": 0,
+  "next_exact_entry": "R5-MEAN10-CONFIRM-01-R1-RESEARCH-EVALUATION-617af4d90c35",
+  "consecutive_resource_refusals_before_next_launch": 1,
+  "next_is_attempt_at_most2_of3": true,
+  "no_threshold_or_unrelated_process_change": true
+}
