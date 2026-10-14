@@ -1101,5 +1101,20 @@
     "seed20261016": "ONLYLIVE_J-51fa505a9c79bfee_FRESH_RECOVERY1_ORIGINAL_STARTUP_REFUSAL_PRESERVED",
     "immutable_freeze": "CONFIRMATION_METHOD_FREEZE.json",
     "both_originalZ_pass": null
+  },
+  "prior_frozen_confirmation": {
+    "status": "FAILED_G4_BOTH_ORIGINAL_Z0_OF32",
+    "immutable_freeze": "CONFIRMATION_METHOD_FREEZE.json",
+    "seeds": "CONFIRMATION_SEEDS.json",
+    "actual_evaluations": [
+      "experiments/R5-H256-CONFIRM-01/R1-evaluation-analysis.json",
+      "experiments/R5-H256-CONFIRM-02-RECOVERY1/R1-evaluation-analysis.json"
+    ],
+    "all_native_and_logical_reservations_preserved": true
+  },
+  "current_candidate": {
+    "case": "R5-MEAN10-DEV-02",
+    "status": "CPU_PREPARATION_PRELIVE_PENDING",
+    "old_DEV01": "CPU configload rejection; no live; preservedsnapshot and2GiBreservation"
   }
 }

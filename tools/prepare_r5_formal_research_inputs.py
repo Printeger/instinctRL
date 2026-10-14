@@ -22,6 +22,9 @@ def main():
  commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip();configpath=D/'snapshot_config.json';cardpath=D/'EXPERIMENT_CARD.json'
  for p in [configpath,cardpath]:assert subprocess.check_output(['git','show',commit+':'+str(p.relative_to(ROOT))],cwd=ROOT)==p.read_bytes()
  config=read(configpath);card=read(cardpath);snapshot=Path(config['workload']['path']);assert not snapshot.exists()
+ from training_workloads.unified_h1.config import RESEARCH_METHOD_PATH, RESEARCH_METHOD_SHA256
+ assert config['method']['proposal_path']==str(snapshot/RESEARCH_METHOD_PATH.relative_to(ROOT)), 'Method proposal must belong to this exact new snapshot'
+ assert config['method']['proposal_sha256']==RESEARCH_METHOD_SHA256 and sha(RESEARCH_METHOD_PATH)==RESEARCH_METHOD_SHA256
  ledger=read(BASE/'goal_budget.json');reservation=2*1024**3
  reserved=ledger['reservations']['formal_initial_segment']['output_peak_and_reservations_bytes']+ledger['reservations']['confirmation_and_transition']['output_peak_and_reservations_bytes']+sum(x['reserved_bytes'] for x in ledger['reservations']['source_snapshots'])
  assert reserved+reservation+card['output_reservation_bytes']<=ledger['caps']['output_peak_and_reservations_bytes']

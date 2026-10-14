@@ -1,0 +1,14 @@
+{
+  "status": "REJECTED_BEFORE_RUNTIME",
+  "source_commit": "15a232452ec2636ed84568dce4e1237b4a45a327",
+  "error": "ValueError: method identity mismatch",
+  "reason": "method.proposal_path retains historicalS1snapshot; newconfig must bind newsource path.",
+  "command": "CUDA_VISIBLE_DEVICES= PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=<exactsnapshot>:<snapshot>/isaaclab-training python3.11 -B -c from training_workloads.unified_h1.config import load_config;load_config()",
+  "GPU_queries": 0,
+  "live_starts": 0,
+  "simulator_initializations": 0,
+  "training_updates": 0,
+  "old_snapshot_preserved": true,
+  "snapshot2GiB_reservation_retained": true,
+  "next_candidate": "R5-MEAN10-DEV-02"
+}

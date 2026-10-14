@@ -936,6 +936,13 @@
       "status": "PASS_VALID_NEGATIVE_G4_FAILED",
       "evidence": "reviews/confirmation01-actual-Z-negative.json",
       "sha256": "e49d2df4c67f5b2ade0b13a93b4940c7fc5559bbc2ce9cf0dcbb50a8d3b0ddd0"
+    },
+    {
+      "call": 21,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Actual confirmation02 negativeZ plus newmeanprior implementation and exactfresh DEV-02 prelive; DEV-01CPUconfig rejectionpreserved",
+      "status": "REQUESTED"
     }
   ],
   "decisions": [

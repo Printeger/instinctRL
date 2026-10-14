@@ -9,7 +9,7 @@
 
 **IN_PROGRESS，非READY。当前无live。** 原w.05/anchor4方法虽开发u192/u256均原Z32/32，但两个预先冻结确认seed20261015/20261016的u256均为0/32，当前方法G4失败。确认01最大漂移.787367m；确认02漂移.327584m且高度.216544m。原T0/200steps/所有方向/失败分母保留。Role20已独立接受确认01有效负结果；确认02完整原件已结算，科学独立复核待本轮下一审核。
 
-当前新研究候选R5-MEAN10-DEV-01：两组共享rewardw.05/anchor4/原LR和网络，唯一变量为训练actor-loss零命令Beta均值软prior0/10；部署输出不替换、不注入真值。预定coldstart256、开发seed20260908、late192/256、原Z不变。PPO旧路径逐位等价及新损失CPU检查已通过，准确新source/config/packet和独立预审尚待完成，未签发新live许可。D015在原master内分配新方法研究/条件确认阶段，旧失败、INCOMPLETE及保护预留不重置。
+当前新研究候选R5-MEAN10-DEV-02：两组共享rewardw.05/anchor4/原LR和网络，唯一变量为训练actor-loss零命令Beta均值软prior0/10；部署输出不替换、不注入真值。预定coldstart256、开发seed20260908、late192/256、原Z不变。PPO旧路径逐位等价及新损失CPU检查已通过，准确新source/config/packet和独立预审尚待完成，未签发新live许可。D015在原master内分配新方法研究/条件确认阶段，旧失败、INCOMPLETE及保护预留不重置。
 
 旧S1 G6/G7/formal实现和启动方案仅历史WIP，需重新绑定将来合格新方法，不能使用旧开发通过绕过确认失败。普通科学负结果继续自主研究，不是DONE/STOP；本Goal不提交正式完整训练。
 
@@ -111,3 +111,5 @@ full20160 reservation retained; no owned survivors. Goal IN_PROGRESS, training0.
 当前唯一LIVE：H256R1 J-a4a37087b4d84996，准确A-56b453060fda4459，input44bc785已push后release；原coexistence2/1/2%及真实first512gate PASS，65updates lastobserved。仅poll此handle，终止+正常ACK后settle/postrun/CPU。R0freshRECOVERY1独立Role11条件PASS，实际AUTH仍未发行，须R1终态/清理/结算后才能issue；不重开旧失败。main-only G6/G7核心CPU6+6PASS，尚无真实入口或完成证据。
 
 最新：H256R1 J-a4a37087b4d84996完成256updates/131072train/2048Adam每类/11writes、全4096policy步零命令，CPU训练完整覆盖PASS；nativeFAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE fullreservation保留，正常ACK/settle/2postrun完成。无live。R0freshRECOVERY1准确A-6c257ca91ac2a1a0已发行，须提交/tag/push后一次release，不能重开旧R0。G6/G7 main-only CPU核心8/6PASS、warmfirstgate11PASS，未接入新真实入口，不能替代准入。H256R1与H128R1初始化/首512完全相同，但u1actor有1.19e-7差异、后段权重不相等，不宣称跨入口精确训练前缀；原因未由本有限核查定论。
+
+DEV-01仅CPU配置路径绑定拒绝，旧snapshot/packet和2GiB预留保留；DEV-02修正准确method路径，科学方法不变，无旧live失败或预算重置。
