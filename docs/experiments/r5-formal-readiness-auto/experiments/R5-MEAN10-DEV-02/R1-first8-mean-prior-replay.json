@@ -1,0 +1,86 @@
+{
+  "status": "PASS_ACTUAL_FIRST8_AUX_FORMULA",
+  "mode": "CPU_SAVED_OUTPUT_ONLY_NO_ACTOR_FORWARD",
+  "all_optimizer_calls": 0,
+  "GPU_queries": 0,
+  "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+  "training_seed": 20260908,
+  "input_pins": {
+    "init": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/init0000.pt",
+      "sha256": "cfb8fd82333944c1dab509f0ac914f89506b4b359b41c86ba774bf08ae6b9940"
+    },
+    "input": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+      "sha256": "012dd61783f7a749a59136d2339dc43e78e987150c46614a10df2cf99d86c5f6"
+    },
+    "probe": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/first_update_probe.pt",
+      "sha256": "c7004c4b18f4ec396676b53a24c934637ed0827fa7ed5e505520cba42bd7c015"
+    },
+    "gate": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/first_update_gate.json",
+      "sha256": "aed1dc5112c3f937bef1d15f06c4eccc64601db4b0b643fa202ca3eb7855bed8"
+    }
+  },
+  "gate": {
+    "float32_atol": 1e-06,
+    "float32_rtol": 1e-05,
+    "minibatches": 8,
+    "policy_rng_consumed": false,
+    "sample_count": 512,
+    "schema_version": "instinctrl-pilot-first-update-gate/1",
+    "status": "PASS"
+  },
+  "rows": [
+    {
+      "minibatch_ordinal": 0,
+      "actual": 7.321843147277832,
+      "CPU_recalculated_saved_output": 7.321842193603516,
+      "absolute_error": 9.5367431640625e-07
+    },
+    {
+      "minibatch_ordinal": 1,
+      "actual": 2.543809652328491,
+      "CPU_recalculated_saved_output": 2.543809413909912,
+      "absolute_error": 2.384185791015625e-07
+    },
+    {
+      "minibatch_ordinal": 2,
+      "actual": 2.403630018234253,
+      "CPU_recalculated_saved_output": 2.403630018234253,
+      "absolute_error": 0.0
+    },
+    {
+      "minibatch_ordinal": 3,
+      "actual": 2.048625946044922,
+      "CPU_recalculated_saved_output": 2.048625946044922,
+      "absolute_error": 0.0
+    },
+    {
+      "minibatch_ordinal": 4,
+      "actual": 1.5105360746383667,
+      "CPU_recalculated_saved_output": 1.5105359554290771,
+      "absolute_error": 1.1920928955078125e-07
+    },
+    {
+      "minibatch_ordinal": 5,
+      "actual": 1.1221399307250977,
+      "CPU_recalculated_saved_output": 1.1221399307250977,
+      "absolute_error": 0.0
+    },
+    {
+      "minibatch_ordinal": 6,
+      "actual": 1.2957172393798828,
+      "CPU_recalculated_saved_output": 1.2957170009613037,
+      "absolute_error": 2.384185791015625e-07
+    },
+    {
+      "minibatch_ordinal": 7,
+      "actual": 1.006272315979004,
+      "CPU_recalculated_saved_output": 1.0062721967697144,
+      "absolute_error": 1.1920928955078125e-07
+    }
+  ],
+  "scope": "8actual minibatch loss scalars vs saved preoptimizer actor outputs under originaltol; not fulltraining acceptance, Z result or same-device G7"
+}

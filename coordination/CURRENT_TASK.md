@@ -1,13 +1,11 @@
 # 当前任务
 
-R5-FORMAL-READINESS-AUTO-01，IN_PROGRESS，目标READY_FOR_FORMAL_R5_TRAINING。当前唯一live R1 J-b8ec45f94a245f6a，无正式训练提交。
+R5-FORMAL-READINESS-AUTO-01，IN_PROGRESS，目标READY_FOR_FORMAL_R5_TRAINING。
 
-旧w.05/anchor4冻结方法：两个确认seed20261015/16，u256原Z均0/32，G4 FAILED。确认01 Role20独立有效负结果接受；确认02J-2a4a6dcb3799110e完整6400数据/normalownedACK/settle/恰好2postrun/CPU分析完成，下一独立审核复核。所有nativeFAILED/-9/PASS_PENDING_CLOSE/INCOMPLETE保守预留保持，不重跑/不挑第三seed/不延长>256。
+当前唯一LIVE：R5-MEAN10-DEV-02 R1 J-b8ec45f94a245f6a / A-ecb30414e9293db6；准确source617af4d90c35e333c97692bdee90146804476edf、config2e9a7284、packetf2661633，只读快照，输入7b18755/tag/push后单次release。coexistence2/1/2%和真实first512gate PASS；185updateslastobserved。仅poll准确handle，terminal+normalACK后settle/exact2postrun/CPU/独立实际checkpoint验收。R0 A-cb56dae76162565d 已固定未提交，待串行idle；不改tools/rlflow/Commander的旧d027release。
 
-下一准确候选R5-MEAN10-DEV-02：训练actor-only零命令soft Beta-mean prior0/10，双方rewardw.05/anchor4/原LRs/网络/physics，coldstart256、同开发seed20260908、预定192/256；finiteweight和原learned部署输出，不hardzero或GT。新代码+新contract/card/config需提交，readonlysnapshot+exactpacket后独立Role21预审，再逐条现有Commanderissue/commit/tag/push/serialsubmit。D015阶段预算在原master内；新确认仅新方法开发合格后freeze两个未用seed，旧失败方法不复活。
+本新方法双方rewardw.05/anchor4/原LR/网络/control，唯一actor-only零命令有限softmeanprior0/10，非零sample直接loss/gradient0但sharednetwork能力不保证不变。coldstart256/同devseed20260908/预定192和256，原Z不变。Role21准确prelive及旧确认02完整负结果已接受。尚无新方法真实Z/开发资格/G4/READY。DEV01仅CPU配置旧路径拒绝，snapshot/packet/2GiB不修改。
 
-所有必需G1-G9最终都要以新合格方法证据关闭。旧S1formal/G6包为历史WIP，不能沿用旧准入身份。本Goal不自动提交正式完整训练。唯一续接docs/experiments/r5-formal-readiness-auto/GOAL_STATE.md及goal_budget.json。
+旧方法两个冻结确认seed20261015/16/u256原Z均0/32，G4 FAILED，Role20/21独立接受完整负结果。原freeze、FAILED/-9/PASS_PENDING_CLOSE/INCOMPLETE及所有收费保留；不能挑第三seed/放宽门槛/旧方法延长>256。新候选达标后才冻结新方法及两未用确认seed。
 
-DEV-01仅CPU配置路径绑定拒绝，旧snapshot/packet和2GiB预留保留；DEV-02修正准确method路径，科学方法不变，无旧live失败或预算重置。
-
-Current ONLY LIVE R1 J-b8ec45f94a245f6a / A-ecb30414e9293db6, inputs7b18755/tag/push, source617af4d/config2e9a7284. Original internalcoexistence2/1/2% and actualfirst512gate PASS;53updateslastobserved. Poll exacthandle only; terminal+normalACK then settle/exact2postrun/CPU/independentactualcheckpoint acceptance. R0A-cb56dae76162565d committed/tagged remainsunsubmitted untilidle. NoZresultyet/noG2G3/G4/READY.
+新formalphase主代码仅main，38CPU PASS，明确恢复后重装当前0/10callback；futureformal launchgate工具16CPU PASS，尚未接现有Commander/新release、未发行正式许可。旧S1formal/G6仅WIP历史，未来必须重绑新qualified候选。总账D015及全部master/protectedbuffers不变。本Goal不提交任何正式训练。唯一续接docs/experiments/r5-formal-readiness-auto/GOAL_STATE.md和goal_budget.json。
