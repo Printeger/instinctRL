@@ -1,0 +1,130 @@
+{
+  "role": "Role21",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "接受确认02实际原Z负结果；条件性预审准确DEV-02 mean-prior开发配对训练及未来评价模板。不是live release、方法资格、G4或READY。",
+  "identities": {
+    "implementation_commit": "15a232452ec2636ed84568dce4e1237b4a45a327",
+    "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "source_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "input_commit": "d0230f0924243fbb9807be248fe177fa815ec266",
+    "experiment_id": "R5-MEAN10-DEV-02",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "overlay_sha256": "2b6d4a9c4070000492339b3eb4277692ff7386934d1ba924d7d3b147dbc67fad",
+    "launch_sha256": "f266163310bc3286e9b8fe39d62cb498d43afb0b11898f83d97210cc49dfaac2",
+    "expected_training_AUTH_sha256": {
+      "R0": "9a9584d6eb66710337e9c9e8d0e0704cf90b0f5b18465381dc832e95d3cc484b",
+      "R1": "f33e9965109a74e9cd4ef25d448e99380f07a68ae49058845a11afe069190b68"
+    },
+    "experiment_card_sha256": "2c3db3531dac0ef11a5313bdb2e6a0d4f86d60fdb885a91e564369235c27196f",
+    "tool_release": "d027e9a0076377380a4ce277727cba8bfde132a113c9ce2b436c28ab7de9f793",
+    "mean_prior_contract_sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+    "ppo_source_sha256": "13290128ecbc79f9c429e064abbb2505bd6830c815ef21b3cec93fc0581e2431",
+    "mean_prior_source_sha256": "a7e8d3589f739636a337ca258d61f9e541bd576b98826019a012e8b5feab896c",
+    "effective_method_sha256": {
+      "R0": "3f0df003066ffd5166455c17d8121f50baa9eed9c5e70a4af79fc9280d1fe234",
+      "R1": "c390ab73252ee37da504298ad08498f3d5131866023d9099f52baf3c749a907f"
+    }
+  },
+  "confirmation02_actual_Z": {
+    "scientific_evidence_accepted": true,
+    "job_id": "J-2a4a6dcb3799110e",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "actual_AUTH_sha256": "d921ae8312ba293d715efe4ee983f4d9490095a7723551a5d59a59386e59449a",
+    "checkpoint_sha256": "8a55556f754977ba2cf1927fd16661d36bbe519f56fcb29e26efaeb1861a10e9",
+    "raw_sha256": "0e3192bf7f8a68f453cbbaa1889985873d4ce932ffc89c9ea004a4b39703fe4c",
+    "inventory": {
+      "original_objects": 37,
+      "original_bytes": 5877222,
+      "archive_copy_bytes": 503577,
+      "combined_bytes": 6380799,
+      "result": "全部原件/copies实际重哈希、大小及完整job/attempt枚举一致。"
+    },
+    "replay": "原replay_raw_case、evaluate_episode及case_outcome独立重放，与producer及analysis一致；完整T0、steps0..199、32lane及八方向。",
+    "results": {
+      "successes": 0,
+      "denominator": 32,
+      "subgroups": "d0至d7均0/4",
+      "engineering_valid": 32,
+      "missing": 0,
+      "reset_interrupted": 0,
+      "collision": 0,
+      "height_failure": 0,
+      "speed_range_m_s": [0.02139347232878208, 0.022366628050804138],
+      "drift_range_m": [0.29856374859809875, 0.32758399844169617],
+      "height_deviation_range_m": [0.20731520652770996, 0.21654438972473145]
+    },
+    "interpretation": "原Z阈值失败是完整有效负结果。height指标超过原.20阈值，与工程height_failure掩码为false不矛盾；不改阈值或失败分母。",
+    "lifecycle": {
+      "native_status": "FAILED",
+      "exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "retained_nontraining_reservation": 6400,
+      "wall_seconds": 63.024779736064374,
+      "allocated_GPU_seconds": 61.55387930897996,
+      "cleanup": "normal ACK、两次稳定空扫描、quiescent、无survivors；再次核对9个已知身份均不再owned。",
+      "postrun": "恰好两份原授权receipt，normal owned ACK后；本次没有GPU查询。"
+    },
+    "old_frozen_G4": "FAILED_BOTH_SEEDS，旧freeze及失败保留，不可换第三seed或继续旧方法超过256。"
+  },
+  "new_method_checks": {
+    "mechanism": "有限可微soft prior作用于现有Beta mean后三维，使用批准actor command门控；无GT、输出替换、hard zero、额外forward、sampling或optimizer。",
+    "gradient_path": "auxiliary加入原total_loss后同次backward，仍使用原actor/critic独立裁剪和step。实际closure仅依赖policy及已有actor output，不接收privileged数据。",
+    "command_gate": "norm(command)<=.001；非零样本auxiliary直接loss及gradient为0，第一action坐标不直接受罚。",
+    "legacy_path": "默认actor_auxiliary=None保持原算术和日志分支；检查了与冻结S0实测bit-exact回归的实现和CPU receipt。本审核未运行optimizer测试。",
+    "first_real_gate": "原512样本capture/bind及概率gate仍在trainer.update之前，因此先于两类optimizer；新aux不参与收集或gate。",
+    "identity": "mean_prior_contract与weight纳入effective checkpoint身份；R0/R1 reward均.05，anchor4、LR及其他profile相同，实际profile仅group和mean_prior_weight不同。",
+    "exact_snapshot": "从准确只读snapshot实际调用load_config及两组validate_parameters/required_budget通过；独立重哈希全部27个product与32个workload源码、card/master及现存spec pins。",
+    "draft_refusal": "DEV-01错误proposal_path导致CPU拒绝的旧snapshot/packet及2GiB预留保留；本次只接受DEV-02，不继承旧draft执行身份。",
+    "fairness_analysis": "已检查main-only分析修复：新mean-prior分支要求首advantages/returns逐位相同，并删除旧reward差异豁免解释；实际训练后仍须独立核对完整init/first512公平性。",
+    "CPU_limits": "82PASS/1GPUskip、30PASS及新增7PASS为CPU实现证据；不等于真实训练、原Z或G6通过。"
+  },
+  "budgets": {
+    "each_training": {
+      "transitions": 131072,
+      "updates": 256,
+      "actor_Adam_steps": 2048,
+      "critic_Adam_steps": 2048,
+      "checkpoint_writes": 11,
+      "outer_wall_and_GPU_seconds": 7210,
+      "output_bytes": 8589934592
+    },
+    "each_evaluation": {
+      "nodes": [192, 256],
+      "nontraining_transitions": 12800,
+      "training_updates_and_checkpoint_writes": 0,
+      "explicit_resets": 2,
+      "outer_wall_and_GPU_seconds": 1810
+    },
+    "result": "整个新开发pair加所有旧保守预留、source snapshots及未减少的confirmation/formal保护预留，独立核算全部master维度仍在上限内。D015为stage内分配，不是自动release或取消旧收费。"
+  },
+  "conditions": [
+    "仅DEV-02准确两组training AUTH可由现有Commander在绑定本accepted review hash后签发；actual AUTH/spec、tag及正常push完成后才可单次串行release。",
+    "每次release重核STOP、全部前序terminal/normal owned cleanup/结算、pins、disk、stage/master各维度、输出配额和原内部coexistence门槛；不得额外探测或放宽阈值。",
+    "保留真实首512 gate、原8GiB entry输出边界、累计写入guard、native单文件上限及完整job/attempt inventory。",
+    "实际训练后独立接受真实u192/u256 checkpoint/source/SHA及init/first512公平性，再绑定未来评价AUTH；当前null checkpoint SHA不可执行。",
+    "两预定R1节点必须完整通过原Z及八子组才可接受开发候选；失败不自动扩展lambda或horizon。",
+    "成功后另行准确freeze新方法和两个未用确认seed，两者必须通过；旧失败确认不被重标为新方法通过。",
+    "main-only分析修复及其回归在首次实际科学分析前提交保全；它不改变冻结运行源码或本packet身份。",
+    "旧native FAILED、INCOMPLETE/null、全部失败和保守预留继续真实保留；不授实际G6/G7或正式训练资格。"
+  ],
+  "non_blocking": [
+    {
+      "id": "SHARED-NETWORK-EFFECT",
+      "detail": "非零样本直接aux梯度为0，不保证共享网络学习后的非零行为不变；后续必须实际检查，不能声称非零能力已保留。"
+    },
+    {
+      "id": "CLIPPING-DOMINANCE",
+      "detail": "lambda10可能主导actor裁剪后的梯度方向。这是本有限实验的效果和风险，需保留aux scalar、梯度及真实任务结果，不能仅以mean接近.5宣称成功。"
+    },
+    {
+      "id": "CAUSAL-LIMIT",
+      "detail": "该实验可检验直接mean regularization是否改善结果；不能证明旧失败由采样方差或缺少reference唯一造成，也不能替代reference恢复研究。"
+    }
+  ],
+  "release_granted": false,
+  "G4_granted": false,
+  "READY_granted": false
+}
