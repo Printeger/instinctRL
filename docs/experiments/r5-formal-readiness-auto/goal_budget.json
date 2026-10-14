@@ -34,8 +34,8 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 1,
-    "simulator_initialization_reservations": 1,
+    "live_starts": 2,
+    "simulator_initialization_reservations": 2,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
@@ -102,6 +102,28 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 66900,
         "inventory": "experiments/R5-H128-DEV-01/live/R0-research-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47",
+        "job_id": "J-d430a5a7a8ec6ba1",
+        "experiment_id": "R5-H128-DEV-01",
+        "group": "R1",
+        "mode": "research-training",
+        "status": "RUNNING",
+        "reserved": {
+          "training_transitions": 65536,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 128,
+          "training_checkpoint_writes": 9,
+          "actor_optimizer_steps": 1024,
+          "critic_optimizer_steps": 1024,
+          "allocated_gpu_seconds": 3610,
+          "wall_seconds_including_cleanup": 3610
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {},
+        "postrun_queries_used": 0,
+        "settled": false
       }
     ],
     "source_snapshots": [
@@ -164,6 +186,13 @@
       "status": "PASS_TWO_ADMISSION_FINDINGS_CLOSED",
       "evidence": "reviews/H128-commander-fixed.json",
       "sha256": "50ab13af53d5fb49337bdefc4cf8f2e09f602288cabc3060c30be1fdf2a45e1a"
+    },
+    {
+      "call": 5,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "ExactnewR0resource-recovery identity only, afterinitialbeforeAppFINAL0failure; methodsource/cardunchanged, independentexpectedAUTHSHA/STOP/backoff/caps/conditionalrelease binding",
+      "status": "REQUESTED"
     }
   ],
   "decisions": [

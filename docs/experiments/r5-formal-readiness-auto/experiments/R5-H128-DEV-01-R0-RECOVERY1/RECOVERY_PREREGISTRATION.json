@@ -1,0 +1,26 @@
+{
+  "schema_version": "instinctrl-bounded-prelaunch-recovery/1",
+  "status": "PROPOSED_NEW_IDENTITY_NOT_ISSUED",
+  "case_id": "R5-H128-DEV-01-R0-RECOVERY1",
+  "parent_experiment_id": "R5-H128-DEV-01",
+  "changed": "Newattempt/spec/AUTHidentity only; no source/method/seed/budget/node/output change",
+  "no_old_job_resumed": true,
+  "reason": {
+    "job_id": "J-f6a597371d5f794a",
+    "native_status": "FAILED/1",
+    "reason": "Originalcoexistence samples10/11/2max>5 beforeApp; no training/data. Newidentity only, allscientificparams/card/source unchanged.",
+    "original_case": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H128-DEV-01",
+    "normal_cleanup": "ACK2stable/noowned",
+    "postrun_queries": 2
+  },
+  "backoff": "Atleast180ssinceoriginalfailedprelaunch ifsameincident; releaseonlywhenR1terminal+ACK andallownedquiescent. IfR1passescoexistence, resourceavailabilityhasbeenre-established, notpermissiontobypassoriginalgate.",
+  "bounded_preflight_rule": "D005atmost3environmentprelaunchattemptsinanunresolvedincident; currentinitialR0failure1, R1initial2. Noextraprobes, killsorrelaxedthresholds.",
+  "frozen_profile_card": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H128-DEV-01/EXPERIMENT_CARD.json",
+    "sha256": "cb8bb5a98bc8ca7b17510f09e97656e4bf98b281da043e82f441d50646fb4bb1"
+  },
+  "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+  "remaining_caps": "Master/stage/confirmation/formal stillcheckedbyaccepted exactCommanderbeforeanyrelease.",
+  "new_GPU_queries": 0,
+  "new_simulator": 0
+}
