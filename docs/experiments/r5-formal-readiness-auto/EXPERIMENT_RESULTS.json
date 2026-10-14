@@ -1764,10 +1764,36 @@
       "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
       "postrun_queries": 2,
       "inventory": "experiments/R5-MEAN10-CONFIRM-01/live/R1-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-0ffa8e246076922b",
+      "experiment_id": "R5-MEAN10-CONFIRM-02-RECOVERY1",
+      "group": "R1",
+      "mode": "research-training",
+      "native_status": "RUNNING",
+      "native_exit_code": null,
+      "raw_status": null,
+      "formal_counter_completeness": null,
+      "formal_transitions": null,
+      "observed": {},
+      "retained_reservations": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048,
+        "allocated_gpu_seconds": 7210,
+        "wall_seconds_including_cleanup": 7210
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": null,
+      "postrun_queries": 0,
+      "inventory": null
     }
   ],
   "master_ledger": "goal_budget.json",
-  "next_experiment": "无live。Role28最终PASS原件8d861a15...已归档：首新seed17原Z32/32独立接受、原seed18资源FINAL0真实失败保留、准确同seed18 RECOVERY1预审PASS。Commander fresh训练准确A-c9353393ca6f4909已发行未提交（AUTH5bd016d5.../packet94075439.../source617/config2e9/controlc468），同冻结256purehover/131072/mean10/reward.05/anchor4/seed20261018。下一提交/tag/push后仅单次releasefresh18；原J31不恢复。G4整体仍待seed18真实训练和primary256Z，旧15/16回归未启动，正式训练0。",
+  "next_experiment": "Poll only currentfreshsame18 J-0ffa8e246076922b; terminal/normalACK/settle/exact2postrun/CPU thenindependentactualcpacceptance andprimary256Z. Firstnew17Z32/32 Role28accepted, wholeG4pending. Noformaltraining.",
   "confirmation_seed_results": {
     "status": "NEW_MEAN_PRIOR_FROZEN_CONFIRMATIONS_NOT_STARTED_NOT_READY",
     "historical_failed_method": {
@@ -1908,7 +1934,15 @@
       20261016
     ],
     "formal_submitted": false,
-    "current_only_live": null
+    "current_only_live": {
+      "experiment_id": "R5-MEAN10-CONFIRM-02-RECOVERY1",
+      "training_seed": 20261018,
+      "job_id": "J-0ffa8e246076922b",
+      "actual_first512gate": "PASS_BEFORE_BOTH_OPTIMIZERS",
+      "actual_primary_Z": "PENDING",
+      "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "control_release": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba"
+    }
   },
   "current_mean_confirmation_training": [
     {
@@ -1994,9 +2028,11 @@
         }
       ],
       "recovery_candidate": "R5-MEAN10-CONFIRM-02-RECOVERY1",
-      "recovery_status": "EXACT_A_c9353393ca6f4909_ISSUED_NOT_SUBMITTED",
+      "recovery_status": "ONLY_LIVE_J_0ffa8e246076922b_ACTUAL_FIRST512_PASS",
       "original_Z_status": "PENDING_NOT_RUN",
-      "original_Z": null
+      "original_Z": null,
+      "recovery_actual_job": "J-0ffa8e246076922b"
     }
-  ]
+  ],
+  "entry_inventory_as_of_ledger_sha256": "21e905b8d85950da2c23070341e470cbe2da2a1daf58d776dbb2e9f04f95bb5f"
 }
