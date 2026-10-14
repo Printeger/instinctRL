@@ -46,7 +46,6 @@
   },
   "observed": {},
   "reservations": {
-    "confirmation_and_transition_training_transitions": 524288,
     "formal_initial_segment": {
       "training_transitions": 262144,
       "nontraining_transitions": 329600,
@@ -100,7 +99,16 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Exactprelive first128purehovercandidate/config/card/master/AUTHproposed/toolrelease; existinggate/data/actor/lifecycle/budgetbounds, independentreleasecondition",
-      "status": "REQUESTED_PRELIVE"
+      "status": "PASS_CONDITIONAL_EXACT_PRELIVE",
+      "evidence": "reviews/H128-exact-prelive.json",
+      "sha256": "95e72eb7470b07e559d4de59484c260a22f92e22c00edbaafe029a3805f88e81"
+    },
+    {
+      "call": 3,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Exact thinCommander r5_formal_commander.py resourceadmission/issuance/accounting/cleanup/postrun beforefirstrelease; no newmethod/repetition ofprelive",
+      "status": "REQUESTED"
     }
   ],
   "decisions": [
@@ -110,5 +118,6 @@
     }
   ],
   "runs": [],
-  "old_budgets": "Read-only, not inherited or refunded; previous INCOMPLETE observations remain conservatively reserved in their own ledgers."
+  "old_budgets": "Read-only, not inherited or refunded; previous INCOMPLETE observations remain conservatively reserved in their own ledgers.",
+  "confirmation_training_minimum_floor": 524288
 }

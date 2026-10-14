@@ -1,0 +1,99 @@
+{
+  "verdict": "PASS",
+  "scope": "准确H128同版本R0/R1训练输入的条件性pre-live验收；未来u96/u128评价仅接受准入设计，不签发release或正式训练准入。",
+  "identities": {
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "source_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+    "input_commit": "71803f1f76934b4b3bd5542ff6b4f17552943961",
+    "launch_sha256": "fe77bc508583668d4ab593877429170a63f4849938a513b941c64ba55db8074a",
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "snapshot_overlay_sha256": "3634188c24a5043ce2a698aa7f4f00490a3a5cbecc9f2f8995100798cb3c856d",
+    "method_sha256": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+    "master_authority_sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33",
+    "tool_release": "d027e9a0076377380a4ce277727cba8bfde132a113c9ce2b436c28ab7de9f793",
+    "expected_training_AUTH_sha256": {
+      "R0": "8bf212121aca4c054c76200d5379d3435ac057fab88fa4cea4e70e99d448f1b1",
+      "R1": "1823d9249b7dea949dfcf710be8538be5718e701320d05f20f7b3a07c7852157"
+    }
+  },
+  "must_fix": [],
+  "checks": [
+    {
+      "contract": "准确源码、配置、工具及未发行输入",
+      "assessment": "PASS_STATIC_ONLY",
+      "evidence": "使用绑定解释器实际load_config通过完整source/runtime配置校验；96个新tool-release文件SHA全部匹配。四入口执行pins、两个训练AUTH预期字节与参数对象匹配，四个fresh attempts及实际AUTH均不存在。"
+    },
+    {
+      "contract": "128-update纯悬停指令和reset分布",
+      "assessment": "PASS_IMPLEMENTATION",
+      "evidence": "独立执行全部2048个ScheduleClock计划，当前及下一command始终为零，时钟连续增长。准确env实现的pure-hover flag阻止旧1024步后的near-wall reset切换；评价专用reset分支仍保留。没有把actor输出硬设零，也没有自动进入mixed课程。"
+    },
+    {
+      "contract": "card/master/profile精确绑定与拒绝篡改",
+      "assessment": "PASS",
+      "evidence": "准确profile通过validate_parameters及required_budget；独立确认anchor_weight、training_seed、command_profile篡改拒绝。参数必须与哈希固定的实验卡逐字段一致，method/mode和准确预算由AUTH loader分别约束。"
+    },
+    {
+      "contract": "actor边界、奖励及首次真实gate",
+      "assessment": "PASS_PRELIVE_PENDING_ACTUAL_GATE",
+      "evidence": "actor输入、网络、控制器及PPO未改变。anchor默认4的旧C1逐component等价性有CPU覆盖；本卡仍固定4，R0/R1仅残差权重0/.05不同。研究cold-start显式启用既有FirstUpdateDiagnostic；capture/bind/before_update仍先于trainer.update及两类optimizer，原512样本容差不变。"
+    },
+    {
+      "contract": "seed、checkpoint与纯悬停阶段身份",
+      "assessment": "PASS_IMPLEMENTATION",
+      "evidence": "训练seed来自准确profile；checkpoint保存实际seed、source/config、有效方法SHA和research-pure-hover curriculum。init及八个预定节点共9次写入/组。评价检查实际checkpoint SHA、update、训练seed及研究curriculum，不猜测旧默认。"
+    },
+    {
+      "contract": "原评价与轻量诊断",
+      "assessment": "PASS_CONDITIONAL_TEMPLATE",
+      "evidence": "预定u96/u128，primary128；每节点原Z200步×32lanes及原T0/startup/阈值/分母/子组保留。新增action、v_corr、目标、root和anchor日志来自现有实际snapshot，不额外采样或改变评分。真实checkpoint绑定仍待训练后独立接受。"
+    },
+    {
+      "contract": "资源、持久化及清理边界",
+      "assessment": "PASS_DESIGN",
+      "evidence": "每入口8GiB预留、5GiB累计workload quota及3GiB native/control/archive allowance；2GiB kernel per-file限制和此前修复的fd路径guard保留。阶段131072训练/25600评价/4starts/256updates/18writes在新master内；确认及正式首段资源被单独保护，旧账本不重置。原STOP/coexistence、owned cleanup、FAILED/INCOMPLETE保守预留规则未取消。"
+    }
+  ],
+  "scientific_assessment": {
+    "assessment": "DEFENSIBLE_FINITE_EXPERIMENT",
+    "reason": "C1从u16到u64仍改善，用户明确授权纯悬停时域扩展；以同版本R0/R1公平128预算和预定u96/u128检验训练时域解释是合理有限动作。",
+    "limits": [
+      "这不是直接证明训练时长的纯因果比较：旧u64结果属于历史参考，当前严格同期主要变量仍是w0/.05。",
+      "先前anchor信息与几何问题没有被解决；本次不得把anchor4→8或参考表征混入同一实验。",
+      "若两个后段节点不合格、平台或不稳定，应按实验卡转向可部署测量参考问题，不能仅盲目继续加时域。",
+      "开发seed两个节点即使通过，也仍需方法冻结后的两个新训练seed及其余G1–G9证据，不能宣布READY。"
+    ]
+  },
+  "non_blocking": [
+    {
+      "id": "RESEARCH-SEED-GENERALITY",
+      "assessment": "通用profile允许其他evaluation_seed，而原metric-h1-v1具有固定seed契约。本准确卡使用20260909，当前无冲突；未来改变evaluation_seed须单独确认原评价契约兼容，不能仅依profile通过。"
+    },
+    {
+      "id": "THIN-COMMANDER-ADAPTERS",
+      "assessment": "本评审覆盖冻结source及d027工具release，不覆盖尚在编写的薄admission/settle/audit脚本。其实际版本和输入须在使用前提交固定并验证准确资源/路径/证据连接，不能视为本PASS已接受任何未指定新工具。"
+    },
+    {
+      "id": "NATIVE-CLOSE",
+      "assessment": "已知close失败仍须保持FAILED；只有完整数据及准确owned cleanup成立时才可另行科学接受，不能改写collector FINAL或退款。"
+    }
+  ],
+  "release_conditions": [
+    "以本次准确accepted review SHA绑定最终训练spec，实际AUTH字节须匹配上述预期哈希；由新master受托Commander准确审批，不需要逐入口再次请求用户许可。",
+    "准确source、inputs、工具及最终spec/AUTH必须正常push并核对实际remote HEAD；本地PASS不能替代成功推送，也不能因网络失败直接release。",
+    "使用已验证薄适配器，入口前核对STOP、idle/owned cleanup、准确pins、实际磁盘、阶段和master剩余额度及确认/正式保护预留。",
+    "原内部coexistence通过后才创建App；每次预留、启动、失败和有原因的新身份恢复均真实计账。",
+    "真实首次512 gate必须在两类optimizer前通过；gate/非有限值失败停止该次作业，保留证据，不放宽容差。",
+    "u96/u128评价须等待真实训练独立接受及准确checkpoint source/SHA绑定；两个原Z节点不得事后更换。",
+    "本PASS不是实际训练完成、策略资格或READY_FOR_FORMAL_R5_TRAINING结论。"
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0,
+    "cpu_checks": "准确配置/文件哈希、profile拒绝篡改、全部2048步纯悬停计划验证。"
+  }
+}
