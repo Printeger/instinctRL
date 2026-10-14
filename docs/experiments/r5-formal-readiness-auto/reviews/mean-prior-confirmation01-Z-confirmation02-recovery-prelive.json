@@ -1,0 +1,209 @@
+{
+  "role": "Role28",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "接受确认02原资源拒绝/FINAL0、新同冻结seed18恢复训练条件prelive，并接受确认01首个新seed实际原Z通过；不授整体G4、READY或release。",
+  "identities": {
+    "input_evidence_commit": "b6aa4d4f4f315ab7d151b224f1cbc64c1d4c16f3",
+    "experiment_id": "R5-MEAN10-CONFIRM-02-RECOVERY1",
+    "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "source_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "launch_sha256": "9407543936abfa7f4e2ac5edf017a009ca3f684f7d4e358e880a693e4798d32f",
+    "expected_training_AUTH_sha256": {
+      "R1": "5bd016d528df09678042da0dbda0c98042840c9e3b8e435a7833cfced7011d97"
+    },
+    "tool_release": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba",
+    "immutable_freeze_sha256": "b55f881c8ef1435dcef21e354b8e36d6765d53b2f0dd2b72c18e81b9a40756c4",
+    "effective_method_sha256": "c390ab73252ee37da504298ad08498f3d5131866023d9099f52baf3c749a907f",
+    "failed_job_id": "J-31eba1c5651ddc1d",
+    "failed_original_packet_sha256": "8d71176b382f9c86592449982fd82ab57ddf1ebedd076050a3ac3b817306c592",
+    "failed_original_training_AUTH_sha256": "82cbba77ae30f5dda9be8dad25eee5f2823d88e8777b69c8cdcb2614e6d2ecec",
+    "backoff_record_sha256": "60dec0f5ecb4383031dc68e2ebb7d479eb139e9c98956477d1a28fc794d03649",
+    "resource_recovery_record_sha256": "024411fb614d6495afc292bbf92f874e2ad0551095926a23d7006d72bb5203cc",
+    "confirmation01_launch_sha256": "d595dcd20fd49e7251956b2f93593c138cf442a0836e303fac535e12d81c2905",
+    "confirmation01_actual_evaluation_AUTH_sha256": "9f6141443efefc074004ae4c495995ce2138ba22018a2d1d4ebfb6e8ad03325a",
+    "confirmation01_evaluation_analysis_sha256": "42a206afb2e606967941d94b95dbcc02d486476e2b7be6a845e683e44dbe84a9",
+    "confirmation01_raw_sha256": "4493711441badc321607ef443ac502b999e8c535073b1d19e733459d9577ac4a"
+  },
+  "failed_entry": {
+    "inventory": {
+      "original_objects": 27,
+      "original_bytes": 34817,
+      "archive_copy_bytes": 34817,
+      "combined_bytes": 69634,
+      "result": "全部原件和copies逐文件实际重哈希及大小核对；整个job/attempt实际文件集合与inventory一致。"
+    },
+    "binding": "actual request.spec、已签发spec及全部pins一致；原AUTH和原freeze/source保持。",
+    "gate": {
+      "utilization_percent": [
+        1,
+        1,
+        9
+      ],
+      "threshold_percent": 5,
+      "span_seconds": 10.026164048,
+      "result": "原门槛正确拒绝；未放宽阈值。高利用率来源未作因果归因。"
+    },
+    "actual_execution": {
+      "initialization_measurement": "NOT_REACHED",
+      "observed_initialization_ticks": 0,
+      "attempted_rollout_steps": 0,
+      "completed_rollout_steps": 0,
+      "first_training_gate": "NOT_REACHED",
+      "training_transitions": 0,
+      "optimizer_updates": 0,
+      "checkpoint_writes": 0
+    },
+    "native_status": "FAILED",
+    "exit_code": 1,
+    "raw_status": "FAIL",
+    "formal_counter_completeness": "FINAL",
+    "formal_transitions": 0,
+    "accounting": {
+      "charged_starts": 1,
+      "charged_initialization_reservations": 1,
+      "retained_output_reservation_bytes": 8589934592,
+      "wall_seconds": 12.61511324904859,
+      "allocated_GPU_seconds": 10.789791333954781,
+      "logical_settlement": "只由实际formal FINAL0结算其未用logical；不退款start/init/output或旧INCOMPLETE。"
+    },
+    "cleanup": "normal ACK、两次稳定空扫描、quiescent、未timed_out、无survivors；再次核对owner/guard/child三个已知身份均不再owned。",
+    "postrun": "恰好ordinal0/1两份原授权receipt，在normal owned ACK后；本轮未执行GPU查询。",
+    "scientific_classification": "没有训练样本或策略结果，属于实际资源拒绝，不能归为方法学习负结果。"
+  },
+  "fresh_packet": {
+    "result": "CONDITIONAL_PASS",
+    "checks": "逐一核对新packet/card/master/parent/expectedAUTH及全部现存spec pins、科学order/执行ID关系；在实际只读source独立load_config及validate_parameters/required_budget/method_hashes通过。",
+    "new_training_attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-02-RECOVERY1-R1-RESEARCH-TRAINING-617af4d90c35",
+    "current_authorization_status": "核查时新attempt及actual AUTH均不存在；尚未签发。",
+    "unchanged": {
+      "training_seed": 20261018,
+      "evaluation_seed": 20260909,
+      "mean_prior_weight": 10,
+      "residual_reward_weight": 0.05,
+      "anchor_weight": 4,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "updates": 256,
+      "training_transitions": 131072,
+      "checkpoint_writes": 11,
+      "primary_evaluation_node": 256,
+      "command_profile": "pure-hover"
+    },
+    "semantic_boundary": "更换明确fresh实验/card/spec/attempt身份，但冻结seed18及方法、source、预算不变；原attempt从未到达训练，不是换seed或科学重试。",
+    "first_real_gate": "必须用新实际512 rollout，在两类optimizer前通过原1e-6/1e-5概率/Beta gate；本轮不提前接受实际gate或训练。",
+    "per_entry": {
+      "starts": 1,
+      "initialization_reservations": 1,
+      "initialization_tick_ceiling": 10,
+      "explicit_resets": 1,
+      "automatic_reset_ceiling": 131072,
+      "outer_wall_and_GPU_seconds": 7210,
+      "output_bytes": 8589934592
+    },
+    "future_evaluation": {
+      "node": 256,
+      "nontraining_transitions": 6400,
+      "training_transitions": 0,
+      "optimizer_updates": 0,
+      "checkpoint_writes": 0,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-02-RECOVERY1-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "sha256": null,
+      "status": "真实fresh产物及独立接受后才能填入和准确issue；不可复用原失败attempt。"
+    }
+  },
+  "resource_recovery": {
+    "original_incident": "原失败为1/3，之后准确确认01主Z作为同incident第二entry。",
+    "backoff": "记录CPU准备实际monotonic经过146.377770093秒，满足60秒；sleep claim为0，没有以额外GPU探测代替退避。",
+    "subsequent_receipt": "RESOURCE_INCIDENT_MEAN_CONFIRM02_RESOLVED记录准确确认01原内部gate 4/1/1% PASS及原receipt SHA；这只证明该时刻恢复，不重置任何收费，不验收其科学结果/终态，也不替代fresh入口自己的coexistence。",
+    "unresolved_rule": "若第二次仍拒绝，第三且最后entry至少180秒退避；不允许第四次未解决incident尝试。新事件仍须有具体测量、fresh identity、准确审核和预算，不能无界自动重试。"
+  },
+  "budget_checks": {
+    "D017": "仅stage starts/init31→32和output282→290GiB；逻辑及时间caps不变，master及confirmation/formal保护额不变。",
+    "preservation": "对照Role25已审2d01b7f ledger，所有既有历史entry收费保留，master caps及两个保护buffer保持；新增实际训练/资源失败按真实状态新增结算。",
+    "next_entry": "按当前已用/保守预留及全部保护额，fresh训练在每个stage/master维度内；实际issue/release时必须使用届时最新总账重新核对。",
+    "no_refund": "旧FAILED/INCOMPLETE、原资源失败start/init/output及真实wall/GPU时间均不退款。"
+  },
+  "conditions": [
+    "当前确认01评价的终态、normal owned ACK、结算及恰好两次postrun已在本轮独立核对通过；fresh02仍须绑定本最终accepted review再issue，发行时重新确认全部前序idle，不能与任何live重叠。",
+    "Commander绑定本accepted review hash、准确新packet/source/expectedAUTH，签发实际AUTH/spec；commit/tag/正常push后才可单次串行release，原失败job/attempt永久不重开。",
+    "release时重核STOP、idle、全部前序owned cleanup、pins、disk、quota、最新stage/master及全部保护预留，执行fresh入口自己的原六查询coexistence，不放宽5%或其他门槛。",
+    "按已登记资源incident及60/180秒、最多三次规则处理；不加外部GPU查询、不操作无关进程、不把本PASS当自动重试权限。",
+    "保留准确冻结seed18和方法；真实训练及u256必须独立接受后再发行原Z评价，原T0/200×32/方向/子组/阈值和失败分母不变。",
+    "两个新确认均须实际原Z通过才可能授G4，不采用2/3、换seed或结果后调参；旧15/16回归仍不计G4。",
+    "本轮接受确认01首个新seed实际原Z；第二seed未发生的结果不预认，整体G4、实际G6/G7、READY及formal submit均未授予。",
+    "将补充确认01实际终态原件/analysis及本完整最终review按准确SHA归档并完成普通状态同步、commit/tag/正常push；不得用此前仅资源恢复范围的draft导出SHA替代本完整最终review。"
+  ],
+  "non_blocking": [
+    {
+      "id": "RESOURCE_ONLY_RECOVERY",
+      "detail": "准确有界fresh资源恢复属于既有master委派；原拒绝不是产品修复证据，也不是学习失败。"
+    },
+    {
+      "id": "AVAILABILITY_NOT_FUTURE_GATE",
+      "detail": "后续4/1/1 PASS不保证下一entry资源可用，fresh入口仍必须独立通过原门槛。"
+    },
+    {
+      "id": "SCIENTIFIC_RESULTS_PENDING",
+      "detail": "此恢复训练和其原Z结果尚未产生；本预审不改变冻结资格状态。"
+    }
+  ],
+  "release_granted": false,
+  "G4_granted": false,
+  "READY_granted": false,
+  "confirmation01_actual_original_Z": {
+    "scientific_evidence_accepted": true,
+    "job_id": "J-ac937a86633306b9",
+    "approval_id": "A-b250992a56a6f5ae",
+    "training_seed": 20261017,
+    "evaluation_seed": 20260909,
+    "update": 256,
+    "checkpoint_sha256": "98a081e3f9a4e939f9601ec4bcec400fa49602ffe5edefd6740c20b7b6aff9ef",
+    "inventory": {
+      "original_objects": 37,
+      "original_bytes": 5991674,
+      "archive_copy_bytes": 504130,
+      "combined_bytes": 6495804,
+      "result": "全部原件/copies实际重哈希及大小核对，整个job/attempt文件集合与inventory一致。"
+    },
+    "binding": "actual request/spec/AUTH、全部pins及Role27已接受的实际u256匹配；source617/config2e9、冻结mean-prior10/seed17一致。",
+    "scoring": "原replay_raw_case/evaluate_episode/case_outcome独立重算，与producer和analysis完全一致；原T0+steps0..199×32、全部方向及子组保留。",
+    "result": {
+      "successes": 32,
+      "denominator": 32,
+      "subgroups": "d0..d7均4/4",
+      "maximum_speed_m_s": 0.010489066131412983,
+      "maximum_drift_m": 0.01935860514640808,
+      "maximum_height_deviation_m": 0.04789996147155762,
+      "engineering_valid": 32,
+      "missing": 0,
+      "reset_interrupted": 0,
+      "collision": 0,
+      "height_failure": 0,
+      "actual_reset_lanes": 0
+    },
+    "actual_fields": "完整200×32命令/动作/root/velocity/correction/final字段有限、零命令和原xyz decoder对应；没有额外forward/sampling。",
+    "lifecycle": {
+      "native_status": "FAILED",
+      "exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed_nontraining_transitions": 6400,
+      "retained_nontraining_reservation": 6400,
+      "training_updates_and_checkpoint_writes": 0,
+      "wall_seconds": 62.54571330384351,
+      "allocated_GPU_seconds": 60.647837965982035,
+      "cleanup": "normal ACK、两次稳定空扫描、quiescent、未timed_out、无survivors；9个已知身份再次核对均不再owned。",
+      "postrun": "恰好两份原授权receipt，normal owned ACK后；本轮无GPU查询。",
+      "process_PASS_granted": false
+    },
+    "qualification": "仅首个预先冻结新确认seed通过；第二seed尚无实际训练/原Z结果，整体G4未授予。",
+    "evidence_commit_boundary": "补充实际终态文件审核时root说明尚待提交；已由上述analysis/raw及完整inventory SHA精确绑定，最终归档须正常commit/push。"
+  },
+  "preliminary_export": {
+    "sha256": "c15121eb00b6bc7115412500978d5017a10a75625c6ab09f71983d9c2c7f62b6",
+    "status": "DRAFT_BEFORE_SAME_ROLE_ADDED_ACTUAL_Z_SCOPE_NOT_FINAL_DELIVERY"
+  }
+}

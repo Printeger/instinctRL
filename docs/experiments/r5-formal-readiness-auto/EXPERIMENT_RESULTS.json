@@ -936,7 +936,7 @@
         "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-01/R1-evaluation-analysis.json",
         "sha256": "42a206afb2e606967941d94b95dbcc02d486476e2b7be6a845e683e44dbe84a9"
       },
-      "independent_acceptance": "PENDING_ROLE28"
+      "independent_acceptance": "reviews/mean-prior-confirmation01-Z-confirmation02-recovery-prelive.json"
     }
   ],
   "actual_entries": [
@@ -1767,7 +1767,7 @@
     }
   ],
   "master_ledger": "goal_budget.json",
-  "next_experiment": "无live。CONFIRM01/seed17主256实际原Z32/32、各子组4/4，maxspeed.0104890661/drift.0193586051/height.0478999615，全T0+200x32、无missing/reset、32工程有效。normalACK/settle/2postrun/CPU完成；nativeFAILED/-9/PASS_PENDING_CLOSE/INCOMPLETE/null/full6400保留，GPU60.647837965982035/wall62.54571330384351。Role28同时独审首新确认Z和旧02资源拒绝/准确同seed18恢复packet94075439...，未final。原资源事件经下一内部4/1/1% PASS实测恢复，不重置旧收费。接受后fresh02再issue/commit/tag/push/单次release。G4整体未授，formal0。",
+  "next_experiment": "无live。Role28最终PASS原件8d861a15...已归档：首新seed17原Z32/32独立接受、原seed18资源FINAL0真实失败保留、准确同seed18 RECOVERY1预审PASS。Commander fresh训练准确A-c9353393ca6f4909已发行未提交（AUTH5bd016d5.../packet94075439.../source617/config2e9/controlc468），同冻结256purehover/131072/mean10/reward.05/anchor4/seed20261018。下一提交/tag/push后仅单次releasefresh18；原J31不恢复。G4整体仍待seed18真实训练和primary256Z，旧15/16回归未启动，正式训练0。",
   "confirmation_seed_results": {
     "status": "NEW_MEAN_PRIOR_FROZEN_CONFIRMATIONS_NOT_STARTED_NOT_READY",
     "historical_failed_method": {
@@ -1917,7 +1917,7 @@
       "training_status": "ACTUAL_COMPLETE256_INDEPENDENT_ROLE27_ACCEPTED",
       "training_job": "J-b7cf47a791e61388",
       "actual_u256_sha256": "98a081e3f9a4e939f9601ec4bcec400fa49602ffe5edefd6740c20b7b6aff9ef",
-      "original_Z_status": "ACTUAL_32_OF32_PENDING_INDEPENDENT_REVIEW",
+      "original_Z_status": "ACTUAL_32_OF32_INDEPENDENT_ROLE28_ACCEPTED",
       "original_Z": {
         "successes": 32,
         "total": 32,
@@ -1977,7 +1977,8 @@
         "speed_rms_m_s": 0.010489066131412983,
         "horizontal_drift_m": 0.01935860514640808,
         "height_deviation_m": 0.04789996147155762
-      }
+      },
+      "independent_original_Z_review": "reviews/mean-prior-confirmation01-Z-confirmation02-recovery-prelive.json"
     },
     {
       "training_seed": 20261018,
@@ -1993,7 +1994,7 @@
         }
       ],
       "recovery_candidate": "R5-MEAN10-CONFIRM-02-RECOVERY1",
-      "recovery_status": "CPU_CARD_PREPARED_PENDING_PACKET_REVIEW_AUTH",
+      "recovery_status": "EXACT_A_c9353393ca6f4909_ISSUED_NOT_SUBMITTED",
       "original_Z_status": "PENDING_NOT_RUN",
       "original_Z": null
     }

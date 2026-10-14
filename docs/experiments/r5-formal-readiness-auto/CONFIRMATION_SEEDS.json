@@ -96,7 +96,7 @@
       "training_status": "ACTUAL_COMPLETE256_INDEPENDENT_ROLE27_ACCEPTED",
       "training_job": "J-b7cf47a791e61388",
       "actual_u256_sha256": "98a081e3f9a4e939f9601ec4bcec400fa49602ffe5edefd6740c20b7b6aff9ef",
-      "original_Z_status": "ACTUAL_32_OF32_PENDING_INDEPENDENT_REVIEW",
+      "original_Z_status": "ACTUAL_32_OF32_INDEPENDENT_ROLE28_ACCEPTED",
       "original_Z": {
         "successes": 32,
         "total": 32,
@@ -156,7 +156,8 @@
         "speed_rms_m_s": 0.010489066131412983,
         "horizontal_drift_m": 0.01935860514640808,
         "height_deviation_m": 0.04789996147155762
-      }
+      },
+      "independent_original_Z_review": "reviews/mean-prior-confirmation01-Z-confirmation02-recovery-prelive.json"
     },
     {
       "training_seed": 20261018,
@@ -172,7 +173,7 @@
         }
       ],
       "recovery_candidate": "R5-MEAN10-CONFIRM-02-RECOVERY1",
-      "recovery_status": "CPU_CARD_PREPARED_PENDING_PACKET_REVIEW_AUTH",
+      "recovery_status": "EXACT_A_c9353393ca6f4909_ISSUED_NOT_SUBMITTED",
       "original_Z_status": "PENDING_NOT_RUN",
       "original_Z": null
     }
