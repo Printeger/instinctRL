@@ -34,19 +34,19 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 20,
-    "simulator_initialization_reservations": 20,
+    "live_starts": 22,
+    "simulator_initialization_reservations": 22,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 7288.1903731441125,
-    "wall_seconds_including_cleanup": 7310.805744918762,
-    "output_peak_and_reservations_bytes": 19030374317
+    "allocated_gpu_seconds": 7383.972169713117,
+    "wall_seconds_including_cleanup": 7408.222593667917,
+    "output_peak_and_reservations_bytes": 19042439670
   },
   "observed": {
     "training_transitions": 917504,
-    "nontraining_transitions": 64000,
+    "nontraining_transitions": 76800,
     "optimizer_updates": 1792,
     "training_checkpoint_writes": 84,
     "actor_optimizer_steps": 14336,
@@ -786,6 +786,64 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 2598143492,
         "inventory": "experiments/R5-MEAN10-DEV-02/live/R0-research-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-MEAN10-DEV-02-R1-RESEARCH-EVALUATION-617af4d90c35",
+        "job_id": "J-4f9bdb2e6fafea54",
+        "experiment_id": "R5-MEAN10-DEV-02",
+        "group": "R1",
+        "mode": "research-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 12065353,
+        "inventory": "experiments/R5-MEAN10-DEV-02/live/R1-research-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-MEAN10-DEV-02-R0-RESEARCH-EVALUATION-617af4d90c35",
+        "job_id": "J-c9f809706825785f",
+        "experiment_id": "R5-MEAN10-DEV-02",
+        "group": "R0",
+        "mode": "research-evaluation",
+        "status": "RUNNING",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 1810,
+          "wall_seconds_including_cleanup": 1810
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {},
+        "postrun_queries_used": 0,
+        "settled": false
       }
     ],
     "source_snapshots": [
