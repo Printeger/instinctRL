@@ -1344,6 +1344,13 @@
       "status": "PASS_ACTUAL_SAME_FROZEN_SEED18_TRAINING_U256_ONLY",
       "evidence": "reviews/mean-prior-confirmation02-recovery1-actual-training.json",
       "sha256": "64bd00651f6c81ddb1eefa6c00a24de228cc99b1d797438288fb9a4d67896a78"
+    },
+    {
+      "call": 30,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Read-only actual oldseed15 mean regressiontraining/checkpoint acceptance afterterminal and actual newconfirmation18originalZ/G4 acceptance whencomplete; revalidate full prospectively frozen17/18 andfour actualDEV02G6diagnosticpins. No G4 beforeactual18Z, no automaticrelease/READY.",
+      "status": "IN_PROGRESS_AWAITING_ACTUAL_TERMINAL_EVIDENCE"
     }
   ],
   "decisions": [
