@@ -1,6 +1,6 @@
 # R5 formal readiness autonomous Goal
 
-当前唯一LIVE fresh同一新确认seed18主256原Z J-a8dc9cb1b63aa810/A-11c66f5f5fb086ec，准确inputs2b3962e/tag/push/actualAUTH256f5476；同一实际u25647796b6c/source617/config2e9/controlc468，仅6400nontraining、0训练/optimizer/写checkpoint。前资源拒绝保留FINAL0/start/init/output/time，D018有界恢复，≥79.78s退避实录，原门槛不改。旧15训练Role30已独立接受且准确Z A-4f24d896680295b3未提交；首17原Z32/32已接受。只poll本句柄，终态normalcleanup后继续；整体G4未授，formal0。
+当前无live。新确认seed18 fresh原Z J-a8dc9cb1b63aa810实际主25632/32、八子组4/4，完整T0+200x32/无reset/missing，maxspeed.0103932060/drift.00717267534/height.0454549789；normalACK/settle/exact2postrun/CPU原函数PASS，nativeFAILED/-9/INCOMPLETE/null/full6400保留。首17原Z32/32已Role28接受；两新seed实际均通过，整体G4等待Role31独立接受。旧15训练Role30已接受；旧16原Role25准确训练A-98bfda5b32515c11下一commit/push后单次release，并行CPU独审，旧回归不计G4。原资源拒绝/收费不改，fresh自身1/3/1%共存PASS，formal0。
 
 Current frozen method w.05/anchor4/LRs1e-4/3e-4/purehover256 FAILED G4: seed20261015 originalZ0/32 (driftmax .787366509), seed20261016 originalZ0/32 (driftmax .327583998,heightmax .216544390). Complete T0+200x32, allfailuredenominators retained. Confirmation01 independentRole20 accepted; second scientific evaluation independentaudit next. Actual scientific/evidence acceptance never changes FAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE/null/full logical+output reservations. BothnormalownedACK/settle/exact2postrun complete. Immutable CONFIRMATION_METHOD_FREEZE.json unchanged, CONFIRMATION_SEEDS.json recordsfailure. Never thirdseed replacement or >256 continuation ofoldmethod.
 
@@ -80,3 +80,6 @@ Authoritative latest: 当前无live。Role30独立PASS旧seed15实际训练/u256
 
 
 Authoritative latest: 当前唯一LIVE fresh同一新确认seed18主256原Z J-a8dc9cb1b63aa810/A-11c66f5f5fb086ec，准确inputs2b3962e/tag/push/actualAUTH256f5476；同一实际u25647796b6c/source617/config2e9/controlc468，仅6400nontraining、0训练/optimizer/写checkpoint。前资源拒绝保留FINAL0/start/init/output/time，D018有界恢复，≥79.78s退避实录，原门槛不改。旧15训练Role30已独立接受且准确Z A-4f24d896680295b3未提交；首17原Z32/32已接受。只poll本句柄，终态normalcleanup后继续；整体G4未授，formal0。
+
+
+Authoritative latest: 当前无live。新确认seed18 fresh原Z J-a8dc9cb1b63aa810实际主25632/32、八子组4/4，完整T0+200x32/无reset/missing，maxspeed.0103932060/drift.00717267534/height.0454549789；normalACK/settle/exact2postrun/CPU原函数PASS，nativeFAILED/-9/INCOMPLETE/null/full6400保留。首17原Z32/32已Role28接受；两新seed实际均通过，整体G4等待Role31独立接受。旧15训练Role30已接受；旧16原Role25准确训练A-98bfda5b32515c11下一commit/push后单次release，并行CPU独审，旧回归不计G4。原资源拒绝/收费不改，fresh自身1/3/1%共存PASS，formal0。

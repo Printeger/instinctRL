@@ -1,0 +1,977 @@
+{
+  "group": "R1",
+  "mode": "research-evaluation",
+  "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+  "actual_parameters": {
+    "experiment_id": "R5-MEAN10-CONFIRM-02-Z-RECOVERY1",
+    "group": "R1",
+    "training_seed": 20261018,
+    "evaluation_seed": 20260909,
+    "max_updates": 256,
+    "checkpoint_updates": [
+      1,
+      2,
+      8,
+      16,
+      32,
+      64,
+      96,
+      128,
+      192,
+      256
+    ],
+    "evaluation_updates": [
+      256
+    ],
+    "command_profile": "pure-hover",
+    "residual_neutrality_weight": 0.05,
+    "anchor_weight": 4.0,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "output_cap_bytes": 8589934592,
+    "master_authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+      "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+    },
+    "mean_prior_contract": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+      "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+    },
+    "mean_prior_weight": 10.0,
+    "experiment_card": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-02-Z-RECOVERY1/EXPERIMENT_CARD.json",
+      "sha256": "10a467ef2c50e2008bc560e6699d9efbe65c3cfbf583afa687cdb1954b1375d3"
+    },
+    "checkpoints": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-02-RECOVERY1-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "47796b6c3804f7bf41a16ef95bb8d0a7c62ebd6a47a3fcb2bda24d1d26b8c54f",
+        "update": 256
+      }
+    ]
+  },
+  "binding": {
+    "spec_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-02-Z-RECOVERY1/inputs/R1-research-evaluation.authorized.json",
+    "spec_sha256": "fc4b2de94b942422356f56672c068de8cf4e6b34d137f1466a068564386a717c",
+    "job_id": "J-a8dc9cb1b63aa810",
+    "native_status": "FAILED",
+    "native_exit_code": -9,
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "authorization_sha256": "256f5476be1449dac530201ce86a0199d0dd5f7c93c7695539f969ea7ab1db4a",
+    "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "owned_cleanup": "NORMAL_ACK_2STABLE_NO_SURVIVORS"
+  },
+  "nodes": {
+    "256": {
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-02-RECOVERY1-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "47796b6c3804f7bf41a16ef95bb8d0a7c62ebd6a47a3fcb2bda24d1d26b8c54f",
+        "update": 256
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-02-Z-RECOVERY1-R1-RESEARCH-EVALUATION-617af4d90c35/results/research-evaluation/evaluation_raw/research_R1_u256/Z.jsonl",
+      "raw_sha256": "e2550aa3a9548d93c2c06a7d0829fed79111dd9490ed873f9b4b4b5a8a3263f6",
+      "episodes": [
+        {
+          "case": "Z",
+          "env_index": 0,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010389953851699829,
+            "drift": 0.0,
+            "height": 0.04542851448059082
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 1,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010389924980700016,
+            "drift": 0.0,
+            "height": 0.04542851448059082
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 2,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010392271913588047,
+            "drift": 0.0046015456318855286,
+            "height": 0.04542851448059082
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 3,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010390250943601131,
+            "drift": 0.0,
+            "height": 0.04542851448059082
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 4,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010389490984380245,
+            "drift": 0.0,
+            "height": 0.04542851448059082
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 5,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010389936156570911,
+            "drift": 0.0,
+            "height": 0.04542803764343262
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 6,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010390381328761578,
+            "drift": 0.0,
+            "height": 0.045426368713378906
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 7,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010392088443040848,
+            "drift": 0.004405654966831207,
+            "height": 0.04542732238769531
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 8,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010391895659267902,
+            "drift": 0.0,
+            "height": 0.04543352127075195
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 9,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010391928255558014,
+            "drift": 0.0,
+            "height": 0.045430660247802734
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 10,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010391702875494957,
+            "drift": 7.62939453125e-06,
+            "height": 0.045430898666381836
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 11,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010391530580818653,
+            "drift": 7.62939453125e-06,
+            "height": 0.04543352127075195
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 12,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010393206030130386,
+            "drift": 0.003872990608215332,
+            "height": 0.045426368713378906
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 13,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.01039193943142891,
+            "drift": 7.62939453125e-06,
+            "height": 0.04543352127075195
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 14,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010391679592430592,
+            "drift": 7.62939453125e-06,
+            "height": 0.045430898666381836
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 15,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.01038872729986906,
+            "drift": 0.006211414933204651,
+            "height": 0.0454256534576416
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 16,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010386739857494831,
+            "drift": 0.005830317735671997,
+            "height": 0.04541778564453125
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 17,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010388879105448723,
+            "drift": 0.007172675337642431,
+            "height": 0.04541969299316406
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 18,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010386768728494644,
+            "drift": 0.0058637261390686035,
+            "height": 0.04541778564453125
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 19,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010387009009718895,
+            "drift": 0.005995795130729675,
+            "height": 0.045418500900268555
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 20,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010389341972768307,
+            "drift": 7.62939453125e-06,
+            "height": 0.04541373252868652
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 21,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010389487259089947,
+            "drift": 7.62939453125e-06,
+            "height": 0.04541945457458496
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 22,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010391219519078732,
+            "drift": 0.004161141812801361,
+            "height": 0.045418500900268555
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 23,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010389442555606365,
+            "drift": 7.62939453125e-06,
+            "height": 0.04541945457458496
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 24,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.01039054524153471,
+            "drift": 7.62939453125e-06,
+            "height": 0.04545450210571289
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 25,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010390538722276688,
+            "drift": 0.0,
+            "height": 0.04545450210571289
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 26,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010390225797891617,
+            "drift": 0.0,
+            "height": 0.04545331001281738
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 27,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010391876101493835,
+            "drift": 0.0034621283411979675,
+            "height": 0.045454978942871094
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 28,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010390345007181168,
+            "drift": 0.0,
+            "height": 0.04545331001281738
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 29,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010390703566372395,
+            "drift": 0.0,
+            "height": 0.04545450210571289
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 30,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010390135459601879,
+            "drift": 0.0,
+            "height": 0.04545331001281738
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 31,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010390332899987698,
+            "drift": 0.0,
+            "height": 0.04545331001281738
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        }
+      ],
+      "original_gate": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "speed_rms_m_s": {
+        "status": "AVAILABLE",
+        "count": 32,
+        "mean": 0.010390328097855672,
+        "std": 1.5437387552071417e-06,
+        "min": 0.010386739857494831,
+        "max": 0.010393206030130386,
+        "p95": 0.010392171004787088,
+        "rms": 0.010390328212535849
+      },
+      "horizontal_drift_m": {
+        "status": "AVAILABLE",
+        "count": 32,
+        "mean": 0.001613700806046836,
+        "std": 0.002474314296850387,
+        "min": 0.0,
+        "max": 0.007172675337642431,
+        "p95": 0.006092824041843414,
+        "rms": 0.002954024632773809
+      },
+      "height_deviation_m": {
+        "status": "AVAILABLE",
+        "count": 32,
+        "mean": 0.0454326868057251,
+        "std": 1.3264276818403527e-05,
+        "min": 0.04541373252868652,
+        "max": 0.045454978942871094,
+        "p95": 0.04545450210571289,
+        "rms": 0.04543268874200763
+      },
+      "failure_reasons": {
+        "PASS": 32
+      },
+      "engineering": {
+        "missing": 0,
+        "reset_interrupted": 0,
+        "collision": 0,
+        "height_failure": 0,
+        "evidence_valid": 32
+      },
+      "actual_reset_lanes": 0,
+      "actual_evaluation_v_corr_b": {
+        "units": "m/s",
+        "frame": "body",
+        "xyz": [
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.0005631871987134218,
+            "std": 2.0210000690063015e-05,
+            "min": 0.00038313865661621094,
+            "max": 0.0005865693092346191,
+            "p95": 0.000585019588470459,
+            "rms": 0.0005635497004901729
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.00018871940672397615,
+            "std": 3.981326799759579e-05,
+            "min": 0.0001233816146850586,
+            "max": 0.0006529688835144043,
+            "p95": 0.0002136826515197754,
+            "rms": 0.0001928733024109295
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.001572702033445239,
+            "std": 6.622206350365031e-05,
+            "min": 0.0015477538108825684,
+            "max": 0.002447962760925293,
+            "p95": 0.0015753656625747678,
+            "rms": 0.00157409562851101
+          }
+        ],
+        "horizontal_norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0005953355513292991,
+          "std": 1.9077432670305796e-05,
+          "min": 0.00047395817819051445,
+          "max": 0.0007641359698027372,
+          "p95": 0.0006124423816800117,
+          "rms": 0.0005956411395411255
+        },
+        "norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0016817467385590134,
+          "std": 6.552346066385907e-05,
+          "min": 0.0016502072103321552,
+          "max": 0.0025606569834053516,
+          "p95": 0.0016866803634911776,
+          "rms": 0.0016830227023279416
+        }
+      },
+      "actual_evaluation_v_final_b": {
+        "units": "m/s",
+        "frame": "body",
+        "xyz": [
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.0005631871987134218,
+            "std": 2.0210000690063015e-05,
+            "min": 0.00038313865661621094,
+            "max": 0.0005865693092346191,
+            "p95": 0.000585019588470459,
+            "rms": 0.0005635497004901729
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.00018871940672397615,
+            "std": 3.981326799759579e-05,
+            "min": 0.0001233816146850586,
+            "max": 0.0006529688835144043,
+            "p95": 0.0002136826515197754,
+            "rms": 0.0001928733024109295
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.001572702033445239,
+            "std": 6.622206350365031e-05,
+            "min": 0.0015477538108825684,
+            "max": 0.002447962760925293,
+            "p95": 0.0015753656625747678,
+            "rms": 0.00157409562851101
+          }
+        ],
+        "horizontal_norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0005953355513292991,
+          "std": 1.9077432670305796e-05,
+          "min": 0.00047395817819051445,
+          "max": 0.0007641359698027372,
+          "p95": 0.0006124423816800117,
+          "rms": 0.0005956411395411255
+        },
+        "norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0016817467385590134,
+          "std": 6.552346066385907e-05,
+          "min": 0.0016502072103321552,
+          "max": 0.0025606569834053516,
+          "p95": 0.0016866803634911776,
+          "rms": 0.0016830227023279416
+        }
+      },
+      "actual_evaluation_velocity_b": {
+        "units": "m/s",
+        "frame": "body",
+        "xyz": [
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.00037406747783414574,
+            "std": 0.0001331374505313495,
+            "min": -1.9088487533736043e-05,
+            "max": 0.000601684267167002,
+            "p95": 0.0005709909833967686,
+            "rms": 0.00039705422640640234
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 3.2614006216550586e-05,
+            "std": 0.00015358027291100212,
+            "min": -0.00024321839737240225,
+            "max": 0.000405088096158579,
+            "p95": 0.00033334747713524847,
+            "rms": 0.0001570050114770577
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": -0.0006739672887353265,
+            "std": 0.010359652016417037,
+            "min": -0.08869030326604843,
+            "max": 0.0015814516227692366,
+            "p95": 0.001575040683383122,
+            "rms": 0.010381551994164375
+          }
+        ],
+        "horizontal_norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0004059210043908479,
+          "std": 0.0001324038167496298,
+          "min": 1.586097278050147e-05,
+          "max": 0.0006434897659346461,
+          "p95": 0.0005850003130035474,
+          "rms": 0.00042696912358570414
+        },
+        "norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0035082299958367003,
+          "std": 0.009780145469173485,
+          "min": 0.00047934340545907617,
+          "max": 0.08869030326604843,
+          "p95": 0.00811440008692271,
+          "rms": 0.010390328344276861
+        }
+      },
+      "actual_evaluation_velocity_world": {
+        "units": "m/s",
+        "frame": "world",
+        "xyz": [
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.0003739808754237828,
+            "std": 0.000133339299652705,
+            "min": -2.1491174265975133e-05,
+            "max": 0.0006017229170538485,
+            "p95": 0.0005709783697966486,
+            "rms": 0.0003970403808362731
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 3.258227255659937e-05,
+            "std": 0.00015357341603810897,
+            "min": -0.00024322132230736315,
+            "max": 0.0004050892312079668,
+            "p95": 0.0003333493616082705,
+            "rms": 0.00015699171506346015
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": -0.0006739766887919529,
+            "std": 0.010359652133299146,
+            "min": -0.08869030326604843,
+            "max": 0.0015814402140676975,
+            "p95": 0.0015750282036606222,
+            "rms": 0.010381552721053075
+          }
+        ],
+        "horizontal_norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.00040586016139627646,
+          "std": 0.0001325329842866643,
+          "min": 1.657395296206232e-05,
+          "max": 0.0006435179384425282,
+          "p95": 0.0005850343004567548,
+          "rms": 0.00042695135850883624
+        },
+        "norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.003508229992635279,
+          "std": 0.009780145463638285,
+          "min": 0.00047934340545907617,
+          "max": 0.08869030326604843,
+          "p95": 0.008114400133488839,
+          "rms": 0.010390328337985765
+        }
+      },
+      "policy": "Deterministic mean action, not sampledtraining. Fields actualsame-clock snapshots, no extra sensor/model sample."
+    }
+  },
+  "coverage_complete": true,
+  "all_original_gates_pass": true,
+  "metric": "Unchanged originalZ sensorT0/startup/200steps32lanes/allsubgroups/allfailures",
+  "CPU_only": true,
+  "optimizer_calls": 0,
+  "missing_samples_filled": false
+}

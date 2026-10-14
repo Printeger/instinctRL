@@ -1,5 +1,5 @@
 {
-  "status": "NEW_MEAN_PRIOR_G4_PENDING_NOT_READY",
+  "status": "BOTH_ACTUAL_ORIGINAL_Z_PASS_PENDING_INDEPENDENT_G4",
   "historical_failed_method": {
     "schema_version": "instinctrl-r5-confirmation-freeze/1",
     "status": "FAILED_BOTH_ORIGINAL_Z_FROZEN_METHOD_NOT_QUALIFIED",
@@ -192,13 +192,74 @@
       ],
       "recovery_candidate": "R5-MEAN10-CONFIRM-02-RECOVERY1",
       "recovery_status": "ACTUAL_COMPLETE256_INDEPENDENT_ROLE29_ACCEPTED",
-      "original_Z_status": "PENDING_NOT_RUN",
-      "original_Z": null,
+      "original_Z_status": "ACTUAL_32_OF32_PENDING_ROLE31",
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
       "recovery_actual_job": "J-0ffa8e246076922b",
       "actual_u256_sha256": "47796b6c3804f7bf41a16ef95bb8d0a7c62ebd6a47a3fcb2bda24d1d26b8c54f",
       "training_status": "ACTUAL_COMPLETE256_INDEPENDENT_ROLE29_ACCEPTED",
       "actual_training_review": "reviews/mean-prior-confirmation02-recovery1-actual-training.json",
-      "next_evaluation_candidate": "R5-MEAN10-CONFIRM-02-Z-RECOVERY1"
+      "next_evaluation_candidate": "R5-MEAN10-CONFIRM-02-Z-RECOVERY1",
+      "maxima": {
+        "speed_rms_m_s": 0.010393206030130386,
+        "horizontal_drift_m": 0.007172675337642431,
+        "height_deviation_m": 0.045454978942871094
+      },
+      "evaluation_case": "R5-MEAN10-CONFIRM-02-Z-RECOVERY1",
+      "evaluation_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-02-Z-RECOVERY1/R1-evaluation-analysis.json",
+        "sha256": "58c52371a57f3ad2c9f3c76cb85d95b2920bcd1348ce193f09e6549c24cfd782"
+      },
+      "independent_original_Z_review": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
     }
   ],
   "old_failed_seed_regressions": [
@@ -213,6 +274,7 @@
       "counts_for_G4": false
     }
   ],
-  "all_new_confirmation_seeds_pass": null,
-  "formal_full_training_submitted": false
+  "all_new_confirmation_seeds_pass": false,
+  "formal_full_training_submitted": false,
+  "actual_both_seeds_original_Z_pass": true
 }
