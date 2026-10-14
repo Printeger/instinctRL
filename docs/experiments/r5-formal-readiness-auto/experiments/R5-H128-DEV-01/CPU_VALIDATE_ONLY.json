@@ -1,0 +1,35 @@
+{
+  "status": "VALID",
+  "method": "unified-h1-formal-readiness-v1",
+  "live_authorized": false,
+  "product_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+  "future_modes": [
+    "main",
+    "controlled-failure",
+    "r4-training",
+    "evaluation",
+    "r5-resume",
+    "control-diagnostic",
+    "pilot-training",
+    "pilot-evaluation",
+    "enhanced-b0-diagnostic",
+    "research-training",
+    "research-evaluation"
+  ],
+  "command": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "training_workloads.unified_h1.formal_unified_h1",
+    "--validate-only"
+  ],
+  "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014",
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:isaaclab-training"
+  },
+  "exit_code": 0,
+  "GPU_queries": 0,
+  "simulator_starts": 0
+}

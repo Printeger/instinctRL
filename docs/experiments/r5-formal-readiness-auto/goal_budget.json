@@ -61,7 +61,16 @@
       "output_peak_and_reservations_bytes": 34359738368
     },
     "live_entries": [],
-    "source_snapshots": [],
+    "source_snapshots": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014",
+        "reserved_bytes": 2147483648,
+        "status": "FROZEN_READ_ONLY",
+        "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "observed_file_bytes": 633824147,
+        "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721"
+      }
+    ],
     "confirmation_and_transition": {
       "training_transitions": 524288,
       "nontraining_transitions": 128000,
@@ -85,6 +94,13 @@
       "status": "COMPLETE_INFORMATION_FINDINGS_NOT_PRELIVE_APPROVAL",
       "evidence": "reviews/anchor-information-findings.json",
       "sha256": "89978d990edd32694faeeeb3c79877f50ee8ce8bc447813c65261a58ae890d7c"
+    },
+    {
+      "call": 2,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Exactprelive first128purehovercandidate/config/card/master/AUTHproposed/toolrelease; existinggate/data/actor/lifecycle/budgetbounds, independentreleasecondition",
+      "status": "REQUESTED_PRELIVE"
     }
   ],
   "decisions": [
