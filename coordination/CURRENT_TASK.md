@@ -1,6 +1,6 @@
 # 当前任务
 
-R5-FORMAL-READINESS-AUTO-01，IN_PROGRESS，目标READY_FOR_FORMAL_R5_TRAINING。
+当前唯一LIVE旧seed15新mean10回归J-2fc1731ec6b0a583/A-4a03b10d998ade29，source617/config2e9/controlc468；实际首次512gatePASS，120updates已观察。Role29已独立接受新确认seed18完整256训练及u25647796b6c，并条件接受准确主256原Z预审；只有当前回归终态normalACK/settle/exact2postrun后才能issue/release18原Z。新17原Z32/32已Role28接受；整体G4仍待18实际Z，旧15/16回归不计G4。旧FAILED/INCOMPLETE/full收费保留，formal训练0。
 
 Current ONLYLIVE R0 J-b959e2d9ded9ebb3 / A-cb56dae76162565d, inputaa9664b/push; actualfirst512gatePASS. Samefrozen617af4d/config2e9a7284. R1 scientifictrainingcomplete256/normalACK/settle/2postrun/CPUcoveragePASS; Role22actualcp/fullspecfixclosurepending. NoactualZyet; noformalupdates. MainCPUprepares newcompatibleintegration snapshot only, noG6AUTH orrelease.
 
@@ -35,3 +35,6 @@ Current ONLYLIVE R0 J-b959e2d9ded9ebb3 / A-cb56dae76162565d, inputaa9664b/push; 
 最新第二确认训练闭合：无live。CONFIRM02-RECOVERY1 J-0ffa8e246076922b已complete256/131072/2048Adam each/11writes，实际first512PASS；nativeFAILED/-9/PASS_PENDING_CLOSE/INCOMPLETE/null/full逻辑+output预留保留。normalACK/settle/exact2postrun/CPUcoverage/first8aux原atol+rtol公式核对PASS，u25647796b6c...；70原件1974629011bytes+21621695copies，GPU918.3162130999845/wall920.2723456788808。Role29实际checkpoint/主256Z预审待回。下一提交/push全部证据后先单次release Role25已批准旧seed15的新mean10回归训练A-4a03b10d998ade29，与CPU独审并行；该回归不计G4，method/seed/primary不调。18评价必须等其真实cp被接受及前序终态normalcleanup后准确issue/release；首17原Z32/32已Role28接受。formal0。
 
 当前唯一LIVE/旧seed回归：当前唯一LIVE旧失败seed15的新mean10回归 R5-MEAN10-REGRESSION-15/R1 J-2fc1731ec6b0a583 /A-4a03b10d998ade29，准确input1e8b0cd/push（许可原9265693/tag），source617/config2e9/controlc468，seed20261015/256purehover。真实first512PASS，16updates已观察；只poll此句柄，回归不计G4、不换17/18。新seed18 RECOVERY1已完整256/normalACK/settle/2postrun/CPUcoveragePASS，u25647796b6c...待Role29独立接受后才可原Z评价，且需当前15终态clean。新seed17原Z32/32已Role28独立接受。原旧method失败/资源拒绝/INCOMPLETE/full预留保留；formal训练0。
+
+
+最新权威续接: 当前唯一LIVE旧seed15新mean10回归J-2fc1731ec6b0a583/A-4a03b10d998ade29，source617/config2e9/controlc468；实际首次512gatePASS，120updates已观察。Role29已独立接受新确认seed18完整256训练及u25647796b6c，并条件接受准确主256原Z预审；只有当前回归终态normalACK/settle/exact2postrun后才能issue/release18原Z。新17原Z32/32已Role28接受；整体G4仍待18实际Z，旧15/16回归不计G4。旧FAILED/INCOMPLETE/full收费保留，formal训练0。

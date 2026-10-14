@@ -1,0 +1,209 @@
+{
+  "role": 29,
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "Independent actual CONFIRM02-RECOVERY1 training acceptance and conditional exact primary-u256 original-Z evaluation admission only.",
+  "identities": {
+    "evidence_commit": "1e8b0cdb4d41de3be64a7823fd9be9cfb9c1c7f8",
+    "experiment_id": "R5-MEAN10-CONFIRM-02-RECOVERY1",
+    "job_id": "J-0ffa8e246076922b",
+    "approval_id": "A-c9353393ca6f4909",
+    "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "source_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "launch_sha256": "9407543936abfa7f4e2ac5edf017a009ca3f684f7d4e358e880a693e4798d32f",
+    "packet_sha256": "9407543936abfa7f4e2ac5edf017a009ca3f684f7d4e358e880a693e4798d32f",
+    "actual_training_AUTH_sha256": "5bd016d528df09678042da0dbda0c98042840c9e3b8e435a7833cfced7011d97",
+    "expected_training_AUTH_sha256": {
+      "R1": "5bd016d528df09678042da0dbda0c98042840c9e3b8e435a7833cfced7011d97"
+    },
+    "method_effective_sha256": "c390ab73252ee37da504298ad08498f3d5131866023d9099f52baf3c749a907f",
+    "control_release": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba",
+    "freeze_sha256": "b55f881c8ef1435dcef21e354b8e36d6765d53b2f0dd2b72c18e81b9a40756c4",
+    "actual_training_analysis_sha256": "0306572a20bbe46b1ede9d847368e2573044b5b6d6379a272af925a34ffb1b11"
+  },
+  "actual_training": {
+    "scientific_evidence_accepted": true,
+    "logical_updates": 256,
+    "training_transitions": 131072,
+    "completed_policy_steps": 4096,
+    "actor_Adam_steps": 2048,
+    "critic_Adam_steps": 2048,
+    "training_checkpoint_writes": 11,
+    "initialization_ticks": 2,
+    "explicit_resets": 1,
+    "automatic_reset_lanes": 128,
+    "training_seed": 20261018,
+    "evaluation_seed": 20260909,
+    "mean_prior_weight": 10,
+    "residual_neutrality_weight": 0.05,
+    "anchor_weight": 4,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "all_commands_zero": true
+  },
+  "checks": {
+    "whole_original_job_and_attempt_enumeration": "PASS",
+    "original_and_copy_sha256": "PASS",
+    "inventory_objects": 70,
+    "original_bytes": 1974629011,
+    "archive_copy_bytes": 21621695,
+    "combined_bytes": 1996250706,
+    "request_spec_AUTH_argv_source_config_card_freeze_pins": "PASS",
+    "packet_file_pin_checks": 21,
+    "full_analysis_independently_recomputed_from_originals_equal": true,
+    "complete_update_and_minibatch_coordinates": "256 ordered updates; 8 minibatches/update, 2048 total; 4096 distinct step coordinates and 131072 real lane samples.",
+    "all_11_checkpoint_payloads": "Counters/source/tree/seed/method/curriculum/LRs checked; actual actor and critic Adam state steps independently equal 8*update, init states empty.",
+    "first_real_512_gate": {
+      "status": "PASS",
+      "sample_count": 512,
+      "minibatches": 8,
+      "atol": 1e-06,
+      "rtol": 1e-05,
+      "policy_rng_consumed": false,
+      "boundary": "Frozen driver calls bind/retain/before_update before trainer.update and therefore both optimizer.step calls. Actual PASS and 8 actual completed probe rows preserved.",
+      "saved_input_correspondence": "All8 saved action/advantage/return/index bit-exact to actual retained first512; first preoptimizer stored logp equals collection logp exactly (max abs0). All retained inputs finite.",
+      "CPU_reproduction_limit": "No reviewer actor forward or optimizer, no replacement of original same-device gate by CPU-network recomputation."
+    },
+    "actual_reward_all_samples": {
+      "all_samples": 131072,
+      "maximum_absolute_formula_error": 1.624351773088506e-07,
+      "zero_command_all": true,
+      "zero_extra": {
+        "status": "AVAILABLE",
+        "count": 131072,
+        "mean": -0.06790422351715712,
+        "std": 0.058985154890577284,
+        "min": -1.1833016872406006,
+        "max": -2.140603282896336e-05,
+        "p95": -0.007768941880203784,
+        "rms": 0.08994571734626094
+      },
+      "anchor_reward": {
+        "status": "AVAILABLE",
+        "count": 131072,
+        "mean": -0.19597720059255574,
+        "std": 0.14512547111216934,
+        "min": -0.9236865639686584,
+        "max": -0.0,
+        "p95": -0.03615910448133946,
+        "rms": 0.24386157039932282
+      },
+      "reset_lanes": 128,
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-02-RECOVERY1-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/learning_log/compact_rollouts.jsonl",
+      "raw_sha256": "f7e1722a422ff4984e8eba148712a27a5e8911cfbff1a2289e507e351f431105"
+    },
+    "actual_mean_prior_validation": {
+      "binding": {
+        "actor_only": true,
+        "actual_weight": 10.0,
+        "authorization_sha256": "5bd016d528df09678042da0dbda0c98042840c9e3b8e435a7833cfced7011d97",
+        "hook_installed": true,
+        "mean_prior_contract": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+          "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+        },
+        "runtime_action_replacement": false
+      },
+      "all_minibatch_scalars": {
+        "status": "AVAILABLE",
+        "count": 2048,
+        "mean": 0.05302166075017656,
+        "std": 0.954471551068206,
+        "min": 1.940533365996089e-05,
+        "max": 38.96300506591797,
+        "p95": 0.02527779964730138,
+        "rms": 0.9559431145770401
+      },
+      "first8_recalculated_saved_actual_actor_outputs": true,
+      "maximum_first8_absolute_error": 3.814697265625e-06,
+      "no_extra_actor_forward": true,
+      "limits": "All scalar counts/finiteness checked; exact formula independently recalculated on saved first8 preoptimizer outputs, no claim of unrecorded later full outputs."
+    },
+    "owned_cleanup": {
+      "status": "NORMAL_ACK_2STABLE_NO_SURVIVORS",
+      "quiescent": true,
+      "timed_out": false,
+      "fresh_identity_checks": 5,
+      "identity_matched_survivors": 0
+    },
+    "postrun": "Exactly two recorded frozen-executable queries after normal ACK; GPU537MiB/1%, compute-apps only existing GNOME164MiB. Reviewer issued no query.",
+    "output": "1996250706 bytes original+copies below retained8GiB entry reservation; no quota relaxation."
+  },
+  "accepted_evaluation_checkpoints": [
+    {
+      "group": "R1",
+      "update": 256,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-02-RECOVERY1-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "sha256": "47796b6c3804f7bf41a16ef95bb8d0a7c62ebd6a47a3fcb2bda24d1d26b8c54f",
+      "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "training_seed": 20261018,
+      "actual_training_job": "J-0ffa8e246076922b"
+    }
+  ],
+  "process_and_accounting": {
+    "native_status": "FAILED",
+    "native_exit_code": -9,
+    "reason": "Known app.close hard timeout; no graceful-close or process-PASS claim.",
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "settled": true,
+    "wall_seconds": 920.2723456788808,
+    "allocated_gpu_seconds": 918.3162130999845,
+    "retained_reservations": {
+      "training_transitions": 131072,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 256,
+      "training_checkpoint_writes": 11,
+      "actor_optimizer_steps": 2048,
+      "critic_optimizer_steps": 2048,
+      "allocated_gpu_seconds": 0,
+      "wall_seconds_including_cleanup": 0
+    },
+    "output_reservation_bytes": 8589934592,
+    "old_failed_entry": "J-31eba1c5651ddc1d remains immutable FINAL0/beforeApp/zero checkpoints, with original start/init/output/time charges retained."
+  },
+  "evaluation_admission": {
+    "conditional_pre_live_PASS": true,
+    "mode": "research-evaluation",
+    "primary_update_only": 256,
+    "evaluation_seed": 20260909,
+    "nontraining_transitions": 6400,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "original_protocol": "Original sensor T0, steps0..199, all32 lanes, original startup/safety/thresholds/eight subgroups and full denominator; no splice, no rerun seed17.",
+    "future_checkpoint_template_matches_accepted_actual": true
+  },
+  "conditions": [
+    "Existing Commander must bind this exact accepted independent review SHA, packet/source/config/control identity and the accepted actual u256 SHA into fresh evaluation AUTH/spec; unbound template is not executable approval.",
+    "Issue/release only after every preceding entry is terminal, normal owned ACK/settlement/exact two postrun audits and idle/STOP checks pass; no overlap. This review does not require seed15 regression for G4 but does require its terminal cleanup if it is run first.",
+    "Recheck current master/stage/protected buffers/output/disk and all pinned bytes through existing exact admission; retain all old FAILED/INCOMPLETE charges and output reservations.",
+    "Commit/tag/normal push exact issued inputs before one serial submission; unchanged original coexistence gate and bounded resource-recovery policy remain mandatory.",
+    "Actual seed18 original-Z must be independently reviewed after completion. Seed17 original-Z Role28 acceptance is retained without repeat. Both prospectively frozen17/18 must pass; no replacement, no2of3, no tuning from this result."
+  ],
+  "non_blocking": [
+    {
+      "id": "NATIVE-CLOSE-KNOWN",
+      "finding": "Scientific training/checkpoint evidence is complete despite nativeFAILED/-9, with normal owned cleanup. Formal counters remain INCOMPLETE/null and conservative full reservations retained."
+    },
+    {
+      "id": "AUX-FLOAT32-TOLERANCE",
+      "finding": "First8 saved actual auxiliary formula maximum absolute error3.814697265625e-6 passes unchanged atol1e-6+rtol1e-5. No absolute-only rejection, tolerance widening or full-later-output reconstruction claim."
+    },
+    {
+      "id": "LEGACY-EPISODE-LABELS",
+      "finding": "Frozen source scheduled nearwall episode labels remain metadata-only; pure-hover behavior is verified by actual commands and known pure-hover reset code. No physical nearwall inference from labels."
+    }
+  ],
+  "limits": {
+    "G4_accepted": false,
+    "G6_G7_accepted": false,
+    "READY": false,
+    "release_authorized_by_review": false,
+    "formal_submission_authorized": false,
+    "scientific_training_acceptance_does_not_imply_Z_pass": true,
+    "other_seed_or_cross_seed_bit_equality_claim": false
+  }
+}
