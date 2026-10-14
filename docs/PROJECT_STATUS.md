@@ -5,15 +5,11 @@
 代码、状态、workload、必要工具和测试已整理到本仓库。源历史完整继承到 `903afc5`，
 其后产品集成提交为 `91c6997`，workload/工具集成为 `e7d58d2`。
 
-## 当前 Goal（2026-10-14 自主正式训练准入）
+## 当前 Goal（2026-10-15 自主正式训练准入）
 
-**IN_PROGRESS，非READY。当前唯一live为新方法对照R0 J-b959e2d9ded9ebb3。** 原w.05/anchor4方法虽开发u192/u256均原Z32/32，但两个预先冻结确认seed20261015/20261016的u256均为0/32，当前方法G4失败。确认01最大漂移.787367m；确认02漂移.327584m且高度.216544m。原T0/200steps/所有方向/失败分母保留。Role20已独立接受确认01有效负结果；确认02完整原件已结算，科学独立复核待本轮下一审核。
+**IN_PROGRESS，非READY。** 当前无live。新方法R5-MEAN10-DEV-02两组均完成256updates，实际首512gate PASS；Role22/23已独立接受实际训练及全部预定checkpoint，Role23独立确认初始化和整个首512（含advantages/returns）逐位相同。原生FAILED/-9、INCOMPLETE/null及全额保守预留保持。原Z尚未评价，未授新G2/G3/G4。准确R1评价A-39d43f0334c27afb、R0评价A-2fa520da2ae9c2cf已发行未提交，两组共用Role23准确审核（其中精确引用Role22接受SHA）；先提交/tag/正常push，随后R1→R0严格串行，各12800nontraining、0训练/optimizer/checkpoint写。正式训练未启动。
 
-当前新研究R5-MEAN10-DEV-02已Role21准确预审、提交/tag/push后release候选R1 J-b8ec45f94a245f6a；source617af4d/config2e9a7284/只读快照。双方共享rewardw.05/anchor4/原LR和网络，唯一变量为训练actor-loss零命令Beta均值有限softprior0/10；部署输出不替换、不注入真值。真实首512gate PASS，185updates已观察，预定coldstart256、开发seed20260908、late192/256，原Z未评价。R0准确许可已冻结待串行。本方法未达标前不授新G2/G3/G4。D015原master内阶段额度，所有失败与保护预留不重置。
-
-旧S1 G6/G7/formal实现和启动方案仅历史WIP，需重新绑定将来合格新方法，不能使用旧开发通过绕过确认失败。普通科学负结果继续自主研究，不是DONE/STOP；本Goal不提交正式完整训练。
-
-唯一续接与预算：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[新总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[真实结果](experiments/r5-formal-readiness-auto/EXPERIMENT_RESULTS.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
+旧w.05/anchor4方案两个冻结确认seed均原Z0/32，G4失败保留。当前新方法为有限零命令Beta均值softprior0/10，双方reward.05且无硬零输出。唯一续接和保守账本：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[goal_budget.json](experiments/r5-formal-readiness-auto/goal_budget.json)。
 
 ## 已完成 Goal（2026-10-14 零命令残差单变量）
 

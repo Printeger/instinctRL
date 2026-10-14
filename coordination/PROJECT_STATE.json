@@ -402,7 +402,7 @@
       "G8_exactformalpackage_conditionalpermission",
       "G9_independentreview"
     ],
-    "next_action": "Exactly2boundpostrunqueries then realdataanalysis/independentreview; noblindretry.",
+    "next_action": "当前无live。新方法R5-MEAN10-DEV-02两组均完成256updates，实际首512gate PASS；Role22/23已独立接受实际训练及全部预定checkpoint，Role23独立确认初始化和整个首512（含advantages/returns）逐位相同。原生FAILED/-9、INCOMPLETE/null及全额保守预留保持。原Z尚未评价，未授新G2/G3/G4。准确R1评价A-39d43f0334c27afb、R0评价A-2fa520da2ae9c2cf已发行未提交，两组共用Role23准确审核（其中精确引用Role22接受SHA）；先提交/tag/正常push，随后R1→R0严格串行，各12800nontraining、0训练/optimizer/checkpoint写。正式训练未启动。",
     "training_authorizations_issued": 6,
     "prelive_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-exact-prelive.json",
     "commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json",

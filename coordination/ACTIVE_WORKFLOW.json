@@ -16,7 +16,7 @@
   "new_training_authorized": true,
   "diagnostic_goal_envelope_authorized": false,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "NoLIVE. BothnewmeanDEV02trainingscomplete256/normalACK/settle/2postrun/CPUcoveragePASS, R1Role22 accepted; R0/pairRole23pending thenaccurateoriginalZ approval/commit/tag/push/serialrelease. Noformaltraining.",
+  "live_permission_note": "当前无live。新方法R5-MEAN10-DEV-02两组均完成256updates，实际首512gate PASS；Role22/23已独立接受实际训练及全部预定checkpoint，Role23独立确认初始化和整个首512（含advantages/returns）逐位相同。原生FAILED/-9、INCOMPLETE/null及全额保守预留保持。原Z尚未评价，未授新G2/G3/G4。准确R1评价A-39d43f0334c27afb、R0评价A-2fa520da2ae9c2cf已发行未提交，两组共用Role23准确审核（其中精确引用Role22接受SHA）；先提交/tag/正常push，随后R1→R0严格串行，各12800nontraining、0训练/optimizer/checkpoint写。正式训练未启动。",
   "diagnostic_goal_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "paired_pilot_task_requested": true,
   "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",

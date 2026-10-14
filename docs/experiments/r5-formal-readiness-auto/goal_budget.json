@@ -1048,7 +1048,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "ActualmeanDEV02 R0 complete training/checkpoints, pairedinit+first512fairness includingequaladvantages/returns; exactoriginalZbotharms prelive afterterminalclean",
-      "status": "REQUESTED_AWAIT_R0_COMPLETE"
+      "status": "PASS_ACTUAL_R0_PAIR_FAIRNESS_BOTH_Z_PRELIVE",
+      "evidence": "reviews/mean-prior-R0-training-pair-Z-prelive.json",
+      "sha256": "f953d6826de7e88814116b153cbd85d122320773a30ed2144621900179266fe8"
     }
   ],
   "decisions": [

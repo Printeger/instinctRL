@@ -1,0 +1,159 @@
+{
+  "role": "Role23",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "接受DEV-02实际R0训练及实际配对初始化/首512公平性；条件性准入两组准确原Z/u192、u256评价。不是评价结果、G2/G3/G4、READY或release。",
+  "identities": {
+    "evidence_commit": "309258a1e4e473b5f2a25b7f7882f1bb5cc9bd64",
+    "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "source_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "launch_sha256": "f266163310bc3286e9b8fe39d62cb498d43afb0b11898f83d97210cc49dfaac2",
+    "tool_release": "d027e9a0076377380a4ce277727cba8bfde132a113c9ce2b436c28ab7de9f793",
+    "actual_training_AUTH_sha256": {
+      "R0": "9a9584d6eb66710337e9c9e8d0e0704cf90b0f5b18465381dc832e95d3cc484b",
+      "R1": "f33e9965109a74e9cd4ef25d448e99380f07a68ae49058845a11afe069190b68"
+    },
+    "R0_job_id": "J-b959e2d9ded9ebb3",
+    "R0_approval_id": "A-cb56dae76162565d",
+    "R0_authorized_spec_file_sha256": "060ca97212cf45936f1c19b52ce42ab36cc2bb067bd6d08ecabdf0613e104196",
+    "R1_training_acceptance_sha256": "d77d450df8ff105597d4b685628d922f7d4cadc987e4f7210bc8b6d2ae232348",
+    "actual_pair_comparison_sha256": "2df1b7039188d81a36bdb085861ef0eb87e25547318bfb81db10fe224ab3671c"
+  },
+  "actual_R0_training": {
+    "scientific_training_accepted": true,
+    "inventory": {
+      "original_objects": 70,
+      "original_bytes": 2576564406,
+      "archive_copy_bytes": 21579086,
+      "combined_bytes": 2598143492,
+      "result": "全部原件和copies实际逐文件重哈希、大小核对通过；完整job及整个attempt枚举与inventory完全相等。"
+    },
+    "binding": "actual request.spec与authorized spec一致，实际AUTH及全部spec pins核对通过。",
+    "coverage": {
+      "completed_updates": 256,
+      "completed_minibatches": 2048,
+      "returned_policy_steps": 4096,
+      "training_transitions": 131072,
+      "actor_Adam_steps": 2048,
+      "critic_Adam_steps": 2048,
+      "checkpoint_writes": 11,
+      "explicit_resets": 1,
+      "automatic_reset_lanes": 128,
+      "initialization_physics_ticks": 2,
+      "result": "实际重读全部update/minibatch和compact rollout，核对顺序、每epoch全部512样本一次覆盖、全部32lane及零命令。"
+    },
+    "method": {
+      "training_seed": 20260908,
+      "mean_prior_weight": 0,
+      "residual_reward_weight": 0.05,
+      "anchor_weight": 4,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "effective_method_sha256": "3f0df003066ffd5166455c17d8121f50baa9eed9c5e70a4af79fc9280d1fe234",
+      "auxiliary_loss": "全部2048个实际minibatch scalar精确为0。",
+      "reward_formula": "独立重算全部131072样本的实际零命令残差奖励，最大绝对误差9.105210985183021e-08。"
+    },
+    "first_real_gate": "生产PASS512；实际首输入、索引、动作、old logp及8个pre/post probe对应。保留原1e-6/1e-5容差和先于两类optimizer的执行边界。",
+    "checkpoints": "实际读取全部11个PT，核对source、seed、method、pure-hover clock、LR、绝对计数，以及模型/Adam张量有限性与每个Adam状态step。"
+  },
+  "actual_pair_fairness": {
+    "accepted": true,
+    "independent_check": "重新读取两组实际init和整个首512 retained文件，并逐字节比较张量，而非只接受报告布尔值。",
+    "init_equal": [
+      "actor",
+      "critic",
+      "source_identity",
+      "network_config",
+      "ppo_config",
+      "training_seed",
+      "curriculum",
+      "counters",
+      "RNG",
+      "empty actor_optimizer",
+      "empty critic_optimizer"
+    ],
+    "first512_equal": [
+      "policy.lidar_grid",
+      "policy.state_vec",
+      "privileged",
+      "actions",
+      "old_alpha",
+      "old_beta",
+      "old_log_probabilities",
+      "advantages",
+      "returns"
+    ],
+    "both_actual_probability_gates": "PASS512",
+    "sole_registered_intervention": "同版本、同初始化、同首rollout、双方reward.05，只有后续actor mean-prior权重0与10不同；不使用旧reward差异豁免。",
+    "limit": "公平性验收不等于原Z改善或原因证明；后续实际策略与物理轨迹差异仍须按原评价判断。"
+  },
+  "accepted_evaluation_checkpoints": [
+    {
+      "group": "R0",
+      "update": 192,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u192.pt",
+      "sha256": "2ca82ba669f6bc05263a9751ef851147e40ebd187b651cc04e2683d8fce5003e",
+      "source_commit": "617af4d90c35e333c97692bdee90146804476edf"
+    },
+    {
+      "group": "R0",
+      "update": 256,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "sha256": "b75698b3ae7b85443d57e5e6a147a85027ced70a9a5ffa6809f55451b8b11821",
+      "source_commit": "617af4d90c35e333c97692bdee90146804476edf"
+    },
+    {
+      "group": "R1",
+      "update": 192,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u192.pt",
+      "sha256": "e01be5cff6837e3b6458768a2cd754e09591c980fdacd00a249262e56faa547b",
+      "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "acceptance": "Role22已接受，本轮引用其精确记录。"
+    },
+    {
+      "group": "R1",
+      "update": 256,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+      "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "acceptance": "Role22已接受，本轮引用其精确记录。"
+    }
+  ],
+  "R0_lifecycle_accounting": {
+    "native_status": "FAILED",
+    "native_exit_code": -9,
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "full_logical_reservations_retained": true,
+    "wall_seconds": 962.0840682969429,
+    "allocated_GPU_seconds": 960.5027795620263,
+    "cleanup": "normal ACK、两次稳定空扫描、quiescent、未timed_out、无survivors；再次只读核对9个已知身份均不再owned。",
+    "postrun": "恰好ordinal0/1两份原授权receipt，normal owned ACK后；本轮无GPU查询。",
+    "process_PASS_granted": false
+  },
+  "conditions": [
+    "两组评价分别绑定本准确prelive/fairness审核和各自实际checkpoint acceptance；R1同时保留Role22精确接受记录，R0使用本轮接受记录。",
+    "各组只评价预先登记u192/u256、eval seed20260909、原T0及每节点200×32lane；各12800非训练、0训练/update/checkpoint写，原startup、方向、阈值、失败分母与子组不变。",
+    "实际AUTH必须填入上述真实path/SHA/source，通过现有Commander准确validate/propose/approve，并在提交/tag/正常push之后才release。",
+    "严格串行，每次release重核前序终态、normal owned cleanup/结算、STOP、idle、pins、disk、输出quota、全部stage/master及保护预留和原内部coexistence门槛。",
+    "保留两组native FAILED、INCOMPLETE/null和全部保守预留；训练数据接受不将其重标为process PASS或退款。",
+    "评价必须完整保留两组全部预定节点；不得按中途结果选节点、改阈值、加lambda或扩展超过256。",
+    "本轮不授G2/G3/G4、实际G6/G7、READY、正式训练提交或任何自动重试。"
+  ],
+  "non_blocking": [
+    {
+      "id": "EVALUATION_PENDING",
+      "detail": "完整公平配对训练不预设mean prior胜负；所有原Z结论等待实际结果和独立评分。"
+    },
+    {
+      "id": "LEGACY_METADATA",
+      "detail": "冻结源码既有nearwall episode标签问题继续按披露处理，不能替代实际命令/reset证据或用于推断物理nearwall。"
+    }
+  ],
+  "release_granted": false,
+  "G2_G3_granted": false,
+  "G4_granted": false,
+  "READY_granted": false
+}
