@@ -34,8 +34,8 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 31,
-    "simulator_initialization_reservations": 31,
+    "live_starts": 32,
+    "simulator_initialization_reservations": 32,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
@@ -1182,6 +1182,28 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 6442150,
         "inventory": "experiments/R5-MEAN10-REGRESSION-15/live/R1-research-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-MEAN10-INTEGRATION-02-R1-RESEARCH-TRANSITION-feb1e96f97e4",
+        "job_id": "J-0daf4f4bbd3ab33d",
+        "experiment_id": "R5-MEAN10-INTEGRATION-02",
+        "group": "R1",
+        "mode": "research-transition",
+        "status": "RUNNING",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 3584,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 910,
+          "wall_seconds_including_cleanup": 910
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {},
+        "postrun_queries_used": 0,
+        "settled": false
       }
     ],
     "source_snapshots": [
@@ -1520,6 +1542,13 @@
       "status": "PASS_ACTUAL_BOTH_UNUSED_CONFIRMATIONS_G4_REG16_TRAINING_FOUR_G6_PINS",
       "evidence": "reviews/mean-prior-G4-regression16-training.json",
       "sha256": "3014f26b1dc5fcd4069c2632684e133bb7944fa14c0d7b05284e29694d018a64"
+    },
+    {
+      "call": 32,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Final actual validation: reg15/reg16 originalZ, actualfiniteG6/G7 complete evidence whenavailable, frozenformalmanifest/completeconditionalpackage andG1-G9 final independentreview; no READY before allactualterminalmaterials, no formal submit.",
+      "status": "IN_PROGRESS_FINAL_ACTUAL_VALIDATION_AND_PACKAGE_REVIEW"
     }
   ],
   "decisions": [

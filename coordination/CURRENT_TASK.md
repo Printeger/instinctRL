@@ -1,6 +1,6 @@
 # 当前任务
 
-当前无live。Role31正式独立G4_granted:true，新冻结17/18primary256原Z均32/32/all8groups4/4已接受；旧16完整训练/u256亦接受。旧15新mean10原Z已实际32/32/all8groups4/4，maxspeed.0104156984/drift.0116864443/height.0460669994，normalACK/settle/exact2postrun/CPU原函数PASS，nativeFAILED/-9/INCOMPLETE/full6400保持，最终独审待做。Commander准确G6G7 INTEGRATION02 A-86647b710bc0825e已发行，S3feb/configd263/actualAUTH3d7497.../四真实DEV02pins已绑实际G4；旧16准确Z亦发行未提交。下一commit/tag/push后仅单次release G6，3584nontrain、0训练/optimizer/writes，随后16Z；formal0。
+当前唯一LIVE真实G6G7 R5-MEAN10-INTEGRATION-02/R1 J-0daf4f4bbd3ab33d/A-86647b710bc0825e，准确inputs4420fda/tag/push，sourceS3feb1e96/configd263/controlc468/actualAUTH3d749754；已绑定Role31真实G4及四DEV02u1/input/probe/u256，3584nontraining、0训练/optimizer/写checkpoint。旧15新方法原Z实际32/32/all8groups4/4及清理结算CPU完成；旧16准确Z A-bef3481b00c09c72后续串行。Role32最终实际验证/包审核已启动，但G6G7未完成、非READY。只poll本句柄，formal0。
 
 Current ONLYLIVE R0 J-b959e2d9ded9ebb3 / A-cb56dae76162565d, inputaa9664b/push; actualfirst512gatePASS. Samefrozen617af4d/config2e9a7284. R1 scientifictrainingcomplete256/normalACK/settle/2postrun/CPUcoveragePASS; Role22actualcp/fullspecfixclosurepending. NoactualZyet; noformalupdates. MainCPUprepares newcompatibleintegration snapshot only, noG6AUTH orrelease.
 
@@ -68,3 +68,6 @@ Current ONLYLIVE R0 J-b959e2d9ded9ebb3 / A-cb56dae76162565d, inputaa9664b/push; 
 
 
 最新权威续接: 当前无live。Role31正式独立G4_granted:true，新冻结17/18primary256原Z均32/32/all8groups4/4已接受；旧16完整训练/u256亦接受。旧15新mean10原Z已实际32/32/all8groups4/4，maxspeed.0104156984/drift.0116864443/height.0460669994，normalACK/settle/exact2postrun/CPU原函数PASS，nativeFAILED/-9/INCOMPLETE/full6400保持，最终独审待做。Commander准确G6G7 INTEGRATION02 A-86647b710bc0825e已发行，S3feb/configd263/actualAUTH3d7497.../四真实DEV02pins已绑实际G4；旧16准确Z亦发行未提交。下一commit/tag/push后仅单次release G6，3584nontrain、0训练/optimizer/writes，随后16Z；formal0。
+
+
+最新权威续接: 当前唯一LIVE真实G6G7 R5-MEAN10-INTEGRATION-02/R1 J-0daf4f4bbd3ab33d/A-86647b710bc0825e，准确inputs4420fda/tag/push，sourceS3feb1e96/configd263/controlc468/actualAUTH3d749754；已绑定Role31真实G4及四DEV02u1/input/probe/u256，3584nontraining、0训练/optimizer/写checkpoint。旧15新方法原Z实际32/32/all8groups4/4及清理结算CPU完成；旧16准确Z A-bef3481b00c09c72后续串行。Role32最终实际验证/包审核已启动，但G6G7未完成、非READY。只poll本句柄，formal0。
