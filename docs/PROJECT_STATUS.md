@@ -7,9 +7,9 @@
 
 ## 当前 Goal（2026-10-15 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 无live。新方法开发G2/G3已Role24独立接受（原Z192/256均32/32及各子组4/4）。首个新seed17已Role27接受完整训练/u256，实际主256原Z32/32、maxdrift.019358605m、maxspeed.010489066m/s、maxheight.047899961m，Role28科学独审中。第二新seed18原入口App前GPU1/1/9%>5%拒绝，正式FINAL0、0训练/rollout/gate/optimizer/writes，normalACK/settle/2postrun完成，原start/init/output/time保留。146.38秒有界退避后，01评价原共存4/1/1% PASS，事件实测恢复。准确同seed18 RECOVERY1 packet94075439...及D017（仅+1start/init/+8GiB）待Role28预审；全部master/保护额/旧收费不变。G4/G6G7/final包仍待；formal训练0。
+**IN_PROGRESS，非READY。** 当前唯一LIVE CONFIRM02-RECOVERY1/R1 J-0ffa8e246076922b /A-c9353393ca6f4909，准确inputs37b9bdc/tag/push，S2source617/config2e9/controlc468/同冻结seed20261018/meanprior10/256purehover。该入口自身原共存4/1/3% PASS，真实首次512gate PASS先于两类optimizer，2updates已观察；只poll此句柄，终态normalACK/settle/恰好2postrun/CPU后再独立实际checkpoint审核及主256原Z。原J31资源拒绝永久保留，收费不重置。首新seed17原Z32/32已Role28独立接受；整体G4仍需18实际Z通过。旧15/16回归未启动，formal训练0。
 
-冻结确认seed17/18必须均原主256通过，旧失败15/16回归不计G4；旧w.05-only两个确认失败完整保留。唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
+开发192/256均原Z32/32已Role24接受；旧w.05-only两确认失败和旧预算仍保留。唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 
 ## 已完成 Goal（2026-10-14 零命令残差单变量）
 
