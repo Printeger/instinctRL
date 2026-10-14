@@ -1,0 +1,176 @@
+{
+  "status": "PASS_TRAINING_INPUTS_AND_DRAFT_EVALUATION_STRUCTURE_ONLY",
+  "initial_validation_rejection_preserved": {
+    "operation": "Tried strictvalidate_parameters on unresolved evaluationproposal",
+    "error": "PermissionError: research checkpoint identity drift",
+    "meaning": "Expected guard refuses null futurecheckpoint SHA/path; noactualAUTHissued orruntime. Corrected audit distinguishes generatedtemplate structuralchecks from executableactualAUTHvalidation."
+  },
+  "cases": [
+    {
+      "experiment_id": "R5-MEAN10-CONFIRM-01",
+      "packet_sha256": "d595dcd20fd49e7251956b2f93593c138cf442a0836e303fac535e12d81c2905",
+      "entries": [
+        {
+          "mode": "research-training",
+          "scope": "Training exactparameter/budget validation PASS",
+          "budget": {
+            "live_process_starts": 1,
+            "simulator_initializations": 1,
+            "initialization_ticks": 10,
+            "training_transitions": 131072,
+            "nontraining_transitions": 0,
+            "optimizer_updates": 256,
+            "checkpoint_writes": 11,
+            "explicit_resets": 1,
+            "automatic_resets": 131072,
+            "wall_seconds": 7200
+          },
+          "expected_AUTH_sha256": "2d6d13531153923f299ee94b43a84a8e4185be3a2a643054d747635732067e69"
+        },
+        {
+          "mode": "research-evaluation",
+          "scope": "Nonexecutable generatedevaluationtemplate structural identity only; actualcheckpoint must later exist/hash/independentaccept before exactAUTH/validate",
+          "budget": {
+            "live_process_starts": 1,
+            "simulator_initializations": 1,
+            "initialization_ticks": 10,
+            "training_transitions": 0,
+            "nontraining_transitions": 6400,
+            "optimizer_updates": 0,
+            "checkpoint_writes": 0,
+            "explicit_resets": 1,
+            "automatic_resets": 6400,
+            "wall_seconds": 1800
+          },
+          "expected_AUTH_sha256": null
+        }
+      ]
+    },
+    {
+      "experiment_id": "R5-MEAN10-CONFIRM-02",
+      "packet_sha256": "8d71176b382f9c86592449982fd82ab57ddf1ebedd076050a3ac3b817306c592",
+      "entries": [
+        {
+          "mode": "research-training",
+          "scope": "Training exactparameter/budget validation PASS",
+          "budget": {
+            "live_process_starts": 1,
+            "simulator_initializations": 1,
+            "initialization_ticks": 10,
+            "training_transitions": 131072,
+            "nontraining_transitions": 0,
+            "optimizer_updates": 256,
+            "checkpoint_writes": 11,
+            "explicit_resets": 1,
+            "automatic_resets": 131072,
+            "wall_seconds": 7200
+          },
+          "expected_AUTH_sha256": "82cbba77ae30f5dda9be8dad25eee5f2823d88e8777b69c8cdcb2614e6d2ecec"
+        },
+        {
+          "mode": "research-evaluation",
+          "scope": "Nonexecutable generatedevaluationtemplate structural identity only; actualcheckpoint must later exist/hash/independentaccept before exactAUTH/validate",
+          "budget": {
+            "live_process_starts": 1,
+            "simulator_initializations": 1,
+            "initialization_ticks": 10,
+            "training_transitions": 0,
+            "nontraining_transitions": 6400,
+            "optimizer_updates": 0,
+            "checkpoint_writes": 0,
+            "explicit_resets": 1,
+            "automatic_resets": 6400,
+            "wall_seconds": 1800
+          },
+          "expected_AUTH_sha256": null
+        }
+      ]
+    },
+    {
+      "experiment_id": "R5-MEAN10-REGRESSION-15",
+      "packet_sha256": "6a644fe63143353e3bbcf4c32e89a9cb9c2967b02b61678d335db53229489c3b",
+      "entries": [
+        {
+          "mode": "research-training",
+          "scope": "Training exactparameter/budget validation PASS",
+          "budget": {
+            "live_process_starts": 1,
+            "simulator_initializations": 1,
+            "initialization_ticks": 10,
+            "training_transitions": 131072,
+            "nontraining_transitions": 0,
+            "optimizer_updates": 256,
+            "checkpoint_writes": 11,
+            "explicit_resets": 1,
+            "automatic_resets": 131072,
+            "wall_seconds": 7200
+          },
+          "expected_AUTH_sha256": "64623c3f3e9bd843c0ffc1766449e2730a058a58e50a033ab2a8a7ca2647cc19"
+        },
+        {
+          "mode": "research-evaluation",
+          "scope": "Nonexecutable generatedevaluationtemplate structural identity only; actualcheckpoint must later exist/hash/independentaccept before exactAUTH/validate",
+          "budget": {
+            "live_process_starts": 1,
+            "simulator_initializations": 1,
+            "initialization_ticks": 10,
+            "training_transitions": 0,
+            "nontraining_transitions": 6400,
+            "optimizer_updates": 0,
+            "checkpoint_writes": 0,
+            "explicit_resets": 1,
+            "automatic_resets": 6400,
+            "wall_seconds": 1800
+          },
+          "expected_AUTH_sha256": null
+        }
+      ]
+    },
+    {
+      "experiment_id": "R5-MEAN10-REGRESSION-16",
+      "packet_sha256": "557cdbdb94afe50938a8f9f43c9ee1debb470e3c8bad3cdcfb2902e5439dd781",
+      "entries": [
+        {
+          "mode": "research-training",
+          "scope": "Training exactparameter/budget validation PASS",
+          "budget": {
+            "live_process_starts": 1,
+            "simulator_initializations": 1,
+            "initialization_ticks": 10,
+            "training_transitions": 131072,
+            "nontraining_transitions": 0,
+            "optimizer_updates": 256,
+            "checkpoint_writes": 11,
+            "explicit_resets": 1,
+            "automatic_resets": 131072,
+            "wall_seconds": 7200
+          },
+          "expected_AUTH_sha256": "a87b2d2f3f02b4d442068ca29f001e333f3d36cbbd0f375428efa0943073c3b7"
+        },
+        {
+          "mode": "research-evaluation",
+          "scope": "Nonexecutable generatedevaluationtemplate structural identity only; actualcheckpoint must later exist/hash/independentaccept before exactAUTH/validate",
+          "budget": {
+            "live_process_starts": 1,
+            "simulator_initializations": 1,
+            "initialization_ticks": 10,
+            "training_transitions": 0,
+            "nontraining_transitions": 6400,
+            "optimizer_updates": 0,
+            "checkpoint_writes": 0,
+            "explicit_resets": 1,
+            "automatic_resets": 6400,
+            "wall_seconds": 1800
+          },
+          "expected_AUTH_sha256": null
+        }
+      ]
+    }
+  ],
+  "aggregate_budget_decision": "D016-confirmation-and-old-seed-regression-allocation.json",
+  "new_AUTH_issued": 0,
+  "GPU_queries": 0,
+  "live_starts": 0,
+  "training_updates": 0,
+  "scope": "Each remaining check prospective, not aggregatepermission. Every actualsubmit rechecks cumulativeledger under exactper-entry review/release."
+}

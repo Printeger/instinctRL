@@ -1132,6 +1132,13 @@
       "status": "PASS_ACTUAL_PAIR_G2_G3_ONLY",
       "evidence": "reviews/mean-prior-DEV02-actual-pair-Z.json",
       "sha256": "521fd7692883d5950d9bb3cada49a653a6e1f7546bd86b9d35f03b473b2435b3"
+    },
+    {
+      "call": 25,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Newcontrol c468/52CPU exactCommander formalhook+seedcompatibility; immutablemeanfreeze/two unusedconfirmations andbotholdfailedseedregressions fourexactpackets/D016. NoactualG4/READY/formalrelease.",
+      "status": "IN_PROGRESS"
     }
   ],
   "decisions": [

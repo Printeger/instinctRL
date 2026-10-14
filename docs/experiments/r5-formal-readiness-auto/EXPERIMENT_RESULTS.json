@@ -566,6 +566,302 @@
         "update": 256
       },
       "all_episodes_analysis": "docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/pair-results.json"
+    },
+    {
+      "experiment_id": "R5-MEAN10-DEV-02",
+      "group": "R0",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 192,
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.016317671164870262,
+        "horizontal_drift_m": 0.2637288570404053,
+        "height_deviation_m": 0.09432864189147949
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-EVALUATION-617af4d90c35/results/research-evaluation/evaluation_raw/research_R0_u192/Z.jsonl",
+      "raw_sha256": "6f2bc7c73c989b61cc76f2b793487377d8cb938055496ba34bab6ec26c9bdf17",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u192.pt",
+        "sha256": "2ca82ba669f6bc05263a9751ef851147e40ebd187b651cc04e2683d8fce5003e",
+        "update": 192
+      },
+      "all_episodes_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-DEV-02/R0-evaluation-analysis.json",
+        "sha256": "1c5b20182f3493ded5609e5631d00875bf6d6c32f878d10945a8891aced55c78"
+      }
+    },
+    {
+      "experiment_id": "R5-MEAN10-DEV-02",
+      "group": "R0",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 256,
+      "original_Z": {
+        "successes": 0,
+        "total": 32,
+        "pass": false,
+        "wilson_95": [
+          0.0,
+          0.10717919825507058
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d1": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d2": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d3": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d4": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d5": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d6": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d7": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.01772424206137657,
+        "horizontal_drift_m": 0.2361323982477188,
+        "height_deviation_m": 0.2290041446685791
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-EVALUATION-617af4d90c35/results/research-evaluation/evaluation_raw/research_R0_u256/Z.jsonl",
+      "raw_sha256": "4f217a011a1a9deb81199a70c115bae00b11845b601a1c0ba58cc2a56c40443d",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "b75698b3ae7b85443d57e5e6a147a85027ced70a9a5ffa6809f55451b8b11821",
+        "update": 256
+      },
+      "all_episodes_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-DEV-02/R0-evaluation-analysis.json",
+        "sha256": "1c5b20182f3493ded5609e5631d00875bf6d6c32f878d10945a8891aced55c78"
+      }
+    },
+    {
+      "experiment_id": "R5-MEAN10-DEV-02",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 192,
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.010518797673285007,
+        "horizontal_drift_m": 0.03178948163986206,
+        "height_deviation_m": 0.04601573944091797
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-EVALUATION-617af4d90c35/results/research-evaluation/evaluation_raw/research_R1_u192/Z.jsonl",
+      "raw_sha256": "a67c988fef147db95ae72e603f41e74cec5999eba53b1f45715c5f86a145003c",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u192.pt",
+        "sha256": "e01be5cff6837e3b6458768a2cd754e09591c980fdacd00a249262e56faa547b",
+        "update": 192
+      },
+      "all_episodes_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-DEV-02/R1-evaluation-analysis.json",
+        "sha256": "054b3ea4d285d56e2418a4fe6d8c371fd81609f31aa0abb938baddc50bdb3c46"
+      }
+    },
+    {
+      "experiment_id": "R5-MEAN10-DEV-02",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 256,
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.01045077946037054,
+        "horizontal_drift_m": 0.010402660816907883,
+        "height_deviation_m": 0.05112266540527344
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-EVALUATION-617af4d90c35/results/research-evaluation/evaluation_raw/research_R1_u256/Z.jsonl",
+      "raw_sha256": "91c55ab0471deba08e9b944ec29321dd1fbe59567fd9ece9eabbeab1a88c4490",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+        "update": 256
+      },
+      "all_episodes_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-DEV-02/R1-evaluation-analysis.json",
+        "sha256": "054b3ea4d285d56e2418a4fe6d8c371fd81609f31aa0abb938baddc50bdb3c46"
+      }
     }
   ],
   "actual_entries": [
@@ -1092,7 +1388,7 @@
     }
   ],
   "master_ledger": "goal_budget.json",
-  "next_experiment": "Frozenconfirmation01/02 exacttrainingapprovalsissued; prospectiveprimary256 unchanged, waitcommit/tag/push+realadmission.",
+  "next_experiment": "Independentexactprelive review newcontrol52CPU+freeze/D016/fourfixedcards, issue newunusedconfirmation01 afterPASS, commit/tag/push/single release. Noformaltraining.",
   "confirmation_seed_results": [],
   "H256_status": "INDEPENDENT_ROLE15_ACTUAL_PAIR_PASS_R1_G2_G3_DEVELOPMENT_ONLY",
   "H256_R0_u256_failure_scope": "All32 engineeringheightfailure + RESET_INTERRUPTED_NO_SPLICE/evidence_validfalse, no missingraw; full200steps preserved but drift notuninterrupted steadytrajectory. Full originalfailuredenominator retained.",
@@ -1113,8 +1409,18 @@
     "all_native_and_logical_reservations_preserved": true
   },
   "current_candidate": {
-    "case": "R5-MEAN10-DEV-02",
-    "status": "CPU_PREPARATION_PRELIVE_PENDING",
-    "old_DEV01": "CPU configload rejection; no live; preservedsnapshot and2GiBreservation"
+    "experiment_id": "R5-MEAN10-DEV-02",
+    "status": "G2_G3_INDEPENDENT_PASS_G4_PENDING",
+    "independent_review": "reviews/mean-prior-DEV02-actual-pair-Z.json",
+    "method_freeze": "MEAN_PRIOR_CONFIRMATION_METHOD_FREEZE.json",
+    "two_unused_confirmations": [
+      20261017,
+      20261018
+    ],
+    "old_seed_regressions": [
+      20261015,
+      20261016
+    ],
+    "formal_submitted": false
   }
 }
