@@ -14,11 +14,36 @@ def sha(p):
 def save(p,v,*,new=False):
  if new:assert not p.exists(),p
  p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n')
+def previous_quiescence(control,state,*,probe=None):
+ from rlflow.jobs import owns
+ probe = owns if probe is None else probe
+ observations=[]
+ for jid,j in state['jobs'].items():
+  assert j['status'] in ['FAILED','STOPPED','SUCCEEDED'] and not probe(j.get('identity')),jid
+  d=control/'jobs'/jid;ackp=d/'lifeguard-ack.json'
+  if ackp.exists():
+   ack=read(ackp);clean=ack['descendant_cleanup'];assert ack['no_survivors'];boundary='NORMAL_ACK'
+  else:
+   # Exact historical exception only: the old watchdog recovery is already
+   # independently accepted and must never impersonate a normal handshake.
+   assert control.resolve()==CONTROL and jid=='J-afe4bda51f5206e5','Missing normal cleanup ACK: '+jid
+   history=read(BASE/'HISTORICAL_CLEANUP_REUSE.json');assert history['job_id']==jid
+   for pin in history['pins'].values():assert sha(Path(pin['path']))==pin['sha256']
+   e=state['evidence'][history['accepted_evidence_id']];assert e['accepted'] and e['sha256']==history['pins']['review']['sha256'] and e['path']==history['pins']['review']['path']
+   settlement=read(Path(history['pins']['settlement']['path']));assert settlement['job_id']==jid and settlement['normal_completion_ack_present'] is False and settlement['no_known_owned_survivors']
+   clean=settlement['descendant_cleanup'];boundary='INDEPENDENTLY_ACCEPTED_HISTORICAL_KNOWN_OWNERSHIP_RECOVERY_NOT_NORMAL_ACK'
+  assert clean['quiescent'] and clean['stable_scans']>=2 and not clean['survivors'] and not clean.get('timed_out',False),jid
+  guard=read(d/'lifeguard-ready.json')['identity'];child=read(d/'process-identity.json')
+  ledger=read(d/'descendant-ledger.json')
+  ids=[j.get('identity'),guard,child]+clean['discovered']+ledger['descendants']
+  assert not any(probe(i) for i in ids),jid
+  observations.append({'job_id':jid,'boundary':boundary,'all_recorded_owned_absent':True})
+ return observations
+
 def idle(store):
  from rlflow import policy
- from rlflow.jobs import owns
  s=store.replay();assert not policy.stopped(CONTROL) and not s['paused']
- assert all(j['status'] in ['FAILED','STOPPED','SUCCEEDED'] and not owns(j.get('identity')) for j in s['jobs'].values())
+ previous_quiescence(CONTROL,s)
  return s
 
 def remaining_check(b,budget,output_cap):
@@ -40,6 +65,8 @@ def remaining_check(b,budget,output_cap):
  for key,src in FIELDS.items():assert used[key]+sum(e['reserved'][key] for e in entries)+budget[src]<=stage[key],key+' stage'
  assert used['live_starts']+1<=stage['live_starts'],'stage starts'
  assert used['simulator_initialization_reservations']+1<=stage['simulator_initialization_reservations'],'stage init'
+ for key in ['allocated_gpu_seconds','wall_seconds_including_cleanup']:
+  assert used[key]+sum(e['reserved'][key] for e in entries)+budget['wall_seconds']+10<=stage[key],key+' stage'
  assert sum(e['output_cap_bytes'] for e in entries)+sum(s['reserved_bytes'] for s in b['reservations']['source_snapshots'])+output_cap+2*1024**3<=stage['output_peak_and_reservations_bytes'],'stage output'
  return {'conservative_output_reserved_bytes_including_confirmation_formal_and_metadata':output}
 

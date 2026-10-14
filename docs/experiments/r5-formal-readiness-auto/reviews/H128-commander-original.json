@@ -1,0 +1,57 @@
+{
+  "verdict": "MUST_FIX",
+  "scope": "仅审核薄Commander适配器的授权、admission、结算和postrun连接；不重开已接受的方法预审。",
+  "identities": {
+    "adapter_commit": "b658653000e5def7b0124a2bbda70a125eb7cb8d",
+    "script": "tools/r5_formal_commander.py",
+    "script_sha256": "972db5efa82d369cdd7775c8381e4399e4f7a9baa9d1600dfb1d3d05a36f657b",
+    "packet_sha256": "fe77bc508583668d4ab593877429170a63f4849938a513b941c64ba55db8074a",
+    "method_source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02"
+  },
+  "must_fix": [
+    {
+      "id": "ADMISSION-STAGE-TIME-R1",
+      "contract": "每次提交必须同时满足已登记阶段和master的wall/GPU上限；阶段扩展需先记录，不能仅因master尚有余额而默认越过。",
+      "evidence": "remaining_check检查master allocated_gpu_seconds/wall_seconds_including_cleanup，但stage检查仅覆盖FIELDS、starts/init和output，遗漏这两项。独立无副作用CPU反例将任一stage时间额度设为0，下一3610秒入口仍通过。现18测试的stage参数列表也没有这两项。",
+      "impact": "适配器可在未登记阶段扩展时释放超出阶段wall/GPU额度的入口，违背所声明的全部阶段维度admission。",
+      "closure": "增加stage used+existing live-entry time reservations+next budget.wall_seconds+10检查，分别约束wall/GPU；补两项stage耗尽拒绝和非零既用/预留边界测试。保持master保护预留算法及不退款语义。"
+    },
+    {
+      "id": "ADMISSION-QUIESCENCE-R1",
+      "contract": "启动新GPU入口前，所有先前相关作业的owned cleanup必须已确认；仅终态和owner消失不足以证明guard/child/descendants已清理。",
+      "evidence": "idle()只检查job状态属于FAILED/STOPPED/SUCCEEDED及not owns(job.identity)，未检查ACK、guardian、child或discovered descendants。独立惯性CPU fixture中，terminal FAILED且无任何cleanup ACK的job仍被接受。现有experiments._finish_worker在await_normal_cleanup异常时会写FAILED receipt，因此terminal状态不保证清理成功。",
+      "impact": "关闭/guardian异常时，issue/submit可把未确认清理的旧作业当作idle，违背单GPU串行与未知所有权必须停止的边界。",
+      "closure": "为submit前的相关真实旧作业增加准确quiescence验证，复用settle已有normal ACK两次稳定扫描、无survivors及owner/guard/child/discovered !owns检查；已有独立接受的recovery证据须按其明确身份处理，不能伪装normal ACK。补missing ACK、活guardian/child/descendant及cleanup timed-out的拒绝fixture，以及正常清理通过fixture。"
+    }
+  ],
+  "accepted_parts": [
+    "issue要求精确packet/source及预期AUTH哈希和Store中accepted master predicate，复用现有validate/propose/decide；训练字节和方法输入没有被重新定义。",
+    "submit要求准确已提交spec、HEAD与origin/main一致、工具release一致、预算预留先于experiments.submit，并阻止相同spec重复提交。",
+    "master逻辑transitions/updates/Adam/checkpoint/output及formal/confirmation保护预留已有检查；输出预留与实际字节没有简单双扣。",
+    "settle检查自身准确terminal receipt与normal owned cleanup，完整枚举原job和整个attempt，small-copy前检查128MiB及入口输出上限。",
+    "INCOMPLETE保持完整逻辑reservation，FINAL才按现有collector结算；wall/GPU实际结算清除对应预留，避免双扣。",
+    "postrun要求settled、准确清理及零已用查询，逐次预扣后仅执行两条冻结nvidia-smi命令并保存原始receipt。"
+  ],
+  "non_blocking": [
+    {
+      "id": "REVIEW-BINDING-STRUCTURE",
+      "assessment": "当前issue通过序列化identities中的哈希成员关系检查packet/AUTH。精确哈希已提供安全约束，但后续维护宜读取明确键，评价接受宜核对update/path/SHA/source对象，避免误绑定到同一JSON内其他证据。"
+    },
+    {
+      "id": "RECOVERY-OF-PARTIAL-ADAPTER-WRITES",
+      "assessment": "issue/settle中保存采用new=True，部分流程失败后不得直接重跑或删除证据；应使用可追溯的局部恢复。当前评审不要求建设新事务平台。"
+    }
+  ],
+  "local_validation_adequate_before_use": false,
+  "minimum_next_action": "修复上述两个admission检查并做有限CPU反例回归，固定新脚本提交/SHA后复核。无须修改已接受方法source、启动GPU或重新运行产品大测试。",
+  "release_boundary": "本脚本版本不得用于release。修复后仍需准确独立接受、正常push与remote身份核对，再由受托Commander在master包络内执行；不需要向用户逐项请求权限。",
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0,
+    "CPU_checks": "仅内存中的stage耗尽与缺失ACK反例；没有调用issue/submit/settle/postrun。"
+  }
+}

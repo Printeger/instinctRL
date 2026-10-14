@@ -108,6 +108,15 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Exact thinCommander r5_formal_commander.py resourceadmission/issuance/accounting/cleanup/postrun beforefirstrelease; no newmethod/repetition ofprelive",
+      "status": "MUST_FIX_ADMISSION_STAGE_TIME_AND_QUIESCENCE",
+      "evidence": "reviews/H128-commander-original.json",
+      "sha256": "d79adf68ab937d079c3f35f593a7c76080a3f29b1405d959792c4ced5f97d94f"
+    },
+    {
+      "call": 4,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Limited closure recheck only stagewall/GPU and priorjobcleanup; exact newscript andhistoricalRole12pin exception. Method/source/packet unchanged.",
       "status": "REQUESTED"
     }
   ],

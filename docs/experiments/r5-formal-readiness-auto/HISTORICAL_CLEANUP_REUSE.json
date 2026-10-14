@@ -1,0 +1,25 @@
+{
+  "schema_version": "instinctrl-historical-cleanup-boundary-reuse/1",
+  "job_id": "J-afe4bda51f5206e5",
+  "accepted_evidence_id": "E-R5-ZERO-R2-PHYSICAL-REVIEW",
+  "pins": {
+    "review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/reviews/review-zero-r2-command-r3-prelive.json",
+      "sha256": "8e2fd1bc7d54a1860261813e8c5a72910eb885e7f21f0daca914e5d55e11b2f2"
+    },
+    "settlement": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/plant-r2-recovery-ownership-settlement.json",
+      "sha256": "c8eefb09218d20d08642f65e6eb6167ae452064c09ef859e4a0b73362b18ba52"
+    },
+    "recovery": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-afe4bda51f5206e5/recovery.json",
+      "sha256": "8639e706139d3e2b330ca567e29d4d515c101c4284e1d0c3de216a7daee9b531"
+    },
+    "descendant_ledger": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-afe4bda51f5206e5/descendant-ledger.json",
+      "sha256": "6b090ea5bc04e17cc736f51903dd7d346555c87dd8ae8e3b21c822edb3793b35"
+    }
+  },
+  "scope": "Only existing independently accepted Role12 known-ownership supplemental boundary, not normal ACK and never a fallback for a new job. Recheck every recorded owner/guard/child/descendant identity absent before newrelease.",
+  "normal_ACK_claimed": false
+}

@@ -1,0 +1,193 @@
+......................FFFFFFF                                            [100%]
+=================================== FAILURES ===================================
+_______________ test_normal_prior_cleanup_is_explicitly_verified _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_normal_prior_cleanup_is_e0')
+
+    def test_normal_prior_cleanup_is_explicitly_verified(tmp_path):
+>    d,state,verify=clean_fixture(tmp_path);assert verify(tmp_path,state,probe=lambda _:False)[0]['boundary']=='NORMAL_ACK'
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+isaaclab-training/tests/test_formal_commander_budget.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+control = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_normal_prior_cleanup_is_e0')
+state = {'jobs': {'J-CPU': {'identity': {'pid': 1}, 'status': 'FAILED'}}}
+probe = <function test_normal_prior_cleanup_is_explicitly_verified.<locals>.<lambda> at 0x77dc6ac74040>
+
+    def previous_quiescence(control,state,*,probe=None):
+>    from rlflow.jobs import owns
+E    ModuleNotFoundError: No module named 'rlflow'
+
+tools/r5_formal_commander.py:18: ModuleNotFoundError
+_ test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[missing_ack] _
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_0')
+change = 'missing_ack'
+
+    @pytest.mark.parametrize('change',['missing_ack','alive_guard','alive_child','alive_descendant','timed_out','not_quiescent'])
+    def test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup(tmp_path,change):
+     d,state,verify=clean_fixture(tmp_path)
+     if change=='missing_ack':(d/'lifeguard-ack.json').unlink()
+     if change in ['timed_out','not_quiescent']:
+      a=json.loads((d/'lifeguard-ack.json').read_text());a['descendant_cleanup']['timed_out' if change=='timed_out' else 'quiescent']=change=='timed_out';(d/'lifeguard-ack.json').write_text(json.dumps(a))
+     live={'alive_guard':2,'alive_child':3,'alive_descendant':4}.get(change)
+>    with pytest.raises(AssertionError):verify(tmp_path,state,probe=lambda i:bool(i and i['pid']==live))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+isaaclab-training/tests/test_formal_commander_budget.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+control = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_0')
+state = {'jobs': {'J-CPU': {'identity': {'pid': 1}, 'status': 'FAILED'}}}
+probe = <function test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup.<locals>.<lambda> at 0x77dc6ac62520>
+
+    def previous_quiescence(control,state,*,probe=None):
+>    from rlflow.jobs import owns
+E    ModuleNotFoundError: No module named 'rlflow'
+
+tools/r5_formal_commander.py:18: ModuleNotFoundError
+_ test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[alive_guard] _
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_1')
+change = 'alive_guard'
+
+    @pytest.mark.parametrize('change',['missing_ack','alive_guard','alive_child','alive_descendant','timed_out','not_quiescent'])
+    def test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup(tmp_path,change):
+     d,state,verify=clean_fixture(tmp_path)
+     if change=='missing_ack':(d/'lifeguard-ack.json').unlink()
+     if change in ['timed_out','not_quiescent']:
+      a=json.loads((d/'lifeguard-ack.json').read_text());a['descendant_cleanup']['timed_out' if change=='timed_out' else 'quiescent']=change=='timed_out';(d/'lifeguard-ack.json').write_text(json.dumps(a))
+     live={'alive_guard':2,'alive_child':3,'alive_descendant':4}.get(change)
+>    with pytest.raises(AssertionError):verify(tmp_path,state,probe=lambda i:bool(i and i['pid']==live))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+isaaclab-training/tests/test_formal_commander_budget.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+control = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_1')
+state = {'jobs': {'J-CPU': {'identity': {'pid': 1}, 'status': 'FAILED'}}}
+probe = <function test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup.<locals>.<lambda> at 0x77dc6ac62ca0>
+
+    def previous_quiescence(control,state,*,probe=None):
+>    from rlflow.jobs import owns
+E    ModuleNotFoundError: No module named 'rlflow'
+
+tools/r5_formal_commander.py:18: ModuleNotFoundError
+_ test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[alive_child] _
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_2')
+change = 'alive_child'
+
+    @pytest.mark.parametrize('change',['missing_ack','alive_guard','alive_child','alive_descendant','timed_out','not_quiescent'])
+    def test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup(tmp_path,change):
+     d,state,verify=clean_fixture(tmp_path)
+     if change=='missing_ack':(d/'lifeguard-ack.json').unlink()
+     if change in ['timed_out','not_quiescent']:
+      a=json.loads((d/'lifeguard-ack.json').read_text());a['descendant_cleanup']['timed_out' if change=='timed_out' else 'quiescent']=change=='timed_out';(d/'lifeguard-ack.json').write_text(json.dumps(a))
+     live={'alive_guard':2,'alive_child':3,'alive_descendant':4}.get(change)
+>    with pytest.raises(AssertionError):verify(tmp_path,state,probe=lambda i:bool(i and i['pid']==live))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+isaaclab-training/tests/test_formal_commander_budget.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+control = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_2')
+state = {'jobs': {'J-CPU': {'identity': {'pid': 1}, 'status': 'FAILED'}}}
+probe = <function test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup.<locals>.<lambda> at 0x77dc6ac63240>
+
+    def previous_quiescence(control,state,*,probe=None):
+>    from rlflow.jobs import owns
+E    ModuleNotFoundError: No module named 'rlflow'
+
+tools/r5_formal_commander.py:18: ModuleNotFoundError
+_ test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[alive_descendant] _
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_3')
+change = 'alive_descendant'
+
+    @pytest.mark.parametrize('change',['missing_ack','alive_guard','alive_child','alive_descendant','timed_out','not_quiescent'])
+    def test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup(tmp_path,change):
+     d,state,verify=clean_fixture(tmp_path)
+     if change=='missing_ack':(d/'lifeguard-ack.json').unlink()
+     if change in ['timed_out','not_quiescent']:
+      a=json.loads((d/'lifeguard-ack.json').read_text());a['descendant_cleanup']['timed_out' if change=='timed_out' else 'quiescent']=change=='timed_out';(d/'lifeguard-ack.json').write_text(json.dumps(a))
+     live={'alive_guard':2,'alive_child':3,'alive_descendant':4}.get(change)
+>    with pytest.raises(AssertionError):verify(tmp_path,state,probe=lambda i:bool(i and i['pid']==live))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+isaaclab-training/tests/test_formal_commander_budget.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+control = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_3')
+state = {'jobs': {'J-CPU': {'identity': {'pid': 1}, 'status': 'FAILED'}}}
+probe = <function test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup.<locals>.<lambda> at 0x77dc6ac62980>
+
+    def previous_quiescence(control,state,*,probe=None):
+>    from rlflow.jobs import owns
+E    ModuleNotFoundError: No module named 'rlflow'
+
+tools/r5_formal_commander.py:18: ModuleNotFoundError
+_ test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[timed_out] _
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_4')
+change = 'timed_out'
+
+    @pytest.mark.parametrize('change',['missing_ack','alive_guard','alive_child','alive_descendant','timed_out','not_quiescent'])
+    def test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup(tmp_path,change):
+     d,state,verify=clean_fixture(tmp_path)
+     if change=='missing_ack':(d/'lifeguard-ack.json').unlink()
+     if change in ['timed_out','not_quiescent']:
+      a=json.loads((d/'lifeguard-ack.json').read_text());a['descendant_cleanup']['timed_out' if change=='timed_out' else 'quiescent']=change=='timed_out';(d/'lifeguard-ack.json').write_text(json.dumps(a))
+     live={'alive_guard':2,'alive_child':3,'alive_descendant':4}.get(change)
+>    with pytest.raises(AssertionError):verify(tmp_path,state,probe=lambda i:bool(i and i['pid']==live))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+isaaclab-training/tests/test_formal_commander_budget.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+control = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_4')
+state = {'jobs': {'J-CPU': {'identity': {'pid': 1}, 'status': 'FAILED'}}}
+probe = <function test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup.<locals>.<lambda> at 0x77dc6ac634c0>
+
+    def previous_quiescence(control,state,*,probe=None):
+>    from rlflow.jobs import owns
+E    ModuleNotFoundError: No module named 'rlflow'
+
+tools/r5_formal_commander.py:18: ModuleNotFoundError
+_ test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[not_quiescent] _
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_5')
+change = 'not_quiescent'
+
+    @pytest.mark.parametrize('change',['missing_ack','alive_guard','alive_child','alive_descendant','timed_out','not_quiescent'])
+    def test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup(tmp_path,change):
+     d,state,verify=clean_fixture(tmp_path)
+     if change=='missing_ack':(d/'lifeguard-ack.json').unlink()
+     if change in ['timed_out','not_quiescent']:
+      a=json.loads((d/'lifeguard-ack.json').read_text());a['descendant_cleanup']['timed_out' if change=='timed_out' else 'quiescent']=change=='timed_out';(d/'lifeguard-ack.json').write_text(json.dumps(a))
+     live={'alive_guard':2,'alive_child':3,'alive_descendant':4}.get(change)
+>    with pytest.raises(AssertionError):verify(tmp_path,state,probe=lambda i:bool(i and i['pid']==live))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+isaaclab-training/tests/test_formal_commander_budget.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+control = PosixPath('/tmp/pytest-of-mint/pytest-1036/test_terminal_failed_does_not_5')
+state = {'jobs': {'J-CPU': {'identity': {'pid': 1}, 'status': 'FAILED'}}}
+probe = <function test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup.<locals>.<lambda> at 0x77dc6ac104a0>
+
+    def previous_quiescence(control,state,*,probe=None):
+>    from rlflow.jobs import owns
+E    ModuleNotFoundError: No module named 'rlflow'
+
+tools/r5_formal_commander.py:18: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED isaaclab-training/tests/test_formal_commander_budget.py::test_normal_prior_cleanup_is_explicitly_verified
+FAILED isaaclab-training/tests/test_formal_commander_budget.py::test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[missing_ack]
+FAILED isaaclab-training/tests/test_formal_commander_budget.py::test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[alive_guard]
+FAILED isaaclab-training/tests/test_formal_commander_budget.py::test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[alive_child]
+FAILED isaaclab-training/tests/test_formal_commander_budget.py::test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[alive_descendant]
+FAILED isaaclab-training/tests/test_formal_commander_budget.py::test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[timed_out]
+FAILED isaaclab-training/tests/test_formal_commander_budget.py::test_terminal_failed_does_not_bypass_missing_or_uncertain_cleanup[not_quiescent]
+7 failed, 22 passed in 0.06s
