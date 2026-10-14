@@ -1,0 +1,15 @@
+# Read-only R5 integration diagnostic v1
+
+This is an implementation check under the new formal-readiness master delegation, not a training permission or a replacement metric. Exact independent prereview, Commander release, original STOP/coexistence/ownership/resource checks, a committed input package and a read-only source snapshot remain mandatory.
+
+`research-transition` strictly loads one accepted final pure-hover research checkpoint and its own actual u1 checkpoint, first512 input and first-update probe. Every file has an exact original path/SHA and training source identity (including config SHA). A new adapter may load the old checkpoint only under an exact reviewed compatibility declaration: all critical product sources, scientific method versions and actor schema must remain identical. Legacy checkpoint-origin rules are unchanged.
+
+First recalculate the actual u1 Beta mean/std/logp against the saved actor-after-minibatch8 boundary on the same device and implementation, with atol1e-6/rtol1e-5. Do not compare the critic value from that observer boundary to the completed-u1 critic. Sampling, gradient changes and optimizer steps are forbidden. Check that forward evaluation does not change model/optimizer state or RNG.
+
+Load the final checkpoint with exact model/optimizer/counter/seed/method/source checks. Recheck load identity and same-input actor output across an independent load on the same device, under the same tolerances. This proves reproducibility of loading, not agreement with an unrecorded historical final-checkpoint output. Use that loaded actor for the physical command sequence.
+
+One explicit fresh simulation reset uses the original Z initial-state construction and evaluation seed20260909. The finite sequence is112 policy steps over32 lanes: zero16, existing eight direction commands32, their temporal negatives32, zero32. Directions preserve the existing .2 axis/.15 diagonal values. Preserve full returned steps, all reset/failure masks and current/next command indexing. Validate actor history schema, finite actions/rewards/control, actual product xyz decoding, anchor exit during nonzero commands and recapture in the final zero segment. Do not bypass the actor or hardcode its output.
+
+The exact process budget is3584 nontraining transitions,0 training transitions,0 optimizer updates,0 checkpoint writes,1 explicit reset, automatic-reset ceiling3584,1 start/init reservation,10 initialization-physics-tick ceiling,900 seconds workload wall and the existing10-second outer cleanup margin. Output cap is explicit in the card and uses the existing cumulative quota. Probe files are read from their original evidence locations, not duplicated as fabricated new results.
+
+No original Z/T/S/X/W metric or threshold is changed or asserted passed by this check. Finite implementation success does not establish untrained nonzero task performance, final method qualification or READY. Native lifecycle failures and incomplete accounting retain their real status and conservative reservations; scientific data require complete evidence and verified owned cleanup. This mode never starts formal training.

@@ -377,6 +377,94 @@ class UnifiedH1LiveBackend:
                 "training_seed":p["training_seed"],"evaluation_seed":p["evaluation_seed"],
                 "episodes":[evaluate_episode(trace) for trace in self._evaluation_rows["Z"]]})
 
+    def run_research_transition(self):
+        """Read-only actual-checkpoint recalculation and bounded command check."""
+        from .checkpoint_recalculation import recalculate_actor_probe
+        from .transition_diagnostic import execute_finite_transition
+        from .pilot_diagnostic import (FLOAT32_ATOL, FLOAT32_RTOL, _digest, _state,
+                                      _rng_snapshot, _rng_equal, _restore_rng)
+        if self.authorization['mode'] != 'research-transition':
+            raise PermissionError('transition backend requires exact mode')
+        p = self.research
+        self._apply_research_profile()
+        rec = p['recalculation']
+
+        def load(row):
+            path = Path(row['path'])
+            self.resource_check('before_transition_checkpoint_read', row['update'])
+            if sha256_file(path) != row['sha256']:
+                raise ValueError('transition checkpoint drift')
+            meta = self._load_evaluation_checkpoint(path, actor_learning_rate=p['actor_lr'])
+            if (self.trainer.update_counter != row['update'] or meta['training_seed'] != p['training_seed']
+                    or meta['curriculum']['version'] != 'curriculum-h1-research-pure-hover-v1'):
+                raise ValueError('transition checkpoint stage/seed/node mismatch')
+            self.trainer.actor.eval()
+            self.trainer.critic.eval()
+            return meta
+
+        load(rec['checkpoint'])
+        for key in ['input', 'probe']:
+            if sha256_file(Path(rec[key]['path'])) != rec[key]['sha256']:
+                raise ValueError('transition retained input/probe drift')
+        data = torch.load(rec['input']['path'], map_location=self.environment.device, weights_only=True)
+        probe = torch.load(rec['probe']['path'], map_location=self.environment.device, weights_only=True)
+        if (data['update'] != 1 or probe['schema_version'] != 'instinctrl-pilot-first-update-probe/2'
+                or probe['sample_count'] != 512 or len(probe['minibatches']) != 8):
+            raise ValueError('transition actual u1 probe boundary invalid')
+        reference = probe['minibatches'][-1]['after']
+        if (reference['boundary'] != 'after_minibatch_8'
+                or not torch.equal(reference['indices'], torch.arange(512, device=reference['indices'].device))):
+            raise ValueError('transition actual u1 probe indices invalid')
+        result = recalculate_actor_probe(self.trainer, data['policy'], data['actions'], reference)
+        atomic_json_replace(self.output, 'checkpoint_actor_recalculation.json', {
+            **result, 'actual_inputs': rec, 'original_source_identity': p['checkpoint_source_identity'],
+            'scope': 'Actual saved u1 actor boundary; not a missing historical final-checkpoint output'})
+        del data, probe, reference
+
+        final = p['checkpoints'][0]
+        original_meta = load(final)
+
+        def reload_check(observation):
+            # Fresh reset has preserved the restored checkpoint RNG. The same
+            # returned observation is reused without a sensor/history advance.
+            frozen = {k: v.detach().clone() for k, v in observation['policy'].items()}
+            before = _digest(_state(self.trainer))
+            rng = _rng_snapshot()
+            try:
+                with torch.no_grad():
+                    first = self.trainer.actor(frozen)
+                    action = first.mean_action.detach().clone()
+                    expected = {'alpha': first.alpha.detach().clone(), 'beta': first.beta.detach().clone(),
+                                'mean': action, 'logp': self.trainer.actor.log_probability_from_output(first, action).detach().clone()}
+                if _digest(_state(self.trainer)) != before:
+                    raise RuntimeError('transition original load forward changed state')
+                meta = load(final)
+                if meta != original_meta or _digest(_state(self.trainer)) != before:
+                    raise RuntimeError('transition independent final load differs')
+                with torch.no_grad():
+                    second = self.trainer.actor(frozen)
+                    actual = {'alpha': second.alpha, 'beta': second.beta, 'mean': second.mean_action,
+                              'logp': self.trainer.actor.log_probability_from_output(second, action)}
+                errors = {}
+                for key, value in actual.items():
+                    if (value.shape != expected[key].shape or not torch.isfinite(value).all()
+                            or not torch.allclose(value, expected[key], atol=FLOAT32_ATOL, rtol=FLOAT32_RTOL)):
+                        raise RuntimeError('transition final reload numeric mismatch: ' + key)
+                    errors[key] = float((value - expected[key]).abs().max().item())
+                if _digest(_state(self.trainer)) != before:
+                    raise RuntimeError('transition reloaded forward changed state')
+                return {'status': 'PASS', 'checkpoint': final, 'metadata': meta,
+                        'state_sha256': before, 'samples': 32, 'device': str(self.environment.device),
+                        'atol': FLOAT32_ATOL, 'rtol': FLOAT32_RTOL, 'maximum_absolute_errors': errors,
+                        'scope': 'Same actual fresh-reset input across two strict loads; no historical final output invented',
+                        'optimizer_calls': 0, 'policy_rng_consumed': False}
+            finally:
+                if not _rng_equal(rng, _rng_snapshot()):
+                    _restore_rng(rng)
+                    raise RuntimeError('transition final reload/forward changed RNG')
+
+        return execute_finite_transition(self, checkpoint_reload_check=reload_check)
+
     def train_pilot(self, group: str) -> None:
         """True cold-start 64-update pilot with the exact seven checkpoint names."""
         self.cold_start(pilot_group=group); self.save_checkpoint("init0000")

@@ -61,7 +61,7 @@ def validate_transition_step(*, current_policy, next_policy, command, following,
             'performance_scoring': 'NOT_AN_ORIGINAL_TASK_ACCEPTANCE'}
 
 
-def execute_finite_transition(backend):
+def execute_finite_transition(backend, *, checkpoint_reload_check=None):
     """Execute only inside a separately authorized transition-mode lifecycle.
 
     Backend creation, strict checkpoint loading and probe recalculation precede
@@ -97,6 +97,12 @@ def execute_finite_transition(backend):
                'sensor_position_w_m': env._evaluation_ray_snapshot.ray_starts_w[:, 0],
                'env_origins_w_m': env.scene.env_origins,
                'scope': 'IMPLEMENTATION_NOT_ORIGINAL_TASK_METRIC'})
+    reload_result = None
+    if checkpoint_reload_check is not None:
+        reload_result = checkpoint_reload_check(observation)
+        trainer = backend.trainer
+        trainer.actor.eval()
+        trainer.critic.eval()
     checks = []
     for step in range(TRANSITION_STEPS):
         backend.resource_check('before_transition_step', step)
@@ -140,6 +146,7 @@ def execute_finite_transition(backend):
                'nontraining_transitions': TRANSITION_SAMPLES,
                'actual_reset_lanes': sum(c['actual_reset_lanes'] for c in checks),
                'checks': checks, 'model_optimizer_unchanged': True, 'optimizer_calls': 0,
+               'checkpoint_reload_check': reload_result,
                'original_task_performance': 'NOT_ASSERTED',
                'protocol': 'zero16/existingdirections32/temporalreverse32/zero32'}
     atomic_json_replace(backend.output, 'finite_transition_summary.json', summary)

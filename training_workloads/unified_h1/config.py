@@ -44,6 +44,8 @@ WORKLOAD_SOURCES = {
     "training_workloads/unified_h1/authorization.py", "training_workloads/unified_h1/backend.py",
     "training_workloads/unified_h1/control_diagnostic.py", "training_workloads/unified_h1/pilot_diagnostic.py",
     "training_workloads/unified_h1/pilot_contract.py", "training_workloads/unified_h1/research_contract.py",
+    "training_workloads/unified_h1/checkpoint_compatibility.py", "training_workloads/unified_h1/checkpoint_recalculation.py",
+    "training_workloads/unified_h1/transition_diagnostic.py",
     "training_workloads/unified_h1/budget.py", "training_workloads/unified_h1/config.py",
     "training_workloads/unified_h1/driver.py", "training_workloads/unified_h1/evaluation.py",
     "training_workloads/unified_h1/formal_unified_h1.py", "training_workloads/unified_h1/live_adapter.py",
@@ -174,7 +176,7 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
     if entry["status"] != "PREPARED_NOT_AUTHORIZED" or entry["module"] != "training_workloads.unified_h1.formal_unified_h1":
         raise ValueError("future entry identity mismatch")
     expected_modes = ["main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic"]
-    if method["version"] == "unified-h1-formal-readiness-v1": expected_modes += ["research-training", "research-evaluation"]
+    if method["version"] == "unified-h1-formal-readiness-v1": expected_modes += ["research-training", "research-evaluation", "research-transition"]
     if entry["modes"] != expected_modes:
         raise ValueError("future mode set mismatch")
     result = dict(value)

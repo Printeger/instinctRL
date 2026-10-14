@@ -1,14 +1,23 @@
 """Bounded formal-readiness profiles; old pilot identities remain immutable."""
 from pathlib import Path
 import hashlib,json,math,re
-MODES=('research-training','research-evaluation')
+MODES=('research-training','research-evaluation','research-transition')
+TRANSITION_PROTOCOL='zero-directions-reverse-zero112-v1'
+INTEGRATION_CONTRACT_SHA256='720845138986bfb053304db915e38fb6bd9558023d65177be53af79bd189a873'
 METHOD_VERSION='unified-h1-formal-readiness-v1'
 CURRICULUM_VERSION='curriculum-h1-research-pure-hover-v1'
 PROFILE_FIELDS={'experiment_id','group','training_seed','evaluation_seed','max_updates','checkpoint_updates','evaluation_updates','command_profile','residual_neutrality_weight','anchor_weight','actor_lr','critic_lr','output_cap_bytes','master_authority','experiment_card'}
-def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def digest(p):
+ with p.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
+def validate_pin(pin):
+ if not isinstance(pin,dict) or set(pin)!={'path','sha256'}:raise PermissionError('research input pin schema mismatch')
+ path=Path(pin['path'])
+ if not path.is_absolute() or path.resolve()!=path or path.is_symlink() or not path.is_file() or digest(path)!=pin['sha256']:raise PermissionError('research input pin drift')
+ return path
 def validate_parameters(mode,value):
  if mode not in MODES or not isinstance(value,dict):raise PermissionError('unknown research profile')
- expected=PROFILE_FIELDS|({'checkpoints'} if mode=='research-evaluation' else set())
+ expected=PROFILE_FIELDS|({'checkpoints'} if mode in ['research-evaluation','research-transition'] else set())
+ if mode=='research-transition':expected|={'transition_protocol','integration_contract','checkpoint_source_identity','checkpoint_compatibility','recalculation'}
  if set(value)!=expected:raise PermissionError('research profile fields mismatch')
  p=dict(value)
  if not isinstance(p['experiment_id'],str) or not re.fullmatch(r'[A-Z0-9-]{3,96}',p['experiment_id']):raise PermissionError('research identity invalid')
@@ -34,13 +43,26 @@ def validate_parameters(mode,value):
  master=json.loads(Path(p['master_authority']['path']).read_text());card=json.loads(Path(p['experiment_card']['path']).read_text())
  if master['id']!='R5-FORMAL-READINESS-AUTO-01' or master['status']!='REGISTERED_USER_DELEGATION':raise PermissionError('research master delegation invalid')
  if card['experiment_id']!=p['experiment_id'] or card['profiles'][p['group']]!={k:v for k,v in p.items() if k not in ['checkpoints','experiment_card']}:raise PermissionError('research card/profile mismatch')
- if mode=='research-evaluation':
+ if mode in ['research-evaluation','research-transition']:
   rows=p['checkpoints']
   if not isinstance(rows,list) or [r.get('update') for r in rows if isinstance(r,dict)]!=p['evaluation_updates']:raise PermissionError('research checkpoint nodes mismatch')
   for r in rows:
    if set(r)!={'path','sha256','update'}:raise PermissionError('research checkpoint fields mismatch')
    f=Path(r['path'])
    if not f.is_absolute() or f.is_symlink() or not f.is_file() or digest(f)!=r['sha256']:raise PermissionError('research checkpoint identity drift')
+ if mode=='research-transition':
+  from .checkpoint_compatibility import validate_source_identity,pinned_json
+  if p['group']!='R1' or p['transition_protocol']!=TRANSITION_PROTOCOL or p['evaluation_seed']!=20260909 or p['evaluation_updates']!=[p['max_updates']]:raise PermissionError('finite transition profile not registered')
+  validate_pin(p['integration_contract'])
+  if p['integration_contract']['sha256']!=INTEGRATION_CONTRACT_SHA256:raise PermissionError('integration contract differs from registered bytes')
+  validate_source_identity(p['checkpoint_source_identity']);pinned_json(p['checkpoint_compatibility'])
+  rec=p['recalculation']
+  if not isinstance(rec,dict) or set(rec)!={'checkpoint','input','probe'}:raise PermissionError('recalculation binding incomplete')
+  ck=rec['checkpoint']
+  if not isinstance(ck,dict) or set(ck)!={'path','sha256','update'} or ck['update']!=1:raise PermissionError('recalculation requires exact actualu1')
+  validate_pin({k:ck[k] for k in ['path','sha256']});validate_pin(rec['input']);validate_pin(rec['probe'])
+  output=Path(p['checkpoints'][0]['path']).parent.parent
+  if (Path(ck['path'])!=output/'checkpoints/u1.pt' or Path(rec['input']['path'])!=output/'pilot_diagnostic/update_1_full_input.pt' or Path(rec['probe']['path'])!=output/'pilot_diagnostic/first_update_probe.pt'):raise PermissionError('recalculation must use same actualtraining entry asfinalcheckpoint')
  return p
 
 def method_hashes(config,p):
@@ -52,6 +74,7 @@ def method_hashes(config,p):
 def required_budget(mode,p):
  p=validate_parameters(mode,p)
  common={'live_process_starts':1,'simulator_initializations':1,'initialization_ticks':10}
+ if mode=='research-transition':return {**common,'training_transitions':0,'nontraining_transitions':3584,'optimizer_updates':0,'checkpoint_writes':0,'explicit_resets':1,'automatic_resets':3584,'wall_seconds':900}
  if mode=='research-training':
   transitions=p['max_updates']*512
   return {**common,'training_transitions':transitions,'nontraining_transitions':0,'optimizer_updates':p['max_updates'],'checkpoint_writes':len(p['checkpoint_updates'])+1,'explicit_resets':1,'automatic_resets':transitions,'wall_seconds':3600 if p['max_updates']<=128 else 7200}

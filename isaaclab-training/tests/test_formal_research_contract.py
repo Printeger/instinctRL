@@ -44,6 +44,44 @@ def test_card_and_master_binding_drift_and_exact_budget(tmp_path):
  p=profile(tmp_path);Path(p['master_authority']['path']).write_text('{}')
  with pytest.raises(PermissionError,match='drift'):validate_parameters('research-training',p)
 
+
+def transition_profile(tmp_path):
+ """Parameter/file tests only; dummy tensors do not authorize a real entry."""
+ p=profile(tmp_path);p['evaluation_updates']=[128]
+ output=tmp_path/'actual-training/results/research-training';(output/'checkpoints').mkdir(parents=True);(output/'pilot_diagnostic').mkdir()
+ for name in ['checkpoints/u1.pt','checkpoints/u128.pt','pilot_diagnostic/update_1_full_input.pt','pilot_diagnostic/first_update_probe.pt']:(output/name).write_bytes(b'opaque CPU parameter fixture only')
+ compatibility=tmp_path/'compatibility.json';compatibility.write_text('{}')
+ p.update(checkpoints=[{**pin(output/'checkpoints/u128.pt'),'update':128}],transition_protocol='zero-directions-reverse-zero112-v1',integration_contract=pin(ROOT/'coordination/contracts/R5_FORMAL_INTEGRATION_DIAGNOSTIC_V1.md'),checkpoint_source_identity={k:('1'*40 if k!='config_sha256' else '2'*64) for k in ['product_commit','product_tree','workload_commit','workload_tree','config_sha256']},checkpoint_compatibility=pin(compatibility),recalculation={'checkpoint':{**pin(output/'checkpoints/u1.pt'),'update':1},'input':pin(output/'pilot_diagnostic/update_1_full_input.pt'),'probe':pin(output/'pilot_diagnostic/first_update_probe.pt')})
+ refresh_transition_card(p)
+ return p
+
+
+def refresh_transition_card(p):
+ card=Path(p['experiment_card']['path']);card.write_text(json.dumps({'experiment_id':p['experiment_id'],'profiles':{p['group']:{k:v for k,v in p.items() if k not in ['checkpoints','experiment_card']}}}));p['experiment_card']=pin(card)
+
+
+def test_finite_transition_budget_is_nontraining_only(tmp_path):
+ p=transition_profile(tmp_path);b=required_budget('research-transition',p)
+ assert (b['nontraining_transitions'],b['training_transitions'],b['optimizer_updates'],b['checkpoint_writes'])==(3584,0,0,0)
+ assert (b['explicit_resets'],b['wall_seconds'],b['initialization_ticks'])==(1,900,10)
+ # Transition parameters cannot masquerade as a normal training authority.
+ with pytest.raises(PermissionError,match='fields mismatch'):validate_parameters('research-training',p)
+
+
+def test_transition_recalculation_cannot_cross_actual_training_entry(tmp_path):
+ p=transition_profile(tmp_path);other=tmp_path/'other-u1.pt';other.write_bytes(b'opaque CPU parameter fixture only');p['recalculation']['checkpoint'].update(pin(other));refresh_transition_card(p)
+ with pytest.raises(PermissionError,match='same actualtraining entry'):validate_parameters('research-transition',p)
+
+
+def test_transition_protocol_is_not_arbitrary_despite_card_edit(tmp_path):
+ p=transition_profile(tmp_path);p['transition_protocol']='modified-temporal-sequence';refresh_transition_card(p)
+ with pytest.raises(PermissionError,match='not registered'):validate_parameters('research-transition',p)
+
+
+def test_transition_requires_exact_five_field_source_identity(tmp_path):
+ p=transition_profile(tmp_path);p['checkpoint_source_identity'].pop('config_sha256');refresh_transition_card(p)
+ with pytest.raises(PermissionError,match='five source fields'):validate_parameters('research-transition',p)
+
 def test_checkpoint_seed_expansion_is_explicit_profile_only():
  args=dict(update=128,transition=65536,policy_step=2048,training_seed=20261017)
  with pytest.raises(CheckpointError):_validate_clock_and_curriculum(**args,curriculum={'version':'curriculum-h1-v1','completed_policy_steps':2048})
