@@ -257,8 +257,8 @@ class UnifiedH1LiveBackend:
             write_guard=__import__("training_workloads.scale_003.persistence", fromlist=["guard_stream"]).guard_stream,
             source_identity=config["resolved_identity"], transition_counter=trainer.update_counter * 512,
             global_policy_step=trainer.update_counter * 16,
-            curriculum={"version": ("curriculum-h1-research-pure-hover-v1" if getattr(self,"research",None) else "curriculum-h1-v1"), "completed_policy_steps": trainer.update_counter * 16},
-            training_seed=(self.research["training_seed"] if getattr(self,"research",None) else 20260908), reset_number=self.counters.explicit_resets + self.counters.automatic_resets,
+            curriculum={"version": ("curriculum-h1-research-pure-hover-v1" if getattr(self,"research",None) and not getattr(self,"_formal_segment",False) else "curriculum-h1-v1"), "completed_policy_steps": trainer.update_counter * 16},
+            training_seed=(self.research["training_seed"] if getattr(self,"research",None) else 20260908), reset_number=getattr(self,"_checkpoint_reset_offset",0) + self.counters.explicit_resets + self.counters.automatic_resets,
             curriculum_generator=self.curriculum_generator)
         self.counters.real_checkpoint_writes += 1
         atomic_json_replace(self.output, f"checkpoints/{label}.json", {"path": str(target), "sha256": sha256_file(target), "bytes": target.stat().st_size})
@@ -335,6 +335,9 @@ class UnifiedH1LiveBackend:
 
 
     def _checkpoint_method_hashes(self, config):
+        if self.authorization['mode'] in {'research-formal-training', 'research-formal-evaluation'}:
+            from .formal_segment import method_hashes
+            return method_hashes(config, self.research)
         if getattr(self, "research", None):
             from .research_contract import method_hashes
             return method_hashes(config, self.research)
@@ -348,8 +351,11 @@ class UnifiedH1LiveBackend:
             raise RuntimeError("actual research reward profile differs")
         atomic_json_replace(self.output,"research_profile_binding.json", {
             "parameters":p,"actual_residual_neutrality_weight":self.environment._h1_residual_neutrality_weight,
-            "actual_anchor_weight":self.environment._h1_anchor_weight,"pure_hover":self.environment._h1_pure_hover_training,
-            "initialization":"COLD_START" if self.authorization["mode"] == "research-training" else "EVALUATION_FRESH_RESET",
+            "actual_anchor_weight":self.environment._h1_anchor_weight,
+            "pure_hover":p["command_profile"] == "pure-hover",
+            "center_reset_only":self.environment._h1_pure_hover_training,
+            "initialization":("COLD_START" if self.authorization["mode"] == "research-training" else
+                "FULL_TRAINER_RESTORE_FRESH_SIM_RESET" if self.authorization["mode"] == "research-formal-training" else "EVALUATION_FRESH_RESET"),
             "authorization_sha256":self.authorization["authorization_sha256"],
             "method_hashes":self._checkpoint_method_hashes(load_config())})
 
@@ -528,16 +534,19 @@ class UnifiedH1LiveBackend:
         atomic_json_replace(self.output, f"evaluation_u{update:04d}.json", result)
         return result
 
-    def _load_evaluation_checkpoint(self, checkpoint: Path, *, actor_learning_rate: float = 3.0e-4) -> Mapping[str, Any]:
+    def _load_evaluation_checkpoint(self, checkpoint: Path, *, actor_learning_rate: float = 3.0e-4,
+                                    expected_method_hashes=None, source_identity=None,
+                                    restore_curriculum_generator: bool = False) -> Mapping[str, Any]:
         from instinctlab.training import HistoryActor, NetworkConfig, PPOConfig, PPOTrainer
         from instinctlab.training.checkpoint_h1 import load_checkpoint_h1
         from instinctlab.training.networks_h1 import PrivilegedCriticH1
         config = load_config(); network = NetworkConfig()
         trainer = PPOTrainer(HistoryActor(network).to(self.environment.device), PrivilegedCriticH1(network).to(self.environment.device), PPOConfig(minibatch_size=64, epoch_count=1, actor_learning_rate=actor_learning_rate, critic_learning_rate=3.0e-4))
         metadata = load_checkpoint_h1(checkpoint.resolve(), trainer,
-            expected_method_hashes=self._checkpoint_method_hashes(config),
-            expected_source_identity=self.authorization["parameters"].get("checkpoint_source_identity", config["resolved_identity"]),
-            curriculum_generator=torch.Generator(device="cpu"))
+            expected_method_hashes=self._checkpoint_method_hashes(config) if expected_method_hashes is None else expected_method_hashes,
+            expected_source_identity=(self.authorization["parameters"].get("checkpoint_source_identity", config["resolved_identity"])
+                                      if source_identity is None else source_identity),
+            curriculum_generator=self.curriculum_generator if restore_curriculum_generator else torch.Generator(device="cpu"))
         self.trainer = trainer
         return metadata
 

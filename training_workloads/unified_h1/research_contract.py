@@ -1,7 +1,7 @@
 """Bounded formal-readiness profiles; old pilot identities remain immutable."""
 from pathlib import Path
 import hashlib,json,math,re
-MODES=('research-training','research-evaluation','research-transition')
+MODES=('research-training','research-evaluation','research-transition','research-formal-training','research-formal-evaluation')
 TRANSITION_PROTOCOL='zero-directions-reverse-zero112-v1'
 INTEGRATION_CONTRACT_SHA256='720845138986bfb053304db915e38fb6bd9558023d65177be53af79bd189a873'
 METHOD_VERSION='unified-h1-formal-readiness-v1'
@@ -15,6 +15,9 @@ def validate_pin(pin):
  if not path.is_absolute() or path.resolve()!=path or path.is_symlink() or not path.is_file() or digest(path)!=pin['sha256']:raise PermissionError('research input pin drift')
  return path
 def validate_parameters(mode,value):
+ if mode in ['research-formal-training','research-formal-evaluation']:
+  from .formal_segment import validate_parameters as validate_formal
+  return validate_formal(mode,value)
  if mode not in MODES or not isinstance(value,dict):raise PermissionError('unknown research profile')
  expected=PROFILE_FIELDS|({'checkpoints'} if mode in ['research-evaluation','research-transition'] else set())
  if mode=='research-transition':expected|={'transition_protocol','integration_contract','checkpoint_source_identity','checkpoint_compatibility','recalculation'}
@@ -72,6 +75,9 @@ def method_hashes(config,p):
  return result
 
 def required_budget(mode,p):
+ if mode in ['research-formal-training','research-formal-evaluation']:
+  from .formal_segment import required_budget as formal_budget
+  return formal_budget(mode,p)
  p=validate_parameters(mode,p)
  common={'live_process_starts':1,'simulator_initializations':1,'initialization_ticks':10}
  if mode=='research-transition':return {**common,'training_transitions':0,'nontraining_transitions':3584,'optimizer_updates':0,'checkpoint_writes':0,'explicit_resets':1,'automatic_resets':3584,'wall_seconds':900}

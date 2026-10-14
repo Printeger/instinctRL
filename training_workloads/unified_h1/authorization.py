@@ -9,12 +9,12 @@ from typing import Any
 from .budget import required_mode_budget
 from .config import CONFIG_PATH, METHOD_SHA256, load_config, sha256_file
 
-MODES = ("main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic", "research-training", "research-evaluation", "research-transition")
+MODES = ("main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic", "research-training", "research-evaluation", "research-transition", "research-formal-training", "research-formal-evaluation")
 BUDGET_FIELDS = {"live_process_starts", "simulator_initializations", "training_transitions",
                  "nontraining_transitions", "optimizer_updates", "checkpoint_writes",
                  "initialization_ticks", "explicit_resets", "automatic_resets", "wall_seconds"}
 
-MODE_ORDERS = {"research-training": None, "research-evaluation": None, "research-transition": None,"main": "UNIFIED-H1-R3", "controlled-failure": "UNIFIED-H1-R3",
+MODE_ORDERS = {"research-formal-training": None, "research-formal-evaluation": None,"research-training": None, "research-evaluation": None, "research-transition": None,"main": "UNIFIED-H1-R3", "controlled-failure": "UNIFIED-H1-R3",
                "r4-training": "UNIFIED-H1-R4", "evaluation": None,
                "r5-resume": "UNIFIED-H1-R5", "control-diagnostic": None,
                "pilot-training": None, "pilot-evaluation": None,
@@ -124,6 +124,9 @@ def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any
     if mode == "research-transition":
         from .checkpoint_compatibility import validate_transition_compatibility
         validate_transition_compatibility(parameters["checkpoint_compatibility"], origin, config)
+    elif mode in {"research-formal-training", "research-formal-evaluation"}:
+        from .checkpoint_compatibility import validate_formal_compatibility
+        validate_formal_compatibility(parameters["checkpoint_compatibility"], origin, config)
     elif origin is not None and any(origin[k] != identity[k] for k in ("product_commit", "product_tree")):
         raise PermissionError("evaluation checkpoint product identity differs from the evaluated product")
     expected_order = MODE_ORDERS[mode]

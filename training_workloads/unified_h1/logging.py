@@ -285,7 +285,7 @@ class LearningLog:
             self._episode_max_drift[lane] = 0; self._episode_max_height[lane] = 0; self._episode_min_clearance[lane] = float("inf")
             driver = evidence.get("_h1_driver", {})
             next_step = int(driver.get("global_policy_step", -1)) + 1 if isinstance(driver, Mapping) else -1
-            mixed_reset = not (isinstance(driver, Mapping) and driver.get("pure_hover") is True)
+            mixed_reset = not (isinstance(driver, Mapping) and (driver.get("pure_hover") is True or driver.get("center_reset_only") is True))
             self._episode_start_types[lane] = ("near_x_wall" if mixed_reset and next_step >= 1024 and lane % 8 == 6
                                                 else "near_y_wall" if mixed_reset and next_step >= 1024 and lane % 8 == 7
                                                 else "center")

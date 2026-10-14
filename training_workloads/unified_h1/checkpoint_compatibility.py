@@ -37,7 +37,7 @@ def validate_source_identity(identity):
     return identity
 
 
-def validate_transition_compatibility(pin, origin, config):
+def _validate_compatibility(pin, origin, config, scope):
     """Require identical critical product files and exact original/new identity.
 
     Only workloads may change for this read-only mode. A future serializer or
@@ -50,7 +50,7 @@ def validate_transition_compatibility(pin, origin, config):
               'execution_source_identity', 'origin_config', 'execution_config',
               'unchanged_product_sha256'}
     if (set(record) != fields or record['schema_version'] != 'instinctrl-checkpoint-compatibility/1'
-            or record['scope'] != 'READ_ONLY_TRANSITION_NO_PRODUCT_CHANGE'):
+            or record['scope'] != scope):
         raise PermissionError('read-only transition compatibility scope invalid')
     if record['origin_source_identity'] != origin or record['execution_source_identity'] != execution:
         raise PermissionError('compatibility origin/execution identity mismatch')
@@ -91,3 +91,14 @@ def validate_transition_compatibility(pin, origin, config):
                     or path.is_symlink() or not path.is_file() or digest(path) != expected):
                 raise PermissionError('compatibility original source drift')
     return dict(origin)
+
+
+def validate_transition_compatibility(pin, origin, config):
+    return _validate_compatibility(pin, origin, config, 'READ_ONLY_TRANSITION_NO_PRODUCT_CHANGE')
+
+
+def validate_formal_compatibility(pin, origin, config):
+    # This binding only establishes a strict checkpoint read across unchanged
+    # product implementations. The formal contract and independent exact
+    # Commander authorization separately admit future optimizer effects.
+    return _validate_compatibility(pin, origin, config, 'FORMAL_WARM_START_IDENTICAL_PRODUCT')

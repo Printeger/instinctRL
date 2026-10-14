@@ -241,6 +241,12 @@ def _dispatch(backend: Any, authorization: Mapping[str, Any]) -> None:
     elif mode == "research-training": backend.train_research()
     elif mode == "research-evaluation": backend.evaluate_research()
     elif mode == "research-transition": backend.run_research_transition()
+    elif mode == "research-formal-training":
+        from .formal_segment import train_segment
+        train_segment(backend)
+    elif mode == "research-formal-evaluation":
+        from .formal_segment import evaluate_segment
+        evaluate_segment(backend)
     elif mode == "pilot-training": backend.train_pilot(parameters["group"])
     elif mode == "pilot-evaluation": backend.evaluate_pilot_z(parameters["group"], parameters["checkpoints"])
     elif mode == "enhanced-b0-diagnostic": backend.run_enhanced_b0_diagnostic(parameters)

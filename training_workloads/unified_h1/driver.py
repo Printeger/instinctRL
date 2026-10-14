@@ -69,6 +69,7 @@ class UnifiedH1Driver:
         origins = getattr(scene, "env_origins", None)
         raw["_h1_driver"] = {"global_policy_step": plan.global_policy_step,
             "pure_hover": self.clock.pure_hover,
+            "center_reset_only": getattr(self.environment, "_h1_pure_hover_training", False),
             "command_b": plan.command_b.detach().cpu(), "next_command_b": plan.next_command_b.detach().cpu(),
             "action": action.detach().cpu(), "reward": reward.detach().cpu(),
             "terminated": terminated.detach().cpu(), "truncated": truncated.detach().cpu(),
@@ -108,7 +109,8 @@ class UnifiedH1TrainingLoop:
     def __init__(self, driver: UnifiedH1Driver, trainer: Any, journal: Any,
                  checkpoint_writer: Any | None = None, before_update: Any | None = None,
                  update_limit: int | None = None, before_rollout: Any | None = None,
-                 before_optimizer: Any | None = None, diagnostic: Any | None = None) -> None:
+                 before_optimizer: Any | None = None, diagnostic: Any | None = None,
+                 optimizer_step_origin: tuple[int, int] = (0, 0)) -> None:
         self.driver = driver; self.trainer = trainer; self.journal = journal
         self.checkpoint_writer = checkpoint_writer
         if before_update is not None and (before_rollout is not None or before_optimizer is not None):
@@ -117,7 +119,17 @@ class UnifiedH1TrainingLoop:
         self.before_optimizer = before_update if before_optimizer is None else before_optimizer
         self.update_limit = update_limit
         self.diagnostic = diagnostic
+        if (not isinstance(optimizer_step_origin, tuple) or len(optimizer_step_origin) != 2
+                or any(type(v) is not int or v < 0 for v in optimizer_step_origin)):
+            raise ValueError("optimizer step origins must be two nonnegative integers")
+        self.optimizer_step_origin = optimizer_step_origin
         self.driver.journal = journal
+
+    def _optimizer_deltas(self, actor, critic):
+        result = tuple(value - origin for value, origin in zip((actor, critic), self.optimizer_step_origin))
+        if any(value < 0 for value in result):
+            raise RuntimeError("optimizer counters fell below restored origin")
+        return result
 
     def run_update(self, *, checkpoint_label: str | None = None) -> Mapping[str, Any]:
         from instinctlab.training.rollout import RolloutConfig
@@ -148,7 +160,8 @@ class UnifiedH1TrainingLoop:
             if self.diagnostic is not None:
                 self.diagnostic.after_update(self.trainer, rollout.segment.batch, result)
             actor = optimizer_steps(self.trainer.actor_optimizer); critic = optimizer_steps(self.trainer.critic_optimizer)
-            counters.complete_update(actor, critic)
+            actor_delta, critic_delta = self._optimizer_deltas(actor, critic)
+            counters.complete_update(actor_delta, critic_delta)
             self.journal.record_update(result, attempted_updates=counters.attempted_updates,
                 actor_optimizer_steps=actor, critic_optimizer_steps=critic, statistics=statistics)
             if checkpoint_label is not None:
@@ -170,7 +183,8 @@ class UnifiedH1TrainingLoop:
             except BaseException: actor = -1
             try: critic = optimizer_steps(self.trainer.critic_optimizer)
             except BaseException: critic = -1
-            counters.actor_optimizer_steps = actor; counters.critic_optimizer_steps = critic
+            counters.actor_optimizer_steps = actor - self.optimizer_step_origin[0] if actor >= 0 else -1
+            counters.critic_optimizer_steps = critic - self.optimizer_step_origin[1] if critic >= 0 else -1
             self.journal.record_partial_failure(attempted_updates=counters.attempted_updates,
                 completed_updates=counters.completed_updates, actor_optimizer_steps=actor,
                 critic_optimizer_steps=critic, error=error)
