@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="22" time="0.628" timestamp="2026-10-14T21:11:56.869278+08:00" hostname="mint-MS-7E30"><testcase classname="tests.test_h1_adapter" name="test_exact_h1_binding_and_consumed_attempt" time="0.026" /><testcase classname="tests.test_h1_adapter" name="test_runner_environment_binds_asset_root_without_inheriting_parent" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_h1_drift_rejected[&lt;lambda&gt;0]" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_h1_drift_rejected[&lt;lambda&gt;1]" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_h1_drift_rejected[&lt;lambda&gt;2]" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_h1_drift_rejected[&lt;lambda&gt;3]" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_h1_drift_rejected[&lt;lambda&gt;4]" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_h1_drift_rejected[&lt;lambda&gt;5]" time="0.012" /><testcase classname="tests.test_h1_adapter" name="test_h1_drift_rejected[&lt;lambda&gt;6]" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_actual_reviewed_lifecycle_cpu_failure_raw_collection_and_no_retry" time="0.057" /><testcase classname="tests.test_h1_adapter" name="test_pending_or_missing_raw_counters_retain_unknown_dimensions" time="0.030" /><testcase classname="tests.test_h1_adapter" name="test_raw_counter_overspend_is_not_silently_settled" time="0.022" /><testcase classname="tests.test_h1_adapter" name="test_original_authorization_checker_exact_binding_and_rejection" time="0.020"><failure message="KeyError: 'proposal_sha256'">bound = ({'argv': ['/usr/bin/python3.12', '-B', '-m', 'training_workloads.unified_h1.formal_unified_h1', '--authorization', '/...tion_seed': 456, 'seed': 123}, ...}}, PosixPath('/tmp/pytest-of-mint/pytest-1033/test_original_authorization_ch0/job'))
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7d4e0c4380e0&gt;
+
+    def test_original_authorization_checker_exact_binding_and_rejection(bound,monkeypatch):
+        v,observed,d=bound
+        auth=importlib.import_module('_offline_h1.authorization')
+        config={**observed['config'],'resolved_identity':{'product_commit':'a','product_tree':'b','workload_commit':'c','workload_tree':'d'}}
+        monkeypatch.setattr(auth,'load_config',lambda:config)
+        path=Path(v['pins']['authorization']['path']);attempt=Path(v['h1']['attempt'])
+        value={'schema_version':'unified-h1-r3-authorization.v2','status':'AUTHORIZED','order_id':'UNIFIED-H1-R3',
+               'method_sha256':auth.METHOD_SHA256,'config_sha256':auth.sha256_file(auth.CONFIG_PATH),
+               **config['resolved_identity'],'attempt':str(attempt),'mode':'controlled-failure','parameters':{},'budgets':observed['authorization']['budgets']}
+        atomic(path,canonical(value))
+&gt;       assert auth.load_r3_authorization(path,attempt,'controlled-failure')['budgets']==value['budgets']
+
+tools/rlflow/tests/test_h1_adapter.py:117: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-mint/pytest-1033/test_original_authorization_ch0/auth.json')
+attempt = PosixPath('/tmp/pytest-of-mint/pytest-1033/test_original_authorization_ch0/attempt')
+mode = 'controlled-failure'
+
+    def load_r3_authorization(path: Path, attempt: Path, mode: str) -&gt; dict[str, Any]:
+        config = load_config()
+        if mode not in MODES or not path.is_absolute() or not path.is_file() or path.is_symlink():
+            raise PermissionError("R3 authorization must be an explicit regular file and known mode")
+        value = json.loads(path.read_text(encoding="utf-8"))
+        required = {"schema_version", "status", "order_id", "method_sha256", "config_sha256", "product_commit", "product_tree",
+                    "workload_commit", "workload_tree", "attempt", "mode", "budgets", "parameters"}
+        if not isinstance(value, dict) or set(value) != required or value["schema_version"] != "unified-h1-r3-authorization.v2" or value["status"] != "AUTHORIZED":
+            raise PermissionError("missing exact R3 machine authorization")
+        identity = config["resolved_identity"]
+&gt;       expected_identity = {"method_sha256": config["method"]["proposal_sha256"], "config_sha256": sha256_file(CONFIG_PATH),
+            "product_commit": identity["product_commit"], "product_tree": identity["product_tree"],
+            "workload_commit": identity["workload_commit"], "workload_tree": identity["workload_tree"]}
+E       KeyError: 'proposal_sha256'
+
+training_workloads/unified_h1/authorization.py:101: KeyError</failure></testcase><testcase classname="tests.test_h1_adapter" name="test_late_raw_evidence_settles_reserved_dimensions_without_second_start" time="0.174" /><testcase classname="tests.test_h1_adapter" name="test_reviewed_controlled_failure_closes_both_resources_and_collects_final" time="0.069" /><testcase classname="tests.test_h1_adapter" name="test_control_diagnostic_uses_only_evaluation_seed[control-diagnostic]" time="0.014" /><testcase classname="tests.test_h1_adapter" name="test_control_diagnostic_uses_only_evaluation_seed[enhanced-b0-diagnostic]" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_control_diagnostic_uses_only_evaluation_seed[evaluation]" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_control_diagnostic_uses_only_evaluation_seed[pilot-evaluation]" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_pilot_training_keeps_training_seed" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_exact_delegated_research_seed_from_validated_authority[research-training-training_seed]" time="0.013" /><testcase classname="tests.test_h1_adapter" name="test_exact_delegated_research_seed_from_validated_authority[research-evaluation-evaluation_seed]" time="0.013" /></testsuite></testsuites>

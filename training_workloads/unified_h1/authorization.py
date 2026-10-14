@@ -9,12 +9,12 @@ from typing import Any
 from .budget import required_mode_budget
 from .config import CONFIG_PATH, METHOD_SHA256, load_config, sha256_file
 
-MODES = ("main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic")
+MODES = ("main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic", "research-training", "research-evaluation")
 BUDGET_FIELDS = {"live_process_starts", "simulator_initializations", "training_transitions",
                  "nontraining_transitions", "optimizer_updates", "checkpoint_writes",
                  "initialization_ticks", "explicit_resets", "automatic_resets", "wall_seconds"}
 
-MODE_ORDERS = {"main": "UNIFIED-H1-R3", "controlled-failure": "UNIFIED-H1-R3",
+MODE_ORDERS = {"research-training": None, "research-evaluation": None,"main": "UNIFIED-H1-R3", "controlled-failure": "UNIFIED-H1-R3",
                "r4-training": "UNIFIED-H1-R4", "evaluation": None,
                "r5-resume": "UNIFIED-H1-R5", "control-diagnostic": None,
                "pilot-training": None, "pilot-evaluation": None,
@@ -22,6 +22,9 @@ MODE_ORDERS = {"main": "UNIFIED-H1-R3", "controlled-failure": "UNIFIED-H1-R3",
 
 
 def _parameters(mode: str, value: object) -> dict[str, Any]:
+    if mode.startswith("research-"):
+        from .research_contract import validate_parameters
+        return validate_parameters(mode, value)
     if mode == "control-diagnostic":
         from .control_diagnostic import validate_parameters as validate_control_diagnostic_parameters
         return validate_control_diagnostic_parameters(value)
@@ -100,6 +103,8 @@ def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any
         "workload_commit": identity["workload_commit"], "workload_tree": identity["workload_tree"]}
     if any(value[key] != expected for key, expected in expected_identity.items()): raise PermissionError("R3 method/config/candidate binding mismatch")
     parameters = _parameters(mode, value["parameters"])
+    research_method = config["method"]["version"] == "unified-h1-formal-readiness-v1"
+    if research_method != mode.startswith("research-"): raise PermissionError("research method/mode mismatch")
     new_method = config["method"]["version"] == "unified-h1-zero-neutrality-v1"
     if new_method != (mode in {"pilot-training", "pilot-evaluation"} and parameters.get("group") in {"C0", "C1"}):
         raise PermissionError("pilot group and method profile disagree")
@@ -119,6 +124,7 @@ def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any
     if origin is not None and any(origin[k] != identity[k] for k in ("product_commit", "product_tree")):
         raise PermissionError("evaluation checkpoint product identity differs from the evaluated product")
     expected_order = MODE_ORDERS[mode]
+    if mode.startswith("research-"): expected_order = parameters["experiment_id"] + "-" + parameters["group"] + "-" + mode.upper()
     if mode == "evaluation": expected_order = "UNIFIED-H1-R4" if parameters["stage"] == "R4" else "UNIFIED-H1-R5"
     if mode == "control-diagnostic": expected_order = parameters["experiment_id"]
     if mode == "pilot-training": expected_order = f"UNIFIED-H1-R5-{parameters['group']}-PILOT-TRAIN"

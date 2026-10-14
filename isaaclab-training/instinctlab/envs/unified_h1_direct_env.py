@@ -78,6 +78,8 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
 
     def __init__(self, cfg: UnifiedH1DirectEnvCfg, render_mode: str | None = None, **kwargs):
         self._h1_residual_neutrality_weight = 0.0
+        self._h1_pure_hover_training = False
+        self._h1_anchor_weight = 4.0
         self._h1_global_policy_step = 0
         self._h1_next_command_b: torch.Tensor | None = None
         self._b0_command_b: torch.Tensor | None = None
@@ -514,6 +516,12 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         self._explicit_reset_pending.zero_()
         self._b0_command_b = None
 
+    def set_h1_research_profile(self, *, pure_hover: bool, anchor_weight: float) -> None:
+        import math
+        if type(pure_hover) is not bool or type(anchor_weight) not in (int, float) or not math.isfinite(anchor_weight) or anchor_weight < 0: raise ValueError("invalid research profile")
+        self._h1_pure_hover_training = pure_hover
+        self._h1_anchor_weight = float(anchor_weight)
+
     def set_h1_residual_neutrality_weight(self, weight: float) -> None:
         import math
         if isinstance(weight, bool) or not isinstance(weight, (int, float)) or not math.isfinite(weight) or weight < 0:
@@ -530,6 +538,7 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
             v_corr_b=self._control.v_corr_b, residual_neutrality_weight=self._h1_residual_neutrality_weight,
             previous_issued_v_final_b=self._reward_previous_v_final_b,
             actual_velocity_b=self._task.actual_velocity_b,
+            anchor_weight=self._h1_anchor_weight,
             anchor_loss=self._control.anchor_metrics["huber_loss"],
             anchor_active=self._control.anchor_metrics["active"],
             anchor_usable_fraction=self._control.anchor_metrics["usable_fraction"],
@@ -655,7 +664,7 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
             self._robot.write_root_pose_to_sim(root[:, :7], indices)
             self._robot.write_root_velocity_to_sim(root[:, 7:], indices)
             return
-        if indices.numel() == 0 or self._h1_global_policy_step < 1024:
+        if indices.numel() == 0 or self._h1_global_policy_step < 1024 or self._h1_pure_hover_training:
             return
         near = indices[(indices % 8) >= 6]
         if near.numel() == 0:

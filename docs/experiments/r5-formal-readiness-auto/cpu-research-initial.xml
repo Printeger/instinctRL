@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="0.643" timestamp="2026-10-14T21:10:59.049799+08:00" hostname="mint-MS-7E30"><testcase classname="" name="isaaclab-training.tests.test_formal_research_contract" time="0.000"><error message="collection failure">ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/isaaclab-training/tests/test_formal_research_contract.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/tests/test_formal_research_contract.py:13: in &lt;module&gt;
+    from test_residual_neutrality import inputs
+E   ModuleNotFoundError: No module named 'test_residual_neutrality'</error></testcase></testsuite></testsuites>

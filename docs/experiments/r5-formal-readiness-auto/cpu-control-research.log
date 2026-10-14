@@ -1,0 +1,46 @@
+............F.........                                                   [100%]
+=================================== FAILURES ===================================
+_______ test_original_authorization_checker_exact_binding_and_rejection ________
+
+bound = ({'argv': ['/usr/bin/python3.12', '-B', '-m', 'training_workloads.unified_h1.formal_unified_h1', '--authorization', '/...tion_seed': 456, 'seed': 123}, ...}}, PosixPath('/tmp/pytest-of-mint/pytest-1033/test_original_authorization_ch0/job'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d4e0c4380e0>
+
+    def test_original_authorization_checker_exact_binding_and_rejection(bound,monkeypatch):
+        v,observed,d=bound
+        auth=importlib.import_module('_offline_h1.authorization')
+        config={**observed['config'],'resolved_identity':{'product_commit':'a','product_tree':'b','workload_commit':'c','workload_tree':'d'}}
+        monkeypatch.setattr(auth,'load_config',lambda:config)
+        path=Path(v['pins']['authorization']['path']);attempt=Path(v['h1']['attempt'])
+        value={'schema_version':'unified-h1-r3-authorization.v2','status':'AUTHORIZED','order_id':'UNIFIED-H1-R3',
+               'method_sha256':auth.METHOD_SHA256,'config_sha256':auth.sha256_file(auth.CONFIG_PATH),
+               **config['resolved_identity'],'attempt':str(attempt),'mode':'controlled-failure','parameters':{},'budgets':observed['authorization']['budgets']}
+        atomic(path,canonical(value))
+>       assert auth.load_r3_authorization(path,attempt,'controlled-failure')['budgets']==value['budgets']
+
+tools/rlflow/tests/test_h1_adapter.py:117: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-mint/pytest-1033/test_original_authorization_ch0/auth.json')
+attempt = PosixPath('/tmp/pytest-of-mint/pytest-1033/test_original_authorization_ch0/attempt')
+mode = 'controlled-failure'
+
+    def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any]:
+        config = load_config()
+        if mode not in MODES or not path.is_absolute() or not path.is_file() or path.is_symlink():
+            raise PermissionError("R3 authorization must be an explicit regular file and known mode")
+        value = json.loads(path.read_text(encoding="utf-8"))
+        required = {"schema_version", "status", "order_id", "method_sha256", "config_sha256", "product_commit", "product_tree",
+                    "workload_commit", "workload_tree", "attempt", "mode", "budgets", "parameters"}
+        if not isinstance(value, dict) or set(value) != required or value["schema_version"] != "unified-h1-r3-authorization.v2" or value["status"] != "AUTHORIZED":
+            raise PermissionError("missing exact R3 machine authorization")
+        identity = config["resolved_identity"]
+>       expected_identity = {"method_sha256": config["method"]["proposal_sha256"], "config_sha256": sha256_file(CONFIG_PATH),
+            "product_commit": identity["product_commit"], "product_tree": identity["product_tree"],
+            "workload_commit": identity["workload_commit"], "workload_tree": identity["workload_tree"]}
+E       KeyError: 'proposal_sha256'
+
+training_workloads/unified_h1/authorization.py:101: KeyError
+- generated xml file: /home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/cpu-control-research.xml -
+=========================== short test summary info ============================
+FAILED tools/rlflow/tests/test_h1_adapter.py::test_original_authorization_checker_exact_binding_and_rejection
+1 failed, 21 passed in 0.63s

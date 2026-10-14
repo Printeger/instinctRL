@@ -57,12 +57,13 @@ class UnifiedH1LiveBackend:
                  environment: Any, resource_guard: RuntimeResourceGuard,
                  counters: ExecutionCounters | None = None,
                  process_started_monotonic: float | None = None) -> None:
+        self.research = authorization["parameters"] if authorization["mode"].startswith("research-") else None
         self.authorization = authorization; self.attempt = attempt; self.app = app
         self.environment = environment; self.resource_guard = resource_guard
         self.output = attempt / "results" / str(authorization["mode"])
         if not self.output.is_dir(): raise ValueError("lifecycle must prepare the mode output before resource construction")
         self.counters = counters or ExecutionCounters(); self.observation = None; self.trainer = None
-        self.driver = None; self.loop = None; self.curriculum_generator = torch.Generator(device="cpu").manual_seed(20260908)
+        self.driver = None; self.loop = None; self.curriculum_generator = torch.Generator(device="cpu").manual_seed(self.research["training_seed"] if self.research else 20260908)
         self.journal: LearningLog | None = None
         self._evaluation_rows: dict[str, list[EpisodeTrace]] = {}
         now = time.monotonic()
@@ -114,12 +115,13 @@ class UnifiedH1LiveBackend:
             if cuda: torch.cuda.set_rng_state_all(cuda)
 
     def _evaluate_case(self, case: str, *, direct_b0: bool, evaluation_label: str) -> None:
+        evaluation_seed = self.research["evaluation_seed"] if getattr(self, "research", None) else 20260909
         if case not in CASES: raise ValueError("unknown B0 case")
         self.environment.set_h1_evaluation_case(case)
         commands = case_commands(case).to(self.environment.device)
         self.environment.set_h1_initial_command(commands[0], 0)
         self.resource_check("before_evaluation_reset", self.counters.explicit_resets + 1)
-        observation, _ = self._preserving_reset(seed=20260909)
+        observation, _ = self._preserving_reset(seed=evaluation_seed)
         self.environment._refresh_task_snapshot()
         initial_source_snapshot = self.environment._evaluation_ray_snapshot
         initial_sensor = initial_source_snapshot.ray_starts_w[:, 0].detach().cpu()
@@ -127,7 +129,7 @@ class UnifiedH1LiveBackend:
         raw_log = LearningLog(self.output / "evaluation_raw")
         raw_relative = f"{evaluation_label}/{case}.jsonl"
         raw_log.append(raw_relative, {"schema_version":"metric-h1-v1.raw-trace.v1", "kind":"T0",
-            "case":case, "seed":20260909, "initial_sensor_position_w_m":initial_sensor,
+            "case":case, "seed":evaluation_seed, "initial_sensor_position_w_m":initial_sensor,
             "initial_root_state_w":initial_root_state, "env_origins_w_m":self.environment.scene.env_origins.detach().cpu()})
         episode_ids = torch.zeros(32, dtype=torch.int64)
         lane_rows = [[] for _ in range(32)]
@@ -167,7 +169,12 @@ class UnifiedH1LiveBackend:
                 "below_height":pre["task"]["termination"]["masks"]["below_height"][:,0],
                 "above_height":pre["task"]["termination"]["masks"]["above_height"][:,0],
                 "reset_mask":reset_mask, "ray_clearance_m":pre["task"]["exact_clearance_m"][:,0],
-                "q":q[:, 0], "ics_beta":ics_beta[:, 0]})
+                "q":q[:, 0], "ics_beta":ics_beta[:, 0],
+                **({"issued_action":action,"v_corr_b":pre["control"]["v_corr_b"],
+                    "v_final_b":pre["control"]["v_final_b"],"v_final_w":pre["control"]["v_final_w"],
+                    "root_state_w":pre["root_state_w"],"anchor_metrics":pre["control"]["anchor_metrics"],
+                    "diagnostic_timing":"action_t staged before integration; pre_reset root/control and same-state sensor returned at t+1; no additional sampling"}
+                   if getattr(self,"research",None) else {})})
             for lane in range(32):
                 lane_rows[lane].append({"command": current[lane].detach().cpu(),
                     "velocity": pre["task"]["actual_velocity_b"][lane].detach().cpu(),
@@ -191,7 +198,7 @@ class UnifiedH1LiveBackend:
                 "initial_root_position_w_m": initial_root_state[lane, :3],
                 "initial_velocity_b": initial_root_state[lane, 7:10],
                 "initial_root_quaternion_wxyz": initial_root_state[lane, 3:7],
-                "sample_policy_steps": tuple(range(len(rows))), "seed": 20260909,
+                "sample_policy_steps": tuple(range(len(rows))), "seed": evaluation_seed,
                 "q": torch.stack([r["q"] for r in rows]), "ics_beta": torch.stack([r["ics"] for r in rows])})
         self._evaluation_rows[case] = traces
         prefix = "b0" if direct_b0 else "policy"
@@ -204,9 +211,12 @@ class UnifiedH1LiveBackend:
         from .pilot_diagnostic import FirstUpdateDiagnostic
         from instinctlab.training.networks_h1 import PrivilegedCriticH1
 
-        torch.manual_seed(20260908)
+        research = getattr(self, "research", None)
+        training_seed = research["training_seed"] if research else 20260908
+        torch.manual_seed(training_seed)
         network = NetworkConfig()
-        actor_lr = 3.0e-4 if pilot_group is None else pilot_actor_learning_rate(pilot_group)
+        actor_lr = research["actor_lr"] if research else (3.0e-4 if pilot_group is None else pilot_actor_learning_rate(pilot_group))
+        if research: self._apply_research_profile()
         if pilot_group in {"C0", "C1"}:
             self.environment.set_h1_residual_neutrality_weight(pilot_residual_weight(pilot_group))
             if self.environment._h1_residual_neutrality_weight != self.authorization["parameters"]["residual_neutrality_weight"]:
@@ -221,18 +231,18 @@ class UnifiedH1LiveBackend:
         initial = command_at(0, device=self.environment.device)
         self.environment.set_h1_initial_command(initial, 0)
         self.resource_check("before_training_reset", self.counters.explicit_resets + 1)
-        self.observation, _ = self._preserving_reset(seed=20260908)
+        self.observation, _ = self._preserving_reset(seed=training_seed)
         journal = LearningLog(self.output / "learning_log"); self.journal = journal
-        self.driver = UnifiedH1Driver(self.environment, self.observation, clock=ScheduleClock(0), counters=self.counters, journal=journal,
+        self.driver = UnifiedH1Driver(self.environment, self.observation, clock=ScheduleClock(0, pure_hover=bool(research)), counters=self.counters, journal=journal,
             before_step=lambda ordinal: self.resource_check("before_training_step", ordinal),
             transition_limit=self.authorization["budgets"]["training_transitions"],
             automatic_reset_limit=self.authorization["budgets"]["automatic_resets"])
-        diagnostic = FirstUpdateDiagnostic(self.output / "pilot_diagnostic", enabled=pilot_group is not None)
+        diagnostic = FirstUpdateDiagnostic(self.output / "pilot_diagnostic", enabled=pilot_group is not None or bool(research))
         self.loop = UnifiedH1TrainingLoop(self.driver, self.trainer, journal, self._write_checkpoint,
             before_rollout=lambda ordinal: self.resource_check("before_training_rollout", ordinal),
             before_optimizer=lambda ordinal: self.resource_check("before_optimizer_update", ordinal),
             update_limit=self.authorization["budgets"]["optimizer_updates"], diagnostic=diagnostic)
-        if pilot_group is not None:
+        if pilot_group is not None or research:
             actual = {"actor":[float(group["lr"]) for group in self.trainer.actor_optimizer.param_groups],
                       "critic":[float(group["lr"]) for group in self.trainer.critic_optimizer.param_groups]}
             if actual != {"actor":[actor_lr],"critic":[3.0e-4]}: raise RuntimeError("pilot optimizer learning rates differ from the bound group")
@@ -243,12 +253,12 @@ class UnifiedH1LiveBackend:
         self.resource_check("before_checkpoint_write", self.counters.real_checkpoint_writes + 1)
         self.counters.reserve_checkpoint(self.authorization["budgets"]["checkpoint_writes"])
         config = load_config(); target = (self.output / "checkpoints" / f"{label}.pt").resolve(); target.parent.mkdir(parents=True, exist_ok=True)
-        save_checkpoint_h1(target, trainer, method_hashes=pilot_method_hashes(config, self.authorization["parameters"].get("group")),
+        save_checkpoint_h1(target, trainer, method_hashes=self._checkpoint_method_hashes(config),
             write_guard=__import__("training_workloads.scale_003.persistence", fromlist=["guard_stream"]).guard_stream,
             source_identity=config["resolved_identity"], transition_counter=trainer.update_counter * 512,
             global_policy_step=trainer.update_counter * 16,
-            curriculum={"version": "curriculum-h1-v1", "completed_policy_steps": trainer.update_counter * 16},
-            training_seed=20260908, reset_number=self.counters.explicit_resets + self.counters.automatic_resets,
+            curriculum={"version": ("curriculum-h1-research-pure-hover-v1" if getattr(self,"research",None) else "curriculum-h1-v1"), "completed_policy_steps": trainer.update_counter * 16},
+            training_seed=(self.research["training_seed"] if getattr(self,"research",None) else 20260908), reset_number=self.counters.explicit_resets + self.counters.automatic_resets,
             curriculum_generator=self.curriculum_generator)
         self.counters.real_checkpoint_writes += 1
         atomic_json_replace(self.output, f"checkpoints/{label}.json", {"path": str(target), "sha256": sha256_file(target), "bytes": target.stat().st_size})
@@ -324,6 +334,49 @@ class UnifiedH1LiveBackend:
             self.loop.run_update(checkpoint_label=f"u{ordinal:04d}" if ordinal % checkpoint_interval == 0 else None)
 
 
+    def _checkpoint_method_hashes(self, config):
+        if getattr(self, "research", None):
+            from .research_contract import method_hashes
+            return method_hashes(config, self.research)
+        return pilot_method_hashes(config, self.authorization["parameters"].get("group"))
+
+    def _apply_research_profile(self):
+        p = self.research
+        self.environment.set_h1_residual_neutrality_weight(p["residual_neutrality_weight"])
+        self.environment.set_h1_research_profile(pure_hover=True, anchor_weight=p["anchor_weight"])
+        if self.environment._h1_residual_neutrality_weight != p["residual_neutrality_weight"] or self.environment._h1_anchor_weight != p["anchor_weight"]:
+            raise RuntimeError("actual research reward profile differs")
+        atomic_json_replace(self.output,"research_profile_binding.json", {
+            "parameters":p,"actual_residual_neutrality_weight":self.environment._h1_residual_neutrality_weight,
+            "actual_anchor_weight":self.environment._h1_anchor_weight,"pure_hover":self.environment._h1_pure_hover_training,
+            "initialization":"COLD_START" if self.authorization["mode"] == "research-training" else "EVALUATION_FRESH_RESET",
+            "authorization_sha256":self.authorization["authorization_sha256"],
+            "method_hashes":self._checkpoint_method_hashes(load_config())})
+
+    def train_research(self):
+        p = self.research
+        self.cold_start(); self.save_checkpoint("init0000")
+        nodes=set(p["checkpoint_updates"])
+        while self.trainer.update_counter < p["max_updates"]:
+            ordinal=self.trainer.update_counter+1; self.resource_check("before_research_update",ordinal)
+            self.loop.run_update(checkpoint_label=f"u{ordinal}" if ordinal in nodes else None)
+
+    def evaluate_research(self):
+        p = self.research; self._apply_research_profile()
+        for row in p["checkpoints"]:
+            path=Path(row["path"]); update=row["update"]
+            if sha256_file(path)!=row["sha256"]: raise ValueError("research checkpoint drift")
+            meta=self._load_evaluation_checkpoint(path,actor_learning_rate=p["actor_lr"])
+            if self.trainer.update_counter != update or meta["training_seed"] != p["training_seed"] or meta["curriculum"]["version"] != "curriculum-h1-research-pure-hover-v1":
+                raise ValueError("research checkpoint seed/stage/node mismatch")
+            self.trainer.actor.eval(); self.trainer.critic.eval(); self._evaluation_rows.clear()
+            label=f"research_{p['group']}_u{update}"
+            self._evaluate_case("Z",direct_b0=False,evaluation_label=label)
+            atomic_json_replace(self.output,f"{label}_Z.json",{
+                "schema_version":"instinctrl-research-z-evaluation/1","group":p["group"],"update":update,
+                "training_seed":p["training_seed"],"evaluation_seed":p["evaluation_seed"],
+                "episodes":[evaluate_episode(trace) for trace in self._evaluation_rows["Z"]]})
+
     def train_pilot(self, group: str) -> None:
         """True cold-start 64-update pilot with the exact seven checkpoint names."""
         self.cold_start(pilot_group=group); self.save_checkpoint("init0000")
@@ -394,7 +447,7 @@ class UnifiedH1LiveBackend:
         config = load_config(); network = NetworkConfig()
         trainer = PPOTrainer(HistoryActor(network).to(self.environment.device), PrivilegedCriticH1(network).to(self.environment.device), PPOConfig(minibatch_size=64, epoch_count=1, actor_learning_rate=actor_learning_rate, critic_learning_rate=3.0e-4))
         metadata = load_checkpoint_h1(checkpoint.resolve(), trainer,
-            expected_method_hashes=pilot_method_hashes(config, self.authorization["parameters"].get("group")),
+            expected_method_hashes=self._checkpoint_method_hashes(config),
             expected_source_identity=self.authorization["parameters"].get("checkpoint_source_identity", config["resolved_identity"]),
             curriculum_generator=torch.Generator(device="cpu"))
         self.trainer = trainer

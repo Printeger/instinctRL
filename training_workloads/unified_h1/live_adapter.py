@@ -238,6 +238,8 @@ def _dispatch(backend: Any, authorization: Mapping[str, Any]) -> None:
     elif mode == "r5-resume": execute_training_phase(backend, resume_checkpoint=Path(parameters["checkpoint"]), target_update=parameters["target_update"])
     elif mode == "evaluation": execute_evaluation_phase(backend, checkpoints=parameters["checkpoints"])
     elif mode == "control-diagnostic": backend.run_control_diagnostic(parameters)
+    elif mode == "research-training": backend.train_research()
+    elif mode == "research-evaluation": backend.evaluate_research()
     elif mode == "pilot-training": backend.train_pilot(parameters["group"])
     elif mode == "pilot-evaluation": backend.evaluate_pilot_z(parameters["group"], parameters["checkpoints"])
     elif mode == "enhanced-b0-diagnostic": backend.run_enhanced_b0_diagnostic(parameters)
@@ -286,10 +288,14 @@ def run_main_sequence(*, authorization: Mapping[str, Any], attempt: Path,
         backend_factory = create_live_backend
     factory = backend_factory
     output.mkdir(mode=0o755)
-    if authorization.get("parameters", {}).get("group") in {"C0", "C1"}:
+    research_mode = mode.startswith("research-")
+    if research_mode or authorization.get("parameters", {}).get("group") in {"C0", "C1"}:
         from .pilot_contract import PILOT_OUTPUT_CAP_BYTES, PILOT_WORKLOAD_WRITE_CAP_BYTES
         from training_workloads.scale_003.persistence import install_output_write_quota
         import resource
+        if research_mode:
+            PILOT_OUTPUT_CAP_BYTES = authorization["parameters"]["output_cap_bytes"]
+            PILOT_WORKLOAD_WRITE_CAP_BYTES = PILOT_OUTPUT_CAP_BYTES - 3 * 1024**3
         if authorization["parameters"]["output_cap_bytes"] != PILOT_OUTPUT_CAP_BYTES:
             raise PermissionError("new pilot output cap differs from exact authorization")
         install_output_write_quota(output, PILOT_WORKLOAD_WRITE_CAP_BYTES)

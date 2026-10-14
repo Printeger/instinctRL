@@ -1,0 +1,93 @@
+{
+  "schema_version": "instinctrl-r5-research-experiment-card/1",
+  "experiment_id": "R5-H128-DEV-01",
+  "parent": "Accepted C0/C1 d257f9 64-update pair; oldreference historical, new R0/R1 same-version contemporaneous pair",
+  "question": "Does a preregistered longer purezero128-update horizon with existing residual-neutrality method reach originalZ, before changing actor reference information?",
+  "phaseA_evidence": "../../REMAINING_ERROR_ANALYSIS.json and independent anchor-information findings",
+  "sole_primary_reward_variable": "R0w0/R1w.05; common new128purehover horizon; compare u96/u128, oldu64 historicalonly",
+  "common_source_config": "snapshot_config.json, source commit fixed at preparation before exact prelive",
+  "init": "Bothcoldstart sameactualtrainingseed, sameactor/critic commoninitialization and first512inputs/actions comparable; reward returns/advantages allowed differ",
+  "primary_node": 128,
+  "predefined_late_nodes": [
+    96,
+    128
+  ],
+  "hypothesis_support": "Candidate complete originalZ at both96/128 without changedwindows/denominators; candidate-vsreference continuous metrics separately reported",
+  "hypothesis_refutation": "No candidate originalZ at both late nodes/plateau/unstable or nonfinite; stop this experiment and test deployable measurement-reference representation rather thanblindduration",
+  "training_transitions_total": 131072,
+  "evaluation_transitions_total": 25600,
+  "live_starts_total": 4,
+  "logical_updates_total": 256,
+  "actor_steps_total": 2048,
+  "critic_steps_total": 2048,
+  "checkpoint_writes_total": 18,
+  "wall_GPU_reservation_total": 10840,
+  "output_reservation_bytes": 34359738368,
+  "profiles": {
+    "R0": {
+      "experiment_id": "R5-H128-DEV-01",
+      "group": "R0",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "max_updates": 128,
+      "checkpoint_updates": [
+        1,
+        2,
+        8,
+        16,
+        32,
+        64,
+        96,
+        128
+      ],
+      "evaluation_updates": [
+        96,
+        128
+      ],
+      "command_profile": "pure-hover",
+      "residual_neutrality_weight": 0.0,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      }
+    },
+    "R1": {
+      "experiment_id": "R5-H128-DEV-01",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "max_updates": 128,
+      "checkpoint_updates": [
+        1,
+        2,
+        8,
+        16,
+        32,
+        64,
+        96,
+        128
+      ],
+      "evaluation_updates": [
+        96,
+        128
+      ],
+      "command_profile": "pure-hover",
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      }
+    }
+  },
+  "acceptance": "OriginalT0/200steps32lanes andd0-d7 allfailures; originalfunction andthresholds. u96/u128 bothrequired fordevelopmentqualification; newunseentrainingseeds onlyaftercandidatefreeze.",
+  "recovery": "Newidentity boundedreasonedrecovery under master; nooldresume, neverrelaxSTOP/coexistence/gate.",
+  "formal_full_training_submitted": false
+}

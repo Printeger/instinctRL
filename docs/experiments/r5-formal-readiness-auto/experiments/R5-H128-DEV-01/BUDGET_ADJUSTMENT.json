@@ -1,0 +1,56 @@
+{
+  "id": "D003",
+  "kind": "BUDGET_ADJUSTMENT",
+  "authority_sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33",
+  "reason": "Finite phaseA and newuser permits purehover128 before changingfeedback; equal-budget2groups needs131072train/256updates/18writes ratherthaninitial64stage",
+  "old_stage": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "allocated_gpu_seconds": 10840,
+    "wall_seconds_including_cleanup": 10840,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "new_stage": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 25600,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 18,
+    "allocated_gpu_seconds": 10840,
+    "wall_seconds_including_cleanup": 10840,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "next_information_gain": "Does a preregistered longer purezero128-update horizon with existing residual-neutrality method reach originalZ, before changing actor reference information?",
+  "confirmation_reservation": {
+    "training_transitions": 524288,
+    "nontraining_transitions": 128000,
+    "live_starts": 12,
+    "simulator_initialization_reservations": 12,
+    "optimizer_updates": 1024,
+    "actor_optimizer_steps": 8192,
+    "critic_optimizer_steps": 8192,
+    "training_checkpoint_writes": 32,
+    "allocated_gpu_seconds": 21680,
+    "wall_seconds_including_cleanup": 21680,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "formal_reservation": {
+    "training_transitions": 262144,
+    "nontraining_transitions": 329600,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 512,
+    "actor_optimizer_steps": 4096,
+    "critic_optimizer_steps": 4096,
+    "training_checkpoint_writes": 10,
+    "allocated_gpu_seconds": 21680,
+    "wall_seconds_including_cleanup": 21680,
+    "output_peak_and_reservations_bytes": 34359738368
+  },
+  "master_caps_unchanged": true
+}

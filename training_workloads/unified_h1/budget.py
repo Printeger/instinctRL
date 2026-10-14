@@ -126,6 +126,9 @@ class ExecutionCounters:
 
 def required_mode_budget(mode: str, parameters: Mapping[str, object]) -> dict[str, int]:
     """Return the exact ceiling for one future process; no slack is implicit."""
+    if mode.startswith("research-"):
+        from .research_contract import required_budget
+        return required_budget(mode, parameters)
     common = {"live_process_starts": 1, "simulator_initializations": 1,
               "initialization_ticks": 10, "automatic_resets": 0}
     if mode == "main":

@@ -70,12 +70,18 @@ def reset_local_positions(global_policy_step: int, env_ids: torch.Tensor | None 
 
 
 class ScheduleClock:
-    def __init__(self, completed_policy_steps: int = 0) -> None:
+    def __init__(self, completed_policy_steps: int = 0, *, pure_hover: bool = False) -> None:
+        if type(pure_hover) is not bool: raise TypeError("pure_hover must be bool")
+        self.pure_hover = pure_hover
         if isinstance(completed_policy_steps, bool) or not isinstance(completed_policy_steps, int) or completed_policy_steps < 0:
             raise ValueError("completed_policy_steps must be nonnegative")
         self.completed_policy_steps = completed_policy_steps
 
     def plan(self, *, device="cpu", dtype=torch.float32) -> StepPlan:
+        if self.pure_hover:
+            command = torch.zeros(NUM_ENVS, 3, device=device, dtype=dtype)
+            zero = torch.ones(NUM_ENVS, device=device, dtype=torch.bool)
+            return StepPlan(self.completed_policy_steps, command, command.clone(), zero, ~zero, None)
         return plan_step(self.completed_policy_steps, device=device, dtype=dtype)
 
     def complete_step(self) -> None:
@@ -87,14 +93,15 @@ class ScheduleClock:
         # Lane reset intentionally does not alter the global curriculum clock.
 
     def state_dict(self) -> dict[str, int | str]:
-        return {"version": "curriculum-h1-v1", "completed_policy_steps": self.completed_policy_steps}
+        return {"version": ("curriculum-h1-research-pure-hover-v1" if self.pure_hover else "curriculum-h1-v1"), "completed_policy_steps": self.completed_policy_steps}
 
     def load_state_dict(self, value: dict[str, int | str]) -> None:
-        if set(value) != {"version", "completed_policy_steps"} or value["version"] != "curriculum-h1-v1":
+        if set(value) != {"version", "completed_policy_steps"} or value["version"] not in {"curriculum-h1-v1", "curriculum-h1-research-pure-hover-v1"}:
             raise ValueError("curriculum state schema mismatch")
         restored = value["completed_policy_steps"]
         if isinstance(restored, bool) or not isinstance(restored, int) or restored < 0:
             raise ValueError("invalid restored curriculum clock")
+        self.pure_hover = value["version"] == "curriculum-h1-research-pure-hover-v1"
         self.completed_policy_steps = restored
 
 

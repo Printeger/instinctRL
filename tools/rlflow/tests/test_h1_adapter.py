@@ -107,7 +107,7 @@ def test_raw_counter_overspend_is_not_silently_settled(bound):
 def test_original_authorization_checker_exact_binding_and_rejection(bound,monkeypatch):
     v,observed,d=bound
     auth=importlib.import_module('_offline_h1.authorization')
-    config={**observed['config'],'resolved_identity':{'product_commit':'a','product_tree':'b','workload_commit':'c','workload_tree':'d'}}
+    config={**observed['config'],'method':{**observed['config']['method'],'proposal_sha256':auth.METHOD_SHA256},'resolved_identity':{'product_commit':'a','product_tree':'b','workload_commit':'c','workload_tree':'d'}}
     monkeypatch.setattr(auth,'load_config',lambda:config)
     path=Path(v['pins']['authorization']['path']);attempt=Path(v['h1']['attempt'])
     value={'schema_version':'unified-h1-r3-authorization.v2','status':'AUTHORIZED','order_id':'UNIFIED-H1-R3',
@@ -184,3 +184,15 @@ def test_pilot_training_keeps_training_seed(bound):
     assert h1.validate(v,d)==observed
     v['seed']=456
     with pytest.raises(Conflict,match='seed'):h1.validate(v,d)
+
+@pytest.mark.parametrize('mode,seed_field',[('research-training','training_seed'),('research-evaluation','evaluation_seed')])
+def test_exact_delegated_research_seed_from_validated_authority(bound,mode,seed_field):
+    v,observed,d=bound
+    observed['authorization']['mode']=mode
+    observed['authorization']['parameters']={'training_seed':20261017,'evaluation_seed':20260909}
+    observed['config']['method']['version']='unified-h1-formal-readiness-v1'
+    v['h1']['mode']=mode;v['argv'][-1]=mode;v['method']='unified-h1-formal-readiness-v1'
+    v['seed']=observed['authorization']['parameters'][seed_field]
+    assert h1.validate(v,d)==observed
+    v['seed']=observed['config']['training']['seed']
+    with pytest.raises(Conflict,match='seed/method'):h1.validate(v,d)

@@ -18,9 +18,12 @@ VERSIONS = {"curriculum": "curriculum-h1-v1", "reward": "reward-h1-v2", "critic"
 NEUTRALITY_METHOD_PATH = Path(__file__).resolve().parents[2] / "coordination/contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md"
 NEUTRALITY_METHOD_SHA256 = "ecc75a8e3d581ca1bd43e8c3e34326a5f18dd55cfa1739fe3b26f4e25fe1c14e"
 NEUTRALITY_VERSIONS = {**VERSIONS, "reward": "reward-h1-zero-neutrality-v1"}
+RESEARCH_METHOD_PATH = Path(__file__).resolve().parents[2] / "coordination/contracts/R5_FORMAL_READINESS_RESEARCH_V1.md"
+RESEARCH_METHOD_SHA256 = "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec"
+RESEARCH_VERSIONS = {**NEUTRALITY_VERSIONS, "curriculum": "curriculum-h1-research-pure-hover-v1"}
 PRODUCT_SOURCES = {
     "isaaclab-training/instinctlab/assets/taslab_uav/articulation.py",
-    "isaaclab-training/instinctlab/control/baseline_b0.py", "isaaclab-training/instinctlab/control/pipeline.py",
+    "isaaclab-training/instinctlab/control/anchor.py", "isaaclab-training/instinctlab/control/baseline_b0.py", "isaaclab-training/instinctlab/control/pipeline.py",
     "isaaclab-training/instinctlab/control/ics.py", "isaaclab-training/instinctlab/control/governor.py",
     "isaaclab-training/instinctlab/control/lee_velocity_controller.py", "isaaclab-training/instinctlab/control/runtime_adapter.py",
     "isaaclab-training/instinctlab/envs/__init__.py",
@@ -40,7 +43,7 @@ WORKLOAD_SOURCES = {
     "training_workloads/unified_h1/asset_closure.py",
     "training_workloads/unified_h1/authorization.py", "training_workloads/unified_h1/backend.py",
     "training_workloads/unified_h1/control_diagnostic.py", "training_workloads/unified_h1/pilot_diagnostic.py",
-    "training_workloads/unified_h1/pilot_contract.py",
+    "training_workloads/unified_h1/pilot_contract.py", "training_workloads/unified_h1/research_contract.py",
     "training_workloads/unified_h1/budget.py", "training_workloads/unified_h1/config.py",
     "training_workloads/unified_h1/driver.py", "training_workloads/unified_h1/evaluation.py",
     "training_workloads/unified_h1/formal_unified_h1.py", "training_workloads/unified_h1/live_adapter.py",
@@ -136,6 +139,9 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
         method_path, method_sha, versions = NEUTRALITY_METHOD_PATH, NEUTRALITY_METHOD_SHA256, NEUTRALITY_VERSIONS
         expected_method = {"version": "unified-h1-zero-neutrality-v1", "proposal_path": str(method_path),
                            "proposal_sha256": method_sha, "hashes": {"method": method_sha, **versions}}
+    if isinstance(method, dict) and method.get("version") == "unified-h1-formal-readiness-v1":
+        method_path, method_sha, versions = RESEARCH_METHOD_PATH, RESEARCH_METHOD_SHA256, RESEARCH_VERSIONS
+        expected_method = {"version": "unified-h1-formal-readiness-v1", "proposal_path": str(method_path), "proposal_sha256": method_sha, "hashes": {"method": method_sha, **versions}}
     _exact_mapping(method, expected_method, "method identity")
     if sha256_file(method_path) != method_sha: raise ValueError("approved method bytes changed")
     _exact_mapping(value["versions"], versions, "method component versions")
@@ -167,7 +173,9 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
         raise ValueError("future entry schema mismatch")
     if entry["status"] != "PREPARED_NOT_AUTHORIZED" or entry["module"] != "training_workloads.unified_h1.formal_unified_h1":
         raise ValueError("future entry identity mismatch")
-    if entry["modes"] != ["main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic"]:
+    expected_modes = ["main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic"]
+    if method["version"] == "unified-h1-formal-readiness-v1": expected_modes += ["research-training", "research-evaluation"]
+    if entry["modes"] != expected_modes:
         raise ValueError("future mode set mismatch")
     result = dict(value)
     result["resolved_identity"] = {"product_commit": product["commit"], "product_tree": product["tree"],

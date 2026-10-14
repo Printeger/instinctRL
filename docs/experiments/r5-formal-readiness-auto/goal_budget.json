@@ -21,12 +21,12 @@
     "paid_cloud_resources": 0
   },
   "stage_allocation": {
-    "training_transitions": 65536,
+    "training_transitions": 131072,
     "nontraining_transitions": 25600,
     "live_starts": 4,
     "simulator_initialization_reservations": 4,
-    "optimizer_updates": 128,
-    "training_checkpoint_writes": 14,
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 18,
     "allocated_gpu_seconds": 10840,
     "wall_seconds_including_cleanup": 10840,
     "output_peak_and_reservations_bytes": 68719476736
@@ -61,7 +61,20 @@
       "output_peak_and_reservations_bytes": 34359738368
     },
     "live_entries": [],
-    "source_snapshots": []
+    "source_snapshots": [],
+    "confirmation_and_transition": {
+      "training_transitions": 524288,
+      "nontraining_transitions": 128000,
+      "live_starts": 12,
+      "simulator_initialization_reservations": 12,
+      "optimizer_updates": 1024,
+      "actor_optimizer_steps": 8192,
+      "critic_optimizer_steps": 8192,
+      "training_checkpoint_writes": 32,
+      "allocated_gpu_seconds": 21680,
+      "wall_seconds_including_cleanup": 21680,
+      "output_peak_and_reservations_bytes": 68719476736
+    }
   },
   "role_calls": [
     {
@@ -74,7 +87,12 @@
       "sha256": "89978d990edd32694faeeeb3c79877f50ee8ce8bc447813c65261a58ae890d7c"
     }
   ],
-  "decisions": [],
+  "decisions": [
+    {
+      "path": "experiments/R5-H128-DEV-01/BUDGET_ADJUSTMENT.json",
+      "sha256": "ef7c2cc33897712401fc62a3559760d3e1a09d6039adb7e3945e7d4dfb707bc8"
+    }
+  ],
   "runs": [],
   "old_budgets": "Read-only, not inherited or refunded; previous INCOMPLETE observations remain conservatively reserved in their own ledgers."
 }

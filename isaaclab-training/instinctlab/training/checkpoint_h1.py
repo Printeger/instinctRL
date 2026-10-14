@@ -106,11 +106,12 @@ def _validate_clock_and_curriculum(*, update: int, transition: int, policy_step:
                                    curriculum: object, training_seed: int) -> dict[str, Any]:
     if transition != 512 * update or policy_step != 16 * update:
         raise CheckpointError("checkpoint-h1 counters must equal 512*update and 16*update")
-    if training_seed != 20260908:
+    research = isinstance(curriculum, dict) and curriculum.get("version") == "curriculum-h1-research-pure-hover-v1"
+    if (not research and training_seed != 20260908) or (research and (type(training_seed) is not int or not 0 <= training_seed < 2**31)):
         raise CheckpointError("checkpoint-h1 training seed mismatch")
     if not isinstance(curriculum, dict) or set(curriculum) != {"version", "completed_policy_steps"}:
         raise CheckpointError("checkpoint-h1 curriculum schema mismatch")
-    if curriculum["version"] != "curriculum-h1-v1":
+    if curriculum["version"] not in {"curriculum-h1-v1", "curriculum-h1-research-pure-hover-v1"}:
         raise CheckpointError("checkpoint-h1 curriculum version mismatch")
     completed = _validate_counter(curriculum["completed_policy_steps"], "completed_policy_steps")
     if completed != policy_step:
