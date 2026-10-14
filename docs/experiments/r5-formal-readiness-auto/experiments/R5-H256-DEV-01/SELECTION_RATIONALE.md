@@ -1,0 +1,7 @@
+# D009 finite horizon extension after a late original-Z pass
+
+H128 does not satisfy its preregistered two-node stability hypothesis: R1 u96 is0/32, max drift0.450617m. R1 u128 is32/32, all eight subgroups4/4, maxima speed0.017075m/s, drift0.232706m, height0.163136m. R0 u96/u128 are0/32. Keep those results and H128 negative stability outcome unchanged.
+
+The planned measurement-reference route was preferred if the bounded horizon proved insufficient or plateaued. New actual evidence distinguishes that case: complete originalZ appears at the last node, so this is not evidence that moredata cannot help. Before modifying actor information, test ONE finite256 pure-hover horizon with new prospective192/256 nodes, common same-source R0/R1 coldstart budgets and unchanged method. This updates the NEXT research decision, not the H128 definition or result. It does not count the already-seen128 as a second prospective late node and does not claim a historicalu64 prefix match.
+
+If either new late node fails, do not extend past256. Move to the separately motivated deployable measurement-reference/representation direction. If both pass, freeze the method/budget/primary256 and only then select two unused training seeds for confirmation. No final qualification from one seed; no default anchor4→8, mixed curriculum, new truth input or acceptance relaxation. Existing exactsource a13c5a4 already supports purehover256; use its original metadata with disclosedlabel defect, no source rewrite or unnecessary training rerun forlabels.

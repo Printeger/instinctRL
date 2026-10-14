@@ -1,0 +1,209 @@
+{
+  "approval_id": "A-8ffd68bb4789ae5a",
+  "h1_evidence": {
+    "allocation_basis": "allocated_device_wall_seconds",
+    "allocation_gpu_seconds": 101.25320989801548,
+    "counter_completeness": "INCOMPLETE",
+    "counters": {
+      "actor_optimizer_steps": 0,
+      "attempted_policy_steps": 400,
+      "attempted_updates": 0,
+      "automatic_resets": 0,
+      "completed_policy_steps": 400,
+      "completed_updates": 0,
+      "critic_optimizer_steps": 0,
+      "explicit_resets": 2,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 12800,
+      "real_checkpoint_writes": 0,
+      "real_environment_transitions": 12800,
+      "real_optimizer_updates": 0,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 0
+    },
+    "exit_fact": "FAILED",
+    "formal_verdict": "NOT_GRANTED",
+    "manifest": {
+      "cleanup_timeout.json": {
+        "bytes": 200,
+        "sha256": "4b016f6cec267e2bb125475a2d20d24925d74502012bd4527bffe69fbe97394f"
+      },
+      "evaluation_progress.json": {
+        "bytes": 112,
+        "sha256": "f962fd6e611d3bcb229c5558c631701704f8343d68d652b524d7385eaa3818a0"
+      },
+      "evaluation_raw/research_R1_u128/Z.jsonl": {
+        "bytes": 5355502,
+        "sha256": "61180cd7275bc91ec53012dd3b7d37753c2a3517e7266220025ef100dfad0de3"
+      },
+      "evaluation_raw/research_R1_u96/Z.jsonl": {
+        "bytes": 5304561,
+        "sha256": "b33a9486d9a6ff8038c966a013e7c9e8212c5b05b888fa7087006c964891c851"
+      },
+      "initialization_accounting.json": {
+        "bytes": 269,
+        "sha256": "61d33061293905bf9cf69e78083b6310aaafb6b060780015d3bef60151f6ef21"
+      },
+      "output_quota_binding.json": {
+        "bytes": 248,
+        "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b"
+      },
+      "process_identity.json": {
+        "bytes": 293,
+        "sha256": "86662c46e95688470401a7f820585d4d9fa6b71611f992cb148169b3bc1229ce"
+      },
+      "process_start.json": {
+        "bytes": 1352,
+        "sha256": "585a9a9ac4d93d08f486351f43804d16f29121522ffd0e6dfcd4884b886f52a3"
+      },
+      "research_R1_u128_Z.json": {
+        "bytes": 8999,
+        "sha256": "d34320b452890aabb003007d8ada2e579a72be7adc8b6ae8c9407667f5958bde"
+      },
+      "research_R1_u128_policy_Z.json": {
+        "bytes": 8920,
+        "sha256": "b3712bcfeaf3d6854a96d472e5f400a3bb92c8faf3095d9f41f49764172a7103"
+      },
+      "research_R1_u96_Z.json": {
+        "bytes": 9489,
+        "sha256": "31a6f51f6ff77aa6dd187591cc53ebf56afa0fdd11083344f27eca1c3a2cb60d"
+      },
+      "research_R1_u96_policy_Z.json": {
+        "bytes": 9411,
+        "sha256": "116a1bcbc0f7c05c6aa729c7d7d1fb4b519509305dc1723d5ecea3345677472e"
+      },
+      "research_profile_binding.json": {
+        "bytes": 1933,
+        "sha256": "b97d7a8759be86b5a188ddc231d10428fb80630d43219d7cf6e1d9158362fcc0"
+      },
+      "status.json": {
+        "bytes": 944,
+        "sha256": "8bcdf2f3d05f73d34256bb46fb3fa2eeab4afd01a0968f6bb708cadbd2f6ad8e"
+      }
+    },
+    "raw_status": "PASS_PENDING_CLOSE",
+    "scientific_validity": "UNASSESSED",
+    "scope": "H1_RAW_EXECUTION",
+    "transitions": null
+  },
+  "id": "J-bb0051be6672154a",
+  "identity": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pgid": 1848317,
+    "pid": 1848317,
+    "starttime": "193483668"
+  },
+  "receipt": {
+    "allocated_seconds": 101.25320989801548,
+    "definitely_not_released": false,
+    "elapsed_seconds": 102.21405940502882,
+    "error": null,
+    "exit_code": -9,
+    "job_id": "J-bb0051be6672154a",
+    "released": true,
+    "spec_sha256": "5bc268b53b42a9251d9e87b44b077155ca51cfec3260f80fda72ef3b6fc4adb0",
+    "status": "FAILED"
+  },
+  "reserved_resources": {
+    "transitions": 12800
+  },
+  "spec": {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--authorization",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY2-a13c5a459d47/commands/AUTHORIZATION.json",
+      "--attempt",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY2-a13c5a459d47",
+      "--mode",
+      "research-evaluation"
+    ],
+    "backend": "real",
+    "conditions": [
+      {
+        "evidence_id": "E-R5-FORMAL-MASTER-DELEGATION-20261014",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      },
+      {
+        "evidence_id": "E-R5-H128-DEV-01-R1-Z-RECOVERY2-ACTUAL-TRAINING",
+        "sha256": "4669b1be4f2dfde7d7d1c30bb712690a0f03d480b3868a7ae995e3d30b78e6a5"
+      },
+      {
+        "evidence_id": "E-R5-H128-DEV-01-R1-Z-RECOVERY2-PRELIVE",
+        "sha256": "36ba1eb7b1e5676b5dfeb17ff2cb1caea1adb2a35486c72fe411cebb9e6ea1e3"
+      }
+    ],
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014",
+    "evaluation": "metric-h1-v1",
+    "h1": {
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY2-a13c5a459d47",
+      "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+      "gpu_accounting": "allocated_device_wall_seconds",
+      "gpu_devices": [
+        "0"
+      ],
+      "mode": "research-evaluation",
+      "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014"
+    },
+    "id": "R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY2-a13c5a459d47",
+    "method": "unified-h1-formal-readiness-v1",
+    "observations": [
+      "status",
+      "counters",
+      "process_identity",
+      "process_start",
+      "cleanup",
+      "evaluation_raw"
+    ],
+    "pins": {
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY2-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "47e7f2c3f869378837c8f21e4766081dddf083994b10d4d3686cd7d8fc470581"
+      },
+      "dispatcher": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014/training_workloads/unified_h1/local_dispatch.py",
+        "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+      },
+      "executable": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "product": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+        "sha256": "0d5f6be7a16576b23cca0823d67d3d47acfc64484d71f36b1381cbffb89b91c9"
+      },
+      "runtime": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "workload": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014/training_workloads/unified_h1/formal_unified_h1.py",
+        "sha256": "ee5c5cb332a6a91e9d7961f7d22d58b66af12c1b9259b6c850b99c4b38847f8b"
+      }
+    },
+    "resources": {
+      "gpu_seconds": 1810,
+      "starts": 1,
+      "transitions": 12800,
+      "wall_seconds": 1810
+    },
+    "runtime": "/home/mint/rl_blackwell_test",
+    "seed": 20260909,
+    "stage_id": "R5-FORMAL-READINESS-AUTO-01"
+  },
+  "stage": "R5-FORMAL-READINESS-AUTO-01",
+  "status": "FAILED",
+  "used_resources": {
+    "gpu_seconds": 101.25320989801548,
+    "starts": 1,
+    "transitions": null,
+    "wall_seconds": 102.21405940502882
+  }
+}

@@ -21,32 +21,32 @@
     "paid_cloud_resources": 0
   },
   "stage_allocation": {
-    "training_transitions": 131072,
-    "nontraining_transitions": 25600,
-    "live_starts": 7,
-    "simulator_initialization_reservations": 7,
-    "optimizer_updates": 256,
-    "training_checkpoint_writes": 18,
-    "allocated_gpu_seconds": 18060,
-    "wall_seconds_including_cleanup": 18060,
-    "output_peak_and_reservations_bytes": 68719476736
+    "training_transitions": 393216,
+    "nontraining_transitions": 51200,
+    "live_starts": 11,
+    "simulator_initialization_reservations": 11,
+    "optimizer_updates": 768,
+    "training_checkpoint_writes": 40,
+    "allocated_gpu_seconds": 36100,
+    "wall_seconds_including_cleanup": 36100,
+    "output_peak_and_reservations_bytes": 103079215104
   },
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 6,
-    "simulator_initialization_reservations": 6,
+    "live_starts": 7,
+    "simulator_initialization_reservations": 7,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 1184.1603402600158,
-    "wall_seconds_including_cleanup": 1189.191172999097,
-    "output_peak_and_reservations_bytes": 4594313117
+    "allocated_gpu_seconds": 1285.4135501580313,
+    "wall_seconds_including_cleanup": 1291.4052324041259,
+    "output_peak_and_reservations_bytes": 4606097420
   },
   "observed": {
     "training_transitions": 131072,
-    "nontraining_transitions": 12800,
+    "nontraining_transitions": 25600,
     "optimizer_updates": 256,
     "training_checkpoint_writes": 18,
     "actor_optimizer_steps": 2048,
@@ -282,6 +282,42 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 70258,
         "inventory": "experiments/R5-H128-DEV-01-R1-Z-RECOVERY1/live/R1-research-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY2-a13c5a459d47",
+        "job_id": "J-bb0051be6672154a",
+        "experiment_id": "R5-H128-DEV-01-R1-Z-RECOVERY2",
+        "group": "R1",
+        "mode": "research-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 11784303,
+        "inventory": "experiments/R5-H128-DEV-01-R1-Z-RECOVERY2/live/R1-research-evaluation/INVENTORY.json"
       }
     ],
     "source_snapshots": [

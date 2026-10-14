@@ -1,0 +1,38 @@
+{
+  "authority": "ExistingexplicitmasterdelegatedCoordinator",
+  "status": "ALLOCATED_WITHIN_MASTER_NOT_RELEASE",
+  "old": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 25600,
+    "live_starts": 7,
+    "simulator_initialization_reservations": 7,
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 18,
+    "allocated_gpu_seconds": 18060,
+    "wall_seconds_including_cleanup": 18060,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "new": {
+    "training_transitions": 393216,
+    "nontraining_transitions": 51200,
+    "live_starts": 11,
+    "simulator_initialization_reservations": 11,
+    "optimizer_updates": 768,
+    "training_checkpoint_writes": 40,
+    "allocated_gpu_seconds": 36100,
+    "wall_seconds_including_cleanup": 36100,
+    "output_peak_and_reservations_bytes": 103079215104
+  },
+  "added_experiment_budget": {
+    "training_transitions": 262144,
+    "nontraining_transitions": 25600,
+    "starts_init": 4,
+    "updates": 512,
+    "writes": 22,
+    "GPU_wall_seconds": 18040,
+    "output_bytes": 34359738368
+  },
+  "confirmation_formal_reserves_unchanged": true,
+  "master_caps_unchanged": true,
+  "prior_failures_and_allcharges_preserved": true
+}

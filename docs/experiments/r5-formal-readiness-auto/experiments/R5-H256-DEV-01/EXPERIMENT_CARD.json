@@ -1,0 +1,97 @@
+{
+  "schema_version": "instinctrl-r5-research-experiment-card/1",
+  "experiment_id": "R5-H256-DEV-01",
+  "parent": "Actual H128same-sourcepair: R1u96fails0/32 butu128passes32/32; noG3qualification. Historicalu64notexactprefix.",
+  "question": "Does the existing method maintain originalZ success at preregistered later192/256 after reaching completeZ at128, under commonpurehover256 coldstart budget?",
+  "phaseA_evidence": "../../REMAINING_ERROR_ANALYSIS.json and independent anchor-information findings",
+  "sole_primary_reward_variable": "SameR0w0/R1w.05 comparison; common256purehover horizon. Newfactor relativeH128isbudgetonly, notanchor/network/otherreward.",
+  "common_source_config": "Reuse exact acceptedreadonly a13c5a4/config73aeb4ff; current main-only metadatafix not applied to frozen source.",
+  "init": "Bothcoldstart sameactualtrainingseed, sameactor/critic commoninitialization and first512inputs/actions comparable; reward returns/advantages allowed differ",
+  "primary_node": 256,
+  "predefined_late_nodes": [
+    192,
+    256
+  ],
+  "hypothesis_support": "R1 completeoriginalZ atBOTH192/256; all32/subgroups/T0/200steps unchanged. Comparecontinuousmetrics vsR0 atsamebudget.",
+  "hypothesis_refutation": "Either192/256fails originalZ: no furtherhorizon beyond256; next deployablemeasurement-reference/representation evidencebasedcandidate.",
+  "training_transitions_total": 262144,
+  "evaluation_transitions_total": 25600,
+  "live_starts_total": 4,
+  "logical_updates_total": 512,
+  "actor_steps_total": 4096,
+  "critic_steps_total": 4096,
+  "checkpoint_writes_total": 22,
+  "wall_GPU_reservation_total": 18040,
+  "output_reservation_bytes": 34359738368,
+  "profiles": {
+    "R0": {
+      "experiment_id": "R5-H256-DEV-01",
+      "group": "R0",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "max_updates": 256,
+      "checkpoint_updates": [
+        1,
+        2,
+        8,
+        16,
+        32,
+        64,
+        96,
+        128,
+        192,
+        256
+      ],
+      "evaluation_updates": [
+        192,
+        256
+      ],
+      "command_profile": "pure-hover",
+      "residual_neutrality_weight": 0.0,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      }
+    },
+    "R1": {
+      "experiment_id": "R5-H256-DEV-01",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "max_updates": 256,
+      "checkpoint_updates": [
+        1,
+        2,
+        8,
+        16,
+        32,
+        64,
+        96,
+        128,
+        192,
+        256
+      ],
+      "evaluation_updates": [
+        192,
+        256
+      ],
+      "command_profile": "pure-hover",
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      }
+    }
+  },
+  "acceptance": "OriginalZ u192/u256bothrequired fordevelopmentG2/G3. Sourceandmethodheldfixed; newunseenconfirmationseeds onlyafterqualifiedcandidatefreeze. Earlier96/128failed stability criterion remains recorded.",
+  "recovery": "Newidentity boundedreasonedrecovery under master; nooldresume, neverrelaxSTOP/coexistence/gate.",
+  "formal_full_training_submitted": false
+}

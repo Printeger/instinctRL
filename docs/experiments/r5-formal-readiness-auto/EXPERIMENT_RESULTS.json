@@ -1,0 +1,523 @@
+{
+  "schema_version": "instinctrl-formal-readiness-results/1",
+  "status": "IN_PROGRESS_NOT_READY",
+  "H128_development_status": "U128_ORIGINAL_Z_PASS_BUT_PREDEFINED_U96_FAILS_NO_G3",
+  "actual_nodes": [
+    {
+      "experiment_id": "R5-H128-DEV-01",
+      "group": "R0",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 96,
+      "original_Z": {
+        "successes": 0,
+        "total": 32,
+        "pass": false,
+        "wilson_95": [
+          0.0,
+          0.10717919825507058
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d1": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d2": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d3": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d4": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d5": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d6": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d7": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.030114157125353813,
+        "horizontal_drift_m": 0.5383400321006775,
+        "height_deviation_m": 0.10802435874938965
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R0_u96/Z.jsonl",
+      "raw_sha256": "c410946212492c055554065d62e724e0a983cfff1e11b145fef1a4d054b6710c",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/u96.pt",
+        "sha256": "378baea2960b2b24ee6719ca811f670fc73ec6d8bf98f7a64b15b5f7bf61bda8",
+        "update": 96
+      }
+    },
+    {
+      "experiment_id": "R5-H128-DEV-01",
+      "group": "R0",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 128,
+      "original_Z": {
+        "successes": 0,
+        "total": 32,
+        "pass": false,
+        "wilson_95": [
+          0.0,
+          0.10717919825507058
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d1": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d2": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d3": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d4": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d5": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d6": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d7": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.03393685817718506,
+        "horizontal_drift_m": 0.4420137405395508,
+        "height_deviation_m": 0.40335583686828613
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R0_u128/Z.jsonl",
+      "raw_sha256": "fd0a955656466ffe6fc0e00996b02ee89b3da8a421a06cbfd5c2d6916d04a293",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/u128.pt",
+        "sha256": "29e70a2980d3ac615bba5cd255877e3c4ecb72cd390a027ccc62411c16cacbf3",
+        "update": 128
+      }
+    },
+    {
+      "experiment_id": "R5-H128-DEV-01",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 96,
+      "original_Z": {
+        "successes": 0,
+        "total": 32,
+        "pass": false,
+        "wilson_95": [
+          0.0,
+          0.10717919825507058
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d1": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d2": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d3": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d4": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d5": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d6": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d7": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.024883536621928215,
+        "horizontal_drift_m": 0.450617253780365,
+        "height_deviation_m": 0.043493032455444336
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY2-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R1_u96/Z.jsonl",
+      "raw_sha256": "b33a9486d9a6ff8038c966a013e7c9e8212c5b05b888fa7087006c964891c851",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u96.pt",
+        "sha256": "d966d1723fa1846afa9cbdbdd97eca68ae495a5bb8c20d540e6a061a213c78cb",
+        "update": 96
+      }
+    },
+    {
+      "experiment_id": "R5-H128-DEV-01",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 128,
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.017075007781386375,
+        "horizontal_drift_m": 0.23270586133003235,
+        "height_deviation_m": 0.16313636302947998
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY2-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R1_u128/Z.jsonl",
+      "raw_sha256": "61180cd7275bc91ec53012dd3b7d37753c2a3517e7266220025ef100dfad0de3",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u128.pt",
+        "sha256": "a165cbaa75113bfa9e6e7e5b681fa10cb84e4f91110ccc29f9d6351c1b10d78f",
+        "update": 128
+      }
+    }
+  ],
+  "actual_entries": [
+    {
+      "job_id": "J-f6a597371d5f794a",
+      "experiment_id": "R5-H128-DEV-01",
+      "group": "R0",
+      "mode": "research-training",
+      "native_status": "FAILED",
+      "native_exit_code": 1,
+      "raw_status": "FAIL",
+      "formal_counter_completeness": "FINAL",
+      "formal_transitions": 0,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H128-DEV-01/live/R0-research-training/INVENTORY.json"
+    },
+    {
+      "job_id": "J-d430a5a7a8ec6ba1",
+      "experiment_id": "R5-H128-DEV-01",
+      "group": "R1",
+      "mode": "research-training",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 65536,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 128,
+        "training_checkpoint_writes": 9,
+        "actor_optimizer_steps": 1024,
+        "critic_optimizer_steps": 1024
+      },
+      "retained_reservations": {
+        "training_transitions": 65536,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 128,
+        "training_checkpoint_writes": 9,
+        "actor_optimizer_steps": 1024,
+        "critic_optimizer_steps": 1024,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H128-DEV-01/live/R1-research-training/INVENTORY.json"
+    },
+    {
+      "job_id": "J-ab6270e88546a984",
+      "experiment_id": "R5-H128-DEV-01-R0-RECOVERY1",
+      "group": "R0",
+      "mode": "research-training",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 65536,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 128,
+        "training_checkpoint_writes": 9,
+        "actor_optimizer_steps": 1024,
+        "critic_optimizer_steps": 1024
+      },
+      "retained_reservations": {
+        "training_transitions": 65536,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 128,
+        "training_checkpoint_writes": 9,
+        "actor_optimizer_steps": 1024,
+        "critic_optimizer_steps": 1024,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H128-DEV-01-R0-RECOVERY1/live/R0-research-training/INVENTORY.json"
+    },
+    {
+      "job_id": "J-6e4b5482bf1461fe",
+      "experiment_id": "R5-H128-DEV-01",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": 1,
+      "raw_status": "FAIL",
+      "formal_counter_completeness": "FINAL",
+      "formal_transitions": 0,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H128-DEV-01/live/R1-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-8c4d37264a6105d4",
+      "experiment_id": "R5-H128-DEV-01-R0-RECOVERY1",
+      "group": "R0",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H128-DEV-01-R0-RECOVERY1/live/R0-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-b3d56961a02c8d9b",
+      "experiment_id": "R5-H128-DEV-01-R1-Z-RECOVERY1",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": 1,
+      "raw_status": "FAIL",
+      "formal_counter_completeness": "FINAL",
+      "formal_transitions": 0,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H128-DEV-01-R1-Z-RECOVERY1/live/R1-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-bb0051be6672154a",
+      "experiment_id": "R5-H128-DEV-01-R1-Z-RECOVERY2",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H128-DEV-01-R1-Z-RECOVERY2/live/R1-research-evaluation/INVENTORY.json"
+    }
+  ],
+  "master_ledger": "goal_budget.json",
+  "next_experiment": "R5-H256-DEV-01 proposed before any furtherlearning; no scientificresult yet",
+  "confirmation_seed_results": []
+}
