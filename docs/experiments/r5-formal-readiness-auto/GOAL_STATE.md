@@ -1,6 +1,6 @@
 # R5 formal readiness autonomous Goal
 
-IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. NoLIVE; CONFIRM01 trainingcomplete, nextfrozenCONFIRM02 trainingbeforeserialevaluations. No formal training submitted.
+IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. Current only LIVE CONFIRM02 J-31eba1c5651ddc1d. CONFIRM01 trainingcomplete/actualreviewpending; bothoriginalZpending. No formal training submitted.
 
 Current frozen method w.05/anchor4/LRs1e-4/3e-4/purehover256 FAILED G4: seed20261015 originalZ0/32 (driftmax .787366509), seed20261016 originalZ0/32 (driftmax .327583998,heightmax .216544390). Complete T0+200x32, allfailuredenominators retained. Confirmation01 independentRole20 accepted; second scientific evaluation independentaudit next. Actual scientific/evidence acceptance never changes FAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE/null/full logical+output reservations. BothnormalownedACK/settle/exact2postrun complete. Immutable CONFIRMATION_METHOD_FREEZE.json unchanged, CONFIRMATION_SEEDS.json recordsfailure. Never thirdseed replacement or >256 continuation ofoldmethod.
 
@@ -46,3 +46,5 @@ Authoritative latest: 当前唯一LIVE CONFIRM01/R1 J-b7cf47a791e61388，准确A
 Role26 preparationPASS archived reviews/mean-prior-integration02-formal-preparation.json (SHA4dba4e9d...). G6-ORDER-ID independentlyCLOSED, old01unchanged/new02conditionalexactpacket a8c92f0a.../expectedAUTH3d749754...; noactualG6/G7 orconfirmationacceptance. FutureG6issuance must bind actualindependentlyaccepted BOTHnewseed G4 predicate/currentfreeze as checkpoint-acceptance evidence PLUS Role26exactprelive andallfourdiagnosticSHA, not usepreparationalone. Noformalpermission/READY. ActualCONFIRM01checkpoint audit deferredtonext recordedcall afterterminaldata.
 
 Authoritative latest: CONFIRM01 J-b7cf47a791e61388 complete256/131072/2048Adam each/11writes，first512PASS；nativeFAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE/null/full逻辑预留保留。NormalownedACK/settle/恰好2postrun/CPU完整coverage PASS。GPU913.5342822959647/wall915.3181124168914，70原件1974505286bytes+21623770copies。Role27接受实际训练/checkpoint及准确主256原Z预审待回。当前无live；提交/push全部新证据和预算后，先单次release已Role25准确批准CONFIRM02训练A-3e4864c93aa9ae01以与CPU独审并行；GPU严格串行。确认01原Z必须等其checkpoint独立接受并且02终态/正常清理后才能issue/release。G4未授，formal训练0。
+
+Authoritative latest: 当前唯一LIVE新mean CONFIRM02/R1 J-31eba1c5651ddc1d /A-3e4864c93aa9ae01，准确input62e3914/push（许可原9265693/tag），训练seed20261018，frozen source617/config2e9/controlc468，coldstart256purehover。CONFIRM01训练已complete256、normalACK/settle/exact2postrun/CPUcoveragePASS，Role27实际训练/u256接受及准确原Z预审进行中。先只poll02句柄；02终态正常清理/结算后才可准确issue/release01原Z。两新seed实际原Z均未评价，G4未授。旧15/16回归许可未提交。G6-ORDER-ID独立Role26已闭合，修正02仅条件准备，仍须actualG4证据才能issue。正式训练未提交。

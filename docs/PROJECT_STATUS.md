@@ -7,7 +7,7 @@
 
 ## 当前 Goal（2026-10-15 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 当前唯一LIVE CONFIRM01/R1 J-b7cf47a791e61388，准确A-be3650864803624d，input9265693/tag/push，source617af4d/config2e9a7284/controlc468。trainingseed20261017，冻结prior10/256purehover，10updates已观察；只poll此handle，终态正常ACK后settle/2postrun/CPU及Role26实际checkpoint审核。CONFIRM02及旧seedregressions准确许可未提交。G4未授，正式训练0。Role26发现G6-ORDER-ID，旧CPU INTEGRATION01原件全保留，修正候选INTEGRATION02 packet a8c92f0a...同S3source/config/cp/method/budget；真实冻结AUTHloader临时目录fixture重现旧拒绝、修正G6及两个formaltrain模板通过，独立closure待回。无actualG6AUTH/live或免费重试，formalpacket不变。
+**IN_PROGRESS，非READY。** 当前唯一LIVE新mean CONFIRM02/R1 J-31eba1c5651ddc1d /A-3e4864c93aa9ae01，准确input62e3914/push（许可原9265693/tag），训练seed20261018，frozen source617/config2e9/controlc468，coldstart256purehover。CONFIRM01训练已complete256、normalACK/settle/exact2postrun/CPUcoveragePASS，Role27实际训练/u256接受及准确原Z预审进行中。先只poll02句柄；02终态正常清理/结算后才可准确issue/release01原Z。两新seed实际原Z均未评价，G4未授。旧15/16回归许可未提交。G6-ORDER-ID独立Role26已闭合，修正02仅条件准备，仍须actualG4证据才能issue。正式训练未提交。
 
 Role24已接受新方法开发u192/u256原Z32/32、全部子组4/4。冻结新seed17/18必须均主256通过，旧失败15/16回归不计G4；旧method/confirmation负结果和nativeFAILED/INCOMPLETE/全预留不改。唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[完整证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 

@@ -1596,6 +1596,39 @@
       "experiment_id": "R5-MEAN10-CONFIRM-01",
       "group": "R1",
       "mode": "research-training",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048
+      },
+      "retained_reservations": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-CONFIRM-01/live/R1-research-training/INVENTORY.json"
+    },
+    {
+      "job_id": "J-31eba1c5651ddc1d",
+      "experiment_id": "R5-MEAN10-CONFIRM-02",
+      "group": "R1",
+      "mode": "research-training",
       "native_status": "RUNNING",
       "native_exit_code": null,
       "raw_status": null,
@@ -1619,7 +1652,7 @@
     }
   ],
   "master_ledger": "goal_budget.json",
-  "next_experiment": "Poll exactcurrentJ-b7cf47a791e61388 only; terminal/normalACK/settle/2postrun/CPU thenindependentactualcheckpointacceptance andaccurateprimaryZissue. Othertrainingapprovalscommitted butunsubmitted. G4/G6G7/finalpackage pending, noformaltraining.",
+  "next_experiment": "当前唯一LIVE新mean CONFIRM02/R1 J-31eba1c5651ddc1d /A-3e4864c93aa9ae01，准确input62e3914/push（许可原9265693/tag），训练seed20261018，frozen source617/config2e9/controlc468，coldstart256purehover。CONFIRM01训练已complete256、normalACK/settle/exact2postrun/CPUcoveragePASS，Role27实际训练/u256接受及准确原Z预审进行中。先只poll02句柄；02终态正常清理/结算后才可准确issue/release01原Z。两新seed实际原Z均未评价，G4未授。旧15/16回归许可未提交。G6-ORDER-ID独立Role26已闭合，修正02仅条件准备，仍须actualG4证据才能issue。正式训练未提交。",
   "confirmation_seed_results": {
     "status": "NEW_MEAN_PRIOR_FROZEN_CONFIRMATIONS_NOT_STARTED_NOT_READY",
     "historical_failed_method": {
@@ -1761,10 +1794,10 @@
     ],
     "formal_submitted": false,
     "current_only_live": {
-      "experiment_id": "R5-MEAN10-CONFIRM-01",
-      "training_seed": 20261017,
-      "job_id": "J-b7cf47a791e61388",
-      "first_actual512gate": "PASS_BEFORE_BOTH_OPTIMIZERS",
+      "experiment_id": "R5-MEAN10-CONFIRM-02",
+      "training_seed": 20261018,
+      "job_id": "J-31eba1c5651ddc1d",
+      "first_actual512gate": "PENDING_NOT_YET_OBSERVED",
       "actual_primary_Z": "PENDING",
       "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
       "control_release": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba"
