@@ -1,0 +1,118 @@
+{
+  "verdict": "PASS",
+  "scope": "接受H256 R1开发seed原Z双节点证据；条件性接受两个准确确认seed输入及fresh R0评价恢复，不授予G4、G6–G9或READY。",
+  "identities": {
+    "evidence_commit": "67edb1592ab3b7c520447fa42fcf1b21d1263f82",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "confirmation_freeze_sha256": "de5480a774d7badd5e205ab59372025efa54e68cfd83b5257ff940b4d7541f4f",
+    "effective_method_sha256": "9d8fa7eaf16a4a83d4d4c7794dfd595e3daca82a684f9e25652b8606638d29c0",
+    "cases": {
+      "R5-H256-CONFIRM-01": {
+        "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "launch_sha256": "e9cc7f008584217c96b46fd043ffe6451a6186e7dd624c93c206bbe72820cbe1",
+        "packet_sha256": "e9cc7f008584217c96b46fd043ffe6451a6186e7dd624c93c206bbe72820cbe1",
+        "training_seed": 20261015,
+        "expected_training_AUTH_sha256": {
+          "R1": "5a7862781168e651bf2beef258600374854150e9fa5e42fdaf0d5b51f369d10d"
+        }
+      },
+      "R5-H256-CONFIRM-02": {
+        "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "launch_sha256": "e0889b2731ab58737c6e4d647b5805f3e67cf57b8c853b357bd634f9b9c2f420",
+        "packet_sha256": "e0889b2731ab58737c6e4d647b5805f3e67cf57b8c853b357bd634f9b9c2f420",
+        "training_seed": 20261016,
+        "expected_training_AUTH_sha256": {
+          "R1": "4db472e03c9f5b599e0f98bd5ab2a354b3ab0bf781b27858a004a13fc7a9e0e9"
+        }
+      },
+      "R5-H256-DEV-01-R0-Z-RECOVERY1": {
+        "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "launch_sha256": "fef39a203ab943c852f9c3965800043441062cb90d5658af97ca3840c91d96fc",
+        "packet_sha256": "fef39a203ab943c852f9c3965800043441062cb90d5658af97ca3840c91d96fc"
+      }
+    }
+  },
+  "must_fix": [],
+  "development_actual_evidence": {
+    "job_id": "J-3e112266540d3422",
+    "assessment": "PASS_COMPLETE_ORIGINAL_Z_AT_BOTH_PREDEFINED_NODES",
+    "independent_checks": "40个对象、11337521原始字节及全部归档bytes/SHA、完整job/attempt枚举、准确执行pins、原评价器重放及现场producer/保存分析精确匹配。",
+    "u192": {
+      "successes": "32/32",
+      "subgroups": "d0–d7各4/4",
+      "maximum_speed": 0.016271766275167465,
+      "maximum_drift": 0.254745751619339,
+      "maximum_height": 0.043306589126586914,
+      "raw_sha256": "6744eda3dfab5fa95a25317f6c4dcc3bdb1e2ebc3858f5ccbd5415cbfddd0e42"
+    },
+    "u256": {
+      "successes": "32/32",
+      "subgroups": "d0–d7各4/4",
+      "maximum_speed": 0.01105083990842104,
+      "maximum_drift": 0.1335449069738388,
+      "maximum_height": 0.05588710308074951,
+      "raw_sha256": "8ed95535e1d313f40bcab0b277ed37d9ead059b41f531319c110f7100a40f8b7"
+    },
+    "coverage": "两个节点各完整sensor-T0+步骤0..199、全部32lanes；每节点32 engineering-valid，无missing/reset interruption/collision/engineering height failure。",
+    "G2_G3": "开发seed及该冻结方法范围内通过；节点前瞻登记，未挑选已观察节点替代。",
+    "lifecycle": "FAILED/-9、PASS_PENDING_CLOSE、INCOMPLETE/null保留；准确normal ACK两次稳定空扫描及所有记录身份消失、恰好两个postrun审计通过。",
+    "limits": "同期H256 R0评价仍缺失，不能先宣布完整配对科学归因；一个开发seed不构成G4或完整READY。"
+  },
+  "confirmation_prelive": {
+    "assessment": "PASS_CONDITIONAL",
+    "checks": [
+      "两个packet/card/freeze及预期AUTH字节哈希匹配，执行pins匹配，实际新attempt/AUTH不存在。",
+      "准确参数通过冻结research_contract及required_budget，只有训练seed相对开发R1改变；每组256updates/131072transitions、11训练checkpoint writes，评价只取预定primary256。",
+      "冻结w=.05、anchor4、actorLR1e-4/critic3e-4、pure-hover、source/config及evaluation seed20260909。",
+      "扫描既有实际attempt AUTH，未发现这两个训练seed被先前实际使用；两者在启动前明确冻结，不能失败后换seed或改为2/3。",
+      "在内存顺序模拟R0恢复加两个确认训练/评价，共五入口预留，均满足当前stage/master及confirmation/formal保护检查。"
+    ],
+    "acceptance": "两个精确确认seed都必须在primary256通过完整原Z32/32及全部方向子组；真实首次512 gate仍须先于两类optimizer。结果尚未产生，G4 PENDING。"
+  },
+  "R0_recovery": {
+    "assessment": "PASS_CONDITIONAL_FRESH_IDENTITY",
+    "failed_job": "J-13c83116c619978c",
+    "failure_check": "独立核验27对象、35198原始字节及归档/完整枚举；原coexistence3/3/9%超过5%，collector FINAL0，无评价轨迹。normal ACK/准确身份消失及两个原审计通过。",
+    "new_packet_check": "科学参数和formal order与原R0评价提案相同，仅执行身份改变；新attempt不存在，未来真实checkpoint仍指向Role13已接受的fresh R0 u192/u256。",
+    "resource_boundary": "原start/init/output收费保留；D012只增加必要启动/初始化和8GiB，不释放旧账。",
+    "backoff": "本事件第二次入口至少60秒；若再拒绝，第三次至少180秒且事件最多3次，持续失败则STOP，不额外探测、杀进程或放宽5%。"
+  },
+  "checkpoint_bindings_reused": {
+    "R1_development": {
+      "u192": "e8c436bc3b6dfd7f6fae5081a02e8e29df2c99ffbf701876c8dc5ffe59b52d62",
+      "u256": "ddc4a93a4f3b2e3689663bc69f187b29f7fae70e4c0a4f834ceae30b24fdcac1"
+    },
+    "R0_fresh_training": {
+      "u192": "8b47e65a7e69da99319bec81845d58edc1c03330ba01ab64e693d0be308a084f",
+      "u256": "28a9a4b7a018ab215ba23706d64ac3ff0833271b9e19dbd61324100858c080bb"
+    }
+  },
+  "conditions": [
+    "将本次准确评审分别绑定各case packet，真实AUTH/spec提交/tag/正常push并核对remote身份后，由受托Commander精确审批。",
+    "先完成R0恢复的退避、原gate和实际终态/owned cleanup，再按计划进行配对科学审核；不将资源失败当作R0策略负结果。",
+    "确认入口串行，release前重新检查STOP、previous-quiescence、stage/master、磁盘及未来保护预留，不能以本PASS替代实时admission。",
+    "CONFIRMATION_METHOD_FREEZE保持不可变；两seed任何失败都完整保留，不在同一freeze下替换seed、改节点或调整方法。",
+    "未来确认评价必须独立接受实际训练gate与真实checkpoint source/SHA后再发行，当前null绑定不可执行。",
+    "保持所有native FAILED、INCOMPLETE/null及完整保守reservation；只按实际collector FINAL结算未用逻辑资源。",
+    "G4、G6–G9及正式方案/最终审核仍未通过；本次不得宣布READY或提交正式完整训练。"
+  ],
+  "non_blocking": [
+    {
+      "id": "DEVELOPMENT-VERSUS-CAUSAL-COMPARISON",
+      "assessment": "真实开发候选双节点达标足以启动预先冻结的确认设计，但完整同期方法效果仍须补齐R0评价并独立解释，不能用旧R0或资源拒绝替代。"
+    },
+    {
+      "id": "FROZEN-LABEL-DEFECT",
+      "assessment": "旧训练near-wall标签缺陷继续附注，不用于物理reset分组或改变原Z；不要求重跑已完整训练。"
+    }
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0
+  }
+}

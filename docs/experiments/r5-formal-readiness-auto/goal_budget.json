@@ -647,7 +647,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Actual H256 R1 bothprospectiveZnodes G2/G3 acceptance + exact frozen two confirmationseed packets D011 + conditional exactfreshR0Z recovery D012. No finalREADY.",
-      "status": "REQUESTED"
+      "status": "PASS_H256_R1_G2_G3_CONFIRMATION_AND_R0_RECOVERY_PRELIVE",
+      "evidence": "reviews/H256-dev-Z-confirmation-R0-recovery-prelive.json",
+      "sha256": "534b902eee4e89598cedc21cfd8dc29b94b6954ac19b9ddc98e3d4266fb5e810"
     }
   ],
   "decisions": [
