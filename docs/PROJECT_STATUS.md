@@ -7,7 +7,7 @@
 
 ## 当前 Goal（2026-10-15 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 当前无live。旧seed15新mean10回归complete256/131072/11writes，实际first512PASS，normalACK/settle/exact2postrun及CPUcoveragePASS，Role30正在独审实际训练/checkpoint。nativeFAILED/-9/INCOMPLETE/null/full收费保留。新确认seed18实际u25647796b6c已Role29接受；准确主256原Z许可A-9d9b879c63255c4d已发行未提交，下一commit/tag/push后仅单次release6400nontraining、0训练/更新/写checkpoint。首17原Z32/32已Role28接受，G4仍待18真实Z；formal训练0。
+**IN_PROGRESS，非READY。** 当前唯一LIVE新确认seed18主256原Z评价J-0f04e97f67bc802a/A-9d9b879c63255c4d，准确inputs eb4a169/tag/push，实际u25647796b6c/source617/config2e9/controlc468；仅6400nontraining、0训练/更新/写checkpoint。旧seed15回归训练complete256/normalACK/settle/exact2postrun/CPUcoveragePASS，Role30独审实际训练及随后18实际Z/G4；首17原Z32/32已独立接受。只poll当前句柄；G4未授，formal训练0。
 
 唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 

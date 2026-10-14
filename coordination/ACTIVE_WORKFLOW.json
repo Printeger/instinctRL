@@ -16,7 +16,7 @@
   "new_training_authorized": true,
   "diagnostic_goal_envelope_authorized": false,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "当前无live。旧seed15新mean10回归complete256/131072/11writes，实际first512PASS，normalACK/settle/exact2postrun及CPUcoveragePASS，Role30正在独审实际训练/checkpoint。nativeFAILED/-9/INCOMPLETE/null/full收费保留。新确认seed18实际u25647796b6c已Role29接受；准确主256原Z许可A-9d9b879c63255c4d已发行未提交，下一commit/tag/push后仅单次release6400nontraining、0训练/更新/写checkpoint。首17原Z32/32已Role28接受，G4仍待18真实Z；formal训练0。",
+  "live_permission_note": "当前唯一LIVE新确认seed18主256原Z评价J-0f04e97f67bc802a/A-9d9b879c63255c4d，准确inputs eb4a169/tag/push，实际u25647796b6c/source617/config2e9/controlc468；仅6400nontraining、0训练/更新/写checkpoint。旧seed15回归训练complete256/normalACK/settle/exact2postrun/CPUcoveragePASS，Role30独审实际训练及随后18实际Z/G4；首17原Z32/32已独立接受。只poll当前句柄；G4未授，formal训练0。",
   "diagnostic_goal_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "paired_pilot_task_requested": true,
   "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
@@ -29,5 +29,5 @@
   "formal_readiness_master_authority": "docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
   "formal_readiness_goal_status": "IN_PROGRESS",
   "formal_full_training_submission_authorized": false,
-  "formal_readiness_current_job": null
+  "formal_readiness_current_job": "J-0f04e97f67bc802a"
 }

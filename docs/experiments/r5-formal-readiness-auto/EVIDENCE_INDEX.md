@@ -1,6 +1,6 @@
 # Evidence index
 
-Current authoritative state: 当前无live。旧seed15新mean10回归complete256/131072/11writes，实际first512PASS，normalACK/settle/exact2postrun及CPUcoveragePASS，Role30正在独审实际训练/checkpoint。nativeFAILED/-9/INCOMPLETE/null/full收费保留。新确认seed18实际u25647796b6c已Role29接受；准确主256原Z许可A-9d9b879c63255c4d已发行未提交，下一commit/tag/push后仅单次release6400nontraining、0训练/更新/写checkpoint。首17原Z32/32已Role28接受，G4仍待18真实Z；formal训练0。
+Current authoritative state: 当前唯一LIVE新确认seed18主256原Z评价J-0f04e97f67bc802a/A-9d9b879c63255c4d，准确inputs eb4a169/tag/push，实际u25647796b6c/source617/config2e9/controlc468；仅6400nontraining、0训练/更新/写checkpoint。旧seed15回归训练complete256/normalACK/settle/exact2postrun/CPUcoveragePASS，Role30独审实际训练及随后18实际Z/G4；首17原Z32/32已独立接受。只poll当前句柄；G4未授，formal训练0。
 
 Current scientific source617af4d/config2e9a7284 and compatible controlc4688ba7 bind four prospectively fixed instances: R5-MEAN10-CONFIRM-01 (new17), -02 (new18), R5-MEAN10-REGRESSION-15 and -16 (oldfailures, excluded G4). [CPU input audit](MEAN_PRIOR_CONFIRMATION_CPU_INPUT_AUDIT.json) distinguishes exact training inputs from nonexecutable generated evaluation templates. [Control integration CPU](CONTROL_INTEGRATION_CPU.json):52PASS, wrong seed/early formal submit/full spec mutation rejected; independentRole25controlimplementationPASS, finalG9pending. All old native failures and frozen sources are preserved.
 
@@ -38,5 +38,6 @@ Newmeanprior scientificsource617af4d/config2e9a7284; R1actualtraining andfullspe
 Role26 currentMUSTFIX G6-ORDER-ID: oldINTEGRATION01 CPUdraft refused exactorderbinding, noactualAUTH/live/init. Oldpacket/card/proposal retained, [newCPUcandidate02](experiments/R5-MEAN10-INTEGRATION-02/EXPERIMENT_CARD.json) changesidentity/orderonly. [FullfrozenAUTHloader fixtureaudit](experiments/R5-MEAN10-INTEGRATION-02/CPU_FULL_AUTH_LOADER_AUDIT.json) preservesoldexpectedrejection andcorrectedG6/twoformaltrainingfull-loaderPASS; ONLY attempt directory rebound to/tmp, noactualreleaseclaim. Independentclosurepending.
 
 [Role26preparation](reviews/mean-prior-integration02-formal-preparation.json) independentlyclosesORDER-ID fornew02, exactS3/compat/ownu1+u256/input/probe andformaltemplateschecked. ConditionalG6issue stillrequiresacceptedactualG4/currentfreeze/allfourdiagnosticpins evidence; preparationcannotreplaceit. NoactualCONFIRM01trainingacceptedbyRole26.
+
 
 
