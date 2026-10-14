@@ -352,6 +352,81 @@
         "sha256": "4244acd2a294ffacba438c686b6f8c00d2f3f72813287b16cd369aea457caf97"
       },
       "independent_acceptance": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
+    },
+    "20261016": {
+      "experiment_id": "R5-MEAN10-REGRESSION-16",
+      "group": "R1",
+      "training_seed": 20261016,
+      "evaluation_seed": 20260909,
+      "update": 256,
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.010371471755206585,
+        "horizontal_drift_m": 0.012983061373233795,
+        "height_deviation_m": 0.04687356948852539
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-EVALUATION-617af4d90c35/results/research-evaluation/evaluation_raw/research_R1_u256/Z.jsonl",
+      "raw_sha256": "9c7ea22046b856e6a955f67143f55dfa6b4e9234d7d3b827843697d72d7e10cd",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "d4ccd88b95013bb3c387c490693cda0b33e217f0cdd30ce785d3992853cb2905",
+        "update": 256
+      },
+      "all_episodes_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/R1-evaluation-analysis.json",
+        "sha256": "986f962936ff6eb5258fdf29dd6bcc3716327b3eab8d52d765795a1e31cbe05b"
+      },
+      "independent_acceptance": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
     }
   }
 }

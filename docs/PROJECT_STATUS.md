@@ -7,7 +7,7 @@
 
 ## 当前 Goal（2026-10-15 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 当前唯一LIVE最后旧seed16新mean10原Z回归J-d510b78739acefbf/A-bef3481b00c09c72，准确inputs78e0026/push（原4420fda/tag），actualAUTH1d711c/source617/config2e9/controlc468/真实u256已Role31接受，仅6400nontraining、0训练/optimizer/writes。G4已Role31独立接受；实际G6G7完整112/3584/0reset及CUDA重算/重载全部误差0已Role32实审PASS，nativeFAILED/-9/INCOMPLETE/full预留/normalACK/2postrun保留。旧15原Z32/32已Role32实审。最后16Z终态清理/CPU/独审后冻结manifest/最终G9；仍非READY，formal0。
+**IN_PROGRESS，非READY。** 当前无live。全部33研究入口已终态normalACK/settle/exact2postrun；最后旧16新方法原Z实际32/32/all8groups4/4，maxspeed.0103714718/drift.0129830614/height.0468735695，CPU全原函数PASS，nativeFAILED/-9/INCOMPLETE/full6400保持。G2G3开发两节点、G4新17/18均独立接受；旧15Z与真实G6G7已Role32实审PASS。formal_r5_launch_manifest.json已准确冻结SHA4fe75be0...，全source/config/wholetemplates/actualevidence/budget绑定，Role32正在最终16Z/manifest/G1G9审核。仅余finalPASS后的机械条件许可/READY/CPU包核验/状态提交push，本Goal不再live或formalsubmit，仍非READY。
 
 唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 

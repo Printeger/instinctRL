@@ -1087,6 +1087,81 @@
         "sha256": "4244acd2a294ffacba438c686b6f8c00d2f3f72813287b16cd369aea457caf97"
       },
       "independent_acceptance": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
+    },
+    {
+      "experiment_id": "R5-MEAN10-REGRESSION-16",
+      "group": "R1",
+      "training_seed": 20261016,
+      "evaluation_seed": 20260909,
+      "update": 256,
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.010371471755206585,
+        "horizontal_drift_m": 0.012983061373233795,
+        "height_deviation_m": 0.04687356948852539
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-EVALUATION-617af4d90c35/results/research-evaluation/evaluation_raw/research_R1_u256/Z.jsonl",
+      "raw_sha256": "9c7ea22046b856e6a955f67143f55dfa6b4e9234d7d3b827843697d72d7e10cd",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "d4ccd88b95013bb3c387c490693cda0b33e217f0cdd30ce785d3992853cb2905",
+        "update": 256
+      },
+      "all_episodes_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/R1-evaluation-analysis.json",
+        "sha256": "986f962936ff6eb5258fdf29dd6bcc3716327b3eab8d52d765795a1e31cbe05b"
+      },
+      "independent_acceptance": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
     }
   ],
   "actual_entries": [
@@ -2151,12 +2226,19 @@
       "experiment_id": "R5-MEAN10-REGRESSION-16",
       "group": "R1",
       "mode": "research-evaluation",
-      "native_status": "RUNNING",
-      "native_exit_code": null,
-      "raw_status": null,
-      "formal_counter_completeness": null,
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
       "formal_transitions": null,
-      "observed": {},
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 6400,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
       "retained_reservations": {
         "training_transitions": 0,
         "nontraining_transitions": 6400,
@@ -2164,13 +2246,13 @@
         "training_checkpoint_writes": 0,
         "actor_optimizer_steps": 0,
         "critic_optimizer_steps": 0,
-        "allocated_gpu_seconds": 1810,
-        "wall_seconds_including_cleanup": 1810
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
       },
       "output_reserved_bytes": 8589934592,
-      "owned_cleanup": null,
-      "postrun_queries": 0,
-      "inventory": null
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-REGRESSION-16/live/R1-research-evaluation/INVENTORY.json"
     }
   ],
   "master_ledger": "goal_budget.json",
@@ -2315,13 +2397,7 @@
       20261016
     ],
     "formal_submitted": false,
-    "current_only_live": {
-      "experiment_id": "R5-MEAN10-REGRESSION-16",
-      "job_id": "J-d510b78739acefbf",
-      "group": "R1",
-      "mode": "research-evaluation",
-      "note": "当前唯一LIVE最后旧seed16新mean10原Z回归J-d510b78739acefbf/A-bef3481b00c09c72，准确inputs78e0026/push（原4420fda/tag），actualAUTH1d711c/source617/config2e9/controlc468/真实u256已Role31接受，仅6400nontraining、0训练/optimizer/writes。G4已Role31独立接受；实际G6G7完整112/3584/0reset及CUDA重算/重载全部误差0已Role32实审PASS，nativeFAILED/-9/INCOMPLETE/full预留/normalACK/2postrun保留。旧15原Z32/32已Role32实审。最后16Z终态清理/CPU/独审后冻结manifest/最终G9；仍非READY，formal0。"
-    }
+    "current_only_live": null
   },
   "current_mean_confirmation_training": [
     {
@@ -2476,5 +2552,5 @@
       "independent_original_Z_review": "reviews/mean-prior-G4-regression16-training.json"
     }
   ],
-  "entry_inventory_as_of_ledger_sha256": "e9b02c8347d2e21db3db65de022faee3d4ebaa89b0012bec56ea275207395a20"
+  "entry_inventory_as_of_ledger_sha256": "3b4e209ae2395c588cf4a6bdc5259d8f46f7969e694d5fe27b65063c8491364b"
 }

@@ -1,6 +1,6 @@
 # Formal R5 first segment
 
-Status: exact mean-prior first-segment plan prepared; G4, actual G6/G7 and final independent acceptance remain pending. This Goal does not submit formal training.
+Status: exact first-segment plan and manifest frozen; G4 independently accepted, actual G6/G7 complete. Final G9 and mechanical conditional-permission/READY binding remain pending. This Goal does not submit formal training.
 
 Both formal arms start from the same accepted development R1/u256, not separate R0/R1 checkpoints. Original checkpoint trainingseed20260908 and all actor/critic/Adam/RNG/clock state are restored exactly. Reconstruct simulation and explicitly fresh-reset it; no physics/history/anchor/actuator continuation is claimed. This is a prospective warm-start actor mean-prior intervention (R0=0, R1=10); both arms use residual reward weight.05. It does not replace the completed cold-start development comparison or establish each ingredient's independent effect.
 

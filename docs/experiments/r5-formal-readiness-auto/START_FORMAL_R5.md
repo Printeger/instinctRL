@@ -1,6 +1,6 @@
 # Formal first-segment operator entry
 
-Status: PREPARED, NOT_READY. The independent confirmations, actual G6/G7 and final review/manifest/conditional permission are still pending. This document creates no approval and this readiness Goal does not submit formal training.
+Status: FROZEN_INPUTS, FINAL_REVIEW_PENDING. The independent confirmations passed; actual G6/G7 and all research runs are complete. The frozen manifest awaits final independent acceptance and mechanical conditional permission/READY binding. This document creates no approval and this readiness Goal does not submit formal training.
 
 The prospective formal experiment is `R5-FORMAL-MEAN10-FIRST-SEGMENT-01`. Both arms restore the exact same actual DEV02 R1/u256 checkpoint, including actor/critic/Adam/RNG/clock state, then fresh-reset physics/history/anchor. The exact fresh-reset seed is20261038 (originaltrainingseed20260908 + actualoriginreset_number129 +1), identical for both arms. Current mean-prior coefficients are R0=0 and R1=10; both residual reward weights are.05. The callback is explicitly reinstalled after origin load. Details and exact source/config/budgets are in [the formal plan](FORMAL_R5_TRAINING_PLAN.md) and the committed AUTH/spec templates under `experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/`.
 
