@@ -862,6 +862,81 @@
         "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-DEV-02/R1-evaluation-analysis.json",
         "sha256": "054b3ea4d285d56e2418a4fe6d8c371fd81609f31aa0abb938baddc50bdb3c46"
       }
+    },
+    {
+      "experiment_id": "R5-MEAN10-CONFIRM-01",
+      "group": "R1",
+      "training_seed": 20261017,
+      "evaluation_seed": 20260909,
+      "update": 256,
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.010489066131412983,
+        "horizontal_drift_m": 0.01935860514640808,
+        "height_deviation_m": 0.04789996147155762
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-01-R1-RESEARCH-EVALUATION-617af4d90c35/results/research-evaluation/evaluation_raw/research_R1_u256/Z.jsonl",
+      "raw_sha256": "4493711441badc321607ef443ac502b999e8c535073b1d19e733459d9577ac4a",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-01-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "98a081e3f9a4e939f9601ec4bcec400fa49602ffe5edefd6740c20b7b6aff9ef",
+        "update": 256
+      },
+      "all_episodes_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-01/R1-evaluation-analysis.json",
+        "sha256": "42a206afb2e606967941d94b95dbcc02d486476e2b7be6a845e683e44dbe84a9"
+      },
+      "independent_acceptance": "PENDING_ROLE28"
     }
   ],
   "actual_entries": [
@@ -1629,30 +1704,70 @@
       "experiment_id": "R5-MEAN10-CONFIRM-02",
       "group": "R1",
       "mode": "research-training",
-      "native_status": "RUNNING",
-      "native_exit_code": null,
-      "raw_status": null,
-      "formal_counter_completeness": null,
-      "formal_transitions": null,
-      "observed": {},
-      "retained_reservations": {
-        "training_transitions": 131072,
+      "native_status": "FAILED",
+      "native_exit_code": 1,
+      "raw_status": "FAIL",
+      "formal_counter_completeness": "FINAL",
+      "formal_transitions": 0,
+      "observed": {
+        "training_transitions": 0,
         "nontraining_transitions": 0,
-        "optimizer_updates": 256,
-        "training_checkpoint_writes": 11,
-        "actor_optimizer_steps": 2048,
-        "critic_optimizer_steps": 2048,
-        "allocated_gpu_seconds": 7210,
-        "wall_seconds_including_cleanup": 7210
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
       },
       "output_reserved_bytes": 8589934592,
-      "owned_cleanup": null,
-      "postrun_queries": 0,
-      "inventory": null
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-CONFIRM-02/live/R1-research-training/INVENTORY.json"
+    },
+    {
+      "job_id": "J-ac937a86633306b9",
+      "experiment_id": "R5-MEAN10-CONFIRM-01",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 6400,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 6400,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-CONFIRM-01/live/R1-research-evaluation/INVENTORY.json"
     }
   ],
   "master_ledger": "goal_budget.json",
-  "next_experiment": "无live。CONFIRM02原J-31eba1c5651ddc1d因GPU1/1/9%>5%在App前拒绝，0rollout/gate/train/optimizer/writes，正式FINAL0，normalACK/settle/exact2postrun完成；start/init/output与GPU10.789791333954781/wall12.61511324904859保留，只有collector正式0未用逻辑预留释放。资源事件1/3，下一准确入口至少退避60秒，无额外GPU探测/阈值/进程操作。Role27已独立接受CONFIRM01完整训练及实际u25698a081e3...，准确原Z许可A-b250992a56a6f5ae已发行未提交；提交/tag/push与退避后只单次release01原Z。CONFIRM02-RECOVERY1同冻结seed18/source/method/budget新卡已准备待准确packet/Role28独立预审；D017仅额外1start/init/8GiB，不扩大master、不退款旧收费。两个新seed原Z均未验收，G4仍未授，formal0。",
+  "next_experiment": "无live。CONFIRM01/seed17主256实际原Z32/32、各子组4/4，maxspeed.0104890661/drift.0193586051/height.0478999615，全T0+200x32、无missing/reset、32工程有效。normalACK/settle/2postrun/CPU完成；nativeFAILED/-9/PASS_PENDING_CLOSE/INCOMPLETE/null/full6400保留，GPU60.647837965982035/wall62.54571330384351。Role28同时独审首新确认Z和旧02资源拒绝/准确同seed18恢复packet94075439...，未final。原资源事件经下一内部4/1/1% PASS实测恢复，不重置旧收费。接受后fresh02再issue/commit/tag/push/单次release。G4整体未授，formal0。",
   "confirmation_seed_results": {
     "status": "NEW_MEAN_PRIOR_FROZEN_CONFIRMATIONS_NOT_STARTED_NOT_READY",
     "historical_failed_method": {
@@ -1802,8 +1917,67 @@
       "training_status": "ACTUAL_COMPLETE256_INDEPENDENT_ROLE27_ACCEPTED",
       "training_job": "J-b7cf47a791e61388",
       "actual_u256_sha256": "98a081e3f9a4e939f9601ec4bcec400fa49602ffe5edefd6740c20b7b6aff9ef",
-      "original_Z_status": "PENDING_NOT_RUN",
-      "original_Z": null
+      "original_Z_status": "ACTUAL_32_OF32_PENDING_INDEPENDENT_REVIEW",
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "evaluation_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-01/R1-evaluation-analysis.json",
+        "sha256": "42a206afb2e606967941d94b95dbcc02d486476e2b7be6a845e683e44dbe84a9"
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.010489066131412983,
+        "horizontal_drift_m": 0.01935860514640808,
+        "height_deviation_m": 0.04789996147155762
+      }
     },
     {
       "training_seed": 20261018,

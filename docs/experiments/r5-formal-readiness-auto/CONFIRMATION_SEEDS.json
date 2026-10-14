@@ -96,8 +96,67 @@
       "training_status": "ACTUAL_COMPLETE256_INDEPENDENT_ROLE27_ACCEPTED",
       "training_job": "J-b7cf47a791e61388",
       "actual_u256_sha256": "98a081e3f9a4e939f9601ec4bcec400fa49602ffe5edefd6740c20b7b6aff9ef",
-      "original_Z_status": "PENDING_NOT_RUN",
-      "original_Z": null
+      "original_Z_status": "ACTUAL_32_OF32_PENDING_INDEPENDENT_REVIEW",
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "evaluation_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-01/R1-evaluation-analysis.json",
+        "sha256": "42a206afb2e606967941d94b95dbcc02d486476e2b7be6a845e683e44dbe84a9"
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.010489066131412983,
+        "horizontal_drift_m": 0.01935860514640808,
+        "height_deviation_m": 0.04789996147155762
+      }
     },
     {
       "training_seed": 20261018,

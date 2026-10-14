@@ -40,13 +40,13 @@
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 8404.479138328927,
-    "wall_seconds_including_cleanup": 8434.0244402159,
-    "output_peak_and_reservations_bytes": 21050463384
+    "allocated_gpu_seconds": 8465.126976294909,
+    "wall_seconds_including_cleanup": 8496.570153519744,
+    "output_peak_and_reservations_bytes": 21056959188
   },
   "observed": {
     "training_transitions": 1048576,
-    "nontraining_transitions": 89600,
+    "nontraining_transitions": 96000,
     "optimizer_updates": 2048,
     "training_checkpoint_writes": 95,
     "actor_optimizer_steps": 16384,
@@ -937,7 +937,7 @@
         "experiment_id": "R5-MEAN10-CONFIRM-01",
         "group": "R1",
         "mode": "research-evaluation",
-        "status": "RUNNING",
+        "status": "FAILED",
         "reserved": {
           "training_transitions": 0,
           "nontraining_transitions": 6400,
@@ -945,13 +945,27 @@
           "training_checkpoint_writes": 0,
           "actor_optimizer_steps": 0,
           "critic_optimizer_steps": 0,
-          "allocated_gpu_seconds": 1810,
-          "wall_seconds_including_cleanup": 1810
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
         },
         "output_cap_bytes": 8589934592,
-        "observed": {},
-        "postrun_queries_used": 0,
-        "settled": false
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 6400,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 6495804,
+        "inventory": "experiments/R5-MEAN10-CONFIRM-01/live/R1-research-evaluation/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -1259,7 +1273,7 @@
       "call": 28,
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
-      "scope": "ActualCONFIRM02 beforeApp resourceFINAL0/normalcleanup preservation plus exactfreshsamefrozenseed18 recovery1/D017 prelive. No seed replacement/G4/READY/release.",
+      "scope": "ActualCONFIRM02 beforeApp resourceFINAL0/normalcleanup preservation plus exactfreshsamefrozenseed18 recovery1/D017 prelive. No seed replacement/G4/READY/release. Also actualCONFIRM01completeoriginalZ scientificacceptance; nooverallG4beforeseed18.",
       "status": "IN_PROGRESS"
     }
   ],
