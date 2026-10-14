@@ -13,11 +13,11 @@
     "path": "../docs/history/consolidation-20261012/r5/review_evidence/HOST_CPU_EVIDENCE.json"
   },
   "latest_independent_review": {
-    "path": "../docs/experiments/r5-formal-readiness-auto/reviews/H128-R1-Z-recovery2-prelive.json",
-    "sha256": "36ba1eb7b1e5676b5dfeb17ff2cb1caea1adb2a35486c72fe411cebb9e6ea1e3",
-    "role_call": 9,
+    "path": "../docs/experiments/r5-formal-readiness-auto/reviews/H128-actual-pair-H256-prelive.json",
+    "sha256": "ed8850681c073e1d42fd332b8d4538ea4b58d2f0a34d4e504f014b462de41efc",
+    "role_call": 10,
     "independent_handle": "/root/pilot_reviewer",
-    "verdict": "PASS_CONDITIONAL_EXACT_THIRD_LAST_R1_EVALUATION",
+    "verdict": "PASS_ACTUAL_H128_PAIR_AND_CONDITIONAL_H256_PRELIVE",
     "accepted": true,
     "completion_allowed": false,
     "candidate_commit": "a13c5a459d471799f30644a9a04189d6e1805f02"
@@ -402,8 +402,8 @@
       "G8_exactformalpackage_conditionalpermission",
       "G9_independentreview"
     ],
-    "next_action": "IndependentRole10 actualH128 Z+pair acceptance and exactfiniteH256prelive; noAUTH issued fornewcase. NoLIVE/noformalfulltraining.",
-    "training_authorizations_issued": 3,
+    "next_action": "Commit/tag/push exactH256authorizedinputs; singleR0trainingrelease then pollONLYhandle. R1onlyafterterminalACK+settlement. Noformaltraining.",
+    "training_authorizations_issued": 5,
     "prelive_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-exact-prelive.json",
     "commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json"
   },

@@ -1,0 +1,78 @@
+{
+  "status": "PASS_CPU_PROFILE_AUDIT_NOT_INDEPENDENT_ACCEPTANCE",
+  "frozen_card_version": "NewprospectiveH256",
+  "entries": [
+    {
+      "group": "R0",
+      "mode": "research-training",
+      "budget": {
+        "live_process_starts": 1,
+        "simulator_initializations": 1,
+        "initialization_ticks": 10,
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "checkpoint_writes": 11,
+        "explicit_resets": 1,
+        "automatic_resets": 131072,
+        "wall_seconds": 7200
+      },
+      "actual_authorization_exists": false
+    },
+    {
+      "group": "R0",
+      "mode": "research-evaluation",
+      "budget": {
+        "live_process_starts": 1,
+        "simulator_initializations": 1,
+        "initialization_ticks": 10,
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "checkpoint_writes": 0,
+        "explicit_resets": 2,
+        "automatic_resets": 12800,
+        "wall_seconds": 1800
+      },
+      "actual_authorization_exists": false
+    },
+    {
+      "group": "R1",
+      "mode": "research-training",
+      "budget": {
+        "live_process_starts": 1,
+        "simulator_initializations": 1,
+        "initialization_ticks": 10,
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "checkpoint_writes": 11,
+        "explicit_resets": 1,
+        "automatic_resets": 131072,
+        "wall_seconds": 7200
+      },
+      "actual_authorization_exists": false
+    },
+    {
+      "group": "R1",
+      "mode": "research-evaluation",
+      "budget": {
+        "live_process_starts": 1,
+        "simulator_initializations": 1,
+        "initialization_ticks": 10,
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "checkpoint_writes": 0,
+        "explicit_resets": 2,
+        "automatic_resets": 12800,
+        "wall_seconds": 1800
+      },
+      "actual_authorization_exists": false
+    }
+  ],
+  "source_reused": "a13c5a459d471799f30644a9a04189d6e1805f02",
+  "new_snapshots": 0,
+  "GPU_queries": 0,
+  "optimizer_calls": 0
+}

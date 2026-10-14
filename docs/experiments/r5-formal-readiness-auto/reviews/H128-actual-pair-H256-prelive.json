@@ -1,0 +1,118 @@
+{
+  "verdict": "PASS",
+  "scope": "接受H128实际配对证据与有限结论；条件性接受准确H256前瞻训练输入，不授予G3、确认seed资格或READY。",
+  "identities": {
+    "evidence_and_input_commit": "cf039321751abe86474026ea3c28aec3d47d5a77",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "tool_release": "d027e9a0076377380a4ce277727cba8bfde132a113c9ce2b436c28ab7de9f793",
+    "launch_sha256": "cae46f1b17f83f990cf7596f3850e8fc8889fe5773abbe4100f3ab34df45d46d",
+    "packet_sha256": "cae46f1b17f83f990cf7596f3850e8fc8889fe5773abbe4100f3ab34df45d46d",
+    "H256_card_sha256": "07ce87bbf6a0629937226ba23be0c69e989944366063586575b74d4d5565d4f9",
+    "expected_training_AUTH_sha256": {
+      "R0": "8f018ac362fd2fb3f1b52bb6e96751872f5b1a35277f71154d32f556ed27c726",
+      "R1": "aff79cb8aa64d1821d5fdbc7c62cff317dccbe89a5ebdbd2b90b4e39790a11ae"
+    },
+    "actual_H128_R1_evaluation_job": "J-bb0051be6672154a"
+  },
+  "must_fix": [],
+  "H128_actual_checks": {
+    "verdict": "PASS_COMPLETE_EVIDENCE",
+    "inventory_and_replay": "独立核验R0评价40对象/11080625原始字节、R1评价40对象/11222183原始字节及全部归档bytes/SHA；完整job/attempt枚举匹配。两组原评价器重放与producer及保存分析精确一致。",
+    "paired_identity": "独立重算完整paired_results，与parent pair-results.json逐字段一致；实际训练、评价source/card/profile、各自真实checkpoint绑定和首次采样可比性通过。",
+    "coverage": "四节点各原T0+200步×32lanes，所有方向子组和失败保留；每节点32个engineering-valid episodes，无missing/reset interruption/collision/engineering height failure。",
+    "results": {
+      "R0_u96": {
+        "successes": "0/32",
+        "maximum_speed": 0.030114157125353813,
+        "maximum_drift": 0.5383400321006775,
+        "maximum_height": 0.10802435874938965
+      },
+      "R0_u128": {
+        "successes": "0/32",
+        "maximum_speed": 0.03393685817718506,
+        "maximum_drift": 0.4420137405395508,
+        "maximum_height": 0.40335583686828613
+      },
+      "R1_u96": {
+        "successes": "0/32",
+        "maximum_speed": 0.024883536621928215,
+        "maximum_drift": 0.450617253780365,
+        "maximum_height": 0.043493032455444336,
+        "raw_sha256": "b33a9486d9a6ff8038c966a013e7c9e8212c5b05b888fa7087006c964891c851"
+      },
+      "R1_u128": {
+        "successes": "32/32",
+        "subgroups": "d0–d7各4/4",
+        "maximum_speed": 0.017075007781386375,
+        "maximum_drift": 0.23270586133003235,
+        "maximum_height": 0.16313636302947998,
+        "raw_sha256": "61180cd7275bc91ec53012dd3b7d37753c2a3517e7266220025ef100dfad0de3"
+      }
+    },
+    "coexistence_and_cleanup": "R1最后入口原5/4/3% gate PASS；准确normal ACK、两次稳定空扫描、所有已记录owned身份消失及两次原postrun审计通过。",
+    "native_and_accounting": "实际完整数据入口仍FAILED/-9、PASS_PENDING_CLOSE、INCOMPLETE/null；逻辑及输出reservation保留，wall/GPU按实际收费。前三个before-App资源失败保持FINAL0及start/init/output收费，不计为学习负结果。"
+  },
+  "H128_scientific_assessment": {
+    "accepted": "预注册primary u128完整原Z单节点通过，并优于同版本R0；是有价值的开发结果。",
+    "stability_result": "u96失败，因此冻结双节点稳定性假设未成立，G3不满足。",
+    "not_accepted": [
+      "将已观察u128事后重选为新的两个稳定节点之一",
+      "READY或跨seed稳定性",
+      "原H128未通过定义被改写为已通过",
+      "历史u64作为当前精确训练前缀"
+    ]
+  },
+  "H256_prelive_checks": [
+    {
+      "contract": "准确新card、输入与AUTH",
+      "result": "PASS_STATIC",
+      "evidence": "packet/card哈希、全部现有执行pins和两个预期训练AUTH字节匹配；实际fresh attempts/AUTH不存在。准确参数通过冻结research_contract，训练预算与required_budget一致。"
+    },
+    {
+      "contract": "纯悬停与公平预算",
+      "result": "PASS",
+      "evidence": "独立检查4096个当前/下一指令计划全部为零。两组同版本cold-start、相同seed/LR/anchor4、各256updates/131072transitions/2048 Adam steps每模型；唯一同期reward变量w0/.05。每组init加十个节点，共11次训练checkpoint写入。"
+    },
+    {
+      "contract": "前瞻性评价与资源保护",
+      "result": "PASS_CONDITIONAL",
+      "evidence": "u192/u256为新卡前瞻节点，primary256；未来checkpoint SHA未发行。独立在内存模拟四入口逐项预留，stage/master及confirmation/formal保护预留均可满足。累计stage393216训练/51200评价/11slots/768updates/40writes/36100秒/96GiB与实际配置对应。"
+    }
+  ],
+  "finite_extension_assessment": {
+    "verdict": "SCIENTIFICALLY_DEFENSIBLE",
+    "reason": "完整原Z首次出现在最后128节点，尚未形成稳定性证据，也没有显示明确平台；在改变actor信息前，以公平共同预算检验一次更晚的两个前瞻节点，有针对性的信息收益，属于用户明确允许的有限纯悬停扩展。",
+    "limits": [
+      "这是适应性下一实验选择，不是对H128预注册结果的修改。",
+      "单节点成功不能保证192/256继续成功，且u128高度余量仍有限。",
+      "若任一新后段节点失败，按D009不再延长时域；转向有独立信息/几何依据的测量参考表征方向，而非继续盲加训练。"
+    ]
+  },
+  "non_blocking": [
+    {
+      "id": "FROZEN-METADATA-LABELS",
+      "assessment": "复用源保留已披露的错误near-wall标签；不得据这些标签判断实际训练分布。保持原件及准确附注，不能悄悄应用main-only日志修复改变运行身份。"
+    },
+    {
+      "id": "NATIVE-CLOSE",
+      "assessment": "进程FAILED与完整科学证据接受分离；新入口也不得伪造graceful close或FINAL。"
+    }
+  ],
+  "release_conditions": [
+    "绑定本准确accepted review SHA、准确H256 packet/source及上述预期AUTH字节，再由受托Commander审批；所有实际输入提交/tag/正常push并核对remote身份。",
+    "继续准确adapter的STOP、idle/owned cleanup、磁盘、stage/master、确认和正式保护预留检查；单GPU串行。",
+    "真实首次512 gate必须先于两类optimizer通过；原gate容差、actor边界、reset安全和coexistence均不变。",
+    "未来u192/u256评价须独立接受真实训练及各自checkpoint身份/SHA后才能发行，保持原Z完整T0、200步、32lanes、所有子组与原阈值。",
+    "两节点均通过后才能冻结候选并选择两个未参与调参的训练seed；仍须G4、非零衔接和正式启动包等剩余条件。",
+    "本PASS不是release、实际H256结果或Goal完成；不提交正式完整训练。"
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0
+  }
+}

@@ -7,15 +7,13 @@
 
 ## 当前 Goal（2026-10-14 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 当前进行 R5-FORMAL-READINESS-AUTO-01，目标 READY_FOR_FORMAL_R5_TRAINING。完整新master委托见 MASTER_AUTHORITY.json，运行/恢复/阶段扩额由现有Commander在总范围内办理。旧Goal和账本保持历史，不启动正式完整训练。
+**IN_PROGRESS，非READY。** H128实际配对训练/评价已独立Role10接受：R1u96原Z0/32、u128原Z32/32且8子组各4/4；u128最大速度.017075m/s、漂移.232706m、高度偏差.163136m。未满足预定双节点稳定性G3，不称准入。R0两节点均0/32；两组各128updates/65536train，init和首512输入/动作/Beta/logp逐位一致，真实firstgate均先于两类optimizer。
 
-两组128纯悬停训练均完整、独立接受（Role6/7）：各65536train、128updates、1024Adam/类、9writes；真实first512gate先于两类optimizer PASS。实际init和首次512 policy/privileged/actions/oldBeta/logp逐位一致。reward单变量w0/.05，actorLR1e-4、critic3e-4、anchor4，training20260908。冻结source a13c5a4、config73aeb4ff，原Z预定u96/u128、primary128。
+最后R1准确资源恢复通过原5/4/3%门槛并完成12800eval；7entries全终态、正常ownedACK/无残留、结算/各2postrun。4真实数据作业原FAILED/-9和INCOMPLETE/null全逻辑/输出预留保留，3beforeApp拒绝保留FINAL0及启动/init/output收费。错误训练episode近墙标签另有实际root审计，不改变原Z分母或改写原件。旧Goal/历史/账本保留。
 
-R0原Z两节点完整12800eval、均0/32；R1原Z尚无轨迹。R1两个评价入口在App前因原5%coexistence分别1/1/9、1/1/6被拒，FINAL0、无App/动作/updates/checkpoint，启动/init/output收费保留。全部已终止/正常ACK2stable无残留/结算及每次2postrun，无live。保守计两次R1拒绝2/3，D008只扩阶段start/init6→7；准确RECOVERY2提案2f9f87c7已Role9条件PASS，A-8ffd68bb4789ae5a已发行，退避≥180秒已实录，提交/tag/push后单次release，至少180秒退避后第三次也是最后一次尝试，再拒则STOP持续资源阻塞。禁止额外GPU探测、无关进程终止、放宽门槛或重开失败job。
+基于最后节点首次全通过，D009有限共同256purehover和新prospective192/256已Role10准确预审PASS，仍共享a13c只读源码/config73aeb4ff、actor/reward边界不变，w0/.05、LR1e-4/3e-4、anchor4、训练seed20260908。准确AUTH R0 A-4a7c68910d003e1a、R1 A-56b453060fda4459已签发，无live；提交/tag/push后单GPU串行release。若新两节点任一失败不再延长超256，转测量参考。Master不变，确认/正式首段资源仍保护，不启动正式完整训练。
 
-已知native close FAILED/-9与INCOMPLETE/null全额逻辑/输出预留保留。R1原episode16个近墙标签属旧调度metadata缺陷；实际64resetlane首返回均在中心，原件不改，未来局部日志修复7CPU PASS。配对分析器明确训练与评价分别绑定恢复身份，6CPU PASS。旧C1u64和新R1u64权重不完全相同，不宣称历史训练前缀等价。
-
-唯一续接入口 GOAL_STATE.md / EVIDENCE_INDEX.md / goal_budget.json。尚无候选资格，G2/G3、两未见训练seed、有限非零衔接、checkpoint同设备复算和准确正式包/最终独立审核待完成；预算内科学负结果后继续，不以CPU通过或首实验结束代替Goal。
+唯一续接与预算：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[新总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[真实节点与入口](experiments/r5-formal-readiness-auto/EXPERIMENT_RESULTS.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。成功仍要求G1–G9，含冻结后两个未调参训练seed、有限非零衔接、同设备checkpoint复算和准确正式启动包/最终独立审核。
 
 ## 已完成 Goal（2026-10-14 零命令残差单变量）
 
@@ -107,4 +105,3 @@ full20160 reservation retained; no owned survivors. Goal IN_PROGRESS, training0.
 最新续接：第四次在完整采集后CPU分析期间被910秒正式watchdog终止，FAILED/137；实际wall910.5478907090146秒原样计账。原manifest仍PREPARED、最终reward计数缺失，20160全额预留。全403200物理行与96reset段已被离线和独立Reviewer复核，接受修复后的零目标物理回归；命令直通原Z/T/S尚待验证。ef68ebb新候选保持同一物理基线，仅补分析前持久化和pilot-evaluation评估seed分类，32CPU回归通过。全部4次启动槽已用完；准确第五次提案和仅start/init4→5的申请包已生成，未签发许可。未来两组pilot精确argv位于pilot_future_proposals.r3.json，首次rollout概率gate强制保留。Goal仍IN_PROGRESS，训练为零。
 
 
-当前最新：第三次R1原gate5/4/3% PASS并完成12800原Z真实评价。R1 u96 0/32、u128 32/32且全部子组4/4；u128最大speed.017075m/s、XYdrift.232706m、height.163136m。H128未满足预定双节点稳定性，不是READY。所有7entries已正常owned清理、结算/2postrun，无live；FAILED与INCOMPLETE保留。D009根据最后节点初次全通过的实际改善，预注册下一次有限共同256purehover R0/R1，未来192/256两节点、原sourcea13c复用，不更改旧实验定义、不选择已看过128做新稳定节点；若再不满足不继续延长超过256，转测量参考。准确packet cae46f1b...和真实H128结果一起交Role10，尚无新AUTH/release。新stage393216train/51200eval/11slots/768updates/40writes/36100s/96GiB均在master内，确认/正式预留不变。
