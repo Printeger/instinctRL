@@ -1,0 +1,166 @@
+{
+  "verdict": "PASS",
+  "scientific_status": "VALID_EXPERIMENT_POSITIVE",
+  "scientific_scope": "可信的单对seed、预注册u64原Z行为改善；原Z准入仍未通过，不代表泛化、完整R5或长训许可。",
+  "completion_allowed": true,
+  "completion_condition": "仅待准确评审归档、普通最终状态同步及完成审计、正常提交/push；不需要新增live、训练或控制回归。",
+  "identities": {
+    "evidence_commit": "0c54b7e5283c1afbeb6c023b3340e22cfaed526f",
+    "source_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+    "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3",
+    "method_sha256": "ecc75a8e3d581ca1bd43e8c3e34326a5f18dd55cfa1739fe3b26f4e25fe1c14e",
+    "tool_release": "74a6042b0a1c92bda01efc5cd62da7f59948db4ff2be667eb9e34765c1a76c60",
+    "extra_job_id": "J-ca72975b201fceb1",
+    "extra_approval_id": "A-859f34b1f384dcdb",
+    "extra_AUTH_sha256": "9d732b78569d3d5e5ff8328447e1300a70102240d809cc7e91c95f6028c6ddf3",
+    "extra_authorized_spec_sha256": "88965f9650c2866c616e312244dffeed0444109b8650962cb9467c5fa42e03b5",
+    "committed_input_prefix": "f400f95",
+    "user_resource_decision_sha256": "f16b801199b8eb03bda7d7681b6f30c6b41652c503b5111fba6851d40c1c1d60"
+  },
+  "must_fix": [],
+  "independent_checks": [
+    {
+      "contract": "追加入口的准确身份与独立授权",
+      "assessment": "PASS",
+      "evidence": "实际request spec与授权spec一致，执行pins、AUTH、Role4接受的真实checkpoint SHA及source/config绑定匹配。准确spec及与实际AUTH相同的预期字节已存在于f400f95提交；条件包含独立prelive、实际训练接受、追加条件预审及新用户资源决定SHA。"
+    },
+    {
+      "contract": "完整原件、归档与实际评价",
+      "assessment": "PASS",
+      "evidence": "独立逐对象验证40个原件、3118695原始字节及3118695归档字节的bytes/SHA；原始job和整个attempt递归枚举完全匹配inventory。实际原评价器重放与现场producer及保存分析逐字段一致。"
+    },
+    {
+      "contract": "全部lane、startup、安全与原阈值",
+      "assessment": "PASS_COMPLETE_EVIDENCE",
+      "evidence": "C1 u16/u64均保留真实sensor-T0及步骤0..199，全部32lanes、全部d0–d7子组；每节点32个engineering-valid episodes，missing/reset interruption/collision/engineering height failure均为0。原门槛未变，所有失败保留。"
+    },
+    {
+      "contract": "配对结果及唯一方法变量",
+      "assessment": "PASS",
+      "evidence": "复用Role3/4独立接受的完整训练、实际w0/.05公式、准确系数checkpoint身份和bit-exact init/首次采样；本轮独立重算完整pair结果，与pair_analysis.complete.json逐字段一致。两组共享LR1e-4及其他方法，学习信号因预注册reward产生的差异合法。"
+    },
+    {
+      "contract": "coexistence、清理与原生状态",
+      "assessment": "PASS_WITH_DISCLOSED_PROCESS_FAILURE",
+      "evidence": "追加入口原coexistence样本5/2/3%，10.037475852秒，通过原5%门槛。实际receipt FAILED/-9、raw PASS_PENDING_CLOSE、collector INCOMPLETE/null；正常ACK两次稳定空扫描、无survivors，准确owner/guard/child不存在。恰好两次postrun审计，仅既有GNOME164MiB。"
+    },
+    {
+      "contract": "资源与输出计账",
+      "assessment": "PASS",
+      "evidence": "独立核对五次wall/GPU之和、五份inventory原件加归档之和、两份只读snapshot实际文件数/字节及最终输出算术。观察值与保守预留分离；旧C1 FINAL0只结清其未使用评价transitions，旧start/init/output预留保留。"
+    }
+  ],
+  "actual_extra_evaluation": {
+    "policy_steps": 400,
+    "nontraining_transitions": 12800,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "u16": {
+      "successes": "0/32",
+      "subgroups": "各0/4",
+      "maximum_speed_rms": 0.05108805373311043,
+      "maximum_drift": 0.7834985256195068,
+      "maximum_height_deviation": 0.5669436454772949,
+      "raw_sha256": "4962ed14ee0c64baba2882d3da7f632140a26ca794a5718b015a0e5e808f18b4"
+    },
+    "u64": {
+      "successes": "0/32",
+      "subgroups": "各0/4",
+      "maximum_speed_rms": 0.02041279710829258,
+      "drift_range": [
+        0.3256063759326935,
+        0.34779226779937744
+      ],
+      "maximum_height_deviation": 0.09513425827026367,
+      "raw_sha256": "b4a3e5b149feee2c21b249822b0541491ac0d8fe0f4988d6fb7833be9db73407"
+    }
+  },
+  "scientific_assessment": {
+    "primary_comparison": "u64",
+    "C0_to_C1_maximum_metrics": {
+      "speed_rms_m_s": [
+        0.102369524538517,
+        0.02041279710829258
+      ],
+      "horizontal_drift_m": [
+        1.9598313570022583,
+        0.34779226779937744
+      ],
+      "height_deviation_m": [
+        0.47130560874938965,
+        0.09513425827026367
+      ]
+    },
+    "reason_positive_is_supported": "预注册主节点在同一明确单变量、共同初始化及首次采样可比条件下，速度、累计漂移与高度均产生一致且幅度明显的实际改善，数据完整且无失败筛除。按需求书，可信行为改善足以形成有限范围VALID_EXPERIMENT_POSITIVE，不以原Z必须通过作为科学完成条件。",
+    "original_Z_admission": false,
+    "original_Z_failure": "四节点仍全部0/32；C1 u64全部lane虽满足速度/高度门槛，但漂移仍超过原0.30m。",
+    "limits": [
+      "一个配对seed不支持统计显著性、多seed泛化或一般最优性。",
+      "实际训练残差和确定性Z属于不同轨迹；评价未记录v_corr，其值保持UNKNOWN，不能以训练动作或真实速度替代。",
+      "结果支持近端残差偏置及软代价在本对中的作用，不证明唯一闭环根因、历史COM原因或论文创新。",
+      "u16是诊断节点；旧PLR是历史参考，不能作为同时代严格对照。",
+      "未验证完整R5 Z/T/S/X/W、命令跟踪、避障或真实飞行。"
+    ]
+  },
+  "five_research_answers": {
+    "historical_LR_progress": "首次更新分布迁移显著减小，但历史PLR固定参考漂移仍失败；当前报告准确保留这一区别。",
+    "residual_and_motion": "保留连续训练窗口中同向残差/运动偏置及ICS状态，支持近端假设；报告正确限制时序、坐标与因果解释。",
+    "new_method_effect": "C1相对同时代C0在预注册u64行为上可信改善，仍不满足原Z。",
+    "whether_extend_256": "不扩展；原Z未通过，也没有额外长训授权。未来单变量ray-anchor coefficient假设仅为提案，w=.05及其他方法保持固定，尚无新值、代码或执行。",
+    "failure_and_budget_retention": "五个新job均保持真实FAILED，四个INCOMPLETE保留全额逻辑预留，旧FINAL0和用户批准追加入口的边界准确；既有诊断与P0/PLR历史不重置。"
+  },
+  "accounting": {
+    "starts_and_init_reservations": 5,
+    "observed_training_transitions": 65536,
+    "observed_nontraining_transitions": 25600,
+    "observed_logical_updates": 128,
+    "observed_training_checkpoint_writes": 14,
+    "actor_adam_steps": 1024,
+    "critic_adam_steps": 1024,
+    "wall_seconds": 848.1728507261723,
+    "allocated_gpu_seconds": 844.9683635749388,
+    "original_job_attempt_archive_bytes": 4288610574,
+    "conservatively_observed_output_bytes": 5528738352,
+    "bounded_output_with_final_metadata_allowance": 5595847216,
+    "retained_output_reservations_bytes": 85899345920,
+    "retained_logical_reservations": {
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14
+    },
+    "further_live_allowed": false
+  },
+  "non_blocking": [
+    {
+      "id": "NATIVE-CLOSE",
+      "assessment": "四个完整数据入口的native-close失败不否定独立核验的科学证据与安全清理；不得改写process PASS、graceful close或collector FINAL。"
+    },
+    {
+      "id": "NEXT-FACTOR",
+      "assessment": "未来ray-anchor coefficient是与剩余累计漂移相关的可证伪目标假设，尚未证明为原因。先核对实际anchor有效率及奖励尺度、不选新权重、不执行新实验的边界合理。"
+    },
+    {
+      "id": "FINAL-METADATA",
+      "assessment": "OUTPUT_ACCOUNTING_FINAL明确为最终review前快照，另留64MiB final metadata allowance。最终同步需将评审/审计新增字节计入并核对该allowance，不能将旧as-of数字当最终精确值。"
+    }
+  ],
+  "ordinary_final_sync_conditions": [
+    "归档本次准确独立评审，更新role6状态和评审SHA。",
+    "将canonical pair_analysis.json、PAIR_ANALYSIS、NEXT_RESEARCH_DECISION、EVIDENCE_INDEX及当前项目/Goal状态从pending改为已接受VALID_EXPERIMENT_POSITIVE并记录Goal完成；原Z admission保持false。",
+    "保留pair_analysis.blocked.json、原C1失败分析、全部原件/评审/FAILED/INCOMPLETE/null及历史budget身份，不能覆盖或重解释旧失败。",
+    "归档root完成审计，核对全部入口terminal、owned quiescence、postrun次数、输入先提交、剩余额度及旧历史不变。",
+    "更新最终实际输出计账，新增metadata保持64MiB allowance内；完整逻辑及输出reservation不退款。",
+    "正常提交并push，结束本Goal；不启动下一阶段、额外探测、权重搜索或256updates。"
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0,
+    "cpu_analysis": "准确原件哈希/完整枚举、原评价器重放、完整pair重算、授权/输入提交绑定、进程身份与输出账本核对。"
+  }
+}

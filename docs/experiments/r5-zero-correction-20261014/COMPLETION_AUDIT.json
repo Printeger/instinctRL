@@ -1,0 +1,241 @@
+{
+  "schema_version": "instinctrl-r5-zero-completion-audit/1",
+  "status": "PASS_FULL_REQUIREMENT_CLOSURE",
+  "goal_complete": true,
+  "scientific_result": "VALID_EXPERIMENT_POSITIVE",
+  "original_Z_admission": false,
+  "requirements": "../../goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md",
+  "initial_main": "436db8033ff4e0bb6e3659daf9265c4d47946023",
+  "actual_reviewed_evidence_commit": "0c54b7e5283c1afbeb6c023b3340e22cfaed526f",
+  "source_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+  "independent_final_review": {
+    "path": "reviews/review-zero-final-scientific.json",
+    "sha256": "da09ded96ad8e806fce59bf2b5dcc177a5b58de2c7f9734d49058d6abea5949f",
+    "verdict": "PASS",
+    "must_fix": [],
+    "role_call": 6
+  },
+  "mandatory_deliverables": [
+    {
+      "path": "R5_ZERO_COMMAND_ATTRIBUTION.md",
+      "exists": true
+    },
+    {
+      "path": "R5_ZERO_COMMAND_ATTRIBUTION.json",
+      "exists": true
+    },
+    {
+      "path": "METHOD_DIFF_AND_CPU_TESTS.md",
+      "exists": true
+    },
+    {
+      "path": "AUTHORITY_AND_RESOURCE_BINDINGS.md",
+      "exists": true
+    },
+    {
+      "path": "PAIR_ANALYSIS.md",
+      "exists": true
+    },
+    {
+      "path": "pair_analysis.json",
+      "exists": true
+    },
+    {
+      "path": "EVIDENCE_INDEX.md",
+      "exists": true
+    },
+    {
+      "path": "NEXT_RESEARCH_DECISION.md",
+      "exists": true
+    }
+  ],
+  "checks": [
+    {
+      "id": "A1",
+      "scope": "CPU actualP0/PLR u1/u2/u16/u64 attribution, signedbody/world/resetsegments/rewardscale/gradientadvantage/conditionalKLlimits",
+      "status": "PASS",
+      "evidence": [
+        "R5_ZERO_COMMAND_ATTRIBUTION.md",
+        "R5_ZERO_COMMAND_ATTRIBUTION.json",
+        "CPU_FIXED_INPUT_CONDITIONAL_KL.json",
+        "reviews/review-zero-prelive.json"
+      ]
+    },
+    {
+      "id": "B1",
+      "scope": "Preregisteredw0/.05 solesinglevariable, sharedactorLR1e-4/critic3e-4, actor/controller/PPO/curriculum/evalunchanged",
+      "status": "PASS",
+      "evidence": [
+        "METHOD_DIFF_AND_CPU_TESTS.md",
+        "launch_inputs.fd-fix-proposed.json",
+        "reviews/review-zero-prelive.json"
+      ]
+    },
+    {
+      "id": "B2",
+      "scope": "w0frozencomponentequivalence/xyzsign/maskfinite/dynamic/sameinitCPU, actualfdquota minimalfix",
+      "status": "PASS",
+      "evidence": [
+        "cpu-product-fd-fix.xml",
+        "cpu-pilot-final.xml",
+        "cpu-analysis-binding-final.xml",
+        "reviews/review-zero-prelive-original.json",
+        "reviews/review-zero-prelive.json"
+      ]
+    },
+    {
+      "id": "C1",
+      "scope": "Fouroriginal+oneexplicitlyapprovedfreshsinglecommittedexactCommander releases, STOP/pins/remainingbudgets/coexistence/ownedcleanup",
+      "status": "PASS",
+      "evidence": [
+        "ACTUAL_EVIDENCE_AUDIT.json",
+        "user_resource_decision_extra_evaluation.json",
+        "C1-extra-evaluation-release-admission.json"
+      ]
+    },
+    {
+      "id": "C2",
+      "scope": "Bothrealfirst512oldBeta/logp/action/input/index gates beforeeitheroptimizer, actualinit/firstrollout comparability",
+      "status": "PASS",
+      "evidence": [
+        "INITIAL_AND_FIRST_ROLLOUT_COMPARISON.json",
+        "reviews/review-C0-training-actual.json",
+        "reviews/review-C1-training-actual.json"
+      ]
+    },
+    {
+      "id": "C3",
+      "scope": "Bothactual64updates32768transitions7checkpoint/512permodelAdamsteps, actualrewardformulabinding",
+      "status": "PASS",
+      "evidence": [
+        "C0-training-data-analysis.json",
+        "C1-training-data-analysis.json"
+      ]
+    },
+    {
+      "id": "C4",
+      "scope": "Bothacceptedactualu16/u64originalZ32lanes200steps/T0startupallfailures/subgroups0updates0writes",
+      "status": "PASS",
+      "evidence": [
+        "C0-evaluation-data-analysis.json",
+        "C1-extra-evaluation-data-analysis.json",
+        "reviews/review-zero-final-scientific.json"
+      ]
+    },
+    {
+      "id": "D1",
+      "scope": "Contemporaneousu64primarycomparison/u16diagnostics/oldPLRhistoricalonly, signedbiasrewards/KL/gradients",
+      "status": "PASS",
+      "evidence": [
+        "pair_analysis.complete.json",
+        "PAIR_ANALYSIS.md"
+      ]
+    },
+    {
+      "id": "D2",
+      "scope": "Sciencevalidpositive/negativewithconcretenextfactor/no256, independentcompleteevidence andfinalreview",
+      "status": "PASS",
+      "evidence": [
+        "NEXT_RESEARCH_DECISION.md",
+        "reviews/review-zero-final-scientific.json"
+      ]
+    },
+    {
+      "id": "D3",
+      "scope": "NativeFAILED/INCOMPLETE/fullreservations/oldbudgets/jobs retained, actualoutputallowance+CPUmetadata under80GiB (explicitresourceexception;64GiBoriginalpreserved), zeroautoretries",
+      "status": "PASS",
+      "evidence": [
+        "goal_budget.json",
+        "ACTUAL_EVIDENCE_AUDIT.json",
+        "OUTPUT_ACCOUNTING_FINAL.json",
+        "OUTPUT_ACCOUNTING_CLOSURE.json"
+      ]
+    },
+    {
+      "id": "D4",
+      "scope": "Allcurrentprojectstatescorrect, commitnormalpush, activeGoalstoponlyfullachieved",
+      "status": "PASS",
+      "evidence": [
+        "pair_analysis.json",
+        "EVIDENCE_INDEX.md"
+      ]
+    }
+  ],
+  "resource_exception": "Actualuserapprovalofexactproposal; starts/init4to5/output64to80GiB only. Alloldused/reservationsretain; nofreeretry.",
+  "current_caps": {
+    "live_starts": 5,
+    "simulator_initialization_reservations": 5,
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "wall_seconds_including_cleanup": 10840,
+    "allocated_gpu_seconds": 10840,
+    "output_bytes": 85899345920,
+    "automatic_retries": 0,
+    "role_calls": 12
+  },
+  "observed": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "actor_optimizer_steps": 1024,
+    "critic_optimizer_steps": 1024
+  },
+  "retained_reservations": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14
+  },
+  "all_native_states_preserved": [
+    {
+      "job_id": "J-08bc17b874c978ea",
+      "status": "FAILED",
+      "exit_code": -9,
+      "formal": "INCOMPLETE",
+      "formal_transitions": null
+    },
+    {
+      "job_id": "J-3083020018e55362",
+      "status": "FAILED",
+      "exit_code": -9,
+      "formal": "INCOMPLETE",
+      "formal_transitions": null
+    },
+    {
+      "job_id": "J-4be233e84359e5c5",
+      "status": "FAILED",
+      "exit_code": -9,
+      "formal": "INCOMPLETE",
+      "formal_transitions": null
+    },
+    {
+      "job_id": "J-c28f721ecfa2d171",
+      "status": "FAILED",
+      "exit_code": 1,
+      "formal": "FINAL",
+      "formal_transitions": 0
+    },
+    {
+      "job_id": "J-ca72975b201fceb1",
+      "status": "FAILED",
+      "exit_code": -9,
+      "formal": "INCOMPLETE",
+      "formal_transitions": null
+    }
+  ],
+  "old_history_unchanged": true,
+  "owned_cleanup": "ALL15JOBSTERMINAL_NOOWNED;fivecurrententrynormalACK2stableempty/no_survivors",
+  "further_live_or_training_authorized": false,
+  "next_action": "STOP_GOAL_COMPLETE",
+  "ordinary_final_sync": {
+    "review_archived": true,
+    "canonical_report_index_current_state_accepted": true,
+    "blocked_and_failure_history_retained": true,
+    "root_actual_audit_pass": true,
+    "final_output": "OUTPUT_ACCOUNTING_CLOSURE.json, currentactualbytes plusfixedremainingallowance; verifybeforecommit",
+    "publication": "Input/evidencecommitsalready normalpushed. This finalaudit/state set mustbe normallycommitted/pushed andHEAD==originverified before Goaltool completion."
+  }
+}

@@ -27,7 +27,7 @@
     "training_checkpoint_writes": 0,
     "wall_seconds_including_cleanup": 848.1728507261723,
     "allocated_gpu_seconds": 844.9683635749388,
-    "output_bytes": 5528738352,
+    "output_bytes": 5540906634,
     "automatic_retries": 0,
     "role_calls": 6
   },
@@ -96,7 +96,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Fresh C1 actual original-Z evaluation whole inventory/pins/producer/T0all32/reset/subgroups/cleanup/formal+native/budget, complete paired u64 primary science and full Goal requirements",
-      "status": "REQUESTED_FINAL_ACTUAL_SCIENTIFIC_REVIEW"
+      "status": "PASS_FINAL_SCIENTIFIC",
+      "evidence": "reviews/review-zero-final-scientific.json",
+      "sha256": "da09ded96ad8e806fce59bf2b5dcc177a5b58de2c7f9734d49058d6abea5949f"
     }
   ],
   "runs": [
@@ -272,7 +274,7 @@
     }
   ],
   "training_authorizations_issued": 2,
-  "evaluation_authorizations_issued": 2,
+  "evaluation_authorizations_issued": 3,
   "no_blind_retry": true,
   "output_reservations_bytes": 85899345920,
   "prior_completed_goals": [
@@ -281,9 +283,11 @@
   ],
   "note": "Observed logicalcounts subset of conservative reservations until formalFINAL; no doublecharge/refund of INCOMPLETE. Five16GiB reservations retained within explicitly approved80GiB; cumulative workload13GiB plus3GiB control/native/archive per entry.",
   "output_accounting": {
-    "path": "OUTPUT_ACCOUNTING_FINAL.json",
-    "snapshot_of_counts_before_this_record_and_ledger_update": true,
-    "remaining_metadata_allowance_bytes": 67108864,
+    "path": "OUTPUT_ACCOUNTING_CLOSURE.json",
+    "pre_review_snapshot": "OUTPUT_ACCOUNTING_FINAL.json",
+    "current_observed_output_bytes": 5540906634,
+    "remaining_metadata_allowance_bytes": 54940582,
+    "bounded_output_with_remaining_allowance_bytes": 5595847216,
     "all_prior_output_reservations_retained": true
   },
   "resource_decisions": [
@@ -317,5 +321,8 @@
         "role_calls": 12
       }
     }
-  ]
+  ],
+  "goal_status": "COMPLETE_VALID_EXPERIMENT_POSITIVE",
+  "further_live_allowed": false,
+  "extra_evaluation_authorization_issued": 1
 }

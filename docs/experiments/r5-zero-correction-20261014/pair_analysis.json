@@ -1,8 +1,7 @@
 {
   "schema_version": "instinctrl-r5-zero-current-pair-index/1",
-  "status": "COMPLETE_ACTUAL_PAIR_PENDING_FINAL_INDEPENDENT_REVIEW",
-  "goal_complete": false,
-  "proposed_scientific_result": "VALID_EXPERIMENT_POSITIVE",
+  "status": "COMPLETE_INDEPENDENTLY_ACCEPTED",
+  "goal_complete": true,
   "original_Z_admission": false,
   "numerical_results": {
     "path": "pair_analysis.complete.json",
@@ -45,5 +44,13 @@
     }
   },
   "long_training_authorized": false,
-  "automatic_retries": 0
+  "automatic_retries": 0,
+  "scientific_result": "VALID_EXPERIMENT_POSITIVE",
+  "independent_final_review": {
+    "path": "reviews/review-zero-final-scientific.json",
+    "sha256": "da09ded96ad8e806fce59bf2b5dcc177a5b58de2c7f9734d49058d6abea5949f",
+    "role_call": 6,
+    "verdict": "PASS"
+  },
+  "completion_audit": "COMPLETION_AUDIT.json"
 }

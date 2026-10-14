@@ -1,3 +1,5 @@
+> Historical recovery guide: its pending conditions below were satisfied by user_resource_decision_extra_evaluation.json and exact committed f400f95 inputs. Fresh J-ca72975b201fceb1 completed once; all commands are CONSUMED, not an invitation to rerun. Final science independently accepted Role6; see EVIDENCE_INDEX.md.
+
 # Exact completion route after an explicit user resource decision
 
 Current status: **UNAUTHORIZED / no new live action**. The active Goal's

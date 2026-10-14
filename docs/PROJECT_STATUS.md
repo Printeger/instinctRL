@@ -7,11 +7,13 @@
 
 ## 当前 Goal（2026-10-14 零命令残差单变量）
 
-**真实配对采集完整，待最终独立科学审核。** C0/C1各64updates/32768train/7checkpoint，真实首512gate PASS，初始化及首输入动作/oldBeta/logp逐位一致。用户批准单次资源例外后的fresh C1原Z已完整取得；四节点均0/32。C1u64最大速度/漂移/高度 .020412797m/s / .347792268m / .095134258m，三项较C0改善，仍全部lane漂移>.30m。拟判单对seed内可信行为改善；未达到原Z准入，不扩256updates。
+**Goal已完成：`VALID_EXPERIMENT_POSITIVE`。** 独立Role6最终PASS，无阻塞性MUST_FIX；全需求审计通过。两组各64updates，真实首512gate先于两类optimizer通过；实际初始化和首输入/动作/oldBeta/logp逐位一致。新方法只比较零命令残差软代价w0/.05，两组actorLR均1e-4。
 
-五entry native FAILED 保留（四次close/-9，一次beforeApp/1）；四INCOMPLETE/null保留65536train+25600eval+128updates+14writes预留，旧FINAL0只结算未用eval。5start/init及80GiB输出预留不退账，正常ownedACK无残留、各两次postrun。Role6最终审核和全需求审计待完成，没有后续live/train授权。
+预注册u64最大lane指标：C0→C1速度RMS **.102369525→.020412797m/s**、水平漂移 **1.959831357→.347792268m**、高度偏差 **.471305609→.095134258m**。在这一个配对seed内可信改善，但C1所有32lane漂移仍>.30m，四个原Z节点均0/32；**未达到原Z准入，不扩256updates**，不宣称泛化或完整R5通过。
 
-[完整报告](experiments/r5-zero-correction-20261014/PAIR_ANALYSIS.md)、[证据索引](experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md)、[研究决定](experiments/r5-zero-correction-20261014/NEXT_RESEARCH_DECISION.md)。
+用户单次例外后的freshC1补充评估已完成且仅增加12800eval、0训练更新/写checkpoint。五个native FAILED保留（四close/-9，一beforeApp/1），四INCOMPLETE/null保留65536train+25600eval+128updates+14writes，旧FINAL0只结算其未用eval；5start/init、80GiB输出预留、正常ownedACK无残留及各两次postrun不变。Role6/12，0自动重试。旧诊断和P0/PLR历史不改写。
+
+[完整报告](experiments/r5-zero-correction-20261014/PAIR_ANALYSIS.md)、[机器结果](experiments/r5-zero-correction-20261014/pair_analysis.json)、[独立审核](experiments/r5-zero-correction-20261014/reviews/review-zero-final-scientific.json)、[完成审计](experiments/r5-zero-correction-20261014/COMPLETION_AUDIT.json)、[研究决定](experiments/r5-zero-correction-20261014/NEXT_RESEARCH_DECISION.md)。本Goal停止；后续ray-anchor单变量仅提案，未授权或实施。
 
 ## 最新完成 Goal（2026-10-13 短程配对实验）
 

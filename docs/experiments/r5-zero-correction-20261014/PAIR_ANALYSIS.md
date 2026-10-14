@@ -1,6 +1,6 @@
 # R5 zero-command residual-neutrality: complete actual pair
 
-**Actual collection complete; proposed scientific result VALID_EXPERIMENT_POSITIVE, pending independent final review.** The preregistered u64 comparison improves speed, drift and height in this one paired seed. Original Z admission still fails: C1 u64 is 0/32 because every lane exceeds 0.30 m XY drift. No 256-update extension or further live work is authorized.
+**Goal scientifically complete: VALID_EXPERIMENT_POSITIVE, independently accepted Role6 PASS with no MUST_FIX.** The preregistered u64 comparison improves speed, drift and height in this one paired seed. Original Z admission still fails: C1 u64 is 0/32 because every lane exceeds 0.30 m XY drift. No 256-update extension or further live work is authorized.
 
 | group/node | Z successes | maximum speed RMS (m/s) | maximum XY drift (m) | maximum height deviation (m) |
 | --- | --- | --- | --- | --- |
@@ -37,4 +37,6 @@ All five entries have normal owned ACK, two stable empty scans/no survivors and 
 
 Current charges:5 starts/init, observed65536 training/25600 eval/128 updates/14 writes,1024 Adam steps per model; wall848.172850726s, GPU844.968363575s. All5×16GiB output reservations remain (80GiB); actual bytes and metadata are separately reconciled within them. Role6 final independent review is charged before its call; no automatic retries.
 
-The immutable prior blocked result is pair_analysis.blocked.json; original failed C1 analysis remains C1-evaluation-data-analysis.json. New C1-extra-evaluation-data-analysis.json binds the exact new authorized spec, unique actual job, terminal receipt, cleanup and raw evidence; pair_analysis.complete.json is the complete numerical artifact. Canonical pair_analysis.json links the current interpretation and historical evidence. Final review and completion audit remain required before declaring Goal complete.
+The immutable prior blocked result is pair_analysis.blocked.json; original failed C1 analysis remains C1-evaluation-data-analysis.json. New C1-extra-evaluation-data-analysis.json binds the exact new authorized spec, unique actual job, terminal receipt, cleanup and raw evidence; pair_analysis.complete.json is the complete numerical artifact. Canonical pair_analysis.json links the current interpretation and historical evidence. Final independent review is archived in reviews/review-zero-final-scientific.json; COMPLETION_AUDIT.json records the whole-requirement closure. The numerical artifact retains its original pre-review status; this report and canonical index record final acceptance.
+
+Final independent Role6 explicitly accepted the complete original evaluation, unique method comparison, scientific scope, budget/cleanup boundaries and all five research answers. No further live/GPU probe, training, weight search or256-update extension occurs. Final output is reconciled in OUTPUT_ACCOUNTING_CLOSURE.json, including review/audit metadata within the preallocated64MiB allowance.

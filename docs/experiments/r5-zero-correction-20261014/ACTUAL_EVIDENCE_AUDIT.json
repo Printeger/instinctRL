@@ -1,0 +1,75 @@
+{
+  "status": "PASS_ACTUAL_EVIDENCE_AND_RESOURCE_AUDIT",
+  "Store_jobs_all_terminal_FAILED": 15,
+  "STOP": [],
+  "all_owned_absent": true,
+  "inventories": [
+    {
+      "path": "live-C0-evaluation/INVENTORY.json",
+      "sha256": "d7368cd0f89d28c5e902e02c0bf8ca3288e86eb5b1cd7b3b8798d7c00be17201",
+      "objects": 40
+    },
+    {
+      "path": "live-C0-training/INVENTORY.json",
+      "sha256": "5e83d067256eee112afa9bc09069f44a6acf9d03df244d3f8eedc423c0cddc09",
+      "objects": 61
+    },
+    {
+      "path": "live-C1-evaluation/INVENTORY.json",
+      "sha256": "694bf09da2850cb46a1c75c438373b5ca8d6c44bc1cb1b979c860f6b2490a5e9",
+      "objects": 27
+    },
+    {
+      "path": "live-C1-extra-evaluation/INVENTORY.json",
+      "sha256": "41e3dbbe5080fe8efc8b3240e7bc3e0082dab93b64e85f605209330a32d6a4d9",
+      "objects": 40
+    },
+    {
+      "path": "live-C1-training/INVENTORY.json",
+      "sha256": "ecbd3e2af4ba669c6e400a395aec040cb1489fbadcf9a3236a95c82950ccac02",
+      "objects": 61
+    }
+  ],
+  "both64training_and_first512": true,
+  "all_four_original_Z_nodes_T0_200x32_covered": true,
+  "all_four_original_Z_successes": "0/32",
+  "all_subgroups": "0/4",
+  "all_failures_retained": true,
+  "solew_same_source_pins_accepted_independent_Role2_3_4": true,
+  "old_diagnostic_and_P0PLR_files_identical_to_Goal_start": true,
+  "used": {
+    "live_starts": 5,
+    "simulator_initialization_reservations": 5,
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "wall_seconds_including_cleanup": 848.1728507261723,
+    "allocated_gpu_seconds": 844.9683635749388,
+    "output_bytes": 5528738352,
+    "automatic_retries": 0,
+    "role_calls": 6
+  },
+  "reserved": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14
+  },
+  "observed": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 25600,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 14,
+    "actor_optimizer_steps": 1024,
+    "critic_optimizer_steps": 1024
+  },
+  "final_scientific_review": {
+    "path": "reviews/review-zero-final-scientific.json",
+    "sha256": "da09ded96ad8e806fce59bf2b5dcc177a5b58de2c7f9734d49058d6abea5949f",
+    "verdict": "PASS",
+    "scientific_status": "VALID_EXPERIMENT_POSITIVE"
+  },
+  "no_more_live": true,
+  "as_of": "Actual evidence audit before final metadata/current-state synchronization; final output count is OUTPUT_ACCOUNTING_CLOSURE.json."
+}
