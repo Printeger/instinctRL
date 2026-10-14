@@ -91,6 +91,32 @@ def test_formal_current_tool_drift_refuses_start(package):
         require_formal_start(root,spec,'CPU-APPROVAL',explicit_start=True)
 
 
+@pytest.mark.parametrize('change',[
+    lambda row:row['experiment_proposal'].update(resources={'starts':999}),
+    lambda row:row['experiment_proposal']['pins'].update(dispatcher={'path':'wrong','sha256':'wrong'}),
+    lambda row:row['expected_authorization'].update(sha256='0'*64),
+])
+def test_formal_issuance_rejects_modified_reviewed_proposal(package,monkeypatch,change):
+    from tools import r5_formal_commander as commander
+    root,base,specpath=package
+    monkeypatch.setattr(commander,'ROOT',root)
+    monkeypatch.setattr(commander,'BASE',base)
+    manifest=json.loads((base/'formal_r5_launch_manifest.json').read_text())
+    commandpath=Path(commander.__file__).resolve()
+    manifest['commander']={'path':str(commandpath),'sha256':digest(commandpath)}
+    mp=save(base/'formal_r5_launch_manifest.json',manifest)
+    review=json.loads((base/'reviews/final-readiness.json').read_text())
+    review['identities']['formal_manifest_sha256']=mp['sha256']
+    reviewpath=base/'reviews/final-readiness.json';save(reviewpath,review)
+    template=json.loads((base/'training-spec-template.json').read_text())
+    row={'mode':'research-formal-training','experiment_proposal':template,
+         'expected_authorization':{'sha256':manifest['entries'][0]['expected_authorization_sha256']}}
+    assert commander.formal_issue_binding(row,review,reviewpath)==manifest['entries'][0]
+    change(row)
+    with pytest.raises(AssertionError):
+        commander.formal_issue_binding(row,review,reviewpath)
+
+
 def generated_evaluation(package):
     root,base,specpath=package
     spec=json.loads(specpath.read_text());spec['h1']['mode']='research-formal-evaluation'

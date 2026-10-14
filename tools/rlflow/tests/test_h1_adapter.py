@@ -185,7 +185,10 @@ def test_pilot_training_keeps_training_seed(bound):
     v['seed']=456
     with pytest.raises(Conflict,match='seed'):h1.validate(v,d)
 
-@pytest.mark.parametrize('mode,seed_field',[('research-training','training_seed'),('research-evaluation','evaluation_seed')])
+@pytest.mark.parametrize('mode,seed_field',[
+    ('research-training','training_seed'),('research-evaluation','evaluation_seed'),
+    ('research-transition','evaluation_seed'),('research-formal-training','training_seed'),
+    ('research-formal-evaluation','evaluation_seed')])
 def test_exact_delegated_research_seed_from_validated_authority(bound,mode,seed_field):
     v,observed,d=bound
     observed['authorization']['mode']=mode
@@ -195,4 +198,7 @@ def test_exact_delegated_research_seed_from_validated_authority(bound,mode,seed_
     v['seed']=observed['authorization']['parameters'][seed_field]
     assert h1.validate(v,d)==observed
     v['seed']=observed['config']['training']['seed']
+    with pytest.raises(Conflict,match='seed/method'):h1.validate(v,d)
+    other = 'evaluation_seed' if seed_field == 'training_seed' else 'training_seed'
+    v['seed']=observed['authorization']['parameters'][other]
     with pytest.raises(Conflict,match='seed/method'):h1.validate(v,d)

@@ -32,6 +32,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('experiment_id')
     parser.add_argument('--parent', required=True)
+    parser.add_argument('--tool-release', type=Path,
+                        help='A new verified control release; scientific source remains unchanged')
     args = parser.parse_args()
     from rlflow.store import Store
     from rlflow.releases import verify
@@ -47,7 +49,7 @@ def main():
     assert card['experiment_id'] == args.experiment_id
     parentpath = BASE / 'experiments' / args.parent / 'launch_inputs.proposed.json'
     parent = read(parentpath)
-    baseline = parent['baseline']
+    baseline = deepcopy(parent['baseline'])
     snapshot = Path(baseline['snapshot'])
     configpath = snapshot / 'training_workloads/unified_h1/candidate_config.json'
     config = read(configpath)
@@ -60,6 +62,9 @@ def main():
     from training_workloads.unified_h1.b0_handoff import _candidate_diff
     assert hashlib.sha256(_candidate_diff(snapshot, baseline['snapshot_commit'])).hexdigest() == baseline['snapshot_diff_sha256']
     verify(Path(baseline['tool_release_path']))
+    if args.tool_release:
+        release = verify(args.tool_release)
+        baseline.update(tool_release_id=release['id'], tool_release_path=str(args.tool_release.resolve()))
     rows = []
     for group, profile in card['profiles'].items():
         for mode in ['research-training', 'research-evaluation']:
@@ -95,7 +100,7 @@ def main():
                 row['expected_authorization'] = {'path': str(path.relative_to(directory)), 'sha256': sha(path)}
             row.update(experiment_proposal=spec, authorization_proposal=auth)
             rows.append(row)
-    packet = {**deepcopy(parent), 'experiment_id': args.experiment_id, 'entries': rows,
+    packet = {**deepcopy(parent), 'baseline': baseline, 'experiment_id': args.experiment_id, 'entries': rows,
               'experiment_card': {'path': str(cardpath), 'sha256': sha(cardpath)},
               'status': 'PREPARED_REUSED_FROZEN_SOURCE_PENDING_EXACT_REVIEW',
               'parent_packet': {'path': str(parentpath), 'sha256': sha(parentpath)},

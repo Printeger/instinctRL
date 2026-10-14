@@ -1,0 +1,24 @@
+{
+  "status": "PASS_CPU_ONLY_NOT_LIVE_OR_FORMAL_PERMISSION",
+  "tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow /home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python -m pytest -q tools/rlflow/tests/test_h1_adapter.py tests/training_workloads/test_formal_launch_gate.py tests/training_workloads/test_r5_commander_modes.py",
+    "exit_code": 0,
+    "passed": 52,
+    "stdout": "52 passed in 0.66s"
+  },
+  "control_release": {
+    "id": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba",
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/control-releases/c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba"
+  },
+  "files": {
+    "tools/r5_formal_commander.py": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4",
+    "tools/r5_formal_launch_gate.py": "f8970f482d3467cd075ad37ba467323b9eb09451f12fd76fa426d03f1ae23791",
+    "tools/prepare_r5_formal_reuse_inputs.py": "6576bc4185aafdcddd1aff890c69bcdd72cf917a9dff0bc79782dd64dcbd26d6",
+    "tools/rlflow/rlflow/h1.py": "f28fc4b5e61e4bfdc5d00a0a1524722f0a0aa2025b682d4599fd8edca9d34757"
+  },
+  "legacy_inputs_preserved": true,
+  "old_live_entries_all_terminal": true,
+  "new_live_starts": 0,
+  "GPU_queries": 0,
+  "formal_submissions": 0
+}

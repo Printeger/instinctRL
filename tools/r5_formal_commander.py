@@ -8,12 +8,35 @@ from copy import deepcopy
 import argparse,hashlib,json,shutil,subprocess
 ROOT=Path(__file__).resolve().parents[1];BASE=ROOT/'docs/experiments/r5-formal-readiness-auto';CONTROL=ROOT/'coordination/research'
 FIELDS={'training_transitions':'training_transitions','nontraining_transitions':'nontraining_transitions','optimizer_updates':'optimizer_updates','training_checkpoint_writes':'checkpoint_writes'}
+TRAINING_MODES={'research-training','research-formal-training'}
+FORMAL_MODES={'research-formal-training','research-formal-evaluation'}
+RESEARCH_MODES=TRAINING_MODES|FORMAL_MODES|{'research-evaluation','research-transition'}
 def read(p):return json.loads(p.read_text())
 def sha(p):
  with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 def save(p,v,*,new=False):
  if new:assert not p.exists(),p
  p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n')
+
+def formal_issue_binding(row,review,review_path):
+ """Final independent review may authorize issuance, never an implicit start."""
+ manifest_path=BASE/'formal_r5_launch_manifest.json';manifest=read(manifest_path)
+ assert review_path.resolve()==(BASE/'reviews/final-readiness.json').resolve()
+ assert review['identities']['formal_manifest_sha256']==sha(manifest_path)
+ assert manifest['status']=='FROZEN_CONDITIONAL_FORMAL_FIRST_SEGMENT'
+ assert manifest['goal_id']=='R5-FORMAL-READINESS-AUTO-01'
+ for key,path in [('commander',Path(__file__)),('launch_gate',ROOT/'tools/r5_formal_launch_gate.py')]:
+  assert manifest[key]=={'path':str(path.resolve()),'sha256':sha(path)}
+ entries=[e for e in manifest['entries'] if e['spec_id']==row['experiment_proposal']['id']]
+ assert len(entries)==1
+ entry=entries[0];pin=entry['spec_template'];assert sha(Path(pin['path']))==pin['sha256']
+ assert read(Path(pin['path']))==row['experiment_proposal']
+ if row['mode'] in TRAINING_MODES:
+  assert entry['expected_authorization_sha256']==row['expected_authorization']['sha256']
+ else:
+  pin=entry['authorization_template'];assert sha(Path(pin['path']))==pin['sha256']
+  assert read(Path(pin['path']))==row['authorization_proposal']
+ return entry
 def previous_quiescence(control,state,*,probe=None):
  from rlflow.jobs import owns
  probe = owns if probe is None else probe
@@ -71,7 +94,11 @@ def remaining_check(b,budget,output_cap):
  return {'conservative_output_reserved_bytes_including_confirmation_formal_and_metadata':output}
 
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('action',choices=['issue','submit','settle','postrun']);ap.add_argument('experiment_id');ap.add_argument('group',choices=['R0','R1']);ap.add_argument('mode',choices=['research-training','research-evaluation']);ap.add_argument('--review',type=Path);ap.add_argument('--checkpoint-acceptance',type=Path);args=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument('action',choices=['issue','submit','settle','postrun']);ap.add_argument('experiment_id');ap.add_argument('group',choices=['R0','R1']);ap.add_argument('mode',choices=sorted(RESEARCH_MODES));ap.add_argument('--review',type=Path);ap.add_argument('--checkpoint-acceptance',type=Path);ap.add_argument('--start-formal',action='store_true');args=ap.parse_args()
+ if args.action=='submit' and args.mode in FORMAL_MODES and not args.start_formal:
+  ap.error('Formal submit requires an explicit later --start-formal action')
+ if args.start_formal and (args.action!='submit' or args.mode not in FORMAL_MODES):
+  ap.error('--start-formal is only valid for a later formal submit')
  from rlflow.store import Store,sha as object_sha
  from rlflow import experiments,policy
  from rlflow.jobs import owns
@@ -85,7 +112,8 @@ def main():
   idle(store);assert args.review and args.review.is_file();review=read(args.review);assert review['verdict']=='PASS' and not review['must_fix']
   identities=review['identities'];assert packet['baseline']['snapshot_commit']==identities['source_commit']
   values=json.dumps(identities);assert sha(packetp) in values,'review must bind exact proposed packet'
-  spec=deepcopy(row['experiment_proposal']);auth=deepcopy(row['authorization_proposal']);training=args.mode=='research-training'
+  spec=deepcopy(row['experiment_proposal']);auth=deepcopy(row['authorization_proposal']);training=args.mode in TRAINING_MODES
+  if args.mode in FORMAL_MODES:formal_issue_binding(row,review,args.review)
   if training:
    expected=D/row['expected_authorization']['path'];assert sha(expected)==row['expected_authorization']['sha256'] and sha(expected) in values
    assert read(expected)==auth
@@ -93,6 +121,9 @@ def main():
    assert args.checkpoint_acceptance and args.checkpoint_acceptance.is_file();accepted=read(args.checkpoint_acceptance);assert accepted['verdict']=='PASS' and not accepted['must_fix']
    for ck in auth['parameters']['checkpoints']:
     f=Path(ck['path']);ck['sha256']=sha(f);assert ck['sha256'] in json.dumps(accepted)
+   if args.mode=='research-transition':
+    for pin in auth['parameters']['recalculation'].values():
+     assert sha(Path(pin['path']))==pin['sha256'] and pin['sha256'] in json.dumps(accepted)
    spec['conditions'].append(accept('E-'+args.experiment_id+'-ACTUAL-TRAINING',args.checkpoint_acceptance,'Independent actualpairedtraining/firstgate/checkpointSHA acceptance'))
   spec['conditions'].append(accept('E-'+args.experiment_id+'-PRELIVE',args.review,'Independent exact research method/profile/source prelive'))
   master=BASE/'MASTER_AUTHORITY.json';assert sha(master)==packet['master_authority']['sha256']
@@ -111,11 +142,20 @@ def main():
   assert subprocess.check_output(['git','show','HEAD:'+str(specp.relative_to(ROOT))],cwd=ROOT)==specp.read_bytes()
   release=verify(Path(packet['baseline']['tool_release_path']))
   assert {n:sha(p) for n,p in files(ROOT/'tools/rlflow').items()}==release['files']
-  auth=read(Path(spec['pins']['authorization']['path']));budget=auth['budgets'];p=auth['parameters'];remaining=remaining_check(b,budget,p['output_cap_bytes'])
+  auth=read(Path(spec['pins']['authorization']['path']));budget=auth['budgets'];p=auth['parameters']
+  formal_gate=None
+  if args.mode in FORMAL_MODES:
+   from tools.r5_formal_launch_gate import require_formal_start,transfer_formal_reserve
+   approval=experiments.authorized(store.replay(),spec,CONTROL)
+   formal_gate=require_formal_start(ROOT,specp,approval['approval_id'],explicit_start=args.start_formal,accepted_evidence=store.replay()['evidence'])
+   b=transfer_formal_reserve(b,budget,p['output_cap_bytes'])
+  remaining=remaining_check(b,budget,p['output_cap_bytes'])
   assert shutil.disk_usage(ROOT).free>30*1024**3+p['output_cap_bytes']
   experiments.validate(spec,CONTROL);approval=experiments.authorized(store.replay(),spec,CONTROL)
   jid='J-'+object_sha({'id':spec['id'],'spec':spec})[:16];assert jid not in store.replay()['jobs']
-  save(D/(name+'-admission.json'),{'status':'PASS','input_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'job_id':jid,'spec_id':spec['id'],'approval_id':approval['approval_id'],'STOP':[],'old_jobs_terminal_noowned':True,'disk_free_bytes':shutil.disk_usage(ROOT).free,'remaining_check':remaining,'prelaunch_GPU_queries':0,'internal_coexistence':'Originalsixquerygate beforeApp'},new=True)
+  admission={'status':'PASS','input_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'job_id':jid,'spec_id':spec['id'],'approval_id':approval['approval_id'],'STOP':[],'old_jobs_terminal_noowned':True,'disk_free_bytes':shutil.disk_usage(ROOT).free,'remaining_check':remaining,'prelaunch_GPU_queries':0,'internal_coexistence':'Originalsixquerygate beforeApp'}
+  if formal_gate is not None:admission['formal_package_gate']=formal_gate
+  save(D/(name+'-admission.json'),admission,new=True)
   reserved={k:budget[v] for k,v in FIELDS.items()};reserved.update(actor_optimizer_steps=budget['optimizer_updates']*8,critic_optimizer_steps=budget['optimizer_updates']*8,allocated_gpu_seconds=budget['wall_seconds']+10,wall_seconds_including_cleanup=budget['wall_seconds']+10)
   entry={'spec_id':spec['id'],'job_id':jid,'experiment_id':args.experiment_id,'group':args.group,'mode':args.mode,'status':'RESERVED_BEFORE_SUBMIT','reserved':reserved,'output_cap_bytes':p['output_cap_bytes'],'observed':{},'postrun_queries_used':0,'settled':False}
   b['reservations']['live_entries'].append(entry);b['used']['live_starts']+=1;b['used']['simulator_initialization_reservations']+=1;save(BASE/'goal_budget.json',b)
