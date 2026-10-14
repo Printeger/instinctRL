@@ -1,0 +1,133 @@
+{
+  "schema_version": "instinctrl-r5-research-experiment-card/1",
+  "experiment_id": "R5-MEAN10-INTEGRATION-02",
+  "status": "CPU_PREPARED_NOT_CANDIDATE_QUALIFIED_OR_LIVE_AUTHORIZED",
+  "parent": "R5-MEAN10-DEV-02; originalZ192/256 and twofrozenunseenseeds must actually qualify before G6release",
+  "question": "If candidatequalifies, do actualcheckpoint recalculation and finite command transitions execute without implementation defects?",
+  "scientific_scope": "IMPLEMENTATION_ONLY_NO_NONZERO_TASK_PERFORMANCE_CLAIM",
+  "primary_checkpoint": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+    "sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+    "update": 256
+  },
+  "source": {
+    "status": "CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY",
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-integration-01-20261015",
+    "snapshot_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "snapshot_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+    "snapshot_diff_sha256": "bbdc26048d716bbb4e5fbd8a49d26cee7fb54aa61b89fb5e02debabb8aeddf68",
+    "read_only": true,
+    "source_identity": {
+      "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+      "product_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+      "product_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+      "workload_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+      "workload_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b"
+    },
+    "snapshot_observed_bytes": 704103394,
+    "snapshot_reserved_bytes": 2147483648,
+    "config_stdout": "{\"config_sha256\": \"d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24\", \"product_commit\": \"feb1e96f97e44c7d872cec44268fc2d8b352bc93\", \"product_tree\": \"6a60e9c6c48e59110c769b8836c4f1320bbad24b\", \"workload_commit\": \"feb1e96f97e44c7d872cec44268fc2d8b352bc93\", \"workload_tree\": \"6a60e9c6c48e59110c769b8836c4f1320bbad24b\"}\n",
+    "config_stderr": "",
+    "GPU_queries": 0,
+    "live_starts": 0,
+    "training_updates": 0
+  },
+  "profiles": {
+    "R1": {
+      "experiment_id": "R5-MEAN10-INTEGRATION-02",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "max_updates": 256,
+      "checkpoint_updates": [
+        1,
+        2,
+        8,
+        16,
+        32,
+        64,
+        96,
+        128,
+        192,
+        256
+      ],
+      "evaluation_updates": [
+        256
+      ],
+      "command_profile": "pure-hover",
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      },
+      "mean_prior_contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+        "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+      },
+      "mean_prior_weight": 10.0,
+      "transition_protocol": "zero-directions-reverse-zero112-v1",
+      "integration_contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-integration-01-20261015/coordination/contracts/R5_FORMAL_INTEGRATION_DIAGNOSTIC_V1.md",
+        "sha256": "720845138986bfb053304db915e38fb6bd9558023d65177be53af79bd189a873"
+      },
+      "checkpoint_source_identity": {
+        "product_commit": "617af4d90c35e333c97692bdee90146804476edf",
+        "product_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+        "workload_commit": "617af4d90c35e333c97692bdee90146804476edf",
+        "workload_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+        "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547"
+      },
+      "checkpoint_compatibility": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-INTEGRATION-01/checkpoint-compatibility.json",
+        "sha256": "777d2bf93968df10bf523d9293acb94ec0261212bd64bcacac4691c076637a27"
+      },
+      "recalculation": {
+        "checkpoint": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u1.pt",
+          "sha256": "4436218bd7fa0c7ceeb8580f99da101fb22df17ffde7954558ee9016c8f2dc42",
+          "update": 1
+        },
+        "input": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+          "sha256": "012dd61783f7a749a59136d2339dc43e78e987150c46614a10df2cf99d86c5f6"
+        },
+        "probe": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/first_update_probe.pt",
+          "sha256": "c7004c4b18f4ec396676b53a24c934637ed0827fa7ed5e505520cba42bd7c015"
+        }
+      }
+    }
+  },
+  "protocol": "zero0:16/existingDIRECTIONS16:48/negative48:80/zero80:112;actorownmean",
+  "training_transitions_total": 0,
+  "evaluation_transitions_total": 3584,
+  "logical_updates_total": 0,
+  "checkpoint_writes_total": 0,
+  "live_starts_total": 1,
+  "wall_GPU_reservation_total": 910,
+  "output_reservation_bytes": 8589934592,
+  "release_prerequisites": [
+    "Actualnewmethod192/256andtwofrozenconfirmationprimary256accepted",
+    "Newcompatiblecontrolrelease+exactpacket/expectedAUTH+independentprelive",
+    "CommanderSTOP/idle/pins/remainingmaster/disk/coexistence/commit/tag/push"
+  ],
+  "acceptance": "Original same-device1e-6/1e-5 actoru1actualafterMB8 andfinalstrictloadsame-inputconsistency,112x32allrows/resetmasks/finitecommands/history/anchor lifecycle; noextraRNG/optimizer/checkpointwrites; nohistoricalfinaloutputinvented",
+  "formal_full_training_submitted": false,
+  "prelive_CPU_recovery": {
+    "finding": "G6-ORDER-ID",
+    "independent_reviewer": "Role26 /root/pilot_reviewer",
+    "old_packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-INTEGRATION-01/launch_inputs.proposed.json",
+      "sha256": "a4da8349bf56c9dd31384bf88421c65437612b6b38de02bc99b0299438f596ea"
+    },
+    "reason": "Oldgenerator used attempt.name (source suffix) asorder_id; exactfrozenAUTHloader demands scientificexperiment-group-mode only. Newcandidate changes identity/orderbinding only, same frozenS3/source/config/actualcheckpoint/compatibility/method/protocol/budget.",
+    "live_or_initialization_starts_old_candidate": 0,
+    "actual_AUTH_issued_old_candidate": false,
+    "budget_reset": false
+  }
+}

@@ -5,6 +5,7 @@ reused. This only binds the compatible control release and the G6 proposal.
 """
 from copy import deepcopy
 from pathlib import Path
+import argparse
 import hashlib
 import json
 
@@ -32,9 +33,13 @@ def save(path, value):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--integration-id', required=True)
+    parser.add_argument('--include-formal', action='store_true')
+    args = parser.parse_args()
     from rlflow.releases import verify, files
     from training_workloads.unified_h1.research_contract import validate_parameters, required_budget
-    integration = BASE / 'experiments/R5-MEAN10-INTEGRATION-01'
+    integration = BASE / 'experiments' / args.integration_id
     cardpath = integration / 'EXPERIMENT_CARD.json'
     card = read(cardpath)
     source = card['source']
@@ -61,7 +66,7 @@ def main():
                   'checkpoints': [deepcopy(card['primary_checkpoint'])]}
     validate_parameters(mode, parameters)
     budget = required_budget(mode, parameters)
-    auth.update(order_id=attempt.name, attempt=str(attempt), mode=mode, budgets=budget,
+    auth.update(order_id=card['experiment_id'] + '-R1-' + mode.upper(), attempt=str(attempt), mode=mode, budgets=budget,
                 parameters=parameters, **source['source_identity'])
     authpath = attempt / 'commands/AUTHORIZATION.json'
     spec.update(id=attempt.name, cwd=str(snapshot), seed=parameters['evaluation_seed'],
@@ -82,8 +87,10 @@ def main():
     save(integration / 'inputs/R1-transition-AUTH.proposed.json', auth)
     common = {key: deepcopy(parent[key]) for key in ['schema_version', 'master_authority',
                                                      'first_rollout_gate', 'stop_paths']}
-    for directory, rows in [(integration, [row]),
-                            (BASE / 'experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01', None)]:
+    targets = [(integration, [row])]
+    if args.include_formal:
+        targets.append((BASE / 'experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01', None))
+    for directory, rows in targets:
         if rows is None:
             rows = []
             for group in ['R0', 'R1']:

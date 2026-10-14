@@ -7,9 +7,9 @@
 
 ## 当前 Goal（2026-10-15 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 无live。Role24独立PASS新mean10开发G2/G3：R1u192/u256原Z均32/32，各方向4/4；R0u19232/32、u256因高度.229004m原Z0/32，完整有效无reset/missing。两评价nativeFAILED/-9/INCOMPLETE/null/full12800各保留，normalACK/settle/2postrun完成。新方法freeze已提交a718f43，未用确认seed20261017/18、主节点256；旧失败seed15/16另列不计G4回归。新工具release c4688ba7 / 52CPU通过，准确四卡八提案等待独立预审。D016只转移未用未来预留，所有旧收费保持，正式首段全额预留不动。G4/G6/G7/最终包仍待完成，本Goal不提交正式训练。
+**IN_PROGRESS，非READY。** 当前唯一LIVE CONFIRM01/R1 J-b7cf47a791e61388，准确A-be3650864803624d，input9265693/tag/push，source617af4d/config2e9a7284/controlc468。trainingseed20261017，冻结prior10/256purehover，10updates已观察；只poll此handle，终态正常ACK后settle/2postrun/CPU及Role26实际checkpoint审核。CONFIRM02及旧seedregressions准确许可未提交。G4未授，正式训练0。Role26发现G6-ORDER-ID，旧CPU INTEGRATION01原件全保留，修正候选INTEGRATION02 packet a8c92f0a...同S3source/config/cp/method/budget；真实冻结AUTHloader临时目录fixture重现旧拒绝、修正G6及两个formaltrain模板通过，独立closure待回。无actualG6AUTH/live或免费重试，formalpacket不变。
 
-唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[实际结果](experiments/r5-formal-readiness-auto/EXPERIMENT_RESULTS.json)。旧w.05-only两确认失败保留，不能继承为新方法达标。
+Role24已接受新方法开发u192/u256原Z32/32、全部子组4/4。冻结新seed17/18必须均主256通过，旧失败15/16回归不计G4；旧method/confirmation负结果和nativeFAILED/INCOMPLETE/全预留不改。唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[完整证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 
 ## 已完成 Goal（2026-10-14 零命令残差单变量）
 

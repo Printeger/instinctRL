@@ -1,0 +1,154 @@
+{
+  "status": "PASS_CPU_FIXTURE_ONLY_NOT_ACTUAL_AUTH_OR_PERMISSION",
+  "actual_frozen_source": "coordination/research/workspaces/R5-formal-mean10-integration-01-20261015",
+  "cases": [
+    {
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-B",
+        "tools/check_r5_proposed_authorization_cpu.py",
+        "--snapshot",
+        "coordination/research/workspaces/R5-formal-mean10-integration-01-20261015",
+        "--authorization",
+        "docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-INTEGRATION-01/inputs/R1-transition-AUTH.proposed.json",
+        "--mode",
+        "research-transition",
+        "--expect-rejection",
+        "R3 order/attempt/mode binding mismatch"
+      ],
+      "proposal_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-INTEGRATION-01/inputs/R1-transition-AUTH.proposed.json",
+      "proposal_sha256": "0319b8b2767f965bca903f033da06342b28ca8a358d744e84f89182ccefa5613",
+      "exit_code": 0,
+      "stdout": {
+        "status": "EXPECTED_REJECTION",
+        "error": "R3 order/attempt/mode binding mismatch",
+        "CPU_fixture_only": true,
+        "actual_authorization_issued": false,
+        "only_rebound_field": "attempt",
+        "GPU_queries": 0,
+        "live_starts": 0
+      },
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-B",
+        "tools/check_r5_proposed_authorization_cpu.py",
+        "--snapshot",
+        "coordination/research/workspaces/R5-formal-mean10-integration-01-20261015",
+        "--authorization",
+        "docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-INTEGRATION-02/inputs/R1-transition-AUTH.proposed.json",
+        "--mode",
+        "research-transition"
+      ],
+      "proposal_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-INTEGRATION-02/inputs/R1-transition-AUTH.proposed.json",
+      "proposal_sha256": "3d749754621d6da25096e600cf061a786166a1b31b124169d1b1dadea09004a5",
+      "exit_code": 0,
+      "stdout": {
+        "status": "PASS_FULL_FROZEN_LOADER_TEMP_ATTEMPT_ONLY",
+        "order_id": "R5-MEAN10-INTEGRATION-02-R1-RESEARCH-TRANSITION",
+        "mode": "research-transition",
+        "budgets": {
+          "live_process_starts": 1,
+          "simulator_initializations": 1,
+          "initialization_ticks": 10,
+          "training_transitions": 0,
+          "nontraining_transitions": 3584,
+          "optimizer_updates": 0,
+          "checkpoint_writes": 0,
+          "explicit_resets": 1,
+          "automatic_resets": 3584,
+          "wall_seconds": 900
+        },
+        "CPU_fixture_only": true,
+        "actual_authorization_issued": false,
+        "only_rebound_field": "attempt",
+        "GPU_queries": 0,
+        "live_starts": 0
+      },
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-B",
+        "tools/check_r5_proposed_authorization_cpu.py",
+        "--snapshot",
+        "coordination/research/workspaces/R5-formal-mean10-integration-01-20261015",
+        "--authorization",
+        "docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/R0-research-formal-training-AUTH.proposed.json",
+        "--mode",
+        "research-formal-training"
+      ],
+      "proposal_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/R0-research-formal-training-AUTH.proposed.json",
+      "proposal_sha256": "cae43dfa1f13a0ec8334afb88f3454d1aa30bc346a581e8e5447b4056b4fb0d6",
+      "exit_code": 0,
+      "stdout": {
+        "status": "PASS_FULL_FROZEN_LOADER_TEMP_ATTEMPT_ONLY",
+        "order_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING",
+        "mode": "research-formal-training",
+        "budgets": {
+          "live_process_starts": 1,
+          "simulator_initializations": 1,
+          "initialization_ticks": 10,
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "checkpoint_writes": 5,
+          "explicit_resets": 1,
+          "automatic_resets": 131072,
+          "wall_seconds": 7200
+        },
+        "CPU_fixture_only": true,
+        "actual_authorization_issued": false,
+        "only_rebound_field": "attempt",
+        "GPU_queries": 0,
+        "live_starts": 0
+      },
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-B",
+        "tools/check_r5_proposed_authorization_cpu.py",
+        "--snapshot",
+        "coordination/research/workspaces/R5-formal-mean10-integration-01-20261015",
+        "--authorization",
+        "docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/R1-research-formal-training-AUTH.proposed.json",
+        "--mode",
+        "research-formal-training"
+      ],
+      "proposal_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/R1-research-formal-training-AUTH.proposed.json",
+      "proposal_sha256": "2223c78a82615cdd91ef8be72a639a2bb563b05da9e4980c96994d91d8deb1d8",
+      "exit_code": 0,
+      "stdout": {
+        "status": "PASS_FULL_FROZEN_LOADER_TEMP_ATTEMPT_ONLY",
+        "order_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING",
+        "mode": "research-formal-training",
+        "budgets": {
+          "live_process_starts": 1,
+          "simulator_initializations": 1,
+          "initialization_ticks": 10,
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "checkpoint_writes": 5,
+          "explicit_resets": 1,
+          "automatic_resets": 131072,
+          "wall_seconds": 7200
+        },
+        "CPU_fixture_only": true,
+        "actual_authorization_issued": false,
+        "only_rebound_field": "attempt",
+        "GPU_queries": 0,
+        "live_starts": 0
+      },
+      "stderr": ""
+    }
+  ],
+  "fixture_scope": "Unmodified frozen stdlib AUTH loader, ONLY attempt path rebound to existing temporarydirectory. Original proposals unchanged; no actualattempt/Auth/Store/simulator/GPU/model/optimizer. Future actualexactAUTH still must beissued/validated underCommander.",
+  "original_review_finding": "G6-ORDER-ID; old01 retained byte-for-byte",
+  "formal_future_evaluation_templates": "Not passed as executableAuth: checkpointSHAs necessarilygeneratedafteractualformaltraining."
+}
