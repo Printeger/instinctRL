@@ -1,0 +1,20 @@
+{
+  "status": "INTERNAL_COEXISTENCE_PASSED_AFTER_BOUNDED_BACKOFF",
+  "failed_job": "J-31eba1c5651ddc1d",
+  "successful_next_entry": "J-ac937a86633306b9",
+  "observed_internal_utilization_percent": [
+    4,
+    1,
+    1
+  ],
+  "original_threshold_percent": 5,
+  "original_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-01-R1-RESEARCH-EVALUATION-617af4d90c35/results/prelaunch/prelaunch_resource_gate.json",
+    "sha256": "1c2bdd08227a80a817ffdef1487b86a8a73cb9b252751fe1f2de929df32810e4"
+  },
+  "recorded_UTC": "2026-10-14T18:06:41.267579+00:00",
+  "read_existing_receipt_only_no_extra_GPU_queries": true,
+  "prior_failed_starts_init_output_actual_GPUwall_retained": true,
+  "no_budget_or_history_reset": true,
+  "scope": "Only measuredresourceavailability restored; currentjobscientificresult/normalterminalcleanup stillpending. No implicitretry/release."
+}

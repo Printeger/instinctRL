@@ -1,6 +1,6 @@
 # R5 formal readiness autonomous Goal
 
-IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. NoLIVE; CONFIRM02 beforeAppresourceFINAL0, boundedfreshrecoverypending; CONFIRM01trainingRole27accepted, exactprimaryZapprovalunsubmitted. No formal training submitted.
+IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. Current only LIVE CONFIRM01 originalZ J-ac937a86633306b9; CONFIRM02freshrecoverypending; G4pending. No formal training submitted.
 
 Current frozen method w.05/anchor4/LRs1e-4/3e-4/purehover256 FAILED G4: seed20261015 originalZ0/32 (driftmax .787366509), seed20261016 originalZ0/32 (driftmax .327583998,heightmax .216544390). Complete T0+200x32, allfailuredenominators retained. Confirmation01 independentRole20 accepted; second scientific evaluation independentaudit next. Actual scientific/evidence acceptance never changes FAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE/null/full logical+output reservations. BothnormalownedACK/settle/exact2postrun complete. Immutable CONFIRMATION_METHOD_FREEZE.json unchanged, CONFIRMATION_SEEDS.json recordsfailure. Never thirdseed replacement or >256 continuation ofoldmethod.
 
@@ -50,3 +50,5 @@ Authoritative latest: CONFIRM01 J-b7cf47a791e61388 complete256/131072/2048Adam e
 Authoritative latest: 当前唯一LIVE新mean CONFIRM02/R1 J-31eba1c5651ddc1d /A-3e4864c93aa9ae01，准确input62e3914/push（许可原9265693/tag），训练seed20261018，frozen source617/config2e9/controlc468，coldstart256purehover。CONFIRM01训练已complete256、normalACK/settle/exact2postrun/CPUcoveragePASS，Role27实际训练/u256接受及准确原Z预审进行中。先只poll02句柄；02终态正常清理/结算后才可准确issue/release01原Z。两新seed实际原Z均未评价，G4未授。旧15/16回归许可未提交。G6-ORDER-ID独立Role26已闭合，修正02仅条件准备，仍须actualG4证据才能issue。正式训练未提交。
 
 Authoritative latest: 无live。CONFIRM02原J-31eba1c5651ddc1d因GPU1/1/9%>5%在App前拒绝，0rollout/gate/train/optimizer/writes，正式FINAL0，normalACK/settle/exact2postrun完成；start/init/output与GPU10.789791333954781/wall12.61511324904859保留，只有collector正式0未用逻辑预留释放。资源事件1/3，下一准确入口至少退避60秒，无额外GPU探测/阈值/进程操作。Role27已独立接受CONFIRM01完整训练及实际u25698a081e3...，准确原Z许可A-b250992a56a6f5ae已发行未提交；提交/tag/push与退避后只单次release01原Z。CONFIRM02-RECOVERY1同冻结seed18/source/method/budget新卡已准备待准确packet/Role28独立预审；D017仅额外1start/init/8GiB，不扩大master、不退款旧收费。两个新seed原Z均未验收，G4仍未授，formal0。
+
+Authoritative latest: 当前唯一LIVE CONFIRM01/R1原Z评价 J-ac937a86633306b9 /A-b250992a56a6f5ae，准确inputs b6aa4d4/tag/push，真实u25698a081e3/source617/config2e9/controlc468；只6400nontraining、0训练/optimizer/checkpoint写。前一02资源拒绝后已记录146.38秒退避，当前原内部共存4/1/1% PASS，原事件有据恢复、旧失败收费不重置，无额外GPU探测。只poll当前句柄；normal终态cleanup/settle/postrun/CPU之后，再处理Role28准确同seed18恢复预审和发行。G4未授，formal0。
