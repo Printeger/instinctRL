@@ -7,9 +7,9 @@
 
 ## 当前 Goal（2026-10-14 自主正式训练准入）
 
-**IN_PROGRESS，目标 READY_FOR_FORMAL_R5_TRAINING。** 新用户已一次性委托完整有界研究、阶段扩额、方法调整、配对训练、确认seed及条件式正式启动包，由现有Coordinator/Commander准确授权；不自动提交正式完整训练。主授权和新总账已登记，确认/衔接至少25%训练与正式首段资源已保护预留。有限旧C1轨迹分析已完成：剩余漂移主要为持续偏置；anchor有效但已大且姿态混淆，先不默认4→8。新128纯悬停同版本R0/R1卡已独立预审；R0首入口因GPU10/11/2%>5在App前失败，FINAL0和收费保留。退避后R1 J-d430a5a7a8ec6ba1完成128updates/65536train/9checkpoint；first512gate在两类optimizer前PASS，全程纯零命令。native FAILED/-9和INCOMPLETE/null保留，正常ownedACK/清理、结算与2postrun完成。无live。R0 RECOVERY1新身份独立预审PASS、准确授权A-a28f12af999d84a3已签发，提交/tag/push后一次release。原Z96/128尚未执行，尚无准入结论。
+**IN_PROGRESS，目标 READY_FOR_FORMAL_R5_TRAINING。** 新用户已一次性委托完整有界研究、阶段扩额、方法调整、配对训练、确认seed及条件式正式启动包，由现有Coordinator/Commander准确授权；不自动提交正式完整训练。主授权和新总账已登记，确认/衔接至少25%训练与正式首段资源已保护预留。有限旧C1轨迹分析已完成：剩余漂移主要为持续偏置；anchor有效但已大且姿态混淆，先不默认4→8。新128纯悬停同版本R0/R1卡已独立预审；R0首入口因GPU10/11/2%>5在App前失败，FINAL0和收费保留。退避后R1 J-d430a5a7a8ec6ba1完成128updates/65536train/9checkpoint；first512gate在两类optimizer前PASS，全程纯零命令。native FAILED/-9和INCOMPLETE/null保留，正常ownedACK/清理、结算与2postrun完成。R1完整训练/checkpoint已独立Role6接受。当前唯一live为fresh R0 RECOVERY1 J-ab6270e88546a984，输入aa772c4已tag/push，原coexistence2/1/4%和真实first512gate PASS，83updates lastobserved。配对实际初始化/首512输入动作Beta/logp逐位相同。原Z96/128尚未执行，尚无准入结论。
 
-当前进展与下一动作见[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)，[主授权](experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json)和[新总账](experiments/r5-formal-readiness-auto/goal_budget.json)。15旧jobs terminal，新增R0失败已正常owned清理；R1已终止且正常清理，无live，STOPclear；原Z阈值、actor部署信息边界及全部历史FAILED/INCOMPLETE保留。
+当前进展与下一动作见[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)，[主授权](experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json)和[新总账](experiments/r5-formal-readiness-auto/goal_budget.json)。15旧jobs terminal，新增R0失败已正常owned清理；R1已终止且正常清理，freshR0唯一live，STOPclear；原Z阈值、actor部署信息边界及全部历史FAILED/INCOMPLETE保留。
 
 ## 已完成 Goal（2026-10-14 零命令残差单变量）
 

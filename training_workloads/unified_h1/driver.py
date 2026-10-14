@@ -68,6 +68,7 @@ class UnifiedH1Driver:
         scene = getattr(self.environment, "scene", None)
         origins = getattr(scene, "env_origins", None)
         raw["_h1_driver"] = {"global_policy_step": plan.global_policy_step,
+            "pure_hover": self.clock.pure_hover,
             "command_b": plan.command_b.detach().cpu(), "next_command_b": plan.next_command_b.detach().cpu(),
             "action": action.detach().cpu(), "reward": reward.detach().cpu(),
             "terminated": terminated.detach().cpu(), "truncated": truncated.detach().cpu(),

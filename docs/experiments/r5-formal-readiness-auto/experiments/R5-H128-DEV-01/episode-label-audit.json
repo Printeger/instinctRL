@@ -1,0 +1,690 @@
+{
+  "status": "CONFIRMED_METADATA_ONLY_LABEL_DEFECT",
+  "job_id": "J-d430a5a7a8ec6ba1",
+  "actual_frozen_source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+  "raw_inputs": {
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/learning_log/partial_rollout_steps.jsonl": "a7a1e79cbef057c834694c95e8f6bae9118d6fcd1743ee568737295d6284fbf6",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/learning_log/compact_rollouts.jsonl": "d4b9e3872daf881e390490fee30ba8130e6f8f4d160c2ef154f14da6ddcffe6a",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/learning_log/episodes.jsonl": "42bc7cdc76e214dbae42d27c31322fbcd732e908f69bcb1513197f1e1769d00e"
+  },
+  "original_nearwall_episode_labels": [
+    {
+      "lane": 6,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_x_wall"
+    },
+    {
+      "lane": 7,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_y_wall"
+    },
+    {
+      "lane": 14,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_x_wall"
+    },
+    {
+      "lane": 15,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_y_wall"
+    },
+    {
+      "lane": 22,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_x_wall"
+    },
+    {
+      "lane": 23,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_y_wall"
+    },
+    {
+      "lane": 30,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_x_wall"
+    },
+    {
+      "lane": 31,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_y_wall"
+    },
+    {
+      "lane": 6,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_x_wall"
+    },
+    {
+      "lane": 7,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_y_wall"
+    },
+    {
+      "lane": 14,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_x_wall"
+    },
+    {
+      "lane": 15,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_y_wall"
+    },
+    {
+      "lane": 22,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_x_wall"
+    },
+    {
+      "lane": 23,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_y_wall"
+    },
+    {
+      "lane": 30,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_x_wall"
+    },
+    {
+      "lane": 31,
+      "episode": 2,
+      "reset": 2,
+      "original_label": "near_y_wall"
+    }
+  ],
+  "all_automatic_reset_lanes": 64,
+  "observed_next_step_positions": [
+    {
+      "lane": 27,
+      "first_returned_step_after_reset": 551,
+      "local_position_after_one_physical_step_m": [
+        6.103515625e-05,
+        -9.633089939597994e-05,
+        1.991347074508667
+      ]
+    },
+    {
+      "lane": 9,
+      "first_returned_step_after_reset": 562,
+      "local_position_after_one_physical_step_m": [
+        4.57763671875e-05,
+        0.0,
+        1.9906715154647827
+      ]
+    },
+    {
+      "lane": 0,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0,
+        1.9907429218292236
+      ]
+    },
+    {
+      "lane": 1,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        -3.0517578125e-05,
+        1.9909640550613403
+      ]
+    },
+    {
+      "lane": 2,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        3.2034775358624756e-05,
+        1.9906415939331055
+      ]
+    },
+    {
+      "lane": 3,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        -5.340576171875e-05,
+        1.990326166152954
+      ]
+    },
+    {
+      "lane": 4,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0001678466796875,
+        1.9902464151382446
+      ]
+    },
+    {
+      "lane": 5,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        -7.62939453125e-05,
+        -1.52587890625e-05,
+        1.9917103052139282
+      ]
+    },
+    {
+      "lane": 6,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        9.1552734375e-05,
+        -3.0517578125e-05,
+        1.991106629371643
+      ]
+    },
+    {
+      "lane": 7,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        8.424182306043804e-05,
+        1.989284873008728
+      ]
+    },
+    {
+      "lane": 8,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        3.0517578125e-05,
+        1.9904961585998535
+      ]
+    },
+    {
+      "lane": 10,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        9.1552734375e-05,
+        0.0,
+        1.9904520511627197
+      ]
+    },
+    {
+      "lane": 11,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        4.57763671875e-05,
+        3.814697265625e-05,
+        1.9913654327392578
+      ]
+    },
+    {
+      "lane": 12,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        3.814697265625e-05,
+        6.986892549321055e-05,
+        1.9900072813034058
+      ]
+    },
+    {
+      "lane": 13,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        7.62939453125e-05,
+        9.1552734375e-05,
+        1.9914624691009521
+      ]
+    },
+    {
+      "lane": 14,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        -2.288818359375e-05,
+        0.0,
+        1.9900705814361572
+      ]
+    },
+    {
+      "lane": 15,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        -2.7798523660749197e-06,
+        0.0,
+        1.991392970085144
+      ]
+    },
+    {
+      "lane": 16,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        2.228521043434739e-05,
+        8.392333984375e-05,
+        1.9901690483093262
+      ]
+    },
+    {
+      "lane": 17,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        1.1732088751159608e-05,
+        2.4327804567292333e-05,
+        1.9921643733978271
+      ]
+    },
+    {
+      "lane": 18,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        3.6990386433899403e-06,
+        -4.57763671875e-05,
+        1.9900304079055786
+      ]
+    },
+    {
+      "lane": 19,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        -4.940113285556436e-06,
+        0.0,
+        1.9920105934143066
+      ]
+    },
+    {
+      "lane": 20,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        -1.52587890625e-05,
+        1.990992784500122
+      ]
+    },
+    {
+      "lane": 21,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        3.814697265625e-05,
+        -5.340576171875e-05,
+        1.9919660091400146
+      ]
+    },
+    {
+      "lane": 22,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        8.392333984375e-05,
+        2.3030792362987995e-05,
+        1.9890481233596802
+      ]
+    },
+    {
+      "lane": 23,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        3.0517578125e-05,
+        3.814697265625e-05,
+        1.9914263486862183
+      ]
+    },
+    {
+      "lane": 24,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        8.392333984375e-05,
+        0.0,
+        1.9910882711410522
+      ]
+    },
+    {
+      "lane": 25,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0,
+        1.9918209314346313
+      ]
+    },
+    {
+      "lane": 26,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0,
+        1.9917584657669067
+      ]
+    },
+    {
+      "lane": 28,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        6.103515625e-05,
+        1.991256833076477
+      ]
+    },
+    {
+      "lane": 29,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0,
+        1.9910494089126587
+      ]
+    },
+    {
+      "lane": 30,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0,
+        1.9910030364990234
+      ]
+    },
+    {
+      "lane": 31,
+      "first_returned_step_after_reset": 1000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        -3.0517578125e-05,
+        1.9899613857269287
+      ]
+    },
+    {
+      "lane": 27,
+      "first_returned_step_after_reset": 1551,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        1.4857985661365092e-05,
+        1.991283893585205
+      ]
+    },
+    {
+      "lane": 9,
+      "first_returned_step_after_reset": 1562,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0,
+        1.9920711517333984
+      ]
+    },
+    {
+      "lane": 0,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0,
+        1.990734577178955
+      ]
+    },
+    {
+      "lane": 1,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        -2.288818359375e-05,
+        1.9914883375167847
+      ]
+    },
+    {
+      "lane": 2,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        -2.5497458409518003e-05,
+        1.9911304712295532
+      ]
+    },
+    {
+      "lane": 3,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        -3.814697265625e-05,
+        1.9911952018737793
+      ]
+    },
+    {
+      "lane": 4,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        6.103515625e-05,
+        1.9908227920532227
+      ]
+    },
+    {
+      "lane": 5,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        -6.103515625e-05,
+        1.9913653135299683
+      ]
+    },
+    {
+      "lane": 6,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0,
+        1.9908249378204346
+      ]
+    },
+    {
+      "lane": 7,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        6.103515625e-05,
+        -4.489879938773811e-05,
+        1.9909753799438477
+      ]
+    },
+    {
+      "lane": 8,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0,
+        1.9909602403640747
+      ]
+    },
+    {
+      "lane": 10,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        -9.1552734375e-05,
+        0.0,
+        1.9908586740493774
+      ]
+    },
+    {
+      "lane": 11,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        -6.866455078125e-05,
+        2.288818359375e-05,
+        1.990214467048645
+      ]
+    },
+    {
+      "lane": 12,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        2.288818359375e-05,
+        -5.637550202663988e-05,
+        1.9906772375106812
+      ]
+    },
+    {
+      "lane": 13,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        3.814697265625e-05,
+        -3.814697265625e-05,
+        1.9907783269882202
+      ]
+    },
+    {
+      "lane": 14,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        -1.52587890625e-05,
+        1.9915958642959595
+      ]
+    },
+    {
+      "lane": 15,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        2.7708301786333323e-06,
+        0.0,
+        1.9912464618682861
+      ]
+    },
+    {
+      "lane": 16,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        -2.359272912144661e-06,
+        -4.57763671875e-05,
+        1.99086594581604
+      ]
+    },
+    {
+      "lane": 17,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        -5.5012700613588095e-05,
+        -3.913720138370991e-05,
+        1.9908483028411865
+      ]
+    },
+    {
+      "lane": 18,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        4.1042803786695e-06,
+        -3.814697265625e-05,
+        1.9900778532028198
+      ]
+    },
+    {
+      "lane": 19,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        4.930378054268658e-05,
+        -6.103515625e-05,
+        1.9903665781021118
+      ]
+    },
+    {
+      "lane": 20,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        4.57763671875e-05,
+        0.0,
+        1.991347312927246
+      ]
+    },
+    {
+      "lane": 21,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        -4.57763671875e-05,
+        1.990278720855713
+      ]
+    },
+    {
+      "lane": 22,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        2.288818359375e-05,
+        2.3621556465514004e-05,
+        1.9907995462417603
+      ]
+    },
+    {
+      "lane": 23,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        6.103515625e-05,
+        -2.288818359375e-05,
+        1.9910639524459839
+      ]
+    },
+    {
+      "lane": 24,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0,
+        1.990453839302063
+      ]
+    },
+    {
+      "lane": 25,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        0.0,
+        1.9895868301391602
+      ]
+    },
+    {
+      "lane": 26,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        6.103515625e-05,
+        -5.340576171875e-05,
+        1.9899307489395142
+      ]
+    },
+    {
+      "lane": 28,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0001068115234375,
+        0.0,
+        1.9921077489852905
+      ]
+    },
+    {
+      "lane": 29,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        4.57763671875e-05,
+        -9.1552734375e-05,
+        1.9912257194519043
+      ]
+    },
+    {
+      "lane": 30,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        6.103515625e-05,
+        -7.62939453125e-05,
+        1.9908579587936401
+      ]
+    },
+    {
+      "lane": 31,
+      "first_returned_step_after_reset": 2000,
+      "local_position_after_one_physical_step_m": [
+        0.0,
+        -4.57763671875e-05,
+        1.9899799823760986
+      ]
+    }
+  ],
+  "largest_abs_local_xy_first_returned_after_reset_m": 0.0001678466796875,
+  "interpretation": "Original episode labels are scheduled hints and false for the researchpurehover reset. Raw physical positions and frozen code show all64 automatic reset lanes returned nearcenter. Poststep position is not exactresetT0; no unrecordedT0 filled. No old data changed. Original Z has independentT0 and its full metric unchanged.",
+  "minimal_future_fix": "Driver records clock.pure_hover; logger prevents mixed wall labels when true. Training/control/actor/RNG/reset unchanged. Seven CPU regressions PASS. No simulation rerun for this metadatafix."
+}

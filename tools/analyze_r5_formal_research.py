@@ -43,12 +43,36 @@ def evaluation_analysis(D,group):
  result={'group':group,'mode':'research-evaluation','source_commit':auth['product_commit'],'actual_parameters':p,'binding':binding,'nodes':nodes,'coverage_complete':all(len(n['episodes'])==32 for n in nodes.values()),'all_original_gates_pass':all(n['original_gate']['pass'] for n in nodes.values()),'metric':'Unchanged originalZ sensorT0/startup/200steps32lanes/allsubgroups/allfailures','CPU_only':True,'optimizer_calls':0,'missing_samples_filled':False}
  return result
 
+def paired_results(D, directories):
+ cardpath=D/'EXPERIMENT_CARD.json';card=read(cardpath)
+ trains={g:read(directories[g]/(g+'-training-analysis.json')) for g in ['R0','R1']}
+ ev={g:read(directories[g]/(g+'-evaluation-analysis.json')) for g in trains}
+ source=None
+ for g in trains:
+  t,e=trains[g],ev[g]
+  assert t['scientific_training_coverage_complete'] and e['coverage_complete']
+  assert t['group']==e['group']==g
+  expected={**card['profiles'][g],'experiment_card':{'path':str(cardpath),'sha256':digest(cardpath)}}
+  assert t['actual_parameters']==expected,'paired training must match the original frozen scientific card'
+  assert {k:v for k,v in e['actual_parameters'].items() if k!='checkpoints'}==expected
+  assert t['binding']['source_commit']==e['binding']['source_commit']==t['source_commit']==e['source_commit']
+  if source is None:source=t['source_commit']
+  assert source==t['source_commit'],'paired source mismatch'
+  checkpoints={r['label']:r for r in t['checkpoints']}
+  for ck in e['actual_parameters']['checkpoints']:
+   actual=checkpoints['u'+str(ck['update'])]
+   assert ck['path']==actual['path'] and ck['sha256']==actual['sha256'],'evaluation must use this actual training entry'
+  assert list(e['nodes'])==[str(u) for u in card['predefined_late_nodes']]
+ assert trains['R0']['binding']['job_id']!=trains['R1']['binding']['job_id']
+ compare=compare_inputs(trains,method_binding_key='research_effective_method')
+ return {'status':'COMPLETE_ACTUAL_PAIR_PENDING_INDEPENDENT_SCIENCE','experiment_id':card['experiment_id'],'source_commit':source,'first_actual_rollout_comparison':compare,'training_analyses':{g:str(directories[g]/(g+'-training-analysis.json')) for g in trains},'evaluation_analyses':{g:str(directories[g]/(g+'-evaluation-analysis.json')) for g in trains},'groups':ev,'candidate_both_predefined_nodes_pass':ev['R1']['all_original_gates_pass'],'primary_node':card['primary_node'],'scientific_scope':'One developmentseed; notREADY beforecandidatefreeze/twonewtrainingseeds/nonzerotransition/formalpackage/finalreview','old_C1_reference':'Historicalonly; same-versionR0 isstrictcontemporaneousreference','optimizer_calls':0}
+
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('experiment_id');ap.add_argument('mode',choices=['training','evaluation','pair']);ap.add_argument('--group',choices=['R0','R1']);args=ap.parse_args();torch.set_num_threads(2);D=BASE/'experiments'/args.experiment_id
+ ap=argparse.ArgumentParser();ap.add_argument('experiment_id');ap.add_argument('mode',choices=['training','evaluation','pair']);ap.add_argument('--group',choices=['R0','R1']);ap.add_argument('--r0-entry');ap.add_argument('--r1-entry');args=ap.parse_args();torch.set_num_threads(2);D=BASE/'experiments'/args.experiment_id
  if args.mode in ['training','evaluation']:
   assert args.group;r=(training_analysis if args.mode=='training' else evaluation_analysis)(D,args.group);target=D/(args.group+'-'+args.mode+'-analysis.json')
  else:
-  trains={g:read(D/(g+'-training-analysis.json')) for g in ['R0','R1']};ev={g:read(D/(g+'-evaluation-analysis.json')) for g in trains};assert all(t['scientific_training_coverage_complete'] for t in trains.values()) and all(e['coverage_complete'] for e in ev.values())
-  compare=compare_inputs(trains,method_binding_key='research_effective_method');r={'status':'COMPLETE_ACTUAL_PAIR_PENDING_INDEPENDENT_SCIENCE','experiment_id':args.experiment_id,'first_actual_rollout_comparison':compare,'training_analyses':{g:str(D/(g+'-training-analysis.json')) for g in trains},'groups':ev,'candidate_both_predefined_nodes_pass':ev['R1']['all_original_gates_pass'],'primary_node':read(D/'EXPERIMENT_CARD.json')['primary_node'],'scientific_scope':'One developmentseed; notREADY beforecandidatefreeze/twonewtrainingseeds/nonzerotransition/formalpackage/finalreview','old_C1_reference':'Historicalonly; same-versionR0 isstrictcontemporaneousreference','optimizer_calls':0};target=D/'pair-results.json'
+  directories={g:(BASE/'experiments'/entry if entry else D) for g,entry in [('R0',args.r0_entry),('R1',args.r1_entry)]}
+  r=paired_results(D,directories);target=D/'pair-results.json'
  assert not target.exists(),target;target.write_text(json.dumps(r,ensure_ascii=False,indent=2,allow_nan=False)+'\n');print(json.dumps({'output':str(target),'coverage':r.get('scientific_training_coverage_complete',r.get('coverage_complete')),'candidate_both_predefined_nodes_pass':r.get('candidate_both_predefined_nodes_pass')}))
 if __name__=='__main__':main()

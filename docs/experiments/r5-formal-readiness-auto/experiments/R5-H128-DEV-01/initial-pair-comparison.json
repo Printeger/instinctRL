@@ -1,0 +1,112 @@
+{
+  "scope": "Actual frozen init and first512 only. R0 still live; no complete training/evaluation acceptance.",
+  "bindings": {
+    "R0": {
+      "spec_id": "R5-H128-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47",
+      "authorization_sha256": "48c5405ff7a46ae5be09c270069b03f51268dff73e2c0f5aa2420756ea74bda8",
+      "init": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/init0000.pt",
+        "sha256": "06bec21012c99fb432fce77e42c26a79552e979b273acec5bb044e85030ed9b4"
+      },
+      "first512": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+        "sha256": "e146285de9ead518e2185acc643210a8b324d64e02407bfe142ad6f77c2a438d"
+      }
+    },
+    "R1": {
+      "spec_id": "R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47",
+      "authorization_sha256": "1823d9249b7dea949dfcf710be8538be5718e701320d05f20f7b3a07c7852157",
+      "init": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/init0000.pt",
+        "sha256": "0ada51d7582f89157f50046ca76146fac53ec2f3d5a860116e9587553625bc60"
+      },
+      "first512": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+        "sha256": "012dd61783f7a749a59136d2339dc43e78e987150c46614a10df2cf99d86c5f6"
+      }
+    }
+  },
+  "comparison": {
+    "actions": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true
+    },
+    "old_log_probabilities": {
+      "shape": [
+        512,
+        1
+      ],
+      "bit_exact_equal": true
+    },
+    "old_alpha": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true
+    },
+    "old_beta": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true
+    },
+    "privileged": {
+      "shape": [
+        512,
+        21
+      ],
+      "bit_exact_equal": true
+    },
+    "policy.lidar_grid": {
+      "shape": [
+        512,
+        12,
+        59,
+        360
+      ],
+      "bit_exact_equal": true
+    },
+    "policy.state_vec": {
+      "shape": [
+        512,
+        52
+      ],
+      "bit_exact_equal": true
+    },
+    "advantages": {
+      "bit_exact_equal": false,
+      "difference_C1_minus_C0": {
+        "status": "AVAILABLE",
+        "count": 512,
+        "mean": -1.0026955834473483,
+        "std": 0.5247430236472572,
+        "min": -2.4573442935943604,
+        "max": -0.00590495765209198,
+        "p95": -0.1726080015301705,
+        "rms": 1.1317038808501474
+      },
+      "scope": "Allowed real learning-signal difference due solely preregistered reward; not required equal."
+    },
+    "returns": {
+      "bit_exact_equal": false,
+      "difference_C1_minus_C0": {
+        "status": "AVAILABLE",
+        "count": 512,
+        "mean": -1.0026955834182445,
+        "std": 0.5247430259969514,
+        "min": -2.4573442935943604,
+        "max": -0.00590495765209198,
+        "p95": -0.1726080015301705,
+        "rms": 1.131703881913856
+      },
+      "scope": "Allowed real learning-signal difference due solely preregistered reward; not required equal."
+    }
+  },
+  "GPU_queries": 0,
+  "optimizer_calls": 0
+}
