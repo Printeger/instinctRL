@@ -1011,6 +1011,81 @@
         "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-02-Z-RECOVERY1/R1-evaluation-analysis.json",
         "sha256": "58c52371a57f3ad2c9f3c76cb85d95b2920bcd1348ce193f09e6549c24cfd782"
       },
+      "independent_acceptance": "reviews/mean-prior-G4-regression16-training.json"
+    },
+    {
+      "experiment_id": "R5-MEAN10-REGRESSION-15",
+      "group": "R1",
+      "training_seed": 20261015,
+      "evaluation_seed": 20260909,
+      "update": 256,
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.010415698401629925,
+        "horizontal_drift_m": 0.011686444282531738,
+        "height_deviation_m": 0.046066999435424805
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-15-R1-RESEARCH-EVALUATION-617af4d90c35/results/research-evaluation/evaluation_raw/research_R1_u256/Z.jsonl",
+      "raw_sha256": "4f7c1ecb8e41a2eb8183ddcac99de9f738a4c4daff12f48124e56ee548ffc820",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-15-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "7e3526f91d8f870d0e95557b87bb516529486127fbab10fff1b6b57c21e8dd88",
+        "update": 256
+      },
+      "all_episodes_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-15/R1-evaluation-analysis.json",
+        "sha256": "4244acd2a294ffacba438c686b6f8c00d2f3f72813287b16cd369aea457caf97"
+      },
       "independent_acceptance": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
     }
   ],
@@ -2010,12 +2085,19 @@
       "experiment_id": "R5-MEAN10-REGRESSION-15",
       "group": "R1",
       "mode": "research-evaluation",
-      "native_status": "RUNNING",
-      "native_exit_code": null,
-      "raw_status": null,
-      "formal_counter_completeness": null,
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
       "formal_transitions": null,
-      "observed": {},
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 6400,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
       "retained_reservations": {
         "training_transitions": 0,
         "nontraining_transitions": 6400,
@@ -2023,13 +2105,13 @@
         "training_checkpoint_writes": 0,
         "actor_optimizer_steps": 0,
         "critic_optimizer_steps": 0,
-        "allocated_gpu_seconds": 1810,
-        "wall_seconds_including_cleanup": 1810
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
       },
       "output_reserved_bytes": 8589934592,
-      "owned_cleanup": null,
-      "postrun_queries": 0,
-      "inventory": null
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-REGRESSION-15/live/R1-research-evaluation/INVENTORY.json"
     }
   ],
   "master_ledger": "goal_budget.json",
@@ -2162,7 +2244,7 @@
   },
   "current_candidate": {
     "experiment_id": "R5-MEAN10-DEV-02",
-    "status": "G2_G3_INDEPENDENT_PASS_BOTH_ACTUAL_CONFIRMATIONS_PASS_G4_REVIEW_PENDING",
+    "status": "G2_G3_G4_INDEPENDENT_PASS_G6_G7_PENDING",
     "independent_review": "reviews/mean-prior-DEV02-actual-pair-Z.json",
     "method_freeze": "MEAN_PRIOR_CONFIRMATION_METHOD_FREEZE.json",
     "two_unused_confirmations": [
@@ -2174,13 +2256,7 @@
       20261016
     ],
     "formal_submitted": false,
-    "current_only_live": {
-      "experiment_id": "R5-MEAN10-REGRESSION-15",
-      "job_id": "J-19456eef8dad3937",
-      "group": "R1",
-      "mode": "research-evaluation",
-      "note": "当前唯一LIVE旧seed15新mean10实际原Z回归J-19456eef8dad3937/A-4f24d896680295b3，准确inputs6a79e60/push（原2b3962e/tag），实际u2567e3526f9...已Role30接受，source617/config2e9/controlc468/seed20261015，仅6400nontraining、0训练/optimizer/writes。旧16完整256训练/normalACK/settle/exact2postrun/CPUcoveragePASS，Role31正独审其实际checkpoint并正式接受新17/18的G4。只poll当前句柄，后续16Z/G6G7需独立准确条件发行；旧回归不计G4，formal0。"
-    }
+    "current_only_live": null
   },
   "current_mean_confirmation_training": [
     {
@@ -2267,7 +2343,7 @@
       ],
       "recovery_candidate": "R5-MEAN10-CONFIRM-02-RECOVERY1",
       "recovery_status": "ACTUAL_COMPLETE256_INDEPENDENT_ROLE29_ACCEPTED",
-      "original_Z_status": "ACTUAL_32_OF32_PENDING_ROLE31",
+      "original_Z_status": "ACTUAL_32_OF32_INDEPENDENT_ROLE31_ACCEPTED",
       "original_Z": {
         "successes": 32,
         "total": 32,
@@ -2332,8 +2408,8 @@
         "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-02-Z-RECOVERY1/R1-evaluation-analysis.json",
         "sha256": "58c52371a57f3ad2c9f3c76cb85d95b2920bcd1348ce193f09e6549c24cfd782"
       },
-      "independent_original_Z_review": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
+      "independent_original_Z_review": "reviews/mean-prior-G4-regression16-training.json"
     }
   ],
-  "entry_inventory_as_of_ledger_sha256": "899761f743bf2f37590ac9ec7ff5ef701f00a514e0f7c36de043ead2bae8e6b1"
+  "entry_inventory_as_of_ledger_sha256": "b51199313be06cb4870cd3d1577ab020ba3695d5f6506817561b5be246e1832d"
 }

@@ -1,0 +1,483 @@
+{
+  "role": 31,
+  "verdict": "PASS",
+  "G4_granted": true,
+  "must_fix": [],
+  "scope": "Actual immutable mean-prior confirmation G4 acceptance on BOTH prospectively fixed unused trainingseeds17/18 at original primary-u256 Z; actual reg16 training/checkpoint acceptance and conditional exact u256 original-Z admission. Four G6 diagnostic originals validated for existing conditional admission. No actual G6/G7, READY or formal-release acceptance.",
+  "identities": {
+    "evidence_commit": "f1c0a0bda00d06ec02b8d31b0bf45d60e255a0ae",
+    "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "S2_source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "source_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "launch_sha256": "557cdbdb94afe50938a8f9f43c9ee1debb470e3c8bad3cdcfb2902e5439dd781",
+    "reg16_packet_sha256": "557cdbdb94afe50938a8f9f43c9ee1debb470e3c8bad3cdcfb2902e5439dd781",
+    "reg16_expected_training_AUTH_sha256": "a87b2d2f3f02b4d442068ca29f001e333f3d36cbbd0f375428efa0943073c3b7",
+    "reg16_actual_job_id": "J-c71649c6559afc47",
+    "reg16_actual_approval_id": "A-98bfda5b32515c11",
+    "reg16_training_analysis_sha256": "936d3b0fae5fc0e04e900706bceb9115cf24a4562cf2a7d733ba99c6ec64cc8b",
+    "confirmation17_packet_sha256": "d595dcd20fd49e7251956b2f93593c138cf442a0836e303fac535e12d81c2905",
+    "confirmation18_recovery_packet_sha256": "45ed5ab534deda76b62125846438e360a7a22ca695b736f78c35a59168074a25",
+    "confirmation18_actual_AUTH_sha256": "256f5476be1449dac530201ce86a0199d0dd5f7c93c7695539f969ea7ab1db4a",
+    "freeze_sha256": "b55f881c8ef1435dcef21e354b8e36d6765d53b2f0dd2b72c18e81b9a40756c4",
+    "effective_method_sha256": "c390ab73252ee37da504298ad08498f3d5131866023d9099f52baf3c749a907f",
+    "control_release": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba"
+  },
+  "G4_assessment": {
+    "status": "PASS_BOTH_FIXED_UNUSED_CONFIRMATIONS",
+    "immutable_freeze_verified": true,
+    "prospective_unused_training_seeds": [
+      20261017,
+      20261018
+    ],
+    "required_seeds_all_pass": true,
+    "primary_update": 256,
+    "actual_each_successes": 32,
+    "actual_each_denominator": 32,
+    "each_all8_subgroups": "4of4",
+    "method": "meanprior10/reward.05/anchor4/actorLR1e-4/criticLR3e-4/purehover256/frozenS2",
+    "source_method_seed_checkpoint_bindings": "PASS for each actual job/spec/request/AUTH/own actual checkpoint; all12 actual specpins and frozen load_config full source manifests/runtime pins independently checked.",
+    "old_seed15_16_role": "Separate regressions, not substitute confirmations or2of3.",
+    "old_w_method_G4": "Historical failed15/16 confirmation result remains FAILED; this acceptance applies only to new mean-prior freeze.",
+    "statistical_limit": "Two prospectively fixed seeds meet the stated bounded original-Z qualification. This is not universal generalization or causal decomposition of all mean-prior ingredients."
+  },
+  "actual_confirmations": {
+    "20261017": {
+      "case": "R5-MEAN10-CONFIRM-01",
+      "job_id": "J-ac937a86633306b9",
+      "binding": {
+        "spec_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-01/inputs/R1-research-evaluation.authorized.json",
+        "spec_sha256": "868b8fd814cb8713e56af744fca51a462300881aeeff52aff0b23e36baa68526",
+        "job_id": "J-ac937a86633306b9",
+        "native_status": "FAILED",
+        "native_exit_code": -9,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "authorization_sha256": "9f6141443efefc074004ae4c495995ce2138ba22018a2d1d4ebfb6e8ad03325a",
+        "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+        "owned_cleanup": "NORMAL_ACK_2STABLE_NO_SURVIVORS"
+      },
+      "launch_sha256": "d595dcd20fd49e7251956b2f93593c138cf442a0836e303fac535e12d81c2905",
+      "analysis_sha256": "42a206afb2e606967941d94b95dbcc02d486476e2b7be6a845e683e44dbe84a9",
+      "raw_sha256": "4493711441badc321607ef443ac502b999e8c535073b1d19e733459d9577ac4a",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-01-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "98a081e3f9a4e939f9601ec4bcec400fa49602ffe5edefd6740c20b7b6aff9ef",
+        "update": 256
+      },
+      "training_seed": 20261017,
+      "evaluation_seed": 20260909,
+      "primary_update": 256,
+      "original_gate": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "engineering": {
+        "missing": 0,
+        "reset_interrupted": 0,
+        "collision": 0,
+        "height_failure": 0,
+        "evidence_valid": 32
+      },
+      "actual_reset_lanes": 0,
+      "metric_maxima": {
+        "speed_rms_m_s": 0.010489066131412983,
+        "horizontal_drift_m": 0.01935860514640808,
+        "height_deviation_m": 0.04789996147155762
+      },
+      "original_and_copy_hash_and_entire_inventory": "PASS",
+      "original_objects": 37,
+      "original_bytes": 5991674,
+      "copy_bytes": 504130,
+      "original_evaluator_replay_equals_analysis_and_producer": true,
+      "T0_200_steps_32_lanes": "Original T0 and orderedsteps0..199, all32 lanes/all8 subgroups, full startup/safety/denominator; no missing/splice/reset, allzero commands; finite action/control/actual state fields and original action-to-correction mapping verified.",
+      "cleanup": "Normal ACK/quiescent/2stable/no survivors/not timedout; all recorded owner/guard/child/discovered identities freshly not owned.",
+      "fresh_identity_checks": 13,
+      "exact_postrun_calls": 2,
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "retained_nontraining_transitions": 6400,
+      "retained_output_bytes": 8589934592,
+      "training_updates_checkpoint_writes": 0,
+      "actual_wall_seconds": 62.54571330384351,
+      "actual_allocated_gpu_seconds": 60.647837965982035
+    },
+    "20261018": {
+      "case": "R5-MEAN10-CONFIRM-02-Z-RECOVERY1",
+      "job_id": "J-a8dc9cb1b63aa810",
+      "binding": {
+        "spec_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-02-Z-RECOVERY1/inputs/R1-research-evaluation.authorized.json",
+        "spec_sha256": "fc4b2de94b942422356f56672c068de8cf4e6b34d137f1466a068564386a717c",
+        "job_id": "J-a8dc9cb1b63aa810",
+        "native_status": "FAILED",
+        "native_exit_code": -9,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "authorization_sha256": "256f5476be1449dac530201ce86a0199d0dd5f7c93c7695539f969ea7ab1db4a",
+        "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+        "owned_cleanup": "NORMAL_ACK_2STABLE_NO_SURVIVORS"
+      },
+      "launch_sha256": "45ed5ab534deda76b62125846438e360a7a22ca695b736f78c35a59168074a25",
+      "analysis_sha256": "58c52371a57f3ad2c9f3c76cb85d95b2920bcd1348ce193f09e6549c24cfd782",
+      "raw_sha256": "e2550aa3a9548d93c2c06a7d0829fed79111dd9490ed873f9b4b4b5a8a3263f6",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-02-RECOVERY1-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "47796b6c3804f7bf41a16ef95bb8d0a7c62ebd6a47a3fcb2bda24d1d26b8c54f",
+        "update": 256
+      },
+      "training_seed": 20261018,
+      "evaluation_seed": 20260909,
+      "primary_update": 256,
+      "original_gate": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "engineering": {
+        "missing": 0,
+        "reset_interrupted": 0,
+        "collision": 0,
+        "height_failure": 0,
+        "evidence_valid": 32
+      },
+      "actual_reset_lanes": 0,
+      "metric_maxima": {
+        "speed_rms_m_s": 0.010393206030130386,
+        "horizontal_drift_m": 0.007172675337642431,
+        "height_deviation_m": 0.045454978942871094
+      },
+      "original_and_copy_hash_and_entire_inventory": "PASS",
+      "original_objects": 37,
+      "original_bytes": 5911286,
+      "copy_bytes": 504020,
+      "original_evaluator_replay_equals_analysis_and_producer": true,
+      "T0_200_steps_32_lanes": "Original T0 and orderedsteps0..199, all32 lanes/all8 subgroups, full startup/safety/denominator; no missing/splice/reset, allzero commands; finite action/control/actual state fields and original action-to-correction mapping verified.",
+      "cleanup": "Normal ACK/quiescent/2stable/no survivors/not timedout; all recorded owner/guard/child/discovered identities freshly not owned.",
+      "fresh_identity_checks": 13,
+      "exact_postrun_calls": 2,
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "retained_nontraining_transitions": 6400,
+      "retained_output_bytes": 8589934592,
+      "training_updates_checkpoint_writes": 0,
+      "actual_wall_seconds": 63.63705727807246,
+      "actual_allocated_gpu_seconds": 61.500112337991595
+    }
+  },
+  "actual_reg16_training": {
+    "scientific_training_accepted": true,
+    "training_seed": 20261016,
+    "evaluation_seed": 20260909,
+    "max_updates": 256,
+    "training_transitions": 131072,
+    "completed_policy_steps": 4096,
+    "actor_Adam_steps": 2048,
+    "critic_Adam_steps": 2048,
+    "minibatches": 2048,
+    "checkpoint_writes": 11,
+    "initialization_ticks": 2,
+    "automatic_reset_lanes": 128,
+    "explicit_resets": 1,
+    "all_zero_commands": true,
+    "mean_prior_weight": 10,
+    "reward_weight": 0.05,
+    "anchor_weight": 4,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "full_original_analysis_recomputed_equal": true,
+    "inventory": {
+      "objects": 70,
+      "original_bytes": 1975389245,
+      "copy_bytes": 21624132,
+      "combined_bytes": 1997013377,
+      "all_originals_and_copies_rehashed": true,
+      "complete_original_job_and_entire_attempt_enumeration": true
+    },
+    "all11_PT_payloads": "Actual source/tree/method/seed/LRs/curriculum/counters checked and actual actor/critic Adam step states each8*update, initialization empty.",
+    "first512": {
+      "actual_gate": "PASS",
+      "sample_count": 512,
+      "minibatches": 8,
+      "atol": 1e-06,
+      "rtol": 1e-05,
+      "RNG_consumed": false,
+      "before_either_optimizer": "Frozen driver capture/bind/retain/before_update precede trainer.update; actual eight probes retained.",
+      "actual_saved_correspondence": "Each probe full index/action/advantage/return bit-exact to retained first512; first preoptimizer stored logp meets original tolerance. No reviewer model forward/optimizer."
+    },
+    "all_actual_reward_formula": {
+      "all_samples": 131072,
+      "maximum_absolute_formula_error": 7.372458893373235e-08,
+      "zero_command_all": true,
+      "zero_extra": {
+        "status": "AVAILABLE",
+        "count": 131072,
+        "mean": -0.06478053498696167,
+        "std": 0.05188885107610378,
+        "min": -0.6376778483390808,
+        "max": -3.596735496103065e-06,
+        "p95": -0.007722611865028741,
+        "rms": 0.08299982276604571
+      },
+      "anchor_reward": {
+        "status": "AVAILABLE",
+        "count": 131072,
+        "mean": -0.15187454824016466,
+        "std": 0.09315751540520897,
+        "min": -0.7643108367919922,
+        "max": -0.0,
+        "p95": -0.03477975018322469,
+        "rms": 0.17816902390602546
+      },
+      "reset_lanes": 128,
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/learning_log/compact_rollouts.jsonl",
+      "raw_sha256": "9880289eb936e5dc5f62491b8652a853a0ac16d83a4d7458a3696f17ad43679c"
+    },
+    "actual_auxiliary_formula_and_scalar_validation": {
+      "binding": {
+        "actor_only": true,
+        "actual_weight": 10.0,
+        "authorization_sha256": "a87b2d2f3f02b4d442068ca29f001e333f3d36cbbd0f375428efa0943073c3b7",
+        "hook_installed": true,
+        "mean_prior_contract": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+          "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+        },
+        "runtime_action_replacement": false
+      },
+      "all_minibatch_scalars": {
+        "status": "AVAILABLE",
+        "count": 2048,
+        "mean": 0.012342308885807896,
+        "std": 0.15815908563980619,
+        "min": 4.17767369071953e-05,
+        "max": 5.241717338562012,
+        "p95": 0.01190019370988009,
+        "rms": 0.15863993494404927
+      },
+      "first8_recalculated_saved_actual_actor_outputs": true,
+      "maximum_first8_absolute_error": 1.1920928955078125e-07,
+      "no_extra_actor_forward": true,
+      "limits": "All scalar counts/finiteness checked; exact formula independently recalculated on saved first8 preoptimizer outputs, no claim of unrecorded later full outputs."
+    },
+    "normal_owned_cleanup": "ACK quiescent/2stable/no survivors/not timedout; fresh identities not owned; settled and exactly2recorded frozen-executable postrun calls (GPU538MiB/1%, only GNOME164MiB).",
+    "native_status": "FAILED",
+    "native_exit_code": -9,
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "retained_reservations": {
+      "training_transitions": 131072,
+      "nontraining_transitions": 0,
+      "optimizer_updates": 256,
+      "training_checkpoint_writes": 11,
+      "actor_optimizer_steps": 2048,
+      "critic_optimizer_steps": 2048,
+      "allocated_gpu_seconds": 0,
+      "wall_seconds_including_cleanup": 0
+    },
+    "retained_output_bytes": 8589934592,
+    "wall_seconds": 911.3661946239881,
+    "allocated_gpu_seconds": 909.1604162219446,
+    "G4_contribution": false
+  },
+  "accepted_evaluation_checkpoints": [
+    {
+      "case": "R5-MEAN10-REGRESSION-16",
+      "group": "R1",
+      "update": 256,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "sha256": "d4ccd88b95013bb3c387c490693cda0b33e217f0cdd30ce785d3992853cb2905",
+      "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "training_seed": 20261016,
+      "training_job": "J-c71649c6559afc47"
+    }
+  ],
+  "reg16_conditional_evaluation_admission": {
+    "status": "CONDITIONAL_PRELIVE_PASS",
+    "packet_sha256": "557cdbdb94afe50938a8f9f43c9ee1debb470e3c8bad3cdcfb2902e5439dd781",
+    "primary_only": 256,
+    "evaluation_seed": 20260909,
+    "nontraining_transitions": 6400,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "workload_wall_seconds": 1800,
+    "outer_wall_GPU_seconds": 1810,
+    "output_reservation_bytes": 8589934592,
+    "full_frozen_AUTH_loader": "Independently PASS with only actual accepted u256 SHA filled and attempt rebound to temporary existing directory; no actualAUTH issued by reviewer.",
+    "retained_protocol": "Original T0/200steps32lanes/all8subgroups/startup/safety/failures/full denominator and thresholds. No existingseed rerun or physics splice.",
+    "not_required_for_G4": true
+  },
+  "accepted_saved_diagnostic_inputs": {
+    "scope": "已接受实际DEV02 R1训练原件的只读诊断身份；不代表尚未执行的G7重算通过。",
+    "u256": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+      "update": 256
+    },
+    "u1": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u1.pt",
+      "sha256": "4436218bd7fa0c7ceeb8580f99da101fb22df17ffde7954558ee9016c8f2dc42",
+      "update": 1
+    },
+    "input": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+      "sha256": "012dd61783f7a749a59136d2339dc43e78e987150c46614a10df2cf99d86c5f6"
+    },
+    "probe": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/first_update_probe.pt",
+      "sha256": "c7004c4b18f4ec396676b53a24c934637ed0827fa7ed5e505520cba42bd7c015"
+    }
+  },
+  "G6_conditional_binding": {
+    "four_actual_DEV02_originals_rehashed_in_this_role": true,
+    "origin_source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "origin_config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "execution_source_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "execution_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "execution_config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+    "experiment_id": "R5-MEAN10-INTEGRATION-02",
+    "packet_sha256": "a8c92f0afcaaa76fc55cb81e4f4c241143d3e9608d23d1ac1f6d435063046ff9",
+    "expected_AUTH_sha256": "3d749754621d6da25096e600cf061a786166a1b31b124169d1b1dadea09004a5",
+    "Role26_strict_compatibility_preparation": "Retained; distinct original and execution five-field source/config identities, identical critical product bytes and both manifests; corrected02scientific order.",
+    "G4_prerequisite_satisfied": true,
+    "conditional_pre_live_scope": "Existing Role26 exact candidate may be admitted only after delegatedCommander explicitly binds this accepted G4 review hash, Role26 preparation/source/config/packet/expectedAUTH and allfour diagnostic pin paths/SHAs, with current original resource and ownership gates.",
+    "actual_G6_G7_accepted": false,
+    "same_device_tolerance": "Future actual u1 afterMB8 actor-only mean/std/logp at originalatol1e-6/rtol1e-5. CPU/checkpoint pin checks do not substitute it."
+  },
+  "formal_preparation_only": {
+    "manifest": "formal_r5_launch_manifest.proposed.json",
+    "observation": "Read prospective manifest/static plan: shared DEV02R1u256 warmstart fullrestore thenfreshsimreset, future aux0/10 bothreward.05, mixedclock4096..8191/center-only reset, absolute257..512, five new checkpoints272/288/320/384/512 and full originalZTSXW; realfirst512gate beforebothoptimizers; existinglaterexplicitstart boundary. Consistent with Role26 preparation scope.",
+    "limits": "No final exact manifest/review/permission acceptance, G8 completion, actualG6/G7, READY or formal submission from this preparation browse. Ordinary pendingG4 wording may now be synchronized by root."
+  },
+  "conditions": [
+    "Root may archive this exact JSON and synchronize current mean-method G4 PASS only; preserve old failed method confirmation results and every original resource/native failure.",
+    "reg16evaluation must bind this accepted actualtraining review and exactaccepted u256 path/SHA/source/packet in newactualAUTH/spec through existingCommander; commit/tag/normalpush before a single serial release.",
+    "Any reg16Z or G6 issue/release requires prior entries terminal+normalownedACK/settlement/exact2postrun, idle/STOP/disk/source/runtime/toolpins/master/stage/protectedbuffers/output checks and original internal coexistence. No overlapping jobs, extra probes, threshold relaxation or automaticretry.",
+    "Known nativeFAILED/-9 remains FAILED; rawPASS_PENDING_CLOSE and collectorINCOMPLETE/null retain all logical and8GiB output reservations. Scientific acceptance cannot relabel processPASS/gracefulclose or refund.",
+    "G6entry only binds distinctS3 compatibleexecution and ownactualDEV02fourpins under existing exactconditionalpreparation; actual112x32 trace/same-deviceG7/reload/lifecycle evidence still requires separate independentacceptance.",
+    "No formal submission during this readinessGoal. FinalREADY/G1-G9 package acceptance and exactconditionalpermission remain separate; laterexplicitformalstart is required outside this review."
+  ],
+  "non_blocking": [
+    {
+      "id": "NATIVE-CLOSE",
+      "finding": "Both confirmations andreg16 retain known nativecloseFAILED/-9; complete scientific evidence and normal owned cleanup independently accepted without counter reinterpretation."
+    },
+    {
+      "id": "AUX-REPRODUCTION-LIMIT",
+      "finding": "All2048auxscalars finite and first8savedactualformula verifiedat originaltolerance; no extra forward or unrecordedlateroutput/G7 claim."
+    },
+    {
+      "id": "FINITE-G4",
+      "finding": "G4 is bounded two-seed originalZ qualification, not mixed-task performance, all-seed stability or completeR5 readiness."
+    },
+    {
+      "id": "OLD-RESOURCE-FAILURES",
+      "finding": "Old beforeAppFINAL0 entry and charges remain; freshgatePASS does not retroactively change failure or guarantee futureavailability."
+    }
+  ],
+  "actual_G6_G7_granted": false,
+  "G8_complete": false,
+  "READY_granted": false,
+  "release_granted": false,
+  "formal_submission_authorized": false
+}

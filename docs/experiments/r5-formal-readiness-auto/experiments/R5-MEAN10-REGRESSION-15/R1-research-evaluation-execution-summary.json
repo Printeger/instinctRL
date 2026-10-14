@@ -1,0 +1,36 @@
+{
+  "spec_id": "R5-MEAN10-REGRESSION-15-R1-RESEARCH-EVALUATION-617af4d90c35",
+  "job_id": "J-19456eef8dad3937",
+  "experiment_id": "R5-MEAN10-REGRESSION-15",
+  "group": "R1",
+  "mode": "research-evaluation",
+  "status": "FAILED",
+  "reserved": {
+    "training_transitions": 0,
+    "nontraining_transitions": 6400,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0,
+    "allocated_gpu_seconds": 0,
+    "wall_seconds_including_cleanup": 0
+  },
+  "output_cap_bytes": 8589934592,
+  "observed": {
+    "training_transitions": 0,
+    "nontraining_transitions": 6400,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0
+  },
+  "postrun_queries_used": 2,
+  "settled": true,
+  "native_exit_code": -9,
+  "raw_status": "PASS_PENDING_CLOSE",
+  "formal_counter_completeness": "INCOMPLETE",
+  "formal_transitions": null,
+  "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+  "output_observed_bytes": 6442150,
+  "inventory": "experiments/R5-MEAN10-REGRESSION-15/live/R1-research-evaluation/INVENTORY.json"
+}

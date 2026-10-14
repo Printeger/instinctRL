@@ -1,0 +1,977 @@
+{
+  "group": "R1",
+  "mode": "research-evaluation",
+  "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+  "actual_parameters": {
+    "experiment_id": "R5-MEAN10-REGRESSION-15",
+    "group": "R1",
+    "training_seed": 20261015,
+    "evaluation_seed": 20260909,
+    "max_updates": 256,
+    "checkpoint_updates": [
+      1,
+      2,
+      8,
+      16,
+      32,
+      64,
+      96,
+      128,
+      192,
+      256
+    ],
+    "evaluation_updates": [
+      256
+    ],
+    "command_profile": "pure-hover",
+    "residual_neutrality_weight": 0.05,
+    "anchor_weight": 4.0,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "output_cap_bytes": 8589934592,
+    "master_authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+      "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+    },
+    "mean_prior_contract": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+      "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+    },
+    "mean_prior_weight": 10.0,
+    "experiment_card": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-15/EXPERIMENT_CARD.json",
+      "sha256": "dd288ad4f9d5d07e3341cc4c80dbe0bfe797287dab287baa97d3852fe089064e"
+    },
+    "checkpoints": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-15-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "7e3526f91d8f870d0e95557b87bb516529486127fbab10fff1b6b57c21e8dd88",
+        "update": 256
+      }
+    ]
+  },
+  "binding": {
+    "spec_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-15/inputs/R1-research-evaluation.authorized.json",
+    "spec_sha256": "e16cb8f7b8a53a8f788cf277c8f609ba315a905fac5fb42602341a3b3174fd53",
+    "job_id": "J-19456eef8dad3937",
+    "native_status": "FAILED",
+    "native_exit_code": -9,
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "authorization_sha256": "f35ed919ad218932d94f1b43bd5da65f234f962e702f6ec3c5c15398de511d0a",
+    "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "owned_cleanup": "NORMAL_ACK_2STABLE_NO_SURVIVORS"
+  },
+  "nodes": {
+    "256": {
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-15-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "7e3526f91d8f870d0e95557b87bb516529486127fbab10fff1b6b57c21e8dd88",
+        "update": 256
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-15-R1-RESEARCH-EVALUATION-617af4d90c35/results/research-evaluation/evaluation_raw/research_R1_u256/Z.jsonl",
+      "raw_sha256": "4f7c1ecb8e41a2eb8183ddcac99de9f738a4c4daff12f48124e56ee548ffc820",
+      "episodes": [
+        {
+          "case": "Z",
+          "env_index": 0,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.01041546929627657,
+            "drift": 0.0,
+            "height": 0.04603075981140137
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 1,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010415698401629925,
+            "drift": 7.62939453125e-06,
+            "height": 0.04603385925292969
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 2,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010408437810838223,
+            "drift": 0.006454192101955414,
+            "height": 0.04603171348571777
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 3,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010414069518446922,
+            "drift": 7.62939453125e-06,
+            "height": 0.04603385925292969
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 4,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010415532626211643,
+            "drift": 0.0,
+            "height": 0.04603075981140137
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 5,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.01041094958782196,
+            "drift": 1.52587890625e-05,
+            "height": 0.04603290557861328
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 6,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010411507450044155,
+            "drift": 1.7059845049516298e-05,
+            "height": 0.046031951904296875
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 7,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010405417531728745,
+            "drift": 0.004816323518753052,
+            "height": 0.04603385925292969
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 8,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010410360991954803,
+            "drift": 1.7059845049516298e-05,
+            "height": 0.046062469482421875
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 9,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010413434356451035,
+            "drift": 1.52587890625e-05,
+            "height": 0.0460665225982666
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 10,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010409899055957794,
+            "drift": 0.00604248046875,
+            "height": 0.04606509208679199
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 11,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010409435257315636,
+            "drift": 0.00467681884765625,
+            "height": 0.04606223106384277
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 12,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010403269901871681,
+            "drift": 0.00708666630089283,
+            "height": 0.0460660457611084
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 13,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010409099981188774,
+            "drift": 0.0035247802734375,
+            "height": 0.04606223106384277
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 14,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010410313494503498,
+            "drift": 0.0064697265625,
+            "height": 0.04606509208679199
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 15,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010408282279968262,
+            "drift": 0.009993627667427063,
+            "height": 0.046066999435424805
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 16,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010411961004137993,
+            "drift": 0.01082117110490799,
+            "height": 0.046051740646362305
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 17,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010397731326520443,
+            "drift": 0.011686444282531738,
+            "height": 0.04605269432067871
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 18,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010411083698272705,
+            "drift": 0.01075039803981781,
+            "height": 0.04605221748352051
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 19,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010408654808998108,
+            "drift": 0.010122343897819519,
+            "height": 0.046051740646362305
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 20,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010408453643321991,
+            "drift": 0.00043487548828125,
+            "height": 0.046051025390625
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 21,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010408522561192513,
+            "drift": 0.00107574462890625,
+            "height": 0.04604816436767578
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 22,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010402832180261612,
+            "drift": 0.0069538289681077,
+            "height": 0.04604816436767578
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 23,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010408642701804638,
+            "drift": 0.00107574462890625,
+            "height": 0.04604816436767578
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 24,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010406062938272953,
+            "drift": 0.00066375732421875,
+            "height": 0.04606294631958008
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 25,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010406356304883957,
+            "drift": 1.52587890625e-05,
+            "height": 0.04606294631958008
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 26,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010405806824564934,
+            "drift": 1.7059845049516298e-05,
+            "height": 0.04606294631958008
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 27,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010398737154901028,
+            "drift": 0.0054967403411865234,
+            "height": 0.04606223106384277
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 28,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010405910201370716,
+            "drift": 1.7059845049516298e-05,
+            "height": 0.04606294631958008
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 29,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.01040556188672781,
+            "drift": 1.52587890625e-05,
+            "height": 0.04606294631958008
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 30,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.01040615327656269,
+            "drift": 0.0,
+            "height": 0.04606294631958008
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 31,
+          "success": true,
+          "reason": "PASS",
+          "metrics": {
+            "speed": 0.010407269932329655,
+            "drift": 7.62939453125e-06,
+            "height": 0.04606175422668457
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        }
+      ],
+      "original_gate": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "speed_rms_m_s": {
+        "status": "AVAILABLE",
+        "count": 32,
+        "mean": 0.010408466187072918,
+        "std": 4.217979347126158e-06,
+        "min": 0.010397731326520443,
+        "max": 0.010415698401629925,
+        "p95": 0.010415497794747352,
+        "rms": 0.010408467041730497
+      },
+      "horizontal_drift_m": {
+        "status": "AVAILABLE",
+        "count": 32,
+        "mean": 0.0033843070989405533,
+        "std": 0.004009050198132544,
+        "min": 0.0,
+        "max": 0.011686444282531738,
+        "p95": 0.010782245919108391,
+        "rms": 0.005246524376297705
+      },
+      "height_deviation_m": {
+        "status": "AVAILABLE",
+        "count": 32,
+        "mean": 0.046052560210227966,
+        "std": 1.2890176259431665e-05,
+        "min": 0.04603075981140137,
+        "max": 0.046066999435424805,
+        "p95": 0.04606626033782959,
+        "rms": 0.04605256201421715
+      },
+      "failure_reasons": {
+        "PASS": 32
+      },
+      "engineering": {
+        "missing": 0,
+        "reset_interrupted": 0,
+        "collision": 0,
+        "height_failure": 0,
+        "evidence_valid": 32
+      },
+      "actual_reset_lanes": 0,
+      "actual_evaluation_v_corr_b": {
+        "units": "m/s",
+        "frame": "body",
+        "xyz": [
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.0008338683936744928,
+            "std": 6.385285666790497e-05,
+            "min": 0.0006179213523864746,
+            "max": 0.0016632676124572754,
+            "p95": 0.0008710026741027832,
+            "rms": 0.0008363095630649759
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": -0.0002602944802492857,
+            "std": 2.5421180829376646e-05,
+            "min": -0.00038757920265197754,
+            "max": -3.960728645324707e-05,
+            "p95": -0.0002314448356628418,
+            "rms": 0.0002615328906332923
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.0011678886599838733,
+            "std": 6.335437424659667e-05,
+            "min": 0.001140296459197998,
+            "max": 0.0018224120140075684,
+            "p95": 0.0011844635009765625,
+            "rms": 0.0011696057877999344
+          }
+        ],
+        "horizontal_norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0008742143123436108,
+          "std": 5.968647645845369e-05,
+          "min": 0.0006606446695514023,
+          "max": 0.0016637390945106745,
+          "p95": 0.0009016044205054641,
+          "rms": 0.0008762494732542997
+        },
+        "norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0014590996550396084,
+          "std": 8.25775132536749e-05,
+          "min": 0.0013392287073656917,
+          "max": 0.002448482671752572,
+          "p95": 0.0014852093299850821,
+          "rms": 0.0014614345175312732
+        }
+      },
+      "actual_evaluation_v_final_b": {
+        "units": "m/s",
+        "frame": "body",
+        "xyz": [
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.0008338683936744928,
+            "std": 6.385285666790497e-05,
+            "min": 0.0006179213523864746,
+            "max": 0.0016632676124572754,
+            "p95": 0.0008710026741027832,
+            "rms": 0.0008363095630649759
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": -0.0002602944802492857,
+            "std": 2.5421180829376646e-05,
+            "min": -0.00038757920265197754,
+            "max": -3.960728645324707e-05,
+            "p95": -0.0002314448356628418,
+            "rms": 0.0002615328906332923
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.0011678886599838733,
+            "std": 6.335437424659667e-05,
+            "min": 0.001140296459197998,
+            "max": 0.0018224120140075684,
+            "p95": 0.0011844635009765625,
+            "rms": 0.0011696057877999344
+          }
+        ],
+        "horizontal_norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0008742143123436108,
+          "std": 5.968647645845369e-05,
+          "min": 0.0006606446695514023,
+          "max": 0.0016637390945106745,
+          "p95": 0.0009016044205054641,
+          "rms": 0.0008762494732542997
+        },
+        "norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0014590996550396084,
+          "std": 8.25775132536749e-05,
+          "min": 0.0013392287073656917,
+          "max": 0.002448482671752572,
+          "p95": 0.0014852093299850821,
+          "rms": 0.0014614345175312732
+        }
+      },
+      "actual_evaluation_velocity_b": {
+        "units": "m/s",
+        "frame": "body",
+        "xyz": [
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.0006007885683649761,
+            "std": 0.0001201163364614809,
+            "min": 1.6682590285199694e-05,
+            "max": 0.0008662404725328088,
+            "p95": 0.0008011846832232549,
+            "rms": 0.0006126784133319577
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": -0.00045321836963912787,
+            "std": 0.00016020688628501226,
+            "min": -0.0006852271035313606,
+            "max": -1.459879854337487e-06,
+            "p95": -0.00013251734999357768,
+            "rms": 0.0004807006729675838
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": -0.0010705093471892724,
+            "std": 0.01032394050498874,
+            "min": -0.08880970627069473,
+            "max": 0.0011922691483050585,
+            "p95": 0.001184546743752435,
+            "rms": 0.010379293704918802
+          }
+        ],
+        "horizontal_norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0007651903552965678,
+          "std": 0.00014467790272663458,
+          "min": 1.6817390132928267e-05,
+          "max": 0.0010198615491390228,
+          "p95": 0.0009752859419677407,
+          "rms": 0.0007787476968673905
+        },
+        "norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0033468715240542223,
+          "std": 0.009855690635650905,
+          "min": 0.0008114247466437519,
+          "max": 0.08880970627069473,
+          "p95": 0.008520163176579556,
+          "rms": 0.010408467077537504
+        }
+      },
+      "actual_evaluation_velocity_world": {
+        "units": "m/s",
+        "frame": "world",
+        "xyz": [
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": 0.0006005668295679811,
+            "std": 0.0001207298035399672,
+            "min": 8.349937161256094e-06,
+            "max": 0.0008662683540023863,
+            "p95": 0.0008011386351427063,
+            "rms": 0.0006125815882314254
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": -0.00045311853489039323,
+            "std": 0.00016037107020969285,
+            "min": -0.0006852286169305444,
+            "max": -1.1533632005011896e-06,
+            "p95": -0.00013018145982641744,
+            "rms": 0.00048066130156422906
+          },
+          {
+            "status": "AVAILABLE",
+            "count": 6400,
+            "mean": -0.001070524605972878,
+            "std": 0.010323946288838603,
+            "min": -0.08880970627069473,
+            "max": 0.0011922545963898301,
+            "p95": 0.0011845330707728862,
+            "rms": 0.010379301031708144
+          }
+        ],
+        "horizontal_norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0007649420089632031,
+          "std": 0.00014544831376530894,
+          "min": 8.51333334139781e-06,
+          "max": 0.00101988494861871,
+          "p95": 0.0009752966318046673,
+          "rms": 0.0007786472173287675
+        },
+        "norm": {
+          "status": "AVAILABLE",
+          "count": 6400,
+          "mean": 0.0033468714804439515,
+          "std": 0.009855690312950825,
+          "min": 0.0008114248630590737,
+          "max": 0.08880970627069473,
+          "p95": 0.008520163223145685,
+          "rms": 0.010408466757952492
+        }
+      },
+      "policy": "Deterministic mean action, not sampledtraining. Fields actualsame-clock snapshots, no extra sensor/model sample."
+    }
+  },
+  "coverage_complete": true,
+  "all_original_gates_pass": true,
+  "metric": "Unchanged originalZ sensorT0/startup/200steps32lanes/allsubgroups/allfailures",
+  "CPU_only": true,
+  "optimizer_calls": 0,
+  "missing_samples_filled": false
+}

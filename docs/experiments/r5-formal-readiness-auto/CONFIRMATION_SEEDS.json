@@ -1,5 +1,5 @@
 {
-  "status": "BOTH_ACTUAL_ORIGINAL_Z_PASS_PENDING_INDEPENDENT_G4",
+  "status": "G4_INDEPENDENTLY_ACCEPTED",
   "historical_failed_method": {
     "schema_version": "instinctrl-r5-confirmation-freeze/1",
     "status": "FAILED_BOTH_ORIGINAL_Z_FROZEN_METHOD_NOT_QUALIFIED",
@@ -192,7 +192,7 @@
       ],
       "recovery_candidate": "R5-MEAN10-CONFIRM-02-RECOVERY1",
       "recovery_status": "ACTUAL_COMPLETE256_INDEPENDENT_ROLE29_ACCEPTED",
-      "original_Z_status": "ACTUAL_32_OF32_PENDING_ROLE31",
+      "original_Z_status": "ACTUAL_32_OF32_INDEPENDENT_ROLE31_ACCEPTED",
       "original_Z": {
         "successes": 32,
         "total": 32,
@@ -259,7 +259,7 @@
         "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-02-Z-RECOVERY1/R1-evaluation-analysis.json",
         "sha256": "58c52371a57f3ad2c9f3c76cb85d95b2920bcd1348ce193f09e6549c24cfd782"
       },
-      "independent_original_Z_review": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
+      "independent_original_Z_review": "reviews/mean-prior-G4-regression16-training.json"
     }
   ],
   "old_failed_seed_regressions": [
@@ -274,7 +274,84 @@
       "counts_for_G4": false
     }
   ],
-  "all_new_confirmation_seeds_pass": false,
+  "all_new_confirmation_seeds_pass": true,
   "formal_full_training_submitted": false,
-  "actual_both_seeds_original_Z_pass": true
+  "actual_both_seeds_original_Z_pass": true,
+  "actual_old_seed_regression_results": {
+    "20261015": {
+      "experiment_id": "R5-MEAN10-REGRESSION-15",
+      "group": "R1",
+      "training_seed": 20261015,
+      "evaluation_seed": 20260909,
+      "update": 256,
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.010415698401629925,
+        "horizontal_drift_m": 0.011686444282531738,
+        "height_deviation_m": 0.046066999435424805
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-15-R1-RESEARCH-EVALUATION-617af4d90c35/results/research-evaluation/evaluation_raw/research_R1_u256/Z.jsonl",
+      "raw_sha256": "4f7c1ecb8e41a2eb8183ddcac99de9f738a4c4daff12f48124e56ee548ffc820",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-15-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "7e3526f91d8f870d0e95557b87bb516529486127fbab10fff1b6b57c21e8dd88",
+        "update": 256
+      },
+      "all_episodes_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-15/R1-evaluation-analysis.json",
+        "sha256": "4244acd2a294ffacba438c686b6f8c00d2f3f72813287b16cd369aea457caf97"
+      },
+      "independent_acceptance": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
+    }
+  }
 }
