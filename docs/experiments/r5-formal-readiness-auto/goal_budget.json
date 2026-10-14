@@ -34,19 +34,19 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 12,
-    "simulator_initialization_reservations": 12,
+    "live_starts": 13,
+    "simulator_initialization_reservations": 13,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 3307.1715859798715,
-    "wall_seconds_including_cleanup": 3318.6157388247084,
-    "output_peak_and_reservations_bytes": 9808777463
+    "allocated_gpu_seconds": 3403.7544717858545,
+    "wall_seconds_including_cleanup": 3416.4051206416916,
+    "output_peak_and_reservations_bytes": 9820558684
   },
   "observed": {
     "training_transitions": 393216,
-    "nontraining_transitions": 38400,
+    "nontraining_transitions": 51200,
     "optimizer_updates": 768,
     "training_checkpoint_writes": 40,
     "actor_optimizer_steps": 6144,
@@ -498,6 +498,42 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 70396,
         "inventory": "experiments/R5-H256-DEV-01-R0-RECOVERY1/live/R0-research-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-H256-DEV-01-R0-Z-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47",
+        "job_id": "J-f617068dbba16bf4",
+        "experiment_id": "R5-H256-DEV-01-R0-Z-RECOVERY1",
+        "group": "R0",
+        "mode": "research-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 11781221,
+        "inventory": "experiments/R5-H256-DEV-01-R0-Z-RECOVERY1/live/R0-research-evaluation/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -650,6 +686,13 @@
       "status": "PASS_H256_R1_G2_G3_CONFIRMATION_AND_R0_RECOVERY_PRELIVE",
       "evidence": "reviews/H256-dev-Z-confirmation-R0-recovery-prelive.json",
       "sha256": "534b902eee4e89598cedc21cfd8dc29b94b6954ac19b9ddc98e3d4266fb5e810"
+    },
+    {
+      "call": 15,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Actual H256 R0 originalZ recovery and complete contemporaneous pair science/accounting; close conditional prerequisite before frozen confirmation release.",
+      "status": "REQUESTED"
     }
   ],
   "decisions": [

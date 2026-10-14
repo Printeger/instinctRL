@@ -1,0 +1,3865 @@
+{
+  "status": "COMPLETE_ACTUAL_PAIR_PENDING_INDEPENDENT_SCIENCE",
+  "experiment_id": "R5-H256-DEV-01",
+  "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+  "first_actual_rollout_comparison": {
+    "actions": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true
+    },
+    "old_log_probabilities": {
+      "shape": [
+        512,
+        1
+      ],
+      "bit_exact_equal": true
+    },
+    "old_alpha": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true
+    },
+    "old_beta": {
+      "shape": [
+        512,
+        4
+      ],
+      "bit_exact_equal": true
+    },
+    "privileged": {
+      "shape": [
+        512,
+        21
+      ],
+      "bit_exact_equal": true
+    },
+    "policy.lidar_grid": {
+      "shape": [
+        512,
+        12,
+        59,
+        360
+      ],
+      "bit_exact_equal": true
+    },
+    "policy.state_vec": {
+      "shape": [
+        512,
+        52
+      ],
+      "bit_exact_equal": true
+    },
+    "advantages": {
+      "bit_exact_equal": false,
+      "difference_C1_minus_C0": {
+        "status": "AVAILABLE",
+        "count": 512,
+        "mean": -1.0026955834473483,
+        "std": 0.5247430236472572,
+        "min": -2.4573442935943604,
+        "max": -0.00590495765209198,
+        "p95": -0.1726080015301705,
+        "rms": 1.1317038808501474
+      },
+      "scope": "Allowed real learning-signal difference due solely preregistered reward; not required equal."
+    },
+    "returns": {
+      "bit_exact_equal": false,
+      "difference_C1_minus_C0": {
+        "status": "AVAILABLE",
+        "count": 512,
+        "mean": -1.0026955834182445,
+        "std": 0.5247430259969514,
+        "min": -2.4573442935943604,
+        "max": -0.00590495765209198,
+        "p95": -0.1726080015301705,
+        "rms": 1.131703881913856
+      },
+      "scope": "Allowed real learning-signal difference due solely preregistered reward; not required equal."
+    }
+  },
+  "training_analyses": {
+    "R0": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01-R0-RECOVERY1/R0-training-analysis.json",
+    "R1": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/R1-training-analysis.json"
+  },
+  "evaluation_analyses": {
+    "R0": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01-R0-Z-RECOVERY1/R0-evaluation-analysis.json",
+    "R1": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/R1-evaluation-analysis.json"
+  },
+  "groups": {
+    "R0": {
+      "group": "R0",
+      "mode": "research-evaluation",
+      "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+      "actual_parameters": {
+        "experiment_id": "R5-H256-DEV-01",
+        "group": "R0",
+        "training_seed": 20260908,
+        "evaluation_seed": 20260909,
+        "max_updates": 256,
+        "checkpoint_updates": [
+          1,
+          2,
+          8,
+          16,
+          32,
+          64,
+          96,
+          128,
+          192,
+          256
+        ],
+        "evaluation_updates": [
+          192,
+          256
+        ],
+        "command_profile": "pure-hover",
+        "residual_neutrality_weight": 0.0,
+        "anchor_weight": 4.0,
+        "actor_lr": 0.0001,
+        "critic_lr": 0.0003,
+        "output_cap_bytes": 8589934592,
+        "master_authority": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+          "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+        },
+        "experiment_card": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/EXPERIMENT_CARD.json",
+          "sha256": "07ce87bbf6a0629937226ba23be0c69e989944366063586575b74d4d5565d4f9"
+        },
+        "checkpoints": [
+          {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/u192.pt",
+            "sha256": "8b47e65a7e69da99319bec81845d58edc1c03330ba01ab64e693d0be308a084f",
+            "update": 192
+          },
+          {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+            "sha256": "28a9a4b7a018ab215ba23706d64ac3ff0833271b9e19dbd61324100858c080bb",
+            "update": 256
+          }
+        ]
+      },
+      "binding": {
+        "spec_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01-R0-Z-RECOVERY1/inputs/R0-research-evaluation.authorized.json",
+        "spec_sha256": "29d181c79420fa07e7473cdc3a136a7820737e6238f5bd5e16f8b6eafef82e57",
+        "job_id": "J-f617068dbba16bf4",
+        "native_status": "FAILED",
+        "native_exit_code": -9,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "authorization_sha256": "b39fee0a6ba86b1175b71a2db760fc4173fb1bd7a48a34bc8434fe9dd4ad1266",
+        "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "owned_cleanup": "NORMAL_ACK_2STABLE_NO_SURVIVORS"
+      },
+      "nodes": {
+        "192": {
+          "checkpoint": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/u192.pt",
+            "sha256": "8b47e65a7e69da99319bec81845d58edc1c03330ba01ab64e693d0be308a084f",
+            "update": 192
+          },
+          "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-Z-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R0_u192/Z.jsonl",
+          "raw_sha256": "8b2eb92d73239b89b79735f63077bb30492ca16550113cbe261c97929e4df587",
+          "episodes": [
+            {
+              "case": "Z",
+              "env_index": 0,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.029912397265434265,
+                "drift": 0.5776321887969971,
+                "height": 0.09093570709228516
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 1,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.029952391982078552,
+                "drift": 0.5687575340270996,
+                "height": 0.09009873867034912
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 2,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.03014318458735943,
+                "drift": 0.5709106922149658,
+                "height": 0.09034466743469238
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 3,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.029961686581373215,
+                "drift": 0.5680024027824402,
+                "height": 0.09004092216491699
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 4,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.029908746480941772,
+                "drift": 0.5779134035110474,
+                "height": 0.09094738960266113
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 5,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.029778974130749702,
+                "drift": 0.5712510347366333,
+                "height": 0.09313905239105225
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 6,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.029806027188897133,
+                "drift": 0.5599465370178223,
+                "height": 0.09217607975006104
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 7,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.03000154346227646,
+                "drift": 0.5638337135314941,
+                "height": 0.09237456321716309
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 8,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028482284396886826,
+                "drift": 0.5244730710983276,
+                "height": 0.13387322425842285
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 9,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028492998331785202,
+                "drift": 0.528952419757843,
+                "height": 0.13495111465454102
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 10,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028505073860287666,
+                "drift": 0.5297394394874573,
+                "height": 0.13697731494903564
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 11,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028497597202658653,
+                "drift": 0.5238955020904541,
+                "height": 0.13572907447814941
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 12,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028689956292510033,
+                "drift": 0.529271125793457,
+                "height": 0.1355680227279663
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 13,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.02850152924656868,
+                "drift": 0.5234522223472595,
+                "height": 0.1358250379562378
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 14,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028504544869065285,
+                "drift": 0.5284364819526672,
+                "height": 0.13687145709991455
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 15,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028507264330983162,
+                "drift": 0.5305579304695129,
+                "height": 0.13553452491760254
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 16,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.02873040735721588,
+                "drift": 0.5243756175041199,
+                "height": 0.14777064323425293
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 17,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028932834044098854,
+                "drift": 0.5320666432380676,
+                "height": 0.14862990379333496
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 18,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028725048527121544,
+                "drift": 0.5238555669784546,
+                "height": 0.14774012565612793
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 19,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028773514553904533,
+                "drift": 0.542101263999939,
+                "height": 0.14951491355895996
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 20,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.02877507545053959,
+                "drift": 0.5421106815338135,
+                "height": 0.15005552768707275
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 21,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.02873159572482109,
+                "drift": 0.5239192843437195,
+                "height": 0.14804184436798096
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 22,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028933219611644745,
+                "drift": 0.5320413708686829,
+                "height": 0.14873850345611572
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 23,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028729703277349472,
+                "drift": 0.5237672924995422,
+                "height": 0.14792966842651367
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 24,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028950225561857224,
+                "drift": 0.5395098328590393,
+                "height": 0.19009685516357422
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 25,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.02896013669669628,
+                "drift": 0.5390254855155945,
+                "height": 0.19035613536834717
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 26,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.02891107276082039,
+                "drift": 0.520573079586029,
+                "height": 0.18776392936706543
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 27,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.029123978689312935,
+                "drift": 0.5250502824783325,
+                "height": 0.18913280963897705
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 28,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028910109773278236,
+                "drift": 0.5201276540756226,
+                "height": 0.1878650188446045
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 29,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028960971161723137,
+                "drift": 0.5396550297737122,
+                "height": 0.19054639339447021
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 30,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028952637687325478,
+                "drift": 0.538520097732544,
+                "height": 0.18983173370361328
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 31,
+              "success": false,
+              "reason": "Z_THRESHOLD_FAILED",
+              "metrics": {
+                "speed": 0.028918875381350517,
+                "drift": 0.5193178057670593,
+                "height": 0.18781840801239014
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            }
+          ],
+          "original_gate": {
+            "successes": 0,
+            "total": 32,
+            "pass": false,
+            "wilson_95": [
+              0.0,
+              0.10717919825507058
+            ],
+            "subgroups": {
+              "d0": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d1": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d2": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d3": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d4": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d5": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d6": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d7": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              }
+            }
+          },
+          "speed_rms_m_s": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 0.029052050202153623,
+            "std": 0.000538378401796279,
+            "min": 0.028482284396886826,
+            "max": 0.03014318458735943,
+            "p95": 0.029979622177779674,
+            "rms": 0.029057038256711146
+          },
+          "horizontal_drift_m": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 0.5394700840115547,
+            "std": 0.018776979261241625,
+            "min": 0.5193178057670593,
+            "max": 0.5779134035110474,
+            "p95": 0.574122554063797,
+            "rms": 0.5397967640636715
+          },
+          "height_deviation_m": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 0.14116310328245163,
+            "std": 0.034945191070519854,
+            "min": 0.09004092216491699,
+            "max": 0.19054639339447021,
+            "p95": 0.19021353125572205,
+            "rms": 0.14542416617360143
+          },
+          "failure_reasons": {
+            "Z_THRESHOLD_FAILED": 32
+          },
+          "engineering": {
+            "missing": 0,
+            "reset_interrupted": 0,
+            "collision": 0,
+            "height_failure": 0,
+            "evidence_valid": 32
+          },
+          "actual_reset_lanes": 0,
+          "actual_evaluation_v_corr_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.001545020085759461,
+                "std": 0.0028562214630624963,
+                "min": -0.00719374418258667,
+                "max": 0.024538040161132812,
+                "p95": 0.0015983015298843383,
+                "rms": 0.0032473201430501058
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.027435608012601732,
+                "std": 0.00220992604451211,
+                "min": 0.012709856033325195,
+                "max": 0.05007833242416382,
+                "p95": 0.030293646454811095,
+                "rms": 0.02752446838984087
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.004796027722768485,
+                "std": 0.005877828238194105,
+                "min": -0.011653095483779907,
+                "max": 0.059620678424835205,
+                "p95": -0.0013109043240547204,
+                "rms": 0.007586220845406227
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.027637927501054947,
+              "std": 0.0020703649505635297,
+              "min": 0.02023353986442089,
+              "max": 0.05041544511914253,
+              "p95": 0.030679645761847497,
+              "rms": 0.027715364828594467
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.02852232078148518,
+              "std": 0.0034884685809029557,
+              "min": 0.025706764310598373,
+              "max": 0.06328284740447998,
+              "p95": 0.030737625434994694,
+              "rms": 0.028734860288539568
+            }
+          },
+          "actual_evaluation_v_final_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.001545020085759461,
+                "std": 0.0028562214630624963,
+                "min": -0.00719374418258667,
+                "max": 0.024538040161132812,
+                "p95": 0.0015983015298843383,
+                "rms": 0.0032473201430501058
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.027435608012601732,
+                "std": 0.00220992604451211,
+                "min": 0.012709856033325195,
+                "max": 0.05007833242416382,
+                "p95": 0.030293646454811095,
+                "rms": 0.02752446838984087
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.004796027722768485,
+                "std": 0.005877828238194105,
+                "min": -0.011653095483779907,
+                "max": 0.059620678424835205,
+                "p95": -0.0013109043240547204,
+                "rms": 0.007586220845406227
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.027637927501054947,
+              "std": 0.0020703649505635297,
+              "min": 0.02023353986442089,
+              "max": 0.05041544511914253,
+              "p95": 0.030679645761847497,
+              "rms": 0.027715364828594467
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.02852232078148518,
+              "std": 0.0034884685809029557,
+              "min": 0.025706764310598373,
+              "max": 0.06328284740447998,
+              "p95": 0.030737625434994694,
+              "rms": 0.028734860288539568
+            }
+          },
+          "actual_evaluation_velocity_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.0016887074583918737,
+                "std": 0.0021199086752210603,
+                "min": -0.005761714652180672,
+                "max": 0.009048179723322392,
+                "p95": 0.0018686302297282918,
+                "rms": 0.0027103036123847547
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.02673498520678095,
+                "std": 0.0034068443754698093,
+                "min": 0.0003738855884876102,
+                "max": 0.03067730739712715,
+                "p95": 0.030060508754104376,
+                "rms": 0.026951178501235643
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.006862893815332427,
+                "std": 0.007968711840567645,
+                "min": -0.07857872545719147,
+                "max": -0.0008810872095637023,
+                "p95": -0.0017048128938768074,
+                "rms": 0.01051663824225836
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.026890299234692064,
+              "std": 0.00325938281205611,
+              "min": 0.0005644662887789309,
+              "max": 0.030990395694971085,
+              "p95": 0.030358811188489196,
+              "rms": 0.027087114450358264
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.02868878479435807,
+              "std": 0.004611407050619275,
+              "min": 0.026570023968815804,
+              "max": 0.0785810574889183,
+              "p95": 0.030856804735958573,
+              "rms": 0.02905703783876622
+            }
+          },
+          "actual_evaluation_velocity_world": {
+            "units": "m/s",
+            "frame": "world",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.0016906788667356155,
+                "std": 0.0021169336623911615,
+                "min": -0.005762496031820774,
+                "max": 0.00905611552298069,
+                "p95": 0.0018682253721635743,
+                "rms": 0.0027092071093571396
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.026729938738226336,
+                "std": 0.00343003557256533,
+                "min": 0.00030251385760493577,
+                "max": 0.030677175149321556,
+                "p95": 0.030060204677283764,
+                "rms": 0.026949114437739813
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.006864630849167952,
+                "std": 0.007974566874309509,
+                "min": -0.07857955247163773,
+                "max": -0.0008789809071458876,
+                "p95": -0.001704165444243701,
+                "rms": 0.010522208586042324
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.026884845446952566,
+              "std": 0.003286283189663511,
+              "min": 0.00045347464038059115,
+              "max": 0.03099040687084198,
+              "p95": 0.030358873959630724,
+              "rms": 0.027084951022831687
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.0286887847550679,
+              "std": 0.004611407057157819,
+              "min": 0.026570023968815804,
+              "max": 0.0785810574889183,
+              "p95": 0.030856804829090832,
+              "rms": 0.02905703780101167
+            }
+          },
+          "policy": "Deterministic mean action, not sampledtraining. Fields actualsame-clock snapshots, no extra sensor/model sample."
+        },
+        "256": {
+          "checkpoint": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+            "sha256": "28a9a4b7a018ab215ba23706d64ac3ff0833271b9e19dbd61324100858c080bb",
+            "update": 256
+          },
+          "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-Z-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R0_u256/Z.jsonl",
+          "raw_sha256": "0d1c1b09bf41a4e6c58e0a58aae033bf4030239acec96003c1a65edfa8b988ab",
+          "episodes": [
+            {
+              "case": "Z",
+              "env_index": 0,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11556456238031387,
+                "drift": 0.33768430352211,
+                "height": 2.0057404041290283
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 1,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11566033214330673,
+                "drift": 0.3344297409057617,
+                "height": 2.0084340572357178
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 2,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11563920229673386,
+                "drift": 0.3333408236503601,
+                "height": 2.008310556411743
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 3,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11563077569007874,
+                "drift": 0.3330721855163574,
+                "height": 2.007885217666626
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 4,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11561667174100876,
+                "drift": 0.3295381963253021,
+                "height": 2.0073840618133545
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 5,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11557941138744354,
+                "drift": 0.35044845938682556,
+                "height": 2.0064799785614014
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 6,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11569194495677948,
+                "drift": 0.36237725615501404,
+                "height": 2.0093514919281006
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 7,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11569248139858246,
+                "drift": 0.36225321888923645,
+                "height": 2.009653329849243
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 8,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.1168772429227829,
+                "drift": 0.38172075152397156,
+                "height": 2.0044920444488525
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 9,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11694247275590897,
+                "drift": 0.37319281697273254,
+                "height": 2.0059568881988525
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 10,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11689548194408417,
+                "drift": 0.38662922382354736,
+                "height": 2.0048635005950928
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 11,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.1168522983789444,
+                "drift": 0.38806673884391785,
+                "height": 2.00398325920105
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 12,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11681218445301056,
+                "drift": 0.387641966342926,
+                "height": 2.003418207168579
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 13,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11684688180685043,
+                "drift": 0.38785308599472046,
+                "height": 2.0038673877716064
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 14,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11692576110363007,
+                "drift": 0.3796878457069397,
+                "height": 2.005510091781616
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 15,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11688119173049927,
+                "drift": 0.3889778256416321,
+                "height": 2.004502058029175
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 16,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11679990589618683,
+                "drift": 0.39888590574264526,
+                "height": 2.0013482570648193
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 17,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11677919328212738,
+                "drift": 0.39911285042762756,
+                "height": 2.0012013912200928
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 18,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11680036038160324,
+                "drift": 0.3983781039714813,
+                "height": 2.001335382461548
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 19,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11682050675153732,
+                "drift": 0.3991769552230835,
+                "height": 2.001854658126831
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 20,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11683471500873566,
+                "drift": 0.3859506845474243,
+                "height": 2.0025856494903564
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 21,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11679130047559738,
+                "drift": 0.39628034830093384,
+                "height": 2.001352548599243
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 22,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11677264422178268,
+                "drift": 0.39745980501174927,
+                "height": 2.0012147426605225
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 23,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11679361760616302,
+                "drift": 0.3972356915473938,
+                "height": 2.0013906955718994
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 24,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11606116592884064,
+                "drift": 0.3822798728942871,
+                "height": 2.004950761795044
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 25,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11603211611509323,
+                "drift": 0.3726200759410858,
+                "height": 2.0042035579681396
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 26,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11607606709003448,
+                "drift": 0.38515520095825195,
+                "height": 2.0053622722625732
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 27,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11606933176517487,
+                "drift": 0.38293197751045227,
+                "height": 2.005352735519409
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 28,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.1160840317606926,
+                "drift": 0.3853323459625244,
+                "height": 2.005481004714966
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 29,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.1160421073436737,
+                "drift": 0.37284427881240845,
+                "height": 2.0043604373931885
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 30,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11469521373510361,
+                "drift": 0.194035142660141,
+                "height": 2.0035417079925537
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 31,
+              "success": false,
+              "reason": "RESET_INTERRUPTED_NO_SPLICE",
+              "metrics": {
+                "speed": 0.11601908504962921,
+                "drift": 0.3952459990978241,
+                "height": 2.0046708583831787
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": true,
+                "missing": false,
+                "reset_interrupted": true,
+                "evidence_valid": false
+              }
+            }
+          ],
+          "original_gate": {
+            "successes": 0,
+            "total": 32,
+            "pass": false,
+            "wilson_95": [
+              0.0,
+              0.10717919825507058
+            ],
+            "subgroups": {
+              "d0": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d1": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d2": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d3": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d4": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d5": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d6": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              },
+              "d7": {
+                "successes": 0,
+                "total": 4,
+                "pass": false
+              }
+            }
+          },
+          "speed_rms_m_s": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 0.11629938310943544,
+            "std": 0.0005929443226915356,
+            "min": 0.11469521373510361,
+            "max": 0.11694247275590897,
+            "p95": 0.11690910756587983,
+            "rms": 0.11630089464232445
+          },
+          "horizontal_drift_m": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 0.3706199899315834,
+            "std": 0.03838743509115444,
+            "min": 0.194035142660141,
+            "max": 0.3991769552230835,
+            "p95": 0.3989880308508873,
+            "rms": 0.3726027000838354
+          },
+          "height_deviation_m": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 2.00468872487545,
+            "std": 0.0024034482633047707,
+            "min": 2.0012013912200928,
+            "max": 2.009653329849243,
+            "p95": 2.00884690284729,
+            "rms": 2.00469016563815
+          },
+          "failure_reasons": {
+            "RESET_INTERRUPTED_NO_SPLICE": 32
+          },
+          "engineering": {
+            "missing": 0,
+            "reset_interrupted": 32,
+            "collision": 0,
+            "height_failure": 32,
+            "evidence_valid": 0
+          },
+          "actual_reset_lanes": 32,
+          "actual_evaluation_v_corr_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.021634928626008333,
+                "std": 0.0051009488224028395,
+                "min": -0.03245055675506592,
+                "max": 0.01716560125350952,
+                "p95": -0.01834950000047684,
+                "rms": 0.02222813117518538
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.006445344663225114,
+                "std": 0.004421210863240887,
+                "min": -0.03716954588890076,
+                "max": 0.00047534704208374023,
+                "p95": -0.0026323139667510987,
+                "rms": 0.007815981916880549
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.12054391292855143,
+                "std": 0.011479063723545966,
+                "min": 0.10777485370635986,
+                "max": 0.2044684886932373,
+                "p95": 0.1231559008359909,
+                "rms": 0.12108923919199187
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.023403653239947742,
+              "std": 0.0027291766066501874,
+              "min": 0.01868773065507412,
+              "max": 0.03720929101109505,
+              "p95": 0.027193665970116854,
+              "rms": 0.023562245010312646
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.1228128229023423,
+              "std": 0.011610071171720752,
+              "min": 0.10997066646814346,
+              "max": 0.20716001093387604,
+              "p95": 0.12583119869232176,
+              "rms": 0.12336037946542851
+            }
+          },
+          "actual_evaluation_v_final_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.021634928626008333,
+                "std": 0.0051009488224028395,
+                "min": -0.03245055675506592,
+                "max": 0.01716560125350952,
+                "p95": -0.01834950000047684,
+                "rms": 0.02222813117518538
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.006445344663225114,
+                "std": 0.004421210863240887,
+                "min": -0.03716954588890076,
+                "max": 0.00047534704208374023,
+                "p95": -0.0026323139667510987,
+                "rms": 0.007815981916880549
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.12054391292855143,
+                "std": 0.011479063723545966,
+                "min": 0.10777485370635986,
+                "max": 0.2044684886932373,
+                "p95": 0.1231559008359909,
+                "rms": 0.12108923919199187
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.023403653239947742,
+              "std": 0.0027291766066501874,
+              "min": 0.01868773065507412,
+              "max": 0.03720929101109505,
+              "p95": 0.027193665970116854,
+              "rms": 0.023562245010312646
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.1228128229023423,
+              "std": 0.011610071171720752,
+              "min": 0.10997066646814346,
+              "max": 0.20716001093387604,
+              "p95": 0.12583119869232176,
+              "rms": 0.12336037946542851
+            }
+          },
+          "actual_evaluation_velocity_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.020895778195545063,
+                "std": 0.0053269780060733,
+                "min": -0.027189742773771286,
+                "max": 0.0026775673031806946,
+                "p95": -0.00983361091930608,
+                "rms": 0.021564096110771837
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.006351140993101581,
+                "std": 0.002361568931214795,
+                "min": -0.012635435909032822,
+                "max": -0.0008474935311824083,
+                "p95": -0.002876886818557978,
+                "rms": 0.006775986993134973
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.11128363483774592,
+                "std": 0.025118247224634252,
+                "min": -0.05233388394117355,
+                "max": 0.12404148280620575,
+                "p95": 0.12218852788209915,
+                "rms": 0.11408318774621712
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.022245597280543733,
+              "std": 0.004007198790013436,
+              "min": 0.0009393125656060874,
+              "max": 0.027336325496435165,
+              "p95": 0.026439434848725796,
+              "rms": 0.02260363334755764
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.11468505392491352,
+              "std": 0.0193193265852773,
+              "min": 0.008381138555705547,
+              "max": 0.12677237391471863,
+              "p95": 0.1242770567536354,
+              "rms": 0.11630089412153684
+            }
+          },
+          "actual_evaluation_velocity_world": {
+            "units": "m/s",
+            "frame": "world",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.0209115004832438,
+                "std": 0.005295884415628047,
+                "min": -0.02718341164290905,
+                "max": 0.0026368030812591314,
+                "p95": -0.010113041009755783,
+                "rms": 0.021571676898294152
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.006346673823863966,
+                "std": 0.002362948306362908,
+                "min": -0.01259688101708889,
+                "max": -0.000736322661396116,
+                "p95": -0.0028821725631132736,
+                "rms": 0.006772281249701861
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.11128118780092336,
+                "std": 0.025123575296648427,
+                "min": -0.05233607813715935,
+                "max": 0.12403549998998642,
+                "p95": 0.12218664586544037,
+                "rms": 0.11408197401022975
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.02225256749166874,
+              "std": 0.004003033601757351,
+              "min": 0.0008147391490638256,
+              "max": 0.027327638119459152,
+              "p95": 0.026449484843760727,
+              "rms": 0.022609755372141268
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.11468505335389637,
+              "std": 0.01931932633509235,
+              "min": 0.008381138555705547,
+              "max": 0.12677237391471863,
+              "p95": 0.1242770567536354,
+              "rms": 0.11630089351689371
+            }
+          },
+          "policy": "Deterministic mean action, not sampledtraining. Fields actualsame-clock snapshots, no extra sensor/model sample."
+        }
+      },
+      "coverage_complete": true,
+      "all_original_gates_pass": false,
+      "metric": "Unchanged originalZ sensorT0/startup/200steps32lanes/allsubgroups/allfailures",
+      "CPU_only": true,
+      "optimizer_calls": 0,
+      "missing_samples_filled": false
+    },
+    "R1": {
+      "group": "R1",
+      "mode": "research-evaluation",
+      "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+      "actual_parameters": {
+        "experiment_id": "R5-H256-DEV-01",
+        "group": "R1",
+        "training_seed": 20260908,
+        "evaluation_seed": 20260909,
+        "max_updates": 256,
+        "checkpoint_updates": [
+          1,
+          2,
+          8,
+          16,
+          32,
+          64,
+          96,
+          128,
+          192,
+          256
+        ],
+        "evaluation_updates": [
+          192,
+          256
+        ],
+        "command_profile": "pure-hover",
+        "residual_neutrality_weight": 0.05,
+        "anchor_weight": 4.0,
+        "actor_lr": 0.0001,
+        "critic_lr": 0.0003,
+        "output_cap_bytes": 8589934592,
+        "master_authority": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+          "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+        },
+        "experiment_card": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/EXPERIMENT_CARD.json",
+          "sha256": "07ce87bbf6a0629937226ba23be0c69e989944366063586575b74d4d5565d4f9"
+        },
+        "checkpoints": [
+          {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u192.pt",
+            "sha256": "e8c436bc3b6dfd7f6fae5081a02e8e29df2c99ffbf701876c8dc5ffe59b52d62",
+            "update": 192
+          },
+          {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+            "sha256": "ddc4a93a4f3b2e3689663bc69f187b29f7fae70e4c0a4f834ceae30b24fdcac1",
+            "update": 256
+          }
+        ]
+      },
+      "binding": {
+        "spec_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/inputs/R1-research-evaluation.authorized.json",
+        "spec_sha256": "a795e13f14ec1b38eb41f5663d447c175e862d730c770d2e66d80191a9663426",
+        "job_id": "J-3e112266540d3422",
+        "native_status": "FAILED",
+        "native_exit_code": -9,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "authorization_sha256": "a27374953b16a8fffa527ab4abe77bc9970243cddb1962628ddaac2325a86542",
+        "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "owned_cleanup": "NORMAL_ACK_2STABLE_NO_SURVIVORS"
+      },
+      "nodes": {
+        "192": {
+          "checkpoint": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u192.pt",
+            "sha256": "e8c436bc3b6dfd7f6fae5081a02e8e29df2c99ffbf701876c8dc5ffe59b52d62",
+            "update": 192
+          },
+          "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-EVALUATION-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R1_u192/Z.jsonl",
+          "raw_sha256": "6744eda3dfab5fa95a25317f6c4dcc3bdb1e2ebc3858f5ccbd5415cbfddd0e42",
+          "episodes": [
+            {
+              "case": "Z",
+              "env_index": 0,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016123631969094276,
+                "drift": 0.24568161368370056,
+                "height": 0.043303489685058594
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 1,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01609574817121029,
+                "drift": 0.23849830031394958,
+                "height": 0.043303489685058594
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 2,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016140993684530258,
+                "drift": 0.254745751619339,
+                "height": 0.04330587387084961
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 3,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016088128089904785,
+                "drift": 0.23831653594970703,
+                "height": 0.043303489685058594
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 4,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016129130497574806,
+                "drift": 0.24568161368370056,
+                "height": 0.043303489685058594
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 5,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.0160886999219656,
+                "drift": 0.2453117072582245,
+                "height": 0.04330587387084961
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 6,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016078894957900047,
+                "drift": 0.23811723291873932,
+                "height": 0.043306589126586914
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 7,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016144759953022003,
+                "drift": 0.2547287344932556,
+                "height": 0.043306589126586914
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 8,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016128025949001312,
+                "drift": 0.2390868365764618,
+                "height": 0.04317641258239746
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 9,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01618378609418869,
+                "drift": 0.24548180401325226,
+                "height": 0.043174028396606445
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 10,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016195906326174736,
+                "drift": 0.24350690841674805,
+                "height": 0.04317522048950195
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 11,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01617010496556759,
+                "drift": 0.23761072754859924,
+                "height": 0.043174028396606445
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 12,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016211705282330513,
+                "drift": 0.2516855001449585,
+                "height": 0.043175458908081055
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 13,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016175953671336174,
+                "drift": 0.23705868422985077,
+                "height": 0.043174028396606445
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 14,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01620851270854473,
+                "drift": 0.24350690841674805,
+                "height": 0.04317522048950195
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 15,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01621975749731064,
+                "drift": 0.23778097331523895,
+                "height": 0.04317331314086914
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 16,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016192328184843063,
+                "drift": 0.22954031825065613,
+                "height": 0.0432744026184082
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 17,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016271766275167465,
+                "drift": 0.24639301002025604,
+                "height": 0.0432736873626709
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 18,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016176003962755203,
+                "drift": 0.2289448231458664,
+                "height": 0.0432744026184082
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 19,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016179746016860008,
+                "drift": 0.2371925562620163,
+                "height": 0.0432744026184082
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 20,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01616646721959114,
+                "drift": 0.24365481734275818,
+                "height": 0.0432744026184082
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 21,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01613416150212288,
+                "drift": 0.23641766607761383,
+                "height": 0.04327654838562012
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 22,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016235869377851486,
+                "drift": 0.252568781375885,
+                "height": 0.04327654838562012
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 23,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016129538416862488,
+                "drift": 0.23623429238796234,
+                "height": 0.04327654838562012
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 24,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01618519239127636,
+                "drift": 0.24383218586444855,
+                "height": 0.04308652877807617
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 25,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016244467347860336,
+                "drift": 0.24594789743423462,
+                "height": 0.0430912971496582
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 26,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01618480682373047,
+                "drift": 0.24011929333209991,
+                "height": 0.04308652877807617
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 27,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016268331557512283,
+                "drift": 0.25287318229675293,
+                "height": 0.04308652877807617
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 28,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01619652472436428,
+                "drift": 0.23957301676273346,
+                "height": 0.04308652877807617
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 29,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016244640573859215,
+                "drift": 0.24594789743423462,
+                "height": 0.0430912971496582
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 30,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.016186192631721497,
+                "drift": 0.24578511714935303,
+                "height": 0.04308652877807617
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 31,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01619076356291771,
+                "drift": 0.23998285830020905,
+                "height": 0.043081045150756836
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            }
+          ],
+          "original_gate": {
+            "successes": 32,
+            "total": 32,
+            "pass": true,
+            "wilson_95": [
+              0.8928208017449296,
+              1.0
+            ],
+            "subgroups": {
+              "d0": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d1": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d2": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d3": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d4": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d5": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d6": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d7": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              }
+            }
+          },
+          "speed_rms_m_s": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 0.01617407938465476,
+            "std": 5.035517944595252e-05,
+            "min": 0.016078894957900047,
+            "max": 0.016271766275167465,
+            "p95": 0.016255301516503097,
+            "rms": 0.016174157770505737
+          },
+          "horizontal_drift_m": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 0.24255648581311107,
+            "std": 0.006377455742951311,
+            "min": 0.2289448231458664,
+            "max": 0.254745751619339,
+            "p95": 0.25370818078517915,
+            "rms": 0.2426403114730923
+          },
+          "height_deviation_m": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 0.043210431933403015,
+            "std": 8.604773170921101e-05,
+            "min": 0.043081045150756836,
+            "max": 0.043306589126586914,
+            "p95": 0.0433061957359314,
+            "rms": 0.04321051760952867
+          },
+          "failure_reasons": {
+            "PASS": 32
+          },
+          "engineering": {
+            "missing": 0,
+            "reset_interrupted": 0,
+            "collision": 0,
+            "height_failure": 0,
+            "evidence_valid": 32
+          },
+          "actual_reset_lanes": 0,
+          "actual_evaluation_v_corr_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.011521907630376518,
+                "std": 0.00030371514921235794,
+                "min": -0.011751651763916016,
+                "max": -0.00830698013305664,
+                "p95": -0.011385585367679595,
+                "rms": 0.011525909870148635
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.004461738858371973,
+                "std": 0.00018736482264634309,
+                "min": 0.002653837203979492,
+                "max": 0.004995405673980713,
+                "p95": 0.004640054702758789,
+                "rms": 0.004465671194464695
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.003118729768320918,
+                "std": 0.0002762375932422266,
+                "min": 0.00211489200592041,
+                "max": 0.006641983985900879,
+                "p95": 0.003199347853660583,
+                "rms": 0.0031309395675629555
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.012356915870768717,
+              "std": 0.0003089462465961759,
+              "min": 0.009208135306835175,
+              "max": 0.012482902966439724,
+              "p95": 0.012458470743149519,
+              "rms": 0.012360777387387155
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.012748643916129367,
+              "std": 0.0002523462863155261,
+              "min": 0.009539981372654438,
+              "max": 0.013190244324505329,
+              "p95": 0.012854654341936111,
+              "rms": 0.012751141139069852
+            }
+          },
+          "actual_evaluation_v_final_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.011521907630376518,
+                "std": 0.00030371514921235794,
+                "min": -0.011751651763916016,
+                "max": -0.00830698013305664,
+                "p95": -0.011385585367679595,
+                "rms": 0.011525909870148635
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.004461738858371973,
+                "std": 0.00018736482264634309,
+                "min": 0.002653837203979492,
+                "max": 0.004995405673980713,
+                "p95": 0.004640054702758789,
+                "rms": 0.004465671194464695
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.003118729768320918,
+                "std": 0.0002762375932422266,
+                "min": 0.00211489200592041,
+                "max": 0.006641983985900879,
+                "p95": 0.003199347853660583,
+                "rms": 0.0031309395675629555
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.012356915870768717,
+              "std": 0.0003089462465961759,
+              "min": 0.009208135306835175,
+              "max": 0.012482902966439724,
+              "p95": 0.012458470743149519,
+              "rms": 0.012360777387387155
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.012748643916129367,
+              "std": 0.0002523462863155261,
+              "min": 0.009539981372654438,
+              "max": 0.013190244324505329,
+              "p95": 0.012854654341936111,
+              "rms": 0.012751141139069852
+            }
+          },
+          "actual_evaluation_velocity_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.011473587561727071,
+                "std": 0.0014043740595878031,
+                "min": -0.012044543400406837,
+                "max": -0.00026448917924426496,
+                "p95": -0.011353419721126556,
+                "rms": 0.011559216151446484
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.004215164749464293,
+                "std": 0.0005453050027269806,
+                "min": 0.00011102700227638707,
+                "max": 0.00478917732834816,
+                "p95": 0.004614792764186859,
+                "rms": 0.004250290744305082
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.0008402678528517527,
+                "std": 0.010450688195900316,
+                "min": -0.08797110617160797,
+                "max": 0.0031997074838727713,
+                "p95": 0.0031829116865992545,
+                "rms": 0.010484413852594047
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.012225120625457749,
+              "std": 0.0014922718092647595,
+              "min": 0.0002899793616961688,
+              "max": 0.01284254901111126,
+              "p95": 0.012696135090664029,
+              "rms": 0.0123158617018753
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.014181598345021484,
+              "std": 0.007777252192600584,
+              "min": 0.012483930215239525,
+              "max": 0.08797159790992737,
+              "p95": 0.014037770079448186,
+              "rms": 0.016174157884935685
+            }
+          },
+          "actual_evaluation_velocity_world": {
+            "units": "m/s",
+            "frame": "world",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.011471153676650374,
+                "std": 0.0014166383403813277,
+                "min": -0.012044476345181465,
+                "max": -0.0002125324244843796,
+                "p95": -0.011353349406272173,
+                "rms": 0.011558297057126007
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.0042142686641557245,
+                "std": 0.0005497007098969685,
+                "min": 8.774329762673005e-05,
+                "max": 0.004789172671735287,
+                "p95": 0.00461479090154171,
+                "rms": 0.0042499683815466335
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.0008401385828571506,
+                "std": 0.01045184617452808,
+                "min": -0.0879712849855423,
+                "max": 0.0032000564970076084,
+                "p95": 0.0031832976965233684,
+                "rms": 0.010485557748370018
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.012222526289533561,
+              "std": 0.001505427939067877,
+              "min": 0.00023237759887706488,
+              "max": 0.012842483818531036,
+              "p95": 0.012696131691336631,
+              "rms": 0.012314887826450764
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.014181598305731314,
+              "std": 0.00777725219733493,
+              "min": 0.012483930215239525,
+              "max": 0.08797159790992737,
+              "p95": 0.014037769241257868,
+              "rms": 0.016174157852762296
+            }
+          },
+          "policy": "Deterministic mean action, not sampledtraining. Fields actualsame-clock snapshots, no extra sensor/model sample."
+        },
+        "256": {
+          "checkpoint": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+            "sha256": "ddc4a93a4f3b2e3689663bc69f187b29f7fae70e4c0a4f834ceae30b24fdcac1",
+            "update": 256
+          },
+          "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-EVALUATION-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R1_u256/Z.jsonl",
+          "raw_sha256": "8ed95535e1d313f40bcab0b277ed37d9ead059b41f531319c110f7100a40f8b7",
+          "episodes": [
+            {
+              "case": "Z",
+              "env_index": 0,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011038084514439106,
+                "drift": 0.1335449069738388,
+                "height": 0.054761528968811035
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 1,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011025495827198029,
+                "drift": 0.12305396050214767,
+                "height": 0.054366350173950195
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 2,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.010998292826116085,
+                "drift": 0.12332435697317123,
+                "height": 0.05438578128814697
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 3,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011029724963009357,
+                "drift": 0.12305396050214767,
+                "height": 0.05435442924499512
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 4,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01104056742042303,
+                "drift": 0.1335449069738388,
+                "height": 0.05476486682891846
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 5,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01105083990842104,
+                "drift": 0.08504370599985123,
+                "height": 0.05442619323730469
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 6,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011046595871448517,
+                "drift": 0.06738300621509552,
+                "height": 0.0544734001159668
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 7,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01101408340036869,
+                "drift": 0.06800422817468643,
+                "height": 0.05450916290283203
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 8,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011005972512066364,
+                "drift": 0.0673523023724556,
+                "height": 0.053954362869262695
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 9,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011002972722053528,
+                "drift": 0.08504363894462585,
+                "height": 0.053734540939331055
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 10,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01098810788244009,
+                "drift": 0.0606527179479599,
+                "height": 0.05350756645202637
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 11,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.0109962597489357,
+                "drift": 0.03207605332136154,
+                "height": 0.053734779357910156
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 12,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.010955494828522205,
+                "drift": 0.03597322851419449,
+                "height": 0.05364704132080078
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 13,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.010996250435709953,
+                "drift": 0.03205449879169464,
+                "height": 0.053737521171569824
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 14,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.010997856967151165,
+                "drift": 0.0606527179479599,
+                "height": 0.05350673198699951
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 15,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.010967228561639786,
+                "drift": 0.08579541742801666,
+                "height": 0.053734540939331055
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 16,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.010997479781508446,
+                "drift": 0.06990765780210495,
+                "height": 0.05495035648345947
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 17,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.010957811959087849,
+                "drift": 0.07153408974409103,
+                "height": 0.054976820945739746
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 18,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01099335215985775,
+                "drift": 0.06994566321372986,
+                "height": 0.05495858192443848
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 19,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.010994563810527325,
+                "drift": 0.08713336288928986,
+                "height": 0.05506551265716553
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 20,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011020753532648087,
+                "drift": 0.0600920245051384,
+                "height": 0.05488109588623047
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 21,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011020819656550884,
+                "drift": 0.030286233872175217,
+                "height": 0.05458188056945801
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 22,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.010979853570461273,
+                "drift": 0.03420599550008774,
+                "height": 0.054656982421875
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 23,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01101808063685894,
+                "drift": 0.030286233872175217,
+                "height": 0.0545886754989624
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 24,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011005431413650513,
+                "drift": 0.06292150169610977,
+                "height": 0.05547142028808594
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 25,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011013658717274666,
+                "drift": 0.0850544199347496,
+                "height": 0.05565643310546875
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 26,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011012349277734756,
+                "drift": 0.06758984178304672,
+                "height": 0.05577540397644043
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 27,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.01097322441637516,
+                "drift": 0.07078253477811813,
+                "height": 0.055654287338256836
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 28,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011011983267962933,
+                "drift": 0.06758291274309158,
+                "height": 0.055783867835998535
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 29,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011013415642082691,
+                "drift": 0.0850544199347496,
+                "height": 0.05565071105957031
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 30,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.010999130085110664,
+                "drift": 0.10711551457643509,
+                "height": 0.055605292320251465
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            },
+            {
+              "case": "Z",
+              "env_index": 31,
+              "success": true,
+              "reason": "PASS",
+              "metrics": {
+                "speed": 0.011002265848219395,
+                "drift": 0.0955270305275917,
+                "height": 0.05588710308074951
+              },
+              "engineering": {
+                "collision": false,
+                "height_failure": false,
+                "missing": false,
+                "reset_interrupted": false,
+                "evidence_valid": true
+              }
+            }
+          ],
+          "original_gate": {
+            "successes": 32,
+            "total": 32,
+            "pass": true,
+            "wilson_95": [
+              0.8928208017449296,
+              1.0
+            ],
+            "subgroups": {
+              "d0": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d1": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d2": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d3": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d4": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d5": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d6": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              },
+              "d7": {
+                "successes": 4,
+                "total": 4,
+                "pass": true
+              }
+            }
+          },
+          "speed_rms_m_s": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 0.011005250067682937,
+            "std": 2.294692306034245e-05,
+            "min": 0.010955494828522205,
+            "max": 0.01105083990842104,
+            "p95": 0.0110432802233845,
+            "rms": 0.011005273990842446
+          },
+          "horizontal_drift_m": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 0.07536165765486658,
+            "std": 0.029545532899452335,
+            "min": 0.030286233872175217,
+            "max": 0.1335449069738388,
+            "p95": 0.12792360447347165,
+            "rms": 0.08094638941177011
+          },
+          "height_deviation_m": {
+            "status": "AVAILABLE",
+            "count": 32,
+            "mean": 0.05467947572469711,
+            "std": 0.0007289678287398944,
+            "min": 0.05350673198699951,
+            "max": 0.05588710308074951,
+            "p95": 0.05577921271324158,
+            "rms": 0.054684334682092266
+          },
+          "failure_reasons": {
+            "PASS": 32
+          },
+          "engineering": {
+            "missing": 0,
+            "reset_interrupted": 0,
+            "collision": 0,
+            "height_failure": 0,
+            "evidence_valid": 32
+          },
+          "actual_reset_lanes": 0,
+          "actual_evaluation_v_corr_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.0034323774371296167,
+                "std": 0.000285054185566457,
+                "min": 0.0032340288162231445,
+                "max": 0.006971180438995361,
+                "p95": 0.0035730630159378053,
+                "rms": 0.0034441937749820975
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.0017462536040693522,
+                "std": 0.0002581659113736141,
+                "min": -0.004322141408920288,
+                "max": -0.0015653669834136963,
+                "p95": -0.0015766605734825133,
+                "rms": 0.0017652340602652588
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.00031610785517841575,
+                "std": 0.0004403200653966747,
+                "min": -0.00043895840644836426,
+                "max": 0.0055425167083740234,
+                "p95": -0.0002963244915008545,
+                "rms": 0.0005420386850552557
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.003854096630457207,
+              "std": 0.00035279060121490015,
+              "min": 0.0037390096113085747,
+              "max": 0.008091394789516926,
+              "p95": 0.003903711214661598,
+              "rms": 0.0038702095608903614
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.0038809585450144367,
+              "std": 0.00045879056623107233,
+              "min": 0.0037618973292410374,
+              "max": 0.009705043397843838,
+              "p95": 0.003919385839253664,
+              "rms": 0.003907982601264136
+            }
+          },
+          "actual_evaluation_v_final_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.0034323774371296167,
+                "std": 0.000285054185566457,
+                "min": 0.0032340288162231445,
+                "max": 0.006971180438995361,
+                "p95": 0.0035730630159378053,
+                "rms": 0.0034441937749820975
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.0017462536040693522,
+                "std": 0.0002581659113736141,
+                "min": -0.004322141408920288,
+                "max": -0.0015653669834136963,
+                "p95": -0.0015766605734825133,
+                "rms": 0.0017652340602652588
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.00031610785517841575,
+                "std": 0.0004403200653966747,
+                "min": -0.00043895840644836426,
+                "max": 0.0055425167083740234,
+                "p95": -0.0002963244915008545,
+                "rms": 0.0005420386850552557
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.003854096630457207,
+              "std": 0.00035279060121490015,
+              "min": 0.0037390096113085747,
+              "max": 0.008091394789516926,
+              "p95": 0.003903711214661598,
+              "rms": 0.0038702095608903614
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.0038809585450144367,
+              "std": 0.00045879056623107233,
+              "min": 0.0037618973292410374,
+              "max": 0.009705043397843838,
+              "p95": 0.003919385839253664,
+              "rms": 0.003907982601264136
+            }
+          },
+          "actual_evaluation_velocity_b": {
+            "units": "m/s",
+            "frame": "body",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.003218522774561734,
+                "std": 0.00033538621870980365,
+                "min": 0.00017235994164366275,
+                "max": 0.003655071370303631,
+                "p95": 0.003542385599575937,
+                "rms": 0.003235950056177169
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.0018904056169844808,
+                "std": 0.0002412991232491061,
+                "min": -0.0023932044859975576,
+                "max": -0.00012907492055092007,
+                "p95": -0.0015520773187745363,
+                "rms": 0.0019057435986006256
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.0025245358410438713,
+                "std": 0.010031926038690008,
+                "min": -0.0881555899977684,
+                "max": -0.00028024017228744924,
+                "p95": -0.00029924606496933853,
+                "rms": 0.010344700153144207
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.003738266932723491,
+              "std": 0.00035859695220987625,
+              "min": 0.00021941594604868442,
+              "max": 0.004212723113596439,
+              "p95": 0.003992784325964749,
+              "rms": 0.003755426931046337
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.00568566043235478,
+              "std": 0.009422808462459383,
+              "min": 0.003426929470151663,
+              "max": 0.08815587311983109,
+              "p95": 0.010477994475512223,
+              "rms": 0.011005273911731648
+            }
+          },
+          "actual_evaluation_velocity_world": {
+            "units": "m/s",
+            "frame": "world",
+            "xyz": [
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": 0.0032174689763564855,
+                "std": 0.00034090685201568774,
+                "min": 0.000131388776935637,
+                "max": 0.0036546969786286354,
+                "p95": 0.0035423712222836913,
+                "rms": 0.0032354789592219106
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.0018897529274977387,
+                "std": 0.00024396828105689787,
+                "min": -0.0023922144901007414,
+                "max": -0.00010200741235166788,
+                "p95": -0.0015520873886998743,
+                "rms": 0.001905436078473411
+              },
+              {
+                "status": "AVAILABLE",
+                "count": 6400,
+                "mean": -0.002524644450973028,
+                "std": 0.010032109120472938,
+                "min": -0.08815570175647736,
+                "max": -0.0002803279785439372,
+                "p95": -0.0002993101938045584,
+                "rms": 0.01034490420491682
+              }
+            ],
+            "horizontal_norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.003737026183155194,
+              "std": 0.00036557631943885964,
+              "min": 0.00016939504712354392,
+              "max": 0.004211714956909418,
+              "p95": 0.003992777690291405,
+              "rms": 0.0037548649428337556
+            },
+            "norm": {
+              "status": "AVAILABLE",
+              "count": 6400,
+              "mean": 0.005685660424933303,
+              "std": 0.009422808485035034,
+              "min": 0.003426929237321019,
+              "max": 0.08815587311983109,
+              "p95": 0.010477994475512223,
+              "rms": 0.011005273927226951
+            }
+          },
+          "policy": "Deterministic mean action, not sampledtraining. Fields actualsame-clock snapshots, no extra sensor/model sample."
+        }
+      },
+      "coverage_complete": true,
+      "all_original_gates_pass": true,
+      "metric": "Unchanged originalZ sensorT0/startup/200steps32lanes/allsubgroups/allfailures",
+      "CPU_only": true,
+      "optimizer_calls": 0,
+      "missing_samples_filled": false
+    }
+  },
+  "candidate_both_predefined_nodes_pass": true,
+  "primary_node": 256,
+  "scientific_scope": "One developmentseed; notREADY beforecandidatefreeze/twonewtrainingseeds/nonzerotransition/formalpackage/finalreview",
+  "old_C1_reference": "Historicalonly; same-versionR0 isstrictcontemporaneousreference",
+  "optimizer_calls": 0
+}

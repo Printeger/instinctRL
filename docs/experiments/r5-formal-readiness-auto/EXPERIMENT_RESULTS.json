@@ -282,6 +282,290 @@
         "sha256": "a165cbaa75113bfa9e6e7e5b681fa10cb84e4f91110ccc29f9d6351c1b10d78f",
         "update": 128
       }
+    },
+    {
+      "experiment_id": "R5-H256-DEV-01",
+      "group": "R0",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 192,
+      "original_Z": {
+        "successes": 0,
+        "total": 32,
+        "pass": false,
+        "wilson_95": [
+          0.0,
+          0.10717919825507058
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d1": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d2": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d3": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d4": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d5": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d6": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d7": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.03014318458735943,
+        "horizontal_drift_m": 0.5779134035110474,
+        "height_deviation_m": 0.19054639339447021
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-Z-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R0_u192/Z.jsonl",
+      "raw_sha256": "8b2eb92d73239b89b79735f63077bb30492ca16550113cbe261c97929e4df587",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/u192.pt",
+        "sha256": "8b47e65a7e69da99319bec81845d58edc1c03330ba01ab64e693d0be308a084f",
+        "update": 192
+      },
+      "all_episodes_analysis": "docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/pair-results.json"
+    },
+    {
+      "experiment_id": "R5-H256-DEV-01",
+      "group": "R0",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 256,
+      "original_Z": {
+        "successes": 0,
+        "total": 32,
+        "pass": false,
+        "wilson_95": [
+          0.0,
+          0.10717919825507058
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d1": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d2": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d3": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d4": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d5": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d6": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d7": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.11694247275590897,
+        "horizontal_drift_m": 0.3991769552230835,
+        "height_deviation_m": 2.009653329849243
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-Z-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R0_u256/Z.jsonl",
+      "raw_sha256": "0d1c1b09bf41a4e6c58e0a58aae033bf4030239acec96003c1a65edfa8b988ab",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+        "sha256": "28a9a4b7a018ab215ba23706d64ac3ff0833271b9e19dbd61324100858c080bb",
+        "update": 256
+      },
+      "all_episodes_analysis": "docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/pair-results.json"
+    },
+    {
+      "experiment_id": "R5-H256-DEV-01",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 192,
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.016271766275167465,
+        "horizontal_drift_m": 0.254745751619339,
+        "height_deviation_m": 0.043306589126586914
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-EVALUATION-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R1_u192/Z.jsonl",
+      "raw_sha256": "6744eda3dfab5fa95a25317f6c4dcc3bdb1e2ebc3858f5ccbd5415cbfddd0e42",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u192.pt",
+        "sha256": "e8c436bc3b6dfd7f6fae5081a02e8e29df2c99ffbf701876c8dc5ffe59b52d62",
+        "update": 192
+      },
+      "all_episodes_analysis": "docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/pair-results.json"
+    },
+    {
+      "experiment_id": "R5-H256-DEV-01",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "update": 256,
+      "original_Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "maxima": {
+        "speed_rms_m_s": 0.01105083990842104,
+        "horizontal_drift_m": 0.1335449069738388,
+        "height_deviation_m": 0.05588710308074951
+      },
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-EVALUATION-a13c5a459d47/results/research-evaluation/evaluation_raw/research_R1_u256/Z.jsonl",
+      "raw_sha256": "8ed95535e1d313f40bcab0b277ed37d9ead059b41f531319c110f7100a40f8b7",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+        "sha256": "ddc4a93a4f3b2e3689663bc69f187b29f7fae70e4c0a4f834ceae30b24fdcac1",
+        "update": 256
+      },
+      "all_episodes_analysis": "docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/pair-results.json"
     }
   ],
   "actual_entries": [
@@ -581,10 +865,142 @@
       "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
       "postrun_queries": 2,
       "inventory": "experiments/R5-H256-DEV-01/live/R1-research-training/INVENTORY.json"
+    },
+    {
+      "job_id": "J-4de358def9405827",
+      "experiment_id": "R5-H256-DEV-01-R0-RECOVERY1",
+      "group": "R0",
+      "mode": "research-training",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048
+      },
+      "retained_reservations": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H256-DEV-01-R0-RECOVERY1/live/R0-research-training/INVENTORY.json"
+    },
+    {
+      "job_id": "J-3e112266540d3422",
+      "experiment_id": "R5-H256-DEV-01",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H256-DEV-01/live/R1-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-13c83116c619978c",
+      "experiment_id": "R5-H256-DEV-01-R0-RECOVERY1",
+      "group": "R0",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": 1,
+      "raw_status": "FAIL",
+      "formal_counter_completeness": "FINAL",
+      "formal_transitions": 0,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H256-DEV-01-R0-RECOVERY1/live/R0-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-f617068dbba16bf4",
+      "experiment_id": "R5-H256-DEV-01-R0-Z-RECOVERY1",
+      "group": "R0",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H256-DEV-01-R0-Z-RECOVERY1/live/R0-research-evaluation/INVENTORY.json"
     }
   ],
   "master_ledger": "goal_budget.json",
-  "next_experiment": "R5-H256-DEV-01 proposed before any furtherlearning; no scientificresult yet",
+  "next_experiment": "Two prospectively frozen confirmationtrainingseeds20261015/20261016, same256purehovermethod/primary256; Role14exactprelivePASS, waiting actualpairreview before firstrelease.",
   "confirmation_seed_results": [],
-  "H256_status": "R1_actual256_complete_science_coverage_CPU_PASS_noZyet; R0resourcefailurepreserved/freshidentityapproved_unsubmitted"
+  "H256_status": "ACTUAL_PAIR_COMPLETE_R1_PREDEFINED192_256_BOTH32_OF32_R0_BOTH0_OF32_PENDING_INDEPENDENT_PAIR_REVIEW"
 }
