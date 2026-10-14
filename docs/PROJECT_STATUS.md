@@ -7,7 +7,7 @@
 
 ## 当前 Goal（2026-10-14 自主正式训练准入）
 
-**IN_PROGRESS，非READY。当前唯一live为新方法候选R1 J-b8ec45f94a245f6a。** 原w.05/anchor4方法虽开发u192/u256均原Z32/32，但两个预先冻结确认seed20261015/20261016的u256均为0/32，当前方法G4失败。确认01最大漂移.787367m；确认02漂移.327584m且高度.216544m。原T0/200steps/所有方向/失败分母保留。Role20已独立接受确认01有效负结果；确认02完整原件已结算，科学独立复核待本轮下一审核。
+**IN_PROGRESS，非READY。当前唯一live为新方法对照R0 J-b959e2d9ded9ebb3。** 原w.05/anchor4方法虽开发u192/u256均原Z32/32，但两个预先冻结确认seed20261015/20261016的u256均为0/32，当前方法G4失败。确认01最大漂移.787367m；确认02漂移.327584m且高度.216544m。原T0/200steps/所有方向/失败分母保留。Role20已独立接受确认01有效负结果；确认02完整原件已结算，科学独立复核待本轮下一审核。
 
 当前新研究R5-MEAN10-DEV-02已Role21准确预审、提交/tag/push后release候选R1 J-b8ec45f94a245f6a；source617af4d/config2e9a7284/只读快照。双方共享rewardw.05/anchor4/原LR和网络，唯一变量为训练actor-loss零命令Beta均值有限softprior0/10；部署输出不替换、不注入真值。真实首512gate PASS，185updates已观察，预定coldstart256、开发seed20260908、late192/256，原Z未评价。R0准确许可已冻结待串行。本方法未达标前不授新G2/G3/G4。D015原master内阶段额度，所有失败与保护预留不重置。
 
@@ -115,3 +115,5 @@ full20160 reservation retained; no owned survivors. Goal IN_PROGRESS, training0.
 DEV-01仅CPU配置路径绑定拒绝，旧snapshot/packet和2GiB预留保留；DEV-02修正准确method路径，科学方法不变，无旧live失败或预算重置。
 
 最新唯一live mean10 DEV02 R1 J-b8ec45f94a245f6a，真实coexistence和首512gate PASS；53updates已观察。source617af4d/config2e9a7284/tag7b18755，R0准确许可已冻结待串行。无当前方法原Z结果，旧G4失败不变。
+
+Current ONLYLIVE R0 J-b959e2d9ded9ebb3 / A-cb56dae76162565d, inputaa9664b/push; actualfirst512gatePASS. Samefrozen617af4d/config2e9a7284. R1 scientifictrainingcomplete256/normalACK/settle/2postrun/CPUcoveragePASS; Role22actualcp/fullspecfixclosurepending. NoactualZyet; noformalupdates. MainCPUprepares newcompatibleintegration snapshot only, noG6AUTH orrelease.

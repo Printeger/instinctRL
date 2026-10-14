@@ -1,6 +1,6 @@
 # R5 formal readiness autonomous Goal
 
-IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. Current ONLY LIVE R1 J-b8ec45f94a245f6a. No formal training submitted.
+IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. Current ONLY LIVE R0 J-b959e2d9ded9ebb3. No formal training submitted.
 
 Current frozen method w.05/anchor4/LRs1e-4/3e-4/purehover256 FAILED G4: seed20261015 originalZ0/32 (driftmax .787366509), seed20261016 originalZ0/32 (driftmax .327583998,heightmax .216544390). Complete T0+200x32, allfailuredenominators retained. Confirmation01 independentRole20 accepted; second scientific evaluation independentaudit next. Actual scientific/evidence acceptance never changes FAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE/null/full logical+output reservations. BothnormalownedACK/settle/exact2postrun complete. Immutable CONFIRMATION_METHOD_FREEZE.json unchanged, CONFIRMATION_SEEDS.json recordsfailure. Never thirdseed replacement or >256 continuation ofoldmethod.
 
@@ -22,3 +22,5 @@ Main-only prospective formal mean-prior phase now explicitly validates origin/cu
 Latest185updatesobserved, actualfirst512PASS and first8actualauxformula CPUreplayPASS maxerror9.54e-7 originaltol. Still noactualoriginalZ/newqualification. Draft formal_launch_gate.py has16CPU tests: exact finalreview/manifest/permission/tools/explicitfuturestart; generatedeval pins acceptedactualcheckpoints; conservative formalreserve transfer retainsoldhistory. NOTwired intoCommanderyet, noactualREADY/conditionalformalpermission files or formalsubmit.
 
 R1 J-b8ec45f94a245f6a nowcomplete256/131072/2048Adam each/11writes, nativeFAILED/-9/PASS_PENDING_CLOSE/INCOMPLETE fullreserves, normalownedACK/settle/exact2postrunDONE. CPUtraininganalysis completed/pendingcommand result, actualu192/u256 acceptance Role22 next. NoLIVE. Nextcommit/push actual evidence andhelperfull-specfix then single R0existingA-cb56dae76162565d; nooldjobresubmit. Role22 found unusedhelpergeneratedspec coveragegap; fullspec template+exactdeclaredlateconditions fix22CPU PASS awaitsindependentclosure, originalfindingpreserved.
+
+Current ONLYLIVE R0 J-b959e2d9ded9ebb3 / A-cb56dae76162565d, inputaa9664b/push; actualfirst512gatePASS. Samefrozen617af4d/config2e9a7284. R1 scientifictrainingcomplete256/normalACK/settle/2postrun/CPUcoveragePASS; Role22actualcp/fullspecfixclosurepending. NoactualZyet; noformalupdates. MainCPUprepares newcompatibleintegration snapshot only, noG6AUTH orrelease.

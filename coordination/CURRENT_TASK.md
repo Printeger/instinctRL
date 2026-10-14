@@ -2,7 +2,7 @@
 
 R5-FORMAL-READINESS-AUTO-01，IN_PROGRESS，目标READY_FOR_FORMAL_R5_TRAINING。
 
-当前唯一LIVE：R5-MEAN10-DEV-02 R1 J-b8ec45f94a245f6a / A-ecb30414e9293db6；准确source617af4d90c35e333c97692bdee90146804476edf、config2e9a7284、packetf2661633，只读快照，输入7b18755/tag/push后单次release。coexistence2/1/2%和真实first512gate PASS；185updateslastobserved。仅poll准确handle，terminal+normalACK后settle/exact2postrun/CPU/独立实际checkpoint验收。R0 A-cb56dae76162565d 已固定未提交，待串行idle；不改tools/rlflow/Commander的旧d027release。
+Current ONLYLIVE R0 J-b959e2d9ded9ebb3 / A-cb56dae76162565d, inputaa9664b/push; actualfirst512gatePASS. Samefrozen617af4d/config2e9a7284. R1 scientifictrainingcomplete256/normalACK/settle/2postrun/CPUcoveragePASS; Role22actualcp/fullspecfixclosurepending. NoactualZyet; noformalupdates. MainCPUprepares newcompatibleintegration snapshot only, noG6AUTH orrelease.
 
 本新方法双方rewardw.05/anchor4/原LR/网络/control，唯一actor-only零命令有限softmeanprior0/10，非零sample直接loss/gradient0但sharednetwork能力不保证不变。coldstart256/同devseed20260908/预定192和256，原Z不变。Role21准确prelive及旧确认02完整负结果已接受。尚无新方法真实Z/开发资格/G4/READY。DEV01仅CPU配置旧路径拒绝，snapshot/packet/2GiB不修改。
 
