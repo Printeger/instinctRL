@@ -1,0 +1,70 @@
+{
+  "status": "CPU_EXACT_EXPECTED_FORMAL_INPUTS_ONLY_NOT_PERMISSION",
+  "rows": [
+    {
+      "group": "R0",
+      "expected_AUTH_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal-first-segment/inputs/R0-training-AUTH.proposed.json",
+      "expected_AUTH_sha256": "21b43822de4c76bf93dfa7852f0e988e22b9c66ac461860593e5dc960f840e10",
+      "source_identity": {
+        "product_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+        "product_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+        "workload_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+        "workload_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+        "config_sha256": "dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f"
+      },
+      "parameters_and_budget": "PASS_EXACT_SNAPSHOT_CPU",
+      "actual_attempt_and_AUTH_exists": false
+    },
+    {
+      "group": "R1",
+      "expected_AUTH_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal-first-segment/inputs/R1-training-AUTH.proposed.json",
+      "expected_AUTH_sha256": "fbd2ee22b662463b923f159c8605cda051ff7da4b83a4f9122198112b254d0d2",
+      "source_identity": {
+        "product_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+        "product_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+        "workload_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+        "workload_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+        "config_sha256": "dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f"
+      },
+      "parameters_and_budget": "PASS_EXACT_SNAPSHOT_CPU",
+      "actual_attempt_and_AUTH_exists": false
+    }
+  ],
+  "formal_training_transitions": 0,
+  "formal_optimizer_updates": 0,
+  "GPU_queries": 0,
+  "help_checks": [
+    {
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-B",
+        "-m",
+        "training_workloads.unified_h1.formal_unified_h1",
+        "--help"
+      ],
+      "cwd": "/home/mint/rl_dev/instinctRL-dev",
+      "CUDA_VISIBLE_DEVICES": "",
+      "stdout_pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal-first-segment/entry-cli-help.txt",
+        "sha256": "9d9afe2189d036178550f4cbf3bb77657cdb1fc6e604aad8a3d08f65c2d8b60d"
+      },
+      "scope": "Parser mode existence only; no authorization or backend. Main help uses byte-identical workload source, snapshot help has exact frozen cwd."
+    },
+    {
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-B",
+        "-m",
+        "training_workloads.unified_h1.formal_unified_h1",
+        "--help"
+      ],
+      "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-integration-01-20261014",
+      "CUDA_VISIBLE_DEVICES": "",
+      "stdout_pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal-first-segment/entry-cli-help-snapshot.txt",
+        "sha256": "9d9afe2189d036178550f4cbf3bb77657cdb1fc6e604aad8a3d08f65c2d8b60d"
+      },
+      "scope": "Parser mode existence only; no authorization or backend. Main help uses byte-identical workload source, snapshot help has exact frozen cwd."
+    }
+  ]
+}

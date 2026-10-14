@@ -1,0 +1,15 @@
+usage: formal_unified_h1.py [-h] [--validate-only]
+                            [--validate-enhanced-b0-handoff]
+                            [--handoff HANDOFF]
+                            [--authorization AUTHORIZATION]
+                            [--attempt ATTEMPT]
+                            [--mode {main,controlled-failure,r4-training,evaluation,r5-resume,control-diagnostic,pilot-training,pilot-evaluation,enhanced-b0-diagnostic,research-training,research-evaluation,research-transition,research-formal-training,research-formal-evaluation}]
+
+options:
+  -h, --help            show this help message and exit
+  --validate-only
+  --validate-enhanced-b0-handoff
+  --handoff HANDOFF
+  --authorization AUTHORIZATION
+  --attempt ATTEMPT
+  --mode {main,controlled-failure,r4-training,evaluation,r5-resume,control-diagnostic,pilot-training,pilot-evaluation,enhanced-b0-diagnostic,research-training,research-evaluation,research-transition,research-formal-training,research-formal-evaluation}

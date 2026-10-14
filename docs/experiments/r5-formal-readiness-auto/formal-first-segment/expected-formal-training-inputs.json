@@ -1,0 +1,61 @@
+{
+  "status": "CPU_PREPARED_NOT_LIVE_PERMISSION",
+  "entries": [
+    {
+      "group": "R0",
+      "mode": "research-formal-training",
+      "expected_authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal-first-segment/inputs/R0-training-AUTH.proposed.json",
+        "sha256": "21b43822de4c76bf93dfa7852f0e988e22b9c66ac461860593e5dc960f840e10"
+      },
+      "actual_authorization_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MIXED-CENTER-01-R0-RESEARCH-FORMAL-TRAINING-90aeeb22c7af/commands/AUTHORIZATION.json",
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MIXED-CENTER-01-R0-RESEARCH-FORMAL-TRAINING-90aeeb22c7af",
+      "status": "PROPOSED_EXPECTED_BYTES_NOT_ISSUED",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-B",
+        "-m",
+        "training_workloads.unified_h1.formal_unified_h1",
+        "--authorization",
+        "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MIXED-CENTER-01-R0-RESEARCH-FORMAL-TRAINING-90aeeb22c7af/commands/AUTHORIZATION.json",
+        "--attempt",
+        "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MIXED-CENTER-01-R0-RESEARCH-FORMAL-TRAINING-90aeeb22c7af",
+        "--mode",
+        "research-formal-training"
+      ]
+    },
+    {
+      "group": "R1",
+      "mode": "research-formal-training",
+      "expected_authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal-first-segment/inputs/R1-training-AUTH.proposed.json",
+        "sha256": "fbd2ee22b662463b923f159c8605cda051ff7da4b83a4f9122198112b254d0d2"
+      },
+      "actual_authorization_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MIXED-CENTER-01-R1-RESEARCH-FORMAL-TRAINING-90aeeb22c7af/commands/AUTHORIZATION.json",
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MIXED-CENTER-01-R1-RESEARCH-FORMAL-TRAINING-90aeeb22c7af",
+      "status": "PROPOSED_EXPECTED_BYTES_NOT_ISSUED",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-B",
+        "-m",
+        "training_workloads.unified_h1.formal_unified_h1",
+        "--authorization",
+        "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MIXED-CENTER-01-R1-RESEARCH-FORMAL-TRAINING-90aeeb22c7af/commands/AUTHORIZATION.json",
+        "--attempt",
+        "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MIXED-CENTER-01-R1-RESEARCH-FORMAL-TRAINING-90aeeb22c7af",
+        "--mode",
+        "research-formal-training"
+      ]
+    }
+  ],
+  "source_identity": {
+    "config_sha256": "dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f",
+    "product_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+    "product_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+    "workload_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+    "workload_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a"
+  },
+  "mandatory_final_condition": "IndependentG1-G9PASS and exactnewcontrolrelease then delegatedCommander mechanicalissuance mustmatchtheseAUTHSHAs; thisGoalnevercallsformalsubmit.",
+  "formal_training_transitions_consumed": 0,
+  "formal_optimizer_updates_consumed": 0
+}
