@@ -1,6 +1,6 @@
 # R5 formal readiness autonomous Goal
 
-IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. Current only LIVE CONFIRM01 J-b7cf47a791e61388. No formal training submitted.
+IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. NoLIVE; CONFIRM01 trainingcomplete, nextfrozenCONFIRM02 trainingbeforeserialevaluations. No formal training submitted.
 
 Current frozen method w.05/anchor4/LRs1e-4/3e-4/purehover256 FAILED G4: seed20261015 originalZ0/32 (driftmax .787366509), seed20261016 originalZ0/32 (driftmax .327583998,heightmax .216544390). Complete T0+200x32, allfailuredenominators retained. Confirmation01 independentRole20 accepted; second scientific evaluation independentaudit next. Actual scientific/evidence acceptance never changes FAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE/null/full logical+output reservations. BothnormalownedACK/settle/exact2postrun complete. Immutable CONFIRMATION_METHOD_FREEZE.json unchanged, CONFIRMATION_SEEDS.json recordsfailure. Never thirdseed replacement or >256 continuation ofoldmethod.
 
@@ -44,3 +44,5 @@ Authoritative latest: Role25独立PASS四准确训练包/control实现，原JSON
 Authoritative latest: 当前唯一LIVE CONFIRM01/R1 J-b7cf47a791e61388，准确A-be3650864803624d，input9265693/tag/push，source617af4d/config2e9a7284/controlc468。trainingseed20261017，冻结prior10/256purehover，10updates已观察；只poll此handle，终态正常ACK后settle/2postrun/CPU及Role26实际checkpoint审核。CONFIRM02及旧seedregressions准确许可未提交。G4未授，正式训练0。Role26发现G6-ORDER-ID，旧CPU INTEGRATION01原件全保留，修正候选INTEGRATION02 packet a8c92f0a...同S3source/config/cp/method/budget；真实冻结AUTHloader临时目录fixture重现旧拒绝、修正G6及两个formaltrain模板通过，独立closure待回。无actualG6AUTH/live或免费重试，formalpacket不变。
 
 Role26 preparationPASS archived reviews/mean-prior-integration02-formal-preparation.json (SHA4dba4e9d...). G6-ORDER-ID independentlyCLOSED, old01unchanged/new02conditionalexactpacket a8c92f0a.../expectedAUTH3d749754...; noactualG6/G7 orconfirmationacceptance. FutureG6issuance must bind actualindependentlyaccepted BOTHnewseed G4 predicate/currentfreeze as checkpoint-acceptance evidence PLUS Role26exactprelive andallfourdiagnosticSHA, not usepreparationalone. Noformalpermission/READY. ActualCONFIRM01checkpoint audit deferredtonext recordedcall afterterminaldata.
+
+Authoritative latest: CONFIRM01 J-b7cf47a791e61388 complete256/131072/2048Adam each/11writes，first512PASS；nativeFAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE/null/full逻辑预留保留。NormalownedACK/settle/恰好2postrun/CPU完整coverage PASS。GPU913.5342822959647/wall915.3181124168914，70原件1974505286bytes+21623770copies。Role27接受实际训练/checkpoint及准确主256原Z预审待回。当前无live；提交/push全部新证据和预算后，先单次release已Role25准确批准CONFIRM02训练A-3e4864c93aa9ae01以与CPU独审并行；GPU严格串行。确认01原Z必须等其checkpoint独立接受并且02终态/正常清理后才能issue/release。G4未授，formal训练0。

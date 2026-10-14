@@ -40,17 +40,17 @@
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 7480.155064699007,
-    "wall_seconds_including_cleanup": 7506.091214549961,
-    "output_peak_and_reservations_bytes": 19054264694
+    "allocated_gpu_seconds": 8393.689346994972,
+    "wall_seconds_including_cleanup": 8421.409326966852,
+    "output_peak_and_reservations_bytes": 21050393750
   },
   "observed": {
-    "training_transitions": 917504,
+    "training_transitions": 1048576,
     "nontraining_transitions": 89600,
-    "optimizer_updates": 1792,
-    "training_checkpoint_writes": 84,
-    "actor_optimizer_steps": 14336,
-    "critic_optimizer_steps": 14336
+    "optimizer_updates": 2048,
+    "training_checkpoint_writes": 95,
+    "actor_optimizer_steps": 16384,
+    "critic_optimizer_steps": 16384
   },
   "reservations": {
     "formal_initial_segment": {
@@ -865,7 +865,7 @@
         "experiment_id": "R5-MEAN10-CONFIRM-01",
         "group": "R1",
         "mode": "research-training",
-        "status": "RUNNING",
+        "status": "FAILED",
         "reserved": {
           "training_transitions": 131072,
           "nontraining_transitions": 0,
@@ -873,13 +873,27 @@
           "training_checkpoint_writes": 11,
           "actor_optimizer_steps": 2048,
           "critic_optimizer_steps": 2048,
-          "allocated_gpu_seconds": 7210,
-          "wall_seconds_including_cleanup": 7210
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
         },
         "output_cap_bytes": 8589934592,
-        "observed": {},
-        "postrun_queries_used": 0,
-        "settled": false
+        "observed": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 11,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 1996129056,
+        "inventory": "experiments/R5-MEAN10-CONFIRM-01/live/R1-research-training/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -1173,6 +1187,13 @@
       "evidence": "reviews/mean-prior-integration02-formal-preparation.json",
       "sha256": "4dba4e9da2ef0674f29f7eb77a2cb270458924a11d30a06f304a0be952f2d33f",
       "deferred_actual_training_scope": "Next explicit actualdata review after terminal+normalACK/settle/postrun/CPU; will record next actualcall honestly."
+    },
+    {
+      "call": 27,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Actualnewmeanconfirmation01 complete256/first512/meanprior/reward/checkpoints/lifecycle independentacceptance, exactprimary256originalZ prelive only. NoG4beforebothactualZ.",
+      "status": "IN_PROGRESS"
     }
   ],
   "decisions": [
