@@ -1,0 +1,47 @@
+{
+  "id": "D018",
+  "decision_by": "Supervisor-Commander within unchanged master",
+  "reason": "Actual seed18primaryZ beforeApp originalGPU gate8/3/1%>5 refused, zeroactualrollout/eval/training/optimizer/writes andcollectorFINAL0. Newexactevaluation-only identity required, not repeat a scientific result.",
+  "failed_job": "J-0f04e97f67bc802a",
+  "failure_gate": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-02-RECOVERY1/live/R1-research-evaluation/attempt/results/prelaunch/prelaunch_resource_gate_failure.json",
+    "sha256": "e81c2a4d86c84c8b9fb5cd09f9228a3d6d278085abf40ab86e0359e4176af9a2"
+  },
+  "before_stage": {
+    "training_transitions": 1441792,
+    "nontraining_transitions": 118784,
+    "live_starts": 32,
+    "simulator_initialization_reservations": 32,
+    "optimizer_updates": 2816,
+    "training_checkpoint_writes": 128,
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 311385128960
+  },
+  "after_stage": {
+    "training_transitions": 1441792,
+    "nontraining_transitions": 118784,
+    "live_starts": 33,
+    "simulator_initialization_reservations": 33,
+    "optimizer_updates": 2816,
+    "training_checkpoint_writes": 128,
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 319975063552
+  },
+  "all_master_caps_confirmation_formal_buffers_unchanged": true,
+  "failed_start_init_output_and_actual_GPUwall_retained": true,
+  "zero_logical_settlement": "OnlycollectorFINAL0 unusedlogicalreleased, noINCOMPLETErefund",
+  "recovery_candidate": "R5-MEAN10-CONFIRM-02-Z-RECOVERY1",
+  "actual_original_training_case": "R5-MEAN10-CONFIRM-02-RECOVERY1",
+  "training_seed_unchanged": 20261018,
+  "actual_u256_sha256": "47796b6c3804f7bf41a16ef95bb8d0a7c62ebd6a47a3fcb2bda24d1d26b8c54f",
+  "resource_incident": {
+    "consecutive_refusals": 1,
+    "attempts_maximum": 3,
+    "minimum_backoff_before_next_release_seconds": 60,
+    "if_second_refused_next_minimum_seconds": 180,
+    "no_fourth_if_unresolved": true
+  },
+  "release": "Onlyindependentexactprelive/actualcpacceptance, freshAUTH/spec, STOP/serialnormalcleanup/disk/quota/originalcoexistence/commit/tag/push; nofreeretry"
+}

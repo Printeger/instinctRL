@@ -1836,26 +1836,33 @@
       "experiment_id": "R5-MEAN10-CONFIRM-02-RECOVERY1",
       "group": "R1",
       "mode": "research-evaluation",
-      "native_status": "RUNNING",
-      "native_exit_code": null,
-      "raw_status": null,
-      "formal_counter_completeness": null,
-      "formal_transitions": null,
-      "observed": {},
+      "native_status": "FAILED",
+      "native_exit_code": 1,
+      "raw_status": "FAIL",
+      "formal_counter_completeness": "FINAL",
+      "formal_transitions": 0,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
       "retained_reservations": {
         "training_transitions": 0,
-        "nontraining_transitions": 6400,
+        "nontraining_transitions": 0,
         "optimizer_updates": 0,
         "training_checkpoint_writes": 0,
         "actor_optimizer_steps": 0,
         "critic_optimizer_steps": 0,
-        "allocated_gpu_seconds": 1810,
-        "wall_seconds_including_cleanup": 1810
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
       },
       "output_reserved_bytes": 8589934592,
-      "owned_cleanup": null,
-      "postrun_queries": 0,
-      "inventory": null
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-CONFIRM-02-RECOVERY1/live/R1-research-evaluation/INVENTORY.json"
     }
   ],
   "master_ledger": "goal_budget.json",
@@ -2000,13 +2007,7 @@
       20261016
     ],
     "formal_submitted": false,
-    "current_only_live": {
-      "experiment_id": "R5-MEAN10-CONFIRM-02-RECOVERY1",
-      "job_id": "J-0f04e97f67bc802a",
-      "group": "R1",
-      "mode": "research-evaluation",
-      "note": "当前唯一LIVE新确认seed18主256原Z评价J-0f04e97f67bc802a/A-9d9b879c63255c4d，准确inputs eb4a169/tag/push，实际u25647796b6c/source617/config2e9/controlc468；仅6400nontraining、0训练/更新/写checkpoint。旧seed15回归训练complete256/normalACK/settle/exact2postrun/CPUcoveragePASS，Role30独审实际训练及随后18实际Z/G4；首17原Z32/32已独立接受。只poll当前句柄；G4未授，formal训练0。"
-    }
+    "current_only_live": null
   },
   "current_mean_confirmation_training": [
     {
@@ -2100,5 +2101,5 @@
       "independent_actual_training_review": "reviews/mean-prior-confirmation02-recovery1-actual-training.json"
     }
   ],
-  "entry_inventory_as_of_ledger_sha256": "d23ef1c03cf087c1dcf906a6abe2b0e9db15ac9d317e08ca80f1828d2275dacb"
+  "entry_inventory_as_of_ledger_sha256": "3b63d0e879fa896424c606c3b39b01673e6a450f2b59d0a53e16e53ff63b0aa3"
 }
