@@ -1971,6 +1971,32 @@
       "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
       "postrun_queries": 2,
       "inventory": "experiments/R5-MEAN10-CONFIRM-02-Z-RECOVERY1/live/R1-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-c71649c6559afc47",
+      "experiment_id": "R5-MEAN10-REGRESSION-16",
+      "group": "R1",
+      "mode": "research-training",
+      "native_status": "RUNNING",
+      "native_exit_code": null,
+      "raw_status": null,
+      "formal_counter_completeness": null,
+      "formal_transitions": null,
+      "observed": {},
+      "retained_reservations": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048,
+        "allocated_gpu_seconds": 7210,
+        "wall_seconds_including_cleanup": 7210
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": null,
+      "postrun_queries": 0,
+      "inventory": null
     }
   ],
   "master_ledger": "goal_budget.json",
@@ -2115,7 +2141,13 @@
       20261016
     ],
     "formal_submitted": false,
-    "current_only_live": null
+    "current_only_live": {
+      "experiment_id": "R5-MEAN10-REGRESSION-16",
+      "job_id": "J-c71649c6559afc47",
+      "group": "R1",
+      "mode": "research-training",
+      "note": "当前唯一LIVE旧失败seed16的新mean10回归R5-MEAN10-REGRESSION-16/R1 J-c71649c6559afc47/A-98bfda5b32515c11，准确inputs95dffde/push（原许可9265693/tag），source617/config2e9/controlc468/seed20261016/256purehover。新确认17/18实际原Z均32/32/all8groups4/4，Role31已独立完整复算/冻结核查通过，正式JSON待16实际训练终态一并导出；此旧seed回归不计G4，method不再调。旧15训练已Role30接受且Z A-4f24d896680295b3未提交。只poll16句柄，终态normalACK/settle/exact2postrun/CPU后继续G6G7/回归Z/最终包；formal0。"
+    }
   },
   "current_mean_confirmation_training": [
     {
@@ -2270,5 +2302,5 @@
       "independent_original_Z_review": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
     }
   ],
-  "entry_inventory_as_of_ledger_sha256": "dea19371e57e1b172a32df5a55fc2b8f07085656dfe989ef9b4ce61f8b486d15"
+  "entry_inventory_as_of_ledger_sha256": "b164eb6827f771551943fbbdf198c17e424bc07110fcbfc48e32faba26965e07"
 }
