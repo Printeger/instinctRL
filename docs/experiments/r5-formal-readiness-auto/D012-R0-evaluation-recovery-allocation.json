@@ -1,0 +1,29 @@
+{
+  "status": "ALLOCATED_WITHIN_MASTER_NOT_RELEASE",
+  "authority": "Existing explicit user masterdelegatedCoordinator",
+  "old": {
+    "training_transitions": 655360,
+    "nontraining_transitions": 64000,
+    "live_starts": 16,
+    "simulator_initialization_reservations": 16,
+    "optimizer_updates": 1280,
+    "training_checkpoint_writes": 62,
+    "allocated_gpu_seconds": 54140,
+    "wall_seconds_including_cleanup": 54140,
+    "output_peak_and_reservations_bytes": 154618822656
+  },
+  "new": {
+    "training_transitions": 655360,
+    "nontraining_transitions": 64000,
+    "live_starts": 17,
+    "simulator_initialization_reservations": 17,
+    "optimizer_updates": 1280,
+    "training_checkpoint_writes": 62,
+    "allocated_gpu_seconds": 54140,
+    "wall_seconds_including_cleanup": 54140,
+    "output_peak_and_reservations_bytes": 163208757248
+  },
+  "reason": "BeforeApp originalcoexistence3/3/9>5; actualFINAL0/NOT_REACHED, allcharges retained. Newidentity unchangedsource/checkpoints/originalZ; incident1of3, before release >=60s then>=180s if needed, noextraGPUprobes. NormalACKsettlement2postruncomplete.",
+  "logical_time_caps_unchanged": true,
+  "master_and_protected_reserves_unchanged": true
+}
