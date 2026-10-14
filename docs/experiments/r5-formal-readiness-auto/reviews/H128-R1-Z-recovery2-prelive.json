@@ -1,0 +1,70 @@
+{
+  "verdict": "PASS",
+  "scope": "准确第三次且最后一次R1 Z资源恢复的条件性身份预审；不是即时release、科学结果或Goal资格验收。",
+  "identities": {
+    "input_commit": "2af03ab88828ad5fd2243ead7caa269d67f50560",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "packet_sha256": "2f9f87c78a01cce18bb5ce965cd73623e5226d9ffbbf021aa36cd7feb148d7ab",
+    "launch_sha256": "2f9f87c78a01cce18bb5ce965cd73623e5226d9ffbbf021aa36cd7feb148d7ab",
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "fresh_spec_id": "R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY2-a13c5a459d47",
+    "formal_order_id": "R5-H128-DEV-01-R1-RESEARCH-EVALUATION",
+    "fresh_attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY2-a13c5a459d47"
+  },
+  "must_fix": [],
+  "checks": [
+    {
+      "contract": "第二次R1评价的真实资源拒绝",
+      "result": "PASS",
+      "evidence": "独立核验RECOVERY1的27个对象、35129原始字节及归档bytes/SHA，完整job/attempt枚举一致。实际coexistence1/1/6%超过未改5%门槛；collector FINAL0，无policy、reset、transitions、optimizer或checkpoint写入。"
+    },
+    {
+      "contract": "准确清理及原审计",
+      "result": "PASS",
+      "evidence": "正常ACK、quiescent、至少两次稳定空扫描及准确owner/guard/child/discovered消失通过。恰好两个postrun receipt已核验；它们不能作为下一入口coexistence保证。"
+    },
+    {
+      "contract": "新身份与科学条件不变",
+      "result": "PASS",
+      "evidence": "新packet SHA匹配。相对RECOVERY1，source/config/card/master及完整科学参数保持相同；只改变attempt/spec/AUTH执行身份。actual新attempt/AUTH不存在，现有执行pins匹配，旧job不重开。"
+    },
+    {
+      "contract": "D008阶段调整与累计限制",
+      "result": "PASS_CONDITIONAL",
+      "evidence": "阶段start/init仅6→7，stage wall/GPU18060、output64GiB及其他方法/资源额度不变；master和confirmation/formal保护预留保留。新声明保守累计两次R1拒绝，即使中间R0曾PASS，也不借此无限重试。"
+    }
+  ],
+  "checkpoint_acceptance_reused": {
+    "review": "Role6 R1实际训练接受",
+    "u96_sha256": "d966d1723fa1846afa9cbdbdd97eca68ae495a5bb8c20d540e6a061a213c78cb",
+    "u128_sha256": "a165cbaa75113bfa9e6e7e5b681fa10cb84e4f91110ccc29f9d6351c1b10d78f",
+    "boundary": "评价仍使用原实际R1训练路径及预定u96/u128，不将新评价恢复当成新训练。"
+  },
+  "release_conditions": [
+    "距最新失败gate结束monotonic1934589724163951至少180秒，并记录实际满足时间；时间经过不等于资源gate通过。",
+    "这是保守累计第三次且最后一次R1评价prelaunch；若再次拒绝，执行STOP_PERSISTENT_RESOURCE_COEXISTENCE，不建立第四次尝试或通过改名重置计数。",
+    "绑定本准确accepted review与既有实际checkpoint接受，发行真实SHA完整的AUTH/spec；提交/tag/正常push并核对remote身份后单次提交。",
+    "重新检查无LIVE、STOP、准确owned quiescence、磁盘、stage/master及confirmation/formal保护预留；保持原5%六次内部查询和两次terminal后审计。",
+    "无额外GPU探测、无无关进程终止、无阈值或科学参数变更。",
+    "旧两次失败及start/init/output收费保留；FINAL0仅按原collector结清未用逻辑资源。",
+    "R0已观察的0/32与R1尚未执行的UNKNOWN分别记录；本预审不授予R1结果、配对正负结论或READY。"
+  ],
+  "non_blocking": [
+    {
+      "id": "RESOURCE-NOT-POLICY-FAILURE",
+      "assessment": "两次拒绝没有评价轨迹，不是原Z策略负结果；利用率来源仍未知。"
+    },
+    {
+      "id": "DELEGATED-RECOVERY",
+      "assessment": "本次限次恢复及D008在当前master委托内，可由受托Commander处理，无需一般逐入口用户确认；第三次失败后的STOP规则不能以阶段预算仍剩余为由绕过。"
+    }
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0
+  }
+}

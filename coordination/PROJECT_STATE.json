@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_FORMAL_READINESS_RESEARCH_PHASE_A",
+  "phase": "R5_FORMAL_READINESS_DEVELOPMENT_ORIGINAL_Z",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -13,19 +13,14 @@
     "path": "../docs/history/consolidation-20261012/r5/review_evidence/HOST_CPU_EVIDENCE.json"
   },
   "latest_independent_review": {
-    "id": "E-R5-ZERO-FINAL-SCIENTIFIC-20261014",
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-zero-final-scientific.json",
-    "sha256": "da09ded96ad8e806fce59bf2b5dcc177a5b58de2c7f9734d49058d6abea5949f",
-    "accepted": true,
-    "role_call": 6,
+    "path": "../docs/experiments/r5-formal-readiness-auto/reviews/H128-R1-Z-recovery2-prelive.json",
+    "sha256": "36ba1eb7b1e5676b5dfeb17ff2cb1caea1adb2a35486c72fe411cebb9e6ea1e3",
+    "role_call": 9,
     "independent_handle": "/root/pilot_reviewer",
-    "verdict": "PASS",
-    "scientific_status": "VALID_EXPERIMENT_POSITIVE",
-    "completion_allowed": true,
-    "evidence_commit": "0c54b7e5283c1afbeb6c023b3340e22cfaed526f",
-    "candidate_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
-    "ordinary_final_sync": "SATISFIED_LOCAL_ARTIFACTS_FINAL_NORMAL_PUSH_REQUIRED",
-    "not_future_training_authority": true
+    "verdict": "PASS_CONDITIONAL_EXACT_THIRD_LAST_R1_EVALUATION",
+    "accepted": true,
+    "completion_allowed": false,
+    "candidate_commit": "a13c5a459d471799f30644a9a04189d6e1805f02"
   },
   "latest_real_diagnostic": {
     "job_id": "J-ad3ac7db1fb82d89",
@@ -42,10 +37,10 @@
     "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
     "training_updates": 0
   },
-  "new_live_execution_authorized": false,
-  "new_training_authorized": false,
+  "new_live_execution_authorized": true,
+  "new_training_authorized": true,
   "migration_is_product_acceptance": false,
-  "current_candidate_config": "../docs/diagnostics/r5-readiness/inputs/pilot_r3_snapshot_config.json",
+  "current_candidate_config": "../docs/experiments/r5-formal-readiness-auto/experiments/R5-H128-DEV-01/snapshot_config.json",
   "blocking_followups": [],
   "migration_verification": {
     "scope": "MIGRATION_CPU_REGRESSION_ONLY_NOT_INDEPENDENT_PRODUCT_ACCEPTANCE",
@@ -407,8 +402,8 @@
       "G8_exactformalpackage_conditionalpermission",
       "G9_independentreview"
     ],
-    "next_action": "Exactly2boundpostrunqueries then realdataanalysis/independentreview; noblindretry.",
-    "training_authorizations_issued": 2,
+    "next_action": "A-8ffd68bb4789ae5a exactissued, >=180sbackoff recorded. Commit/tag/push then singlesubmitRECOVERY2 thirdlastR1Z attempt; pollreturnedhandle. Failedoriginalgate again=>STOPpersistentresource, no4th.",
+    "training_authorizations_issued": 3,
     "prelive_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-exact-prelive.json",
     "commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json"
   },

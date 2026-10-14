@@ -386,7 +386,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Exactthird/lastR1 originalZ RECOVERY2 and D008stage7 slots, cumulativeR1resourcefailure2/3/180sbackoff, unchangedscience/actualcheckpoints.",
-      "status": "REQUESTED"
+      "status": "PASS_CONDITIONAL_THIRD_LAST_R1_EVALUATION",
+      "evidence": "reviews/H128-R1-Z-recovery2-prelive.json",
+      "sha256": "36ba1eb7b1e5676b5dfeb17ff2cb1caea1adb2a35486c72fe411cebb9e6ea1e3"
     }
   ],
   "decisions": [
