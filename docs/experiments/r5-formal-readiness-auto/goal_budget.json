@@ -1138,6 +1138,15 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Newcontrol c468/52CPU exactCommander formalhook+seedcompatibility; immutablemeanfreeze/two unusedconfirmations andbotholdfailedseedregressions fourexactpackets/D016. NoactualG4/READY/formalrelease.",
+      "status": "PASS_FOUR_EXACT_TRAINING_PACKETS_CONTROL_IMPLEMENTATION_ONLY",
+      "evidence": "reviews/mean-prior-confirmations-regressions-control-prelive.json",
+      "sha256": "bec474e798473af17f452efbbcbf47ef5e4e421b9c581ea61fc4a5059e72b25a"
+    },
+    {
+      "call": 26,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "ConditionalprospectiveG6/S3/source/actualownu1+final/completeformaltemplates; firstnewconfirmationactualtraining/checkpoint acceptance after terminal evidence arrives. NoG4/READY/formalrelease.",
       "status": "IN_PROGRESS"
     }
   ],

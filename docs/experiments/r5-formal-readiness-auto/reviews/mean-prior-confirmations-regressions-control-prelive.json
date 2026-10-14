@@ -1,0 +1,156 @@
+{
+  "role": "Role25",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "准确四个cold-start训练包的条件prelive，以及新控制release和formal入口实现审查。未来评价仅模板；不授G4、实际G6/G7、G8完成、READY或任何release。",
+  "identities": {
+    "input_commit": "2d01b7f2db2728a0aa5a98e30787cf335ee03d9a",
+    "control_integration_commit": "29abdaf99b6eb4bb0e30e51289d87289ddb04c27",
+    "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "source_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "overlay_sha256": "2b6d4a9c4070000492339b3eb4277692ff7386934d1ba924d7d3b147dbc67fad",
+    "tool_release": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba",
+    "commander_sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4",
+    "formal_launch_gate_sha256": "f8970f482d3467cd075ad37ba467323b9eb09451f12fd76fa426d03f1ae23791",
+    "h1_adapter_sha256": "f28fc4b5e61e4bfdc5d00a0a1524722f0a0aa2025b682d4599fd8edca9d34757",
+    "freeze_sha256": "b55f881c8ef1435dcef21e354b8e36d6765d53b2f0dd2b72c18e81b9a40756c4",
+    "master_authority_sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33",
+    "effective_method_sha256": "c390ab73252ee37da504298ad08498f3d5131866023d9099f52baf3c749a907f",
+    "mean_prior_contract_sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+    "launch_sha256": {
+      "R5-MEAN10-CONFIRM-01": "d595dcd20fd49e7251956b2f93593c138cf442a0836e303fac535e12d81c2905",
+      "R5-MEAN10-CONFIRM-02": "8d71176b382f9c86592449982fd82ab57ddf1ebedd076050a3ac3b817306c592",
+      "R5-MEAN10-REGRESSION-15": "6a644fe63143353e3bbcf4c32e89a9cb9c2967b02b61678d335db53229489c3b",
+      "R5-MEAN10-REGRESSION-16": "557cdbdb94afe50938a8f9f43c9ee1debb470e3c8bad3cdcfb2902e5439dd781"
+    },
+    "expected_training_AUTH_sha256": {
+      "R5-MEAN10-CONFIRM-01": "2d6d13531153923f299ee94b43a84a8e4185be3a2a643054d747635732067e69",
+      "R5-MEAN10-CONFIRM-02": "82cbba77ae30f5dda9be8dad25eee5f2823d88e8777b69c8cdcb2614e6d2ecec",
+      "R5-MEAN10-REGRESSION-15": "64623c3f3e9bd843c0ffc1766449e2730a058a58e50a033ab2a8a7ca2647cc19",
+      "R5-MEAN10-REGRESSION-16": "a87b2d2f3f02b4d442068ca29f001e333f3d36cbbd0f375428efa0943073c3b7"
+    }
+  },
+  "control_checks": {
+    "release": "独立verify内容寻址id通过；96个冻结文件与当前tools/rlflow全部逐文件SHA一致。相对旧d027仅rlflow/h1.py及对应test_h1_adapter.py变化，旧release及历史输入保持原身份。",
+    "seed_semantics": "H1仅新增research-transition/research-formal-evaluation使用authorization evaluation_seed；既有research-training/research-evaluation选择行为不变。训练source/config/科学方法没有因此变化。",
+    "exact_formal_issue": "formal发行需要准确final-readiness review及其manifest hash，manifest绑定当前Commander/gate和完整spec_template；训练expectedAUTH或未来评价AUTH模板也精确绑定。",
+    "later_formal_submit": "真实CLI在没有显式later --start-formal时，于Store之前拒绝；实际formal submit还必须通过准确READY/manifest/review/permission/Store approval及完整spec gate。",
+    "generated_formal_evaluation": "只允许声明的AUTH SHA填充与manifest固定ID/顺序/kind的late条件；checkpoint path/SHA/update必须对应独立accepted训练证据，完整spec最终deep equality。",
+    "reserve_transfer": "transfer_formal_reserve产生checked copy，随后remaining/disk/validate/approval通过，才随真实admission的entry charge持久化；历史收费和既有reserved entries不退款。",
+    "ordinary_guards": "串行idle/STOP、原coexistence、准确committed spec/remote HEAD、工具字节、磁盘、累积预算、完整inventory和两次postrun边界仍保留。",
+    "independent_CPU_validation": "实际运行限定测试tools/rlflow/tests/test_h1_adapter.py、test_formal_launch_gate.py、test_r5_commander_modes.py：52/52 PASS；只用/tmp作为pytest临时目录，无Store mutation、GPU、simulator、actor forward或optimizer。",
+    "limit": "未执行完整formal Store发行或submit；本轮不把实现准备当G8完成，也不批准尚未产生的准确G6/formal包。"
+  },
+  "freeze_checks": {
+    "immutable_method": "freeze绑定Role24已接受的开发G2/G3、实际candidate source/config/method、primary256及固定256 cold-start预算；新控制兼容范围明确且不改变科学方法。",
+    "unused_confirmation_seeds": [
+      20261017,
+      20261018
+    ],
+    "independent_unused_seed_check": "独立枚举37份实际AUTH，集合及各原件SHA与freeze扫描完全一致；未用确认seed均未出现在先前实际训练授权中。",
+    "confirmation_rule": "两个预先冻结新seed均须完整原Z32/32且全部子组4/4，不采用2/3、不换seed、不看结果调参或扩展超过256。",
+    "old_failed_seed_regressions": [
+      20261015,
+      20261016
+    ],
+    "regression_rule": "旧失败seed只作新方法明确回归，不能计作未用G4确认；旧冻结失败仍保持失败。"
+  },
+  "exact_training_cases": [
+    {
+      "experiment_id": "R5-MEAN10-CONFIRM-01",
+      "group": "R1",
+      "training_seed": 20261017,
+      "validation_scope": "UNUSED_CONFIRMATION_G4"
+    },
+    {
+      "experiment_id": "R5-MEAN10-CONFIRM-02",
+      "group": "R1",
+      "training_seed": 20261018,
+      "validation_scope": "UNUSED_CONFIRMATION_G4"
+    },
+    {
+      "experiment_id": "R5-MEAN10-REGRESSION-15",
+      "group": "R1",
+      "training_seed": 20261015,
+      "validation_scope": "OLD_FAILED_SEED_REGRESSION_NOT_G4"
+    },
+    {
+      "experiment_id": "R5-MEAN10-REGRESSION-16",
+      "group": "R1",
+      "training_seed": 20261016,
+      "validation_scope": "OLD_FAILED_SEED_REGRESSION_NOT_G4"
+    }
+  ],
+  "common_training_checks": {
+    "result": "四包逐一核对packet/card/master/parent/expectedAUTH字节和全部现存spec pins；新attempt及actual AUTH在核查时不存在。四profile与freeze一致，仅新实验身份和预定training seed变化。",
+    "actual_snapshot_validation": "从准确只读生产snapshot独立调用load_config、四个validate_parameters/required_budget及method_hashes全部PASS。",
+    "mean_prior_weight": 10,
+    "residual_reward_weight": 0.05,
+    "anchor_weight": 4,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "updates": 256,
+    "training_transitions": 131072,
+    "actor_Adam_steps": 2048,
+    "critic_Adam_steps": 2048,
+    "checkpoint_writes": 11,
+    "command_profile": "pure-hover",
+    "evaluation_seed": 20260909,
+    "first_rollout": "真实512样本capture/index/oldBeta/logp概率gate先于两类optimizer；实际运行后需独立验收，当前只审准确实现和输入。",
+    "per_entry": {
+      "starts": 1,
+      "initialization_reservations": 1,
+      "initialization_tick_ceiling": 10,
+      "explicit_resets": 1,
+      "automatic_reset_ceiling": 131072,
+      "outer_wall_and_GPU_seconds": 7210,
+      "output_bytes": 8589934592
+    },
+    "future_evaluation": "各case原Z只u256，6400非训练、0训练/update/checkpoint写；原T0、200steps×32、startup、安全、全部子组、阈值及分母不变。当前checkpoint SHA为null，strict拒绝未绑定draft是预期行为。"
+  },
+  "budget_checks": {
+    "D016": "stage调整在master内；只调未来未用confirmation/transition保护额，完整formal reserve保持不变。",
+    "historical_preservation": "与完整结算后的6ae8cd9 ledger比较，master caps、used、所有历史live_entries及formal_initial_segment值完全一致。",
+    "four_training_and_future_evaluation": "四训练524288 transitions/1024updates/44writes及四未来评价25600非训练，加既有保守预留和调整后全部保护额，逻辑/start/init/output各维度均在stage/master内。",
+    "stage": {
+      "training_transitions": 1441792,
+      "nontraining_transitions": 118784,
+      "starts": 31,
+      "initialization_reservations": 31,
+      "updates": 2816,
+      "checkpoint_writes": 128,
+      "wall_and_GPU_seconds": 55050,
+      "output_bytes": 302795194368
+    },
+    "time_admission": "以当前used和全部保护额核对下一7210秒entry，GPU58050.15506469901、wall58076.09121454996均小于86400。每个后续entry必须重新按实际使用量检查；不是八条entry的一揽子时间release。"
+  },
+  "conditions": [
+    "仅对上述四个准确cold-start训练身份提供条件prelive。Commander绑定本accepted review hash、相应packet/source和expectedAUTH SHA，签发准确actual AUTH/spec；完成commit/tag/正常push后才可单次串行release。",
+    "每次release重核remote HEAD/已提交spec/工具字节、STOP、idle、全部前序终态正常owned cleanup/结算、磁盘、quota、master/stage及所有保护预留和原内部coexistence。",
+    "不增加外部GPU探测、不放宽资源阈值、不操作无关进程。仅有测量支持的基础设施失败可另立准确fresh recovery身份并重新审核；不能科学重试或重开旧handle。",
+    "实际训练必须完成原首512 before-both-optimizers gate并保留完整数据、checkpoint及native生命周期；每个真实u256须独立接受后才能填入未来评价AUTH/source/SHA，重新准确issue并串行release。",
+    "两个未用确认均须通过；旧15/16回归不得替代任何确认，不可据结果改方法、节点、seed或预算。",
+    "所有旧失败、native FAILED、INCOMPLETE/null、实际计数和完整保守预留继续保持；科学验收与process verdict分别记录。",
+    "G6/G7、G8最终完整包、最终READY和later formal submit必须各自取得准确实际证据/独立审核；当前CPU集成和本四包预审都不是这些权限。"
+  ],
+  "non_blocking": [
+    {
+      "id": "FORMAL_IMPLEMENTATION_BOUNDARY",
+      "detail": "新控制的formal入口实现可作为准备，但没有准确最终包或实际G6/G7；不因这些尚未进入本轮的交付物缺失阻塞四个已冻结cold-start训练。"
+    },
+    {
+      "id": "RESULTS_PENDING",
+      "detail": "四个未来训练和原Z结果尚未产生；新方法的G4及旧seed回归结果均未授予。"
+    },
+    {
+      "id": "RESOURCE_CONDITIONALITY",
+      "detail": "预算保护和每次remaining_check持续有效；本PASS不预留额外隐含重试或保证后续每个entry无条件可启动。"
+    }
+  ],
+  "release_granted": false,
+  "G4_granted": false,
+  "G6_G7_granted": false,
+  "G8_complete": false,
+  "READY_granted": false
+}
