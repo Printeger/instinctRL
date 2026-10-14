@@ -92,6 +92,33 @@ def test_disabled_observer_is_noop(tmp_path):
     assert not list(tmp_path.iterdir())
 
 
+def test_resumed_phase_gate_is_bound_to_actual_starting_counter(tmp_path):
+    trainer, batch = fixture()
+    trainer.update_counter = 256
+    diagnostic = FirstUpdateDiagnostic(tmp_path, enabled=True, starting_update=256)
+    before = _digest(_state(trainer))
+    rng = torch.get_rng_state().clone()
+    diagnostic.before_update(trainer, batch)
+    assert len(diagnostic._rows) == 1 and diagnostic._step_count == 0
+    assert _digest(_state(trainer)) == before and torch.equal(rng, torch.get_rng_state())
+    diagnostic.retain_rollout(257, batch, trainer)
+    retained = torch.load(tmp_path / 'update_257_full_input.pt', weights_only=True)
+    assert retained['update'] == 257
+    diagnostic.abort(RuntimeError('CPU test stops before any optimizer'))
+
+
+def test_resumed_phase_mismatch_cannot_skip_first_gate(tmp_path):
+    trainer, batch = fixture()
+    trainer.update_counter = 256
+    batch.old_log_probabilities[0, 0] += 1
+    diagnostic = FirstUpdateDiagnostic(tmp_path, enabled=True, starting_update=256)
+    before = _digest(_state(trainer))
+    with pytest.raises(RuntimeError, match='pre-update probability/distribution gate failed'):
+        diagnostic.before_update(trainer, batch)
+    assert _digest(_state(trainer)) == before
+    assert trainer.update_counter == 256 and diagnostic._step_count == 0
+
+
 def test_pre_hook_attempt_is_not_completed_update(tmp_path):
     trainer, batch = fixture()
     diagnostic = FirstUpdateDiagnostic(tmp_path, enabled=True)
@@ -170,9 +197,11 @@ def test_real_product_network_collection_binding_and_no_update_gate(tmp_path):
     assert actor.distribution == original
 
 
-def test_mocked_eight_callback_boundaries_detach_normally_without_updates(tmp_path):
+@pytest.mark.parametrize('starting_update', [0, 256])
+def test_mocked_eight_callback_boundaries_detach_normally_without_updates(tmp_path, starting_update):
     trainer, batch = fixture()
-    diagnostic = FirstUpdateDiagnostic(tmp_path, enabled=True)
+    trainer.update_counter = starting_update
+    diagnostic = FirstUpdateDiagnostic(tmp_path, enabled=True, starting_update=starting_update)
     diagnostic.before_update(trainer, batch)
     before = _digest(_state(trainer))
     pre = next(iter(trainer.actor_optimizer._optimizer_step_pre_hooks.values()))
@@ -187,3 +216,8 @@ def test_mocked_eight_callback_boundaries_detach_normally_without_updates(tmp_pa
     saved=torch.load(tmp_path/'first_update_probe.pt',weights_only=False)
     assert saved['correction_units']=='m/s' and saved['correction_heads']==[1,2,3]
     assert len(saved['minibatches'])==8
+    gate = json.loads((tmp_path / 'first_update_gate.json').read_text())
+    if starting_update:
+        assert gate['starting_update'] == 256 and gate['first_absolute_update'] == 257
+    else:
+        assert 'starting_update' not in gate and 'first_absolute_update' not in gate

@@ -4,7 +4,7 @@ import torch
 from instinctlab.control.anchor import MeasurementAnchor
 from instinctlab.control.governor import decode_governor
 from training_workloads.unified_h1.transition_diagnostic import (
-    transition_commands, validate_transition_step, TRANSITION_SAMPLES,
+    transition_commands, validate_transition_step, execute_finite_transition, TRANSITION_SAMPLES,
 )
 
 
@@ -85,3 +85,18 @@ def test_nonzero_reference_cannot_remain_active(zero_row):
     metrics['active'][:] = 1
     with pytest.raises(RuntimeError, match='reference remains active'):
         validate_transition_step(**row(commands[16], commands[17], metrics))
+
+
+def test_finite_runner_rejects_wrong_mode_before_touching_backend():
+    from types import SimpleNamespace
+    with pytest.raises(PermissionError, match='exact authorized mode'):
+        execute_finite_transition(SimpleNamespace(authorization={'mode': 'research-evaluation'}))
+
+
+def test_finite_runner_rejects_training_budget_before_touching_backend():
+    from types import SimpleNamespace
+    auth = {'mode': 'research-transition', 'budgets': {
+        'training_transitions': 512, 'optimizer_updates': 1,
+        'checkpoint_writes': 0, 'nontraining_transitions': 3584}}
+    with pytest.raises(PermissionError, match='nontraining only'):
+        execute_finite_transition(SimpleNamespace(authorization=auth))

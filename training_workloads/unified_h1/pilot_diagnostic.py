@@ -96,7 +96,10 @@ def beta_kl(old_alpha: torch.Tensor, old_beta: torch.Tensor, alpha: torch.Tensor
 
 class FirstUpdateDiagnostic:
     """Owns the fixed 512-sample gate/probe without sampling policy actions."""
-    def __init__(self, output: Path, *, enabled: bool) -> None:
+    def __init__(self, output: Path, *, enabled: bool, starting_update: int = 0) -> None:
+        if type(starting_update) is not int or starting_update < 0:
+            raise ValueError("diagnostic starting update must be a nonnegative integer")
+        self.starting_update = starting_update
         self.output=output; self.enabled=bool(enabled); self._probe=None; self._rows=[]; self._handles=[]; self._gradient_handles=[]; self._unclipped_gradients={}; self._before_parameters=None; self._step_count=0; self._completed_step_count=0; self._trainer=None
 
     def _evaluate(self, trainer: Any, batch: Any, boundary: str) -> dict[str,Any]:
@@ -161,7 +164,7 @@ class FirstUpdateDiagnostic:
         self._rollout_distributions=None
 
     def before_update(self, trainer: Any, batch: Any) -> None:
-        if not self.enabled or trainer.update_counter != 0: return
+        if not self.enabled or trainer.update_counter != self.starting_update: return
         self._trainer=trainer
         _batch(batch); before=_state(trainer); rng=_rng_snapshot()
         try:
@@ -218,8 +221,11 @@ class FirstUpdateDiagnostic:
         save_tensor_evidence({"schema_version":"instinctrl-pilot-first-update-probe/2","sample_count":SAMPLES,
                     "correction_heads":[1,2,3],"correction_frame":"body","correction_units":"m/s",
                     "sample_minus_mean_action_units":"dimensionless","minibatches":self._rows},self.output/"first_update_probe.pt")
-        atomic_json_replace(self.output,"first_update_gate.json",{"schema_version":"instinctrl-pilot-first-update-gate/1","status":"PASS","sample_count":SAMPLES,
-            "float32_atol":FLOAT32_ATOL,"float32_rtol":FLOAT32_RTOL,"policy_rng_consumed":False,"minibatches":MINIBATCHES})
+        gate={"schema_version":"instinctrl-pilot-first-update-gate/1","status":"PASS","sample_count":SAMPLES,
+            "float32_atol":FLOAT32_ATOL,"float32_rtol":FLOAT32_RTOL,"policy_rng_consumed":False,"minibatches":MINIBATCHES}
+        if self.starting_update:
+            gate.update(starting_update=self.starting_update, first_absolute_update=self.starting_update + 1)
+        atomic_json_replace(self.output,"first_update_gate.json",gate)
         self._probe=None
 
     def detach_hooks(self) -> None:
@@ -240,7 +246,7 @@ class FirstUpdateDiagnostic:
             "completion_scope":"observed actor post-step hook boundaries; actual model/optimizer state retained in partial probe"})
 
     def retain_rollout(self, update: int, batch: Any, trainer: Any) -> None:
-        if not self.enabled or update not in RETAIN_FULL_INPUT_UPDATES: return
+        if not self.enabled or update - self.starting_update not in RETAIN_FULL_INPUT_UPDATES: return
         _batch(batch); self.output.mkdir(parents=True,exist_ok=True)
         save_tensor_evidence({"schema_version":"instinctrl-pilot-retained-input/1","update":update,"policy":_clone(batch.policy),"privileged":_clone(batch.privileged),
                     "actions":_clone(batch.actions),"old_log_probabilities":_clone(batch.old_log_probabilities),"old_alpha":_clone(batch.old_alpha),"old_beta":_clone(batch.old_beta),
