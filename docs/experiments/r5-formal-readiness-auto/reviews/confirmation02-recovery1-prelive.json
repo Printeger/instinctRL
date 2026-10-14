@@ -1,0 +1,113 @@
+{
+  "role": "Role18",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "确认02资源拒绝后的准确fresh训练恢复包条件预审；不验收训练结果、确认原Z、G4或READY，不授予release。",
+  "identities": {
+    "evidence_commit": "c05913507ff15138db7c93dc3e96806c424d6c23",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "source_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "tool_release": "d027e9a0076377380a4ce277727cba8bfde132a113c9ce2b436c28ab7de9f793",
+    "launch_sha256": "a8304e120d3a9ef57f1345409b9df77b0ffcd6d4b647b3fbf222e78af0c8c4ad",
+    "expected_training_AUTH_sha256": {
+      "R1": "c57eec627283d01fb819edbaeb0238255b86c09fb57a924285e536863fa0e0c1"
+    },
+    "new_training_spec_id": "R5-H256-CONFIRM-02-R1-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47",
+    "new_training_attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-CONFIRM-02-R1-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47",
+    "scientific_experiment_id": "R5-H256-CONFIRM-02",
+    "parent_packet_sha256": "e0889b2731ab58737c6e4d647b5805f3e67cf57b8c853b357bd634f9b9c2f420",
+    "parent_failed_job": "J-c92f097ed211653e",
+    "experiment_card_sha256": "f42044a8de14c3100e53c22e2dd0eeb3af31a8e05851cc56541541445a521ed2",
+    "master_authority_sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+  },
+  "failed_entry_checks": {
+    "inventory": {
+      "original_objects": 27,
+      "original_bytes": 33575,
+      "archive_copy_bytes": 33575,
+      "result": "全部实际原件与copies逐文件重哈希和核对大小；原job与整个attempt文件集合与inventory完全一致。"
+    },
+    "resource_failure": {
+      "native_status": "FAILED",
+      "exit_code": 1,
+      "observed_utilization_percent": [
+        9,
+        4,
+        3
+      ],
+      "observed_span_seconds": 10.029434484,
+      "unchanged_threshold_percent": 5,
+      "classification": "原coexistence正确拒绝；不是学习负结果，也没有证据建立产品或方法缺陷。未归因GPU利用率来源。"
+    },
+    "execution": {
+      "initialization_measurement": "NOT_REACHED",
+      "observed_initialization_ticks": 0,
+      "training_transitions": 0,
+      "optimizer_updates": 0,
+      "checkpoint_writes": 0,
+      "formal_counter_completeness": "FINAL",
+      "formal_transitions": 0
+    },
+    "cleanup": "正常ACK、quiescent、未timed_out、两次稳定空扫描、无survivors；再次只读核对owner/guard/child三个已知身份均不再owned。",
+    "postrun": "恰好ordinal0/1两份原receipt，在normal owned ACK后；本轮未执行GPU查询。",
+    "accounting": {
+      "wall_seconds": 12.127727136015892,
+      "allocated_GPU_seconds": 10.80531289218925,
+      "start_and_init_charge_retained": true,
+      "output_reservation_bytes_retained": 8589934592,
+      "unused_logical_reservation_settled_on_FINAL_zero_only": true
+    }
+  },
+  "fresh_packet_checks": {
+    "result": "PASS",
+    "identity_changes": "训练AUTH只有attempt字段变化；训练spec只有id、argv路径、authorization pin及h1 attempt变化。评价相应更换fresh身份和未来fresh训练checkpoint路径。",
+    "scientific_parameters": "与旧准确包完全相同：冻结seed20261016，eval20260909，R1 w.05、anchor4、actorLR1e-4、criticLR3e-4、pure-hover256、原Z只u256。",
+    "bindings": "核对baseline/card/master/parent byte pins、全部现存spec pins，以及expected AUTH文件字节与packet proposal及SHA一致。",
+    "future_evaluation_checkpoint": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-CONFIRM-02-R1-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+      "update": 256,
+      "sha256": null,
+      "status": "必须等待实际fresh训练产物与独立验收，不可使用旧失败attempt或虚构SHA。"
+    },
+    "current_executability": "新训练和评价attempt尚不存在，actual AUTH不存在；这是未签发proposal，不是可执行许可。"
+  },
+  "budget_checks": {
+    "D014": "仅stage starts/init18→19及output162→170GiB；逻辑、时间cap及master/保护预留保持不变。",
+    "new_training_entry": {
+      "training_transitions": 131072,
+      "optimizer_updates": 256,
+      "actor_Adam_steps": 2048,
+      "critic_Adam_steps": 2048,
+      "checkpoint_writes": 11,
+      "outer_wall_and_GPU_seconds": 7210,
+      "output_bytes": 8589934592,
+      "explicit_resets": 1,
+      "automatic_reset_ceiling": 131072
+    },
+    "admission_arithmetic": "旧保守逻辑预留加本次完整新entry与未减少的confirmation/formal保护预留，所有master维度均仍有空间；stage训练524288+131072=655360、writes51+11=62，保持失败start/init及8GiB收费。实际release仍须由现有adapter重新核对当时总账和磁盘。"
+  },
+  "conditions": [
+    "记录并执行本incident第二attempt的至少60秒退避；若再次同类拒绝，第三且最后attempt至少180秒。最多三次包含原attempt；第三拒绝后STOP persistent resource，不产生第四次。",
+    "只建立新fresh attempt，永久保留旧FAILED job/attempt；不得resume、resubmit或改写旧receipt。",
+    "签发actual AUTH前绑定本review的accepted hash及准确packet/source/expected AUTH；提交、tag、正常push后才由现有Commander准确release。",
+    "release时重核所有前序job terminal、owned cleanup/结算、STOP clear、单GPU串行、pins、disk、stage/master全部维度和保护预留。",
+    "使用原内部六查询coexistence gate，不加外部GPU探测，不放宽5%或其他阈值，不操作GNOME及无关进程。",
+    "训练必须保留真实首512 gate先于两类optimizer、完整256updates和既定checkpoint节点；实际训练完成后独立验收fresh u256，才能签发原Z评价。",
+    "资源恢复不改变冻结方法或seed；确认01未评价的Z结果不能用于调参。两个冻结seed均须按原确认规则通过。",
+    "native close失败、INCOMPLETE/null和保守预留继续真实保留；科学数据与process verdict分别验收。"
+  ],
+  "non_blocking": [
+    {
+      "id": "RESOURCE-REFUSAL",
+      "detail": "有限、预先声明且带退避的resource-only fresh恢复在现有master委派内；这不是产品修复，也不是无界自动重试。"
+    },
+    {
+      "id": "FUTURE-EVALUATION",
+      "detail": "本轮只检查原Z/u256模板与新训练路径；尚未验收任何真实确认02 checkpoint或原Z结果。"
+    }
+  ],
+  "release_granted": false,
+  "scientific_qualification_granted": false,
+  "READY_granted": false
+}

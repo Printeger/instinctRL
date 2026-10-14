@@ -1,5 +1,5 @@
 {
-  "status": "WAITING_MINIMUM_BACKOFF",
+  "status": "MINIMUM_BACKOFF_COMPLETED_NO_GPU_PROBES",
   "failed_job": "J-c92f097ed211653e",
   "unresolved_incident_failures": 1,
   "maximum_attempts_including_original": 3,
@@ -8,5 +8,7 @@
   "started_monotonic": 1940513.333534818,
   "started_UTC": "2026-10-14T15:46:16.023988+00:00",
   "additional_GPU_queries": 0,
-  "unrelated_process_actions": 0
+  "unrelated_process_actions": 0,
+  "actual_elapsed_seconds": 527.7471621271688,
+  "completed_UTC": "2026-10-14T15:55:03.771151+00:00"
 }
