@@ -1,0 +1,213 @@
+{
+  "approval_id": "A-859f34b1f384dcdb",
+  "h1_evidence": {
+    "allocation_basis": "allocated_device_wall_seconds",
+    "allocation_gpu_seconds": 100.06469768192619,
+    "counter_completeness": "INCOMPLETE",
+    "counters": {
+      "actor_optimizer_steps": 0,
+      "attempted_policy_steps": 400,
+      "attempted_updates": 0,
+      "automatic_resets": 0,
+      "completed_policy_steps": 400,
+      "completed_updates": 0,
+      "critic_optimizer_steps": 0,
+      "explicit_resets": 2,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 12800,
+      "real_checkpoint_writes": 0,
+      "real_environment_transitions": 12800,
+      "real_optimizer_updates": 0,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 0
+    },
+    "exit_fact": "FAILED",
+    "formal_verdict": "NOT_GRANTED",
+    "manifest": {
+      "cleanup_timeout.json": {
+        "bytes": 200,
+        "sha256": "e088af8bc00073ac83d496680f73007235e82f3f7dc928eac07bf21194a04a09"
+      },
+      "evaluation_progress.json": {
+        "bytes": 112,
+        "sha256": "f962fd6e611d3bcb229c5558c631701704f8343d68d652b524d7385eaa3818a0"
+      },
+      "evaluation_raw/pilot_C1_u16/Z.jsonl": {
+        "bytes": 1272999,
+        "sha256": "4962ed14ee0c64baba2882d3da7f632140a26ca794a5718b015a0e5e808f18b4"
+      },
+      "evaluation_raw/pilot_C1_u64/Z.jsonl": {
+        "bytes": 1285903,
+        "sha256": "b4a3e5b149feee2c21b249822b0541491ac0d8fe0f4988d6fb7833be9db73407"
+      },
+      "initialization_accounting.json": {
+        "bytes": 269,
+        "sha256": "61d33061293905bf9cf69e78083b6310aaafb6b060780015d3bef60151f6ef21"
+      },
+      "output_quota_binding.json": {
+        "bytes": 250,
+        "sha256": "9814f1db236e942e003d62d3f6f6b9c73047facb0c1818538141d742b022e49a"
+      },
+      "pilot_C1_u16_Z.json": {
+        "bytes": 9397,
+        "sha256": "2909a4bd1ec4927a80206bfcfcd1a8fb8383273410a510a7b7dd09c7ebce1079"
+      },
+      "pilot_C1_u16_policy_Z.json": {
+        "bytes": 9339,
+        "sha256": "e67d888ad94814c523a9c7c841ea0c85b3f27378738832ace1c524c3cbaab6a4"
+      },
+      "pilot_C1_u64_Z.json": {
+        "bytes": 9459,
+        "sha256": "c31cbaaafba6adfe7c4af3ac8577e66af1298c9b8458a075c9cc5a0d6988e8e8"
+      },
+      "pilot_C1_u64_policy_Z.json": {
+        "bytes": 9401,
+        "sha256": "ad300b819d7cd935c861ddfbb2efa3637de6c690f76c265bfdee0f0187653c44"
+      },
+      "pilot_reward_binding.json": {
+        "bytes": 513,
+        "sha256": "76468c25973ce93ba941e53da712b5c1185b60bd9283950bd04f6bb72efe0d74"
+      },
+      "process_identity.json": {
+        "bytes": 293,
+        "sha256": "2acc41264deceb36550feb062860f5cf7224cf21bcca1fccdb1b70c15004e56e"
+      },
+      "process_start.json": {
+        "bytes": 1349,
+        "sha256": "54ea26e1a9aeebc3d5a8d822573887abd00e11d58d3fa9c6473cb0365e396329"
+      },
+      "status.json": {
+        "bytes": 944,
+        "sha256": "8bcdf2f3d05f73d34256bb46fb3fa2eeab4afd01a0968f6bb708cadbd2f6ad8e"
+      }
+    },
+    "raw_status": "PASS_PENDING_CLOSE",
+    "scientific_validity": "UNASSESSED",
+    "scope": "H1_RAW_EXECUTION",
+    "transitions": null
+  },
+  "id": "J-ca72975b201fceb1",
+  "identity": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pgid": 1814118,
+    "pid": 1814118,
+    "starttime": "190542555"
+  },
+  "receipt": {
+    "allocated_seconds": 100.06469768192619,
+    "definitely_not_released": false,
+    "elapsed_seconds": 100.77406434598379,
+    "error": null,
+    "exit_code": -9,
+    "job_id": "J-ca72975b201fceb1",
+    "released": true,
+    "spec_sha256": "05a4b6a73fc225c2d2461c2adf33d6afe344f452fdf66308f23e49cd57fa1464",
+    "status": "FAILED"
+  },
+  "reserved_resources": {
+    "transitions": 12800
+  },
+  "spec": {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--authorization",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+      "--attempt",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014",
+      "--mode",
+      "pilot-evaluation"
+    ],
+    "backend": "real",
+    "conditions": [
+      {
+        "evidence_id": "E-R5-ZERO-PRELIVE-20261014",
+        "sha256": "3d3b54d0fd6e8a0cc8b3dc3196bdb97054cb3b418deeef1db1c923f98cef95f3"
+      },
+      {
+        "evidence_id": "E-R5-ZERO-C1-ACTUAL-TRAINING-20261014",
+        "sha256": "61d1e97d68b78f4d0f9b7920ccc8427391f395bcc2b89529269cbd7b72f5400d"
+      },
+      {
+        "evidence_id": "E-R5-ZERO-EXTRA-CONDITIONAL-PRELIVE-20261014",
+        "sha256": "0cf841431c6e0d6e61c531b5e4b03aa032db7dd4b164d3c8fac8f1ab3d8514b8"
+      },
+      {
+        "evidence_id": "E-R5-ZERO-USER-EXTRA-RESOURCE-DECISION-20261014",
+        "sha256": "f16b801199b8eb03bda7d7681b6f30c6b41652c503b5111fba6851d40c1c1d60"
+      }
+    ],
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014",
+    "evaluation": "metric-h1-v1",
+    "h1": {
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014",
+      "config_sha256": "4746f5a9d2e96477d8ed6fc84804deb247a6a9e090c4b3e2c4c3a2ed06f266a3",
+      "gpu_accounting": "allocated_device_wall_seconds",
+      "gpu_devices": [
+        "0"
+      ],
+      "mode": "pilot-evaluation",
+      "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014"
+    },
+    "id": "UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014",
+    "method": "unified-h1-zero-neutrality-v1",
+    "observations": [
+      "status",
+      "counters",
+      "process_identity",
+      "process_start",
+      "cleanup",
+      "evaluation_raw"
+    ],
+    "pins": {
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+        "sha256": "9d732b78569d3d5e5ff8328447e1300a70102240d809cc7e91c95f6028c6ddf3"
+      },
+      "dispatcher": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014/training_workloads/unified_h1/local_dispatch.py",
+        "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+      },
+      "executable": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "product": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+        "sha256": "f06b81b0a334dae1cf96738d21ec6bb29860c436917e4e6f1e15ddcb81116f28"
+      },
+      "runtime": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "workload": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014/training_workloads/unified_h1/formal_unified_h1.py",
+        "sha256": "148467596f4c5616c09db7563bc2f6aada030e1735dcd450caa56e64d3284896"
+      }
+    },
+    "resources": {
+      "gpu_seconds": 1810,
+      "starts": 1,
+      "transitions": 12800,
+      "wall_seconds": 1810
+    },
+    "runtime": "/home/mint/rl_blackwell_test",
+    "seed": 20260909,
+    "stage_id": "INSTINCTRL-R5-ZERO-CORRECTION-20261014"
+  },
+  "stage": "INSTINCTRL-R5-ZERO-CORRECTION-20261014",
+  "status": "FAILED",
+  "used_resources": {
+    "gpu_seconds": 100.06469768192619,
+    "starts": 1,
+    "transitions": null,
+    "wall_seconds": 100.77406434598379
+  }
+}

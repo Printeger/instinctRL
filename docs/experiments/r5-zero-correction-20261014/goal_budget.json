@@ -19,27 +19,27 @@
     "role_calls": 12
   },
   "used": {
-    "live_starts": 4,
-    "simulator_initialization_reservations": 4,
+    "live_starts": 5,
+    "simulator_initialization_reservations": 5,
     "training_transitions": 0,
     "nontraining_transitions": 0,
     "optimizer_updates": 0,
     "training_checkpoint_writes": 0,
-    "wall_seconds_including_cleanup": 747.3987863801885,
-    "allocated_gpu_seconds": 744.9036658930127,
-    "output_bytes": 5522252877,
+    "wall_seconds_including_cleanup": 848.1728507261723,
+    "allocated_gpu_seconds": 844.9683635749388,
+    "output_bytes": 5528738352,
     "automatic_retries": 0,
-    "role_calls": 5
+    "role_calls": 6
   },
   "reserved": {
     "training_transitions": 65536,
-    "nontraining_transitions": 12800,
+    "nontraining_transitions": 25600,
     "optimizer_updates": 128,
     "training_checkpoint_writes": 14
   },
   "observed": {
     "training_transitions": 65536,
-    "nontraining_transitions": 12800,
+    "nontraining_transitions": 25600,
     "optimizer_updates": 128,
     "training_checkpoint_writes": 14,
     "actor_optimizer_steps": 1024,
@@ -90,6 +90,13 @@
       "status": "PASS_PARTIAL_AND_CONDITIONAL_PRELIVE_ONLY",
       "evidence": "reviews/review-C0-Z-C1-failure-extra-prelive.json",
       "sha256": "0cf841431c6e0d6e61c531b5e4b03aa032db7dd4b164d3c8fac8f1ab3d8514b8"
+    },
+    {
+      "call": 6,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Fresh C1 actual original-Z evaluation whole inventory/pins/producer/T0all32/reset/subgroups/cleanup/formal+native/budget, complete paired u64 primary science and full Goal requirements",
+      "status": "REQUESTED_FINAL_ACTUAL_SCIENTIFIC_REVIEW"
     }
   ],
   "runs": [
@@ -228,19 +235,53 @@
       "output_bytes_including_archive": 65830,
       "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
       "inventory": "live-C1-evaluation/INVENTORY.json"
+    },
+    {
+      "group": "C1",
+      "mode": "pilot-evaluation",
+      "spec_id": "UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014",
+      "job_id": "J-ca72975b201fceb1",
+      "status": "FAILED",
+      "starts_charged": 1,
+      "simulator_initialization_reserved": 1,
+      "training_transitions_reserved": 0,
+      "nontraining_transitions_reserved": 12800,
+      "optimizer_updates_reserved": 0,
+      "training_checkpoint_writes_reserved": 0,
+      "output_bytes_reserved": 17179869184,
+      "postrun_nvidia_smi_calls_used": 2,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "settlement": "INCOMPLETE_FULL_ENTRY_RESERVATION_RETAINED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "actual_accounting_completed": true,
+      "wall_seconds": 100.77406434598379,
+      "allocated_gpu_seconds": 100.06469768192619,
+      "output_bytes_including_archive": 6237390,
+      "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
+      "inventory": "live-C1-extra-evaluation/INVENTORY.json"
     }
   ],
   "training_authorizations_issued": 2,
   "evaluation_authorizations_issued": 2,
   "no_blind_retry": true,
-  "output_reservations_bytes": 68719476736,
+  "output_reservations_bytes": 85899345920,
   "prior_completed_goals": [
     "../../diagnostics/r5-readiness/goal_budget.json",
     "../r5-paired-pilot-20261013/goal_budget.json"
   ],
-  "note": "Observed logicalcounts subset of conservative reservations until formalFINAL, never doublecharged/refunded onINCOMPLETE. Perentry16GiB reserved before release; cumulativebeforewrite13GiB workloads plus3GiB finitecontrol/native/archive allowance; 4reservations<=64GiB.",
+  "note": "Observed logicalcounts subset of conservative reservations until formalFINAL; no doublecharge/refund of INCOMPLETE. Five16GiB reservations retained within explicitly approved80GiB; cumulative workload13GiB plus3GiB control/native/archive per entry.",
   "output_accounting": {
-    "path": "OUTPUT_ACCOUNTING_BEFORE_RESOURCE_DECISION.json",
+    "path": "OUTPUT_ACCOUNTING_FINAL.json",
     "snapshot_of_counts_before_this_record_and_ledger_update": true,
     "remaining_metadata_allowance_bytes": 67108864,
     "all_prior_output_reservations_retained": true

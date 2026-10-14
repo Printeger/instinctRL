@@ -4,7 +4,7 @@
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_ZERO_CORRECTION_BLOCKED_PENDING_USER_RESOURCE_EXCEPTION",
+  "phase": "R5_ZERO_CORRECTION_C1_EVALUATION_TERMINAL_PENDING_ACTUAL_REVIEW",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -383,7 +383,7 @@
   },
   "current_goal": {
     "target": "R5_ZERO_COMMAND_SINGLE_VARIABLE_SCIENTIFIC_CLOSURE",
-    "status": "IN_PROGRESS_EXTRA_EVALUATION_RESOURCE_APPROVED",
+    "status": "COMPLETE_ACTUAL_COLLECTION_PENDING_FINAL_INDEPENDENT_REVIEW",
     "contract": "contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md",
     "requirements": "../docs/goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md",
     "evidence_index": "../docs/experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md",
@@ -393,7 +393,7 @@
     "training_execution_requested_by_user": true,
     "training_authorization_issued": false,
     "current_exact_release": null,
-    "next_action": "Commander exact issuance; commit/tag/push actual authorization and spec, single fresh C1 original-Z release under original gates; final independent scientific assessment.",
+    "next_action": "Final independent science and complete requirement audit; no more live/train.",
     "independent_review": {
       "id": "E-R5-ZERO-C0-Z-C1-FAILURE-CONDITIONAL-EXTRA-20261014",
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-C0-Z-C1-failure-extra-prelive.json",
@@ -416,28 +416,12 @@
     "learning_signals_comparison": "ADVANTAGES_RETURNS_DIFFER_AS_ALLOWED_BY_W",
     "C0_actual_training_acceptance": "ROLE3_PASS_COMPLETE64_AND_REAL_U16_U64",
     "evaluation_authorization_issued": false,
-    "scientific_result_status": "PENDING_C1_ORIGINAL_Z",
+    "scientific_result_status": "PENDING_INDEPENDENT_SCIENTIFIC_ASSESSMENT",
     "completion_proven": false,
     "remaining_required_work": [
-      "C1actualu16/u64originalZ",
-      "independentfinalscientificreview/fullpairdecision"
+      "independentfinalscientificreview/fullpairdecision",
+      "completionaudit/currentstatesync"
     ],
-    "specific_blocker": {
-      "failed_job": "J-c28f721ecfa2d171",
-      "coexistence_utilization_percent": [
-        4,
-        6,
-        2
-      ],
-      "unchanged_limit_percent": 5,
-      "failed_entry_native_status": "FAILED/1",
-      "formal_counter": "FINAL0",
-      "start_init_caps_used": "4/4",
-      "budget_reset": false,
-      "proposal": "../docs/experiments/r5-zero-correction-20261014/C1_EXTRA_EVALUATION_RESOURCE_PROPOSAL.json",
-      "user_decision": "APPROVED_SINGLE_FRESH_ENTRY",
-      "goal_tool_status": "ACTIVE_NOT_COMPLETE"
-    },
     "goal_achieved": false,
     "historical_resource_blocked_audit": {
       "condition": "ExplicitnewuserresourceexceptionforonefreshC1originalZabsent; all4start/initand64GiBoutputreservationsconsumed.",
@@ -455,6 +439,22 @@
     "resource_decision": {
       "path": "docs/experiments/r5-zero-correction-20261014/user_resource_decision_extra_evaluation.json",
       "sha256": "f16b801199b8eb03bda7d7681b6f30c6b41652c503b5111fba6851d40c1c1d60"
+    },
+    "historical_specific_blocker": {
+      "failed_job": "J-c28f721ecfa2d171",
+      "coexistence_utilization_percent": [
+        4,
+        6,
+        2
+      ],
+      "unchanged_limit_percent": 5,
+      "failed_entry_native_status": "FAILED/1",
+      "formal_counter": "FINAL0",
+      "start_init_caps_used": "4/4",
+      "budget_reset": false,
+      "proposal": "../docs/experiments/r5-zero-correction-20261014/C1_EXTRA_EVALUATION_RESOURCE_PROPOSAL.json",
+      "user_decision": "APPROVED_SINGLE_FRESH_ENTRY",
+      "goal_tool_status": "ACTIVE_NOT_COMPLETE"
     }
   },
   "historical_prior_independent_review": {

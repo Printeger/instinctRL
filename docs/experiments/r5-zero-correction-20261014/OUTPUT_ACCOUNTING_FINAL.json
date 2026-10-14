@@ -1,0 +1,78 @@
+{
+  "schema_version": "instinctrl-r5-zero-final-attributable-output/1",
+  "as_of": "After fresh fifth-entry settlement, before final review and final-state metadata",
+  "original_job_attempt_and_archive_bytes": 4288610574,
+  "inventories": [
+    {
+      "path": "live-C0-evaluation/INVENTORY.json",
+      "sha256": "d7368cd0f89d28c5e902e02c0bf8ca3288e86eb5b1cd7b3b8798d7c00be17201"
+    },
+    {
+      "path": "live-C0-training/INVENTORY.json",
+      "sha256": "5e83d067256eee112afa9bc09069f44a6acf9d03df244d3f8eedc423c0cddc09"
+    },
+    {
+      "path": "live-C1-evaluation/INVENTORY.json",
+      "sha256": "694bf09da2850cb46a1c75c438373b5ca8d6c44bc1cb1b979c860f6b2490a5e9"
+    },
+    {
+      "path": "live-C1-extra-evaluation/INVENTORY.json",
+      "sha256": "41e3dbbe5080fe8efc8b3240e7bc3e0082dab93b64e85f605209330a32d6a4d9"
+    },
+    {
+      "path": "live-C1-training/INVENTORY.json",
+      "sha256": "ecbd3e2af4ba669c6e400a395aec040cb1489fbadcf9a3236a95c82950ccac02"
+    }
+  ],
+  "goal_metadata_excluding_counted_archive_bytes": 3883351,
+  "metadata_files": 118,
+  "fresh_source_input_snapshots": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-20261014",
+      "regular_file_bytes": 617844892,
+      "file_count": 8789,
+      "immutable_input_snapshot_conservatively_charged": true
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-zero-correction-fd-fix-20261014",
+      "regular_file_bytes": 618012334,
+      "file_count": 8855,
+      "immutable_input_snapshot_conservatively_charged": true
+    }
+  ],
+  "other_touched_file_bytes_conservatively_charged": 387201,
+  "other_touched_files": [
+    "coordination/CURRENT_TASK.md",
+    "training_workloads/unified_h1/logging.py",
+    "tools/analyze_r5_paired_pilot.py",
+    "training_workloads/unified_h1/live_adapter.py",
+    "tools/prepare_r5_zero_correction_inputs.py",
+    "isaaclab-training/instinctlab/task/rewards_h1.py",
+    "isaaclab-training/tests/test_residual_neutrality.py",
+    "training_workloads/unified_h1/authorization.py",
+    "docs/PROJECT_STATUS.md",
+    "training_workloads/unified_h1/pilot_diagnostic.py",
+    "docs/goals/InstinctRL_R5_Autonomous_Followup_Goal_Prompt.md",
+    "isaaclab-training/tests/test_zero_pair_analysis_binding.py",
+    "training_workloads/unified_h1/pilot_contract.py",
+    "tools/analyze_r5_zero_command_attribution.py",
+    "training_workloads/scale_003/persistence.py",
+    "training_workloads/unified_h1/budget.py",
+    "isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+    "coordination/contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md",
+    "coordination/ACTIVE_WORKFLOW.json",
+    "isaaclab-training/instinctlab/training/checkpoint_h1.py",
+    "tools/analyze_r5_zero_correction_pair.py",
+    "training_workloads/unified_h1/backend.py",
+    "docs/goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md",
+    "training_workloads/unified_h1/config.py",
+    "coordination/PROJECT_STATE.json"
+  ],
+  "output_bytes_observed_conservatively": 5528738352,
+  "metadata_completion_allowance_bytes": 67108864,
+  "bounded_total_including_final_metadata_allowance": 5595847216,
+  "aggregate_cap_bytes": 85899345920,
+  "all_five_output_reservations_retained_bytes": 85899345920,
+  "accounting_rule": "Actual bytes subset of full retained reservations, not added to them; no quota.used inference/refund; both original+archive counted; snapshots conservatively charged; final metadata bounded by separate64MiB allowance.",
+  "within_cap": true
+}

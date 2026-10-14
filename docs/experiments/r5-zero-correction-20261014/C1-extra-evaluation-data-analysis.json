@@ -1,0 +1,1328 @@
+{
+  "group": "C1",
+  "mode": "pilot-evaluation",
+  "source_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+  "actual_raw_status": {
+    "cleanup_errors": [],
+    "counters": {
+      "actor_optimizer_steps": 0,
+      "attempted_policy_steps": 400,
+      "attempted_updates": 0,
+      "automatic_resets": 0,
+      "completed_policy_steps": 400,
+      "completed_updates": 0,
+      "critic_optimizer_steps": 0,
+      "explicit_resets": 2,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 12800,
+      "real_checkpoint_writes": 0,
+      "real_environment_transitions": 12800,
+      "real_optimizer_updates": 0,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 0
+    },
+    "initialization_measurement": {
+      "counter_source": "SimulationContext.current_time_step_index",
+      "measurement_boundary": "after_environment_construction_before_explicit_reset_or_policy_step",
+      "observed_physics_ticks": 2,
+      "reserved_simulator_initializations": 1,
+      "status": "OBSERVED"
+    },
+    "primary_error": null,
+    "schema_version": "unified-h1-status.v3",
+    "status": "PASS_PENDING_CLOSE"
+  },
+  "u16_u64": {
+    "16": {
+      "status": "ACTUAL_ORIGINAL_Z_REPLAYED",
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014/results/pilot-evaluation/evaluation_raw/pilot_C1_u16/Z.jsonl",
+      "raw_sha256": "4962ed14ee0c64baba2882d3da7f632140a26ca794a5718b015a0e5e808f18b4",
+      "episodes": [
+        {
+          "case": "Z",
+          "env_index": 0,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04821288585662842,
+            "drift": 0.7404329180717468,
+            "height": 0.5283727645874023
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 1,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.048208847641944885,
+            "drift": 0.7398995757102966,
+            "height": 0.5286111831665039
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 2,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04819291830062866,
+            "drift": 0.7411838173866272,
+            "height": 0.5281453132629395
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 3,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.0482170470058918,
+            "drift": 0.7349129319190979,
+            "height": 0.5293025970458984
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 4,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.048212308436632156,
+            "drift": 0.7404339909553528,
+            "height": 0.5283794403076172
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 5,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.048170268535614014,
+            "drift": 0.7419505715370178,
+            "height": 0.5285506248474121
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 6,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.048174794763326645,
+            "drift": 0.7406560778617859,
+            "height": 0.5285789966583252
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 7,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04816152900457382,
+            "drift": 0.7414755821228027,
+            "height": 0.5281541347503662
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 8,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.049611642956733704,
+            "drift": 0.7602342367172241,
+            "height": 0.5470309257507324
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 9,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04937976598739624,
+            "drift": 0.7590203881263733,
+            "height": 0.5432131290435791
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 10,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.0493430495262146,
+            "drift": 0.7571744918823242,
+            "height": 0.5428187847137451
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 11,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04961864650249481,
+            "drift": 0.7576162219047546,
+            "height": 0.5474979877471924
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 12,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04931925982236862,
+            "drift": 0.7582045793533325,
+            "height": 0.5427632331848145
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 13,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.0495571568608284,
+            "drift": 0.7562586665153503,
+            "height": 0.5464432239532471
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 14,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04934128746390343,
+            "drift": 0.7571200132369995,
+            "height": 0.5427999496459961
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 15,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04930112883448601,
+            "drift": 0.7572469115257263,
+            "height": 0.5430107116699219
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 16,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04950825124979019,
+            "drift": 0.7603360414505005,
+            "height": 0.5429139137268066
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 17,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.0494670532643795,
+            "drift": 0.7606750130653381,
+            "height": 0.5428946018218994
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 18,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.049523528665304184,
+            "drift": 0.7585374712944031,
+            "height": 0.5432898998260498
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 19,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04952260106801987,
+            "drift": 0.7605056762695312,
+            "height": 0.5432171821594238
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 20,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04956858605146408,
+            "drift": 0.7608399987220764,
+            "height": 0.5431280136108398
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 21,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04954642057418823,
+            "drift": 0.7592648863792419,
+            "height": 0.5427320003509521
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 22,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.04952843114733696,
+            "drift": 0.7606669068336487,
+            "height": 0.5428507328033447
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 23,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.049577344208955765,
+            "drift": 0.7584462761878967,
+            "height": 0.543231725692749
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 24,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.0508917011320591,
+            "drift": 0.7801437377929688,
+            "height": 0.5643711090087891
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 25,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.050911616533994675,
+            "drift": 0.776390552520752,
+            "height": 0.5643177032470703
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 26,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.05096461996436119,
+            "drift": 0.7794270515441895,
+            "height": 0.5640835762023926
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 27,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.05088024213910103,
+            "drift": 0.7795255184173584,
+            "height": 0.5644879341125488
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 28,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.05108805373311043,
+            "drift": 0.7834985256195068,
+            "height": 0.5669436454772949
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 29,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.05091220140457153,
+            "drift": 0.7763894200325012,
+            "height": 0.5643222332000732
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 30,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.05087152123451233,
+            "drift": 0.7611229419708252,
+            "height": 0.5644009113311768
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 31,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.05092715471982956,
+            "drift": 0.7587482333183289,
+            "height": 0.5636730194091797
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        }
+      ],
+      "original_gate": {
+        "successes": 0,
+        "total": 32,
+        "pass": false,
+        "wilson_95": [
+          0.0,
+          0.10717919825507058
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d1": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d2": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d3": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d4": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d5": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d6": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d7": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          }
+        }
+      },
+      "evidence_valid_episodes": 32
+    },
+    "64": {
+      "status": "ACTUAL_ORIGINAL_Z_REPLAYED",
+      "raw_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014/results/pilot-evaluation/evaluation_raw/pilot_C1_u64/Z.jsonl",
+      "raw_sha256": "b4a3e5b149feee2c21b249822b0541491ac0d8fe0f4988d6fb7833be9db73407",
+      "episodes": [
+        {
+          "case": "Z",
+          "env_index": 0,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020167119801044464,
+            "drift": 0.34322550892829895,
+            "height": 0.08958113193511963
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 1,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.02021629735827446,
+            "drift": 0.32681137323379517,
+            "height": 0.08939719200134277
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 2,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020374316722154617,
+            "drift": 0.3328703045845032,
+            "height": 0.0894920825958252
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 3,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020213760435581207,
+            "drift": 0.32694101333618164,
+            "height": 0.08942890167236328
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 4,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020168034359812737,
+            "drift": 0.34317976236343384,
+            "height": 0.08953022956848145
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 5,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020096542313694954,
+            "drift": 0.34779226779937744,
+            "height": 0.08964657783508301
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 6,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.02012532204389572,
+            "drift": 0.3282425105571747,
+            "height": 0.08966875076293945
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 7,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.02028612419962883,
+            "drift": 0.33447349071502686,
+            "height": 0.08973419666290283
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 8,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.01987982541322708,
+            "drift": 0.3256886303424835,
+            "height": 0.08999240398406982
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 9,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.019878152757883072,
+            "drift": 0.3278006911277771,
+            "height": 0.09003889560699463
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 10,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.019879933446645737,
+            "drift": 0.32566702365875244,
+            "height": 0.09007644653320312
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 11,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.01987079344689846,
+            "drift": 0.32568392157554626,
+            "height": 0.09013426303863525
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 12,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020046668127179146,
+            "drift": 0.3265533447265625,
+            "height": 0.09011447429656982
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 13,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.019876649603247643,
+            "drift": 0.32592645287513733,
+            "height": 0.09009480476379395
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 14,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.019881224259734154,
+            "drift": 0.3256063759326935,
+            "height": 0.09007394313812256
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 15,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.019875776022672653,
+            "drift": 0.3263745903968811,
+            "height": 0.09002220630645752
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 16,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.019946565851569176,
+            "drift": 0.3269386291503906,
+            "height": 0.09507143497467041
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 17,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020112864673137665,
+            "drift": 0.3271397352218628,
+            "height": 0.0951005220413208
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 18,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.019931670278310776,
+            "drift": 0.32723236083984375,
+            "height": 0.0950930118560791
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 19,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.019943777471780777,
+            "drift": 0.3286117613315582,
+            "height": 0.09512829780578613
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 20,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.019955633208155632,
+            "drift": 0.3278852701187134,
+            "height": 0.09512686729431152
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 21,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.01995866186916828,
+            "drift": 0.3279857039451599,
+            "height": 0.09513425827026367
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 22,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.02011570706963539,
+            "drift": 0.32715296745300293,
+            "height": 0.09511959552764893
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 23,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.01996251568198204,
+            "drift": 0.3276174068450928,
+            "height": 0.09509491920471191
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 24,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020238030701875687,
+            "drift": 0.3447969853878021,
+            "height": 0.09409785270690918
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 25,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.02023586630821228,
+            "drift": 0.3419392704963684,
+            "height": 0.09389400482177734
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 26,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020234107971191406,
+            "drift": 0.32811403274536133,
+            "height": 0.09341752529144287
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 27,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.02041279710829258,
+            "drift": 0.3348034918308258,
+            "height": 0.0937575101852417
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 28,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.02023376151919365,
+            "drift": 0.3278946578502655,
+            "height": 0.0933988094329834
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 29,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020242391154170036,
+            "drift": 0.34337717294692993,
+            "height": 0.09405815601348877
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 30,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020192841067910194,
+            "drift": 0.34140878915786743,
+            "height": 0.09338068962097168
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        },
+        {
+          "case": "Z",
+          "env_index": 31,
+          "success": false,
+          "reason": "Z_THRESHOLD_FAILED",
+          "metrics": {
+            "speed": 0.020186003297567368,
+            "drift": 0.32636821269989014,
+            "height": 0.09272348880767822
+          },
+          "engineering": {
+            "collision": false,
+            "height_failure": false,
+            "missing": false,
+            "reset_interrupted": false,
+            "evidence_valid": true
+          }
+        }
+      ],
+      "original_gate": {
+        "successes": 0,
+        "total": 32,
+        "pass": false,
+        "wilson_95": [
+          0.0,
+          0.10717919825507058
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d1": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d2": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d3": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d4": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d5": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d6": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          },
+          "d7": {
+            "successes": 0,
+            "total": 4,
+            "pass": false
+          }
+        }
+      },
+      "evidence_valid_episodes": 32
+    }
+  },
+  "coverage_complete": true,
+  "all_original_gates_pass": false,
+  "metric": "Original metric-h1-v1 including sensorT0/startup/safety/resets/all32lanes/subgroups; no threshold edits.",
+  "scope": "Z development evaluations only; process acceptance is separate.",
+  "analysis_input_spec": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/inputs/C1-extra-evaluation-spec.authorized.json",
+    "sha256": "88965f9650c2866c616e312244dffeed0444109b8650962cb9467c5fa42e03b5",
+    "spec_id": "UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014",
+    "authorization_sha256": "9d732b78569d3d5e5ff8328447e1300a70102240d809cc7e91c95f6028c6ddf3",
+    "job_id": "J-ca72975b201fceb1",
+    "actual_request_sha256": "d62369bfaf58890bb392676eaac265af86147e2deb5807a5843e9ac74ec9405d"
+  },
+  "analysis_tool_sha256": "73209d48a39b88a8288eeabf6775124fd8b06c410336ccdc607e509d8882f711",
+  "CPU_only": true,
+  "analysis_optimizer_updates": 0,
+  "missing_samples_filled": false
+}

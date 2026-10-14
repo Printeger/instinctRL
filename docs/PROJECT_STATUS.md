@@ -7,11 +7,11 @@
 
 ## 当前 Goal（2026-10-14 零命令残差单变量）
 
-**执行中：用户已批准单次 C1 原 Z 补充评估资源例外。** start/init cap4→5、output预留64→80GiB，其他预算、方法和原门槛保持。原四入口、FAILED 和完整保守预留保留；不恢复旧失败任务，不自动重试，不增加训练更新。现有 Commander 精确签发、输入提交/tag/正常push 后仅执行新 C1 u16/u64 评估。
+**真实配对采集完整，待最终独立科学审核。** C0/C1各64updates/32768train/7checkpoint，真实首512gate PASS，初始化及首输入动作/oldBeta/logp逐位一致。用户批准单次资源例外后的fresh C1原Z已完整取得；四节点均0/32。C1u64最大速度/漂移/高度 .020412797m/s / .347792268m / .095134258m，三项较C0改善，仍全部lane漂移>.30m。拟判单对seed内可信行为改善；未达到原Z准入，不扩256updates。
 
-两组实际各64updates/32768train/7checkpoint，真实首512 gate PASS，初始化和首采样逐位一致，Role3/4已独立接受。C0原Z均0/32；C1旧入口coexistence失败、尚无轨迹。补充实测和最终独立科学审核完成后才能结束 Goal。
+五entry native FAILED 保留（四次close/-9，一次beforeApp/1）；四INCOMPLETE/null保留65536train+25600eval+128updates+14writes预留，旧FINAL0只结算未用eval。5start/init及80GiB输出预留不退账，正常ownedACK无残留、各两次postrun。Role6最终审核和全需求审计待完成，没有后续live/train授权。
 
-[证据索引](experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md)、[新资源决定](experiments/r5-zero-correction-20261014/user_resource_decision_extra_evaluation.json)。
+[完整报告](experiments/r5-zero-correction-20261014/PAIR_ANALYSIS.md)、[证据索引](experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md)、[研究决定](experiments/r5-zero-correction-20261014/NEXT_RESEARCH_DECISION.md)。
 
 ## 最新完成 Goal（2026-10-13 短程配对实验）
 
