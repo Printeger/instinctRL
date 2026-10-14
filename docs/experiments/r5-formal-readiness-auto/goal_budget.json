@@ -1169,7 +1169,10 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "ConditionalprospectiveG6/S3/source/actualownu1+final/completeformaltemplates; firstnewconfirmationactualtraining/checkpoint acceptance after terminal evidence arrives. NoG4/READY/formalrelease.",
-      "status": "IN_PROGRESS"
+      "status": "PASS_PREPARATION_ONLY_G6_ORDER_ID_CLOSED_ACTUAL_CONFIRMATION_NOT_ACCEPTED",
+      "evidence": "reviews/mean-prior-integration02-formal-preparation.json",
+      "sha256": "4dba4e9da2ef0674f29f7eb77a2cb270458924a11d30a06f304a0be952f2d33f",
+      "deferred_actual_training_scope": "Next explicit actualdata review after terminal+normalACK/settle/postrun/CPU; will record next actualcall honestly."
     }
   ],
   "decisions": [
