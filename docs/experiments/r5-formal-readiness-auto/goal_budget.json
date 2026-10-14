@@ -692,7 +692,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Actual H256 R0 originalZ recovery and complete contemporaneous pair science/accounting; close conditional prerequisite before frozen confirmation release.",
-      "status": "REQUESTED"
+      "status": "PASS_ACTUAL_H256_PAIR_CONFIRMATION_CONDITION_CLOSED",
+      "evidence": "reviews/H256-actual-pair.json",
+      "sha256": "e7a10f4b76a1c21d80bc30d14ca26630030dec20339115eacd8f0a94492ee8fd"
     }
   ],
   "decisions": [

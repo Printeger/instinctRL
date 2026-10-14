@@ -1,0 +1,114 @@
+{
+  "verdict": "PASS",
+  "scope": "接受完整H256同版本开发配对科学证据，关闭Role14要求的R0恢复及配对科学审核条件；不授予G4、G6–G9或READY。",
+  "identities": {
+    "evidence_commit": "7eccf132f123ce85b3c04f282a64c7d8fa8f88eb",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "R0_evaluation_job": "J-f617068dbba16bf4",
+    "R0_actual_AUTH_sha256": "b39fee0a6ba86b1175b71a2db760fc4173fb1bd7a48a34bc8434fe9dd4ad1266",
+    "R0_actual_spec_sha256": "29d181c79420fa07e7473cdc3a136a7820737e6238f5bd5e16f8b6eafef82e57",
+    "confirmation_freeze_sha256": "de5480a774d7badd5e205ab59372025efa54e68cfd83b5257ff940b4d7541f4f"
+  },
+  "must_fix": [],
+  "actual_checks": [
+    {
+      "contract": "完整R0实际评价",
+      "result": "PASS_COMPLETE_EVIDENCE",
+      "evidence": "独立核验40个对象、11217765原始字节及563456归档字节的bytes/SHA，完整job/attempt枚举匹配。原评价器重放、现场producer与保存分析精确一致；准确spec/AUTH/pins及真实checkpoint SHA匹配。"
+    },
+    {
+      "contract": "完整同期配对来源和公平性",
+      "result": "PASS",
+      "evidence": "独立重算parent paired_results，与pair-results.json逐字段一致。明确绑定R0 fresh训练RECOVERY1及fresh评价-Z-RECOVERY1、R1 parent真实训练/评价；同source/card、相同seed/LR/anchor/纯悬停预算，唯一同期reward变量w0/.05。此前独立接受的实际init/首512可比性继续成立。"
+    },
+    {
+      "contract": "全样本、原评分及失败",
+      "result": "PASS",
+      "evidence": "R0两个节点均原T0+200步×32lanes，原函数/阈值/方向子组不变；没有删除失败或拼接reset。u256工程无效原因是实际高度失败导致reset interruption，不是缺失raw。"
+    },
+    {
+      "contract": "关闭、清理与计账",
+      "result": "PASS_WITH_PROCESS_FAILURE",
+      "evidence": "R0入口FAILED/-9、PASS_PENDING_CLOSE、INCOMPLETE/null；准确normal ACK两次稳定空扫描及owner/guard/child/记录descendants消失通过。恰好两个postrun原始审计通过。原件加归档11781221字节，完整12800评价及8GiB预留继续保留，时间按实际收费。"
+    }
+  ],
+  "actual_pair": {
+    "R0_u192": {
+      "successes": "0/32",
+      "subgroups": "各0/4",
+      "maximum_speed": 0.03014318458735943,
+      "maximum_drift": 0.5779134035110474,
+      "maximum_height": 0.19054639339447021,
+      "engineering_valid_episodes": 32,
+      "reason": "Z_THRESHOLD_FAILED",
+      "raw_sha256": "8b2eb92d73239b89b79735f63077bb30492ca16550113cbe261c97929e4df587"
+    },
+    "R0_u256": {
+      "successes": "0/32",
+      "subgroups": "各0/4",
+      "maximum_speed": 0.11694247275590897,
+      "maximum_drift": 0.3991769552230835,
+      "maximum_height": 2.009653329849243,
+      "height_failure_episodes": 32,
+      "reset_interrupted_episodes": 32,
+      "engineering_valid_episodes": 0,
+      "missing_raw_episodes": 0,
+      "reason": "RESET_INTERRUPTED_NO_SPLICE",
+      "raw_sha256": "0d1c1b09bf41a4e6c58e0a58aae033bf4030239acec96003c1a65edfa8b988ab"
+    },
+    "R1_u192": {
+      "successes": "32/32",
+      "subgroups": "各4/4",
+      "independent_acceptance": "Role14"
+    },
+    "R1_u256": {
+      "successes": "32/32",
+      "subgroups": "各4/4",
+      "independent_acceptance": "Role14"
+    },
+    "scientific_assessment": "同版本、同预算的开发seed实验支持R1候选效果；R1在两个预定后段节点完整通过原Z，R0均失败。开发seed范围G2/G3成立，方法冻结后开展两个前瞻确认seed有依据。",
+    "limits": "仅一对训练seed，不支持统计显著性、泛化或唯一物理因果结论。R0 u256窗口发生reset，表内漂移不能解释为连续稳态轨迹，不能据此进行无中断漂移比例比较。"
+  },
+  "accounting": {
+    "R0_observed_nontraining_transitions": 12800,
+    "R0_training_updates_checkpoint_writes": 0,
+    "R0_wall_seconds": 97.78938181698322,
+    "R0_allocated_gpu_seconds": 96.5828858059831,
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "retained_evaluation_reservation": 12800,
+    "retained_output_reservation_bytes": 8589934592,
+    "historical_failures": "原before-App失败、FINAL0、start/init/output收费继续独立保留，不重标为学习结果。"
+  },
+  "non_blocking": [
+    {
+      "id": "REPORT-RESET-ANNOTATION",
+      "assessment": "PAIR_REPORT应明确补充R0u256全部32lane高度failure与reset interruption、engineering evidence_valid=false且missing=0；不将表内累计指标解释为无中断稳态行为。机器原结果已完整保留，这是普通结论范围同步，不要求重跑或新角色调用。"
+    },
+    {
+      "id": "NATIVE-CLOSE",
+      "assessment": "科学证据PASS不改写进程FAILED或collector INCOMPLETE，不退款完整逻辑及输出预留。"
+    },
+    {
+      "id": "KNOWN-METADATA-LABELS",
+      "assessment": "训练near-wall字符串缺陷继续附注；原Z分母和实际物理状态不由这些标签决定。"
+    }
+  ],
+  "confirmation_release_conditions": [
+    "归档本准确评审并补充上述reset范围注释；Role14的完整R0恢复/配对审核条件可据此关闭。",
+    "CONFIRMATION_METHOD_FREEZE及20261015/20261016两个训练seed保持不变，两者必须各自primary256完整原Z通过，不能2/3或替换失败seed。",
+    "确认01准确已发行输入须完成commit/tag/正常push和remote核对，再重新执行STOP、idle/owned cleanup、stage/master、磁盘、工具及保护预留检查。",
+    "仅通过已接受的精确确认packet和受托Commander审批串行release；原coexistence及真实首次512 gate先于两类optimizer不变。",
+    "确认02仍需按其已接受准确输入正常发行；评价只在各自真实训练和checkpoint独立接受后绑定SHA发行。",
+    "本次不接受任何新formal CPU代码、实际G6/G7、正式启动包或G4结果；READY仍须剩余G4及G6–G9。"
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0
+  }
+}
