@@ -23,13 +23,13 @@
   "stage_allocation": {
     "training_transitions": 1441792,
     "nontraining_transitions": 118784,
-    "live_starts": 31,
-    "simulator_initialization_reservations": 31,
+    "live_starts": 32,
+    "simulator_initialization_reservations": 32,
     "optimizer_updates": 2816,
     "training_checkpoint_writes": 128,
     "allocated_gpu_seconds": 55050,
     "wall_seconds_including_cleanup": 55050,
-    "output_peak_and_reservations_bytes": 302795194368
+    "output_peak_and_reservations_bytes": 311385128960
   },
   "used": {
     "training_transitions": 0,
@@ -40,9 +40,9 @@
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 8393.689346994972,
-    "wall_seconds_including_cleanup": 8421.409326966852,
-    "output_peak_and_reservations_bytes": 21050393750
+    "allocated_gpu_seconds": 8404.479138328927,
+    "wall_seconds_including_cleanup": 8434.0244402159,
+    "output_peak_and_reservations_bytes": 21050463384
   },
   "observed": {
     "training_transitions": 1048576,
@@ -901,21 +901,35 @@
         "experiment_id": "R5-MEAN10-CONFIRM-02",
         "group": "R1",
         "mode": "research-training",
-        "status": "RUNNING",
+        "status": "FAILED",
         "reserved": {
-          "training_transitions": 131072,
+          "training_transitions": 0,
           "nontraining_transitions": 0,
-          "optimizer_updates": 256,
-          "training_checkpoint_writes": 11,
-          "actor_optimizer_steps": 2048,
-          "critic_optimizer_steps": 2048,
-          "allocated_gpu_seconds": 7210,
-          "wall_seconds_including_cleanup": 7210
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
         },
         "output_cap_bytes": 8589934592,
-        "observed": {},
-        "postrun_queries_used": 0,
-        "settled": false
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": 1,
+        "raw_status": "FAIL",
+        "formal_counter_completeness": "FINAL",
+        "formal_transitions": 0,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 69634,
+        "inventory": "experiments/R5-MEAN10-CONFIRM-02/live/R1-research-training/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -1215,6 +1229,15 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Actualnewmeanconfirmation01 complete256/first512/meanprior/reward/checkpoints/lifecycle independentacceptance, exactprimary256originalZ prelive only. NoG4beforebothactualZ.",
+      "status": "PASS_ACTUAL_CONFIRMATION01_TRAINING_U256_ONLY",
+      "evidence": "reviews/mean-prior-confirmation01-actual-training.json",
+      "sha256": "492b950dc4594a6f07869009afd7ee17943abe9790d05c11c56ecab67789ca61"
+    },
+    {
+      "call": 28,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "ActualCONFIRM02 beforeApp resourceFINAL0/normalcleanup preservation plus exactfreshsamefrozenseed18 recovery1/D017 prelive. No seed replacement/G4/READY/release.",
       "status": "IN_PROGRESS"
     }
   ],
@@ -1234,6 +1257,10 @@
     {
       "path": "D016-confirmation-and-old-seed-regression-allocation.json",
       "sha256": "89848e02ceef5d1e3cbabc5abb6ee1af48e4d19bcc16a7ea693ae49eb005db9f"
+    },
+    {
+      "path": "D017-confirmation02-resource-recovery.json",
+      "sha256": "f966813d1dcfc61cd5134fe0703b47d8966daa4d028e3685edc36cb9567d42fe"
     }
   ],
   "runs": [],

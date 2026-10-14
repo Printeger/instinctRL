@@ -16,7 +16,7 @@
   "new_training_authorized": true,
   "diagnostic_goal_envelope_authorized": false,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "当前唯一LIVE新mean CONFIRM02/R1 J-31eba1c5651ddc1d /A-3e4864c93aa9ae01，准确input62e3914/push（许可原9265693/tag），训练seed20261018，frozen source617/config2e9/controlc468，coldstart256purehover。CONFIRM01训练已complete256、normalACK/settle/exact2postrun/CPUcoveragePASS，Role27实际训练/u256接受及准确原Z预审进行中。先只poll02句柄；02终态正常清理/结算后才可准确issue/release01原Z。两新seed实际原Z均未评价，G4未授。旧15/16回归许可未提交。G6-ORDER-ID独立Role26已闭合，修正02仅条件准备，仍须actualG4证据才能issue。正式训练未提交。",
+  "live_permission_note": "无live。CONFIRM02原J-31eba1c5651ddc1d因GPU1/1/9%>5%在App前拒绝，0rollout/gate/train/optimizer/writes，正式FINAL0，normalACK/settle/exact2postrun完成；start/init/output与GPU10.789791333954781/wall12.61511324904859保留，只有collector正式0未用逻辑预留释放。资源事件1/3，下一准确入口至少退避60秒，无额外GPU探测/阈值/进程操作。Role27已独立接受CONFIRM01完整训练及实际u25698a081e3...，准确原Z许可A-b250992a56a6f5ae已发行未提交；提交/tag/push与退避后只单次release01原Z。CONFIRM02-RECOVERY1同冻结seed18/source/method/budget新卡已准备待准确packet/Role28独立预审；D017仅额外1start/init/8GiB，不扩大master、不退款旧收费。两个新seed原Z均未验收，G4仍未授，formal0。",
   "diagnostic_goal_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "paired_pilot_task_requested": true,
   "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
@@ -29,5 +29,5 @@
   "formal_readiness_master_authority": "docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
   "formal_readiness_goal_status": "IN_PROGRESS",
   "formal_full_training_submission_authorized": false,
-  "formal_readiness_current_job": "J-31eba1c5651ddc1d"
+  "formal_readiness_current_job": null
 }

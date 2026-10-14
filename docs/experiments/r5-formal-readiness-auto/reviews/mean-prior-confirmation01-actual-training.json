@@ -1,0 +1,144 @@
+{
+  "role": "Role27",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "确认01实际完整训练及准确u256 checkpoint接受；条件性准入该case原Z/primary256。不是实际原Z、G4、G6/G7、READY或release。",
+  "identities": {
+    "evidence_commit": "62e39143eead29acd5628b98ec037bf829ee60b5",
+    "experiment_id": "R5-MEAN10-CONFIRM-01",
+    "job_id": "J-b7cf47a791e61388",
+    "approval_id": "A-be3650864803624d",
+    "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "source_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "launch_sha256": "d595dcd20fd49e7251956b2f93593c138cf442a0836e303fac535e12d81c2905",
+    "actual_training_AUTH_sha256": "2d6d13531153923f299ee94b43a84a8e4185be3a2a643054d747635732067e69",
+    "authorized_spec_file_sha256": "41b92698e73d22425a7bf113815bdf03537afb820d3588884702852acef34563",
+    "tool_release": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba",
+    "immutable_freeze_sha256": "b55f881c8ef1435dcef21e354b8e36d6765d53b2f0dd2b72c18e81b9a40756c4",
+    "effective_method_sha256": "c390ab73252ee37da504298ad08498f3d5131866023d9099f52baf3c749a907f",
+    "training_seed": 20261017,
+    "evaluation_seed": 20260909
+  },
+  "actual_training": {
+    "scientific_training_accepted": true,
+    "inventory": {
+      "original_objects": 70,
+      "original_bytes": 1974505286,
+      "archive_copy_bytes": 21623770,
+      "combined_bytes": 1996129056,
+      "result": "全部原件与copies实际逐文件重哈希、大小核对通过；整个job和attempt实际文件集合与inventory完全相等。"
+    },
+    "binding": "actual request.spec与authorized spec一致；全部spec pins及实际AUTH字节核对通过，AUTH与准确预审proposal相同。",
+    "coverage": {
+      "completed_updates": 256,
+      "completed_minibatches": 2048,
+      "returned_policy_steps": 4096,
+      "training_transitions": 131072,
+      "actor_Adam_steps": 2048,
+      "critic_Adam_steps": 2048,
+      "checkpoint_writes": 11,
+      "explicit_resets": 1,
+      "automatic_reset_lanes": 128,
+      "initialization_physics_ticks": 2,
+      "result": "独立重读全部update/minibatch和compact rollout，验证顺序、每epoch全部512样本一次覆盖、全部32lane及零命令。"
+    },
+    "checkpoint_checks": "实际读取全部11个PT；完整network_config、ppo_config、source_identity和method_hashes与冻结候选一致，确认training seed20261017、pure-hover clock、绝对counter、模型和Adam有限性及每个Adam step。",
+    "frozen_parameters": {
+      "mean_prior_weight": 10,
+      "residual_reward_weight": 0.05,
+      "anchor_weight": 4,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "max_updates": 256
+    },
+    "first_real_gate": {
+      "status": "PASS",
+      "sample_count": 512,
+      "atol": 0.000001,
+      "rtol": 0.00001,
+      "evidence": "实际读取首512输入/actions/oldAlphaBeta/logp及8个pre/post probe，索引0..511、动作、Beta均值及before-MB1 logp与old_logp对应。原生产gate执行路径先于两类optimizer，保留实际同设备结果。",
+      "limit": "没有额外actor forward/sampling/optimizer；CPU保存证据核对不替代生产gate或实际G7。"
+    },
+    "auxiliary_validation": {
+      "finite_nonnegative_actual_scalars": 2048,
+      "first8_saved_actual_preoptimizer_formula_replayed": true,
+      "maximum_first8_absolute_error": 9.5367431640625e-7,
+      "limit": "只重算已保存的真实preoptimizer输出；不虚构后续未保存的完整输出，也不冒充同设备G7。"
+    },
+    "reward_validation": {
+      "all_samples": 131072,
+      "independent_scalar_formula_maximum_absolute_error": 8.685879393510731e-8,
+      "result": "按实际v_corr_b独立重算reward.05零命令残差项，通过原数值范围。"
+    }
+  },
+  "accepted_evaluation_checkpoints": [
+    {
+      "update": 256,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-01-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "sha256": "98a081e3f9a4e939f9601ec4bcec400fa49602ffe5edefd6740c20b7b6aff9ef",
+      "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+      "training_seed": 20261017,
+      "counters": {
+        "update": 256,
+        "transition": 131072,
+        "global_policy_step": 4096,
+        "actor_optimizer": 2048,
+        "critic_optimizer": 2048
+      }
+    }
+  ],
+  "lifecycle_accounting": {
+    "native_status": "FAILED",
+    "native_exit_code": -9,
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "full_logical_and_output_reservations_retained": true,
+    "wall_seconds": 915.3181124168914,
+    "allocated_GPU_seconds": 913.5342822959647,
+    "cleanup": "normal ACK、两次稳定空扫描、quiescent、未timed_out、无survivors；再次只读核对9个已知身份均不再owned。",
+    "postrun": "恰好ordinal0/1两份原授权receipt，在normal owned ACK后；本轮无GPU查询。",
+    "process_PASS_granted": false
+  },
+  "exact_evaluation_preparation": {
+    "verdict": "CONDITIONAL_PASS",
+    "node": 256,
+    "evaluation_seed": 20260909,
+    "nontraining_transitions": 6400,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "explicit_resets": 1,
+    "workload_wall_seconds": 1800,
+    "outer_wall_and_GPU_seconds": 1810,
+    "scope": "同case准确packet原Z模板只填上述实际u256 SHA；原sensor T0、完整200×32、startup、安全、八方向、子组、失败分母和阈值保持。"
+  },
+  "conditions": [
+    "Commander明确绑定本accepted review hash、准确packet/source及上述真实u256 path/SHA，签发实际评价AUTH/spec；提交/tag/正常push后才可串行release。",
+    "确认02训练可依其既有Role25准确许可串行执行；确认01评价须等待所有前序尤其确认02终态、normal owned cleanup/结算，并重核STOP、idle、pins、disk、quota、全部stage/master和保护预留及原内部coexistence。",
+    "当前只接受训练及checkpoint，确认01原Z尚未验收；两个预先冻结新seed均须实际原Z通过才可能授G4，不换seed、不采用2/3、不调方法或扩展超过256。",
+    "不同训练seed不要求init/first512逐位相同；本轮核对的是准确冻结seed及实际完整执行，不冒充跨seed受控逐位消融。",
+    "native FAILED、INCOMPLETE/null、完整逻辑/output预留和全部旧失败继续保持；科学训练接受不改为process PASS或退款。",
+    "本轮不授实际G6/G7、最终G8/READY、formal submit或自动重试。"
+  ],
+  "non_blocking": [
+    {
+      "id": "CONFIRMATION_RESULTS_PENDING",
+      "detail": "完成新seed训练并不证明其原Z通过或跨seed可靠性。"
+    },
+    {
+      "id": "LEGACY_EPISODE_LABEL",
+      "detail": "冻结源码既有nearwall标签问题继续按披露处理，不能以标签代替实际pure-hover/reset证据；无需为日志重跑。"
+    },
+    {
+      "id": "NO_DEVICE_SUBSTITUTION",
+      "detail": "CPU公式和保存输入核对不替换原同设备float32 gate或未来G7重算。"
+    }
+  ],
+  "release_granted": false,
+  "G4_granted": false,
+  "actual_G6_G7_granted": false,
+  "READY_granted": false
+}

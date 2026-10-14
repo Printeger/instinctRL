@@ -1,0 +1,50 @@
+{
+  "id": "D017",
+  "decision_by": "Supervisor-Commander within unchanged master",
+  "reason": "ActualCONFIRM02 resource gate samples1/1/9% exceed unchanged5% beforeApp/rollout. FINAL0 independentlycheckable, normalcleanup/settle/2postrun complete; freshsamefrozentrainingseed18 recovery needs oneextra start/init and8GiBoutput, not extra scientifictraining/evaluation/logical budget.",
+  "failed_job": "J-31eba1c5651ddc1d",
+  "failed_case": "R5-MEAN10-CONFIRM-02",
+  "failed_source": "617af4d90c35e333c97692bdee90146804476edf",
+  "receipt": "experiments/R5-MEAN10-CONFIRM-02/R1-research-training-execution-summary.json",
+  "failure_gate": {
+    "path": "experiments/R5-MEAN10-CONFIRM-02/live/R1-research-training/attempt/results/prelaunch/prelaunch_resource_gate_failure.json",
+    "sha256": "117b01da5f6483736641ca8256c4b2f44645bc7f04584f146ec3ad334193ee2b"
+  },
+  "before_stage": {
+    "training_transitions": 1441792,
+    "nontraining_transitions": 118784,
+    "live_starts": 31,
+    "simulator_initialization_reservations": 31,
+    "optimizer_updates": 2816,
+    "training_checkpoint_writes": 128,
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 302795194368
+  },
+  "after_stage": {
+    "training_transitions": 1441792,
+    "nontraining_transitions": 118784,
+    "live_starts": 32,
+    "simulator_initialization_reservations": 32,
+    "optimizer_updates": 2816,
+    "training_checkpoint_writes": 128,
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 311385128960
+  },
+  "all_master_caps_and_confirmation_formal_buffers_unchanged": true,
+  "failed_start_init_output_and_actual_GPUwall_retained": true,
+  "zero_logical_settlement": "Only formal collector FINAL0 released unusedlogicalreservation; no INCOMPLETE refund orhistoricalreset.",
+  "recovery_candidate": "R5-MEAN10-CONFIRM-02-RECOVERY1",
+  "training_seed_unchanged": 20261018,
+  "resource_incident": {
+    "consecutive_refusals": 1,
+    "attempts_maximum": 3,
+    "next_attempt": "AccuratelyapprovedCONFIRM01primaryZ evaluation, attempt2 ifsameincident remainsunresolved",
+    "minimum_backoff_before_next_release_seconds": 60,
+    "if_second_refused_next_minimum_seconds": 180,
+    "no_fourth_if_unresolved": true,
+    "no_extra_GPU_queries_or_threshold_or_unrelatedprocess_changes": true
+  },
+  "release": "Only independentlyaccepted accuratefreshcandidate, originalSTOP/idle/normalcleanup/remaining/disk/quota/coexistence/commit/tag/push. No oldhandle resubmit."
+}

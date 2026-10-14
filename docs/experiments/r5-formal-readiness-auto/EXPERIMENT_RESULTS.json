@@ -1652,7 +1652,7 @@
     }
   ],
   "master_ledger": "goal_budget.json",
-  "next_experiment": "当前唯一LIVE新mean CONFIRM02/R1 J-31eba1c5651ddc1d /A-3e4864c93aa9ae01，准确input62e3914/push（许可原9265693/tag），训练seed20261018，frozen source617/config2e9/controlc468，coldstart256purehover。CONFIRM01训练已complete256、normalACK/settle/exact2postrun/CPUcoveragePASS，Role27实际训练/u256接受及准确原Z预审进行中。先只poll02句柄；02终态正常清理/结算后才可准确issue/release01原Z。两新seed实际原Z均未评价，G4未授。旧15/16回归许可未提交。G6-ORDER-ID独立Role26已闭合，修正02仅条件准备，仍须actualG4证据才能issue。正式训练未提交。",
+  "next_experiment": "无live。CONFIRM02原J-31eba1c5651ddc1d因GPU1/1/9%>5%在App前拒绝，0rollout/gate/train/optimizer/writes，正式FINAL0，normalACK/settle/exact2postrun完成；start/init/output与GPU10.789791333954781/wall12.61511324904859保留，只有collector正式0未用逻辑预留释放。资源事件1/3，下一准确入口至少退避60秒，无额外GPU探测/阈值/进程操作。Role27已独立接受CONFIRM01完整训练及实际u25698a081e3...，准确原Z许可A-b250992a56a6f5ae已发行未提交；提交/tag/push与退避后只单次release01原Z。CONFIRM02-RECOVERY1同冻结seed18/source/method/budget新卡已准备待准确packet/Role28独立预审；D017仅额外1start/init/8GiB，不扩大master、不退款旧收费。两个新seed原Z均未验收，G4仍未授，formal0。",
   "confirmation_seed_results": {
     "status": "NEW_MEAN_PRIOR_FROZEN_CONFIRMATIONS_NOT_STARTED_NOT_READY",
     "historical_failed_method": {
@@ -1793,14 +1793,35 @@
       20261016
     ],
     "formal_submitted": false,
-    "current_only_live": {
-      "experiment_id": "R5-MEAN10-CONFIRM-02",
+    "current_only_live": null
+  },
+  "current_mean_confirmation_training": [
+    {
+      "training_seed": 20261017,
+      "training_case": "R5-MEAN10-CONFIRM-01",
+      "training_status": "ACTUAL_COMPLETE256_INDEPENDENT_ROLE27_ACCEPTED",
+      "training_job": "J-b7cf47a791e61388",
+      "actual_u256_sha256": "98a081e3f9a4e939f9601ec4bcec400fa49602ffe5edefd6740c20b7b6aff9ef",
+      "original_Z_status": "PENDING_NOT_RUN",
+      "original_Z": null
+    },
+    {
       "training_seed": 20261018,
-      "job_id": "J-31eba1c5651ddc1d",
-      "first_actual512gate": "PENDING_NOT_YET_OBSERVED",
-      "actual_primary_Z": "PENDING",
-      "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
-      "control_release": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba"
+      "attempts": [
+        {
+          "case": "R5-MEAN10-CONFIRM-02",
+          "job": "J-31eba1c5651ddc1d",
+          "status": "RESOURCE_BEFORE_APP_FINAL0_FAILED",
+          "real_training_transitions": 0,
+          "real_updates": 0,
+          "real_checkpoint_writes": 0,
+          "start_init_output_charged": true
+        }
+      ],
+      "recovery_candidate": "R5-MEAN10-CONFIRM-02-RECOVERY1",
+      "recovery_status": "CPU_CARD_PREPARED_PENDING_PACKET_REVIEW_AUTH",
+      "original_Z_status": "PENDING_NOT_RUN",
+      "original_Z": null
     }
-  }
+  ]
 }

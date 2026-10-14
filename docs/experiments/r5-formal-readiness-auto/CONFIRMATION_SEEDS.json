@@ -1,5 +1,5 @@
 {
-  "status": "NEW_MEAN_PRIOR_FROZEN_CONFIRMATIONS_NOT_STARTED_NOT_READY",
+  "status": "NEW_MEAN_PRIOR_G4_PENDING_NOT_READY",
   "historical_failed_method": {
     "schema_version": "instinctrl-r5-confirmation-freeze/1",
     "status": "FAILED_BOTH_ORIGINAL_Z_FROZEN_METHOD_NOT_QUALIFIED",
@@ -89,7 +89,35 @@
     20261018
   ],
   "primary_node": 256,
-  "results": [],
+  "results": [
+    {
+      "training_seed": 20261017,
+      "training_case": "R5-MEAN10-CONFIRM-01",
+      "training_status": "ACTUAL_COMPLETE256_INDEPENDENT_ROLE27_ACCEPTED",
+      "training_job": "J-b7cf47a791e61388",
+      "actual_u256_sha256": "98a081e3f9a4e939f9601ec4bcec400fa49602ffe5edefd6740c20b7b6aff9ef",
+      "original_Z_status": "PENDING_NOT_RUN",
+      "original_Z": null
+    },
+    {
+      "training_seed": 20261018,
+      "attempts": [
+        {
+          "case": "R5-MEAN10-CONFIRM-02",
+          "job": "J-31eba1c5651ddc1d",
+          "status": "RESOURCE_BEFORE_APP_FINAL0_FAILED",
+          "real_training_transitions": 0,
+          "real_updates": 0,
+          "real_checkpoint_writes": 0,
+          "start_init_output_charged": true
+        }
+      ],
+      "recovery_candidate": "R5-MEAN10-CONFIRM-02-RECOVERY1",
+      "recovery_status": "CPU_CARD_PREPARED_PENDING_PACKET_REVIEW_AUTH",
+      "original_Z_status": "PENDING_NOT_RUN",
+      "original_Z": null
+    }
+  ],
   "old_failed_seed_regressions": [
     {
       "training_seed": 20261015,
