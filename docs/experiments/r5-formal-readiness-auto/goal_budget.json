@@ -34,15 +34,15 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 3,
-    "simulator_initialization_reservations": 3,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 1066.4480635679793,
-    "wall_seconds_including_cleanup": 1068.7671306540724,
-    "output_peak_and_reservations_bytes": 4582529144
+    "allocated_gpu_seconds": 1077.2567735239863,
+    "wall_seconds_including_cleanup": 1080.433468528092,
+    "output_peak_and_reservations_bytes": 4582598966
   },
   "observed": {
     "training_transitions": 131072,
@@ -174,6 +174,42 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 2291894475,
         "inventory": "experiments/R5-H128-DEV-01-R0-RECOVERY1/live/R0-research-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-H128-DEV-01-R1-RESEARCH-EVALUATION-a13c5a459d47",
+        "job_id": "J-6e4b5482bf1461fe",
+        "experiment_id": "R5-H128-DEV-01",
+        "group": "R1",
+        "mode": "research-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": 1,
+        "raw_status": "FAIL",
+        "formal_counter_completeness": "FINAL",
+        "formal_transitions": 0,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 69822,
+        "inventory": "experiments/R5-H128-DEV-01/live/R1-research-evaluation/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -254,6 +290,13 @@
       "status": "PASS_R1_ACTUAL_TRAINING_CHECKPOINTS_ONLY",
       "evidence": "reviews/H128-R1-actual-training.json",
       "sha256": "4669b1be4f2dfde7d7d1c30bb712690a0f03d480b3868a7ae995e3d30b78e6a5"
+    },
+    {
+      "call": 7,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Actual R0 RECOVERY1 training/checkpoint acceptance + exact recovery evaluation binding + real pairinit/first512 comparison. Existing same-source methods/prelive unchanged. Metadata audit separately disclosed, no qualification.",
+      "status": "REQUESTED"
     }
   ],
   "decisions": [

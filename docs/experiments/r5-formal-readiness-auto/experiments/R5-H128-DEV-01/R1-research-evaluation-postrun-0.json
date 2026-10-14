@@ -1,0 +1,14 @@
+{
+  "job_id": "J-6e4b5482bf1461fe",
+  "after_normal_owned_ACK": true,
+  "ordinal": 0,
+  "argv": [
+    "/usr/bin/nvidia-smi",
+    "--query-gpu=index,name,driver_version,memory.total,memory.used,utilization.gpu",
+    "--format=csv,noheader,nounits"
+  ],
+  "executable_sha256": "22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be",
+  "exit_code": 0,
+  "stdout": "0, NVIDIA GeForce RTX 5070, 580.173.02, 12227, 544, 5\n",
+  "stderr": ""
+}

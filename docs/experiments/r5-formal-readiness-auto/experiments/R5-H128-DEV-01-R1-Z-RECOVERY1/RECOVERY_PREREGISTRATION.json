@@ -1,0 +1,40 @@
+{
+  "case_id": "R5-H128-DEV-01-R1-Z-RECOVERY1",
+  "status": "PROPOSED_NOT_ISSUED",
+  "parent_scientific_experiment": "R5-H128-DEV-01",
+  "changed": "Only evaluation attempt/spec/AUTH identity, same originalcard/profile/source/actualR1checkpoints/seed/nodes/budget",
+  "failed_job": "J-6e4b5482bf1461fe",
+  "failure_pin": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-a13c5a459d47/results/prelaunch/prelaunch_resource_gate_failure.json",
+    "sha256": "b3883ec7383efc47e1dfc4a7a00a2abad0feb5eb2c781a17d88ca660894350e3"
+  },
+  "samples_utilization_percent": [
+    1,
+    1,
+    9
+  ],
+  "original_limit_percent": 5,
+  "formal_counter": "FINAL0",
+  "initialization_observed": "NOT_REACHED",
+  "owned_cleanup": "NORMAL_ACK2STABLE_NO_SURVIVORS",
+  "start_init_output_charges_retained": true,
+  "unresolved_resource_incident": {
+    "attempts_so_far": 1,
+    "maximum_attempts": 3,
+    "next_attempt_minimum_backoff_seconds": 60,
+    "third_attempt_minimum_backoff_seconds": 180,
+    "no_extra_GPU_queries": true,
+    "no_unrelated_process_kills": true
+  },
+  "known_failure_end_monotonic_ns": 1934183158315180,
+  "proposal_created_monotonic_ns": 1934273140913312,
+  "remaining_budget": "Existingstage6/18060s64GiB fits plannedR0eval+newR1eval, master and protectedconfirmation/formal checks unchanged.",
+  "release_conditions": [
+    "Independent exactnewpacket acceptance with accepted realR1checkpointSHA",
+    "NoLIVE/STOP and allactualownedquiescent",
+    "Originalcoexistence/firstgate/evidence/lifecycle checks unchanged",
+    "Commit/tag/normalpush actualinputs before oncesubmit",
+    "Nooldjob resubmit/resume",
+    "Ifavailabilityneverrestored, incidenttotalatmost3 with increasingbackoff, thenSTOPpersistentresource"
+  ]
+}

@@ -99,3 +99,5 @@ full20160 reservation retained; no owned survivors. Goal IN_PROGRESS, training0.
 当前续接（第四次运行中）：最小实测质量／实际 allocation、公开 reset 与精确 actor digest 修复已通过独立预审。第三次入口因继承旧 SCALE 资源产品哈希而在 coexistence／AppLauncher 前失败，现有 collector 正式结算其零 transitions；启动和初始化保守预留仍扣账。资源绑定兼容修复后的第四次 J-afe4bda51f5206e5 已通过真实 coexistence，正在收集 Z/T/S 零目标回归。全部 4 次启动槽已占用，当前保守 transitions 账为 60,480；命令直通的第五次精确提案和未来配对 pilot argv 已生成但未授权。完整轨迹、清理及独立科学验收仍待完成，训练为零。唯一最新索引为 docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md。
 
 最新续接：第四次在完整采集后CPU分析期间被910秒正式watchdog终止，FAILED/137；实际wall910.5478907090146秒原样计账。原manifest仍PREPARED、最终reward计数缺失，20160全额预留。全403200物理行与96reset段已被离线和独立Reviewer复核，接受修复后的零目标物理回归；命令直通原Z/T/S尚待验证。ef68ebb新候选保持同一物理基线，仅补分析前持久化和pilot-evaluation评估seed分类，32CPU回归通过。全部4次启动槽已用完；准确第五次提案和仅start/init4→5的申请包已生成，未签发许可。未来两组pilot精确argv位于pilot_future_proposals.r3.json，首次rollout概率gate强制保留。Goal仍IN_PROGRESS，训练为零。
+
+最新实际状态：R1原Z入口J-6e4b5482bf1461fe在App前因1/1/9%>5失败，FINAL0/全部数据0、正常ACK/结算/2postrun完成，start/init/output保留。无live；新资源事件1/3，按60/180秒退避，不放宽门槛。fresh R1-Z-RECOVERY1准确提案已准备未发行；R0实际训练独立审核待回。
