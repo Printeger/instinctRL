@@ -7,7 +7,7 @@
 
 ## 当前 Goal（2026-10-15 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 当前无live。旧seed16新mean10回归J-c71649c6559afc47已complete256/131072/2048Adam各/11writes，实际first512PASS，normalACK/settle/exact2postrun/CPUcoveragePASS；GPU909.1604162219446/wall911.3661946239881、70原件全inventory/总1997013377bytes，nativeFAILED/-9/INCOMPLETE/null/full预留保持。Role31将独立接受实际16/u256并正式导出两新确认17/18实际原Z32/32的G4及四G6pins。下一commit/push后单次release已Role30批准旧15原Z A-4f24d896680295b3，只6400nontraining、0训练/更新/writes；仍需真实G6G7和最终包，formal0。
+**IN_PROGRESS，非READY。** 当前唯一LIVE旧seed15新mean10实际原Z回归J-19456eef8dad3937/A-4f24d896680295b3，准确inputs6a79e60/push（原2b3962e/tag），实际u2567e3526f9...已Role30接受，source617/config2e9/controlc468/seed20261015，仅6400nontraining、0训练/optimizer/writes。旧16完整256训练/normalACK/settle/exact2postrun/CPUcoveragePASS，Role31正独审其实际checkpoint并正式接受新17/18的G4。只poll当前句柄，后续16Z/G6G7需独立准确条件发行；旧回归不计G4，formal0。
 
 唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 

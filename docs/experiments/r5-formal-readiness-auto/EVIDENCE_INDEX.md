@@ -1,6 +1,6 @@
 # Evidence index
 
-Current authoritative state: 当前无live。旧seed16新mean10回归J-c71649c6559afc47已complete256/131072/2048Adam各/11writes，实际first512PASS，normalACK/settle/exact2postrun/CPUcoveragePASS；GPU909.1604162219446/wall911.3661946239881、70原件全inventory/总1997013377bytes，nativeFAILED/-9/INCOMPLETE/null/full预留保持。Role31将独立接受实际16/u256并正式导出两新确认17/18实际原Z32/32的G4及四G6pins。下一commit/push后单次release已Role30批准旧15原Z A-4f24d896680295b3，只6400nontraining、0训练/更新/writes；仍需真实G6G7和最终包，formal0。
+Current authoritative state: 当前唯一LIVE旧seed15新mean10实际原Z回归J-19456eef8dad3937/A-4f24d896680295b3，准确inputs6a79e60/push（原2b3962e/tag），实际u2567e3526f9...已Role30接受，source617/config2e9/controlc468/seed20261015，仅6400nontraining、0训练/optimizer/writes。旧16完整256训练/normalACK/settle/exact2postrun/CPUcoveragePASS，Role31正独审其实际checkpoint并正式接受新17/18的G4。只poll当前句柄，后续16Z/G6G7需独立准确条件发行；旧回归不计G4，formal0。
 
 Current scientific source617af4d/config2e9a7284 and compatible controlc4688ba7 bind four prospectively fixed instances: R5-MEAN10-CONFIRM-01 (new17), -02 (new18), R5-MEAN10-REGRESSION-15 and -16 (oldfailures, excluded G4). [CPU input audit](MEAN_PRIOR_CONFIRMATION_CPU_INPUT_AUDIT.json) distinguishes exact training inputs from nonexecutable generated evaluation templates. [Control integration CPU](CONTROL_INTEGRATION_CPU.json):52PASS, wrong seed/early formal submit/full spec mutation rejected; independentRole25controlimplementationPASS, finalG9pending. All old native failures and frozen sources are preserved.
 
@@ -38,6 +38,7 @@ Newmeanprior scientificsource617af4d/config2e9a7284; R1actualtraining andfullspe
 Role26 currentMUSTFIX G6-ORDER-ID: oldINTEGRATION01 CPUdraft refused exactorderbinding, noactualAUTH/live/init. Oldpacket/card/proposal retained, [newCPUcandidate02](experiments/R5-MEAN10-INTEGRATION-02/EXPERIMENT_CARD.json) changesidentity/orderonly. [FullfrozenAUTHloader fixtureaudit](experiments/R5-MEAN10-INTEGRATION-02/CPU_FULL_AUTH_LOADER_AUDIT.json) preservesoldexpectedrejection andcorrectedG6/twoformaltrainingfull-loaderPASS; ONLY attempt directory rebound to/tmp, noactualreleaseclaim. Independentclosurepending.
 
 [Role26preparation](reviews/mean-prior-integration02-formal-preparation.json) independentlyclosesORDER-ID fornew02, exactS3/compat/ownu1+u256/input/probe andformaltemplateschecked. ConditionalG6issue stillrequiresacceptedactualG4/currentfreeze/allfourdiagnosticpins evidence; preparationcannotreplaceit. NoactualCONFIRM01trainingacceptedbyRole26.
+
 
 
 

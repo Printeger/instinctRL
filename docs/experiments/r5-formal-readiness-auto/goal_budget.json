@@ -34,8 +34,8 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 30,
-    "simulator_initialization_reservations": 30,
+    "live_starts": 31,
+    "simulator_initialization_reservations": 31,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
@@ -1146,6 +1146,28 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 1997013377,
         "inventory": "experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-MEAN10-REGRESSION-15-R1-RESEARCH-EVALUATION-617af4d90c35",
+        "job_id": "J-19456eef8dad3937",
+        "experiment_id": "R5-MEAN10-REGRESSION-15",
+        "group": "R1",
+        "mode": "research-evaluation",
+        "status": "RUNNING",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 6400,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 1810,
+          "wall_seconds_including_cleanup": 1810
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {},
+        "postrun_queries_used": 0,
+        "settled": false
       }
     ],
     "source_snapshots": [
