@@ -1,6 +1,6 @@
 # R5 formal readiness autonomous Goal
 
-IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. Current ONLY LIVE R0 J-b959e2d9ded9ebb3. No formal training submitted.
+IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. NoLIVE. No formal training submitted.
 
 Current frozen method w.05/anchor4/LRs1e-4/3e-4/purehover256 FAILED G4: seed20261015 originalZ0/32 (driftmax .787366509), seed20261016 originalZ0/32 (driftmax .327583998,heightmax .216544390). Complete T0+200x32, allfailuredenominators retained. Confirmation01 independentRole20 accepted; second scientific evaluation independentaudit next. Actual scientific/evidence acceptance never changes FAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE/null/full logical+output reservations. BothnormalownedACK/settle/exact2postrun complete. Immutable CONFIRMATION_METHOD_FREEZE.json unchanged, CONFIRMATION_SEEDS.json recordsfailure. Never thirdseed replacement or >256 continuation ofoldmethod.
 
@@ -30,3 +30,5 @@ Role22PASS actualR1training/u192/u256 andindependentclosure ofFORMAL-GENERATED-F
 Prospective formalMEAN10 case experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01 nowprepared againstS3feb1e96/configd263cdef. BothsharedactualnewDEV02R1u256; sameorigin10, current0/10, bothreward.05. ExacttrainingAUTH proposals SHAcae43dfa.../2223c78a..., futureevaluationAUTH/spec templatesdeclaregenerated5checkpointSHA only, actualS3CLI--helpchecked, CPUprofiles/budgetsvalidated. NoactualformalAUTH/attempt/approval/READY created; qualification/G6G7/controlintegration/finalreview remain. Oldformal-first-segment/S1 remainhistoricalWIP.
 
 Actual pair init/first512 inputs/actions/oldBeta/logp/privileged/advantages/returns bit-exact PASS (partialproof whileR0live; notfulltrainingacceptance), receipt experiments/R5-MEAN10-DEV-02/actual-init-first512-pair-comparison.json. MainCPU transition evidence analyzer extension validates113compactrows, no invented dense inputs, perboundarycommand/xyz/reset/reference replay, actualsource/checkpointmetadata/inventory/tolerance receipts;14CPU compactnegative+pairbindingtestsPASS. NoactualG6resultcreated.
+
+R0J-b959e2d9ded9ebb3 terminalcomplete256/131072/2048Adam each/11writes, actualfirst512PASS, nativeFAILED/-9/PASS_PENDING_CLOSE/INCOMPLETE fullreserves. NormalownedACK/settle/2postrun DONE, CPUtrainingcoverage/aux0formulaPASS. Role23exactactualtraining/pairfairness/Zprelivepending. Next acceptedRole23 thenissue bothactualZspecs (R1ckacceptanceRole22; R0Role23), commit/tag/push and singleR1eval thenR0. NoactualZyet/G2G3G4notgranted.
