@@ -1,6 +1,6 @@
 # R5 formal readiness autonomous Goal
 
-IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. NoLIVE; freshsame18trainingcomplete/actualcpreviewRole29pending; nextfixedold15regressiontraining; G4pendingactual18Z. No formal training submitted.
+IN_PROGRESS, target READY_FOR_FORMAL_R5_TRAINING. Current only LIVE old15newmeanregression J-2fc1731ec6b0a583; fresh18trainingRole29pending; G4pendingactual18Z. No formal training submitted.
 
 Current frozen method w.05/anchor4/LRs1e-4/3e-4/purehover256 FAILED G4: seed20261015 originalZ0/32 (driftmax .787366509), seed20261016 originalZ0/32 (driftmax .327583998,heightmax .216544390). Complete T0+200x32, allfailuredenominators retained. Confirmation01 independentRole20 accepted; second scientific evaluation independentaudit next. Actual scientific/evidence acceptance never changes FAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE/null/full logical+output reservations. BothnormalownedACK/settle/exact2postrun complete. Immutable CONFIRMATION_METHOD_FREEZE.json unchanged, CONFIRMATION_SEEDS.json recordsfailure. Never thirdseed replacement or >256 continuation ofoldmethod.
 
@@ -60,3 +60,5 @@ Authoritative latest: 无live。Role28最终PASS原件8d861a15...已归档：首
 Authoritative latest: 当前唯一LIVE CONFIRM02-RECOVERY1/R1 J-0ffa8e246076922b /A-c9353393ca6f4909，准确inputs37b9bdc/tag/push，S2source617/config2e9/controlc468/同冻结seed20261018/meanprior10/256purehover。该入口自身原共存4/1/3% PASS，真实首次512gate PASS先于两类optimizer，2updates已观察；只poll此句柄，终态normalACK/settle/恰好2postrun/CPU后再独立实际checkpoint审核及主256原Z。原J31资源拒绝永久保留，收费不重置。首新seed17原Z32/32已Role28独立接受；整体G4仍需18实际Z通过。旧15/16回归未启动，formal训练0。
 
 Authoritative latest: 无live。CONFIRM02-RECOVERY1 J-0ffa8e246076922b已complete256/131072/2048Adam each/11writes，实际first512PASS；nativeFAILED/-9/PASS_PENDING_CLOSE/INCOMPLETE/null/full逻辑+output预留保留。normalACK/settle/exact2postrun/CPUcoverage/first8aux原atol+rtol公式核对PASS，u25647796b6c...；70原件1974629011bytes+21621695copies，GPU918.3162130999845/wall920.2723456788808。Role29实际checkpoint/主256Z预审待回。下一提交/push全部证据后先单次release Role25已批准旧seed15的新mean10回归训练A-4a03b10d998ade29，与CPU独审并行；该回归不计G4，method/seed/primary不调。18评价必须等其真实cp被接受及前序终态normalcleanup后准确issue/release；首17原Z32/32已Role28接受。formal0。
+
+Authoritative latest: 当前唯一LIVE旧失败seed15的新mean10回归 R5-MEAN10-REGRESSION-15/R1 J-2fc1731ec6b0a583 /A-4a03b10d998ade29，准确input1e8b0cd/push（许可原9265693/tag），source617/config2e9/controlc468，seed20261015/256purehover。真实first512PASS，16updates已观察；只poll此句柄，回归不计G4、不换17/18。新seed18 RECOVERY1已完整256/normalACK/settle/2postrun/CPUcoveragePASS，u25647796b6c...待Role29独立接受后才可原Z评价，且需当前15终态clean。新seed17原Z32/32已Role28独立接受。原旧method失败/资源拒绝/INCOMPLETE/full预留保留；formal训练0。

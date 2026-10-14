@@ -16,7 +16,7 @@
   "new_training_authorized": true,
   "diagnostic_goal_envelope_authorized": false,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "无live。CONFIRM02-RECOVERY1 J-0ffa8e246076922b已complete256/131072/2048Adam each/11writes，实际first512PASS；nativeFAILED/-9/PASS_PENDING_CLOSE/INCOMPLETE/null/full逻辑+output预留保留。normalACK/settle/exact2postrun/CPUcoverage/first8aux原atol+rtol公式核对PASS，u25647796b6c...；70原件1974629011bytes+21621695copies，GPU918.3162130999845/wall920.2723456788808。Role29实际checkpoint/主256Z预审待回。下一提交/push全部证据后先单次release Role25已批准旧seed15的新mean10回归训练A-4a03b10d998ade29，与CPU独审并行；该回归不计G4，method/seed/primary不调。18评价必须等其真实cp被接受及前序终态normalcleanup后准确issue/release；首17原Z32/32已Role28接受。formal0。",
+  "live_permission_note": "当前唯一LIVE旧失败seed15的新mean10回归 R5-MEAN10-REGRESSION-15/R1 J-2fc1731ec6b0a583 /A-4a03b10d998ade29，准确input1e8b0cd/push（许可原9265693/tag），source617/config2e9/controlc468，seed20261015/256purehover。真实first512PASS，16updates已观察；只poll此句柄，回归不计G4、不换17/18。新seed18 RECOVERY1已完整256/normalACK/settle/2postrun/CPUcoveragePASS，u25647796b6c...待Role29独立接受后才可原Z评价，且需当前15终态clean。新seed17原Z32/32已Role28独立接受。原旧method失败/资源拒绝/INCOMPLETE/full预留保留；formal训练0。",
   "diagnostic_goal_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "paired_pilot_task_requested": true,
   "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
@@ -29,5 +29,5 @@
   "formal_readiness_master_authority": "docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
   "formal_readiness_goal_status": "IN_PROGRESS",
   "formal_full_training_submission_authorized": false,
-  "formal_readiness_current_job": null
+  "formal_readiness_current_job": "J-2fc1731ec6b0a583"
 }

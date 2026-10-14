@@ -7,9 +7,9 @@
 
 ## 当前 Goal（2026-10-15 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 当前唯一LIVE CONFIRM02-RECOVERY1/R1 J-0ffa8e246076922b /A-c9353393ca6f4909，准确inputs37b9bdc/tag/push，S2source617/config2e9/controlc468/同冻结seed20261018/meanprior10/256purehover。该入口自身原共存4/1/3% PASS，真实首次512gate PASS先于两类optimizer，2updates已观察；只poll此句柄，终态normalACK/settle/恰好2postrun/CPU后再独立实际checkpoint审核及主256原Z。原J31资源拒绝永久保留，收费不重置。首新seed17原Z32/32已Role28独立接受；整体G4仍需18实际Z通过。旧15/16回归未启动，formal训练0。
+**IN_PROGRESS，非READY。** 当前唯一LIVE旧失败seed15的新mean10回归 R5-MEAN10-REGRESSION-15/R1 J-2fc1731ec6b0a583 /A-4a03b10d998ade29，准确input1e8b0cd/push（许可原9265693/tag），source617/config2e9/controlc468，seed20261015/256purehover。真实first512PASS，16updates已观察；只poll此句柄，回归不计G4、不换17/18。新seed18 RECOVERY1已完整256/normalACK/settle/2postrun/CPUcoveragePASS，u25647796b6c...待Role29独立接受后才可原Z评价，且需当前15终态clean。新seed17原Z32/32已Role28独立接受。原旧method失败/资源拒绝/INCOMPLETE/full预留保留；formal训练0。
 
-开发192/256均原Z32/32已Role24接受；旧w.05-only两确认失败和旧预算仍保留。唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
+开发192/256均原Z32/32已Role24接受。G4仍需固定seed18主256原Z实际通过；旧失败15/16回归不计G4。唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 
 ## 已完成 Goal（2026-10-14 零命令残差单变量）
 
