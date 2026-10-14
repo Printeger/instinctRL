@@ -40,17 +40,17 @@
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 4372.131791332969,
-    "wall_seconds_including_cleanup": 4387.387480112724,
-    "output_peak_and_reservations_bytes": 12427258009
+    "allocated_gpu_seconds": 5293.040610661032,
+    "wall_seconds_including_cleanup": 5309.656679502688,
+    "output_peak_and_reservations_bytes": 14423272872
   },
   "observed": {
-    "training_transitions": 524288,
+    "training_transitions": 655360,
     "nontraining_transitions": 51200,
-    "optimizer_updates": 1024,
-    "training_checkpoint_writes": 51,
-    "actor_optimizer_steps": 8192,
-    "critic_optimizer_steps": 8192
+    "optimizer_updates": 1280,
+    "training_checkpoint_writes": 62,
+    "actor_optimizer_steps": 10240,
+    "critic_optimizer_steps": 10240
   },
   "reservations": {
     "formal_initial_segment": {
@@ -613,7 +613,7 @@
         "experiment_id": "R5-H256-CONFIRM-02-RECOVERY1",
         "group": "R1",
         "mode": "research-training",
-        "status": "RUNNING",
+        "status": "FAILED",
         "reserved": {
           "training_transitions": 131072,
           "nontraining_transitions": 0,
@@ -621,13 +621,27 @@
           "training_checkpoint_writes": 11,
           "actor_optimizer_steps": 2048,
           "critic_optimizer_steps": 2048,
-          "allocated_gpu_seconds": 7210,
-          "wall_seconds_including_cleanup": 7210
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
         },
         "output_cap_bytes": 8589934592,
-        "observed": {},
-        "postrun_queries_used": 0,
-        "settled": false
+        "observed": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 11,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 1996014863,
+        "inventory": "experiments/R5-H256-CONFIRM-02-RECOVERY1/live/R1-research-training/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -824,6 +838,13 @@
       "status": "PASS_CONDITIONAL_EXACT_CONFIRMATION02_RECOVERY1",
       "evidence": "reviews/confirmation02-recovery1-prelive.json",
       "sha256": "c9035d01b961c8cb7a1927340c4f91f63a8d8c8fe573e2cae132d5d2b172faa6"
+    },
+    {
+      "call": 19,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Actual confirmation02fresh complete256training/gate/immutablefrozenseed20261016/actualu256 checkpoint acceptance and exactprimary originalZ evaluation binding. NoG4beforeactualZ.",
+      "status": "REQUESTED"
     }
   ],
   "decisions": [
