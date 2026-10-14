@@ -68,7 +68,7 @@ def test_exact_additional_budget_and_method_origin(profile):
     assert (b['training_transitions'], b['optimizer_updates'], b['checkpoint_writes']) == (131072,256,5)
     assert b['explicit_resets'] == 1 and b['nontraining_transitions'] == 0
     hashes = method_hashes({'method':{'hashes':{'method':'original'}}},profile)
-    assert hashes['reset_distribution']=='center-only-v1'
+    assert hashes['reset_distribution']=='center-only-v1' and hashes['curriculum']=='curriculum-h1-v1'
     assert hashes['origin_checkpoint_sha256']==profile['initialization_checkpoint']['sha256']
     # Only CURRENT intervention changes; both groups restore the SAME origin.
     q=deepcopy(profile);q.update(group='R0',residual_neutrality_weight=0.)

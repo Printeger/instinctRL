@@ -91,7 +91,7 @@ def required_budget(mode, p):
 def method_hashes(config, p):
     from .research_contract import method_hashes as research_hashes
     result = research_hashes(config, p)
-    result.update(formal_phase=CONTRACT_SHA256, reset_distribution='center-only-v1',
+    result.update(curriculum='curriculum-h1-v1', formal_phase=CONTRACT_SHA256, reset_distribution='center-only-v1',
                   initialization='qualified-warmup-fresh-reset-v1',
                   origin_checkpoint_sha256=p['initialization_checkpoint']['sha256'])
     return result
