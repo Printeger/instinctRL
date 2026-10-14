@@ -1,0 +1,57 @@
+{
+  "schema_version": "instinctrl-r5-confirmation-freeze/1",
+  "status": "FROZEN_BEFORE_ANY_CONFIRMATION_START_RESULTS_PENDING",
+  "freeze_UTC": "2026-10-14T15:10:05.381550+00:00",
+  "evidence_commit": "018e6a5",
+  "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+  "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+  "method": "unified-h1-formal-readiness-v1",
+  "effective_method_sha256": "9d8fa7eaf16a4a83d4d4c7794dfd595e3daca82a684f9e25652b8606638d29c0",
+  "frozen_profile": {
+    "group": "R1",
+    "evaluation_seed": 20260909,
+    "max_updates": 256,
+    "checkpoint_updates": [
+      1,
+      2,
+      8,
+      16,
+      32,
+      64,
+      96,
+      128,
+      192,
+      256
+    ],
+    "command_profile": "pure-hover",
+    "residual_neutrality_weight": 0.05,
+    "anchor_weight": 4.0,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "output_cap_bytes": 8589934592,
+    "master_authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+      "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+    }
+  },
+  "primary_node": 256,
+  "development_late_nodes": [
+    192,
+    256
+  ],
+  "development_evaluation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/R1-evaluation-analysis.json",
+    "sha256": "c88401e95ac61cdea763a519dbed74736d01bb142574fa9bd0f9e1482421684e",
+    "both_original_Z_pass": true,
+    "independent_actualscience_review": "PENDING; mustacceptbeforeconfirmationrelease"
+  },
+  "training_seeds": [
+    20261015,
+    20261016
+  ],
+  "evaluation_seed": 20260909,
+  "seed_rule": "These exact two trainingseeds fixed prospectively, absent all prior Goal cards/AUTH/checkpoint identities at freeze. Both primary256 must originalZpass32/32+allsubgroups, no2of3; never replace failedseed under samemethodfreeze. Same256/131072coldstart budget and frozenmethod. No future weights selected.",
+  "results": [],
+  "all_confirmation_seeds_pass": null,
+  "formal_full_training_submitted": false
+}
