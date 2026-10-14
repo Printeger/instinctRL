@@ -806,6 +806,14 @@
         "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
         "observed_file_bytes": 692261898,
         "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-integration-01-20261015",
+        "reserved_bytes": 2147483648,
+        "status": "FROZEN_READ_ONLY",
+        "source_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+        "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+        "observed_file_bytes": 704103394
       }
     ],
     "confirmation_and_transition": {
@@ -1017,7 +1025,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Read-only prospectiveformal mean-prior warmhook andfinalpackage gate/reservehelper review; actualnewDEV02R1 training/checkpoint acceptance afterterminaldata available. No G2/G3/G4/READY beforeactualZ.",
-      "status": "REQUESTED_AWAIT_ACTUAL_TRAINING_COMPLETION"
+      "status": "PASS_ACTUAL_R1_TRAINING_AND_HELPER_FULL_SPEC_CLOSED",
+      "evidence": "reviews/mean-prior-R1-actual-training-helper-closure.json",
+      "sha256": "d77d450df8ff105597d4b685628d922f7d4cadc987e4f7210bc8b6d2ae232348"
     }
   ],
   "decisions": [

@@ -1,0 +1,105 @@
+{
+  "status": "PASS_CPU_ONLY_NOT_RELEASE_OR_G6",
+  "budget": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "initialization_ticks": 10,
+    "training_transitions": 0,
+    "nontraining_transitions": 3584,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "explicit_resets": 1,
+    "automatic_resets": 3584,
+    "wall_seconds": 900
+  },
+  "source": {
+    "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+    "product_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "product_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "workload_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "workload_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b"
+  },
+  "all_product_hashes_identical_to_mean_DEV02": true,
+  "profile": {
+    "experiment_id": "R5-MEAN10-INTEGRATION-01",
+    "group": "R1",
+    "training_seed": 20260908,
+    "evaluation_seed": 20260909,
+    "max_updates": 256,
+    "checkpoint_updates": [
+      1,
+      2,
+      8,
+      16,
+      32,
+      64,
+      96,
+      128,
+      192,
+      256
+    ],
+    "evaluation_updates": [
+      256
+    ],
+    "command_profile": "pure-hover",
+    "residual_neutrality_weight": 0.05,
+    "anchor_weight": 4.0,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "output_cap_bytes": 8589934592,
+    "master_authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+      "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+    },
+    "mean_prior_contract": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+      "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+    },
+    "mean_prior_weight": 10.0,
+    "transition_protocol": "zero-directions-reverse-zero112-v1",
+    "integration_contract": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-integration-01-20261015/coordination/contracts/R5_FORMAL_INTEGRATION_DIAGNOSTIC_V1.md",
+      "sha256": "720845138986bfb053304db915e38fb6bd9558023d65177be53af79bd189a873"
+    },
+    "checkpoint_source_identity": {
+      "product_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "product_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+      "workload_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "workload_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+      "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547"
+    },
+    "checkpoint_compatibility": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-INTEGRATION-01/checkpoint-compatibility.json",
+      "sha256": "777d2bf93968df10bf523d9293acb94ec0261212bd64bcacac4691c076637a27"
+    },
+    "recalculation": {
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u1.pt",
+        "sha256": "4436218bd7fa0c7ceeb8580f99da101fb22df17ffde7954558ee9016c8f2dc42",
+        "update": 1
+      },
+      "input": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+        "sha256": "012dd61783f7a749a59136d2339dc43e78e987150c46614a10df2cf99d86c5f6"
+      },
+      "probe": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/first_update_probe.pt",
+        "sha256": "c7004c4b18f4ec396676b53a24c934637ed0827fa7ed5e505520cba42bd7c015"
+      }
+    },
+    "experiment_card": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-INTEGRATION-01/EXPERIMENT_CARD.json",
+      "sha256": "d74904b3c194b5902db6c987f8391a60daf4f7b9d29fce37fe3bd272ddfb210e"
+    },
+    "checkpoints": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+        "update": 256
+      }
+    ]
+  },
+  "GPU_queries": 0,
+  "live_starts": 0,
+  "optimizer_calls": 0
+}

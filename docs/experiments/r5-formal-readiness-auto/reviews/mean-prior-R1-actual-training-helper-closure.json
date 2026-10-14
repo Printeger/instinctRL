@@ -1,0 +1,143 @@
+{
+  "role": "Role22",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "接受DEV-02 R1实际训练及u192/u256 checkpoint；关闭未接入formal helper的限定实现缺陷。未来原Z评价仍受配对公平性及串行release条件约束；不授G6/G7、正式提交或READY。",
+  "identities": {
+    "evidence_and_helper_fix_commit": "aa9664b154868f34a2571325cb462350e54b3d63",
+    "training_source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "source_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "launch_sha256": "f266163310bc3286e9b8fe39d62cb498d43afb0b11898f83d97210cc49dfaac2",
+    "job_id": "J-b8ec45f94a245f6a",
+    "approval_id": "A-ecb30414e9293db6",
+    "actual_training_AUTH_sha256": "f33e9965109a74e9cd4ef25d448e99380f07a68ae49058845a11afe069190b68",
+    "authorized_spec_file_sha256": "8e4aa402709fea637de9d037bf5719b016829c39b7bfa5879793888a9caef020",
+    "tool_release": "d027e9a0076377380a4ce277727cba8bfde132a113c9ce2b436c28ab7de9f793",
+    "formal_segment_sha256": "f9608916051d8a3cfc9839a752d06cd37e3d2e68f266ba85d8edb56ac008879e",
+    "formal_mean_phase_contract_sha256": "103664d19c5e037d5903c86e2af11b61181a8722e599bdbdd87ae7c7f9414930",
+    "fixed_launch_gate_sha256": "f8970f482d3467cd075ad37ba467323b9eb09451f12fd76fa426d03f1ae23791"
+  },
+  "actual_training": {
+    "scientific_training_accepted": true,
+    "inventory": {
+      "original_objects": 70,
+      "original_bytes": 1974680764,
+      "archive_copy_bytes": 21622904,
+      "combined_bytes": 1996303668,
+      "result": "所有原件及copies实际逐文件重哈希、大小核对通过，完整job/attempt文件集合与inventory相等。"
+    },
+    "binding": "actual request.spec、authorized spec、实际AUTH及全部spec pins一致。",
+    "coverage": {
+      "completed_updates": 256,
+      "completed_minibatches": 2048,
+      "returned_policy_steps": 4096,
+      "training_transitions": 131072,
+      "actor_Adam_steps": 2048,
+      "critic_Adam_steps": 2048,
+      "checkpoint_writes": 11,
+      "explicit_resets": 1,
+      "automatic_reset_lanes": 128,
+      "initialization_physics_ticks": 2,
+      "result": "独立重读全部update/minibatch和compact rollout，顺序、每epoch512样本一次覆盖、全部零命令及绝对计数通过。"
+    },
+    "method": {
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "mean_prior_weight": 10,
+      "residual_reward_weight": 0.05,
+      "anchor_weight": 4,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "effective_method_sha256": "c390ab73252ee37da504298ad08498f3d5131866023d9099f52baf3c749a907f",
+      "reward_formula": "独立对全部131072样本用实际correction重算零命令残差项，简单标量重算最大绝对误差7.580777250382198e-08，处于原容差内。"
+    },
+    "first512_gate": {
+      "status": "PASS",
+      "evidence": "实际读取首512 policy/actions/oldAlphaBeta/logp及8个pre/post probe，索引、动作、Beta均值、before-MB1 logp与保存old_logp对应；原生产gate先于两类optimizer。",
+      "limit": "保留原同设备gate及1e-6/1e-5容差；没有额外actor forward、sampling或optimizer调用。"
+    },
+    "auxiliary_evidence": {
+      "finite_nonnegative_minibatch_scalars": 2048,
+      "first8_formula_recalculated": true,
+      "maximum_first8_absolute_error": 9.5367431640625e-07,
+      "scope": "使用保存的真实preoptimizer actor输出和确定性minibatch索引进行CPU重算；没有冒充同设备G7，也没有推断未保存的后续完整actor输出。"
+    },
+    "checkpoints": "实际读取全部11个PT，核对source、seed、method、pure-hover clock、LR、绝对计数及模型/Adam有限性与step。"
+  },
+  "accepted_evaluation_checkpoints": [
+    {
+      "update": 192,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u192.pt",
+      "sha256": "e01be5cff6837e3b6458768a2cd754e09591c980fdacd00a249262e56faa547b",
+      "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547"
+    },
+    {
+      "update": 256,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+      "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547"
+    }
+  ],
+  "lifecycle_accounting": {
+    "native_status": "FAILED",
+    "native_exit_code": -9,
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "full_logical_reservations_retained": true,
+    "wall_seconds": 913.4126316141337,
+    "allocated_GPU_seconds": 911.8811367629096,
+    "cleanup": "normal ACK、两次稳定空扫描、quiescent、未timed_out、无survivors；再次核对9个已知身份均不再owned。",
+    "postrun": "恰好ordinal0/1两份原授权receipt，在normal owned ACK后；本轮未执行GPU查询。",
+    "process_PASS_granted": false
+  },
+  "prospective_formal_implementation": {
+    "verdict": "PASS_IMPLEMENTATION_ONLY",
+    "checks": [
+      "两组显式共享同一R1 prior10 origin；未来reward均.05，当前aux为0/10，旧reward干预不被隐式沿用。",
+      "完整strict restore后显式安装当前组callback，位于fresh reset、首真实512 gate和update之前；不依赖checkpoint恢复Python callback。",
+      "原始origin方法与当前正式phase方法分别绑定，保留mixed curriculum、center-only reset和origin checkpoint身份。",
+      "新增256updates、绝对257至512、Adam增量及五节点计账保持分离；fresh simulator reset不宣称物理连续。",
+      "formal reserve transfer操作checked copy，转入stage，不退款历史，不修改used或其他保护预留。",
+      "helper仍要求later explicit start、准确manifest/review/permission/tool/AUTH及生成checkpoint的独立accepted evidence。"
+    ],
+    "limit": "尚未接入实际最终包；准确新source/config/compatibility/tool/manifest/permission和最终审核仍须另行完成。"
+  },
+  "closed_findings": [
+    {
+      "id": "FORMAL-GENERATED-FULL-SPEC",
+      "status": "CLOSED",
+      "original_commit": "5aaecbc4f4b66a1210ea228fb4ad4a109197ff4a",
+      "contract": "未来generated评价只允许声明的checkpoint/AUTH及审核条件填充，其他spec字段必须属于已独立审核的完整模板。",
+      "evidence": "原helper的零写入内存反例表明可保留argv/cwd/h1/AUTH而更改dispatcher/resources/method后仍获helper接受。",
+      "impact": "未接入helper的最终包绑定不完整；没有影响既有Commander或当前live。",
+      "closure": "aa9664b为每entry绑定完整spec_template并deep equality；仅generated AUTH SHA和manifest固定ID/顺序/kind的late条件可填。训练同样完整比较。本次独立执行限定CPU测试22/22 PASS，包含dispatcher/resources/method/evaluation/runtime/undeclared-condition反例。",
+      "preserved_original_finding_sha256": "b9b7a24064dc0c2bebcaf9224b8b601823d947433ed8e256189abf96d0933d62"
+    }
+  ],
+  "conditions": [
+    "R1原Z只使用上述真实u192/u256及原seed20260909、两节点各200×32加T0；12800非训练、0训练/optimizer/checkpoint写，原阈值和子组不变。",
+    "先等待当前R0 J-b959e2d9ded9ebb3终态、normal owned cleanup与结算，并完成实际配对init/first512独立公平性审核；当前不提前认定配对公平。",
+    "公平性必须包含两组相同reward下首advantages/returns逐位对应，不沿用旧reward差异豁免。",
+    "Commander另行绑定本accepted review hash、实际checkpoint/source/SHA、准确AUTH/spec，提交/tag/正常push后按原STOP、idle、disk、预算及coexistence门槛串行release。",
+    "native FAILED、INCOMPLETE/null和完整保守预留保持真实；本次训练验收不释放这些逻辑预留。",
+    "未接入formal helper及CPU phase实现不构成实际G6/G7、READY、conditional permission发行或formal submit；本Goal不提交正式训练。"
+  ],
+  "non_blocking": [
+    {
+      "id": "METHOD_OUTCOME_PENDING",
+      "detail": "完整训练和aux计算证据不代表原Z通过，亦不证明非零任务或跨seed稳定性。"
+    },
+    {
+      "id": "FORMAL_WIP_BOUNDARY",
+      "detail": "本轮未要求尚不存在的最终READY/approval；后续准确完整包必须独立审核，不能继承本实现审查作为release。"
+    }
+  ],
+  "release_granted": false,
+  "G6_G7_granted": false,
+  "READY_granted": false
+}

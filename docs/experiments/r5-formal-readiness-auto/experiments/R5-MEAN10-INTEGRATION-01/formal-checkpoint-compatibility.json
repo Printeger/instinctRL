@@ -1,0 +1,55 @@
+{
+  "schema_version": "instinctrl-checkpoint-compatibility/1",
+  "scope": "FORMAL_WARM_START_IDENTICAL_PRODUCT",
+  "origin_source_identity": {
+    "product_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "product_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "workload_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "workload_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547"
+  },
+  "execution_source_identity": {
+    "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+    "product_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "product_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "workload_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "workload_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b"
+  },
+  "origin_config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-02-20261015/training_workloads/unified_h1/candidate_config.json",
+    "sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547"
+  },
+  "execution_config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-integration-01-20261015/training_workloads/unified_h1/candidate_config.json",
+    "sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24"
+  },
+  "unchanged_product_sha256": {
+    "isaaclab-training/instinctlab/assets/taslab_uav/articulation.py": "080eb6a30c76a63395effe2da38f0ffab22642b494651d0e195f74e14473598d",
+    "isaaclab-training/instinctlab/control/anchor.py": "2d73af1c2f58fee40e616826771b9e97b07758556f6ce5ab66b398bbcaea4c8d",
+    "isaaclab-training/instinctlab/control/baseline_b0.py": "5fa2b8d746eb231a1bb12f331fe1a76e8f988005e9a315e1dbf622e0bf1ed3d1",
+    "isaaclab-training/instinctlab/control/governor.py": "cd5cf6c73578bc69dc5f696ac6d294d9d4c8db0baaf12265e6715646554b7197",
+    "isaaclab-training/instinctlab/control/ics.py": "87dba0e3f4d2e252b74fb8b89954b0673e07fe07748cf8b3a36dea6f7c03b6ac",
+    "isaaclab-training/instinctlab/control/lee_velocity_controller.py": "3818c21ff2550b7c10ad15a1e1d167ba8f20486b882a3944fff956692b915f95",
+    "isaaclab-training/instinctlab/control/pipeline.py": "dd1e81f51f76422d7dfc6673dbf59c3c082b7fd9ceb12ff84a56272c745d1d2b",
+    "isaaclab-training/instinctlab/control/runtime_adapter.py": "dfb10aa31275e39b871f050397b8c941216c17b73c0dd6926521fe5434227e0f",
+    "isaaclab-training/instinctlab/envs/__init__.py": "35fe24c13b1fea52f4eff09b29187dc642cf175bd054f2b86538879952843ef3",
+    "isaaclab-training/instinctlab/envs/taslab_direct_env.py": "35be09e97c24424e4cb5bb046d16302a4c49901825bf2eb61278a650e6cce639",
+    "isaaclab-training/instinctlab/envs/unified_h1_direct_env.py": "0d5f6be7a16576b23cca0823d67d3d47acfc64484d71f36b1381cbffb89b91c9",
+    "isaaclab-training/instinctlab/evaluation/raycaster_observability.py": "3d4433d33940baa4e413606cded6851440ec2c66fc10a4386930bd1a43312aa4",
+    "isaaclab-training/instinctlab/observations/actor.py": "dfc339233e146e585493bfcc1893b5ee87c46c827963e36d6f9ec79e4b81ce44",
+    "isaaclab-training/instinctlab/sensors/mid360.py": "a37a1c423d8818194f23023ba969f55025dc867d2280579633a699807a5aea44",
+    "isaaclab-training/instinctlab/task/__init__.py": "5ca71c76eede74601a11dc1b73acc7e5e0b33664896e52df8746599d364ec3f6",
+    "isaaclab-training/instinctlab/task/critic_h1.py": "ea00315e8ca67ba8cdb1c3a22bf11a466b06d98bdd46b2bc55d437c6758cbddf",
+    "isaaclab-training/instinctlab/task/rewards_h1.py": "ff69134ae79afbda8627811a060341de350f5d4829166a01bdb423dc71c07027",
+    "isaaclab-training/instinctlab/task/scene_h1.py": "e94dd2e9614e8dae380f298650edc5cc91fcaacc7ca9ed80b678581bba087d59",
+    "isaaclab-training/instinctlab/task/termination.py": "90be9cf7d68d54f520866737a1aef3c449f5b3b52bfe62a9666d405756b59d89",
+    "isaaclab-training/instinctlab/training/__init__.py": "43ed3f2b45c7678d09c05275e73ee669161ccae0caab9d09f35039f8560e1d24",
+    "isaaclab-training/instinctlab/training/checkpoint.py": "d04f77d3e443ed8466db5dc6f0c05d633fd012b799eedf4d6047d4e395e9b37b",
+    "isaaclab-training/instinctlab/training/checkpoint_h1.py": "94337128716045da864eac88598d23191ad3ee74d41fb38cacee4eb7315462d9",
+    "isaaclab-training/instinctlab/training/networks.py": "a0790d5f80c8a9f2f06d05fc80bcdcfe8fd3e1a5c71a482443f1b3f5769dc129",
+    "isaaclab-training/instinctlab/training/networks_h1.py": "e2039982cdd8249116ef8910c2ba0d28646d0ad17e35a5fe4b09afc3b8b0a0db",
+    "isaaclab-training/instinctlab/training/ppo.py": "13290128ecbc79f9c429e064abbb2505bd6830c815ef21b3cec93fc0581e2431",
+    "isaaclab-training/instinctlab/training/rollout.py": "a1d04a84a6099a711cab1d8cb8b6a550addf292dde4682ea82d3a9a0d32ab58d",
+    "isaaclab-training/instinctlab/training/rollout_h1.py": "99368e65552960680e2fbf860fdf726ec51ab3671c420719cdec90b6992cdabc"
+  }
+}
