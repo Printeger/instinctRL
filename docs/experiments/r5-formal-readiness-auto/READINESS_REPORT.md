@@ -19,12 +19,21 @@ The previous w.05-only method passed development192/256 but FAILED both frozen c
 
 The new [immutable method freeze](MEAN_PRIOR_CONFIRMATION_METHOD_FREEZE.json) fixes new unused trainingseeds20261017/18 and common primary256 before either start; both must pass the unchanged original Z. Old failedseeds15/16 are separate fixed newmethod regressions and NEVER count for G4. They cannot tune this frozen method. Only the candidate is confirmed, so no cross-seed relative ablation effect is claimed. Exact cards, source, tool, AUTH proposals and budgets are committed. D016 reallocates only unused future reserves inside the unchanged master and leaves the full formal first-segment reserve and all old charges untouched.
 
+Actual new confirmations use the same frozen method and primaryu256. Seed17 completed its actual originalZ and was accepted by Role28. Seed18 completed training accepted by Role29 and actual originalZ in the distinct evaluation-only resource recovery; Role31 has independently replayed both raw results, with final combined training/G4 export pending oldseed16 terminal evidence. The beforeApp resource refusals produced zero science and remain separately charged, never classified as failed Z or used for seed replacement.
+
+| Prospectively frozen training seed / primary | Original Z | Maxspeed m/s | Maxdrift m | Maxheight m |
+| --- | --- | --- | --- | --- |
+| 20261017/u256 | 32/32 | .010489066 | .019358605 | .047899961 |
+| 20261018/u256 | 32/32 | .010393206 | .007172675 | .045454979 |
+
+All eight direction subgroups are4/4 for both confirmations, with full sensorT0+200steps and all32 engineering-valid lanes/no missing or reset. [Actual17 analysis](experiments/R5-MEAN10-CONFIRM-01/R1-evaluation-analysis.json) and [actual18 analysis](experiments/R5-MEAN10-CONFIRM-02-Z-RECOVERY1/R1-evaluation-analysis.json) bind original raw and actual checkpoint SHAs. Oldseed15 newmethod regression training was accepted by Role30; oldseed16 regression is currently live. Their separate Z regressions remain pending and cannot replace either frozen new confirmation.
+
 | Gate | Current evidence |
 | --- | --- |
 | G1 method | Implemented/reviewed finite prior with deployment boundary preserved; final audit pending |
 | G2 primary original Z | Development PASS, Role24, primary256 |
 | G3 two predefined late nodes | Development PASS, Role24,192/256 |
-| G4 unused seed confirmation | Frozen exact17/18; actual results pending |
+| G4 unused seed confirmation | Both frozen17/18 actual primaryZ32/32; Role31 raw replay passed, final export pending |
 | G5 learning implementation | Both DEV02 real512 gates precede both optimizers; actual training accepted Roles22/23 |
 | G6 finite nonzero transition | Exact112×32 proposal prepared; no actual transition result yet |
 | G7 same-device checkpoint recalculation | Exact ownu1/input/probe and finalu256 pins prepared; actual CUDA recalculation pending |
