@@ -1,0 +1,63 @@
+{
+  "schema_version": "instinctrl-r5-research-experiment-card/1",
+  "experiment_id": "R5-H256-CONFIRM-01",
+  "parent": "R5-H256-DEV-01",
+  "question": "Prospective independent trainingseed confirmation of frozen qualifiedmethod; no parameter tuning.",
+  "sole_primary_change": "Only trainingseed relative to developmentR1; no reward/actor/source/LR/anchor/horizon change.",
+  "common_source_config": "Reuse exact acceptedreadonly a13c5a4/config73aeb4ff; current main-only metadatafix not applied to frozen source.",
+  "init": "COLD_START; actualfirst512probabilitygatebeforeeitheroptimizer, originalphysicalfreshreset.",
+  "primary_node": 256,
+  "predefined_late_nodes": [
+    256
+  ],
+  "training_transitions_total": 131072,
+  "evaluation_transitions_total": 6400,
+  "live_starts_total": 2,
+  "logical_updates_total": 256,
+  "actor_steps_total": 2048,
+  "critic_steps_total": 2048,
+  "checkpoint_writes_total": 11,
+  "wall_GPU_reservation_total": 9020,
+  "output_reservation_bytes": 17179869184,
+  "profiles": {
+    "R1": {
+      "experiment_id": "R5-H256-CONFIRM-01",
+      "group": "R1",
+      "training_seed": 20261015,
+      "evaluation_seed": 20260909,
+      "max_updates": 256,
+      "checkpoint_updates": [
+        1,
+        2,
+        8,
+        16,
+        32,
+        64,
+        96,
+        128,
+        192,
+        256
+      ],
+      "evaluation_updates": [
+        256
+      ],
+      "command_profile": "pure-hover",
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      }
+    }
+  },
+  "method_seed_freeze": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/CONFIRMATION_SEEDS.json",
+    "sha256_at_prospective_freeze": "de5480a774d7badd5e205ab59372025efa54e68cfd83b5257ff940b4d7541f4f"
+  },
+  "acceptance": "Primary256 full originalZ32/32, all8subgroups4/4, unchangedT0/200steps/allfailures/0.08speed/0.30drift/0.20height; BOTH frozen confirmationseeds mustpass. Failure remains evidence and requires research/newmethod+newconfirmation seeds, never2of3.",
+  "recovery": "Newidentity boundedreasonedrecovery under master; nooldresume, neverrelaxSTOP/coexistence/gate.",
+  "formal_full_training_submitted": false
+}

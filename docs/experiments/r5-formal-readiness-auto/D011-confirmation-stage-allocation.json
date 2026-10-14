@@ -1,0 +1,30 @@
+{
+  "authority": "Existing explicit user masterdelegatedCoordinator",
+  "status": "ALLOCATED_WITHIN_MASTER_NOT_RELEASE",
+  "old": {
+    "training_transitions": 393216,
+    "nontraining_transitions": 51200,
+    "live_starts": 12,
+    "simulator_initialization_reservations": 12,
+    "optimizer_updates": 768,
+    "training_checkpoint_writes": 40,
+    "allocated_gpu_seconds": 36100,
+    "wall_seconds_including_cleanup": 36100,
+    "output_peak_and_reservations_bytes": 120259084288
+  },
+  "new": {
+    "training_transitions": 655360,
+    "nontraining_transitions": 64000,
+    "live_starts": 16,
+    "simulator_initialization_reservations": 16,
+    "optimizer_updates": 1280,
+    "training_checkpoint_writes": 62,
+    "allocated_gpu_seconds": 54140,
+    "wall_seconds_including_cleanup": 54140,
+    "output_peak_and_reservations_bytes": 154618822656
+  },
+  "reason": "Actualdevelopmentcandidatebothprospective192/256originalZpass. Freeze method/budget/primary NOW before any newseedtraining; exact independentreview required beforeconfirmationrelease.",
+  "confirmation_and_formal_full_reserves_unchanged": true,
+  "conservative_policy": "New confirmationallocation charged in liveentries while original full confirmationandtransition protectedreserve retained as conservative additionalbuffer, no refund/doublecountactual. All failed INCOMPLETE entries retained.",
+  "master_caps_unchanged": true
+}
