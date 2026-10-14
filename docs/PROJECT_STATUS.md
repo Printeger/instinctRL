@@ -7,7 +7,7 @@
 
 ## 当前 Goal（2026-10-15 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 当前无live。新确认seed18原Z入口J-0f04e97f67bc802a在App前原GPU窗口8/3/1%>5拒绝，0rollout/eval/train/optimizer/writes，formalFINAL0；normalACK/settle/exact2postrun完成，start/init/output及实际GPU10.800074399914593/wall12.963952553924173保留。D018仅额外1start/init/8GiB，新准确同一实际seed18u256评价R5-MEAN10-CONFIRM-02-Z-RECOVERY1 packet45ed5ab5已CPU冻结AUTHloader验证、等待Role30独立预审，事件1/3退避≥60s，无额外GPU探测。旧seed15训练完整256/CPUcoveragePASS、Role30同时审阅。整体G4仍待18真实Z，formal0。
+**IN_PROGRESS，非READY。** 当前无live。Role30独立PASS旧seed15实际训练/u256及seed18资源FINAL0失败保留/准确fresh原Z预审。Commander准确fresh18原Z许可A-11c66f5f5fb086ec已发行，实际AUTH256f5476...；同一真实u25647796b6c/seed18/source617/config2e9/controlc468，仅6400nontraining。另旧seed15准确Z A-4f24d896680295b3发行但后续串行等待。已实录≥79.78s退避，原8/3/1%资源拒绝收费不变，D018只增加1start/init/8GiB。下一commit/tag/push后单次releasefresh18Z；G4未授，formal0。
 
 唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 

@@ -1,0 +1,34 @@
+{
+  "proposal_id": "P-11c66f5f5fb086ec",
+  "proposal_sha256": "11c66f5f5fb086ec0e48935cbc76e6c728a3a175fe8437ae8ae4c22f89d327f2",
+  "approval": {
+    "approval_id": "A-11c66f5f5fb086ec",
+    "approver": "local-user-cli",
+    "budget": {
+      "fake_starts": 0,
+      "role_calls": 0,
+      "wall_seconds": 1810
+    },
+    "decision": "APPROVED",
+    "preconditions": [
+      "exact pins",
+      "accepted condition hashes",
+      "STOP clear",
+      "single submission"
+    ],
+    "proposal_id": "P-11c66f5f5fb086ec",
+    "proposal_sha256": "11c66f5f5fb086ec0e48935cbc76e6c728a3a175fe8437ae8ae4c22f89d327f2",
+    "proposal_version": 1,
+    "reason": "Explicit masterdelegate 4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33; independentexactreview c5b2b3e77efa8701640d1c50b1d106ce664d8eea3caf52793991b4b95394f059; exactcard 10a467ef2c50e2008bc560e6699d9efbe65c3cfbf583afa687cdb1954b1375d3. Preservefirst512gate/actorboundary/originalZ/STOP/coexistence/quota/cleanup. Commit/tag/normalpush before single release; no automaticretry; allmaster/confirmation/formalreserves protected.",
+    "scope": "EXPERIMENT",
+    "stage_id": "R5-FORMAL-READINESS-AUTO-01",
+    "time": 1792004182.1668978
+  },
+  "actual_authorization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-02-Z-RECOVERY1-R1-RESEARCH-EVALUATION-617af4d90c35/commands/AUTHORIZATION.json",
+    "sha256": "256f5476be1449dac530201ce86a0199d0dd5f7c93c7695539f969ea7ab1db4a"
+  },
+  "review_sha256": "c5b2b3e77efa8701640d1c50b1d106ce664d8eea3caf52793991b4b95394f059",
+  "master_sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33",
+  "submitted": false
+}
