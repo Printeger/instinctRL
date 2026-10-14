@@ -1,5 +1,5 @@
 {
-  "status": "IMPLEMENTED_CPU_VERIFIED_AWAITING_EXACT_INDEPENDENT_CLOSURE",
+  "status": "CLOSED_INDEPENDENT_ROLE17",
   "finding": "FORMAL-CURRICULUM-IDENTITY-R1",
   "review": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/G6-formal-implementation-original.json",
@@ -10,5 +10,9 @@
   "CPU_receipt": "cpu-formal-segment-clock-identity.xml",
   "actual_training_reruns": 0,
   "product_changes": 0,
-  "note": "Reviewer already checked identical workingtreefix direction; exact committedcandidate closure stillrequired in next independent exactpackage review."
+  "note": "Reviewer already checked identical workingtreefix direction; exact committedcandidate closure stillrequired in next independent exactpackage review.",
+  "independent_closure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/confirmation01-actual-training-clock-closure.json",
+    "sha256": "d2e91d3371629f4d46680a572f28c07eb95e6c45e48b9ae971d0ebd53a545492"
+  }
 }

@@ -1,0 +1,140 @@
+{
+  "role": "Role17",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "确认01实际训练数据及准确u256 checkpoint验收；条件性原Z评价准入；限定关闭Role16实现缺陷。不是确认结果、G4、G6/G7或READY验收，也不是release。",
+  "identities": {
+    "evidence_commit": "f5cdeaea5a29e110c831113bc47e2532b3dec380",
+    "experiment_id": "R5-H256-CONFIRM-01",
+    "job_id": "J-983c37552deb85d9",
+    "approval_id": "A-f706136dae2ce864",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "source_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "launch_sha256": "e9cc7f008584217c96b46fd043ffe6451a6186e7dd624c93c206bbe72820cbe1",
+    "authorized_spec_file_sha256": "c45db61b0e1000fa32a58864bfb7f24f2343baa811c99458d1d67bb437291342",
+    "actual_training_AUTH_sha256": "5a7862781168e651bf2beef258600374854150e9fa5e42fdaf0d5b51f369d10d",
+    "tool_release": "d027e9a0076377380a4ce277727cba8bfde132a113c9ce2b436c28ab7de9f793",
+    "confirmation_freeze_sha256": "de5480a774d7badd5e205ab59372025efa54e68cfd83b5257ff940b4d7541f4f",
+    "training_seed": 20261015,
+    "evaluation_seed": 20260909
+  },
+  "actual_training": {
+    "scientific_training_accepted": true,
+    "inventory_check": {
+      "all_original_objects": 69,
+      "original_bytes": 2585047681,
+      "archive_copy_bytes": 21584494,
+      "combined_bytes": 2606632175,
+      "result": "全部原件与已列archive copies逐文件实际重哈希、核对大小；原job和整个attempt实际文件集合与inventory完全相等。"
+    },
+    "binding": "actual request.spec与已提交authorized spec相等；实际AUTH字节、全部spec pins及实际参数核对通过。",
+    "coverage": {
+      "completed_updates": 256,
+      "completed_minibatches": 2048,
+      "actual_returned_policy_steps": 4096,
+      "training_transitions": 131072,
+      "actor_Adam_steps": 2048,
+      "critic_Adam_steps": 2048,
+      "checkpoint_writes": 11,
+      "explicit_resets": 1,
+      "automatic_reset_lanes": 173,
+      "initialization_physics_ticks": 2,
+      "result": "独立重读全部update/minibatch和compact rollout原件；顺序、每epoch512样本一次覆盖、32lane、零命令和完整绝对计数通过。"
+    },
+    "method": {
+      "weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "curriculum": "curriculum-h1-research-pure-hover-v1",
+      "effective_method_sha256": "9d8fa7eaf16a4a83d4d4c7794dfd595e3daca82a684f9e25652b8606638d29c0",
+      "reward_formula": "独立核对全部131072样本，按实际v_corr_b重算零命令残差项；最大绝对误差9.840176584674509e-08。"
+    },
+    "first_gate": {
+      "result": "PASS",
+      "samples": 512,
+      "actual_saved_input_shape": {
+        "lidar_grid": [
+          512,
+          12,
+          59,
+          360
+        ],
+        "state_vec": [
+          512,
+          52
+        ],
+        "actions": [
+          512,
+          4
+        ]
+      },
+      "evidence": "实际读取首输入与8个真实pre/post minibatch probe，核对索引0..511、边界名称及before-MB1 logp与保存old_logp对应；保留生产同设备gate的原1e-6/1e-5容差。已接受源码中的gate位于两类optimizer之前。",
+      "limit": "本次CPU证据核对不替代或重新定义实际同设备生产gate；没有额外actor sampling、forward或optimizer调用。"
+    },
+    "checkpoint_contents": "实际读取全部11个PT；检查源身份、seed、方法、PPO LR、pure-hover clock、绝对update/transition/Adam计数、模型及optimizer张量有限性和每个Adam状态step。"
+  },
+  "accepted_evaluation_checkpoints": [
+    {
+      "update": 256,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-CONFIRM-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+      "sha256": "1e5a1f4208a82b479d2b985d48967fa2131d8bec5e964d4119af164504edee64",
+      "bytes": 1509993,
+      "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+      "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+      "training_seed": 20261015,
+      "counters": {
+        "update": 256,
+        "transition": 131072,
+        "global_policy_step": 4096,
+        "actor_optimizer": 2048,
+        "critic_optimizer": 2048
+      }
+    }
+  ],
+  "lifecycle_accounting": {
+    "native_process_status": "FAILED",
+    "native_exit_code": -9,
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "full_logical_reservations_retained": true,
+    "wall_seconds": 958.8546323350165,
+    "allocated_GPU_seconds": 957.5720066549256,
+    "cleanup": "normal lifeguard ACK，quiescent且未timed_out，两次稳定空扫描，无survivors；再次只读核对owner/guard/child/discovered共9个身份均不再owned。",
+    "postrun": "恰好两份已授权receipt，ordinal0/1，均在normal owned ACK后；本次未执行GPU查询。",
+    "process_PASS_granted": false
+  },
+  "implementation_closure": {
+    "id": "FORMAL-CURRICULUM-IDENTITY-R1",
+    "status": "CLOSED",
+    "original_candidate": "d32ff123df675097acea212a4afbe70275eace1d",
+    "fix_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+    "fixed_formal_segment_sha256": "7a7472cf34c6ee492753eb14caa8c53157eca10f23f99b95ac89525ff271b21d",
+    "evidence": "git show核对已提交的一行curriculum='curriculum-h1-v1' override及新增断言，提交字节与Role16已检查工作树修复完全相等；保留13PASS回归receipt。",
+    "implementation_verdict": "PASS",
+    "limit": "只关闭已发现的CPU实现身份缺陷；不验收新snapshot/config/tool/card/AUTH，不宣称实际G6/G7或正式训练权限。"
+  },
+  "conditions": [
+    "Commander将本独立验收的accepted evidence hash、上述实际u256路径/SHA/source以及实际evaluation AUTH字节绑定到准确新spec；提交、tag、正常push后才可release。",
+    "使用packet中的research-evaluation模板：只评价原Z/u256、seed20260909、200steps×32lane加原T0；6400非训练、0训练/optimizer/checkpoint写；原阈值、startup、失败分母和子组不变。",
+    "实际release必须串行，前一entry terminal、normal owned ACK与结算、STOP/idle、pins、disk、全部master及保护预留和原coexistence门槛检查通过。",
+    "确认01训练验收不代表其原Z通过；两预先冻结seed都必须独立满足确认规则，不换seed、不调参、不采用2/3。",
+    "确认02可以遵循已冻结准确许可串行执行；不能用确认01尚未评价的checkpoint结果改变方法。",
+    "原native失败、INCOMPLETE/null和完整保守逻辑预留不因科学训练验收而释放或改写。"
+  ],
+  "non_blocking": [
+    {
+      "id": "LEGACY-EPISODE-LABEL",
+      "detail": "冻结S0仍存在已披露的post1024 nearwall标签误写。实际pure-hover/reset代码边界不变；不能以这些标签证明物理nearwall，也无需为日志修正重跑本次训练。"
+    },
+    {
+      "id": "QUALIFICATION-PENDING",
+      "detail": "原Z确认结果、第二冻结seed的完整确认、实际G6/G7及最终READY均仍待各自证据和独立验收。"
+    }
+  ],
+  "release_granted": false,
+  "G4_granted": false,
+  "READY_granted": false
+}

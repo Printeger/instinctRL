@@ -1,0 +1,29 @@
+{
+  "authority": "Existing user masterdelegatedCoordinator",
+  "status": "ALLOCATED_WITHIN_MASTER_NOT_RELEASE",
+  "old": {
+    "training_transitions": 655360,
+    "nontraining_transitions": 67584,
+    "live_starts": 18,
+    "simulator_initialization_reservations": 18,
+    "optimizer_updates": 1280,
+    "training_checkpoint_writes": 62,
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 173946175488
+  },
+  "new": {
+    "training_transitions": 655360,
+    "nontraining_transitions": 67584,
+    "live_starts": 19,
+    "simulator_initialization_reservations": 19,
+    "optimizer_updates": 1280,
+    "training_checkpoint_writes": 62,
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 182536110080
+  },
+  "reason": "Original beforeAppcoexistence9/4/3>5 FAILED/1, FINAL0/NOT_REACHED/0training/update/cpwrites, normalACKsettled2postrun. Same exactfrozenseed20261016/method/source/budget/card; onlyfreshidentity andfutureevalckptpaths differ. Incidentfailure1/3, next>=60s, third>=180s, neverfourth. No extraGPUprobes or unrelatedprocessactions.",
+  "logical_timecaps_unchanged": true,
+  "master_and_protected_reserves_unchanged": true
+}

@@ -23,26 +23,26 @@
   "stage_allocation": {
     "training_transitions": 655360,
     "nontraining_transitions": 67584,
-    "live_starts": 18,
-    "simulator_initialization_reservations": 18,
+    "live_starts": 19,
+    "simulator_initialization_reservations": 19,
     "optimizer_updates": 1280,
     "training_checkpoint_writes": 62,
     "allocated_gpu_seconds": 55050,
     "wall_seconds_including_cleanup": 55050,
-    "output_peak_and_reservations_bytes": 173946175488
+    "output_peak_and_reservations_bytes": 182536110080
   },
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 14,
-    "simulator_initialization_reservations": 14,
+    "live_starts": 15,
+    "simulator_initialization_reservations": 15,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 4361.32647844078,
-    "wall_seconds_including_cleanup": 4375.259752976708,
-    "output_peak_and_reservations_bytes": 12427190859
+    "allocated_gpu_seconds": 4372.131791332969,
+    "wall_seconds_including_cleanup": 4387.387480112724,
+    "output_peak_and_reservations_bytes": 12427258009
   },
   "observed": {
     "training_transitions": 524288,
@@ -570,6 +570,42 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 2606632175,
         "inventory": "experiments/R5-H256-CONFIRM-01/live/R1-research-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-H256-CONFIRM-02-R1-RESEARCH-TRAINING-a13c5a459d47",
+        "job_id": "J-c92f097ed211653e",
+        "experiment_id": "R5-H256-CONFIRM-02",
+        "group": "R1",
+        "mode": "research-training",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": 1,
+        "raw_status": "FAIL",
+        "formal_counter_completeness": "FINAL",
+        "formal_transitions": 0,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 67150,
+        "inventory": "experiments/R5-H256-CONFIRM-02/live/R1-research-training/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -754,6 +790,15 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Actual confirmation01 training/gate/frozenseed/method/u256 identity and exact originalZ evaluation acceptance; limited exact90aeeb2 closure of Role16 curriculum hash finding, no G4/READY.",
+      "status": "PASS_CONFIRMATION01_ACTUAL_TRAINING_AND_FORMAL_CLOCK_CLOSURE",
+      "evidence": "reviews/confirmation01-actual-training-clock-closure.json",
+      "sha256": "d2e91d3371629f4d46680a572f28c07eb95e6c45e48b9ae971d0ebd53a545492"
+    },
+    {
+      "call": 18,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Exactnew confirmation02 resource-only RECOVERY1 identity +D014 withinmaster, seed/method/budget frozen unchanged, futureevalactualckptpaths; conditionalboundedincident prelive.",
       "status": "REQUESTED"
     }
   ],
