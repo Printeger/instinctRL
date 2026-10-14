@@ -9,3 +9,5 @@ R0原Z两节点完整12800eval、均0/32；R1原Z尚无轨迹。R1两个评价�
 已知native close FAILED/-9与INCOMPLETE/null全额逻辑/输出预留保留。R1原episode16个近墙标签属旧调度metadata缺陷；实际64resetlane首返回均在中心，原件不改，未来局部日志修复7CPU PASS。配对分析器明确训练与评价分别绑定恢复身份，6CPU PASS。旧C1u64和新R1u64权重不完全相同，不宣称历史训练前缀等价。
 
 唯一续接入口 docs/experiments/r5-formal-readiness-auto/{GOAL_STATE.md,EVIDENCE_INDEX.md,goal_budget.json}。尚无候选资格，G2/G3、两未见训练seed、有限非零衔接、checkpoint同设备复算和准确正式包/最终独立审核待完成；预算内科学负结果后继续，不以CPU通过或首实验结束代替Goal。
+
+当前最新：第三次R1原gate5/4/3% PASS并完成12800原Z真实评价。R1 u96 0/32、u128 32/32且全部子组4/4；u128最大speed.017075m/s、XYdrift.232706m、height.163136m。H128未满足预定双节点稳定性，不是READY。所有7entries已正常owned清理、结算/2postrun，无live；FAILED与INCOMPLETE保留。D009根据最后节点初次全通过的实际改善，预注册下一次有限共同256purehover R0/R1，未来192/256两节点、原sourcea13c复用，不更改旧实验定义、不选择已看过128做新稳定节点；若再不满足不继续延长超过256，转测量参考。准确packet cae46f1b...和真实H128结果一起交Role10，尚无新AUTH/release。新stage393216train/51200eval/11slots/768updates/40writes/36100s/96GiB均在master内，确认/正式预留不变。

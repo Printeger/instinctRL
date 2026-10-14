@@ -106,3 +106,5 @@ full20160 reservation retained; no owned survivors. Goal IN_PROGRESS, training0.
 
 最新续接：第四次在完整采集后CPU分析期间被910秒正式watchdog终止，FAILED/137；实际wall910.5478907090146秒原样计账。原manifest仍PREPARED、最终reward计数缺失，20160全额预留。全403200物理行与96reset段已被离线和独立Reviewer复核，接受修复后的零目标物理回归；命令直通原Z/T/S尚待验证。ef68ebb新候选保持同一物理基线，仅补分析前持久化和pilot-evaluation评估seed分类，32CPU回归通过。全部4次启动槽已用完；准确第五次提案和仅start/init4→5的申请包已生成，未签发许可。未来两组pilot精确argv位于pilot_future_proposals.r3.json，首次rollout概率gate强制保留。Goal仍IN_PROGRESS，训练为零。
 
+
+当前最新：第三次R1原gate5/4/3% PASS并完成12800原Z真实评价。R1 u96 0/32、u128 32/32且全部子组4/4；u128最大speed.017075m/s、XYdrift.232706m、height.163136m。H128未满足预定双节点稳定性，不是READY。所有7entries已正常owned清理、结算/2postrun，无live；FAILED与INCOMPLETE保留。D009根据最后节点初次全通过的实际改善，预注册下一次有限共同256purehover R0/R1，未来192/256两节点、原sourcea13c复用，不更改旧实验定义、不选择已看过128做新稳定节点；若再不满足不继续延长超过256，转测量参考。准确packet cae46f1b...和真实H128结果一起交Role10，尚无新AUTH/release。新stage393216train/51200eval/11slots/768updates/40writes/36100s/96GiB均在master内，确认/正式预留不变。
