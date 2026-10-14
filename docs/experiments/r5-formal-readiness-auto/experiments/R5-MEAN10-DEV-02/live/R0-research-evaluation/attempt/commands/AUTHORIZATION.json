@@ -1,0 +1,79 @@
+{
+  "schema_version": "unified-h1-r3-authorization.v2",
+  "status": "AUTHORIZED",
+  "order_id": "R5-MEAN10-DEV-02-R0-RESEARCH-EVALUATION",
+  "method_sha256": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+  "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+  "product_commit": "617af4d90c35e333c97692bdee90146804476edf",
+  "product_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+  "workload_commit": "617af4d90c35e333c97692bdee90146804476edf",
+  "workload_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-EVALUATION-617af4d90c35",
+  "mode": "research-evaluation",
+  "budgets": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "initialization_ticks": 10,
+    "training_transitions": 0,
+    "nontraining_transitions": 12800,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "explicit_resets": 2,
+    "automatic_resets": 12800,
+    "wall_seconds": 1800
+  },
+  "parameters": {
+    "experiment_id": "R5-MEAN10-DEV-02",
+    "group": "R0",
+    "training_seed": 20260908,
+    "evaluation_seed": 20260909,
+    "max_updates": 256,
+    "checkpoint_updates": [
+      1,
+      2,
+      8,
+      16,
+      32,
+      64,
+      96,
+      128,
+      192,
+      256
+    ],
+    "evaluation_updates": [
+      192,
+      256
+    ],
+    "command_profile": "pure-hover",
+    "residual_neutrality_weight": 0.05,
+    "anchor_weight": 4.0,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "output_cap_bytes": 8589934592,
+    "master_authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+      "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+    },
+    "mean_prior_contract": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+      "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+    },
+    "mean_prior_weight": 0.0,
+    "experiment_card": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-DEV-02/EXPERIMENT_CARD.json",
+      "sha256": "2c3db3531dac0ef11a5313bdb2e6a0d4f86d60fdb885a91e564369235c27196f"
+    },
+    "checkpoints": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u192.pt",
+        "sha256": "2ca82ba669f6bc05263a9751ef851147e40ebd187b651cc04e2683d8fce5003e",
+        "update": 192
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "b75698b3ae7b85443d57e5e6a147a85027ced70a9a5ffa6809f55451b8b11821",
+        "update": 256
+      }
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "id": "D016",
+  "decision_by": "Supervisor-Commander under unchanged user master delegation",
+  "master_authority": {
+    "path": "MASTER_AUTHORITY.json",
+    "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+  },
+  "reason": "Newmean DEV02 candidate both prospective late originalZ nodes pass; method freezing and two unseen confirmations next. Requirements also retain oldfailedseeds20261015/16 for explicit newmethod regression, which never count as unused confirmations. Allocate these two prospective regression instances without refunding any old failed/INCOMPLETE entry.",
+  "before_stage": {
+    "training_transitions": 1179648,
+    "nontraining_transitions": 105984,
+    "live_starts": 27,
+    "simulator_initialization_reservations": 27,
+    "optimizer_updates": 2304,
+    "training_checkpoint_writes": 106,
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 268435456000
+  },
+  "after_stage": {
+    "training_transitions": 1441792,
+    "nontraining_transitions": 118784,
+    "live_starts": 31,
+    "simulator_initialization_reservations": 31,
+    "optimizer_updates": 2816,
+    "training_checkpoint_writes": 128,
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 302795194368
+  },
+  "before_protected_confirmation_and_transition": {
+    "training_transitions": 524288,
+    "nontraining_transitions": 128000,
+    "live_starts": 12,
+    "simulator_initialization_reservations": 12,
+    "optimizer_updates": 1024,
+    "actor_optimizer_steps": 8192,
+    "critic_optimizer_steps": 8192,
+    "training_checkpoint_writes": 32,
+    "allocated_gpu_seconds": 21680,
+    "wall_seconds_including_cleanup": 21680,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "after_protected_confirmation_and_transition": {
+    "training_transitions": 393216,
+    "nontraining_transitions": 121600,
+    "live_starts": 10,
+    "simulator_initialization_reservations": 10,
+    "optimizer_updates": 768,
+    "actor_optimizer_steps": 6144,
+    "critic_optimizer_steps": 6144,
+    "training_checkpoint_writes": 21,
+    "allocated_gpu_seconds": 21680,
+    "wall_seconds_including_cleanup": 21680,
+    "output_peak_and_reservations_bytes": 51539607552
+  },
+  "formal_protected_unchanged": {
+    "training_transitions": 262144,
+    "nontraining_transitions": 329600,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 512,
+    "actor_optimizer_steps": 4096,
+    "critic_optimizer_steps": 4096,
+    "training_checkpoint_writes": 10,
+    "allocated_gpu_seconds": 21680,
+    "wall_seconds_including_cleanup": 21680,
+    "output_peak_and_reservations_bytes": 34359738368
+  },
+  "master_caps_unchanged": true,
+  "all_existing_used_entries_reservations_and_observed_unchanged": true,
+  "transfer_only_unused_future_reserve": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 6400,
+    "live_starts": 2,
+    "simulator_initialization_reservations": 2,
+    "optimizer_updates": 256,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048,
+    "training_checkpoint_writes": 11,
+    "output_peak_and_reservations_bytes": 17179869184
+  },
+  "aggregate_future_validation_training": 524288,
+  "validation_scope": "Two newunused confirmationseeds + two priorfailedseeds regression, all fixed256/primary256 under new immutable method; oldfailedseeds excluded G4. No2of3, noafter-result node/loss/seed change.",
+  "times": "stage55050/protected21680/formal21680 allocations unchanged; realused+pending+protected master time admission always rechecked, never assume sum of unused stage allocations is actualcharge",
+  "release_authority": "Not automatic. Independent accurateprelive, exactnewAUTH/packet/controlrelease, commit/tag/push, STOP/idle/cleanup/disk/quota/master+stage+protected and originalinternalcoexistence before each serialrelease."
+}
