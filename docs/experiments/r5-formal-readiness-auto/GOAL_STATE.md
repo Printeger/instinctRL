@@ -15,3 +15,6 @@ S1 source90aeeb2/configdfb4fd1f readonlyintegration oldWIP remains intact, exact
 DEV-01仅CPU配置路径绑定拒绝，旧snapshot/packet和2GiB预留保留；DEV-02修正准确method路径，科学方法不变，无旧live失败或预算重置。
 
 Latest: DEV-02 source617af4d/config2e9a7284/packetf2661633 actualROloadconfig PASS, Role21 full exactprelivePASS andbotholdconfirmationnegative independentlyaccepted. R1 exactA-ecb30414e9293db6 issuednotyet submitted; R0exactapproval in itsfile. Nextcommit/tag/push then R1single release; R0 waitssame serialnormalcleanup. Realfirst512 mandatory, noformaltraining.
+
+Current ONLY LIVE R1 J-b8ec45f94a245f6a / A-ecb30414e9293db6, inputs7b18755/tag/push, source617af4d/config2e9a7284. Original internalcoexistence2/1/2% and actualfirst512gate PASS;53updateslastobserved. Poll exacthandle only; terminal+normalACK then settle/exact2postrun/CPU/independentactualcheckpoint acceptance. R0A-cb56dae76162565d committed/tagged remainsunsubmitted untilidle. NoZresultyet/noG2G3/G4/READY.
+Main-only prospective formal mean-prior phase now explicitly validates origin/currentscalars, keeps bothreward.05, sameacceptedcandidatewarmup origin, reinstalls current0/10 callback before additionalupdates. CPU38PASS including legacy/currentphase/warmhook and checkpoint/recalculation. Noactualformalupdates/permission or liveG6. tools/rlflow+Commander remain d027/1525ec unchanged while pending old-release entries.

@@ -7,6 +7,7 @@ import re
 
 MODES = ('research-formal-training', 'research-formal-evaluation')
 CONTRACT_SHA256 = '675fe7b24c858d9aa24c963acd591f77c2a99b45dc181073bcc39663314791c7'
+MEAN_PRIOR_PHASE_SHA256 = '103664d19c5e037d5903c86e2af11b61181a8722e599bdbdd87ae7c7f9414930'
 CHECKPOINT_UPDATES = [272, 288, 320, 384, 512]
 FIELDS = {'experiment_id', 'group', 'training_seed', 'evaluation_seed', 'start_update',
           'target_update', 'checkpoint_updates', 'evaluation_updates', 'command_profile',
@@ -23,6 +24,9 @@ def validate_parameters(mode, value):
     if mode not in MODES or not isinstance(value, dict):
         raise PermissionError('unknown formal segment mode')
     expected = FIELDS | ({'checkpoints'} if mode == MODES[1] else set())
+    mean_prior = 'mean_prior_weight' in value or 'mean_prior_contract' in value
+    if mean_prior:
+        expected |= {'mean_prior_weight', 'mean_prior_contract'}
     if set(value) != expected:
         raise PermissionError('formal segment profile fields mismatch')
     p = dict(value)
@@ -37,7 +41,7 @@ def validate_parameters(mode, value):
             or any(type(u) is not int for u in p['checkpoint_updates'] + p['evaluation_updates'])
             or p['command_profile'] != 'mixed-center'):
         raise PermissionError('formal segment phase/clock/nodes unregistered')
-    for key, expected_scalar in {'residual_neutrality_weight': {'R0': 0., 'R1': .05}[p['group']],
+    for key, expected_scalar in {'residual_neutrality_weight': .05 if mean_prior else {'R0': 0., 'R1': .05}[p['group']],
                                  'anchor_weight': 4., 'actor_lr': 1e-4, 'critic_lr': 3e-4}.items():
         if type(p[key]) not in (int, float) or p[key] != expected_scalar:
             raise PermissionError('formal segment method scalar unregistered: ' + key)
@@ -45,7 +49,7 @@ def validate_parameters(mode, value):
         raise PermissionError('formal segment output cap unregistered')
     for key in ['master_authority', 'experiment_card', 'phase_contract']:
         validate_pin(p[key])
-    if p['phase_contract']['sha256'] != CONTRACT_SHA256:
+    if p['phase_contract']['sha256'] != (MEAN_PRIOR_PHASE_SHA256 if mean_prior else CONTRACT_SHA256):
         raise PermissionError('formal segment contract differs')
     master = json.loads(Path(p['master_authority']['path']).read_text())
     card = json.loads(Path(p['experiment_card']['path']).read_text())
@@ -55,6 +59,17 @@ def validate_parameters(mode, value):
             or card['profiles'][p['group']] != {k: v for k, v in p.items() if k not in ['checkpoints', 'experiment_card']}):
         raise PermissionError('formal segment card/profile mismatch')
     origin = research_parameters('research-training', p['origin_profile'])
+    if mean_prior:
+        from .research_contract import MEAN_PRIOR_CONTRACT_SHA256
+        validate_pin(p['mean_prior_contract'])
+        if (p['mean_prior_contract']['sha256'] != MEAN_PRIOR_CONTRACT_SHA256
+                or type(p['mean_prior_weight']) not in (int, float)
+                or p['mean_prior_weight'] != {'R0': 0., 'R1': 10.}[p['group']]
+                or origin.get('mean_prior_contract') != p['mean_prior_contract']
+                or origin.get('mean_prior_weight') != 10.):
+            raise PermissionError('formal mean prior phase/origin mismatch')
+    elif 'mean_prior_contract' in origin:
+        raise PermissionError('mean prior origin requires explicit current formal mean prior phase')
     if (origin['group'] != 'R1' or origin['training_seed'] != p['training_seed']
             or origin['max_updates'] != 256 or origin['anchor_weight'] != p['anchor_weight']
             or origin['actor_lr'] != p['actor_lr'] or origin['critic_lr'] != p['critic_lr']):
@@ -91,7 +106,7 @@ def required_budget(mode, p):
 def method_hashes(config, p):
     from .research_contract import method_hashes as research_hashes
     result = research_hashes(config, p)
-    result.update(curriculum='curriculum-h1-v1', formal_phase=CONTRACT_SHA256, reset_distribution='center-only-v1',
+    result.update(curriculum='curriculum-h1-v1', formal_phase=p['phase_contract']['sha256'], reset_distribution='center-only-v1',
                   initialization='qualified-warmup-fresh-reset-v1',
                   origin_checkpoint_sha256=p['initialization_checkpoint']['sha256'])
     return result
@@ -118,6 +133,8 @@ def train_segment(backend):
     if (backend.trainer.update_counter != p['start_update'] or meta['training_seed'] != p['training_seed']
             or meta['curriculum']['version'] != 'curriculum-h1-research-pure-hover-v1'):
         raise ValueError('formal warmup actual checkpoint stage/seed/node mismatch')
+    from .mean_prior import configure_trainer
+    configure_trainer(backend.trainer, p)
     backend._checkpoint_reset_offset = meta['reset_number']
     backend._formal_segment = True
     start = meta['counters']['global_policy_step']

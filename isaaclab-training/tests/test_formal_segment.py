@@ -76,6 +76,46 @@ def test_exact_additional_budget_and_method_origin(profile):
     assert q['initialization_checkpoint']==profile['initialization_checkpoint']
 
 
+def mean_prior_profile(p):
+    p['origin_profile'].update(mean_prior_contract=pin(ROOT/'coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md'), mean_prior_weight=10.)
+    origin = p['origin_profile']
+    oc = Path(origin['experiment_card']['path'])
+    oc.write_text(json.dumps({'experiment_id':origin['experiment_id'], 'profiles':{'R1':{k:v for k,v in origin.items() if k!='experiment_card'}}}))
+    origin['experiment_card']=pin(oc)
+    p.update(mean_prior_contract=origin['mean_prior_contract'],mean_prior_weight=10.,
+             phase_contract=pin(ROOT/'coordination/contracts/R5_FORMAL_MIXED_CENTER_MEAN_PRIOR_V1.md'))
+    refresh(p)
+    return p
+
+
+def test_mean_prior_formal_phase_is_explicit_and_same_origin_for_both_arms(profile):
+    p=mean_prior_profile(profile)
+    assert validate_parameters('research-formal-training',p)==p
+    q=deepcopy(p);q.update(group='R0',mean_prior_weight=0.);refresh(q)
+    assert validate_parameters('research-formal-training',q)==q
+    assert p['initialization_checkpoint']==q['initialization_checkpoint']
+    assert p['origin_profile']==q['origin_profile']
+    assert p['residual_neutrality_weight']==q['residual_neutrality_weight']==.05
+    assert required_budget('research-formal-training',q)['optimizer_updates']==256
+    a,b=[method_hashes({'method':{'hashes':{}}},x) for x in [p,q]]
+    assert a['formal_phase']==p['phase_contract']['sha256'] and a['curriculum']=='curriculum-h1-v1'
+    assert a['research_effective_method']!=b['research_effective_method']
+
+
+def test_mean_prior_cannot_silently_resume_with_legacy_formal_loss(profile):
+    p=mean_prior_profile(profile)
+    p.pop('mean_prior_weight');p.pop('mean_prior_contract')
+    p['phase_contract']=pin(ROOT/'coordination/contracts/R5_FORMAL_MIXED_CENTER_V1.md');refresh(p)
+    with pytest.raises(PermissionError,match='explicit current formal'):
+        validate_parameters('research-formal-training',p)
+
+
+def test_mean_prior_warmup_and_intervention_must_match_registered_phase(profile):
+    p=mean_prior_profile(profile);p['mean_prior_weight']=1.;refresh(p)
+    with pytest.raises(PermissionError,match='phase/origin'):
+        validate_parameters('research-formal-training',p)
+
+
 @pytest.mark.parametrize('key,value', [('start_update',128),('target_update',1024),
     ('command_profile','pure-hover'),('training_seed',20261015),('anchor_weight',8.),
     ('checkpoint_updates',[272,512]),('actor_lr',3e-4)])
@@ -161,3 +201,17 @@ def test_formal_actions_reject_other_entry_modes():
     backend=NS(authorization={'mode':'research-training'})
     with pytest.raises(PermissionError,match='exact mode'):train_segment(backend)
     with pytest.raises(PermissionError,match='exact mode'):evaluate_segment(backend)
+
+
+@pytest.mark.parametrize('group,weight',[('R0',0.),('R1',10.)])
+def test_restored_mean_prior_hook_uses_current_formal_arm_before_updates(profile,tmp_path,monkeypatch,group,weight):
+    from training_workloads.unified_h1 import mean_prior
+    p=mean_prior_profile(profile);p.update(group=group,mean_prior_weight=weight);refresh(p)
+    calls=[];configure=mean_prior.configure_trainer
+    def install(trainer,phase):
+        calls.append((trainer.update_counter,phase['mean_prior_weight'],phase['origin_profile']['mean_prior_weight']))
+        configure(trainer,phase)
+        assert trainer.actor_auxiliary is not None
+    monkeypatch.setattr(mean_prior,'configure_trainer',install)
+    test_warm_entry_binds_original_method_restore_fresh_reset_and_gate(p,tmp_path,monkeypatch)
+    assert calls==[(256,weight,10.)]
