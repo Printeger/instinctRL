@@ -1,0 +1,36 @@
+{
+  "spec_id": "R5-H128-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47",
+  "job_id": "J-ab6270e88546a984",
+  "experiment_id": "R5-H128-DEV-01-R0-RECOVERY1",
+  "group": "R0",
+  "mode": "research-training",
+  "status": "FAILED",
+  "reserved": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 9,
+    "actor_optimizer_steps": 1024,
+    "critic_optimizer_steps": 1024,
+    "allocated_gpu_seconds": 0,
+    "wall_seconds_including_cleanup": 0
+  },
+  "output_cap_bytes": 8589934592,
+  "observed": {
+    "training_transitions": 65536,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 128,
+    "training_checkpoint_writes": 9,
+    "actor_optimizer_steps": 1024,
+    "critic_optimizer_steps": 1024
+  },
+  "postrun_queries_used": 2,
+  "settled": true,
+  "native_exit_code": -9,
+  "raw_status": "PASS_PENDING_CLOSE",
+  "formal_counter_completeness": "INCOMPLETE",
+  "formal_transitions": null,
+  "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+  "output_observed_bytes": 2291894475,
+  "inventory": "experiments/R5-H128-DEV-01-R0-RECOVERY1/live/R0-research-training/INVENTORY.json"
+}

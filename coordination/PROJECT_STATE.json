@@ -393,8 +393,8 @@
     "evidence_index": "docs/experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md",
     "goal_state": "docs/experiments/r5-formal-readiness-auto/GOAL_STATE.md",
     "budget": "docs/experiments/r5-formal-readiness-auto/goal_budget.json",
-    "current_job": "J-ab6270e88546a984",
-    "current_exact_release": "A-a28f12af999d84a3",
+    "current_job": null,
+    "current_exact_release": null,
     "completion_proven": false,
     "remaining_required_work": [
       "G1_method",
@@ -407,7 +407,7 @@
       "G8_exactformalpackage_conditionalpermission",
       "G9_independentreview"
     ],
-    "next_action": "Poll this exactlivejob; no resubmit. Terminal+normalownedACK, settle/postrun, CPU science then continue Goal.",
+    "next_action": "Exactly2boundpostrunqueries then realdataanalysis/independentreview; noblindretry.",
     "training_authorizations_issued": 2,
     "prelive_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-exact-prelive.json",
     "commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json"
