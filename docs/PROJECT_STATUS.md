@@ -7,9 +7,9 @@
 
 ## 当前 Goal（2026-10-14 自主正式训练准入）
 
-**IN_PROGRESS，目标 READY_FOR_FORMAL_R5_TRAINING。** 新用户已一次性委托完整有界研究、阶段扩额、方法调整、配对训练、确认seed及条件式正式启动包，由现有Coordinator/Commander准确授权；不自动提交正式完整训练。主授权和新总账已登记，确认/衔接至少25%训练与正式首段资源已保护预留。当前先从旧C1真实轨迹定位启动/持续漂移和anchor的信息与尺度，未启动新live。
+**IN_PROGRESS，目标 READY_FOR_FORMAL_R5_TRAINING。** 新用户已一次性委托完整有界研究、阶段扩额、方法调整、配对训练、确认seed及条件式正式启动包，由现有Coordinator/Commander准确授权；不自动提交正式完整训练。主授权和新总账已登记，确认/衔接至少25%训练与正式首段资源已保护预留。有限旧C1轨迹分析已完成：剩余漂移主要为持续偏置；anchor有效但已大且姿态混淆，先不默认4→8。新128纯悬停同版本R0/R1卡已独立预审；R0首入口因GPU10/11/2%>5在App前失败，FINAL0和收费保留。退避后R1 J-d430a5a7a8ec6ba1通过原coexistence4/1/4%，真实first512gate先于两类optimizer PASS，已观察84updates、越过旧64节点后命令仍全零。原Z96/128尚未执行，尚无准入结论。
 
-当前进展与下一动作见[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)，[主授权](experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json)和[新总账](experiments/r5-formal-readiness-auto/goal_budget.json)。15旧jobs terminal/noowned/STOPclear；原Z阈值、actor部署信息边界及全部历史FAILED/INCOMPLETE保留。
+当前进展与下一动作见[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)，[主授权](experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json)和[新总账](experiments/r5-formal-readiness-auto/goal_budget.json)。15旧jobs terminal，新增R0失败已正常owned清理；R1是当前唯一live，STOPclear；原Z阈值、actor部署信息边界及全部历史FAILED/INCOMPLETE保留。
 
 ## 已完成 Goal（2026-10-14 零命令残差单变量）
 
