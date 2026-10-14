@@ -1,0 +1,334 @@
+{
+  "schema_version": "instinctrl-r5-confirmation-freeze/2",
+  "status": "FROZEN_BEFORE_ANY_NEW_CONFIRMATION_START",
+  "freeze_UTC": "2026-10-14T17:29:48.247601+00:00",
+  "evidence_commit": "6ae8cd9c65f878ab2c8774a9e363e7cd81c95f96",
+  "baseline": {
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-02-20261015",
+    "snapshot_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "snapshot_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "snapshot_diff_sha256": "2b6d4a9c4070000492339b3eb4277692ff7386934d1ba924d7d3b147dbc67fad",
+    "read_only": true,
+    "tool_release_id": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba",
+    "tool_release_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/control-releases/c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba"
+  },
+  "method_hashes": {
+    "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+    "curriculum": "curriculum-h1-research-pure-hover-v1",
+    "reward": "reward-h1-zero-neutrality-v1",
+    "critic": "critic-h1-v2",
+    "checkpoint": "checkpoint-h1-v2",
+    "logging": "learning-log-h1-v1",
+    "metric": "metric-h1-v1",
+    "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+    "research_effective_method": "c390ab73252ee37da504298ad08498f3d5131866023d9099f52baf3c749a907f"
+  },
+  "frozen_profile": {
+    "group": "R1",
+    "evaluation_seed": 20260909,
+    "max_updates": 256,
+    "checkpoint_updates": [
+      1,
+      2,
+      8,
+      16,
+      32,
+      64,
+      96,
+      128,
+      192,
+      256
+    ],
+    "evaluation_updates": [
+      256
+    ],
+    "command_profile": "pure-hover",
+    "residual_neutrality_weight": 0.05,
+    "anchor_weight": 4.0,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "output_cap_bytes": 8589934592,
+    "master_authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+      "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+    },
+    "mean_prior_contract": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+      "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+    },
+    "mean_prior_weight": 10.0
+  },
+  "primary_node": 256,
+  "development_late_nodes": [
+    192,
+    256
+  ],
+  "actual_development_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/mean-prior-DEV02-actual-pair-Z.json",
+    "sha256": "521fd7692883d5950d9bb3cada49a653a6e1f7546bd86b9d35f03b473b2435b3"
+  },
+  "development_evaluation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-DEV-02/R1-evaluation-analysis.json",
+    "sha256": "054b3ea4d285d56e2418a4fe6d8c371fd81609f31aa0abb938baddc50bdb3c46"
+  },
+  "training_seeds": [
+    20261017,
+    20261018
+  ],
+  "evaluation_seed": 20260909,
+  "unused_seed_check": {
+    "all_prior_actual_authorizations": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/commands/AUTHORIZATION.json",
+        "sha256": "65c7209459a89eb9206725573cf0677ff3be947d5bf02a05df228b5933add809",
+        "training_seed": null,
+        "mode": "pilot-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "7b1a5431d14c45a76db105999ec0d72927c94976fd847d4acd29f72ece11633d",
+        "training_seed": 20260908,
+        "mode": "research-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-ENTRY6/commands/AUTHORIZATION.json",
+        "sha256": "d9ad47c04d9da65520660d1b406383887ee5b5a6fd0f6a8552e012ab30c134cd",
+        "training_seed": null,
+        "mode": "control-diagnostic"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-EVALUATION-617af4d90c35/commands/AUTHORIZATION.json",
+        "sha256": "0162eef4ae207e9ef17112e010d3e9dd1f4cda0142d98ed7ed70f3eb2ad75b54",
+        "training_seed": 20260908,
+        "mode": "research-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-CONFIRM-01-R1-RESEARCH-EVALUATION-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "ff16c80f0df39a88fb31dc6e76f032cd8a8676f365b5c09e00237362edba3de5",
+        "training_seed": 20261015,
+        "mode": "research-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-TRAINING-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "8bf212121aca4c054c76200d5379d3435ac057fab88fa4cea4e70e99d448f1b1",
+        "training_seed": 20260908,
+        "mode": "research-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "48c5405ff7a46ae5be09c270069b03f51268dff73e2c0f5aa2420756ea74bda8",
+        "training_seed": 20260908,
+        "mode": "research-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-PLR-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/commands/AUTHORIZATION.json",
+        "sha256": "6ab316cb0c6cd0b0033547103f98c38ab7f07bad5105c4c26a6692f35d40eb08",
+        "training_seed": null,
+        "mode": "pilot-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "1823d9249b7dea949dfcf710be8538be5718e701320d05f20f7b3a07c7852157",
+        "training_seed": 20260908,
+        "mode": "research-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-EVALUATION-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "a27374953b16a8fffa527ab4abe77bc9970243cddb1962628ddaac2325a86542",
+        "training_seed": 20260908,
+        "mode": "research-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-MEASUREMENT-R1-20261012/commands/AUTHORIZATION.json",
+        "sha256": "26b2cef353a30f0a655813de8b2538c3a35682c695fdd0c6f5e2011df73fb142",
+        "training_seed": null,
+        "mode": "enhanced-b0-diagnostic"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-COMMAND-PASSTHROUGH-20261012-PLANT-R3/commands/AUTHORIZATION.json",
+        "sha256": "580207a02313958463f1f66c2be7452371aca6c121a3df892ca2dcaede8c1b4c",
+        "training_seed": null,
+        "mode": "control-diagnostic"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "aff79cb8aa64d1821d5fdbc7c62cff317dccbe89a5ebdbd2b90b4e39790a11ae",
+        "training_seed": 20260908,
+        "mode": "research-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-CONFIRM-02-R1-RESEARCH-TRAINING-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "4db472e03c9f5b599e0f98bd5ab2a354b3ab0bf781b27858a004a13fc7a9e0e9",
+        "training_seed": 20261016,
+        "mode": "research-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-EVAL-BASELINE-ef68ebb5682b-20261013/commands/AUTHORIZATION.json",
+        "sha256": "d8686a0f771d2445953a0c83bd10ce0801ee4ae55c38671ea82c1fa9ed152ea5",
+        "training_seed": null,
+        "mode": "pilot-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "5fa5acdefa9f0464f88e08a3ad9e0114d5fdf1a60e3dcaed07d1b4daef280b4a",
+        "training_seed": 20260908,
+        "mode": "research-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C0-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+        "sha256": "381df451ed0629a7ddc27c99ea15223369a95933de381c2c9ace0008c616b96f",
+        "training_seed": null,
+        "mode": "pilot-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012/commands/AUTHORIZATION.json",
+        "sha256": "de40adb7be771134bd1b70e9d1775debc7790b57f416889d22215bd3dd3b0cf6",
+        "training_seed": null,
+        "mode": "enhanced-b0-diagnostic"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-PLANT-R1-20261012/commands/AUTHORIZATION.json",
+        "sha256": "f8a54e683d10b28e8ef5ba9aae9619516d0bf5c130e97e5dccad0b07b85b7bdc",
+        "training_seed": null,
+        "mode": "enhanced-b0-diagnostic"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY2-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "47e7f2c3f869378837c8f21e4766081dddf083994b10d4d3686cd7d8fc470581",
+        "training_seed": 20260908,
+        "mode": "research-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-CONFIRM-02-R1-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "c57eec627283d01fb819edbaeb0238255b86c09fb57a924285e536863fa0e0c1",
+        "training_seed": 20261016,
+        "mode": "research-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C0-PILOT-EVAL-ZERO-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+        "sha256": "01f3fae8e8bc50cb412f7550cdc74fae44173df71d7759387c6909597a2ca9d6",
+        "training_seed": null,
+        "mode": "pilot-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-READINESS-B0-BASELINE-20261012/commands/AUTHORIZATION.json",
+        "sha256": "f6e03a976a9789d014508665d1b6c5eb79e426731cd94e24ca5a32362f54a7f6",
+        "training_seed": null,
+        "mode": "enhanced-b0-diagnostic"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-TRAIN-ZERO-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+        "sha256": "05df1f8e2f74d06d655edc0e01a6f9f82b708c4bfac6d9f0dddbf6ec39a268b0",
+        "training_seed": null,
+        "mode": "pilot-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-EVALUATION-617af4d90c35/commands/AUTHORIZATION.json",
+        "sha256": "f94e7a17e5e4633f6280e5462b53b71a5cb3d40624997e01e120076bdf293c8c",
+        "training_seed": 20260908,
+        "mode": "research-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-RESEARCH-TRAINING-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "8f018ac362fd2fb3f1b52bb6e96751872f5b1a35277f71154d32f556ed27c726",
+        "training_seed": 20260908,
+        "mode": "research-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "b00a62ee830d56d58ee17d75d4b548fc4220e9615eb65943c0b8027182a1fdfa",
+        "training_seed": 20260908,
+        "mode": "research-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-Z-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "b39fee0a6ba86b1175b71a2db760fc4173fb1bd7a48a34bc8434fe9dd4ad1266",
+        "training_seed": 20260908,
+        "mode": "research-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-CONFIRM-01-R1-RESEARCH-TRAINING-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "5a7862781168e651bf2beef258600374854150e9fa5e42fdaf0d5b51f369d10d",
+        "training_seed": 20261015,
+        "mode": "research-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-EVAL-ZERO-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+        "sha256": "7a00eb5bb547f0200360b8c12433d0d62e760f1ac153fc3c1a64f68551a64c78",
+        "training_seed": null,
+        "mode": "pilot-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "ce564dca52aa467062554c81a4cec32b573b7dac7e7aa29dcfffc0297299d66f",
+        "training_seed": 20260908,
+        "mode": "research-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-C1-PILOT-EVAL-EXTRA-USER-DECISION-d257f9ca8ec8-20261014/commands/AUTHORIZATION.json",
+        "sha256": "9d732b78569d3d5e5ff8328447e1300a70102240d809cc7e91c95f6028c6ddf3",
+        "training_seed": null,
+        "mode": "pilot-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-CONFIRM-02-R1-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "d921ae8312ba293d715efe4ee983f4d9490095a7723551a5d59a59386e59449a",
+        "training_seed": 20261016,
+        "mode": "research-evaluation"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/commands/AUTHORIZATION.json",
+        "sha256": "f33e9965109a74e9cd4ef25d448e99380f07a68ae49058845a11afe069190b68",
+        "training_seed": 20260908,
+        "mode": "research-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R0-RESEARCH-TRAINING-617af4d90c35/commands/AUTHORIZATION.json",
+        "sha256": "9a9584d6eb66710337e9c9e8d0e0704cf90b0f5b18465381dc832e95d3cc484b",
+        "training_seed": 20260908,
+        "mode": "research-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/UNIFIED-H1-R5-P0-PILOT-TRAIN-BASELINE-ef68ebb5682b-20261013/commands/AUTHORIZATION.json",
+        "sha256": "e3d36470554f42e7fb610a03a755c3acc11254c454cd9a24b9fb65c96ad5b554",
+        "training_seed": null,
+        "mode": "pilot-training"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "19a6fc61aa66df94c3c526966ca72f917066e41a6f1afc807ea9b523e7c304e4",
+        "training_seed": 20260908,
+        "mode": "research-evaluation"
+      }
+    ],
+    "selected_absent": true,
+    "CPU_fixture_mentions_not_training": true
+  },
+  "seed_rule": "Both exact unused trainingseeds must originalZ32/32/all8subgroups4/4 at primary256 with original T0/200/startup/thresholds/denominators. No2of3, replacement, >256 or changes after results. These confirm candidate only, not cross-seed causal comparison.",
+  "prior_failed_seed_regressions": [
+    20261015,
+    20261016
+  ],
+  "regression_rule": "Both old failedseeds retained as explicit newmethod regression, fixedsamebudget/primary256; NEVER count for newunused G4. Regression cannot tune frozennewmethod.",
+  "previous_failed_freeze": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/CONFIRMATION_METHOD_FREEZE.json",
+    "sha256": "de5480a774d7badd5e205ab59372025efa54e68cfd83b5257ff940b4d7541f4f"
+  },
+  "formal_training_submitted": false,
+  "development_baseline": {
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-02-20261015",
+    "snapshot_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "snapshot_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "snapshot_diff_sha256": "2b6d4a9c4070000492339b3eb4277692ff7386934d1ba924d7d3b147dbc67fad",
+    "read_only": true,
+    "tool_release_id": "d027e9a0076377380a4ce277727cba8bfde132a113c9ce2b436c28ab7de9f793",
+    "tool_release_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/control-releases/d027e9a0076377380a4ce277727cba8bfde132a113c9ce2b436c28ab7de9f793"
+  },
+  "control_compatibility_cpu": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/CONTROL_INTEGRATION_CPU.json",
+    "sha256": "12749d8ef6d35cb5b484c63f21c8630ffdef09d2a0710a53da1f75baad0eb13f"
+  },
+  "control_compatibility_scope": "Researchtraining/evaluation same seed behavior; adds correct evaluationseed for transition/formalevaluation and exactfinalpackage gate for laterformal. No product/workload/source/science changes."
+}

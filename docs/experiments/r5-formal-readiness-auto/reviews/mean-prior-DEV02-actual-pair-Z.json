@@ -1,0 +1,187 @@
+{
+  "role": "Role24",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "实际mean-prior DEV-02完整配对及原Z开发G2/G3验收；不授G4、G6/G7、READY、确认或正式训练release。",
+  "identities": {
+    "experiment_id": "R5-MEAN10-DEV-02",
+    "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "source_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "launch_sha256": "f266163310bc3286e9b8fe39d62cb498d43afb0b11898f83d97210cc49dfaac2",
+    "tool_release": "d027e9a0076377380a4ce277727cba8bfde132a113c9ce2b436c28ab7de9f793",
+    "R1_evidence_commit": "175bb7338bfe98cffbcb591f2f4abb4e1b7de26b",
+    "R0_evidence_binding": "实际终态原件及下列analysis/pair SHA；审核时root说明随后提交，最终归档须正常commit/push。",
+    "R1_evaluation": {
+      "job_id": "J-4f9bdb2e6fafea54",
+      "approval_id": "A-39d43f0334c27afb",
+      "actual_AUTH_sha256": "0162eef4ae207e9ef17112e010d3e9dd1f4cda0142d98ed7ed70f3eb2ad75b54",
+      "authorized_spec_file_sha256": "b73d50e9a7ebd6f86bfc93d4d425dee01ab4edc9d394ef96411b8d92463af95c",
+      "analysis_sha256": "054b3ea4d285d56e2418a4fe6d8c371fd81609f31aa0abb938baddc50bdb3c46"
+    },
+    "R0_evaluation": {
+      "job_id": "J-c9f809706825785f",
+      "actual_AUTH_sha256": "f94e7a17e5e4633f6280e5462b53b71a5cb3d40624997e01e120076bdf293c8c",
+      "authorized_spec_file_sha256": "a21fee126d3a33c912f2b9f90e5eac96e9805952d5e5990bd4eff23ab98e4673",
+      "analysis_sha256": "1c5b20182f3493ded5609e5631d00875bf6d6c32f878d10945a8891aced55c78"
+    },
+    "pair_results_sha256": "fb66dfbe67c1abe357b649002deb2db60d7f1031b7a1561b94fe24aae7c23dc1",
+    "actual_pair_init_first512_sha256": "2df1b7039188d81a36bdb085861ef0eb87e25547318bfb81db10fe224ab3671c",
+    "accepted_training_reviews": {
+      "R1_Role22_sha256": "d77d450df8ff105597d4b685628d922f7d4cadc987e4f7210bc8b6d2ae232348",
+      "R0_and_pair_fairness_Role23_export_sha256": "f953d6826de7e88814116b153cbd85d122320773a30ed2144621900179266fe8"
+    }
+  },
+  "checks": {
+    "inventories": {
+      "R1": {
+        "original_objects": 40,
+        "original_bytes": 11502937,
+        "archive_copy_bytes": 562416,
+        "combined_bytes": 12065353
+      },
+      "R0": {
+        "original_objects": 40,
+        "original_bytes": 11261754,
+        "archive_copy_bytes": 563270,
+        "combined_bytes": 11825024
+      },
+      "result": "两组所有实际原件和copies逐文件重哈希、大小核对通过；整个job与attempt实际文件集合与inventory完全相等。"
+    },
+    "bindings": "两组actual request.spec、已签发spec、AUTH字节及全部pins一致；实际source/config/seed/mean-prior权重、checkpoint path/SHA与已接受训练和冻结card一致。",
+    "scoring": "两组全部四节点用原replay_raw_case、evaluate_episode及case_outcome独立重放，与producer、analysis及pair-results一致；评分文件相对原版本无变化。",
+    "coverage": "每节点原T0加完整steps0..199、32lane、八方向子组；各组12800实际非训练。所有四节点均32个engineering有效、0missing/0reset interruption/0collision/0height_failure，实际reset lanes为0。",
+    "actor_control_fields": "全部四节点200×32 action、root、velocity、correction、final command有限；命令均为零，实际action后三维与原xyz correction解码对应。没有actor forward、sampling、optimizer或GPU查询。",
+    "fairness": "复用Role22/23已独立接受的实际训练、同init/RNG及整个first512逐字节一致证据；同source、双方reward.05/anchor4/LRs，唯一注册干预为actor soft mean-prior0/10。",
+    "original_denominator": "四节点共128个episode全部保留，既不裁startup，也不改原sensor T0、阈值、窗口、分母或子组。",
+    "pair_summary": "pair-results精确嵌入两组实际evaluation analyses，训练/评价来源与预定primary256和晚节点192/256对应。"
+  },
+  "actual_original_Z": [
+    {
+      "group": "R0",
+      "mean_prior_weight": 0,
+      "update": 192,
+      "successes": 32,
+      "denominator": 32,
+      "subgroups": "d0..d7各4/4",
+      "max_speed_m_s": 0.016317671164870262,
+      "max_drift_m": 0.2637288570404053,
+      "max_height_deviation_m": 0.09432864189147949,
+      "checkpoint_sha256": "2ca82ba669f6bc05263a9751ef851147e40ebd187b651cc04e2683d8fce5003e",
+      "raw_sha256": "6f2bc7c73c989b61cc76f2b793487377d8cb938055496ba34bab6ec26c9bdf17"
+    },
+    {
+      "group": "R0",
+      "mean_prior_weight": 0,
+      "update": 256,
+      "successes": 0,
+      "denominator": 32,
+      "subgroups": "d0..d7各0/4",
+      "failure": "全部Z_THRESHOLD_FAILED；height偏差.2233008146至.2290041447超过原.20阈值。工程height_failure掩码为false不改变评分失败。",
+      "max_speed_m_s": 0.01772424206137657,
+      "max_drift_m": 0.2361323982477188,
+      "max_height_deviation_m": 0.2290041446685791,
+      "checkpoint_sha256": "b75698b3ae7b85443d57e5e6a147a85027ced70a9a5ffa6809f55451b8b11821",
+      "raw_sha256": "4f217a011a1a9deb81199a70c115bae00b11845b601a1c0ba58cc2a56c40443d"
+    },
+    {
+      "group": "R1",
+      "mean_prior_weight": 10,
+      "update": 192,
+      "successes": 32,
+      "denominator": 32,
+      "subgroups": "d0..d7各4/4",
+      "max_speed_m_s": 0.010518797673285007,
+      "max_drift_m": 0.03178948163986206,
+      "max_height_deviation_m": 0.04601573944091797,
+      "checkpoint_sha256": "e01be5cff6837e3b6458768a2cd754e09591c980fdacd00a249262e56faa547b",
+      "raw_sha256": "a67c988fef147db95ae72e603f41e74cec5999eba53b1f45715c5f86a145003c"
+    },
+    {
+      "group": "R1",
+      "mean_prior_weight": 10,
+      "update": 256,
+      "successes": 32,
+      "denominator": 32,
+      "subgroups": "d0..d7各4/4",
+      "max_speed_m_s": 0.01045077946037054,
+      "max_drift_m": 0.010402660816907883,
+      "max_height_deviation_m": 0.05112266540527344,
+      "checkpoint_sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+      "raw_sha256": "91c55ab0471deba08e9b944ec29321dd1fbe59567fd9ece9eabbeab1a88c4490"
+    }
+  ],
+  "lifecycle_accounting": {
+    "R1": {
+      "native_status": "FAILED",
+      "exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed_nontraining_transitions": 12800,
+      "retained_nontraining_reservation": 12800,
+      "wall_seconds": 97.41684874915518,
+      "allocated_GPU_seconds": 95.78179656900465
+    },
+    "R0": {
+      "native_status": "FAILED",
+      "exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed_nontraining_transitions": 12800,
+      "retained_nontraining_reservation": 12800,
+      "wall_seconds": 97.86862088204361,
+      "allocated_GPU_seconds": 96.18289498589002
+    },
+    "cleanup": "两组均normal ACK、两次稳定空扫描、quiescent、未timed_out、无survivors；各自9个已知身份再次只读核对均不再owned。",
+    "postrun": "每组恰好ordinal0/1两份原授权receipt，在normal owned ACK后；没有附加GPU查询。",
+    "pair_observed_totals": {
+      "starts_and_init_reservations": 4,
+      "training_transitions": 262144,
+      "nontraining_transitions": 25600,
+      "logical_updates": 512,
+      "actor_Adam_steps": 4096,
+      "critic_Adam_steps": 4096,
+      "checkpoint_writes": 22,
+      "original_objects": 220,
+      "original_bytes": 4574009861,
+      "archive_copy_bytes": 44327676,
+      "combined_bytes": 4618337537,
+      "wall_seconds": 2070.7821695422754,
+      "allocated_GPU_seconds": 2064.3486078798305
+    },
+    "reservations": "两训练和两评价均保留native FAILED/INCOMPLETE及完整逻辑预留；原start/init/output收费与旧失败预算不退款。",
+    "process_PASS_granted": false
+  },
+  "scientific_decision": {
+    "pair_scientifically_accepted": true,
+    "G2_development": "PASS：准确新mean-prior候选在预先登记primary256完整原Z32/32及全部子组通过。",
+    "G3_development": "PASS：同一开发seed下预先登记晚节点192/256均完整通过，符合本card有限开发稳定性判据。",
+    "paired_interpretation": "R0在192通过、256因高度阈值失败；R1两个节点均通过且记录指标更低。此公平实现配对支持soft mean-prior10在这一个已实现开发pair中的可信改善，不可说R0全部节点失败。",
+    "limits": "一个训练seed、稀疏预定评价节点；不证明普遍因果、排除数值非确定性、跨seed稳健性、非零能力或reference恢复。不能把旧失败确认重新归为通过。",
+    "next_boundary": "可据此准备新的不可变方法freeze和两个未用确认seed的准确包，再独立预审；本轮不批准具体新确认身份或任何release。",
+    "G4": "NOT_GRANTED",
+    "READY": "NOT_GRANTED"
+  },
+  "conditions": [
+    "将本独立review、R0终态输出、分析和pair-results按上述SHA完整归档，完成普通最终状态同步、commit/tag及正常push；保留R1与全部旧历史字节。",
+    "新确认必须在任何新seed训练前冻结实际方法/source/config/budget/primary256和两未用seed，两者都必须通过，不采用2/3、换seed或失败后调参。",
+    "当前开发结果不能发行未审核的G6、兼容声明、formal包或READY；这些仍需各自准确身份、实际证据及独立审核。",
+    "所有旧method/confirmation失败、native FAILED、INCOMPLETE/null及保守预算继续保留。"
+  ],
+  "non_blocking": [
+    {
+      "id": "SCIENTIFIC_VS_PROCESS",
+      "detail": "完整科学开发结果可接受；两评价native close失败仍是真实process失败，不改为graceful/PASS。"
+    },
+    {
+      "id": "EARLIER_CONFIRMATION",
+      "detail": "旧w.05-only冻结方法两seed失败保持失败；新方法开发通过不替代其结果。"
+    }
+  ],
+  "release_granted": false,
+  "G2_G3_development_accepted": true,
+  "G4_granted": false,
+  "READY_granted": false
+}

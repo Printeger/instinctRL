@@ -1,0 +1,81 @@
+{
+  "schema_version": "instinctrl-r5-research-experiment-card/1",
+  "experiment_id": "R5-MEAN10-REGRESSION-15",
+  "parent": "R5-MEAN10-DEV-02",
+  "question": "OLD_FAILED_SEED_REGRESSION_NOT_G4",
+  "phaseA_evidence": "../../REMAINING_ERROR_ANALYSIS.json and independent anchor-information findings",
+  "sole_primary_reward_variable": "No newmethod tuning. Candidateonly exact finite meanprior10/reward.05/anchor4/LRs1e-4/3e-4/source617 frozen above.",
+  "common_source_config": {
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-02-20261015",
+    "snapshot_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "snapshot_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+    "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "snapshot_diff_sha256": "2b6d4a9c4070000492339b3eb4277692ff7386934d1ba924d7d3b147dbc67fad",
+    "read_only": true,
+    "tool_release_id": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba",
+    "tool_release_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/control-releases/c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba"
+  },
+  "init": "Coldstart same frozen rule, prospectively fixedtrainingseed; actualfirst512gate before eitheroptimizer.",
+  "primary_node": 256,
+  "predefined_late_nodes": [
+    256
+  ],
+  "hypothesis_support": "Both unused confirmations pass unchanged originalZ; oldregressions separate.",
+  "hypothesis_refutation": "Any unusedconfirmationprimary fails -> frozen method G4 failed, never seedreplacement.",
+  "training_transitions_total": 131072,
+  "evaluation_transitions_total": 6400,
+  "live_starts_total": 2,
+  "logical_updates_total": 256,
+  "actor_steps_total": 2048,
+  "critic_steps_total": 2048,
+  "checkpoint_writes_total": 11,
+  "wall_GPU_reservation_total": 9020,
+  "output_reservation_bytes": 17179869184,
+  "profiles": {
+    "R1": {
+      "experiment_id": "R5-MEAN10-REGRESSION-15",
+      "group": "R1",
+      "training_seed": 20261015,
+      "evaluation_seed": 20260909,
+      "max_updates": 256,
+      "checkpoint_updates": [
+        1,
+        2,
+        8,
+        16,
+        32,
+        64,
+        96,
+        128,
+        192,
+        256
+      ],
+      "evaluation_updates": [
+        256
+      ],
+      "command_profile": "pure-hover",
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      },
+      "mean_prior_contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+        "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+      },
+      "mean_prior_weight": 10.0
+    }
+  },
+  "acceptance": "Both old failedseeds retained as explicit newmethod regression, fixedsamebudget/primary256; NEVER count for newunused G4. Regression cannot tune frozennewmethod.",
+  "recovery": "Bounded fresh identity only for measured infrastructure failure; no scientific retry.",
+  "formal_full_training_submitted": false,
+  "method_freeze": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MEAN_PRIOR_CONFIRMATION_METHOD_FREEZE.json",
+    "sha256": "b55f881c8ef1435dcef21e354b8e36d6765d53b2f0dd2b72c18e81b9a40756c4"
+  },
+  "validation_scope": "OLD_FAILED_SEED_REGRESSION_NOT_G4"
+}

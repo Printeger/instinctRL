@@ -1129,7 +1129,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "ActualnewmeanDEV02 originalZ bothpredeclarednodes/botharms/unchangedscoring/fullraw andlifecycle; G2/G3only,noG4/READY/release",
-      "status": "IN_PROGRESS"
+      "status": "PASS_ACTUAL_PAIR_G2_G3_ONLY",
+      "evidence": "reviews/mean-prior-DEV02-actual-pair-Z.json",
+      "sha256": "521fd7692883d5950d9bb3cada49a653a6e1f7546bd86b9d35f03b473b2435b3"
     }
   ],
   "decisions": [
