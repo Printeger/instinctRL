@@ -1,0 +1,242 @@
+Loading user config located at: '/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/data/Kit/Isaac-Sim/5.1/user.config.json'
+[Info] [carb] Logging to file: /home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-15-R1-RESEARCH-TRAINING-617af4d90c35/results/prelaunch/kit.log
+2026-10-14T18:33:49Z [80ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-14T18:33:49Z [80ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+2026-10-14T18:33:49Z [91ms] [Warning] [omni.platforminfo.plugin] failed to open the default display.  Can't verify X Server version.
+2026-10-14T18:33:49Z [94ms] [Warning] [carb.cudainterop.plugin] CUDA_VISIBLE_DEVICES environment variable is set.
+2026-10-14T18:33:49Z [94ms] [Warning] [carb.cudainterop.plugin] Note CUDA device enumeration and Omniverse device enumeration are different.
+2026-10-14T18:33:49Z [94ms] [Warning] [carb.cudainterop.plugin] Setting CUDA_VISIBLE_DEVICES can lead to undesired behavior or crashes.
+2026-10-14T18:33:49Z [226ms] [Warning] [carb.windowing-glfw.plugin] GLFW initialization failed.
+2026-10-14T18:33:49Z [226ms] [Warning] [carb] Failed to startup plugin carb.windowing-glfw.plugin (interfaces: [carb::windowing::IGLContext v1.0],[carb::windowing::IWindowing v1.5]) (impl: carb.windowing-glfw.plugin)
+2026-10-14T18:33:49Z [309ms] [Warning] [gpu.foundation.plugin] Skipping unsupported non-NVIDIA GPU: AMD Ryzen 7 9700X 8-Core Processor (RADV RAPHAEL_MENDOCINO)
+2026-10-14T18:33:49Z [309ms] [Warning] [gpu.foundation.plugin] Skipping unsupported non-NVIDIA GPU: AMD Ryzen 7 9700X 8-Core Processor (RADV RAPHAEL_MENDOCINO)
+
+|---------------------------------------------------------------------------------------------|
+| Driver Version: 580.173.02    | Graphics API: Vulkan
+|=============================================================================================|
+| GPU | Name                             | Active | LDA | GPU Memory | Vendor-ID | LUID       |
+|     |                                  |        |     |            | Device-ID | UUID       |
+|     |                                  |        |     |            | Bus-ID    |            |
+|---------------------------------------------------------------------------------------------|
+| 0   | NVIDIA GeForce RTX 5070          | Yes: 0 |     | 12227   MB | 10de      | 0          |
+|     |                                  |        |     |            | 2f04      | 6ad8d003.. |
+|     |                                  |        |     |            | 1         |            |
+|---------------------------------------------------------------------------------------------|
+| 1   | AMD Ryzen 7 9700X 8-Core Proce.. |        |     | 10670   MB | 1002      | 0          |
+|     |                                  |        |     |            | 13c0      | 00000000.. |
+|     |                                  |        |     |            | 13        |            |
+|=============================================================================================|
+| OS: 24.04.4 LTS (Noble Numbat) ubuntu, Version: 24.04.4, Kernel: 7.0.0-28-generic
+| Processor: AMD Ryzen 7 9700X 8-Core Processor
+| Cores: 8 | Logical Cores: 16
+|---------------------------------------------------------------------------------------------|
+| Total Memory (MB): 30988 | Free Memory: 25176
+| Total Page/Swap (MB): 8191 | Free Page/Swap: 5843
+|---------------------------------------------------------------------------------------------|
+2026-10-14T18:33:49Z [525ms] [Warning] [gpu.foundation.plugin] IOMMU is enabled.
+2026-10-14T18:33:49Z [525ms] [Warning] [gpu.foundation.plugin] Detected IOMMU is enabled. Running CUDA peer-to-peer bandwidth and latency validation.
+Unidirectional P2P=Enabled Bandwidth (P2P Writes) Matrix (GB/s)
+   D\D     0 
+     0 583.46 
+P2P=Enabled Latency (P2P Writes) Matrix (us)
+   GPU     0 
+     0   2.07 
+
+   CPU     0 
+     0   1.79 
+2026-10-14T18:33:49Z [641ms] [Warning] [omni.usd_config.extension] Enable omni.materialx.libs extension to use MaterialX
+[INFO][AppLauncher]: Using device: cuda:0
+[INFO][AppLauncher]: Loading experience file: /home/mint/rl_blackwell_test/repos/IsaacLab/apps/isaaclab.python.headless.kit
+
+[36m======================================================================================[0m
+[36m[1m[INFO][IsaacLab]: Logging to file: /tmp/isaaclab/logs/isaaclab_2026-10-15_02-33-51.log[0m
+[36m======================================================================================[0m
+
+[33m02:33:51 [simulation_context.py] WARNING: The `enable_external_forces_every_iteration` parameter in the PhysxCfg is set to False. If you are experiencing noisy velocities, consider enabling this flag. You may need to slightly increase the number of velocity iterations (setting it to 1 or 2 rather than 0), together with this flag, to improve the accuracy of velocity updates.[0m
+[INFO]: Base environment:
+	Environment device    : cuda:0
+	Environment seed      : 0
+	Physics step-size     : 0.005
+	Rendering step-size   : 0.1
+	Environment step-size : 0.1
+[INFO]: Time taken for scene creation : 0.208977 seconds
+[INFO]: Scene manager:  <class InteractiveScene>
+	Number of environments: 32
+	Environment spacing   : 100.0
+	Source prim name      : /World/envs/env_0
+	Global prim paths     : []
+	Replicate physics     : True
+[INFO]: Starting the simulation. This may take a few seconds. Please wait...
+[INFO]: Time taken for simulation start : 0.854178 seconds
+[INFO]: Completed setting up the environment...
+[33m02:33:53 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/torch/distributions/dirichlet.py:86: UserWarning: No PYTORCH_KERNEL_CACHE_PATH or HOME environment variable set! This disables kernel caching. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/jit_utils.cpp:1475.)
+  + torch.lgamma(self.concentration.sum(-1))
+[33m02:34:24 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:34:29 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:34:34 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:34:39 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:34:44 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:34:49 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:34:54 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:34:59 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:35:05 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:35:10 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:35:15 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:35:20 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:35:26 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:35:31 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:35:36 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:35:41 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:35:46 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:35:51 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:35:56 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:01 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:06 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:11 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:16 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:21 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:26 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:31 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:36 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:41 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:46 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:51 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:36:56 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:01 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:06 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:11 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:16 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:21 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:26 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:32 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:37 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:42 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:47 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:52 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:37:57 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:02 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:07 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:12 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:17 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:22 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:27 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:32 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:37 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:42 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:47 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:52 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:38:58 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:03 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:08 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:13 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:18 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:23 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:28 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:33 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:38 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:43 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:48 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:53 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:39:58 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:03 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:08 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:13 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:18 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:23 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:29 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:34 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:39 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:44 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:49 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:54 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:40:59 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:41:04 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:41:09 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:41:14 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:41:19 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:41:24 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:41:29 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:41:34 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:41:39 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:41:45 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:41:50 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:41:55 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:00 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:05 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:10 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:15 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:20 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:25 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:30 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:35 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:40 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:45 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:50 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:42:56 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:01 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:06 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:11 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:16 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:21 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:26 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:31 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:36 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:41 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:46 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:51 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:43:56 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:02 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:07 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:12 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:17 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:22 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:27 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:32 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:37 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:42 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:47 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:52 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:44:57 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:02 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:07 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:12 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:17 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:22 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:28 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:33 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:38 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:43 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:48 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:53 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:45:58 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:03 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:08 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:14 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:19 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:24 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:29 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:34 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:39 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:44 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:49 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:54 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:46:59 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:47:04 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:47:09 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:47:14 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:47:19 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:47:24 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:47:29 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:47:34 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:47:40 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:47:45 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:47:50 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:47:55 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:48:00 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:48:05 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:48:10 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:48:15 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:48:20 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:48:25 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m
+[33m02:48:30 [articulation.py] WARNING: The function 'set_external_force_and_torque' will be deprecated in a future release. Please use 'permanent_wrench_composer.set_forces_and_torques' instead.[0m

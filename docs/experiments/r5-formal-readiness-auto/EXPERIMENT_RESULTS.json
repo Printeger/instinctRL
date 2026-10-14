@@ -1803,12 +1803,19 @@
       "experiment_id": "R5-MEAN10-REGRESSION-15",
       "group": "R1",
       "mode": "research-training",
-      "native_status": "RUNNING",
-      "native_exit_code": null,
-      "raw_status": null,
-      "formal_counter_completeness": null,
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
       "formal_transitions": null,
-      "observed": {},
+      "observed": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048
+      },
       "retained_reservations": {
         "training_transitions": 131072,
         "nontraining_transitions": 0,
@@ -1816,13 +1823,13 @@
         "training_checkpoint_writes": 11,
         "actor_optimizer_steps": 2048,
         "critic_optimizer_steps": 2048,
-        "allocated_gpu_seconds": 7210,
-        "wall_seconds_including_cleanup": 7210
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
       },
       "output_reserved_bytes": 8589934592,
-      "owned_cleanup": null,
-      "postrun_queries": 0,
-      "inventory": null
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-REGRESSION-15/live/R1-research-training/INVENTORY.json"
     }
   ],
   "master_ledger": "goal_budget.json",
@@ -1967,13 +1974,7 @@
       20261016
     ],
     "formal_submitted": false,
-    "current_only_live": {
-      "experiment_id": "R5-MEAN10-REGRESSION-15",
-      "job_id": "J-2fc1731ec6b0a583",
-      "group": "R1",
-      "mode": "research-training",
-      "note": "当前唯一LIVE旧seed15新mean10回归J-2fc1731ec6b0a583/A-4a03b10d998ade29，source617/config2e9/controlc468；实际首次512gatePASS，120updates已观察。Role29已独立接受新确认seed18完整256训练及u25647796b6c，并条件接受准确主256原Z预审；只有当前回归终态normalACK/settle/exact2postrun后才能issue/release18原Z。新17原Z32/32已Role28接受；整体G4仍待18实际Z，旧15/16回归不计G4。旧FAILED/INCOMPLETE/full收费保留，formal训练0。"
-    }
+    "current_only_live": null
   },
   "current_mean_confirmation_training": [
     {
@@ -2067,5 +2068,5 @@
       "independent_actual_training_review": "reviews/mean-prior-confirmation02-recovery1-actual-training.json"
     }
   ],
-  "entry_inventory_as_of_ledger_sha256": "ec42ec1dd21b39e75da9088cbff79b42faf791291ea0444d75e8628bd839195c"
+  "entry_inventory_as_of_ledger_sha256": "417d40790d4a23e5b71f94253ee0b3f7d53a75646067a95cec54f5b7168584bb"
 }
