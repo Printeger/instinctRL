@@ -23,26 +23,26 @@
   "stage_allocation": {
     "training_transitions": 393216,
     "nontraining_transitions": 51200,
-    "live_starts": 11,
-    "simulator_initialization_reservations": 11,
+    "live_starts": 12,
+    "simulator_initialization_reservations": 12,
     "optimizer_updates": 768,
     "training_checkpoint_writes": 40,
     "allocated_gpu_seconds": 36100,
     "wall_seconds_including_cleanup": 36100,
-    "output_peak_and_reservations_bytes": 103079215104
+    "output_peak_and_reservations_bytes": 120259084288
   },
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 7,
-    "simulator_initialization_reservations": 7,
+    "live_starts": 8,
+    "simulator_initialization_reservations": 8,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 1285.4135501580313,
-    "wall_seconds_including_cleanup": 1291.4052324041259,
-    "output_peak_and_reservations_bytes": 4606097420
+    "allocated_gpu_seconds": 1296.2166967920493,
+    "wall_seconds_including_cleanup": 1303.2156514162198,
+    "output_peak_and_reservations_bytes": 4606164414
   },
   "observed": {
     "training_transitions": 131072,
@@ -318,6 +318,42 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 11784303,
         "inventory": "experiments/R5-H128-DEV-01-R1-Z-RECOVERY2/live/R1-research-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-H256-DEV-01-R0-RESEARCH-TRAINING-a13c5a459d47",
+        "job_id": "J-98c4c0af48d17d1a",
+        "experiment_id": "R5-H256-DEV-01",
+        "group": "R0",
+        "mode": "research-training",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": 1,
+        "raw_status": "FAIL",
+        "formal_counter_completeness": "FINAL",
+        "formal_transitions": 0,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 66994,
+        "inventory": "experiments/R5-H256-DEV-01/live/R0-research-training/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -434,6 +470,13 @@
       "status": "PASS_ACTUAL_H128_PAIR_AND_CONDITIONAL_H256_PRELIVE",
       "evidence": "reviews/H128-actual-pair-H256-prelive.json",
       "sha256": "ed8850681c073e1d42fd332b8d4538ea4b58d2f0a34d4e504f014b462de41efc"
+    },
+    {
+      "call": 11,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "H256R0 exactnewresource-recovery identity after beforeAppFINAL0, D010stage12slots/112GiB, samemethod/card/inputbudget. Conditional onR1terminal/nooverlap andboundedincidentbackoff.",
+      "status": "REQUESTED"
     }
   ],
   "decisions": [

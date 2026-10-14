@@ -1,0 +1,28 @@
+{
+  "decision": "D010",
+  "authority": "ExistingmasterdelegatedCoordinator",
+  "old": {
+    "training_transitions": 393216,
+    "nontraining_transitions": 51200,
+    "live_starts": 11,
+    "simulator_initialization_reservations": 11,
+    "optimizer_updates": 768,
+    "training_checkpoint_writes": 40,
+    "allocated_gpu_seconds": 36100,
+    "wall_seconds_including_cleanup": 36100,
+    "output_peak_and_reservations_bytes": 103079215104
+  },
+  "new": {
+    "training_transitions": 393216,
+    "nontraining_transitions": 51200,
+    "live_starts": 12,
+    "simulator_initialization_reservations": 12,
+    "optimizer_updates": 768,
+    "training_checkpoint_writes": 40,
+    "allocated_gpu_seconds": 36100,
+    "wall_seconds_including_cleanup": 36100,
+    "output_peak_and_reservations_bytes": 120259084288
+  },
+  "reason": "OneH256R0beforeAppresourcefailure. Preservechargedslot/output, addonefreshrecoveryentry; training/eval/update/write/time allocationsunchanged. Output100GiBminimum for12entries+snapshot/meta,112GiBallocated withinmaster.",
+  "master_caps_and_confirmation_formal_unchanged": true
+}

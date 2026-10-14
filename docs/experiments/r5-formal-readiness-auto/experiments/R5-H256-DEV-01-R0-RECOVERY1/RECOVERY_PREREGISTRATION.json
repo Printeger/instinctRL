@@ -1,0 +1,39 @@
+{
+  "case_id": "R5-H256-DEV-01-R0-RECOVERY1",
+  "scientific_parent": "R5-H256-DEV-01",
+  "status": "PROPOSED_NOT_ISSUED",
+  "changed": "Freshattempt/spec/AUTH identityonly; originalH256source/card/profile/seed/nodes/budgetunchanged",
+  "failed_job": "J-98c4c0af48d17d1a",
+  "failure_pin": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R0-RESEARCH-TRAINING-a13c5a459d47/results/prelaunch/prelaunch_resource_gate_failure.json",
+    "sha256": "22765027dc6c4c05984cb1ddd013f952bf017847b22795ca89240e137d468689"
+  },
+  "actual_failure_samples": [
+    4,
+    10,
+    16
+  ],
+  "formal_counter": "FINAL0",
+  "actual_training_updates_transitions_writes": 0,
+  "actual_initialization": "NOT_REACHED",
+  "charged_start_init_output_retained": true,
+  "normal_cleanup": "ACK2STABLE_NOOWNED",
+  "postrun": 2,
+  "incident_rule": {
+    "first_failed_prelaunch": "J-98c4c0af48d17d1a",
+    "prior_incident_resolved_by": "H128R1 J-bb0051be6672154a originalgatePASS5/4/3/full12800eval",
+    "attempts_so_far": 1,
+    "maximum_unresolved_attempts": 3,
+    "next_R1_original_entry_after_minimum_seconds": 60,
+    "third_attempt_minimum_seconds": 180,
+    "stop_if_three_consecutive_unresolved_failures": true,
+    "no_extra_GPUprobes": true,
+    "no_unrelated_kills_or_gatechange": true
+  },
+  "release_conditions": [
+    "R1actualterminal andnormalACK+settlement beforefreshR0issue/release",
+    "Currentmaster/stage/confirmation/formalreserves andSTOP/owned checks",
+    "Independentexactreview/accurateAUTHhash/inputscommit_tag_push",
+    "No oldfailedidentity resumed"
+  ]
+}

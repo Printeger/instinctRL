@@ -105,3 +105,5 @@ full20160 reservation retained; no owned survivors. Goal IN_PROGRESS, training0.
 最新续接：第四次在完整采集后CPU分析期间被910秒正式watchdog终止，FAILED/137；实际wall910.5478907090146秒原样计账。原manifest仍PREPARED、最终reward计数缺失，20160全额预留。全403200物理行与96reset段已被离线和独立Reviewer复核，接受修复后的零目标物理回归；命令直通原Z/T/S尚待验证。ef68ebb新候选保持同一物理基线，仅补分析前持久化和pilot-evaluation评估seed分类，32CPU回归通过。全部4次启动槽已用完；准确第五次提案和仅start/init4→5的申请包已生成，未签发许可。未来两组pilot精确argv位于pilot_future_proposals.r3.json，首次rollout概率gate强制保留。Goal仍IN_PROGRESS，训练为零。
 
 
+
+最新H256：R0原入口J-98c4c0af48d17d1a在App前原GPU门槛4/10/16%>5失败，FINAL0/无训练数据，正常ACK/settle/2postrun并保留启动/init/output收费。无live。下一R1原准确A-56b453060fda4459退避≥60秒已实录，提交当前状态/输入并push后单次release。R0 fresh RECOVERY1packet1e38a94b.../expectedAUTHb00a62ee...独立Role11预审待回，只能R1终止/正常清理后发行。D010 stage12slots/112GiB，其余资源和master/confirmation/formal保护不变；当前未解决事件1/3，下一R1为attempt2/3，若仍拒第三次至少180秒且不第四次。

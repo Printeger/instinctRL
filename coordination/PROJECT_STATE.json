@@ -402,7 +402,7 @@
       "G8_exactformalpackage_conditionalpermission",
       "G9_independentreview"
     ],
-    "next_action": "Commit/tag/push exactH256authorizedinputs; singleR0trainingrelease then pollONLYhandle. R1onlyafterterminalACK+settlement. Noformaltraining.",
+    "next_action": "H256R0beforeAppresourcefailure settled. Commit/pushbackoff>=60s andreleaseoriginalR1 exactonce, pollhandle. FreshR0RECOVERY1reviewpending, nooverlap.",
     "training_authorizations_issued": 5,
     "prelive_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-exact-prelive.json",
     "commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json"
