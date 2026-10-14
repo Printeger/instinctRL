@@ -40,17 +40,17 @@
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 3403.7544717858545,
-    "wall_seconds_including_cleanup": 3416.4051206416916,
-    "output_peak_and_reservations_bytes": 9820558684
+    "allocated_gpu_seconds": 4361.32647844078,
+    "wall_seconds_including_cleanup": 4375.259752976708,
+    "output_peak_and_reservations_bytes": 12427190859
   },
   "observed": {
-    "training_transitions": 393216,
+    "training_transitions": 524288,
     "nontraining_transitions": 51200,
-    "optimizer_updates": 768,
-    "training_checkpoint_writes": 40,
-    "actor_optimizer_steps": 6144,
-    "critic_optimizer_steps": 6144
+    "optimizer_updates": 1024,
+    "training_checkpoint_writes": 51,
+    "actor_optimizer_steps": 8192,
+    "critic_optimizer_steps": 8192
   },
   "reservations": {
     "formal_initial_segment": {
@@ -541,7 +541,7 @@
         "experiment_id": "R5-H256-CONFIRM-01",
         "group": "R1",
         "mode": "research-training",
-        "status": "RUNNING",
+        "status": "FAILED",
         "reserved": {
           "training_transitions": 131072,
           "nontraining_transitions": 0,
@@ -549,13 +549,27 @@
           "training_checkpoint_writes": 11,
           "actor_optimizer_steps": 2048,
           "critic_optimizer_steps": 2048,
-          "allocated_gpu_seconds": 7210,
-          "wall_seconds_including_cleanup": 7210
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
         },
         "output_cap_bytes": 8589934592,
-        "observed": {},
-        "postrun_queries_used": 0,
-        "settled": false
+        "observed": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 11,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 2606632175,
+        "inventory": "experiments/R5-H256-CONFIRM-01/live/R1-research-training/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -734,6 +748,13 @@
       "status": "MUST_FIX_FORMAL_CURRICULUM_IDENTITY_FIXED_90AEEB2_EXACT_INDEPENDENT_CLOSURE_PENDING",
       "evidence": "reviews/G6-formal-implementation-original.json",
       "sha256": "6fc49e1f8c8f0af17b4eb91954e976c71bd7770300791d5db6952afe6eda1cf0"
+    },
+    {
+      "call": 17,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Actual confirmation01 training/gate/frozenseed/method/u256 identity and exact originalZ evaluation acceptance; limited exact90aeeb2 closure of Role16 curriculum hash finding, no G4/READY.",
+      "status": "REQUESTED"
     }
   ],
   "decisions": [
