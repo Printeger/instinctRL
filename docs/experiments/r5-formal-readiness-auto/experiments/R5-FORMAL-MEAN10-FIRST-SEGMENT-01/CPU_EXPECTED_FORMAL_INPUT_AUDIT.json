@@ -1,0 +1,24 @@
+{
+  "status": "PASS_CPU_EXPECTED_TRAINING_PROFILES_BUDGET_CLI",
+  "source": {
+    "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+    "product_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "product_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "workload_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "workload_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b"
+  },
+  "bothsame_origin": true,
+  "future_evaluation_missing_checkpoint_SHA_expected": true,
+  "future_eval_authorization_executable": false,
+  "actual_snapshot_help_argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "training_workloads.unified_h1.formal_unified_h1",
+    "--help"
+  ],
+  "GPU_queries": 0,
+  "newlive": 0,
+  "optimizer_calls": 0,
+  "actual_AUTH_writes": 0
+}
