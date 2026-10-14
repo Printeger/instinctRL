@@ -17,7 +17,7 @@ Both formal arms start from the same accepted development R1/u256, not separate 
 | Update budget per arm | 256 additional updates, absolute257–512; 131072 new transitions; 2048 additional Adam steps each |
 | Command phase | Existing mixed clock global4096–8191, alternating16hover/16nonzero lanes,128-step role blocks, original .2axis/.15diagonal directions |
 | Reset phase | Center-only; old near-wall reset placement suppressed explicitly, independent of mixed command clock |
-| Fresh-reset seed | actual original trainingseed + saved reset_number +1; same input checkpoint gives both arms the same seed |
+| Fresh-reset seed | **20261038 = 20260908 + 129 + 1**, from actual accepted origin reset_number129; identical for both arms, integer seed rather than a calendar date |
 | Evaluation seed | original20260909, unchanged case construction/T0/steps/functions/thresholds |
 | New checkpoints | Absolute272,288,320,384,512;5 new writes per arm, never overwrite origin |
 | Evaluation | All five actual checkpoints, complete originalZ/T/S/X/W×32 lanes;164800 nontraining per arm |
@@ -35,3 +35,5 @@ Evaluation hashes that do not exist yet are defined as generated inputs, never p
 The first segment stops at absolute512. Further low-speed tracking, stopping/reversal, near-wall or generalization stages require measured competence, a new prospective exact phase decision, remaining-budget accounting and independent review/release. No automatic horizon extension or complete R5 convergence is promised. Known native-close FAILED is tolerated only with complete separately accepted scientific evidence, preserved INCOMPLETE/full conservative reservations and verified normal owned cleanup; unknown exits or ownership ambiguity stop further work.
 
 Executable workload modes are research-formal-training and research-formal-evaluation in the existing formal_unified_h1 module. Prepared case is R5-FORMAL-MEAN10-FIRST-SEGMENT-01; packet SHA1f212fae59f7ed4a03e219936c1baffc0754371cdcd213879e12931f1a78dfda. Compatible control release c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba. Existing Commander requires a final-reviewed complete spec and separate conditional permission, plus an explicit later --start-formal action. Exact control-tool inputs, conditional release identities and operator commands are supplied by formal_r5_launch_manifest.json and START_FORMAL_R5.md after final package acceptance; this prospective plan itself is not permission.
+
+[Actual origin CPU metadata](experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/ACTUAL_ORIGIN_CPU_METADATA.json) rechecks the realu256 SHA and records its exactsource/method/counters/reset129 and derived fresh-reset seed20261038. This CPUread is not an actual formal rollout, G7 device recomputation or submission.
