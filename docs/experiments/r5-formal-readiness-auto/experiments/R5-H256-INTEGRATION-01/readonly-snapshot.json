@@ -1,0 +1,23 @@
+{
+  "status": "CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY",
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-integration-01-20261014",
+  "snapshot_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+  "snapshot_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+  "config_sha256": "dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f",
+  "snapshot_diff_sha256": "d3dce04326dd88f668f77206c0ff56c6218b354615050ceec7e700c055c99f10",
+  "read_only": true,
+  "source_identity": {
+    "config_sha256": "dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f",
+    "product_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+    "product_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+    "workload_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+    "workload_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a"
+  },
+  "snapshot_observed_bytes": 667366671,
+  "snapshot_reserved_bytes": 2147483648,
+  "config_stdout": "{\"config_sha256\": \"dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f\", \"product_commit\": \"90aeeb22c7af5ee77853ad5ee34d2098ce23f904\", \"product_tree\": \"9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a\", \"workload_commit\": \"90aeeb22c7af5ee77853ad5ee34d2098ce23f904\", \"workload_tree\": \"9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a\"}\n",
+  "config_stderr": "",
+  "GPU_queries": 0,
+  "live_starts": 0,
+  "training_updates": 0
+}

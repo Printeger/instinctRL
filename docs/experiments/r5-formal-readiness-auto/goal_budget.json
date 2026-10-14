@@ -22,20 +22,20 @@
   },
   "stage_allocation": {
     "training_transitions": 655360,
-    "nontraining_transitions": 64000,
-    "live_starts": 17,
-    "simulator_initialization_reservations": 17,
+    "nontraining_transitions": 67584,
+    "live_starts": 18,
+    "simulator_initialization_reservations": 18,
     "optimizer_updates": 1280,
     "training_checkpoint_writes": 62,
-    "allocated_gpu_seconds": 54140,
-    "wall_seconds_including_cleanup": 54140,
-    "output_peak_and_reservations_bytes": 163208757248
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 173946175488
   },
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 13,
-    "simulator_initialization_reservations": 13,
+    "live_starts": 14,
+    "simulator_initialization_reservations": 14,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
@@ -534,6 +534,28 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 11781221,
         "inventory": "experiments/R5-H256-DEV-01-R0-Z-RECOVERY1/live/R0-research-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-H256-CONFIRM-01-R1-RESEARCH-TRAINING-a13c5a459d47",
+        "job_id": "J-983c37552deb85d9",
+        "experiment_id": "R5-H256-CONFIRM-01",
+        "group": "R1",
+        "mode": "research-training",
+        "status": "RUNNING",
+        "reserved": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 11,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048,
+          "allocated_gpu_seconds": 7210,
+          "wall_seconds_including_cleanup": 7210
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {},
+        "postrun_queries_used": 0,
+        "settled": false
       }
     ],
     "source_snapshots": [
@@ -544,6 +566,14 @@
         "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
         "observed_file_bytes": 633824147,
         "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-integration-01-20261014",
+        "reserved_bytes": 2147483648,
+        "status": "FROZEN_READ_ONLY",
+        "source_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+        "config_sha256": "dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f",
+        "observed_file_bytes": 667366671
       }
     ],
     "confirmation_and_transition": {
@@ -695,6 +725,15 @@
       "status": "PASS_ACTUAL_H256_PAIR_CONFIRMATION_CONDITION_CLOSED",
       "evidence": "reviews/H256-actual-pair.json",
       "sha256": "e7a10f4b76a1c21d80bc30d14ca26630030dec20339115eacd8f0a94492ee8fd"
+    },
+    {
+      "call": 16,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Read-only critical G6/G7 and prospective formal warm-start implementation review at d32ff12; no actual GPU/newsource exactrelease or G4 qualification.",
+      "status": "MUST_FIX_FORMAL_CURRICULUM_IDENTITY_FIXED_90AEEB2_EXACT_INDEPENDENT_CLOSURE_PENDING",
+      "evidence": "reviews/G6-formal-implementation-original.json",
+      "sha256": "6fc49e1f8c8f0af17b4eb91954e976c71bd7770300791d5db6952afe6eda1cf0"
     }
   ],
   "decisions": [

@@ -7,13 +7,11 @@
 
 ## 当前 Goal（2026-10-14 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 目标 READY_FOR_FORMAL_R5_TRAINING，按G1–G9验收，不提交正式完整训练。H256两组真实训练各256updates/131072train已完成，原FAILED/-9、INCOMPLETE及全逻辑预留保留；正常ownedACK、结算与各2postrun已完成。R1训练Role12独立接受；fresh R0训练和真实init/first512配对比较已保存，Role13独立审核中。
+**IN_PROGRESS，非READY。** H256实际同版本配对已Role15独立接受。R1在预先登记u192/u256均完整原Z32/32、8方向各4/4，最大漂移.254746/.133545m；R0均0/32，u256全部高度失败/reset中断，完整raw和失败分母保留，漂移不作连续稳态解释。开发G2/G3成立，一个训练seed仍不构成G4。
 
-当前唯一live为R1原Z评价 `J-3e112266540d3422`，准确许可 `A-852b7e582eb562fc`，冻结输入提交/tag/正常push后串行release。源码a13c、config73aeb4ff、RO快照及方法不变；预先登记u192/u256、主节点256，完整原Z全部门槛和分母不变。R0评价待实际checkpoint独立接受后准确发行。若R1两节点任一失败，不延长超256，转测量参考；均通过后仍须冻结并做两个未见训练seed确认及G6/G7/G8/G9。
+当前唯一live：冻结后的首个确认训练 `J-983c37552deb85d9`，准确 `A-f706136dae2ce864`，输入069ae5a/tag/正常push后release。两个未调参训练seed20261015/20261016及同a13c/config73aeb4ff、w.05/anchor4/LR1e-4/3e-4/purehover256/primary256均在运行前不可变冻结；两者必须全通过，不能2/3或换seed。确认02准确许可A-98a471c16d274aa9未提交，串行等待。旧资源失败、nativeFAILED/INCOMPLETE及保守预留原样保留，所有此前作业正常owned清理/结算/恰好2postrun。
 
-H128已独立接受：R1u96失败0/32、u128原Z32/32且8子组各4/4，u128最大速度.017075、漂移.232706、高度.163136。单节点不满足G3；R0两个节点均0/32。原失败入口与资源收费完整保留，不重跑已完成数据。
-
-D010 stage在原master内扩展，确认/正式首段保护资源不变；精确实际与保守账以总账为准。G6/G7新CPU实现47项回归通过，尚无新source/config/tool准确预审与live，不计完成；正式入口和包仍待实现验证。当前／历史receipt不混同。
+G6/G7和正式warmstart入口已main-only实现，65CPU回归PASS、独立关键代码审核中；新准确source/config/tool/prelive、实际衔接与两个seed确认、正式包和最终审核尚未完成。两正式组计划共享已验证devR1/u256，完整trainerrestore后freshsimreset，新的首actual512gate，mixed-center追加阶段。本Goal不提交正式完整训练。Master和阶段/保护预算以总账为准。
 
 唯一续接与预算：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[新总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[真实结果](experiments/r5-formal-readiness-auto/EXPERIMENT_RESULTS.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 

@@ -1,0 +1,229 @@
+{
+  "schema_version": "instinctrl-r5-research-experiment-card/1",
+  "experiment_id": "R5-FORMAL-MIXED-CENTER-01",
+  "question": "Prospective fulltrainerwarmstart reward intervention during firstmixed-center segment, commonqualified devR1/u256 origin",
+  "sole_primary_change": "w0/.05 after SAME qualifiedR1warmup; no coldstartablationclaim",
+  "primary_node": 512,
+  "predefined_late_nodes": [
+    272,
+    288,
+    320,
+    384,
+    512
+  ],
+  "profiles": {
+    "R0": {
+      "group": "R0",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "residual_neutrality_weight": 0.0,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      },
+      "experiment_id": "R5-FORMAL-MIXED-CENTER-01",
+      "start_update": 256,
+      "target_update": 512,
+      "checkpoint_updates": [
+        272,
+        288,
+        320,
+        384,
+        512
+      ],
+      "evaluation_updates": [
+        272,
+        288,
+        320,
+        384,
+        512
+      ],
+      "command_profile": "mixed-center",
+      "phase_contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-integration-01-20261014/coordination/contracts/R5_FORMAL_MIXED_CENTER_V1.md",
+        "sha256": "675fe7b24c858d9aa24c963acd591f77c2a99b45dc181073bcc39663314791c7"
+      },
+      "checkpoint_source_identity": {
+        "product_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "product_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+        "workload_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "workload_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+        "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721"
+      },
+      "checkpoint_compatibility": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-INTEGRATION-01/formal-checkpoint-compatibility.json",
+        "sha256": "931aa8b2088f653ad43be227c354bc7a4a13252ed1d49a7051bdd76f39d8506f"
+      },
+      "initialization_checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+        "sha256": "ddc4a93a4f3b2e3689663bc69f187b29f7fae70e4c0a4f834ceae30b24fdcac1",
+        "update": 256
+      },
+      "origin_profile": {
+        "experiment_id": "R5-H256-DEV-01",
+        "group": "R1",
+        "training_seed": 20260908,
+        "evaluation_seed": 20260909,
+        "max_updates": 256,
+        "checkpoint_updates": [
+          1,
+          2,
+          8,
+          16,
+          32,
+          64,
+          96,
+          128,
+          192,
+          256
+        ],
+        "evaluation_updates": [
+          192,
+          256
+        ],
+        "command_profile": "pure-hover",
+        "residual_neutrality_weight": 0.05,
+        "anchor_weight": 4.0,
+        "actor_lr": 0.0001,
+        "critic_lr": 0.0003,
+        "output_cap_bytes": 8589934592,
+        "master_authority": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+          "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+        },
+        "experiment_card": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/EXPERIMENT_CARD.json",
+          "sha256": "07ce87bbf6a0629937226ba23be0c69e989944366063586575b74d4d5565d4f9"
+        }
+      }
+    },
+    "R1": {
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      },
+      "experiment_id": "R5-FORMAL-MIXED-CENTER-01",
+      "start_update": 256,
+      "target_update": 512,
+      "checkpoint_updates": [
+        272,
+        288,
+        320,
+        384,
+        512
+      ],
+      "evaluation_updates": [
+        272,
+        288,
+        320,
+        384,
+        512
+      ],
+      "command_profile": "mixed-center",
+      "phase_contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-integration-01-20261014/coordination/contracts/R5_FORMAL_MIXED_CENTER_V1.md",
+        "sha256": "675fe7b24c858d9aa24c963acd591f77c2a99b45dc181073bcc39663314791c7"
+      },
+      "checkpoint_source_identity": {
+        "product_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "product_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+        "workload_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "workload_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+        "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721"
+      },
+      "checkpoint_compatibility": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-INTEGRATION-01/formal-checkpoint-compatibility.json",
+        "sha256": "931aa8b2088f653ad43be227c354bc7a4a13252ed1d49a7051bdd76f39d8506f"
+      },
+      "initialization_checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+        "sha256": "ddc4a93a4f3b2e3689663bc69f187b29f7fae70e4c0a4f834ceae30b24fdcac1",
+        "update": 256
+      },
+      "origin_profile": {
+        "experiment_id": "R5-H256-DEV-01",
+        "group": "R1",
+        "training_seed": 20260908,
+        "evaluation_seed": 20260909,
+        "max_updates": 256,
+        "checkpoint_updates": [
+          1,
+          2,
+          8,
+          16,
+          32,
+          64,
+          96,
+          128,
+          192,
+          256
+        ],
+        "evaluation_updates": [
+          192,
+          256
+        ],
+        "command_profile": "pure-hover",
+        "residual_neutrality_weight": 0.05,
+        "anchor_weight": 4.0,
+        "actor_lr": 0.0001,
+        "critic_lr": 0.0003,
+        "output_cap_bytes": 8589934592,
+        "master_authority": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+          "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+        },
+        "experiment_card": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/EXPERIMENT_CARD.json",
+          "sha256": "07ce87bbf6a0629937226ba23be0c69e989944366063586575b74d4d5565d4f9"
+        }
+      }
+    }
+  },
+  "source": {
+    "status": "CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY",
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-integration-01-20261014",
+    "snapshot_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+    "snapshot_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+    "config_sha256": "dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f",
+    "snapshot_diff_sha256": "d3dce04326dd88f668f77206c0ff56c6218b354615050ceec7e700c055c99f10",
+    "read_only": true,
+    "source_identity": {
+      "config_sha256": "dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f",
+      "product_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+      "product_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+      "workload_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+      "workload_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a"
+    },
+    "snapshot_observed_bytes": 667366671,
+    "snapshot_reserved_bytes": 2147483648,
+    "config_stdout": "{\"config_sha256\": \"dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f\", \"product_commit\": \"90aeeb22c7af5ee77853ad5ee34d2098ce23f904\", \"product_tree\": \"9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a\", \"workload_commit\": \"90aeeb22c7af5ee77853ad5ee34d2098ce23f904\", \"workload_tree\": \"9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a\"}\n",
+    "config_stderr": "",
+    "GPU_queries": 0,
+    "live_starts": 0,
+    "training_updates": 0
+  },
+  "training_transitions_total": 262144,
+  "evaluation_transitions_total": 329600,
+  "live_starts_total": 4,
+  "logical_updates_total": 512,
+  "actor_steps_total": 4096,
+  "critic_steps_total": 4096,
+  "checkpoint_writes_total": 10,
+  "wall_GPU_reservation_total": 21640,
+  "output_reservation_bytes": 34359738368,
+  "acceptance": "Allnodes fullZ/T/S/X/Woriginalevaluation, anyoriginalZregressionblockscontinuation; nonzeroperformanceunknownuntilactualformaltraining. First512warmgatebeforeeitheroptimizer in BOTH arms.",
+  "execution_in_this_goal": false,
+  "future_checkpoint_binding": "Exact5actualperarmSHAfilledafterboundedtraining plus independentactualacceptance; missingfuturehashnotcurrentinput."
+}

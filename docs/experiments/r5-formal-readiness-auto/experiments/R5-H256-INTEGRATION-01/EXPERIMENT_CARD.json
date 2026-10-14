@@ -1,0 +1,116 @@
+{
+  "schema_version": "instinctrl-r5-research-experiment-card/1",
+  "experiment_id": "R5-H256-INTEGRATION-01",
+  "parent": "R5-H256-DEV-01 and immutable methodfreeze; actual G4 acceptance required before live release",
+  "question": "Does actual qualified devR1/u256 execute finite zero/plus/minus/zero without new lifecycle/shape/index/reference defects, and does same-device strictload reproduce its actualu1savedprobe plusfinalreload?",
+  "scientific_scope": "IMPLEMENTATION_ONLY, not newZ/T/S/X/Wtaskperformance, nooptimizer/cpwrites",
+  "primary_checkpoint": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+    "sha256": "ddc4a93a4f3b2e3689663bc69f187b29f7fae70e4c0a4f834ceae30b24fdcac1",
+    "update": 256
+  },
+  "protocol": "zero0:16, laneDIRECTIONS16:48, temporalnegative48:80, zero80:112;112steps32lanes;actorownmean",
+  "source": {
+    "status": "CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY",
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-integration-01-20261014",
+    "snapshot_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+    "snapshot_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+    "config_sha256": "dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f",
+    "snapshot_diff_sha256": "d3dce04326dd88f668f77206c0ff56c6218b354615050ceec7e700c055c99f10",
+    "read_only": true,
+    "source_identity": {
+      "config_sha256": "dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f",
+      "product_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+      "product_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+      "workload_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+      "workload_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a"
+    },
+    "snapshot_observed_bytes": 667366671,
+    "snapshot_reserved_bytes": 2147483648,
+    "config_stdout": "{\"config_sha256\": \"dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f\", \"product_commit\": \"90aeeb22c7af5ee77853ad5ee34d2098ce23f904\", \"product_tree\": \"9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a\", \"workload_commit\": \"90aeeb22c7af5ee77853ad5ee34d2098ce23f904\", \"workload_tree\": \"9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a\"}\n",
+    "config_stderr": "",
+    "GPU_queries": 0,
+    "live_starts": 0,
+    "training_updates": 0
+  },
+  "profiles": {
+    "R1": {
+      "experiment_id": "R5-H256-INTEGRATION-01",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "max_updates": 256,
+      "checkpoint_updates": [
+        1,
+        2,
+        8,
+        16,
+        32,
+        64,
+        96,
+        128,
+        192,
+        256
+      ],
+      "evaluation_updates": [
+        256
+      ],
+      "command_profile": "pure-hover",
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      },
+      "transition_protocol": "zero-directions-reverse-zero112-v1",
+      "integration_contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-integration-01-20261014/coordination/contracts/R5_FORMAL_INTEGRATION_DIAGNOSTIC_V1.md",
+        "sha256": "720845138986bfb053304db915e38fb6bd9558023d65177be53af79bd189a873"
+      },
+      "checkpoint_source_identity": {
+        "product_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "product_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+        "workload_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+        "workload_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+        "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721"
+      },
+      "checkpoint_compatibility": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-INTEGRATION-01/checkpoint-compatibility.json",
+        "sha256": "48e41feecbe245ec40b579e9215772c6772f7da7414dfa9e1cd63311e34eb543"
+      },
+      "recalculation": {
+        "checkpoint": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u1.pt",
+          "sha256": "20cc254cf750e8eab97b2c6d0bfd08c1a7b1329d82cc52a4d1cc91a844749ee2",
+          "update": 1
+        },
+        "input": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+          "sha256": "012dd61783f7a749a59136d2339dc43e78e987150c46614a10df2cf99d86c5f6"
+        },
+        "probe": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/pilot_diagnostic/first_update_probe.pt",
+          "sha256": "fe0d18357362e165a90026687eadc15956bb7f86c44b8d9a93957dfd77e3d2a1"
+        }
+      }
+    }
+  },
+  "training_transitions_total": 0,
+  "evaluation_transitions_total": 3584,
+  "live_starts_total": 1,
+  "logical_updates_total": 0,
+  "checkpoint_writes_total": 0,
+  "wall_GPU_reservation_total": 910,
+  "output_reservation_bytes": 8589934592,
+  "acceptance": "Exact3584actualnontraining, T0+112allrows/resetmasks/finitecontrolleddata/actualdecoder andcommandhistory/anchor exit-recapture; unchangedmodels+optimizers+RNG arounddiagnostics. Actualu1actor mean/std/logp1e-6/1e-5; actualfinalsameinputrepeatability. No performancepass or historicalfinaloutput invented.",
+  "release_prerequisites": [
+    "G4twofrozenseedsactualZaccepted",
+    "exactnewcontrolrelease/schema seedcompatibility",
+    "independentexactsource/config/card/AUTH/remainingbudgetprelive",
+    "Commanderexactapproval/commit/tag/push/STOP/idle/coexistence/cleanup"
+  ],
+  "formal_full_training_submitted": false
+}

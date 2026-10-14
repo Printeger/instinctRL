@@ -1,0 +1,29 @@
+{
+  "authority": "Existing user masterdelegatedCoordinator",
+  "status": "ALLOCATED_WITHIN_MASTER_NOT_LIVE_RELEASE",
+  "old": {
+    "training_transitions": 655360,
+    "nontraining_transitions": 64000,
+    "live_starts": 17,
+    "simulator_initialization_reservations": 17,
+    "optimizer_updates": 1280,
+    "training_checkpoint_writes": 62,
+    "allocated_gpu_seconds": 54140,
+    "wall_seconds_including_cleanup": 54140,
+    "output_peak_and_reservations_bytes": 163208757248
+  },
+  "new": {
+    "training_transitions": 655360,
+    "nontraining_transitions": 67584,
+    "live_starts": 18,
+    "simulator_initialization_reservations": 18,
+    "optimizer_updates": 1280,
+    "training_checkpoint_writes": 62,
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 173946175488
+  },
+  "reason": "G6/G7boundedimplementationcheck3584nontraining/0trainingupdate/0cpwrite and2GiBexactROsnapshot, afterG4actualacceptance. This doesnot authorizelive or formaltraining.",
+  "master_caps_unchanged": true,
+  "full_confirmation_formal_reserves_unchanged": true
+}

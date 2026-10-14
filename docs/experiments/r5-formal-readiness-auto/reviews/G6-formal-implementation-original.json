@@ -1,0 +1,58 @@
+{
+  "role": "Role16",
+  "verdict": "MUST_FIX",
+  "scope": "只读 CPU 实现审核；不构成任何实验输入、工具发布、G6/G7 实际验收或 live 授权。",
+  "identities": {
+    "implementation_commit": "d32ff123df675097acea212a4afbe70275eace1d",
+    "evidence_head": "069ae5a",
+    "formal_segment_committed_sha256": "bf44e7b30e6559b292ff5c4ce02e8c656229120fb74573732246c1e29f178dd2",
+    "formal_segment_observed_uncommitted_fix_sha256": "7a7472cf34c6ee492753eb14caa8c53157eca10f23f99b95ac89525ff271b21d",
+    "backend_sha256": "e8152d6d54d483fe44a776a56ec2cf5938f4b23d0fc206e9c172dd547aa7c872",
+    "checkpoint_compatibility_sha256": "670ec6ff9dc4841f7e9d088422fecec22dc23bb7295fa4bbb094fdf03369bb80",
+    "checkpoint_recalculation_sha256": "d23c77092a71fb69359bcef6bf50f3ff9ca01b34b61748e889c1b49e249fe626",
+    "transition_diagnostic_sha256": "7347ffa01d64b58b7342ea663d126313d4b5ae02d7b45a88b2e0ab6be8ae6eda",
+    "formal_contract_sha256": "675fe7b24c858d9aa24c963acd591f77c2a99b45dc181073bcc39663314791c7",
+    "integration_contract_sha256": "720845138986bfb053304db915e38fb6bd9558023d65177be53af79bd189a873"
+  },
+  "must_fix": [
+    {
+      "id": "FORMAL-CURRICULUM-IDENTITY-R1",
+      "contract": "正式段实际 mixed curriculum-h1-v1 必须与 checkpoint method 身份一致，不能保留 research-pure-hover 标签。",
+      "evidence": "d32ff12 的 formal_segment.method_hashes 继承 research_hashes(config,p)，但未覆盖 config method hashes 中的 curriculum；实际 driver 使用 ScheduleClock(4096)，_write_checkpoint 保存 curriculum-h1-v1。工作树已增加 curriculum='curriculum-h1-v1'，并增加对应断言；修复尚未提交。",
+      "impact": "准确候选可以生成 payload 为 mixed、method curriculum 却为 pure-hover 的正式 checkpoint，导致科学身份自相矛盾；65 项原回归未覆盖该字段。",
+      "closure": "将已检查的一行 curriculum override 与新增断言形成 additive commit，保留原候选和测试证据，并绑定新精确 commit/SHA。已检查的修复方向充分；本项无需重跑训练或修改产品、serializer、阈值。"
+    }
+  ],
+  "checks": {
+    "critical_product_boundary": "a13c 到 d32ff12 的 isaaclab-training/instinctlab 产品源码无差异，checkpoint serializer 未扩 enum。",
+    "compatibility": "兼容声明绑定原始及执行五字段身份、配置 SHA、方法、actor schema、全部 critical product hashes，并重新核对原 checkout/原 workload 文件。声明本身不授予执行许可。",
+    "warm_restore": "正式训练显式使用 origin_profile 的纯 hover 方法身份 strict load；恢复 actor、critic、两类 Adam、绝对 counter、全局 RNG 和 curriculum generator。",
+    "fresh_reset": "恢复后使用新 simulation reset；_preserving_reset 保存并恢复 Python、NumPy、Torch CPU/CUDA RNG。初始化证据明确否认 physics/history/anchor/actuator 连续性。",
+    "mixed_center": "ScheduleClock 从实际 4096 开始，保留 16 hover/16 非零命令。产品 _h1_pure_hover_training 标志仅影响 near-wall reset placement，不会清零混合命令；logging 分别记录 pure_hover 与 center_reset_only。",
+    "first_gate": "starting_update=256；真实 rollout distribution capture/bind、绝对输入257/258保留及概率 gate 均在 trainer.update 前，因此先于两类 optimizer。新增拒绝 fixture 检查 mismatch 时没有 optimizer 调用。",
+    "accounting": "本次 logical updates、transitions、五次 checkpoint writes 与绝对 trainer counters 分离；Adam 增量减去恢复的2048，partial failure 保存实际绝对 optimizer 边界及增量 counters。",
+    "formal_evaluation": "未来五个实际 checkpoint 必须全部提供 SHA；加载使用当前执行 source 和正式方法身份，严格检查节点、seed、mixed curriculum，并遍历原 Z/T/S/X/W。",
+    "g7": "u1 重算绑定同一训练目录的实际 checkpoint/input/probe，使用 after-minibatch8 的 actor mean/std/logp；正确排除不同时间边界的 critic value，检查模型/optimizer/RNG 未改变。",
+    "reload_repeatability": "最终 checkpoint 独立 strict reload，比较模型/optimizer digest、metadata 及同一实际 reset 输入的 actor 输出；没有冒充缺失的历史最终输出。",
+    "g6": "单次112×32非训练序列保留 T0、实际返回行、reset/failure masks 和 current/next command；使用 actor 自身 mean action，核对实际 xyz decoder、非零 anchor exit 和最终 zero recapture。",
+    "cpu_evidence": "检查了65PASS原回归 receipt、新13PASS clock identity receipt及相关测试实现。未执行 simulator、GPU查询、optimizer或额外模型 sampling。"
+  },
+  "non_blocking": [
+    {
+      "id": "EXACT-PACKAGE-PENDING",
+      "detail": "本轮未产生或批准准确新 config、snapshot overlay、compatibility declaration、control release、card、AUTH、argv 或预算；这些必须另行冻结并独立准确预审。正式两组共享指定 devR1/u256、而非任意满足 schema 的 R1 checkpoint，也须由该精确包核实。"
+    },
+    {
+      "id": "CPU-COVERAGE-LIMIT",
+      "detail": "warm-entry fixture 替换了训练 loop，不执行正式 optimizer；transition fixture 与 CPU 重算不能替代完整实际 G6/G7、同设备历史 probe 重算、正式 checkpoint 可重载或任务表现验收。"
+    },
+    {
+      "id": "PROCESS-ACCOUNTING",
+      "detail": "后续实际运行仍必须保留 native FAILED、INCOMPLETE/null 和保守预留；科学数据验收与 process verdict 分开，owned cleanup 和实际资源证据不可省略。"
+    }
+  ],
+  "release_allowed": false,
+  "g6_g7_accepted": false,
+  "ready_allowed": false,
+  "follow_up": "仅需提交并精确绑定已检查的 curriculum 身份修复，闭合本候选唯一发现的实现阻塞；当前确认01旧只读运行不受本次 main 实现影响。"
+}

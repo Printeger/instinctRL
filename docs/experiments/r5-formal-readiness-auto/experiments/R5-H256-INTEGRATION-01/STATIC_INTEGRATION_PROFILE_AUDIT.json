@@ -1,0 +1,67 @@
+{
+  "status": "PASS_CPU_SOURCE_CONFIG_PROFILES_COMPATIBILITY_ONLY",
+  "source_identity": {
+    "product_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+    "product_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+    "workload_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+    "workload_tree": "9cb3f7ec0256945ce7be2bcc4c0754509f1dcb0a",
+    "config_sha256": "dfb4fd1f0c143e3ac94f88ded9292900ff327dddb2b68082389f6dcbf10bcb5f"
+  },
+  "rows": [
+    {
+      "mode": "research-transition",
+      "group": "R1",
+      "exact_budget": {
+        "live_process_starts": 1,
+        "simulator_initializations": 1,
+        "initialization_ticks": 10,
+        "training_transitions": 0,
+        "nontraining_transitions": 3584,
+        "optimizer_updates": 0,
+        "checkpoint_writes": 0,
+        "explicit_resets": 1,
+        "automatic_resets": 3584,
+        "wall_seconds": 900
+      },
+      "status": "PASS_CPU_STATIC_ONLY"
+    },
+    {
+      "mode": "research-formal-training",
+      "group": "R0",
+      "exact_budget": {
+        "live_process_starts": 1,
+        "simulator_initializations": 1,
+        "initialization_ticks": 10,
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "checkpoint_writes": 5,
+        "explicit_resets": 1,
+        "automatic_resets": 131072,
+        "wall_seconds": 7200
+      },
+      "status": "PASS_CPU_STATIC_ONLY"
+    },
+    {
+      "mode": "research-formal-training",
+      "group": "R1",
+      "exact_budget": {
+        "live_process_starts": 1,
+        "simulator_initializations": 1,
+        "initialization_ticks": 10,
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "checkpoint_writes": 5,
+        "explicit_resets": 1,
+        "automatic_resets": 131072,
+        "wall_seconds": 7200
+      },
+      "status": "PASS_CPU_STATIC_ONLY"
+    }
+  ],
+  "GPU_queries": 0,
+  "live_starts": 0,
+  "optimizer_updates": 0,
+  "independent_review": "PENDING_EXACT_LIVE_PACKAGE"
+}

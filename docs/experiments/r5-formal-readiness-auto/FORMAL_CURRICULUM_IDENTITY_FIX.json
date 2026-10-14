@@ -1,0 +1,14 @@
+{
+  "status": "IMPLEMENTED_CPU_VERIFIED_AWAITING_EXACT_INDEPENDENT_CLOSURE",
+  "finding": "FORMAL-CURRICULUM-IDENTITY-R1",
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/G6-formal-implementation-original.json",
+    "sha256": "6fc49e1f8c8f0af17b4eb91954e976c71bd7770300791d5db6952afe6eda1cf0"
+  },
+  "fix_commit": "90aeeb22c7af5ee77853ad5ee34d2098ce23f904",
+  "actual_fixed_source_sha256": "7a7472cf34c6ee492753eb14caa8c53157eca10f23f99b95ac89525ff271b21d",
+  "CPU_receipt": "cpu-formal-segment-clock-identity.xml",
+  "actual_training_reruns": 0,
+  "product_changes": 0,
+  "note": "Reviewer already checked identical workingtreefix direction; exact committedcandidate closure stillrequired in next independent exactpackage review."
+}
