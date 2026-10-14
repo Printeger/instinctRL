@@ -34,8 +34,8 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 8,
-    "simulator_initialization_reservations": 8,
+    "live_starts": 9,
+    "simulator_initialization_reservations": 9,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
@@ -354,6 +354,28 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 66994,
         "inventory": "experiments/R5-H256-DEV-01/live/R0-research-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47",
+        "job_id": "J-a4a37087b4d84996",
+        "experiment_id": "R5-H256-DEV-01",
+        "group": "R1",
+        "mode": "research-training",
+        "status": "RUNNING",
+        "reserved": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 11,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048,
+          "allocated_gpu_seconds": 7210,
+          "wall_seconds_including_cleanup": 7210
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {},
+        "postrun_queries_used": 0,
+        "settled": false
       }
     ],
     "source_snapshots": [
@@ -476,7 +498,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "H256R0 exactnewresource-recovery identity after beforeAppFINAL0, D010stage12slots/112GiB, samemethod/card/inputbudget. Conditional onR1terminal/nooverlap andboundedincidentbackoff.",
-      "status": "REQUESTED"
+      "status": "PASS_CONDITIONAL_FRESH_H256_R0_RECOVERY1",
+      "evidence": "reviews/H256-R0-recovery1-prelive.json",
+      "sha256": "524e1980a5c00f7f4f9d3651b0c7c12985e4bf6802d230d51b521a48ac25220c"
     }
   ],
   "decisions": [

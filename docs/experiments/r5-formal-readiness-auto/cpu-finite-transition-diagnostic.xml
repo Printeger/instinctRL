@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="6" time="0.656" timestamp="2026-10-14T22:31:08.708247+08:00" hostname="mint-MS-7E30"><testcase classname="tests.training_workloads.test_finite_transition_diagnostic" name="test_temporal_zero_positive_negative_zero_has_exact_budget_and_no_rng" time="0.005" /><testcase classname="tests.training_workloads.test_finite_transition_diagnostic" name="test_actual_anchor_exits_and_recaptures_during_temporal_reversal" time="0.020"><failure message="ValueError: policy keys and order must be exactly ('lidar_grid', 'state_vec')">def test_actual_anchor_exits_and_recaptures_during_temporal_reversal():
+        commands = transition_commands()
+        anchor = MeasurementAnchor()
+        ranges = torch.full((32, 59, 360), 3.)
+        valid = torch.ones_like(ranges, dtype=torch.bool)
+        reliable = torch.ones_like(ranges)
+        no_reset = torch.zeros(32, dtype=torch.bool)
+        for step, expected_active in [(0, 32), (16, 0), (48, 0), (80, 32)]:
+            metrics = anchor.update(ranges, valid, reliable, commands[step], no_reset, no_reset).metrics
+&gt;           result = validate_transition_step(**row(commands[step], commands[step + 1], metrics))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_finite_transition_diagnostic.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/transition_diagnostic.py:27: in validate_transition_step
+    validate_policy(policy)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+policy = {'state_vec': tensor([[0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  .....[0., 0., 0.,  ..., 0., 0., 0.],
+          [0., 0., 0.,  ..., 0., 0., 0.],
+          [0., 0., 0.,  ..., 0., 0., 0.]]]])}
+
+    def validate_policy(policy: Mapping[str, torch.Tensor]) -&gt; tuple[torch.Tensor, torch.Tensor]:
+        """Require the ordered exact M4 policy pair, float32, one device, and finite values."""
+        if not isinstance(policy, Mapping):
+            raise TypeError("policy must be a mapping containing only the exact M4 pair")
+        if tuple(policy.keys()) != ACTOR_KEYS:
+&gt;           raise ValueError(f"policy keys and order must be exactly {ACTOR_KEYS}")
+E           ValueError: policy keys and order must be exactly ('lidar_grid', 'state_vec')
+
+isaaclab-training/instinctlab/training/networks.py:83: ValueError</failure></testcase><testcase classname="tests.training_workloads.test_finite_transition_diagnostic" name="test_rejects_command_switch_one_observation_too_early" time="0.001"><failure message="ValueError: policy keys and order must be exactly ('lidar_grid', 'state_vec')">zero_row = {'current_policy': {'state_vec': tensor([[0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+     ...,
+        [-0.1500,  0.1500,  0.0000],
+        [ 0.1500, -0.1500,  0.0000],
+        [-0.1500, -0.1500,  0.0000]]), ...}
+
+    def test_rejects_command_switch_one_observation_too_early(zero_row):
+        zero_row['current_policy']['state_vec'][:, 45:48] = zero_row['following']
+        with pytest.raises(RuntimeError, match='obs_t current command'):
+&gt;           validate_transition_step(**zero_row)
+
+tests/training_workloads/test_finite_transition_diagnostic.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/transition_diagnostic.py:27: in validate_transition_step
+    validate_policy(policy)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+policy = {'state_vec': tensor([[0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  .....[0., 0., 0.,  ..., 0., 0., 0.],
+          [0., 0., 0.,  ..., 0., 0., 0.],
+          [0., 0., 0.,  ..., 0., 0., 0.]]]])}
+
+    def validate_policy(policy: Mapping[str, torch.Tensor]) -&gt; tuple[torch.Tensor, torch.Tensor]:
+        """Require the ordered exact M4 policy pair, float32, one device, and finite values."""
+        if not isinstance(policy, Mapping):
+            raise TypeError("policy must be a mapping containing only the exact M4 pair")
+        if tuple(policy.keys()) != ACTOR_KEYS:
+&gt;           raise ValueError(f"policy keys and order must be exactly {ACTOR_KEYS}")
+E           ValueError: policy keys and order must be exactly ('lidar_grid', 'state_vec')
+
+isaaclab-training/instinctlab/training/networks.py:83: ValueError</failure></testcase><testcase classname="tests.training_workloads.test_finite_transition_diagnostic" name="test_rejects_next_command_one_observation_too_late" time="0.001"><failure message="ValueError: policy keys and order must be exactly ('lidar_grid', 'state_vec')">zero_row = {'current_policy': {'state_vec': tensor([[0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+     ...,
+        [-0.1500,  0.1500,  0.0000],
+        [ 0.1500, -0.1500,  0.0000],
+        [-0.1500, -0.1500,  0.0000]]), ...}
+
+    def test_rejects_next_command_one_observation_too_late(zero_row):
+        zero_row['next_policy']['state_vec'][:, 45:48] = 0
+        with pytest.raises(RuntimeError, match='obs_t\+1 command'):
+&gt;           validate_transition_step(**zero_row)
+
+tests/training_workloads/test_finite_transition_diagnostic.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/transition_diagnostic.py:27: in validate_transition_step
+    validate_policy(policy)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+policy = {'state_vec': tensor([[0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  .....[0., 0., 0.,  ..., 0., 0., 0.],
+          [0., 0., 0.,  ..., 0., 0., 0.],
+          [0., 0., 0.,  ..., 0., 0., 0.]]]])}
+
+    def validate_policy(policy: Mapping[str, torch.Tensor]) -&gt; tuple[torch.Tensor, torch.Tensor]:
+        """Require the ordered exact M4 policy pair, float32, one device, and finite values."""
+        if not isinstance(policy, Mapping):
+            raise TypeError("policy must be a mapping containing only the exact M4 pair")
+        if tuple(policy.keys()) != ACTOR_KEYS:
+&gt;           raise ValueError(f"policy keys and order must be exactly {ACTOR_KEYS}")
+E           ValueError: policy keys and order must be exactly ('lidar_grid', 'state_vec')
+
+isaaclab-training/instinctlab/training/networks.py:83: ValueError</failure></testcase><testcase classname="tests.training_workloads.test_finite_transition_diagnostic" name="test_rejects_wrong_vertical_correction_semantics" time="0.001"><failure message="ValueError: policy keys and order must be exactly ('lidar_grid', 'state_vec')">zero_row = {'current_policy': {'state_vec': tensor([[0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+     ...,
+        [-0.1500,  0.1500,  0.0000],
+        [ 0.1500, -0.1500,  0.0000],
+        [-0.1500, -0.1500,  0.0000]]), ...}
+
+    def test_rejects_wrong_vertical_correction_semantics(zero_row):
+        zero_row['pre_reset']['control']['v_corr_b'][:, 2] = .1
+        with pytest.raises(RuntimeError, match='actual xyz decoder'):
+&gt;           validate_transition_step(**zero_row)
+
+tests/training_workloads/test_finite_transition_diagnostic.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/transition_diagnostic.py:27: in validate_transition_step
+    validate_policy(policy)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+policy = {'state_vec': tensor([[0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  .....[0., 0., 0.,  ..., 0., 0., 0.],
+          [0., 0., 0.,  ..., 0., 0., 0.],
+          [0., 0., 0.,  ..., 0., 0., 0.]]]])}
+
+    def validate_policy(policy: Mapping[str, torch.Tensor]) -&gt; tuple[torch.Tensor, torch.Tensor]:
+        """Require the ordered exact M4 policy pair, float32, one device, and finite values."""
+        if not isinstance(policy, Mapping):
+            raise TypeError("policy must be a mapping containing only the exact M4 pair")
+        if tuple(policy.keys()) != ACTOR_KEYS:
+&gt;           raise ValueError(f"policy keys and order must be exactly {ACTOR_KEYS}")
+E           ValueError: policy keys and order must be exactly ('lidar_grid', 'state_vec')
+
+isaaclab-training/instinctlab/training/networks.py:83: ValueError</failure></testcase><testcase classname="tests.training_workloads.test_finite_transition_diagnostic" name="test_nonzero_reference_cannot_remain_active" time="0.001"><failure message="ValueError: policy keys and order must be exactly ('lidar_grid', 'state_vec')">zero_row = {'current_policy': {'state_vec': tensor([[0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+     ...,
+        [-0.1500,  0.1500,  0.0000],
+        [ 0.1500, -0.1500,  0.0000],
+        [-0.1500, -0.1500,  0.0000]]), ...}
+
+    def test_nonzero_reference_cannot_remain_active(zero_row):
+        commands = transition_commands()
+        metrics = zero_row['pre_reset']['control']['anchor_metrics']
+        metrics['active'][:] = 1
+        with pytest.raises(RuntimeError, match='reference remains active'):
+&gt;           validate_transition_step(**row(commands[16], commands[17], metrics))
+
+tests/training_workloads/test_finite_transition_diagnostic.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/transition_diagnostic.py:27: in validate_transition_step
+    validate_policy(policy)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+policy = {'state_vec': tensor([[0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  .....[0., 0., 0.,  ..., 0., 0., 0.],
+          [0., 0., 0.,  ..., 0., 0., 0.],
+          [0., 0., 0.,  ..., 0., 0., 0.]]]])}
+
+    def validate_policy(policy: Mapping[str, torch.Tensor]) -&gt; tuple[torch.Tensor, torch.Tensor]:
+        """Require the ordered exact M4 policy pair, float32, one device, and finite values."""
+        if not isinstance(policy, Mapping):
+            raise TypeError("policy must be a mapping containing only the exact M4 pair")
+        if tuple(policy.keys()) != ACTOR_KEYS:
+&gt;           raise ValueError(f"policy keys and order must be exactly {ACTOR_KEYS}")
+E           ValueError: policy keys and order must be exactly ('lidar_grid', 'state_vec')
+
+isaaclab-training/instinctlab/training/networks.py:83: ValueError</failure></testcase></testsuite></testsuites>

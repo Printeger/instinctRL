@@ -107,3 +107,5 @@ full20160 reservation retained; no owned survivors. Goal IN_PROGRESS, training0.
 
 
 最新H256：R0原入口J-98c4c0af48d17d1a在App前原GPU门槛4/10/16%>5失败，FINAL0/无训练数据，正常ACK/settle/2postrun并保留启动/init/output收费。无live。下一R1原准确A-56b453060fda4459退避≥60秒已实录，提交当前状态/输入并push后单次release。R0 fresh RECOVERY1packet1e38a94b.../expectedAUTHb00a62ee...独立Role11预审待回，只能R1终止/正常清理后发行。D010 stage12slots/112GiB，其余资源和master/confirmation/formal保护不变；当前未解决事件1/3，下一R1为attempt2/3，若仍拒第三次至少180秒且不第四次。
+
+当前唯一LIVE：H256R1 J-a4a37087b4d84996，准确A-56b453060fda4459，input44bc785已push后release；原coexistence2/1/2%及真实first512gate PASS，65updates lastobserved。仅poll此handle，终止+正常ACK后settle/postrun/CPU。R0freshRECOVERY1独立Role11条件PASS，实际AUTH仍未发行，须R1终态/清理/结算后才能issue；不重开旧失败。main-only G6/G7核心CPU6+6PASS，尚无真实入口或完成证据。

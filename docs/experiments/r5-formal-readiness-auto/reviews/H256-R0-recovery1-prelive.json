@@ -1,0 +1,66 @@
+{
+  "verdict": "PASS",
+  "scope": "准确H256 R0 fresh recovery1身份与资源恢复的条件性预审；不重审方法、不授予即时release或科学资格。",
+  "identities": {
+    "input_commit": "44bc785004cc4d76ff7d21ccc2703e2c046529d8",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "packet_sha256": "1e38a94b7001fb397f06bd91e69a39a8337f846040990c31c15e5fafb01797f6",
+    "launch_sha256": "1e38a94b7001fb397f06bd91e69a39a8337f846040990c31c15e5fafb01797f6",
+    "expected_training_AUTH_sha256": {
+      "R0": "b00a62ee830d56d58ee17d75d4b548fc4220e9615eb65943c0b8027182a1fdfa"
+    },
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "parent_scientific_experiment": "R5-H256-DEV-01",
+    "recovery_case_id": "R5-H256-DEV-01-R0-RECOVERY1"
+  },
+  "must_fix": [],
+  "checks": [
+    {
+      "contract": "原R0启动前失败及证据完整性",
+      "result": "PASS",
+      "evidence": "独立验证27对象、33497原始字节及归档bytes/SHA，完整job/attempt枚举匹配。原coexistence4/10/16%超过未改5%；collector FINAL0，无动作、reset、training、update或checkpoint写入。初始化是已收费预留，实际NOT_REACHED。"
+    },
+    {
+      "contract": "准确清理与审计",
+      "result": "PASS",
+      "evidence": "正常ACK、quiescent、至少两次稳定空扫描，准确owner/guard/child/discovered均不存在；两个实际postrun receipt通过。后续GPU10%审计保留，不冒充未来资源PASS。"
+    },
+    {
+      "contract": "fresh身份且科学条件不变",
+      "result": "PASS",
+      "evidence": "新packet、预期训练AUTH字节及全部现有pins匹配。source/config/card/master、profile、seed、节点及预算与原H256 R0相同，仅改变执行身份；新attempt/AUTH不存在。未来评价路径指向本fresh训练u192/u256，SHA仍null。"
+    },
+    {
+      "contract": "D010与累计资源",
+      "result": "PASS_CONDITIONAL",
+      "evidence": "阶段start/init11→12、output96→112GiB；训练/评价/update/write/time额度和master保护预留不变。旧失败start/init/output保留，FINAL零只结清未用逻辑额度，没有继承旧结果或免费重试。"
+    }
+  ],
+  "conditions": [
+    "fresh R0 actual AUTH的发行和release均须等待R1实际terminal、normal ACK、owned quiescence及settlement；不得与R1重叠或提前绕过登记顺序。",
+    "按原计划R1下一入口至少60秒退避；如同一事件仍未解决，第三次至少180秒且事件最多3次，第三次仍失败则STOP持续资源阻塞。",
+    "R1资源PASS仅重建曾观察的可用性，后续R0仍须完整原coexistence，不增加探测、不杀无关进程、不改5%门槛。",
+    "绑定本准确review、packet及预期AUTH SHA，由受托Commander审批；实际输入提交/tag/正常push并核对remote身份后按新spec只提交一次。",
+    "继续stage/master、confirmation/formal保护预留、磁盘、STOP和全部previous-quiescence检查；保留所有原收费和失败。",
+    "原真实首次512 gate仍先于两类optimizer；未来评价须接受本fresh训练的真实checkpoint来源/SHA，不能发布null绑定模板。",
+    "本PASS不构成实际H256结果、稳定性、确认seed资格或READY结论。"
+  ],
+  "non_blocking": [
+    {
+      "id": "RESOURCE-CAUSE",
+      "assessment": "失败是资源准入拒绝，不是学习负结果；compute列表仅见GNOME不能确定GPU利用率来源。"
+    },
+    {
+      "id": "MASTER-DELEGATION",
+      "assessment": "该有原因、新身份、限次恢复及D010在新master委托内，可由受托Commander处理，无需逐入口再请求一般用户许可。"
+    }
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0
+  }
+}
