@@ -7,13 +7,15 @@
 
 ## 当前 Goal（2026-10-14 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** H128实际配对训练/评价已独立Role10接受：R1u96原Z0/32、u128原Z32/32且8子组各4/4；u128最大速度.017075m/s、漂移.232706m、高度偏差.163136m。未满足预定双节点稳定性G3，不称准入。R0两节点均0/32；两组各128updates/65536train，init和首512输入/动作/Beta/logp逐位一致，真实firstgate均先于两类optimizer。
+**IN_PROGRESS，非READY。** 目标 READY_FOR_FORMAL_R5_TRAINING，按G1–G9验收，不提交正式完整训练。H256两组真实训练各256updates/131072train已完成，原FAILED/-9、INCOMPLETE及全逻辑预留保留；正常ownedACK、结算与各2postrun已完成。R1训练Role12独立接受；fresh R0训练和真实init/first512配对比较已保存，Role13独立审核中。
 
-最后R1准确资源恢复通过原5/4/3%门槛并完成12800eval；7entries全终态、正常ownedACK/无残留、结算/各2postrun。4真实数据作业原FAILED/-9和INCOMPLETE/null全逻辑/输出预留保留，3beforeApp拒绝保留FINAL0及启动/init/output收费。错误训练episode近墙标签另有实际root审计，不改变原Z分母或改写原件。旧Goal/历史/账本保留。
+当前唯一live为R1原Z评价 `J-3e112266540d3422`，准确许可 `A-852b7e582eb562fc`，冻结输入提交/tag/正常push后串行release。源码a13c、config73aeb4ff、RO快照及方法不变；预先登记u192/u256、主节点256，完整原Z全部门槛和分母不变。R0评价待实际checkpoint独立接受后准确发行。若R1两节点任一失败，不延长超256，转测量参考；均通过后仍须冻结并做两个未见训练seed确认及G6/G7/G8/G9。
 
-基于最后节点首次全通过，D009有限共同256purehover和新prospective192/256已Role10准确预审PASS，仍共享a13c只读源码/config73aeb4ff、actor/reward边界不变，w0/.05、LR1e-4/3e-4、anchor4、训练seed20260908。准确AUTH R0 A-4a7c68910d003e1a、R1 A-56b453060fda4459已签发，无live；提交/tag/push后单GPU串行release。若新两节点任一失败不再延长超256，转测量参考。Master不变，确认/正式首段资源仍保护，不启动正式完整训练。
+H128已独立接受：R1u96失败0/32、u128原Z32/32且8子组各4/4，u128最大速度.017075、漂移.232706、高度.163136。单节点不满足G3；R0两个节点均0/32。原失败入口与资源收费完整保留，不重跑已完成数据。
 
-唯一续接与预算：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[新总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[真实节点与入口](experiments/r5-formal-readiness-auto/EXPERIMENT_RESULTS.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。成功仍要求G1–G9，含冻结后两个未调参训练seed、有限非零衔接、同设备checkpoint复算和准确正式启动包/最终独立审核。
+D010 stage在原master内扩展，确认/正式首段保护资源不变；精确实际与保守账以总账为准。G6/G7新CPU实现47项回归通过，尚无新source/config/tool准确预审与live，不计完成；正式入口和包仍待实现验证。当前／历史receipt不混同。
+
+唯一续接与预算：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[新总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[真实结果](experiments/r5-formal-readiness-auto/EXPERIMENT_RESULTS.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 
 ## 已完成 Goal（2026-10-14 零命令残差单变量）
 

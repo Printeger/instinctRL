@@ -34,19 +34,19 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 10,
-    "simulator_initialization_reservations": 10,
+    "live_starts": 11,
+    "simulator_initialization_reservations": 11,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 3200.1841547240037,
-    "wall_seconds_including_cleanup": 3209.299113272922,
-    "output_peak_and_reservations_bytes": 9796808169
+    "allocated_gpu_seconds": 3296.3862655349076,
+    "wall_seconds_including_cleanup": 3306.659427626757,
+    "output_peak_and_reservations_bytes": 9808707067
   },
   "observed": {
     "training_transitions": 393216,
-    "nontraining_transitions": 25600,
+    "nontraining_transitions": 38400,
     "optimizer_updates": 768,
     "training_checkpoint_writes": 40,
     "actor_optimizer_steps": 6144,
@@ -426,6 +426,42 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 2594330276,
         "inventory": "experiments/R5-H256-DEV-01-R0-RECOVERY1/live/R0-research-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-H256-DEV-01-R1-RESEARCH-EVALUATION-a13c5a459d47",
+        "job_id": "J-3e112266540d3422",
+        "experiment_id": "R5-H256-DEV-01",
+        "group": "R1",
+        "mode": "research-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 11898898,
+        "inventory": "experiments/R5-H256-DEV-01/live/R1-research-evaluation/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -566,7 +602,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Actual H256 fresh R0 training/firstgate/checkpoints plus real pairinit/first512 comparison; exact R0 originalZ eval binding, no G3/READY. Read only.",
-      "status": "REQUESTED"
+      "status": "PASS_H256_R0_ACTUAL_TRAINING_PAIRINIT_CHECKPOINTS",
+      "evidence": "reviews/H256-R0-actual-training.json",
+      "sha256": "7eb278f867fa560b7986349f5b4ed571bee82ff4de3acfc150311a6798124940"
     }
   ],
   "decisions": [
