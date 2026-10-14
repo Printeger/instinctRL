@@ -1,0 +1,34 @@
+{
+  "decision": "D008",
+  "authority": "Existing explicitmaster delegatedCoordinator/Commander; no newuserapprovalneeded",
+  "reason": "Two R1beforeAppresourcefailures, boundedthird/lastattempt after180s. No scientificrepeat/newtraining.",
+  "old_stage": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 25600,
+    "live_starts": 6,
+    "simulator_initialization_reservations": 6,
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 18,
+    "allocated_gpu_seconds": 18060,
+    "wall_seconds_including_cleanup": 18060,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "new_stage": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 25600,
+    "live_starts": 7,
+    "simulator_initialization_reservations": 7,
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 18,
+    "allocated_gpu_seconds": 18060,
+    "wall_seconds_including_cleanup": 18060,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "changed_only": [
+    "live_starts6to7",
+    "simulator_initialization_reservations6to7"
+  ],
+  "confirmation_and_formal_protected": true,
+  "master_caps_unchanged": true,
+  "oldcharges_unchanged": true
+}

@@ -50,6 +50,16 @@ def test_fresh_recovery_keeps_actual_provenance(pair):
     assert result['groups']['R0']['binding']['job_id'] == 'R0'
 
 
+def test_evaluation_can_use_its_own_fresh_identity_without_relabeling_training(pair):
+    base, directories = pair
+    fresh = base.parent / 'fresh-evaluation'
+    fresh.mkdir()
+    (directories['R1'] / 'R1-evaluation-analysis.json').rename(fresh / 'R1-evaluation-analysis.json')
+    result = analysis.paired_results(base, directories, {**directories, 'R1': fresh})
+    assert result['training_analyses']['R1'].startswith(str(directories['R1']))
+    assert result['evaluation_analyses']['R1'].startswith(str(fresh))
+
+
 def test_rejects_eval_from_original_failed_or_other_training(pair):
     base, directories = pair
     mutate(directories, 'R0', 'evaluation',

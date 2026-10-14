@@ -1,0 +1,40 @@
+{
+  "case_id": "R5-H128-DEV-01-R1-Z-RECOVERY2",
+  "status": "PROPOSED_NOT_ISSUED",
+  "scientific_parent": "R5-H128-DEV-01",
+  "changed": "Only newevaluation attempt/spec/AUTHidentity. Actualtrained R1checkpoint/source/config/card/seed/nodes/budget unchanged.",
+  "R1_evaluation_failures_counted": [
+    "J-6e4b5482bf1461fe",
+    "J-b3d56961a02c8d9b"
+  ],
+  "latest_failure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/results/prelaunch/prelaunch_resource_gate_failure.json",
+    "sha256": "119ef1832e5fb8ccaf5c4690d1ffebc0aaedeee7305f5b7f84493628cbfedd6d",
+    "samples": [
+      1,
+      1,
+      6
+    ],
+    "formal_counter": "FINAL0",
+    "initialization_observed": "NOT_REACHED",
+    "owned_cleanup": "NORMAL_ACK2STABLE_NO_SURVIVORS",
+    "postrun": 2,
+    "start_init_output_retained": true
+  },
+  "conservative_recovery_limit": {
+    "next_R1_evaluation_attempt": 3,
+    "maximum": 3,
+    "minimum_backoff_since_latest_failed_gate_seconds": 180,
+    "failure_end_monotonic_ns": 1934589724163951,
+    "third_failure_action": "STOP_PERSISTENT_RESOURCE_COEXISTENCE; nofourthattempt/orthresholdrelaxation",
+    "counting_note": "Count both R1refusals despite intervening R0gatePASS/fullrun; do not use interveningavailability to obtain unboundedR1retries."
+  },
+  "release_conditions": [
+    "Independentexactreview and actualR1checkpointacceptance",
+    "NoLIVE/STOP/allownedquiescent",
+    "Master/stage/confirmation/formalprotected checks",
+    "Atleast180srecordedbackoff",
+    "Inputscommit/tag/push thenonesubmit",
+    "Original5percent/sixqueries unchanged, noextraGPUprobes/nounrelatedkills"
+  ]
+}

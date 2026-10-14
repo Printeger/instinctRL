@@ -103,3 +103,5 @@ full20160 reservation retained; no owned survivors. Goal IN_PROGRESS, training0.
 最新实际状态：R1原Z入口J-6e4b5482bf1461fe在App前因1/1/9%>5失败，FINAL0/全部数据0、正常ACK/结算/2postrun完成，start/init/output保留。无live；新资源事件1/3，按60/180秒退避，不放宽门槛。fresh R1-Z-RECOVERY1准确提案已准备未发行；R0实际训练独立审核待回。
 
 最新：R0原Z96/128完整12800样本已复算，两个节点均0/32；正常清理、FAILED/-9和INCOMPLETE12800预留保留。原coexistence3/2/2%PASS恢复观察到的可用性。无live，R1 Z RECOVERY1经Role8及真实checkpoint接受已准确授权A-8376604127b9a588，提交/tag/push后一次release，不继承原失败身份。
+
+最新：R1 Z RECOVERY1 J-b3d56961a02c8d9b再次beforeApp占用拒绝1/1/6%>5，FINAL0、正常ACK/结算/2postrun；无轨迹，不是策略负结果。无live。两次R1拒绝保守合并计2/3，D008只扩stage slots6→7，准备最后RECOVERY2，须180秒退避及Role9准确预审；不再第四次，master和未来预留不变。

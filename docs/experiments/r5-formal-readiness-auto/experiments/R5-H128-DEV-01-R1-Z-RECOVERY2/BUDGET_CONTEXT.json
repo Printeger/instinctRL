@@ -1,0 +1,68 @@
+{
+  "stage": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 25600,
+    "live_starts": 7,
+    "simulator_initialization_reservations": 7,
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 18,
+    "allocated_gpu_seconds": 18060,
+    "wall_seconds_including_cleanup": 18060,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "master_caps": {
+    "training_transitions": 2097152,
+    "nontraining_transitions": 1048576,
+    "live_starts": 64,
+    "simulator_initialization_reservations": 64,
+    "optimizer_updates": 4096,
+    "actor_optimizer_steps": 65536,
+    "critic_optimizer_steps": 65536,
+    "training_checkpoint_writes": 256,
+    "allocated_gpu_seconds": 86400,
+    "wall_seconds_including_cleanup": 86400,
+    "output_peak_and_reservations_bytes": 519680897024,
+    "parallel_GPU_jobs": 1,
+    "paid_cloud_resources": 0
+  },
+  "protected_confirmation": {
+    "training_transitions": 524288,
+    "nontraining_transitions": 128000,
+    "live_starts": 12,
+    "simulator_initialization_reservations": 12,
+    "optimizer_updates": 1024,
+    "actor_optimizer_steps": 8192,
+    "critic_optimizer_steps": 8192,
+    "training_checkpoint_writes": 32,
+    "allocated_gpu_seconds": 21680,
+    "wall_seconds_including_cleanup": 21680,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "protected_formal": {
+    "training_transitions": 262144,
+    "nontraining_transitions": 329600,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 512,
+    "actor_optimizer_steps": 4096,
+    "critic_optimizer_steps": 4096,
+    "training_checkpoint_writes": 10,
+    "allocated_gpu_seconds": 21680,
+    "wall_seconds_including_cleanup": 21680,
+    "output_peak_and_reservations_bytes": 34359738368
+  },
+  "used": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "live_starts": 6,
+    "simulator_initialization_reservations": 6,
+    "optimizer_updates": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0,
+    "training_checkpoint_writes": 0,
+    "allocated_gpu_seconds": 1184.1603402600158,
+    "wall_seconds_including_cleanup": 1189.191172999097,
+    "output_peak_and_reservations_bytes": 4594313117
+  },
+  "current_live": null
+}
