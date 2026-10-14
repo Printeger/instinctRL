@@ -90,3 +90,21 @@ def test_rejects_missing_predefined_node(pair):
     mutate(directories, 'R1', 'evaluation', lambda v: v['nodes'].pop('96'))
     with pytest.raises(AssertionError):
         analysis.paired_results(base, directories)
+
+
+def test_mean_prior_cannot_inherit_old_reward_difference_exemption(pair, monkeypatch):
+    base, directories = pair
+    path = base / 'EXPERIMENT_CARD.json'
+    card = json.loads(path.read_text())
+    for group in ['R0', 'R1']:
+        card['profiles'][group]['mean_prior_contract'] = {'path': 'fixture', 'sha256': 'new-method'}
+    path.write_text(json.dumps(card))
+    for group in ['R0', 'R1']:
+        for kind in ['training', 'evaluation']:
+            mutate(directories, group, kind, lambda v: v['actual_parameters'].update(
+                mean_prior_contract={'path': 'fixture', 'sha256': 'new-method'},
+                experiment_card={'path': str(path), 'sha256': analysis.digest(path)}))
+    monkeypatch.setattr(analysis, 'compare_inputs', lambda *a, **kw: {
+        'advantages': {'bit_exact_equal': False}, 'returns': {'bit_exact_equal': True}})
+    with pytest.raises(AssertionError, match='same-reward mean-prior pair'):
+        analysis.paired_results(base, directories)

@@ -87,6 +87,10 @@ def paired_results(D, directories, evaluation_directories=None):
   assert list(e['nodes'])==[str(u) for u in card['predefined_late_nodes']]
  assert trains['R0']['binding']['job_id']!=trains['R1']['binding']['job_id']
  compare=compare_inputs(trains,method_binding_key='research_effective_method')
+ if 'mean_prior_contract' in card['profiles']['R1']:
+  for field in ['advantages','returns']:
+   assert compare[field]['bit_exact_equal'], 'same-reward mean-prior pair requires equal first-rollout '+field
+   compare[field]['scope']='Same reward/init/firstrollout before auxiliary optimizer effect: bit-exact equality required; no reward-difference exemption.'
  return {'status':'COMPLETE_ACTUAL_PAIR_PENDING_INDEPENDENT_SCIENCE','experiment_id':card['experiment_id'],'source_commit':source,'first_actual_rollout_comparison':compare,'training_analyses':{g:str(directories[g]/(g+'-training-analysis.json')) for g in trains},'evaluation_analyses':{g:str(evaluation_directories[g]/(g+'-evaluation-analysis.json')) for g in trains},'groups':ev,'candidate_both_predefined_nodes_pass':ev['R1']['all_original_gates_pass'],'primary_node':card['primary_node'],'scientific_scope':'One developmentseed; notREADY beforecandidatefreeze/twonewtrainingseeds/nonzerotransition/formalpackage/finalreview','old_C1_reference':'Historicalonly; same-versionR0 isstrictcontemporaneousreference','optimizer_calls':0}
 
 def main():
