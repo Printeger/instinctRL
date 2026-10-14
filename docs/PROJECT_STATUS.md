@@ -7,9 +7,9 @@
 
 ## 当前 Goal（2026-10-15 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 无live。CONFIRM02原入口App前GPU1/1/9%>5%拒绝，formalFINAL0，原start/init/output/GPUwall保留，normalACK/settle/2postrun完成；资源事件1/3，已实测CPU准备退避至少60秒。Role27已接受CONFIRM01完整256训练与真实u256，准确主256原Z许可A-b250992a56a6f5ae已发行未提交，准备提交/tag/push后单次release；无额外GPU探测。固定seed18的fresh RECOVERY1/source617/method与预算不变，准确packet94075439...待Role28预审。D017仅加1start/init/8GiB，master/formal保护与旧收费不改；两新seed原Z/G4仍待，formal0。
+**IN_PROGRESS，非READY。** 无live。新方法开发G2/G3已Role24独立接受（原Z192/256均32/32及各子组4/4）。首个新seed17已Role27接受完整训练/u256，实际主256原Z32/32、maxdrift.019358605m、maxspeed.010489066m/s、maxheight.047899961m，Role28科学独审中。第二新seed18原入口App前GPU1/1/9%>5%拒绝，正式FINAL0、0训练/rollout/gate/optimizer/writes，normalACK/settle/2postrun完成，原start/init/output/time保留。146.38秒有界退避后，01评价原共存4/1/1% PASS，事件实测恢复。准确同seed18 RECOVERY1 packet94075439...及D017（仅+1start/init/+8GiB）待Role28预审；全部master/保护额/旧收费不变。G4/G6G7/final包仍待；formal训练0。
 
-Role24接受新方法开发u192/u256原Z均32/32、全部子组4/4；旧w.05-only两个冻结确认失败保留。唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
+冻结确认seed17/18必须均原主256通过，旧失败15/16回归不计G4；旧w.05-only两个确认失败完整保留。唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 
 ## 已完成 Goal（2026-10-14 零命令残差单变量）
 
