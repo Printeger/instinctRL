@@ -1,0 +1,71 @@
+{
+  "verdict": "PASS",
+  "scope": "准确fresh R0 recovery1身份与有界资源恢复的条件性预审；不是即时release、学习科学结果或Goal资格验收。",
+  "identities": {
+    "input_commit": "289bc94e95f90512cb0ed2284b84ba0db6dc912c",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "launch_sha256": "3c435508e44c90687df0f62e33b78e84868fd0b570e4f754472174716a692646",
+    "expected_training_AUTH_sha256": {
+      "R0": "48c5405ff7a46ae5be09c270069b03f51268dff73e2c0f5aa2420756ea74bda8"
+    },
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "master_authority_sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33",
+    "adapter_sha256": "1525ec2442e17c502b9b08a8732aad98bad22508390957c3d7b59f3d65f9ec99",
+    "parent_experiment_id": "R5-H128-DEV-01",
+    "recovery_case_id": "R5-H128-DEV-01-R0-RECOVERY1"
+  },
+  "must_fix": [],
+  "checks": [
+    {
+      "contract": "旧R0启动前失败的真实性",
+      "result": "PASS",
+      "evidence": "独立核验27个原始对象、33450原始字节及归档SHA/bytes，完整枚举job和整个attempt。原coexistence样本10/11/2%，10.026292218秒，超过未改5%门槛。collector FINAL0；动作、训练、更新、reset、checkpoint均为0。初始化预留收费1不是实际App创建证明。"
+    },
+    {
+      "contract": "失败清理与原审计",
+      "result": "PASS",
+      "evidence": "正常ACK至少两次稳定空扫描、无survivors，准确owner/guard/child及discovered身份均不存在。两个实际postrun receipt为GPU4%及仅既有GNOME164MiB；不能据此作下一入口coexistence保证。"
+    },
+    {
+      "contract": "fresh身份而非重开或改名旧结果",
+      "result": "PASS",
+      "evidence": "新attempt/spec/AUTH身份唯一，实际新attempt和AUTH不存在。科学profile、card、master、source、seed、训练预算与节点逐字段保持原R0；formal order保持parent科学标签，执行spec及attempt明确标记RECOVERY1。"
+    },
+    {
+      "contract": "精确执行pins及未来评价边界",
+      "result": "PASS_CONDITIONAL",
+      "evidence": "执行pins与预期AUTH字节哈希匹配；未来u96/u128路径指向新R0训练attempt，SHA为空，不指向旧失败入口或R1。评价不能发行直至新R0真实训练与checkpoint独立接受。"
+    },
+    {
+      "contract": "新master内的D005恢复额度",
+      "result": "PASS_DESIGN",
+      "evidence": "阶段start/init4→6、wall/GPU10840→18060，其他训练/评价/update/write额度不变；master与confirmation/formal保护预留保留。旧失败start/init/output照常收费，FINAL零仅结清实际未用逻辑资源。"
+    }
+  ],
+  "release_conditions": [
+    "R1仍LIVE时禁止release新R0；必须先R1实际terminal、准确normal ACK、owned quiescence及结算，再重新运行accepted adapter的idle/admission检查。",
+    "按RECOVERY_PREREGISTRATION和D005执行有界退避；若属同一未解决事件，至少距失败180秒，并累计该事件原始prelaunch尝试次数，最多3次。R1 PASS只说明曾重新具备资源条件，不豁免下一次gate。",
+    "将本次准确accepted review及新packet/AUTH SHA绑定至委托Commander审批，实际输入提交并正常push、remote身份核对后，按新spec只提交一次。",
+    "继续原STOP、5% coexistence、磁盘、stage/master及未来保护预留检查；无额外探测、无无关进程终止、无阈值放宽。",
+    "旧失败job保持原身份和失败证据，不resubmit、不resume、不当作学习负结果；所有新旧实际收费和保守输出预留保留。",
+    "真实首次512 gate仍须先于两类optimizer；未来评价仍须准确checkpoint接受，不继承本次预审为科学资格。"
+  ],
+  "non_blocking": [
+    {
+      "id": "RESOURCE-CAUSE",
+      "assessment": "利用率超过门槛是直接失败条件；仅看到GNOME compute记录不能确定其为利用率来源，不构成实现修复依据。"
+    },
+    {
+      "id": "MASTER-DELEGATION",
+      "assessment": "本次恢复在新用户明确master委托和D005内，可由受托Commander处理，不需要逐入口再询问用户一般许可。"
+    }
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0
+  }
+}

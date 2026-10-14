@@ -13,3 +13,5 @@ Next: commit/tag/push exactauthorizedinputpack; tools/r5_formal_commander.py sub
 D005extendsstage start/init4→6/time10840→18060 withinmaster, onlyforboundedresource recovery; train/eval/update/write capsunchanged. Latestknownnoownedall16jobs. To completeR0 later requiresnewidentity+exactreviewedAUTH, notresubmission. GeneralmissingR0data isUNKNOWN, notscientificnegative. NoexternalSTOP.
 
 CurrentLIVE handle J-d430a5a7a8ec6ba1 (R1 firstresearch128), originalcoexistencePASS4/1/4%, noextraGPUqueries. Poll exacthandle untilterminal, gate/data/normalACKthen settle/postrun. OriginalR0failednothing; freshR0RECOVERY1 exactproposalpreparedinexperiments/R5-H128-DEV-01-R0-RECOVERY1, no actualAUTH/release. Role5boundedidentityreview requested, canreadwhileR1ownsGPU.
+
+Role5PASSconditionalfreshR0recovery1 precisepacket3c435508.../expectedAUTH48c5405...; no actualAUTHissuedwhileR1live. Reviewarchivedreviews/H128-R0-recovery1-prelive.json. ActualR1first512gatePASS beforebothoptimizers,21updatesobservedatlastsnapshot; currenthandleconfirmedRUNNING, pollsame.
