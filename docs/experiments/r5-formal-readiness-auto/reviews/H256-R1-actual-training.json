@@ -1,0 +1,117 @@
+{
+  "verdict": "PASS",
+  "scope": "接受H256 R1完整实际训练证据及u192/u256 checkpoint身份；条件性原Z评价准入，不授予G3、配对结果或READY。",
+  "identities": {
+    "evidence_commit": "a811216a78cbc33138ba27f7813e3da27d34d773",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "packet_sha256": "cae46f1b17f83f990cf7596f3850e8fc8889fe5773abbe4100f3ab34df45d46d",
+    "method_sha256": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+    "effective_method_sha256": "9d8fa7eaf16a4a83d4d4c7794dfd595e3daca82a684f9e25652b8606638d29c0",
+    "experiment_card_sha256": "07ce87bbf6a0629937226ba23be0c69e989944366063586575b74d4d5565d4f9",
+    "job_id": "J-a4a37087b4d84996",
+    "authorization_sha256": "aff79cb8aa64d1821d5fdbc7c62cff317dccbe89a5ebdbd2b90b4e39790a11ae",
+    "actual_training_spec_sha256": "b43344665224a96917dba36e31ca0852eb7bbe0283474edd7f22c8d5b64da03a"
+  },
+  "must_fix": [],
+  "checks": [
+    {
+      "contract": "完整原件与准确执行身份",
+      "result": "PASS",
+      "evidence": "独立验证69对象、2574788289原始字节及21525190归档字节的bytes/SHA，完整job和整个attempt枚举匹配。实际request/spec/AUTH、执行pins和source/config/profile/card对应。"
+    },
+    {
+      "contract": "完整256更新与实际纯悬停",
+      "result": "PASS",
+      "evidence": "独立重算实际训练分析，与保存结果逐字段一致：256连续updates、2048minibatches、4096×32实际返回样本、11个checkpoint。全部131072样本指令为零，研究pure-hover profile实际开启，无自动mixed课程。"
+    },
+    {
+      "contract": "真实方法、seed与奖励",
+      "result": "PASS",
+      "evidence": "实际w=.05、anchor4、actorLR1e-4/critic3e-4、seed20260908、research-pure-hover curriculum和有效方法SHA匹配。全部131072样本奖励公式通过原容差，最大误差7.893831299732312e-8。"
+    },
+    {
+      "contract": "首次真实512 gate先于两类optimizer",
+      "result": "PASS",
+      "evidence": "实际同设备gate通过。独立核验更新前probe logp与采样old logp逐位相等、ratio全1，八个probe的action/索引对应实际捕获rollout；准确已审源码保证gate先于trainer.update及两类optimizer。"
+    },
+    {
+      "contract": "实际checkpoint来源与计数",
+      "result": "PASS",
+      "evidence": "独立CPU读取全部11个checkpoint，核对真实seed、PPO配置、source/config、方法、curriculum和update/transition/policy-step/Adam步数；u192/u256正是预定后段节点。"
+    },
+    {
+      "contract": "清理、输出和保守计账",
+      "result": "PASS_WITH_DISCLOSED_PROCESS_FAILURE",
+      "evidence": "实际原件加归档2596313479字节低于8GiB预留。receipt FAILED/-9、raw PASS_PENDING_CLOSE、collector INCOMPLETE/null；正常ACK至少两次稳定空扫描、无timed_out/survivors，准确owner/guard/child及所有记录descendants不存在。两个实际postrun审计已核验。"
+    }
+  ],
+  "accepted_observed_training": {
+    "updates": 256,
+    "training_transitions": 131072,
+    "policy_steps": 4096,
+    "actor_adam_steps": 2048,
+    "critic_adam_steps": 2048,
+    "checkpoint_writes": 11,
+    "automatic_reset_lanes": 128,
+    "wall_seconds": 955.5180876809172,
+    "allocated_gpu_seconds": 954.4757000738755
+  },
+  "accepted_evaluation_checkpoints": [
+    {
+      "update": 192,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u192.pt",
+      "sha256": "e8c436bc3b6dfd7f6fae5081a02e8e29df2c99ffbf701876c8dc5ffe59b52d62",
+      "transition": 98304,
+      "global_policy_step": 3072,
+      "actor_and_critic_adam_steps_each": 1536
+    },
+    {
+      "update": 256,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+      "sha256": "ddc4a93a4f3b2e3689663bc69f187b29f7fae70e4c0a4f834ceae30b24fdcac1",
+      "transition": 131072,
+      "global_policy_step": 4096,
+      "actor_and_critic_adam_steps_each": 2048
+    }
+  ],
+  "retained_reservations": {
+    "training_transitions": 131072,
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 11,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048,
+    "output_bytes": 8589934592,
+    "time": "实际wall/GPU已结算，对应时间预留清零，不双计。"
+  },
+  "non_blocking": [
+    {
+      "id": "NATIVE-CLOSE",
+      "assessment": "完整训练科学数据接受不改变原生FAILED或collector INCOMPLETE/null，不伪造graceful close、FINAL或退款。"
+    },
+    {
+      "id": "LABEL-AND-PREFIX-LIMITS",
+      "assessment": "冻结源的near-wall标签缺陷继续附注，不作物理reset证据；不能由init/首次512相同推定H128/H256全训练前缀相同，也不据微小权重差作唯一因果解释。"
+    },
+    {
+      "id": "G6-G7-SCOPE",
+      "assessment": "main-only G6/G7/warm-gate CPU代码未进入本运行只读身份，不计为本候选实际衔接或接管验证完成。"
+    }
+  ],
+  "evaluation_conditions": [
+    "准确R1评价模板指向上述实际u192/u256；发行时绑定真实SHA和本评审准确accepted predicate，不能发布null绑定。",
+    "保持seed20260909、原Z T0+200步×32lanes、所有失败与方向子组、原阈值和预定节点。",
+    "由受托Commander准确审批，实际输入提交/tag/正常push后，重新检查STOP、stage/master、保护预留、磁盘和工具。",
+    "fresh R0若为唯一LIVE，必须等待其实际terminal及准确owned cleanup/idle，禁止评价重叠。",
+    "真实评价后再独立判断双节点、同期配对及方法冻结；本PASS不授予G3、确认seed或READY。",
+    "保持D009失败后不再延长时域的科学边界，任何方法转向另作前瞻性登记。"
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0
+  }
+}
