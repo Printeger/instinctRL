@@ -1,0 +1,105 @@
+{
+  "role": "Role19",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "确认02 RECOVERY1实际训练科学数据与u256 checkpoint验收，以及条件性原Z/u256评价准入；不验收尚未完成的确认评价，不授予G4、READY或release。",
+  "identities": {
+    "evidence_commit": "e25a246cd3864becf056c6c3fe33efc21f853014",
+    "case": "R5-H256-CONFIRM-02-RECOVERY1",
+    "scientific_experiment_id": "R5-H256-CONFIRM-02",
+    "job_id": "J-51fa505a9c79bfee",
+    "approval_id": "A-bf8c624b3fa1dd59",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "source_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "launch_sha256": "a8304e120d3a9ef57f1345409b9df77b0ffcd6d4b647b3fbf222e78af0c8c4ad",
+    "actual_training_AUTH_sha256": "c57eec627283d01fb819edbaeb0238255b86c09fb57a924285e536863fa0e0c1",
+    "authorized_spec_file_sha256": "830e6d826048f99856d13f0166ce377ba817dd05bcea2dfb04dae22297deac56",
+    "tool_release": "d027e9a0076377380a4ce277727cba8bfde132a113c9ce2b436c28ab7de9f793",
+    "training_seed": 20261016,
+    "evaluation_seed": 20260909,
+    "effective_method_sha256": "9d8fa7eaf16a4a83d4d4c7794dfd595e3daca82a684f9e25652b8606638d29c0"
+  },
+  "actual_training": {
+    "scientific_training_accepted": true,
+    "inventory": {
+      "original_objects": 69,
+      "original_bytes": 1974486944,
+      "archive_copy_bytes": 21527919,
+      "combined_bytes": 1996014863,
+      "result": "所有实际原件和已列archive copies逐文件重哈希及大小核对通过；实际整个job和attempt文件集合与inventory完全相等。"
+    },
+    "binding": "actual request.spec与authorized spec一致；实际AUTH字节与准确预审proposal一致；全部spec pins核对通过。",
+    "coverage": {
+      "completed_updates": 256,
+      "completed_minibatches": 2048,
+      "returned_policy_steps": 4096,
+      "training_transitions": 131072,
+      "actor_Adam_steps": 2048,
+      "critic_Adam_steps": 2048,
+      "checkpoint_writes": 11,
+      "explicit_resets": 1,
+      "automatic_reset_lanes": 128,
+      "initialization_physics_ticks": 2,
+      "independent_check": "实际重读全部update/minibatch与compact rollout原件，核对顺序、每epoch全部512样本一次覆盖、全部32lane、零命令和绝对计数。"
+    },
+    "method": {
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "curriculum": "curriculum-h1-research-pure-hover-v1",
+      "reward_validation": "独立使用实际v_corr_b重算全部131072样本的零命令残差项，最大绝对误差7.897366494091784e-08。"
+    },
+    "first_real_gate": {
+      "status": "PASS",
+      "sample_count": 512,
+      "atol": 0.000001,
+      "rtol": 0.00001,
+      "checks": "实际读取首512 policy/action/oldAlphaBeta/logp与8个pre/post minibatch probe；检查索引0..511、绝对边界、action对应、before-MB1 logp和保存old_logp及Beta均值对应。生产gate位于两类optimizer之前。",
+      "limit": "CPU保存证据核对不替代原同设备生产gate；本轮没有actor forward、sampling或optimizer调用。"
+    },
+    "checkpoints": "全部11个实际PT已读取，核对完整源身份、冻结seed、方法、LR、pure-hover clock、绝对计数、模型/Adam张量有限性和每个Adam状态step。"
+  },
+  "accepted_evaluation_checkpoints": [
+    {
+      "update": 256,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-CONFIRM-02-R1-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+      "sha256": "8a55556f754977ba2cf1927fd16661d36bbe519f56fcb29e26efaeb1861a10e9",
+      "bytes": 1509993,
+      "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+      "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+      "training_seed": 20261016,
+      "counters": {"update": 256, "transition": 131072, "global_policy_step": 4096, "actor_optimizer": 2048, "critic_optimizer": 2048}
+    }
+  ],
+  "lifecycle_accounting": {
+    "native_status": "FAILED",
+    "native_exit_code": -9,
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "full_logical_reservations_retained": true,
+    "wall_seconds": 922.2691993899643,
+    "allocated_GPU_seconds": 920.9088193280622,
+    "cleanup": "normal ACK、quiescent、未timed_out、两次稳定空扫描、无survivors；再次只读核对9个已知owner/guard/child/discovered身份均不再owned。",
+    "postrun": "恰好ordinal0/1两份已授权原receipt，均在normal owned ACK后；记录GPU利用率7%及只有GNOME compute-app。该记录不构成未来coexistence PASS，也不改变原门槛。",
+    "old_failure": "旧J-c92f097ed211653e的beforeApp FAILED/FINAL0、start/init/output收费及历史证据保持独立，不将其当作本次训练或重开旧handle。",
+    "process_PASS_granted": false
+  },
+  "conditions": [
+    "Commander将本review accepted hash及上述实际u256路径/SHA/source绑定到准确原Z评价AUTH和spec；提交、tag、正常push后才可release。",
+    "使用RECOVERY1包内对应评价身份，只评价u256、seed20260909、原T0及200steps×32lane；6400非训练、0训练/optimizer/checkpoint写，原阈值、startup、失败分母和子组不变。",
+    "评价release必须等待当前唯一live确认01评价terminal、normal owned ACK及结算；重核STOP/idle、pins、disk、全部stage/master和保护预留及原内部coexistence门槛。",
+    "确认方法与两个预先冻结seed保持不变；两seed均须按原确认规则通过，不能调参、替换seed或采用2/3。",
+    "本科学训练验收不释放INCOMPLETE的逻辑预留，不将native FAILED改为PASS。",
+    "评价结果须另行独立验收；本轮不授予G4、G6/G7、正式训练release或READY。"
+  ],
+  "non_blocking": [
+    {"id": "LEGACY-EPISODE-LABEL", "detail": "冻结S0既有nearwall标签误写仍按历史披露处理，不能据此推断实际reset placement；实际pure-hover命令、产品reset代码和完整raw保持原身份，无需为日志修复重跑。"},
+    {"id": "CONFIRMATION-PENDING", "detail": "接受的是冻结确认seed20261016的完整训练数据和checkpoint；原Z是否通过仍未知。"}
+  ],
+  "release_granted": false,
+  "G4_granted": false,
+  "READY_granted": false
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "instinctrl-r5-confirmation-freeze/1",
-  "status": "FROZEN_BEFORE_ANY_CONFIRMATION_START_RESULTS_PENDING",
+  "status": "FAILED_CONFIRMATION01_ORIGINAL_Z_CONFIRMATION02_EVALUATION_PENDING",
   "freeze_UTC": "2026-10-14T15:10:05.381550+00:00",
   "evidence_commit": "018e6a5",
   "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
@@ -51,8 +51,18 @@
   ],
   "evaluation_seed": 20260909,
   "seed_rule": "These exact two trainingseeds fixed prospectively, absent all prior Goal cards/AUTH/checkpoint identities at freeze. Both primary256 must originalZpass32/32+allsubgroups, no2of3; never replace failedseed under samemethodfreeze. Same256/131072coldstart budget and frozenmethod. No future weights selected.",
-  "results": [],
-  "all_confirmation_seeds_pass": null,
+  "results": [
+    {
+      "training_seed": 20261015,
+      "analysis_path": "docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-CONFIRM-01/R1-evaluation-analysis.json",
+      "node": 256,
+      "all_original_gates_pass": false,
+      "success_count": 0,
+      "total": 32,
+      "independent_review": "PENDING_ROLE20"
+    }
+  ],
+  "all_confirmation_seeds_pass": false,
   "formal_full_training_submitted": false,
   "immutable_freeze": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/CONFIRMATION_METHOD_FREEZE.json",

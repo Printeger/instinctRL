@@ -34,19 +34,19 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 16,
-    "simulator_initialization_reservations": 16,
+    "live_starts": 17,
+    "simulator_initialization_reservations": 17,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 5293.040610661032,
-    "wall_seconds_including_cleanup": 5309.656679502688,
-    "output_peak_and_reservations_bytes": 14423272872
+    "allocated_gpu_seconds": 5354.252577510197,
+    "wall_seconds_including_cleanup": 5372.284265271621,
+    "output_peak_and_reservations_bytes": 14429546358
   },
   "observed": {
     "training_transitions": 655360,
-    "nontraining_transitions": 51200,
+    "nontraining_transitions": 57600,
     "optimizer_updates": 1280,
     "training_checkpoint_writes": 62,
     "actor_optimizer_steps": 10240,
@@ -642,6 +642,42 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 1996014863,
         "inventory": "experiments/R5-H256-CONFIRM-02-RECOVERY1/live/R1-research-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-H256-CONFIRM-01-R1-RESEARCH-EVALUATION-a13c5a459d47",
+        "job_id": "J-0e0f31489b086305",
+        "experiment_id": "R5-H256-CONFIRM-01",
+        "group": "R1",
+        "mode": "research-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 6400,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 6400,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 6273486,
+        "inventory": "experiments/R5-H256-CONFIRM-01/live/R1-research-evaluation/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -844,6 +880,15 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Actual confirmation02fresh complete256training/gate/immutablefrozenseed20261016/actualu256 checkpoint acceptance and exactprimary originalZ evaluation binding. NoG4beforeactualZ.",
+      "status": "PASS_ACTUAL_CONFIRMATION02_TRAINING_ONLY",
+      "evidence": "reviews/confirmation02-actual-training.json",
+      "sha256": "43751b64afab75068fd115d1869b23445cbbe079c28ac0ef1212a92f2ab31b41"
+    },
+    {
+      "call": 20,
+      "role": "Reviewer",
+      "handle": "/root/pilot_reviewer",
+      "scope": "Actual confirmation01 negative originalZ validation and bounded next-method evidence consultation, no newprelive/G4/READY",
       "status": "REQUESTED"
     }
   ],
