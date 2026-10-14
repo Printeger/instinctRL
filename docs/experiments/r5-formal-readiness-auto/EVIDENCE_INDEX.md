@@ -1,6 +1,6 @@
 # Evidence index
 
-Current authoritative state: 当前无live。Role30独立PASS旧seed15实际训练/u256及seed18资源FINAL0失败保留/准确fresh原Z预审。Commander准确fresh18原Z许可A-11c66f5f5fb086ec已发行，实际AUTH256f5476...；同一真实u25647796b6c/seed18/source617/config2e9/controlc468，仅6400nontraining。另旧seed15准确Z A-4f24d896680295b3发行但后续串行等待。已实录≥79.78s退避，原8/3/1%资源拒绝收费不变，D018只增加1start/init/8GiB。下一commit/tag/push后单次releasefresh18Z；G4未授，formal0。
+Current authoritative state: 当前唯一LIVE fresh同一新确认seed18主256原Z J-a8dc9cb1b63aa810/A-11c66f5f5fb086ec，准确inputs2b3962e/tag/push/actualAUTH256f5476；同一实际u25647796b6c/source617/config2e9/controlc468，仅6400nontraining、0训练/optimizer/写checkpoint。前资源拒绝保留FINAL0/start/init/output/time，D018有界恢复，≥79.78s退避实录，原门槛不改。旧15训练Role30已独立接受且准确Z A-4f24d896680295b3未提交；首17原Z32/32已接受。只poll本句柄，终态normalcleanup后继续；整体G4未授，formal0。
 
 Current scientific source617af4d/config2e9a7284 and compatible controlc4688ba7 bind four prospectively fixed instances: R5-MEAN10-CONFIRM-01 (new17), -02 (new18), R5-MEAN10-REGRESSION-15 and -16 (oldfailures, excluded G4). [CPU input audit](MEAN_PRIOR_CONFIRMATION_CPU_INPUT_AUDIT.json) distinguishes exact training inputs from nonexecutable generated evaluation templates. [Control integration CPU](CONTROL_INTEGRATION_CPU.json):52PASS, wrong seed/early formal submit/full spec mutation rejected; independentRole25controlimplementationPASS, finalG9pending. All old native failures and frozen sources are preserved.
 
@@ -38,6 +38,7 @@ Newmeanprior scientificsource617af4d/config2e9a7284; R1actualtraining andfullspe
 Role26 currentMUSTFIX G6-ORDER-ID: oldINTEGRATION01 CPUdraft refused exactorderbinding, noactualAUTH/live/init. Oldpacket/card/proposal retained, [newCPUcandidate02](experiments/R5-MEAN10-INTEGRATION-02/EXPERIMENT_CARD.json) changesidentity/orderonly. [FullfrozenAUTHloader fixtureaudit](experiments/R5-MEAN10-INTEGRATION-02/CPU_FULL_AUTH_LOADER_AUDIT.json) preservesoldexpectedrejection andcorrectedG6/twoformaltrainingfull-loaderPASS; ONLY attempt directory rebound to/tmp, noactualreleaseclaim. Independentclosurepending.
 
 [Role26preparation](reviews/mean-prior-integration02-formal-preparation.json) independentlyclosesORDER-ID fornew02, exactS3/compat/ownu1+u256/input/probe andformaltemplateschecked. ConditionalG6issue stillrequiresacceptedactualG4/currentfreeze/allfourdiagnosticpins evidence; preparationcannotreplaceit. NoactualCONFIRM01trainingacceptedbyRole26.
+
 
 
 

@@ -1863,6 +1863,32 @@
       "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
       "postrun_queries": 2,
       "inventory": "experiments/R5-MEAN10-CONFIRM-02-RECOVERY1/live/R1-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-a8dc9cb1b63aa810",
+      "experiment_id": "R5-MEAN10-CONFIRM-02-Z-RECOVERY1",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "native_status": "RUNNING",
+      "native_exit_code": null,
+      "raw_status": null,
+      "formal_counter_completeness": null,
+      "formal_transitions": null,
+      "observed": {},
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 6400,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 1810,
+        "wall_seconds_including_cleanup": 1810
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": null,
+      "postrun_queries": 0,
+      "inventory": null
     }
   ],
   "master_ledger": "goal_budget.json",
@@ -2007,7 +2033,13 @@
       20261016
     ],
     "formal_submitted": false,
-    "current_only_live": null
+    "current_only_live": {
+      "experiment_id": "R5-MEAN10-CONFIRM-02-Z-RECOVERY1",
+      "job_id": "J-a8dc9cb1b63aa810",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "note": "当前唯一LIVE fresh同一新确认seed18主256原Z J-a8dc9cb1b63aa810/A-11c66f5f5fb086ec，准确inputs2b3962e/tag/push/actualAUTH256f5476；同一实际u25647796b6c/source617/config2e9/controlc468，仅6400nontraining、0训练/optimizer/写checkpoint。前资源拒绝保留FINAL0/start/init/output/time，D018有界恢复，≥79.78s退避实录，原门槛不改。旧15训练Role30已独立接受且准确Z A-4f24d896680295b3未提交；首17原Z32/32已接受。只poll本句柄，终态normalcleanup后继续；整体G4未授，formal0。"
+    }
   },
   "current_mean_confirmation_training": [
     {
@@ -2101,5 +2133,5 @@
       "independent_actual_training_review": "reviews/mean-prior-confirmation02-recovery1-actual-training.json"
     }
   ],
-  "entry_inventory_as_of_ledger_sha256": "596df0ba5a0312351ef11730cf3e25d87534710760fb61efff13da2061ce8b89"
+  "entry_inventory_as_of_ledger_sha256": "c2b905df4ac56c4235820a598d7d8008cdc0524c086cc0660946727ebf20240a"
 }

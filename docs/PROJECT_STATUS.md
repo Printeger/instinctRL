@@ -7,7 +7,7 @@
 
 ## 当前 Goal（2026-10-15 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** 当前无live。Role30独立PASS旧seed15实际训练/u256及seed18资源FINAL0失败保留/准确fresh原Z预审。Commander准确fresh18原Z许可A-11c66f5f5fb086ec已发行，实际AUTH256f5476...；同一真实u25647796b6c/seed18/source617/config2e9/controlc468，仅6400nontraining。另旧seed15准确Z A-4f24d896680295b3发行但后续串行等待。已实录≥79.78s退避，原8/3/1%资源拒绝收费不变，D018只增加1start/init/8GiB。下一commit/tag/push后单次releasefresh18Z；G4未授，formal0。
+**IN_PROGRESS，非READY。** 当前唯一LIVE fresh同一新确认seed18主256原Z J-a8dc9cb1b63aa810/A-11c66f5f5fb086ec，准确inputs2b3962e/tag/push/actualAUTH256f5476；同一实际u25647796b6c/source617/config2e9/controlc468，仅6400nontraining、0训练/optimizer/写checkpoint。前资源拒绝保留FINAL0/start/init/output/time，D018有界恢复，≥79.78s退避实录，原门槛不改。旧15训练Role30已独立接受且准确Z A-4f24d896680295b3未提交；首17原Z32/32已接受。只poll本句柄，终态normalcleanup后继续；整体G4未授，formal0。
 
 唯一续接：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 
