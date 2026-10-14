@@ -382,7 +382,7 @@
   "current_goal": {
     "target": "READY_FOR_FORMAL_R5_TRAINING",
     "id": "R5-FORMAL-READINESS-AUTO-01",
-    "status": "IN_PROGRESS",
+    "status": "READY_FOR_FORMAL_R5_TRAINING",
     "requirements": "docs/goals/InstinctRL_R5_Formal_Training_Readiness_Autonomous_Goal.md",
     "master_authority": "docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
     "evidence_index": "docs/experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md",
@@ -390,25 +390,30 @@
     "budget": "docs/experiments/r5-formal-readiness-auto/goal_budget.json",
     "current_job": null,
     "current_exact_release": null,
-    "completion_proven": false,
-    "remaining_required_work": [
-      "G1_method",
-      "G2_originalZ",
-      "G3_two_predefined_late_nodes",
-      "G4_two_unseen_training_seeds",
-      "G5_actualfirstgate",
-      "G6_finite_nonzero_transition",
-      "G7_checkpoint_recalculation_lifecycle",
-      "G8_exactformalpackage_conditionalpermission",
-      "G9_independentreview"
-    ],
-    "next_action": "当前无live。全部33研究入口已终态normalACK/settle/exact2postrun；最后旧16新方法原Z实际32/32/all8groups4/4，maxspeed.0103714718/drift.0129830614/height.0468735695，CPU全原函数PASS，nativeFAILED/-9/INCOMPLETE/full6400保持。G2G3开发两节点、G4新17/18均独立接受；旧15Z与真实G6G7已Role32实审PASS。formal_r5_launch_manifest.json已准确冻结SHA4fe75be0...，全source/config/wholetemplates/actualevidence/budget绑定，Role32正在最终16Z/manifest/G1G9审核。仅余finalPASS后的机械条件许可/READY/CPU包核验/状态提交push，本Goal不再live或formalsubmit，仍非READY。",
-    "training_authorizations_issued": 6,
-    "prelive_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-exact-prelive.json",
-    "commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json",
+    "completion_proven": true,
+    "remaining_required_work": [],
+    "next_action": "STOP_GOAL_COMPLETE_READY. Laterexplicitformalstartonly through exactconditionedCommander; thisGoaldoesnotsubmitformal.",
+    "training_authorizations_issued": 16,
     "current_frozen_G4": "NEW_MEAN_METHOD_BOTH_UNUSED_CONFIRMATIONS_INDEPENDENT_PASS",
     "new_candidate": "R5-MEAN10-DEV-02",
-    "historical_failed_G4": "OLD_W0_005_BOTH_CONFIRMATIONS_FAILED"
+    "historical_failed_G4": "OLD_W0_005_BOTH_CONFIRMATIONS_FAILED",
+    "historical_initial_prelive_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-exact-prelive.json",
+    "historical_initial_commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json",
+    "conditional_formal_training_authorizations_issued": 2,
+    "goal_achieved": true,
+    "independent_final_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/final-readiness.json",
+      "sha256": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0"
+    },
+    "formal_readiness": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_r5_readiness.json",
+      "sha256": "fc3561a9e1706fad33bed1367497b97f01436ca9e5cdfb9901c462331ad8b27b"
+    },
+    "formal_conditional_permission": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_conditional_permission.json",
+      "sha256": "f0aa8c1ce592430d2be03b4e441fa1bc8af3013297a152ad60a11b9fb335a183"
+    },
+    "formal_training_submitted": false
   },
   "historical_prior_independent_review": {
     "path": "reviews/review-entry6-final-readiness.json",

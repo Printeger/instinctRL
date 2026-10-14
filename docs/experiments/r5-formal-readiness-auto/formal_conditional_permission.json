@@ -1,0 +1,61 @@
+{
+  "schema_version": "instinctrl-r5-formal-conditional-permission/1",
+  "goal_id": "R5-FORMAL-READINESS-AUTO-01",
+  "status": "CONDITIONAL_APPROVED_AT_READINESS",
+  "decision_by": "Supervisor-Commander under actual unchanged master delegation; individual approval IDs are actual Store policy decisions, not user signatures",
+  "master_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+    "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+  },
+  "manifest": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_r5_launch_manifest.json",
+    "sha256": "4fe75be00ab0c62d7fd288031735bd07b091c9739fe7e1c346c751a021f68d14"
+  },
+  "independent_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/final-readiness.json",
+    "sha256": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0"
+  },
+  "entries": [
+    {
+      "group": "R0",
+      "spec": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/R0-research-formal-training.authorized.json",
+        "sha256": "57dae2a164f77d7b218fd4819ea7bed0dae4c2a2693dc17cd598cc8b4c4f92c0"
+      },
+      "approval_id": "A-352a74cb31ae8ed7",
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/commands/AUTHORIZATION.json",
+        "sha256": "cae43dfa1f13a0ec8334afb88f3454d1aa30bc346a581e8e5447b4056b4fb0d6"
+      },
+      "submitted": false
+    },
+    {
+      "group": "R1",
+      "spec": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/R1-research-formal-training.authorized.json",
+        "sha256": "4d7f1e1b70e0f6610204d2bd4cffa28455b583f05429bf438f6e17b497002c3b"
+      },
+      "approval_id": "A-1a5e9613684876f3",
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/commands/AUTHORIZATION.json",
+        "sha256": "2223c78a82615cdd91ef8be72a639a2bb563b05da9e4980c96994d91d8deb1d8"
+      },
+      "submitted": false
+    }
+  ],
+  "allowed_generated_evaluation_spec_ids": [
+    "R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4",
+    "R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4"
+  ],
+  "conditions": [
+    "Later explicit formal-start action only; this Goal submits none",
+    "Frozen complete manifest/spec/Auth/source/config/control/input hashes; no undeclared transformation",
+    "Actual first512 gate at absolute257 before BOTH optimizers in each arm; original tolerance, stop before mismatch update",
+    "All prior jobs terminal/normalownedACK/two stable empty scans/no descendants/settled/exact2postrun; no overlap",
+    "Original STOP/coexistence/disk30GiBfloor and master/stage/protected/output quotas",
+    "Generated evaluations require independent joint actual-training acceptance of all five checkpoint paths/SHAs for both arms; exact declared checkpoint and finalreview late conditions only",
+    "Commit/tag/normal push actual execution inputs before release; preserve nativeFAILED/INCOMPLETE/full reservations, no free retries",
+    "Boundedfirstsegment ends absolute512; all five originalZ/T/S/X/W nodes assessed retrospectively, anyZregression blocks additionalsegments; noautomaticcurriculumextension"
+  ],
+  "formal_submitted": false
+}

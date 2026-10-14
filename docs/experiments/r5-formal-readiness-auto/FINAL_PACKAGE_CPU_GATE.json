@@ -1,0 +1,23 @@
+{
+  "status": "PASS_BOTH_ACTUAL_ISSUED_FORMAL_TRAINING_SPECS",
+  "checks": [
+    {
+      "manifest_sha256": "4fe75be00ab0c62d7fd288031735bd07b091c9739fe7e1c346c751a021f68d14",
+      "review_sha256": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0",
+      "permission_sha256": "f0aa8c1ce592430d2be03b4e441fa1bc8af3013297a152ad60a11b9fb335a183",
+      "approval_id": "A-352a74cb31ae8ed7",
+      "generated_checkpoint_acceptance_sha256": null
+    },
+    {
+      "manifest_sha256": "4fe75be00ab0c62d7fd288031735bd07b091c9739fe7e1c346c751a021f68d14",
+      "review_sha256": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0",
+      "permission_sha256": "f0aa8c1ce592430d2be03b4e441fa1bc8af3013297a152ad60a11b9fb335a183",
+      "approval_id": "A-1a5e9613684876f3",
+      "generated_checkpoint_acceptance_sha256": null
+    }
+  ],
+  "execution": "Pure require_formal_start only, no Commander submit, no job/runtime/GPU/optimizer",
+  "formal_submissions": 0,
+  "full_spec_and_actualAUTHchecked": true,
+  "negative_without_explicit_start_refused_both": true
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": "instinctrl-r5-formal-readiness/1",
+  "goal_id": "R5-FORMAL-READINESS-AUTO-01",
+  "status": "READY_FOR_FORMAL_R5_TRAINING",
+  "formal_training_submitted_at_readiness": false,
+  "manifest": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_r5_launch_manifest.json",
+    "sha256": "4fe75be00ab0c62d7fd288031735bd07b091c9739fe7e1c346c751a021f68d14"
+  },
+  "independent_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/final-readiness.json",
+    "sha256": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0"
+  },
+  "conditional_permission": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_conditional_permission.json",
+    "sha256": "f0aa8c1ce592430d2be03b4e441fa1bc8af3013297a152ad60a11b9fb335a183"
+  },
+  "qualifications": {
+    "G4": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/mean-prior-G4-regression16-training.json",
+      "sha256": "3014f26b1dc5fcd4069c2632684e133bb7944fa14c0d7b05284e29694d018a64"
+    },
+    "G6_G7": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-INTEGRATION-02/R1-transition-analysis.json",
+      "sha256": "67a973d24a3a474f4d030c6e308219efa14c819120c380f09306909da10c30ca"
+    }
+  },
+  "later_explicit_start_required": true,
+  "formal_training_transitions": 0,
+  "formal_optimizer_updates": 0,
+  "formal_checkpoint_writes": 0,
+  "known_native_failures_and_conservative_reservations_retained": true
+}

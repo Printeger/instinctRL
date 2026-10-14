@@ -16,7 +16,7 @@
   "new_training_authorized": true,
   "diagnostic_goal_envelope_authorized": false,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "当前无live。全部33研究入口已终态normalACK/settle/exact2postrun；最后旧16新方法原Z实际32/32/all8groups4/4，maxspeed.0103714718/drift.0129830614/height.0468735695，CPU全原函数PASS，nativeFAILED/-9/INCOMPLETE/full6400保持。G2G3开发两节点、G4新17/18均独立接受；旧15Z与真实G6G7已Role32实审PASS。formal_r5_launch_manifest.json已准确冻结SHA4fe75be0...，全source/config/wholetemplates/actualevidence/budget绑定，Role32正在最终16Z/manifest/G1G9审核。仅余finalPASS后的机械条件许可/READY/CPU包核验/状态提交push，本Goal不再live或formalsubmit，仍非READY。",
+  "live_permission_note": "GoalcompleteREADY, nolive/noformalsubmit. Exactconditionalformalfirstsegmentissued; laterexplicitstartrequired.",
   "diagnostic_goal_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "paired_pilot_task_requested": true,
   "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
@@ -27,7 +27,12 @@
   "zero_correction_original_Z_admission": false,
   "formal_readiness_task_requested": true,
   "formal_readiness_master_authority": "docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
-  "formal_readiness_goal_status": "IN_PROGRESS",
+  "formal_readiness_goal_status": "READY_FOR_FORMAL_R5_TRAINING",
   "formal_full_training_submission_authorized": false,
-  "formal_readiness_current_job": null
+  "formal_readiness_current_job": null,
+  "formal_conditional_permission": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_conditional_permission.json",
+    "sha256": "f0aa8c1ce592430d2be03b4e441fa1bc8af3013297a152ad60a11b9fb335a183"
+  },
+  "formal_training_submitted": false
 }

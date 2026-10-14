@@ -1,6 +1,6 @@
 # R5 formal training readiness
 
-Status: **ACTUAL_VALIDATION_COMPLETE, FINAL_REVIEW_AND_CONDITIONAL_PACKAGE_PENDING**. Target is `READY_FOR_FORMAL_R5_TRAINING`; formal training has not been submitted. This is the current report, updated as actual independent evidence arrives. [Goal state](GOAL_STATE.md), [full ledger](goal_budget.json), [all results](EXPERIMENT_RESULTS.json) and [evidence index](EVIDENCE_INDEX.md) preserve historical stages and negative results.
+Status: **READY_FOR_FORMAL_R5_TRAINING**. Target is `READY_FOR_FORMAL_R5_TRAINING`; formal training has not been submitted. Final independent Role32 PASS/noMUST_FIX accepted G1–G9; all mechanical issuance/cross-binding/CPU-gate conditions are satisfied. [Goal state](GOAL_STATE.md), [full ledger](goal_budget.json), [all results](EXPERIMENT_RESULTS.json) and [evidence index](EVIDENCE_INDEX.md) preserve historical stages and negative results.
 
 The current candidate adds a finite actor-only soft prior on zero-command Beta mean xyz corrections, coefficient10, to the shared residual reward.05/anchor4/actorLR1e-4/criticLR3e-4 baseline. The decoder remains xyz=mean[:,1:4]−.5; the actor retains its original deployment measurement/history/validity/time/IMU/command inputs. No hard-zero output, action substitution, simulator truth input or threshold change is used. Nonzero samples have zero direct auxiliary loss/gradient; the shared network can still change, so nonzero behavior needs its own implementation check and subsequent training evaluation. The large auxiliary coefficient may dominate the PPO direction and is a disclosed method choice.
 
@@ -30,15 +30,15 @@ All eight direction subgroups are4/4 for both confirmations, with full sensorT0+
 
 | Gate | Current evidence |
 | --- | --- |
-| G1 method | Implemented/reviewed finite prior with deployment boundary preserved; final audit pending |
+| G1 method | PASS, finalRole32 accepted exact finiteprior/method/deployment boundary |
 | G2 primary original Z | Development PASS, Role24, primary256 |
 | G3 two predefined late nodes | Development PASS, Role24,192/256 |
 | G4 unused seed confirmation | PASS, both immutable17/18 primaryZ32/32, independentRole31 G4_granted:true |
 | G5 learning implementation | Both DEV02 real512 gates precede both optimizers; actual training accepted Roles22/23 |
-| G6 finite nonzero transition | Actual112×32/3584/0reset PASS_IMPLEMENTATION_ONLY; CPUfullreplay and Role32 actualaudit pass, finalexportpending |
+| G6 finite nonzero transition | PASS_IMPLEMENTATION_ONLY, actual112×32/3584/0reset; finalRole32 accepted fullCPU+production/raw evidence |
 | G7 same-device checkpoint recalculation | ActualCUDA u1afterMB8 mean/std/logp and finalu256strictindependentreload alpha/beta/mean/logp errorsALL0 at original1e-6/1e-5; state/Adam/RNGunchanged |
-| G8 formal package | Exact frozen formal_r5_launch_manifest.json includes fullS3/config/card/AUTH/spec/argv/source/control/actualqualification/budget; finalconditionalissuancepending G9 |
-| G9 final independent review | Role32 actualfinalreview inprogress; all33researchentries terminal andsettled, noformaljobs |
+| G8 formal package | PASS, frozenmanifest and bothactualissuedcompleteformaltraining specs/AUTHs/Storeapprovals, crosspinnedconditionalpermission/READY and pureCPUgate |
+| G9 final independent review | PASS/noMUST_FIX, exactRole32 finalreview archived; all33researchentries terminalclean/settled/twopostrun, noformaljobs |
 
 | Old failed seed, new method / primary | Original Z | Maxspeed m/s | Maxdrift m | Maxheight m |
 | --- | --- | --- | --- | --- |
@@ -50,3 +50,7 @@ All eight direction subgroups are4/4 for both confirmations, with full sensorT0+
 Compatible integration sourcefeb1e96/configd263cdef has identical critical product hashes to mean-method development, with explicit strict origin/execution compatibility declarations. The prospective formal segment restores the SAME actual DEV02 R1/u256 into both arms, then fresh-resets simulation/history/reference. It reinstalls current prior0/10 after origin load, both reward.05, retains first real512 gate, and runs additional256 updates (absolute257–512), original mixed commands with explicit center-only resets. Five new checkpoints272/288/320/384/512 each receive full original Z/T/S/X/W evaluation. [Formal plan](FORMAL_R5_TRAINING_PLAN.md) and [guarded later entry](START_FORMAL_R5.md) are prepared; this Goal never submits those formal jobs. Performance on the full nonzero task remains unknown and is not asserted by finite implementation checks.
 
 All four DEV02 native jobs remain FAILED/-9/rawPASS_PENDING_CLOSE/INCOMPLETE/null, with full logical/output reservations retained. Normal owned ACK, two stable empty scans/no survivors, complete inventory and exactly two authorized postrun queries per job permit separate scientific acceptance. They do not create a process PASS or refund. The ledger distinguishes observed research totals from conservative used+reserved totals; no old failed task was resumed, no old quota reset, no unrelated process killed, no runtime dependency changed. Current main and origin identities are read from git; precise run inputs and tags are recorded separately from evidence commits.
+
+[Final independent G1–G9 review](reviews/final-readiness.json), [READY](formal_r5_readiness.json), [immutable manifest](formal_r5_launch_manifest.json), [actual conditional permission](formal_conditional_permission.json), [pure actual-package CPU gate](FINAL_PACKAGE_CPU_GATE.json) and [completion audit](COMPLETION_AUDIT.json) close the Goal. Actual Store approvals are R0 A-352a74cb31ae8ed7 and R1 A-1a5e9613684876f3, both issued and never submitted. Both exact AUTH byte hashes equal the prospectively reviewed training inputs; complete spec equality and negative missing-explicit-start checks passed. Current source/control/runtime and all scientific inputs remain frozen.
+
+The research ledger records1441792 observedtraining,118784nontraining,2816logicalupdates,22528Adam steps each and128checkpointwrites across33starts/init. These observations do not replace INCOMPLETE/null formal accounting; all conservative logical/output reservations remain. Protected formal first-segment resources remain fully untouched. No formal process, optimizer or checkpoint write occurred. Next action is only the later explicit entry in [START_FORMAL_R5](START_FORMAL_R5.md); this completed Goal stops here.

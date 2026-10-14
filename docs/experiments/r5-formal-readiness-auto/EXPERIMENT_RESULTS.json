@@ -1,6 +1,6 @@
 {
   "schema_version": "instinctrl-formal-readiness-results/1",
-  "status": "IN_PROGRESS_NOT_READY",
+  "status": "READY_FOR_FORMAL_R5_TRAINING",
   "H128_development_status": "U128_ORIGINAL_Z_PASS_BUT_PREDEFINED_U96_FAILS_NO_G3",
   "actual_nodes": [
     {
@@ -1086,7 +1086,7 @@
         "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-15/R1-evaluation-analysis.json",
         "sha256": "4244acd2a294ffacba438c686b6f8c00d2f3f72813287b16cd369aea457caf97"
       },
-      "independent_acceptance": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
+      "independent_acceptance": "reviews/mean-prior-final-validation.json"
     },
     {
       "experiment_id": "R5-MEAN10-REGRESSION-16",
@@ -1161,7 +1161,7 @@
         "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/R1-evaluation-analysis.json",
         "sha256": "986f962936ff6eb5258fdf29dd6bcc3716327b3eab8d52d765795a1e31cbe05b"
       },
-      "independent_acceptance": "PENDING_INDEPENDENT_ACTUAL_SCIENTIFIC_REVIEW"
+      "independent_acceptance": "reviews/mean-prior-final-validation.json"
     }
   ],
   "actual_entries": [
@@ -2256,7 +2256,7 @@
     }
   ],
   "master_ledger": "goal_budget.json",
-  "next_experiment": "Poll only currentfreshsame18 J-0ffa8e246076922b; terminal/normalACK/settle/exact2postrun/CPU thenindependentactualcpacceptance andprimary256Z. Firstnew17Z32/32 Role28accepted, wholeG4pending. Noformaltraining.",
+  "next_experiment": null,
   "confirmation_seed_results": {
     "status": "NEW_MEAN_PRIOR_FROZEN_CONFIRMATIONS_NOT_STARTED_NOT_READY",
     "historical_failed_method": {
@@ -2385,7 +2385,7 @@
   },
   "current_candidate": {
     "experiment_id": "R5-MEAN10-DEV-02",
-    "status": "G2_G3_G4_INDEPENDENT_PASS_G6_G7_PENDING",
+    "status": "G1_G9_INDEPENDENT_PASS_READY",
     "independent_review": "reviews/mean-prior-DEV02-actual-pair-Z.json",
     "method_freeze": "MEAN_PRIOR_CONFIRMATION_METHOD_FREEZE.json",
     "two_unused_confirmations": [
@@ -2552,5 +2552,18 @@
       "independent_original_Z_review": "reviews/mean-prior-G4-regression16-training.json"
     }
   ],
-  "entry_inventory_as_of_ledger_sha256": "3b4e209ae2395c588cf4a6bdc5259d8f46f7969e694d5fe27b65063c8491364b"
+  "entry_inventory_as_of_ledger_sha256": "8bfc6f373167beda1f43eb7b9cabfda69c42b51fe88835a64a7bb0251730987f",
+  "next_formal_explicit_start": "START_FORMAL_R5.md",
+  "formal_readiness": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_r5_readiness.json",
+    "sha256": "fc3561a9e1706fad33bed1367497b97f01436ca9e5cdfb9901c462331ad8b27b"
+  },
+  "completion_audit": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/COMPLETION_AUDIT.json",
+    "sha256": "3fe81d562a17cd8951c86fd2e65ce3a77495f0055cf2c31ac460d0e47b153ca3"
+  },
+  "formal_conditional_training_approvals": [
+    "A-352a74cb31ae8ed7",
+    "A-1a5e9613684876f3"
+  ]
 }

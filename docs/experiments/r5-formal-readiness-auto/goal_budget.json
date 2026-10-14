@@ -1598,7 +1598,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Final actual validation: reg15/reg16 originalZ, actualfiniteG6/G7 complete evidence whenavailable, frozenformalmanifest/completeconditionalpackage andG1-G9 final independentreview; no READY before allactualterminalmaterials, no formal submit.",
-      "status": "IN_PROGRESS_FINAL_ACTUAL_VALIDATION_AND_PACKAGE_REVIEW"
+      "status": "PASS_G1_G9_NO_MUST_FIX_CONDITIONAL_MECHANICAL_BINDING_ONLY",
+      "evidence": "reviews/final-readiness.json",
+      "sha256": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0"
     }
   ],
   "decisions": [

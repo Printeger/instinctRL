@@ -1,7 +1,8 @@
 # Evidence index
 
-Current authoritative state: 当前无live。全部33研究入口已终态normalACK/settle/exact2postrun；最后旧16新方法原Z实际32/32/all8groups4/4，maxspeed.0103714718/drift.0129830614/height.0468735695，CPU全原函数PASS，nativeFAILED/-9/INCOMPLETE/full6400保持。G2G3开发两节点、G4新17/18均独立接受；旧15Z与真实G6G7已Role32实审PASS。formal_r5_launch_manifest.json已准确冻结SHA4fe75be0...，全source/config/wholetemplates/actualevidence/budget绑定，Role32正在最终16Z/manifest/G1G9审核。仅余finalPASS后的机械条件许可/READY/CPU包核验/状态提交push，本Goal不再live或formalsubmit，仍非READY。
+Current authoritative state: **READY_FOR_FORMAL_R5_TRAINING。** 新mean10候选开发预定192/256原Z均32/32，冻结后未用seed20261017/18主256均32/32并独立接受；旧失败seed15/16新方法回归及真实G6有限零/正/反/零、G7同设备原容差重算/重载均已独立核验。最终审核PASS/noMUST_FIX，准确formal首段manifest/两组条件许可/完整启动命令已固定且CPU入口核验通过。当前无live，本Goal未提交任何formal训练，至此停止。完整非零任务性能仍待正式训练评价；旧FAILED/INCOMPLETE及全额保守收费保留。 [Final review](reviews/final-readiness.json), [READY](formal_r5_readiness.json), [manifest](formal_r5_launch_manifest.json), [conditional permission](formal_conditional_permission.json), [completion audit](COMPLETION_AUDIT.json).
 
+下列为历史进度索引；最终状态以上述READY/manifest/finalreview/完成审计为准。
 Current scientific source617af4d/config2e9a7284 and compatible controlc4688ba7 bind four prospectively fixed instances: R5-MEAN10-CONFIRM-01 (new17), -02 (new18), R5-MEAN10-REGRESSION-15 and -16 (oldfailures, excluded G4). [CPU input audit](MEAN_PRIOR_CONFIRMATION_CPU_INPUT_AUDIT.json) distinguishes exact training inputs from nonexecutable generated evaluation templates. [Control integration CPU](CONTROL_INTEGRATION_CPU.json):52PASS, wrong seed/early formal submit/full spec mutation rejected; independentRole25controlimplementationPASS, finalG9pending. All old native failures and frozen sources are preserved.
 
 Compatible integration sourcefeb1e96/configd263cdef reuses identical mean-method product hashes. [CPU-corrected finite transition proposed packet](experiments/R5-MEAN10-INTEGRATION-02/launch_inputs.proposed.json) and [prospective formal packet](experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/launch_inputs.proposed.json) contain exact original checkpoint/input/probe bindings and future formal AUTH/spec templates, respectively. No G6/G7 live, final manifest/permission/READY or formal submission is implied. [Current formal plan](FORMAL_R5_TRAINING_PLAN.md) uses shared actual DEV02 R1/u256 and current mean-prior0/10, both reward.05. Historical old S1/w-reward plans below are superseded.
@@ -38,18 +39,3 @@ Newmeanprior scientificsource617af4d/config2e9a7284; R1actualtraining andfullspe
 Role26 currentMUSTFIX G6-ORDER-ID: oldINTEGRATION01 CPUdraft refused exactorderbinding, noactualAUTH/live/init. Oldpacket/card/proposal retained, [newCPUcandidate02](experiments/R5-MEAN10-INTEGRATION-02/EXPERIMENT_CARD.json) changesidentity/orderonly. [FullfrozenAUTHloader fixtureaudit](experiments/R5-MEAN10-INTEGRATION-02/CPU_FULL_AUTH_LOADER_AUDIT.json) preservesoldexpectedrejection andcorrectedG6/twoformaltrainingfull-loaderPASS; ONLY attempt directory rebound to/tmp, noactualreleaseclaim. Independentclosurepending.
 
 [Role26preparation](reviews/mean-prior-integration02-formal-preparation.json) independentlyclosesORDER-ID fornew02, exactS3/compat/ownu1+u256/input/probe andformaltemplateschecked. ConditionalG6issue stillrequiresacceptedactualG4/currentfreeze/allfourdiagnosticpins evidence; preparationcannotreplaceit. NoactualCONFIRM01trainingacceptedbyRole26.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

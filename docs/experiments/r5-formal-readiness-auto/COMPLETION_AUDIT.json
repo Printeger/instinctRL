@@ -1,0 +1,104 @@
+{
+  "schema_version": "instinctrl-r5-completion-audit/1",
+  "goal_id": "R5-FORMAL-READINESS-AUTO-01",
+  "status": "READY_FOR_FORMAL_R5_TRAINING",
+  "G1_G9_independent_PASS": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/final-readiness.json",
+    "sha256": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0"
+  },
+  "all_gates_accepted": true,
+  "current_jobs": [],
+  "entries": 33,
+  "all_terminal_settled_normal_owned_ACK_and_two_postrun": true,
+  "formal_jobs_submitted": 0,
+  "formal_training_transitions": 0,
+  "formal_optimizer_updates": 0,
+  "formal_checkpoint_writes": 0,
+  "observed_research": {
+    "training_transitions": 1441792,
+    "nontraining_transitions": 118784,
+    "optimizer_updates": 2816,
+    "training_checkpoint_writes": 128,
+    "actor_optimizer_steps": 22528,
+    "critic_optimizer_steps": 22528
+  },
+  "conservative_master_accounting": {
+    "training_transitions": {
+      "used_and_conservatively_reserved": 1441792,
+      "protected": 655360,
+      "master_cap": 2097152
+    },
+    "nontraining_transitions": {
+      "used_and_conservatively_reserved": 118784,
+      "protected": 451200,
+      "master_cap": 1048576
+    },
+    "live_starts": {
+      "used_and_conservatively_reserved": 33,
+      "protected": 14,
+      "master_cap": 64
+    },
+    "simulator_initialization_reservations": {
+      "used_and_conservatively_reserved": 33,
+      "protected": 14,
+      "master_cap": 64
+    },
+    "optimizer_updates": {
+      "used_and_conservatively_reserved": 2816,
+      "protected": 1280,
+      "master_cap": 4096
+    },
+    "actor_optimizer_steps": {
+      "used_and_conservatively_reserved": 22528,
+      "protected": 10240,
+      "master_cap": 65536
+    },
+    "critic_optimizer_steps": {
+      "used_and_conservatively_reserved": 22528,
+      "protected": 10240,
+      "master_cap": 65536
+    },
+    "training_checkpoint_writes": {
+      "used_and_conservatively_reserved": 128,
+      "protected": 31,
+      "master_cap": 256
+    },
+    "allocated_gpu_seconds": {
+      "used_and_conservatively_reserved": 11437.470208185492,
+      "protected": 43360,
+      "master_cap": 86400
+    },
+    "wall_seconds_including_cleanup": {
+      "used_and_conservatively_reserved": 11487.700223276392,
+      "protected": 43360,
+      "master_cap": 86400
+    },
+    "output_peak_and_reservations_bytes": {
+      "used_and_conservatively_reserved": 296352743424,
+      "protected": 85899345920,
+      "master_cap": 519680897024
+    },
+    "parallel_GPU_jobs": {
+      "active": 0,
+      "master_cap": 1
+    },
+    "paid_cloud_resources": {
+      "used": 0,
+      "master_cap": 0
+    }
+  },
+  "budget": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/goal_budget.json",
+    "sha256": "8bfc6f373167beda1f43eb7b9cabfda69c42b51fe88835a64a7bb0251730987f"
+  },
+  "READY": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_r5_readiness.json",
+    "sha256": "fc3561a9e1706fad33bed1367497b97f01436ca9e5cdfb9901c462331ad8b27b"
+  },
+  "pure_final_package_gate": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/FINAL_PACKAGE_CPU_GATE.json",
+    "sha256": "1d302ad68c65c67413597d4a96f554f340b13233b1abbd9d98eda5a378fc17d1"
+  },
+  "historical_failures_not_rewritten": true,
+  "no_formal_training_started": true
+}

@@ -1,0 +1,1045 @@
+{
+  "role": 32,
+  "verdict": "PASS",
+  "must_fix": [],
+  "G4_granted": true,
+  "G6_granted": true,
+  "G7_granted": true,
+  "G8_package_review": "PASS_CONDITIONAL_MECHANICAL_BINDING_ONLY",
+  "G9_review": "PASS",
+  "ready_status_allowed": "READY_FOR_FORMAL_R5_TRAINING",
+  "completion_allowed": true,
+  "scope": "Final independent G1-G9 scientific readiness and exact first-formal-segment package acceptance. READY becomes effective only after the mechanical exact-issuance/cross-binding/CPU-gate/state-sync conditions below. No formal training submission or full nonzero-task performance acceptance.",
+  "identities": {
+    "evidence_commit": "ab6c082de81fa0d4d5182132b5797060f6a6774a",
+    "source_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "source_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+    "overlay_sha256": "bbdc26048d716bbb4e5fbd8a49d26cee7fb54aa61b89fb5e02debabb8aeddf68",
+    "formal_manifest_sha256": "4fe75be00ab0c62d7fd288031735bd07b091c9739fe7e1c346c751a021f68d14",
+    "launch_sha256": "1f212fae59f7ed4a03e219936c1baffc0754371cdcd213879e12931f1a78dfda",
+    "formal_packet_sha256": "1f212fae59f7ed4a03e219936c1baffc0754371cdcd213879e12931f1a78dfda",
+    "expected_training_AUTH_sha256": {
+      "R0": "cae43dfa1f13a0ec8334afb88f3454d1aa30bc346a581e8e5447b4056b4fb0d6",
+      "R1": "2223c78a82615cdd91ef8be72a639a2bb563b05da9e4980c96994d91d8deb1d8"
+    },
+    "control_release": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba",
+    "master_authority_sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33",
+    "master_accepted_Store_evidence_id": "E-R5-FORMAL-MASTER-DELEGATION-20261014",
+    "qualification_freeze_sha256": "b55f881c8ef1435dcef21e354b8e36d6765d53b2f0dd2b72c18e81b9a40756c4",
+    "checkpoint_origin_source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+    "checkpoint_origin_config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+    "actual_G6_packet_sha256": "a8c92f0afcaaa76fc55cb81e4f4c241143d3e9608d23d1ac1f6d435063046ff9",
+    "actual_G6_AUTH_sha256": "3d749754621d6da25096e600cf061a786166a1b31b124169d1b1dadea09004a5",
+    "actual_G6_job_id": "J-0daf4f4bbd3ab33d",
+    "actual_G6_approval_id": "A-86647b710bc0825e",
+    "actual_G6_analysis_sha256": "67a973d24a3a474f4d030c6e308219efa14c819120c380f09306909da10c30ca"
+  },
+  "requirements": {
+    "G1": {
+      "status": "PASS",
+      "evidence": "S2 mean-prior method c390…/contractd0aa… and S3 formalphase103664…; actual qualifying source/profile/checkpoints and prior independent implementation/prelive reviews bound by frozenmanifest.",
+      "finding": "Original HistoryActor Beta4 with approved lidar/state/IMU/measurement histories, validity/time and commands; privileged21 critic and reward/controller boundaries retained. Only auxiliary train objective is lambda*mean[zero-command indicator*sum(((Beta.mean[1:4]-.5)/.1)^2)], candidatelambda10. No actor GT/position/velocity/map, hardzero, output replacement or B0 bypass. Existing residualreward.05/anchor4/LRs1e-4,3e-4 and governor/ICS/Lee/mass-allocation remain explicit.",
+      "formal_scope": "Both future arms restore same qualified DEV02R1u256; futureaux0/10, bothreward.05, fulltrainerrestore then freshsimreset, mixed-center first segment. This is prospective warm-start intervention, not another cold-start causal claim."
+    },
+    "G2": {
+      "status": "PASS",
+      "evidence": "DEV02R1 primary256 originalZ32/32/all8subgroups4/4; Role24 accepted actuals and this role independently replayed original evaluation again.",
+      "thresholds": "Original speed<=.08m/s, XYdrift<=.30m, height<=.20m; original sensorT0/full200steps/all32/startup/safety/failures/denominator."
+    },
+    "G3": {
+      "status": "PASS",
+      "evidence": "Same development instance predeclared late192 and256 BOTH32/32/allgroups4/4. Exact original source/checkpoints and raw/producer/analysis independently rechecked in this role; no posthoc best-node selection."
+    },
+    "G4": {
+      "status": "PASS",
+      "evidence": "Immutablefreeze b55… prospectively selected unused trainingseeds20261017/20261018, both exact primary256 originalZ32/32/all8subgroups4/4. Role31 independently accepted BOTH actuals; frozenmanifest pins that exact independent review3014….",
+      "limits": "Old w.05-only seed15/16 failures preserved; new mean-prior15/16 regressions are additional regressions, not replacements or2of3. Three qualifying training instances meet the bounded rule; not statistical sufficiency or universal reliability."
+    },
+    "G5": {
+      "status": "PASS",
+      "evidence": "Actual new cold-start training/first512 gates and actual source/method/seed/checkpoint/optimizer accounting accepted across Roles22/23/27/29/30/31; current gate remains before trainer.update and both optimizer.step calls. Initial/final512 shapes, collection-time oldBeta/logp/input/action/index, no gate RNG and originalatol1e-6/rtol1e-5 retained.",
+      "implementation": "OptionalPPO actor_auxiliary defaultNone oldpath equivalence and finite differentiable boundary tests accepted; no extra policy sampling/RNG. Mean-prior pair initialactor/critic/fullfirst512 incladvantages/returns bit-exact; reward same. Formalmixedclock identity override and warmstarting_update256 gate/optimizer origins were independently closed with CPU tests; actual future formal gate remains mandatory before either optimizer."
+    },
+    "G6": {
+      "status": "PASS_IMPLEMENTATION_ONLY",
+      "evidence": "Actual S3 J-0daf4f4bbd3ab33d, full112x32=3584 stepsamples zero16/existing8directions32/temporalreverse32/zero32, real actor meanaction, nooptimizer/writes. All112 original rows and production validation checks independently replayed equal; current/following command52state indexing, actiondecoder/control/root shapes/finiteness and anchor clear/reacquire lifecycle checked,0actualreset.",
+      "limit": "Finite implementation/transition execution only; fullT/S/X/W policy competence is UNKNOWN until formal evaluation."
+    },
+    "G7": {
+      "status": "PASS_WITH_DISCLOSED_KNOWN_NATIVE_CLOSE",
+      "evidence": "Actual strictS3 execution of accepted S2u1/full512input/probe sameCUDA afterMB8 actor mean/std/logp errorsALL0 at original1e-6/1e-5; finalu256 twoindependentstrictloads on sameactualfreshreset32input alpha/beta/mean/logp errorsALL0. Model/Adam/RNG unchanged, critic wrong-time-boundary comparison correctly excluded.",
+      "lifecycle": "Knownclose9.5s nativeFAILED/-9 preserved; complete separatelyaccepted scientific records, normalownedACK2stableempty/no survivors/exact2postrun. All33newGoalentries terminal/settled and all48knownStorejobs freshly verified notowned, one exact alreadyaccepted historical recovery exception remains explicitly non-normalACK.",
+      "accounting": "INCOMPLETE/null is not FINAL; full conservative logic/output reservations retained. Old goals’ tracked evidence/budgets byte-identical to newGoalstart56f996d."
+    },
+    "G8": {
+      "status": "PASS_EXACT_FROZEN_PACKAGE_WITH_MECHANICAL_BINDING_CONDITIONS",
+      "evidence": "Finalmanifest4fe75be0… whole4spec/AUTHtemplates, S3source/config/runtime/control, actualsharedorigin, freshresetseed20261038, method/contracts/qualification, exactargv/entryIDs, allfuturegeneratedevaluationnodes/budgets/stops, delegatedmaster and sufficientprotectedformalreserve verified. Both exacttrainingAUTHs independently pass full unmodified frozenAUTHloader using tempattempt only.",
+      "remaining": "Only root existingCommander mechanical issue of the reviewed exacttwo trainingAUTH/spec/Storeapprovals, crosspinconditionalpermission+READY+thisindependentreview, pureCPUgate and ordinarycurrentstate/commit/tag/normalpush sync. No scientificmethod/input decision remains. ActualfutureformalcheckpointSHA are generatedinputs, accepted only after realtraining; theirabsence is not a currentblocker."
+    },
+    "G9": {
+      "status": "PASS",
+      "evidence": "IndependentRole32 review of G1-G8, actualregressions/G6G7 and exactfinalpackage; noMUST_FIX. Rootsolewriter archives exactreviewbytes/hash and may copy samebytes to declaredalias. No reviewer approval impersonation or project mutation."
+    }
+  },
+  "development_original_Z_independent_replay": {
+    "192": {
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u192.pt",
+        "sha256": "e01be5cff6837e3b6458768a2cd754e09591c980fdacd00a249262e56faa547b",
+        "update": 192
+      },
+      "raw_sha256": "a67c988fef147db95ae72e603f41e74cec5999eba53b1f45715c5f86a145003c",
+      "original_gate": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "engineering": {
+        "missing": 0,
+        "reset_interrupted": 0,
+        "collision": 0,
+        "height_failure": 0,
+        "evidence_valid": 32
+      },
+      "metric_maxima": {
+        "speed_rms_m_s": 0.010518797673285007,
+        "horizontal_drift_m": 0.03178948163986206,
+        "height_deviation_m": 0.04601573944091797
+      }
+    },
+    "256": {
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+        "update": 256
+      },
+      "raw_sha256": "91c55ab0471deba08e9b944ec29321dd1fbe59567fd9ece9eabbeab1a88c4490",
+      "original_gate": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "engineering": {
+        "missing": 0,
+        "reset_interrupted": 0,
+        "collision": 0,
+        "height_failure": 0,
+        "evidence_valid": 32
+      },
+      "metric_maxima": {
+        "speed_rms_m_s": 0.01045077946037054,
+        "horizontal_drift_m": 0.010402660816907883,
+        "height_deviation_m": 0.05112266540527344
+      }
+    }
+  },
+  "confirmation_original_Z_acceptance": {
+    "review_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/mean-prior-G4-regression16-training.json",
+    "review_sha256": "3014f26b1dc5fcd4069c2632684e133bb7944fa14c0d7b05284e29694d018a64",
+    "freeze_exact_training_seeds": [
+      20261017,
+      20261018
+    ],
+    "primary_update": 256,
+    "both_required_both_pass": true,
+    "actuals": {
+      "20261017": {
+        "case": "R5-MEAN10-CONFIRM-01",
+        "job_id": "J-ac937a86633306b9",
+        "binding": {
+          "spec_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-01/inputs/R1-research-evaluation.authorized.json",
+          "spec_sha256": "868b8fd814cb8713e56af744fca51a462300881aeeff52aff0b23e36baa68526",
+          "job_id": "J-ac937a86633306b9",
+          "native_status": "FAILED",
+          "native_exit_code": -9,
+          "formal_counter_completeness": "INCOMPLETE",
+          "formal_transitions": null,
+          "authorization_sha256": "9f6141443efefc074004ae4c495995ce2138ba22018a2d1d4ebfb6e8ad03325a",
+          "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+          "owned_cleanup": "NORMAL_ACK_2STABLE_NO_SURVIVORS"
+        },
+        "launch_sha256": "d595dcd20fd49e7251956b2f93593c138cf442a0836e303fac535e12d81c2905",
+        "analysis_sha256": "42a206afb2e606967941d94b95dbcc02d486476e2b7be6a845e683e44dbe84a9",
+        "raw_sha256": "4493711441badc321607ef443ac502b999e8c535073b1d19e733459d9577ac4a",
+        "checkpoint": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-01-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+          "sha256": "98a081e3f9a4e939f9601ec4bcec400fa49602ffe5edefd6740c20b7b6aff9ef",
+          "update": 256
+        },
+        "training_seed": 20261017,
+        "evaluation_seed": 20260909,
+        "primary_update": 256,
+        "original_gate": {
+          "successes": 32,
+          "total": 32,
+          "pass": true,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ],
+          "subgroups": {
+            "d0": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d1": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d2": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d3": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d4": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d5": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d6": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d7": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            }
+          }
+        },
+        "engineering": {
+          "missing": 0,
+          "reset_interrupted": 0,
+          "collision": 0,
+          "height_failure": 0,
+          "evidence_valid": 32
+        },
+        "actual_reset_lanes": 0,
+        "metric_maxima": {
+          "speed_rms_m_s": 0.010489066131412983,
+          "horizontal_drift_m": 0.01935860514640808,
+          "height_deviation_m": 0.04789996147155762
+        },
+        "original_and_copy_hash_and_entire_inventory": "PASS",
+        "original_objects": 37,
+        "original_bytes": 5991674,
+        "copy_bytes": 504130,
+        "original_evaluator_replay_equals_analysis_and_producer": true,
+        "T0_200_steps_32_lanes": "Original T0 and orderedsteps0..199, all32 lanes/all8 subgroups, full startup/safety/denominator; no missing/splice/reset, allzero commands; finite action/control/actual state fields and original action-to-correction mapping verified.",
+        "cleanup": "Normal ACK/quiescent/2stable/no survivors/not timedout; all recorded owner/guard/child/discovered identities freshly not owned.",
+        "fresh_identity_checks": 13,
+        "exact_postrun_calls": 2,
+        "native_status": "FAILED",
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "retained_nontraining_transitions": 6400,
+        "retained_output_bytes": 8589934592,
+        "training_updates_checkpoint_writes": 0,
+        "actual_wall_seconds": 62.54571330384351,
+        "actual_allocated_gpu_seconds": 60.647837965982035
+      },
+      "20261018": {
+        "case": "R5-MEAN10-CONFIRM-02-Z-RECOVERY1",
+        "job_id": "J-a8dc9cb1b63aa810",
+        "binding": {
+          "spec_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-CONFIRM-02-Z-RECOVERY1/inputs/R1-research-evaluation.authorized.json",
+          "spec_sha256": "fc4b2de94b942422356f56672c068de8cf4e6b34d137f1466a068564386a717c",
+          "job_id": "J-a8dc9cb1b63aa810",
+          "native_status": "FAILED",
+          "native_exit_code": -9,
+          "formal_counter_completeness": "INCOMPLETE",
+          "formal_transitions": null,
+          "authorization_sha256": "256f5476be1449dac530201ce86a0199d0dd5f7c93c7695539f969ea7ab1db4a",
+          "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+          "owned_cleanup": "NORMAL_ACK_2STABLE_NO_SURVIVORS"
+        },
+        "launch_sha256": "45ed5ab534deda76b62125846438e360a7a22ca695b736f78c35a59168074a25",
+        "analysis_sha256": "58c52371a57f3ad2c9f3c76cb85d95b2920bcd1348ce193f09e6549c24cfd782",
+        "raw_sha256": "e2550aa3a9548d93c2c06a7d0829fed79111dd9490ed873f9b4b4b5a8a3263f6",
+        "checkpoint": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-CONFIRM-02-RECOVERY1-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+          "sha256": "47796b6c3804f7bf41a16ef95bb8d0a7c62ebd6a47a3fcb2bda24d1d26b8c54f",
+          "update": 256
+        },
+        "training_seed": 20261018,
+        "evaluation_seed": 20260909,
+        "primary_update": 256,
+        "original_gate": {
+          "successes": 32,
+          "total": 32,
+          "pass": true,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ],
+          "subgroups": {
+            "d0": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d1": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d2": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d3": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d4": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d5": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d6": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            },
+            "d7": {
+              "successes": 4,
+              "total": 4,
+              "pass": true
+            }
+          }
+        },
+        "engineering": {
+          "missing": 0,
+          "reset_interrupted": 0,
+          "collision": 0,
+          "height_failure": 0,
+          "evidence_valid": 32
+        },
+        "actual_reset_lanes": 0,
+        "metric_maxima": {
+          "speed_rms_m_s": 0.010393206030130386,
+          "horizontal_drift_m": 0.007172675337642431,
+          "height_deviation_m": 0.045454978942871094
+        },
+        "original_and_copy_hash_and_entire_inventory": "PASS",
+        "original_objects": 37,
+        "original_bytes": 5911286,
+        "copy_bytes": 504020,
+        "original_evaluator_replay_equals_analysis_and_producer": true,
+        "T0_200_steps_32_lanes": "Original T0 and orderedsteps0..199, all32 lanes/all8 subgroups, full startup/safety/denominator; no missing/splice/reset, allzero commands; finite action/control/actual state fields and original action-to-correction mapping verified.",
+        "cleanup": "Normal ACK/quiescent/2stable/no survivors/not timedout; all recorded owner/guard/child/discovered identities freshly not owned.",
+        "fresh_identity_checks": 13,
+        "exact_postrun_calls": 2,
+        "native_status": "FAILED",
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "retained_nontraining_transitions": 6400,
+        "retained_output_bytes": 8589934592,
+        "training_updates_checkpoint_writes": 0,
+        "actual_wall_seconds": 63.63705727807246,
+        "actual_allocated_gpu_seconds": 61.500112337991595
+      }
+    }
+  },
+  "old_seed_new_method_regressions_actual_Z": {
+    "20261015": {
+      "case": "R5-MEAN10-REGRESSION-15",
+      "job_id": "J-19456eef8dad3937",
+      "approval_id": "A-4f24d896680295b3",
+      "packet_sha256": "6a644fe63143353e3bbcf4c32e89a9cb9c2967b02b61678d335db53229489c3b",
+      "analysis_sha256": "4244acd2a294ffacba438c686b6f8c00d2f3f72813287b16cd369aea457caf97",
+      "raw_sha256": "4f7c1ecb8e41a2eb8183ddcac99de9f738a4c4daff12f48124e56ee548ffc820",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-15-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "7e3526f91d8f870d0e95557b87bb516529486127fbab10fff1b6b57c21e8dd88",
+        "update": 256
+      },
+      "binding": {
+        "spec_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-15/inputs/R1-research-evaluation.authorized.json",
+        "spec_sha256": "e16cb8f7b8a53a8f788cf277c8f609ba315a905fac5fb42602341a3b3174fd53",
+        "job_id": "J-19456eef8dad3937",
+        "native_status": "FAILED",
+        "native_exit_code": -9,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "authorization_sha256": "f35ed919ad218932d94f1b43bd5da65f234f962e702f6ec3c5c15398de511d0a",
+        "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+        "owned_cleanup": "NORMAL_ACK_2STABLE_NO_SURVIVORS"
+      },
+      "original_gate": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "engineering": {
+        "missing": 0,
+        "reset_interrupted": 0,
+        "collision": 0,
+        "height_failure": 0,
+        "evidence_valid": 32
+      },
+      "actual_reset_lanes": 0,
+      "metric_maxima": {
+        "speed_rms_m_s": 0.010415698401629925,
+        "horizontal_drift_m": 0.011686444282531738,
+        "height_deviation_m": 0.046066999435424805
+      },
+      "complete_inventory_originals_copies_rehashed": true,
+      "inventory_objects": 37,
+      "original_bytes": 5937984,
+      "archive_copy_bytes": 504166,
+      "original_evaluator_replay_equal_analysis_and_producer": true,
+      "T0_steps_lanes": "T0+steps0..199/all32/all8subgroups/fullstartup/safety/denominator; actual allzero commands and finite action/control/state, original action-to-correction relationship.",
+      "owned_cleanup": "NormalACK/quiescent/2stable/not timedout/no survivors; all recorded known identities freshly not owned; settled/exact2postrun.",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "retained_nontraining_transitions": 6400,
+      "retained_output_bytes": 8589934592,
+      "wall_seconds": 62.922922438941896,
+      "allocated_gpu_seconds": 60.654442343860865,
+      "G4_contribution": false
+    },
+    "20261016": {
+      "case": "R5-MEAN10-REGRESSION-16",
+      "job_id": "J-d510b78739acefbf",
+      "approval_id": "A-bef3481b00c09c72",
+      "packet_sha256": "557cdbdb94afe50938a8f9f43c9ee1debb470e3c8bad3cdcfb2902e5439dd781",
+      "analysis_sha256": "986f962936ff6eb5258fdf29dd6bcc3716327b3eab8d52d765795a1e31cbe05b",
+      "raw_sha256": "9c7ea22046b856e6a955f67143f55dfa6b4e9234d7d3b827843697d72d7e10cd",
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "d4ccd88b95013bb3c387c490693cda0b33e217f0cdd30ce785d3992853cb2905",
+        "update": 256
+      },
+      "binding": {
+        "spec_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/inputs/R1-research-evaluation.authorized.json",
+        "spec_sha256": "1d15b6ffd0f97a37dba01dcd35a06de9eb9a0d355b6a813b227f2d4ff5e75b5c",
+        "job_id": "J-d510b78739acefbf",
+        "native_status": "FAILED",
+        "native_exit_code": -9,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "authorization_sha256": "1d711c2491ea46ea1d920780daadde2f18ae3274079d18a13718a1621019c23d",
+        "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+        "owned_cleanup": "NORMAL_ACK_2STABLE_NO_SURVIVORS"
+      },
+      "original_gate": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "engineering": {
+        "missing": 0,
+        "reset_interrupted": 0,
+        "collision": 0,
+        "height_failure": 0,
+        "evidence_valid": 32
+      },
+      "actual_reset_lanes": 0,
+      "metric_maxima": {
+        "speed_rms_m_s": 0.010371471755206585,
+        "horizontal_drift_m": 0.012983061373233795,
+        "height_deviation_m": 0.04687356948852539
+      },
+      "complete_inventory_originals_copies_rehashed": true,
+      "inventory_objects": 37,
+      "original_bytes": 5977949,
+      "archive_copy_bytes": 503957,
+      "original_evaluator_replay_equal_analysis_and_producer": true,
+      "T0_steps_lanes": "T0+steps0..199/all32/all8subgroups/fullstartup/safety/denominator; actual allzero commands and finite action/control/state, original action-to-correction relationship.",
+      "owned_cleanup": "NormalACK/quiescent/2stable/not timedout/no survivors; all recorded known identities freshly not owned; settled/exact2postrun.",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "retained_nontraining_transitions": 6400,
+      "retained_output_bytes": 8589934592,
+      "wall_seconds": 62.93017210997641,
+      "allocated_gpu_seconds": 60.507345222868025,
+      "G4_contribution": false
+    }
+  },
+  "actual_G6_G7": {
+    "scientific_implementation_accepted": true,
+    "status": "PASS_IMPLEMENTATION_ONLY",
+    "binding": {
+      "spec_path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-INTEGRATION-02/inputs/R1-research-transition.authorized.json",
+      "spec_sha256": "072ee54f05a26e354b067374ad7f72ea6ce38a15b8aa738735b18c4235ff004b",
+      "job_id": "J-0daf4f4bbd3ab33d",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "authorization_sha256": "3d749754621d6da25096e600cf061a786166a1b31b124169d1b1dadea09004a5",
+      "source_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+      "owned_cleanup": "NORMAL_ACK_2STABLE_NO_SURVIVORS"
+    },
+    "inventory": {
+      "objects": 36,
+      "original_bytes": 10263007,
+      "archive_copy_bytes": 499626,
+      "combined_bytes": 10762633,
+      "all_originals_copies_rehashed_and_entire_job_attempt_enumerated": true
+    },
+    "raw_sha256": "3b3beee29c2ad2fe39a68c8226b50c0b96761c64880ddf0e390704519e1e8697",
+    "steps": 112,
+    "nontraining_transitions": 3584,
+    "actual_reset_lanes": 0,
+    "training_updates_checkpoint_writes": 0,
+    "original112checks_replayed_equal_to_production_receipts_and_analysis": true,
+    "actual_same_device_recalculation": {
+      "actual_inputs": {
+        "checkpoint": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u1.pt",
+          "sha256": "4436218bd7fa0c7ceeb8580f99da101fb22df17ffde7954558ee9016c8f2dc42",
+          "update": 1
+        },
+        "input": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+          "sha256": "012dd61783f7a749a59136d2339dc43e78e987150c46614a10df2cf99d86c5f6"
+        },
+        "probe": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/first_update_probe.pt",
+          "sha256": "c7004c4b18f4ec396676b53a24c934637ed0827fa7ed5e505520cba42bd7c015"
+        }
+      },
+      "atol": 1e-06,
+      "critic_value_comparison": "EXCLUDED_DIFFERENT_OBSERVER_BOUNDARY",
+      "device": "cuda:0",
+      "maximum_absolute_errors": {
+        "action_mean": 0.0,
+        "action_std": 0.0,
+        "log_probability": 0.0
+      },
+      "model_optimizer_unchanged": true,
+      "optimizer_calls": 0,
+      "original_source_identity": {
+        "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547",
+        "product_commit": "617af4d90c35e333c97692bdee90146804476edf",
+        "product_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+        "workload_commit": "617af4d90c35e333c97692bdee90146804476edf",
+        "workload_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad"
+      },
+      "policy_rng_consumed": false,
+      "reference_boundary": "ACTOR_AFTER_FIRST_UPDATE_MINIBATCH8",
+      "rtol": 1e-05,
+      "samples": 512,
+      "scope": "Actual saved u1 actor boundary; not a missing historical final-checkpoint output",
+      "status": "PASS"
+    },
+    "actual_final_reload": {
+      "atol": 1e-06,
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+        "sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+        "update": 256
+      },
+      "device": "cuda:0",
+      "maximum_absolute_errors": {
+        "alpha": 0.0,
+        "beta": 0.0,
+        "logp": 0.0,
+        "mean": 0.0
+      },
+      "metadata": {
+        "counters": {
+          "actor_optimizer": 2048,
+          "critic_optimizer": 2048,
+          "global_policy_step": 4096,
+          "transition": 131072,
+          "update": 256
+        },
+        "curriculum": {
+          "completed_policy_steps": 4096,
+          "version": "curriculum-h1-research-pure-hover-v1"
+        },
+        "reset_number": 129,
+        "training_seed": 20260908
+      },
+      "optimizer_calls": 0,
+      "policy_rng_consumed": false,
+      "rtol": 1e-05,
+      "samples": 32,
+      "scope": "Same actual fresh-reset input across two strict loads; no historical final output invented",
+      "state_sha256": "1bea56d76792fafacd4fa3657598260543d1c5dd76c30511e3523b5c48d155dd",
+      "status": "PASS"
+    },
+    "actual_policy_shape_history_reference_indexing": "Production full-policy validator on realcurrent/returned32lane observations + independentlyreplayed compactrows. No unrecorded densepolicy manufactured by CPUanalyzer. Zero reference becomesactive, clears onnonzero and reacquires onzero.",
+    "model_optimizer_RNG_unchanged": true,
+    "raw_status": "PASS_PENDING_CLOSE",
+    "native_status": "FAILED",
+    "native_exit_code": -9,
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "retained_nontraining_reservation": 3584,
+    "retained_output_bytes": 8589934592,
+    "normal_owned_ACK_settled_exact2postrun": true,
+    "wall_seconds": 49.90550746396184,
+    "allocated_gpu_seconds": 46.27718109986745,
+    "finite_performance_limit": "NOT_ORIGINAL_ZTSXW_TASK_ACCEPTANCE"
+  },
+  "accepted_saved_diagnostic_inputs": {
+    "scope": "已接受实际DEV02 R1训练原件的只读诊断身份；不代表尚未执行的G7重算通过。",
+    "u256": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+      "update": 256
+    },
+    "u1": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u1.pt",
+      "sha256": "4436218bd7fa0c7ceeb8580f99da101fb22df17ffde7954558ee9016c8f2dc42",
+      "update": 1
+    },
+    "input": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+      "sha256": "012dd61783f7a749a59136d2339dc43e78e987150c46614a10df2cf99d86c5f6"
+    },
+    "probe": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/first_update_probe.pt",
+      "sha256": "c7004c4b18f4ec396676b53a24c934637ed0827fa7ed5e505520cba42bd7c015"
+    }
+  },
+  "formal_first_segment": {
+    "experiment_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+    "source_snapshot": {
+      "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-integration-01-20261015",
+      "snapshot_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+      "snapshot_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+      "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+      "snapshot_diff_sha256": "bbdc26048d716bbb4e5fbd8a49d26cee7fb54aa61b89fb5e02debabb8aeddf68",
+      "read_only": true,
+      "tool_release_id": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba",
+      "tool_release_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/control-releases/c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba"
+    },
+    "same_actual_origin_both_arms": {
+      "same_actual_checkpoint_for_both_arms": true,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+      "training_seed": 20260908,
+      "origin_reset_number": 129,
+      "fresh_reset_seed": 20261038,
+      "restore": [
+        "actor",
+        "critic",
+        "actor_optimizer",
+        "critic_optimizer",
+        "RNG",
+        "clock",
+        "counters"
+      ],
+      "fresh_reset": [
+        "physics",
+        "sensor_history",
+        "anchor_reference",
+        "actuator_state"
+      ],
+      "current_callback_reinstalled_after_load": true
+    },
+    "future_current_auxiliary": {
+      "R0": 0,
+      "R1": 10
+    },
+    "both_residual_reward_weight": 0.05,
+    "anchor_weight": 4,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "initialization": "Fullactor/critic/Adam/RNG/curriculum/counters strictrestore; freshsim/history/anchor/actuatorreset; no physicalcontinuationclaim. Currentcallback reinstalled afterload beforeupdates.",
+    "origin_update": 256,
+    "fresh_reset_seed": 20261038,
+    "training_seed_metadata": 20260908,
+    "evaluation_seed": 20260909,
+    "clock": "Existingmixedglobal4096..8191,16hover/16nonzero lanes,center-onlyreset distinctfromcommandphase.",
+    "additional_updates_each": 256,
+    "absolute_update_range": [
+      257,
+      512
+    ],
+    "training_transitions_each": 131072,
+    "new_checkpoints_each": [
+      272,
+      288,
+      320,
+      384,
+      512
+    ],
+    "new_writes_each": 5,
+    "additional_Adam_steps_each_optimizer_each_arm": 2048,
+    "future_eval_each": {
+      "cases": [
+        "Z",
+        "T",
+        "S",
+        "X",
+        "W"
+      ],
+      "all5actualcheckpoints": true,
+      "nontraining_transitions": 164800,
+      "original_T0_startup_failures_32lanes_thresholds": true,
+      "actualcheckpoint_hashes": "Futuregeneratedinputs only; require independent actualtraining acceptance.",
+      "Z_regression": "Any savednode originalZregression blocks furthercontinuation beyondthisboundedcompletedfirstsegment; keepallnodes."
+    },
+    "aggregate_training": 262144,
+    "aggregate_nontraining": 329600,
+    "aggregate_starts_init": 4,
+    "aggregate_logical_updates": 512,
+    "aggregate_checkpoint_writes": 10,
+    "aggregate_wall_GPU_maximum_seconds": 21640,
+    "protected_reserve_seconds": 21680,
+    "output_reserve_bytes": 34359738368,
+    "first_real_rollout_gate": "Each futurearm original512 gate starting_update256 beforebothoptimizers, retainactual257/258, atol1e-6/rtol1e-5, no train-through failure.",
+    "no_automatic_followup_horizon_retry_or_task_stage": true
+  },
+  "whole_package_checks": {
+    "manifest_sha256": "4fe75be00ab0c62d7fd288031735bd07b091c9739fe7e1c346c751a021f68d14",
+    "manifest_and_qualification_file_pins_rehashed": 29,
+    "four_whole_spec_AUTH_templates_equal_packet": true,
+    "generated_eval_transformations_only": "Five accepted actualcheckpointSHAs; exactmanifestdeclared actualtraining acceptance condition + finalreviewcondition IDs/order; allotherAUTH/spec dispatcher/resources/method/runtime/etc frozen by deepequality.",
+    "both_training_expected_AUTHs_full_frozen_loader_CPU": "PASS; onlytemporaryattempt rebound, noStore/auth/job/GPUcreated.",
+    "exact_current_control96file_release": "PASS independently verified",
+    "actual_S3_source_git_config_fullmanifests_runtime_resourcepins": "PASS independently load_config in exactreadonlysource",
+    "formalAUTHs_absent_at_review": true,
+    "allfourfutureformal_attempts_absent_at_review": true,
+    "formal_jobs_submitted": 0,
+    "exact_START_command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow /home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python tools/r5_formal_commander.py submit R5-FORMAL-MEAN10-FIRST-SEGMENT-01 R0 research-formal-training --start-formal",
+    "start_guard": "Without laterexplicit--start-formal rejects beforeStore; with it requires exactREADY/manifest/review/permission/actualStoreapproval/fullspec/pins plus currentordinarygates. Not executedbythisGoal.",
+    "normalpush_HEAD_origin_verified": "ab6c082de81fa0d4d5182132b5797060f6a6774a"
+  },
+  "accounting": {
+    "research_entries": 33,
+    "all33_terminal_clean_settled_exact2postrun": true,
+    "all_known_Store_jobs": 48,
+    "all48_terminalFAILED_no_known_owned": true,
+    "historical_non_normal_cleanup_exception": "Only oldJ-afe4bda51f5206e5 independentlyaccepted knownidentityrecovery, exactpinnedreview and freshallidentitiesabsent; neverrelabelednormalACK. Current33 allnormalACK.",
+    "STOP_files_present": [],
+    "Store_paused": false,
+    "actual_observed_research": {
+      "training_transitions": 1441792,
+      "nontraining_transitions": 118784,
+      "optimizer_updates": 2816,
+      "training_checkpoint_writes": 128,
+      "actor_optimizer_steps": 22528,
+      "critic_optimizer_steps": 22528
+    },
+    "used_ledger": {
+      "training_transitions": 0,
+      "nontraining_transitions": 0,
+      "live_starts": 33,
+      "simulator_initialization_reservations": 33,
+      "optimizer_updates": 0,
+      "actor_optimizer_steps": 0,
+      "critic_optimizer_steps": 0,
+      "training_checkpoint_writes": 0,
+      "allocated_gpu_seconds": 11437.470208185492,
+      "wall_seconds_including_cleanup": 11487.700223276392,
+      "output_peak_and_reservations_bytes": 27077626206
+    },
+    "conservative_totals_including_alloldentries_and_unused_confirmation_formal_and_metadata": {
+      "training_transitions": 2097152,
+      "nontraining_transitions": 569984,
+      "optimizer_updates": 4096,
+      "training_checkpoint_writes": 159,
+      "actor_optimizer_steps": 32768,
+      "critic_optimizer_steps": 32768,
+      "allocated_gpu_seconds": 54797.47020818549,
+      "wall_seconds_including_cleanup": 54847.70022327639,
+      "live_starts": 47,
+      "simulator_initialization_reservations": 47,
+      "output_peak_and_reservations_bytes": 382252089344
+    },
+    "protected_formal_reserve": {
+      "training_transitions": 262144,
+      "nontraining_transitions": 329600,
+      "live_starts": 4,
+      "simulator_initialization_reservations": 4,
+      "optimizer_updates": 512,
+      "actor_optimizer_steps": 4096,
+      "critic_optimizer_steps": 4096,
+      "training_checkpoint_writes": 10,
+      "allocated_gpu_seconds": 21680,
+      "wall_seconds_including_cleanup": 21680,
+      "output_peak_and_reservations_bytes": 34359738368
+    },
+    "protected_confirmation_transition_reserve": {
+      "training_transitions": 393216,
+      "nontraining_transitions": 121600,
+      "live_starts": 10,
+      "simulator_initialization_reservations": 10,
+      "optimizer_updates": 768,
+      "actor_optimizer_steps": 6144,
+      "critic_optimizer_steps": 6144,
+      "training_checkpoint_writes": 21,
+      "allocated_gpu_seconds": 21680,
+      "wall_seconds_including_cleanup": 21680,
+      "output_peak_and_reservations_bytes": 51539607552
+    },
+    "all_four_exactfutureformal_transfer_and_remaining_admission_CPU_copies": "PASS, nonmutating originals/history/confirmationunchanged,40sformalbuffer remains.",
+    "disk_free_CPU_read_bytes": 520886124544,
+    "disk_floor_bytes": 32212254720,
+    "historical_goals_immutable": "Tracked diagnostics/zero-correction/paired-pilot evidence andbudgets unchanged from56f996d newGoalstart.",
+    "INCOMPLETE_rule": "Actualobservedcounts do not replace formalnull; fulllogical/output reservations retained. BeforeAppFINAL0 releasesonlyitsunusedlogical; failedstart/init/output/time remain.",
+    "native_failure_rule": "Every nativeFAILED remains FAILED; no gracious-close/processPASS invention. New unknownexit/ownershipambiguity mustSTOP."
+  },
+  "conditions": [
+    {
+      "id": "MECHANICAL-ISSUANCE",
+      "requirement": "Root existing delegatedCommander may now issue ONLY the two exact reviewed formaltraining AUTHbytes/specs/Storeapprovals under master. Match expectedAUTHsha R0cae43dfa…/R12223c78a…, sourceS3/configd263/packet1f212…/frozenwholetemplates, appending only the declared finalreview condition. Do not submit jobs."
+    },
+    {
+      "id": "MECHANICAL-CROSS-BINDING",
+      "requirement": "Archive this exactJSON as reviews/final-readiness.json and samebytes alias ifused. Generate formal_conditional_permission.json with exactmanifest/review/masterpins andactualtwoapproval/spec/AUTHpins, generatedevaluationIDs/templates; generate formal_r5_readiness.json READY with those exactcrosspins. No scientificinput or frozenmanifest change."
+    },
+    {
+      "id": "MECHANICAL-CPU-GATE",
+      "requirement": "Run existing pure require_formal_start validation on actual crossboundtraining specs/approvalIDs, no processlaunch/GPU. Verify negative no-explicit-start refusal, exactwhole-spec/hash/permission/READYbinding and current protectedreserves. Any mechanical mismatch must be corrected/rechecked within reviewedtemplates before marking effectiveREADY; this condition permits no scientific waiver."
+    },
+    {
+      "id": "MECHANICAL-FINAL-SYNC",
+      "requirement": "Synchronize currentreport/state/START/plan/evidenceindex and finalaudit to acceptedG1-G9, preserving alloldfailures, rawFAILED/INCOMPLETE/null/counters/output. Commit/tag/normalpush and verify exactremoteHEAD. No newresearch/live or formal submit in thisGoal."
+    },
+    {
+      "id": "LATER-ACTUAL-START",
+      "requirement": "Actualformaltraining is a separate laterexplicitstart action. Existing exactapproval/manifest/permission/STOP/idle/ownedcleanup/disk/master/stage/source/runtime/tools/quota/originalcoexistence checks are mandatorythen. Futureevaluations fillonlyindependentlyacceptedactualfivecheckpointSHAs anddeclaredlateconditions, commit/push beforetheir own explicitlater release."
+    }
+  ],
+  "non_blocking": [
+    {
+      "id": "KNOWN-NATIVE-CLOSE",
+      "finding": "Known app.close9.5sec timeout causes nativeFAILED/-9 despite complete scientific evidence. Normalownedcleanup accepted; allraw/formalstatus andconservativecharges remain. Unknownfailure/uncertaincleanup is not covered."
+    },
+    {
+      "id": "FINITE-NONZERO-SCOPE",
+      "finding": "G6proves executableboundedcommand/history/reference/indexingtransition, not full nonzero competence. T/S/X/W andpostwarmupZ stability remain measuredfutureformaloutcomes."
+    },
+    {
+      "id": "CAUSAL-AND-GENERALIZATION-LIMIT",
+      "finding": "Mean-prior improves thiscontrolleddevelopmentpair and passes bothprospectiveconfirmations/oldseedregressions. No uniqueCOM/anchor/variancecause, unlimitedseed orrealworldreliabilityproof."
+    },
+    {
+      "id": "HISTORICAL-NEGATIVES",
+      "finding": "Oldw.05-onlyfrozenG4failure, adaptivecandidate/pathrejections, priorresourcefailures andoldnativeoverrun retained; not replacedbynewpositivecase."
+    },
+    {
+      "id": "FUTURE-CHECKPOINTS",
+      "finding": "No future272/288/320/384/512 actualhash existsyet; exactgeneratedinputs andindependentacceptancecontracts are complete. This is not a missing currentstartinginput."
+    }
+  ],
+  "no_remaining_scientific_MUST_FIX_or_TODO": true,
+  "formal_training_submitted_at_review": false,
+  "formal_training_submission_authorized_in_this_goal": false,
+  "actual_formal_release_granted_by_this_review": false,
+  "READY_effective_immediately_before_mechanical_conditions": false,
+  "reviewer_mutation_boundary": "Projectreadonly; onlyown/tmpreviewoutputs. NoGPUqueries, simulation, modelactorforward/sampling, optimizer, Storeconstructor/transactions, submissions, processsignals orsubagents."
+}
