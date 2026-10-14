@@ -1,0 +1,107 @@
+{
+  "schema_version": "instinctrl-r5-research-experiment-card/1",
+  "experiment_id": "R5-MEAN10-DEV-01",
+  "parent": "Frozen prior method failed confirmation01 and02 originalZ; Role20 accepted first negative. Both failures retained.",
+  "question": "Does an actor-only zero-command soft mean prior reduce persistent deterministic correction bias at predefined192/256?",
+  "phaseA_evidence": "../../REMAINING_ERROR_ANALYSIS.json and independent anchor-information findings",
+  "sole_primary_reward_variable": "Reward held w.05 botharms; sole variable mean-prior weight0/10 in actor loss, not runtime action replacement.",
+  "common_source_config": "New exactmain snapshot prepared onlyaftercommitted code/config/card.",
+  "init": "Same seed/source coldstart/init/first512; onlyfiniteauxiliaryobjective differs after firstgate; initial reward/advantages/returns expected same.",
+  "primary_node": 256,
+  "predefined_late_nodes": [
+    192,
+    256
+  ],
+  "hypothesis_support": "R1 completeoriginalZ atBOTH192/256; all32/subgroups/T0/200steps unchanged. Comparecontinuousmetrics vsR0 atsamebudget.",
+  "hypothesis_refutation": "Either predefined late candidate node fails originalZ: this finite method fails G3, no horizon extension or seed replacement.",
+  "training_transitions_total": 262144,
+  "evaluation_transitions_total": 25600,
+  "live_starts_total": 4,
+  "logical_updates_total": 512,
+  "actor_steps_total": 4096,
+  "critic_steps_total": 4096,
+  "checkpoint_writes_total": 22,
+  "wall_GPU_reservation_total": 18040,
+  "output_reservation_bytes": 34359738368,
+  "profiles": {
+    "R0": {
+      "experiment_id": "R5-MEAN10-DEV-01",
+      "group": "R0",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "max_updates": 256,
+      "checkpoint_updates": [
+        1,
+        2,
+        8,
+        16,
+        32,
+        64,
+        96,
+        128,
+        192,
+        256
+      ],
+      "evaluation_updates": [
+        192,
+        256
+      ],
+      "command_profile": "pure-hover",
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      },
+      "mean_prior_contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+        "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+      },
+      "mean_prior_weight": 0.0
+    },
+    "R1": {
+      "experiment_id": "R5-MEAN10-DEV-01",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "max_updates": 256,
+      "checkpoint_updates": [
+        1,
+        2,
+        8,
+        16,
+        32,
+        64,
+        96,
+        128,
+        192,
+        256
+      ],
+      "evaluation_updates": [
+        192,
+        256
+      ],
+      "command_profile": "pure-hover",
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      },
+      "mean_prior_contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+        "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+      },
+      "mean_prior_weight": 10.0
+    }
+  },
+  "acceptance": "Both candidateu192/u256 originalZ complete32/32 and all8subgroups4/4, first512 beforebothoptimizers; then newfreeze+twounseenconfirmseeds. Prior failedfreeze neverrequalified.",
+  "recovery": "Bounded fresh identity only for measured infrastructure failure; no scientific retry.",
+  "formal_full_training_submitted": false
+}

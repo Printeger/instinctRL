@@ -4,6 +4,7 @@ import hashlib,json,math,re
 MODES=('research-training','research-evaluation','research-transition','research-formal-training','research-formal-evaluation')
 TRANSITION_PROTOCOL='zero-directions-reverse-zero112-v1'
 INTEGRATION_CONTRACT_SHA256='720845138986bfb053304db915e38fb6bd9558023d65177be53af79bd189a873'
+MEAN_PRIOR_CONTRACT_SHA256='d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9'
 METHOD_VERSION='unified-h1-formal-readiness-v1'
 CURRICULUM_VERSION='curriculum-h1-research-pure-hover-v1'
 PROFILE_FIELDS={'experiment_id','group','training_seed','evaluation_seed','max_updates','checkpoint_updates','evaluation_updates','command_profile','residual_neutrality_weight','anchor_weight','actor_lr','critic_lr','output_cap_bytes','master_authority','experiment_card'}
@@ -20,6 +21,8 @@ def validate_parameters(mode,value):
   return validate_formal(mode,value)
  if mode not in MODES or not isinstance(value,dict):raise PermissionError('unknown research profile')
  expected=PROFILE_FIELDS|({'checkpoints'} if mode in ['research-evaluation','research-transition'] else set())
+ mean_prior = 'mean_prior_contract' in value or 'mean_prior_weight' in value
+ if mean_prior:expected|={'mean_prior_contract','mean_prior_weight'}
  if mode=='research-transition':expected|={'transition_protocol','integration_contract','checkpoint_source_identity','checkpoint_compatibility','recalculation'}
  if set(value)!=expected:raise PermissionError('research profile fields mismatch')
  p=dict(value)
@@ -36,7 +39,14 @@ def validate_parameters(mode,value):
  for k in ['residual_neutrality_weight','anchor_weight','actor_lr','critic_lr']:
   if type(p[k]) not in [int,float] or not math.isfinite(p[k]) or p[k]<0:raise PermissionError('research scalar invalid')
  if p['actor_lr']!=1e-4 or p['critic_lr']!=3e-4:raise PermissionError('research LR profile unregistered')
- if p['residual_neutrality_weight']!={'R0':0.,'R1':.05}[p['group']]:raise PermissionError('research group/weight mismatch')
+ if mean_prior:
+  validate_pin(p['mean_prior_contract'])
+  if (p['mean_prior_contract']['sha256']!=MEAN_PRIOR_CONTRACT_SHA256
+      or type(p['mean_prior_weight']) not in (int,float)
+      or p['mean_prior_weight']!={'R0':0.,'R1':10.}[p['group']]
+      or p['residual_neutrality_weight']!=.05 or p['anchor_weight']!=4.):
+   raise PermissionError('mean prior registered profile mismatch')
+ elif p['residual_neutrality_weight']!={'R0':0.,'R1':.05}[p['group']]:raise PermissionError('research group/weight mismatch')
  if type(p['output_cap_bytes']) is not int or not 4*1024**3<=p['output_cap_bytes']<=16*1024**3:raise PermissionError('research output limit invalid')
  for k in ['master_authority','experiment_card']:
   pin=p[k]
@@ -71,6 +81,9 @@ def validate_parameters(mode,value):
 def method_hashes(config,p):
  result=dict(config['method']['hashes'])
  effective={k:p[k] for k in ['residual_neutrality_weight','anchor_weight','actor_lr','critic_lr','command_profile']}
+ if 'mean_prior_contract' in p:
+  effective['mean_prior_weight']=p['mean_prior_weight']
+  result['mean_prior_contract']=p['mean_prior_contract']['sha256']
  result['research_effective_method']=hashlib.sha256(json.dumps(effective,sort_keys=True,separators=(',',':')).encode()).hexdigest()
  return result
 

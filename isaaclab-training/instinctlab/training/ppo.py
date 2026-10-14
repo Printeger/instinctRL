@@ -269,7 +269,7 @@ def _optimizer_finite(optimizer: torch.optim.Optimizer, label: str) -> None:
 class PPOTrainer:
     """One bounded deterministic PPO interface with structurally separate optimizers."""
 
-    def __init__(self, actor: HistoryActor, critic: PrivilegedCritic, config: PPOConfig = PPOConfig()) -> None:
+    def __init__(self, actor: HistoryActor, critic: PrivilegedCritic, config: PPOConfig = PPOConfig(), *, actor_auxiliary=None) -> None:
         if not isinstance(actor, HistoryActor) or not isinstance(critic, PrivilegedCritic):
             raise TypeError("actor and critic must use the exact training network classes")
         if not isinstance(config, PPOConfig):
@@ -279,6 +279,9 @@ class PPOTrainer:
         self.actor = actor
         self.critic = critic
         self.config = config
+        if actor_auxiliary is not None and not callable(actor_auxiliary):
+            raise TypeError("actor auxiliary must be callable or None")
+        self.actor_auxiliary = actor_auxiliary
         self.actor_optimizer = torch.optim.Adam(actor.parameters(), lr=config.actor_learning_rate)
         self.critic_optimizer = torch.optim.Adam(critic.parameters(), lr=config.critic_learning_rate)
         self.update_counter = 0
@@ -321,6 +324,14 @@ class PPOTrainer:
                 + self.config.value_loss_coefficient * value_loss
                 - self.config.entropy_coefficient * entropy_mean
             )
+            auxiliary = None
+            if self.actor_auxiliary is not None:
+                auxiliary = self.actor_auxiliary(policy, output)
+                if (not isinstance(auxiliary, torch.Tensor) or auxiliary.shape != ()
+                        or auxiliary.device != total_loss.device or auxiliary.dtype != total_loss.dtype
+                        or not bool(torch.isfinite(auxiliary).item())):
+                    raise FloatingPointError("actor auxiliary must be a finite scalar before either optimizer")
+                total_loss = total_loss + auxiliary
             for name, tensor in (("value_loss", value_loss), ("entropy", entropy_mean), ("total_loss", total_loss)):
                 if not bool(torch.isfinite(tensor).all().item()):
                     raise FloatingPointError(f"{name} is nonfinite before optimizer mutation")
@@ -350,6 +361,8 @@ class PPOTrainer:
                 "actor_pre_clip_gradient_norm": float(actor_norm.detach().item()),
                 "critic_pre_clip_gradient_norm": float(critic_norm.detach().item()),
             })
+            if auxiliary is not None:
+                records[-1]["actor_auxiliary_loss"] = float(auxiliary.detach().item())
         if not bool((coverage == 1).all().item()):
             raise RuntimeError("deterministic minibatching did not cover every sample exactly once per epoch")
         if not torch.equal(batch.old_log_probabilities, old_snapshot):

@@ -7,11 +7,11 @@
 
 ## 当前 Goal（2026-10-14 自主正式训练准入）
 
-**IN_PROGRESS，非READY。** H256实际同版本配对已Role15独立接受。R1在预先登记u192/u256均完整原Z32/32、8方向各4/4，最大漂移.254746/.133545m；R0均0/32，u256全部高度失败/reset中断，完整raw和失败分母保留，漂移不作连续稳态解释。开发G2/G3成立，一个训练seed仍不构成G4。
+**IN_PROGRESS，非READY。当前无live。** 原w.05/anchor4方法虽开发u192/u256均原Z32/32，但两个预先冻结确认seed20261015/20261016的u256均为0/32，当前方法G4失败。确认01最大漂移.787367m；确认02漂移.327584m且高度.216544m。原T0/200steps/所有方向/失败分母保留。Role20已独立接受确认01有效负结果；确认02完整原件已结算，科学独立复核待本轮下一审核。
 
-当前唯一live：冻结后的首个确认训练 `J-983c37552deb85d9`，准确 `A-f706136dae2ce864`，输入069ae5a/tag/正常push后release。两个未调参训练seed20261015/20261016及同a13c/config73aeb4ff、w.05/anchor4/LR1e-4/3e-4/purehover256/primary256均在运行前不可变冻结；两者必须全通过，不能2/3或换seed。确认02准确许可A-98a471c16d274aa9未提交，串行等待。旧资源失败、nativeFAILED/INCOMPLETE及保守预留原样保留，所有此前作业正常owned清理/结算/恰好2postrun。
+当前新研究候选R5-MEAN10-DEV-01：两组共享rewardw.05/anchor4/原LR和网络，唯一变量为训练actor-loss零命令Beta均值软prior0/10；部署输出不替换、不注入真值。预定coldstart256、开发seed20260908、late192/256、原Z不变。PPO旧路径逐位等价及新损失CPU检查已通过，准确新source/config/packet和独立预审尚待完成，未签发新live许可。D015在原master内分配新方法研究/条件确认阶段，旧失败、INCOMPLETE及保护预留不重置。
 
-G6/G7和正式warmstart入口已main-only实现，65CPU回归PASS、独立关键代码审核中；新准确source/config/tool/prelive、实际衔接与两个seed确认、正式包和最终审核尚未完成。两正式组计划共享已验证devR1/u256，完整trainerrestore后freshsimreset，新的首actual512gate，mixed-center追加阶段。本Goal不提交正式完整训练。Master和阶段/保护预算以总账为准。
+旧S1 G6/G7/formal实现和启动方案仅历史WIP，需重新绑定将来合格新方法，不能使用旧开发通过绕过确认失败。普通科学负结果继续自主研究，不是DONE/STOP；本Goal不提交正式完整训练。
 
 唯一续接与预算：[GOAL_STATE](experiments/r5-formal-readiness-auto/GOAL_STATE.md)、[新总账](experiments/r5-formal-readiness-auto/goal_budget.json)、[真实结果](experiments/r5-formal-readiness-auto/EXPERIMENT_RESULTS.json)、[证据索引](experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md)。
 

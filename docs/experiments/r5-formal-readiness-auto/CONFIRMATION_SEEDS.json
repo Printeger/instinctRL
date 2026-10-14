@@ -1,6 +1,6 @@
 {
   "schema_version": "instinctrl-r5-confirmation-freeze/1",
-  "status": "FAILED_CONFIRMATION01_ORIGINAL_Z_CONFIRMATION02_EVALUATION_PENDING",
+  "status": "FAILED_BOTH_ORIGINAL_Z_FROZEN_METHOD_NOT_QUALIFIED",
   "freeze_UTC": "2026-10-14T15:10:05.381550+00:00",
   "evidence_commit": "018e6a5",
   "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
@@ -59,7 +59,16 @@
       "all_original_gates_pass": false,
       "success_count": 0,
       "total": 32,
-      "independent_review": "PENDING_ROLE20"
+      "independent_review": "reviews/confirmation01-actual-Z-negative.json"
+    },
+    {
+      "training_seed": 20261016,
+      "analysis_path": "docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-CONFIRM-02-RECOVERY1/R1-evaluation-analysis.json",
+      "node": 256,
+      "all_original_gates_pass": false,
+      "success_count": 0,
+      "total": 32,
+      "independent_review": "PENDING"
     }
   ],
   "all_confirmation_seeds_pass": false,

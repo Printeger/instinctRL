@@ -27,6 +27,27 @@ def training_analysis(D,group):
   terms.extend(actual.tolist());anchor.extend(torch.tensor(r['reward_components']['reward_anchor']).reshape(32).tolist());rows+=1;resets+=int(torch.tensor(r['terminated']).logical_or(torch.tensor(r['truncated'])).sum())
  assert rows==p['max_updates']*16
  result.update(binding=binding,actual_parameters=p,actual_reward_validation={'all_samples':rows*32,'maximum_absolute_formula_error':maxerror,'zero_command_all':True,'zero_extra':stats(terms),'anchor_reward':stats(anchor),'reset_lanes':resets,'raw_path':str(path),'raw_sha256':digest(path)},CPU_only=True,optimizer_calls=0,missing_samples_filled=False)
+ if 'mean_prior_weight' in p:
+  from instinctlab.training.ppo import deterministic_minibatches
+  out=attempt/'results/research-training'
+  auxbinding=read(out/'actor_mean_prior_binding.json')
+  assert auxbinding['actual_weight']==p['mean_prior_weight'] and auxbinding['mean_prior_contract']==p['mean_prior_contract'] and auxbinding['hook_installed'] and auxbinding['actor_only'] and not auxbinding['runtime_action_replacement']
+  records=jsonl(out/'learning_log/minibatches.jsonl');values=[r['actor_auxiliary_loss'] for r in records]
+  assert len(values)==p['max_updates']*8 and all(type(v) in (int,float) and 0<=v<float('inf') for v in values)
+  if p['mean_prior_weight']==0:assert all(v==0 for v in values)
+  cp=torch.load(out/'checkpoints/init0000.pt',map_location='cpu',weights_only=True)
+  retained=torch.load(out/'pilot_diagnostic/update_1_full_input.pt',map_location='cpu',weights_only=True)
+  probe=torch.load(out/'pilot_diagnostic/first_update_probe.pt',map_location='cpu',weights_only=True)
+  indices=deterministic_minibatches(512,64,1,cp['ppo_config']['permutation_seed'])
+  errors=[]
+  for i,ids in enumerate(indices):
+   mean=probe['minibatches'][i]['action_mean'][ids]
+   zero=retained['policy']['state_vec'][ids,45:48].norm(dim=-1)<=.001
+   expected=p['mean_prior_weight']*(zero*((mean[:,1:4]-.5)/.1).square().sum(-1)).mean()
+   assert records[i]['update']==1 and records[i]['minibatch_ordinal']==i
+   assert torch.isclose(expected,torch.tensor(values[i]),atol=1e-6,rtol=1e-5)
+   errors.append(abs(float(expected)-values[i]))
+  result['actor_mean_prior_validation']={'binding':auxbinding,'all_minibatch_scalars':stats(values),'first8_recalculated_saved_actual_actor_outputs':True,'maximum_first8_absolute_error':max(errors),'no_extra_actor_forward':True,'limits':'All scalar counts/finiteness checked; exact formula independently recalculated on saved first8 preoptimizer outputs, no claim of unrecorded later full outputs.'}
  return result
 
 def evaluation_analysis(D,group):

@@ -1,10 +1,10 @@
 {
   "schema_version": "instinctrl-project-state/1",
-  "as_of": "2026-10-14",
+  "as_of": "2026-10-15",
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_FORMAL_READINESS_DEVELOPMENT_ORIGINAL_Z",
+  "phase": "R5_FORMAL_READINESS_NEW_METHOD_RESEARCH",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -402,10 +402,12 @@
       "G8_exactformalpackage_conditionalpermission",
       "G9_independentreview"
     ],
-    "next_action": "Exactly2boundpostrunqueries then realdataanalysis/independentreview; noblindretry.",
+    "next_action": "Freeze newmeanprior candidate exactsource/config/packet; independentprelive before newCommanderrelease",
     "training_authorizations_issued": 6,
     "prelive_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-exact-prelive.json",
-    "commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json"
+    "commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json",
+    "current_frozen_G4": "FAILED_BOTH_CONFIRMATION_ORIGINAL_Z",
+    "new_candidate": "R5-MEAN10-DEV-01"
   },
   "historical_prior_independent_review": {
     "path": "reviews/review-entry6-final-readiness.json",

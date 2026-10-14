@@ -1,0 +1,68 @@
+{
+  "schema_version": "unified-h1-r3-authorization.v2",
+  "status": "AUTHORIZED",
+  "order_id": "R5-H256-CONFIRM-02-R1-RESEARCH-EVALUATION",
+  "method_sha256": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+  "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+  "product_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+  "product_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+  "workload_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+  "workload_tree": "106f2b79dba7952b533276eab22056f40d92c23b",
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-CONFIRM-02-R1-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47",
+  "mode": "research-evaluation",
+  "budgets": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "initialization_ticks": 10,
+    "training_transitions": 0,
+    "nontraining_transitions": 6400,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "explicit_resets": 1,
+    "automatic_resets": 6400,
+    "wall_seconds": 1800
+  },
+  "parameters": {
+    "experiment_id": "R5-H256-CONFIRM-02",
+    "group": "R1",
+    "training_seed": 20261016,
+    "evaluation_seed": 20260909,
+    "max_updates": 256,
+    "checkpoint_updates": [
+      1,
+      2,
+      8,
+      16,
+      32,
+      64,
+      96,
+      128,
+      192,
+      256
+    ],
+    "evaluation_updates": [
+      256
+    ],
+    "command_profile": "pure-hover",
+    "residual_neutrality_weight": 0.05,
+    "anchor_weight": 4.0,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "output_cap_bytes": 8589934592,
+    "master_authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+      "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+    },
+    "experiment_card": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-CONFIRM-02/EXPERIMENT_CARD.json",
+      "sha256": "f42044a8de14c3100e53c22e2dd0eeb3af31a8e05851cc56541541445a521ed2"
+    },
+    "checkpoints": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H256-CONFIRM-02-R1-RESEARCH-TRAINING-RECOVERY1-a13c5a459d47/results/research-training/checkpoints/u256.pt",
+        "sha256": "8a55556f754977ba2cf1927fd16661d36bbe519f56fcb29e26efaeb1861a10e9",
+        "update": 256
+      }
+    ]
+  }
+}

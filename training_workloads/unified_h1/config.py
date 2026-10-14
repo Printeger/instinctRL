@@ -44,6 +44,7 @@ WORKLOAD_SOURCES = {
     "training_workloads/unified_h1/authorization.py", "training_workloads/unified_h1/backend.py",
     "training_workloads/unified_h1/control_diagnostic.py", "training_workloads/unified_h1/pilot_diagnostic.py",
     "training_workloads/unified_h1/pilot_contract.py", "training_workloads/unified_h1/research_contract.py",
+    "training_workloads/unified_h1/mean_prior.py",
     "training_workloads/unified_h1/checkpoint_compatibility.py", "training_workloads/unified_h1/checkpoint_recalculation.py",
     "training_workloads/unified_h1/transition_diagnostic.py", "training_workloads/unified_h1/formal_segment.py",
     "training_workloads/unified_h1/budget.py", "training_workloads/unified_h1/config.py",

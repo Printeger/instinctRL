@@ -227,6 +227,15 @@ class UnifiedH1LiveBackend:
                 "method_hashes": pilot_method_hashes(load_config(), pilot_group)})
         ppo = PPOConfig(minibatch_size=64, epoch_count=1, actor_learning_rate=actor_lr, critic_learning_rate=3.0e-4)
         self.trainer = PPOTrainer(HistoryActor(network).to(self.environment.device), PrivilegedCriticH1(network).to(self.environment.device), ppo)
+        from .mean_prior import configure_trainer
+        configure_trainer(self.trainer, research)
+        if research and 'mean_prior_weight' in research:
+            atomic_json_replace(self.output, 'actor_mean_prior_binding.json', {
+                'mean_prior_contract': research['mean_prior_contract'],
+                'actual_weight': research['mean_prior_weight'],
+                'hook_installed': self.trainer.actor_auxiliary is not None,
+                'actor_only': True, 'runtime_action_replacement': False,
+                'authorization_sha256': self.authorization['authorization_sha256']})
         self.environment.set_h1_evaluation_case(None)
         initial = command_at(0, device=self.environment.device)
         self.environment.set_h1_initial_command(initial, 0)

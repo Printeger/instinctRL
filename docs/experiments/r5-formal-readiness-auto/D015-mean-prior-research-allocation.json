@@ -1,0 +1,45 @@
+{
+  "id": "D015",
+  "decision_by": "Supervisor-Commander under unchanged user master delegation",
+  "master_authority": {
+    "path": "MASTER_AUTHORITY.json",
+    "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+  },
+  "reason": "Both frozen confirmation seeds fail originalZ; valid scientificnegative does not pause Goal. New finite actor-onlymeanprior0/10 pairedmethod instead of moreduration/anchor assumptions. Reviewer20 recommends reference study; Commander firstselects cheaper falsifiable directmeanprior because actual deterministicbias observed and deploymentinput remains unchanged; no causalclaim.",
+  "before_stage": {
+    "training_transitions": 655360,
+    "nontraining_transitions": 67584,
+    "live_starts": 19,
+    "simulator_initialization_reservations": 19,
+    "optimizer_updates": 1280,
+    "training_checkpoint_writes": 62,
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 182536110080
+  },
+  "after_stage": {
+    "training_transitions": 1179648,
+    "nontraining_transitions": 105984,
+    "live_starts": 27,
+    "simulator_initialization_reservations": 27,
+    "optimizer_updates": 2304,
+    "training_checkpoint_writes": 106,
+    "allocated_gpu_seconds": 55050,
+    "wall_seconds_including_cleanup": 55050,
+    "output_peak_and_reservations_bytes": 268435456000
+  },
+  "new_scientific_slots": {
+    "development_training": 2,
+    "development_evaluation": 2,
+    "prospective_newconfirmation_training": 2,
+    "prospective_newconfirmation_evaluation": 2
+  },
+  "new_train_total": 524288,
+  "new_evaluation_total": 38400,
+  "protected_confirmation_and_formal_unchanged": true,
+  "master_caps_unchanged": true,
+  "release_authority": "No automatic command; exact source/config/card/AUTH/review/remainingbudget/STOP/idle/disk/coexistence must pass per entry",
+  "old_failed_freeze_retained": "CONFIRMATION_METHOD_FREEZE.json and CONFIRMATION_SEEDS.json",
+  "conditional_confirmation": "No seed selection or launch until newcandidate192/256both accepted, method frozen; old failedseeds not replaceable under oldmethod",
+  "extra_metadata_and_snapshot_quota_reserved_before_writes": true
+}

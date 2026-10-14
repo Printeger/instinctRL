@@ -1,0 +1,126 @@
+{
+  "role": "Role20",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "接受确认01完整实际原Z负结果，判定当前冻结方法G4失败；提供只读机制分析建议，不授新实验prelive或release。",
+  "identities": {
+    "evidence_head_observed": "f2cac310d5172ec729ca64e261f1ac830ba227eb",
+    "job_id": "J-0e0f31489b086305",
+    "approval_id": "A-7a95780badb906b1",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "launch_sha256": "e9cc7f008584217c96b46fd043ffe6451a6186e7dd624c93c206bbe72820cbe1",
+    "actual_evaluation_AUTH_sha256": "ff16c80f0df39a88fb31dc6e76f032cd8a8676f365b5c09e00237362edba3de5",
+    "authorized_spec_file_sha256": "e47bad8322bba4e6b2fb4918b13d273241fa2a10733fd943d19c802aad941887",
+    "checkpoint_sha256": "1e5a1f4208a82b479d2b985d48967fa2131d8bec5e964d4119af164504edee64",
+    "raw_sha256": "b868f1815044f9a8a7fb0890539b67a7b482b93f51a0524d3b64bd6812e7185d",
+    "training_seed": 20261015,
+    "evaluation_seed": 20260909,
+    "update": 256
+  },
+  "actual_evaluation": {
+    "scientific_evidence_accepted": true,
+    "inventory": {
+      "original_objects": 37,
+      "original_bytes": 5769579,
+      "archive_copy_bytes": 503907,
+      "combined_bytes": 6273486,
+      "result": "所有原件和copies逐文件重哈希、大小及整个job/attempt枚举一致。"
+    },
+    "binding": "actual request.spec、authorized spec、实际AUTH、全部spec pins及已接受训练u256绑定一致。",
+    "replay": "使用未变化的原replay_raw_case、evaluate_episode、case_outcome独立重算；与实际producer和analysis逐episode及总gate一致。",
+    "coverage": {
+      "T0": 1,
+      "policy_steps": 200,
+      "lanes": 32,
+      "nontraining_transitions": 6400,
+      "steps": "完整0..199",
+      "all_commands_zero": true,
+      "reset_lanes": 0,
+      "missing_episodes": 0,
+      "reset_interrupted_episodes": 0,
+      "engineering_valid_episodes": 32,
+      "collision_episodes": 0,
+      "height_failure_episodes": 0
+    },
+    "original_results": {
+      "successes": 0,
+      "denominator": 32,
+      "subgroups": "d0至d7均0/4",
+      "failure_reason": "Z_THRESHOLD_FAILED，32条均保留",
+      "speed_range_m_s": [0.04011399671435356, 0.04073500260710716],
+      "drift_range_m": [0.6606662273406982, 0.787366509437561],
+      "height_deviation_range_m": [0.10006880760192871, 0.10759282112121582]
+    },
+    "control_evidence": "全部200×32实际action、root、velocity、correction和final command有限；action后三维与实际v_corr_b的原xyz解码对应。保留原sensor T0和完整startup，不裁剪或拼接轨迹。"
+  },
+  "lifecycle_accounting": {
+    "native_status": "FAILED",
+    "native_exit_code": -9,
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "retained_nontraining_reservation": 6400,
+    "training_updates_and_checkpoint_writes": 0,
+    "wall_seconds": 62.62758576893248,
+    "allocated_GPU_seconds": 61.21196684916504,
+    "owned_cleanup": "normal ACK、两次稳定空扫描、quiescent、未timed_out、无survivors；再次只读核对9个已知身份均不再owned。",
+    "postrun": "恰好两份原授权receipt，均在normal owned ACK后；本轮无GPU查询。",
+    "process_PASS_granted": false
+  },
+  "scientific_decision": {
+    "current_frozen_G4": "FAILED",
+    "reason": "预先冻结规则要求两个新训练seed都通过；确认01已完整有效地失败，因此确认02任何结果都不能挽救该冻结方法的G4。",
+    "development_evidence": "保留既有dev R1/u192和u256通过的事实，但不能用开发通过替代确认失败。",
+    "required_next_behavior": "继续保留确认02预定评价以完整报告；不选择第三seed替代、不放宽门槛、不沿当前方法扩展超过256。后续若研究新方法，须新准确预注册和新确认freeze。",
+    "goal_status": "仍在自主研究Goal内，普通科学负结果不构成暂停或READY。"
+  },
+  "finite_actual_comparison": {
+    "scope": "直接读取三个真实u256 actor checkpoint、各自真实first512保存数据及最后训练update原始rollout；没有额外forward或sampling。",
+    "observations": [
+      {
+        "training_seed": 20260908,
+        "last_update_mean_v_corr_b": [0.008522162213921547, -0.0015389946638606489, 0.0006552876438945532],
+        "last_update_mean_anchor_huber": 0.022969941577230202,
+        "evaluation_mean_v_corr_b": [0.0034323774371296167, -0.0017462536040693522, -0.00031610785517841575],
+        "Z_successes": 32
+      },
+      {
+        "training_seed": 20261015,
+        "last_update_mean_v_corr_b": [-0.010033311729785055, 0.03806183277629316, 0.002983151818625629],
+        "last_update_mean_anchor_huber": 0.41257806306748535,
+        "evaluation_mean_v_corr_b": [-0.017024768181145192, 0.03496651566587389, 0.007895556017756463],
+        "evaluation_mean_actual_velocity_b": [-0.01685747505744075, 0.03412152590565711, 0.005517276574291827],
+        "Z_successes": 0
+      },
+      {
+        "training_seed": 20261016,
+        "last_update_mean_v_corr_b": [-0.0008393056341446936, -0.015876395860686898, 0.013798496103845537],
+        "last_update_mean_anchor_huber": 0.06700569665554212,
+        "Z_status": "本轮未评价"
+      }
+    ],
+    "first512": "两个确认seed与开发seed的真实首512 actions及oldAlpha/Beta均不逐位相同，符合不同冻结训练seed；不能把这些跨seed结果解释成相同初始化/相同rollout的受控消融。",
+    "interpretation": "确认01训练末段和原Z均存在方向一致的持久correction/velocity偏置，且anchor损失较大。支持seed敏感策略偏置的描述；不证明anchor不可观测、控制器或任一奖励项是唯一原因。"
+  },
+  "recommended_next_single_variable": {
+    "recommendation": "优先研究actor是否获得可部署的测量reference信息，而不是继续增加训练时长或直接把anchor系数4改成8。",
+    "source_basis": "MeasurementAnchor把dense reference保留为内部状态；当前actor只有批准的测量history/state_vec，未显式获得该长期reference。anchor损失仍对reward生效，不能把已有reward反馈等同于actor直接观察reference。",
+    "prerequisite_CPU_work": "先做有限几何、姿态变化、validity及recapture辨识探针，明确候选reference/residual的可观测范围、混淆和生命周期；不得把ray误差冒充真实XY位移。",
+    "prospective_design": "主变量应限于actor可用的测量reference表示，保留w.05、anchor4、LR、controller、原评价规则及有界256训练；准确表示、对照、初始化公平性和新确认seed必须先另行预注册及审核。",
+    "status": "研究建议及机制假设；未批准任何具体新方法、实验身份或live输入。"
+  },
+  "non_blocking": [
+    {
+      "id": "VALID_NEGATIVE_RESULT",
+      "detail": "方法确认失败是有效科学结果，不是缺证据或需要重跑原seed的实现阻塞。"
+    },
+    {
+      "id": "NATIVE_CLOSE",
+      "detail": "完整负结果可独立接受，但native FAILED及INCOMPLETE保守预留必须保持原样。"
+    }
+  ],
+  "release_granted": false,
+  "G4_granted": false,
+  "READY_granted": false
+}
