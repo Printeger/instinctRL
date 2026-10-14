@@ -16,7 +16,7 @@
   "new_training_authorized": true,
   "diagnostic_goal_envelope_authorized": false,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "当前无live。真实G6G7 J-0daf4f4bbd3ab33d已完整112steps/3584nontraining/0autoreset/0训练optimizerwrites，CPU完整重放PASS_IMPLEMENTATION_ONLY；actualCUDA u1真实512 mean/std/logp及finalu256独立重载alpha/beta/mean/logp误差全部0，原atol1e-6/rtol1e-5、模型AdamRNG不变。normalACK/settle/exact2postrun完成，nativeFAILED/-9/INCOMPLETE/null/full3584+8GiB保持；Role32正在独立最终核验。G4已Role31接受、旧15原Z32/32已Role32实审通过待final。下一commit/push后单次release旧16准确Z A-bef3481b00c09c72，6400nontraining/0训练更新writes；随后冻结最终manifest/G9，formal0。",
+  "live_permission_note": "当前唯一LIVE最后旧seed16新mean10原Z回归J-d510b78739acefbf/A-bef3481b00c09c72，准确inputs78e0026/push（原4420fda/tag），actualAUTH1d711c/source617/config2e9/controlc468/真实u256已Role31接受，仅6400nontraining、0训练/optimizer/writes。G4已Role31独立接受；实际G6G7完整112/3584/0reset及CUDA重算/重载全部误差0已Role32实审PASS，nativeFAILED/-9/INCOMPLETE/full预留/normalACK/2postrun保留。旧15原Z32/32已Role32实审。最后16Z终态清理/CPU/独审后冻结manifest/最终G9；仍非READY，formal0。",
   "diagnostic_goal_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "paired_pilot_task_requested": true,
   "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
@@ -29,5 +29,5 @@
   "formal_readiness_master_authority": "docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
   "formal_readiness_goal_status": "IN_PROGRESS",
   "formal_full_training_submission_authorized": false,
-  "formal_readiness_current_job": null
+  "formal_readiness_current_job": "J-d510b78739acefbf"
 }

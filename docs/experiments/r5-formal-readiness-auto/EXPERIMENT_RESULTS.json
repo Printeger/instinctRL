@@ -2145,6 +2145,32 @@
       "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
       "postrun_queries": 2,
       "inventory": "experiments/R5-MEAN10-INTEGRATION-02/live/R1-research-transition/INVENTORY.json"
+    },
+    {
+      "job_id": "J-d510b78739acefbf",
+      "experiment_id": "R5-MEAN10-REGRESSION-16",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "native_status": "RUNNING",
+      "native_exit_code": null,
+      "raw_status": null,
+      "formal_counter_completeness": null,
+      "formal_transitions": null,
+      "observed": {},
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 6400,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 1810,
+        "wall_seconds_including_cleanup": 1810
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": null,
+      "postrun_queries": 0,
+      "inventory": null
     }
   ],
   "master_ledger": "goal_budget.json",
@@ -2289,7 +2315,13 @@
       20261016
     ],
     "formal_submitted": false,
-    "current_only_live": null
+    "current_only_live": {
+      "experiment_id": "R5-MEAN10-REGRESSION-16",
+      "job_id": "J-d510b78739acefbf",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "note": "当前唯一LIVE最后旧seed16新mean10原Z回归J-d510b78739acefbf/A-bef3481b00c09c72，准确inputs78e0026/push（原4420fda/tag），actualAUTH1d711c/source617/config2e9/controlc468/真实u256已Role31接受，仅6400nontraining、0训练/optimizer/writes。G4已Role31独立接受；实际G6G7完整112/3584/0reset及CUDA重算/重载全部误差0已Role32实审PASS，nativeFAILED/-9/INCOMPLETE/full预留/normalACK/2postrun保留。旧15原Z32/32已Role32实审。最后16Z终态清理/CPU/独审后冻结manifest/最终G9；仍非READY，formal0。"
+    }
   },
   "current_mean_confirmation_training": [
     {
@@ -2444,5 +2476,5 @@
       "independent_original_Z_review": "reviews/mean-prior-G4-regression16-training.json"
     }
   ],
-  "entry_inventory_as_of_ledger_sha256": "7077f915c4a8e4835857fcd6b5798b8a4fe40f4fade7fc66cae59255e6d136d5"
+  "entry_inventory_as_of_ledger_sha256": "e9b02c8347d2e21db3db65de022faee3d4ebaa89b0012bec56ea275207395a20"
 }

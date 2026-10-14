@@ -388,8 +388,8 @@
     "evidence_index": "docs/experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md",
     "goal_state": "docs/experiments/r5-formal-readiness-auto/GOAL_STATE.md",
     "budget": "docs/experiments/r5-formal-readiness-auto/goal_budget.json",
-    "current_job": null,
-    "current_exact_release": null,
+    "current_job": "J-d510b78739acefbf",
+    "current_exact_release": "A-bef3481b00c09c72",
     "completion_proven": false,
     "remaining_required_work": [
       "G1_method",
@@ -402,7 +402,7 @@
       "G8_exactformalpackage_conditionalpermission",
       "G9_independentreview"
     ],
-    "next_action": "当前无live。真实G6G7 J-0daf4f4bbd3ab33d已完整112steps/3584nontraining/0autoreset/0训练optimizerwrites，CPU完整重放PASS_IMPLEMENTATION_ONLY；actualCUDA u1真实512 mean/std/logp及finalu256独立重载alpha/beta/mean/logp误差全部0，原atol1e-6/rtol1e-5、模型AdamRNG不变。normalACK/settle/exact2postrun完成，nativeFAILED/-9/INCOMPLETE/null/full3584+8GiB保持；Role32正在独立最终核验。G4已Role31接受、旧15原Z32/32已Role32实审通过待final。下一commit/push后单次release旧16准确Z A-bef3481b00c09c72，6400nontraining/0训练更新writes；随后冻结最终manifest/G9，formal0。",
+    "next_action": "当前唯一LIVE最后旧seed16新mean10原Z回归J-d510b78739acefbf/A-bef3481b00c09c72，准确inputs78e0026/push（原4420fda/tag），actualAUTH1d711c/source617/config2e9/controlc468/真实u256已Role31接受，仅6400nontraining、0训练/optimizer/writes。G4已Role31独立接受；实际G6G7完整112/3584/0reset及CUDA重算/重载全部误差0已Role32实审PASS，nativeFAILED/-9/INCOMPLETE/full预留/normalACK/2postrun保留。旧15原Z32/32已Role32实审。最后16Z终态清理/CPU/独审后冻结manifest/最终G9；仍非READY，formal0。",
     "training_authorizations_issued": 6,
     "prelive_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-exact-prelive.json",
     "commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json",
