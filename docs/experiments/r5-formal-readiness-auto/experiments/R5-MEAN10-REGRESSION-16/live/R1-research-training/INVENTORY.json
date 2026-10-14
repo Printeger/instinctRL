@@ -1,0 +1,572 @@
+{
+  "job_id": "J-c71649c6559afc47",
+  "roots": {
+    "job": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47",
+    "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35"
+  },
+  "files": [
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/descendant-cleanup.json",
+      "category": "job",
+      "relative": "descendant-cleanup.json",
+      "bytes": 675,
+      "sha256": "57dca789c23ec78d1d42afa9e145adb6aa65507eafd6e8f4972126238e23ff0e",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/descendant-cleanup.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/descendant-ledger.json",
+      "category": "job",
+      "relative": "descendant-ledger.json",
+      "bytes": 164,
+      "sha256": "09c8164e62daf6014cab4c983e7c7ab6b1092b5634f87f36be8b12752adb9657",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/descendant-ledger.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/h1-authority.json",
+      "category": "job",
+      "relative": "h1-authority.json",
+      "bytes": 13726,
+      "sha256": "42f6786521edf0cc4aaeda7f3a21bc963e1e135a34ec37569b50bd05a13bb0c4",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/h1-authority.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/h1-collection.json",
+      "category": "job",
+      "relative": "h1-collection.json",
+      "bytes": 6156,
+      "sha256": "fae134bdc1416412fe26a93db65ac844129c5bc88dd0a72aca3cd67b2b15c6e2",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/h1-collection.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/h1-collections/fae134bdc1416412fe26a93db65ac844129c5bc88dd0a72aca3cd67b2b15c6e2.json",
+      "category": "job",
+      "relative": "h1-collections/fae134bdc1416412fe26a93db65ac844129c5bc88dd0a72aca3cd67b2b15c6e2.json",
+      "bytes": 6156,
+      "sha256": "fae134bdc1416412fe26a93db65ac844129c5bc88dd0a72aca3cd67b2b15c6e2",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/h1-collections/fae134bdc1416412fe26a93db65ac844129c5bc88dd0a72aca3cd67b2b15c6e2.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/h1-evidence/125931fcf7953c20544a6898596927ee2e79b234bb24290b9b82351bb6f9519d/process_start.json",
+      "category": "job",
+      "relative": "h1-evidence/125931fcf7953c20544a6898596927ee2e79b234bb24290b9b82351bb6f9519d/process_start.json",
+      "bytes": 1354,
+      "sha256": "125931fcf7953c20544a6898596927ee2e79b234bb24290b9b82351bb6f9519d",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/h1-evidence/125931fcf7953c20544a6898596927ee2e79b234bb24290b9b82351bb6f9519d/process_start.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/h1-evidence/69bcb3767149cddc769aed4626a9202930d2008175bc5c809bc11158b36ff17c/process_identity.json",
+      "category": "job",
+      "relative": "h1-evidence/69bcb3767149cddc769aed4626a9202930d2008175bc5c809bc11158b36ff17c/process_identity.json",
+      "bytes": 292,
+      "sha256": "69bcb3767149cddc769aed4626a9202930d2008175bc5c809bc11158b36ff17c",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/h1-evidence/69bcb3767149cddc769aed4626a9202930d2008175bc5c809bc11158b36ff17c/process_identity.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/h1-evidence/7542ccfe0d0762daa2d05e5094d0e93ae010c46810208917e6cbfae15d3b0878/status.json",
+      "category": "job",
+      "relative": "h1-evidence/7542ccfe0d0762daa2d05e5094d0e93ae010c46810208917e6cbfae15d3b0878/status.json",
+      "bytes": 962,
+      "sha256": "7542ccfe0d0762daa2d05e5094d0e93ae010c46810208917e6cbfae15d3b0878",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/h1-evidence/7542ccfe0d0762daa2d05e5094d0e93ae010c46810208917e6cbfae15d3b0878/status.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/held-child.json",
+      "category": "job",
+      "relative": "held-child.json",
+      "bytes": 920,
+      "sha256": "7ad56d7a7a523c1a7e1ba7f17c1a17f427c49d04c038bef616be94ef38e037b9",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/held-child.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/lifeguard-ack.json",
+      "category": "job",
+      "relative": "lifeguard-ack.json",
+      "bytes": 830,
+      "sha256": "731c67d634e64bc633a3dcdc1aa52093200efc3b2237c89cec1d0ec3953d6137",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/lifeguard-ack.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/lifeguard-done",
+      "category": "job",
+      "relative": "lifeguard-done",
+      "bytes": 4,
+      "sha256": "a4c3ed04a95a3da14a9d235c83d868bed7c0f45cf7f3faa751ee8f50598d2211",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/lifeguard-done"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/lifeguard-ready.json",
+      "category": "job",
+      "relative": "lifeguard-ready.json",
+      "bytes": 200,
+      "sha256": "52f0affca87882c5ba4e4acacc98524f4870b3877b045d2f36f69bf742bfc24a",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/lifeguard-ready.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/lifeguard-request.json",
+      "category": "job",
+      "relative": "lifeguard-request.json",
+      "bytes": 3451,
+      "sha256": "9a043716a5a44042be4d16951e2810e8b38ba82d66a211a8a1eeaec75ea7c91c",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/lifeguard-request.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/lifeguard.log",
+      "category": "job",
+      "relative": "lifeguard.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/lifeguard.log"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/owner-subreaper.json",
+      "category": "job",
+      "relative": "owner-subreaper.json",
+      "bytes": 128,
+      "sha256": "6b1a6eb541500356d4d4af99454ac6337aba7ada1fd0c710a2d8b4512b61cf30",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/owner-subreaper.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/process-identity.json",
+      "category": "job",
+      "relative": "process-identity.json",
+      "bytes": 103,
+      "sha256": "2ba3cdc143d0e909dee99340e0387a01a7aa6c3c2f32ecd49726692c3d73c44d",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/process-identity.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/receipt.json",
+      "category": "job",
+      "relative": "receipt.json",
+      "bytes": 280,
+      "sha256": "c10eb7e28fcad3b2537af3b02f52cd194ced84ec0446a8e9322ed2d544af7be0",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/receipt.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/release-intent.json",
+      "category": "job",
+      "relative": "release-intent.json",
+      "bytes": 152,
+      "sha256": "01dc25104ed293cd152335e4a0fad368709d46a7464b8b9eb358d15d074da9b0",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/release-intent.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/request.json",
+      "category": "job",
+      "relative": "request.json",
+      "bytes": 3145,
+      "sha256": "3cb252e3cf9f3fcce6b493622676d985383215f21877d2b514bd0a940173d854",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/request.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/supervisor-release.json",
+      "category": "job",
+      "relative": "supervisor-release.json",
+      "bytes": 231,
+      "sha256": "b0ca5df794b9c30666ff0ecddfec104dd30ec582bbc5a8654f362eb035747842",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/supervisor-release.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c71649c6559afc47/supervisor.log",
+      "category": "job",
+      "relative": "supervisor.log",
+      "bytes": 40201,
+      "sha256": "9a620d6d15560c4587d46072a2fce15b5ab6ad3a0def9f1aa7320c59555589d8",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/job/supervisor.log"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/commands/AUTHORIZATION.json",
+      "category": "attempt",
+      "relative": "commands/AUTHORIZATION.json",
+      "bytes": 2366,
+      "sha256": "a87b2d2f3f02b4d442068ca29f001e333f3d36cbbd0f375428efa0943073c3b7",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/commands/AUTHORIZATION.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/prelaunch/asset_root_runtime.json",
+      "category": "attempt",
+      "relative": "results/prelaunch/asset_root_runtime.json",
+      "bytes": 387,
+      "sha256": "1c4ec2a7e242b94b5a96d91a7e88eef50a6bce22ffc177be2dd8058db7e18f19",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/prelaunch/asset_root_runtime.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/prelaunch/kit.log",
+      "category": "attempt",
+      "relative": "results/prelaunch/kit.log",
+      "bytes": 399789,
+      "sha256": "f02f6abafacce1583aec0e052f0d0b647f17f89d2ac57773ea56055e0f736dc9",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/prelaunch/kit.log"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/prelaunch/prelaunch_resource_gate.json",
+      "category": "attempt",
+      "relative": "results/prelaunch/prelaunch_resource_gate.json",
+      "bytes": 1418,
+      "sha256": "6c7790b97888f745d09604aea748922621f06a47926d0cc63eeeb9d00102da93",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/prelaunch/prelaunch_resource_gate.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/prelaunch/runtime_resources.json",
+      "category": "attempt",
+      "relative": "results/prelaunch/runtime_resources.json",
+      "bytes": 911906,
+      "sha256": "a71052492d1001e6f0c4e49a5313f3f160bc6a5e839bda2b6e81eb1d54b3cec8",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/prelaunch/runtime_resources.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/actor_mean_prior_binding.json",
+      "category": "attempt",
+      "relative": "results/research-training/actor_mean_prior_binding.json",
+      "bytes": 386,
+      "sha256": "eddeddea830d3539683df11b3832909a22dc44cdd06c47ae670e90139cb01551",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/actor_mean_prior_binding.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/init0000.json",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/init0000.json",
+      "bytes": 274,
+      "sha256": "2b10fd653d9137a2765c858459d68a090ebaf47f3626566ec87cf5c205be3727",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/init0000.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/init0000.pt",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/init0000.pt",
+      "bytes": 517004,
+      "sha256": "68348f2017d0fa186ae96fb09dc7cd57b77740225969775bdee8ae10e3cae052",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/init0000.pt"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u1.json",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u1.json",
+      "bytes": 269,
+      "sha256": "7ab47f52f87cde374a105c5bab1f5e22a5a2f56f155a2334c97c20f16102b49f",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u1.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u1.pt",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u1.pt",
+      "bytes": 1510121,
+      "sha256": "35c05e748fb3fa85af329c346ea788471dde1084dfe81a007426714f8b3859e4",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u1.pt"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u128.json",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u128.json",
+      "bytes": 271,
+      "sha256": "efc8d51d656ec32fa0c401e30a7c594943361da94c8715e6f679578542f0dd92",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u128.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u128.pt",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u128.pt",
+      "bytes": 1510121,
+      "sha256": "dd69b84eaf6dd6e620238860123bf8cda76cbc31abe4590c051829ae2e693fdf",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u128.pt"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u16.json",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u16.json",
+      "bytes": 270,
+      "sha256": "b8c48226d9a3c13814f3df9683ce14e7f81b5b27a8241ce5cd269c28a5e5c696",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u16.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u16.pt",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u16.pt",
+      "bytes": 1510121,
+      "sha256": "e77c0e33fbea4bf980a5f54c75e74c9a080e5fbf021d7608c9b0a5b27d683a01",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u16.pt"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u192.json",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u192.json",
+      "bytes": 271,
+      "sha256": "a750cf6150ff6eab8d9540ec3bcbe53423e9e8ff64503426629c335b4a1cd05e",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u192.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u192.pt",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u192.pt",
+      "bytes": 1510121,
+      "sha256": "2ca5b613654d7037264d48ed5f0917d19c0b949abf8b460e05a0eba3891f1309",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u192.pt"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u2.json",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u2.json",
+      "bytes": 269,
+      "sha256": "cefcab6a461836690449d2a9b9828cc045b83c5613b046cce711b6acc2fb625d",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u2.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u2.pt",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u2.pt",
+      "bytes": 1510121,
+      "sha256": "0e87d33c4ea0459de373229e6302e6915d6a693b598c48938f3b29e14ba17e60",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u2.pt"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.json",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u256.json",
+      "bytes": 271,
+      "sha256": "ccde6937d1eadf117906c51769ad3aa4c4a50487e0a57908fb4b3c0528fe009e",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u256.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u256.pt",
+      "bytes": 1510121,
+      "sha256": "d4ccd88b95013bb3c387c490693cda0b33e217f0cdd30ce785d3992853cb2905",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u256.pt"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u32.json",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u32.json",
+      "bytes": 270,
+      "sha256": "f8efffcdc40c9e34e80a40a728b8156a48059bca9369135e00e700c9fa6565bd",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u32.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u32.pt",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u32.pt",
+      "bytes": 1510121,
+      "sha256": "02835eca2ea225e4afdc068f8b1e439b2af71b90b8863798bad957ffb6bdb1f0",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u32.pt"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u64.json",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u64.json",
+      "bytes": 270,
+      "sha256": "af78392b8d61fefea094d99c7f50a36ed247c85bc2ac50c46d9caa9c27d3aacd",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u64.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u64.pt",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u64.pt",
+      "bytes": 1510121,
+      "sha256": "da341c8d8e8a168faa175ce2fdbacca6704fd18dd50773d28c254e073f0da6d4",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u64.pt"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u8.json",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u8.json",
+      "bytes": 269,
+      "sha256": "042d7d45bacfaa591e7190c7cd575595b5ab8ce76f6bfbfcfd00d125bd1d2632",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u8.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u8.pt",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u8.pt",
+      "bytes": 1510121,
+      "sha256": "86fac93b99723197625113cc270e31dcc23ec670abf7a6e21fc38ac4714c86dd",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u8.pt"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u96.json",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u96.json",
+      "bytes": 270,
+      "sha256": "228792e4eb28be956530019d764546c91a62ae4b7ce8161acb026d165ffcabae",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u96.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u96.pt",
+      "category": "attempt",
+      "relative": "results/research-training/checkpoints/u96.pt",
+      "bytes": 1510121,
+      "sha256": "b56c09e2afbfc4b381e29eba2f3939df5be26d86f2b2abe6b50193721c0aa455",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/checkpoints/u96.pt"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/cleanup_timeout.json",
+      "category": "attempt",
+      "relative": "results/research-training/cleanup_timeout.json",
+      "bytes": 200,
+      "sha256": "459dd8e361bd886d9e0f300f2204a4bd07d781a47e112e425b159454aedce23d",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/cleanup_timeout.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/initialization_accounting.json",
+      "category": "attempt",
+      "relative": "results/research-training/initialization_accounting.json",
+      "bytes": 269,
+      "sha256": "61d33061293905bf9cf69e78083b6310aaafb6b060780015d3bef60151f6ef21",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/initialization_accounting.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/learning_log/accounting.jsonl",
+      "category": "attempt",
+      "relative": "results/research-training/learning_log/accounting.jsonl",
+      "bytes": 1271848,
+      "sha256": "9249419735730262821d4dcc5b2369b95f6c17c397661b736dce2cf1b6eb4084",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/learning_log/accounting.jsonl"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/learning_log/command_blocks.jsonl",
+      "category": "attempt",
+      "relative": "results/research-training/learning_log/command_blocks.jsonl",
+      "bytes": 91843,
+      "sha256": "b05cda7986c92d8893fc1fc8d64859d728d80b15222f3cb94d998d85ffdabaea",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/learning_log/command_blocks.jsonl"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/learning_log/compact_rollouts.jsonl",
+      "category": "attempt",
+      "relative": "results/research-training/learning_log/compact_rollouts.jsonl",
+      "bytes": 291031369,
+      "sha256": "9880289eb936e5dc5f62491b8652a853a0ac16d83a4d7458a3696f17ad43679c",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/learning_log/episodes.jsonl",
+      "category": "attempt",
+      "relative": "results/research-training/learning_log/episodes.jsonl",
+      "bytes": 149123,
+      "sha256": "ef65e8347ae86b66a6e34ddffb53f333226c6b8e7b24a9914c92c860e93f1aab",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/learning_log/episodes.jsonl"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/learning_log/measurement_windows.jsonl",
+      "category": "attempt",
+      "relative": "results/research-training/learning_log/measurement_windows.jsonl",
+      "bytes": 305129889,
+      "sha256": "333ae85cc42f824172bc1c32cce1406cd30e6df0afadd9629e0bd4317734fcd8",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/learning_log/minibatches.jsonl",
+      "category": "attempt",
+      "relative": "results/research-training/learning_log/minibatches.jsonl",
+      "bytes": 973803,
+      "sha256": "dc84735cf30544aacc54d845784b28e5e083d69fbc453ec1967e7e7ec914317e",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/learning_log/minibatches.jsonl"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/learning_log/partial_rollout_steps.jsonl",
+      "category": "attempt",
+      "relative": "results/research-training/learning_log/partial_rollout_steps.jsonl",
+      "bytes": 300958526,
+      "sha256": "55973b728805101297cb70ca26173ca905455f93a378bd862dabcc8aa30392b5",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/learning_log/rollouts.jsonl",
+      "category": "attempt",
+      "relative": "results/research-training/learning_log/rollouts.jsonl",
+      "bytes": 1461301,
+      "sha256": "8a9ee3cd6d1e6ff429ad7b01c7b8f72b525cc0eec024d32daff722e78d57fe43",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/learning_log/rollouts.jsonl"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/learning_log/updates.jsonl",
+      "category": "attempt",
+      "relative": "results/research-training/learning_log/updates.jsonl",
+      "bytes": 654275,
+      "sha256": "c769106dbe0ddd46977828616361cb2456e4b0621869619f7e5fcdc0d9667a73",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/learning_log/updates.jsonl"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/output_quota_binding.json",
+      "category": "attempt",
+      "relative": "results/research-training/output_quota_binding.json",
+      "bytes": 248,
+      "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/output_quota_binding.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/first_update_gate.json",
+      "category": "attempt",
+      "relative": "results/research-training/pilot_diagnostic/first_update_gate.json",
+      "bytes": 179,
+      "sha256": "aed1dc5112c3f937bef1d15f06c4eccc64601db4b0b643fa202ca3eb7855bed8",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/pilot_diagnostic/first_update_gate.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/first_update_probe.pt",
+      "category": "attempt",
+      "relative": "results/research-training/pilot_diagnostic/first_update_probe.pt",
+      "bytes": 12289599,
+      "sha256": "60dcca15fc4e411aab2287931afc4f809632c874876cbe42cefdd358d3c13b52",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/update_1_full_input.pt",
+      "category": "attempt",
+      "relative": "results/research-training/pilot_diagnostic/update_1_full_input.pt",
+      "bytes": 522177865,
+      "sha256": "1e2abed39d31d8c2e752980503857e71d6af68485f06576606878893a4cea953",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_diagnostic/update_2_full_input.pt",
+      "category": "attempt",
+      "relative": "results/research-training/pilot_diagnostic/update_2_full_input.pt",
+      "bytes": 522177865,
+      "sha256": "1468adbb6760a3464de026a85b0bbd609a70cda0f5b43d17a10694cc09e47b28",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/pilot_optimizer_lrs.json",
+      "category": "attempt",
+      "relative": "results/research-training/pilot_optimizer_lrs.json",
+      "bytes": 113,
+      "sha256": "90e9eeee3c9938a53382189612d7f5a8df0b38f4deb0dc545173ad0868d4c9e3",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/pilot_optimizer_lrs.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/process_identity.json",
+      "category": "attempt",
+      "relative": "results/research-training/process_identity.json",
+      "bytes": 293,
+      "sha256": "1bceeca439e8a17be49393629952f372985bf474f2a78b107b89d5afa6a88ab8",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/process_identity.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/process_start.json",
+      "category": "attempt",
+      "relative": "results/research-training/process_start.json",
+      "bytes": 1355,
+      "sha256": "06acf755757b5b446869e2e87a4b8fa28c4c2a95907ef8c27b780552d44f8c83",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/process_start.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/research_profile_binding.json",
+      "category": "attempt",
+      "relative": "results/research-training/research_profile_binding.json",
+      "bytes": 1749,
+      "sha256": "0babe049a8da55419bb40304bda3e6903dbdbefe188eb9f7c6a9d04f47bee480",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/research_profile_binding.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-REGRESSION-16-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/status.json",
+      "category": "attempt",
+      "relative": "results/research-training/status.json",
+      "bytes": 963,
+      "sha256": "4a033b5f90f5dbbb82df74dab2af8da4a11df8dab097304e5de505172231a8fc",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/attempt/results/research-training/status.json"
+    }
+  ],
+  "total_original_bytes": 1975389245,
+  "total_archive_copy_bytes": 21624132,
+  "coverage": "Every original job and entire attempt file; no history rewrite or replacement of big originals."
+}

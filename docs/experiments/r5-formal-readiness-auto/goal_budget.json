@@ -40,17 +40,17 @@
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 10360.870823296951,
-    "wall_seconds_including_cleanup": 10400.575426639523,
-    "output_peak_and_reservations_bytes": 25056926140
+    "allocated_gpu_seconds": 11270.031239518896,
+    "wall_seconds_including_cleanup": 11311.941621263511,
+    "output_peak_and_reservations_bytes": 27053939517
   },
   "observed": {
-    "training_transitions": 1310720,
+    "training_transitions": 1441792,
     "nontraining_transitions": 102400,
-    "optimizer_updates": 2560,
-    "training_checkpoint_writes": 117,
-    "actor_optimizer_steps": 20480,
-    "critic_optimizer_steps": 20480
+    "optimizer_updates": 2816,
+    "training_checkpoint_writes": 128,
+    "actor_optimizer_steps": 22528,
+    "critic_optimizer_steps": 22528
   },
   "reservations": {
     "formal_initial_segment": {
@@ -1117,7 +1117,7 @@
         "experiment_id": "R5-MEAN10-REGRESSION-16",
         "group": "R1",
         "mode": "research-training",
-        "status": "RUNNING",
+        "status": "FAILED",
         "reserved": {
           "training_transitions": 131072,
           "nontraining_transitions": 0,
@@ -1125,13 +1125,27 @@
           "training_checkpoint_writes": 11,
           "actor_optimizer_steps": 2048,
           "critic_optimizer_steps": 2048,
-          "allocated_gpu_seconds": 7210,
-          "wall_seconds_including_cleanup": 7210
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
         },
         "output_cap_bytes": 8589934592,
-        "observed": {},
-        "postrun_queries_used": 0,
-        "settled": false
+        "observed": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 11,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 1997013377,
+        "inventory": "experiments/R5-MEAN10-REGRESSION-16/live/R1-research-training/INVENTORY.json"
       }
     ],
     "source_snapshots": [
