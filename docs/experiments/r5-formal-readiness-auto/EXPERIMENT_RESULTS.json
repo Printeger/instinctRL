@@ -1365,6 +1365,237 @@
       "experiment_id": "R5-H256-CONFIRM-02-RECOVERY1",
       "group": "R1",
       "mode": "research-training",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048
+      },
+      "retained_reservations": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H256-CONFIRM-02-RECOVERY1/live/R1-research-training/INVENTORY.json"
+    },
+    {
+      "job_id": "J-0e0f31489b086305",
+      "experiment_id": "R5-H256-CONFIRM-01",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 6400,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 6400,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H256-CONFIRM-01/live/R1-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-2a4a6dcb3799110e",
+      "experiment_id": "R5-H256-CONFIRM-02-RECOVERY1",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 6400,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 6400,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-H256-CONFIRM-02-RECOVERY1/live/R1-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-b8ec45f94a245f6a",
+      "experiment_id": "R5-MEAN10-DEV-02",
+      "group": "R1",
+      "mode": "research-training",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048
+      },
+      "retained_reservations": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-DEV-02/live/R1-research-training/INVENTORY.json"
+    },
+    {
+      "job_id": "J-b959e2d9ded9ebb3",
+      "experiment_id": "R5-MEAN10-DEV-02",
+      "group": "R0",
+      "mode": "research-training",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048
+      },
+      "retained_reservations": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 11,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-DEV-02/live/R0-research-training/INVENTORY.json"
+    },
+    {
+      "job_id": "J-4f9bdb2e6fafea54",
+      "experiment_id": "R5-MEAN10-DEV-02",
+      "group": "R1",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-DEV-02/live/R1-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-c9f809706825785f",
+      "experiment_id": "R5-MEAN10-DEV-02",
+      "group": "R0",
+      "mode": "research-evaluation",
+      "native_status": "FAILED",
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "observed": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0
+      },
+      "retained_reservations": {
+        "training_transitions": 0,
+        "nontraining_transitions": 12800,
+        "optimizer_updates": 0,
+        "training_checkpoint_writes": 0,
+        "actor_optimizer_steps": 0,
+        "critic_optimizer_steps": 0,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_reserved_bytes": 8589934592,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "postrun_queries": 2,
+      "inventory": "experiments/R5-MEAN10-DEV-02/live/R0-research-evaluation/INVENTORY.json"
+    },
+    {
+      "job_id": "J-b7cf47a791e61388",
+      "experiment_id": "R5-MEAN10-CONFIRM-01",
+      "group": "R1",
+      "mode": "research-training",
       "native_status": "RUNNING",
       "native_exit_code": null,
       "raw_status": null,
@@ -1388,15 +1619,122 @@
     }
   ],
   "master_ledger": "goal_budget.json",
-  "next_experiment": "Independentexactprelive review newcontrol52CPU+freeze/D016/fourfixedcards, issue newunusedconfirmation01 afterPASS, commit/tag/push/single release. Noformaltraining.",
-  "confirmation_seed_results": [],
+  "next_experiment": "Poll exactcurrentJ-b7cf47a791e61388 only; terminal/normalACK/settle/2postrun/CPU thenindependentactualcheckpointacceptance andaccurateprimaryZissue. Othertrainingapprovalscommitted butunsubmitted. G4/G6G7/finalpackage pending, noformaltraining.",
+  "confirmation_seed_results": {
+    "status": "NEW_MEAN_PRIOR_FROZEN_CONFIRMATIONS_NOT_STARTED_NOT_READY",
+    "historical_failed_method": {
+      "schema_version": "instinctrl-r5-confirmation-freeze/1",
+      "status": "FAILED_BOTH_ORIGINAL_Z_FROZEN_METHOD_NOT_QUALIFIED",
+      "freeze_UTC": "2026-10-14T15:10:05.381550+00:00",
+      "evidence_commit": "018e6a5",
+      "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+      "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+      "method": "unified-h1-formal-readiness-v1",
+      "effective_method_sha256": "9d8fa7eaf16a4a83d4d4c7794dfd595e3daca82a684f9e25652b8606638d29c0",
+      "frozen_profile": {
+        "group": "R1",
+        "evaluation_seed": 20260909,
+        "max_updates": 256,
+        "checkpoint_updates": [
+          1,
+          2,
+          8,
+          16,
+          32,
+          64,
+          96,
+          128,
+          192,
+          256
+        ],
+        "command_profile": "pure-hover",
+        "residual_neutrality_weight": 0.05,
+        "anchor_weight": 4.0,
+        "actor_lr": 0.0001,
+        "critic_lr": 0.0003,
+        "output_cap_bytes": 8589934592,
+        "master_authority": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+          "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+        }
+      },
+      "primary_node": 256,
+      "development_late_nodes": [
+        192,
+        256
+      ],
+      "development_evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-DEV-01/R1-evaluation-analysis.json",
+        "sha256": "c88401e95ac61cdea763a519dbed74736d01bb142574fa9bd0f9e1482421684e",
+        "both_original_Z_pass": true,
+        "independent_actualscience_review": "PENDING; mustacceptbeforeconfirmationrelease"
+      },
+      "training_seeds": [
+        20261015,
+        20261016
+      ],
+      "evaluation_seed": 20260909,
+      "seed_rule": "These exact two trainingseeds fixed prospectively, absent all prior Goal cards/AUTH/checkpoint identities at freeze. Both primary256 must originalZpass32/32+allsubgroups, no2of3; never replace failedseed under samemethodfreeze. Same256/131072coldstart budget and frozenmethod. No future weights selected.",
+      "results": [
+        {
+          "training_seed": 20261015,
+          "analysis_path": "docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-CONFIRM-01/R1-evaluation-analysis.json",
+          "node": 256,
+          "all_original_gates_pass": false,
+          "success_count": 0,
+          "total": 32,
+          "independent_review": "reviews/confirmation01-actual-Z-negative.json"
+        },
+        {
+          "training_seed": 20261016,
+          "analysis_path": "docs/experiments/r5-formal-readiness-auto/experiments/R5-H256-CONFIRM-02-RECOVERY1/R1-evaluation-analysis.json",
+          "node": 256,
+          "all_original_gates_pass": false,
+          "success_count": 0,
+          "total": 32,
+          "independent_review": "reviews/mean-prior-DEV02-prelive.json"
+        }
+      ],
+      "all_confirmation_seeds_pass": false,
+      "formal_full_training_submitted": false,
+      "immutable_freeze": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/CONFIRMATION_METHOD_FREEZE.json",
+        "sha256": "de5480a774d7badd5e205ab59372025efa54e68cfd83b5257ff940b4d7541f4f"
+      }
+    },
+    "current_method_freeze": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MEAN_PRIOR_CONFIRMATION_METHOD_FREEZE.json",
+      "sha256": "b55f881c8ef1435dcef21e354b8e36d6765d53b2f0dd2b72c18e81b9a40756c4"
+    },
+    "training_seeds": [
+      20261017,
+      20261018
+    ],
+    "primary_node": 256,
+    "results": [],
+    "old_failed_seed_regressions": [
+      {
+        "training_seed": 20261015,
+        "status": "PROSPECTIVELY_REGISTERED_NOT_STARTED",
+        "counts_for_G4": false
+      },
+      {
+        "training_seed": 20261016,
+        "status": "PROSPECTIVELY_REGISTERED_NOT_STARTED",
+        "counts_for_G4": false
+      }
+    ],
+    "all_new_confirmation_seeds_pass": null,
+    "formal_full_training_submitted": false
+  },
   "H256_status": "INDEPENDENT_ROLE15_ACTUAL_PAIR_PASS_R1_G2_G3_DEVELOPMENT_ONLY",
   "H256_R0_u256_failure_scope": "All32 engineeringheightfailure + RESET_INTERRUPTED_NO_SPLICE/evidence_validfalse, no missingraw; full200steps preserved but drift notuninterrupted steadytrajectory. Full originalfailuredenominator retained.",
   "confirmation_training_status": {
-    "seed20261015": "COMPLETE256_ACCEPTED_ROLE17_Z_PENDING",
-    "seed20261016": "ONLYLIVE_J-51fa505a9c79bfee_FRESH_RECOVERY1_ORIGINAL_STARTUP_REFUSAL_PRESERVED",
+    "scope": "HISTORICAL_W05_ONLY_FAILED_FREEZE",
+    "seed20261015": "COMPLETE256_ACCEPTED_ROLE17_ORIGINAL_Z0_OF32_ROLE20_VALIDNEGATIVE",
+    "seed20261016": "COMPLETE256_RECOVERY1_ACCEPTED_ROLE19_ORIGINAL_Z0_OF32_ROLE21_VALIDNEGATIVE",
     "immutable_freeze": "CONFIRMATION_METHOD_FREEZE.json",
-    "both_originalZ_pass": null
+    "both_originalZ_pass": false
   },
   "prior_frozen_confirmation": {
     "status": "FAILED_G4_BOTH_ORIGINAL_Z0_OF32",
@@ -1421,6 +1759,15 @@
       20261015,
       20261016
     ],
-    "formal_submitted": false
+    "formal_submitted": false,
+    "current_only_live": {
+      "experiment_id": "R5-MEAN10-CONFIRM-01",
+      "training_seed": 20261017,
+      "job_id": "J-b7cf47a791e61388",
+      "first_actual512gate": "PASS_BEFORE_BOTH_OPTIMIZERS",
+      "actual_primary_Z": "PENDING",
+      "source_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "control_release": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba"
+    }
   }
 }
