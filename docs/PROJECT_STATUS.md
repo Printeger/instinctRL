@@ -101,3 +101,5 @@ full20160 reservation retained; no owned survivors. Goal IN_PROGRESS, training0.
 最新续接：第四次在完整采集后CPU分析期间被910秒正式watchdog终止，FAILED/137；实际wall910.5478907090146秒原样计账。原manifest仍PREPARED、最终reward计数缺失，20160全额预留。全403200物理行与96reset段已被离线和独立Reviewer复核，接受修复后的零目标物理回归；命令直通原Z/T/S尚待验证。ef68ebb新候选保持同一物理基线，仅补分析前持久化和pilot-evaluation评估seed分类，32CPU回归通过。全部4次启动槽已用完；准确第五次提案和仅start/init4→5的申请包已生成，未签发许可。未来两组pilot精确argv位于pilot_future_proposals.r3.json，首次rollout概率gate强制保留。Goal仍IN_PROGRESS，训练为零。
 
 最新实际状态：R1原Z入口J-6e4b5482bf1461fe在App前因1/1/9%>5失败，FINAL0/全部数据0、正常ACK/结算/2postrun完成，start/init/output保留。无live；新资源事件1/3，按60/180秒退避，不放宽门槛。fresh R1-Z-RECOVERY1准确提案已准备未发行；R0实际训练独立审核待回。
+
+最新：R0原Z96/128完整12800样本已复算，两个节点均0/32；正常清理、FAILED/-9和INCOMPLETE12800预留保留。原coexistence3/2/2%PASS恢复观察到的可用性。无live，R1 Z RECOVERY1经Role8及真实checkpoint接受已准确授权A-8376604127b9a588，提交/tag/push后一次release，不继承原失败身份。

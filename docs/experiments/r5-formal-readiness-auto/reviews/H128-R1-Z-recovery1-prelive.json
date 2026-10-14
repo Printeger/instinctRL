@@ -1,0 +1,72 @@
+{
+  "verdict": "PASS",
+  "scope": "仅准确fresh R1 Z recovery1身份与条件性评价准入；不是即时release、方法重审或科学资格验收。",
+  "identities": {
+    "input_commit": "ea0695b2ba0037fdb2d0549f0042b3140bd7f3d0",
+    "source_commit": "a13c5a459d471799f30644a9a04189d6e1805f02",
+    "packet_sha256": "6b6861a42a0b6b8c1ed348840b8dfa135163d773ca3c0115888dec91bfe222b9",
+    "launch_sha256": "6b6861a42a0b6b8c1ed348840b8dfa135163d773ca3c0115888dec91bfe222b9",
+    "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+    "recovery_case_id": "R5-H128-DEV-01-R1-Z-RECOVERY1",
+    "parent_scientific_experiment": "R5-H128-DEV-01",
+    "fresh_spec_id": "R5-H128-DEV-01-R1-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47",
+    "formal_order_id": "R5-H128-DEV-01-R1-RESEARCH-EVALUATION"
+  },
+  "must_fix": [],
+  "checks": [
+    {
+      "contract": "原评价入口的真实资源失败",
+      "result": "PASS",
+      "evidence": "独立核验旧入口27个对象、34911原始字节及归档bytes/SHA，完整枚举job和整个attempt。原coexistence样本1/1/9%超过未改5%门槛；collector FINAL0，无动作、reset、transition、optimizer或checkpoint写入。正常ACK与准确owner/guard/child/discovered消失，以及两次原始postrun审计均通过。"
+    },
+    {
+      "contract": "fresh身份与不改变科学条件",
+      "result": "PASS",
+      "evidence": "新packet哈希匹配；新attempt/spec唯一，实际attempt/AUTH不存在。source/config/card/profile、seed、节点及预算与原R1评价提案相同，formal order保持科学标签。只改变执行身份，没有重开旧job或将资源失败当成策略结果。"
+    },
+    {
+      "contract": "准确pins及实际checkpoint来源",
+      "result": "PASS_CONDITIONAL_BINDING",
+      "evidence": "所有现有执行pins匹配；评价路径准确指向Role6接受的真实R1 u96/u128。再次核验两个实际checkpoint SHA，均保持一致。当前AUTH/checkpoint SHA占位未发行，必须在准确审批前填入真实接受值。"
+    }
+  ],
+  "accepted_checkpoint_bindings": [
+    {
+      "update": 96,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u96.pt",
+      "sha256": "d966d1723fa1846afa9cbdbdd97eca68ae495a5bb8c20d540e6a061a213c78cb"
+    },
+    {
+      "update": 128,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R1-RESEARCH-TRAINING-a13c5a459d47/results/research-training/checkpoints/u128.pt",
+      "sha256": "a165cbaa75113bfa9e6e7e5b681fa10cb84e4f91110ccc29f9d6351c1b10d78f"
+    }
+  ],
+  "conditions": [
+    "由受托Commander绑定本次准确review及既有Role6实际训练接受，填入真实checkpoint SHA和准确AUTH SHA；提交/tag/正常push后才可单次release。",
+    "必须等待R0评价实际terminal、准确normal ACK及全部owned quiescence，重新运行idle/STOP和资源检查，不允许重叠。",
+    "若同一资源事件仍未解决，累计全部prelaunch尝试，第三次至少180秒退避且事件最多3次；R0 gate PASS仅恢复已观察的资源可用性，不豁免新R1原gate。",
+    "保持原5% coexistence、六次内部查询、两次terminal后审计，无额外GPU探测、无无关进程终止或阈值放宽。",
+    "保持原Z T0+200步×32lanes、seed20260909、u96/u128、所有失败及方向子组与原阈值。",
+    "旧失败job及start/init/output收费保留；只有实际FINAL0结清其未用逻辑资源。新入口仍须stage/master及confirmation/formal保护预留检查。",
+    "本PASS不接受当前null绑定模板为可执行AUTH，不构成原Z成功、配对结果或READY结论。"
+  ],
+  "non_blocking": [
+    {
+      "id": "RESOURCE-NOT-LEARNING",
+      "assessment": "旧R1评价没有任何策略轨迹，不能记为0/32学习负结果；资源利用率来源仍不能由compute列表推定。"
+    },
+    {
+      "id": "DELEGATION",
+      "assessment": "该有原因、新身份、有限恢复属于当前master委托，可由Coordinator/Commander处理，不需要逐入口再向用户请求一般许可。"
+    }
+  ],
+  "review_actions": {
+    "shared_writes": 0,
+    "gpu_queries": 0,
+    "simulation_or_live_starts": 0,
+    "model_forward_calls": 0,
+    "optimizer_calls": 0,
+    "delegations": 0
+  }
+}

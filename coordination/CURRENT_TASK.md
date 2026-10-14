@@ -7,3 +7,5 @@ R5-FORMAL-READINESS-AUTO-01，目标 READY_FOR_FORMAL_R5_TRAINING，正在进行
 当前无live。R0 RECOVERY1实际128updates完成、正常ACK/结算/2postrun；两组各65536train/9writes，FAILED/-9及INCOMPLETE/null全预留保留。Role6已接受R1真实checkpoint；R1原Z96/128准确A-6bf8b66c262e56da已发行，提交/tag/push后一次release。R0独立实际审核/评价与完整pair仍待，尚无候选原Z资格。
 
 最新实际状态：R1原Z入口J-6e4b5482bf1461fe在App前因1/1/9%>5失败，FINAL0/全部数据0、正常ACK/结算/2postrun完成，start/init/output保留。无live；新资源事件1/3，按60/180秒退避，不放宽门槛。fresh R1-Z-RECOVERY1准确提案已准备未发行；R0实际训练独立审核待回。
+
+最新：R0原Z96/128完整12800样本已复算，两个节点均0/32；正常清理、FAILED/-9和INCOMPLETE12800预留保留。原coexistence3/2/2%PASS恢复观察到的可用性。无live，R1 Z RECOVERY1经Role8及真实checkpoint接受已准确授权A-8376604127b9a588，提交/tag/push后一次release，不继承原失败身份。

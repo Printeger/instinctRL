@@ -1,0 +1,209 @@
+{
+  "approval_id": "A-b89f05b496caa7c7",
+  "h1_evidence": {
+    "allocation_basis": "allocated_device_wall_seconds",
+    "allocation_gpu_seconds": 96.07463528215885,
+    "counter_completeness": "INCOMPLETE",
+    "counters": {
+      "actor_optimizer_steps": 0,
+      "attempted_policy_steps": 400,
+      "attempted_updates": 0,
+      "automatic_resets": 0,
+      "completed_policy_steps": 400,
+      "completed_updates": 0,
+      "critic_optimizer_steps": 0,
+      "explicit_resets": 2,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 12800,
+      "real_checkpoint_writes": 0,
+      "real_environment_transitions": 12800,
+      "real_optimizer_updates": 0,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 0
+    },
+    "exit_fact": "FAILED",
+    "formal_verdict": "NOT_GRANTED",
+    "manifest": {
+      "cleanup_timeout.json": {
+        "bytes": 200,
+        "sha256": "66a6c0024ff751b9f3ad2b17fcca06d0387727cf04b6cc3ebca22c2c328c01b9"
+      },
+      "evaluation_progress.json": {
+        "bytes": 112,
+        "sha256": "f962fd6e611d3bcb229c5558c631701704f8343d68d652b524d7385eaa3818a0"
+      },
+      "evaluation_raw/research_R0_u128/Z.jsonl": {
+        "bytes": 5250296,
+        "sha256": "fd0a955656466ffe6fc0e00996b02ee89b3da8a421a06cbfd5c2d6916d04a293"
+      },
+      "evaluation_raw/research_R0_u96/Z.jsonl": {
+        "bytes": 5267061,
+        "sha256": "c410946212492c055554065d62e724e0a983cfff1e11b145fef1a4d054b6710c"
+      },
+      "initialization_accounting.json": {
+        "bytes": 269,
+        "sha256": "61d33061293905bf9cf69e78083b6310aaafb6b060780015d3bef60151f6ef21"
+      },
+      "output_quota_binding.json": {
+        "bytes": 248,
+        "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b"
+      },
+      "process_identity.json": {
+        "bytes": 293,
+        "sha256": "f2a4c3ccfea2dec6aa30fa2ef4a94d49336c5646800a96ad7aa013ee64147a18"
+      },
+      "process_start.json": {
+        "bytes": 1352,
+        "sha256": "4f01abfaf1e031b710bd6d2fb6d756e372a1e0be8a4148e6f1eace0758758df1"
+      },
+      "research_R0_u128_Z.json": {
+        "bytes": 9475,
+        "sha256": "e8177d8719cd658de867e4a85ffd3d51f26d374232b7523b799ed0dcb484e417"
+      },
+      "research_R0_u128_policy_Z.json": {
+        "bytes": 9396,
+        "sha256": "b9e087e646c332eac31007a30a3f90cfaf469603d9eefa2345b0b0af3c1ce01d"
+      },
+      "research_R0_u96_Z.json": {
+        "bytes": 9465,
+        "sha256": "a2a635c76ffc10afcc1de78751d9570cd5376f457b686412d1ca3b9f904b0a17"
+      },
+      "research_R0_u96_policy_Z.json": {
+        "bytes": 9387,
+        "sha256": "8040daca7de97777a5b328f9afc9f85be6cea7027c4c3ac4b8cf4fba60faea15"
+      },
+      "research_profile_binding.json": {
+        "bytes": 1951,
+        "sha256": "b56262e1765957b0a537d9544067ad7aa1507f0cbcca0524ef7be59900504350"
+      },
+      "status.json": {
+        "bytes": 944,
+        "sha256": "8bcdf2f3d05f73d34256bb46fb3fa2eeab4afd01a0968f6bb708cadbd2f6ad8e"
+      }
+    },
+    "raw_status": "PASS_PENDING_CLOSE",
+    "scientific_validity": "UNASSESSED",
+    "scope": "H1_RAW_EXECUTION",
+    "transitions": null
+  },
+  "id": "J-8c4d37264a6105d4",
+  "identity": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pgid": 1846688,
+    "pid": 1846688,
+    "starttime": "193440142"
+  },
+  "receipt": {
+    "allocated_seconds": 96.07463528215885,
+    "definitely_not_released": false,
+    "elapsed_seconds": 96.96042937901802,
+    "error": null,
+    "exit_code": -9,
+    "job_id": "J-8c4d37264a6105d4",
+    "released": true,
+    "spec_sha256": "9a5867c0b34d3a18fdb28ba66e49986bd81337cc6c328cd281df7138c60bd96a",
+    "status": "FAILED"
+  },
+  "reserved_resources": {
+    "transitions": 12800
+  },
+  "spec": {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--authorization",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/commands/AUTHORIZATION.json",
+      "--attempt",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47",
+      "--mode",
+      "research-evaluation"
+    ],
+    "backend": "real",
+    "conditions": [
+      {
+        "evidence_id": "E-R5-FORMAL-MASTER-DELEGATION-20261014",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      },
+      {
+        "evidence_id": "E-R5-H128-DEV-01-R0-RECOVERY1-ACTUAL-TRAINING",
+        "sha256": "d5e780a7aa599dd3cec62a29436a04c9dc5c2920ebdef13a3fa789b627dce0b8"
+      },
+      {
+        "evidence_id": "E-R5-H128-DEV-01-R0-RECOVERY1-PRELIVE",
+        "sha256": "d5e780a7aa599dd3cec62a29436a04c9dc5c2920ebdef13a3fa789b627dce0b8"
+      }
+    ],
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014",
+    "evaluation": "metric-h1-v1",
+    "h1": {
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47",
+      "config_sha256": "73aeb4ff6db0c72fdd4a0e01efec7785b23fa3e8d8885c546fb91b7261007721",
+      "gpu_accounting": "allocated_device_wall_seconds",
+      "gpu_devices": [
+        "0"
+      ],
+      "mode": "research-evaluation",
+      "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014"
+    },
+    "id": "R5-H128-DEV-01-R0-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47",
+    "method": "unified-h1-formal-readiness-v1",
+    "observations": [
+      "status",
+      "counters",
+      "process_identity",
+      "process_start",
+      "cleanup",
+      "evaluation_raw"
+    ],
+    "pins": {
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47/commands/AUTHORIZATION.json",
+        "sha256": "7b1a5431d14c45a76db105999ec0d72927c94976fd847d4acd29f72ece11633d"
+      },
+      "dispatcher": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014/training_workloads/unified_h1/local_dispatch.py",
+        "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+      },
+      "executable": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "product": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+        "sha256": "0d5f6be7a16576b23cca0823d67d3d47acfc64484d71f36b1381cbffb89b91c9"
+      },
+      "runtime": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "workload": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014/training_workloads/unified_h1/formal_unified_h1.py",
+        "sha256": "ee5c5cb332a6a91e9d7961f7d22d58b66af12c1b9259b6c850b99c4b38847f8b"
+      }
+    },
+    "resources": {
+      "gpu_seconds": 1810,
+      "starts": 1,
+      "transitions": 12800,
+      "wall_seconds": 1810
+    },
+    "runtime": "/home/mint/rl_blackwell_test",
+    "seed": 20260909,
+    "stage_id": "R5-FORMAL-READINESS-AUTO-01"
+  },
+  "stage": "R5-FORMAL-READINESS-AUTO-01",
+  "status": "FAILED",
+  "used_resources": {
+    "gpu_seconds": 96.07463528215885,
+    "starts": 1,
+    "transitions": null,
+    "wall_seconds": 96.96042937901802
+  }
+}

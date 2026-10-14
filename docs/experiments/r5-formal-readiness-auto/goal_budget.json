@@ -34,19 +34,19 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 4,
-    "simulator_initialization_reservations": 4,
+    "live_starts": 5,
+    "simulator_initialization_reservations": 5,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 1077.2567735239863,
-    "wall_seconds_including_cleanup": 1080.433468528092,
-    "output_peak_and_reservations_bytes": 4582598966
+    "allocated_gpu_seconds": 1173.3314088061452,
+    "wall_seconds_including_cleanup": 1177.39389790711,
+    "output_peak_and_reservations_bytes": 4594242859
   },
   "observed": {
     "training_transitions": 131072,
-    "nontraining_transitions": 0,
+    "nontraining_transitions": 12800,
     "optimizer_updates": 256,
     "training_checkpoint_writes": 18,
     "actor_optimizer_steps": 2048,
@@ -210,6 +210,42 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 69822,
         "inventory": "experiments/R5-H128-DEV-01/live/R1-research-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-H128-DEV-01-R0-RESEARCH-EVALUATION-RECOVERY1-a13c5a459d47",
+        "job_id": "J-8c4d37264a6105d4",
+        "experiment_id": "R5-H128-DEV-01-R0-RECOVERY1",
+        "group": "R0",
+        "mode": "research-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 12800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 11643893,
+        "inventory": "experiments/R5-H128-DEV-01-R0-RECOVERY1/live/R0-research-evaluation/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -305,7 +341,9 @@
       "role": "Reviewer",
       "handle": "/root/pilot_reviewer",
       "scope": "Exactfresh R1 originalZ RECOVERY1 identity only after beforeAppresourcefailure; source/method/profile/actualacceptedcheckpoints unchanged. Boundedincident recovery with originalgates, noqualification.",
-      "status": "REQUESTED"
+      "status": "PASS_CONDITIONAL_EXACT_FRESH_R1_Z_RECOVERY1",
+      "evidence": "reviews/H128-R1-Z-recovery1-prelive.json",
+      "sha256": "99f8b826ff428fedda46ee9c511516f852edcd2e48eb280ebf651594fe8d0e8b"
     }
   ],
   "decisions": [
