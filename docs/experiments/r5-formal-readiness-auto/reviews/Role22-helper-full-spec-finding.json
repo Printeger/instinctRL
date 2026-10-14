@@ -1,0 +1,17 @@
+{
+  "role": "Role22",
+  "verdict": "MUST_FIX_LIMITED_UNUSED_HELPER",
+  "must_fix": [
+    {
+      "id": "FORMAL-GENERATED-FULL-SPEC",
+      "code_commit": "5aaecbc",
+      "scope": "Unwired futureformal launchgate only; no existingCommander bypass orlive effect",
+      "verbatim_messages": [
+        "Role22发现helper未来generated-eval边界具体缺口：require_formal_start 对generated spec只比 argv/cwd/h1及AUTH template，未把其余spec字段绑定到已审manifest/template。现有fixture可修改 spec.pins.dispatcher/product/runtime、resources、method/evaluation等且仍通过helper（provided validaccepted checkpoint condition）。独立Store精确approval不等于这些变化已在final manifest科学审核内。建议manifest pin完整spec_template；generated分支只允许authorization SHA填充及精确新增accepted-checkpoint条件，其他字段deep equality。helper未wired所以无当前live影响，但作为声称“future eval只fill已接受SHA”的实现应闭合；我会列为限定helper MUST_FIX并加最小反例。不会要求未执行WIP现成READY/approval。",
+        "已用当前真实helper代码+完全内存filesystem mock（零写入、无Store/实际许可）复现缺口：保留argv/cwd/h1/AUTH和accepted checkpoint review，任意改dispatcher pin、resources.starts=999、method字段，require_formal_start仍返回接受。只是helper反例，不声称现有Commander已被绕过。最小闭合仍是完整spec_template+明确白名单变换+负fixture。正式mean phase callback静态核对正确：strictrestore后configure当前0/10，firstgate/loop前完成，origin10与current0明确分离；未发现此部分新阻塞。"
+      ]
+    }
+  ],
+  "builder_fix_status": "APPLIED_FULL_SPEC_TEMPLATE_AND_EXACT_LATE_CONDITIONS_22CPU_PASS_AWAIT_INDEPENDENT_CLOSURE",
+  "native_or_execution_changes": 0
+}

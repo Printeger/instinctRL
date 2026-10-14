@@ -135,6 +135,28 @@ def require_formal_start(root, specpath, approval_id, *, explicit_start=False, a
                 break
         if checkpoint_acceptance_sha256 is None:
             raise PermissionError('Generated formal checkpoints lack exact accepted training evidence')
+    # Bind the WHOLE reviewed proposal, including dispatcher/runtime/resources
+    # and every other field. Only the explicitly declared late review conditions
+    # and generated authorization SHA may be filled after the final review.
+    frozen_spec = pinned(expected['spec_template'], Path(expected['spec_template']['path']))
+    filled_spec = deepcopy(frozen_spec)
+    if generated:
+        if filled_spec['pins']['authorization']['sha256'] is not None:
+            raise PermissionError('Generated spec template already has a checkpoint-dependent AUTH SHA')
+        filled_spec['pins']['authorization']['sha256'] = authorization['sha256']
+    bindings = {'final_review': digest(review_path), 'checkpoint_acceptance': checkpoint_acceptance_sha256}
+    additions = expected['additional_conditions']
+    if ([a['binding'] for a in additions].count('final_review') != 1
+            or [a['binding'] for a in additions].count('checkpoint_acceptance') != int(generated)
+            or len(additions) != 1 + int(generated)):
+        raise PermissionError('Formal late-condition template is not exact')
+    for addition in additions:
+        if set(addition) != {'evidence_id', 'binding'} or addition['binding'] not in bindings:
+            raise PermissionError('Formal undeclared late-condition transformation')
+        filled_spec['conditions'].append({'evidence_id': addition['evidence_id'],
+                                          'sha256': bindings[addition['binding']]})
+    if filled_spec != spec:
+        raise PermissionError('Formal complete spec differs from reviewed template')
     return {'manifest_sha256': digest(manifest_path), 'review_sha256': digest(review_path),
             'permission_sha256': digest(permission_path), 'approval_id': approval_id,
             'generated_checkpoint_acceptance_sha256': checkpoint_acceptance_sha256}

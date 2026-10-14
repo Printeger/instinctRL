@@ -22,17 +22,22 @@ def package(tmp_path):
     master=save(base/'MASTER_AUTHORITY.json',{'id':GOAL})
     auth=save(base/'fixture-AUTH.json',{'fixture':'Not a real runtime authorization'})
     spec={'id':'CPU-FORMAL', 'h1':{'mode':'research-formal-training'},
-          'pins':{'authorization':auth}, 'argv':['fixture'], 'cwd':'fixture'}
+          'pins':{'authorization':auth}, 'argv':['fixture'], 'cwd':'fixture','conditions':[]}
     specpath=base/'fixture-spec.json'; specpin=save(specpath,spec)
+    templatepin=save(base/'training-spec-template.json',spec)
     manifest={'goal_id':GOAL,'status':'FROZEN_CONDITIONAL_FORMAL_FIRST_SEGMENT',
               'commander':save(root/'tools/r5_formal_commander.py',{'fixture':'Never executable'}),
               'launch_gate':save(root/'tools/r5_formal_launch_gate.py',{'fixture':'Never executable'}),
               'master_authority':master,'entries':[{'spec_id':spec['id'],
                 'expected_authorization_sha256':auth['sha256'],
+                'spec_template':templatepin,
+                'additional_conditions':[{'evidence_id':'CPU-FINAL-REVIEW','binding':'final_review'}],
                 'argv':spec['argv'],'cwd':spec['cwd'],'h1':spec['h1']}]}
     mp=save(base/'formal_r5_launch_manifest.json',manifest)
     rp=save(base/'reviews/final-readiness.json',{'verdict':'PASS','must_fix':[],
             'identities':{'formal_manifest_sha256':mp['sha256']}})
+    spec['conditions'].append({'evidence_id':'CPU-FINAL-REVIEW','sha256':rp['sha256']})
+    specpin=save(specpath,spec)
     permission={'goal_id':GOAL,'status':'CONDITIONAL_APPROVED_AT_READINESS',
                 'manifest':mp,'independent_review':rp,'master_authority':master,
                 'entries':[{'spec':specpin,'approval_id':'CPU-APPROVAL','authorization':auth}]}
@@ -100,16 +105,23 @@ def generated_evaluation(package):
     tp=save(base/'evaluation-template.json',template)
     rp=save(base/'CPU-training-review.json',{'verdict':'PASS','must_fix':[],
         'accepted_evaluation_checkpoints':paths})
-    spec['conditions']=[{'evidence_id':'CPU-ACCEPTED-TRAINING','sha256':rp['sha256']}]
-    save(specpath,spec)
+    frozen_spec=deepcopy(spec);frozen_spec['conditions']=[]
+    frozen_spec['pins']['authorization']['sha256']=None
+    stp=save(base/'evaluation-spec-template.json',frozen_spec)
     manifest=json.loads((base/'formal_r5_launch_manifest.json').read_text())
     entry=manifest['entries'][0]
-    entry.update(h1=spec['h1'],generated_checkpoint_inputs=True,authorization_template=tp)
+    entry.update(h1=spec['h1'],generated_checkpoint_inputs=True,authorization_template=tp,
+        spec_template=stp,additional_conditions=[
+            {'evidence_id':'CPU-ACCEPTED-TRAINING','binding':'checkpoint_acceptance'},
+            {'evidence_id':'CPU-FINAL-REVIEW','binding':'final_review'}])
     entry.pop('expected_authorization_sha256')
     mp=save(base/'formal_r5_launch_manifest.json',manifest)
     review=json.loads((base/'reviews/final-readiness.json').read_text())
     review['identities']['formal_manifest_sha256']=mp['sha256']
     finalrp=save(base/'reviews/final-readiness.json',review)
+    spec['conditions']=[{'evidence_id':'CPU-ACCEPTED-TRAINING','sha256':rp['sha256']},
+                        {'evidence_id':'CPU-FINAL-REVIEW','sha256':finalrp['sha256']}]
+    save(specpath,spec)
     permission=json.loads((base/'formal_conditional_permission.json').read_text())
     permission.update(manifest=mp,independent_review=finalrp,entries=[],allowed_generated_evaluation_spec_ids=[spec['id']])
     pp=save(base/'formal_conditional_permission.json',permission)
@@ -146,6 +158,22 @@ def test_generated_future_checkpoint_drift_refuses_before_release(package):
     root,base,specpath=package
     (base/'CPU-only-u512.pt').write_bytes(b'changed')
     with pytest.raises(PermissionError,match='checkpoint file drift'):
+        require_formal_start(root,specpath,'CPU-LATER-APPROVAL',explicit_start=True,accepted_evidence=evidence)
+
+
+@pytest.mark.parametrize('change',[
+    lambda s:s['pins'].update(dispatcher={'path':'wrong','sha256':'wrong'}),
+    lambda s:s.update(resources={'starts':999}),
+    lambda s:s.update(method='wrong'),
+    lambda s:s.update(evaluation='wrong'),
+    lambda s:s.update(runtime='wrong'),
+    lambda s:s['conditions'].append({'evidence_id':'UNDECLARED','sha256':'wrong'}),
+])
+def test_generated_eval_complete_spec_tampering_is_rejected(package,change):
+    evidence=generated_evaluation(package)
+    root,base,specpath=package
+    spec=json.loads(specpath.read_text());change(spec);save(specpath,spec)
+    with pytest.raises(PermissionError,match='complete spec differs'):
         require_formal_start(root,specpath,'CPU-LATER-APPROVAL',explicit_start=True,accepted_evidence=evidence)
 
 
