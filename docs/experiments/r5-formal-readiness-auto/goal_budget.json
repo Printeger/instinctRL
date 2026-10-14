@@ -23,28 +23,35 @@
   "stage_allocation": {
     "training_transitions": 131072,
     "nontraining_transitions": 25600,
-    "live_starts": 4,
-    "simulator_initialization_reservations": 4,
+    "live_starts": 6,
+    "simulator_initialization_reservations": 6,
     "optimizer_updates": 256,
     "training_checkpoint_writes": 18,
-    "allocated_gpu_seconds": 10840,
-    "wall_seconds_including_cleanup": 10840,
+    "allocated_gpu_seconds": 18060,
+    "wall_seconds_including_cleanup": 18060,
     "output_peak_and_reservations_bytes": 68719476736
   },
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 0,
-    "simulator_initialization_reservations": 0,
+    "live_starts": 1,
+    "simulator_initialization_reservations": 1,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 0,
-    "wall_seconds_including_cleanup": 0,
-    "output_peak_and_reservations_bytes": 0
+    "allocated_gpu_seconds": 10.800361374858767,
+    "wall_seconds_including_cleanup": 11.547275206074119,
+    "output_peak_and_reservations_bytes": 66900
   },
-  "observed": {},
+  "observed": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0
+  },
   "reservations": {
     "formal_initial_segment": {
       "training_transitions": 262144,
@@ -59,7 +66,44 @@
       "wall_seconds_including_cleanup": 21680,
       "output_peak_and_reservations_bytes": 34359738368
     },
-    "live_entries": [],
+    "live_entries": [
+      {
+        "spec_id": "R5-H128-DEV-01-R0-RESEARCH-TRAINING-a13c5a459d47",
+        "job_id": "J-f6a597371d5f794a",
+        "experiment_id": "R5-H128-DEV-01",
+        "group": "R0",
+        "mode": "research-training",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": 1,
+        "raw_status": "FAIL",
+        "formal_counter_completeness": "FINAL",
+        "formal_transitions": 0,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 66900,
+        "inventory": "experiments/R5-H128-DEV-01/live/R0-research-training/INVENTORY.json"
+      }
+    ],
     "source_snapshots": [
       {
         "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-H128-01-20261014",
@@ -126,6 +170,10 @@
     {
       "path": "experiments/R5-H128-DEV-01/BUDGET_ADJUSTMENT.json",
       "sha256": "ef7c2cc33897712401fc62a3559760d3e1a09d6039adb7e3945e7d4dfb707bc8"
+    },
+    {
+      "path": "experiments/R5-H128-DEV-01/D005-environment-recovery.json",
+      "sha256": "40718d12b8cce147e8291805fa5202d0a77383cc4933276a52a4a6a339b0b7ed"
     }
   ],
   "runs": [],

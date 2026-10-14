@@ -1,0 +1,42 @@
+{
+  "kind": "BUDGET_ADJUSTMENT_AND_BOUNDED_ENVIRONMENT_RECOVERY",
+  "id": "D005",
+  "master_authority_sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33",
+  "cause": "FirstR0entry existing originalGPU<=5percentcoexistence拒绝 beforeApp; samples10,11,2%. CollectorFINAL0; no trainingorcheckpoints. NormalownedACK2stable/no survivors andexact2postruncomplete.",
+  "failed_job": "J-f6a597371d5f794a",
+  "failure_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-H128-DEV-01-R0-RESEARCH-TRAINING-a13c5a459d47/results/prelaunch/prelaunch_resource_gate_failure.json",
+  "failure_sha256": "e074dca3377fb1d40d2b2486d58eab1b9acadb0e32569b6219e4536745df20eb",
+  "old_stage": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 25600,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 18,
+    "allocated_gpu_seconds": 10840,
+    "wall_seconds_including_cleanup": 10840,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "new_stage": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 25600,
+    "live_starts": 6,
+    "simulator_initialization_reservations": 6,
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 18,
+    "allocated_gpu_seconds": 18060,
+    "wall_seconds_including_cleanup": 18060,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "master_caps_unchanged": true,
+  "all_previous_start_init_output_reservations_retained": true,
+  "next_action": "Second environmental prelaunch attempt is already independently accepted R1 initial exactentry after>=60sbackoff; scientificpairorder notcausalvariable. Ifsameenvironmentrefuses, atmostonefurthernew-identityattempt after>=180s, thenpersistentresourceSTOP. NoexternalGPUprobes/kills/thresholdchange.",
+  "elapsed_since_last_failed_prelaunch_sample_seconds": 167.74759912700392,
+  "backoff_rule_seconds": [
+    60,
+    180
+  ],
+  "total_prelaunch_attempts_for_this_environment_incident_maximum": 3,
+  "training_budget_unchanged": true,
+  "formal_confirmation_reserves_protected": true
+}

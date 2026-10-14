@@ -1,0 +1,36 @@
+{
+  "spec_id": "R5-H128-DEV-01-R0-RESEARCH-TRAINING-a13c5a459d47",
+  "job_id": "J-f6a597371d5f794a",
+  "experiment_id": "R5-H128-DEV-01",
+  "group": "R0",
+  "mode": "research-training",
+  "status": "FAILED",
+  "reserved": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0,
+    "allocated_gpu_seconds": 0,
+    "wall_seconds_including_cleanup": 0
+  },
+  "output_cap_bytes": 8589934592,
+  "observed": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0
+  },
+  "postrun_queries_used": 2,
+  "settled": true,
+  "native_exit_code": 1,
+  "raw_status": "FAIL",
+  "formal_counter_completeness": "FINAL",
+  "formal_transitions": 0,
+  "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+  "output_observed_bytes": 66900,
+  "inventory": "experiments/R5-H128-DEV-01/live/R0-research-training/INVENTORY.json"
+}
