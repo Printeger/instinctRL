@@ -15,3 +15,11 @@ R1同样。真实已有文件则复核不覆写历史。禁止删最差lane、�
 最终只按所给schema返回。status PASS表示完整原件独立审核+真实最终分析/提交push已完成，即使科学性能是负结果；summary必须清楚科学实际结果。artifacts至少含final review、EXPERIMENT_RESULTS.json、FINAL_ANALYSIS.md pins；commit准确已push HEAD。若数据/权限等真实异常，持久化STOP原因并返回STOP，不制造完整结果、不再次调用模型。
 
 调用前已有的全部case文件、训练joint review/analysis及原件/副本均须保持不变，goal_budget.json只能原样提交，不可编辑。artifacts必须包括final review、EXPERIMENT_RESULTS.json、FINAL_ANALYSIS.md和两组evaluation-analysis.json这5个文件；不要绑定会变动的项目状态/账本。
+
+强制返回契约：artifacts 数组 MUST 逐项包含下列全部 5 个绝对路径，各项为 {"path":"准确绝对路径","sha256":"实际文件sha256"}。仅返回摘要、三项主文档或省略许可文件不能通过。每一文件必须已在返回的准确 commit 中提交并正常 push。
+
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/reviews/final-scientific-review.json`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/EXPERIMENT_RESULTS.json`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/FINAL_ANALYSIS.md`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/R0-evaluation-analysis.json`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/R1-evaluation-analysis.json`

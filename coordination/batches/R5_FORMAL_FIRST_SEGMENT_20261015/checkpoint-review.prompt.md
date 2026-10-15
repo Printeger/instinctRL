@@ -21,3 +21,15 @@ R1同样。二者必须共用同一 joint acceptance SHA，避免case级条件�
 最终仅按所给schema返回：status PASS代表两组实际训练独立有效、评价许可已准确发行、纯CPU gate通过且commit/push完成；summary简述真实结论，artifacts列出review、分析和准确spec pins，commit=已push HEAD。负结果/权限或资源异常返回STOP并持久化原因，不请求普通阶段批准。不要提交评价，不进行模型轮询。
 
 批处理器将逐字节保护调用前的全部case文件、原件/副本与goal_budget.json；只可将它们原样提交，不可编辑。artifacts必须逐项列出以下9个文件：joint-actual-training.json、两组training-analysis.json、两组evaluation.authorized.json、两组evaluation-AUTH.bound.json、两组evaluation-approval.json（均使用上述准确目录）。不要在artifacts中绑定未来会变动的goal_budget.json或项目状态文件。
+
+强制返回契约：artifacts 数组 MUST 逐项包含下列全部 9 个绝对路径，各项为 {"path":"准确绝对路径","sha256":"实际文件sha256"}。仅返回摘要、三项主文档或省略许可文件不能通过。每一文件必须已在返回的准确 commit 中提交并正常 push。
+
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/reviews/joint-actual-training.json`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/R0-training-analysis.json`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/R0-research-formal-evaluation.authorized.json`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/R0-research-formal-evaluation-AUTH.bound.json`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/R0-research-formal-evaluation-approval.json`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/R1-training-analysis.json`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/R1-research-formal-evaluation.authorized.json`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/R1-research-formal-evaluation-AUTH.bound.json`
+- `/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/R1-research-formal-evaluation-approval.json`
