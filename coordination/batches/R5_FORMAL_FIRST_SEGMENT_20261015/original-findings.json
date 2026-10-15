@@ -1,0 +1,39 @@
+{
+  "candidate_commit": "9e5f7552d9d24c6b79eef2412e3fe2bb371d8df4",
+  "verdict": "MUST_FIX",
+  "findings": [
+    {
+      "id": "BATCH-MODEL-RESUME-R1",
+      "classification": "MUST_FIX",
+      "contract": "Recover completed model slots from durable receipts without repeating calls; permit completion after controller-only crash.",
+      "evidence": "Original9e5f755 call_model always compares answer.commit==currentHEAD. CPU fixture with successful checkpoint-review receipt commitA and later final-analysis HEADB raises MODEL_COMMIT_IDENTITY_MISMATCH without any model spawn.",
+      "impact": "Crash after second model commit/before final COMPLETE permanently stops an otherwise completed batch on model1 replay.",
+      "closure": "Persist accepted slot boundary and exactreceipt/artifacts/commit. Reuse verifiedaccepted slots with ancestor/allowedphase consistency; do not callagain. Test restart after model2commit before finalCOMPLETE and after bothmodelreceipts."
+    },
+    {
+      "id": "BATCH-MODEL-WRITE-BOUNDARY-R1",
+      "classification": "MUST_FIX",
+      "contract": "No frozen source/input/method/budget changes, all actual evaluation startinginputs committed and pushed, unrelated docs/goal preserved.",
+      "evidence": "Original allowed_model_changes(final-analysis,[formalcase/EXPERIMENT_CARD.json,goal_budget.json]) returnsTrue. Entirecaseprefix permits frozenAUTH/spec/card edits; guardchecks manifestbytes but not nestedpins. Tracked-only gitstatus skips newrequiredreview/specfiles and artifactsarray has no mandatorypaths.",
+      "impact": "A model could accidentally commit frozenprofile or budgetcap/history changes, or omit requireduntrackedreview inputs from pushedcommit, while controller acceptsPASS/COMPLETE.",
+      "closure": "Protect pinnedfrozeninputs/existingoriginals and bytewiseledger facts before/aftermodelslots; allowonlyexactgeneratedevaluationinputs/archives/currentoutputs. Require mandatoryreview/analysis/spec/AUTH artifacts and verify actualHEAD Gitblob bytes and remoteancestry. Include untracked scopedchecks while preserving unrelateddocs/goal."
+    },
+    {
+      "id": "BATCH-MODEL-OWNED-CLEANUP-R1",
+      "classification": "MUST_FIX",
+      "contract": "Errorreceipt must not conceal a live owned model writer; no nextjob/model on unknownownership.",
+      "evidence": "Original model_worker Popen succeeds then injectedrequest/codex_identity persistence OSError: worker writes exit_code-1 errorreceipt without signal/wait to fakealiveCLI. CPU-onlyPopenmock repro confirmschild remainsalive.",
+      "impact": "Controller reportsSTOP while ownedCLI maycontinuewritingproject; nextmanualrecovery lacks a proven settledwriter boundary.",
+      "closure": "Persist/adopt exactworker/CLI identities and validateplan/slot; onallpost-Popen errors/STOP/timeout cancelonlymatchingownprocessgroup andwait/reap, recordtrueexit/cleanup. Unknownownership failclosed with explicitunsolvedidentity and no otherwrite/launch. Test preexistingcancel, identity-savefault, controllerdeath/adoption."
+    },
+    {
+      "id": "BATCH-EVAL-JSON-R1",
+      "classification": "MUST_FIX",
+      "contract": "Originalscoring mustaccept completevalid positiveornegative scientificdata with identicalproducerfields.",
+      "evidence": "Root identified and independentCPUconfirmed originalcase_outcome returns Wilson tuple, while producerJSON haslist. evaluate_checkpoint directdict comparison thereforefalse for validproducerJSON.",
+      "impact": "Both completeevaluations falselySTOP before secondfinalscientificmodelcall.",
+      "closure": "JSONnormalize only representation before exactproducer comparison; keep originalscoring/thresholds/denominator. Test actualcase_outcome tuple and truechangedscore refusal."
+    }
+  ],
+  "scope": "Originalcandidateonly; awaiting root fixedcandidate. No live or model calls."
+}

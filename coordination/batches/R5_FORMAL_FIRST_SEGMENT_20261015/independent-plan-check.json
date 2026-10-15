@@ -1,0 +1,25 @@
+{
+  "plan_sha256": "f1301d835924facb27480d9c254554a3a713612719af69866856608502aa6f62",
+  "all_pins_verified": {
+    "batch": "be2aaea41a72e3f75bc0449343dec6820aed26ac9eda284b87ddb09c0b1d3758",
+    "analyzer": "f401ce16ceb198fee6853e0219a55e96c46d778e90d9ef1e7334bea6a9f14445",
+    "commander": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4",
+    "launch_gate": "f8970f482d3467cd075ad37ba467323b9eb09451f12fd76fa426d03f1ae23791",
+    "manifest": "4fe75be00ab0c62d7fd288031735bd07b091c9739fe7e1c346c751a021f68d14",
+    "ready": "fc3561a9e1706fad33bed1367497b97f01436ca9e5cdfb9901c462331ad8b27b",
+    "permission": "f0aa8c1ce592430d2be03b4e441fa1bc8af3013297a152ad60a11b9fb335a183",
+    "final_review": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0",
+    "checkpoint-review_prompt": "31c5219ad0d7a5e9222f48e16b87cc5208437958bb9993d43536aa8c34b0f514",
+    "final-analysis_prompt": "59ef5354c0a8eea5eee37940331657391efaf9978cbf21e3858c395a1b4e15a3",
+    "response_schema": "45277d43679f453fe846690fa61be3d1ef52e834d2453e0262785857929fa56b",
+    "codex": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70",
+    "tmux": "034b15c64035f783d43862f2775eb4828f61571ca62c8199796000b97d556ecd",
+    "authority": "5774415e196b364dd60146c52b097a41145ed8c93d543cee5a4b0ffd0b8078f6"
+  },
+  "exact_training_approvals": {
+    "R0": "A-352a74cb31ae8ed7",
+    "R1": "A-1a5e9613684876f3"
+  },
+  "formal_existing_gates_pureCPU": "PASS",
+  "runtime_not_initialized": true
+}

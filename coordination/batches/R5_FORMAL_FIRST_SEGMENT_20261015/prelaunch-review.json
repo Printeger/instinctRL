@@ -1,0 +1,157 @@
+{
+  "verdict": "PASS",
+  "must_fix": [],
+  "candidate_commit": "0242ade8594832b0af40a5814d813c1f84ca9117",
+  "scope": "Independent CPU/code prelaunch review for the one already-approved fixed formal first-segment local batch. Safe exact launch entry only; not actual training/checkpoint/evaluation success or final scientific acceptance.",
+  "identities": {
+    "source_commit": "0242ade8594832b0af40a5814d813c1f84ca9117",
+    "batch_sha256": "be2aaea41a72e3f75bc0449343dec6820aed26ac9eda284b87ddb09c0b1d3758",
+    "analyzer_sha256": "f401ce16ceb198fee6853e0219a55e96c46d778e90d9ef1e7334bea6a9f14445",
+    "proposed_plan_sha256": "f1301d835924facb27480d9c254554a3a713612719af69866856608502aa6f62",
+    "prompt_sha256": {
+      "checkpoint-review": "31c5219ad0d7a5e9222f48e16b87cc5208437958bb9993d43536aa8c34b0f514",
+      "final-analysis": "59ef5354c0a8eea5eee37940331657391efaf9978cbf21e3858c395a1b4e15a3"
+    },
+    "checkpoint_review_prompt_sha256": "31c5219ad0d7a5e9222f48e16b87cc5208437958bb9993d43536aa8c34b0f514",
+    "final_analysis_prompt_sha256": "59ef5354c0a8eea5eee37940331657391efaf9978cbf21e3858c395a1b4e15a3",
+    "response_schema_sha256": "45277d43679f453fe846690fa61be3d1ef52e834d2453e0262785857929fa56b",
+    "user_authority_sha256": "5774415e196b364dd60146c52b097a41145ed8c93d543cee5a4b0ffd0b8078f6",
+    "frozen_formal_source_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "frozen_formal_config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+    "formal_manifest_sha256": "4fe75be00ab0c62d7fd288031735bd07b091c9739fe7e1c346c751a021f68d14",
+    "formal_ready_sha256": "fc3561a9e1706fad33bed1367497b97f01436ca9e5cdfb9901c462331ad8b27b",
+    "formal_permission_sha256": "f0aa8c1ce592430d2be03b4e441fa1bc8af3013297a152ad60a11b9fb335a183",
+    "original_final_readiness_review_sha256": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0",
+    "commander_sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4",
+    "launch_gate_sha256": "f8970f482d3467cd075ad37ba467323b9eb09451f12fd76fa426d03f1ae23791",
+    "control_release": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba",
+    "training_approvals": {
+      "R0": "A-352a74cb31ae8ed7",
+      "R1": "A-1a5e9613684876f3"
+    }
+  },
+  "closed_findings": [
+    {
+      "id": "BATCH-MODEL-RESUME-R1",
+      "classification": "MUST_FIX",
+      "contract": "Recover completed model slots from durable receipts without repeating calls; permit completion after controller-only crash.",
+      "evidence": "Original9e5f755 call_model always compares answer.commit==currentHEAD. CPU fixture with successful checkpoint-review receipt commitA and later final-analysis HEADB raises MODEL_COMMIT_IDENTITY_MISMATCH without any model spawn.",
+      "impact": "Crash after second model commit/before final COMPLETE permanently stops an otherwise completed batch on model1 replay.",
+      "closure": "Persist accepted slot boundary and exactreceipt/artifacts/commit. Reuse verifiedaccepted slots with ancestor/allowedphase consistency; do not callagain. Test restart after model2commit before finalCOMPLETE and after bothmodelreceipts.",
+      "status": "CLOSED",
+      "closed_candidate": "0242ade8594832b0af40a5814d813c1f84ca9117",
+      "closure_evidence": "Accepted model row now durably stores receipt/last-message/artifact pins and accepted commit. Resume verifies immutable artifacts and ancestor commit, not stale HEAD equality; completed model#1 survives later model#2 commit without invocation. CPU actual temporary-Git test covers later commit and artifact tamper."
+    },
+    {
+      "id": "BATCH-MODEL-WRITE-BOUNDARY-R1",
+      "classification": "MUST_FIX",
+      "contract": "No frozen source/input/method/budget changes, all actual evaluation startinginputs committed and pushed, unrelated docs/goal preserved.",
+      "evidence": "Original allowed_model_changes(final-analysis,[formalcase/EXPERIMENT_CARD.json,goal_budget.json]) returnsTrue. Entirecaseprefix permits frozenAUTH/spec/card edits; guardchecks manifestbytes but not nestedpins. Tracked-only gitstatus skips newrequiredreview/specfiles and artifactsarray has no mandatorypaths.",
+      "impact": "A model could accidentally commit frozenprofile or budgetcap/history changes, or omit requireduntrackedreview inputs from pushedcommit, while controller acceptsPASS/COMPLETE.",
+      "closure": "Protect pinnedfrozeninputs/existingoriginals and bytewiseledger facts before/aftermodelslots; allowonlyexactgeneratedevaluationinputs/archives/currentoutputs. Require mandatoryreview/analysis/spec/AUTH artifacts and verify actualHEAD Gitblob bytes and remoteancestry. Include untracked scopedchecks while preserving unrelateddocs/goal.",
+      "status": "CLOSED",
+      "closed_candidate": "0242ade8594832b0af40a5814d813c1f84ca9117",
+      "closure_evidence": "Before a model, protect bytewise whole accounting ledger, every existing case file and complete inventory originals/copies; recursive manifest pins protect frozen templates/card. Changed paths outside fixed scope reject, required9/5 artifact pins must be in actualpushed Gitcommit, untracked outputs reject except pre-existing unrelated docs/goal. Controller-created unchanged archives may be committed. Tests cover ledger/card/original/copy tamper. Accepted earlier model artifacts remain immutable."
+    },
+    {
+      "id": "BATCH-MODEL-OWNED-CLEANUP-R1",
+      "classification": "MUST_FIX",
+      "contract": "Errorreceipt must not conceal a live owned model writer; no nextjob/model on unknownownership.",
+      "evidence": "Original model_worker Popen succeeds then injectedrequest/codex_identity persistence OSError: worker writes exit_code-1 errorreceipt without signal/wait to fakealiveCLI. CPU-onlyPopenmock repro confirmschild remainsalive.",
+      "impact": "Controller reportsSTOP while ownedCLI maycontinuewritingproject; nextmanualrecovery lacks a proven settledwriter boundary.",
+      "closure": "Persist/adopt exactworker/CLI identities and validateplan/slot; onallpost-Popen errors/STOP/timeout cancelonlymatchingownprocessgroup andwait/reap, recordtrueexit/cleanup. Unknownownership failclosed with explicitunsolvedidentity and no otherwrite/launch. Test preexistingcancel, identity-savefault, controllerdeath/adoption.",
+      "status": "CLOSED",
+      "closed_candidate": "0242ade8594832b0af40a5814d813c1f84ca9117",
+      "closure_evidence": "Worker self-records exact boot/starttime identity in atomicrequest, controller adopts exact slot/prompt request after spawn-save crash. Dead worker recorded CLI cleaned only by exact owned identity, no respawn. Worker finally terminates/waits/reaps live ownCLI on postPopen exception and records real exit+cleanup or explicit unknown-ownership error; fakechild persistence-fault test passes."
+    },
+    {
+      "id": "BATCH-EVAL-JSON-R1",
+      "classification": "MUST_FIX",
+      "contract": "Originalscoring mustaccept completevalid positiveornegative scientificdata with identicalproducerfields.",
+      "evidence": "Root identified and independentCPUconfirmed originalcase_outcome returns Wilson tuple, while producerJSON haslist. evaluate_checkpoint directdict comparison thereforefalse for validproducerJSON.",
+      "impact": "Both completeevaluations falselySTOP before secondfinalscientificmodelcall.",
+      "closure": "JSONnormalize only representation before exactproducer comparison; keep originalscoring/thresholds/denominator. Test actualcase_outcome tuple and truechangedscore refusal.",
+      "status": "CLOSED",
+      "closed_candidate": "0242ade8594832b0af40a5814d813c1f84ca9117",
+      "closure_evidence": "Only JSON representation normalized before exact original evaluate_checkpoint/producer comparison. Original Wilson tuple regression verifies equality after normalization and rejects changedscore; no scoring/threshold/denominator change."
+    },
+    {
+      "id": "BATCH-MODEL-PRELAUNCH-CANCEL-R1",
+      "status": "CLOSED",
+      "contract": "A durably cancelled/STOPPED batch must not launch an additional CLI/API request.",
+      "evidence": "Independent fakePopen repro on earliercandidate showed preexistingcancel still spawnedCLI once before loopnoticed.",
+      "impact": "A cancellation before model launch could still consume inference and start a projectwriter.",
+      "closure": "0242ade repeats guard and reads atomic state/cancel inside receipt-producing try immediately beforePopen; preexistingcancel or status!=RUNNING yields CANCELLED_BEFORE_MODEL_START/nochild/exit-1. Two CPU negative fixtures assert Popen0."
+    }
+  ],
+  "checks": {
+    "user_authority": "Exact newuserauthorizes fixedR0/R1formal257..512+existingcheckpointreview+alloriginalevaluation+onefinalanalysis; supersedes prior readinessGoal no-submit only for this fixedbatch. No variables/retries/expansion allowed.",
+    "strict_fixed_order": "R0training thenterminalownedACK/settle/exact2postrun/sciencecounts; R1training likewise; onecheckpoint-reviewCLI; only independentlyaccepted10actualcheckpointSHAs+exactexistingevaluation approvals; serialR0/R1evaluations; independentCPUsource/raw/hash/originalscoreverification; onefinal-analysisCLI.",
+    "zero_model_polling": "Only localPython sleeps/polls exactknownjobID; no Codexprogresspolling or subagents. Two fixedONCE slots atmostonce, durableintent/request/receipt; any model/API/guard failure stops, no retries.",
+    "existing_launchguards": "Both already-issued exactformaltraining approvals and READY/manifest/permission/whole-spec/pins validated independently with pure require_formal_start. No Store transaction/submit performed. Existingcommander and frozenh1 environment retain CUDA0 for realjobs; CPU/model environment CUDAempty does not change actualjob binding.",
+    "submit_crash_windows": "Durable submit intent beforeeffect, derive exactStorejobID and reattach ifpresent; charged/admission/intent without provablejob stops rather than resubmit. Existingdoneentries do not repeat submit/settle/postrun. Partialpostrun ambiguity never repeats queries.",
+    "owned_model_boundaries": "flock onecontroller; worker uses separate session and durable boot/starttime identities. Exactownchildgroup cleanup only; unknownownership failsclosed; cancellation checked beforeCLI starts. Controller/model projectwrites separated by stage; no concurrent builder permitted.",
+    "STOP": "ExternalSTOP/pause/controller interruption prevent advancement; existingactiveownedjob safety closes viaoriginalrunner, evidence preserved; no threshold or unrelatedprocess modification. STOPPED not automatically reset.",
+    "formal_absolute_accounting": "Analyzer validates absolute257..512, 131072additional samples/group, 2048additionalAdam each/5writes, actualpayload counters257..512absolute and restoredorigin2048. Actual mixed clock4096..8191 and firstgate starting256/firstabsolute257 retained; minibatch seed origin permutation_seed+256,8savedpreoptimizerauxformulas at unchanged1e-6/1e-5.",
+    "training_acceptance": "Read all10newPTs/payload source/config/method/seed/clock/LRs/Adamactualstates/finiteness; actualretained257/258/probe512/Beta/logp/action/adv/return/index independentreview required in firstmodel. Completeflags alone neverauthorize evaluation.",
+    "evaluation_acceptance": "Original fivecheckpoints272/288/320/384/512 timesZ/T/S/X/W times32lanes, allT0/fullsteps/originalfailuredenominators/subgroups/scoring. CPU inventory enumerates entirejob/attempt and hashes originals/copies; originalscore exactJSON-normalized producer comparison before model#2. Negativepolicyresults remain valid scientificdata; anyZregression blocksnextsegment.",
+    "known_native_failure": "Only rawPASS/PASS_PENDING_CLOSE, no primary/cleanup errors, complete counters/knownapp.closeHARD_TIMEOUT9.5/nativeFAILED-9 plusnormalownedACK/settle/exact2postrun may be separatelyaccepted. FAILED/INCOMPLETE/null/fullreservations never become processPASS orrefund. Other native/resource/data/ownership failure stops.",
+    "write_and_commit_scope": "Frozenruntime/source/method/manifests/caseinputs/oldraw/ledgerfacts remainbytewiseprotected. Model1onlydeclarednew evaluation approval/spec/AUTHbound products plusnewanalysis/review; model2fixedresults/currentstatus. Required9/5files mustbe namedinartifactpins and equalactualHEAD Gitblobs; finalHEAD origin match; unrelateddocs/goal preserved.",
+    "plan_pins": "All14proposedfilepins independently rehashed, actualoldformalapprovals valid, runtimeunique state not initialized, nojob submitted/model invoked. Finalplan mayonlybindthisreview and non-executablefinalizationmetadata; executionfields remain exactproposedvalues."
+  },
+  "independent_CPU_validation": {
+    "result": "59 PASS",
+    "command": "CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow:isaaclab-training navrl_python -B -m pytest -q -p no:cacheprovider test_r5_formal_batch.py test_r5_formal_segment_analysis.py test_formal_launch_gate.py test_r5_commander_modes.py test_formal_research_analysis_binding.py; basetemp/junit under own/tmp only",
+    "receipt": {
+      "path": "/tmp/instinctrl-batch-prelaunch-review/independent-tests-final.xml",
+      "sha256": "29b03a60f57bb4d9ff36b86447bcef9a47c93dccde794ddac102c4ea042c33fb"
+    },
+    "previous_57_PASS_receipt": {
+      "path": "/tmp/instinctrl-batch-prelaunch-review/independent-tests.xml",
+      "sha256": "3cf445c9415c9192ec9f3862d2787f3dce2369093bfbba797b5dc46c659a833e"
+    },
+    "original_findings": {
+      "path": "/tmp/instinctrl-batch-prelaunch-review/original-findings.json",
+      "sha256": "fd1ed4ea4071b5813ce1c62d9db1caab39d1cbb3383c507bc0446c2b421286e9"
+    },
+    "bounded_original_defect_reproductions": "Immutable9e5source fixtures and patched-Popen only; no realCLIinference, GPU, jobsubmit or signals.",
+    "pure_existing_plan_check": {
+      "path": "/tmp/instinctrl-batch-prelaunch-review/independent-plan-check.json",
+      "sha256": "1cbb53f9b5c35d640c9cbdfc463aa7ba69e622ca7af01ddbfae4850c38ff3fc5"
+    }
+  },
+  "conditions": [
+    "Root archives this exactprelaunchreviewJSON and freezes plan.json copying all proposed executablefields/pins unchanged from reviewedplanSHA, adding exactprelaunch_review path/SHA and non-executablefinalizationstatus/time only. No unreviewed code/prompt/analyzer change.",
+    "Normalcommit/tag/push finalizedreview+plan and allinput/currentstatus records; require exactHEAD/origin beforeinit. Retain unrelateddocs/goal and all prior scientific/archive/history bytes.",
+    "Initialize unique state exactlyonce using existingidle/STOP/wholeformalpermission/approval/pin checks. Confirm no existing batch/controller/tmux or consumedformaljob; ambiguities halt, never reinitialize or resubmit.",
+    "Launch exactlyone fixedtmux session instinctrl-r5-formal-first-20261015 running approvedrun command with controlPython/PYTHONPATH. Root then ends currentCodexturn; localPython owns all subsequent waiting. Do not monitor experiment progress by further Codexcalls.",
+    "Duringrun root/othercontexts remainreadonly. Only controller/runtime and its one awaitedindependentmodelwriter mayoperate in authorizedstage; no code edits, manualsubmit, newvariables, budgetexpansion, retry or extra model/APIprobe.",
+    "If STOP/resource/authorization/unknownownership/API/data/partialsideeffect failure occurs, preserve exactFAILURE/state/receipts and stopadvancement. Atmosttwo fixedCLIinvocations; successmayusefewer ifearlierstop. No automaticanotherinference or newexperimentidentity."
+  ],
+  "non_blocking": [
+    {
+      "id": "FUTURE-API-AVAILABILITY",
+      "finding": "Recorded actuallocalCLI/login/help/tmux checks establish presentcapability, not guaranteed futureAPI inference. Firstrealstage call mayfail; itmustpersist failure andSTOP withoutretry."
+    },
+    {
+      "id": "AMBIGUOUS-RECOVERY",
+      "finding": "Knownexactjobs and acceptedmodelreceipts canresume; uncertain intent/nojob or partialsettle/postrun deliberatelySTOP for factualinspection. This is failclosed recovery, not blindretry."
+    },
+    {
+      "id": "NATIVE-AND-PERFORMANCE",
+      "finding": "KnowncloseFAILED and scientificallynegativepolicyresults remain disclosed. DataacceptancePASS/COMPLETE doesnotmean allZTSXWpassed or authorize anyfurthersegment."
+    },
+    {
+      "id": "ARTIFACT-PROMPT-CLARITY",
+      "finding": "Finalprompts explicitly enumerate required9/5 absoluteartifactpaths, actualSHA andpushedcommit; prior5443already required9/5 byname, latestclarification removes relativepath ambiguity without looseningguard."
+    }
+  ],
+  "launch_entry_safe": true,
+  "actual_training_accepted": false,
+  "actual_checkpoint_evaluation_accepted": false,
+  "actual_final_scientific_result_accepted": false,
+  "new_experiment_variables": 0,
+  "automatic_retries": 0,
+  "automatic_budget_expansion": false,
+  "reviewer_activity": "Projectreadonly; own/tmpoutputs only. CPUtests and pureexistinggates only; no modelcalls, GPUqueries, simulations, submissions, realprocesssignals or delegation."
+}
