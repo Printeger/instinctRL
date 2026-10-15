@@ -1,0 +1,76 @@
+{
+  "status": "PROPOSED_NOT_EXECUTABLE_UNTIL_PRELAUNCH_REVIEW_BOUND",
+  "experiment_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+  "control_python": "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+  "cpu_python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+  "tmux_session": "instinctrl-r5-formal-first-20261015",
+  "poll_seconds": 15,
+  "model_call_limit": 2,
+  "model_timeout_seconds": 3600,
+  "model_output_cap_bytes": 268435456,
+  "training_approvals": {
+    "R0": "A-352a74cb31ae8ed7",
+    "R1": "A-1a5e9613684876f3"
+  },
+  "pins": {
+    "batch": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_batch.py",
+      "sha256": "e5fa2a06ccd7a5c457cc6749fcdc76d7b13f0f57be9e33c68c63465375dfcdf1"
+    },
+    "analyzer": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/analyze_r5_formal_segment.py",
+      "sha256": "25fb9f8951611b6e09c81f3a09dc9e9115829a162bcb703d44ce991293ec5a52"
+    },
+    "commander": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_commander.py",
+      "sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4"
+    },
+    "launch_gate": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_launch_gate.py",
+      "sha256": "f8970f482d3467cd075ad37ba467323b9eb09451f12fd76fa426d03f1ae23791"
+    },
+    "manifest": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_r5_launch_manifest.json",
+      "sha256": "4fe75be00ab0c62d7fd288031735bd07b091c9739fe7e1c346c751a021f68d14"
+    },
+    "ready": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_r5_readiness.json",
+      "sha256": "fc3561a9e1706fad33bed1367497b97f01436ca9e5cdfb9901c462331ad8b27b"
+    },
+    "permission": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_conditional_permission.json",
+      "sha256": "f0aa8c1ce592430d2be03b4e441fa1bc8af3013297a152ad60a11b9fb335a183"
+    },
+    "final_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/final-readiness.json",
+      "sha256": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0"
+    },
+    "checkpoint-review_prompt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/checkpoint-review.prompt.md",
+      "sha256": "6b2c7225b43718c91f0b9aeba79a0119c6a5736a16b6cb04e2b6faf152e76585"
+    },
+    "final-analysis_prompt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/final-analysis.prompt.md",
+      "sha256": "3534270d579807afd6550df23bb8c689d581d5e1a2c702b48342f4f3ba95562b"
+    },
+    "response_schema": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/response.schema.json",
+      "sha256": "45277d43679f453fe846690fa61be3d1ef52e834d2453e0262785857929fa56b"
+    },
+    "codex": {
+      "path": "/usr/local/lib/node_modules/@openai/codex/bin/codex.js",
+      "sha256": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70"
+    },
+    "tmux": {
+      "path": "/usr/bin/tmux",
+      "sha256": "034b15c64035f783d43862f2775eb4828f61571ca62c8199796000b97d556ecd"
+    },
+    "authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/USER_AUTHORITY.md",
+      "sha256": "5774415e196b364dd60146c52b097a41145ed8c93d543cee5a4b0ffd0b8078f6"
+    }
+  },
+  "new_experiment_variables": 0,
+  "automatic_budget_expansion": false,
+  "automatic_retries": 0
+}

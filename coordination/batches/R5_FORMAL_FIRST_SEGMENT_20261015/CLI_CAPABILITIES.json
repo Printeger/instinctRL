@@ -1,0 +1,69 @@
+{
+  "status": "LOCAL_CLI_PARSE_AUTH_AND_TMUX_PERMISSION_VERIFIED",
+  "checks": [
+    {
+      "name": "codex-version",
+      "argv": [
+        "codex",
+        "--version"
+      ],
+      "exit_code": 0,
+      "output_path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/codex-version.txt",
+      "sha256": "22054e4b428e0a164a766c17aa80feb64ce2fab392aa0abb260d2164b10e4f18"
+    },
+    {
+      "name": "codex-auth",
+      "argv": [
+        "codex",
+        "login",
+        "status"
+      ],
+      "exit_code": 0,
+      "output_path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/codex-auth.txt",
+      "sha256": "16118df3eb3595e44a4721878cef0f79910e6564e10ff0e78e451e7c4e478947"
+    },
+    {
+      "name": "exec-help",
+      "argv": [
+        "codex",
+        "-a",
+        "never",
+        "-s",
+        "danger-full-access",
+        "exec",
+        "--help"
+      ],
+      "exit_code": 0,
+      "output_path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/exec-help.txt",
+      "sha256": "df0d864ca2076f7654288c6a1e3394e3eaa2ea8f15021df2524efdd90c70986c"
+    },
+    {
+      "name": "tmux-version",
+      "argv": [
+        "tmux",
+        "-V"
+      ],
+      "exit_code": 0,
+      "output_path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/tmux-version.txt",
+      "sha256": "55fa0b31b8e01d61eabb4f3e7bd5745ec2db07c5098d1f4bbf517d49729865f5"
+    },
+    {
+      "name": "tmux-permission",
+      "argv": [
+        "tmux",
+        "-L",
+        "r5-permission-check",
+        "new-session",
+        "-d",
+        "-s",
+        "check",
+        "/bin/true"
+      ],
+      "exit_code": 0,
+      "output_path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/tmux-permission.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "model_API_requests_before_training": 0,
+  "API_entitlement": "Not probed by extra inference; firstactualindependentcall validates at requiredstage; failure stopswithoutretry."
+}
