@@ -1,0 +1,151 @@
+{
+  "schema_version": "instinctrl-independent-formal-training-stop/1",
+  "experiment_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+  "group": "R0",
+  "status": "STOP_CPU_ACTUAL_TRAINING",
+  "coverage_complete": false,
+  "independent_reviewer": "This actual checkpoint Reviewer invocation; no other Reviewer signature",
+  "CPU_only": true,
+  "actor_forwards": 0,
+  "optimizer_calls": 0,
+  "analyzer": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/analyze_r5_formal_segment.py",
+    "sha256": "f401ce16ceb198fee6853e0219a55e96c46d778e90d9ef1e7334bea6a9f14445"
+  },
+  "analyzer_execution": {
+    "exit_code": 1,
+    "exception_type": "TypeError",
+    "message": "'NoneType' object is not subscriptable",
+    "file": "tools/analyze_r5_formal_segment.py",
+    "line": 96,
+    "expression": "aux['actual_weight'] == p['mean_prior_weight'] and aux['hook_installed'] and aux['actor_only']",
+    "output_written_by_analyzer": false,
+    "command": "CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow:isaaclab-training /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 tools/analyze_r5_formal_segment.py training R0 --output docs/experiments/r5-formal-first-segment-20261015/R0-training-analysis.json"
+  },
+  "reviewer_record": "This STOP record was written after the supplied analyzer aborted; it is not a successful analyzer result. No analyzer/source/runtime modification or rerun.",
+  "evidence": {
+    "job_id": "J-0a6d7c4f861968ed",
+    "source_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+    "spec": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/inputs/R0-research-formal-training.authorized.json",
+      "sha256": "57dae2a164f77d7b218fd4819ea7bed0dae4c2a2693dc17cd598cc8b4c4f92c0"
+    },
+    "authorization": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/commands/AUTHORIZATION.json",
+      "sha256": "cae43dfa1f13a0ec8334afb88f3454d1aa30bc346a581e8e5447b4056b4fb0d6"
+    },
+    "inventory": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/live/R0-research-formal-training/INVENTORY.json",
+      "sha256": "3ca2243303f53cdc6aac304d2259eda07604320df0cea9de109c50deeb9c503a"
+    },
+    "inventory_validation": {
+      "all_originals_and_archived_copies_SHA256": "PASS",
+      "objects": 57
+    },
+    "request": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-0a6d7c4f861968ed/request.json",
+      "sha256": "c8faf9507f0d18ed28a7f91f47edd34ff2c7279b9d89b73fed2ef1b7a744b3df"
+    },
+    "receipt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-0a6d7c4f861968ed/receipt.json",
+      "sha256": "40aedef904e6df3d430d19d0af4aec2c1886ee239fb8c5b1881c5a3f4f8189ff"
+    },
+    "normal_owned_ACK": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-0a6d7c4f861968ed/lifeguard-ack.json",
+      "sha256": "c630741cf2016a273c59e30528caaf8c2080e143bc944fb173d1df9b050c05b0"
+    },
+    "final_job": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/R0-research-formal-training-final-job.json",
+      "sha256": "e059fb3241d2b9cf3bcdbc2d2ce1b4f5011faec95a02f880a79b6b563716f802"
+    },
+    "execution_summary": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/R0-research-formal-training-execution-summary.json",
+      "sha256": "d07c49196560bb8a8f3cf367916f64db526a30747bee9d7b9cd178138b6fc840"
+    },
+    "postruns": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/R0-research-formal-training-postrun-0.json",
+        "sha256": "4b002306fc22a58d36e95906343becb89601ba772369f8be16388096cd8e9391"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/R0-research-formal-training-postrun-1.json",
+        "sha256": "e48e98d73f3e2a0b5ee159b66f5981e0c4379845811d092f5c0529f0315d71c1"
+      }
+    ],
+    "raw_status": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/status.json",
+      "sha256": "da6a7911623833f3d5ff6df48f056bc8989de59b1cfd866b7240f6ec10a8720d"
+    },
+    "known_cleanup_timeout": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/cleanup_timeout.json",
+      "sha256": "2ca2861dde88b8880960cc5fbcec1da516a18069c4a466445d335a7cd5dd50b1"
+    },
+    "formal_initialization": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/formal_initialization.json",
+      "sha256": "0f49884d6b3f221448c0593c48a5e2651ab0180bfeae40f36eb3fce690d332c1"
+    },
+    "minibatch_log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/learning_log/minibatches.jsonl",
+      "sha256": "eec8b9ecc63cd796d35ba65c6bf8765933af115726561e891a0b908f91edff4d"
+    },
+    "missing_actual_callback_binding": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/actor_mean_prior_binding.json",
+    "accounting": {
+      "spec_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4",
+      "job_id": "J-0a6d7c4f861968ed",
+      "experiment_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+      "group": "R0",
+      "mode": "research-formal-training",
+      "status": "FAILED",
+      "reserved": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 5,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048,
+        "allocated_gpu_seconds": 0,
+        "wall_seconds_including_cleanup": 0
+      },
+      "output_cap_bytes": 8589934592,
+      "observed": {
+        "training_transitions": 131072,
+        "nontraining_transitions": 0,
+        "optimizer_updates": 256,
+        "training_checkpoint_writes": 5,
+        "actor_optimizer_steps": 2048,
+        "critic_optimizer_steps": 2048
+      },
+      "postrun_queries_used": 2,
+      "settled": true,
+      "native_exit_code": -9,
+      "raw_status": "PASS_PENDING_CLOSE",
+      "formal_counter_completeness": "INCOMPLETE",
+      "formal_transitions": null,
+      "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+      "output_observed_bytes": 1989226078,
+      "inventory": "experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/live/R0-research-formal-training/INVENTORY.json"
+    },
+    "observed_auxiliary_scalars": {
+      "count": 2048,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "first8": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "science_accepted": false
+  },
+  "must_fix": [
+    "FORMAL-ACTUAL-CALLBACK-BINDING-MISSING"
+  ],
+  "checkpoint_acceptance": "NOT_PERFORMED: stop at missing required actual restored-callback evidence before any new checkpoint loads; no checkpoint accepted.",
+  "limits": "Observed auxiliary loss scalars and configure_trainer source call do not replace the required actual callback binding log; no inference of method invalidity or performance success."
+}

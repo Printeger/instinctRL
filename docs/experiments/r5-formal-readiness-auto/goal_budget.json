@@ -21,50 +21,52 @@
     "paid_cloud_resources": 0
   },
   "stage_allocation": {
-    "training_transitions": 1441792,
+    "training_transitions": 1703936,
     "nontraining_transitions": 118784,
-    "live_starts": 33,
-    "simulator_initialization_reservations": 33,
-    "optimizer_updates": 2816,
-    "training_checkpoint_writes": 128,
-    "allocated_gpu_seconds": 55050,
-    "wall_seconds_including_cleanup": 55050,
-    "output_peak_and_reservations_bytes": 319975063552
+    "live_starts": 35,
+    "simulator_initialization_reservations": 35,
+    "optimizer_updates": 3328,
+    "training_checkpoint_writes": 138,
+    "allocated_gpu_seconds": 69470,
+    "wall_seconds_including_cleanup": 69470,
+    "output_peak_and_reservations_bytes": 337154932736,
+    "actor_optimizer_steps": 26624,
+    "critic_optimizer_steps": 26624
   },
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 33,
-    "simulator_initialization_reservations": 33,
+    "live_starts": 35,
+    "simulator_initialization_reservations": 35,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 11437.470208185492,
-    "wall_seconds_including_cleanup": 11487.700223276392,
-    "output_peak_and_reservations_bytes": 27077626206
+    "allocated_gpu_seconds": 13256.025870693615,
+    "wall_seconds_including_cleanup": 13311.340307398234,
+    "output_peak_and_reservations_bytes": 31056340680
   },
   "observed": {
-    "training_transitions": 1441792,
+    "training_transitions": 1703936,
     "nontraining_transitions": 118784,
-    "optimizer_updates": 2816,
-    "training_checkpoint_writes": 128,
-    "actor_optimizer_steps": 22528,
-    "critic_optimizer_steps": 22528
+    "optimizer_updates": 3328,
+    "training_checkpoint_writes": 138,
+    "actor_optimizer_steps": 26624,
+    "critic_optimizer_steps": 26624
   },
   "reservations": {
     "formal_initial_segment": {
-      "training_transitions": 262144,
+      "training_transitions": 0,
       "nontraining_transitions": 329600,
-      "live_starts": 4,
-      "simulator_initialization_reservations": 4,
-      "optimizer_updates": 512,
-      "actor_optimizer_steps": 4096,
-      "critic_optimizer_steps": 4096,
-      "training_checkpoint_writes": 10,
-      "allocated_gpu_seconds": 21680,
-      "wall_seconds_including_cleanup": 21680,
-      "output_peak_and_reservations_bytes": 34359738368
+      "live_starts": 2,
+      "simulator_initialization_reservations": 2,
+      "optimizer_updates": 0,
+      "actor_optimizer_steps": 0,
+      "critic_optimizer_steps": 0,
+      "training_checkpoint_writes": 0,
+      "allocated_gpu_seconds": 7260,
+      "wall_seconds_including_cleanup": 7260,
+      "output_peak_and_reservations_bytes": 17179869184
     },
     "live_entries": [
       {
@@ -1254,6 +1256,78 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 6481906,
         "inventory": "experiments/R5-MEAN10-REGRESSION-16/live/R1-research-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4",
+        "job_id": "J-0a6d7c4f861968ed",
+        "experiment_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+        "group": "R0",
+        "mode": "research-formal-training",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 5,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 5,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 1989226078,
+        "inventory": "experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/live/R0-research-formal-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4",
+        "job_id": "J-838e67f829192ab7",
+        "experiment_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+        "group": "R1",
+        "mode": "research-formal-training",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 5,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 5,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 1989488396,
+        "inventory": "experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/live/R1-research-formal-training/INVENTORY.json"
       }
     ],
     "source_snapshots": [
