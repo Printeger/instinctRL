@@ -430,6 +430,9 @@ def model_worker(slot):
     started = time.time(); code = -1; error = None; proc = None; ident = None; cleanup = None
     try:
         with prompt.open('rb') as stdin, (d/'events.jsonl').open('xb') as stdout, (d/'stderr.log').open('xb') as stderr:
+            b.guard()
+            if (d/'cancel.json').exists() or read(b.path)['status'] != 'RUNNING':
+                raise RuntimeError('CANCELLED_BEFORE_MODEL_START')
             proc = subprocess.Popen(argv, cwd=ROOT, stdin=stdin, stdout=stdout, stderr=stderr, env=b.environment(), start_new_session=True)
             from rlflow.jobs import identity, owns
             ident = identity(proc.pid)

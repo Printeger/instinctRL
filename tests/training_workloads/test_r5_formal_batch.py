@@ -176,6 +176,7 @@ def test_worker_post_popen_persistence_failure_reaps_exact_child(tmp_path,monkey
     b.plan['pins']={slot+'_prompt':batch.pin(tmp_path/'prompt'),'response_schema':batch.pin(tmp_path/'schema'),'codex':batch.pin(tmp_path/'codex')}
     b.state['model_calls'][slot]={'prompt':b.plan['pins'][slot+'_prompt']}
     b.state['entries']={g+'-research-formal-training':{'done':True} for g in ['R0','R1']}
+    b.save()
     monkeypatch.setattr(batch,'Batch',lambda:b)
     from rlflow import jobs
     monkeypatch.setattr(jobs,'identity',lambda pid:{'pid':pid})
@@ -194,3 +195,21 @@ def test_worker_post_popen_persistence_failure_reaps_exact_child(tmp_path,monkey
     r=batch.read(b.run/'calls'/slot/'receipt.json')
     assert cleanup==[{'pid':123456}] and r['exit_code']==-15 and r['child_cleanup']['no_owned_survivor']
     assert 'post-Popen disk failure' in r['error']
+
+
+@pytest.mark.parametrize('reason',['cancel','STOPPED'])
+def test_worker_preexisting_cancel_or_stopped_never_invokes_model(tmp_path,monkeypatch,reason):
+    b=fixture_batch(tmp_path,monkeypatch);slot='checkpoint-review'
+    for name in ['prompt','schema','codex']:(tmp_path/name).write_text('{}')
+    b.plan['pins']={slot+'_prompt':batch.pin(tmp_path/'prompt'),'response_schema':batch.pin(tmp_path/'schema'),'codex':batch.pin(tmp_path/'codex')}
+    b.state['model_calls'][slot]={'prompt':b.plan['pins'][slot+'_prompt']}
+    b.state['entries']={g+'-research-formal-training':{'done':True} for g in ['R0','R1']}
+    if reason=='cancel':write(b.run/'calls'/slot/'cancel.json',{'reason':'controller cancelled'})
+    else:b.state['status']='STOPPED'
+    b.save()
+    monkeypatch.setattr(batch,'Batch',lambda:b)
+    monkeypatch.setattr(batch.subprocess,'Popen',lambda *_a,**_kw:pytest.fail('cancelled model must never start'))
+    assert batch.model_worker(slot)==1
+    receipt=batch.read(b.run/'calls'/slot/'receipt.json')
+    assert receipt['exit_code']==-1 and 'CANCELLED_BEFORE_MODEL_START' in receipt['error']
+    assert receipt['child_identity'] is None
