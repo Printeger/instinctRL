@@ -35,3 +35,5 @@ tmux attach -t instinctrl-r5-formal-first-20261015
 - 同目录`EXPERIMENT_RESULTS.json`和`reviews/final-scientific-review.json`
 
 如资源gate、STOP、ownership、数据或API失败，不会生成伪造完整分析；准确原因在运行目录`FAILURE.json`及唯一state。既有正式启动4入口/资源包络保持固定，本次不授权任何重试或额外入口。
+
+模型验收接受边界另存accepted commit及全部产物pins；意外恢复不会把后续正常提交误认作早先审核失效，也不会再次调用模型。每次模型调用前逐字节保护当前账本、全部已有case输入/归档与inventory所有原件/副本，并递归校验manifest中的模板/合同/证据pins。强制产物必须存在于准确已push提交中，未提交新结果不算完成。worker异常会按准确子进程身份清理并wait后记录真实退出码；worker已死时只采用request中的准确CLI身份清理并STOP，不重新调用。

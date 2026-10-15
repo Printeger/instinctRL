@@ -682,5 +682,19 @@
     "machine_results": "../docs/experiments/r5-zero-correction-20261014/pair_analysis.json",
     "completion_audit": "../docs/experiments/r5-zero-correction-20261014/COMPLETION_AUDIT.json",
     "next_stage_authorized": false
+  },
+  "formal_first_segment_execution": {
+    "task_id": "R5_FORMAL_FIRST_SEGMENT_20261015",
+    "authority": "coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/USER_AUTHORITY.md",
+    "state_path": "coordination/research/batches/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/state.json",
+    "status_authority": "ONLY_LOCAL_BATCH_STATE_JSON",
+    "tmux_session": "instinctrl-r5-formal-first-20261015",
+    "frozen_experiment": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+    "live_entries_maximum": 4,
+    "runtime_model_calls_maximum": 2,
+    "automatic_retries": 0,
+    "automatic_budget_expansion": false,
+    "new_experiment_variables": 0,
+    "execution_instructions": "Only controller and its awaited independent model may write this workspace; read-only observers use local state/logs without model polling."
   }
 }

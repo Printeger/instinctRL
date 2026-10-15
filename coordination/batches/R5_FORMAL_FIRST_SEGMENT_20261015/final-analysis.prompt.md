@@ -13,3 +13,5 @@ R1同样。真实已有文件则复核不覆写历史。禁止删最差lane、�
 更新docs/PROJECT_STATUS.md、coordination/CURRENT_TASK.md、coordination/PROJECT_STATE.json及ACTIVE_WORKFLOW中的本次正式段执行索引，明确当前无live、已完成的是固定首段、本次结束；旧readiness Goal及历史失败/冻结包不改写。不编辑controller state.json；它在你退出后原子转COMPLETE。只提交本任务证据/当前状态：本轮docs目录、同case本轮归档/许可、原goal_budget.json、上述状态文件；不暂存docs/goal/或他人修改。必要forceadd仅本case评价归档的job/supervisor.log、job/lifeguard.log和attempt/results/prelaunch/kit.log。正常commit/tag r5-formal-first-segment-results-20261015/push，tag存在时只精确核对，不force或重写历史。
 
 最终只按所给schema返回。status PASS表示完整原件独立审核+真实最终分析/提交push已完成，即使科学性能是负结果；summary必须清楚科学实际结果。artifacts至少含final review、EXPERIMENT_RESULTS.json、FINAL_ANALYSIS.md pins；commit准确已push HEAD。若数据/权限等真实异常，持久化STOP原因并返回STOP，不制造完整结果、不再次调用模型。
+
+调用前已有的全部case文件、训练joint review/analysis及原件/副本均须保持不变，goal_budget.json只能原样提交，不可编辑。artifacts必须包括final review、EXPERIMENT_RESULTS.json、FINAL_ANALYSIS.md和两组evaluation-analysis.json这5个文件；不要绑定会变动的项目状态/账本。

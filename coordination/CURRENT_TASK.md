@@ -1,5 +1,9 @@
 # 当前任务
 
+固定R5正式第一段本地批处理。当前用户已授权既有4准确入口与2次证据门槛后的独立codex exec；无扩额/重试/新变量。唯一运行状态：`coordination/research/batches/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/state.json`。请只读状态/日志，不用模型轮询，不与controller/其等待模型并行写入。详情见 `coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/README.md`。
+
+下列为已完成准入Goal及历史进度。
+
 **READY_FOR_FORMAL_R5_TRAINING。** 新mean10候选开发预定192/256原Z均32/32，冻结后未用seed20261017/18主256均32/32并独立接受；旧失败seed15/16新方法回归及真实G6有限零/正/反/零、G7同设备原容差重算/重载均已独立核验。最终审核PASS/noMUST_FIX，准确formal首段manifest/两组条件许可/完整启动命令已固定且CPU入口核验通过。当前无live，本Goal未提交任何formal训练，至此停止。完整非零任务性能仍待正式训练评价；旧FAILED/INCOMPLETE及全额保守收费保留。
 
 下列为历史进度快照，不代表当前LIVE或待验收状态。

@@ -129,6 +129,7 @@ def training_analysis(directory, group):
     assert coordinates == [(u, s) for u in range(257, 513) for s in range(16)]
     # Saved outputs only: do not run an extra actor or sample on CPU.
     from instinctlab.training.ppo import deterministic_minibatches
+    assert digest(Path(p['initialization_checkpoint']['path'])) == p['initialization_checkpoint']['sha256']
     origin = torch.load(p['initialization_checkpoint']['path'], map_location='cpu', weights_only=True)
     data = torch.load(out/'pilot_diagnostic/update_257_full_input.pt', map_location='cpu', weights_only=True)
     probe = torch.load(out/'pilot_diagnostic/first_update_probe.pt', map_location='cpu', weights_only=True)
@@ -164,7 +165,7 @@ def evaluation_analysis(directory, group):
             steps = [r for r in rows if r['kind'] == 'STEP']
             assert [r['step'] for r in steps] == list(range(CASES[case].steps))
             traces.extend(replay_raw_case(str(raw), case=case))
-        result = evaluate_checkpoint(traces, update=ck['update'])
+        result = json.loads(json.dumps(evaluate_checkpoint(traces, update=ck['update']), allow_nan=False))
         assert result == read(out/f'formal_{group}_u{ck["update"]}.json'), 'original score replay mismatch'
         nodes[str(ck['update'])] = result
     assert sorted(map(int, nodes)) == NODES

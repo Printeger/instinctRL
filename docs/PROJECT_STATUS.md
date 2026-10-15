@@ -5,7 +5,11 @@
 代码、状态、workload、必要工具和测试已整理到本仓库。源历史完整继承到 `903afc5`，
 其后产品集成提交为 `91c6997`，workload/工具集成为 `e7d58d2`。
 
-## 当前 Goal（2026-10-15 自主正式训练准入）
+## 当前任务（2026-10-15 正式首段本地无人值守执行）
+
+用户已明确授权固定R0/R1正式257–512、两组训练后一次独立checkpoint验收/准确评价发行、全部原Z/T/S/X/W评价后一次最终独立科研分析。复用已有准确许可和原Commander守卫，不扩额、不重试、不改方法。运行由tmux中的本地Python等待，Codex不定时轮询。唯一运行状态：`coordination/research/batches/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/state.json`；[执行说明](../coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/README.md)、[本轮实际结果目录](experiments/r5-formal-first-segment-20261015/README.md)。同一目录仅controller或它等待的独立模型写入。
+
+## 已完成 Goal（2026-10-15 自主正式训练准入）
 
 **READY_FOR_FORMAL_R5_TRAINING。** 新mean10候选开发预定192/256原Z均32/32，冻结后未用seed20261017/18主256均32/32并独立接受；旧失败seed15/16新方法回归及真实G6有限零/正/反/零、G7同设备原容差重算/重载均已独立核验。最终审核PASS/noMUST_FIX，准确formal首段manifest/两组条件许可/完整启动命令已固定且CPU入口核验通过。当前无live，本Goal未提交任何formal训练，至此停止。完整非零任务性能仍待正式训练评价；旧FAILED/INCOMPLETE及全额保守收费保留。
 

@@ -16,7 +16,7 @@
   "new_training_authorized": true,
   "diagnostic_goal_envelope_authorized": false,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "GoalcompleteREADY, nolive/noformalsubmit. Exactconditionalformalfirstsegmentissued; laterexplicitstartrequired.",
+  "live_permission_note": "Current newuser expresslyauthorizes frozenfirstsegment4entries through existingexactCommander andlocalbatch; no newvariables/budget/retries. Actualprogress only in coordination/research/batches/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/state.json",
   "diagnostic_goal_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "paired_pilot_task_requested": true,
   "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
@@ -28,11 +28,25 @@
   "formal_readiness_task_requested": true,
   "formal_readiness_master_authority": "docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
   "formal_readiness_goal_status": "READY_FOR_FORMAL_R5_TRAINING",
-  "formal_full_training_submission_authorized": false,
+  "formal_full_training_submission_authorized": true,
   "formal_readiness_current_job": null,
   "formal_conditional_permission": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_conditional_permission.json",
     "sha256": "f0aa8c1ce592430d2be03b4e441fa1bc8af3013297a152ad60a11b9fb335a183"
   },
-  "formal_training_submitted": false
+  "formal_training_submitted": false,
+  "formal_first_segment_execution": {
+    "task_id": "R5_FORMAL_FIRST_SEGMENT_20261015",
+    "authority": "coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/USER_AUTHORITY.md",
+    "state_path": "coordination/research/batches/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/state.json",
+    "status_authority": "ONLY_LOCAL_BATCH_STATE_JSON",
+    "tmux_session": "instinctrl-r5-formal-first-20261015",
+    "frozen_experiment": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+    "live_entries_maximum": 4,
+    "runtime_model_calls_maximum": 2,
+    "automatic_retries": 0,
+    "automatic_budget_expansion": false,
+    "new_experiment_variables": 0,
+    "execution_instructions": "Only controller and its awaited independent model may write this workspace; read-only observers use local state/logs without model polling."
+  }
 }

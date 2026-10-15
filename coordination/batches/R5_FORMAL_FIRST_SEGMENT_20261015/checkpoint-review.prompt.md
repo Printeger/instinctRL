@@ -19,3 +19,5 @@ R1同样。二者必须共用同一 joint acceptance SHA，避免case级条件�
 提交并正常push本任务证据和准确评价输入，创建唯一tag r5-formal-first-segment-evaluation-inputs-20261015；tag已存在则精确核对，不改写。只暂存本任务：docs/experiments/r5-formal-first-segment-20261015/、docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/、原goal_budget.json及Commander改变的coordination/PROJECT_STATE.json；必要forceadd只该case训练归档job/supervisor.log、job/lifeguard.log、attempt/results/prelaunch/kit.log。不暂存docs/goal/或他人修改，不改历史readiness事实。不更改冻结runtime或source。可记录当前项目执行状态，但不动controller唯一状态。
 
 最终仅按所给schema返回：status PASS代表两组实际训练独立有效、评价许可已准确发行、纯CPU gate通过且commit/push完成；summary简述真实结论，artifacts列出review、分析和准确spec pins，commit=已push HEAD。负结果/权限或资源异常返回STOP并持久化原因，不请求普通阶段批准。不要提交评价，不进行模型轮询。
+
+批处理器将逐字节保护调用前的全部case文件、原件/副本与goal_budget.json；只可将它们原样提交，不可编辑。artifacts必须逐项列出以下9个文件：joint-actual-training.json、两组training-analysis.json、两组evaluation.authorized.json、两组evaluation-AUTH.bound.json、两组evaluation-approval.json（均使用上述准确目录）。不要在artifacts中绑定未来会变动的goal_budget.json或项目状态文件。

@@ -31,3 +31,14 @@ def test_actual257_probe_uses_restored_permutation_seed_and_original_relative_to
     with pytest.raises(AssertionError):verify_probe(data,probe,mini,{'mean_prior_weight':10},{'ppo_config':{'permutation_seed':123-256}})
     data['update']=1
     with pytest.raises(AssertionError):verify_probe(data,probe,mini,{'mean_prior_weight':10},{'ppo_config':{'permutation_seed':123}})
+
+
+def test_original_wilson_tuple_matches_json_producer_without_altering_score():
+    import json
+    from training_workloads.unified_h1.evaluation import case_outcome
+    result=case_outcome([True]*32,['d'+str(i%8)for i in range(32)],expected_subgroups=['d'+str(i)for i in range(8)])
+    producer=json.loads(json.dumps(result))
+    assert isinstance(result['wilson_95'],tuple) and result!=producer
+    assert json.loads(json.dumps(result,allow_nan=False))==producer
+    producer['successes']=31
+    assert json.loads(json.dumps(result,allow_nan=False))!=producer

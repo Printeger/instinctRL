@@ -119,3 +119,78 @@ def test_model_cannot_change_method_or_original_authority():
     assert batch.allowed_model_changes('final-analysis', ['docs/PROJECT_STATUS.md'])
     for name in ['tools/r5_formal_commander.py','isaaclab-training/instinctlab/training/ppo.py',str(batch.BASE/'formal_r5_launch_manifest.json'),'docs/goal/user.md']:
         assert not batch.allowed_model_changes('final-analysis', [name])
+
+
+def test_accepted_model_survives_later_commits_without_invocation(tmp_path, monkeypatch):
+    b=fixture_batch(tmp_path,monkeypatch)
+    import subprocess
+    subprocess.run(['git','init','-q',str(tmp_path)],check=True)
+    for key,value in [('user.name','CPU Test'),('user.email','cpu@example.invalid')]:
+        subprocess.run(['git','config',key,value],cwd=tmp_path,check=True)
+    p=tmp_path/'evidence.json';write(p,{'accepted':True})
+    subprocess.run(['git','add','evidence.json'],cwd=tmp_path,check=True)
+    subprocess.run(['git','commit','-qm','first independent acceptance'],cwd=tmp_path,check=True)
+    first=subprocess.check_output(['git','rev-parse','HEAD'],cwd=tmp_path,text=True).strip()
+    subprocess.run(['git','commit','--allow-empty','-qm','later final analysis'],cwd=tmp_path,check=True)
+    write(b.run/'receipt.json',{'exit_code':0});write(b.run/'answer.json',{'commit':first})
+    row={'accepted':True,'accepted_commit':first,'receipt':batch.pin(b.run/'receipt.json'),
+         'last_message':batch.pin(b.run/'answer.json'),'accepted_artifacts':[batch.pin(p)]}
+    b.state['model_calls']['checkpoint-review']=row
+    real_popen=batch.subprocess.Popen
+    def no_model(argv,*a,**kw):
+        if '_model-worker' in argv:pytest.fail('no model replay')
+        return real_popen(argv,*a,**kw)
+    monkeypatch.setattr(batch.subprocess,'Popen',no_model)
+    b.call_model('checkpoint-review')
+    write(p,{'accepted':'tampered'})
+    with pytest.raises(RuntimeError,match='PIN_DRIFT'):b.call_model('checkpoint-review')
+
+
+@pytest.mark.parametrize('target',['ledger','frozen_case','original','copy'])
+def test_model_cannot_mutate_accounting_frozen_input_or_raw(tmp_path, monkeypatch,target):
+    b=fixture_batch(tmp_path,monkeypatch)
+    paths={'ledger':tmp_path/batch.BASE/'goal_budget.json','frozen_case':b.case/'EXPERIMENT_CARD.json',
+           'original':tmp_path/'attempt/raw.bin','copy':b.case/'live/fixed/raw.bin'}
+    for p in paths.values():p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b'original')
+    write(b.case/'live/fixed/INVENTORY.json',{'files':[{'original':str(paths['original']),'archived':str(paths['copy'])}]})
+    b.state['entries']={'fixed':{'done':True,'spec':{'path':str(b.case/'inputs/fixed.authorized.json')}}}
+    protected=b.model_protected_files()
+    b.state['model_calls']['checkpoint-review']={'intent':True,'protected':protected}
+    write(b.run/'calls/checkpoint-review/receipt.json',{'exit_code':0,'error':None})
+    paths[target].write_bytes(b'tampered')
+    with pytest.raises(RuntimeError,match='PIN_DRIFT'):b.call_model('checkpoint-review')
+
+
+def test_recursive_manifest_protects_templates(tmp_path):
+    p=tmp_path/'EXPERIMENT_CARD.json';write(p,{'fixed':True})
+    manifest={'entries':[{'nested':{'template':batch.pin(p)}}]}
+    pins=list(batch.manifest_pins(manifest));assert len(pins)==1
+    write(p,{'fixed':False})
+    with pytest.raises(RuntimeError,match='PIN_DRIFT'):batch.checked(pins[0])
+
+
+def test_worker_post_popen_persistence_failure_reaps_exact_child(tmp_path,monkeypatch):
+    b=fixture_batch(tmp_path,monkeypatch);slot='checkpoint-review'
+    for name in ['prompt','schema','codex']:
+        (tmp_path/name).write_text('{}')
+    b.plan['pins']={slot+'_prompt':batch.pin(tmp_path/'prompt'),'response_schema':batch.pin(tmp_path/'schema'),'codex':batch.pin(tmp_path/'codex')}
+    b.state['model_calls'][slot]={'prompt':b.plan['pins'][slot+'_prompt']}
+    b.state['entries']={g+'-research-formal-training':{'done':True} for g in ['R0','R1']}
+    monkeypatch.setattr(batch,'Batch',lambda:b)
+    from rlflow import jobs
+    monkeypatch.setattr(jobs,'identity',lambda pid:{'pid':pid})
+    class Child:
+        pid=123456;returncode=None
+        def poll(self):return self.returncode
+        def wait(self,timeout):self.returncode=-15;return -15
+    child=Child();monkeypatch.setattr(batch.subprocess,'Popen',lambda *_a,**_kw:child)
+    cleanup=[];monkeypatch.setattr(batch,'stop_owned',lambda ident:cleanup.append(ident) or {'no_owned_survivor':True})
+    original_write=batch.write
+    def disk_failure(path,value):
+        if Path(path).name=='request.json' and 'codex_identity' in value:raise OSError('post-Popen disk failure')
+        original_write(path,value)
+    monkeypatch.setattr(batch,'write',disk_failure)
+    assert batch.model_worker(slot)==1
+    r=batch.read(b.run/'calls'/slot/'receipt.json')
+    assert cleanup==[{'pid':123456}] and r['exit_code']==-15 and r['child_cleanup']['no_owned_survivor']
+    assert 'post-Popen disk failure' in r['error']

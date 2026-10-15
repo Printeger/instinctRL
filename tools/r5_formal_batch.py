@@ -45,10 +45,43 @@ def can_submit(entry, job, *, charged, admission):
 
 
 def allowed_model_changes(slot, paths):
-    prefixes = [str(RESULTS)+'/', str(BASE/'experiments'/CASE)+'/']
+    case = BASE/'experiments'/CASE
+    prefixes = [str(RESULTS)+'/']
     exact = {str(BASE/'goal_budget.json'), 'coordination/PROJECT_STATE.json'}
+    # Existing case files are immutable during either model call. Only the
+    # already declared evaluation authorization products may be added by #1.
+    if slot == 'checkpoint-review':
+        for g in ['R0','R1']:
+            n = g+'-research-formal-evaluation'
+            exact |= {str(case/'inputs'/(n+'.authorized.json')), str(case/'inputs'/(n+'-AUTH.bound.json')),
+                      str(case/(n+'-approval.json'))}
     if slot == 'final-analysis': exact |= {'coordination/ACTIVE_WORKFLOW.json','coordination/CURRENT_TASK.md','docs/PROJECT_STATUS.md'}
     return all(p in exact or any(p.startswith(prefix) for prefix in prefixes) for p in paths)
+
+
+def manifest_pins(value):
+    if isinstance(value, dict):
+        if isinstance(value.get('path'), str) and isinstance(value.get('sha256'), str): yield value
+        for child in value.values(): yield from manifest_pins(child)
+    elif isinstance(value, list):
+        for child in value: yield from manifest_pins(child)
+
+
+def stop_owned(identity_value, *, wait_seconds=15):
+    """Terminate only this recorded process group; unknown ownership fails shut."""
+    from rlflow.jobs import owns
+    if not identity_value: raise RuntimeError('UNKNOWN_MODEL_CHILD_OWNERSHIP')
+    pid = identity_value['pid']
+    if owns(identity_value):
+        if os.getpgid(pid) != pid: raise RuntimeError('MODEL_CHILD_GROUP_MISMATCH')
+        os.killpg(pid, signal.SIGTERM)
+        until = time.time()+wait_seconds
+        while owns(identity_value) and time.time()<until: time.sleep(.1)
+        if owns(identity_value): os.killpg(pid, signal.SIGKILL)
+        until = time.time()+5
+        while owns(identity_value) and time.time()<until: time.sleep(.1)
+        if owns(identity_value): raise RuntimeError('OWNED_MODEL_CHILD_SURVIVED')
+    return {'identity':identity_value, 'no_owned_survivor':not owns(identity_value)}
 
 
 def postrun_complete(count, files):
@@ -108,6 +141,7 @@ class Batch:
                     'checkpoint-review_prompt','final-analysis_prompt','response_schema','codex','tmux','authority','prelaunch_review'}
         if set(self.plan['pins']) != required: raise RuntimeError('PLAN_PIN_SET')
         for value in self.plan['pins'].values(): checked(value)
+        for value in manifest_pins(read(checked(self.plan['pins']['manifest']))): checked(value)
         review = read(checked(self.plan['pins']['prelaunch_review']))
         if review['verdict'] != 'PASS' or review['must_fix'] or review['identities']['batch_sha256'] != sha(ROOT/'tools/r5_formal_batch.py'):
             raise RuntimeError('PRELAUNCH_REVIEW_NOT_BOUND')
@@ -234,16 +268,34 @@ class Batch:
         self.guard(); self.save(phase='MODEL:'+slot)
         calls = self.state['model_calls']; result_path = self.run/'calls'/slot/'receipt.json'
         row = calls.get(slot)
+        if row and row.get('accepted'):
+            self.verify_accepted_model(row)
+            return
         if row is None:
             if len(calls) >= 2: raise RuntimeError('MODEL_CALL_LIMIT')
             calls[slot] = {'intent':True, 'prompt':self.plan['pins'][slot+'_prompt'], 'started_at':time.time(),
-                           'start_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=self.root,text=True).strip()}; self.save()
+                           'start_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=self.root,text=True).strip(),
+                           'protected':self.model_protected_files()}; self.save()
             argv = [self.plan['control_python'], str(self.root/'tools/r5_formal_batch.py'), '_model-worker', slot]
             with (self.run/(slot+'-worker.log')).open('ab') as log:
                 proc = subprocess.Popen(argv, cwd=self.root, env=self.environment(), stdout=log, stderr=log, start_new_session=True)
             calls[slot]['worker_identity'] = identity(proc.pid); self.save(); row = calls[slot]
+        # Worker self-records its exact boot/starttime identity before invoking CLI.
+        # This closes controller death between Popen and its identity save.
+        request_path = self.run/'calls'/slot/'request.json'
+        if not row.get('worker_identity') and not result_path.exists():
+            until = time.time()+10
+            while not request_path.exists() and not result_path.exists() and time.time()<until: time.sleep(.1)
+            if request_path.exists():
+                request = read(request_path)
+                if request['slot'] != slot or request['prompt'] != row['prompt']: raise RuntimeError('MODEL_REQUEST_IDENTITY_MISMATCH')
+                row['worker_identity'] = request['worker_identity']; self.save()
         while not result_path.exists():
-            if not row.get('worker_identity') or not owns(row['worker_identity']): raise RuntimeError('AMBIGUOUS_MODEL_CALL: '+slot)
+            if not row.get('worker_identity') or not owns(row['worker_identity']):
+                if request_path.exists() and read(request_path).get('codex_identity'):
+                    cleanup = stop_owned(read(request_path)['codex_identity'])
+                    write(self.run/'calls'/slot/'orphan-cleanup.json', cleanup)
+                raise RuntimeError('AMBIGUOUS_MODEL_CALL: '+slot)
             try: self.guard()
             except BaseException:
                 write(self.run/'calls'/slot/'cancel.json', {'reason':'CONTROLLER_STOP_OR_PAUSE', 'time':time.time()})
@@ -253,6 +305,7 @@ class Batch:
             time.sleep(2)
         result = read(result_path); row['receipt'] = pin(result_path); row['exit_code'] = result['exit_code']; self.save()
         if result['exit_code'] != 0 or result['error'] is not None: raise RuntimeError('MODEL_EXIT_FAILURE: '+slot)
+        for protected in row['protected']: checked(protected)
         answer = read(checked(result['last_message']))
         for artifact in answer['artifacts']: checked(artifact)
         if answer['commit'] != subprocess.check_output(['git','rev-parse','HEAD'],cwd=self.root,text=True).strip():
@@ -261,9 +314,12 @@ class Batch:
         self.guard()
         subprocess.run(['git','merge-base','--is-ancestor',row['start_commit'],'HEAD'],cwd=self.root,check=True)
         changes = subprocess.check_output(['git','diff','--name-only',row['start_commit'],'HEAD'],cwd=self.root,text=True).splitlines()
-        if not allowed_model_changes(slot, changes): raise RuntimeError('MODEL_EDITED_OUTSIDE_AUTHORIZED_SCOPE')
+        protected_names = {str(Path(p['path']).relative_to(self.root)) for p in row['protected'] if Path(p['path']).is_relative_to(self.root)}
+        if not allowed_model_changes(slot, [p for p in changes if p not in protected_names]): raise RuntimeError('MODEL_EDITED_OUTSIDE_AUTHORIZED_SCOPE')
         if subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=self.root):
             raise RuntimeError('MODEL_LEFT_UNCOMMITTED_TRACKED_CHANGES')
+        untracked = subprocess.check_output(['git','ls-files','--others','--exclude-standard'],cwd=self.root,text=True).splitlines()
+        if any(not p.startswith('docs/goal/') for p in untracked): raise RuntimeError('MODEL_LEFT_UNCOMMITTED_OUTPUTS')
         self.log('MODEL_ACCEPTED', slot=slot, summary=answer['summary'])
         if slot == 'checkpoint-review':
             review = read(self.root/RESULTS/'reviews/joint-actual-training.json')
@@ -279,6 +335,51 @@ class Batch:
             if review['verdict'] != 'PASS' or review['must_fix']: raise RuntimeError('FINAL_EVIDENCE_REJECTED')
             if not (self.root/RESULTS/'FINAL_ANALYSIS.md').is_file(): raise RuntimeError('FINAL_ANALYSIS_MISSING')
         if subprocess.check_output(['git','rev-parse','HEAD'],cwd=self.root) != subprocess.check_output(['git','rev-parse','origin/main'],cwd=self.root): raise RuntimeError('MODEL_OUTPUT_NOT_PUSHED')
+        mandatory = self.model_mandatory_files(slot)
+        artifacts = {str(checked(p)):p for p in answer['artifacts']}
+        for p in mandatory:
+            if str(p.resolve()) not in artifacts: raise RuntimeError('REQUIRED_MODEL_ARTIFACT_NOT_LISTED: '+str(p))
+            content = subprocess.check_output(['git','show',answer['commit']+':'+str(p.relative_to(self.root))],cwd=self.root)
+            if content != p.read_bytes(): raise RuntimeError('REQUIRED_MODEL_ARTIFACT_NOT_COMMITTED: '+str(p))
+        # All previously accepted outputs remain immutable through later calls.
+        for other in calls.values():
+            if other.get('accepted'): self.verify_accepted_model(other)
+        row.update(accepted=True, accepted_commit=answer['commit'], accepted_artifacts=answer['artifacts'], last_message=result['last_message'])
+        self.save()
+
+    def verify_accepted_model(self, row):
+        checked(row['receipt']); checked(row['last_message'])
+        for p in row['accepted_artifacts']: checked(p)
+        subprocess.run(['git','merge-base','--is-ancestor',row['accepted_commit'],'HEAD'],cwd=self.root,check=True)
+
+    def model_mandatory_files(self, slot):
+        if slot == 'checkpoint-review':
+            files = [self.root/RESULTS/'reviews/joint-actual-training.json']
+            for g in ['R0','R1']:
+                files += [self.root/RESULTS/f'{g}-training-analysis.json',
+                          self.case/'inputs'/f'{g}-research-formal-evaluation.authorized.json',
+                          self.case/'inputs'/f'{g}-research-formal-evaluation-AUTH.bound.json',
+                          self.case/f'{g}-research-formal-evaluation-approval.json']
+            return files
+        return [self.root/RESULTS/p for p in ['reviews/final-scientific-review.json','EXPERIMENT_RESULTS.json',
+                'FINAL_ANALYSIS.md','R0-evaluation-analysis.json','R1-evaluation-analysis.json']]
+
+    def model_protected_files(self):
+        """Protect accounting byte-for-byte and every existing raw/copy/input.
+
+        Commander has finished its mutations before handing the directory to
+        the model. Issuing evaluation approvals does not modify this ledger.
+        """
+        files = {self.root/BASE/'goal_budget.json'}
+        files.update(p for p in self.case.rglob('*') if p.is_file())
+        for entry in self.state['entries'].values():
+            if not entry.get('done'): raise RuntimeError('MODEL_BEFORE_ENTRY_CLOSED')
+            name = Path(entry['spec']['path']).name.removesuffix('.authorized.json')
+            inv = read(self.case/'live'/name/'INVENTORY.json')
+            for item in inv['files']:
+                for key in ['original','archived']:
+                    if item[key]: files.add(Path(item[key]))
+        return [pin(p) for p in sorted(files)]
 
     def execute(self):
         from rlflow.jobs import identity
@@ -310,6 +411,8 @@ def model_worker(slot):
     """A separate owned waiter saves the CLI exit even if the controller dies."""
     b = Batch(); b.guard()
     required = 'research-formal-training' if slot == 'checkpoint-review' else 'research-formal-evaluation'
+    if b.state['model_calls'].get(slot, {}).get('prompt') != b.plan['pins'][slot+'_prompt']:
+        raise RuntimeError('MODEL_INTENT_NOT_BOUND')
     if not all(b.state['entries'].get(g+'-'+required, {}).get('done') for g in ['R0','R1']):
         raise RuntimeError('MODEL_STAGE_PREREQUISITES_NOT_MET')
     if slot == 'final-analysis':
@@ -322,8 +425,9 @@ def model_worker(slot):
     argv = [str(checked(b.plan['pins']['codex'])), '-a','never','-s','danger-full-access',
             'exec','--json','--color','never','-C',str(ROOT), '--output-schema',str(schema),
             '--output-last-message',str(d/'last-message.json'), '-']
-    write(request, {'slot':slot, 'argv':argv, 'prompt':pin(prompt), 'schema':pin(schema), 'started_at':time.time(), 'worker_pid':os.getpid()})
-    started = time.time(); code = -1; error = None
+    from rlflow.jobs import identity
+    write(request, {'slot':slot, 'argv':argv, 'prompt':pin(prompt), 'schema':pin(schema), 'started_at':time.time(), 'worker_pid':os.getpid(), 'worker_identity':identity(os.getpid())})
+    started = time.time(); code = -1; error = None; proc = None; ident = None; cleanup = None
     try:
         with prompt.open('rb') as stdin, (d/'events.jsonl').open('xb') as stdout, (d/'stderr.log').open('xb') as stderr:
             proc = subprocess.Popen(argv, cwd=ROOT, stdin=stdin, stdout=stdout, stderr=stderr, env=b.environment(), start_new_session=True)
@@ -344,6 +448,18 @@ def model_worker(slot):
                 time.sleep(2)
             code = proc.returncode
     except BaseException as exc: error = repr(exc)
+    finally:
+        if proc is not None:
+            try:
+                if proc.poll() is None:
+                    # Includes failure to persist request after Popen. Retain
+                    # the actual child identity and reap before a receipt.
+                    if ident is None: ident = identity(proc.pid)
+                    cleanup = stop_owned(ident)
+                    proc.wait(timeout=20)
+                code = proc.returncode
+            except BaseException as exc:
+                error = str(error)+'; OWNED_CHILD_CLEANUP_UNKNOWN: '+repr(exc)
     last = d/'last-message.json'
     summary = None
     if last.exists():
@@ -351,6 +467,7 @@ def model_worker(slot):
         except (ValueError, AttributeError): pass
     write(d/'receipt.json', {'slot':slot, 'exit_code':code, 'error':error, 'started_at':started,
          'finished_at':time.time(), 'prompt':pin(prompt), 'argv':argv,
+         'child_identity':ident, 'child_cleanup':cleanup,
          'last_message':pin(last) if last.exists() else None,
          'events_path':str(d/'events.jsonl'), 'stderr_path':str(d/'stderr.log'), 'summary':summary})
     return 0 if code == 0 and error is None else 1
