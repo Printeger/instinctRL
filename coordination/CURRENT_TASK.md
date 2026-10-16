@@ -1,5 +1,9 @@
 # 当前任务
 
+2026-10-16最新授权：优先验收现有R0/R1正式257–512成果，再完成原定评估。已准备一次checkpoint-recovery独立复审（含恢复代码预审），累计模型上限3含旧STOP与原最终分析；不重训、不重试作业、不扩GPU/实验预算。新接受记录另存recovery-20261016/joint-actual-training.json，旧STOP/原件/失败/计账保留。恢复包见 `coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/recovery-20261016/README.md`；实际状态只读原唯一state.json。启动后只有controller及其等待的独立模型写入，其他上下文不得模型轮询。
+
+以下为原首段授权与历史记录，其中原2次模型限制由本次明确额外1次复审更新，其余原实验边界不变。
+
 固定R5正式第一段本地批处理。当前用户已授权既有4准确入口与2次证据门槛后的独立codex exec；无扩额/重试/新变量。唯一运行状态：`coordination/research/batches/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/state.json`。请只读状态/日志，不用模型轮询，不与controller/其等待模型并行写入。详情见 `coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/README.md`。
 
 下列为已完成准入Goal及历史进度。

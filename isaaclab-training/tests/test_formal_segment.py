@@ -179,9 +179,13 @@ def test_warm_entry_binds_original_method_restore_fresh_reset_and_gate(profile,t
         return {'policy':{'state_vec':torch.zeros(32,52)}},{}
     class Loop:
         def __init__(self,*args,**kwargs):calls['loop']=kwargs
-        def run_update(self,**kwargs):trainer.update_counter+=1
+        def run_update(self,**kwargs):
+            if 'mean_prior_weight' in profile:
+                binding=json.loads((tmp_path/'actor_mean_prior_binding.json').read_text())
+                assert binding['starting_update']==256 and binding['actual_weight']==profile['mean_prior_weight']
+            trainer.update_counter+=1
     monkeypatch.setattr(driver_module,'UnifiedH1TrainingLoop',Loop)
-    backend=NS(research=profile,authorization={'mode':'research-formal-training','budgets':required_budget('research-formal-training',profile)},
+    backend=NS(research=profile,authorization={'mode':'research-formal-training','authorization_sha256':'f'*64,'budgets':required_budget('research-formal-training',profile)},
         trainer=trainer,environment=env,output=tmp_path,counters=ExecutionCounters(),
         resource_check=lambda *a:None,_apply_research_profile=lambda:None,
         _load_evaluation_checkpoint=load,_preserving_reset=reset,_write_checkpoint=lambda *a:None)
@@ -215,3 +219,8 @@ def test_restored_mean_prior_hook_uses_current_formal_arm_before_updates(profile
     monkeypatch.setattr(mean_prior,'configure_trainer',install)
     test_warm_entry_binds_original_method_restore_fresh_reset_and_gate(p,tmp_path,monkeypatch)
     assert calls==[(256,weight,10.)]
+    binding=json.loads((tmp_path/'actor_mean_prior_binding.json').read_text())
+    assert binding['actual_weight']==weight and binding['hook_installed']
+    assert binding['starting_update']==256 and binding['actor_only']
+    assert binding['mean_prior_contract']==p['mean_prior_contract']
+    assert binding['authorization_sha256']=='f'*64 and not binding['runtime_action_replacement']

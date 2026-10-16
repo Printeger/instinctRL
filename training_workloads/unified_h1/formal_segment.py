@@ -135,6 +135,15 @@ def train_segment(backend):
         raise ValueError('formal warmup actual checkpoint stage/seed/node mismatch')
     from .mean_prior import configure_trainer
     configure_trainer(backend.trainer, p)
+    if 'mean_prior_weight' in p:
+        atomic_json_replace(backend.output, 'actor_mean_prior_binding.json', {
+            'mean_prior_contract': p['mean_prior_contract'],
+            'actual_weight': p['mean_prior_weight'],
+            'hook_installed': backend.trainer.actor_auxiliary is not None,
+            'actor_only': True, 'runtime_action_replacement': False,
+            'authorization_sha256': backend.authorization['authorization_sha256'],
+            'phase': 'AFTER_ORIGIN_RESTORE_BEFORE_FIRST_FORMAL_UPDATE',
+            'starting_update': backend.trainer.update_counter})
     backend._checkpoint_reset_offset = meta['reset_number']
     backend._formal_segment = True
     start = meta['counters']['global_policy_step']

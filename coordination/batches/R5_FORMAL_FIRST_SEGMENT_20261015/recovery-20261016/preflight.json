@@ -1,0 +1,60 @@
+{
+  "status": "CPU_BOOTSTRAP_ONLY_NOT_CHECKPOINT_ACCEPTANCE",
+  "head_before_commit": "49236de5302271f11b6bd8d298b26482d03d67ec",
+  "plan": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/recovery-20261016/plan.json",
+    "sha256": "376dee8f258bbde42d47043f38e3261aa044fd1dbf8864a9ec181d81d2a61ed2"
+  },
+  "original_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/batches/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/state.json",
+    "sha256": "e5930f177b02d317b68fb78b30c9628344bc5a2db017752585b9590fac5a6a10"
+  },
+  "protected_originals_verified": 251,
+  "no_owned_previous_controller_or_models": true,
+  "STOP_pause_clear": true,
+  "Store_quiescent": true,
+  "evaluation_budget_projection_only": [
+    {
+      "group": "R0",
+      "budgets": {
+        "live_process_starts": 1,
+        "simulator_initializations": 1,
+        "initialization_ticks": 10,
+        "training_transitions": 0,
+        "nontraining_transitions": 164800,
+        "optimizer_updates": 0,
+        "checkpoint_writes": 0,
+        "explicit_resets": 25,
+        "automatic_resets": 164800,
+        "wall_seconds": 3600
+      },
+      "remaining_check": {
+        "conservative_output_reserved_bytes_including_confirmation_formal_and_metadata": 382252089344
+      }
+    },
+    {
+      "group": "R1",
+      "budgets": {
+        "live_process_starts": 1,
+        "simulator_initializations": 1,
+        "initialization_ticks": 10,
+        "training_transitions": 0,
+        "nontraining_transitions": 164800,
+        "optimizer_updates": 0,
+        "checkpoint_writes": 0,
+        "explicit_resets": 25,
+        "automatic_resets": 164800,
+        "wall_seconds": 3600
+      },
+      "remaining_check": {
+        "conservative_output_reserved_bytes_including_confirmation_formal_and_metadata": 382252089344
+      }
+    }
+  ],
+  "actual_budget_unchanged": true,
+  "disk_free_bytes": 516225544192,
+  "GPU_queries": 0,
+  "submissions": 0,
+  "model_calls": 0,
+  "CLI_login_status": "Logged in using ChatGPT"
+}

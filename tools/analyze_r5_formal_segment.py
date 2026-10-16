@@ -82,7 +82,7 @@ def verify_probe(data, probe, mini, p, origin):
         assert torch.isclose(expected, torch.tensor(mini[i]['actor_auxiliary_loss']), atol=1e-6, rtol=1e-5)
 
 
-def training_analysis(directory, group):
+def training_analysis(directory, group, *, binding_verifier=None):
     attempt, auth, config, binding = bound_entry(directory, group, 'research-formal-training')
     p = auth['parameters']; out = attempt / 'results/research-formal-training'
     receipt = read(ROOT / 'coordination/research/jobs' / binding['job_id'] / 'receipt.json')
@@ -92,9 +92,15 @@ def training_analysis(directory, group):
     assert init['origin'] == p['initialization_checkpoint'] and init['phase'] == p
     assert init['initial_global_policy_step'] == 4096 and init['restored_adam_steps_each'] == 2048
     assert init['physical_history_anchor_actuator_continuity_claimed'] is False
-    aux = read(out/'actor_mean_prior_binding.json')
-    assert aux['actual_weight'] == p['mean_prior_weight'] and aux['hook_installed'] and aux['actor_only']
-    assert aux['mean_prior_contract'] == p['mean_prior_contract'] and not aux['runtime_action_replacement']
+    if binding_verifier is None:
+        aux = read(out/'actor_mean_prior_binding.json')
+        assert aux['actual_weight'] == p['mean_prior_weight'] and aux['hook_installed'] and aux['actor_only']
+        assert aux['mean_prior_contract'] == p['mean_prior_contract'] and not aux['runtime_action_replacement']
+        binding_evidence = {'kind': 'ORIGINAL_RUNTIME_BINDING_FILE', 'original': str(out/'actor_mean_prior_binding.json')}
+    else:
+        # Explicit offline recovery only. No implicit fallback, synthetic file or
+        # acceptance: an independent reviewer must adjudicate the evidence.
+        binding_evidence = binding_verifier(directory, group, out, auth)
     checkpoints = []
     for update in NODES:
         path = out / 'checkpoints' / f'u{update}.pt'
@@ -144,6 +150,7 @@ def training_analysis(directory, group):
             'inventory': inventory, 'additional_counters': counts, 'automatic_reset_lanes': resets,
             'accepted_checkpoint_candidates': checkpoints, 'first_absolute_update': 257, 'first_update_distribution_diagnostics':diagnostics,
             'all_minibatch_statistics':learning, 'learning_update_statistics':updates,
+            'auxiliary_binding_evidence': binding_evidence,
             'CPU_only': True, 'actor_forwards': 0, 'optimizer_calls': 0,
             'limits': 'Independent model must additionally inspect actual retained gate/probe correspondence before acceptance.'}
 

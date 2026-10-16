@@ -691,10 +691,20 @@
     "tmux_session": "instinctrl-r5-formal-first-20261015",
     "frozen_experiment": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
     "live_entries_maximum": 4,
-    "runtime_model_calls_maximum": 2,
+    "runtime_model_calls_maximum": 3,
     "automatic_retries": 0,
     "automatic_budget_expansion": false,
     "new_experiment_variables": 0,
-    "execution_instructions": "Only controller and its awaited independent model may write this workspace; read-only observers use local state/logs without model polling."
+    "execution_instructions": "Only controller and its awaited independent model may write this workspace; read-only observers use local state/logs without model polling.",
+    "recovery_authority": "coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/recovery-20261016/USER_AUTHORITY.md",
+    "recovery_plan": "coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/recovery-20261016/plan.json",
+    "recovery_status": "PREPARED_CPU_REVIEW_ONLY_PENDING_INDEPENDENT_ACCEPTANCE",
+    "recovery_tmux_session": "instinctrl-r5-formal-recovery-20261016",
+    "completed_training_jobs": [
+      "J-0a6d7c4f861968ed",
+      "J-838e67f829192ab7"
+    ],
+    "additional_training_authorized": false,
+    "additional_review_calls": 1
   }
 }

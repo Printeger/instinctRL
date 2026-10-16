@@ -7,6 +7,8 @@
 
 ## 当前任务（2026-10-15 正式首段本地无人值守执行）
 
+2026-10-16有限恢复：用户选择优先验收现有成果并完成原定评价。[恢复包](../coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/recovery-20261016/README.md)已准备两组CPU补充证据及一次额外独立复审，累计模型上限3含旧STOP和原最终分析。修复未来正式入口漏写binding的缺陷，原冻结评价source不改。只有独立接受原始证据、10checkpoint及精确恢复代码后才可发行/执行两组原评价；无新增训练、作业重试或实验扩额。准备状态不等于独立接受；实际进度继续以原唯一state.json为准。
+
 2026-10-16结果补记：R0/R1各完成绝对257–512更新、131072个观察到的训练transitions及5个新checkpoint，均已结算和正常owned ACK清理；原生FAILED/-9、collector INCOMPLETE/null及保守预留保持。独立checkpoint审核因两组原件缺少 `actor_mean_prior_binding.json` 给出STOP；批处理停在 `MODEL:checkpoint-review`，未接受checkpoint、未发行或执行Z/T/S/X/W评价，最终独立模型分析未调用。用户另行要求的[离线训练效果报告](experiments/r5-formal-first-segment-20261015/offline-analysis-20261016/REPORT.md)已生成：非零跟踪改善、R1末段较好但全段略差，均值约束效果不等于悬停达标；另记录末尾episode重复日志问题。该报告不改变原审核与唯一运行状态、不恢复批处理。
 
 用户已明确授权固定R0/R1正式257–512、两组训练后一次独立checkpoint验收/准确评价发行、全部原Z/T/S/X/W评价后一次最终独立科研分析。复用已有准确许可和原Commander守卫，不扩额、不重试、不改方法。运行由tmux中的本地Python等待，Codex不定时轮询。唯一运行状态：`coordination/research/batches/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/state.json`；[执行说明](../coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/README.md)、[本轮实际结果目录](experiments/r5-formal-first-segment-20261015/README.md)。同一目录仅controller或它等待的独立模型写入。

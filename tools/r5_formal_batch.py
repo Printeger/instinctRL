@@ -50,7 +50,7 @@ def allowed_model_changes(slot, paths):
     exact = {str(BASE/'goal_budget.json'), 'coordination/PROJECT_STATE.json'}
     # Existing case files are immutable during either model call. Only the
     # already declared evaluation authorization products may be added by #1.
-    if slot == 'checkpoint-review':
+    if slot in {'checkpoint-review', 'checkpoint-recovery'}:
         for g in ['R0','R1']:
             n = g+'-research-formal-evaluation'
             exact |= {str(case/'inputs'/(n+'.authorized.json')), str(case/'inputs'/(n+'-AUTH.bound.json')),
@@ -184,6 +184,15 @@ class Batch:
         if action == 'submit': argv.append('--start-formal')
         self.command(group+'-'+mode+'-'+action, argv)
 
+    def worker_command(self, slot):
+        return [self.plan['control_python'], str(self.root/'tools/r5_formal_batch.py'), '_model-worker', slot]
+
+    def checkpoint_slot(self): return 'checkpoint-review'
+
+    def checkpoint_review_path(self): return self.root/RESULTS/'reviews/joint-actual-training.json'
+
+    def training_analysis_path(self, group): return self.root/RESULTS/f'{group}-training-analysis.json'
+
     def initialize(self):
         from tools.r5_formal_commander import idle
         from tools.r5_formal_launch_gate import require_formal_start
@@ -272,11 +281,11 @@ class Batch:
             self.verify_accepted_model(row)
             return
         if row is None:
-            if len(calls) >= 2: raise RuntimeError('MODEL_CALL_LIMIT')
+            if len(calls) >= self.plan.get('model_call_limit', 2): raise RuntimeError('MODEL_CALL_LIMIT')
             calls[slot] = {'intent':True, 'prompt':self.plan['pins'][slot+'_prompt'], 'started_at':time.time(),
                            'start_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=self.root,text=True).strip(),
                            'protected':self.model_protected_files()}; self.save()
-            argv = [self.plan['control_python'], str(self.root/'tools/r5_formal_batch.py'), '_model-worker', slot]
+            argv = self.worker_command(slot)
             with (self.run/(slot+'-worker.log')).open('ab') as log:
                 proc = subprocess.Popen(argv, cwd=self.root, env=self.environment(), stdout=log, stderr=log, start_new_session=True)
             calls[slot]['worker_identity'] = identity(proc.pid); self.save(); row = calls[slot]
@@ -321,8 +330,8 @@ class Batch:
         untracked = subprocess.check_output(['git','ls-files','--others','--exclude-standard'],cwd=self.root,text=True).splitlines()
         if any(not p.startswith('docs/goal/') for p in untracked): raise RuntimeError('MODEL_LEFT_UNCOMMITTED_OUTPUTS')
         self.log('MODEL_ACCEPTED', slot=slot, summary=answer['summary'])
-        if slot == 'checkpoint-review':
-            review = read(self.root/RESULTS/'reviews/joint-actual-training.json')
+        if slot == self.checkpoint_slot():
+            review = read(self.checkpoint_review_path())
             if review['verdict'] != 'PASS' or review['must_fix']: raise RuntimeError('CHECKPOINT_REVIEW_REJECTED')
             for g in ['R0','R1']:
                 from tools.r5_formal_launch_gate import require_formal_start
@@ -353,10 +362,10 @@ class Batch:
         subprocess.run(['git','merge-base','--is-ancestor',row['accepted_commit'],'HEAD'],cwd=self.root,check=True)
 
     def model_mandatory_files(self, slot):
-        if slot == 'checkpoint-review':
-            files = [self.root/RESULTS/'reviews/joint-actual-training.json']
+        if slot == self.checkpoint_slot():
+            files = [self.checkpoint_review_path()]
             for g in ['R0','R1']:
-                files += [self.root/RESULTS/f'{g}-training-analysis.json',
+                files += [self.training_analysis_path(g),
                           self.case/'inputs'/f'{g}-research-formal-evaluation.authorized.json',
                           self.case/'inputs'/f'{g}-research-formal-evaluation-AUTH.bound.json',
                           self.case/f'{g}-research-formal-evaluation-approval.json']
@@ -407,10 +416,10 @@ class Batch:
                 self.log('STOPPED', error=str(error)); raise
 
 
-def model_worker(slot):
+def model_worker(slot, *, instance=None):
     """A separate owned waiter saves the CLI exit even if the controller dies."""
-    b = Batch(); b.guard()
-    required = 'research-formal-training' if slot == 'checkpoint-review' else 'research-formal-evaluation'
+    b = instance if instance is not None else Batch(); b.guard()
+    required = 'research-formal-training' if slot == b.checkpoint_slot() else 'research-formal-evaluation'
     if b.state['model_calls'].get(slot, {}).get('prompt') != b.plan['pins'][slot+'_prompt']:
         raise RuntimeError('MODEL_INTENT_NOT_BOUND')
     if not all(b.state['entries'].get(g+'-'+required, {}).get('done') for g in ['R0','R1']):
