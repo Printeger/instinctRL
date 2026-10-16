@@ -1,11 +1,13 @@
 # instinctRL 当前状态
 
-更新：2026-10-15。唯一日常开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一开发分支 `main`，
+更新：2026-10-16。唯一日常开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一开发分支 `main`，
 远端 [Printeger/instinctRL](https://github.com/Printeger/instinctRL)。当前精确版本以 `git rev-parse HEAD` 为准。
 代码、状态、workload、必要工具和测试已整理到本仓库。源历史完整继承到 `903afc5`，
 其后产品集成提交为 `91c6997`，workload/工具集成为 `e7d58d2`。
 
 ## 当前任务（2026-10-15 正式首段本地无人值守执行）
+
+2026-10-16结果补记：R0/R1各完成绝对257–512更新、131072个观察到的训练transitions及5个新checkpoint，均已结算和正常owned ACK清理；原生FAILED/-9、collector INCOMPLETE/null及保守预留保持。独立checkpoint审核因两组原件缺少 `actor_mean_prior_binding.json` 给出STOP；批处理停在 `MODEL:checkpoint-review`，未接受checkpoint、未发行或执行Z/T/S/X/W评价，最终独立模型分析未调用。用户另行要求的[离线训练效果报告](experiments/r5-formal-first-segment-20261015/offline-analysis-20261016/REPORT.md)已生成：非零跟踪改善、R1末段较好但全段略差，均值约束效果不等于悬停达标；另记录末尾episode重复日志问题。该报告不改变原审核与唯一运行状态、不恢复批处理。
 
 用户已明确授权固定R0/R1正式257–512、两组训练后一次独立checkpoint验收/准确评价发行、全部原Z/T/S/X/W评价后一次最终独立科研分析。复用已有准确许可和原Commander守卫，不扩额、不重试、不改方法。运行由tmux中的本地Python等待，Codex不定时轮询。唯一运行状态：`coordination/research/batches/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/state.json`；[执行说明](../coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/README.md)、[本轮实际结果目录](experiments/r5-formal-first-segment-20261015/README.md)。同一目录仅controller或它等待的独立模型写入。
 
