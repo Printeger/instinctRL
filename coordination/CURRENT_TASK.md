@@ -1,5 +1,9 @@
 # 当前任务
 
+2026-10-17最终结果：固定正式首段科学分析完成，本次结束；当前无live，不继续训练。R0/R1所有5节点原Z32/32，两组u384/u512原T/S/X32/32，全部节点W0/32，完整R5未通过。最终证据审核PASS/noMUST_FIX只表示完整数据科学有效，不能解释为所有性能门槛通过。见 `docs/experiments/r5-formal-first-segment-20261015/FINAL_ANALYSIS.md`、`EXPERIMENT_RESULTS.json` 和 `reviews/final-scientific-review.json`。
+
+累计模型上限3、实际调用3含原STOP、一次恢复PASS及本次最终分析；不再模型调用、重试或追加段。四job正常owned ACK/两稳定空扫描/无残留/settle/各2postrun均独立核对；FAILED/-9/PASS_PENDING_CLOSE/INCOMPLETE/null和保守账本保持。唯一controller state.json未编辑，由controller在本次退出后验收并转COMPLETE。机器执行索引为PROJECT_STATE/ACTIVE_WORKFLOW的formal_first_segment_execution；旧readiness Goal及下列历史进度保留，不表示当前待执行动作。
+
 2026-10-16最新授权：优先验收现有R0/R1正式257–512成果，再完成原定评估。已准备一次checkpoint-recovery独立复审（含恢复代码预审），累计模型上限3含旧STOP与原最终分析；不重训、不重试作业、不扩GPU/实验预算。新接受记录另存recovery-20261016/joint-actual-training.json，旧STOP/原件/失败/计账保留。恢复包见 `coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/recovery-20261016/README.md`；实际状态只读原唯一state.json。启动后只有controller及其等待的独立模型写入，其他上下文不得模型轮询。
 
 以下为原首段授权与历史记录，其中原2次模型限制由本次明确额外1次复审更新，其余原实验边界不变。

@@ -1,11 +1,19 @@
 # instinctRL 当前状态
 
-更新：2026-10-16。唯一日常开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一开发分支 `main`，
+更新：2026-10-17。唯一日常开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一开发分支 `main`，
 远端 [Printeger/instinctRL](https://github.com/Printeger/instinctRL)。当前精确版本以 `git rev-parse HEAD` 为准。
 代码、状态、workload、必要工具和测试已整理到本仓库。源历史完整继承到 `903afc5`，
 其后产品集成提交为 `91c6997`，workload/工具集成为 `e7d58d2`。
 
-## 当前任务（2026-10-15 正式首段本地无人值守执行）
+## 当前任务：固定正式首段已完成，本次结束（2026-10-17）
+
+**独立科学证据审核PASS/noMUST_FIX；完整R5未通过。** R0/R1各完成绝对257–512、131072训练transitions、256更新和5个checkpoint；两组全部五节点Z/T/S/X/W已按原函数从50case×32lane完整重放。全部节点Z32/32；两组u384/u512的T/S/X32/32、各方向4/4；所有节点W0/32、两墙子组0/16，安全距离全部未达标。两组原Z均未回退，但不因此获得追加段授权。R1晚期漂移和跟踪较好，早期学习进展较慢且部分高度/W指标更差；仅限共同origin的单seed aux0/10配对解释。
+
+四个job均已终态、normal owned ACK、两次稳定空扫描无残留、settle和各恰好2postrun。原生FAILED/-9、app.close9.5s、raw PASS_PENDING_CLOSE、collector INCOMPLETE/null及全额保守工作量/输出预留保留，goal_budget.json原样提交。当前无live，不继续训练、评价、模型调用或重试。本次模型上限3、实际调用3（原STOP、恢复独立复审PASS、本次最终分析），历史调用和缺失binding事实不改写。
+
+[最终分析](experiments/r5-formal-first-segment-20261015/FINAL_ANALYSIS.md)、[机器结果](experiments/r5-formal-first-segment-20261015/EXPERIMENT_RESULTS.json)、[独立审核](experiments/r5-formal-first-segment-20261015/reviews/final-scientific-review.json)。唯一controller状态 `coordination/research/batches/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/state.json` 本次只读：分析时为MODEL:final-analysis，由controller在本次退出并验证提交/push后原子转COMPLETE。完成的是固定首段，非完整非零任务收敛。下一阶段仅建议先分析既有W触发/制动/几何及训练覆盖差异，未执行或改变方法。
+
+### 本段授权与历史进度（保留当时事实）
 
 2026-10-16有限恢复：用户选择优先验收现有成果并完成原定评价。[恢复包](../coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/recovery-20261016/README.md)已准备两组CPU补充证据及一次额外独立复审，累计模型上限3含旧STOP和原最终分析。修复未来正式入口漏写binding的缺陷，原冻结评价source不改。只有独立接受原始证据、10checkpoint及精确恢复代码后才可发行/执行两组原评价；无新增训练、作业重试或实验扩额。准备状态不等于独立接受；实际进度继续以原唯一state.json为准。
 

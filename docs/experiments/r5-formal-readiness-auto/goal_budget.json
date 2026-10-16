@@ -22,33 +22,33 @@
   },
   "stage_allocation": {
     "training_transitions": 1703936,
-    "nontraining_transitions": 118784,
-    "live_starts": 35,
-    "simulator_initialization_reservations": 35,
+    "nontraining_transitions": 448384,
+    "live_starts": 37,
+    "simulator_initialization_reservations": 37,
     "optimizer_updates": 3328,
     "training_checkpoint_writes": 138,
-    "allocated_gpu_seconds": 69470,
-    "wall_seconds_including_cleanup": 69470,
-    "output_peak_and_reservations_bytes": 337154932736,
+    "allocated_gpu_seconds": 76690,
+    "wall_seconds_including_cleanup": 76690,
+    "output_peak_and_reservations_bytes": 354334801920,
     "actor_optimizer_steps": 26624,
     "critic_optimizer_steps": 26624
   },
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 35,
-    "simulator_initialization_reservations": 35,
+    "live_starts": 37,
+    "simulator_initialization_reservations": 37,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 13256.025870693615,
-    "wall_seconds_including_cleanup": 13311.340307398234,
-    "output_peak_and_reservations_bytes": 31056340680
+    "allocated_gpu_seconds": 15129.964120832505,
+    "wall_seconds_including_cleanup": 15190.726420918945,
+    "output_peak_and_reservations_bytes": 31346049844
   },
   "observed": {
     "training_transitions": 1703936,
-    "nontraining_transitions": 118784,
+    "nontraining_transitions": 448384,
     "optimizer_updates": 3328,
     "training_checkpoint_writes": 138,
     "actor_optimizer_steps": 26624,
@@ -57,16 +57,16 @@
   "reservations": {
     "formal_initial_segment": {
       "training_transitions": 0,
-      "nontraining_transitions": 329600,
-      "live_starts": 2,
-      "simulator_initialization_reservations": 2,
+      "nontraining_transitions": 0,
+      "live_starts": 0,
+      "simulator_initialization_reservations": 0,
       "optimizer_updates": 0,
       "actor_optimizer_steps": 0,
       "critic_optimizer_steps": 0,
       "training_checkpoint_writes": 0,
-      "allocated_gpu_seconds": 7260,
-      "wall_seconds_including_cleanup": 7260,
-      "output_peak_and_reservations_bytes": 17179869184
+      "allocated_gpu_seconds": 40,
+      "wall_seconds_including_cleanup": 40,
+      "output_peak_and_reservations_bytes": 0
     },
     "live_entries": [
       {
@@ -1328,6 +1328,78 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 1989488396,
         "inventory": "experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/live/R1-research-formal-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4",
+        "job_id": "J-48cb8eaab9932820",
+        "experiment_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+        "group": "R0",
+        "mode": "research-formal-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 164800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 164800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 144522087,
+        "inventory": "experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/live/R0-research-formal-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4",
+        "job_id": "J-365cda5a12a088d3",
+        "experiment_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+        "group": "R1",
+        "mode": "research-formal-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 164800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 164800,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 145187077,
+        "inventory": "experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/live/R1-research-formal-evaluation/INVENTORY.json"
       }
     ],
     "source_snapshots": [

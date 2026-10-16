@@ -1,10 +1,10 @@
 {
   "schema_version": "instinctrl-project-state/1",
-  "as_of": "2026-10-15",
+  "as_of": "2026-10-17",
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_FORMAL_READINESS_NEW_METHOD_RESEARCH",
+  "phase": "R5_FIXED_FORMAL_FIRST_SEGMENT_SCIENTIFICALLY_COMPLETE",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -37,8 +37,8 @@
     "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
     "training_updates": 0
   },
-  "new_live_execution_authorized": true,
-  "new_training_authorized": true,
+  "new_live_execution_authorized": false,
+  "new_training_authorized": false,
   "migration_is_product_acceptance": false,
   "current_candidate_config": "../docs/experiments/r5-formal-readiness-auto/experiments/R5-H128-DEV-01/snapshot_config.json",
   "blocking_followups": [],
@@ -698,13 +698,54 @@
     "execution_instructions": "Only controller and its awaited independent model may write this workspace; read-only observers use local state/logs without model polling.",
     "recovery_authority": "coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/recovery-20261016/USER_AUTHORITY.md",
     "recovery_plan": "coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/recovery-20261016/plan.json",
-    "recovery_status": "PREPARED_CPU_REVIEW_ONLY_PENDING_INDEPENDENT_ACCEPTANCE",
+    "recovery_status": "ORIGINAL_TRAINING_ACCEPTED_BOTH_ORIGINAL_EVALUATIONS_COMPLETE_FINAL_ANALYSIS_COMPLETE",
     "recovery_tmux_session": "instinctrl-r5-formal-recovery-20261016",
     "completed_training_jobs": [
       "J-0a6d7c4f861968ed",
       "J-838e67f829192ab7"
     ],
     "additional_training_authorized": false,
-    "additional_review_calls": 1
-  }
+    "additional_review_calls": 1,
+    "status": "FIXED_FIRST_SEGMENT_SCIENTIFICALLY_COMPLETE_PARTIAL_PERFORMANCE",
+    "current_live_jobs": [],
+    "completed_evaluation_jobs": [
+      "J-48cb8eaab9932820",
+      "J-365cda5a12a088d3"
+    ],
+    "runtime_model_calls_actual_including_final": 3,
+    "model_call_history": [
+      {
+        "slot": "checkpoint-review",
+        "result": "STOP_PRESERVED"
+      },
+      {
+        "slot": "checkpoint-recovery",
+        "result": "PASS_ACCEPT_ORIGINAL_RUNTIME_EVIDENCE"
+      },
+      {
+        "slot": "final-analysis",
+        "result": "PASS_VALID_DATA_PARTIAL_PERFORMANCE_FINAL_CALL"
+      }
+    ],
+    "scientific_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/reviews/final-scientific-review.json",
+      "sha256": "efd642a2ab48c85c5793bf1c1a7cf76baa512778cabc4bd188cef020b962e191"
+    },
+    "experiment_results": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/EXPERIMENT_RESULTS.json",
+      "sha256": "40f83379113f1b588726a3e9846d78a348197001a3a576835a24cd01497321c4"
+    },
+    "final_analysis": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/FINAL_ANALYSIS.md",
+      "sha256": "e8754426c0d123ce9b7e5a33d575f50de39665b9e21b30f131fcc4a437e8e8d4"
+    },
+    "performance": "Both arms: original Z32/32 at all5nodes; T/S/X32/32 at384/512; W0/32 at all5nodes. No complete R5 pass.",
+    "continue_training": false,
+    "task_ended": true,
+    "next_action": "No additional job or model call. Controller alone records COMPLETE after this third final invocation exits and validates committed/pushed artifacts.",
+    "controller_state_edited_by_analyst": false,
+    "controller_state_at_analysis": "RUNNING/MODEL:final-analysis",
+    "old_readiness_goal_unchanged": true
+  },
+  "current_execution_index": "formal_first_segment_execution"
 }

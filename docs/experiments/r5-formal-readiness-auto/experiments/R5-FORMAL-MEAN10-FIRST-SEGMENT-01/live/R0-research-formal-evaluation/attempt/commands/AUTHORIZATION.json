@@ -1,0 +1,155 @@
+{
+  "schema_version": "unified-h1-r3-authorization.v2",
+  "status": "AUTHORIZED",
+  "order_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-EVALUATION",
+  "method_sha256": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+  "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24",
+  "product_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+  "product_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+  "workload_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+  "workload_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4",
+  "mode": "research-formal-evaluation",
+  "budgets": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "initialization_ticks": 10,
+    "training_transitions": 0,
+    "nontraining_transitions": 164800,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "explicit_resets": 25,
+    "automatic_resets": 164800,
+    "wall_seconds": 3600
+  },
+  "parameters": {
+    "training_seed": 20260908,
+    "evaluation_seed": 20260909,
+    "residual_neutrality_weight": 0.05,
+    "anchor_weight": 4.0,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "output_cap_bytes": 8589934592,
+    "master_authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+      "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+    },
+    "mean_prior_contract": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+      "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+    },
+    "experiment_id": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+    "group": "R0",
+    "start_update": 256,
+    "target_update": 512,
+    "checkpoint_updates": [
+      272,
+      288,
+      320,
+      384,
+      512
+    ],
+    "evaluation_updates": [
+      272,
+      288,
+      320,
+      384,
+      512
+    ],
+    "command_profile": "mixed-center",
+    "mean_prior_weight": 0.0,
+    "phase_contract": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-integration-01-20261015/coordination/contracts/R5_FORMAL_MIXED_CENTER_MEAN_PRIOR_V1.md",
+      "sha256": "103664d19c5e037d5903c86e2af11b61181a8722e599bdbdd87ae7c7f9414930"
+    },
+    "checkpoint_source_identity": {
+      "product_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "product_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+      "workload_commit": "617af4d90c35e333c97692bdee90146804476edf",
+      "workload_tree": "ca2f94b5ffc3225c08eb2b45efa5663746265bad",
+      "config_sha256": "2e9a72840a57ad6806d16298829563439e9ce950e8510bccc3010147d6b0e547"
+    },
+    "checkpoint_compatibility": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-INTEGRATION-01/formal-checkpoint-compatibility.json",
+      "sha256": "bc5b2f0744a31a4580304451e7af53f5ced9b6d6ae7c47b4dc5d3c02b128802a"
+    },
+    "initialization_checkpoint": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-MEAN10-DEV-02-R1-RESEARCH-TRAINING-617af4d90c35/results/research-training/checkpoints/u256.pt",
+      "sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768",
+      "update": 256
+    },
+    "origin_profile": {
+      "experiment_id": "R5-MEAN10-DEV-02",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20260909,
+      "max_updates": 256,
+      "checkpoint_updates": [
+        1,
+        2,
+        8,
+        16,
+        32,
+        64,
+        96,
+        128,
+        192,
+        256
+      ],
+      "evaluation_updates": [
+        192,
+        256
+      ],
+      "command_profile": "pure-hover",
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+        "sha256": "4d0a51a571d3e19e7b41bbb018ebd995106f1a058410a22de1797440cc641f33"
+      },
+      "mean_prior_contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+        "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+      },
+      "mean_prior_weight": 10.0,
+      "experiment_card": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-MEAN10-DEV-02/EXPERIMENT_CARD.json",
+        "sha256": "2c3db3531dac0ef11a5313bdb2e6a0d4f86d60fdb885a91e564369235c27196f"
+      }
+    },
+    "experiment_card": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/experiments/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/EXPERIMENT_CARD.json",
+      "sha256": "ea618f790061e3d93310bbd5e9a8fadb3601e942afe784b710130cd2d51b927b"
+    },
+    "checkpoints": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u272.pt",
+        "sha256": "a73a19f835b1a2f29070f8f402d5a7d047152898985ea5e6ca9e89a6858001ad",
+        "update": 272
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u288.pt",
+        "sha256": "17b08f4e00f768904cc06da9c048cab8992c5327b94d0c7d6f578b5ecbf64ebe",
+        "update": 288
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u320.pt",
+        "sha256": "023f8a730c3038924fae9ef0c7af6553c0f5a7e6bb341ec584e1535557c81c12",
+        "update": 320
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u384.pt",
+        "sha256": "eae747712bfc1c0e79688471071ddb6fe99641bef95721de81e349615439d7d3",
+        "update": 384
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R0-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "5abc5af7ee7132871adf5578e171db3b6bafecf0c0ae3b76d2794921d1cee191",
+        "update": 512
+      }
+    ]
+  }
+}
