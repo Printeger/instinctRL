@@ -1,8 +1,8 @@
 {
   "status": "INTERIM_CPU_ONLY",
-  "automatic_sessions_reserved": 2,
-  "automatic_sessions_completed": 2,
-  "remaining_unreserved": 30,
+  "automatic_sessions_reserved": 3,
+  "automatic_sessions_completed": 3,
+  "remaining_unreserved": 29,
   "initial_user_session_usage": "UNKNOWN",
   "calls": [
     {
@@ -47,6 +47,28 @@
             "reasoning_output_tokens": 843
           }
         ]
+      }
+    },
+    {
+      "event_key": "ccc3c84352ee756df0fea28bd9a4ccbd0af6637fa3123415b165217346b6fbe8",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/ccc3c84352ee756df0fea28bd9a4ccbd0af6637fa3123415b165217346b6fbe8/receipt.json",
+        "sha256": "ff5d601a19d81a68b19d4da63b41d4590f22a2e321a9bf84c64fbf9e0d84c4a7"
+      },
+      "purpose": "Independent five-fix closure and restartable model handoff audit",
+      "result": "PASS_CPU_SCOPE",
+      "usage": {
+        "availability": "REPORTED",
+        "malformed_event_lines": 0,
+        "reported_turn_count": 1,
+        "totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 237184,
+          "input_tokens": 293546,
+          "output_tokens": 3236,
+          "reasoning_output_tokens": 149
+        },
+        "unknown_turn_count": 0
       }
     }
   ],

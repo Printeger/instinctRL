@@ -403,14 +403,22 @@ class TaslabDirectEnv(DirectRLEnv):
         ))
         return reward.total[:, 0].clone()
 
+    def _policy_sensor_frame(self, ranges_m, validity, policy_time):
+        """Default measured frame; R6 may opt in before shared history only."""
+        return ranges_m, validity, policy_time
+
+    def _reset_policy_sensor_frame(self, indices):
+        """Default has no additional measurement delivery state."""
+
     def _get_observations(self) -> dict[str, Any]:
         root = self._validated_root_state()
         ranges_m, validity, clearance, collision = self._read_sensor_producers()
         policy_time = self.episode_length_buf.to(root.dtype).unsqueeze(-1) * POLICY_DT_S
+        policy_ranges, policy_validity, sensor_time = self._policy_sensor_frame(ranges_m, validity, policy_time)
         policy = self._history.update(
-            ranges_m=ranges_m,
-            validity=validity,
-            sensor_frame_time_s=policy_time,
+            ranges_m=policy_ranges,
+            validity=policy_validity,
+            sensor_frame_time_s=sensor_time,
             policy_time_s=policy_time,
             body_angular_velocity_rad_s=self._robot.data.root_ang_vel_b,
             gravity_direction_body=self._robot.data.projected_gravity_b,
@@ -465,6 +473,7 @@ class TaslabDirectEnv(DirectRLEnv):
             self._history.reset(indices)
         else:
             self._history.reset()
+        self._reset_policy_sensor_frame(indices)
         for index in indices.detach().cpu().tolist():
             self._control_pipelines[index] = ControlCorePipeline(ControlCoreConfig(use_b0=False))
         self._actions[indices] = 0.0

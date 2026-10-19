@@ -1,0 +1,80 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "All five prior findings are resolved within the implemented CPU scope: historical used sessions preserve combined final/repair capacity; subreaper cleanup handles descendants after leader exit; worker metadata, streamed logs, extracted final JSON and receipts have prewrite bounds; full-beam noise draws prevent validity masks from shifting paired streams; tests use an isolated budget fixture. The original budget counterexample now rejects in memory. Handoff inspection supports exact-worker recovery after controller failure, including missing state binding when worker.json exists; ambiguous dispatch claims never retry. The pre-binding test reconstructs that state after worker startup rather than injecting a crash at Popen. The actual extractor reproduced both historical final messages byte-for-byte from existing JSONL events. All referenced evidence hashes matched. Recorded results comprise 31 control tests, 36 tensor/scoring/archive tests and 7 separate fake-CLI handoff tests; these were inspected, not rerun. The earlier 66-test dependency failure remains preserved. No substantive MUST_FIX remains in this scope. This establishes neither scientific domain pass, physics integration, full unattended execution nor live resource admission.",
+  "evidence_pins": [
+    {
+      "path": "docs/experiments/r6-robustness-auto/reviews/cpu-review-recovery1.json",
+      "sha256": "4b16c9db3b3df5227c496e06d5b4b76530adfc3cee2896be8fe66469345cb941"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_REVIEW_FIX_TESTS.json",
+      "sha256": "b969aff803c3915d058819883a9f56ac00447c082863f958be3e904d05342745"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_BATCH_HANDOFF_TESTS.json",
+      "sha256": "b16a43c03de070aedf9e57f2f2956246ba70f4a3eb816f0811d8405d60417def"
+    },
+    {
+      "path": "tools/r6_budget.py",
+      "sha256": "e6a6c373c05bf6c13d73d2eb478fa036e6910a8406d1a6a824ebaa0ea884ce47"
+    },
+    {
+      "path": "tools/r6_model_worker.py",
+      "sha256": "8c2d4b92121193d7e96aebe2225208d16ca5184a259654e8723c75c517cc14b7"
+    },
+    {
+      "path": "tools/r6_worker_processes.py",
+      "sha256": "1431c182d12920e4d42dc99cb6a5d72289552ad2b87a79b065cb79c948ad6f01"
+    },
+    {
+      "path": "tools/r6_recovery.py",
+      "sha256": "352d05e48620f4341b9791966edf1e31df8daff9702813a23921d0cb14a3d7d8"
+    },
+    {
+      "path": "tools/r6_batch.py",
+      "sha256": "10ed2961dd1dc3467186c520fbdc3422612987f42a25de8466ac329ad4cc1c07"
+    },
+    {
+      "path": "tools/test_r6_batch.py",
+      "sha256": "80a60476df1fd4a6ce7aa81a96e7a11d6d2de776534d4933e8ccdca4ec0a8a06"
+    },
+    {
+      "path": "tools/test_r6_model_worker.py",
+      "sha256": "1cb8f05479453f57993175e72388366868029fc68c8835beaa386e94ccbb3d46"
+    },
+    {
+      "path": "tools/test_r6_recovery.py",
+      "sha256": "8873d0afae0912bb43b857508ff801d102e370c24435d937a95c909c43109334"
+    },
+    {
+      "path": "tools/test_r6_budget.py",
+      "sha256": "6afc42324594a1b4bcd1b6bf5874f8f5ae19f4e7279aba9763bf0aac58856192"
+    },
+    {
+      "path": "tools/fixtures/r6_budget.json",
+      "sha256": "50d7f6a56944b8d2ef9a47c24452e137b080d80f9e06e181b3f5e8e53cd0ff18"
+    },
+    {
+      "path": "isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "f3847b22632c35f8af3bede9e794f34fcd19d92fe141f4d2ace848e84b0b4215"
+    },
+    {
+      "path": "tools/test_r6_range_delivery.py",
+      "sha256": "156ef2ce9c3ac697e2822305f9f9615007690cbb5dc605e5d6a45317defae5f6"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/events.jsonl",
+      "sha256": "382ebe60b3f6d1b86d58c78d106035f0ebc4ac750efce7869036e82527f5542b"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/events.jsonl",
+      "sha256": "8e4d55ba4ef8a9bbc00362c8cb39699cc141fabd414c0dd8eef8d60899bc0d21"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Record this limited CPU acceptance while preserving historical failures. Continue the separately pending job/resource integration, capacity accounting and protocol work under existing authority. Add deterministic crash-window coverage during integration; require separate evidence and review before claiming unattended completion, scientific success or live admission.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 29
+  },
+  "must_fix": []
+}

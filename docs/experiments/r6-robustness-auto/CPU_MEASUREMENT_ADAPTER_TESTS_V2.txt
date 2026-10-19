@@ -1,0 +1,19 @@
+test_actual_observation_path_delivers_delay_and_drop_to_shared_history (tools.test_r6_measurement_adapter.AdapterTests.test_actual_observation_path_delivers_delay_and_drop_to_shared_history) ... ok
+test_audit_sink_cannot_mutate_actor_frame (tools.test_r6_measurement_adapter.AdapterTests.test_audit_sink_cannot_mutate_actor_frame) ... ok
+test_default_path_identity_and_unchanged_privileged_critic (tools.test_r6_measurement_adapter.AdapterTests.test_default_path_identity_and_unchanged_privileged_critic) ... ok
+test_full_reset_required_and_partial_reset_clears_only_selected_delay (tools.test_r6_measurement_adapter.AdapterTests.test_full_reset_required_and_partial_reset_clears_only_selected_delay) ... ok
+test_original_suite_guard_and_dormant_method_resolution (tools.test_r6_measurement_adapter.AdapterTests.test_original_suite_guard_and_dormant_method_resolution) ... ok
+test_sink_failure_poison_and_frame_quota (tools.test_r6_measurement_adapter.AdapterTests.test_sink_failure_poison_and_frame_quota) ... ok
+test_actor_history_and_ics_extract_same_delivered_ranges (tools.test_r6_range_delivery.DeliveryTests.test_actor_history_and_ics_extract_same_delivered_ranges) ... ok
+test_common_noise_survives_different_validity_masks (tools.test_r6_range_delivery.DeliveryTests.test_common_noise_survives_different_validity_masks) ... ok
+test_delay_and_drop_retain_acquisition_time (tools.test_r6_range_delivery.DeliveryTests.test_delay_and_drop_retain_acquisition_time) ... ok
+test_invalid_beams_not_noised_and_input_unmodified (tools.test_r6_range_delivery.DeliveryTests.test_invalid_beams_not_noised_and_input_unmodified) ... ok
+test_noise_is_bounded_reproducible_and_changes_by_seed (tools.test_r6_range_delivery.DeliveryTests.test_noise_is_bounded_reproducible_and_changes_by_seed) ... ok
+test_selected_reset_cannot_leak_previous_episode_frame (tools.test_r6_range_delivery.DeliveryTests.test_selected_reset_cannot_leak_previous_episode_frame) ... ok
+test_timestamp_regression_rejected (tools.test_r6_range_delivery.DeliveryTests.test_timestamp_regression_rejected) ... ok
+test_zero_noise_does_not_consume_random_stream (tools.test_r6_range_delivery.DeliveryTests.test_zero_noise_does_not_consume_random_stream) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.018s
+
+OK

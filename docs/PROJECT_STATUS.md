@@ -1,20 +1,24 @@
-# 当前 Goal：R6 鲁棒性与课程学习闭环（CPU 修复待复审）
+# 当前 Goal：R6 鲁棒性与课程学习闭环（CPU 组件独审通过，集成未完成）
 
-2026-10-20：完整目标未完成，R6 controller 尚未部署，没有 R6 live 作业。
-冻结 u640 SHA256 为 `aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429`；
-基线 config/源码/method/runtime 可执行文件及地面/UAV 资产已完成 CPU 哈希审计。
+2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
+冻结u640 SHA256为 `aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429`；
+基线config/源码/method/runtime可执行文件及地面/UAV资产已完成CPU哈希审计。
 主委托、预算和证据位于 `docs/experiments/r6-robustness-auto/`。
 
-已使用两次自动审核会话，剩余30次。首次验证CLI认证/schema，但read-only沙箱无法执行核查；
-第二次实际独审提出5项MUST_FIX，原始receipt和输出保留。已局部修复会话预留、
-worker后代清理、所有输出写入限额、配对测量噪声流及可变账本测试依赖，尚未独立复审通过。
-新CPU验证：现有编排Python的31项控制/worker测试、现有张量Python的36项测量/评分/归档测试全部通过。
-此前误用仿真Python执行worker测试导致缺少jsonschema，66项合并测试失败的记录原样保留；未安装依赖。
-见 `CPU_REVIEW_FIX_TESTS.json` 的准确输入、命令和结果，旧测试通过记录仅代表各自历史输入。
+自动审核会话已完成3次，剩余29次。首次CLI认证/schema通过但沙箱核查失败，第二次独审提出5项MUST_FIX；
+第三次已核验准确修复与新增模型交接路径，返回PASS_CPU_SCOPE/noMUST_FIX。
+`reviews/cpu-fix-handoff-review.json`、三次原始receipt/usage/事件完整保留。
+独审覆盖31项控制/worker、36项张量/评分/归档和7项交接测试；确认配对噪声、预算保护、
+输出写入限额、后代清理、隔离测试账本以及控制器重启接回同一worker，不代表完整无人值守或live准入。
+此前误用缺少jsonschema的仿真Python导致的66项合并测试失败记录仍保留；未安装依赖。
 
-新测试仍为草案：12个目标块及4个压力块，最终三模型加基线共774400非训练transitions。
-四模型归档的合成CPU估计54.5GiB不是最坏界；内部最终保护80GiB/24000秒仍待完整容量审核。
-协议冻结、live接入、完整控制器恢复验收、exact Store许可和科学验证均未完成。
+新增默认关闭的R6测量接口已接到actor/ICS共用history前，干净测量单独交审计sink，
+原critic边界保留。14项CPU接线/测量测试通过（含实际观察方法AST与CPU替身）；
+见 `CPU_MEASUREMENT_ADAPTER_TESTS.json`。该新接口未包含在上述独审范围内，尚未live验证。
+
+协议仍为12目标块及4压力块草案，最终三模型加基线774400非训练transitions。
+合成归档估计54.5GiB不是最坏界；内部最终保护80GiB/24000秒待完整容量审核。
+物理reset/force、完整job/resource控制器、容量/协议冻结、exact Store许可及科学验证均未完成。
 聊天Goal自动续推理与零模型等待的交接限制尚未解决；不能称后台运行或科学完成。
 下方历史状态不覆盖上述事实。
 

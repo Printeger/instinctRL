@@ -1,0 +1,28 @@
+test_actual_observation_path_delivers_delay_and_drop_to_shared_history (tools.test_r6_measurement_adapter.AdapterTests.test_actual_observation_path_delivers_delay_and_drop_to_shared_history) ... ok
+test_audit_sink_cannot_mutate_actor_frame (tools.test_r6_measurement_adapter.AdapterTests.test_audit_sink_cannot_mutate_actor_frame) ... ok
+test_default_path_identity_and_unchanged_privileged_critic (tools.test_r6_measurement_adapter.AdapterTests.test_default_path_identity_and_unchanged_privileged_critic) ... ok
+test_full_reset_required_and_partial_reset_clears_only_selected_delay (tools.test_r6_measurement_adapter.AdapterTests.test_full_reset_required_and_partial_reset_clears_only_selected_delay) ... ERROR
+test_original_suite_guard_and_dormant_method_resolution (tools.test_r6_measurement_adapter.AdapterTests.test_original_suite_guard_and_dormant_method_resolution) ... ok
+test_sink_failure_poison_and_frame_quota (tools.test_r6_measurement_adapter.AdapterTests.test_sink_failure_poison_and_frame_quota) ... ok
+
+======================================================================
+ERROR: test_full_reset_required_and_partial_reset_clears_only_selected_delay (tools.test_r6_measurement_adapter.AdapterTests.test_full_reset_required_and_partial_reset_clears_only_selected_delay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_measurement_adapter.py", line 72, in test_full_reset_required_and_partial_reset_clears_only_selected_delay
+    e.reset(torch.tensor([0]));e._get_observations()
+                               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/envs/taslab_direct_env.py", line 417, in _get_observations
+    policy_ranges, policy_validity, sensor_time = self._policy_sensor_frame(ranges_m, validity, policy_time)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness_adapter.py", line 57, in _policy_sensor_frame
+    audit=block['chain'].deliver(ranges_m,validity,policy_time,drop)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness.py", line 67, in deliver
+    raise ValueError('acquisition timestamp must advance; reset lane explicitly')
+ValueError: acquisition timestamp must advance; reset lane explicitly
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.020s
+
+FAILED (errors=1)

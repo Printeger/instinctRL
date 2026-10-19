@@ -1,0 +1,69 @@
+{
+  "status": "CPU_PASS_PENDING_INDEPENDENT_AND_LIVE_VALIDATION",
+  "tests": 14,
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "unittest",
+    "tools.test_r6_measurement_adapter",
+    "tools.test_r6_range_delivery",
+    "-v"
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MEASUREMENT_ADAPTER_TESTS_V2.txt",
+    "sha256": "4fb2ebc86e045dc7a45f3562c7c7899b83d659d54ffc934215707f6490cd9ae6"
+  },
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/envs/taslab_direct_env.py",
+      "sha256": "5a77102708ee9fbfa2e17a44fbb9264d4294f0cdd537bbfc720644b6f0af5566"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+      "sha256": "d216c8ebceced5bc77d5359f573cd9f8049aaf5cfa0d24d12701ae16c46611d2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness_adapter.py",
+      "sha256": "3d41a275babc165c0dc75b3cba85ad45abe5d680bf79f50bae95ca57f56eb463"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "f3847b22632c35f8af3bede9e794f34fcd19d92fe141f4d2ace848e84b0b4215"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/actor.py",
+      "sha256": "dfc339233e146e585493bfcc1893b5ee87c46c827963e36d6f9ec79e4b81ce44"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_measurement_adapter.py",
+      "sha256": "93a31c4ebd092509719d069cf20a927657da1b3c2ec76b91b2cc0ed5a3289555"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_range_delivery.py",
+      "sha256": "156ef2ce9c3ac697e2822305f9f9615007690cbb5dc605e5d6a45317defae5f6"
+    }
+  ],
+  "method": "Execute actual Taslab observation/hook methods extracted by AST with CPU producer/root stubs; real tensor history and ICS extraction. No Isaac import or simulation.",
+  "initial_failure": {
+    "output": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MEASUREMENT_ADAPTER_TESTS.txt",
+      "sha256": "f6eb7eef363f6a8e6f339b31d7490fba4027bc805e265014f1ba66ef792f560c"
+    },
+    "reason": "Partial-reset fixture requested a second acquisition at the unchanged time of the other lane. Corrected fixture to advance non-reset lane at the next policy boundary; timestamp rejection retained."
+  },
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "not_proven": [
+    "Isaac runtime behavior",
+    "physical reset and force integration",
+    "audit sink persistence in live workload",
+    "independent acceptance of adapter",
+    "scientific domain pass"
+  ]
+}

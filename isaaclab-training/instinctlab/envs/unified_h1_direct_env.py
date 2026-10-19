@@ -30,6 +30,7 @@ from instinctlab.task.scene_h1 import H1_RAY_MESH_PATH, H1_RAY_SCENE_PATH, combi
 from instinctlab.control.pipeline import ControlCoreResult
 from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz
 from instinctlab.control.rotor_actuation import ROTOR_NAMES
+from instinctlab.observations.robustness_adapter import R6MeasurementMixin
 from .taslab_direct_env import TaslabDirectEnv, TaslabDirectEnvCfg, _detached_snapshot
 
 def _define_triangle_mesh(path: str, points: list[tuple[float, float, float]], indices: list[int], *, collision: bool) -> None:
@@ -71,7 +72,7 @@ class UnifiedH1DirectEnvCfg(TaslabDirectEnvCfg):
     task_contract_version: str = "unified-h1-v1"
 
 
-class UnifiedH1DirectEnv(TaslabDirectEnv):
+class UnifiedH1DirectEnv(R6MeasurementMixin, TaslabDirectEnv):
     """H1 reward, critic and mixed-stage reset wiring."""
 
     cfg: UnifiedH1DirectEnvCfg
