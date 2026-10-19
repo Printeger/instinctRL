@@ -1,11 +1,11 @@
-# 当前 Goal：R6 鲁棒性与课程学习闭环（新控制修复待独审，集成未完成）
+# 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 冻结u640 SHA256为 `aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429`；
 基线config/源码/method/runtime可执行文件及地面/UAV资产已完成CPU哈希审计。
 主委托、预算和证据位于 `docs/experiments/r6-robustness-auto/`。
 
-自动审核会话已完成4次，剩余28次。首次CLI认证/schema通过但沙箱核查失败，第二次独审提出5项MUST_FIX；
+自动审核会话已完成5次，剩余27次。首次CLI认证/schema通过但沙箱核查失败，第二次独审提出5项MUST_FIX；
 第三次已核验准确修复与新增模型交接路径，返回PASS_CPU_SCOPE/noMUST_FIX。
 `reviews/cpu-fix-handoff-review.json`、三次原始receipt/usage/事件完整保留。
 独审覆盖31项控制/worker、36项张量/评分/归档和7项交接测试；确认配对噪声、预算保护、
@@ -59,6 +59,8 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 已形成修复候选：job唯一绑定、统一硬/保护额度检查、45秒派发截止及有界准确身份清理；
 96项CPU回归通过（含实际SIGSTOP进程和无关进程保护），见 `CPU_CONTROL_REPAIR_TESTS.json`。
 这不是独审闭环；原MUST_FIX与原始receipt/usage保留，待独立复核，不增加live准入。
+第五次独立复核已关闭上述三项缺陷：`reviews/cpu-control-fix-review.json`为PASS_CPU_SCOPE/noMUST_FIX，
+准确source/test哈希及实际receipt/usage已核验。此结论只覆盖受审控制组件，不授予完整控制器或live准入。
 物理reset/force的实际验证、完整job/resource控制器、容量/协议冻结、exact Store许可及科学验证均未完成。
 聊天Goal自动续推理与零模型等待的交接限制尚未解决；不能称后台运行或科学完成。
 下方历史状态不覆盖上述事实。

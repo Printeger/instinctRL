@@ -1,7 +1,7 @@
 {
   "status": "INTERIM_CPU_ONLY",
   "automatic_sessions_reserved": 5,
-  "automatic_sessions_completed": 4,
+  "automatic_sessions_completed": 5,
   "remaining_unreserved": 27,
   "initial_user_session_usage": "UNKNOWN",
   "calls": [
@@ -92,10 +92,31 @@
         },
         "unknown_turn_count": 0
       }
+    },
+    {
+      "event_key": "1fe62477ac41ab5009c0ea53a827362a3e515017238893381a33c8d7aa1b7462",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/1fe62477ac41ab5009c0ea53a827362a3e515017238893381a33c8d7aa1b7462/receipt.json",
+        "sha256": "e17d661889d11b75c53e6c38b9bba278fc0b08ae25836f0672590d25479a8fad"
+      },
+      "purpose": "Independent closure of three control defects",
+      "result": "PASS_CPU_SCOPE",
+      "usage": {
+        "availability": "REPORTED",
+        "malformed_event_lines": 0,
+        "reported_turn_count": 1,
+        "totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 264064,
+          "input_tokens": 312207,
+          "output_tokens": 2927,
+          "reasoning_output_tokens": 132
+        },
+        "unknown_turn_count": 0
+      }
     }
   ],
   "training_started": false,
   "zero_model_training_wait_verified": false,
-  "pure_wait_model_calls": 0,
-  "pending_event": "1fe62477ac41ab5009c0ea53a827362a3e515017238893381a33c8d7aa1b7462"
+  "pure_wait_model_calls": 0
 }

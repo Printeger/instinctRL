@@ -1,0 +1,68 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "Session5 closes the three reviewed defects in the implemented components. Source and test hashes match repair commit 1d11bf5 and the report. New and pre-existing job aliases fail closed; hard/protected excess blocks reservation replay and unlaunched model/postrun dispatch, including worker entry points, while observation, receipt consumption and cleanup remain available without refunds. Postrun cancellation independently enforces the persisted 45-second deadline and boot identity, bounds TERM/KILL, validates coherent ancestry and process identity, and preserves reconciliation without fabricating receipts or permitting retries. Inspected the recorded 96-test pass, including SIGSTOP and unrelated-process protection; independently ran only in-memory budget/alias checks. No scientific, capacity or full-controller acceptance.",
+  "evidence_pins": [
+    {
+      "path": "tools/r6_budget.py",
+      "sha256": "2fdee08edc08dcdb8411f56e36ffeaee930bf2dbfceba8149a07d7199f9e15b1"
+    },
+    {
+      "path": "tools/r6_recovery.py",
+      "sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55"
+    },
+    {
+      "path": "tools/r6_batch.py",
+      "sha256": "8abe4d42fca1acc45935a4471365a53507ea437ff907b8d9dc9eb05c4debb8d6"
+    },
+    {
+      "path": "tools/r6_model_worker.py",
+      "sha256": "188880d1da73a6142e343500db6bd23b49653b5f15ceb3df1def26c9577aa37f"
+    },
+    {
+      "path": "tools/r6_job_handoff.py",
+      "sha256": "0ae3fae820e6b5d5e1802c8e5762080d1b6f9455182ee83e6e5e1413307f1d14"
+    },
+    {
+      "path": "tools/r6_postrun.py",
+      "sha256": "2447eb6bbe42e77ded7ea63119de8d11d0984355e4ddc2e19dad089a9c3d3806"
+    },
+    {
+      "path": "tools/test_r6_budget.py",
+      "sha256": "6ba1af62b367cd453805f1342c455fc863ccc1626580170b7f9c5cd61d427dd0"
+    },
+    {
+      "path": "tools/test_r6_recovery.py",
+      "sha256": "252d081fa3ccdcb8e8d559bf2433f92da21333dc7ff4139221637989a5d219fc"
+    },
+    {
+      "path": "tools/test_r6_batch.py",
+      "sha256": "d0eadd85e9385f7753fff31829550f65b1db952dee4a46a43b82009460e8db52"
+    },
+    {
+      "path": "tools/test_r6_postrun.py",
+      "sha256": "23b9ee9c728b732102f1dfbafb111189b65c3e04d2b59a41aa27e9f306d7a12f"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/reviews/cpu-control-review.json",
+      "sha256": "8d24f40b920299012e157c146bb17c969c4408ab1a328e3f6a6cc9b5edb8d3da"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_CONTROL_REPAIR_TESTS.json",
+      "sha256": "7d7887270d445e7117d743bfbc238452b705500f72df5ff3fb3aceef152e1965"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_CONTROL_REPAIR_TESTS_INITIAL.txt",
+      "sha256": "9c1dbf94f88a2acf15c638971fafa75797e390b17c3d2a275a67c2d1bef1f9a5"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_CONTROL_REPAIR_TESTS_V2.txt",
+      "sha256": "0352e2f9e8f229493d31dce3e5acb8a39e462cd38ade1453e6a4913d56b4e542"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Keep capacity_pass=false. Full resource admission, new-job submission, CPU scientific analysis and the reviewed next-plan chain remain unimplemented and unaccepted, requiring implementation and separate review before operational acceptance. Preserve original failures, reservations and ambiguous-query evidence. The two earlier model receipts lacking modern cleanup fields remain blocked pending separate reconciliation; this review does not authorize them. Parent records actual receipt usage.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 27
+  },
+  "must_fix": []
+}
