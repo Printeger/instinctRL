@@ -2,6 +2,12 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+当前执行阻塞：native总量硬限额/目录未落实，连续三轮未解除；待用户提供已请求的配额目录
+及机制后再做CPU耗尽/恢复验证与独审。准确运行路径、capacity和部署尚不能冻结。
+SSH密钥交换前断开，HTTPS亦TLS握手失败，已有本地提交待同步；没有改凭证或远端。
+见 `docs/experiments/r6-robustness-auto/EXECUTION_BLOCKERS.json`。项目未完成，
+本次停止自动续推不代表科学阴性或成功，完整R6目标与原资源上限保留。
+
 准确spec现可在同一writer锁内完成登记→提交→本地等待/关闭；新预留前先校验资源窗口新鲜度，
 已有提交claim则恢复原作业，不要求运行中GPU重新空闲。18项CPU组合回归通过（新增4项），
 见 `docs/experiments/r6-robustness-auto/CPU_REGISTERED_CYCLE_TESTS.json`；原生失败与全额预留保留。

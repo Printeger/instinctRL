@@ -1,0 +1,44 @@
+{
+  "status": "EXTERNAL_ENVIRONMENT_BLOCKED_NOT_SCIENTIFIC_COMPLETE",
+  "head_at_check": "9bfa74f059227c58482c0b8781fd54760c68875f",
+  "blocker": "No verified aggregate native output limit or supplied per-job quota directory. Cannot lower native allowance, accept capacity, freeze exact paths or dispatch safely.",
+  "recurrence_evidence_commits": [
+    "94d4fa2",
+    "9bfa74f"
+  ],
+  "current_job": null,
+  "current_model_event": null,
+  "capacity_pass": false,
+  "model_receipt_cleanup_check": "no_model_workers passed in control Python during this audit",
+  "state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "387b9581d1624ba14a0b5a72a372c5f0630fed0a47c823667be0e7bcdd7ea1a9"
+  },
+  "native_requirement": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_STORAGE_REQUIREMENT_DRAFT.json",
+    "sha256": "2ed82deb95ab8ccb23808358fb5985c69c1096a0bfcc4592843801242c7b8937"
+  },
+  "native_environment": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_STORAGE_ENVIRONMENT_CPU.json",
+    "sha256": "17e8a599ea2446a380b9467c592dba9c1ae919578161d7a1f3846df3580ea101"
+  },
+  "pending_user_request": "Provide administrator-configured output directory path and hard per-job aggregate quota mechanism, proposed 1610612736 bytes. No mount or runtime changes performed.",
+  "network_check": {
+    "ssh": "ssh.github.com:443 connection closes at key exchange before authentication",
+    "https": "https://github.com/Printeger/instinctRL.git TLS handshake non-properly terminated",
+    "remote_verified": false,
+    "push_pending": true
+  },
+  "resume_requirements": [
+    "Validate supplied quota mechanism and containment for native writable paths with CPU exhaustion/restart tests",
+    "Independent acceptance before changing production allowance or capacity flag",
+    "Restore remote access and push committed exact inputs before any live run",
+    "Resolve Goal UI zero-model handoff before long training; deploy and validate full controller using exact accepted inputs"
+  ],
+  "full_goal_unchanged": true,
+  "scientific_completion": false,
+  "new_gpu_queries": 0,
+  "new_live_starts": 0,
+  "new_model_calls": 0,
+  "operating_ledger_modified": false
+}
