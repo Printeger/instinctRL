@@ -68,6 +68,7 @@ def bind_analysis(entry, key, report_pin, store):
             raise RecoveryError('ANALYSIS_IMPLEMENTATION_DRIFT')
     root=Path(__file__).resolve().parents[1]
     for name,relative in [('measurement_replayer','training_workloads/unified_h1/robustness_measurement_replay.py'),
+                          ('physics_replayer','training_workloads/unified_h1/robustness_physics_replay.py'),
                           ('delivery_implementation','isaaclab-training/instinctlab/observations/robustness.py')]:
         if report.get(name)!=robustness_analysis.pin(root/relative):
             raise RecoveryError('ANALYSIS_MEASUREMENT_IMPLEMENTATION_DRIFT')
@@ -85,8 +86,11 @@ def bind_analysis(entry, key, report_pin, store):
         if pin['path'] in seen:
             raise RecoveryError('ANALYSIS_DUPLICATE_INPUT')
         seen.add(pin['path'])
-        if {k:pin[k] for k in ('path','sha256')} == request['protocol']:
-            checked(request['protocol'])
+        external = [request['protocol']]
+        if protocol.get('physics_replay',{}).get('mount_source'):
+            external.append(protocol['physics_replay']['mount_source'])
+        if {k:pin[k] for k in ('path','sha256')} in external:
+            checked({k:pin[k] for k in ('path','sha256')})
         else:
             if output not in Path(pin['path']).parents:
                 raise RecoveryError('ANALYSIS_OTHER_ATTEMPT_INPUT')
@@ -100,6 +104,8 @@ def bind_analysis(entry, key, report_pin, store):
         if row.get('measurement_replay',{}).get('bit_exact_delivery') is True and any(
                 str(output/'r6'/row['block_id']/name) not in seen for name in ('measurements.bin','audit.bin')):
             raise RecoveryError('ANALYSIS_MEASUREMENT_WITHOUT_INPUTS')
+        if row.get('physics_replay',{}).get('staging_reconstructed') is True and str(output/'r6'/row['block_id']/'audit.bin') not in seen:
+            raise RecoveryError('ANALYSIS_PHYSICS_WITHOUT_INPUTS')
     original = report['summary']['original']
     if original['replay_complete']:
         required = [output/'evaluation_raw/r6_baseline_u640_original'/(case+'.jsonl') for case in ('Z','T','S','X','W')]
@@ -127,6 +133,8 @@ def bind_analysis(entry, key, report_pin, store):
         issues.append('INVENTORY_INCOMPLETE')
     if any(row.get('measurement_replay',{}).get('bit_exact_delivery') is not True for row in report['blocks']):
         issues.append('MEASUREMENT_REPLAY_INCOMPLETE')
+    if any(row.get('physics_replay',{}).get('staging_reconstructed') is not True for row in report['blocks']):
+        issues.append('PHYSICS_STAGING_REPLAY_INCOMPLETE')
     if not original['replay_complete'] or not original.get('saved_result_equal') or not original.get('saved_wall_equal') or any(
             not row['replay_complete'] or not row['saved_result_equal'] for row in report['blocks']):
         issues.append('MOTION_EVIDENCE_INCOMPLETE_OR_MISMATCHED')

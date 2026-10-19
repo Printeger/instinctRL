@@ -100,13 +100,14 @@ def evaluate_block(backend,block,*,run_id,seed,split,expected_mass_kg,range_quot
             audit.append('step_complete',dict(policy_step=step,counters=counters.snapshot(),lanes=samples,
                 root_state_w=root,reset_mask=reset,control=pre['control'],reward_diagnostics=extras['reward_diagnostics'],
                 output_measurement_sequence=step+1,timing='action_t/command_t before physics; root, source and reward diagnostics are pre-reset t+1; delivery archive t+1 may reflect reset'))
-        env.finish_r6_physics();env.finish_r6_measurements()
+        physics_completion=env.finish_r6_physics();env.finish_r6_measurements()
         if archive.frames!=block['steps']+1 or counts['force']!=block['steps']*20 or counts['reset']<32:
             raise ValueError('R6 missing measurement/reset/force evidence')
         result=score_block(block,traces,run_id=run_id)
         summary=dict(schema_version='r6-block-result/1',run_id=run_id,block_id=block['id'],seed=seed,split=split,
             scoring=result,counters=counters.snapshot(),measurement_frames=archive.frames,audit_records=audit.records,
             force_records=counts['force'],reset_records=counts['reset'],measurement_bytes=archive.written,audit_bytes=audit.written,
+            physics_completion=physics_completion,
             evidence_status='COMPLETE_BLOCK_REQUIRES_INDEPENDENT_REPLAY',scientific_acceptance=False)
     # Preserve the complete replayable lane records separately for the pure scorer.
     atomic_json_replace(folder,'motion_traces.json',traces)

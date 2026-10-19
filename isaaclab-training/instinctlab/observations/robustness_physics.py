@@ -1,5 +1,6 @@
 """Opt-in R6 privileged reset/disturbance wiring; never actor inputs."""
 import copy
+import math
 import torch
 from instinctlab.control.lee_velocity_controller import quaternion_to_rotation_matrix_wxyz
 from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz
@@ -100,6 +101,8 @@ class R6PhysicsMixin:
                     magnitude=max(1.,float(root[lane,:3].abs().max()),float(sensor[lane].abs().max()))
                     position_atol=max(1e-5,2*torch.finfo(root.dtype).eps*magnitude)
                     state['reset_sink'](dict(lane=lane,block_tick=state['ticks'],expected=copy.deepcopy(state['specs'][lane]),actual=actual,
+                        dtype=str(root.dtype),env_origin_w_m=self.scene.env_origins[lane].detach().cpu().tolist(),
+                        root_position_w_m=root[lane,:3].detach().cpu().tolist(),sensor_position_w_m=sensor[lane].detach().cpu().tolist(),
                         position_atol_m=position_atol,position_tolerance_rule='max(1e-5,2*dtype_epsilon*max(1,abs(actual_world_coordinates)))'))
                     verify_reset(state['specs'][lane],actual,position_atol=position_atol)
                 state['ready'].update(state['pending']);state['pending'].clear()
@@ -119,6 +122,8 @@ class R6PhysicsMixin:
         if state['failed'] or state['ready']!=set(range(32)) or state['pending']:
             raise RuntimeError('R6 reset must be observed before physics')
         tick=state['ticks'];sim_tick=self.sim.current_time_step_index
+        physics_dt=float(self.sim.get_physics_dt())
+        if not math.isfinite(physics_dt) or abs(physics_dt-.005)>1e-12:raise RuntimeError('R6 actual physics dt differs')
         if type(sim_tick)is not int or (state['last_sim_tick'] is not None and sim_tick!=state['last_sim_tick']+1):
             raise RuntimeError('R6 actual physics clock discontinuity')
         if tick>=state['block']['steps']*20:raise RuntimeError('R6 physics tick quota')
@@ -135,6 +140,9 @@ class R6PhysicsMixin:
             # Setter stages buffers; physics application is verified separately
             # from the subsequent trajectory and actual simulator tick audit.
             state['force_sink'](dict(block_tick=tick,sim_tick=sim_tick,active=active,
+                physics_dt_s=physics_dt,dtype=str(mass.dtype),body_quaternion_wxyz=q.detach().clone(),
+                rotor_forces_local_n=self._wrench.forces_body_n.detach().clone(),
+                rotor_torques_local_nm=self._wrench.torques_body_nm.detach().clone(),
                 mass_kg=mass.detach().clone(),additional_world_n=world.detach().clone(),
                 additional_local_n=local.detach().clone(),staged_forces_local_n=forces.detach().clone(),
                 staged_torques_local_nm=torques.detach().clone()))
@@ -149,4 +157,8 @@ class R6PhysicsMixin:
             raise RuntimeError('incomplete R6 physics block')
         if state['last_sim_tick'] is None or self.sim.current_time_step_index!=state['last_sim_tick']+1:
             raise RuntimeError('last R6 staged wrench has no completed physics tick')
+        completion=dict(block_ticks=state['ticks'],last_staged_sim_tick=state['last_sim_tick'],
+            completed_sim_tick=self.sim.current_time_step_index,physics_dt_s=float(self.sim.get_physics_dt()),
+            evidence_status='STAGING_AND_CLOCK_ONLY_NOT_INTEGRATION_PROOF')
         self._r6_physics=None
+        return completion

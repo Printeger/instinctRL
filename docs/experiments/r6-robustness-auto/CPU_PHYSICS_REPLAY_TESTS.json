@@ -1,0 +1,128 @@
+{
+  "status": "CPU_PASS_PENDING_INDEPENDENT_REVIEW_CAPACITY_AND_LIVE",
+  "tests": 53,
+  "new_physics_replay_tests": 8,
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness_physics.py",
+      "sha256": "19b66208bd99e93853ffc2ce4246382dac6c2e36262ed11dd688b4c7ae429863"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_physics_replay.py",
+      "sha256": "dee0eef068cbfa059cbd728d4fe769552d9a5788f17d80379e87dd6c7f4f6fbe"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "2fc028b02c1bea0c66c09d8e207f54f8a8e69cb99c30989f0079b2c1b3d408e0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_analysis.py",
+      "sha256": "f3214bba9c7a1898ec4206ac2565695566e8a94a9b1c49dbe76003a1980f84f2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "1161bf3d0789d422dc3d27f9aa7ef0b72578d064db60bf829a89cd6e5b4fb1ba"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_physics_replay.py",
+      "sha256": "ffe8cffb5692ea1e20a7a792074aec84a77d76ef882867d0155a11b42d04556e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_physics_adapter.py",
+      "sha256": "0815bc330b38bc4ae71dcd54d250886d3e6d4ffab9cc83d95363822d3c60bf4c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_analysis_binding.py",
+      "sha256": "ddb51c1b4a3d73eff5432bde2c8b0ed770436f26fd27dad80ffb14e34ba7bae1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "6f9e29e06a5031fb05b9d54456c8a6618a26dd73ff03a07b5c3d308e0f74361b"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PHYSICS_REPLAY_TESTS.txt",
+      "sha256": "1cd26f60f68541b308bd644dea9332afbc6d0b07bff96d612123acb621703484"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PHYSICS_REPLAY_TESTS_V2.txt",
+      "sha256": "be36dfbc9cef6de52b1cb0c8201ce1f234bc4f1c88b22d66fcf6ffa1baea3c23"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PHYSICS_BINDING_REGRESSION.txt",
+      "sha256": "59bed3d0368a72b489fa3c8476dd443472e3b8bbcfb73cb331cc1ed9eb509dd7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PHYSICS_BINDING_REGRESSION_V2.txt",
+      "sha256": "2eaf27dc94c51a80943d178b2bf7d223b6c1944746b06cc04d0c214a3a04d2e1"
+    }
+  ],
+  "commands": [
+    {
+      "executable": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "argv": [
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_r6_physics_replay",
+        "tools.test_r6_physics_adapter",
+        "tools.test_r6_evaluation",
+        "tools.test_r6_analysis",
+        "-v"
+      ],
+      "tests": 37,
+      "exit_code": 0,
+      "seconds": 55.054,
+      "extra_environment": {
+        "OMP_NUM_THREADS": "2",
+        "MKL_NUM_THREADS": "2"
+      }
+    },
+    {
+      "executable": "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+      "argv": [
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_r6_analysis_binding"
+      ],
+      "tests": 16,
+      "exit_code": 0,
+      "seconds": 0.075
+    }
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "finding": "Previous force records lacked body orientation and rotor-only inputs, preventing independent reconstruction of local addition/torque preservation; reset tolerance lacked raw world-coordinate basis.",
+  "changes": [
+    "Archive actual dt, dtype, body quaternion, rotor-only wrench, completed final simulator tick",
+    "Archive reset world origin/root/sensor coordinates and dtype; recompute roundoff tolerance",
+    "NumPy quaternion reconstruction independent of production distributed_pulse",
+    "Expected reset regenerated from seed/split/mount; mount literal bound to frozen baseline sensor source by hash and AST",
+    "Per-block staging replay and explicit gaps integrated into analysis and exact-job report consumer"
+  ],
+  "coverage": [
+    "Pulse ticks999/1000/1039/1040 plus baseline/end ticks",
+    "Corrupted world/local/additive rotor force and torque rejected",
+    "Mass/dt/active/dtype/clock and seed/reset coordinate/tolerance mutations rejected",
+    "Missing force record and missing last completed tick rejected",
+    "Full audit lossless roundtrip via actual mixin CPU fixture",
+    "Mount source .05m verified against frozen sensor file; .06m mutation manually rejected"
+  ],
+  "capacity_revision": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/FORCE_ARCHIVE_CAPACITY_CPU_V2.json",
+    "sha256": "751a45c30f1280fe2db77ab5913fc5b84dda32ea965713404c2e04e3ecb747c2"
+  },
+  "limitations": [
+    "CPU fixture mass1.16kg; not actual baseline mass validation",
+    "Wrench staging and clock evidence are not proof of actual physics integration or force application",
+    "Same scenario generator used to regenerate reset; independent scientific review still required",
+    "New full controller, capacity bounds, protocol freeze and live permission remain incomplete"
+  ],
+  "physical_integration_verified": false,
+  "scientific_acceptance": false
+}

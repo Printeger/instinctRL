@@ -140,7 +140,9 @@ def summarize(blocks, original):
             subgroups=None if score is None else score['subgroups'],
             failed_lanes=None if score is None else [r['lane'] for r in score['lanes'] if not r['motion_pass']],
             measurement_replay=row.get('measurement_replay',{}).get('bit_exact_delivery',False),
-            measurement_error=row.get('measurement_error')))
+            measurement_error=row.get('measurement_error'),
+            staging_reconstructed=row.get('physics_replay',{}).get('staging_reconstructed',False),
+            physics_error=row.get('physics_error')))
     result = dict(schema_version='r6-motion-replay-summary/1', blocks=rows,
         original=original, scientific_acceptance=False,
         pending=['EXACT_JOB_INVENTORY_AND_MODEL_BINDING', 'INDEPENDENT_MEASUREMENT_CHAIN_ACCEPTANCE',
@@ -155,8 +157,10 @@ def analyze(output, protocol_path, *, run_id, seed, split):
     protocol = inputs.read(protocol_path)
     blocks = replay_blocks(output, protocol['blocks'], run_id=run_id, seed=seed, split=split, inputs=inputs)
     from .robustness_measurement_replay import replay_block_measurements
+    from .robustness_physics_replay import replay_staging, verified_mount
     for block, row in zip(protocol['blocks'],blocks):
         row['measurement_replay']={};row['measurement_error']='MOTION_BLOCK_INCOMPLETE'
+        row['physics_replay']={};row['physics_error']='MOTION_BLOCK_INCOMPLETE'
         if not row['replay_complete']:continue
         folder=Path(output)/'r6'/block['id']
         try:
@@ -170,6 +174,22 @@ def analyze(output, protocol_path, *, run_id, seed, split):
             row['measurement_error']=None
         except (OSError,ValueError,KeyError,TypeError,IndexError,AttributeError,RuntimeError) as error:
             row['measurement_error']=type(error).__name__+':'+str(error)[:240]
+        try:
+            mount=verified_mount(protocol);inputs.pins.setdefault(mount['path'],mount)
+            audit=folder/'audit.bin'
+            if audit.absolute()!=audit.resolve() or audit.stat().st_size>2*1024**3:
+                raise ValueError('PHYSICS_ARCHIVE_PATH_OR_BOUND')
+            identity=pin(audit);inputs.pins.setdefault(identity['path'],identity)
+            result=inputs.read(folder/'result.json')
+            physics=replay_staging(audit,block,run_id=run_id,seed=seed,split=split,
+                expected_records=result['audit_records'],expected_mass_kg=protocol['pulse']['reference_mass_kg'],
+                mount_position_m=protocol['physics_replay']['mount_position_m'],completion=result['physics_completion'])
+            if (physics['force_records']!=result['force_records'] or physics['reset_records']!=result['reset_records']
+                    or physics['audit']['bytes']!=result['audit_bytes']):
+                raise ValueError('PHYSICS_RESULT_COUNTS')
+            row['physics_replay']=physics;row['physics_error']=None
+        except (OSError,ValueError,KeyError,TypeError,IndexError,AttributeError,RuntimeError) as error:
+            row['physics_error']=type(error).__name__+':'+str(error)[:240]
     original = None
     original_summary = dict(replay_complete=False, error=None)
     try:
@@ -188,5 +208,6 @@ def analyze(output, protocol_path, *, run_id, seed, split):
         inputs=list(inputs.pins.values()), scorer=pin(robustness.__file__), analyzer=pin(__file__),
         measurement_replayer=pin(Path(__file__).with_name('robustness_measurement_replay.py')),
         delivery_implementation=pin(Path(__file__).resolve().parents[2]/'isaaclab-training/instinctlab/observations/robustness.py'),
+        physics_replayer=pin(Path(__file__).with_name('robustness_physics_replay.py')),
         scientific_acceptance=False, summary=summary)
     return report, summary

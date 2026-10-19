@@ -43,6 +43,7 @@ class BindingTests(unittest.TestCase):
         root=Path(__file__).resolve().parents[1]
         self.report['measurement_replayer']=analysis.pin(root/'training_workloads/unified_h1/robustness_measurement_replay.py')
         self.report['delivery_implementation']=analysis.pin(root/'isaaclab-training/instinctlab/observations/robustness.py')
+        self.report['physics_replayer']=analysis.pin(root/'training_workloads/unified_h1/robustness_physics_replay.py')
         cleanup=patch('tools.r6_analysis_binding.cleanup_evidence',return_value=({},dict(status='FAILED',exit_code=-9)))
         cleanup.start();self.addCleanup(cleanup.stop)
 
@@ -55,7 +56,7 @@ class BindingTests(unittest.TestCase):
     def test_missing_evidence_remains_incomplete_native_failure_retained(self):
         result=self.bind()
         self.assertEqual(result['native_exit_code'],-9)
-        self.assertEqual(result['issues'],['MODEL_BINDING_MISSING','MEASUREMENT_REPLAY_INCOMPLETE','MOTION_EVIDENCE_INCOMPLETE_OR_MISMATCHED'])
+        self.assertEqual(result['issues'],['MODEL_BINDING_MISSING','MEASUREMENT_REPLAY_INCOMPLETE','PHYSICS_STAGING_REPLAY_INCOMPLETE','MOTION_EVIDENCE_INCOMPLETE_OR_MISMATCHED'])
         self.assertFalse(result['scientific_acceptance'])
 
     def test_other_job_closure(self):

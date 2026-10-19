@@ -1,0 +1,26 @@
+test_archive_roundtrip_and_final_tick (tools.test_r6_physics_replay.PhysicsReplayTests.test_archive_roundtrip_and_final_tick) ... ok
+test_clock_dt_mass_and_active_corruption (tools.test_r6_physics_replay.PhysicsReplayTests.test_clock_dt_mass_and_active_corruption) ... ok
+test_force_world_local_rotor_and_torque_corruption (tools.test_r6_physics_replay.PhysicsReplayTests.test_force_world_local_rotor_and_torque_corruption) ... ok
+test_independent_rotation_and_window_endpoints (tools.test_r6_physics_replay.PhysicsReplayTests.test_independent_rotation_and_window_endpoints) ... ok
+test_missing_force_record (tools.test_r6_physics_replay.PhysicsReplayTests.test_missing_force_record) ... ok
+test_reset_recomputed_from_seed_and_observed_world (tools.test_r6_physics_replay.PhysicsReplayTests.test_reset_recomputed_from_seed_and_observed_world) ... ok
+test_reset_seed_and_local_coordinate_corruption (tools.test_r6_physics_replay.PhysicsReplayTests.test_reset_seed_and_local_coordinate_corruption) ... ok
+test_reset_tolerance_not_trusted (tools.test_r6_physics_replay.PhysicsReplayTests.test_reset_tolerance_not_trusted) ... ok
+test_actual_hooks_follow_rotor_application_and_base_reset (tools.test_r6_physics_adapter.PhysicsTests.test_actual_hooks_follow_rotor_application_and_base_reset) ... ok
+test_exact_40_tick_pulse_and_no_residual_force (tools.test_r6_physics_adapter.PhysicsTests.test_exact_40_tick_pulse_and_no_residual_force) ... ok
+test_finish_requires_last_physics_tick_and_quota_rejects_extra_action (tools.test_r6_physics_adapter.PhysicsTests.test_finish_requires_last_physics_tick_and_quota_rejects_extra_action) ... ok
+test_mass_and_clock_drift_and_incomplete_finish_fail (tools.test_r6_physics_adapter.PhysicsTests.test_mass_and_clock_drift_and_incomplete_finish_fail) ... ok
+test_observed_reset_mismatch_is_saved_and_poisoned (tools.test_r6_physics_adapter.PhysicsTests.test_observed_reset_mismatch_is_saved_and_poisoned) ... ok
+test_rotated_reset_observed_sensor_position_and_float_world_precision (tools.test_r6_physics_adapter.PhysicsTests.test_rotated_reset_observed_sensor_position_and_float_world_precision) ... ok
+test_world_force_and_zero_com_moment_with_different_body_attitudes (tools.test_r6_physics_adapter.PhysicsTests.test_world_force_and_zero_com_moment_with_different_body_attitudes) ... ok
+test_zero_level_and_selected_reset_never_rewind_block_clock (tools.test_r6_physics_adapter.PhysicsTests.test_zero_level_and_selected_reset_never_rewind_block_clock) ... ok
+test_actual_backend_entry_rejects_old_authority_and_unfrozen_protocol (tools.test_r6_evaluation.EvaluationTests.test_actual_backend_entry_rejects_old_authority_and_unfrozen_protocol) ... ok
+test_audit_quota_corruption_and_no_overwrite (tools.test_r6_evaluation.EvaluationTests.test_audit_quota_corruption_and_no_overwrite) ... ok
+test_full_lane_raw_world_commands_archive_and_counts (tools.test_r6_evaluation.EvaluationTests.test_full_lane_raw_world_commands_archive_and_counts) ... ok
+test_last_sample_reset_keeps_32_lane_failure_denominator (tools.test_r6_evaluation.EvaluationTests.test_last_sample_reset_keeps_32_lane_failure_denominator) ... ok
+test_transition_cap_stops_before_second_physical_step (tools.test_r6_evaluation.EvaluationTests.test_transition_cap_stops_before_second_physical_step) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 33.511s
+
+OK

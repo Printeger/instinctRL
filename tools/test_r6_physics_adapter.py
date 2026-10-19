@@ -30,7 +30,7 @@ class Env(R6PhysicsMixin,Base):
             write_root_velocity_to_sim=lambda velocity,ids:root.__setitem__((ids,slice(7,13)),velocity),
             set_external_force_and_torque=self.set_wrench)
         self._wrench=SimpleNamespace(forces_body_n=torch.full((32,5,3),.4),torques_body_nm=torch.full((32,5,3),.03))
-        self.sim=SimpleNamespace(current_time_step_index=40);self.reset_rows=[];self.force_rows=[]
+        self.sim=SimpleNamespace(current_time_step_index=40,get_physics_dt=lambda:.005);self.reset_rows=[];self.force_rows=[]
         block=dict(id='P-fixture',task=task,steps=steps,pulse_acceleration_m_s2=.5)
         if task=='wall_modes':block.update(id='W-fixture',pulse_acceleration_m_s2=0.,sensor_to_wall_distance_m=1.3)
         self.configure_r6_physics(block=block,seed=17,split='development',reset_sink=self.reset_rows.append,

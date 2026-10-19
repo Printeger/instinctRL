@@ -283,7 +283,7 @@
       "distribution": "F_body_world = measured_body_mass * registered_acceleration_world, transform each by actual body link orientation, add to fresh rotor forces; preserve rotor torques",
       "time": "zero-based block physics ticks1000..1039; check actual simulator tick increments each call; no reset rewinds block clock",
       "mass": "Caller supplies pinned baseline total mass; every tick measured sum must agree within1e-5kg; no mass mutation",
-      "audit": "Every physics tick records simulator/block ticks, measured per-body mass, added world/local forces and staged total local wrench. Staging is not proof of completed physical integration. Finish requires next simulator tick after last staged action."
+      "audit": "Every physics tick records dt, simulator/block ticks, dtype, measured per-body mass, actual body-link quaternion, fresh rotor wrench, added world/local forces and staged total local wrench. Result records completed simulator tick after last stage. Staging/clock records are not independent physical integration proof."
     }
   },
   "metrics": {
@@ -344,5 +344,20 @@
     "quaternion_atol": 1e-06,
     "velocity_atol": 1e-06,
     "automatic_resets": "Reapply same registered per-lane reset pose; do not rewind block physics clock or measurement random stream. Record actual reset and mark metric reset failures."
+  },
+  "physics_replay": {
+    "status": "DRAFT_NOT_INDEPENDENTLY_REVIEWED",
+    "mount_position_m": [
+      0.0,
+      0.0,
+      0.05
+    ],
+    "mount_source": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/sensors/mid360.py",
+      "sha256": "a37a1c423d8818194f23023ba969f55025dc867d2280579633a699807a5aea44"
+    },
+    "numeric_tolerance": "16*dtype_epsilon*max(1,max(abs(expected))) for wrench arithmetic; exact unchanged torque and inactive rotor wrench",
+    "reset_tolerance": "Recompute max(1e-5,2*dtype_epsilon*max(1,abs(actual_world_coordinates))); check archived world-to-local subtraction and seeded reset_spec",
+    "physical_integration_verified": false
   }
 }
