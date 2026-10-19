@@ -15,6 +15,7 @@ from rlflow import experiments, policy
 from rlflow.store import Store, Conflict, sha
 from tools import r6_resource_queue as q
 from tools.r6_recovery import Journal, file_pin
+from tools.r6_recovery import RecoveryError
 from tools.r6_submit import submit_once
 from training_workloads.scale_003.resources import GPU_IDENTITY
 
@@ -75,6 +76,31 @@ def bound(tmp_path, monkeypatch):
 def invoke(b):
     with b.journal.writer():
         return submit_once(b.journal, b.key, b.store, queue_key=b.queue_key)
+
+
+@pytest.mark.parametrize('drift', ['missing', 'resources', 'purpose', 'identity',
+                                  'event_key', 'duplicate', 'goal'])
+def test_event_must_match_one_actual_budget_reservation(bound, monkeypatch, drift):
+    b = bound
+    with b.journal.writer():
+        state = b.journal.read()
+        ledger = state['budget']
+        reservation = next(r for r in ledger['reservations']
+                           if r['identity'] == state['events'][b.key]['identity'])
+        if drift == 'missing':ledger['reservations'].remove(reservation)
+        elif drift == 'resources':reservation['resources'] = {'live_starts':0}
+        elif drift == 'purpose':reservation['purpose'] = 'confirmation_delivery'
+        elif drift == 'identity':reservation['identity']['job_id'] = 'OTHER'
+        elif drift == 'event_key':reservation['event_key'] = 'OTHER'
+        elif drift == 'duplicate':ledger['reservations'].append(dict(reservation))
+        elif drift == 'goal':ledger['goal_id'] = 'OTHER'
+        b.journal.save(state)
+    submit = Mock(side_effect=AssertionError('submission reached with inconsistent reservation'))
+    monkeypatch.setattr(experiments, 'submit', submit)
+    with pytest.raises(RecoveryError, match='SUBMIT_RESERVATION_BINDING'):invoke(b)
+    assert 'submission_claim' not in b.journal.read()['events'][b.key]
+    assert not b.store.replay()['jobs']
+    submit.assert_not_called()
 
 
 @pytest.mark.parametrize('change,reason', [

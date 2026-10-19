@@ -1,0 +1,43 @@
+{
+  "schema_version": "r6-submit-reservation-binding-cpu/1",
+  "status": "CPU_FIX_PASS_PENDING_INDEPENDENT_REVIEW",
+  "tests_passed": 31,
+  "new_regressions": 7,
+  "reproduction": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SUBMIT_RESERVATION_REPRO.txt",
+    "sha256": "78c5d416d0e9b108dacf2796a9bebcb270a5d602fd72dec922fdc72e50dacc54"
+  },
+  "reproduction_result": "6 inconsistent reservations reached the inert submit sentinel; duplicate reservation already failed via BudgetError; all seven now fail with explicit binding rejection before claim",
+  "reproduction_source_commit": "7e79f30",
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SUBMIT_RESERVATION_TESTS.txt",
+    "sha256": "f3d523669fb77269609e59fa08382f65c27cffcbbff736178b954983b5429bb5"
+  },
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+    "sha256": "638c5a7bfc2d19cc678e132ef7ebfc174496b283a8baa07a006c69a713beaf43"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_store.py",
+    "sha256": "8d9d2e564818718ba8e7c0a60c73302ba645a9a9f997446acb9b11d62fd5116b"
+  },
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "9b272bf84588eeb8c3b064bcb99b89f7971176eb09e468b8440b14a8accb2668"
+  },
+  "operating_state_modified": false,
+  "capacity_pass": false,
+  "live_starts": 0,
+  "gpu_queries": 0,
+  "model_calls": 0,
+  "coverage": [
+    "Missing, reduced, repurposed, identity-drifted, key-drifted, duplicated and wrong-goal reservations fail before new Store effects",
+    "Fresh submission requires one exact ledger reservation with matching event identity, canonical key, resources and purpose",
+    "Existing Store authority/recovery and submission regressions remain passing"
+  ],
+  "limitations": [
+    "Synthetic CPU queue; no real R6 exact authorization or reservation minima integration",
+    "No independent acceptance, capacity approval or controller deployment",
+    "Recovery remains observation-only and never resubmits"
+  ]
+}

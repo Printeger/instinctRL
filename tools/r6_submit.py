@@ -60,6 +60,18 @@ def submit_once(journal, key, store, *, queue_key):
             or any(not c.get('receipt') for c in e.get('sample_claims',{}).values()))
             for e in state['events'].values()), 'CPU_WORKER_UNRESOLVED')
         require(state['budget']['capacity_pass'] is True, 'CAPACITY_NOT_ACCEPTED')
+        # Event resources are not themselves a charge. Require the exact
+        # persisted reservation before any new Store effect; checking only
+        # ledger totals would permit a missing or reduced reservation.
+        ledger=state['budget'];event=entry['identity']
+        reservation_key=json.dumps(tuple(event[k] for k in sorted(event)),separators=(',', ':'))
+        reservations=[r for r in ledger['reservations']
+                      if r['identity']==event or r['event_key']==reservation_key]
+        require(ledger['goal_id']==state['goal_id'] and len(reservations)==1
+                and reservations[0]['identity']==event
+                and reservations[0]['event_key']==reservation_key
+                and reservations[0]['resources']==entry['resources']
+                and reservations[0]['purpose']==entry['purpose'], 'RESERVATION_BINDING')
         if spec.get('backend')=='real':
             require(spec.get('h1',{}).get('mode')=='research-r6-evaluation', 'R6_MODE_REQUIRED')
             auth=json.loads(checked(spec['pins']['authorization']).read_text())

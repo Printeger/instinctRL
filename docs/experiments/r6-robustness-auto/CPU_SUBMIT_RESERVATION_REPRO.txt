@@ -1,0 +1,393 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_________ test_event_must_match_one_actual_budget_reservation[missing] _________
+
+bound = namespace(store=<rlflow.store.Store object at 0x77f0366ecb60>, journal=<tools.r6_recovery.Journal object at 0x77f0367c...of-mint/pytest-1119/test_event_must_match_one_actu0/store/workspaces/cpu/inert.py'), popen=<Mock id='131873600464672'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77f0366ecb90>
+drift = 'missing'
+
+    @pytest.mark.parametrize('drift', ['missing', 'resources', 'purpose', 'identity',
+                                      'event_key', 'duplicate', 'goal'])
+    def test_event_must_match_one_actual_budget_reservation(bound, monkeypatch, drift):
+        b = bound
+        with b.journal.writer():
+            state = b.journal.read()
+            ledger = state['budget']
+            reservation = next(r for r in ledger['reservations']
+                               if r['identity'] == state['events'][b.key]['identity'])
+            if drift == 'missing':ledger['reservations'].remove(reservation)
+            elif drift == 'resources':reservation['resources'] = {'live_starts':0}
+            elif drift == 'purpose':reservation['purpose'] = 'confirmation_delivery'
+            elif drift == 'identity':reservation['identity']['job_id'] = 'OTHER'
+            elif drift == 'event_key':reservation['event_key'] = 'OTHER'
+            elif drift == 'duplicate':ledger['reservations'].append(dict(reservation))
+            elif drift == 'goal':ledger['goal_id'] = 'OTHER'
+            b.journal.save(state)
+        submit = Mock(side_effect=AssertionError('submission reached with inconsistent reservation'))
+        monkeypatch.setattr(experiments, 'submit', submit)
+>       with pytest.raises(RecoveryError, match='SUBMIT_RESERVATION_BINDING'):invoke(b)
+
+tools/test_r6_submit_store.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_submit_store.py:78: in invoke
+    return submit_once(b.journal, b.key, b.store, queue_key=b.queue_key)
+tools/r6_submit.py:91: in submit_once
+    experiments.submit(store,spec)
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='131873589393888'>
+args = (<rlflow.store.Store object at 0x77f0366ecb60>, {'argv': ['/usr/bin/python3.12', '/tmp/pytest-of-mint/pytest-1119/test...11111111111111'}], 'cwd': '/tmp/pytest-of-mint/pytest-1119/test_event_must_match_one_actu0/store/workspaces/cpu', ...})
+kwargs = {}
+effect = AssertionError('submission reached with inconsistent reservation')
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: submission reached with inconsistent reservation
+
+/usr/lib/python3.12/unittest/mock.py:1193: AssertionError
+________ test_event_must_match_one_actual_budget_reservation[resources] ________
+
+bound = namespace(store=<rlflow.store.Store object at 0x77f0375533e0>, journal=<tools.r6_recovery.Journal object at 0x77f03752...of-mint/pytest-1119/test_event_must_match_one_actu1/store/workspaces/cpu/inert.py'), popen=<Mock id='131873589547504'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77f0375510a0>
+drift = 'resources'
+
+    @pytest.mark.parametrize('drift', ['missing', 'resources', 'purpose', 'identity',
+                                      'event_key', 'duplicate', 'goal'])
+    def test_event_must_match_one_actual_budget_reservation(bound, monkeypatch, drift):
+        b = bound
+        with b.journal.writer():
+            state = b.journal.read()
+            ledger = state['budget']
+            reservation = next(r for r in ledger['reservations']
+                               if r['identity'] == state['events'][b.key]['identity'])
+            if drift == 'missing':ledger['reservations'].remove(reservation)
+            elif drift == 'resources':reservation['resources'] = {'live_starts':0}
+            elif drift == 'purpose':reservation['purpose'] = 'confirmation_delivery'
+            elif drift == 'identity':reservation['identity']['job_id'] = 'OTHER'
+            elif drift == 'event_key':reservation['event_key'] = 'OTHER'
+            elif drift == 'duplicate':ledger['reservations'].append(dict(reservation))
+            elif drift == 'goal':ledger['goal_id'] = 'OTHER'
+            b.journal.save(state)
+        submit = Mock(side_effect=AssertionError('submission reached with inconsistent reservation'))
+        monkeypatch.setattr(experiments, 'submit', submit)
+>       with pytest.raises(RecoveryError, match='SUBMIT_RESERVATION_BINDING'):invoke(b)
+
+tools/test_r6_submit_store.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_submit_store.py:78: in invoke
+    return submit_once(b.journal, b.key, b.store, queue_key=b.queue_key)
+tools/r6_submit.py:91: in submit_once
+    experiments.submit(store,spec)
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='131873589544720'>
+args = (<rlflow.store.Store object at 0x77f0375533e0>, {'argv': ['/usr/bin/python3.12', '/tmp/pytest-of-mint/pytest-1119/test...11111111111111'}], 'cwd': '/tmp/pytest-of-mint/pytest-1119/test_event_must_match_one_actu1/store/workspaces/cpu', ...})
+kwargs = {}
+effect = AssertionError('submission reached with inconsistent reservation')
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: submission reached with inconsistent reservation
+
+/usr/lib/python3.12/unittest/mock.py:1193: AssertionError
+_________ test_event_must_match_one_actual_budget_reservation[purpose] _________
+
+bound = namespace(store=<rlflow.store.Store object at 0x77f03675b1a0>, journal=<tools.r6_recovery.Journal object at 0x77f0367c...of-mint/pytest-1119/test_event_must_match_one_actu2/store/workspaces/cpu/inert.py'), popen=<Mock id='131873590769616'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77f036759af0>
+drift = 'purpose'
+
+    @pytest.mark.parametrize('drift', ['missing', 'resources', 'purpose', 'identity',
+                                      'event_key', 'duplicate', 'goal'])
+    def test_event_must_match_one_actual_budget_reservation(bound, monkeypatch, drift):
+        b = bound
+        with b.journal.writer():
+            state = b.journal.read()
+            ledger = state['budget']
+            reservation = next(r for r in ledger['reservations']
+                               if r['identity'] == state['events'][b.key]['identity'])
+            if drift == 'missing':ledger['reservations'].remove(reservation)
+            elif drift == 'resources':reservation['resources'] = {'live_starts':0}
+            elif drift == 'purpose':reservation['purpose'] = 'confirmation_delivery'
+            elif drift == 'identity':reservation['identity']['job_id'] = 'OTHER'
+            elif drift == 'event_key':reservation['event_key'] = 'OTHER'
+            elif drift == 'duplicate':ledger['reservations'].append(dict(reservation))
+            elif drift == 'goal':ledger['goal_id'] = 'OTHER'
+            b.journal.save(state)
+        submit = Mock(side_effect=AssertionError('submission reached with inconsistent reservation'))
+        monkeypatch.setattr(experiments, 'submit', submit)
+>       with pytest.raises(RecoveryError, match='SUBMIT_RESERVATION_BINDING'):invoke(b)
+
+tools/test_r6_submit_store.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_submit_store.py:78: in invoke
+    return submit_once(b.journal, b.key, b.store, queue_key=b.queue_key)
+tools/r6_submit.py:91: in submit_once
+    experiments.submit(store,spec)
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='131873590761456'>
+args = (<rlflow.store.Store object at 0x77f03675b1a0>, {'argv': ['/usr/bin/python3.12', '/tmp/pytest-of-mint/pytest-1119/test...11111111111111'}], 'cwd': '/tmp/pytest-of-mint/pytest-1119/test_event_must_match_one_actu2/store/workspaces/cpu', ...})
+kwargs = {}
+effect = AssertionError('submission reached with inconsistent reservation')
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: submission reached with inconsistent reservation
+
+/usr/lib/python3.12/unittest/mock.py:1193: AssertionError
+________ test_event_must_match_one_actual_budget_reservation[identity] _________
+
+bound = namespace(store=<rlflow.store.Store object at 0x77f0365c0230>, journal=<tools.r6_recovery.Journal object at 0x77f03744...of-mint/pytest-1119/test_event_must_match_one_actu3/store/workspaces/cpu/inert.py'), popen=<Mock id='131873589202624'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77f0365c23f0>
+drift = 'identity'
+
+    @pytest.mark.parametrize('drift', ['missing', 'resources', 'purpose', 'identity',
+                                      'event_key', 'duplicate', 'goal'])
+    def test_event_must_match_one_actual_budget_reservation(bound, monkeypatch, drift):
+        b = bound
+        with b.journal.writer():
+            state = b.journal.read()
+            ledger = state['budget']
+            reservation = next(r for r in ledger['reservations']
+                               if r['identity'] == state['events'][b.key]['identity'])
+            if drift == 'missing':ledger['reservations'].remove(reservation)
+            elif drift == 'resources':reservation['resources'] = {'live_starts':0}
+            elif drift == 'purpose':reservation['purpose'] = 'confirmation_delivery'
+            elif drift == 'identity':reservation['identity']['job_id'] = 'OTHER'
+            elif drift == 'event_key':reservation['event_key'] = 'OTHER'
+            elif drift == 'duplicate':ledger['reservations'].append(dict(reservation))
+            elif drift == 'goal':ledger['goal_id'] = 'OTHER'
+            b.journal.save(state)
+        submit = Mock(side_effect=AssertionError('submission reached with inconsistent reservation'))
+        monkeypatch.setattr(experiments, 'submit', submit)
+>       with pytest.raises(RecoveryError, match='SUBMIT_RESERVATION_BINDING'):invoke(b)
+
+tools/test_r6_submit_store.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_submit_store.py:78: in invoke
+    return submit_once(b.journal, b.key, b.store, queue_key=b.queue_key)
+tools/r6_submit.py:91: in submit_once
+    experiments.submit(store,spec)
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='131873589214096'>
+args = (<rlflow.store.Store object at 0x77f0365c0230>, {'argv': ['/usr/bin/python3.12', '/tmp/pytest-of-mint/pytest-1119/test...11111111111111'}], 'cwd': '/tmp/pytest-of-mint/pytest-1119/test_event_must_match_one_actu3/store/workspaces/cpu', ...})
+kwargs = {}
+effect = AssertionError('submission reached with inconsistent reservation')
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: submission reached with inconsistent reservation
+
+/usr/lib/python3.12/unittest/mock.py:1193: AssertionError
+________ test_event_must_match_one_actual_budget_reservation[event_key] ________
+
+bound = namespace(store=<rlflow.store.Store object at 0x77f0367a39b0>, journal=<tools.r6_recovery.Journal object at 0x77f03756...of-mint/pytest-1119/test_event_must_match_one_actu4/store/workspaces/cpu/inert.py'), popen=<Mock id='131873589381936'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77f0367a3f20>
+drift = 'event_key'
+
+    @pytest.mark.parametrize('drift', ['missing', 'resources', 'purpose', 'identity',
+                                      'event_key', 'duplicate', 'goal'])
+    def test_event_must_match_one_actual_budget_reservation(bound, monkeypatch, drift):
+        b = bound
+        with b.journal.writer():
+            state = b.journal.read()
+            ledger = state['budget']
+            reservation = next(r for r in ledger['reservations']
+                               if r['identity'] == state['events'][b.key]['identity'])
+            if drift == 'missing':ledger['reservations'].remove(reservation)
+            elif drift == 'resources':reservation['resources'] = {'live_starts':0}
+            elif drift == 'purpose':reservation['purpose'] = 'confirmation_delivery'
+            elif drift == 'identity':reservation['identity']['job_id'] = 'OTHER'
+            elif drift == 'event_key':reservation['event_key'] = 'OTHER'
+            elif drift == 'duplicate':ledger['reservations'].append(dict(reservation))
+            elif drift == 'goal':ledger['goal_id'] = 'OTHER'
+            b.journal.save(state)
+        submit = Mock(side_effect=AssertionError('submission reached with inconsistent reservation'))
+        monkeypatch.setattr(experiments, 'submit', submit)
+>       with pytest.raises(RecoveryError, match='SUBMIT_RESERVATION_BINDING'):invoke(b)
+
+tools/test_r6_submit_store.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_submit_store.py:78: in invoke
+    return submit_once(b.journal, b.key, b.store, queue_key=b.queue_key)
+tools/r6_submit.py:91: in submit_once
+    experiments.submit(store,spec)
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='131873589385920'>
+args = (<rlflow.store.Store object at 0x77f0367a39b0>, {'argv': ['/usr/bin/python3.12', '/tmp/pytest-of-mint/pytest-1119/test...11111111111111'}], 'cwd': '/tmp/pytest-of-mint/pytest-1119/test_event_must_match_one_actu4/store/workspaces/cpu', ...})
+kwargs = {}
+effect = AssertionError('submission reached with inconsistent reservation')
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: submission reached with inconsistent reservation
+
+/usr/lib/python3.12/unittest/mock.py:1193: AssertionError
+________ test_event_must_match_one_actual_budget_reservation[duplicate] ________
+
+bound = namespace(store=<rlflow.store.Store object at 0x77f0367905c0>, journal=<tools.r6_recovery.Journal object at 0x77f03755...of-mint/pytest-1119/test_event_must_match_one_actu5/store/workspaces/cpu/inert.py'), popen=<Mock id='131873589827328'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77f0367921b0>
+drift = 'duplicate'
+
+    @pytest.mark.parametrize('drift', ['missing', 'resources', 'purpose', 'identity',
+                                      'event_key', 'duplicate', 'goal'])
+    def test_event_must_match_one_actual_budget_reservation(bound, monkeypatch, drift):
+        b = bound
+        with b.journal.writer():
+            state = b.journal.read()
+            ledger = state['budget']
+            reservation = next(r for r in ledger['reservations']
+                               if r['identity'] == state['events'][b.key]['identity'])
+            if drift == 'missing':ledger['reservations'].remove(reservation)
+            elif drift == 'resources':reservation['resources'] = {'live_starts':0}
+            elif drift == 'purpose':reservation['purpose'] = 'confirmation_delivery'
+            elif drift == 'identity':reservation['identity']['job_id'] = 'OTHER'
+            elif drift == 'event_key':reservation['event_key'] = 'OTHER'
+            elif drift == 'duplicate':ledger['reservations'].append(dict(reservation))
+            elif drift == 'goal':ledger['goal_id'] = 'OTHER'
+            b.journal.save(state)
+        submit = Mock(side_effect=AssertionError('submission reached with inconsistent reservation'))
+        monkeypatch.setattr(experiments, 'submit', submit)
+>       with pytest.raises(RecoveryError, match='SUBMIT_RESERVATION_BINDING'):invoke(b)
+
+tools/test_r6_submit_store.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_submit_store.py:78: in invoke
+    return submit_once(b.journal, b.key, b.store, queue_key=b.queue_key)
+tools/r6_submit.py:79: in submit_once
+    journal.require_dispatch_budget()
+tools/r6_recovery.py:121: in require_dispatch_budget
+    admissible(self.read()['budget'])
+tools/r6_budget.py:52: in admissible
+    usage = totals(ledger)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ledger = {'allocation_revision': {'new_disk_bytes': 85899345920, 'new_final_seconds': 24000, 'prior_disk_bytes': 42949672960, '...ic_model_sessions': 32, 'live_starts': 64, 'live_wall_seconds': 43200, ...}, 'disk_free_floor_bytes': 32212254720, ...}
+
+    def totals(ledger, *, enforce_caps=True):
+        caps = ledger['caps']
+        result = {k: amount(ledger['used'][k]) for k in caps}
+        seen = set()
+        for reservation in ledger['reservations']:
+            key = reservation['event_key']
+            if key in seen:
+>               raise BudgetError('Duplicate reservation event')
+E               tools.r6_budget.BudgetError: Duplicate reservation event
+
+tools/r6_budget.py:40: BudgetError
+__________ test_event_must_match_one_actual_budget_reservation[goal] ___________
+
+bound = namespace(store=<rlflow.store.Store object at 0x77f0367b6690>, journal=<tools.r6_recovery.Journal object at 0x77f03759...of-mint/pytest-1119/test_event_must_match_one_actu6/store/workspaces/cpu/inert.py'), popen=<Mock id='131873589764240'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77f0367b57f0>
+drift = 'goal'
+
+    @pytest.mark.parametrize('drift', ['missing', 'resources', 'purpose', 'identity',
+                                      'event_key', 'duplicate', 'goal'])
+    def test_event_must_match_one_actual_budget_reservation(bound, monkeypatch, drift):
+        b = bound
+        with b.journal.writer():
+            state = b.journal.read()
+            ledger = state['budget']
+            reservation = next(r for r in ledger['reservations']
+                               if r['identity'] == state['events'][b.key]['identity'])
+            if drift == 'missing':ledger['reservations'].remove(reservation)
+            elif drift == 'resources':reservation['resources'] = {'live_starts':0}
+            elif drift == 'purpose':reservation['purpose'] = 'confirmation_delivery'
+            elif drift == 'identity':reservation['identity']['job_id'] = 'OTHER'
+            elif drift == 'event_key':reservation['event_key'] = 'OTHER'
+            elif drift == 'duplicate':ledger['reservations'].append(dict(reservation))
+            elif drift == 'goal':ledger['goal_id'] = 'OTHER'
+            b.journal.save(state)
+        submit = Mock(side_effect=AssertionError('submission reached with inconsistent reservation'))
+        monkeypatch.setattr(experiments, 'submit', submit)
+>       with pytest.raises(RecoveryError, match='SUBMIT_RESERVATION_BINDING'):invoke(b)
+
+tools/test_r6_submit_store.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_submit_store.py:78: in invoke
+    return submit_once(b.journal, b.key, b.store, queue_key=b.queue_key)
+tools/r6_submit.py:91: in submit_once
+    experiments.submit(store,spec)
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='131873589770672'>
+args = (<rlflow.store.Store object at 0x77f0367b6690>, {'argv': ['/usr/bin/python3.12', '/tmp/pytest-of-mint/pytest-1119/test...11111111111111'}], 'cwd': '/tmp/pytest-of-mint/pytest-1119/test_event_must_match_one_actu6/store/workspaces/cpu', ...})
+kwargs = {}
+effect = AssertionError('submission reached with inconsistent reservation')
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: submission reached with inconsistent reservation
+
+/usr/lib/python3.12/unittest/mock.py:1193: AssertionError
+=========================== short test summary info ============================
+FAILED tools/test_r6_submit_store.py::test_event_must_match_one_actual_budget_reservation[missing]
+FAILED tools/test_r6_submit_store.py::test_event_must_match_one_actual_budget_reservation[resources]
+FAILED tools/test_r6_submit_store.py::test_event_must_match_one_actual_budget_reservation[purpose]
+FAILED tools/test_r6_submit_store.py::test_event_must_match_one_actual_budget_reservation[identity]
+FAILED tools/test_r6_submit_store.py::test_event_must_match_one_actual_budget_reservation[event_key]
+FAILED tools/test_r6_submit_store.py::test_event_must_match_one_actual_budget_reservation[duplicate]
+FAILED tools/test_r6_submit_store.py::test_event_must_match_one_actual_budget_reservation[goal]
+7 failed, 10 deselected in 1.67s
