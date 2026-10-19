@@ -1,0 +1,298 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": [
+        "PASS_LEGACY_MODEL_RECONCILIATION",
+        "MUST_FIX"
+      ]
+    },
+    "must_fix": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "changed_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_plan": {
+      "type": "null"
+    },
+    "historical_descendant_cleanup_proven": {
+      "type": "boolean",
+      "enum": [
+        false
+      ]
+    },
+    "ownership_ambiguity_remaining": {
+      "type": "boolean"
+    },
+    "runtime_dispatch_authorized": {
+      "type": "boolean",
+      "enum": [
+        false
+      ]
+    },
+    "proposal": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "source_pins": {
+      "type": "object",
+      "properties": {
+        "tools/r6_legacy_model_reconciliation.py": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "tools/audit_r6_legacy_model_cleanup.py": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "tools/r6_job_handoff.py": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "tools/r6_batch.py": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "tools/r6_model_worker.py": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "tools/r6_recovery.py": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "tools/r6_worker_processes.py": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "tools/r6_legacy_model_reconciliation.py",
+        "tools/audit_r6_legacy_model_cleanup.py",
+        "tools/r6_job_handoff.py",
+        "tools/r6_batch.py",
+        "tools/r6_model_worker.py",
+        "tools/r6_recovery.py",
+        "tools/r6_worker_processes.py"
+      ],
+      "additionalProperties": false
+    },
+    "original_receipts": {
+      "type": "object",
+      "properties": {
+        "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01",
+        "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75"
+      ],
+      "additionalProperties": false
+    },
+    "remaining_budget": {
+      "type": "string"
+    },
+    "evidence_pins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "session_evidence": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "decision",
+    "must_fix",
+    "changed_files",
+    "next_plan",
+    "historical_descendant_cleanup_proven",
+    "ownership_ambiguity_remaining",
+    "runtime_dispatch_authorized",
+    "proposal",
+    "source_pins",
+    "original_receipts",
+    "remaining_budget",
+    "evidence_pins",
+    "notes",
+    "session_evidence"
+  ],
+  "additionalProperties": false
+}

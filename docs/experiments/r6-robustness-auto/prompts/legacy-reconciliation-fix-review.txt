@@ -1,0 +1,46 @@
+Independently review closure of exactly the two MUST_FIX findings in
+docs/experiments/r6-robustness-auto/reviews/legacy-reconciliation-review.json.
+You are read-only. Do not edit files, execute tests, query GPUs, run simulation,
+invoke another model, spawn agents, install anything, or submit jobs. No background
+commands. Read-only cat/rg/hash/in-memory Python inspection is allowed. Return JSON
+using the supplied schema; no markdown. This is a substantive evidence review.
+
+Working directory: /home/mint/rl_dev/instinctRL-dev
+All evidence below is under docs/experiments/r6-robustness-auto/.
+Read CPU_LEGACY_RECONCILIATION_REPAIR_V2.json and its exact sources/tests/output.
+Verify complete modern cleanup checks in r6_worker_processes.cleanup_verified,
+r6_batch.verified_decision, r6_job_handoff.no_model_workers, and the narrow
+r6_legacy_model_reconciliation validator. Inspect the new tests through the REAL
+verified_decision path (successful exit/schema fields present), including missing
+fields, status-only records, types/counts, and current live identities. Tests are
+CPU substitutes, not independent acceptance.
+
+Read LEGACY_MODEL_SESSION_SUPPLEMENT.json and verify its original session_source
+pin, thread ID against the first legacy CLI JSONL, and the actual raw session
+records. The original raw session contains three paired exec wrapper calls:
+the cat attempt with exit1/bwrap error, in-memory tool metadata listing, and the
+two MCP metadata queries. Inspect all actual inputs and terminal outputs for
+spawning/ownership ambiguity; do not rely solely on this summary. The supplement
+is hard-pinned and now must be explicitly bound by the decision and acceptance;
+its original raw session is rechecked at handoff. No original receipt is changed.
+
+Read LEGACY_MODEL_CLEANUP_RECONCILIATION_PROPOSAL_V2.json and both complete
+original receipts/transcripts/last messages. The second session's eleven recorded
+commands were previously inspected but confirm the exact pin bindings. Determine
+whether the added original tool records resolve the missing-attempt evidence
+without falsely proving historical cleanup. Current absent processes alone do
+not resolve uncertainty. If ownership is still ambiguous, return MUST_FIX.
+
+PASS_LEGACY_MODEL_RECONCILIATION requires no remaining blockers,
+ownership_ambiguity_remaining=false, must_fix=[], changed_files=[], next_plan=null.
+historical_descendant_cleanup_proven=false and runtime_dispatch_authorized=false
+always. This narrow reconciliation grants no live/scientific/capacity acceptance.
+Return concrete MUST_FIX findings if either original blocker or a new material
+defect in these changes remains. Do not treat old unrelated scientific findings
+as blockers of this scoped review.
+
+Copy exact proposal, session_evidence, original_receipts and current source_pins
+into the result after checking hashes. Include repair evidence, supplement and
+raw session pins in evidence_pins. remaining_budget is a short description of the
+actual batch budget, including this session's reservation. Explain the evidence
+and limits in notes. Do not modify operational state or create acceptance files.

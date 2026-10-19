@@ -15,6 +15,7 @@ from tools.r6_recovery import RecoveryError, checked, file_pin
 from tools.r6_worker_processes import cleanup_verified
 
 ROOT = Path(__file__).resolve().parents[1]
+SESSION_EVIDENCE_SHA256 = '75b2ccc8d85dd97dad666786b878ea30bc968bf24b0ac00a79353f7ae9bbedd6'
 ORIGINAL_RECEIPTS = {
     '655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01':
         '60104087056120fbfc6f049d54fd508cb87859b7b2744f3dfe5ed99da22a0f0c',
@@ -47,7 +48,7 @@ def validate_reconciliation(journal, key):
     """Verify an explicit approval tied to a completed independent model event.
 
     State may contain ``legacy_model_reconciliation`` with review_event_key,
-    review_receipt and proposal pins. Merely creating this field cannot pass:
+    review_receipt, proposal and session_evidence pins. Creating this field cannot pass:
     the model's pinned, schema-validated output must approve these exact inputs.
     Any drift requires a new review, never an automatic refreshed approval.
     """
@@ -55,7 +56,7 @@ def validate_reconciliation(journal, key):
     state = journal.read()
     approval = state.get('legacy_model_reconciliation')
     require(isinstance(approval, dict) and set(approval) == {
-        'review_event_key', 'review_receipt', 'proposal'}, 'APPROVAL_REQUIRED')
+        'review_event_key', 'review_receipt', 'proposal', 'session_evidence'}, 'APPROVAL_REQUIRED')
     review_key = approval['review_event_key']
     review = state['events'].get(review_key, {})
     require(review_key not in LEGACY_EVENTS and review.get('kind') == 'model'
@@ -92,6 +93,15 @@ def validate_reconciliation(journal, key):
             and decision.get('runtime_dispatch_authorized') is False,
             'REVIEW_NOT_ACCEPTED')
     require(decision.get('proposal') == approval['proposal'], 'PROPOSAL_BINDING')
+    require(decision.get('session_evidence') == approval['session_evidence']
+            and approval['session_evidence']['sha256'] == SESSION_EVIDENCE_SHA256,
+            'SESSION_BINDING')
+    supplement = read_pin(approval['session_evidence'])
+    # Only this exact independently inspected supplement is eligible. Its raw
+    # source must still be available and unchanged; no replacement narrative.
+    checked(supplement['session_source'])
+    require(supplement['original_receipt'] ==
+            state['events'][supplement['original_event_key']]['receipt'], 'SESSION_ORIGINAL')
     require(decision.get('source_pins') == source_pins(), 'SOURCE_DRIFT')
     proposal = read_pin(approval['proposal'])
     require(proposal.get('schema_version') == 'r6-legacy-model-reconciliation-proposal/1'
@@ -119,6 +129,8 @@ def validate_reconciliation(journal, key):
     # Do not allow the review or original evidence to change during validation.
     checked(approval['review_receipt'])
     checked(approval['proposal'])
+    checked(approval['session_evidence'])
+    checked(supplement['session_source'])
     for pin in expected.values():
         checked(pin)
     return {'review_event_key': review_key, 'original_receipts': expected,

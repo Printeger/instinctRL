@@ -48,17 +48,25 @@ class ReconciliationTests(unittest.TestCase):
         receipt_path.write_text(json.dumps(self.review_receipt))
         self.state['events'][self.review_key] = dict(kind='model', status='RECEIPT_RECORDED',
             identity=event, request={}, receipt=file_pin(receipt_path))
+        session_path = self.j.directory / 'raw-session.jsonl'; session_path.write_text('CPU fixture')
+        supplement_path = self.j.directory / 'session-supplement.json'
+        legacy_key = sorted(LEGACY_EVENTS)[0]
+        supplement_path.write_text(json.dumps(dict(session_source=file_pin(session_path),
+            original_event_key=legacy_key, original_receipt=self.originals[legacy_key])))
         self.state['legacy_model_reconciliation'] = dict(review_event_key=self.review_key,
-            review_receipt=file_pin(receipt_path), proposal=file_pin(proposal_path))
+            review_receipt=file_pin(receipt_path), proposal=file_pin(proposal_path),
+            session_evidence=file_pin(supplement_path))
         self.decision = dict(decision='PASS_LEGACY_MODEL_RECONCILIATION', must_fix=[],
             changed_files=[], next_plan=None, historical_descendant_cleanup_proven=False,
             ownership_ambiguity_remaining=False, runtime_dispatch_authorized=False,
             proposal=file_pin(proposal_path), source_pins=module.source_pins(),
-            original_receipts=self.originals)
+            original_receipts=self.originals, session_evidence=file_pin(supplement_path))
         self.save()
         self.hashes = patch.object(module, 'ORIGINAL_RECEIPTS',
                                    {k: p['sha256'] for k, p in self.originals.items()})
         self.hashes.start(); self.addCleanup(self.hashes.stop)
+        session_hash = patch.object(module, 'SESSION_EVIDENCE_SHA256', file_pin(supplement_path)['sha256'])
+        session_hash.start(); self.addCleanup(session_hash.stop)
         # All actual acceptance tests below mock only the external model result.
         # A separate test exercises rejection by the real receipt verifier.
         self.verifier = patch('tools.r6_batch.verified_decision', return_value=self.decision)
@@ -112,7 +120,7 @@ class ReconciliationTests(unittest.TestCase):
 
     def test_source_proposal_and_original_bindings_rejected(self):
         for field, code in [('source_pins', 'SOURCE_DRIFT'), ('proposal', 'PROPOSAL_BINDING'),
-                            ('original_receipts', 'REVIEW_ORIGINALS')]:
+                            ('original_receipts', 'REVIEW_ORIGINALS'), ('session_evidence', 'SESSION_BINDING')]:
             old = self.decision[field]; self.decision[field] = {}
             with self.assertRaisesRegex(RecoveryError, code): self.validate()
             self.decision[field] = old
@@ -139,7 +147,11 @@ class ReconciliationTests(unittest.TestCase):
         key = sorted(LEGACY_EVENTS)[0]
         p = Path(self.originals[key]['path']); p.write_text(p.read_text() + '\n')
         self.state['events'][key]['receipt'] = file_pin(p); self.save()
-        with self.assertRaisesRegex(RecoveryError, 'ORIGINAL_RECEIPT'): self.validate()
+        with self.assertRaisesRegex(RecoveryError, 'SESSION_ORIGINAL|ORIGINAL_RECEIPT'): self.validate()
+
+    def test_raw_session_drift_rejected(self):
+        (self.j.directory / 'raw-session.jsonl').write_text('changed')
+        with self.assertRaisesRegex(RecoveryError, 'PIN_DRIFT'): self.validate()
 
     def test_review_liveness_rechecked(self):
         with patch.object(module, 'owns', return_value=True):
