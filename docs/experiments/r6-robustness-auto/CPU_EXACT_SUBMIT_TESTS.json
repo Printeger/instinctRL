@@ -1,0 +1,69 @@
+{
+  "schema_version": "r6-exact-submit-cpu/1",
+  "status": "CPU_COMPONENT_PASS_NOT_DEPLOYED_PENDING_REVIEW",
+  "distinct_tests_passed": 50,
+  "groups": [
+    {
+      "passed": 47,
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_EXACT_SUBMIT_TESTS.txt",
+        "sha256": "4ca526521b9e97d36ddb9fc7c8ef48c3aeb15a3dc8e616b07692b5c6d2c8ae9c"
+      },
+      "scope": "11 initial submit plus36 existing queue/handoff"
+    },
+    {
+      "passed": 14,
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_EXACT_SUBMIT_TESTS_V2.txt",
+        "sha256": "020bf5d621836a9c677aa20352a64c159d85110a359ec3efce8967000cd5f8f6"
+      },
+      "scope": "14 final submit tests,11 overlap with first run"
+    }
+  ],
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+    "sha256": "52d8864d15be227acff302640747ed0a588c29db2b25e11053aa331e7133fe4e"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit.py",
+    "sha256": "d184e24a94532fe9ebf06d16b7ea29b909bf6833da07d2a232a13a0d20529b8a"
+  },
+  "dependencies": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py",
+      "sha256": "89510f87f48a4aa60cb0863e0ec24a0bf13bbd6ada43314d9f55f4f34db7214a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/experiments.py",
+      "sha256": "dd85dee9971a93137348320364c82a95f377d4e963e649262df5bfd3157a937d"
+    }
+  ],
+  "actual_operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "9b272bf84588eeb8c3b064bcb99b89f7971176eb09e468b8440b14a8accb2668"
+  },
+  "actual_capacity_pass": false,
+  "actual_live_jobs_started": 0,
+  "actual_gpu_queries": 0,
+  "model_calls": 0,
+  "operating_state_modified": false,
+  "coverage": [
+    "Actual Journal and synthetic complete13-sample resource windows; Store validate/authorization/submit are inert substitutes",
+    "Claim-before-submit; exact Store/job/approval/source binding; restart cannot resubmit ambiguous missing job",
+    "Receipt-before-state crash recovery; STOP observation without new submission; no resurrection after completed handoff",
+    "Capacity/model/queue age/budget/orphan-artifact gates; no refund; native FAILED/-9 retained"
+  ],
+  "limitations": [
+    "No real Store issuance/submission or GPU resource observations",
+    "Production real-mode authority and reservation validation still require integrated exact-spec tests and independent review",
+    "Resource wait/submit/close/analysis/decision orchestration and background zero-model handoff remain unfinished"
+  ]
+}

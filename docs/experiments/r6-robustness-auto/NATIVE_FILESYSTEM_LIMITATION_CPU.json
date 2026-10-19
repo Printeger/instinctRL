@@ -1,0 +1,23 @@
+{
+  "schema_version": "r6-native-filesystem-limit-check/1",
+  "status": "UNPRIVILEGED_MOUNT_NAMESPACE_UNAVAILABLE",
+  "argv": [
+    "/usr/bin/unshare",
+    "--user",
+    "--map-root-user",
+    "--mount",
+    "/bin/true"
+  ],
+  "executable": {
+    "path": "/usr/bin/unshare",
+    "sha256": "51bcc77ba5db162c80028f861f0a2770d728c1de80773816d863f28d7a817adb"
+  },
+  "exit_code": 1,
+  "stderr": "unshare: write failed /proc/self/uid_map: Operation not permitted\n",
+  "mount_command_executed": false,
+  "privilege_escalation_attempted": false,
+  "runtime_files_modified": false,
+  "gpu_queries": 0,
+  "capacity_pass": false,
+  "implication": "Cannot assume a private size-limited tmpfs is available with current user permissions. No quota or mount was established; keep native aggregate output bounds unresolved."
+}
