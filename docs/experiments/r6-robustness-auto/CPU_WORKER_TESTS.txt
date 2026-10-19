@@ -1,0 +1,11 @@
+test_cpu_job_completion_event_and_registered_next_step (tools.test_r6_model_worker.WorkerTests.test_cpu_job_completion_event_and_registered_next_step) ... ok
+test_invalid_schema_is_not_accepted_as_decision (tools.test_r6_model_worker.WorkerTests.test_invalid_schema_is_not_accepted_as_decision) ... ok
+test_schema_usage_receipt_and_recovery_consume_once (tools.test_r6_model_worker.WorkerTests.test_schema_usage_receipt_and_recovery_consume_once) ... ok
+test_stop_during_worker_no_retry_or_stop_removal (tools.test_r6_model_worker.WorkerTests.test_stop_during_worker_no_retry_or_stop_removal) ... ok
+test_timeout_cleans_child_and_keeps_session_charge (tools.test_r6_model_worker.WorkerTests.test_timeout_cleans_child_and_keeps_session_charge) ... ok
+test_worker_death_preserves_ambiguous_event_without_retry (tools.test_r6_model_worker.WorkerTests.test_worker_death_preserves_ambiguous_event_without_retry) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.305s
+
+OK

@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": [
+        "PASS_CPU_SCOPE",
+        "MUST_FIX"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "evidence_pins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "changed_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_plan": {
+      "type": "string"
+    },
+    "remaining_budget": {
+      "type": "object",
+      "properties": {
+        "automatic_sessions_remaining": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "automatic_sessions_remaining"
+      ],
+      "additionalProperties": false
+    },
+    "must_fix": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "decision",
+    "summary",
+    "evidence_pins",
+    "changed_files",
+    "next_plan",
+    "remaining_budget",
+    "must_fix"
+  ],
+  "additionalProperties": false
+}
