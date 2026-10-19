@@ -4,9 +4,9 @@ import os
 from pathlib import Path
 import stat
 
-from rlflow.store import atomic, canonical
+from rlflow.store import atomic, canonical, sha
 from tools.r6_budget import observe
-from tools.r6_job_handoff import close_terminal_job, read
+from tools.r6_job_handoff import close_terminal_job, read, exact_job, cleanup_evidence, TERMINAL
 from tools.r6_recovery import RecoveryError, checked, file_pin
 
 DISK = 'output_actual_plus_unreleased_reservations_bytes'
@@ -92,7 +92,24 @@ def record_inventory(journal, key, store):
     state = journal.read(); entry = state['events'][key]
     if state.get('current_job') not in (None, entry['identity']['job_id']):
         raise RecoveryError('OTHER_JOB_HANDOFF_ACTIVE')
-    closure = close_terminal_job(journal, key, store)
+    if entry.get('inventory'):
+        # Rechecking originals must not rewind a later analysis/decision phase,
+        # including when drift is detected part way through the verification.
+        entry = journal.canonical_job(key,state=state)
+        closure = read(checked(entry['closure']))
+        spec = read(checked(entry['request']['spec']))
+        job = exact_job(store.replay(),entry,spec)
+        if job['status'] not in TERMINAL:raise RecoveryError('JOB_NOT_TERMINAL')
+        pins,receipt = cleanup_evidence(store.root/'jobs'/job['id'],job)
+        expected = dict(event_key=key,request_sha256=sha(entry['request']),job_id=job['id'],
+            spec_sha256=sha(spec),evidence=pins,native_status=receipt['status'],
+            native_exit_code=receipt.get('exit_code'),reservation_retained=entry['resources'],
+            h1_evidence=job.get('h1_evidence'),scientific_acceptance=False)
+        if (entry['identity']['input_sha256']!=sha(entry['request'])
+                or any(closure.get(k)!=v for k,v in expected.items())):
+            raise RecoveryError('JOB_CLOSURE_DRIFT')
+    else:
+        closure = close_terminal_job(journal, key, store)
     state = journal.read(); entry = state['events'][key]
     spec = read(checked(entry['request']['spec']))
     attempt = Path(spec['h1']['attempt'])
@@ -114,6 +131,7 @@ def record_inventory(journal, key, store):
     if entry.get('inventory'):
         if read(checked(entry['inventory'])) != result:
             raise RecoveryError('INVENTORY_REPLAY_DRIFT')
+        return result
     elif path.exists():
         if read(path) != result:
             raise RecoveryError('INVENTORY_REPLAY_DRIFT')

@@ -1,0 +1,64 @@
+{
+  "schema_version": "r6-postclose-finalizer-cpu/1",
+  "status": "CPU_COMPOSITION_PASS_PENDING_REVIEW_NOT_DEPLOYED",
+  "tests_passed": 40,
+  "new_tests": 5,
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_finalize_job.py",
+      "sha256": "302b2183922cc72f44ae4a80fcf13bbcf97787ee102a050cf361042aae0e6f5e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_inventory.py",
+      "sha256": "5982f12d6b8ae223d91201753e6629ffbd47e00c77a15c410befc05b77ae60c7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_postrun.py",
+      "sha256": "070576af06e0ac3918896adf9cd910edad7fe0d1867f30d55d760c04de9b7b0f"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_job_inventory.py",
+      "sha256": "7868c8392ac01baa4f9e57e18d1188dbbe3dd5c65932084339cde628129e24dd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_postrun.py",
+      "sha256": "aeca145c60cb8990071245e6a3a9f8319ad6c7d0b82729682258c82a377d08f8"
+    }
+  ],
+  "reproduction": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_POSTCLOSE_REPLAY_REPRO.txt",
+    "sha256": "5d21d34a12d61003cd4f4ba21d124662ffbb7ddecc872333833b1a207895dc4b"
+  },
+  "replay_fix_output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_POSTCLOSE_REPLAY_TESTS.txt",
+    "sha256": "e4a72d37cb15eee562df6c99305a05a09dbce8a4c2a0af80e6a3e6b484d9d8a2"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_POSTCLOSE_FINALIZER_TESTS.txt",
+    "sha256": "1d8807795f6121142acc622a57e28a3c48a6537080366338802cbf90eab140fb"
+  },
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "9b272bf84588eeb8c3b064bcb99b89f7971176eb09e468b8440b14a8accb2668"
+  },
+  "operating_state_modified": false,
+  "capacity_pass": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "command_template": "python -B -m tools.r6_finalize_job DIRECTORY EVENT_KEY --store EXISTING_STORE --executable PINNED_QUERY_EXECUTABLE",
+  "coverage": [
+    "Three reproduced state rewind failures fixed: successful inventory replay, failed inventory replay, completed postrun replay",
+    "Inventory replay rechecks terminal Store job, closure pins, native cleanup and all originals without changing downstream state",
+    "Postrun summary replay validates existing two query receipts without resetting analysis/decision phase",
+    "Finalizer composes inventory, exact two-query registration and existing bounded postrun workers",
+    "Actual temporary CPU fake-query processes execute twice total; restart after first query runs only remaining ordinal; full replay preserves journal exactly"
+  ],
+  "limitations": [
+    "Test Store/native job receipts and GPU query contents remain synthetic; CPU fake-query processes are real",
+    "New finalizer is not full controller deployment or a scientific decision",
+    "Independent review, production exact source/snapshot authorization, capacity and zero-model background handoff remain pending"
+  ]
+}

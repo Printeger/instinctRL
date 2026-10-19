@@ -90,6 +90,37 @@ class PostrunTests(unittest.TestCase):
         self.assertEqual(self.count(),1);self.j=Journal(self.j.directory)
         self.complete();self.assertEqual(self.count(),2)
 
+    def test_completed_postrun_replay_preserves_later_analysis_state(self):
+        self.register();first=self.complete()
+        with self.j.writer():
+            state=self.j.read();state['status']='MODEL_DECISION_RECORDED';self.j.save(state)
+        before=self.j.read()
+        self.assertEqual(self.complete(),first)
+        self.assertEqual(self.count(),2)
+        self.assertEqual(self.j.read(),before)
+
+    def test_finalizer_registers_two_queries_and_replay_preserves_state(self):
+        from tools.r6_finalize_job import finalize
+        self.exe.write_text(FAKE.format(python=sys.executable,body='pass'));self.exe.chmod(0o700)
+        def run():
+            with self.j.writer():
+                return finalize(self.j,self.job_key,self.store,file_pin(self.exe),free_disk_bytes=500*1024**3)
+        first=run();self.assertEqual(self.count(),2)
+        with self.j.writer():
+            state=self.j.read();state['status']='MODEL_DECISION_RECORDED';self.j.save(state)
+        before=self.j.read()
+        self.assertEqual(run(),first);self.assertEqual(self.count(),2)
+        self.assertEqual(self.j.read(),before)
+
+    def test_finalizer_recovers_after_first_query_without_repeating_it(self):
+        from tools.r6_finalize_job import finalize
+        self.register()
+        with self.j.writer():postrun_handoff(self.j,self.keys[0],poll_seconds=.01)
+        self.assertEqual(self.count(),1)
+        with self.j.writer():
+            result=finalize(self.j,self.job_key,self.store,file_pin(self.exe),free_disk_bytes=500*1024**3)
+        self.assertTrue(result['postrun']['postrun_complete']);self.assertEqual(self.count(),2)
+
     def test_claim_without_worker_is_ambiguous_and_never_retried(self):
         self.register()
         with self.j.writer():

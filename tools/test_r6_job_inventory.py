@@ -64,6 +64,23 @@ class InventoryTests(unittest.TestCase):
         self.record();(self.attempt/'failed-output.bin').write_bytes(b'changed')
         with self.assertRaisesRegex(RecoveryError,'INVENTORY_REPLAY_DRIFT'):self.record()
 
+    def test_inventory_replay_preserves_later_analysis_state(self):
+        first=self.record()
+        with self.j.writer():
+            state=self.j.read();state['status']='MODEL_DECISION_RECORDED';self.j.save(state)
+        before=self.j.read()
+        self.assertEqual(self.record(),first)
+        self.assertEqual(self.j.read(),before)
+
+    def test_failed_inventory_replay_does_not_rewind_analysis(self):
+        self.record()
+        with self.j.writer():
+            state=self.j.read();state['status']='MODEL_DECISION_RECORDED';self.j.save(state)
+        before=self.j.read()
+        (self.attempt/'failed-output.bin').write_bytes(b'drift')
+        with self.assertRaisesRegex(RecoveryError,'INVENTORY_REPLAY_DRIFT'):self.record()
+        self.assertEqual(self.j.read(),before)
+
     def test_missing_attempt_is_explicit_and_not_complete(self):
         (self.attempt/'failed-output.bin').unlink();self.attempt.rmdir()
         result = self.record()

@@ -1,0 +1,54 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_____ InventoryTests.test_failed_inventory_replay_does_not_rewind_analysis _____
+
+self = <test_r6_job_inventory.InventoryTests testMethod=test_failed_inventory_replay_does_not_rewind_analysis>
+
+    def test_failed_inventory_replay_does_not_rewind_analysis(self):
+        self.record()
+        with self.j.writer():
+            state=self.j.read();state['status']='MODEL_DECISION_RECORDED';self.j.save(state)
+        before=self.j.read()
+        (self.attempt/'failed-output.bin').write_bytes(b'drift')
+        with self.assertRaisesRegex(RecoveryError,'INVENTORY_REPLAY_DRIFT'):self.record()
+>       self.assertEqual(self.j.read(),before)
+E       AssertionError: {'bud[4666 chars]ion': 'r6-recovery/1', 'status': 'JOB_CLOSED_PENDING_ANALYSIS'} != {'bud[4666 chars]ion': 'r6-recovery/1', 'status': 'MODEL_DECISION_RECORDED'}
+E       Diff is 9351 characters long. Set self.maxDiff to None to see it.
+
+tools/test_r6_job_inventory.py:82: AssertionError
+_____ InventoryTests.test_inventory_replay_preserves_later_analysis_state ______
+
+self = <test_r6_job_inventory.InventoryTests testMethod=test_inventory_replay_preserves_later_analysis_state>
+
+    def test_inventory_replay_preserves_later_analysis_state(self):
+        first=self.record()
+        with self.j.writer():
+            state=self.j.read();state['status']='MODEL_DECISION_RECORDED';self.j.save(state)
+        before=self.j.read()
+        self.assertEqual(self.record(),first)
+>       self.assertEqual(self.j.read(),before)
+E       AssertionError: {'bud[4678 chars]overy/1', 'status': 'INVENTORIED_PENDING_POSTRUN_AND_ANALYSIS'} != {'bud[4678 chars]overy/1', 'status': 'MODEL_DECISION_RECORDED'}
+E       Diff is 9363 characters long. Set self.maxDiff to None to see it.
+
+tools/test_r6_job_inventory.py:73: AssertionError
+__ PostrunTests.test_completed_postrun_replay_preserves_later_analysis_state ___
+
+self = <test_r6_postrun.PostrunTests testMethod=test_completed_postrun_replay_preserves_later_analysis_state>
+
+    def test_completed_postrun_replay_preserves_later_analysis_state(self):
+        self.register();first=self.complete()
+        with self.j.writer():
+            state=self.j.read();state['status']='MODEL_DECISION_RECORDED';self.j.save(state)
+        before=self.j.read()
+        self.assertEqual(self.complete(),first)
+        self.assertEqual(self.count(),2)
+>       self.assertEqual(self.j.read(),before)
+E       AssertionError: {'bud[9809 chars]'r6-recovery/1', 'status': 'POSTRUN_COMPLETE_PENDING_ANALYSIS'} != {'bud[9809 chars]'r6-recovery/1', 'status': 'MODEL_DECISION_RECORDED'}
+E       Diff is 21122 characters long. Set self.maxDiff to None to see it.
+
+tools/test_r6_postrun.py:100: AssertionError
+=========================== short test summary info ============================
+FAILED tools/test_r6_job_inventory.py::InventoryTests::test_failed_inventory_replay_does_not_rewind_analysis
+FAILED tools/test_r6_job_inventory.py::InventoryTests::test_inventory_replay_preserves_later_analysis_state
+FAILED tools/test_r6_postrun.py::PostrunTests::test_completed_postrun_replay_preserves_later_analysis_state
+3 failed, 29 deselected in 0.74s

@@ -324,6 +324,7 @@ def complete_postruns(journal, job_key, keys, *, poll_seconds=1):
     path = journal.directory/'jobs'/job_key/'postrun-summary.json'
     if job.get('postrun'):
         if json.loads(checked(job['postrun']).read_text()) != result:raise RecoveryError('POSTRUN_SUMMARY_DRIFT')
+        return result
     elif path.exists():
         if json.loads(path.read_text()) != result:raise RecoveryError('POSTRUN_SUMMARY_DRIFT')
     else:
