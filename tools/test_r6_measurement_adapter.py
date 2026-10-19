@@ -95,7 +95,7 @@ class AdapterTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError,'contaminate'):e._get_observations()
         text=(ROOT/'isaaclab-training/instinctlab/envs/unified_h1_direct_env.py').read_text()
         c=next(n for n in ast.parse(text).body if isinstance(n,ast.ClassDef) and n.name=='UnifiedH1DirectEnv')
-        self.assertEqual([n.id for n in c.bases],['R6MeasurementMixin','TaslabDirectEnv'])
+        self.assertEqual([n.id for n in c.bases],['R6PhysicsMixin','R6MeasurementMixin','TaslabDirectEnv'])
         reset=next(n for n in cls.body if isinstance(n,ast.FunctionDef) and n.name=='_reset_idx')
         self.assertIn('_reset_policy_sensor_frame',ast.unparse(reset))
 

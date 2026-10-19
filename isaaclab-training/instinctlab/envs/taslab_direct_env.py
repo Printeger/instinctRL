@@ -272,6 +272,10 @@ class TaslabDirectEnv(DirectRLEnv):
         self._lee = taslab_velocity_control(root_state_w, self._control.v_final_w,
             measured_mass_kg=mass,measured_allocation=allocation)
         self._wrench = self._wrench_adapter.apply(self._robot, self._lee.normalized_rotor_commands)
+        self._apply_external_disturbance()
+
+    def _apply_external_disturbance(self) -> None:
+        """No disturbance unless a separately registered R6 block opts in."""
 
     def _validated_root_state(self) -> torch.Tensor:
         root = self._robot.data.root_state_w

@@ -1,0 +1,83 @@
+{
+  "status": "CPU_PASS_PENDING_INDEPENDENT_AND_LIVE_VALIDATION",
+  "tests": 20,
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "unittest",
+    "tools.test_r6_physics_adapter",
+    "tools.test_r6_measurement_adapter",
+    "tools.test_r6_scenarios",
+    "-v"
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness_physics.py",
+      "sha256": "61129a9508db6f9ba02106dedc0ad9f211e3c6e644b878262bee4a806aa63131"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness_adapter.py",
+      "sha256": "3d41a275babc165c0dc75b3cba85ad45abe5d680bf79f50bae95ca57f56eb463"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/envs/taslab_direct_env.py",
+      "sha256": "940ce1e2949c9b1291020804cb9aca57a1840470353f085a5b2c18be0c46a739"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+      "sha256": "cfd5e72964b81e31a25b976b23017dae21235bd5c4ab5c64d0020fe0d0615972"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/control/runtime_adapter.py",
+      "sha256": "dfb10aa31275e39b871f050397b8c941216c17b73c0dd6926521fe5434227e0f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_scenarios.py",
+      "sha256": "630cbdf15d217644fae7bf0be8fb7db4be1f07abacd62ea9c9cb6e7ef34a22f3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_physics_adapter.py",
+      "sha256": "c4d422bf6992a574192a73345d5f56001a3ba32ff1d2a71119e82ba2a76bd34f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_measurement_adapter.py",
+      "sha256": "7c8f41511b3c02f61e8875f003f670e038ac20e1de6a2b3b60fcf218ddab8685"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_scenarios.py",
+      "sha256": "7a95171e1c7bd03e800308ae7b13f858ab951dff1af911d3e55fb7563a7658a4"
+    }
+  ],
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PHYSICS_ADAPTER_TESTS_V2.txt",
+    "sha256": "e2602d6a385797a8e6a745c2a0136e3b440d674c24c246c1c4ec63559a8cc6e9"
+  },
+  "runtime_source_read_only": {
+    "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/assets/articulation/articulation.py",
+    "sha256": "fb179aacdd848906367d01105020e1d36412bd0f1da7187be09f0781ff589309"
+  },
+  "runtime_inspection": "Public setter stages permanent local wrenches; write_data_to_sim applies these before physics. No runtime import or edit.",
+  "coverage": [
+    "World force reconstruction under different body attitudes, mass weighting and zero added total COM moment",
+    "Unchanged rotor torque buffers and restored rotor-only forces after exact40tick pulse",
+    "Actual reset readback audit, mounted sensor geometry, float32 world precision and mismatch preservation",
+    "Clock/mass drift, action quota, last physics tick check and selected reset without clock rewind",
+    "Existing measured actor/ICS adapter and scenario regressions"
+  ],
+  "not_proven": [
+    "actual simulator force application or trajectory response",
+    "independent physical feasibility and tolerance review",
+    "full evaluation workload/raw persistence",
+    "controller resource/job phases",
+    "complete capacity or protocol freeze",
+    "scientific target pass"
+  ],
+  "gpu_queries": 0,
+  "simulator_initializations": 0
+}

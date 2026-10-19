@@ -31,6 +31,7 @@ from instinctlab.control.pipeline import ControlCoreResult
 from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz
 from instinctlab.control.rotor_actuation import ROTOR_NAMES
 from instinctlab.observations.robustness_adapter import R6MeasurementMixin
+from instinctlab.observations.robustness_physics import R6PhysicsMixin
 from .taslab_direct_env import TaslabDirectEnv, TaslabDirectEnvCfg, _detached_snapshot
 
 def _define_triangle_mesh(path: str, points: list[tuple[float, float, float]], indices: list[int], *, collision: bool) -> None:
@@ -72,7 +73,7 @@ class UnifiedH1DirectEnvCfg(TaslabDirectEnvCfg):
     task_contract_version: str = "unified-h1-v1"
 
 
-class UnifiedH1DirectEnv(R6MeasurementMixin, TaslabDirectEnv):
+class UnifiedH1DirectEnv(R6PhysicsMixin, R6MeasurementMixin, TaslabDirectEnv):
     """H1 reward, critic and mixed-stage reset wiring."""
 
     cfg: UnifiedH1DirectEnvCfg
@@ -660,6 +661,8 @@ class UnifiedH1DirectEnv(R6MeasurementMixin, TaslabDirectEnv):
         super()._reset_idx(indices)
         if hasattr(self, "_h1_ics_clearance_margin_m"):
             self.set_h1_ics_clearance_margin(self._h1_ics_clearance_margin_m)
+        if self._reset_r6_physics(indices):
+            return
         if indices.numel() and self._h1_evaluation_case is not None:
             configured = torch.zeros(self.num_envs, 3, device=self.device, dtype=self._actions.dtype)
             configured[:, 2] = 2.0

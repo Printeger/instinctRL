@@ -265,7 +265,14 @@
       1.1815179230179638
     ],
     "verification": "Record applied force every physics tick and actual mass. No direct velocity overwrite. Confirm force composition does not erase rotor wrench.",
-    "recovery_clock": "Starts at removal of final force tick (t=5.2s), not at pulse onset."
+    "recovery_clock": "Starts at removal of final force tick (t=5.2s), not at pulse onset.",
+    "runtime_staging": {
+      "status": "DRAFT_CPU_WIRED_NOT_PHYSICALLY_VERIFIED",
+      "distribution": "F_body_world = measured_body_mass * registered_acceleration_world, transform each by actual body link orientation, add to fresh rotor forces; preserve rotor torques",
+      "time": "zero-based block physics ticks1000..1039; check actual simulator tick increments each call; no reset rewinds block clock",
+      "mass": "Caller supplies pinned baseline total mass; every tick measured sum must agree within1e-5kg; no mass mutation",
+      "audit": "Every physics tick records simulator/block ticks, measured per-body mass, added world/local forces and staged total local wrench. Staging is not proof of completed physical integration. Finish requires next simulator tick after last staged action."
+    }
   },
   "metrics": {
     "all": "Every lane retains all initial transients, collisions, height failures, reset interruptions and missing required audit records. Missing record fails; intentional measured dropout with complete audit is not missing evidence. All numerics finite.",
@@ -315,5 +322,15 @@
   "metric_implementation": {
     "path": "training_workloads/unified_h1/robustness.py",
     "scope": "Motion and finite-rectangle geometry only; motion_pass requires separate input-chain/force/reset/RNG provenance acceptance before scientific PASS."
+  },
+  "reset_execution": {
+    "status": "DRAFT_CPU_WIRED_NOT_LIVE_VERIFIED",
+    "root_pose": "reset_spec for every lane, sensor-relative target corrected by rotated mount; write pose and zero velocities after base history/rotor reset",
+    "verification": "After actual sensor refresh, compare public root state and composed actual sensor parent/mount pose against spec; persist mismatches before rejection",
+    "position_atol_m": "max(1e-5, 2*finfo(root_dtype).eps*max(1, abs(actual root/sensor world coordinates)))",
+    "position_tolerance_reason": "Float32 world-origin addition/subtraction precision; does not round observations or alter0.8m geometric scoring",
+    "quaternion_atol": 1e-06,
+    "velocity_atol": 1e-06,
+    "automatic_resets": "Reapply same registered per-lane reset pose; do not rewind block physics clock or measurement random stream. Record actual reset and mark metric reset failures."
   }
 }
