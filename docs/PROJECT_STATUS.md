@@ -77,6 +77,7 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 新增资源等待/采样交接控制：claim先于Popen，准确worker重接与原60秒截止保留，controller可清理SIGSTOP worker/所属后代且不碰无关进程；完整13样本假查询实际窗口跨度≥60秒，busy后60秒本地退避再采完整新窗口。旧未消费样本过期则保留receipt并中断旧窗口；晚到/取消样本不作为当前观测。未核对采样阻止模型/分析派发，活动模型/CPU/job阻止新采样。54项相关CPU检查通过，见 `CPU_RESOURCE_WAIT_TESTS.json`。仅假查询进程，未查询GPU；完整controller部署、exact Store/submit、AppLauncher R6新鲜准入及独审/容量仍未完成，队列PASS不授权发车。
 新增R6实际启动前新鲜资源窗口：research-r6-evaluation不再落入旧瞬时5%入口，另采完整13样本/至少60秒，沿用V2阈值，180秒总截止及逐查询剩余时间限制，STOP/旧样本/未来时间戳拒绝并保存失败前缀。51项相关CPU检查通过，见 `CPU_R6_PRELAUNCH_TESTS.json`；旧配置身份失败已在修改前源码复现，缺Torch检查改用既有张量Python通过，原失败记录保留。协议增加准确policy绑定但仍未冻结；未进行真实GPU查询或sim启动。容量时间重算、源码快照闭包、独审、Store发行及完整controller仍未完成，capacity_pass=false。
 新增R6执行配置版本 `unified-h1-r6-config.v1`：强制绑定3个测量/物理产品模块和13个评分/归档/准入/重放/存储模块；旧配置不能授权R6入口，旧schema清单及模式规则保留。31项相关CPU检查通过，逐个删去或修改16个新增源码均被拒绝，见 `CPU_R6_SOURCE_CONFIG_TESTS.json`；首次fixture使用旧proposal路径的失败记录保留。`EXECUTION_CONFIG_DRAFT.json`保存当前源码哈希和冻结基线不变字段，拟定快照尚未创建；SELF身份待精确快照固定，未继承旧receipt。实际快照完整load_config、兼容独审、容量/协议冻结及Store/controller仍待完成。
+实际CPU快照已固定：tag `r6-cpu-snapshot-input-01` / commit `0add4b0eb914a2bd55e9f84bf8e344d58167cec7`，路径 `coordination/research/workspaces/R6-baseline-source-candidate-01`。既有Python完整load_config通过，源码/方法/资产/工具身份校验无替身；全部文件只读，990,058,113bytes，创建前保守预留2GiB并保持全额计费。实际重放只核验同一快照，未再克隆/预留。4项新快照CPU测试通过，初次fixture预算计数失败保留；见 `CPU_R6_SNAPSHOT_VERIFICATION.json`。冻结基线全部旧source pin与原评分器核验不变，5个产品改动仅限两环境接线与3个R6测量/物理模块；兼容payload草案已保存但尚无独审签收。无GPU查询/live启动，capacity仍false；协议/容量、exact Store、完整controller及科学验证未完成。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）

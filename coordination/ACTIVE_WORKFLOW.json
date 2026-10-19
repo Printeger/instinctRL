@@ -184,6 +184,9 @@
     "cpu_control_review": "docs/experiments/r6-robustness-auto/reviews/cpu-control-review.json",
     "cpu_control_repair_tests": 96,
     "cpu_control_repair_evidence": "docs/experiments/r6-robustness-auto/CPU_CONTROL_REPAIR_TESTS.json",
-    "accepted_cpu_control_review": "docs/experiments/r6-robustness-auto/reviews/cpu-control-fix-review.json"
+    "accepted_cpu_control_review": "docs/experiments/r6-robustness-auto/reviews/cpu-control-fix-review.json",
+    "cpu_snapshot_status": "ACTUAL_CONFIG_PASS_READ_ONLY_PENDING_COMPATIBILITY_REVIEW",
+    "cpu_snapshot_evidence": "docs/experiments/r6-robustness-auto/CPU_R6_SNAPSHOT_VERIFICATION.json",
+    "cpu_snapshot_input_commit": "0add4b0eb914a2bd55e9f84bf8e344d58167cec7"
   }
 }
