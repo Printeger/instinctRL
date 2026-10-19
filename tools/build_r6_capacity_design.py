@@ -26,7 +26,11 @@ def run():
             range_quota_bytes=range_quota,audit_quota_bytes=audit_quota,motion_metadata_quota_bytes=16*MIB))
     native=3*GIB;original=64*MIB
     full=native+original+sum(b['range_quota_bytes']+b['audit_quota_bytes']+b['motion_metadata_quota_bytes'] for b in blocks)
-    final_components=dict(four_full_evaluations=4*full,three_training_jobs=6*GIB,
+    confirmation_training_payload=2*GIB
+    development_training_payload=GIB
+    confirmation_training_total=native+confirmation_training_payload
+    development_training_total=native+development_training_payload
+    final_components=dict(four_full_evaluations=4*full,three_training_jobs=3*confirmation_training_total,
         snapshots=2*GIB,videos=2*GIB,controller_and_reviews=GIB,failed_cleanup_and_delivery_margin=GIB)
     final_total=sum(final_components.values());final_protection=math.ceil(final_total/GIB)*GIB
     dev_limit=budget['caps']['output_actual_plus_unreleased_reservations_bytes']-final_protection
@@ -34,9 +38,16 @@ def run():
     # Retain every component and its15% sample margin; avoid wasting almost a
     # GiB merely rounding each small development evaluation to a whole GiB.
     subset_quota=math.ceil(subset/(256*MIB))*(256*MIB)
+    # The first charged snapshot lacks the accepted complete execution inventory
+    # and cannot be reused or silently upgraded. A current baseline needs another
+    # exact source snapshot, retaining the old reservation in full.
     development=dict(initial_full_baseline=full,one_affected_block_plus_original_evaluation=subset_quota,
-        one_256_update_training_job=GIB,snapshots=2*GIB,controller_and_reviews=GIB,failed_prelaunch_and_repair_margin=2*GIB)
+        one_256_update_training_job=development_training_total,
+        historical_snapshot_reservation=2*GIB,new_baseline_snapshot=2*GIB,
+        controller_and_reviews=GIB,failed_prelaunch_and_repair_margin=2*GIB)
     dev_total=sum(development.values())
+    baseline_only={k:v for k,v in development.items() if k not in
+        ('one_affected_block_plus_original_evaluation','one_256_update_training_job')}
     fixed=sum(row['compressed_bytes'] for row in t['files'] if row['relative'].startswith('pilot_diagnostic/'))
     variable=t['projected_total_bytes']-fixed
     training_1024=fixed+4*variable
@@ -51,6 +62,7 @@ def run():
     final_seconds=4*per_model_seconds+final_train_seconds+7*180+1200+fresh_prelaunch_seconds
     return dict(schema_version='r6-composed-capacity-draft/1',status='PROPOSAL_NOT_ACCEPTED',capacity_pass=False,
         inputs=[pin(BASE/name) for name in names],tool=pin(Path(__file__).resolve()),blocks=blocks,
+        training_entry_contract=pin(ROOT/'training_workloads/unified_h1/live_adapter.py'),
         unchanged_native_allowance_bytes=native,original_suite_metadata_allowance_bytes=original,
         full_evaluation_quota_bytes=full,full_evaluation_transitions=transitions,final_nontraining_transitions=4*transitions,
         sampling_headroom='15% above CPU samples rounded up16MiB; extra16MiB/block reset/header allowance and16MiB motion/metadata. Proposed quotas, not worst-case proofs.',
@@ -59,9 +71,18 @@ def run():
         existing_protection_deficit_bytes=max(0,final_total-80*GIB),
         development_limit_after_proposal_bytes=dev_limit,development_example_components_bytes=development,
         development_example_total_bytes=dev_total,development_example_fits=dev_total<=dev_limit,
+        development_example_deficit_bytes=max(0,dev_total-dev_limit),
+        baseline_only_components_bytes=baseline_only,baseline_only_total_bytes=sum(baseline_only.values()),
+        baseline_only_fits=sum(baseline_only.values())<=dev_limit,
+        baseline_only_deficit_bytes=max(0,sum(baseline_only.values())-dev_limit),
         scope='Final all16blocks plus original suite for three confirmation models and paired baseline unchanged. Development example is one256-update candidate with original suite plus one preregistered affected block; additional candidates/controls must fit remaining resources after actual measurements. Not method registration or a promise all three maximum candidates fit simultaneously; longer segments/control arms require exact admission against the same pool.',
         training_compression=dict(historical_fixed_bytes=fixed,historical_variable_per256_bytes=variable,
-            extrapolated_per1024_bytes=training_1024,proposed_per_confirmation_job_bytes=2*GIB,
+            extrapolated_per1024_bytes=training_1024,
+            proposed_per_confirmation_payload_bytes=confirmation_training_payload,
+            native_per_training_job_bytes=native,
+            proposed_per_confirmation_job_bytes=confirmation_training_total,
+            proposed_per_development_payload_bytes=development_training_payload,
+            proposed_per_development_job_bytes=development_training_total,
             implementation_status='OPT_IN_CPU_ADAPTER_TESTED_NOT_LIVE_INTEGRATED; exact historical bytes recovered including per-record flush/fsync; checkpoints may remain uncompressed'),
         final_time_seconds=dict(historical_scaled_physics_per_model=base_seconds,range_encode_per_model=range_seconds,
             force_encode_fsync_per_model=force_seconds,step_encode_fsync_per_model=step_seconds,
@@ -69,7 +90,8 @@ def run():
             seven_separate_prelaunch_window_caps=fresh_prelaunch_seconds,
             total_sample_extrapolation=final_seconds,existing_protection=24000,proposed_protection=27000,
             development_remaining_if_accepted=43200-27000),
-        unresolved=['Independent acceptance of output/time allocation changes; current ledger unchanged',
+        unresolved=['Corrected training/native and second baseline snapshot accounting exceeds the development pool even for baseline-only preparation; reduce verified output requirements before dispatch, without reducing final coverage or refunding old reservations',
+            'Independent acceptance of output/time allocation changes; current ledger unchanged',
             'Opt-in lossless training adapters CPU-tested; live lifecycle integration, consumers and independent review still required',
             'Block motion/result combined16MiB write guard implemented; reset/header and new training-noise field coverage still requires review',
             'Native logs across runtime paths require bounded guards; job control-directory sizes alone insufficient',
@@ -77,7 +99,8 @@ def run():
             'GPU synchronization/CPU noise and scientific feasibility not measured by these CPU samples',
             'Full failed job may exceed repair pool; explicit future storage-release settlement needs independent review, never implicit refunds'],
         superseded_fixture_note='STEP_ARCHIVE_CAPACITY_CPU.json initial sample omitted per-lane policy_step/command fields and is excluded; V2 includes them. Initial record retained.',
-        snapshot_accounting='Development snapshot component includes the already charged2GiB first snapshot; it is not an additional free pool. Final2GiB component permits one shared exact source identity, further identities need remaining budget.',
+        snapshot_accounting='Development separately charges2GiB historical snapshot plus2GiB new baseline snapshot. The old snapshot lacks complete inventory and is not reusable as current input. Final2GiB permits one shared final source identity; further identities need remaining budget.',
+        correction_note='V4 mistook training payload budgets1/2GiB for total job output although live_adapter subtracts3GiB native allowance. V5 adds that allowance to every training job and charges the necessary replacement baseline snapshot. Old reports and operating ledger remain unchanged.',
         prelaunch_accounting='Conservatively add full180s actual prelaunch per final job; earlier historical scaled timing retained, no subtraction based on unknown historical gate cost.',
         ledger_changed=False,final_coverage_reduced=False)
 

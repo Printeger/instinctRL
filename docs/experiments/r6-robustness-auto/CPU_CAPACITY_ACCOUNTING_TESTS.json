@@ -1,0 +1,47 @@
+{
+  "schema_version": "r6-capacity-accounting-correction/1",
+  "status": "CPU_ACCOUNTING_PASS_CAPACITY_FAIL",
+  "tests_passed": 4,
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CAPACITY_ACCOUNTING_TESTS.txt",
+    "sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6"
+  },
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/build_r6_capacity_design.py",
+    "sha256": "69a2e7789c32e18d4666e3b4fa9705cfc63815b0400168d03d25798b7c74bd04"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_capacity_design.py",
+    "sha256": "5e54a9a2f1fe5ef2705614564fd3192c5948300a17063c61d8edfdde92e6b326"
+  },
+  "actual_entry": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/live_adapter.py",
+    "sha256": "ebfd1bec9fdcb4586acb02a5ebc982dd98c56f2cbaaa9742afe069a0a6e70957"
+  },
+  "snapshot_tool": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/prepare_r6_snapshot.py",
+    "sha256": "44ae60fa43e6e45b35f3f6d450f7b721d0aad9a38731a99d1ca73967ae1df584"
+  },
+  "prior_report": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_COMPOSED_DRAFT_V4.json",
+    "sha256": "b738a5b1892349b99235c6086880682de208269254637f4857d3db07df83d3dd"
+  },
+  "corrected_report": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_COMPOSED_DRAFT_V5.json",
+    "sha256": "56bb916565aea2c5d494b715172647d9dba27aa71d8719e800256838b1c141a8"
+  },
+  "operating_budget": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/goal_budget.json",
+    "sha256": "029864fafddfdede524fd75c770614b942867679664917c4e7c6b76da7f72087"
+  },
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "9b272bf84588eeb8c3b064bcb99b89f7971176eb09e468b8440b14a8accb2668"
+  },
+  "capacity_pass": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "operating_ledger_modified": false,
+  "final_coverage_reduced": false
+}

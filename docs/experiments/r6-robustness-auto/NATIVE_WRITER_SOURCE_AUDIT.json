@@ -1,0 +1,38 @@
+{
+  "schema_version": "r6-native-writer-source-audit/1",
+  "status": "READ_ONLY_SOURCE_EVIDENCE_NOT_CAPACITY_ACCEPTANCE",
+  "sources": [
+    {
+      "role": "shader/driver/texture cache discovery",
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/exts/isaacsim.benchmark.services/isaacsim/benchmark/services/execution.py",
+      "sha256": "77db57dc55e404c1453320689e0494d2f00a64bd797fe185a6f9bbf9a753ecc7"
+    },
+    {
+      "role": "extension registry cache",
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/extscore/omni.kit.registry.nucleus/config/extension.toml",
+      "sha256": "8098157f938f817f0897962f1a62e548e7b66d7f86a76eb25a6428bd6bf583b3"
+    },
+    {
+      "role": "Kit log settings",
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/dev/include/carb/logging/LoggingSettingsUtils.h",
+      "sha256": "c0bd10da980c365c933bc10813e4fa53d93e12d5cebc50ecb16a2d57fcdd404a"
+    }
+  ],
+  "cache_settings_observed_in_frozen_source": [
+    "/rtx/shaderDb/shaderCachePath",
+    "/rtx/shaderDb/driverShaderCachePath",
+    "/rtx-transient/resourcemanager/localTextureCachePath",
+    "/exts/omni.kit.registry.nucleus/cachePath"
+  ],
+  "findings": [
+    "Frozen benchmark source explicitly discovers three cache paths beyond the per-job console and Kit log. Their actual runtime values have not been queried.",
+    "The extension registry config uses ${omni_global_data}/exts. Redirecting it to an empty path could affect dependency resolution; no such change was made.",
+    "Research live_adapter subtracts3GiB per training/evaluation job before workload quota and sets2GiB RLIMIT_FSIZE per file. That limit does not establish aggregate native output or cache bounds.",
+    "Current R6 settings bind crash dump path and preserve originals, but do not prove total bytes."
+  ],
+  "next_required": "Determine enforceable native output/path limits and CPU-verifiable capacity reductions, then independent review before actual use; do not change runtime dependencies or weaken final coverage.",
+  "runtime_files_modified": false,
+  "settings_changed": false,
+  "gpu_queries": 0,
+  "capacity_pass": false
+}

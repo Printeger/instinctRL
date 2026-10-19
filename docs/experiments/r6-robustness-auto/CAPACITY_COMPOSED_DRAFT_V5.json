@@ -1,0 +1,265 @@
+{
+  "schema_version": "r6-composed-capacity-draft/1",
+  "status": "PROPOSAL_NOT_ACCEPTED",
+  "capacity_pass": false,
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0",
+      "bytes": 16710
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/ARCHIVE_TEMPORAL_CPU_RNG_CAPACITY.json",
+      "sha256": "14468449b91ad6dc4dfed7bed4dc7e7127d506448d4a0ff04cd6e2c055b0067a",
+      "bytes": 5637
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/FORCE_ARCHIVE_CAPACITY_CPU_V3.json",
+      "sha256": "ec10c02b70539e8f9a6ce61109116d5b8f4910e0e3036771ecad8aa0ab6d5548",
+      "bytes": 6195
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/STEP_ARCHIVE_CAPACITY_CPU_V2.json",
+      "sha256": "3beaafc65e6a2431987c76871eea58b4e1b010f9323384b3a3d163f163ada341",
+      "bytes": 3884
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TRAINING_CHUNK_STORE_CAPACITY_CPU.json",
+      "sha256": "87089d0bf64ee8cc9e945ca31622ab41ea127543a16948c0a47bb206666802dc",
+      "bytes": 7654
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_ALLOCATION.json",
+      "sha256": "825b750d4e120cda8689a7bafadf8eda992c6b0a7f436739156c2b965777c0c1",
+      "bytes": 4800
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/goal_budget.json",
+      "sha256": "029864fafddfdede524fd75c770614b942867679664917c4e7c6b76da7f72087",
+      "bytes": 7719
+    }
+  ],
+  "tool": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/build_r6_capacity_design.py",
+    "sha256": "69a2e7789c32e18d4666e3b4fa9705cfc63815b0400168d03d25798b7c74bd04",
+    "bytes": 9924
+  },
+  "blocks": [
+    {
+      "block_id": "S-clean-low",
+      "range_sample_bytes": 734719442,
+      "force_and_step_sample_bytes": 48265470,
+      "range_quota_bytes": 855638016,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "S-clean-high",
+      "range_sample_bytes": 734719442,
+      "force_and_step_sample_bytes": 48265470,
+      "range_quota_bytes": 855638016,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "S-noise",
+      "range_sample_bytes": 1214905676,
+      "force_and_step_sample_bytes": 48265470,
+      "range_quota_bytes": 1409286144,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "S-delay-drop",
+      "range_sample_bytes": 734678389,
+      "force_and_step_sample_bytes": 48265470,
+      "range_quota_bytes": 855638016,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "X-clean",
+      "range_sample_bytes": 446160002,
+      "force_and_step_sample_bytes": 29251800,
+      "range_quota_bytes": 520093696,
+      "audit_quota_bytes": 67108864,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "X-noise",
+      "range_sample_bytes": 737753676,
+      "force_and_step_sample_bytes": 29251800,
+      "range_quota_bytes": 855638016,
+      "audit_quota_bytes": 67108864,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "P-clean",
+      "range_sample_bytes": 734719442,
+      "force_and_step_sample_bytes": 48423030,
+      "range_quota_bytes": 855638016,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "P-combined",
+      "range_sample_bytes": 1213302966,
+      "force_and_step_sample_bytes": 48423030,
+      "range_quota_bytes": 1409286144,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "W-near",
+      "range_sample_bytes": 734719442,
+      "force_and_step_sample_bytes": 48265470,
+      "range_quota_bytes": 855638016,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "W-middle",
+      "range_sample_bytes": 734719442,
+      "force_and_step_sample_bytes": 48265470,
+      "range_quota_bytes": 855638016,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "W-far",
+      "range_sample_bytes": 734719442,
+      "force_and_step_sample_bytes": 48265470,
+      "range_quota_bytes": 855638016,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "W-combined",
+      "range_sample_bytes": 1213302966,
+      "force_and_step_sample_bytes": 48265470,
+      "range_quota_bytes": 1409286144,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "stress-S-noise",
+      "range_sample_bytes": 1263177166,
+      "force_and_step_sample_bytes": 48265470,
+      "range_quota_bytes": 1459617792,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "stress-S-combined",
+      "range_sample_bytes": 1258324987,
+      "force_and_step_sample_bytes": 48265470,
+      "range_quota_bytes": 1459617792,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "stress-P-high",
+      "range_sample_bytes": 734719442,
+      "force_and_step_sample_bytes": 48436750,
+      "range_quota_bytes": 855638016,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    },
+    {
+      "block_id": "stress-W-high",
+      "range_sample_bytes": 1261517705,
+      "force_and_step_sample_bytes": 48265470,
+      "range_quota_bytes": 1459617792,
+      "audit_quota_bytes": 83886080,
+      "motion_metadata_quota_bytes": 16777216
+    }
+  ],
+  "training_entry_contract": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/live_adapter.py",
+    "sha256": "ebfd1bec9fdcb4586acb02a5ebc982dd98c56f2cbaaa9742afe069a0a6e70957",
+    "bytes": 23238
+  },
+  "unchanged_native_allowance_bytes": 3221225472,
+  "original_suite_metadata_allowance_bytes": 67108864,
+  "full_evaluation_quota_bytes": 21692940288,
+  "full_evaluation_transitions": 193600,
+  "final_nontraining_transitions": 774400,
+  "sampling_headroom": "15% above CPU samples rounded up16MiB; extra16MiB/block reset/header allowance and16MiB motion/metadata. Proposed quotas, not worst-case proofs.",
+  "final_components_bytes": {
+    "four_full_evaluations": 86771761152,
+    "three_training_jobs": 16106127360,
+    "snapshots": 2147483648,
+    "videos": 2147483648,
+    "controller_and_reviews": 1073741824,
+    "failed_cleanup_and_delivery_margin": 1073741824
+  },
+  "final_total_bytes": 109320339456,
+  "proposed_final_storage_protection_bytes": 109521666048,
+  "existing_final_storage_protection_bytes": 85899345920,
+  "existing_protection_deficit_bytes": 23420993536,
+  "development_limit_after_proposal_bytes": 27917287424,
+  "development_example_components_bytes": {
+    "initial_full_baseline": 21692940288,
+    "one_affected_block_plus_original_evaluation": 5100273664,
+    "one_256_update_training_job": 4294967296,
+    "historical_snapshot_reservation": 2147483648,
+    "new_baseline_snapshot": 2147483648,
+    "controller_and_reviews": 1073741824,
+    "failed_prelaunch_and_repair_margin": 2147483648
+  },
+  "development_example_total_bytes": 38604374016,
+  "development_example_fits": false,
+  "development_example_deficit_bytes": 10687086592,
+  "baseline_only_components_bytes": {
+    "initial_full_baseline": 21692940288,
+    "historical_snapshot_reservation": 2147483648,
+    "new_baseline_snapshot": 2147483648,
+    "controller_and_reviews": 1073741824,
+    "failed_prelaunch_and_repair_margin": 2147483648
+  },
+  "baseline_only_total_bytes": 29209133056,
+  "baseline_only_fits": false,
+  "baseline_only_deficit_bytes": 1291845632,
+  "scope": "Final all16blocks plus original suite for three confirmation models and paired baseline unchanged. Development example is one256-update candidate with original suite plus one preregistered affected block; additional candidates/controls must fit remaining resources after actual measurements. Not method registration or a promise all three maximum candidates fit simultaneously; longer segments/control arms require exact admission against the same pool.",
+  "training_compression": {
+    "historical_fixed_bytes": 194864087,
+    "historical_variable_per256_bytes": 220812961,
+    "extrapolated_per1024_bytes": 1078115931,
+    "proposed_per_confirmation_payload_bytes": 2147483648,
+    "native_per_training_job_bytes": 3221225472,
+    "proposed_per_confirmation_job_bytes": 5368709120,
+    "proposed_per_development_payload_bytes": 1073741824,
+    "proposed_per_development_job_bytes": 4294967296,
+    "implementation_status": "OPT_IN_CPU_ADAPTER_TESTED_NOT_LIVE_INTEGRATED; exact historical bytes recovered including per-record flush/fsync; checkpoints may remain uncompressed"
+  },
+  "final_time_seconds": {
+    "historical_scaled_physics_per_model": 1565.8275567861817,
+    "range_encode_per_model": 808.2033000150695,
+    "force_encode_fsync_per_model": 379.3166343122721,
+    "step_encode_fsync_per_model": 47.04938782379031,
+    "three_training_1024": 10939.617172272876,
+    "seven_cleanup_allowances": 1260,
+    "video_allowance": 1200,
+    "seven_separate_prelaunch_window_caps": 1260,
+    "total_sample_extrapolation": 25861.20468802213,
+    "existing_protection": 24000,
+    "proposed_protection": 27000,
+    "development_remaining_if_accepted": 16200
+  },
+  "unresolved": [
+    "Corrected training/native and second baseline snapshot accounting exceeds the development pool even for baseline-only preparation; reduce verified output requirements before dispatch, without reducing final coverage or refunding old reservations",
+    "Independent acceptance of output/time allocation changes; current ledger unchanged",
+    "Opt-in lossless training adapters CPU-tested; live lifecycle integration, consumers and independent review still required",
+    "Block motion/result combined16MiB write guard implemented; reset/header and new training-noise field coverage still requires review",
+    "Native logs across runtime paths require bounded guards; job control-directory sizes alone insufficient",
+    "Snapshot reserve now2GiB per identity; actual first snapshot about0.922GiB charged2GiB. Further snapshots/video/runtime metadata must fit explicit pools",
+    "GPU synchronization/CPU noise and scientific feasibility not measured by these CPU samples",
+    "Full failed job may exceed repair pool; explicit future storage-release settlement needs independent review, never implicit refunds"
+  ],
+  "superseded_fixture_note": "STEP_ARCHIVE_CAPACITY_CPU.json initial sample omitted per-lane policy_step/command fields and is excluded; V2 includes them. Initial record retained.",
+  "snapshot_accounting": "Development separately charges2GiB historical snapshot plus2GiB new baseline snapshot. The old snapshot lacks complete inventory and is not reusable as current input. Final2GiB permits one shared final source identity; further identities need remaining budget.",
+  "correction_note": "V4 mistook training payload budgets1/2GiB for total job output although live_adapter subtracts3GiB native allowance. V5 adds that allowance to every training job and charges the necessary replacement baseline snapshot. Old reports and operating ledger remain unchanged.",
+  "prelaunch_accounting": "Conservatively add full180s actual prelaunch per final job; earlier historical scaled timing retained, no subtraction based on unknown historical gate cost.",
+  "ledger_changed": false,
+  "final_coverage_reduced": false
+}
