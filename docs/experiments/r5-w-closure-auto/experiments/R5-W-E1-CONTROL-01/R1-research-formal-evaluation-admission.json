@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "input_commit": "d952ed324c370c107c5acefe136b41d3f7354580",
+  "job_id": "J-79c61443f05bdaee",
+  "spec_id": "R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2",
+  "approval_id": "A-9306976b2df3dee8",
+  "STOP": [],
+  "old_jobs_terminal_noowned": true,
+  "disk_free_bytes": 515204890624,
+  "remaining_check": {
+    "training_transitions": 0,
+    "nontraining_transitions": 32960,
+    "live_starts": 1,
+    "simulator_initialization_reservations": 1,
+    "optimizer_updates": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0,
+    "training_checkpoint_writes": 0,
+    "allocated_gpu_seconds": 1810,
+    "wall_seconds_including_cleanup": 1810,
+    "output_peak_and_reservations_bytes": 12884901888
+  },
+  "prelaunch_GPU_queries": 0
+}

@@ -1,0 +1,639 @@
+{
+  "status": "E1_FIXED_POLICY_CONTROL_PASS_NOT_GOAL_COMPLETE",
+  "checkpoint": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+    "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+    "update": 512
+  },
+  "original_result": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u512.json",
+    "sha256": "19884c13340afb8919d4dcad5cd621b7fd0580c3c77f552d085d02ea6233ac97"
+  },
+  "motion": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u512_goal_motion.json",
+    "sha256": "1de3d712c1b504c382476671e6a443ba3d6048372f37903326ee6bca1c13e762"
+  },
+  "inventory": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/live/R1-research-formal-evaluation/INVENTORY.json",
+    "sha256": "f58f4547178ab39822ba44c5063a23fbf45931bf731482d12983af2846bf9112"
+  },
+  "execution_summary": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/R1-research-formal-evaluation-execution-summary.json",
+    "sha256": "9b52f55290471c75cb27ce6c4f29d0bcf3c31f9e187a23951426160a5bd875dc"
+  },
+  "cases": {
+    "S": {
+      "pass": true,
+      "subgroups": {
+        "d0": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d1": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d2": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d3": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d4": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d5": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d6": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d7": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        }
+      },
+      "successes": 32,
+      "total": 32,
+      "wilson_95": [
+        0.8928208017449296,
+        1.0
+      ]
+    },
+    "T": {
+      "pass": true,
+      "subgroups": {
+        "d0": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d1": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d2": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d3": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d4": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d5": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d6": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d7": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        }
+      },
+      "successes": 32,
+      "total": 32,
+      "wilson_95": [
+        0.8928208017449296,
+        1.0
+      ]
+    },
+    "W": {
+      "pass": true,
+      "subgroups": {
+        "x_wall": {
+          "pass": true,
+          "successes": 16,
+          "total": 16
+        },
+        "y_wall": {
+          "pass": true,
+          "successes": 16,
+          "total": 16
+        }
+      },
+      "successes": 32,
+      "total": 32,
+      "wilson_95": [
+        0.8928208017449296,
+        1.0
+      ]
+    },
+    "X": {
+      "pass": true,
+      "subgroups": {
+        "d0": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d1": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d2": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d3": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d4": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d5": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d6": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d7": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        }
+      },
+      "successes": 32,
+      "total": 32,
+      "wilson_95": [
+        0.8928208017449296,
+        1.0
+      ]
+    },
+    "Z": {
+      "pass": true,
+      "subgroups": {
+        "d0": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d1": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d2": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d3": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d4": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d5": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d6": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        },
+        "d7": {
+          "pass": true,
+          "successes": 4,
+          "total": 4
+        }
+      },
+      "successes": 32,
+      "total": 32,
+      "wilson_95": [
+        0.8928208017449296,
+        1.0
+      ]
+    }
+  },
+  "w_lanes": [
+    {
+      "env_index": 0,
+      "success": true,
+      "metrics": {
+        "height": 0.055077552795410156,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.867431640625,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 1,
+      "success": true,
+      "metrics": {
+        "height": 0.05505979061126709,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.86767578125,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 2,
+      "success": true,
+      "metrics": {
+        "height": 0.055042386054992676,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.867431640625,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 3,
+      "success": true,
+      "metrics": {
+        "height": 0.055042386054992676,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.867431640625,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 4,
+      "success": true,
+      "metrics": {
+        "height": 0.055077552795410156,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.867431640625,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 5,
+      "success": true,
+      "metrics": {
+        "height": 0.055040955543518066,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8644561767578125,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 6,
+      "success": true,
+      "metrics": {
+        "height": 0.055022478103637695,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.864471435546875,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 7,
+      "success": true,
+      "metrics": {
+        "height": 0.055031776428222656,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.864471435546875,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 8,
+      "success": true,
+      "metrics": {
+        "height": 0.055065035820007324,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8643035888671875,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 9,
+      "success": true,
+      "metrics": {
+        "height": 0.055040955543518066,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8644561767578125,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 10,
+      "success": true,
+      "metrics": {
+        "height": 0.05503106117248535,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8655242919921875,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 11,
+      "success": true,
+      "metrics": {
+        "height": 0.055033206939697266,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8655776977539062,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 12,
+      "success": true,
+      "metrics": {
+        "height": 0.05507183074951172,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8655776977539062,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 13,
+      "success": true,
+      "metrics": {
+        "height": 0.05504941940307617,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8655242919921875,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 14,
+      "success": true,
+      "metrics": {
+        "height": 0.055031538009643555,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8655242919921875,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 15,
+      "success": true,
+      "metrics": {
+        "height": 0.055029869079589844,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8653140068054199,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 16,
+      "success": true,
+      "metrics": {
+        "height": 0.055196523666381836,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8652725219726562,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 17,
+      "success": true,
+      "metrics": {
+        "height": 0.05520224571228027,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8647265434265137,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 18,
+      "success": true,
+      "metrics": {
+        "height": 0.055196404457092285,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.86529541015625,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 19,
+      "success": true,
+      "metrics": {
+        "height": 0.055207133293151855,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.864166259765625,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 20,
+      "success": true,
+      "metrics": {
+        "height": 0.05519700050354004,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.86468505859375,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 21,
+      "success": true,
+      "metrics": {
+        "height": 0.055196404457092285,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8652725219726562,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 22,
+      "success": true,
+      "metrics": {
+        "height": 0.055202364921569824,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8646726608276367,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 23,
+      "success": true,
+      "metrics": {
+        "height": 0.05520272254943848,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.86529541015625,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 24,
+      "success": true,
+      "metrics": {
+        "height": 0.0551985502243042,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8645172119140625,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 25,
+      "success": true,
+      "metrics": {
+        "height": 0.05519986152648926,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.86468505859375,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 26,
+      "success": true,
+      "metrics": {
+        "height": 0.05519378185272217,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8652725219726562,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 27,
+      "success": true,
+      "metrics": {
+        "height": 0.055208563804626465,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8646383285522461,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 28,
+      "success": true,
+      "metrics": {
+        "height": 0.05519723892211914,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.86529541015625,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 29,
+      "success": true,
+      "metrics": {
+        "height": 0.05519843101501465,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.864166259765625,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 30,
+      "success": true,
+      "metrics": {
+        "height": 0.055199384689331055,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8642425537109375,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    },
+    {
+      "env_index": 31,
+      "success": true,
+      "metrics": {
+        "height": 0.05520272254943848,
+        "ics_beta_min": 0.0,
+        "min_distance": 0.8652725219726562,
+        "proactive_stop_outside_trigger": false,
+        "q_true_steps": 173,
+        "stop_time": 2.3000000000000003
+      }
+    }
+  ],
+  "interpretation": "Control engineering gain from fixed original R1/u512 plus .15m margin; no RL training occurred. L1 training and two-node evaluation plus independent validation remain required.",
+  "native": "FAILED/-9; raw PASS_PENDING_CLOSE; INCOMPLETE/null; full32960 reservation preserved"
+}

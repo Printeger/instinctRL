@@ -1,0 +1,121 @@
+{
+  "schema_version": "independent-review-relay/1",
+  "reviewer": "/root/audit_e1",
+  "recorder": "root sole-writer relay of independent final response",
+  "verdict": "PASS",
+  "must_fix": [],
+  "identities": {
+    "inventory": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/live/R1-research-formal-evaluation/INVENTORY.json",
+      "sha256": "f58f4547178ab39822ba44c5063a23fbf45931bf731482d12983af2846bf9112"
+    },
+    "final_job": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/R1-research-formal-evaluation-final-job.json",
+      "sha256": "b2b6540b45816c9401d606fcd464c02668dc4a5e1753289fd5112af5aec7df25"
+    },
+    "execution_summary": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/R1-research-formal-evaluation-execution-summary.json",
+      "sha256": "9b52f55290471c75cb27ce6c4f29d0bcf3c31f9e187a23951426160a5bd875dc"
+    },
+    "authorized_spec": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/inputs/R1-research-formal-evaluation.authorized.json",
+      "sha256": "5be8b97a34e5450b6a248be47ec6e4952985921d9c1eba71dd9da13f815ddd53"
+    },
+    "packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/launch_inputs.proposed.json",
+      "sha256": "42062f0363a2fb238ee235ac87744a165ed4251d9fa57ea2162eaea464109ba2"
+    },
+    "receipt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-79c61443f05bdaee/receipt.json",
+      "sha256": "ece0bd851f65fa03df4d962f01f4b392f7b2fd89cd50f93811d80d2cb8f2b0a3"
+    },
+    "normal_ack": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-79c61443f05bdaee/lifeguard-ack.json",
+      "sha256": "83588df4e2dd7c9eff352a6686c9ccd32f15baa4e8457e38ef4068e38548acf1"
+    },
+    "postrun_0": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/R1-research-formal-evaluation-postrun-0.json",
+      "sha256": "f3d31ebcaa5c0ace9c4b47937f6c02fb3b75868eb32a9ed825aac1cd74a15e86"
+    },
+    "postrun_1": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/R1-research-formal-evaluation-postrun-1.json",
+      "sha256": "ef759bf50d0326d8e229c1a03317dee953e73ed12211fb8a6549deff37f7147d"
+    },
+    "original_evaluation": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512.json",
+      "sha256": "19884c13340afb8919d4dcad5cd621b7fd0580c3c77f552d085d02ea6233ac97"
+    },
+    "original_motion": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512_goal_motion.json",
+      "sha256": "1de3d712c1b504c382476671e6a443ba3d6048372f37903326ee6bca1c13e762"
+    }
+  },
+  "scope": "E1 actual originals, terminal ownership, resource audit and original frozen evaluator replay; permits preregistered L1, not Goal completion",
+  "evidence_validation": {
+    "original_files": 46,
+    "archive_files": 41,
+    "hash_size_checks": 87,
+    "failures": [],
+    "all_h1_manifest_and_spec_pins_match": true,
+    "replay_json_normalized_exact_match": true
+  },
+  "terminal": {
+    "native_status": "FAILED",
+    "exit_code": -9,
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "normal_owned_ACK": true,
+    "stable_empty_scans": 2,
+    "no_survivors": true,
+    "settled": true,
+    "postrun_queries": 2,
+    "STOP": [],
+    "paused": false
+  },
+  "scientific_results": {
+    "cases": {
+      "Z": "32/32",
+      "T": "32/32",
+      "S": "32/32",
+      "X": "32/32",
+      "W": "32/32"
+    },
+    "walls": {
+      "x": "16/16",
+      "y": "16/16"
+    },
+    "world_normal_11_consecutive_motion": "32/32",
+    "W_min_distance_range_m": [
+      0.864166259765625,
+      0.86767578125
+    ],
+    "W_mean_min_distance_m": 0.8653149902820587,
+    "W_stop_time_all_lanes_s": 2.3000000000000003,
+    "q_true_steps_each": 173,
+    "ics_beta_min_each": 0,
+    "attribution": "Control engineering only; original R1/u512 a3b9f911... with .15m; no learning"
+  },
+  "resources": {
+    "observed_nontraining_transitions": 32960,
+    "full_nontraining_reservation_retained": 32960,
+    "training": 0,
+    "updates": 0,
+    "writes": 0,
+    "starts": 1,
+    "initializations": 1,
+    "gpu_seconds": 207.57661264995113,
+    "wall_seconds": 210.3869727072306,
+    "original_bytes": 28177639,
+    "archive_bytes": 1367821,
+    "output_bytes": 29545460,
+    "output_reservation": 8589934592,
+    "source_reservation": 2147483648
+  },
+  "CPU_reproduction": "Frozen snapshot evaluation.replay_raw_case for all Z/T/S/X/W and evaluate_checkpoint(update=512); JSON-roundtrip exact equality to original; world-normal raw velocities wall_motion_prerequisite all32.",
+  "actions": {
+    "file_edits": 0,
+    "GPU_queries": 0,
+    "live_starts": 0
+  }
+}

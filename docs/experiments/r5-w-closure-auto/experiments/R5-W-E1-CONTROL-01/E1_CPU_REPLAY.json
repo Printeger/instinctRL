@@ -1,0 +1,1944 @@
+{
+  "status": "PASS_E1_CPU_REPLAY_NOT_GOAL_COMPLETE",
+  "inventory": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/live/R1-research-formal-evaluation/INVENTORY.json",
+    "sha256": "f58f4547178ab39822ba44c5063a23fbf45931bf731482d12983af2846bf9112"
+  },
+  "tool": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/replay_r5_w_e1.py",
+    "sha256": "16e61ccc16e911f661927932b7f14d4875fc866a49e2be27ccc853fc778b3f6c"
+  },
+  "checked_original_and_archived_files": 87,
+  "original_result": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512.json",
+    "sha256": "19884c13340afb8919d4dcad5cd621b7fd0580c3c77f552d085d02ea6233ac97"
+  },
+  "cases": {
+    "Z": {
+      "successes": 32,
+      "total": 32,
+      "pass": true,
+      "wilson_95": [
+        0.8928208017449296,
+        1.0
+      ],
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        }
+      }
+    },
+    "T": {
+      "successes": 32,
+      "total": 32,
+      "pass": true,
+      "wilson_95": [
+        0.8928208017449296,
+        1.0
+      ],
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        }
+      }
+    },
+    "S": {
+      "successes": 32,
+      "total": 32,
+      "pass": true,
+      "wilson_95": [
+        0.8928208017449296,
+        1.0
+      ],
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        }
+      }
+    },
+    "X": {
+      "successes": 32,
+      "total": 32,
+      "pass": true,
+      "wilson_95": [
+        0.8928208017449296,
+        1.0
+      ],
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "pass": true
+        }
+      }
+    },
+    "W": {
+      "successes": 32,
+      "total": 32,
+      "pass": true,
+      "wilson_95": [
+        0.8928208017449296,
+        1.0
+      ],
+      "subgroups": {
+        "x_wall": {
+          "successes": 16,
+          "total": 16,
+          "pass": true
+        },
+        "y_wall": {
+          "successes": 16,
+          "total": 16,
+          "pass": true
+        }
+      }
+    }
+  },
+  "all_gates_pass": true,
+  "w_timing": [
+    {
+      "lane": 0,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0885009765625,
+          "world_normal_velocity_m_s": 0.17898350954055786,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.982208251953125,
+          "world_normal_velocity_m_s": 0.17902472615242004,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9296875,
+          "world_normal_velocity_m_s": 0.1742984801530838,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9296875,
+          "world_normal_velocity_m_s": 0.1742984801530838,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 45,
+          "observation_time_s": 4.6000000000000005,
+          "control_issue_time_s": 4.5,
+          "geometry_m": 0.867431640625,
+          "world_normal_velocity_m_s": 6.760846736142412e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 1,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0885009765625,
+          "world_normal_velocity_m_s": 0.1789480447769165,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.982208251953125,
+          "world_normal_velocity_m_s": 0.17894983291625977,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9296875,
+          "world_normal_velocity_m_s": 0.17421890795230865,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9296875,
+          "world_normal_velocity_m_s": 0.17421890795230865,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 45,
+          "observation_time_s": 4.6000000000000005,
+          "control_issue_time_s": 4.5,
+          "geometry_m": 0.86767578125,
+          "world_normal_velocity_m_s": 6.574050348717719e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 2,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0885009765625,
+          "world_normal_velocity_m_s": 0.17892740666866302,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.982208251953125,
+          "world_normal_velocity_m_s": 0.17898283898830414,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9296875,
+          "world_normal_velocity_m_s": 0.1742589920759201,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9296875,
+          "world_normal_velocity_m_s": 0.1742589920759201,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 45,
+          "observation_time_s": 4.6000000000000005,
+          "control_issue_time_s": 4.5,
+          "geometry_m": 0.867431640625,
+          "world_normal_velocity_m_s": 6.749799649696797e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 3,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0885009765625,
+          "world_normal_velocity_m_s": 0.17895834147930145,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.982208251953125,
+          "world_normal_velocity_m_s": 0.1789798140525818,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9296875,
+          "world_normal_velocity_m_s": 0.1742583066225052,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9296875,
+          "world_normal_velocity_m_s": 0.1742583066225052,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 45,
+          "observation_time_s": 4.6000000000000005,
+          "control_issue_time_s": 4.5,
+          "geometry_m": 0.867431640625,
+          "world_normal_velocity_m_s": 6.664254033239558e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 4,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0885009765625,
+          "world_normal_velocity_m_s": 0.17898350954055786,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.982208251953125,
+          "world_normal_velocity_m_s": 0.17902472615242004,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9296875,
+          "world_normal_velocity_m_s": 0.1742984801530838,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9296875,
+          "world_normal_velocity_m_s": 0.1742984801530838,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 45,
+          "observation_time_s": 4.6000000000000005,
+          "control_issue_time_s": 4.5,
+          "geometry_m": 0.867431640625,
+          "world_normal_velocity_m_s": 6.760846736142412e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 5,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0882415771484375,
+          "world_normal_velocity_m_s": 0.1789340227842331,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.98028564453125,
+          "world_normal_velocity_m_s": 0.1789661943912506,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9272308349609375,
+          "world_normal_velocity_m_s": 0.17425012588500977,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9272308349609375,
+          "world_normal_velocity_m_s": 0.17425012588500977,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 46,
+          "observation_time_s": 4.7,
+          "control_issue_time_s": 4.6000000000000005,
+          "geometry_m": 0.8644561767578125,
+          "world_normal_velocity_m_s": -2.344266431464348e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 6,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0882415771484375,
+          "world_normal_velocity_m_s": 0.17890654504299164,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.98028564453125,
+          "world_normal_velocity_m_s": 0.17897625267505646,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9272308349609375,
+          "world_normal_velocity_m_s": 0.17426440119743347,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9272308349609375,
+          "world_normal_velocity_m_s": 0.17426440119743347,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 46,
+          "observation_time_s": 4.7,
+          "control_issue_time_s": 4.6000000000000005,
+          "geometry_m": 0.864471435546875,
+          "world_normal_velocity_m_s": -2.6006135158240795e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 7,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0882415771484375,
+          "world_normal_velocity_m_s": 0.17893071472644806,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.98028564453125,
+          "world_normal_velocity_m_s": 0.1789482980966568,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9272308349609375,
+          "world_normal_velocity_m_s": 0.17422878742218018,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9272308349609375,
+          "world_normal_velocity_m_s": 0.17422878742218018,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 46,
+          "observation_time_s": 4.7,
+          "control_issue_time_s": 4.6000000000000005,
+          "geometry_m": 0.864471435546875,
+          "world_normal_velocity_m_s": -2.2362062736647204e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 8,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0882415771484375,
+          "world_normal_velocity_m_s": 0.17896810173988342,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.98028564453125,
+          "world_normal_velocity_m_s": 0.179035946726799,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9272308349609375,
+          "world_normal_velocity_m_s": 0.17431412637233734,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9272308349609375,
+          "world_normal_velocity_m_s": 0.17431412637233734,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 46,
+          "observation_time_s": 4.7,
+          "control_issue_time_s": 4.6000000000000005,
+          "geometry_m": 0.8643035888671875,
+          "world_normal_velocity_m_s": -2.5402376195415854e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 9,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0882415771484375,
+          "world_normal_velocity_m_s": 0.1789340227842331,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.98028564453125,
+          "world_normal_velocity_m_s": 0.1789661943912506,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9272308349609375,
+          "world_normal_velocity_m_s": 0.17425012588500977,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9272308349609375,
+          "world_normal_velocity_m_s": 0.17425012588500977,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 46,
+          "observation_time_s": 4.7,
+          "control_issue_time_s": 4.6000000000000005,
+          "geometry_m": 0.8644561767578125,
+          "world_normal_velocity_m_s": -2.3492146283388138e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 10,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0883636474609375,
+          "world_normal_velocity_m_s": 0.17884697020053864,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9812545776367188,
+          "world_normal_velocity_m_s": 0.17895960807800293,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17423701286315918,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17423701286315918,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 48,
+          "observation_time_s": 4.9,
+          "control_issue_time_s": 4.800000000000001,
+          "geometry_m": 0.8655242919921875,
+          "world_normal_velocity_m_s": -0.00017970410408452153,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 11,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0883636474609375,
+          "world_normal_velocity_m_s": 0.1788821518421173,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9812545776367188,
+          "world_normal_velocity_m_s": 0.17898887395858765,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17427445948123932,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17427445948123932,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 47,
+          "observation_time_s": 4.800000000000001,
+          "control_issue_time_s": 4.7,
+          "geometry_m": 0.8655776977539062,
+          "world_normal_velocity_m_s": -0.00010578329965937883,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 12,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0883636474609375,
+          "world_normal_velocity_m_s": 0.17888319492340088,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9812545776367188,
+          "world_normal_velocity_m_s": 0.17901602387428284,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17430737614631653,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17430737614631653,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 48,
+          "observation_time_s": 4.9,
+          "control_issue_time_s": 4.800000000000001,
+          "geometry_m": 0.8655776977539062,
+          "world_normal_velocity_m_s": -0.0001802245096769184,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 13,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0883636474609375,
+          "world_normal_velocity_m_s": 0.17887745797634125,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9812545776367188,
+          "world_normal_velocity_m_s": 0.17898045480251312,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17425422370433807,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17425422370433807,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 48,
+          "observation_time_s": 4.9,
+          "control_issue_time_s": 4.800000000000001,
+          "geometry_m": 0.8655242919921875,
+          "world_normal_velocity_m_s": -0.000180288843694143,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 14,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0883636474609375,
+          "world_normal_velocity_m_s": 0.17884700000286102,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9812545776367188,
+          "world_normal_velocity_m_s": 0.17895962297916412,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17423710227012634,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17423710227012634,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 48,
+          "observation_time_s": 4.9,
+          "control_issue_time_s": 4.800000000000001,
+          "geometry_m": 0.8655242919921875,
+          "world_normal_velocity_m_s": -0.00017934337665792555,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 15,
+      "wall": "x",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.088364601135254,
+          "world_normal_velocity_m_s": 0.17879824340343475,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.981074333190918,
+          "world_normal_velocity_m_s": 0.17886963486671448,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9282331466674805,
+          "world_normal_velocity_m_s": 0.1741742044687271,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9282331466674805,
+          "world_normal_velocity_m_s": 0.1741742044687271,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 47,
+          "observation_time_s": 4.800000000000001,
+          "control_issue_time_s": 4.7,
+          "geometry_m": 0.8653140068054199,
+          "world_normal_velocity_m_s": -3.124808790744282e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 16,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.088348388671875,
+          "world_normal_velocity_m_s": 0.17869268357753754,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.98114013671875,
+          "world_normal_velocity_m_s": 0.1788026988506317,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9284515380859375,
+          "world_normal_velocity_m_s": 0.17380870878696442,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9284515380859375,
+          "world_normal_velocity_m_s": 0.17380870878696442,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 49,
+          "observation_time_s": 5.0,
+          "control_issue_time_s": 4.9,
+          "geometry_m": 0.8652725219726562,
+          "world_normal_velocity_m_s": -0.00024272857990581542,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 17,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0882782936096191,
+          "world_normal_velocity_m_s": 0.17889325320720673,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9808945655822754,
+          "world_normal_velocity_m_s": 0.1790042221546173,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9280638694763184,
+          "world_normal_velocity_m_s": 0.17399688065052032,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9280638694763184,
+          "world_normal_velocity_m_s": 0.17399688065052032,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 50,
+          "observation_time_s": 5.1000000000000005,
+          "control_issue_time_s": 5.0,
+          "geometry_m": 0.8647265434265137,
+          "world_normal_velocity_m_s": -2.8857140932814218e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 18,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0884552001953125,
+          "world_normal_velocity_m_s": 0.17874643206596375,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9813003540039062,
+          "world_normal_velocity_m_s": 0.17881575226783752,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285507202148438,
+          "world_normal_velocity_m_s": 0.1738026738166809,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285507202148438,
+          "world_normal_velocity_m_s": 0.1738026738166809,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 49,
+          "observation_time_s": 5.0,
+          "control_issue_time_s": 4.9,
+          "geometry_m": 0.86529541015625,
+          "world_normal_velocity_m_s": -0.00024399897665716708,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 19,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0881195068359375,
+          "world_normal_velocity_m_s": 0.17874689400196075,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9801788330078125,
+          "world_normal_velocity_m_s": 0.1788230538368225,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.927215576171875,
+          "world_normal_velocity_m_s": 0.1738196462392807,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.927215576171875,
+          "world_normal_velocity_m_s": 0.1738196462392807,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 47,
+          "observation_time_s": 4.800000000000001,
+          "control_issue_time_s": 4.7,
+          "geometry_m": 0.864166259765625,
+          "world_normal_velocity_m_s": -0.000188200589036569,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 20,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0885162353515625,
+          "world_normal_velocity_m_s": 0.17870758473873138,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9806060791015625,
+          "world_normal_velocity_m_s": 0.17880652844905853,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9276123046875,
+          "world_normal_velocity_m_s": 0.17380115389823914,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9276123046875,
+          "world_normal_velocity_m_s": 0.17380115389823914,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 47,
+          "observation_time_s": 4.800000000000001,
+          "control_issue_time_s": 4.7,
+          "geometry_m": 0.86468505859375,
+          "world_normal_velocity_m_s": -0.00018848049512598664,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 21,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.088348388671875,
+          "world_normal_velocity_m_s": 0.17872440814971924,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.98114013671875,
+          "world_normal_velocity_m_s": 0.1788133680820465,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9284515380859375,
+          "world_normal_velocity_m_s": 0.17379920184612274,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9284515380859375,
+          "world_normal_velocity_m_s": 0.17379920184612274,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 49,
+          "observation_time_s": 5.0,
+          "control_issue_time_s": 4.9,
+          "geometry_m": 0.8652725219726562,
+          "world_normal_velocity_m_s": -0.00024508609203621745,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 22,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0882325172424316,
+          "world_normal_velocity_m_s": 0.17890779674053192,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9808492660522461,
+          "world_normal_velocity_m_s": 0.17900097370147705,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9280204772949219,
+          "world_normal_velocity_m_s": 0.17401085793972015,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9280204772949219,
+          "world_normal_velocity_m_s": 0.17401085793972015,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 50,
+          "observation_time_s": 5.1000000000000005,
+          "control_issue_time_s": 5.0,
+          "geometry_m": 0.8646726608276367,
+          "world_normal_velocity_m_s": -3.0181052352418192e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 23,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.08837890625,
+          "world_normal_velocity_m_s": 0.17874059081077576,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.981170654296875,
+          "world_normal_velocity_m_s": 0.17882034182548523,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17382970452308655,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285125732421875,
+          "world_normal_velocity_m_s": 0.17382970452308655,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 49,
+          "observation_time_s": 5.0,
+          "control_issue_time_s": 4.9,
+          "geometry_m": 0.86529541015625,
+          "world_normal_velocity_m_s": -0.00024507558555342257,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 24,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0884552001953125,
+          "world_normal_velocity_m_s": 0.17870697379112244,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9805450439453125,
+          "world_normal_velocity_m_s": 0.17880655825138092,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.927490234375,
+          "world_normal_velocity_m_s": 0.1738009750843048,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.927490234375,
+          "world_normal_velocity_m_s": 0.1738009750843048,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 47,
+          "observation_time_s": 4.800000000000001,
+          "control_issue_time_s": 4.7,
+          "geometry_m": 0.8645172119140625,
+          "world_normal_velocity_m_s": -0.00018902280135080218,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 25,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0885162353515625,
+          "world_normal_velocity_m_s": 0.17873798310756683,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9806060791015625,
+          "world_normal_velocity_m_s": 0.1788143515586853,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9276123046875,
+          "world_normal_velocity_m_s": 0.17379184067249298,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9276123046875,
+          "world_normal_velocity_m_s": 0.17379184067249298,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 47,
+          "observation_time_s": 4.800000000000001,
+          "control_issue_time_s": 4.7,
+          "geometry_m": 0.86468505859375,
+          "world_normal_velocity_m_s": -0.00018835754599422216,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 26,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.088348388671875,
+          "world_normal_velocity_m_s": 0.1787460893392563,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.98114013671875,
+          "world_normal_velocity_m_s": 0.17881128191947937,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9284515380859375,
+          "world_normal_velocity_m_s": 0.1738053858280182,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9284515380859375,
+          "world_normal_velocity_m_s": 0.1738053858280182,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 49,
+          "observation_time_s": 5.0,
+          "control_issue_time_s": 4.9,
+          "geometry_m": 0.8652725219726562,
+          "world_normal_velocity_m_s": -0.00024340614618267864,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 27,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0882081985473633,
+          "world_normal_velocity_m_s": 0.17890211939811707,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9808230400085449,
+          "world_normal_velocity_m_s": 0.17901377379894257,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9279899597167969,
+          "world_normal_velocity_m_s": 0.1740233600139618,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9279899597167969,
+          "world_normal_velocity_m_s": 0.1740233600139618,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 50,
+          "observation_time_s": 5.1000000000000005,
+          "control_issue_time_s": 5.0,
+          "geometry_m": 0.8646383285522461,
+          "world_normal_velocity_m_s": -3.061603638343513e-05,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 28,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.0885391235351562,
+          "world_normal_velocity_m_s": 0.178693488240242,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9813385009765625,
+          "world_normal_velocity_m_s": 0.17880231142044067,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285888671875,
+          "world_normal_velocity_m_s": 0.1738080233335495,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9285888671875,
+          "world_normal_velocity_m_s": 0.1738080233335495,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 49,
+          "observation_time_s": 5.0,
+          "control_issue_time_s": 4.9,
+          "geometry_m": 0.86529541015625,
+          "world_normal_velocity_m_s": -0.00024377861700486392,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 29,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.088226318359375,
+          "world_normal_velocity_m_s": 0.17874084413051605,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9801788330078125,
+          "world_normal_velocity_m_s": 0.17881475389003754,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.927215576171875,
+          "world_normal_velocity_m_s": 0.17379224300384521,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.927215576171875,
+          "world_normal_velocity_m_s": 0.17379224300384521,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 47,
+          "observation_time_s": 4.800000000000001,
+          "control_issue_time_s": 4.7,
+          "geometry_m": 0.864166259765625,
+          "world_normal_velocity_m_s": -0.00018689711578190327,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 30,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.08837890625,
+          "world_normal_velocity_m_s": 0.17875602841377258,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.9803619384765625,
+          "world_normal_velocity_m_s": 0.17879822850227356,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9274139404296875,
+          "world_normal_velocity_m_s": 0.1737866848707199,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9274139404296875,
+          "world_normal_velocity_m_s": 0.1737866848707199,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 47,
+          "observation_time_s": 4.800000000000001,
+          "control_issue_time_s": 4.7,
+          "geometry_m": 0.8642425537109375,
+          "world_normal_velocity_m_s": -0.00018882547738030553,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    },
+    {
+      "lane": 31,
+      "wall": "y",
+      "events": {
+        "trigger_1p1": {
+          "row": 21,
+          "observation_time_s": 2.2,
+          "control_issue_time_s": 2.1,
+          "geometry_m": 1.088348388671875,
+          "world_normal_velocity_m_s": 0.1787395477294922,
+          "beta": 1.0,
+          "q": 0.0
+        },
+        "q_true": {
+          "row": 27,
+          "observation_time_s": 2.8000000000000003,
+          "control_issue_time_s": 2.7,
+          "geometry_m": 0.98114013671875,
+          "world_normal_velocity_m_s": 0.1788189709186554,
+          "beta": 1.0,
+          "q": 1.0
+        },
+        "beta_below_one": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9284515380859375,
+          "world_normal_velocity_m_s": 0.1738283932209015,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "beta_zero": {
+          "row": 30,
+          "observation_time_s": 3.1,
+          "control_issue_time_s": 3.0,
+          "geometry_m": 0.9284515380859375,
+          "world_normal_velocity_m_s": 0.1738283932209015,
+          "beta": 0.0,
+          "q": 1.0
+        },
+        "below_0p8": null,
+        "minimum_geometry": {
+          "row": 49,
+          "observation_time_s": 5.0,
+          "control_issue_time_s": 4.9,
+          "geometry_m": 0.8652725219726562,
+          "world_normal_velocity_m_s": -0.00024451606441289186,
+          "beta": 0.0,
+          "q": 1.0
+        }
+      },
+      "world_normal_11_sample_approach": true
+    }
+  ],
+  "timing": "Control issued at i*0.1s; geometry/root observed at (i+1)*0.1s; no cross-frame subtraction.",
+  "scientific_attribution": "Fixed original R1/u512 with .15m ICS margin: control engineering, not RL."
+}
