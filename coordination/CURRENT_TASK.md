@@ -1,3 +1,15 @@
+# 当前完成：R5 W 全原门槛通过（2026-10-19）
+
+**R5_ALL_ORIGINAL_GATES_PASS，最终独审PASS/noMUST_FIX。** 选定R1/u640 SHA `aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429`；u640/u768原seed20260909五任务均32/32，独立seed20261020的u640完整160case/lane重放通过、全部方向4/4、W两墙16/16及真实运动32/32。W最差几何.861944675m、停车2.4s。
+
+E1固定u512+.15m已通过，收益归因控制工程；L1只支持有限q-positive训练和能力保留，未识别独立RL安全增益。独立执行固定初态，所有step数据与原u640相同、T0仅seed不同；原primary保留160个CASE_SEED_MISMATCH，不能称新初态/扰动覆盖、广泛泛化或硬件安全。
+
+七作业原生失败原样保留（四FAILED/-9 INCOMPLETE/null，三prelaunch FINAL0），各正常owned ACK/settle/恰好两postrun；131072训练、131840非训练、256updates、2writes的观察证据不退款全reserve。7start/init、5snapshot、66GiB全输出/快照reserve（含metadata68GiB）在原caps内。资源V2本次live窗口通过，仍只是临时调度规则。
+
+最终报告：`docs/experiments/r5-w-closure-auto/FINAL_R5_W_RESULTS.md/.json`；精确模型/方法/复现manifest、全原件索引、资源与需求审计、W时序图及`reviews/final-independent.json`均已交付。无后续实验计划。唯一controller的`batch-resource-v2/state.json`仍由controller在本次最终回复后记录COMPLETE；本写者未修改它或旧已停止`batch/state.json`。
+
+以下内容保留为历史阶段记录，当时的IN_PROGRESS/尚未执行表述不覆盖上述最终证据。
+
 # 当前任务：R5 W 安全训练闭环（2026-10-19）
 
 当前事件：L1 RECOVERY1真实256updates/131072transitions及u640/u768已独立接受（q2004），原FAILED/-9、INCOMPLETE/null/full reserve保持。E1固定策略工程通过不算RL提升。R5-W-L1-EVAL-01两节点原五任务完整评价已独审/issue A-f86ae4584e07d817，尚未执行；精确plan-l1-evaluation.json提交/tag/push并独审后由原controller接续。唯一batch/state.json只读；当前模型为唯一写者，无直接submit/新controller/GPU探测。完整Goal还需评价、首通过节点独立验证、方法消融与最终审核，不能阶段通过即完成。

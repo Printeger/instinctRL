@@ -1,0 +1,51 @@
+{
+  "reviewer": "/root/final_review",
+  "read_only": true,
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "最终科学结果、原Goal需求覆盖、交付身份、原件索引、资源与方法归因审核",
+  "identities": {
+    "final_result": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_R5_W_RESULTS.json",
+      "sha256": "f0067bf592994321801bf9defc05de5a0a788f770999f443db66ae3907da8b89"
+    },
+    "selected_checkpoint_sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+    "training_source_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "training_config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+    "actual_independent_review_sha256": "bd131ee84803836c42fa9d6206fbfb25e78f6e4a615720ad187b9632fb467ed3"
+  },
+  "checks": {
+    "original_goal_and_user_prompt_read": true,
+    "direct_delivery_and_requirement_pins_verified": 117,
+    "original_and_archive_files_verified": 546,
+    "original_index_entries": 286,
+    "current_delivery_hash_errors": [],
+    "selected_u640_origin_u512_and_secondary_u768_hashes_verified": true,
+    "requirements_audit": "完整诊断、工程控制对照、近墙训练、原五任务与独立协议验证及最终交付证据齐全",
+    "training": "原u512完整恢复后u513–768；131072 transitions、256updates、两类各2048 Adam、2writes、q2004；中心与两墙覆盖明确",
+    "primary_evaluation": "u640/u768原seed20260909五任务各32/32；方向4/4、两墙16/16、运动32/32；已有冻结评分完整重放独审PASS",
+    "independent_evaluation": "采用已准确pin的独立实际审核：真实seed20261020、160case/lane、完整32lanes和step counts；冻结evaluate_independent逐字典一致；原primary保留160 CASE_SEED_MISMATCH",
+    "W_gates": "世界法向速度连续11样本>=0.1m/s、原几何>=0.8m、停车<=3s和两墙全部通过",
+    "method_attribution": "R1→E1归为ICS裕度工程收益；E1→L1仅支持有限q-positive训练及能力保留，不归因为独立RL安全增益",
+    "plot": "实际查看FINAL_W_TIMING.png，包含R1/E1/u640/u768/独立seed、两墙几何/世界法向速度/q/beta；报告明确时钟区别和均值图不替代逐lane验收",
+    "resource_accounting": "7starts/init；131072训练与131840非训练全额逻辑预留保留；输出及五snapshot连同metadata共68GiB<=72GiB stage及128GiB master；GPU/wall未耗尽",
+    "native_failures": "4个FAILED/-9 INCOMPLETE/null及3个prelaunch FAILED/1 FINAL0原样保留；科学通过不改写native终态",
+    "cleanup": "七作业正常owned ACK、settle和各恰好两postrun证据在原件索引中保留",
+    "resource_v2": "13live samples/60.4627s符合已审窗口；61样本诊断未冒充live receipt；临时调度性质及限制明确",
+    "controller_state_written_by_reviewer": false,
+    "reviewer_gpu_or_simulation_actions": false
+  },
+  "scientific_conclusion": "证据支持R5_ALL_ORIGINAL_GATES_PASS及首通过模型u640的交付。",
+  "limitations": [
+    "独立seed是明确标注的等价协议评分；原primary seed约束未放宽。",
+    "独立运行全部step字典与primary u640一致，T0仅seed不同；固定初态和确定性复现不证明新分布泛化或额外随机扰动覆盖。",
+    "模型通过依赖已验证的ICS 0.15m裕度和冻结控制/方法，不能解释为脱离安全层的actor安全性。",
+    "结果不证明独立RL安全增益、无性能干扰或硬件飞行安全。",
+    "历史文件包含当时的可变状态与工具身份；审核不要求将历史pins改绑到当前工作树。当前交付pins及明确原件/归档索引均实测一致。"
+  ],
+  "remaining_delivery_conditions": [
+    "由唯一写者保存本独审并同步当前项目状态。",
+    "保持final_result上述SHA不变，完成最终additive commit、tag及正常push。",
+    "上述交付完成后向原唯一controller返回COMPLETE；仅controller记录终态，旧batch/state保持只读。"
+  ]
+}

@@ -1,10 +1,10 @@
 {
   "schema_version": "instinctrl-project-state/1",
-  "as_of": "2026-10-17",
+  "as_of": "2026-10-19",
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_FIXED_FORMAL_FIRST_SEGMENT_SCIENTIFICALLY_COMPLETE",
+  "phase": "R5_W_ALL_ORIGINAL_GATES_PASS",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -712,23 +712,37 @@
     "controller_state_at_analysis": "RUNNING/MODEL:final-analysis",
     "old_readiness_goal_unchanged": true
   },
-  "current_execution_index": "formal_first_segment_execution",
+  "current_execution_index": "w_closure_execution",
   "w_closure_execution": {
     "goal_id": "R5-W-CLOSURE-AUTO-20261019",
     "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
-    "registration": "docs/experiments/r5-w-closure-auto/registrations/W-L1-002.json",
-    "state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
-    "status": "L1_ACTUAL_ACCEPTED_TWO_NODE_EVALUATION_ISSUED_HANDOFF",
+    "registration": "docs/experiments/r5-w-closure-auto/registrations/W-V2-001.json",
+    "state_path": "docs/experiments/r5-w-closure-auto/batch-resource-v2/state.json",
+    "status": "SCIENTIFIC_COMPLETE_FINAL_REVIEW_PASS_PENDING_CONTROLLER_RECORD",
     "current_live_jobs": [],
     "exact_job_permission_required": true,
-    "current_exact_release": "A-f86ae4584e07d817",
-    "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-l1-evaluation.json",
-    "last_completed_job": "J-8bdfaca0488e524d",
+    "current_exact_release": null,
+    "next_plan": null,
+    "last_completed_job": "J-c2412eb2e9c23e5a",
     "last_training_transitions": 131072,
     "actual_training_review": {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-recovery1-actual-independent.json",
       "sha256": "ce921180385c8b009151e7e71f94426c8f3052c4ad0cedc53cf2dc75275ea468"
     },
-    "next_evaluation_status": "NOT_EXECUTED"
+    "next_evaluation_status": "COMPLETE_RAW_ACCEPTED",
+    "historical_state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
+    "goal_complete": true,
+    "scientific_status": "R5_ALL_ORIGINAL_GATES_PASS",
+    "final_result": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_R5_W_RESULTS.json",
+      "sha256": "f0067bf592994321801bf9defc05de5a0a788f770999f443db66ae3907da8b89"
+    },
+    "final_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/final-independent.json",
+      "sha256": "89365a0148c96e4e57f722f10d9fb126059fb67672795347909cd97f941868d7"
+    },
+    "controller_state_modified": false,
+    "controller_completion_pending_return": true,
+    "independent_seed_limitation": "Actual20261020; fixed initial states and identical step dictionaries to primaryu640; T0 only seed differs; no new distribution coverage."
   }
 }

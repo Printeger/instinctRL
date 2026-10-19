@@ -1,16 +1,24 @@
 {
   "goal_id": "R5-W-CLOSURE-AUTO-20261019",
-  "status": "IN_PROGRESS",
-  "phase": "RESOURCE_V2_EXACT_ISSUED_PENDING_CONTROLLER_START",
+  "status": "SCIENTIFIC_COMPLETE_PENDING_CONTROLLER_RECORD",
+  "phase": "FINAL_REVIEW_PASS",
   "live_job": null,
-  "controller_started": false,
+  "controller_started": true,
   "master_registered": true,
-  "requirements_complete": false,
-  "current_exact_release": "A-d9d376bb39e26342",
+  "requirements_complete": true,
+  "current_exact_release": null,
   "state_authority": "docs/experiments/r5-w-closure-auto/batch-resource-v2/state.json",
-  "note": "This is a handoff index. Once started only the exact batch state is authoritative; do not infer live or complete from this static index.",
-  "completed_job": "J-4c3d85af4438c260",
-  "next_experiment": "R5-W-L1-INDEPENDENT-RESOURCE-V2",
-  "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-resource-v2.json",
-  "historical_state_authority": "docs/experiments/r5-w-closure-auto/batch/state.json"
+  "note": "Static completion index. Sole controller records terminal COMPLETE after receiving final response; neither controller state file was edited. All old failures and reserves preserved.",
+  "completed_job": "J-c2412eb2e9c23e5a",
+  "next_experiment": null,
+  "next_plan": null,
+  "historical_state_authority": "docs/experiments/r5-w-closure-auto/batch/state.json",
+  "final_result": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_R5_W_RESULTS.json",
+    "sha256": "f0067bf592994321801bf9defc05de5a0a788f770999f443db66ae3907da8b89"
+  },
+  "final_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/final-independent.json",
+    "sha256": "89365a0148c96e4e57f722f10d9fb126059fb67672795347909cd97f941868d7"
+  }
 }
