@@ -344,6 +344,9 @@ class UnifiedH1LiveBackend:
 
 
     def _checkpoint_method_hashes(self, config):
+        if self.authorization["mode"] == "research-r6-evaluation":
+            from .robustness_contract import baseline
+            return baseline(self.research)["method_hashes"]
         if self.authorization['mode'] in {'research-formal-training', 'research-formal-evaluation'}:
             from .formal_segment import method_hashes
             return method_hashes(config, self.research)

@@ -1,0 +1,33 @@
+{
+  "schema_version": "r6-master-authority/1",
+  "id": "R6-ROBUSTNESS-AUTO-20261019",
+  "status": "REGISTERED_USER_DELEGATION",
+  "user_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/USER_AUTHORITY.txt",
+    "sha256": "b45cbca50cf944ea2b2abe2b6fd57998224784f5de2e2545cc7ae69fc8a2d706"
+  },
+  "requirements": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md",
+    "sha256": "200fb9daa96606ae3a58516219121d2ae243de51a8b1e02d10077a4b15e2f12b"
+  },
+  "scope": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md",
+    "sha256": "185699494c924fa0a6fd909563bac0214073b650304083cd510b934960581bf7"
+  },
+  "caps": {
+    "allocated_gpu_seconds": 43200,
+    "automatic_model_sessions": 32,
+    "live_starts": 64,
+    "live_wall_seconds": 43200,
+    "major_scientific_candidates": 3,
+    "nontraining_transitions": 2000000,
+    "output_actual_plus_unreleased_reservations_bytes": 137438953472,
+    "queue_seconds": 21600,
+    "simulator_initializations": 64,
+    "training_checkpoint_writes": 96,
+    "training_transitions": 3000000
+  },
+  "exact_store_permission_still_required": true,
+  "store_registration_complete": false,
+  "capacity_pass": false
+}

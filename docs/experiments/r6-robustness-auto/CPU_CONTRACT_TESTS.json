@@ -1,0 +1,126 @@
+{
+  "status": "CPU_PASS_PENDING_INDEPENDENT_REVIEW_AND_EXACT_RELEASE",
+  "tests": 61,
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tools/test_r6_contract.py",
+    "isaaclab-training/tests/test_formal_research_contract.py",
+    "isaaclab-training/tests/test_formal_segment.py",
+    "tools/test_r6_physics_adapter.py",
+    "tools/test_r6_measurement_adapter.py",
+    "-q"
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTRACT_REGRESSION_TESTS_V3.txt",
+    "sha256": "a019caf0685d9a48522defbab341ee37776c4668446fc34e6ff55307d25d4887"
+  },
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "7204ec8729bf20beff22e65cb76af80ae1bb377c1b84a503e2ddfe38b7269ead"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/research_contract.py",
+      "sha256": "84d3a1c82c5195b36afdca42f5ca63dd58b6b50765934b4bee6f7c0950dd54be"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/authorization.py",
+      "sha256": "9276970e5f2585b59d5fc256052c7de999875ac4a0f899d12c011d4607cdb21d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/formal_unified_h1.py",
+      "sha256": "42191734125cd784bf2b7665a7177ba958fd4de9c26b44582aeb2923692b431b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/live_adapter.py",
+      "sha256": "ebfd1bec9fdcb4586acb02a5ebc982dd98c56f2cbaaa9742afe069a0a6e70957"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "eab96b39a251d25dcabf47e47fd663f93aafcff245bade9c41359038676c8684"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/formal_segment.py",
+      "sha256": "7decffc1eb7fc54261abd2fe7234926a889d19fed1bd0137c2b87c2667fe1770"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+      "sha256": "a3c06c94865c5211d1d438abb35629071eb6171e3a4ab57fe64cd23d04508e2a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_contract.py",
+      "sha256": "ce7dae68e3832c49715a8780d151c058297c55c08e669d14e690cba9339eaf6f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/tests/test_formal_research_contract.py",
+      "sha256": "60a46065de0a7b2291f173431b7f5215a5bf3a9bd9f7d8e4f833faf83f2c6c3a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/tests/test_formal_segment.py",
+      "sha256": "72cf524dcb984b459bfe1a53a19e5236c9f95edc01825b802592d9df085ccee0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_physics_adapter.py",
+      "sha256": "c4d422bf6992a574192a73345d5f56001a3ba32ff1d2a71119e82ba2a76bd34f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_measurement_adapter.py",
+      "sha256": "0928ffd19c95277249cd05cfd1fbdf680aa98eba8568d2dcaa5384d7546b495d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_BINDINGS.json",
+      "sha256": "6ebe90717fa2571816ba3392841f3690c2c3fe37225c3728f935bb80d3102623"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/MASTER_AUTHORITY.json",
+      "sha256": "8e9313bb4c8840a89277975c152bc1912f4ad380a5180afdda05dbd03f23e0be"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "a4633a179b0cc343cb323e7df3559281f718fc95e290145da27a01c35feca7c0"
+    }
+  ],
+  "initial_failed_regression": {
+    "output": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTRACT_REGRESSION_TESTS.txt",
+      "sha256": "322b5be20777c27a77787d2babcc834cb1f5cd56f964a7969fdda7d00737a29f"
+    },
+    "failures": 2,
+    "passed": 42,
+    "fixes": [
+      "Only invoke R6 reset hook when opt-in block exists; preserve old dormant path and AST test.",
+      "Move existing formal training/evaluation mode checks before research-profile dispatch; prevent AttributeError before wrong-mode rejection."
+    ]
+  },
+  "fixture_note": "Temporary protocol/review/capacity cards are labelled CPU fixtures. No real protocol is frozen, capacity accepted, exact permission issued or simulator invoked.",
+  "coverage": [
+    "Exact u640 bindings and original20260909 seed; no seed relabelling",
+    "All16 frozen blocks required; no domain omission",
+    "193600 nontraining transitions,21 explicit resets,0 training/update/checkpoint writes",
+    "Component quotas include native allowance and per-file ceiling",
+    "Missing independent review/capacity, altered cards, nonfinite mass and final split rejected",
+    "Original evaluator source invariant and lifecycle dispatch to new wrapper",
+    "Historical research/formal contracts and current physics/measurement regressions"
+  ],
+  "not_proven": [
+    "actual new-mode authorization issuance",
+    "actual checkpoint loading in R6 process",
+    "independent compatibility/protocol acceptance",
+    "complete final/development capacity",
+    "new resource admission/controller integration",
+    "live baseline performance"
+  ],
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "model_calls": 0
+}

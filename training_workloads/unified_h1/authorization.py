@@ -9,12 +9,12 @@ from typing import Any
 from .budget import required_mode_budget
 from .config import CONFIG_PATH, METHOD_SHA256, load_config, sha256_file
 
-MODES = ("main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic", "research-training", "research-evaluation", "research-transition", "research-formal-training", "research-formal-evaluation")
+MODES = ("research-r6-evaluation", "main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic", "research-training", "research-evaluation", "research-transition", "research-formal-training", "research-formal-evaluation")
 BUDGET_FIELDS = {"live_process_starts", "simulator_initializations", "training_transitions",
                  "nontraining_transitions", "optimizer_updates", "checkpoint_writes",
                  "initialization_ticks", "explicit_resets", "automatic_resets", "wall_seconds"}
 
-MODE_ORDERS = {"research-formal-training": None, "research-formal-evaluation": None,"research-training": None, "research-evaluation": None, "research-transition": None,"main": "UNIFIED-H1-R3", "controlled-failure": "UNIFIED-H1-R3",
+MODE_ORDERS = {"research-r6-evaluation": None,"research-formal-training": None, "research-formal-evaluation": None,"research-training": None, "research-evaluation": None, "research-transition": None,"main": "UNIFIED-H1-R3", "controlled-failure": "UNIFIED-H1-R3",
                "r4-training": "UNIFIED-H1-R4", "evaluation": None,
                "r5-resume": "UNIFIED-H1-R5", "control-diagnostic": None,
                "pilot-training": None, "pilot-evaluation": None,
@@ -121,7 +121,10 @@ def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any
         if Path(candidate["repository"]).resolve()!=Path(config["workload"]["path"]).resolve() or candidate["commit"]!=identity["workload_commit"]:
             raise PermissionError("enhanced B0 handoff candidate differs from current workload")
     origin = parameters.get("checkpoint_source_identity")
-    if mode == "research-transition":
+    if mode == "research-r6-evaluation":
+        from .robustness_contract import baseline, validate_compatibility
+        validate_compatibility(parameters["checkpoint_compatibility"], baseline(parameters)["source_identity"], config)
+    elif mode == "research-transition":
         from .checkpoint_compatibility import validate_transition_compatibility
         validate_transition_compatibility(parameters["checkpoint_compatibility"], origin, config)
     elif mode in {"research-formal-training", "research-formal-evaluation"}:

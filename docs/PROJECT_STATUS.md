@@ -26,8 +26,14 @@
 新增独立R6 backend入口拒绝旧R5授权和未冻结协议。5项CPU替身workload测试通过，
 另15项实际观察接线/物理接口回归通过，准确输入见 `CPU_EVALUATION_TESTS.json`。
 world指令在实际观察边界转换后进入history，保持内外观察与过去command帧一致；
-丢帧索引明确定义为观察边界0..steps。真实research-mode发行/lifecycle dispatch和checkpoint
-绑定入口尚未完成，不能把CPU替身数据称为真实基线结果。
+丢帧索引明确定义为观察边界0..steps。真实research-mode发行尚未完成，不能把CPU替身数据称为真实基线结果。
+
+新增 `research-r6-evaluation` 基线入口已接入CLI、参数/预算验证、源码兼容检查和lifecycle
+分派；实际u640加载与原五任务→16新块顺序已实现，尚未live。新主委托机器记录
+`MASTER_AUTHORITY.json`不代替Store许可，capacity仍false。61项CPU回归通过，见
+`CPU_CONTRACT_TESTS.json`；此前2项回归失败保留并修复。入口要求独审冻结协议、容量
+报告及精确兼容review，固定193600非训练transitions/21显式reset，拒绝原seed重标、
+删域、训练和提前final揭晓。候选训练与最终确认入口仍是后续完整Goal工作，未缩减目标。
 
 协议仍为12目标块及4压力块草案，最终三模型加基线774400非训练transitions。
 合成归档估计54.5GiB不是最坏界；内部最终保护80GiB/24000秒待完整容量审核。

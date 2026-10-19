@@ -238,6 +238,9 @@ def _dispatch(backend: Any, authorization: Mapping[str, Any]) -> None:
     elif mode == "r5-resume": execute_training_phase(backend, resume_checkpoint=Path(parameters["checkpoint"]), target_update=parameters["target_update"])
     elif mode == "evaluation": execute_evaluation_phase(backend, checkpoints=parameters["checkpoints"])
     elif mode == "control-diagnostic": backend.run_control_diagnostic(parameters)
+    elif mode == "research-r6-evaluation":
+        from .robustness_contract import evaluate_registered
+        evaluate_registered(backend)
     elif mode == "research-training": backend.train_research()
     elif mode == "research-evaluation": backend.evaluate_research()
     elif mode == "research-transition": backend.run_research_transition()

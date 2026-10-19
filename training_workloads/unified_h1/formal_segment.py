@@ -131,6 +131,8 @@ def method_hashes(config, p):
 
 
 def train_segment(backend):
+    if backend.authorization['mode'] != MODES[0]:
+        raise PermissionError('formal training requires exact mode')
     if 'w_closure_contract' in backend.research:
         from .w_closure import train_segment as w_impl
         return w_impl(backend)
@@ -141,8 +143,6 @@ def train_segment(backend):
     from .logging import LearningLog
     from .pilot_diagnostic import FirstUpdateDiagnostic
     from training_workloads.scale_003.persistence import atomic_json_replace
-    if backend.authorization['mode'] != MODES[0]:
-        raise PermissionError('formal training requires exact mode')
     p = backend.research
     backend._apply_research_profile()
     ck = p['initialization_checkpoint']
@@ -198,6 +198,8 @@ def train_segment(backend):
 
 
 def evaluate_segment(backend):
+    if backend.authorization['mode'] != MODES[1]:
+        raise PermissionError('formal evaluation requires exact mode')
     if 'independent_validation_protocol' in backend.research:
         from .w_independent import evaluate_segment as independent_impl
         return independent_impl(backend)
@@ -207,8 +209,6 @@ def evaluate_segment(backend):
     from .config import load_config, sha256_file
     from .evaluation import CASES, evaluate_checkpoint
     from training_workloads.scale_003.persistence import atomic_json_replace
-    if backend.authorization['mode'] != MODES[1]:
-        raise PermissionError('formal evaluation requires exact mode')
     p = backend.research
     backend._apply_research_profile()
     for row in p['checkpoints']:

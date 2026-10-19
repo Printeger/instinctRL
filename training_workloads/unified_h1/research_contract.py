@@ -1,7 +1,7 @@
 """Bounded formal-readiness profiles; old pilot identities remain immutable."""
 from pathlib import Path
 import hashlib,json,math,re
-MODES=('research-training','research-evaluation','research-transition','research-formal-training','research-formal-evaluation')
+MODES=('research-r6-evaluation','research-training','research-evaluation','research-transition','research-formal-training','research-formal-evaluation')
 TRANSITION_PROTOCOL='zero-directions-reverse-zero112-v1'
 INTEGRATION_CONTRACT_SHA256='720845138986bfb053304db915e38fb6bd9558023d65177be53af79bd189a873'
 MEAN_PRIOR_CONTRACT_SHA256='d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9'
@@ -16,6 +16,9 @@ def validate_pin(pin):
  if not path.is_absolute() or path.resolve()!=path or path.is_symlink() or not path.is_file() or digest(path)!=pin['sha256']:raise PermissionError('research input pin drift')
  return path
 def validate_parameters(mode,value):
+ if mode=='research-r6-evaluation':
+  from .robustness_contract import validate_parameters as validate_r6
+  return validate_r6(mode,value)
  if mode in ['research-formal-training','research-formal-evaluation']:
   from .formal_segment import validate_parameters as validate_formal
   return validate_formal(mode,value)
@@ -88,6 +91,9 @@ def method_hashes(config,p):
  return result
 
 def required_budget(mode,p):
+ if mode=='research-r6-evaluation':
+  from .robustness_contract import required_budget as r6_budget
+  return r6_budget(mode,p)
  if mode in ['research-formal-training','research-formal-evaluation']:
   from .formal_segment import required_budget as formal_budget
   return formal_budget(mode,p)

@@ -661,7 +661,7 @@ class UnifiedH1DirectEnv(R6PhysicsMixin, R6MeasurementMixin, TaslabDirectEnv):
         super()._reset_idx(indices)
         if hasattr(self, "_h1_ics_clearance_margin_m"):
             self.set_h1_ics_clearance_margin(self._h1_ics_clearance_margin_m)
-        if self._reset_r6_physics(indices):
+        if getattr(self, '_r6_physics', None) is not None and self._reset_r6_physics(indices):
             return
         if indices.numel() and self._h1_evaluation_case is not None:
             configured = torch.zeros(self.num_envs, 3, device=self.device, dtype=self._actions.dtype)
