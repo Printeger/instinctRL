@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/check_r6_native_logger.py", line 55, in <module>
+    if args.child:child()
+                  ^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/check_r6_native_logger.py", line 21, in child
+    import carb
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/__init__.py", line 31, in <module>
+    from ._carb import *
+ImportError: libpython3.11.so.1.0: cannot open shared object file: No such file or directory

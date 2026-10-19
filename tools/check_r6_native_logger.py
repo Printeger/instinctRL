@@ -13,9 +13,11 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 KIT=Path('/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit')
 PYTHON=Path('/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11')
+PYTHON_LIBRARY=PYTHON.parent.parent/'lib/libpython3.11.so.1.0'
 
 
 def child():
+    ctypes.CDLL(str(PYTHON_LIBRARY),mode=ctypes.RTLD_GLOBAL)
     ctypes.CDLL(str(KIT/'libcarb.so'),mode=ctypes.RTLD_GLOBAL)
     sys.path.insert(0,str(KIT/'kernel/py'))
     import carb
@@ -34,7 +36,7 @@ def run(output):
     from training_workloads.unified_h1.local_dispatch import dispatch_held
     from tools.r6_recovery import file_pin
     output=output.resolve();output.mkdir(exist_ok=False)
-    inputs=[Path(__file__),ROOT/'training_workloads/unified_h1/local_dispatch.py',PYTHON,
+    inputs=[Path(__file__),ROOT/'training_workloads/unified_h1/local_dispatch.py',PYTHON,PYTHON_LIBRARY,
             KIT/'libcarb.so',KIT/'kernel/py/carb/__init__.py',
             KIT/'kernel/py/carb/_carb.cpython-311-x86_64-linux-gnu.so']
     pins=[file_pin(p) for p in inputs]
