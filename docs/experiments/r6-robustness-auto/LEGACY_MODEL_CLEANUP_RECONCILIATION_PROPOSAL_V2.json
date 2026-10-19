@@ -1,0 +1,215 @@
+{
+  "schema_version": "r6-legacy-model-reconciliation-proposal/1",
+  "status": "EVIDENCE_ONLY_PENDING_INDEPENDENT_RECONCILIATION",
+  "state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "08d96921248b3fcec2337b2bad7e4cd2c587609faf5bda191124f61de927e12f"
+  },
+  "auditor": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/audit_r6_legacy_model_cleanup.py",
+    "sha256": "0446d05c7267c1b29a1e736d76dbe5572a7821cff3062c6397f03fdf8da0e473"
+  },
+  "events": [
+    {
+      "event_key": "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01",
+      "original_receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/receipt.json",
+        "sha256": "60104087056120fbfc6f049d54fd508cb87859b7b2744f3dfe5ed99da22a0f0c"
+      },
+      "original_events": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/events.jsonl",
+        "sha256": "8e4d55ba4ef8a9bbc00362c8cb39699cc141fabd414c0dd8eef8d60899bc0d21"
+      },
+      "original_stderr": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "original_last_message": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/last-message.json",
+        "sha256": "4b16c9db3b3df5227c496e06d5b4b76530adfc3cee2896be8fe66469345cb941"
+      },
+      "receipt_exit_code": 0,
+      "receipt_error": null,
+      "worker_identity": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pgid": 2266527,
+        "pid": 2266527,
+        "starttime": "237389436"
+      },
+      "cli_identity": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pgid": 2266528,
+        "pid": 2266528,
+        "starttime": "237389455"
+      },
+      "worker_currently_alive": false,
+      "cli_currently_alive": false,
+      "turn_completions": 1,
+      "commands": [
+        {
+          "item_id": "item_1",
+          "command": "/bin/bash -lc 'cat docs/PROJECT_STATUS.md coordination/ACTIVE_WORKFLOW.json coordination/protocols/SINGLE_BRANCH_WORKFLOW.md docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md docs/experiments/r6-robustness-auto/USER_AUTHORITY.txt'",
+          "completed": true,
+          "exit_code": 0,
+          "exact_command_matches": true
+        },
+        {
+          "item_id": "item_2",
+          "command": "/bin/bash -lc 'cat tools/r6_budget.py tools/r6_recovery.py tools/r6_model_worker.py'",
+          "completed": true,
+          "exit_code": 0,
+          "exact_command_matches": true
+        },
+        {
+          "item_id": "item_3",
+          "command": "/bin/bash -lc 'cat training_workloads/unified_h1/robustness.py training_workloads/unified_h1/robustness_scenarios.py training_workloads/unified_h1/range_archive.py isaaclab-training/instinctlab/observations/robustness.py'",
+          "completed": true,
+          "exit_code": 0,
+          "exact_command_matches": true
+        },
+        {
+          "item_id": "item_4",
+          "command": "/bin/bash -lc 'cat docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json docs/experiments/r6-robustness-auto/SPLIT_MANIFEST.json docs/experiments/r6-robustness-auto/CAPACITY_ALLOCATION.json docs/experiments/r6-robustness-auto/goal_budget.json'",
+          "completed": true,
+          "exit_code": 0,
+          "exact_command_matches": true
+        },
+        {
+          "item_id": "item_5",
+          "command": "/bin/bash -lc \"rg --files | rg '(r6|robustness|range_archive).*test|test.*(r6|robustness|range_archive)|CPU_'; cat coordination/ACTIVE_WORKFLOW.json coordination/protocols/SINGLE_BRANCH_WORKFLOW.md\"",
+          "completed": true,
+          "exit_code": 0,
+          "exact_command_matches": true
+        },
+        {
+          "item_id": "item_7",
+          "command": "/bin/bash -lc 'cat tools/test_r6_model_worker.py tools/test_r6_robustness.py tools/test_r6_budget.py tools/test_r6_recovery.py'",
+          "completed": true,
+          "exit_code": 0,
+          "exact_command_matches": true
+        },
+        {
+          "item_id": "item_8",
+          "command": "/bin/bash -lc 'cat docs/experiments/r6-robustness-auto/CPU_*.json docs/experiments/r6-robustness-auto/CPU_*.txt'",
+          "completed": true,
+          "exit_code": 0,
+          "exact_command_matches": true
+        },
+        {
+          "item_id": "item_9",
+          "command": "/bin/bash -lc \"sed -n '1,125p' docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md; git status --short; git rev-parse HEAD; rg --files -g '*STOP*' -g 'AGENTS.md' tools training_workloads isaaclab-training coordination docs/experiments/r6-robustness-auto\"",
+          "completed": true,
+          "exit_code": 1,
+          "exact_command_matches": true
+        },
+        {
+          "item_id": "item_10",
+          "command": "/bin/bash -lc \"cat docs/experiments/r6-robustness-auto/CPU_RECOVERY_TESTS.json docs/experiments/r6-robustness-auto/CPU_METRIC_MEASUREMENT_TESTS.json docs/experiments/r6-robustness-auto/CPU_ARCHIVE_SCENARIO_TESTS.json; cat tools/test_r6_range_delivery.py tools/test_r6_scenarios.py tools/test_r6_range_archive.py; sed -n '90,210p' tools/test_r6_recovery.py; rg -n 'def identity|def owns' tools/rlflow/rlflow/jobs.py\"",
+          "completed": true,
+          "exit_code": 0,
+          "exact_command_matches": true
+        },
+        {
+          "item_id": "item_11",
+          "command": "/bin/bash -lc \"sha256sum tools/r6_budget.py tools/r6_recovery.py tools/r6_model_worker.py tools/test_r6_model_worker.py tools/test_r6_recovery.py training_workloads/unified_h1/robustness.py training_workloads/unified_h1/robustness_scenarios.py training_workloads/unified_h1/range_archive.py isaaclab-training/instinctlab/observations/robustness.py docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json docs/experiments/r6-robustness-auto/SPLIT_MANIFEST.json docs/experiments/r6-robustness-auto/CAPACITY_ALLOCATION.json docs/experiments/r6-robustness-auto/goal_budget.json docs/experiments/r6-robustness-auto/CPU_WORKER_TESTS.txt docs/experiments/r6-robustness-auto/CPU_ARCHIVE_SCENARIO_TESTS.json; sed -n '55,85p' tools/rlflow/rlflow/jobs.py; cat docs/experiments/r6-robustness-auto/CPU_REVIEW_ENTRY.json docs/experiments/r6-robustness-auto/CPU_REVIEW_RECOVERY1_ENTRY.json\"",
+          "completed": true,
+          "exit_code": 0,
+          "exact_command_matches": true
+        },
+        {
+          "item_id": "item_12",
+          "command": "/bin/bash -lc \"python3 -B - <<'PY'\nimport json\nfrom pathlib import Path\nfrom tools.r6_budget import reserve,totals\np=Path('docs/experiments/r6-robustness-auto/goal_budget.json')\nb=json.loads(p.read_text());b['reservations']=[];b['used']['automatic_model_sessions']=10\nkey=dict(goal_id=b['goal_id'],event_id='READ_ONLY_ARITHMETIC',job_id='CPU-NO-JOB',input_sha256='a'*64,role='review')\nr=reserve(b,event_key=key,resources={'automatic_model_sessions':15},purpose='confirmation_delivery',free_disk_bytes=500*1024**3)\nprint(json.dumps({'in_memory_only':True,'total_sessions':totals(r)['automatic_model_sessions'],'remaining':32-totals(r)['automatic_model_sessions'],'required_protected_sessions':sum(b['protected_model_sessions'].values()),'current_real_ledger_reservations':len(json.loads(p.read_text())['reservations'])}))\nPY\"",
+          "completed": true,
+          "exit_code": 0,
+          "exact_command_matches": true
+        }
+      ],
+      "unmatched_completed_ids": [],
+      "other_item_types": [],
+      "mcp_calls": [],
+      "unmatched_completed_mcp_ids": [],
+      "all_reported_commands_terminal": true,
+      "all_reported_tool_items_terminal": true,
+      "historical_descendant_cleanup_proven": false,
+      "independent_reconciliation_required": true
+    },
+    {
+      "event_key": "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75",
+      "original_receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/receipt.json",
+        "sha256": "82cdb6ba2ac8cb559d3055c7def8bc74537f477ab4c16b784b4251d347ae554e"
+      },
+      "original_events": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/events.jsonl",
+        "sha256": "382ebe60b3f6d1b86d58c78d106035f0ebc4ac750efce7869036e82527f5542b"
+      },
+      "original_stderr": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "original_last_message": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/last-message.json",
+        "sha256": "ad0cbca8cbe8864ef4b021986b7e128930eeea9679a9c77871746cd62b88ef95"
+      },
+      "receipt_exit_code": 0,
+      "receipt_error": null,
+      "worker_identity": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pgid": 2265882,
+        "pid": 2265882,
+        "starttime": "237375443"
+      },
+      "cli_identity": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pgid": 2265886,
+        "pid": 2265886,
+        "starttime": "237375462"
+      },
+      "worker_currently_alive": false,
+      "cli_currently_alive": false,
+      "turn_completions": 1,
+      "commands": [],
+      "unmatched_completed_ids": [],
+      "other_item_types": [],
+      "mcp_calls": [
+        {
+          "item_id": "item_1",
+          "server": "codex",
+          "tool": "list_mcp_resources",
+          "arguments": {},
+          "completed": true,
+          "exact_call_matches": true,
+          "error": null
+        },
+        {
+          "item_id": "item_2",
+          "server": "codex",
+          "tool": "list_mcp_resource_templates",
+          "arguments": {},
+          "completed": true,
+          "exact_call_matches": true,
+          "error": null
+        }
+      ],
+      "unmatched_completed_mcp_ids": [],
+      "all_reported_commands_terminal": true,
+      "all_reported_tool_items_terminal": true,
+      "historical_descendant_cleanup_proven": false,
+      "independent_reconciliation_required": true
+    }
+  ],
+  "process_observation_pid": 2295623,
+  "observed_boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+  "modern_cleanup_schema_waived": false,
+  "no_model_workers_gate_changed": false,
+  "runtime_dispatch_authorized": false,
+  "claims": {
+    "original_receipts_unmodified": true,
+    "process_checks_are_current_observations_not_historical_cleanup_proof": true
+  },
+  "remaining": [
+    "Independent inspection of complete terminal tool commands for spawning/ownership ambiguity",
+    "Explicit narrow reconciliation acceptance and validator before any legacy receipt can satisfy no_model_workers",
+    "All future worker/CLI absence must still be checked at actual handoff; this snapshot cannot authorize later training"
+  ]
+}

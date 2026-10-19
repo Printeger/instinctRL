@@ -1,0 +1,22 @@
+{
+  "status": "CPU_EVIDENCE_AUDIT_PASS_NOT_RECONCILIATION_ACCEPTANCE",
+  "tests_passed": 5,
+  "test_log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_LEGACY_CLEANUP_AUDIT_TESTS.txt",
+    "sha256": "d4d1b876bc23750d25d4b185b7331a2af4537ab38ef09ac159dc634fe69f7c72"
+  },
+  "proposal": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LEGACY_MODEL_CLEANUP_RECONCILIATION_PROPOSAL_V2.json",
+    "sha256": "8dc7cfcd2f6869af1f26ca95f154c690da04b94beaa4cb2931ce1947a56758cd"
+  },
+  "guard_result": "MODEL_CLEANUP_UNCONFIRMED",
+  "gate_unchanged": true,
+  "original_receipts_unchanged": true,
+  "model_calls": 0,
+  "live_starts": 0,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/audit_r6_legacy_model_cleanup.py",
+    "sha256": "0446d05c7267c1b29a1e736d76dbe5572a7821cff3062c6397f03fdf8da0e473"
+  },
+  "limitation": "Current process absence and terminal tool events do not retroactively prove all descendants were cleaned; explicit independent reconciliation and a narrow validator are still required"
+}
