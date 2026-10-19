@@ -1,0 +1,197 @@
+{
+  "status": "READ_ONLY_HISTORICAL_CONTROL_DIRECTORY_SIZE_NOT_NATIVE_BOUND",
+  "jobs": [
+    {
+      "job_id": "J-c2412eb2e9c23e5a",
+      "root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c2412eb2e9c23e5a",
+      "files": [
+        {
+          "relative": "descendant-cleanup.json",
+          "bytes": 675
+        },
+        {
+          "relative": "descendant-ledger.json",
+          "bytes": 164
+        },
+        {
+          "relative": "h1-authority.json",
+          "bytes": 16710
+        },
+        {
+          "relative": "h1-collection.json",
+          "bytes": 3526
+        },
+        {
+          "relative": "h1-collections/13b22f76395e913e090aa55db88dd71f7855c302cb0da72cdd158043b3706dbc.json",
+          "bytes": 3526
+        },
+        {
+          "relative": "h1-evidence/6675b82bc2bd3bb1831683a6deb973abd1f11ad385947cd5cba1f87a760cd599/process_start.json",
+          "bytes": 1358
+        },
+        {
+          "relative": "h1-evidence/672e238efc7b4ecbab56dc963cb51155dc0967892af2bbb19ed208a391f58f90/process_identity.json",
+          "bytes": 292
+        },
+        {
+          "relative": "h1-evidence/d6b794e3c7dbdeca591149e98205fb48e6c2159a91f3432a6f31e77591ebadd8/status.json",
+          "bytes": 945
+        },
+        {
+          "relative": "held-child.json",
+          "bytes": 960
+        },
+        {
+          "relative": "lifeguard-ack.json",
+          "bytes": 830
+        },
+        {
+          "relative": "lifeguard-done",
+          "bytes": 4
+        },
+        {
+          "relative": "lifeguard-ready.json",
+          "bytes": 200
+        },
+        {
+          "relative": "lifeguard-request.json",
+          "bytes": 3928
+        },
+        {
+          "relative": "lifeguard.log",
+          "bytes": 0
+        },
+        {
+          "relative": "owner-subreaper.json",
+          "bytes": 128
+        },
+        {
+          "relative": "process-identity.json",
+          "bytes": 103
+        },
+        {
+          "relative": "receipt.json",
+          "bytes": 280
+        },
+        {
+          "relative": "release-intent.json",
+          "bytes": 152
+        },
+        {
+          "relative": "request.json",
+          "bytes": 3623
+        },
+        {
+          "relative": "supervisor-release.json",
+          "bytes": 231
+        },
+        {
+          "relative": "supervisor.log",
+          "bytes": 13204
+        }
+      ],
+      "total_bytes": 50839,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c2412eb2e9c23e5a/receipt.json",
+        "sha256": "e0e651b515eb29ba337ace06932e60ebe536ce0e28bc7f24a353dad3f6d6da2d"
+      }
+    },
+    {
+      "job_id": "J-8bdfaca0488e524d",
+      "root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-8bdfaca0488e524d",
+      "files": [
+        {
+          "relative": "descendant-cleanup.json",
+          "bytes": 675
+        },
+        {
+          "relative": "descendant-ledger.json",
+          "bytes": 164
+        },
+        {
+          "relative": "h1-authority.json",
+          "bytes": 15856
+        },
+        {
+          "relative": "h1-collection.json",
+          "bytes": 4221
+        },
+        {
+          "relative": "h1-collections/245689355020d6ec2af0efcdf01c067fa5889ffab8a364ca17131c311f7dcb1a.json",
+          "bytes": 4221
+        },
+        {
+          "relative": "h1-evidence/1d36ffc1bad8d9b2165d65e3782231cc0a53e970f8055ef2931db4e139150d48/process_start.json",
+          "bytes": 1360
+        },
+        {
+          "relative": "h1-evidence/4e31b587d64b63b002d3172fbe02ca54a89ddb0836bab1579aacd277a3da5872/status.json",
+          "bytes": 961
+        },
+        {
+          "relative": "h1-evidence/98e65f467e0b081a4f82a848e96e7f95631dacb6866971c916bdc5f8be15ba1f/process_identity.json",
+          "bytes": 292
+        },
+        {
+          "relative": "held-child.json",
+          "bytes": 935
+        },
+        {
+          "relative": "lifeguard-ack.json",
+          "bytes": 830
+        },
+        {
+          "relative": "lifeguard-done",
+          "bytes": 4
+        },
+        {
+          "relative": "lifeguard-ready.json",
+          "bytes": 200
+        },
+        {
+          "relative": "lifeguard-request.json",
+          "bytes": 3701
+        },
+        {
+          "relative": "lifeguard.log",
+          "bytes": 0
+        },
+        {
+          "relative": "owner-subreaper.json",
+          "bytes": 128
+        },
+        {
+          "relative": "process-identity.json",
+          "bytes": 103
+        },
+        {
+          "relative": "receipt.json",
+          "bytes": 278
+        },
+        {
+          "relative": "release-intent.json",
+          "bytes": 152
+        },
+        {
+          "relative": "request.json",
+          "bytes": 3396
+        },
+        {
+          "relative": "supervisor-release.json",
+          "bytes": 231
+        },
+        {
+          "relative": "supervisor.log",
+          "bytes": 40283
+        }
+      ],
+      "total_bytes": 77991,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-8bdfaca0488e524d/receipt.json",
+        "sha256": "c4487db560e1c6d2d368924d7b2b4ec5d76b49604d4c6c2f8a662e574ddf4174"
+      }
+    }
+  ],
+  "limitations": "Job control directories only; runtime can emit elsewhere. Does not establish a safe reduced native quota or replace supervisor/runtime output guards.",
+  "capacity_pass": false
+}

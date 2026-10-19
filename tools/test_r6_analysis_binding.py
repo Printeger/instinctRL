@@ -44,6 +44,8 @@ class BindingTests(unittest.TestCase):
         self.report['measurement_replayer']=analysis.pin(root/'training_workloads/unified_h1/robustness_measurement_replay.py')
         self.report['delivery_implementation']=analysis.pin(root/'isaaclab-training/instinctlab/observations/robustness.py')
         self.report['physics_replayer']=analysis.pin(root/'training_workloads/unified_h1/robustness_physics_replay.py')
+        self.report['audit_reader']=analysis.pin(root/'training_workloads/unified_h1/robustness_audit.py')
+        self.report['force_codec']=analysis.pin(root/'training_workloads/unified_h1/force_archive.py')
         cleanup=patch('tools.r6_analysis_binding.cleanup_evidence',return_value=({},dict(status='FAILED',exit_code=-9)))
         cleanup.start();self.addCleanup(cleanup.stop)
 

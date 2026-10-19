@@ -7,6 +7,7 @@ import struct
 import zlib
 from .logging import _jsonable
 from training_workloads.scale_003.persistence import reserve_output_bytes
+from .force_archive import MAGIC,SHAPES,encode_force,decode_force
 
 HEADER=struct.Struct('<II32s')
 MAX_RECORD=8*1024**2
@@ -22,8 +23,12 @@ class AuditLog:
         finally:os.close(fd)
     def append(self,kind,payload):
         if self.failed:raise ValueError('AUDIT_PREVIOUS_FAILURE')
-        raw=json.dumps(dict(schema_version='r6-audit/1',run_id=self.run_id,block_id=self.block_id,
-            sequence=self.records,kind=kind,payload=_jsonable(payload)),sort_keys=True,separators=(',',':'),allow_nan=False).encode()
+        row=dict(schema_version='r6-audit/1',run_id=self.run_id,block_id=self.block_id,
+            sequence=self.records,kind=kind,payload=payload)
+        if kind=='force' and all(k in payload for k in SHAPES):
+            raw=encode_force(row)
+        else:
+            raw=json.dumps(_jsonable(row),sort_keys=True,separators=(',',':'),allow_nan=False).encode()
         if len(raw)>MAX_RECORD:raise ValueError('AUDIT_RECORD_BOUND')
         compressed=zlib.compress(raw,3)
         record=HEADER.pack(len(compressed),len(raw),hashlib.sha256(raw).digest())+compressed
@@ -52,7 +57,7 @@ def read_audit(path,*,run_id,block_id,expected_records):
             if len(raw)!=raw_size or not decoder.eof or decoder.unused_data or decoder.unconsumed_tail:
                 raise ValueError('AUDIT_DECOMPRESSION_BOUND')
             if hashlib.sha256(raw).digest()!=digest:raise ValueError('AUDIT_HASH')
-            row=json.loads(raw)
+            row=decode_force(raw) if raw.startswith(MAGIC) else json.loads(raw)
             if (row['schema_version'],row['run_id'],row['block_id'],row['sequence'])!=('r6-audit/1',run_id,block_id,sequence):
                 raise ValueError('AUDIT_IDENTITY')
             yield row

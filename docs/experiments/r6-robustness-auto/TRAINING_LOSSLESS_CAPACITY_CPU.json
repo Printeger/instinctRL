@@ -1,0 +1,109 @@
+{
+  "status": "READ_ONLY_HISTORICAL_BYTE_COMPRESSION_NOT_R6_LOGGING_APPROVAL",
+  "capacity_pass": false,
+  "codec": "zlib level3 streaming; original bytes recover exactly",
+  "files": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+      "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+      "original_bytes": 1510761,
+      "compressed_bytes": 1308296,
+      "exact_byte_roundtrip": true,
+      "seconds": 0.029782135039567947,
+      "relative": "checkpoints/u640.pt"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u768.pt",
+      "sha256": "0c4a8b486280a3bb8dbc91778ed1949c085c4dedd3c6ff75ac7194a957111e41",
+      "original_bytes": 1510761,
+      "compressed_bytes": 1306802,
+      "exact_byte_roundtrip": true,
+      "seconds": 0.029311764985322952,
+      "relative": "checkpoints/u768.pt"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/learning_log/accounting.jsonl",
+      "sha256": "9249419735730262821d4dcc5b2369b95f6c17c397661b736dce2cf1b6eb4084",
+      "original_bytes": 1271848,
+      "compressed_bytes": 79088,
+      "exact_byte_roundtrip": true,
+      "seconds": 0.0037426729686558247,
+      "relative": "learning_log/accounting.jsonl"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/learning_log/compact_rollouts.jsonl",
+      "sha256": "787635d839a2379ec53987f69c8bea6b328cd837b0c5fb9cab4f856f0f0a0efe",
+      "original_bytes": 292764978,
+      "compressed_bytes": 76716705,
+      "exact_byte_roundtrip": true,
+      "seconds": 2.4603734938427806,
+      "relative": "learning_log/compact_rollouts.jsonl"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/learning_log/measurement_windows.jsonl",
+      "sha256": "dbbc75aa13e06e9e2da9da748ccee1d557d2f5cbbf71b59f14073e749d3ee877",
+      "original_bytes": 294978055,
+      "compressed_bytes": 57308793,
+      "exact_byte_roundtrip": true,
+      "seconds": 2.382364207878709,
+      "relative": "learning_log/measurement_windows.jsonl"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/learning_log/partial_rollout_steps.jsonl",
+      "sha256": "c467186f5d3d9ff90eb8b838fc6095aa274f66c32f3e694414d1f593a89a9bcd",
+      "original_bytes": 305324753,
+      "compressed_bytes": 76171352,
+      "exact_byte_roundtrip": true,
+      "seconds": 2.379875908140093,
+      "relative": "learning_log/partial_rollout_steps.jsonl"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/learning_log/rollouts.jsonl",
+      "sha256": "bca81478f0531e641ec7a08435140d1abf0d48ebce2c461f48893e17ccc596a0",
+      "original_bytes": 1693278,
+      "compressed_bytes": 259965,
+      "exact_byte_roundtrip": true,
+      "seconds": 0.008239116985350847,
+      "relative": "learning_log/rollouts.jsonl"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/pilot_diagnostic/first_update_probe.pt",
+      "sha256": "c6bb100c558c33438b25160f43b6459d12a70d75e65909f3e1328f86e11f8918",
+      "original_bytes": 12289599,
+      "compressed_bytes": 9961639,
+      "exact_byte_roundtrip": true,
+      "seconds": 0.2725663180463016,
+      "relative": "pilot_diagnostic/first_update_probe.pt"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/pilot_diagnostic/update_513_full_input.pt",
+      "sha256": "abd6987bc18e42ed456a99e3bbf1ad47933d7118432205560982b6b2f432a284",
+      "original_bytes": 522177865,
+      "compressed_bytes": 87604600,
+      "exact_byte_roundtrip": true,
+      "seconds": 2.5776261226274073,
+      "relative": "pilot_diagnostic/update_513_full_input.pt"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/pilot_diagnostic/update_514_full_input.pt",
+      "sha256": "d98b099fc39ae1f4984b38c9568e7869d2be7db6233a3f6df834139305a3488d",
+      "original_bytes": 522177865,
+      "compressed_bytes": 97297179,
+      "exact_byte_roundtrip": true,
+      "seconds": 2.7671608650125563,
+      "relative": "pilot_diagnostic/update_514_full_input.pt"
+    }
+  ],
+  "original_total_bytes": 1958329318,
+  "unmeasured_small_files_bytes": 2629555,
+  "projected_lossless_total_bytes": 410643974,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TRAINING_STORAGE_CPU.json",
+    "sha256": "dc33c02b9fa39e1a6bcb57ced379246d4790b00dd5b0c66940d4fcc0e96a6825"
+  },
+  "tool": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_training_compression.py",
+    "sha256": "064c32d8c6a2f2a3ba76634e5f93d08f454f1fcac4d1beb5035957bad609565c"
+  },
+  "limitations": "Actual oldR5 bytes; R6 noise/fields can change ratio. Not a worst-case bound. No compressed files or new training writer created. No pickle loading, GPU or simulator."
+}

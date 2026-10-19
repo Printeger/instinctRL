@@ -67,6 +67,7 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 新增准确作业分析绑定入口：`r6_batch --analysis-report ... --analysis-store ...` 可消费已生成的CPU重放报告，核对spec/authorization/attempt/protocol、原件清单及关闭/postrun记录；记录保持幂等和原生失败/控制状态。54项CPU检查通过（含16项新增绑定测试），见 `CPU_ANALYSIS_BINDING_TESTS.json`。模型绑定缺失明确记为缺口；该入口不等于自动分析worker或科学接受，完整controller与下一决策派发仍未部署。
 新增流式测量重放：归档clean测量、时间和audit reset mask重建实际送达帧，逐字段bit-exact核对噪声、延迟、丢帧与有效性，并接入CPU分析及作业绑定。发现原实现设备相关RNG无法纯CPU重放，新增 `R6/range-noise/cpu-v1` 候选固定CPU随机生成/加噪，保留独立lane流与无效beam抽样规则；旧身份不继承。完整32×21240beam CPU检查通过，详见 `CPU_MEASUREMENT_REPLAY_TESTS.json`。真实GPU传输/开销、物理传感器与时钟真实性、独审和容量仍未通过；未启动R6 live。
 新增物理暂存/reset原件重算：保存每tick姿态、原旋翼wrench、实际dt与末步完成时钟，以及reset世界坐标/dtype；NumPy独立重算世界/局部附加力和叠加，检查撤力、力矩保留、seed/reset/tolerance与最终tick。结果明确 `physical_integration_verified=false`，已接入分析/绑定但未独审或live。见 `CPU_PHYSICS_REPLAY_TESTS.json`。新增字段使最终四模型force归档CPU样本估计增至7,048,886,240bytes（约6.56GiB）；`FORCE_ARCHIVE_CAPACITY_CPU_V2.json`仍非上界，capacity_pass=false，旧估计/原件保留。
+完整容量补算与force无损二进制候选：45项CPU检查通过，旧JSON审计仍可读、逐record哈希/fsync/配额保留；`FORCE_ARCHIVE_CAPACITY_CPU_V3.json`最终四模型force样本估计2.54GiB。全control/reward step样本和新版CPU RNG测距已补测；旧训练1.958GB只读无损压缩估计0.411GB，原字节/冻结u640哈希核验，训练压缩writer未实现。`CAPACITY_COMPOSED_DRAFT_V2.json`保留最终774400非训练transitions，提出最终92GiB/27000秒（现80GiB/24000秒不足）；开发示例与最终共127.516GiB，未修改操作账本。原生/训练/元数据/视频精确配额和独审仍未闭合，capacity_pass=false。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）

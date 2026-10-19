@@ -209,5 +209,7 @@ def analyze(output, protocol_path, *, run_id, seed, split):
         measurement_replayer=pin(Path(__file__).with_name('robustness_measurement_replay.py')),
         delivery_implementation=pin(Path(__file__).resolve().parents[2]/'isaaclab-training/instinctlab/observations/robustness.py'),
         physics_replayer=pin(Path(__file__).with_name('robustness_physics_replay.py')),
+        audit_reader=pin(Path(__file__).with_name('robustness_audit.py')),
+        force_codec=pin(Path(__file__).with_name('force_archive.py')),
         scientific_acceptance=False, summary=summary)
     return report, summary

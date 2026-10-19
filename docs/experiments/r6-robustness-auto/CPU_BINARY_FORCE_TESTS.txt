@@ -1,0 +1,33 @@
+test_corrupt_shape_offset_and_dtype_rejected (tools.test_r6_force_archive.ForceArchiveTests.test_corrupt_shape_offset_and_dtype_rejected) ... ok
+test_exact_float32_and_float64_roundtrip_and_negative_zero (tools.test_r6_force_archive.ForceArchiveTests.test_exact_float32_and_float64_roundtrip_and_negative_zero) ... ok
+test_invalid_arrays_not_coerced (tools.test_r6_force_archive.ForceArchiveTests.test_invalid_arrays_not_coerced) ... ok
+test_mixed_legacy_and_binary_audit_records (tools.test_r6_force_archive.ForceArchiveTests.test_mixed_legacy_and_binary_audit_records) ... ok
+test_quota_checked_before_binary_record_write (tools.test_r6_force_archive.ForceArchiveTests.test_quota_checked_before_binary_record_write) ... ok
+test_truncation_and_trailing_data_rejected (tools.test_r6_force_archive.ForceArchiveTests.test_truncation_and_trailing_data_rejected) ... ok
+test_archive_roundtrip_and_final_tick (tools.test_r6_physics_replay.PhysicsReplayTests.test_archive_roundtrip_and_final_tick) ... ok
+test_clock_dt_mass_and_active_corruption (tools.test_r6_physics_replay.PhysicsReplayTests.test_clock_dt_mass_and_active_corruption) ... ok
+test_force_world_local_rotor_and_torque_corruption (tools.test_r6_physics_replay.PhysicsReplayTests.test_force_world_local_rotor_and_torque_corruption) ... ok
+test_independent_rotation_and_window_endpoints (tools.test_r6_physics_replay.PhysicsReplayTests.test_independent_rotation_and_window_endpoints) ... ok
+test_missing_force_record (tools.test_r6_physics_replay.PhysicsReplayTests.test_missing_force_record) ... ok
+test_reset_recomputed_from_seed_and_observed_world (tools.test_r6_physics_replay.PhysicsReplayTests.test_reset_recomputed_from_seed_and_observed_world) ... ok
+test_reset_seed_and_local_coordinate_corruption (tools.test_r6_physics_replay.PhysicsReplayTests.test_reset_seed_and_local_coordinate_corruption) ... ok
+test_reset_tolerance_not_trusted (tools.test_r6_physics_replay.PhysicsReplayTests.test_reset_tolerance_not_trusted) ... ok
+test_audit_reset_types_not_coerced (tools.test_r6_measurement_replay.MeasurementReplayTests.test_audit_reset_types_not_coerced) ... ok
+test_audit_schedule_complete_and_exact (tools.test_r6_measurement_replay.MeasurementReplayTests.test_audit_schedule_complete_and_exact) ... ok
+test_full_noise_delay_drop_reset_bit_exact (tools.test_r6_measurement_replay.MeasurementReplayTests.test_full_noise_delay_drop_reset_bit_exact) ... ok
+test_missing_frame_and_wrong_beam_denominator (tools.test_r6_measurement_replay.MeasurementReplayTests.test_missing_frame_and_wrong_beam_denominator) ... ok
+test_production_beam_count_with_default_replay_contract (tools.test_r6_measurement_replay.MeasurementReplayTests.test_production_beam_count_with_default_replay_contract) ... ok
+test_reencoded_tamper_rejected_not_just_archive_hash (tools.test_r6_measurement_replay.MeasurementReplayTests.test_reencoded_tamper_rejected_not_just_archive_hash) ... ok
+test_rng_labels_cannot_hide_wrong_noise (tools.test_r6_measurement_replay.MeasurementReplayTests.test_rng_labels_cannot_hide_wrong_noise) ... ok
+test_seed_label_changes_cannot_pass (tools.test_r6_measurement_replay.MeasurementReplayTests.test_seed_label_changes_cannot_pass) ... ok
+test_unrecorded_reset_rejected (tools.test_r6_measurement_replay.MeasurementReplayTests.test_unrecorded_reset_rejected) ... ok
+test_actual_backend_entry_rejects_old_authority_and_unfrozen_protocol (tools.test_r6_evaluation.EvaluationTests.test_actual_backend_entry_rejects_old_authority_and_unfrozen_protocol) ... ok
+test_audit_quota_corruption_and_no_overwrite (tools.test_r6_evaluation.EvaluationTests.test_audit_quota_corruption_and_no_overwrite) ... ok
+test_full_lane_raw_world_commands_archive_and_counts (tools.test_r6_evaluation.EvaluationTests.test_full_lane_raw_world_commands_archive_and_counts) ... ok
+test_last_sample_reset_keeps_32_lane_failure_denominator (tools.test_r6_evaluation.EvaluationTests.test_last_sample_reset_keeps_32_lane_failure_denominator) ... ok
+test_transition_cap_stops_before_second_physical_step (tools.test_r6_evaluation.EvaluationTests.test_transition_cap_stops_before_second_physical_step) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 35.102s
+
+OK

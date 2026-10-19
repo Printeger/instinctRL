@@ -65,7 +65,8 @@ def run():
     total = sum(b['estimated_force_bytes'] for b in blocks)
     paths = ['tools/measure_r6_force_capacity.py', 'tools/test_r6_physics_adapter.py',
         'isaaclab-training/instinctlab/observations/robustness_physics.py',
-        'training_workloads/unified_h1/robustness_audit.py', 'training_workloads/unified_h1/logging.py']
+        'training_workloads/unified_h1/robustness_audit.py', 'training_workloads/unified_h1/force_archive.py',
+        'training_workloads/unified_h1/logging.py']
     def pin(path):
         return dict(path=str(path), sha256=hashlib.sha256(path.read_bytes()).hexdigest())
     return dict(status='CPU_FIXTURE_NOT_CAPACITY_ACCEPTANCE', capacity_pass=False,

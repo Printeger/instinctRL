@@ -1,0 +1,123 @@
+{
+  "status": "CPU_PASS_CAPACITY_PROPOSAL_NOT_ACCEPTED",
+  "tests": 45,
+  "new_codec_tests": 6,
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/force_archive.py",
+      "sha256": "2ada654e0f9f1f95799b12379c631f8fcac2a8666f53c185893fa521fe79309c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_audit.py",
+      "sha256": "6990ef11d6c018b529fa7b805b2ee7fe5c11dfab028b4392798f9024427fb087"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_analysis.py",
+      "sha256": "1507f7f2ab57faed5f8ebc9f931709875de546fab2da1972ae2546851be92ae8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "da614602aeb2ce37d03eada3b0155444384a8d1e564fc435bbd9d7cc3b2d5cfd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_force_archive.py",
+      "sha256": "3ed75ce207d4930c0b417377c1ea0b0d28fe461fd7cf911f779deab3547d6740"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_analysis_binding.py",
+      "sha256": "7a01135dd5ef3a90cb0b2fb98c08e2d6ecd1e89a871619fc4ad13564aa620911"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_step_capacity.py",
+      "sha256": "dce827ce188cec55cd1f0daa8b1e3952dd8d4306461137cc517b8e323f749371"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_force_capacity.py",
+      "sha256": "e24d917566b068c52d3d0f9fc00b81caaa4c2855da174e75e26c667443a3e13f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_training_compression.py",
+      "sha256": "064c32d8c6a2f2a3ba76634e5f93d08f454f1fcac4d1beb5035957bad609565c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/build_r6_capacity_design.py",
+      "sha256": "9ec771e9478f908ac6fb857fec975b951c21d75f206667c117db9f755cb84e32"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BINARY_FORCE_TESTS.txt",
+      "sha256": "f3c173789310651d4f57ca418942a0cf0b72158d0a771cc64f70fa5ce71c7e5b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BINARY_FORCE_BINDING_TESTS.txt",
+      "sha256": "c7aef28573dd346b7ba685f3d2ec544dbfb85fedfbed9fab0c778d251f7118ec"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BINARY_FORCE_ANALYSIS_TEST.txt",
+      "sha256": "14bcca47b6e19c715e338b5acc2e6f26803bf0d9886cbbec2cc4c591b22556a3"
+    }
+  ],
+  "commands": [
+    {
+      "python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "args": [
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_r6_force_archive",
+        "tools.test_r6_physics_replay",
+        "tools.test_r6_measurement_replay",
+        "tools.test_r6_evaluation",
+        "-v"
+      ],
+      "tests": 28,
+      "seconds": 35.102,
+      "exit_code": 0
+    },
+    {
+      "python": "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+      "args": [
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_r6_analysis_binding"
+      ],
+      "tests": 16,
+      "seconds": 0.078,
+      "exit_code": 0
+    },
+    {
+      "python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "args": [
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_r6_analysis.AnalysisTests.test_combined_report_full_protocol_keeps_missing_blocks"
+      ],
+      "tests": 1,
+      "seconds": 1.288,
+      "exit_code": 0
+    }
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": "",
+    "tensor_CPU_threads": "OMP_NUM_THREADS=2 MKL_NUM_THREADS=2"
+  },
+  "coverage": [
+    "float32/float64 full force tensors exact JSON-value recovery, including negative zero",
+    "Legacy JSON force and binary force records coexist in unchanged per-record hash/zlib/quota envelope",
+    "Invalid tensor shape/dtype/nonfinite, malformed descriptor/offset/length/truncation/trailing data rejected",
+    "Quota checked before write; existing force/reset reconstruction and measurement/evaluation regressions pass",
+    "Exact report consumer pins audit reader and force codec implementations"
+  ],
+  "capacity_pass": false,
+  "ledger_changed": false,
+  "limitations": [
+    "Not independently accepted and no live GPU or physics verification",
+    "Force binary codec is implemented; proposed training compression is measured only, not implemented",
+    "Full capacity draft still depends on explicit writer quotas, settlement and independent review"
+  ]
+}

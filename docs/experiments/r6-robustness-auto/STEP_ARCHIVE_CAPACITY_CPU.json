@@ -1,0 +1,143 @@
+{
+  "status": "CPU_FIXTURE_NOT_CAPACITY_ACCEPTANCE",
+  "capacity_pass": false,
+  "seed": 2026102003,
+  "samples": [
+    {
+      "kind": "step_attempt",
+      "step": 0,
+      "bytes": 2518,
+      "seconds": 0.0030896011739969254
+    },
+    {
+      "kind": "step_complete",
+      "step": 0,
+      "bytes": 6794,
+      "seconds": 0.003974153194576502
+    },
+    {
+      "kind": "step_attempt",
+      "step": 1,
+      "bytes": 2530,
+      "seconds": 0.002585840877145529
+    },
+    {
+      "kind": "step_complete",
+      "step": 1,
+      "bytes": 7030,
+      "seconds": 0.004006932955235243
+    },
+    {
+      "kind": "step_attempt",
+      "step": 2,
+      "bytes": 2539,
+      "seconds": 0.002711891196668148
+    },
+    {
+      "kind": "step_complete",
+      "step": 2,
+      "bytes": 7086,
+      "seconds": 0.003983092028647661
+    },
+    {
+      "kind": "step_attempt",
+      "step": 3,
+      "bytes": 2545,
+      "seconds": 0.0033274726010859013
+    },
+    {
+      "kind": "step_complete",
+      "step": 3,
+      "bytes": 7063,
+      "seconds": 0.003769981674849987
+    },
+    {
+      "kind": "step_attempt",
+      "step": 4,
+      "bytes": 2530,
+      "seconds": 0.0027628811076283455
+    },
+    {
+      "kind": "step_complete",
+      "step": 4,
+      "bytes": 7069,
+      "seconds": 0.004011451732367277
+    },
+    {
+      "kind": "step_attempt",
+      "step": 5,
+      "bytes": 2556,
+      "seconds": 0.0032074619084596634
+    },
+    {
+      "kind": "step_complete",
+      "step": 5,
+      "bytes": 7120,
+      "seconds": 0.0038956422358751297
+    },
+    {
+      "kind": "step_attempt",
+      "step": 6,
+      "bytes": 2526,
+      "seconds": 0.002791070844978094
+    },
+    {
+      "kind": "step_complete",
+      "step": 6,
+      "bytes": 7035,
+      "seconds": 0.003995321691036224
+    },
+    {
+      "kind": "step_attempt",
+      "step": 7,
+      "bytes": 2545,
+      "seconds": 0.0030339020304381847
+    },
+    {
+      "kind": "step_complete",
+      "step": 7,
+      "bytes": 6970,
+      "seconds": 0.00400193314999342
+    }
+  ],
+  "exact_json_roundtrip": true,
+  "policy_steps_per_model": 5020,
+  "sampled_pair_bytes": 9676,
+  "per_model_step_audit_bytes": 48573520,
+  "final_four_step_audit_bytes": 194294080,
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+    "sha256": "6f9e29e06a5031fb05b9d54456c8a6618a26dd73ff03a07b5c3d308e0f74361b",
+    "bytes": 15889
+  },
+  "code": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_step_capacity.py",
+      "sha256": "382f8e0692868677906af87c75670a29f2abdc90897828ddf3b8b82857aeaffd",
+      "bytes": 6155
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "2fc028b02c1bea0c66c09d8e207f54f8a8e69cb99c30989f0079b2c1b3d408e0",
+      "bytes": 8260
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_audit.py",
+      "sha256": "c2271d4e4c5d05a0872eed5d1d7a048a56ea03d21ecf0d49801c9a3cb21dbf3c",
+      "bytes": 3096
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/control/pipeline.py",
+      "sha256": "dd1e81f51f76422d7dfc6673dbf59c3c082b7fd9ceb12ff84a56272c745d1d2b",
+      "bytes": 5785
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/task/rewards_h1.py",
+      "sha256": "ff69134ae79afbda8627811a060341de350f5d4829166a01bdb423dc71c07027",
+      "bytes": 9856
+    }
+  ],
+  "limitations": "Actual CPU control/reward functions on full21240beam synthetic history. No simulator or policy model. Samples do not bound all numeric values/compression or reset events. Excludes range, force, reset, motion, original suite, training, native, snapshot, video and metadata.",
+  "gpu_queries": 0,
+  "simulator_initializations": 0
+}

@@ -68,6 +68,8 @@ def bind_analysis(entry, key, report_pin, store):
             raise RecoveryError('ANALYSIS_IMPLEMENTATION_DRIFT')
     root=Path(__file__).resolve().parents[1]
     for name,relative in [('measurement_replayer','training_workloads/unified_h1/robustness_measurement_replay.py'),
+                          ('audit_reader','training_workloads/unified_h1/robustness_audit.py'),
+                          ('force_codec','training_workloads/unified_h1/force_archive.py'),
                           ('physics_replayer','training_workloads/unified_h1/robustness_physics_replay.py'),
                           ('delivery_implementation','isaaclab-training/instinctlab/observations/robustness.py')]:
         if report.get(name)!=robustness_analysis.pin(root/relative):

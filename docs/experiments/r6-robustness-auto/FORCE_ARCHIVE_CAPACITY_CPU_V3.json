@@ -1,0 +1,248 @@
+{
+  "status": "CPU_FIXTURE_NOT_CAPACITY_ACCEPTANCE",
+  "capacity_pass": false,
+  "seed": 2026102002,
+  "cases": [
+    {
+      "acceleration_m_s2": 0.0,
+      "ticks": [
+        0,
+        999,
+        1000,
+        1039,
+        1040,
+        6599
+      ],
+      "active": [
+        false,
+        false,
+        true,
+        true,
+        false,
+        false
+      ],
+      "record_bytes": [
+        6777,
+        6790,
+        6766,
+        6779,
+        6786,
+        6775
+      ],
+      "encode_write_fsync_seconds": [
+        0.003536385018378496,
+        0.003666476346552372,
+        0.0036963890306651592,
+        0.0037753251381218433,
+        0.0036751069128513336,
+        0.0037086200900375843
+      ],
+      "exact_json_roundtrip": true
+    },
+    {
+      "acceleration_m_s2": 0.5,
+      "ticks": [
+        0,
+        999,
+        1000,
+        1039,
+        1040,
+        6599
+      ],
+      "active": [
+        false,
+        false,
+        true,
+        true,
+        false,
+        false
+      ],
+      "record_bytes": [
+        6778,
+        6780,
+        10401,
+        10396,
+        6781,
+        6792
+      ],
+      "encode_write_fsync_seconds": [
+        0.003742421977221966,
+        0.003723391331732273,
+        0.003715580329298973,
+        0.0036403131671249866,
+        0.0037041688337922096,
+        0.00364132272079587
+      ],
+      "exact_json_roundtrip": true
+    },
+    {
+      "acceleration_m_s2": 1.0,
+      "ticks": [
+        0,
+        999,
+        1000,
+        1039,
+        1040,
+        6599
+      ],
+      "active": [
+        false,
+        false,
+        true,
+        true,
+        false,
+        false
+      ],
+      "record_bytes": [
+        6776,
+        6780,
+        10396,
+        10416,
+        6794,
+        6789
+      ],
+      "encode_write_fsync_seconds": [
+        0.0036860969848930836,
+        0.003607870079576969,
+        0.003653425257652998,
+        0.0036602946929633617,
+        0.0038826451636850834,
+        0.003674647305160761
+      ],
+      "exact_json_roundtrip": true
+    }
+  ],
+  "blocks": [
+    {
+      "block_id": "S-clean-low",
+      "physics_ticks": 6600,
+      "active_ticks": 0,
+      "estimated_force_bytes": 44814000
+    },
+    {
+      "block_id": "S-clean-high",
+      "physics_ticks": 6600,
+      "active_ticks": 0,
+      "estimated_force_bytes": 44814000
+    },
+    {
+      "block_id": "S-noise",
+      "physics_ticks": 6600,
+      "active_ticks": 0,
+      "estimated_force_bytes": 44814000
+    },
+    {
+      "block_id": "S-delay-drop",
+      "physics_ticks": 6600,
+      "active_ticks": 0,
+      "estimated_force_bytes": 44814000
+    },
+    {
+      "block_id": "X-clean",
+      "physics_ticks": 4000,
+      "active_ticks": 0,
+      "estimated_force_bytes": 27160000
+    },
+    {
+      "block_id": "X-noise",
+      "physics_ticks": 4000,
+      "active_ticks": 0,
+      "estimated_force_bytes": 27160000
+    },
+    {
+      "block_id": "P-clean",
+      "physics_ticks": 6600,
+      "active_ticks": 40,
+      "estimated_force_bytes": 44971560
+    },
+    {
+      "block_id": "P-combined",
+      "physics_ticks": 6600,
+      "active_ticks": 40,
+      "estimated_force_bytes": 44971560
+    },
+    {
+      "block_id": "W-near",
+      "physics_ticks": 6600,
+      "active_ticks": 0,
+      "estimated_force_bytes": 44814000
+    },
+    {
+      "block_id": "W-middle",
+      "physics_ticks": 6600,
+      "active_ticks": 0,
+      "estimated_force_bytes": 44814000
+    },
+    {
+      "block_id": "W-far",
+      "physics_ticks": 6600,
+      "active_ticks": 0,
+      "estimated_force_bytes": 44814000
+    },
+    {
+      "block_id": "W-combined",
+      "physics_ticks": 6600,
+      "active_ticks": 0,
+      "estimated_force_bytes": 44814000
+    },
+    {
+      "block_id": "stress-S-noise",
+      "physics_ticks": 6600,
+      "active_ticks": 0,
+      "estimated_force_bytes": 44814000
+    },
+    {
+      "block_id": "stress-S-combined",
+      "physics_ticks": 6600,
+      "active_ticks": 0,
+      "estimated_force_bytes": 44814000
+    },
+    {
+      "block_id": "stress-P-high",
+      "physics_ticks": 6600,
+      "active_ticks": 40,
+      "estimated_force_bytes": 44985280
+    },
+    {
+      "block_id": "stress-W-high",
+      "physics_ticks": 6600,
+      "active_ticks": 0,
+      "estimated_force_bytes": 44814000
+    }
+  ],
+  "per_model_force_bytes": 682202400,
+  "final_four_force_bytes": 2728809600,
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+    "sha256": "6f9e29e06a5031fb05b9d54456c8a6618a26dd73ff03a07b5c3d308e0f74361b"
+  },
+  "code": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_force_capacity.py",
+      "sha256": "e24d917566b068c52d3d0f9fc00b81caaa4c2855da174e75e26c667443a3e13f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_physics_adapter.py",
+      "sha256": "0815bc330b38bc4ae71dcd54d250886d3e6d4ffab9cc83d95363822d3c60bf4c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness_physics.py",
+      "sha256": "19b66208bd99e93853ffc2ce4246382dac6c2e36262ed11dd688b4c7ae429863"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_audit.py",
+      "sha256": "6990ef11d6c018b529fa7b805b2ee7fe5c11dfab028b4392798f9024427fb087"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/force_archive.py",
+      "sha256": "2ada654e0f9f1f95799b12379c631f8fcac2a8666f53c185893fa521fe79309c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/logging.py",
+      "sha256": "69575a7de0d7e054c769d7968bf6a4e56d72a3d0640a0ccb2d4cd77c935385d9"
+    }
+  ],
+  "limitations": "Synthetic independent float32 wrenches and body attitudes through actual physics mixin sink and AuditLog; fixture mass1.16kg, not baseline mass. No physics integration. Sample maxima are not bounds. Excludes reset, policy-step, motion, measurement, native, training, snapshot and video outputs. Timings include local fsync but do not predict live GPU/CPU synchronization cost.",
+  "gpu_queries": 0,
+  "simulator_initializations": 0
+}
