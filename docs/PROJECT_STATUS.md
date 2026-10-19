@@ -69,6 +69,7 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 新增物理暂存/reset原件重算：保存每tick姿态、原旋翼wrench、实际dt与末步完成时钟，以及reset世界坐标/dtype；NumPy独立重算世界/局部附加力和叠加，检查撤力、力矩保留、seed/reset/tolerance与最终tick。结果明确 `physical_integration_verified=false`，已接入分析/绑定但未独审或live。见 `CPU_PHYSICS_REPLAY_TESTS.json`。新增字段使最终四模型force归档CPU样本估计增至7,048,886,240bytes（约6.56GiB）；`FORCE_ARCHIVE_CAPACITY_CPU_V2.json`仍非上界，capacity_pass=false，旧估计/原件保留。
 完整容量补算与force无损二进制候选：45项CPU检查通过，旧JSON审计仍可读、逐record哈希/fsync/配额保留；`FORCE_ARCHIVE_CAPACITY_CPU_V3.json`最终四模型force样本估计2.54GiB。全control/reward step样本和新版CPU RNG测距已补测；旧训练1.958GB只读无损压缩估计0.411GB，原字节/冻结u640哈希核验，训练压缩writer未实现。`CAPACITY_COMPOSED_DRAFT_V2.json`保留最终774400非训练transitions，提出最终92GiB/27000秒（现80GiB/24000秒不足）；开发示例与最终共127.516GiB，未修改操作账本。原生/训练/元数据/视频精确配额和独审仍未闭合，capacity_pass=false。
 新增可选R6训练无损存储：分块哈希、完成footer、共享写前配额和直接随机读取，JSONL逐条flush/fsync，诊断张量原字节可恢复；12项新CPU检查与11项旧概率诊断回归通过，见 `CPU_LOSSLESS_TRAINING_TESTS.json`。实际错误概率gate仍在优化器前拒绝，默认旧入口不变。历史1.958GB按实际codec重测为0.416GB，见 `TRAINING_CHUNK_STORE_CAPACITY_CPU.json`；`CAPACITY_COMPOSED_DRAFT_V3.json`更新训练估计但不修改操作预算。live训练接线/关闭与消费者、独审及新数据容量仍待完成，capacity_pass=false。
+训练存储失败关闭补修：flush/fsync错误现在使共享池拒绝后续写入；统一关闭所有所属流，失败前缀不补成功footer，context清理保留原训练异常，关闭后拒绝新文件名。18项CPU检查通过，含6项新增磁盘错误/全局配额/生命周期检查，见 `CPU_TRAINING_STORAGE_LIFECYCLE_TESTS.json`。这是存储生命周期API补齐，尚未接入live训练分派；完整controller、容量和独审状态不变。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）

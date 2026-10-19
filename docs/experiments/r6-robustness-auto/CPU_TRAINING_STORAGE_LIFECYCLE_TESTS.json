@@ -1,0 +1,48 @@
+{
+  "status": "CPU18_PASS_STORAGE_LIFECYCLE_NOT_LIVE_INTEGRATED",
+  "capacity_pass": false,
+  "tests": {
+    "command": "python3.11 -B -m unittest tools.test_r6_lossless_evidence -v",
+    "passed": 18,
+    "seconds": 0.657,
+    "new_failure_tests": 6
+  },
+  "python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2"
+  },
+  "pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/lossless_evidence.py",
+      "sha256": "82684c9bdf7be9bf19e910f12f016092ffff41d022e7b0a537d7f965ca8779d4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_storage.py",
+      "sha256": "b0671469a2d33558444473230b6b26c0f5848685f85936716a28fd7b99086412"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_lossless_evidence.py",
+      "sha256": "f91f7155eaa6bdb8442a2578230cda762980905767d64eb6a9c86300a0fef5ed"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_STORAGE_LIFECYCLE_TESTS.txt",
+      "sha256": "02de92eb8829f54aba960ed138b69296aec0b06af8817680e5b9299bb4fb839f"
+    }
+  ],
+  "findings": [
+    "Previous flush/fsync exceptions did not consistently poison the shared pool; now they do",
+    "Pool closes all owned descriptors after a failure and preserves incomplete prefixes without adding success footers",
+    "Context cleanup preserves original training exception; successful closure rejects new output names",
+    "Global OutputWriteQuota rejection occurs before the compressed chunk write"
+  ],
+  "limitations": [
+    "Storage lifecycle API is CPU-tested but not connected to a live R6 training dispatcher",
+    "Existing completed per-file footers certify bytes only, not success of the whole job",
+    "No changes to operating budget or scientific acceptance; independent review remains pending",
+    "Earlier capacity samples retain their exact old source pins; encoded format unchanged but samples are not acceptance of new source"
+  ]
+}

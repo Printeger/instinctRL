@@ -28,7 +28,7 @@ class EvidencePool:
         if self.root.resolve()!=self.root:raise ValueError('EVIDENCE_PATH_ALIAS')
         self.root.mkdir(parents=True,exist_ok=False)
         self.run_id=run_id;self.maximum=maximum_bytes;self.raw_maximum=maximum_raw_file_bytes
-        self.used=0;self.writers={};self.failed=False
+        self.used=0;self.writers={};self.failed=False;self.closed=False
 
     def reserve(self,path,size):
         if self.failed or self.used+size>self.maximum:
@@ -42,12 +42,51 @@ class EvidencePool:
         if not logical_name or p.is_absolute() or '..' in p.parts or p.as_posix()!=logical_name:
             raise ValueError('EVIDENCE_LOGICAL_PATH')
         if logical_name in self.writers:raise ValueError('EVIDENCE_ALREADY_OPENED')
-        if self.failed:raise ValueError('EVIDENCE_POOL_FAILED')
+        if self.failed or self.closed:raise ValueError('EVIDENCE_POOL_FAILED_OR_CLOSED')
         path=self.root/(logical_name+'.r6z')
         if path.resolve()!=path or self.root not in path.parents:raise ValueError('EVIDENCE_PATH_ALIAS')
         path.parent.mkdir(parents=True,exist_ok=True)
         writer=ChunkWriter(self,path,logical_name);self.writers[logical_name]=writer
         return writer
+
+
+    def close(self):
+        """Close every descriptor even on failure; never certify a poisoned pool."""
+        if self.closed:
+            if self.failed:raise ValueError('EVIDENCE_POOL_FAILED')
+            return
+        error=None
+        for writer in self.writers.values():
+            try:
+                if self.failed:writer.abort()
+                else:writer.close()
+            except BaseException as exc:
+                if error is None:error=exc
+                self.failed=True
+        self.closed=True
+        if error is not None:raise error
+        if self.failed:raise ValueError('EVIDENCE_POOL_FAILED')
+
+    def abort(self):
+        self.failed=True
+        error=None
+        for writer in self.writers.values():
+            try:writer.abort()
+            except BaseException as exc:
+                if error is None:error=exc
+        self.closed=True
+        if error is not None:raise error
+
+    def __enter__(self):return self
+
+    def __exit__(self,kind,value,traceback):
+        if kind is None:self.close()
+        else:
+            # Cleanup errors must not replace the original training failure.
+            try:self.abort()
+            except BaseException as cleanup:
+                value.add_note('Evidence cleanup also failed: '+repr(cleanup))
+        return False
 
 
 class ChunkWriter:
@@ -90,22 +129,29 @@ class ChunkWriter:
     def tell(self):return self.raw_bytes
 
     def flush(self):
-        if self.failed:raise ValueError('EVIDENCE_PREVIOUS_FAILURE')
-        self._chunk();self.stream.flush();os.fsync(self.stream.fileno())
+        if self.failed or self.pool.failed:raise ValueError('EVIDENCE_PREVIOUS_FAILURE')
+        try:
+            self._chunk();self.stream.flush();os.fsync(self.stream.fileno())
+        except BaseException:
+            self.failed=True;self.pool.failed=True;raise
 
     def close(self):
         if self.stream.closed:return
         try:
             self.flush();self._emit(HEADER.pack(0,0,self.digest.digest()))
-            self.stream.flush();os.fsync(self.stream.fileno());self.complete=True
+            self.stream.flush();os.fsync(self.stream.fileno())
             directory=os.open(self.path.parent,os.O_DIRECTORY)
             try:os.fsync(directory)
             finally:os.close(directory)
+            self.complete=True
+        except BaseException:
+            self.failed=True;self.pool.failed=True;raise
         finally:self.stream.close()
 
     def abort(self):
         # Preserve every emitted byte, but never write a success footer.
-        self.failed=True;self.pool.failed=True;self.stream.close()
+        self.failed=True;self.pool.failed=True
+        if not self.stream.closed:self.stream.close()
 
 
 class ChunkReader(io.RawIOBase):

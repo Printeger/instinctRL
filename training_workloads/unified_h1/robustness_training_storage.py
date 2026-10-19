@@ -9,9 +9,10 @@ from .pilot_diagnostic import FirstUpdateDiagnostic
 class R6LearningLog(LearningLog):
     def __init__(self,root,*,pool,**kwargs):
         super().__init__(root,**kwargs)
-        self.pool=pool;self.compressed_streams={}
+        self.pool=pool;self.compressed_streams={};self.closed=False
 
     def append(self,relative,record):
+        if self.closed:raise ValueError('R6_LOG_CLOSED')
         name='learning_log/'+relative
         # Validate each request even when a stream has already been opened.
         path=Path(relative)
@@ -24,6 +25,7 @@ class R6LearningLog(LearningLog):
         except BaseException:stream.abort();raise
 
     def close(self):
+        self.closed=True
         errors=[]
         for stream in self.compressed_streams.values():
             try:stream.close()

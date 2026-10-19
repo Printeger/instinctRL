@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 import zlib
 import torch
 
@@ -120,6 +121,65 @@ class LosslessTests(unittest.TestCase):
         self.assertTrue(torch.equal(restored['old_alpha'],batch.old_alpha))
         self.assertTrue(torch.equal(restored['policy']['state_vec'],batch.policy['state_vec']))
         self.assertFalse((self.root/'pilot/update_1_full_input.pt').exists())
+
+
+    def test_fsync_failure_poison_and_close_all_descriptors(self):
+        pool=self.pool();a=pool.open('a');b=pool.open('b')
+        a.write(b'first');b.write(b'second')
+        with mock.patch('training_workloads.unified_h1.lossless_evidence.os.fsync',side_effect=OSError('disk failure')):
+            with self.assertRaisesRegex(OSError,'disk failure'):a.flush()
+        self.assertTrue(pool.failed)
+        with self.assertRaisesRegex(ValueError,'FAILED'):pool.close()
+        self.assertTrue(a.stream.closed and b.stream.closed)
+        self.assertFalse(a.complete or b.complete)
+        for name in ('a','b'):
+            with self.assertRaisesRegex(ValueError,'INCOMPLETE'):self.reader(name)
+
+    def test_pool_close_failure_closes_other_stream_without_footer(self):
+        pool=self.pool();a=pool.open('a');b=pool.open('b')
+        a.write(b'first');b.write(b'second')
+        with mock.patch('training_workloads.unified_h1.lossless_evidence.os.fsync',side_effect=OSError('disk failure')):
+            with self.assertRaisesRegex(OSError,'disk failure'):pool.close()
+        self.assertTrue(pool.closed and pool.failed)
+        self.assertTrue(a.stream.closed and b.stream.closed)
+        with self.assertRaisesRegex(ValueError,'INCOMPLETE'):self.reader('b')
+        with self.assertRaisesRegex(ValueError,'FAILED'):pool.close()
+
+    def test_context_preserves_training_failure_and_rejects_partial_stream(self):
+        pool=self.pool()
+        with self.assertRaisesRegex(RuntimeError,'training failed'):
+            with pool:
+                a=pool.open('a');a.write(b'last evidence');a.flush()
+                raise RuntimeError('training failed')
+        self.assertTrue(pool.closed and a.stream.closed)
+        with self.assertRaisesRegex(ValueError,'INCOMPLETE'):self.reader('a')
+
+    def test_successful_pool_closure_prevents_new_files(self):
+        pool=self.pool()
+        with pool:
+            writer=pool.open('a');writer.write(b'complete')
+        pool.close()
+        self.assertTrue(writer.complete)
+        with self.reader('a') as reader:self.assertEqual(reader.read(),b'complete')
+        with self.assertRaisesRegex(ValueError,'CLOSED'):pool.open('new')
+
+    def test_installed_global_quota_rejects_before_chunk_write(self):
+        from training_workloads.scale_003 import persistence
+        quota=persistence.OutputWriteQuota(self.root,100)
+        with mock.patch.object(persistence,'_output_quota',quota):
+            pool=self.pool();writer=pool.open('blob');before=pool.used
+            writer.write(bytes(range(256)))
+            with self.assertRaises(persistence.PersistenceError):writer.flush()
+            pool.abort()
+        self.assertEqual(writer.path.stat().st_size,before)
+        self.assertEqual(quota.used,before)
+        self.assertTrue(pool.failed and pool.closed)
+
+    def test_closed_learning_log_rejects_new_names(self):
+        pool=self.pool();journal=R6LearningLog(self.root/'log',pool=pool)
+        journal.append('updates.jsonl',{'update':1});journal.close()
+        with self.assertRaisesRegex(ValueError,'LOG_CLOSED'):journal.append('new.jsonl',{})
+        pool.close()
 
 
 if __name__=='__main__':unittest.main()
