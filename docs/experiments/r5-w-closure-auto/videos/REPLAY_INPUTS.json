@@ -1,0 +1,306 @@
+{
+  "schema": "r5-visualization-only-v1",
+  "authorization": "User explicitly authorized Isaac Sim visualization and recording only; no training, scientific reevaluation or frozen changes.",
+  "mode": "Isaac Sim RTX rendering of original recorded poses; timeline paused; no physics integration or policy inference",
+  "source_snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019",
+  "source_identity": {
+    "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+    "product_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "product_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924",
+    "workload_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "workload_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924"
+  },
+  "method": {
+    "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+    "curriculum": "curriculum-h1-v1",
+    "reward": "reward-h1-zero-neutrality-v1",
+    "critic": "critic-h1-v2",
+    "checkpoint": "checkpoint-h1-v2",
+    "logging": "learning-log-h1-v1",
+    "metric": "metric-h1-v1",
+    "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+    "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+    "reset_distribution": "mixed-nearwall",
+    "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+    "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+    "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5",
+    "ics_clearance_margin_m": "0.15"
+  },
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_R5_W_RESULTS.md",
+      "sha256": "5a4b0a2cd4ec4e3be8e62f1b266535138fa4b5ca538e2fa0f8247e5b572e277e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/TRAINING_AND_EVALUATION_MANIFEST.json",
+      "sha256": "89bfe63bbed6b30cbcf7a82d16469d574b4041d60a38775cf4957def1430dc6d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/final-independent.json",
+      "sha256": "89365a0148c96e4e57f722f10d9fb126059fb67672795347909cd97f941868d7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_ORIGINALS_INDEX.json",
+      "sha256": "59c646152b2cf69159a98f0b8916650a921c1d0c4d0d7516141b4eadcfd4c2ea"
+    }
+  ],
+  "assets_and_source": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/config.py",
+      "sha256": "9ac7c02dcc9ce12cf67cbf57d6fff8841624705db7b1f0bae82cbc906244ba2f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/__init__.py",
+      "sha256": "c1380196aedd72eb9ae5dff617c57e1fc9c6077aa697e7f637ed15b6829ac085"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/taslab_uav.usd",
+      "sha256": "3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/lee_controller_taslab_uav.yaml",
+      "sha256": "e5e0496666f3f245d604a949eedc5060370d71b95de0d2337d39617bacd1f8e6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/taslab_uav.yaml",
+      "sha256": "91b7319fd844303eb8e18f946434f3369988c8789e6ba0172b67bfd89177e3e4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/articulation.py",
+      "sha256": "080eb6a30c76a63395effe2da38f0ffab22642b494651d0e195f74e14473598d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/PROVENANCE.json",
+      "sha256": "71a212c48274622b0d6cfca0859cd885ddc2c62ce837144d58dc3c60298a6688"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/NOTICE.md",
+      "sha256": "8ffc59e01d9b4f3a53eba8b4c197cd019a9a91e05c7fc2406a5147112ab78355"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/task/scene_h1.py",
+      "sha256": "e94dd2e9614e8dae380f298650edc5cc91fcaacc7ca9ed80b678581bba087d59"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/evaluation.py",
+      "sha256": "a6caedb36a5ddb408a9a9b8c6e073808b480252f6cc3ec12d201b69ab5e5583c"
+    }
+  ],
+  "clips": [
+    {
+      "name": "Z_u640_m015",
+      "case": "Z",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/Z.jsonl",
+        "sha256": "dc69184414c00ed0c884f91822b78de66e77d17042de86f8820a634e6fc51165"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15"
+    },
+    {
+      "name": "T_u640_m015",
+      "case": "T",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/T.jsonl",
+        "sha256": "c672dd90954eb91ecc05c81c2122f9b5c90352cf30c1e135bd50bc129f01bd60"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15"
+    },
+    {
+      "name": "S_u640_m015",
+      "case": "S",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/S.jsonl",
+        "sha256": "776e312d76a5846991fb32e6ce0e4504ffd8029c19ee108694a82358233e3531"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15"
+    },
+    {
+      "name": "X_u640_m015",
+      "case": "X",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/X.jsonl",
+        "sha256": "f61f436f4fbfbf0cae0a927b4f73a406e36c21f18548333aff9faecb94fc19ff"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15"
+    },
+    {
+      "name": "W_x_wall_u640_m015",
+      "case": "W",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/W.jsonl",
+        "sha256": "3e4421880a52bbfec6b0a26b8466329697c664ce4dd8c1b3cf5310f265fffce9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15"
+    },
+    {
+      "name": "W_y_wall_u640_m015",
+      "case": "W",
+      "lane": 16,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/W.jsonl",
+        "sha256": "3e4421880a52bbfec6b0a26b8466329697c664ce4dd8c1b3cf5310f265fffce9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15"
+    },
+    {
+      "name": "W_x_wall_u512_m000",
+      "case": "W",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/evaluation_raw/formal_R1_u512/W.jsonl",
+        "sha256": "1cc2ab19ed216b1c49264730e3997fba94ffa84e5fc2af02b609f649712b010c"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/formal_R1_u512.json",
+        "sha256": "895b26acd8734a14859e264a2358313fb863f48745d23a4e629928ad6d0738e2"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.0,
+      "label": "R1 u512 margin0"
+    },
+    {
+      "name": "W_y_wall_u512_m000",
+      "case": "W",
+      "lane": 16,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/evaluation_raw/formal_R1_u512/W.jsonl",
+        "sha256": "1cc2ab19ed216b1c49264730e3997fba94ffa84e5fc2af02b609f649712b010c"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/formal_R1_u512.json",
+        "sha256": "895b26acd8734a14859e264a2358313fb863f48745d23a4e629928ad6d0738e2"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.0,
+      "label": "R1 u512 margin0"
+    },
+    {
+      "name": "W_x_wall_u512_m015",
+      "case": "W",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u512/W.jsonl",
+        "sha256": "a5944e0775d8f44656826e43b3bb6f0aa190cd44637aa575bee63543ae87e0b9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512.json",
+        "sha256": "19884c13340afb8919d4dcad5cd621b7fd0580c3c77f552d085d02ea6233ac97"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.15,
+      "label": "E1 u512 margin.15"
+    },
+    {
+      "name": "W_y_wall_u512_m015",
+      "case": "W",
+      "lane": 16,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u512/W.jsonl",
+        "sha256": "a5944e0775d8f44656826e43b3bb6f0aa190cd44637aa575bee63543ae87e0b9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512.json",
+        "sha256": "19884c13340afb8919d4dcad5cd621b7fd0580c3c77f552d085d02ea6233ac97"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.15,
+      "label": "E1 u512 margin.15"
+    }
+  ],
+  "resolution": [
+    960,
+    640
+  ],
+  "fps": 10,
+  "limits": {
+    "wall_seconds": 3600,
+    "training_updates": 0,
+    "physics_steps": 0,
+    "checkpoint_writes": 0,
+    "max_output_bytes": 4294967296
+  },
+  "selection": "Deterministic lane 0 for Z/T/S/X and x_wall; lane 16 for y_wall. Representative clips, not all 32 lanes.",
+  "timing": "Frame i displays postintegration state at (i+1)*0.1s and command/q/beta issued at i*0.1s from same raw record; no interpolation.",
+  "attribution": "E1 fixed u512 + 0.15m margin already passed. Controller engineering gain is not an isolated RL learning gain."
+}
