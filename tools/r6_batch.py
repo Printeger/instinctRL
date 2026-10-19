@@ -1,8 +1,8 @@
 """R6 model handoff used by the local single-writer batch.
 
-Only consumes previously registered model events. No permission issuance, job
+Consumes registered model events and closes already submitted jobs. No permission issuance, job
 submission, budget reservation, automatic retry or scientific acceptance here.
-Job/resource phases must be attached before this can run the full R6 goal.
+Resource admission, dispatch and analysis/next-plan phases remain incomplete.
 """
 from pathlib import Path
 import argparse
@@ -104,9 +104,15 @@ def model_handoff(journal,key,*,poll_seconds=15):
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('directory',type=Path);ap.add_argument('event_key')
+    ap.add_argument('--job-store',type=Path,help='Close an existing exact job in this rlflow Store; never submit')
     a=ap.parse_args();journal=Journal(a.directory.resolve())
     with journal.writer():
-        result=model_handoff(journal,a.event_key)
+        if a.job_store is None:
+            result=model_handoff(journal,a.event_key)
+        else:
+            from rlflow.store import Store
+            from tools.r6_job_handoff import job_handoff
+            result=job_handoff(journal,a.event_key,Store(a.job_store.resolve()))
     print(json.dumps(result,ensure_ascii=False))
 
 

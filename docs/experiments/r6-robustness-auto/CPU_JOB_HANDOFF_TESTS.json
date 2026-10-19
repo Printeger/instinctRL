@@ -1,0 +1,134 @@
+{
+  "schema_version": "r6-job-handoff-cpu-tests/1",
+  "status": "CPU_PASS_PENDING_INDEPENDENT_REVIEW_NOT_DEPLOYED",
+  "test_runs": [
+    {
+      "tests": 31,
+      "exit_code": 0,
+      "log": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_JOB_HANDOFF_TESTS.txt",
+        "sha256": "bd94743f704487830922168a50419faa2e97f98b8dce2735a8d1a9b22bfd792d"
+      },
+      "scope": "initial jobclose14 + recovery10 + modelhandoff7"
+    },
+    {
+      "tests": 35,
+      "exit_code": 0,
+      "log": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_JOB_HANDOFF_TESTS_V2.txt",
+        "sha256": "3d8b88f924c68358493f1927dfb566327cac5d2280d0b1b853fea0f95cf3fa6b"
+      },
+      "scope": "jobclose18 + recovery10 + modelhandoff7"
+    },
+    {
+      "tests": 19,
+      "exit_code": 0,
+      "log": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_JOB_HANDOFF_TESTS_V3.txt",
+        "sha256": "423fc1f52f56695737c0adde8a65f1a41c8add74cfd216a7dfba1082e6b5d80b"
+      },
+      "scope": "final jobclose19 including live receipt child without child.json"
+    }
+  ],
+  "command_prefix": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow CUDA_VISIBLE_DEVICES='' /home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python -m unittest",
+  "commands_suffixes": [
+    "tools.test_r6_job_handoff tools.test_r6_recovery tools.test_r6_batch",
+    "tools.test_r6_job_handoff tools.test_r6_recovery tools.test_r6_batch",
+    "tools.test_r6_job_handoff"
+  ],
+  "code": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "a0377a876c3439df05ff729061663c4532ea06093662e58175ed224aefa987f1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "87bc6a7de934fe7ae4eaafe3d110b70e1e90a669ab74371b7a6ecaa9150d1417"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "352d05e48620f4341b9791966edf1e31df8daff9702813a23921d0cb14a3d7d8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_job_handoff.py",
+      "sha256": "4f91477e8c7e0d00f23cb6d6a304e592bff0b31a32def667ced649d85bbf0c63"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_recovery.py",
+      "sha256": "8873d0afae0912bb43b857508ff801d102e370c24435d937a95c909c43109334"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_batch.py",
+      "sha256": "80a60476df1fd4a6ce7aa81a96e7a11d6d2de776534d4933e8ccdca4ec0a8a06"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/fixtures/r6_budget.json",
+      "sha256": "50d7f6a56944b8d2ef9a47c24452e137b080d80f9e06e181b3f5e8e53cd0ff18"
+    }
+  ],
+  "implemented": [
+    "Exact pre-registered job/spec binding; module never submits",
+    "Local15s default wait, fixed pre-registered deadline, no model launch",
+    "Normal ACK + exact owner + matching cleanup + two stable scans + every recorded identity absent",
+    "STOP/pause/deadline cancellation for the exact existing job, persisted cancel claim, no ambiguous retry",
+    "Atomic closure recovers file-before-journal crash; immutable receipt pins",
+    "Native FAILED/exit preserved; observed time separately recorded; all R6 reservations retained",
+    "Closure explicitly leaves output inventory, postrun and scientific acceptance incomplete",
+    "Model worker/CLI/cleanup identity checks prevent waiting with active or ambiguous model side effects"
+  ],
+  "legacy_model_cleanup_gaps": [
+    {
+      "event_key": "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/receipt.json",
+        "sha256": "60104087056120fbfc6f049d54fd508cb87859b7b2744f3dfe5ed99da22a0f0c"
+      },
+      "known_worker": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pgid": 2266527,
+        "pid": 2266527,
+        "starttime": "237389436"
+      },
+      "known_cli": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pgid": 2266528,
+        "pid": 2266528,
+        "starttime": "237389455"
+      },
+      "status": "LEGACY_CLEANUP_ATTESTATION_MISSING_NO_AUTO_ACCEPTANCE"
+    },
+    {
+      "event_key": "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/receipt.json",
+        "sha256": "82cdb6ba2ac8cb559d3055c7def8bc74537f477ab4c16b784b4251d347ae554e"
+      },
+      "known_worker": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pgid": 2265882,
+        "pid": 2265882,
+        "starttime": "237375443"
+      },
+      "known_cli": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pgid": 2265886,
+        "pid": 2265886,
+        "starttime": "237375462"
+      },
+      "status": "LEGACY_CLEANUP_ATTESTATION_MISSING_NO_AUTO_ACCEPTANCE"
+    }
+  ],
+  "remaining": [
+    "Reconcile legacy model cleanup evidence without rewriting old receipts",
+    "Resource admission and exact new-job dispatch",
+    "Output inventory and postrun event recovery",
+    "CPU analysis and reviewed next-plan transitions",
+    "Whole job-completion to decision to next-job CPU end-to-end test",
+    "Independent integration review and full capacity approval before deployment"
+  ],
+  "operational_state_edited": false,
+  "automatic_model_calls": 0,
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "test_limitation": "Real short CPU subprocess identities and mocked rlflow Store/reconcile/cancel. No real Store job created, no simulator, no model API, no live handoff claim."
+}

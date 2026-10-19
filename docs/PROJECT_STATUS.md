@@ -41,6 +41,11 @@ world指令在实际观察边界转换后进入history，保持内外观察与�
 旧训练固定诊断与逐步日志已分开统计；内部最终保护80GiB/24000秒仍待完整容量审核。
 完整force sink的18条CPU归档样本精确重建；最终四模型额外估计3.96GiB，测距+force约57.92GiB。
 见 `FORCE_ARCHIVE_CAPACITY_CPU.json`；不含其余日志/训练/native/快照/视频，也不是最坏界或live吞吐。
+新增 `tools/r6_job_handoff.py` 复用rlflow关闭已提交的准确job：本地等待、STOP单次取消、
+normal ACK/所属进程核验、原生失败与全额预留保留。新增19项CPU检查通过，原恢复/模型交接
+17项回归通过，见 `CPU_JOB_HANDOFF_TESTS.json`；尚未独审或部署。两份早期模型receipt缺少
+新版cleanup字段，仍需单独核对；新入口不会静默当作已清理。资源/submit/postrun、分析及
+下一计划衔接仍未闭合，本轮未改唯一batch状态或操作Store作业。
 物理reset/force的实际验证、完整job/resource控制器、容量/协议冻结、exact Store许可及科学验证均未完成。
 聊天Goal自动续推理与零模型等待的交接限制尚未解决；不能称后台运行或科学完成。
 下方历史状态不覆盖上述事实。
