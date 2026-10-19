@@ -12,7 +12,9 @@ L1原入口 `R5-W-L1-NEARWALL-01` / `J-06a095a1c78d517e` 在prelaunch共存门�
 
 原两节点评价 `R5-W-L1-EVAL-01` / `J-3db27ce7c40e9542` 已实际完成并独立接受：u640/u768各原Z/T/S/X/W32/32、每方向4/4、两墙16/16、每W lane连续11样本真实接近通过。冻结evaluate_checkpoint逐节点原raw重放完整字典一致。nativeFAILED/-9/INCOMPLETE/null/full65920reserve保留，正常ACK/settle/恰好2postrun。首通过u640，E1固定原u512+.15m已经全通过，因此不宣称L1额外RL安全增益。见 [评价与消融报告](experiments/r5-w-closure-auto/L1_EVALUATION_REPORT.md)。
 
-独立验证 `R5-W-L1-INDEPENDENT-01` 准确许可 `A-e3529b5fa1ba5f5e` 已独立预审并合法发行，**尚未执行**。固定实际u640、新reset seed20261020，完整五任务32960非训练、无训练/写入。新source4386730b/configf702a6f8，原产品/backend/evaluator/primary入口字节不变；单独协议核验真实seed后仅以标注的内存seed视图调用原评分，所有物理/时序/初态/阈值保持。W-V1-001累计上限覆盖全部旧失败与reserve及此独立验证。提交/tag/push及准确计划独审后由原controller执行；本次未submit、未改state/当前controller、无GPU探测。**完整Goal仍IN_PROGRESS**：独立验证实际结果、最终完整证据和final_review尚待完成。唯一状态 `docs/experiments/r5-w-closure-auto/batch/state.json`。下文旧任务状态仅作历史。
+独立验证原入口 `R5-W-L1-INDEPENDENT-01` / `J-fd7e0e132dca6e7d` 已prelaunch FAILED/1、FINAL0：GPU三样本2/12/3%，12%超过原5%共存门；postrun3%，未建立持续外部阻塞证据。27项原件/归档及packet pins独审PASS，normal owned ACK、settle、恰好两postrun完成；无评价raw，不能报告独立seed通过或科学阴性。失败start/init和8GiB输出预留保留，旧INCOMPLETE/null/full reserves不退。见 [失败独审](experiments/r5-w-closure-auto/reviews/independent01-failure-actual.json)。
+
+同Goal内准备一次有依据的 `R5-W-L1-INDEPENDENT-RECOVERY1`：固定首通过u640、seed20261020、32960非训练/5reset、0训练/写入。仅独立模块增加明确RECOVERY1身份白名单；primary/backend/evaluator/产品与评分门槛不变。首次CPU快照method路径绑定拒绝，原snapshot/config及2GiB预留保全；新r2候选 source032412b/config6a65b6ae已CPU冻结，32项回归PASS。W-V1-002已独审登记，6start/init、64GiB输出封顶在原master内；准确packet独审PASS，许可 `A-35403dcbfe28c1b1` 已合法签发，尚未submit；输入提交/tag/push和计划独审完成后由原controller执行。**完整Goal仍IN_PROGRESS**：独立seed实际全raw重放、最终交付和final_review尚待完成；不能把E1工程收益记为RL增益。唯一controller状态 `docs/experiments/r5-w-closure-auto/batch/state.json` 只读。下文旧任务仅作历史。
 
 更新：2026-10-17。唯一日常开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一开发分支 `main`，
 远端 [Printeger/instinctRL](https://github.com/Printeger/instinctRL)。当前精确版本以 `git rev-parse HEAD` 为准。

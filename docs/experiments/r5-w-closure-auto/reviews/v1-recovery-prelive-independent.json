@@ -1,0 +1,45 @@
+{
+  "verdict": "PASS",
+  "must_fix": [],
+  "reviewer": "/root/audit",
+  "scope": "Exact RECOVERY1 packet prelive; not scientific result or completion",
+  "identities": {
+    "master": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+      "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+    },
+    "stage": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V1-002.json",
+      "sha256": "f702c3f2e4a7c575844ecdfc31ac39ff09c4559e0699b860bee1b8852c8a2396"
+    },
+    "packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/launch_inputs.proposed.json",
+      "sha256": "63aaf2ba3c87581a6de182a78a926794e80fc232ad05faeec2c5611c78b352d7"
+    },
+    "commander": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_commander.py",
+      "sha256": "cafb006b531087770e2035f75134f0ee51b60437379934bdfbd3fa4685de18e0"
+    },
+    "ownership_helper": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_commander.py",
+      "sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4"
+    },
+    "snapshot": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/readonly-snapshot.json",
+      "sha256": "4a22310da08ea6afd8605ef00e2386b825e6674ae0f4adbee97ae03f41c6d563"
+    },
+    "after_prompt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_W_CLOSURE_20261019/after-independent-recovery1.prompt.md",
+      "sha256": "1d0d6b91979e1abbabdd70f49d8191030d7eddfb8a0445ead5aff6475e45f37e"
+    }
+  },
+  "checks": [
+    "18 existing packet pins match; planned AUTH absent and exact proposal SHA a4cf51ab4c06cc5be1da7cd8bfa8eb2ee560010492d8336f0bdc800ac0a62ed7 matches target",
+    "Frozen snapshot032412b source hashes and read-only bits match; only w_independent.py changed against original independent snapshot; all primary/backend/evaluator/product bytes unchanged",
+    "Frozen protocol/validate_parameters/required_budget CPU PASS, actual seed20261020/u640/32960/5reset/0train-write",
+    "Store437 idle and STOP absent; resources within registered stage/master including failed CPU snapshot and all old reserves",
+    "after_prompt preserves exact next event, full Goal, actual failure limits and no blind retry"
+  ],
+  "reviewer_writes": 0,
+  "reviewer_gpu_queries": 0
+}

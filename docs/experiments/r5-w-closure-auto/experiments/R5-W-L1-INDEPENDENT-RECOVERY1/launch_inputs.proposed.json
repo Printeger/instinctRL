@@ -1,0 +1,251 @@
+{
+  "schema_version": "instinctrl-w-exact-inputs/1",
+  "status": "PREPARED_NOT_APPROVED",
+  "experiment_id": "R5-W-L1-INDEPENDENT-RECOVERY1",
+  "baseline": {
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-recovery1-r2-20261019",
+    "snapshot_commit": "032412baee46a8fb510c557f23b541d5f8b4d0b0",
+    "snapshot_tree": "70662200d506cda848760739aced7a0921094fc6",
+    "config_sha256": "6a65b6aeaa3e970e1fd89637ce1f66908ff95e68a2e1579bd73ce3df77000ed1",
+    "snapshot_diff_sha256": "8ee252f19fd07138ecb80b0843bb2af50fb383f7fea14feb1441f771ca485bc9",
+    "read_only": true,
+    "tool_release_id": "c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba",
+    "tool_release_path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/control-releases/c4688ba7b1220951002c7899eac1eb04375aecc5ed8b5767b7bb7e4e70b34fba"
+  },
+  "master_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+    "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+  },
+  "stage_allocation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V1-002.json",
+    "sha256": "f702c3f2e4a7c575844ecdfc31ac39ff09c4559e0699b860bee1b8852c8a2396"
+  },
+  "experiment_card": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/EXPERIMENT_CARD.json",
+    "sha256": "56f4ae902d6cdb3b5506a70807f3ca10ba0892f671cff10ebbeac4523671bac9"
+  },
+  "entries": [
+    {
+      "group": "R1",
+      "mode": "research-formal-evaluation",
+      "experiment_proposal": {
+        "id": "R5-W-L1-INDEPENDENT-RECOVERY1-R1-RESEARCH-FORMAL-EVALUATION-032412baee46",
+        "stage_id": "R5-W-CLOSURE-AUTO-20261019",
+        "backend": "real",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-B",
+          "-m",
+          "training_workloads.unified_h1.formal_unified_h1",
+          "--authorization",
+          "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RECOVERY1-R1-RESEARCH-FORMAL-EVALUATION-032412baee46/commands/AUTHORIZATION.json",
+          "--attempt",
+          "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RECOVERY1-R1-RESEARCH-FORMAL-EVALUATION-032412baee46",
+          "--mode",
+          "research-formal-evaluation"
+        ],
+        "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-recovery1-r2-20261019",
+        "pins": {
+          "dispatcher": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-recovery1-r2-20261019/training_workloads/unified_h1/local_dispatch.py",
+            "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+          },
+          "executable": {
+            "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+            "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+          },
+          "product": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-recovery1-r2-20261019/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+            "sha256": "6eb8728000ef1232019ba5bafe285b40e8c24a662e286bda35dc33cc2e385173"
+          },
+          "workload": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-recovery1-r2-20261019/training_workloads/unified_h1/formal_unified_h1.py",
+            "sha256": "287b8384873b6e342d0f3e5e4b0eaf3b3fd4c6107057eefedb4ae50a4e03986e"
+          },
+          "runtime": {
+            "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+            "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+          },
+          "authorization": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RECOVERY1-R1-RESEARCH-FORMAL-EVALUATION-032412baee46/commands/AUTHORIZATION.json",
+            "sha256": "a4cf51ab4c06cc5be1da7cd8bfa8eb2ee560010492d8336f0bdc800ac0a62ed7"
+          }
+        },
+        "method": "unified-h1-formal-readiness-v1",
+        "evaluation": "metric-h1-v1",
+        "runtime": "/home/mint/rl_blackwell_test",
+        "seed": 20261020,
+        "resources": {
+          "starts": 1,
+          "wall_seconds": 1810,
+          "gpu_seconds": 1810,
+          "transitions": 32960
+        },
+        "conditions": [],
+        "observations": [
+          "status",
+          "counters",
+          "process_identity",
+          "process_start",
+          "cleanup",
+          "evaluation_raw"
+        ],
+        "h1": {
+          "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-recovery1-r2-20261019",
+          "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RECOVERY1-R1-RESEARCH-FORMAL-EVALUATION-032412baee46",
+          "mode": "research-formal-evaluation",
+          "config_sha256": "6a65b6aeaa3e970e1fd89637ce1f66908ff95e68a2e1579bd73ce3df77000ed1",
+          "gpu_devices": [
+            "0"
+          ],
+          "gpu_accounting": "allocated_device_wall_seconds"
+        }
+      },
+      "authorization_proposal": {
+        "schema_version": "unified-h1-r3-authorization.v2",
+        "status": "AUTHORIZED",
+        "order_id": "R5-W-L1-INDEPENDENT-RECOVERY1-R1-RESEARCH-FORMAL-EVALUATION",
+        "method_sha256": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+        "config_sha256": "6a65b6aeaa3e970e1fd89637ce1f66908ff95e68a2e1579bd73ce3df77000ed1",
+        "product_commit": "032412baee46a8fb510c557f23b541d5f8b4d0b0",
+        "product_tree": "70662200d506cda848760739aced7a0921094fc6",
+        "workload_commit": "032412baee46a8fb510c557f23b541d5f8b4d0b0",
+        "workload_tree": "70662200d506cda848760739aced7a0921094fc6",
+        "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RECOVERY1-R1-RESEARCH-FORMAL-EVALUATION-032412baee46",
+        "mode": "research-formal-evaluation",
+        "budgets": {
+          "live_process_starts": 1,
+          "simulator_initializations": 1,
+          "initialization_ticks": 10,
+          "training_transitions": 0,
+          "nontraining_transitions": 32960,
+          "optimizer_updates": 0,
+          "checkpoint_writes": 0,
+          "explicit_resets": 5,
+          "automatic_resets": 32960,
+          "wall_seconds": 1800
+        },
+        "parameters": {
+          "experiment_id": "R5-W-L1-INDEPENDENT-RECOVERY1",
+          "group": "R1",
+          "training_seed": 20260908,
+          "evaluation_seed": 20261020,
+          "start_update": 512,
+          "target_update": 768,
+          "checkpoint_updates": [
+            640,
+            768
+          ],
+          "evaluation_updates": [
+            640
+          ],
+          "command_profile": "mixed-nearwall",
+          "residual_neutrality_weight": 0.05,
+          "anchor_weight": 4.0,
+          "actor_lr": 0.0001,
+          "critic_lr": 0.0003,
+          "mean_prior_weight": 10.0,
+          "mean_prior_contract": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+            "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+          },
+          "output_cap_bytes": 8589934592,
+          "master_authority": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+            "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+          },
+          "w_closure_contract": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/coordination/contracts/R5_W_SAFETY_CLOSURE_V1.md",
+            "sha256": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5"
+          },
+          "checkpoint_source_identity": {
+            "product_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+            "product_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+            "workload_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+            "workload_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+            "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24"
+          },
+          "checkpoint_compatibility": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/checkpoint-compatibility.json",
+            "sha256": "c6f108b5f512661b49d4a469798e55a76d4dd28510224ef07c0b45f58c450e9d"
+          },
+          "initialization_checkpoint": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+            "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+            "update": 512
+          },
+          "origin_method_hashes": {
+            "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+            "curriculum": "curriculum-h1-v1",
+            "reward": "reward-h1-zero-neutrality-v1",
+            "critic": "critic-h1-v2",
+            "checkpoint": "checkpoint-h1-v2",
+            "logging": "learning-log-h1-v1",
+            "metric": "metric-h1-v1",
+            "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+            "research_effective_method": "8afa2645dd181eb1e54c4c38e60f59db2c7cdda48df5d232b5e0628c451269cd",
+            "formal_phase": "103664d19c5e037d5903c86e2af11b61181a8722e599bdbdd87ae7c7f9414930",
+            "reset_distribution": "center-only-v1",
+            "initialization": "qualified-warmup-fresh-reset-v1",
+            "origin_checkpoint_sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768"
+          },
+          "evaluation_checkpoint_origin": "CANDIDATE",
+          "ics_clearance_margin_m": 0.15,
+          "checkpoints": [
+            {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+              "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+              "update": 640
+            }
+          ],
+          "independent_validation_protocol": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/INDEPENDENT_PROTOCOL.json",
+            "sha256": "bc53f043025bbda3616f4e9178cc17f7bdb39ace5d43697d0c1e15a93b7f13ba"
+          },
+          "experiment_card": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/EXPERIMENT_CARD.json",
+            "sha256": "56f4ae902d6cdb3b5506a70807f3ca10ba0892f671cff10ebbeac4523671bac9"
+          }
+        }
+      },
+      "expected_authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/inputs/R1-research-formal-evaluation-AUTH.proposed.json",
+        "sha256": "a4cf51ab4c06cc5be1da7cd8bfa8eb2ee560010492d8336f0bdc800ac0a62ed7"
+      }
+    }
+  ],
+  "first_rollout_gate": {
+    "implemented_and_cpu_verified": true,
+    "live_first_rollout_gate": "PENDING_NEXT_PILOT",
+    "first_optimizer_step_requires_gate": true,
+    "sample_count": 512,
+    "action_shape": [
+      512,
+      4
+    ],
+    "logp_shape": [
+      512,
+      1
+    ],
+    "old_alpha_beta_shape": [
+      512,
+      4
+    ],
+    "atol": 1e-06,
+    "rtol": 1e-05,
+    "gate_failure_optimizer_steps": 0,
+    "probability_source": "collection-time actual Beta concentrations/logp paired by policy/action/index",
+    "diagnostic_schema": "instinctrl-pilot-first-update-probe/2"
+  },
+  "stop_paths": [
+    "/home/mint/rl_dev/instinctRL_coordination/commander/STOP",
+    "/home/mint/rl_dev/instinctRL_coordination/executor/STOP",
+    "/home/mint/rl_dev/instinctRL_coordination/STOP",
+    "/home/mint/rl_dev/STOP",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/STOP"
+  ],
+  "generator": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/prepare_r5_w_independent_recovery_packet.py",
+    "sha256": "d6bd4b000d651579a189eaa8caff5af9244f389e95076e66ed3bdaf50c402d59"
+  }
+}

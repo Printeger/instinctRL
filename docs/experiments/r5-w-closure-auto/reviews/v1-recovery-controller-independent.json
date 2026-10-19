@@ -1,0 +1,24 @@
+{
+  "verdict": "PASS",
+  "must_fix": [],
+  "reviewer": "/root/audit",
+  "scope": "Exact fresh reviewed controller handoff, not scientific completion",
+  "identities": {
+    "plan_payload_sha256": "93002bc8d09855166cbad4829945f6673d90e456c9d74ee0f986af0a90ce1608",
+    "issued_cpu_check": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/ISSUED_CPU_CHECK.json",
+      "sha256": "d4a99ee739a0ce192f866670319366dcfbfa16c4c0eed867114febab0ca8be63"
+    }
+  },
+  "checks": [
+    "All8 plan pins match; original controller/ownership helper unchanged",
+    "Fresh job J-4c3d85af4438c260 not in Store; approved exact A-35403dcbfe28c1b1",
+    "Limits poll15/retries0/model7200/output67108864 correct",
+    "Prospective resources match independent remaining_check; idle/STOP/ownership PASS",
+    "After_prompt preserves exact recovery terminal and entire Goal; source/config/scoring limits and old failures retained",
+    "Original batch state remains MODEL independent01; reviewer read-only"
+  ],
+  "release_condition": "Commit/tag/push exact inputs then original controller only",
+  "reviewer_writes": 0,
+  "reviewer_gpu_queries": 0
+}

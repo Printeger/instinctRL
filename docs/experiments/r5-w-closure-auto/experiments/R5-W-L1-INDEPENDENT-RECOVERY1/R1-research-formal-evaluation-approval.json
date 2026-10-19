@@ -1,0 +1,51 @@
+{
+  "proposal_id": "P-35403dcbfe28c1b1",
+  "proposal_sha256": "35403dcbfe28c1b101a1e4ef8db6c00ffc8256469aef98e8576c0b0652b8167f",
+  "approval": {
+    "approval_id": "A-35403dcbfe28c1b1",
+    "approver": "local-user-cli",
+    "budget": {
+      "fake_starts": 0,
+      "role_calls": 0,
+      "wall_seconds": 1810
+    },
+    "decision": "APPROVED",
+    "preconditions": [
+      "exact pins",
+      "accepted condition hashes",
+      "STOP clear",
+      "single submission"
+    ],
+    "proposal_id": "P-35403dcbfe28c1b1",
+    "proposal_sha256": "35403dcbfe28c1b101a1e4ef8db6c00ffc8256469aef98e8576c0b0652b8167f",
+    "proposal_version": 1,
+    "reason": "Delegated Commander under explicit user W master 91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2; stage f702c3f2e4a7c575844ecdfc31ac39ff09c4559e0699b860bee1b8852c8a2396; independent packet review fa19bb35892db001601c5c836a3adce8640e066750c7ac3787f02b7c5060ce61. Not a new user click. Exact single release only after commit/tag/push; all original guards preserved.",
+    "scope": "EXPERIMENT",
+    "stage_id": "R5-W-CLOSURE-AUTO-20261019",
+    "time": 1792404423.515769
+  },
+  "actual_authorization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RECOVERY1-R1-RESEARCH-FORMAL-EVALUATION-032412baee46/commands/AUTHORIZATION.json",
+    "sha256": "a4cf51ab4c06cc5be1da7cd8bfa8eb2ee560010492d8336f0bdc800ac0a62ed7"
+  },
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/v1-recovery-prelive-independent.json",
+    "sha256": "fa19bb35892db001601c5c836a3adce8640e066750c7ac3787f02b7c5060ce61"
+  },
+  "checkpoint_acceptance": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-evaluation-actual-independent.json",
+    "sha256": "57c45dd5b8409ef09e86f8fa5e3c2d71ddfbfe9e5420731ee764a0f4111e9b2b"
+  },
+  "commander": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_commander.py",
+    "sha256": "cafb006b531087770e2035f75134f0ee51b60437379934bdfbd3fa4685de18e0"
+  },
+  "stage": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V1-002.json",
+    "sha256": "f702c3f2e4a7c575844ecdfc31ac39ff09c4559e0699b860bee1b8852c8a2396"
+  },
+  "ownership_helper": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_commander.py",
+    "sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4"
+  }
+}

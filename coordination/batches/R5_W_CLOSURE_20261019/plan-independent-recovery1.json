@@ -1,0 +1,43 @@
+{
+  "experiment_id": "R5-W-L1-INDEPENDENT-RECOVERY1",
+  "controller": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_batch.py",
+    "sha256": "ebbe0328f335b6038b3f1f439df45177d6a623e6d6afb5189c29c746b95daa1c"
+  },
+  "ownership_helper": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_commander.py",
+    "sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4"
+  },
+  "spec": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/inputs/R1-research-formal-evaluation.authorized.json",
+    "sha256": "3b562dd50e2e638f3c7b058ecba4792b74eff93a6c2bfadf4b32ff741541ec5c"
+  },
+  "commander": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_commander.py",
+    "sha256": "cafb006b531087770e2035f75134f0ee51b60437379934bdfbd3fa4685de18e0"
+  },
+  "stage": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V1-002.json",
+    "sha256": "f702c3f2e4a7c575844ecdfc31ac39ff09c4559e0699b860bee1b8852c8a2396"
+  },
+  "after_prompt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_W_CLOSURE_20261019/after-independent-recovery1.prompt.md",
+    "sha256": "1d0d6b91979e1abbabdd70f49d8191030d7eddfb8a0445ead5aff6475e45f37e"
+  },
+  "schema": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_W_CLOSURE_20261019/decision.schema.json",
+    "sha256": "a56f9faf0968fefaa19c5d3b798dc3b20a2bb0ca06c9b726a90a477d4477be90"
+  },
+  "codex": {
+    "path": "/usr/local/lib/node_modules/@openai/codex/bin/codex.js",
+    "sha256": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70"
+  },
+  "poll_seconds": 15,
+  "automatic_retries": 0,
+  "model_timeout_seconds": 7200,
+  "model_output_cap_bytes": 67108864,
+  "independent_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/v1-recovery-controller-independent.json",
+    "sha256": "9f5ea637db839e2bae6bfec384c529cd7a439962dd411c6916059e756268fd71"
+  }
+}
