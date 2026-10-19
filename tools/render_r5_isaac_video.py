@@ -78,10 +78,10 @@ def main():
     UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.z)
     UsdGeom.SetStageMetersPerUnit(stage, 1.)
     light = UsdLux.DomeLight.Define(stage, '/World/ReplayLight')
-    light.CreateIntensityAttr(1000)
+    light.CreateIntensityAttr(300)
     light.CreateColorAttr((.85,.91,1.))
     sun = UsdLux.DistantLight.Define(stage, '/World/ReplaySun')
-    sun.CreateIntensityAttr(2500)
+    sun.CreateIntensityAttr(800)
     UsdGeom.Xformable(sun).AddRotateXYZOp().Set((25,-25,-35))
     points, indices, identities = combined_scene_triangles(torch.zeros((1,3)))
     for i,name in enumerate(('Floor','XWall','YWall')):
@@ -140,7 +140,7 @@ def main():
                 else:
                     eye=pos+np.array([-2.6,-3.4,1.9]);target=pos+np.array([.3,.25,0.])
                 cam_transform.Set(Gf.Matrix4d().SetLookAt(Gf.Vec3d(*eye),Gf.Vec3d(*target),Gf.Vec3d(0,0,1)).GetInverse())
-                d,names=sensor_origin_surface_distance(torch.tensor([sensor],dtype=torch.float64),torch.zeros((1,3),dtype=torch.float64))
+                d,names=sensor_origin_surface_distance(torch.from_numpy(sensor[None, :]),torch.zeros((1,3),dtype=torch.float64))
                 endpoint=sensor.copy();axis={'floor':2,'x_wall':0,'y_wall':1}[names[0]]
                 endpoint[axis]=0 if axis==2 else 6
                 # Clamp to the same finite rectangle used by frozen evaluation.
@@ -167,7 +167,7 @@ def main():
                 draw.text((16,500),f't(state)={(i+1)*.1:5.1f}s   t(control)={i*.1:5.1f}s   q={q:.0f}   ICS beta={beta:.3f}',font=font,fill='white')
                 draw.text((16,528),f'Actual v_body: [{vel[0]:+.3f}, {vel[1]:+.3f}, {vel[2]:+.3f}] m/s',font=font,fill='#7de3ff')
                 draw.text((16,555),f'Target v_body: [{command[0]:+.3f}, {command[1]:+.3f}, {command[2]:+.3f}] m/s',font=font,fill='white')
-                draw.text((16,582),f'Sensor geometry distance: {float(d[0]):.3f} m ({names[0]}) | Red: 0.80 m wall safety line',font=small,fill='#ffbb78')
+                draw.text((16,582),f'Sensor geometry distance: {float(d[0]):.3f} m ({names[0]}) | Orange: 0.80 m wall safety line',font=small,fill='#ffbb78')
                 draw.text((16,611),'Fixed u512 + margin already passed. Controller improvement is NOT isolated RL gain.',font=small,fill='#ffd86b')
                 writer.append_data(np.asarray(frame))
                 telemetry.append(dict(frame=i,raw_step=row['step'],state_time_s=(i+1)*.1,control_time_s=i*.1,position_local_m=pos.tolist(),quaternion_wxyz=state[3:7],actual_velocity_b=vel,target_velocity_b=command,distance_m=float(d[0]),surface=names[0],q=q,ics_beta=beta))
@@ -182,7 +182,7 @@ def main():
     manifest=dict(status='COMPLETE',mode=cfg['mode'],source_commit=args.source_commit,entrypoint=pin(__file__),inputs=pin(args.inputs),asset_closure=closure,pid=os.getpid(),started_unix=start,finished_unix=time.time(),videos=videos,physics_steps=0,policy_inference_steps=0,optimizer_updates=0,checkpoint_writes=0,pose_source='Original raw, translated by original environment origin only; no pose interpolation; rotor phases unavailable and left at asset default.',scene='Exact frozen combined_scene_triangles and TASLAB USD; presentation materials, lighting, camera, grid and annotation lines added only to replay stage.',timing=cfg['timing'])
     stage.GetRootLayer().Export(str(out/'replay_stage.usda'))
     (out/'RUN_MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n')
-    rgb.detach([product]);product.destroy()
+    rgb.detach([product.path]);product.destroy()
     signal.alarm(30)
     app.close()
 
