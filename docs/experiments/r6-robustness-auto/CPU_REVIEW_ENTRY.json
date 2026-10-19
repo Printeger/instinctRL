@@ -1,0 +1,32 @@
+{
+  "event_key": "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75",
+  "request": {
+    "prompt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/cpu-review.txt",
+      "sha256": "1a675d84d15975d0fc0498d9064b34734cec4f671f3267bf046eac76695f29b7"
+    },
+    "schema": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/cpu-review.schema.json",
+      "sha256": "88a36ded28626acf67be2c6b6b78746cae66ff6d746ebd5d08122ec353c9d78d"
+    },
+    "executable": {
+      "path": "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+      "sha256": "9a820c17865fa825d04db416818679a9d63bd72e50835c396f496e5684626c9c"
+    },
+    "cwd": "/home/mint/rl_dev/instinctRL-dev",
+    "sandbox": "read-only",
+    "timeout_seconds": 3600,
+    "output_cap_bytes": 67108864,
+    "stop_paths": [
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/STOP"
+    ]
+  },
+  "cli_version": "codex-cli 0.161.0",
+  "worker": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_model_worker.py",
+    "sha256": "008a3e4d39fa4e62d920231620748ec104323113a3397535796667b71d540199"
+  },
+  "source_commit": "87c75218c5f0a293d95196299053b03b41cd73d0",
+  "scientific_status": "CPU_PREPARE_NOT_LIVE_READY",
+  "automatic_sessions_reserved": 1
+}
