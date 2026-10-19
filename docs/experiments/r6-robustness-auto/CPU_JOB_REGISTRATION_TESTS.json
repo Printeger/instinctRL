@@ -1,0 +1,46 @@
+{
+  "schema_version": "r6-job-registration-cpu/1",
+  "status": "CPU_PASS_PENDING_REVIEW_NOT_DEPLOYED",
+  "pytest_cases_passed": 23,
+  "new_test_cases": 8,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_register_job.py",
+    "sha256": "4498f7940c931d2e89429c59777d5dac9498d9382b4aacf713fea69eb7777133"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_register_job.py",
+    "sha256": "0b2f18d8d372e937d0c43e8b2637b8d82b4fcf191233dfe6a7906155c807e44e"
+  },
+  "fixture_and_regression_tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_real_contract.py",
+    "sha256": "d96d8ffcb756ff43a81816e3d994677874f4764f8d3359cbf6b6b8a470fb0cbe"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_JOB_REGISTRATION_TESTS.txt",
+    "sha256": "adbbf2a54d03b90bd949c84e51c157693aa18791eba4b05f8c02dacbe3df0a6d"
+  },
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "387b9581d1624ba14a0b5a72a372c5f0630fed0a47c823667be0e7bcdd7ea1a9"
+  },
+  "operating_state_modified": false,
+  "capacity_pass": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "coverage": [
+    "Exact authorized spec determines one canonical job event and full resource reservation including 180 seconds cleanup",
+    "Replay preserves original deadline and full journal even after expiry; no implicit reservation replacement",
+    "STOP, model activity, rejected capacity and revoked Store permission prevent fresh registration",
+    "Existing submit bridge consumes registered event; launch failure is recovered without a second submit"
+  ],
+  "substitutes": [
+    "Temporary real Store and real-mode contract validation; runtime inspection and resource observations replaced by CPU fixtures",
+    "Popen raises before any process launches; no actual GPU, simulation or training"
+  ],
+  "limitations": [
+    "Registration neither issues permission nor submits a job",
+    "No deployed controller or approved next-plan execution",
+    "Capacity, independent review, frozen production inputs and zero-model handoff remain unresolved"
+  ]
+}

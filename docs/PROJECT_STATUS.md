@@ -1,6 +1,11 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
+
+新增准确作业登记入口从已获Store许可的spec计算完整预留；恢复复用原事件与原截止时间，
+不重复记账或延长窗口。23项CPU测试通过（新增8项），见
+`docs/experiments/r6-robustness-auto/CPU_JOB_REGISTRATION_TESTS.json`。
+仅临时Store与CPU替身验证，尚未独审或部署；操作账本未变，capacity仍false，无新增GPU查询/live/model调用。
 冻结u640 SHA256为 `aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429`；
 基线config/源码/method/runtime可执行文件及地面/UAV资产已完成CPU哈希审计。
 主委托、预算和证据位于 `docs/experiments/r6-robustness-auto/`。
