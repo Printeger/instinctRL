@@ -1,0 +1,153 @@
+{
+  "reviewer": "/root/actual_review",
+  "recorder": "Root relay of read-only independent reviewer final response",
+  "read_only": true,
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "Actual RESOURCE-V2 execution, complete raw replay, ownership and resource evidence; not final Goal closure review",
+  "identities": {
+    "experiment_id": "R5-W-L1-INDEPENDENT-RESOURCE-V2",
+    "job_id": "J-c2412eb2e9c23e5a",
+    "source_commit": "bc9f623dbff3bf73bc528447c97b7c290b4dd777",
+    "source_tree": "e38fcdb7538c7ddeadba80d1ac4e78ff3e8cf367",
+    "config_sha256": "ec64b14ea63428ba74fb3052c6ca20a52675db1d33564031457ca10ecf8ac18b",
+    "checkpoint_update": 640,
+    "checkpoint_sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+    "plan": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_W_CLOSURE_20261019/plan-resource-v2.json",
+      "sha256": "ee8a925ae39ab1133283853420d202008220a26f70bd7a1880396b10eb3de40a"
+    },
+    "snapshot": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RESOURCE-V2/readonly-snapshot.json",
+      "sha256": "ad5afc06409b396c75f3e9ee24494e7599db5aa2d7bd043d99ca11d008e6f285"
+    },
+    "inventory": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RESOURCE-V2/live/R1-research-formal-evaluation/INVENTORY.json",
+      "sha256": "605813c28885a467e99a58cca04b0c0371c558a49668864a95af752ef7ce0266"
+    },
+    "final_job": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RESOURCE-V2/R1-research-formal-evaluation-final-job.json",
+      "sha256": "4a1a59062a6da71eb4b4701fe6d6013a4597ffc8baae3108078706644152950a"
+    },
+    "execution_summary": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RESOURCE-V2/R1-research-formal-evaluation-execution-summary.json",
+      "sha256": "4b25739d65008e0e08097188b7e547efddb494ec2d9e716c393b0842437eadbc"
+    },
+    "actual_result_sha256": "fc29e145ced516b4d9bad32e5fbdc5e978275bac5b8505d13f2fbae11afd80e6",
+    "primary_evaluator_sha256": "a6caedb36a5ddb408a9a9b8c6e073808b480252f6cc3ec12d201b69ab5e5583c",
+    "independent_evaluator_sha256": "a4a6ef91fb9d30cb8f450511c4b46ca143a6a2adfca46fa8d8cab3733535988a",
+    "cpu_replay": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/INDEPENDENT_RESOURCE_V2_CPU_REPLAY.json",
+      "sha256": "f32d988f99b5b8524d6c7ef514586850555803b51a08fd5e7b43a57698689fce"
+    }
+  },
+  "checks": {
+    "original_and_archive_hash_checks": 91,
+    "recursive_plan_packet_final_job_protocol_pins_verified": 26,
+    "cpu_replay": {
+      "execution": "Separate read-only Python invocation; CUDA_VISIBLE_DEVICES empty and PYTHONDONTWRITEBYTECODE=1; frozen snapshot imported first",
+      "traces": 160,
+      "actual_T0_seed_all_cases": 20261020,
+      "actual_lanes_every_step": 32,
+      "steps_per_case": {
+        "Z": 200,
+        "T": 100,
+        "S": 330,
+        "X": 200,
+        "W": 200
+      },
+      "nontraining_transitions": 32960,
+      "dictionary_equal_to_original_independent_output": true,
+      "all_original_metric_gates_pass": true,
+      "case_successes": {
+        "Z": "32/32",
+        "T": "32/32",
+        "S": "32/32",
+        "X": "32/32",
+        "W": "32/32"
+      },
+      "all_direction_groups": "4/4",
+      "W_wall_groups": {
+        "x_wall": "16/16",
+        "y_wall": "16/16"
+      },
+      "W_world_normal_velocity_at_least_point1_for_11_consecutive_samples": "32/32",
+      "W_geometry_and_stop": "Original >=0.8m geometry and <=3s stop gates pass",
+      "original_primary_actual_seed_diagnostics": 160,
+      "primary_diagnostic": "CASE_SEED_MISMATCH",
+      "primary_evaluation_and_w_closure_equal_old_snapshot_bytes": true
+    },
+    "seed_scope": {
+      "comparison": "Independent actual raw versus original primary u640 raw",
+      "cases": [
+        "Z",
+        "T",
+        "S",
+        "X",
+        "W"
+      ],
+      "all_step_dictionaries_identical": true,
+      "only_T0_difference_each_case": "seed",
+      "interpretation": "New actual execution and seed protocol reproduce the same deterministic trajectories from fixed suite initial states; no new physical disturbance or initial-state distribution coverage."
+    },
+    "ownership": {
+      "normal_ACK": true,
+      "ACK_owner_matches_final_job": true,
+      "stable_empty_scans": 2,
+      "no_survivors": true,
+      "settled": true,
+      "postrun_queries": 2,
+      "postrun_ordinals": [
+        0,
+        1
+      ],
+      "postrun_exit_codes": [
+        0,
+        0
+      ],
+      "postrun_result": "560MiB used, utilization2; only approved desktop compute process164MiB"
+    },
+    "resource_gate": {
+      "live_samples": 13,
+      "span_seconds": 60.462717241,
+      "gap_min_seconds": 5.032209306,
+      "gap_max_seconds": 5.04402898,
+      "median_utilization": 1,
+      "mean_utilization": 2.1538461538461537,
+      "peak_utilization": 9,
+      "samples_above_10": 0,
+      "memory_used_MiB": 560,
+      "memory_free_MiB": 11667,
+      "approved_compute_process_MiB": 164,
+      "runtime_observations": 1041,
+      "runtime_min_free_bytes": 8273723392,
+      "runtime_all_above_1GiB_guard": true,
+      "observed_output_bytes": 29705504,
+      "output_cap_bytes": 8589934592
+    },
+    "accounting": {
+      "training_transitions": 0,
+      "optimizer_updates": 0,
+      "checkpoint_writes": 0,
+      "explicit_resets": 5,
+      "nontraining_reserve_retained": 32960,
+      "allocated_gpu_seconds": 263.21826832927763,
+      "wall_seconds_including_cleanup": 266.578906361945
+    }
+  },
+  "native_terminal_preserved": {
+    "status": "FAILED",
+    "exit_code": -9,
+    "counter_completeness": "INCOMPLETE",
+    "formal_transitions": null,
+    "cause_evidence": "cleanup_timeout.json: app.close HARD_TIMEOUT after9.5s, SIGKILL_OWNER_PROCESS",
+    "scientific_replay_does_not_relabel_native_success": true
+  },
+  "limitations": [
+    "Independent seed is explicitly an equivalent-protocol scoring view, not original primary-seed execution.",
+    "Fixed initial states and identical deterministic trajectories do not establish new-distribution generalization.",
+    "E1 already passed with fixed u512 plus0.15m; L1 and this replication do not isolate an RL safety improvement.",
+    "Resource admission is a provisional scheduling choice, not evidence of interference-free execution or flight safety.",
+    "Historical failures, snapshots, native terminals and full reserves remain preserved; this review grants no refund or terminal rewrite."
+  ]
+}

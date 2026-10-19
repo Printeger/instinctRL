@@ -1,0 +1,245 @@
+{
+  "approval_id": "A-d9d376bb39e26342",
+  "h1_evidence": {
+    "allocation_basis": "allocated_device_wall_seconds",
+    "allocation_gpu_seconds": 263.21826832927763,
+    "counter_completeness": "INCOMPLETE",
+    "counters": {
+      "actor_optimizer_steps": 0,
+      "attempted_policy_steps": 1030,
+      "attempted_updates": 0,
+      "automatic_resets": 0,
+      "completed_policy_steps": 1030,
+      "completed_updates": 0,
+      "critic_optimizer_steps": 0,
+      "explicit_resets": 5,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 32960,
+      "real_checkpoint_writes": 0,
+      "real_environment_transitions": 32960,
+      "real_optimizer_updates": 0,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 0
+    },
+    "exit_fact": "FAILED",
+    "formal_verdict": "NOT_GRANTED",
+    "manifest": {
+      "cleanup_timeout.json": {
+        "bytes": 200,
+        "sha256": "480bf69149dc5b1ae213d0f94851589f23284ae37e3fbd5a144c39b813d0c6b9"
+      },
+      "evaluation_progress.json": {
+        "bytes": 114,
+        "sha256": "aa033868919b3d71d6f5a52809a2938a8e740ea9149318df3a5a4bfe34b5d3d8"
+      },
+      "evaluation_raw/w_independent_R1_u640/S.jsonl": {
+        "bytes": 8901082,
+        "sha256": "b1e9873a251bcbc184e3d8d5bf6e4a9e7862493dc9d531a635c9479f364e99b2"
+      },
+      "evaluation_raw/w_independent_R1_u640/T.jsonl": {
+        "bytes": 2619044,
+        "sha256": "c482971104e6346584c240f4fcabaec4b44c2ffa4393b7d8acf15e816b1a91d4"
+      },
+      "evaluation_raw/w_independent_R1_u640/W.jsonl": {
+        "bytes": 4662764,
+        "sha256": "5d01473963ac1f43cf903f57e5eb50cc9bbab8f96ee93ff3c6f310d8b1e00988"
+      },
+      "evaluation_raw/w_independent_R1_u640/X.jsonl": {
+        "bytes": 5295716,
+        "sha256": "9e3b71236dff254fcf8bda7b0ce7540cfee952b8008deafd883a21e62cd9f1d6"
+      },
+      "evaluation_raw/w_independent_R1_u640/Z.jsonl": {
+        "bytes": 5460494,
+        "sha256": "ce7ab3177ffd5949c46028d58327c9939dc618d1077116f984e38bc5374febf9"
+      },
+      "independent_protocol_binding.json": {
+        "bytes": 5220,
+        "sha256": "f4d3dccbccf72097775767ece6943398b0f5d39b51449f02a8e7d77737c0b08c"
+      },
+      "initialization_accounting.json": {
+        "bytes": 269,
+        "sha256": "61d33061293905bf9cf69e78083b6310aaafb6b060780015d3bef60151f6ef21"
+      },
+      "output_quota_binding.json": {
+        "bytes": 248,
+        "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b"
+      },
+      "process_identity.json": {
+        "bytes": 293,
+        "sha256": "5d6a587fbd87cd7a4db97efa4534cb79293cdde03d5802b9ffa086df21cdaff3"
+      },
+      "process_start.json": {
+        "bytes": 1359,
+        "sha256": "f074ba6918ce81d146b3b39ab90438599497c887e72476d9249bb84399ae80e7"
+      },
+      "status.json": {
+        "bytes": 946,
+        "sha256": "070a0b1c8122b3cb71eb25e7a3ac5bc4aa049958045fcf995fc0e6de05df404e"
+      },
+      "w_independent_R1_u640.json": {
+        "bytes": 355039,
+        "sha256": "fc29e145ced516b4d9bad32e5fbdc5e978275bac5b8505d13f2fbae11afd80e6"
+      },
+      "w_independent_R1_u640_goal_motion.json": {
+        "bytes": 244,
+        "sha256": "1de3d712c1b504c382476671e6a443ba3d6048372f37903326ee6bca1c13e762"
+      },
+      "w_independent_R1_u640_policy_S.json": {
+        "bytes": 15219,
+        "sha256": "005440d24c52b045c24d5a006039ef58fe32efdce749abdf769f63bee32589bf"
+      },
+      "w_independent_R1_u640_policy_T.json": {
+        "bytes": 10632,
+        "sha256": "fe4c42ec841f43865c729c4a501a44ae1dbb86216e25244478baf2717d361a9d"
+      },
+      "w_independent_R1_u640_policy_W.json": {
+        "bytes": 306011,
+        "sha256": "e862130624887af837e9ec0924d573aa6fc3552f77ad76df66d9408a5e4b1c8c"
+      },
+      "w_independent_R1_u640_policy_X.json": {
+        "bytes": 14324,
+        "sha256": "5852c8d30fb4be25c05e56f8f83e5584b8bc08da9c53522f1178870bf2ff13fc"
+      },
+      "w_independent_R1_u640_policy_Z.json": {
+        "bytes": 9137,
+        "sha256": "9f39ff2e2642ac79583a6af8096532489615b0f361366cc870012efe5fee9eb5"
+      },
+      "w_profile_binding.json": {
+        "bytes": 3917,
+        "sha256": "7268add2dd08037be7dffb8e2e6dcdde8d42b3abd8ee5807a89c9e7cf253d409"
+      }
+    },
+    "raw_status": "PASS_PENDING_CLOSE",
+    "scientific_validity": "UNASSESSED",
+    "scope": "H1_RAW_EXECUTION",
+    "transitions": null
+  },
+  "id": "J-c2412eb2e9c23e5a",
+  "identity": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pgid": 2247500,
+    "pid": 2247500,
+    "starttime": "236285858"
+  },
+  "receipt": {
+    "allocated_seconds": 263.21826832927763,
+    "definitely_not_released": false,
+    "elapsed_seconds": 266.578906361945,
+    "error": null,
+    "exit_code": -9,
+    "job_id": "J-c2412eb2e9c23e5a",
+    "released": true,
+    "spec_sha256": "0e76ed5cc48359304fe6db124e2d54903420904eb04602a51f72bec6b1ee29d2",
+    "status": "FAILED"
+  },
+  "reserved_resources": {
+    "transitions": 32960
+  },
+  "spec": {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--authorization",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RESOURCE-V2-R1-RESEARCH-FORMAL-EVALUATION-bc9f623dbff3/commands/AUTHORIZATION.json",
+      "--attempt",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RESOURCE-V2-R1-RESEARCH-FORMAL-EVALUATION-bc9f623dbff3",
+      "--mode",
+      "research-formal-evaluation"
+    ],
+    "backend": "real",
+    "conditions": [
+      {
+        "evidence_id": "E-R5-W-CLOSURE-AUTO-20261019-MASTER",
+        "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+      },
+      {
+        "evidence_id": "E-R5-W-CLOSURE-V2-001",
+        "sha256": "d6fe6433a897a8e1bc88a23c2b0a5776be559677e0185885b8e3f7233c1f983e"
+      },
+      {
+        "evidence_id": "E-R5-W-L1-INDEPENDENT-RESOURCE-V2-PRELIVE",
+        "sha256": "368bd38c992de1c8b903cbab8c04ec0431ee147f4934ff57cd080f89ae78fc2f"
+      },
+      {
+        "evidence_id": "E-R5-W-L1-INDEPENDENT-RESOURCE-V2-CHECKPOINT",
+        "sha256": "57c45dd5b8409ef09e86f8fa5e3c2d71ddfbfe9e5420731ee764a0f4111e9b2b"
+      },
+      {
+        "evidence_id": "E-R5-W-RESOURCE-ADMISSION-USER-20261019",
+        "sha256": "936d7dac52d05758e45f0037da4ce375a905de33568db7381ed16901c8af5d6a"
+      }
+    ],
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-resource-v2-20261019",
+    "evaluation": "metric-h1-v1",
+    "h1": {
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RESOURCE-V2-R1-RESEARCH-FORMAL-EVALUATION-bc9f623dbff3",
+      "config_sha256": "ec64b14ea63428ba74fb3052c6ca20a52675db1d33564031457ca10ecf8ac18b",
+      "gpu_accounting": "allocated_device_wall_seconds",
+      "gpu_devices": [
+        "0"
+      ],
+      "mode": "research-formal-evaluation",
+      "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-resource-v2-20261019"
+    },
+    "id": "R5-W-L1-INDEPENDENT-RESOURCE-V2-R1-RESEARCH-FORMAL-EVALUATION-bc9f623dbff3",
+    "method": "unified-h1-formal-readiness-v1",
+    "observations": [
+      "status",
+      "counters",
+      "process_identity",
+      "process_start",
+      "cleanup",
+      "evaluation_raw"
+    ],
+    "pins": {
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RESOURCE-V2-R1-RESEARCH-FORMAL-EVALUATION-bc9f623dbff3/commands/AUTHORIZATION.json",
+        "sha256": "1f93b3fc45231060e405caa51e404ec75f3dadae70e0ada43875e949d744708a"
+      },
+      "dispatcher": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-resource-v2-20261019/training_workloads/unified_h1/local_dispatch.py",
+        "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+      },
+      "executable": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "product": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-resource-v2-20261019/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+        "sha256": "6eb8728000ef1232019ba5bafe285b40e8c24a662e286bda35dc33cc2e385173"
+      },
+      "runtime": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "workload": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-resource-v2-20261019/training_workloads/unified_h1/formal_unified_h1.py",
+        "sha256": "287b8384873b6e342d0f3e5e4b0eaf3b3fd4c6107057eefedb4ae50a4e03986e"
+      }
+    },
+    "resources": {
+      "gpu_seconds": 1810,
+      "starts": 1,
+      "transitions": 32960,
+      "wall_seconds": 1810
+    },
+    "runtime": "/home/mint/rl_blackwell_test",
+    "seed": 20261020,
+    "stage_id": "R5-W-CLOSURE-AUTO-20261019"
+  },
+  "stage": "R5-W-CLOSURE-AUTO-20261019",
+  "status": "FAILED",
+  "used_resources": {
+    "gpu_seconds": 263.21826832927763,
+    "starts": 1,
+    "transitions": null,
+    "wall_seconds": 266.578906361945
+  }
+}

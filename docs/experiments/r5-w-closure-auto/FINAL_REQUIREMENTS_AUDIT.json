@@ -1,0 +1,303 @@
+{
+  "requirements": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/goals/InstinctRL_R5_W_Safety_Closure_Autonomous_Goal.md",
+    "sha256": "de8a87e28e673f3dd2048383d6ccef651c000042eb2002c152bfb587ed7ce996"
+  },
+  "user_prompt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/USER_GOAL_PROMPT.txt",
+    "sha256": "17879fa8dfc7be6b4373016017c90c4c895779397e23391adf8a5f8b64278073"
+  },
+  "checks": [
+    {
+      "id": "0/full-goal",
+      "requirement": "Full five-task capability, not diagnosis-only",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/TRAINING_AND_EVALUATION_MANIFEST.json",
+          "sha256": "89bfe63bbed6b30cbcf7a82d16469d574b4041d60a38775cf4957def1430dc6d"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/INDEPENDENT_RESOURCE_V2_CPU_REPLAY.json",
+          "sha256": "f32d988f99b5b8524d6c7ef514586850555803b51a08fd5e7b43a57698689fce"
+        }
+      ]
+    },
+    {
+      "id": "A/origin",
+      "requirement": "Exact accepted original R1 u512/source/method preserved",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/BASELINE_IDENTITY.json",
+          "sha256": "7325d8136421db7906249fb9558241a9a9d7d6c4e4447f1d735749aebe380aa0"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/baseline-accepted.json",
+          "sha256": "9c3b929279c83ecee2fc7605793b822428406ca07cc15bbf947752b61aa5242b"
+        }
+      ]
+    },
+    {
+      "id": "A/diagnosis",
+      "requirement": "320 old W lanes, geometry/q/beta/velocity/braking timing; no repeated E0 work",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/W_CAUSAL_DIAGNOSIS.json",
+          "sha256": "3541d56872a7c9ec8b5d9b164b8527b7fd6c636195cbe3d45761578bcd35fa56"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/W_CAUSAL_DIAGNOSIS.md",
+          "sha256": "6e0a5626b1041564b662741d2e13ffc654eb21504a51cb8819c464b9dfbbc47b"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/ORIGINAL_TRAINING_COVERAGE.json",
+          "sha256": "fc273b2a1fa814aba9033a6d70ef0d035ed3aa17368979c959f0730a2a5df6dd"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/diagnosis-independent.json",
+          "sha256": "9d7a8088d359230496720fb671feb51b67ab62fe9a6760bbee75e274eab8c352"
+        }
+      ]
+    },
+    {
+      "id": "B/decision",
+      "requirement": "Control margin limitation; fixed policy engineering control before nearwall training",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/METHOD_DECISION_LOG.md",
+          "sha256": "ae6915c4352f0f6ca8990837b600e0e8323e9426192493ff9d8b969b625826be"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/E1_CPU_REPLAY.json",
+          "sha256": "b5c2a25c4e20fe07d5007bb3f0d2a5e14fa93b820830e24bcfae9757d0c0b341"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/e1-actual-independent.json",
+          "sha256": "981152430c41e78e443c40afaec4e5d0491143bccc175207719c74ffcf531059"
+        }
+      ]
+    },
+    {
+      "id": "B/protection",
+      "requirement": "Actor privilege, metric, controller boundaries preserved; CPU negative/regression evidence",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/w-cpu-tests-r5.txt",
+          "sha256": "53d90e7301571ac77e3f7207fe1014e2aba91b272ac0f6ba9006463eff878936"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/w-independent-tests-r3.txt",
+          "sha256": "0d03c26519fb98f4ccf0e9c91837c2764c4f9ed9e9ccf4344b508ecfdb5d2832"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/v1-code-independent.json",
+          "sha256": "7ebb966633e6acf5ad73b184164bf215569ddd4c93f257d920bc8ed36500f79d"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/resource-v2-stage-independent.json",
+          "sha256": "9c06b8f4d1d9a5373a5517f54c7fc92e2d69d9c2d93652a388aef8d3a41d4935"
+        }
+      ]
+    },
+    {
+      "id": "B/freeze",
+      "requirement": "Exact source/config, input authority and read-only snapshot pins for each entry",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/TRAINING_AND_EVALUATION_MANIFEST.json",
+          "sha256": "89bfe63bbed6b30cbcf7a82d16469d574b4041d60a38775cf4957def1430dc6d"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_ORIGINALS_INDEX.json",
+          "sha256": "59c646152b2cf69159a98f0b8916650a921c1d0c4d0d7516141b4eadcfd4c2ea"
+        }
+      ]
+    },
+    {
+      "id": "C/train",
+      "requirement": "Full trainer/Adam/RNG warm-start, first512 before optimizers, u513-768 and2 checkpoints",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-recovery1-actual-independent.json",
+          "sha256": "ce921180385c8b009151e7e71f94426c8f3052c4ad0cedc53cf2dc75275ea468"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/L1_RECOVERY1_ORIGINALS_AUDIT.json",
+          "sha256": "3064c168248d5714f08e2c04cd2d086bcc75f9deeaf61d0563ebfd49b91b5a60"
+        }
+      ]
+    },
+    {
+      "id": "C/coverage",
+      "requirement": "Center98304/x16384/y16384, q2004; finite rewards/ICS/nonzero commands recorded",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/TRAINING_AND_EVALUATION_MANIFEST.json",
+          "sha256": "89bfe63bbed6b30cbcf7a82d16469d574b4041d60a38775cf4957def1430dc6d"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-recovery1-actual-independent.json",
+          "sha256": "ce921180385c8b009151e7e71f94426c8f3052c4ad0cedc53cf2dc75275ea468"
+        }
+      ]
+    },
+    {
+      "id": "C/primary",
+      "requirement": "Both u640/u768 full original seed20260909 all tasks/subgroups/motion pass",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-evaluation-actual-independent.json",
+          "sha256": "57c45dd5b8409ef09e86f8fa5e3c2d71ddfbfe9e5420731ee764a0f4111e9b2b"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/L1_U640_CPU_REPLAY.json",
+          "sha256": "2a25fd6eaeacba52edb0fade0a380cef117d90fa9618171a2cfc65a795092234"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/L1_U768_CPU_REPLAY.json",
+          "sha256": "ac10fea8d0355d05b46c75d2a4b48664e07e39c3bab5a7aea203e35c5789fc73"
+        }
+      ]
+    },
+    {
+      "id": "C/independent",
+      "requirement": "First passing u640 actual seed20261020; 160case/lane complete raw replay; seed-only scoring view; primary mismatch retained",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/INDEPENDENT_RESOURCE_V2_CPU_REPLAY.json",
+          "sha256": "f32d988f99b5b8524d6c7ef514586850555803b51a08fd5e7b43a57698689fce"
+        }
+      ]
+    },
+    {
+      "id": "C/motion",
+      "requirement": "Every W lane true world normal11samples>=.1, geometry>=.8/stop<=3 and both walls",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/INDEPENDENT_RESOURCE_V2_CPU_REPLAY.json",
+          "sha256": "f32d988f99b5b8524d6c7ef514586850555803b51a08fd5e7b43a57698689fce"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-evaluation-actual-independent.json",
+          "sha256": "57c45dd5b8409ef09e86f8fa5e3c2d71ddfbfe9e5420731ee764a0f4111e9b2b"
+        }
+      ]
+    },
+    {
+      "id": "C/recovery",
+      "requirement": "Prelaunch/RECOVERY1 not two science candidates; no blind training extension or retry",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_RESOURCE_AUDIT.json",
+          "sha256": "55c1a0607384136eda2fc1f6c591272c623519b373be9d1250b5437e94c9a7be"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/INDEPENDENT_RECOVERY1_STOP_RESULT.json",
+          "sha256": "d75bce6f594125755f0e9248268851b4f476f04f6b7cf9f72d8cab5e45b6f0cc"
+        }
+      ]
+    },
+    {
+      "id": "resource/v2",
+      "requirement": "Exact new user authority, independently frozen provisional window; diagnostic not live receipt",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/resource-admission-v2/DECISION.md",
+          "sha256": "76ba619072d54d9eab7013c142d541fb8607fb9e6b6753bc63e93071aeec6f26"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/resource-admission-v2/USER_AUTHORITY.txt",
+          "sha256": "936d7dac52d05758e45f0037da4ce375a905de33568db7381ed16901c8af5d6a"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/resource-v2-stage-independent.json",
+          "sha256": "9c06b8f4d1d9a5373a5517f54c7fc92e2d69d9c2d93652a388aef8d3a41d4935"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/resource-v2-prelive-independent.json",
+          "sha256": "368bd38c992de1c8b903cbab8c04ec0431ee147f4934ff57cd080f89ae78fc2f"
+        }
+      ]
+    },
+    {
+      "id": "control/cleanup",
+      "requirement": "Unique existing controller; normal ownedACK/settle/exactly2postrun all7 jobs",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_ORIGINALS_INDEX.json",
+          "sha256": "59c646152b2cf69159a98f0b8916650a921c1d0c4d0d7516141b4eadcfd4c2ea"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_RESOURCE_AUDIT.json",
+          "sha256": "55c1a0607384136eda2fc1f6c591272c623519b373be9d1250b5437e94c9a7be"
+        }
+      ]
+    },
+    {
+      "id": "resource/caps",
+      "requirement": "All old failures and5 snapshots/reservations retained; 68GiB inclmetadata within72/128; master counters not exhausted",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_RESOURCE_AUDIT.json",
+          "sha256": "55c1a0607384136eda2fc1f6c591272c623519b373be9d1250b5437e94c9a7be"
+        }
+      ]
+    },
+    {
+      "id": "D/model",
+      "requirement": "Selected u640 complete model/source/method and secondary u768 exact pins",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/TRAINING_AND_EVALUATION_MANIFEST.json",
+          "sha256": "89bfe63bbed6b30cbcf7a82d16469d574b4041d60a38775cf4957def1430dc6d"
+        }
+      ]
+    },
+    {
+      "id": "D/ablation",
+      "requirement": "Original R1->E1 engineering gain; E1->L1 retained ability, no isolated learned safety gain",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_METHOD_COMPARISON.json",
+          "sha256": "ab59e3f56eab1528af8e4159e253a9eb66904a12f3fcf8400093052bbe9daefd"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_W_TIMING.png",
+          "sha256": "9fc08458ddce15e83873fffc2ebeca34f909d275934727c62ddf5eac9dfce9fd"
+        }
+      ]
+    },
+    {
+      "id": "D/limits",
+      "requirement": "New seed on fixed suite initial states; no new initial distribution/broad generalization/hardware safety",
+      "status": "PASS_EVIDENCE_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/INDEPENDENT_RESOURCE_V2_CPU_REPLAY.json",
+          "sha256": "f32d988f99b5b8524d6c7ef514586850555803b51a08fd5e7b43a57698689fce"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_METHOD_COMPARISON.json",
+          "sha256": "ab59e3f56eab1528af8e4159e253a9eb66904a12f3fcf8400093052bbe9daefd"
+        }
+      ]
+    }
+  ],
+  "completion_sequence": "Final independent review must bind FINAL_R5_W_RESULTS.json with PASS/noMUST_FIX; commit/tag/normal push before returning COMPLETE. Controller alone records terminal decision."
+}

@@ -1,3 +1,17 @@
+# R5 W 最终交付索引（2026-10-19）
+
+当前科学结果：R5_ALL_ORIGINAL_GATES_PASS。最终独审见 reviews/final-independent.json；controller终态仅由 batch-resource-v2/state.json 记录。
+
+- FINAL_R5_W_RESULTS.md/.json：结果、模型、限制；TRAINING_AND_EVALUATION_MANIFEST.json：来源、method、训练与全部任务/方向/墙组。
+- FINAL_ORIGINALS_INDEX.json：7实际jobs、286条原件索引，每条原始/归档路径、bytes、SHA；大checkpoint/raw仍在原绝对路径。
+- FINAL_RESOURCE_AUDIT.json、goal_budget.json：所有失败、全reserve和5snapshot，不退款。
+- INDEPENDENT_RESOURCE_V2_CPU_REPLAY.json：真实seed20261020、完整160case/lane、原primary mismatch、W运动/时序。
+- FINAL_METHOD_COMPARISON.json、FINAL_W_TIMING.png：R1/E1/L1/独立seed；工程收益与训练分开。
+- FINAL_REQUIREMENTS_AUDIT.json：逐项需求验收；reviews/resource-v2-actual-independent.json：实际运行独审；reviews/final-independent.json：最终结果准确pin。
+- 精确资源V2计划 coordination/batches/R5_W_CLOSURE_20261019/plan-resource-v2.json；旧batch/state及历史STOP结果保留，唯一现controller使用batch-resource-v2。
+
+以下为历史逐阶段交接记录，含当时尚未执行/IN_PROGRESS表述，不覆盖上述当前证据。
+
 # R5 W closure evidence index — IN PROGRESS
 
 The complete Goal remains active. E1 engineering and L1 training evidence are accepted; both trained nodes still await full evaluation. This index is not a completion audit.

@@ -1,0 +1,861 @@
+{
+  "schema_version": "r5-w-final-result/1",
+  "status": "R5_ALL_ORIGINAL_GATES_PASS",
+  "goal_id": "R5-W-CLOSURE-AUTO-20261019",
+  "selected_model": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+    "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+    "update": 640
+  },
+  "candidate_source_identity": {
+    "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+    "product_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "product_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924",
+    "workload_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "workload_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924"
+  },
+  "candidate_method_hashes": {
+    "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+    "curriculum": "curriculum-h1-v1",
+    "reward": "reward-h1-zero-neutrality-v1",
+    "critic": "critic-h1-v2",
+    "checkpoint": "checkpoint-h1-v2",
+    "logging": "learning-log-h1-v1",
+    "metric": "metric-h1-v1",
+    "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+    "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+    "reset_distribution": "mixed-nearwall",
+    "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+    "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+    "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5",
+    "ics_clearance_margin_m": "0.15"
+  },
+  "original_primary_results": [
+    {
+      "label": "L1 u640 margin.15",
+      "update": 640,
+      "inventory": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/INVENTORY.json",
+        "sha256": "5cfb83caa3580e126b469bd8500c103a67cee63bd4dc52fc3c13d7f02ded1812"
+      },
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/W.jsonl",
+        "sha256": "3e4421880a52bbfec6b0a26b8466329697c664ce4dd8c1b3cf5310f265fffce9"
+      },
+      "cases": {
+        "S": {
+          "pass": true,
+          "subgroups": {
+            "d0": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d1": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d2": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d3": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d4": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d5": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d6": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d7": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            }
+          },
+          "successes": 32,
+          "total": 32,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ]
+        },
+        "T": {
+          "pass": true,
+          "subgroups": {
+            "d0": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d1": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d2": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d3": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d4": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d5": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d6": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d7": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            }
+          },
+          "successes": 32,
+          "total": 32,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ]
+        },
+        "W": {
+          "pass": true,
+          "subgroups": {
+            "x_wall": {
+              "pass": true,
+              "successes": 16,
+              "total": 16
+            },
+            "y_wall": {
+              "pass": true,
+              "successes": 16,
+              "total": 16
+            }
+          },
+          "successes": 32,
+          "total": 32,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ]
+        },
+        "X": {
+          "pass": true,
+          "subgroups": {
+            "d0": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d1": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d2": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d3": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d4": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d5": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d6": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d7": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            }
+          },
+          "successes": 32,
+          "total": 32,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ]
+        },
+        "Z": {
+          "pass": true,
+          "subgroups": {
+            "d0": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d1": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d2": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d3": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d4": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d5": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d6": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d7": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            }
+          },
+          "successes": 32,
+          "total": 32,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ]
+        }
+      },
+      "walls": {
+        "x": {
+          "min_geometry_m": 0.867889404296875,
+          "max_stop_s": 2.3000000000000003
+        },
+        "y": {
+          "min_geometry_m": 0.8619446754455566,
+          "max_stop_s": 2.4000000000000004
+        }
+      }
+    },
+    {
+      "label": "L1 u768 margin.15",
+      "update": 768,
+      "inventory": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/INVENTORY.json",
+        "sha256": "5cfb83caa3580e126b469bd8500c103a67cee63bd4dc52fc3c13d7f02ded1812"
+      },
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u768.json",
+        "sha256": "58fa534a6df03b244a1d586a3040234117e924da54c3e417b1c71fb067de73f1"
+      },
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u768/W.jsonl",
+        "sha256": "638590334350e8bdd8e1270510755d6bfdbdbabef1c62277dad89db995bc9f84"
+      },
+      "cases": {
+        "S": {
+          "pass": true,
+          "subgroups": {
+            "d0": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d1": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d2": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d3": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d4": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d5": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d6": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d7": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            }
+          },
+          "successes": 32,
+          "total": 32,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ]
+        },
+        "T": {
+          "pass": true,
+          "subgroups": {
+            "d0": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d1": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d2": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d3": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d4": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d5": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d6": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d7": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            }
+          },
+          "successes": 32,
+          "total": 32,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ]
+        },
+        "W": {
+          "pass": true,
+          "subgroups": {
+            "x_wall": {
+              "pass": true,
+              "successes": 16,
+              "total": 16
+            },
+            "y_wall": {
+              "pass": true,
+              "successes": 16,
+              "total": 16
+            }
+          },
+          "successes": 32,
+          "total": 32,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ]
+        },
+        "X": {
+          "pass": true,
+          "subgroups": {
+            "d0": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d1": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d2": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d3": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d4": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d5": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d6": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d7": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            }
+          },
+          "successes": 32,
+          "total": 32,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ]
+        },
+        "Z": {
+          "pass": true,
+          "subgroups": {
+            "d0": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d1": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d2": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d3": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d4": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d5": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d6": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            },
+            "d7": {
+              "pass": true,
+              "successes": 4,
+              "total": 4
+            }
+          },
+          "successes": 32,
+          "total": 32,
+          "wilson_95": [
+            0.8928208017449296,
+            1.0
+          ]
+        }
+      },
+      "walls": {
+        "x": {
+          "min_geometry_m": 0.8560943603515625,
+          "max_stop_s": 2.3000000000000003
+        },
+        "y": {
+          "min_geometry_m": 0.8553390502929688,
+          "max_stop_s": 2.3000000000000003
+        }
+      }
+    }
+  ],
+  "independent_seed_result": {
+    "label": "Independent u640 seed20261020",
+    "update": 640,
+    "inventory": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RESOURCE-V2/live/R1-research-formal-evaluation/INVENTORY.json",
+      "sha256": "605813c28885a467e99a58cca04b0c0371c558a49668864a95af752ef7ce0266"
+    },
+    "result": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RESOURCE-V2-R1-RESEARCH-FORMAL-EVALUATION-bc9f623dbff3/results/research-formal-evaluation/w_independent_R1_u640.json",
+      "sha256": "fc29e145ced516b4d9bad32e5fbdc5e978275bac5b8505d13f2fbae11afd80e6"
+    },
+    "raw": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-RESOURCE-V2-R1-RESEARCH-FORMAL-EVALUATION-bc9f623dbff3/results/research-formal-evaluation/evaluation_raw/w_independent_R1_u640/W.jsonl",
+      "sha256": "5d01473963ac1f43cf903f57e5eb50cc9bbab8f96ee93ff3c6f310d8b1e00988"
+    },
+    "cases": {
+      "S": {
+        "pass": true,
+        "subgroups": {
+          "d0": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d1": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d2": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d3": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d4": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d5": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d6": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d7": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          }
+        },
+        "successes": 32,
+        "total": 32,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ]
+      },
+      "T": {
+        "pass": true,
+        "subgroups": {
+          "d0": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d1": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d2": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d3": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d4": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d5": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d6": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d7": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          }
+        },
+        "successes": 32,
+        "total": 32,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ]
+      },
+      "W": {
+        "pass": true,
+        "subgroups": {
+          "x_wall": {
+            "pass": true,
+            "successes": 16,
+            "total": 16
+          },
+          "y_wall": {
+            "pass": true,
+            "successes": 16,
+            "total": 16
+          }
+        },
+        "successes": 32,
+        "total": 32,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ]
+      },
+      "X": {
+        "pass": true,
+        "subgroups": {
+          "d0": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d1": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d2": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d3": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d4": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d5": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d6": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d7": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          }
+        },
+        "successes": 32,
+        "total": 32,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ]
+      },
+      "Z": {
+        "pass": true,
+        "subgroups": {
+          "d0": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d1": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d2": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d3": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d4": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d5": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d6": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          },
+          "d7": {
+            "pass": true,
+            "successes": 4,
+            "total": 4
+          }
+        },
+        "successes": 32,
+        "total": 32,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ]
+      }
+    },
+    "walls": {
+      "x": {
+        "min_geometry_m": 0.867889404296875,
+        "max_stop_s": 2.3000000000000003
+      },
+      "y": {
+        "min_geometry_m": 0.8619446754455566,
+        "max_stop_s": 2.4000000000000004
+      }
+    }
+  },
+  "actual_seed": 20261020,
+  "canonical_scoring_seed": 20260909,
+  "independent_actual_primary_seed_diagnostic": "160 CASE_SEED_MISMATCH retained",
+  "same_fixed_initial_states": true,
+  "all_step_dictionaries_equal_primary_u640": true,
+  "scientific_attribution": "R1->E1 establishes engineering margin benefit; L1 adds finite q-positive nearwall training and retains all tasks. No isolated RL safety improvement established.",
+  "limitations": [
+    "Independent seed is explicitly an equivalent-protocol scoring view, not original primary-seed execution.",
+    "Fixed initial states and identical deterministic trajectories do not establish new-distribution generalization.",
+    "E1 already passed with fixed u512 plus0.15m; L1 and this replication do not isolate an RL safety improvement.",
+    "Resource admission is a provisional scheduling choice, not evidence of interference-free execution or flight safety.",
+    "Historical failures, snapshots, native terminals and full reserves remain preserved; this review grants no refund or terminal rewrite."
+  ],
+  "native_statuses_preserved": true,
+  "reservations_preserved": true,
+  "controller_state_modified": false,
+  "deliverables": {
+    "report": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_R5_W_RESULTS.md",
+      "sha256": "5a4b0a2cd4ec4e3be8e62f1b266535138fa4b5ca538e2fa0f8247e5b572e277e"
+    },
+    "manifest": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/TRAINING_AND_EVALUATION_MANIFEST.json",
+      "sha256": "89bfe63bbed6b30cbcf7a82d16469d574b4041d60a38775cf4957def1430dc6d"
+    },
+    "originals": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_ORIGINALS_INDEX.json",
+      "sha256": "59c646152b2cf69159a98f0b8916650a921c1d0c4d0d7516141b4eadcfd4c2ea"
+    },
+    "resources": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_RESOURCE_AUDIT.json",
+      "sha256": "55c1a0607384136eda2fc1f6c591272c623519b373be9d1250b5437e94c9a7be"
+    },
+    "requirements": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_REQUIREMENTS_AUDIT.json",
+      "sha256": "ab54a3f6b04be8efe0881fc1bf7dc30a461d935a650e68804f7c93f414843796"
+    },
+    "comparison": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_METHOD_COMPARISON.json",
+      "sha256": "ab59e3f56eab1528af8e4159e253a9eb66904a12f3fcf8400093052bbe9daefd"
+    },
+    "plot": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/FINAL_W_TIMING.png",
+      "sha256": "9fc08458ddce15e83873fffc2ebeca34f909d275934727c62ddf5eac9dfce9fd"
+    },
+    "independent_replay": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/INDEPENDENT_RESOURCE_V2_CPU_REPLAY.json",
+      "sha256": "f32d988f99b5b8524d6c7ef514586850555803b51a08fd5e7b43a57698689fce"
+    },
+    "actual_independent_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/resource-v2-actual-independent.json",
+      "sha256": "bd131ee84803836c42fa9d6206fbfb25e78f6e4a615720ad187b9632fb467ed3"
+    },
+    "training_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-recovery1-actual-independent.json",
+      "sha256": "ce921180385c8b009151e7e71f94426c8f3052c4ad0cedc53cf2dc75275ea468"
+    },
+    "primary_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-evaluation-actual-independent.json",
+      "sha256": "57c45dd5b8409ef09e86f8fa5e3c2d71ddfbfe9e5420731ee764a0f4111e9b2b"
+    },
+    "evidence_index": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/EVIDENCE_INDEX.md",
+      "sha256": "e06c777a93d046207d1f486855de0373a2b74287c603bf762832328d8141c683"
+    }
+  },
+  "completion_control": "Scientific result frozen for final independent review. Only PASS/noMUST_FIX accurately pinning this file plus commit/tag/push permits COMPLETE; controller alone records terminal state."
+}

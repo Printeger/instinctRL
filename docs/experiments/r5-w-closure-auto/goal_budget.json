@@ -21,15 +21,15 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 6,
-    "simulator_initialization_reservations": 6,
+    "live_starts": 7,
+    "simulator_initialization_reservations": 7,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 1542.3795480518602,
-    "wall_seconds_including_cleanup": 1560.6870957026258,
-    "output_peak_and_reservations_bytes": 2058015284
+    "allocated_gpu_seconds": 1805.5978163811378,
+    "wall_seconds_including_cleanup": 1827.2660020645708,
+    "output_peak_and_reservations_bytes": 2087720788
   },
   "reservations": {
     "live_entries": [
@@ -254,6 +254,43 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 82872,
         "inventory": "experiments/R5-W-L1-INDEPENDENT-RECOVERY1/live/R1-research-formal-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-W-L1-INDEPENDENT-RESOURCE-V2-R1-RESEARCH-FORMAL-EVALUATION-bc9f623dbff3",
+        "job_id": "J-c2412eb2e9c23e5a",
+        "experiment_id": "R5-W-L1-INDEPENDENT-RESOURCE-V2",
+        "group": "R1",
+        "mode": "research-formal-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 32960,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 32960,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "raw_status_missing": false,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 29705504,
+        "inventory": "experiments/R5-W-L1-INDEPENDENT-RESOURCE-V2/live/R1-research-formal-evaluation/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -333,7 +370,7 @@
   ],
   "observed": {
     "training_transitions": 131072,
-    "nontraining_transitions": 98880,
+    "nontraining_transitions": 131840,
     "optimizer_updates": 256,
     "training_checkpoint_writes": 2,
     "actor_optimizer_steps": 2048,
