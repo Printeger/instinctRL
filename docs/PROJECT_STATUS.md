@@ -65,6 +65,7 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 聊天Goal自动续推理与零模型等待的交接限制尚未解决；不能称后台运行或科学完成。
 新增离线运动重放组件：沿原评分器重放原五任务，并逐块重算新增32lane运动评分；保存评分不一致、缺件、身份错误与性能失败分别记录。决策摘要写前限48KiB，完整指标/原件hash另存。CPU替身验证不授予科学验收；准确job/inventory/model绑定、测量/物理/RNG原件核验与controller接线仍未完成。见 `CPU_ANALYSIS_TESTS.json`。
 新增准确作业分析绑定入口：`r6_batch --analysis-report ... --analysis-store ...` 可消费已生成的CPU重放报告，核对spec/authorization/attempt/protocol、原件清单及关闭/postrun记录；记录保持幂等和原生失败/控制状态。54项CPU检查通过（含16项新增绑定测试），见 `CPU_ANALYSIS_BINDING_TESTS.json`。模型绑定缺失明确记为缺口；该入口不等于自动分析worker或科学接受，完整controller与下一决策派发仍未部署。
+新增流式测量重放：归档clean测量、时间和audit reset mask重建实际送达帧，逐字段bit-exact核对噪声、延迟、丢帧与有效性，并接入CPU分析及作业绑定。发现原实现设备相关RNG无法纯CPU重放，新增 `R6/range-noise/cpu-v1` 候选固定CPU随机生成/加噪，保留独立lane流与无效beam抽样规则；旧身份不继承。完整32×21240beam CPU检查通过，详见 `CPU_MEASUREMENT_REPLAY_TESTS.json`。真实GPU传输/开销、物理传感器与时钟真实性、独审和容量仍未通过；未启动R6 live。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）

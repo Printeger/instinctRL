@@ -220,7 +220,7 @@
   },
   "lane_stratification": {
     "center": "8 world horizontal directions, four lanes each; lane j direction j%8. Yaw stratum (j//8+j%8)%5. Independent bounded xy offsets per lane. Commands converted world-to-body using current orientation at each control boundary.",
-    "wall": "lanes 0..15 x wall,16..31 y wall; within each wall four lanes per toward/away/parallel/zero mode; parallel signs balanced. Yaw and tangent vary. Report wall × mode separately.",
+    "wall": "lanes 0..15 x wall,16..31 y wall; within each wall four lanes per toward/away/parallel/zero mode; parallel signs balanced. Yaw and tangent vary. Report wall \u00d7 mode separately.",
     "pulse": "8 world force directions with four lanes each; zero commanded velocity throughout.",
     "command_execution": "Stage next world command before env.step. At actual next observation boundary, rotate with measured current attitude before history.update; both internal/external latest command and retained past command frames stay consistent. No world pose/attitude fields are appended to actor."
   },
@@ -246,7 +246,17 @@
       "frame_available"
     ],
     "invalid_fill": "Every invalid beam preserves exact40.0m fill; reject other invalid representations before actor history.",
-    "drop_index_semantics": "Observation boundary index k at block time k*0.1s, including reset boundary0; frame k feeds action k. drop_policy_steps70/180 therefore drop delivery at t7.0/t18.0s, not post-action70/180."
+    "drop_index_semantics": "Observation boundary index k at block time k*0.1s, including reset boundary0; frame k feeds action k. drop_policy_steps70/180 therefore drop delivery at t7.0/t18.0s, not post-action70/180.",
+    "noise_replay_algorithm": {
+      "version": "R6/range-noise/cpu-v1",
+      "generator_device": "cpu",
+      "arithmetic_device": "cpu",
+      "identity_input": "R6/range-noise/cpu-v1/{seed}/{split}/{block_id}/{lane}",
+      "seed_derivation": "int(SHA256(identity_input)[:16],16) modulo 2**63",
+      "delivery_device": "Transfer noised ranges to runtime device after CPU addition and clipping",
+      "verification": "Bit-exact CPU replay from archived clean ranges, validity, delivery time and audit reset masks; real GPU transfer and timing remain unverified",
+      "change_status": "New prelive candidate; previous device-dependent stream identities remain historical. Capacity and independent review pending."
+    }
   },
   "pulse": {
     "mass_reference": {
@@ -303,7 +313,7 @@
     }
   },
   "aggregation": {
-    "target": "Every target block must have32/32 successful lanes; every direction and wall×mode subgroup must have all its lanes pass. Each final seed passes separately. No averaging away failed seeds.",
+    "target": "Every target block must have32/32 successful lanes; every direction and wall\u00d7mode subgroup must have all its lanes pass. Each final seed passes separately. No averaging away failed seeds.",
     "stress": "Same lane rules and full denominators, report failure boundary; not required for target PASS.",
     "confidence": "Wilson two-sided95% per block/subgroup and per seed, report n; no iid or universal safety claim from correlated lanes or3seeds.",
     "learning": "Paired common realization comparison to frozen u640; controller changes need fixed-policy control before RL attribution."

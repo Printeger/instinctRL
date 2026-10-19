@@ -66,6 +66,11 @@ def bind_analysis(entry, key, report_pin, store):
     for name, path in [('analyzer',robustness_analysis.__file__),('scorer',robustness.__file__)]:
         if report[name] != robustness_analysis.pin(path):
             raise RecoveryError('ANALYSIS_IMPLEMENTATION_DRIFT')
+    root=Path(__file__).resolve().parents[1]
+    for name,relative in [('measurement_replayer','training_workloads/unified_h1/robustness_measurement_replay.py'),
+                          ('delivery_implementation','isaaclab-training/instinctlab/observations/robustness.py')]:
+        if report.get(name)!=robustness_analysis.pin(root/relative):
+            raise RecoveryError('ANALYSIS_MEASUREMENT_IMPLEMENTATION_DRIFT')
     indexed = {r['path']:r for r in inventory['files']}
     if len(indexed) != len(inventory['files']):
         raise RecoveryError('ANALYSIS_DUPLICATE_INVENTORY_PATH')
@@ -92,6 +97,9 @@ def bind_analysis(entry, key, report_pin, store):
         if row['replay_complete'] and any(str(output/'r6'/row['block_id']/name) not in seen
                 for name in ('motion_traces.json','result.json')):
             raise RecoveryError('ANALYSIS_COMPLETE_BLOCK_WITHOUT_INPUTS')
+        if row.get('measurement_replay',{}).get('bit_exact_delivery') is True and any(
+                str(output/'r6'/row['block_id']/name) not in seen for name in ('measurements.bin','audit.bin')):
+            raise RecoveryError('ANALYSIS_MEASUREMENT_WITHOUT_INPUTS')
     original = report['summary']['original']
     if original['replay_complete']:
         required = [output/'evaluation_raw/r6_baseline_u640_original'/(case+'.jsonl') for case in ('Z','T','S','X','W')]
@@ -117,6 +125,8 @@ def bind_analysis(entry, key, report_pin, store):
             raise RecoveryError('ANALYSIS_MODEL_BINDING')
     if not inventory['output_inventory_complete']:
         issues.append('INVENTORY_INCOMPLETE')
+    if any(row.get('measurement_replay',{}).get('bit_exact_delivery') is not True for row in report['blocks']):
+        issues.append('MEASUREMENT_REPLAY_INCOMPLETE')
     if not original['replay_complete'] or not original.get('saved_result_equal') or not original.get('saved_wall_equal') or any(
             not row['replay_complete'] or not row['saved_result_equal'] for row in report['blocks']):
         issues.append('MOTION_EVIDENCE_INCOMPLETE_OR_MISMATCHED')

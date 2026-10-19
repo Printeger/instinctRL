@@ -1,0 +1,55 @@
+test_audit_reset_types_not_coerced (tools.test_r6_measurement_replay.MeasurementReplayTests.test_audit_reset_types_not_coerced) ... ok
+test_audit_schedule_complete_and_exact (tools.test_r6_measurement_replay.MeasurementReplayTests.test_audit_schedule_complete_and_exact) ... ok
+test_full_noise_delay_drop_reset_bit_exact (tools.test_r6_measurement_replay.MeasurementReplayTests.test_full_noise_delay_drop_reset_bit_exact) ... ok
+test_missing_frame_and_wrong_beam_denominator (tools.test_r6_measurement_replay.MeasurementReplayTests.test_missing_frame_and_wrong_beam_denominator) ... ok
+test_production_beam_count_with_default_replay_contract (tools.test_r6_measurement_replay.MeasurementReplayTests.test_production_beam_count_with_default_replay_contract) ... ok
+test_reencoded_tamper_rejected_not_just_archive_hash (tools.test_r6_measurement_replay.MeasurementReplayTests.test_reencoded_tamper_rejected_not_just_archive_hash) ... ok
+test_rng_labels_cannot_hide_wrong_noise (tools.test_r6_measurement_replay.MeasurementReplayTests.test_rng_labels_cannot_hide_wrong_noise) ... ok
+test_seed_label_changes_cannot_pass (tools.test_r6_measurement_replay.MeasurementReplayTests.test_seed_label_changes_cannot_pass) ... ok
+test_unrecorded_reset_rejected (tools.test_r6_measurement_replay.MeasurementReplayTests.test_unrecorded_reset_rejected) ... ok
+test_actor_history_and_ics_extract_same_delivered_ranges (tools.test_r6_range_delivery.DeliveryTests.test_actor_history_and_ics_extract_same_delivered_ranges) ... ok
+test_common_noise_survives_different_validity_masks (tools.test_r6_range_delivery.DeliveryTests.test_common_noise_survives_different_validity_masks) ... ok
+test_delay_and_drop_retain_acquisition_time (tools.test_r6_range_delivery.DeliveryTests.test_delay_and_drop_retain_acquisition_time) ... ok
+test_invalid_beams_not_noised_and_input_unmodified (tools.test_r6_range_delivery.DeliveryTests.test_invalid_beams_not_noised_and_input_unmodified) ... ok
+test_noise_is_bounded_reproducible_and_changes_by_seed (tools.test_r6_range_delivery.DeliveryTests.test_noise_is_bounded_reproducible_and_changes_by_seed) ... ok
+test_selected_reset_cannot_leak_previous_episode_frame (tools.test_r6_range_delivery.DeliveryTests.test_selected_reset_cannot_leak_previous_episode_frame) ... ok
+test_timestamp_regression_rejected (tools.test_r6_range_delivery.DeliveryTests.test_timestamp_regression_rejected) ... ok
+test_zero_noise_does_not_consume_random_stream (tools.test_r6_range_delivery.DeliveryTests.test_zero_noise_does_not_consume_random_stream) ... ok
+test_actual_workload_cpu_substitute_output_replays (tools.test_r6_analysis.AnalysisTests.test_actual_workload_cpu_substitute_output_replays) ... ok
+test_ambiguous_and_nonfinite_json_rejected (tools.test_r6_analysis.AnalysisTests.test_ambiguous_and_nonfinite_json_rejected) ... ok
+test_changed_input_rejected (tools.test_r6_analysis.AnalysisTests.test_changed_input_rejected) ... ok
+test_combined_report_full_protocol_keeps_missing_blocks (tools.test_r6_analysis.AnalysisTests.test_combined_report_full_protocol_keeps_missing_blocks) ... ok
+test_complete_equal_is_not_scientific_acceptance (tools.test_r6_analysis.AnalysisTests.test_complete_equal_is_not_scientific_acceptance) ... ok
+test_duplicate_block_rejected (tools.test_r6_analysis.AnalysisTests.test_duplicate_block_rejected) ... ok
+test_duplicate_lane_not_silently_dropped (tools.test_r6_analysis.AnalysisTests.test_duplicate_lane_not_silently_dropped) ... ok
+test_input_limit (tools.test_r6_analysis.AnalysisTests.test_input_limit) ... ok
+test_mismatched_saved_score (tools.test_r6_analysis.AnalysisTests.test_mismatched_saved_score) ... ok
+test_missing_file_keeps_block_denominator (tools.test_r6_analysis.AnalysisTests.test_missing_file_keeps_block_denominator) ... ok
+test_missing_lane_remains_failure (tools.test_r6_analysis.AnalysisTests.test_missing_lane_remains_failure) ... ok
+test_original_complete_replay_retains_performance_failure (tools.test_r6_analysis.AnalysisTests.test_original_complete_replay_retains_performance_failure) ... ok
+test_original_seed_and_extra_lane_rejected (tools.test_r6_analysis.AnalysisTests.test_original_seed_and_extra_lane_rejected) ... ok
+test_summary_limit (tools.test_r6_analysis.AnalysisTests.test_summary_limit) ... ok
+test_symlink_rejected (tools.test_r6_analysis.AnalysisTests.test_symlink_rejected) ... ok
+test_wrong_seed_is_evidence_error (tools.test_r6_analysis.AnalysisTests.test_wrong_seed_is_evidence_error) ... ok
+test_actual_observation_path_delivers_delay_and_drop_to_shared_history (tools.test_r6_measurement_adapter.AdapterTests.test_actual_observation_path_delivers_delay_and_drop_to_shared_history) ... ok
+test_audit_sink_cannot_mutate_actor_frame (tools.test_r6_measurement_adapter.AdapterTests.test_audit_sink_cannot_mutate_actor_frame) ... ok
+test_default_path_identity_and_unchanged_privileged_critic (tools.test_r6_measurement_adapter.AdapterTests.test_default_path_identity_and_unchanged_privileged_critic) ... ok
+test_full_reset_required_and_partial_reset_clears_only_selected_delay (tools.test_r6_measurement_adapter.AdapterTests.test_full_reset_required_and_partial_reset_clears_only_selected_delay) ... ok
+test_original_suite_guard_and_dormant_method_resolution (tools.test_r6_measurement_adapter.AdapterTests.test_original_suite_guard_and_dormant_method_resolution) ... ok
+test_sink_failure_poison_and_frame_quota (tools.test_r6_measurement_adapter.AdapterTests.test_sink_failure_poison_and_frame_quota) ... ok
+test_world_command_uses_actual_boundary_attitude_before_history_update (tools.test_r6_measurement_adapter.AdapterTests.test_world_command_uses_actual_boundary_attitude_before_history_update) ... ok
+test_bit_exact_roundtrip_dedup_signed_zero_and_float64 (tools.test_r6_range_archive.ArchiveTests.test_bit_exact_roundtrip_dedup_signed_zero_and_float64) ... ok
+test_delayed_frame_reference_saves_bytes_and_requires_exact_previous (tools.test_r6_range_archive.ArchiveTests.test_delayed_frame_reference_saves_bytes_and_requires_exact_previous) ... ok
+test_delayed_noise_uses_previous_xor_and_preserves_exact_float_bits (tools.test_r6_range_archive.ArchiveTests.test_delayed_noise_uses_previous_xor_and_preserves_exact_float_bits) ... ok
+test_duplicate_open_cannot_overwrite_evidence (tools.test_r6_range_archive.ArchiveTests.test_duplicate_open_cannot_overwrite_evidence) ... ok
+test_extra_frame_and_wrong_identity_rejected (tools.test_r6_range_archive.ArchiveTests.test_extra_frame_and_wrong_identity_rejected) ... ok
+test_nonfinite_and_missing_fields_rejected (tools.test_r6_range_archive.ArchiveTests.test_nonfinite_and_missing_fields_rejected) ... ok
+test_quota_rejects_before_write_and_keeps_previous_frame (tools.test_r6_range_archive.ArchiveTests.test_quota_rejects_before_write_and_keeps_previous_frame) ... ok
+test_reader_mutation_cannot_corrupt_next_frame_reference (tools.test_r6_range_archive.ArchiveTests.test_reader_mutation_cannot_corrupt_next_frame_reference) ... ok
+test_truncation_and_corruption_rejected (tools.test_r6_range_archive.ArchiveTests.test_truncation_and_corruption_rejected) ... ok
+test_writer_copies_previous_and_reads_legacy_independent_frames (tools.test_r6_range_archive.ArchiveTests.test_writer_copies_previous_and_reads_legacy_independent_frames) ... ok
+
+----------------------------------------------------------------------
+Ran 50 tests in 21.505s
+
+OK

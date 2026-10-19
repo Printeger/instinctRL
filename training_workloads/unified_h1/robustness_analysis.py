@@ -138,10 +138,12 @@ def summarize(blocks, original):
             replay_complete=row['replay_complete'], saved_result_equal=row['saved_result_equal'], error=row['error'],
             successes=None if score is None else score['successes'],
             subgroups=None if score is None else score['subgroups'],
-            failed_lanes=None if score is None else [r['lane'] for r in score['lanes'] if not r['motion_pass']]))
+            failed_lanes=None if score is None else [r['lane'] for r in score['lanes'] if not r['motion_pass']],
+            measurement_replay=row.get('measurement_replay',{}).get('bit_exact_delivery',False),
+            measurement_error=row.get('measurement_error')))
     result = dict(schema_version='r6-motion-replay-summary/1', blocks=rows,
         original=original, scientific_acceptance=False,
-        pending=['EXACT_JOB_INVENTORY_AND_MODEL_BINDING', 'MEASUREMENT_CHAIN_REPLAY',
+        pending=['EXACT_JOB_INVENTORY_AND_MODEL_BINDING', 'INDEPENDENT_MEASUREMENT_CHAIN_ACCEPTANCE',
                  'RESET_FORCE_AND_RANDOM_STREAM_AUDIT', 'INDEPENDENT_SCIENTIFIC_REVIEW'])
     if len(encoded(result)) > MAX_SUMMARY_BYTES:
         raise ValueError('SUMMARY_SIZE_BOUND')
@@ -152,6 +154,22 @@ def analyze(output, protocol_path, *, run_id, seed, split):
     inputs = Inputs()
     protocol = inputs.read(protocol_path)
     blocks = replay_blocks(output, protocol['blocks'], run_id=run_id, seed=seed, split=split, inputs=inputs)
+    from .robustness_measurement_replay import replay_block_measurements
+    for block, row in zip(protocol['blocks'],blocks):
+        row['measurement_replay']={};row['measurement_error']='MOTION_BLOCK_INCOMPLETE'
+        if not row['replay_complete']:continue
+        folder=Path(output)/'r6'/block['id']
+        try:
+            for name in ('measurements.bin','audit.bin'):
+                path=folder/name
+                if path.absolute()!=path.resolve() or path.stat().st_size>2*1024**3:
+                    raise ValueError('MEASUREMENT_ARCHIVE_PATH_OR_BOUND')
+                identity=pin(path);inputs.pins[identity['path']]=identity
+            result=inputs.read(folder/'result.json')
+            row['measurement_replay']=replay_block_measurements(folder,block,run_id=run_id,seed=seed,split=split,result=result)
+            row['measurement_error']=None
+        except (OSError,ValueError,KeyError,TypeError,IndexError,AttributeError,RuntimeError) as error:
+            row['measurement_error']=type(error).__name__+':'+str(error)[:240]
     original = None
     original_summary = dict(replay_complete=False, error=None)
     try:
@@ -168,5 +186,7 @@ def analyze(output, protocol_path, *, run_id, seed, split):
     report = dict(schema_version='r6-motion-replay/1', run_id=run_id, seed=seed, split=split,
         protocol_frozen=protocol.get('frozen') is True, blocks=blocks, original=original,
         inputs=list(inputs.pins.values()), scorer=pin(robustness.__file__), analyzer=pin(__file__),
+        measurement_replayer=pin(Path(__file__).with_name('robustness_measurement_replay.py')),
+        delivery_implementation=pin(Path(__file__).resolve().parents[2]/'isaaclab-training/instinctlab/observations/robustness.py'),
         scientific_acceptance=False, summary=summary)
     return report, summary

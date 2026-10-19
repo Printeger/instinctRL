@@ -26,9 +26,11 @@ class RangeDelivery:
         self.device,self.dtype=torch.device(device),dtype
         self.generators=[];self.streams=[]
         for lane in range(lanes):
-            payload=f'R6/range-noise/{seed}/{stream_id}/{lane}'.encode()
+            # A single CPU algorithm is replayable without CUDA and independent
+            # of the device running physics. This is a new stream identity.
+            payload=f'R6/range-noise/cpu-v1/{seed}/{stream_id}/{lane}'.encode()
             digest=hashlib.sha256(payload).hexdigest()
-            generator=torch.Generator(device=self.device)
+            generator=torch.Generator(device='cpu')
             generator.manual_seed(int(digest[:16],16)%(2**63))
             self.generators.append(generator);self.streams.append(digest)
         self.pending=self._empty();self.last=self._empty()
@@ -71,13 +73,16 @@ class RangeDelivery:
             raise ValueError('invalid beam must retain exact 40m fill')
         noisy=ranges_m.clone()
         if self.sigma:
+            noisy=ranges_m.detach().cpu().clone()
+            cpu_validity=validity.detach().cpu()
             for lane,generator in enumerate(self.generators):
-                mask=validity[lane]
+                mask=cpu_validity[lane]
                 # Draw by acquisition/lane/beam, never by a policy-dependent
                 # validity mask. Paired policies therefore receive the same
                 # noise on shared beams and keep identical subsequent streams.
-                noise=torch.randn((self.rays,),device=self.device,dtype=self.dtype,generator=generator)
+                noise=torch.randn((self.rays,),device='cpu',dtype=self.dtype,generator=generator)
                 noisy[lane,mask]=(noisy[lane,mask]+noise[mask].clamp(-3.,3.)*self.sigma).clamp(.1,40.)
+            noisy=noisy.to(self.device)
         acquired=dict(ranges=noisy,valid=validity.clone(),time=acquisition_time_s.clone(),
                       available=torch.ones((self.lanes,1),device=self.device,dtype=torch.bool))
         candidate=acquired if self.delay==0 else self.pending
