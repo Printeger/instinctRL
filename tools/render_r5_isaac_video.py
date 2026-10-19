@@ -35,11 +35,16 @@ def main():
     def check():
         for p in [root/'STOP', root/'coordination/STOP', root/'coordination/commander/STOP',
                   root/'coordination/executor/STOP', root/'coordination/research/STOP',
-                  Path(args.inputs).parent/'STOP']:
+                  Path(args.inputs).parent/'STOP', root.parent/'STOP',
+                  root.parent/'instinctRL_coordination/STOP',
+                  root.parent/'instinctRL_coordination/commander/STOP',
+                  root.parent/'instinctRL_coordination/executor/STOP']:
             if p.exists():
                 raise RuntimeError(f'STOP: {p}')
         if time.time()-start > cfg['limits']['wall_seconds']:
             raise TimeoutError('Visualization wall budget')
+        if sum(p.stat().st_size for p in out.rglob('*') if p.is_file()) > cfg['limits']['max_output_bytes']:
+            raise RuntimeError('Visualization output budget')
     check()
     for record in cfg['sources']+cfg['assets_and_source']+[v[k] for v in cfg['clips'] for k in ('raw','evaluation','checkpoint')]:
         assert pin(record['path'])['sha256'] == record['sha256'], record['path']
