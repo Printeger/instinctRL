@@ -1,0 +1,12 @@
+test_completed_artifact_drift_refuses_replay (tools.test_r6_batch.BatchTests.test_completed_artifact_drift_refuses_replay) ... ok
+test_consumed_review_is_not_relaunched (tools.test_r6_batch.BatchTests.test_consumed_review_is_not_relaunched) ... ok
+test_controller_restart_reattaches_exact_live_worker (tools.test_r6_batch.BatchTests.test_controller_restart_reattaches_exact_live_worker) ... ok
+test_dispatch_claim_without_handle_never_launches (tools.test_r6_batch.BatchTests.test_dispatch_claim_without_handle_never_launches) ... ok
+test_failed_schema_recorded_but_not_accepted (tools.test_r6_batch.BatchTests.test_failed_schema_recorded_but_not_accepted) ... ok
+test_restart_after_popen_before_binding_recovers_worker_identity (tools.test_r6_batch.BatchTests.test_restart_after_popen_before_binding_recovers_worker_identity) ... ok
+test_stop_before_dispatch_preserves_unstarted_event (tools.test_r6_batch.BatchTests.test_stop_before_dispatch_preserves_unstarted_event) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 2.300s
+
+OK

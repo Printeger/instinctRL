@@ -1,0 +1,113 @@
+"""R6 model handoff used by the local single-writer batch.
+
+Only consumes previously registered model events. No permission issuance, job
+submission, budget reservation, automatic retry or scientific acceptance here.
+Job/resource phases must be attached before this can run the full R6 goal.
+"""
+from pathlib import Path
+import argparse
+import json
+import os
+import subprocess
+import sys
+import time
+
+from rlflow.jobs import identity, owns
+from tools.r6_recovery import Journal, RecoveryError, checked, file_pin
+from tools.r6_model_worker import validate_request
+
+ROOT=Path(__file__).resolve().parents[1]
+
+
+def worker_environment():
+    return dict(os.environ,PYTHONDONTWRITEBYTECODE='1',CUDA_VISIBLE_DEVICES='',
+                PYTHONPATH='.:tools/rlflow',GIT_TERMINAL_PROMPT='0')
+
+
+def verified_decision(journal,key):
+    """Receipt recording is separate from validating the returned decision."""
+    entry=journal.read()['events'][key]
+    receipt=json.loads(checked(entry['receipt']).read_text())
+    if receipt.get('exit_code')!=0 or receipt.get('error') is not None or receipt.get('schema_valid') is not True:
+        raise RecoveryError('MODEL_FAILED_PRESERVE_RECEIPT')
+    if receipt.get('cleanup',{}).get('status')!='VERIFIED_NO_OWNED_DESCENDANTS':
+        raise RecoveryError('MODEL_CLEANUP_NOT_VERIFIED')
+    for keyname in ('events','stderr','last_message'):
+        checked(receipt[keyname])
+    _,_,_,schema=validate_request(entry['request'])
+    result=json.loads(checked(receipt['last_message']).read_text())
+    import jsonschema
+    jsonschema.validate(result,schema)
+    return result
+
+
+def model_handoff(journal,key,*,poll_seconds=15):
+    """Caller holds the sole writer lock throughout the read-only review.
+
+    Dispatch claim survives a crash before Popen; that ambiguous event is never
+    retried. After Popen, worker.json permits exact reattachment even if the
+    controller died before binding the PID into state. A receipt permits closing
+    an already exited worker. STOP is handled by the worker and never removed.
+    """
+    journal.require_writer()
+    if not 0<poll_seconds<=60:raise ValueError('LOCAL_POLL_INTERVAL')
+    state=journal.read();entry=state['events'][key]
+    if entry['kind']!='model':raise RecoveryError('MODEL_EVENT_REQUIRED')
+    call=journal.directory/'calls'/key
+    receipt_path=call/'receipt.json'
+    process=None
+    if entry['receipt']:
+        return verified_decision(journal,key)
+    if not entry.get('dispatch_claim'):
+        journal.guard()
+        if entry['process'] is not None or entry['status']!='INTENT' or call.exists():
+            raise RecoveryError('UNCLAIMED_SIDE_EFFECT_REQUIRES_RECONCILIATION')
+        validate_request(entry['request'])
+        entry['dispatch_claim']={'controller':identity(os.getpid()),'time':time.time(),
+                                 'worker':file_pin(ROOT/'tools/r6_model_worker.py')}
+        state.update(status='MODEL_REVIEW',current_model_event=key,controller_identity=identity(os.getpid()))
+        journal.save(state)
+        process=subprocess.Popen([sys.executable,'-B','-m','tools.r6_model_worker',
+            str(journal.directory.resolve()),key],cwd=ROOT,env=worker_environment(),
+            stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,
+            start_new_session=True)
+        live=identity(process.pid)
+        if live is not None:journal.bind_process(key,live)
+    while True:
+        if process is not None:process.poll() # Reap our child before checking owns().
+        entry=journal.read()['events'][key]
+        # Worker identity is persisted before any model side effect. The event
+        # key plus exact Linux start/boot identity prevents PID-only attachment.
+        worker_path=call/'worker.json'
+        if entry['process'] is None and worker_path.exists():
+            worker=json.loads(worker_path.read_text())
+            if worker['event_key']!=key:raise RecoveryError('WORKER_EVENT_MISMATCH')
+            if owns(worker['identity']):journal.bind_process(key,worker['identity'])
+        action=journal.observe(key,receipt_path=receipt_path)['action']
+        if action=='ACCEPT_RECEIPT':
+            journal.consume(key,receipt_path)
+            state=journal.read();state.update(status='MODEL_RECEIPT_RECORDED',current_model_event=None)
+            journal.save(state)
+            return verified_decision(journal,key)
+        if action=='ALREADY_CONSUMED':return verified_decision(journal,key)
+        if action=='RECONCILE':
+            # A live process owned by this invocation may not have created its
+            # worker.json yet; its exact Popen identity is already bound above.
+            raise RecoveryError('MODEL_AMBIGUOUS_NO_RETRY')
+        if action not in ('WAIT_OWNED_WORKER','WAIT_OWNED_EXIT','CANCEL_OWNED'):
+            raise RecoveryError('UNEXPECTED_MODEL_OBSERVATION: '+action)
+        # STOP is observed by the worker's bounded local loop, including cleanup.
+        # No second model is called to ask whether the first one has finished.
+        time.sleep(poll_seconds)
+
+
+def main():
+    ap=argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('directory',type=Path);ap.add_argument('event_key')
+    a=ap.parse_args();journal=Journal(a.directory.resolve())
+    with journal.writer():
+        result=model_handoff(journal,a.event_key)
+    print(json.dumps(result,ensure_ascii=False))
+
+
+if __name__=='__main__':main()
