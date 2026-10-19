@@ -215,7 +215,8 @@
       -0.2,
       0.2
     ],
-    "reset": "Solve root position from rotated sensor offset to achieve specified sensor distance, verify actual reset state; never use body-centre distance as sensor distance."
+    "reset": "Solve root position from rotated sensor offset to achieve specified sensor distance, verify actual reset state; never use body-centre distance as sensor distance.",
+    "reset_velocity": "Initial root linear/angular velocity zero; audit actual reset against generated specification. Speed factor in these blocks varies command magnitude, not initial velocity."
   },
   "lane_stratification": {
     "center": "8 world horizontal directions, four lanes each; lane j direction j%8. Yaw stratum (j//8+j%8)%5. Independent bounded xy offsets per lane. Commands converted world-to-body using current orientation at each control boundary.",
@@ -229,7 +230,7 @@
       0,
       1
     ],
-    "delay_initialization": "No prior frame: invalid unavailable sample, not a synthetic fresh frame; preserve this transient.",
+    "delay_initialization": "No prior frame: invalid unavailable sample, not a synthetic fresh frame; preserve this transient. Placeholder timestamp0 is marked frame_available=false and all beam validity=false; it is not a received frame.",
     "drop": "At specified policy steps, no new frame; retain prior frame with original acquisition timestamp and increment age; dropped-delivery flag true. No fabricated new timestamp.",
     "audit_fields": [
       "clean_ranges",
@@ -240,8 +241,10 @@
       "delivery_time",
       "frame_age",
       "drop",
-      "noise_rng_identity"
-    ]
+      "noise_rng_identity",
+      "frame_available"
+    ],
+    "invalid_fill": "Every invalid beam preserves exact40.0m fill; reject other invalid representations before actor history."
   },
   "pulse": {
     "mass_reference": {
@@ -285,7 +288,7 @@
       "recovery": "11 consecutive samples speed<=.08 confirmed within3s after force removal; hold201 observations from confirmation with RMS<=.08/drift<=.30. Reference is post-recovery confirmation, not old position; no H2 claim."
     },
     "wall_modes": {
-      "toward": "Require actual world wall-normal speed>=speed/2 for11 consecutive observations. First geometric clearance<=1.1m triggers 3s stop confirmation; otherwise proactive confirmation within20s from start. After confirmation speed RMS<=.08 with at least101 observations, all-time distance>=.8 and height gate.",
+      "toward": "Require actual world wall-normal speed>=speed/2 for11 consecutive observations before the first qualifying sample of stopping confirmation. First geometric clearance<=1.1m triggers 3s stop confirmation; otherwise proactive confirmation within20s from start. After confirmation speed RMS<=.08 with at least101 observations, all-time distance>=.8 and height gate.",
       "away_parallel": "100 steps assigned direction then230 zero, stop rules; geometry still all-time. Parallel signs balanced.",
       "zero": "Original Z metrics over entire330 steps, all-time geometry/height."
     }
@@ -308,5 +311,9 @@
     "Prove sensor timing/force/reset implementation and CPU random stream separation.",
     "Independent physical feasibility review, especially low-speed movement prerequisites and nearwall stopping.",
     "Exact output/time/init/reset/optimizer accounting and pipeline rehearsal."
-  ]
+  ],
+  "metric_implementation": {
+    "path": "training_workloads/unified_h1/robustness.py",
+    "scope": "Motion and finite-rectangle geometry only; motion_pass requires separate input-chain/force/reset/RNG provenance acceptance before scientific PASS."
+  }
 }

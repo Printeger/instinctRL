@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "tests": 42,
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "automatic_worker_sessions": 0,
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "unittest",
+    "tools.test_r6_budget",
+    "tools.test_r6_recovery",
+    "tools.test_r6_robustness",
+    "tools.test_r6_range_delivery",
+    "-v"
+  ],
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_METRIC_MEASUREMENT_TESTS.txt",
+    "sha256": "716b1789ae97c69fba2bfd5871af4258622567f8157b57f9aa9dd38f6589508f"
+  },
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness.py",
+      "sha256": "37935ef61bbcb49c89c9293c4dead7fd418fd1663195e508a4948442eed50804"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "cec597bad33eba37ab507ed8ca95f576bf14e97770c0649fef233a7bc6553046"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_robustness.py",
+      "sha256": "a30274cd019f04160ccbbecf7aadbe346c8678c14831f5586f641b31748e53d8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_range_delivery.py",
+      "sha256": "f3405c727907eda376399a888822774b474fcf232aef2472db84b59d265b0777"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "f195d649f54acb2c3df7f41e1014a9873f376a2a8c8108730e160813e4365de1"
+    }
+  ],
+  "initial_failure": {
+    "type": "CPU_IMPORT_ERROR",
+    "reason": "Initial placement under sensors imported IsaacLab camera/carb before AppLauncher. Moved dormant pure tensor module to observations; no runtime modification.",
+    "gpu_or_simulator_started": false
+  },
+  "scope": "CPU motion metrics, raw denominator preservation, tensor delivery timing/noise/reset and shared actor/ICS extraction; budget and recovery core regressions.",
+  "not_proven": [
+    "live impairment integration",
+    "force application",
+    "exact reset specification audit",
+    "full controller recovery chain",
+    "complete disk/time capacity",
+    "noninteractive auth/schema review",
+    "scientific domain pass"
+  ]
+}
