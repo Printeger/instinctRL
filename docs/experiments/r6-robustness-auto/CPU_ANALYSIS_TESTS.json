@@ -1,0 +1,76 @@
+{
+  "status": "CPU_PASS_PENDING_INDEPENDENT_REVIEW",
+  "tests": 37,
+  "elapsed_seconds": 54.346,
+  "exit_code": 0,
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "unittest",
+    "tools.test_r6_analysis",
+    "tools.test_r6_robustness",
+    "tools.test_r6_evaluation"
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/analyze_r6_evaluation.py",
+      "sha256": "d742ff014506ae1650e4b310109c7b4b3f3198262a66034432b76fa4126af25f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_analysis.py",
+      "sha256": "f23c717c08b75165682275f8b49b3fd1abc2b775c22f417871c2035041b8aa8e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_analysis.py",
+      "sha256": "1a3f0925530b7c0ad8fe80858e47302a12d32a9f798c1c77ccd61ce1e6e691ed"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness.py",
+      "sha256": "37935ef61bbcb49c89c9293c4dead7fd418fd1663195e508a4948442eed50804"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/evaluation.py",
+      "sha256": "a6caedb36a5ddb408a9a9b8c6e073808b480252f6cc3ec12d201b69ab5e5583c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_robustness.py",
+      "sha256": "a30274cd019f04160ccbbecf7aadbe346c8678c14831f5586f641b31748e53d8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_evaluation.py",
+      "sha256": "3da2d56d86cf820f187b60bbf724a866469c1ea580f7a08a29b673c4bce7388c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "04411af293778a7c8d72905063fd66f559062458b7ff9db4841e646f53aa1cb9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "a4633a179b0cc343cb323e7df3559281f718fc95e290145da27a01c35feca7c0"
+    }
+  ],
+  "observed_terminal_summary": "Ran 37 tests in 54.346s\n\nOK",
+  "verification": [
+    "160 original case/lane synthetic raw replay with unchanged evaluator, actual seed retained",
+    "Original seed mutation and excess lane rejected",
+    "All registered blocks retained on missing originals; missing lane retains denominator32",
+    "Saved score mismatch and saved result identity errors remain evidence errors",
+    "Duplicate lanes, JSON keys, nonfinite JSON, symlinks, changed inputs and size bounds rejected",
+    "Actual evaluate_block CPU substitute output replayed with exact saved score equality",
+    "Full16block compact summary bounded48KiB; full report stores per-lane results and input hashes"
+  ],
+  "limitations": [
+    "CPU fixtures only; no actual R6 evaluation, GPU probe or simulation",
+    "No independent scientific acceptance",
+    "Not yet integrated with exact closed-job inventory, model binding, postrun and event dispatch",
+    "Measurement-chain, reset/force and random-stream audits remain required",
+    "Protocol remains draft; no final split realization revealed"
+  ],
+  "scientific_acceptance": false
+}

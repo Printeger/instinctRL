@@ -63,6 +63,7 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 准确source/test哈希及实际receipt/usage已核验。此结论只覆盖受审控制组件，不授予完整控制器或live准入。
 物理reset/force的实际验证、完整job/resource控制器、容量/协议冻结、exact Store许可及科学验证均未完成。
 聊天Goal自动续推理与零模型等待的交接限制尚未解决；不能称后台运行或科学完成。
+新增离线运动重放组件：沿原评分器重放原五任务，并逐块重算新增32lane运动评分；保存评分不一致、缺件、身份错误与性能失败分别记录。决策摘要写前限48KiB，完整指标/原件hash另存。CPU替身验证不授予科学验收；准确job/inventory/model绑定、测量/物理/RNG原件核验与controller接线仍未完成。见 `CPU_ANALYSIS_TESTS.json`。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）
