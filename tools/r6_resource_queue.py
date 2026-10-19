@@ -177,6 +177,8 @@ def finish(journal,key,*,interrupted=False):
     """Persist raw full/partial window and deterministic result without queries."""
     journal.require_writer();state=journal.read();entry=validate(journal,key,state)
     path=journal.directory/'resource-queue'/key/'window.json'
+    if any(not c.get('receipt') for c in entry.get('sample_claims',{}).values()):
+        raise RecoveryError('QUEUE_SAMPLE_CLAIM_UNRESOLVED')
     if entry.get('window_record'):
         return json.loads(checked(entry['window_record']).read_text())
     # Handle crash after artifact but before state commit without recalculating

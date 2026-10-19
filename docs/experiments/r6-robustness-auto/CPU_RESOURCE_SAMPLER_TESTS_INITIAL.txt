@@ -1,0 +1,15 @@
+test_adopted_orphan_is_cleaned (tools.test_r6_resource_sampler.SamplerTests.test_adopted_orphan_is_cleaned) ... ok
+test_capture_limit_retains_prefix_before_refusal (tools.test_r6_resource_sampler.SamplerTests.test_capture_limit_retains_prefix_before_refusal) ... ok
+test_claim_without_receipt_not_retried_or_finished_as_pass (tools.test_r6_resource_sampler.SamplerTests.test_claim_without_receipt_not_retried_or_finished_as_pass) ... ok
+test_crash_after_append_before_receipt_binding_reuses_sample (tools.test_r6_resource_sampler.SamplerTests.test_crash_after_append_before_receipt_binding_reuses_sample) ... ok
+test_exact_pair_sample_receipt_and_idempotent_consumption (tools.test_r6_resource_sampler.SamplerTests.test_exact_pair_sample_receipt_and_idempotent_consumption) ... ok
+test_nonzero_query_preserves_native_code_and_no_second_query (tools.test_r6_resource_sampler.SamplerTests.test_nonzero_query_preserves_native_code_and_no_second_query) ... ok
+test_receipt_parse_drift_refused (tools.test_r6_resource_sampler.SamplerTests.test_receipt_parse_drift_refused) ... ok
+test_same_sample_directory_never_runs_twice (tools.test_r6_resource_sampler.SamplerTests.test_same_sample_directory_never_runs_twice) ... ok
+test_stop_cleans_sleeping_query (tools.test_r6_resource_sampler.SamplerTests.test_stop_cleans_sleeping_query) ... ok
+test_timeout_cleans_query_and_keeps_failure (tools.test_r6_resource_sampler.SamplerTests.test_timeout_cleans_query_and_keeps_failure) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 32.325s
+
+OK

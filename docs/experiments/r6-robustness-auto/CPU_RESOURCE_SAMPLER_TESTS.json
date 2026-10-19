@@ -1,0 +1,80 @@
+{
+  "status": "CPU_RESOURCE_SAMPLE_WORKER_PASS_NOT_FULL_QUEUE_CONTROLLER",
+  "capacity_pass": false,
+  "tests": [
+    {
+      "command": "python -B -m unittest tools.test_r6_resource_sampler tools.test_r6_resource_queue -v",
+      "passed": 29,
+      "seconds": 33.788,
+      "log": "CPU_RESOURCE_SAMPLER_TESTS_V2.txt"
+    },
+    {
+      "command": "python -B -m unittest tools.test_r6_resource_sampler.SamplerTests.test_non_utf8_failure_output_remains_consumable_as_failed_evidence tools.test_r6_resource_sampler.SamplerTests.test_exact_pair_sample_receipt_and_idempotent_consumption tools.test_r6_resource_sampler.SamplerTests.test_cleanup_uncertainty_cannot_close_window -v",
+      "passed": 3,
+      "log": "CPU_RESOURCE_SAMPLER_TESTS_V3.txt"
+    }
+  ],
+  "distinct_tests": 30,
+  "python": "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "bounds": {
+    "sample_output_bytes": 49152,
+    "query_log_bytes": 16384,
+    "query_seconds": 15,
+    "sample_query_window_seconds": 30,
+    "cleanup_seconds_per_query": 15,
+    "recorded_controller_deadline_seconds": 60,
+    "queries_per_sample": 2
+  },
+  "checks": [
+    "Fixed GPU-summary and process-list argv; source/executable/review pins, no shell execution",
+    "Exclusive sample directory plus original per-ordinal claim; duplicate execution refuses overwrite",
+    "Raw stdout/stderr and native query exit status retained; prewrite cap, timeout, STOP and subreaper cleanup",
+    "Receipt requires exact worker/query/output identity and verified owned cleanup",
+    "Successful parsed sample reconstructed from original stdout before journal append",
+    "Crash after append before receipt state binding reuses exact sample",
+    "Failed clean samples can be recorded after STOP; missing receipt or cleanup uncertainty prevents window closure",
+    "Non-UTF8 failure output remains opaque original evidence rather than blocking safe failure settlement"
+  ],
+  "limitations": [
+    "Fake executable only: no real GPU query, CUDA initialization, model call, live job or simulation",
+    "Local sample-dispatch/recovery/wait loop and independent controller timeout enforcement still pending",
+    "Recorded60-second deadline is checked at worker start; full supervisor must enforce it if worker stalls",
+    "Real sampler requires capacity acceptance plus exact sampler review and frozen nvidia-smi pin; neither granted by these tests",
+    "Full queue/prelaunch/resource/submit integration and independent review remain pending"
+  ],
+  "pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_sampler.py",
+      "sha256": "e5588b3b8143ff4840bc7c1cd1281865b8fa91bee2ac6030de8be3eef2e17b28"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_resource_sampler.py",
+      "sha256": "3ca20efb968a25a2cdd696a36323eaff0508e23c02e2dea7c382d596595eb60f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py",
+      "sha256": "89510f87f48a4aa60cb0863e0ec24a0bf13bbd6ada43314d9f55f4f34db7214a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_worker_processes.py",
+      "sha256": "1431c182d12920e4d42dc99cb6a5d72289552ad2b87a79b065cb79c948ad6f01"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_SAMPLER_TESTS_INITIAL.txt",
+      "sha256": "f40bb133d0bfc568ba5df1c1e4e2f6e69461a1b0cde382e20b1e10857095bd1a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_SAMPLER_TESTS_V2.txt",
+      "sha256": "40263ca46de4aaa7cce2099ce1dbe80a610699788b2b38613cb0cce60b92adf5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_SAMPLER_TESTS_V3.txt",
+      "sha256": "aa49f669c55f0e563492f9b9dd6ea63e79cafefb46cbcf48dc441045eb34936d"
+    }
+  ]
+}
