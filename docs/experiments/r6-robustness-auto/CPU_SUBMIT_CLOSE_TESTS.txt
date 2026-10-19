@@ -1,0 +1,40 @@
+F......................................................                  [100%]
+=================================== FAILURES ===================================
+_______ test_cli_combines_submit_and_close_with_native_failure_preserved _______
+
+cycle = namespace(store=<rlflow.store.Store object at 0x7629ad12e4e0>, journal=<tools.r6_recovery.Journal object at 0x7629ace4...s_submit_and_c0/store/workspaces/cpu/inert.py'), popen=<Mock id='129921369458304'>, submit=<Mock id='129921354174384'>)
+capsys = <_pytest.capture.CaptureFixture object at 0x7629ad0f7e30>
+
+    def test_cli_combines_submit_and_close_with_native_failure_preserved(cycle,capsys):
+        b=cycle
+>       main([*cli_args(b),'--wait-close'])
+
+tools/test_r6_submit_close.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_submit.py:181: in main
+    result=action(journal,args.event_key,Store(root),queue_key=args.queue_key)
+tools/r6_submit.py:144: in submit_and_close
+    submission=submit_once(journal,key,store,queue_key=queue_key)
+tools/r6_submit.py:104: in submit_once
+    experiments.submit(store,spec)
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1199: in _execute_mock_call
+    result = effect(*args, **kwargs)
+tools/test_r6_submit_close.py:27: in finish
+    b.journal.require_writer()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tools.r6_recovery.Journal object at 0x7629ace44da0>
+
+    def require_writer(self):
+        if self._lock is None or self._owner_pid != os.getpid():
+>           raise RecoveryError('SINGLE_WRITER_REQUIRED')
+E           tools.r6_recovery.RecoveryError: SINGLE_WRITER_REQUIRED
+
+tools/r6_recovery.py:60: RecoveryError
+=========================== short test summary info ============================
+FAILED tools/test_r6_submit_close.py::test_cli_combines_submit_and_close_with_native_failure_preserved
+1 failed, 54 passed in 10.52s

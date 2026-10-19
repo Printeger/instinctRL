@@ -1,0 +1,58 @@
+{
+  "schema_version": "r6-submit-close-cpu/1",
+  "status": "CPU_COMPOSITION_PASS_PENDING_REVIEW_NOT_DEPLOYED",
+  "tests_passed": 74,
+  "new_composition_tests": 6,
+  "existing_submit_tests": 49,
+  "existing_job_handoff_tests": 19,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+    "sha256": "dcccf9ed3d102ba06244fd934855c16a70fc84f1e899b9a75b674cc9c7266b83"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_close.py",
+    "sha256": "d1a9865c7b9ca6016f1267999df26b1cdd3119cb18bcd8737c626172e17280f9"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SUBMIT_CLOSE_TESTS_V2.txt",
+    "sha256": "05e260b0a3f221c984a0c63dedf63fda4d2213541c3765e5c7af678d2b824277"
+  },
+  "initial_output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SUBMIT_CLOSE_TESTS.txt",
+    "sha256": "469d042c4bd3bd20cbcf9a1e8632a6d9a2453cc27d6d7b6c15378b891d49a3f6"
+  },
+  "initial_failure": "Fixture checked the original Journal object for lock ownership while CLI correctly held a new Journal object lock. Replaced with a competing flock assertion; original failure retained.",
+  "dependency": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+    "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+  },
+  "command_template": "python -B -m tools.r6_submit DIRECTORY EVENT_KEY --store EXISTING_STORE --queue-key QUEUE_EVENT_KEY --wait-close",
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "9b272bf84588eeb8c3b064bcb99b89f7971176eb09e468b8440b14a8accb2668"
+  },
+  "operating_state_modified": false,
+  "capacity_pass": false,
+  "live_starts": 0,
+  "gpu_queries": 0,
+  "model_calls": 0,
+  "coverage": [
+    "Submit and existing model-free wait/close retain one Journal writer lock",
+    "Cleanup wall/GPU reservation required before any submission, including CPU fixture path",
+    "Crash after durable submission before handoff recovers same job without submit",
+    "Native FAILED/-9 preserved by actual close function; no scientific acceptance",
+    "Completed step verifies exact terminal Store job, original closure and raw cleanup pins without resetting later analysis state",
+    "STOP permits existing closed evidence verification without new effects",
+    "Existing live CPU handle local wait/STOP/deadline/cleanup regressions pass"
+  ],
+  "substitutes": [
+    "New composition tests synthesize terminal job and native cleanup receipts; these are not live receipts",
+    "Store submission is a fixture in composition tests; separate submission integration tests retain their documented Popen/authority boundaries",
+    "Resource samples and review/capacity remain CPU fixtures"
+  ],
+  "limitations": [
+    "Not a full autonomous controller: inventory/postrun/analysis/decision orchestration and deployment still pending",
+    "No production exact snapshot/config authorization, capacity acceptance or new independent review",
+    "Goal UI zero-model handoff and scientific validation remain incomplete"
+  ]
+}

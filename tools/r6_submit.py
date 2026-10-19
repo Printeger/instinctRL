@@ -128,14 +128,47 @@ def submit_once(journal, key, store, *, queue_key):
     return result
 
 
+def submit_and_close(journal, key, store, *, queue_key):
+    """One writer owns submit and the existing model-free local wait/close.
+
+Replay of a closed step verifies its original evidence without moving later
+analysis/decision state backwards. Unknown submission effects never retry.
+"""
+    journal.require_writer()
+    entry=journal.canonical_job(key)
+    spec=json.loads(checked(entry['request']['spec']).read_text())
+    for name in ('live_wall_seconds','allocated_gpu_seconds'):
+        value=entry['resources'].get(name)
+        require(type(value) in (int,float) and math.isfinite(value)
+                and value>=spec['resources']['wall_seconds']+180, 'CLOSE_RESERVATION_REQUIRED')
+    submission=submit_once(journal,key,store,queue_key=queue_key)
+    entry=journal.canonical_job(key)
+    from tools.r6_job_handoff import job_handoff, exact_job, cleanup_evidence, TERMINAL
+    if entry.get('closure'):
+        closure=json.loads(checked(entry['closure']).read_text())
+        job=exact_job(store.replay(),entry,spec)
+        require(job['status'] in TERMINAL, 'CLOSED_JOB_NOT_TERMINAL')
+        pins,receipt=cleanup_evidence(store.root/'jobs'/job['id'],job)
+        expected=dict(event_key=key,request_sha256=sha(entry['request']),job_id=job['id'],
+            spec_sha256=sha(spec),evidence=pins,native_status=receipt['status'],
+            native_exit_code=receipt.get('exit_code'),reservation_retained=entry['resources'],
+            h1_evidence=job.get('h1_evidence'),scientific_acceptance=False)
+        require(all(closure.get(k)==v for k,v in expected.items()), 'CLOSURE_BINDING')
+    else:
+        closure=job_handoff(journal,key,store)
+    return dict(submission=submission,closure=closure)
+
+
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__, epilog=(
-        'Submits or recovers one registered job; does not wait or call a model. '
+        'Submits or recovers one registered job; never calls a model. '
+        '--wait-close retains the writer lock through local wait and closure. '
         'Use tools.r6_batch DIRECTORY EVENT_KEY --job-store STORE for local wait/close.'))
     parser.add_argument('directory',type=Path)
     parser.add_argument('event_key')
     parser.add_argument('--store',type=Path,required=True)
     parser.add_argument('--queue-key',required=True)
+    parser.add_argument('--wait-close',action='store_true')
     args=parser.parse_args(argv)
     from tools.r6_recovery import Journal
     from rlflow.store import Store
@@ -144,7 +177,8 @@ def main(argv=None):
         # A mistyped Store path must not create a new authority database.
         root=args.store.resolve(strict=True)
         require((root/'runtime/research.db').is_file(), 'STORE_DATABASE_REQUIRED')
-        result=submit_once(journal,args.event_key,Store(root),queue_key=args.queue_key)
+        action=submit_and_close if args.wait_close else submit_once
+        result=action(journal,args.event_key,Store(root),queue_key=args.queue_key)
     print(json.dumps(result,ensure_ascii=False))
 
 
