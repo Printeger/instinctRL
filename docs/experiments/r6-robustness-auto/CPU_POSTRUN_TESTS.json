@@ -1,0 +1,102 @@
+{
+  "schema_version": "r6-postrun-cpu-tests/1",
+  "status": "CPU14_PASS_PENDING_INDEPENDENT_REVIEW_NOT_DEPLOYED",
+  "runs": [
+    {
+      "tests": 11,
+      "log": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_POSTRUN_TESTS.txt",
+        "sha256": "8e27ba251a82e731bcc384453337cd416872b2dad6880b00f70927a6074dc3cd"
+      },
+      "exit_code": 0,
+      "scope": "initial postrun fixture suite"
+    },
+    {
+      "tests": 13,
+      "log": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_POSTRUN_TESTS_V2.txt",
+        "sha256": "6cdce7d5f1245589b9e453626f9a1b05391ee1efb0794aeffe61926b7312e51f"
+      },
+      "exit_code": 0,
+      "scope": "adds15second timeout and orphan descendant cleanup"
+    },
+    {
+      "tests": 2,
+      "log": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_POSTRUN_FINAL_CHECKS.txt",
+        "sha256": "fe7f036fcf3f12958d97a16bc991e17fe19751d493043c47ba42506dcd814379"
+      },
+      "exit_code": 0,
+      "scope": "final summary path: exactly-two and restart after first query"
+    },
+    {
+      "tests": 1,
+      "log": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_POSTRUN_INCOMPLETE_CHECK.txt",
+        "sha256": "3e740ba100fb66e4f0bed534f1172d263dfd742bf99fa626d991c8195392d864"
+      },
+      "exit_code": 0,
+      "scope": "preserve incomplete inventory after successful queries"
+    }
+  ],
+  "command_prefix": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow CUDA_VISIBLE_DEVICES='' /home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python -m unittest",
+  "code": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_postrun.py",
+      "sha256": "102506037183f6d88dfa874f2c4cfecd126df92fd40b66602bcde56203dd2eb8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "a7996d964770fe3f516469df73a169243b8d02c9c4286ef5f4ebca6d17c27c6b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "352d05e48620f4341b9791966edf1e31df8daff9702813a23921d0cb14a3d7d8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_worker_processes.py",
+      "sha256": "1431c182d12920e4d42dc99cb6a5d72289552ad2b87a79b065cb79c948ad6f01"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_model_worker.py",
+      "sha256": "8c2d4b92121193d7e96aebe2225208d16ca5184a259654e8723c75c517cc14b7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_postrun.py",
+      "sha256": "9a60baac495c682ba67bb0181d811c91d49393c1eb4900591f62aeb83288e5ef"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_job_inventory.py",
+      "sha256": "702a0e6cacfbb9444a72b833dedf6dbedd431a4fe609a417012226951e473708"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_job_handoff.py",
+      "sha256": "05ffaf1593d65e6187efaebab5e083e877cb1f8af352077a177d10be1cee1716"
+    }
+  ],
+  "implemented": [
+    "Only two fixed query argument lists; real executable must match frozen config pin",
+    "CPU substitute limited to isolated test goal and fixture executable directory",
+    "Both query events reserved before launch; same job/ordinal cannot be rebound",
+    "Persistent dispatch claim and exact worker identity enable controller restart reattachment",
+    "Worker owns bounded query and descendants;15second query timeout plus existing15second cleanup bound",
+    "Per-query1MiB output cap enforced before write with64KiB receipt headroom",
+    "STOP, nonzero exit, output cap, partial receipt and ambiguous dispatch preserve failure without retry",
+    "Exactly two successful receipts required for postrun-complete summary; no scientific verdict",
+    "Source job native failures and missing-output state remain distinct"
+  ],
+  "per_query_reserved_bytes": 1114112,
+  "two_query_reserved_bytes": 2228224,
+  "reservation_note": "Per-query1MiB plus64KiB overhead; summary capped64KiB. All reservations retained. Global controller metadata capacity still requires full accounting.",
+  "limitations": [
+    "No real nvidia-smi, GPU query, simulator, Store job or model API call",
+    "CPU postrun worker uses current development tree; exact frozen deployment and integration review remain necessary",
+    "Hard worker death with missing receipt remains ambiguous and never retried; deployment recovery must inspect exact recorded child ownership",
+    "Resource admission, new-job dispatch, CPU analysis and reviewed next-plan chain remain incomplete",
+    "Two older model receipts still need separate cleanup reconciliation before live handoff"
+  ],
+  "actual_gpu_queries": 0,
+  "simulator_initializations": 0,
+  "model_api_calls": 0,
+  "operational_ledger_changed": false
+}

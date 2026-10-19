@@ -44,12 +44,16 @@ world指令在实际观察边界转换后进入history，保持内外观察与�
 新增 `tools/r6_job_handoff.py` 复用rlflow关闭已提交的准确job：本地等待、STOP单次取消、
 normal ACK/所属进程核验、原生失败与全额预留保留。新增19项CPU检查通过，原恢复/模型交接
 17项回归通过，见 `CPU_JOB_HANDOFF_TESTS.json`；尚未独审或部署。两份早期模型receipt缺少
-新版cleanup字段，仍需单独核对；新入口不会静默当作已清理。资源/submit/postrun、分析及
+新版cleanup字段，仍需单独核对；新入口不会静默当作已清理。资源/submit、分析及
 下一计划衔接仍未闭合，本轮未改唯一batch状态或操作Store作业。
 新增准确job/attempt原件清单及保守预算观察：全文件哈希、失败原件保留、扫描变化拒绝，
 实际消耗超过预留时计入较大值，低于预留不退款。63项CPU回归通过，见
 `CPU_JOB_INVENTORY_TESTS.json`；支持清单写入后中断恢复，未改操作账本或Store。
-清单不包含全部controller元数据和未来postrun输出，其容量及postrun衔接仍待补齐；尚未独审。
+清单不包含全部controller元数据；postrun另按查询事件预留，整体元数据容量仍待补齐；尚未独审。
+新增固定两类postrun查询的有界worker/receipt衔接：准确ordinal去重、控制器重启接回、
+15秒查询超时、1MiB写前输出限额及所属后代清理。14项CPU假查询检查通过，见
+`CPU_POSTRUN_TESTS.json`；没有真实GPU查询。postrun成功不覆盖原件缺失/原生失败。
+每查询另预留1MiB+64KiB；该模块尚待独审、准确部署输入冻结及完整下一计划衔接。
 物理reset/force的实际验证、完整job/resource控制器、容量/协议冻结、exact Store许可及科学验证均未完成。
 聊天Goal自动续推理与零模型等待的交接限制尚未解决；不能称后台运行或科学完成。
 下方历史状态不覆盖上述事实。

@@ -107,9 +107,13 @@ def main():
     action=ap.add_mutually_exclusive_group()
     action.add_argument('--job-store',type=Path,help='Close an existing exact job in this rlflow Store; never submit')
     action.add_argument('--inventory-store',type=Path,help='Inventory exact closed-job originals; no GPU queries')
+    action.add_argument('--postrun-keys',nargs=2,metavar=('GPU_EVENT','PROCESS_EVENT'),help='Complete two registered postrun queries for event_key job')
     a=ap.parse_args();journal=Journal(a.directory.resolve())
     with journal.writer():
-        if a.inventory_store is not None:
+        if a.postrun_keys is not None:
+            from tools.r6_postrun import complete_postruns
+            result=complete_postruns(journal,a.event_key,a.postrun_keys)
+        elif a.inventory_store is not None:
             from rlflow.store import Store
             from tools.r6_job_inventory import record_inventory
             result=record_inventory(journal,a.event_key,Store(a.inventory_store.resolve()))
