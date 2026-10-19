@@ -1,0 +1,80 @@
+{
+  "schema_version": "r6-capacity-allocation/1",
+  "status": "DRAFT_PENDING_EXACT_WORKLOAD_ACCOUNTING_AND_REVIEW",
+  "baseline_receipts": {
+    "J-8bdfaca0488e524d": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-8bdfaca0488e524d/receipt.json",
+      "sha256": "c4487db560e1c6d2d368924d7b2b4ec5d76b49604d4c6c2f8a662e574ddf4174"
+    },
+    "J-c2412eb2e9c23e5a": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-c2412eb2e9c23e5a/receipt.json",
+      "sha256": "e0e651b515eb29ba337ace06932e60ebe536ce0e28bc7f24a353dad3f6d6da2d"
+    }
+  },
+  "historical_training": {
+    "updates": 256,
+    "training_transitions": 131072,
+    "allocated_seconds": 908.632140296977,
+    "elapsed_seconds": 911.634764356073
+  },
+  "historical_evaluation": {
+    "nontraining_transitions": 32960,
+    "allocated_seconds": 263.21826832927763,
+    "elapsed_seconds": 266.578906361945
+  },
+  "final_protection": {
+    "training_transitions": 1572864,
+    "nontraining_transitions": 800000,
+    "allocated_gpu_seconds": 24000,
+    "live_wall_seconds": 24000,
+    "live_starts": 16,
+    "simulator_initializations": 16,
+    "training_checkpoint_writes": 24,
+    "output_actual_plus_unreleased_reservations_bytes": 85899345920,
+    "automatic_model_sessions": 8
+  },
+  "development_maximum_after_protection": {
+    "training_transitions": 1427136,
+    "nontraining_transitions": 1200000,
+    "allocated_gpu_seconds": 19200,
+    "live_wall_seconds": 19200,
+    "live_starts": 48,
+    "simulator_initializations": 48,
+    "training_checkpoint_writes": 72,
+    "output_actual_plus_unreleased_reservations_bytes": 51539607552,
+    "automatic_model_sessions": 24
+  },
+  "planned_training": {
+    "development": {
+      "candidates": 3,
+      "max_updates_per_candidate": 768,
+      "transitions": 1179648
+    },
+    "confirmation": {
+      "seeds": 3,
+      "updates_per_seed_upper_design": 1024,
+      "transitions": 1572864
+    },
+    "total_transitions": 2752512,
+    "remaining_engineering_margin_transitions": 247488
+  },
+  "nontraining": {
+    "full_initial_baseline": 193600,
+    "final_three_and_baseline": 774400,
+    "development_policy": "Use preregistered affected-condition subsets plus original regression for intermediate candidates. Do not spend on all16blocks at every checkpoint. Exact subset branches must be frozen before observing the baseline. Final coverage remains unchanged.",
+    "original_regression_per_model": 32960,
+    "reserved_nontraining_including_final": 2000000
+  },
+  "measurement_logging_proposal": {
+    "evaluation": "Full clean/delivered frames, validity/times/RNG identity for all new evaluation steps and reset frames. Bitwise references and XOR/zlib compression only; no downsampling/rounding.",
+    "training": "Draft finite-field policy: per-lane clean/delivered minimum/valid count/timestamps/full tensor hashes every policy step, full measurement windows for first rollout and registered boundary/failure windows; all actual exposure/reward/termination/q/ICS recorded. Windows and caps must be frozen and independently accepted. No deletion of negative outcomes.",
+    "unresolved": "Training failure-window upper count, byte allocation, exact physics-force logging, reset/start/init/checkpoint/cleanup quotas and evidence-audit coverage must be implemented before capacity_pass=true."
+  },
+  "measured_full_frame_fixture": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/ARCHIVE_CAPACITY_CPU.json",
+    "sha256": "a6e4e470e55b5d64c33de181b9fff3339acf4ac16773b6635498af2f43a80afd"
+  },
+  "estimated_final_measurement_bytes": 58552076320,
+  "estimate_is_not_worst_case_bound": true,
+  "live_guard": "Each output reservation includes measured bytes and remaining quota; quota-before-write abort preserves failure evidence without borrowing final reserve. A fixture estimate never authorizes exceeding128GiB."
+}

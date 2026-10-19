@@ -19,12 +19,12 @@
   "protected_confirmation_delivery_repair": {
     "training_transitions": 1572864,
     "nontraining_transitions": 800000,
-    "allocated_gpu_seconds": 18000,
-    "live_wall_seconds": 18000,
+    "allocated_gpu_seconds": 24000,
+    "live_wall_seconds": 24000,
     "live_starts": 16,
     "simulator_initializations": 16,
     "training_checkpoint_writes": 24,
-    "output_actual_plus_unreleased_reservations_bytes": 42949672960,
+    "output_actual_plus_unreleased_reservations_bytes": 85899345920,
     "automatic_model_sessions": 8
   },
   "protected_model_sessions": {
@@ -58,5 +58,14 @@
   "model_session_max_output_bytes": 67108864,
   "model_context_max_bytes": 65536,
   "settlement_policy": "No implicit refund; preserve native failures. New settlement protocol requires independent review before first use.",
-  "capacity_pass": false
+  "capacity_pass": false,
+  "allocation_revision": {
+    "status": "CPU_DESIGN_PENDING_INDEPENDENT_REVIEW",
+    "reason": "Full-frame lossless measurement storage and observed per-job R5 runtime require greater final reserve. No live job or reservation has consumed any allocation.",
+    "prior_disk_bytes": 42949672960,
+    "new_disk_bytes": 85899345920,
+    "prior_final_seconds": 18000,
+    "new_final_seconds": 24000,
+    "total_caps_unchanged": true
+  }
 }

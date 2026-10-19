@@ -1,0 +1,50 @@
+{
+  "schema_version": "r6-cpu-archive-size-fixture/1",
+  "status": "CPU_FIXTURE_COMPLETE_NOT_LIVE_CAPACITY_PASS",
+  "cases": [
+    {
+      "label": "uniform-clean",
+      "valid_fraction": 1.0,
+      "sigma_m": 0.0,
+      "input_array_bytes": 6797248,
+      "encoded_bytes": 2222565,
+      "encoding_seconds": 0.05708484910428524,
+      "bitwise_roundtrip": true
+    },
+    {
+      "label": "uniform-noisy",
+      "valid_fraction": 1.0,
+      "sigma_m": 0.03,
+      "input_array_bytes": 6797248,
+      "encoded_bytes": 3819236,
+      "encoding_seconds": 0.1301752869039774,
+      "bitwise_roundtrip": true
+    },
+    {
+      "label": "sparse-noisy",
+      "valid_fraction": 0.25,
+      "sigma_m": 0.03,
+      "input_array_bytes": 6797248,
+      "encoded_bytes": 1945155,
+      "encoding_seconds": 0.15045831026509404,
+      "bitwise_roundtrip": true
+    },
+    {
+      "label": "smooth-noisy",
+      "valid_fraction": 1.0,
+      "sigma_m": 0.03,
+      "input_array_bytes": 6797248,
+      "encoded_bytes": 1715197,
+      "encoding_seconds": 0.06899269390851259,
+      "bitwise_roundtrip": true
+    }
+  ],
+  "new_evaluation_policy_steps_per_model": 5020,
+  "noisy_steps_per_model": 2180,
+  "independent_uniform_fixture_estimate_bytes_per_model": 14638019080,
+  "independent_uniform_fixture_estimate_bytes_final_four_models": 58552076320,
+  "note": "Includes one full32-lane frame per new evaluation policy step; reset frames, original suite, training, motion/force logs, snapshots and video still require allocation. Uniform fixtures are not a mathematical compression bound. CPU encoding time is measured, not simulator throughput.",
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "fixture_seed": 2026101901
+}

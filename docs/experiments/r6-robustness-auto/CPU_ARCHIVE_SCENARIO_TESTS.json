@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "tests": 54,
+  "automatic_worker_sessions": 0,
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ARCHIVE_SCENARIO_TESTS.txt",
+    "sha256": "e9035d3ead7a65d93b4069410081e333b8b86c45d50a1444a379b7f32abc13f8"
+  },
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/range_archive.py",
+      "sha256": "3f0692547012cfa43f80efda912d935cc568d31930eb46bf5e5f0e1f852b4729"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_scenarios.py",
+      "sha256": "630cbdf15d217644fae7bf0be8fb7db4be1f07abacd62ea9c9cb6e7ef34a22f3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_archive_capacity.py",
+      "sha256": "ec85f1b1149726f542cefc23ec4fac19e60fb258cb960537e75486df652b1585"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_range_archive.py",
+      "sha256": "110bea868ba768d49d260d711d2b424ec7f5b7deffa4992894fda908a531976c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_scenarios.py",
+      "sha256": "7a95171e1c7bd03e800308ae7b13f858ab951dff1af911d3e55fb7563a7658a4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/goal_budget.json",
+      "sha256": "f033133092ba42c120ae33ad123bb50dcfbcdd92b6349b2e7d86149cb4b689e6"
+    }
+  ],
+  "scope": "CPU-only bitwise codec, before-write quota, corrupt/truncated archive refusal, geometry-aware reset specification, actual seed-dependent CPU samples, pulse duration/impulse arithmetic and prior42 regressions.",
+  "not_proven": [
+    "Simulator reset/force/measurement execution",
+    "Full controller recovery and event worker chain",
+    "Independent review and noninteractive authentication/schema",
+    "Complete time/disk capacity within exact job plans",
+    "Scientific domain pass"
+  ]
+}
