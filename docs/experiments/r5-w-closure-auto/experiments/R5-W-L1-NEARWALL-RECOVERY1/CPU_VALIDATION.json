@@ -1,0 +1,42 @@
+{
+  "status": "PASS_CPU_ONLY_NOT_LIVE_RESULT",
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow:isaaclab-training CUDA_VISIBLE_DEVICES='' /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 -m pytest -q -p no:cacheprovider tests/training_workloads/test_w_closure.py tests/training_workloads/test_pilot_diagnostic_torch.py tests/training_workloads/test_checkpoint_compatibility.py tests/training_workloads/test_research_episode_labels.py",
+  "result": "39 passed in 3.25s",
+  "semantic_comparison": "AUTH identical after removing only order_id,attempt and parameters experiment_id/checkpoint_compatibility/experiment_card; compatibility content identical",
+  "packet": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/launch_inputs.proposed.json",
+    "sha256": "0e7e9bf94a2a771fdb50b397178857662c8ba4038decdc6bb3ccf0e5717a719f"
+  },
+  "source_reuse": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/readonly-snapshot.json",
+    "sha256": "2dba4ea142022c13c3ce6c8905ac8e89ba556d609ae1a3be7abde30687ffab14"
+  },
+  "recovery_admission_totals": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 32960,
+    "live_starts": 3,
+    "simulator_initialization_reservations": 3,
+    "optimizer_updates": 256,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048,
+    "training_checkpoint_writes": 2,
+    "allocated_gpu_seconds": 3828.3855940508656,
+    "wall_seconds_including_cleanup": 3834.083842956461,
+    "output_peak_and_reservations_bytes": 30064771072
+  },
+  "projected_full_two_node_evaluation_totals": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 98880,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 256,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048,
+    "training_checkpoint_writes": 2,
+    "allocated_gpu_seconds": 7438.385594050866,
+    "wall_seconds_including_cleanup": 7444.083842956461,
+    "output_peak_and_reservations_bytes": 38654705664
+  },
+  "live_starts": 0,
+  "gpu_queries": 0
+}

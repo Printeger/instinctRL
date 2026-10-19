@@ -102,12 +102,14 @@
   "w_closure_execution": {
     "goal_id": "R5-W-CLOSURE-AUTO-20261019",
     "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
-    "registration": "docs/experiments/r5-w-closure-auto/registrations/W-L1-001.json",
+    "registration": "docs/experiments/r5-w-closure-auto/registrations/W-L1-002.json",
     "state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
-    "status": "E1_ACCEPTED_L1_ISSUED_CONTROLLER_HANDOFF",
+    "status": "L1_PRELAUNCH_FINAL_ZERO_RECOVERY1_REVIEWED_CONTROLLER_HANDOFF",
     "current_live_jobs": [],
     "exact_job_permission_required": true,
-    "current_exact_release": "A-16b87f0fbbf2df04",
-    "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-l1-training.json"
+    "current_exact_release": "A-e685757b2203d20f",
+    "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-l1-recovery1.json",
+    "last_completed_job": "J-06a095a1c78d517e",
+    "last_training_transitions": 0
   }
 }

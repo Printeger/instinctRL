@@ -1,0 +1,31 @@
+{
+  "schema_version": "independent-review-relay/1",
+  "reviewer": "/root/l1_audit",
+  "recorder": "root relay of independent read-only final controller review",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "Exact issued recovery1 controller plan; release contingent on commit/tag/push",
+  "identities": {
+    "plan_payload_sha256": "cad902455fccda109343ef6cf4980ddf674e2f2e20cf009c3ae18b135c405c54",
+    "spec": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/inputs/R1-research-formal-training.authorized.json",
+      "sha256": "9df70df988fa4339ddabd08facb360fc0c21e273067843b3084cd6888f66abfe"
+    }
+  },
+  "checks": [
+    "All plan pins rehashed/matched; rlflow.store.sha payload excludes independent_review",
+    "poll15/retries0/model7200/output67108864 exact",
+    "SQLite Store mode=ro validated event replay version414; A-e685757b2203d20f APPROVED exactly equals artifact; all conditions accepted with exact original hash",
+    "Actual AUTH equals reviewed packet proposal; spec differs only legally added conditions",
+    "Master and W-L1-002 PASS; master caps unchanged",
+    "Readonly idle/ownership PASS:54historical jobs terminal, recorded owned processes absent, cleanup valid,STOP clear,not paused",
+    "Recovery has no submitted job; admission131072train32960reserved nontraining3start/init256updates2writes3828.3855940508656GPU3834.083842956461wall28GiB within stage/master",
+    "Future full2node eval4start/init36GiB<8000s covered",
+    "Exact afterprompt retains complete Goal/checkpoint acceptance/full evaluation/independent validation/final evidence",
+    "Old failures/conservative reservations retained; existing controller unchanged"
+  ],
+  "release_boundary": "Commit/tag/push then return exact next_plan; existing controller alone submits",
+  "reviewer_writes": 0,
+  "reviewer_gpu_queries": 0,
+  "reviewer_live_submissions": 0
+}

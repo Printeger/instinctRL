@@ -1,0 +1,27 @@
+{
+  "id": "W-L1-002",
+  "goal_id": "R5-W-CLOSURE-AUTO-20261019",
+  "evidence_id": "E-R5-W-CLOSURE-L1-002",
+  "master_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+    "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+  },
+  "cumulative_caps": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 98880,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 256,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048,
+    "training_checkpoint_writes": 2,
+    "allocated_gpu_seconds": 8000,
+    "wall_seconds_including_cleanup": 8000,
+    "output_peak_and_reservations_bytes": 42949672960
+  },
+  "scope": "Cumulative E1, prelaunch FINAL0 L1 failure, one independently reviewed fresh L1 recovery and subsequent complete two-node evaluation. Each exact job separately issued. No scientific changes or blind retries.",
+  "previous_stage": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-L1-001.json",
+    "sha256": "d5848a1efbb9f4a630f2d749cdca22ef2c4845dc39b6b6f7fc9d4cb51133529c"
+  }
+}

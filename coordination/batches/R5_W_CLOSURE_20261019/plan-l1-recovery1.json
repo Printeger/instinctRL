@@ -1,0 +1,43 @@
+{
+  "experiment_id": "R5-W-L1-NEARWALL-RECOVERY1",
+  "controller": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_batch.py",
+    "sha256": "ebbe0328f335b6038b3f1f439df45177d6a623e6d6afb5189c29c746b95daa1c"
+  },
+  "ownership_helper": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_commander.py",
+    "sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4"
+  },
+  "spec": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/inputs/R1-research-formal-training.authorized.json",
+    "sha256": "9df70df988fa4339ddabd08facb360fc0c21e273067843b3084cd6888f66abfe"
+  },
+  "commander": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_commander.py",
+    "sha256": "cafb006b531087770e2035f75134f0ee51b60437379934bdfbd3fa4685de18e0"
+  },
+  "stage": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-L1-002.json",
+    "sha256": "8ab9b2b84965e843e85f1d68784a2282b7195859088ffe6a058a60e70cdca10e"
+  },
+  "after_prompt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_W_CLOSURE_20261019/after-l1-recovery1.prompt.md",
+    "sha256": "381eefa5c2967734b4fd6c460b6dccd39b287ec940719bdbd4dce07203517d7b"
+  },
+  "schema": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_W_CLOSURE_20261019/decision.schema.json",
+    "sha256": "a56f9faf0968fefaa19c5d3b798dc3b20a2bb0ca06c9b726a90a477d4477be90"
+  },
+  "codex": {
+    "path": "/usr/local/lib/node_modules/@openai/codex/bin/codex.js",
+    "sha256": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70"
+  },
+  "poll_seconds": 15,
+  "automatic_retries": 0,
+  "model_timeout_seconds": 7200,
+  "model_output_cap_bytes": 67108864,
+  "independent_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-recovery1-controller.json",
+    "sha256": "c8d55af39a8922f1371a6533601b4b42b7f71715c6e8a91a2648ae7fbec267ed"
+  }
+}

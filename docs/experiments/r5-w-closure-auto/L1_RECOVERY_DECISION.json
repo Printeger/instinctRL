@@ -1,0 +1,86 @@
+{
+  "status": "PRELAUNCH_FINAL_ZERO_ONE_FRESH_REVIEWED_RECOVERY",
+  "inputs": {
+    "packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/launch_inputs.proposed.json",
+      "sha256": "972b07e4daefb82ea26e9c52dbce9bc38b655a76f91310f17c4ceefc9f6babb1"
+    },
+    "authorized_spec": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/inputs/R1-research-formal-training.authorized.json",
+      "sha256": "3ac1758573bb2df3a400f5def9310aa99dbd7cf87085ea6dc873999d4a9ec913"
+    },
+    "final_job": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/R1-research-formal-training-final-job.json",
+      "sha256": "18f0f772728590e78fdaf980155817114a2a95f775032d8c8db43d1a2a259a3b"
+    },
+    "execution_summary": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/R1-research-formal-training-execution-summary.json",
+      "sha256": "1c603b5a647a91b374f9e847d21f66e6b11856cf16118f38b1c83ac3fe4cc4b2"
+    },
+    "inventory": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/live/R1-research-formal-training/INVENTORY.json",
+      "sha256": "2aa0e3f5f8f740173f64f1b54f5805d8d119b50107d13d1953c304669aeef8ef"
+    },
+    "failure": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/live/R1-research-formal-training/attempt/results/prelaunch/prelaunch_resource_gate_failure.json",
+      "sha256": "01435690f32402e464b35c9a6a475a6d31e0dbeffbca112231f05024ae327e0b"
+    },
+    "receipt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/live/R1-research-formal-training/job/receipt.json",
+      "sha256": "a5d0b6c789e1169dd398360b91b02f5a02f08ae44b8e792c8990e83e0904c79a"
+    },
+    "owned_ack": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/live/R1-research-formal-training/job/lifeguard-ack.json",
+      "sha256": "868e33294217a253a44802fd479a9f329f5289b3ff807bb3b4fe530f4d49bb13"
+    },
+    "postrun0": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/R1-research-formal-training-postrun-0.json",
+      "sha256": "3c057e4d03083e4f3ab249063c75021331c807903a924113a7162e990964e0ad"
+    },
+    "postrun1": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/R1-research-formal-training-postrun-1.json",
+      "sha256": "70c37d58d511e23bf7fcf86b6d764e905dcba004a24a5352320c705c16b2262e"
+    },
+    "budget_before": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/L1_SETTLED_BUDGET_SNAPSHOT.json",
+      "sha256": "3c5cc6ee0f5412885bf4c310486e2a52029e32afb54a55af4a0c21656686f0f7"
+    }
+  },
+  "old_job": "J-06a095a1c78d517e",
+  "observed_gpu_utilization_percent": [
+    2,
+    6,
+    3
+  ],
+  "unchanged_gpu_utilization_limit_percent": 5,
+  "postrun_gpu_utilization_percent": 3,
+  "postrun_compute_app": "gnome-remote-desktop-daemon pid3950 only; no owned survivors",
+  "cause": "Original prelaunch coexistence gate rejected a transient 6% sample before AppLauncher; no training failure or learning result.",
+  "scientific_work": {
+    "training_transitions": 0,
+    "updates": 0,
+    "optimizer_steps": 0,
+    "checkpoint_writes": 0,
+    "first512_gate": "NOT_REACHED",
+    "u640": "ABSENT",
+    "u768": "ABSENT",
+    "q_ICS_reward_coverage": "NOT_COLLECTED"
+  },
+  "decision": "One fresh experiment identity, same frozen source/config/R1-u512 full trainer Adam RNG restoration and original mixed-nearwall schedule/parameters; no method change. Original resource gate must pass anew inside the released job.",
+  "basis": "Known short utilization excursion; final sample3% and normal postrun3%, no unknown compute processes, owned quiescence PASS, no persistent pressure established. CPU preparation provides backoff; no GPU probes or external process changes.",
+  "backoff": {
+    "observed_unix_time": 1792401065.2357583,
+    "seconds_since_settle": 164.27714657783508,
+    "minimum_seconds": 60
+  },
+  "resource_policy": "Old E1 INCOMPLETE full32960 reserve unchanged. L1 FINAL0 counters settled by original commander; failed start/init and full8GiB output remain charged. New stage includes fourth start and full output reserves, within unchanged master caps.",
+  "stage": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-L1-002.json",
+    "sha256": "8ab9b2b84965e843e85f1d68784a2282b7195859088ffe6a058a60e70cdca10e"
+  },
+  "automatic_retries": 0,
+  "repeated_failure_policy": "No unconditional further retry: independently inspect exact new terminal evidence; persistent coexistence denial is an external resource blocker, never relax gate or terminate unrelated process.",
+  "live_submitter": "Existing controller only, after new exact independent prelive/issue/commit/tag/push and reviewed next_plan",
+  "disk_free_bytes": 515138871296,
+  "goal": "IN_PROGRESS; both checkpoints full evaluation and first passing trained node independent seed/initial-state validation remain required; E1 control gain is not RL gain."
+}

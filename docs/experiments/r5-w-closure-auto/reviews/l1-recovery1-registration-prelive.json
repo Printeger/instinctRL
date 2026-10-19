@@ -1,0 +1,58 @@
+{
+  "schema_version": "independent-review-relay/1",
+  "reviewer": "/root/l1_audit",
+  "recorder": "root relay of independent read-only final response",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "W-L1-002 registration and exact R5-W-L1-NEARWALL-RECOVERY1 prelive; not live training acceptance",
+  "identities": {
+    "master": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+      "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+    },
+    "commander": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_commander.py",
+      "sha256": "cafb006b531087770e2035f75134f0ee51b60437379934bdfbd3fa4685de18e0"
+    },
+    "stage": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-L1-002.json",
+      "sha256": "8ab9b2b84965e843e85f1d68784a2282b7195859088ffe6a058a60e70cdca10e"
+    },
+    "ownership_helper": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_commander.py",
+      "sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4"
+    },
+    "snapshot_tool": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/prepare_r5_w_snapshot.py",
+      "sha256": "bb8336c6c5f3a8f206b26153e45fcfa91dfb5808a45408a12806531e7e7d4ac3"
+    },
+    "packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/launch_inputs.proposed.json",
+      "sha256": "0e7e9bf94a2a771fdb50b397178857662c8ba4038decdc6bb3ccf0e5717a719f"
+    },
+    "recovery_generator": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/prepare_r5_w_l1_recovery_packet.py",
+      "sha256": "204d5e6fdf9528636e0bc80f4aaf466ec66dc7040b2a4f18c86509f77572bbd2"
+    },
+    "after_prompt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_W_CLOSURE_20261019/after-l1-recovery1.prompt.md",
+      "sha256": "381eefa5c2967734b4fd6c460b6dccd39b287ec940719bdbd4dce07203517d7b"
+    }
+  },
+  "checks": [
+    "55recursive existing pins and60frozen source-manifest entries rehashed without mismatch",
+    "Old/new packet differs only experiment/attempt/order/card/compatibility/stage/generator identity; science,method,budget,first512,seeds,guards unchanged",
+    "Compatibility bytes identical; proposed AUTH equals packet proposal; original accepted a3b9f911 R1/u512 retained",
+    "Frozen full actor/critic/Adam/RNG/curriculum restoration; diagnostic.before_update before trainer.update and either optimizer",
+    "Original24center4x4y/u513-768/u640+768/.05/anchor4/meanprior10/LRs/ICS.15 retained",
+    "Failure relay faithful; old FAILED/FINAL0 and E1INCOMPLETE/full32960 unchanged",
+    "Recorded >60second backoff; no GPU probing; unchanged5percent gate; no unrelated-process action; fresh one-shot identity; retries0",
+    "Stage4start/init40GiB8000s within master; conservative future totals131072train98880nontrain256updates2writes7438.385594050866GPU7444.083842956461wall36GiB",
+    "CPU39passed3.25s supporting evidence only",
+    "After-prompt retains complete Goal, both actual checkpoint independent acceptance, original5tasks32lanes/allW11samples, independent seed/initial-state validation, evidence/resource/final review and controller-only release"
+  ],
+  "release_boundary": "PASS supports legal register/issue; controller release only after commit/tag/push and exact reviewed plan",
+  "reviewer_writes": 0,
+  "reviewer_gpu_queries": 0,
+  "reviewer_live_submissions": 0
+}
