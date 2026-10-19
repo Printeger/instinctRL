@@ -1,0 +1,352 @@
+{
+  "status": "COMPLETE",
+  "mode": "Isaac Sim RTX rendering of original recorded poses; timeline paused; no physics integration or policy inference",
+  "source_commit": "e5c2912c53483dfbe757d23c016ba99246732846",
+  "entrypoint": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/source/e5c2912c53483dfbe757d23c016ba99246732846/render_r5_isaac_video.py",
+    "sha256": "e2f76947cc9bcaeb50bd9b42d2923ba5cdc4a71e1db1c1abc4a36becf1b3d3b7"
+  },
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/REPLAY_INPUTS.json",
+    "sha256": "7c91bb3aae69e9cc6d15174041684477f293c44ba844ecba6f58a5100fa1b2fb"
+  },
+  "asset_closure": {
+    "asset_root": "/home/mint/rl_dev/instinctRL-dev/runtime_assets/Assets/Isaac/5.1",
+    "manifest_sha256": "f64a0561477efcc612761f6b3034f9612f2d3cb42832138e86ff7a4c18e1ef52",
+    "opened_files": {
+      "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_basecolor.png": {
+        "bytes": 436257,
+        "sha256": "deab39088eaf39ed7be951966c5e6bd5e58b90ab64743b0cdc8e5579fd5a99d9"
+      },
+      "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_blue.png": {
+        "bytes": 1474958,
+        "sha256": "44fc0e82007bb0bd94631cd7ec45986a71ed74b9413899fbffac13efe151be4b"
+      },
+      "Isaac/Environments/Grid/Materials/Textures/Wireframe_blue.png": {
+        "bytes": 111895,
+        "sha256": "940b96ee8c8e53bd1acbc770d4ca0ac98bed9c96439ab386d1b27dbc9790cc4e"
+      },
+      "Isaac/Environments/Grid/default_environment.usd": {
+        "bytes": 13622,
+        "sha256": "8a21c317d638d33a4e6c20c958a7ed8f4d8c5195efd7e20f1b85178b4a15638a"
+      }
+    },
+    "material": {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/mdl/core/Base/OmniPBR.mdl",
+      "sha256": "685a82c18b381f1cd29831490e4c356e61dbeac2d86803babc115cd6a4a845db"
+    },
+    "network_fallback": false
+  },
+  "pid": 2253789,
+  "started_unix": 1792419544.2234402,
+  "finished_unix": 1792419634.9597702,
+  "videos": [
+    {
+      "name": "Z_u640_m015",
+      "case": "Z",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/Z.jsonl",
+        "sha256": "dc69184414c00ed0c884f91822b78de66e77d17042de86f8820a634e6fc51165"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/Z_u640_m015.mp4",
+        "sha256": "1f9b26b72949235a01b70aa95b234bf5f8a045fa14ff4db7c5f9e8eedf569282"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/Z_u640_m015.json",
+        "sha256": "eeade38059a98d3238d9522f104680db5c3d58bfa42d0ab99e5b3e14a97e2d82"
+      },
+      "frames": 200,
+      "duration_s": 20.0
+    },
+    {
+      "name": "T_u640_m015",
+      "case": "T",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/T.jsonl",
+        "sha256": "c672dd90954eb91ecc05c81c2122f9b5c90352cf30c1e135bd50bc129f01bd60"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/T_u640_m015.mp4",
+        "sha256": "06a40e18479ddaeb05184693dfbba171051acafc44467fb60fd0aa5b83ddad07"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/T_u640_m015.json",
+        "sha256": "09216ff024fe19effd55280a05331dfc1b535d7d9325a2187e50e66ce31e4569"
+      },
+      "frames": 100,
+      "duration_s": 10.0
+    },
+    {
+      "name": "S_u640_m015",
+      "case": "S",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/S.jsonl",
+        "sha256": "776e312d76a5846991fb32e6ce0e4504ffd8029c19ee108694a82358233e3531"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/S_u640_m015.mp4",
+        "sha256": "e1c979db09ac8923ed1086c0e95584414e1169f3be729160bbfdd0baa8b81ca1"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/S_u640_m015.json",
+        "sha256": "a3c8e44abcbac36f35d39dd228b24cc2d05a3b0ca39b1f2b035328d4fbba618e"
+      },
+      "frames": 330,
+      "duration_s": 33.0
+    },
+    {
+      "name": "X_u640_m015",
+      "case": "X",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/X.jsonl",
+        "sha256": "f61f436f4fbfbf0cae0a927b4f73a406e36c21f18548333aff9faecb94fc19ff"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/X_u640_m015.mp4",
+        "sha256": "439f2ba6f62b957db875ac14e314d11b4af2163bc9ed9cc577137e843b0cc96b"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/X_u640_m015.json",
+        "sha256": "9304855d169ec0d44f387cfb1800618e5446d917aa3ab5d4e557b53968c23e06"
+      },
+      "frames": 200,
+      "duration_s": 20.0
+    },
+    {
+      "name": "W_x_wall_u640_m015",
+      "case": "W",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/W.jsonl",
+        "sha256": "3e4421880a52bbfec6b0a26b8466329697c664ce4dd8c1b3cf5310f265fffce9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u640_m015.mp4",
+        "sha256": "ae17353dfd8ea562cf8430c4fd09725d328275a199e2d1cc1e23b0dad7aeebb2"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u640_m015.json",
+        "sha256": "72f7b600e3374a1f9f37e4c3b2ec4abca5c0fb3efed2a7e8e7acd15421328113"
+      },
+      "frames": 200,
+      "duration_s": 20.0
+    },
+    {
+      "name": "W_y_wall_u640_m015",
+      "case": "W",
+      "lane": 16,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/W.jsonl",
+        "sha256": "3e4421880a52bbfec6b0a26b8466329697c664ce4dd8c1b3cf5310f265fffce9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u640_m015.mp4",
+        "sha256": "683af3ff9262dd2cf69dfbf0388feffcd7d5501adf778e0b30f27f83f2618200"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u640_m015.json",
+        "sha256": "69eb7c8c8f996df849e3c9b3e643925ba3afb99e01f9dd46cc163f6ef98cf1c9"
+      },
+      "frames": 200,
+      "duration_s": 20.0
+    },
+    {
+      "name": "W_x_wall_u512_m000",
+      "case": "W",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/evaluation_raw/formal_R1_u512/W.jsonl",
+        "sha256": "1cc2ab19ed216b1c49264730e3997fba94ffa84e5fc2af02b609f649712b010c"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/formal_R1_u512.json",
+        "sha256": "895b26acd8734a14859e264a2358313fb863f48745d23a4e629928ad6d0738e2"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.0,
+      "label": "R1 u512 margin0",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m000.mp4",
+        "sha256": "932c554ec65c3e6476e5bfa98125cfcff0f5b6c382b117d02a9965f2e5d179c3"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m000.json",
+        "sha256": "008aaf437930d86ed89c16d9000812c31597752e472a1d44f17bb3c30d16c496"
+      },
+      "frames": 200,
+      "duration_s": 20.0
+    },
+    {
+      "name": "W_y_wall_u512_m000",
+      "case": "W",
+      "lane": 16,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/evaluation_raw/formal_R1_u512/W.jsonl",
+        "sha256": "1cc2ab19ed216b1c49264730e3997fba94ffa84e5fc2af02b609f649712b010c"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/formal_R1_u512.json",
+        "sha256": "895b26acd8734a14859e264a2358313fb863f48745d23a4e629928ad6d0738e2"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.0,
+      "label": "R1 u512 margin0",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m000.mp4",
+        "sha256": "5d6028bd3bd91f4ff17fc40b311e44ab7974b1c1b39e8dad5badbd2abe47e1fb"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m000.json",
+        "sha256": "2fb4b1717e8aeaa44fc9cc75328a68c18d65e1072a70f7e8f2509ceff7af6b1c"
+      },
+      "frames": 200,
+      "duration_s": 20.0
+    },
+    {
+      "name": "W_x_wall_u512_m015",
+      "case": "W",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u512/W.jsonl",
+        "sha256": "a5944e0775d8f44656826e43b3bb6f0aa190cd44637aa575bee63543ae87e0b9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512.json",
+        "sha256": "19884c13340afb8919d4dcad5cd621b7fd0580c3c77f552d085d02ea6233ac97"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.15,
+      "label": "E1 u512 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m015.mp4",
+        "sha256": "d0dc7eff6089778bf43d120da275c5e1e20bd035c83499ed8d3aed2c20f7297d"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m015.json",
+        "sha256": "73e52f136665923517fc693c55524711776a0aafd4118a6119f4452c949bac54"
+      },
+      "frames": 200,
+      "duration_s": 20.0
+    },
+    {
+      "name": "W_y_wall_u512_m015",
+      "case": "W",
+      "lane": 16,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u512/W.jsonl",
+        "sha256": "a5944e0775d8f44656826e43b3bb6f0aa190cd44637aa575bee63543ae87e0b9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512.json",
+        "sha256": "19884c13340afb8919d4dcad5cd621b7fd0580c3c77f552d085d02ea6233ac97"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.15,
+      "label": "E1 u512 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m015.mp4",
+        "sha256": "9096c3e2326bbfa811799425deef247f55a4c5009dc04d9ea41c58657ecb606b"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m015.json",
+        "sha256": "5cfac64a03691950243ad15de058d83fb52f367866af85a8ab37d09b14be3fc0"
+      },
+      "frames": 200,
+      "duration_s": 20.0
+    }
+  ],
+  "physics_steps": 0,
+  "policy_inference_steps": 0,
+  "optimizer_updates": 0,
+  "checkpoint_writes": 0,
+  "pose_source": "Original raw, translated by original environment origin only; no pose interpolation; rotor phases unavailable and left at asset default.",
+  "scene": "Exact frozen combined_scene_triangles and TASLAB USD; presentation materials, lighting, camera, grid and annotation lines added only to replay stage.",
+  "timing": "Frame i displays postintegration state at (i+1)*0.1s and command/q/beta issued at i*0.1s from same raw record; no interpolation."
+}

@@ -1,0 +1,528 @@
+#usda 1.0
+(
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Z"
+)
+
+def "Render" (
+    hide_in_stage_window = true
+    no_delete = true
+)
+{
+    def "OmniverseKit"
+    {
+        def "HydraTextures" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            def RenderProduct "omni_kit_widget_viewport_ViewportTexture_0" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </OmniverseKit_Persp>
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string[] omni:rtx:material:db:flattener:ior_constant = ["ior_constant", "glass_ior"]
+                string[] omni:rtx:material:db:flattener:reflection_roughness_constant = ["reflection_roughness_constant", "frosting_roughness"]
+                string[] omni:rtx:material:db:flattener:transmittance_color = ["transmittance_color", "glass_color"]
+                bool omni:rtx:material:db:nonVisualMaterialCSV:enabled = 0
+                bool omni:rtx:material:db:syncLoads = 1
+                token omni:rtx:post:aa:op
+                token omni:rtx:post:dlss:execMode = "performance"
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                int omni:rtx:pt:clampSpp = 64
+                bool omni:rtx:pt:denoising:enabled = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:limits:maxBounces = 4
+                int omni:rtx:pt:limits:maxGlossyBounces = 6
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:maxVolumeBounces = 4
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                int omni:rtx:pt:samplesPerIteration = 64
+                int omni:rtx:pt:samplesPerPixel = 64
+                bool omni:rtx:raytracing:picking:occluded:enabled = 0
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                int omni:rtx:rt:iesTextureRes = 1024
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                int omni:rtx:scene:hydra:subdivision:refinementLevel = 0
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (960, 640)
+            }
+
+            def RenderProduct "Replicator" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/ReplayCamera>
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string[] omni:rtx:material:db:flattener:ior_constant = ["ior_constant", "glass_ior"]
+                string[] omni:rtx:material:db:flattener:reflection_roughness_constant = ["reflection_roughness_constant", "frosting_roughness"]
+                string[] omni:rtx:material:db:flattener:transmittance_color = ["transmittance_color", "glass_color"]
+                bool omni:rtx:material:db:nonVisualMaterialCSV:enabled = 0
+                bool omni:rtx:material:db:syncLoads = 1
+                token omni:rtx:post:aa:op
+                token omni:rtx:post:dlss:execMode = "performance"
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                int omni:rtx:pt:clampSpp = 64
+                bool omni:rtx:pt:denoising:enabled = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:limits:maxBounces = 4
+                int omni:rtx:pt:limits:maxGlossyBounces = 6
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:maxVolumeBounces = 4
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                int omni:rtx:pt:samplesPerIteration = 64
+                int omni:rtx:pt:samplesPerPixel = 64
+                bool omni:rtx:raytracing:picking:occluded:enabled = 0
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                int omni:rtx:rt:iesTextureRes = 1024
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                int omni:rtx:scene:hydra:subdivision:refinementLevel = 0
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (960, 640)
+            }
+        }
+    }
+
+    def RenderSettings "OmniverseGlobalRenderSettings" (
+        prepend apiSchemas = ["OmniRtxSettingsGlobalRtAdvancedAPI_1", "OmniRtxSettingsGlobalPtAdvancedAPI_1"]
+        no_delete = true
+    )
+    {
+        rel products = [
+            </Render/OmniverseKit/HydraTextures/omni_kit_widget_viewport_ViewportTexture_0>,
+            </Render/OmniverseKit/HydraTextures/Replicator>,
+        ]
+    }
+
+    def "Vars"
+    {
+        def RenderVar "LdrColor" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            uniform string sourceName = "LdrColor"
+        }
+    }
+}
+
+def "World"
+{
+    def DomeLight "ReplayLight"
+    {
+        color3f inputs:color = (0.85, 0.91, 1)
+        float inputs:intensity = 300
+    }
+
+    def DistantLight "ReplaySun"
+    {
+        float inputs:intensity = 800
+        float3 xformOp:rotateXYZ = (25, -25, -35)
+        uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+    }
+
+    def Mesh "Floor"
+    {
+        uniform bool doubleSided = 1
+        int[] faceVertexCounts = [3, 3]
+        int[] faceVertexIndices = [0, 1, 2, 0, 2, 3]
+        point3f[] points = [(-42, -42, 0), (42, -42, 0), (42, 42, 0), (-42, 42, 0)]
+        color3f[] primvars:displayColor = [(0.22, 0.26, 0.3)]
+    }
+
+    def Mesh "XWall"
+    {
+        uniform bool doubleSided = 1
+        int[] faceVertexCounts = [3, 3]
+        int[] faceVertexIndices = [0, 1, 2, 0, 2, 3]
+        point3f[] points = [(6, -6, 0), (6, -6, 12), (6, 6, 12), (6, 6, 0)]
+        color3f[] primvars:displayColor = [(0.39, 0.46, 0.54)]
+    }
+
+    def Mesh "YWall"
+    {
+        uniform bool doubleSided = 1
+        int[] faceVertexCounts = [3, 3]
+        int[] faceVertexIndices = [0, 1, 2, 0, 2, 3]
+        point3f[] points = [(-6, 6, 0), (6, 6, 0), (6, 6, 12), (-6, 6, 12)]
+        color3f[] primvars:displayColor = [(0.44, 0.5, 0.57)]
+    }
+
+    def Xform "ReplayDrone"
+    {
+        quatf xformOp:orient = (0.99999994, -5.912686e-7, 0.000012734243, 0.000018206212)
+        double3 xformOp:translate = (-0.08015882968902588, 5.134727478027344, 1.9448034763336182)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+        def "Asset" (
+            prepend references = @/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/taslab_uav.usd@
+        )
+        {
+        }
+    }
+
+    def BasisCurves "GridX0"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, -6, 0.005), (-6, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY0"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, -6, 0.005), (6, -6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX1"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-5, -6, 0.005), (-5, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY1"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, -5, 0.005), (6, -5, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX2"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-4, -6, 0.005), (-4, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY2"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, -4, 0.005), (6, -4, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX3"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-3, -6, 0.005), (-3, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY3"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, -3, 0.005), (6, -3, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX4"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-2, -6, 0.005), (-2, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY4"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, -2, 0.005), (6, -2, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX5"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-1, -6, 0.005), (-1, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY5"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, -1, 0.005), (6, -1, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX6"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(0, -6, 0.005), (0, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY6"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, 0, 0.005), (6, 0, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX7"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(1, -6, 0.005), (1, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY7"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, 1, 0.005), (6, 1, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX8"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(2, -6, 0.005), (2, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY8"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, 2, 0.005), (6, 2, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX9"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(3, -6, 0.005), (3, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY9"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, 3, 0.005), (6, 3, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX10"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(4, -6, 0.005), (4, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY10"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, 4, 0.005), (6, 4, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX11"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(5, -6, 0.005), (5, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY11"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, 5, 0.005), (6, 5, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridX12"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(6, -6, 0.005), (6, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "GridY12"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, 6, 0.005), (6, 6, 0.005)]
+        color3f[] primvars:displayColor = [(0.35, 0.4, 0.45)]
+        uniform token type = "linear"
+        float[] widths = [0.006] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "SafeX"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(5.2, -6, 2.05), (5.2, 6, 2.05)]
+        color3f[] primvars:displayColor = [(1, 0.18, 0.06)]
+        uniform token type = "linear"
+        float[] widths = [0.018] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "SafeY"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-6, 5.2, 2.05), (6, 5.2, 2.05)]
+        color3f[] primvars:displayColor = [(1, 0.18, 0.06)]
+        uniform token type = "linear"
+        float[] widths = [0.018] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "Distance"
+    {
+        int[] curveVertexCounts = [2]
+        point3f[] points = [(-0.08015756, 5.1347275, 1.9948034), (-0.08015756, 6, 1.9948034)]
+        color3f[] primvars:displayColor = [(1, 0.8, 0.05)]
+        uniform token type = "linear"
+        float[] widths = [0.012] (
+            interpolation = "constant"
+        )
+    }
+
+    def BasisCurves "Trail"
+    {
+        int[] curveVertexCounts = [200]
+        point3f[] points = [(-0.07500286, 4.6001205, 1.9909122), (-0.075021215, 4.6015396, 1.9829448), (-0.07504581, 4.6057663, 1.9765108), (-0.075055696, 4.6131363, 1.9712353), (-0.0750436, 4.6234818, 1.9668673), (-0.07501495, 4.636101, 1.963245), (-0.07497868, 4.6503906, 1.9602448), (-0.07494143, 4.665886, 1.9577662), (-0.07490662, 4.68219, 1.9557252), (-0.07487529, 4.6990433, 1.954048), (-0.07484699, 4.7162323, 1.9526693), (-0.0748209, 4.733658, 1.9515358), (-0.07479616, 4.7512207, 1.9506019), (-0.074772246, 4.768936, 1.9498307), (-0.074748725, 4.7866516, 1.9491905), (-0.07472538, 4.8045197, 1.9486556), (-0.07470229, 4.8223495, 1.9482063), (-0.074679494, 4.84021, 1.9478263), (-0.07465707, 4.8580856, 1.9475012), (-0.07463486, 4.875923, 1.9472212), (-0.074612625, 4.8937683, 1.9469764), (-0.07459025, 4.9116516, 1.94676), (-0.07456767, 4.9295197, 1.9465679), (-0.07454498, 4.9473877, 1.9463923), (-0.074522145, 4.965271, 1.9462305), (-0.07449913, 4.9831085, 1.9460807), (-0.07447594, 5.0009766, 1.9459406), (-0.07445257, 5.01886, 1.9458088), (-0.074429005, 5.0366974, 1.9456822), (-0.074405275, 5.0545273, 1.9455603), (-0.07437962, 5.0722733, 1.9454678), (-0.07434452, 5.088585, 1.9454186), (-0.07431219, 5.1020584, 1.9453803), (-0.07429968, 5.1123505, 1.9453267), (-0.07430965, 5.119751, 1.9452568), (-0.07433443, 5.124878, 1.9451811), (-0.07436482, 5.1283417, 1.9451114), (-0.07439483, 5.130623, 1.9450506), (-0.07442167, 5.132103, 1.9450005), (-0.07444492, 5.1330795, 1.9449604), (-0.07446544, 5.133713, 1.9449276), (-0.074484184, 5.1341476, 1.9449009), (-0.07450211, 5.1344147, 1.9448808), (-0.07451992, 5.1345673, 1.9448646), (-0.0745381, 5.13472, 1.9448516), (-0.0745571, 5.1347275, 1.9448402), (-0.07457703, 5.1347275, 1.9448314), (-0.07459782, 5.1347275, 1.9448254), (-0.07461925, 5.1347275, 1.9448202), (-0.07464104, 5.1347275, 1.9448152), (-0.07466331, 5.1347275, 1.9448124), (-0.07468609, 5.1347275, 1.94481), (-0.07470941, 5.1347275, 1.9448076), (-0.0747333, 5.1347275, 1.9448053), (-0.07475775, 5.1347275, 1.9448035), (-0.074782684, 5.1347275, 1.9448035), (-0.07480806, 5.1347275, 1.9448035), (-0.07483393, 5.1347275, 1.9448035), (-0.074860275, 5.1347275, 1.9448035), (-0.07488699, 5.1347275, 1.9448035), (-0.07491412, 5.1347275, 1.9448035), (-0.07494166, 5.1347275, 1.9448035), (-0.07496955, 5.1347275, 1.9448035), (-0.074997865, 5.1347275, 1.9448035), (-0.07502656, 5.1347275, 1.9448035), (-0.07505559, 5.1347275, 1.9448035), (-0.07508498, 5.1347275, 1.9448035), (-0.07511466, 5.1347275, 1.9448035), (-0.07514463, 5.1347275, 1.9448035), (-0.07517487, 5.1347275, 1.9448035), (-0.07520532, 5.1347275, 1.9448035), (-0.0752361, 5.1347275, 1.9448035), (-0.07526712, 5.1347275, 1.9448035), (-0.075298354, 5.1347275, 1.9448035), (-0.07532987, 5.1347275, 1.9448035), (-0.07536169, 5.1347275, 1.9448035), (-0.07539377, 5.1347275, 1.9448035), (-0.07542615, 5.1347275, 1.9448035), (-0.07545877, 5.1347275, 1.9448035), (-0.07549162, 5.1347275, 1.9448035), (-0.075524755, 5.1347275, 1.9448035), (-0.075558126, 5.1347275, 1.9448035), (-0.07559178, 5.1347275, 1.9448035), (-0.07562571, 5.1347275, 1.9448035), (-0.07565988, 5.1347275, 1.9448035), (-0.075694345, 5.1347275, 1.9448035), (-0.075729065, 5.1347275, 1.9448035), (-0.075764075, 5.1347275, 1.9448035), (-0.07579932, 5.1347275, 1.9448035), (-0.07583485, 5.1347275, 1.9448035), (-0.075870626, 5.1347275, 1.9448035), (-0.07590669, 5.1347275, 1.9448035), (-0.075942986, 5.1347275, 1.9448035), (-0.07597956, 5.1347275, 1.9448035), (-0.076016404, 5.1347275, 1.9448035), (-0.07605348, 5.1347275, 1.9448035), (-0.076090835, 5.1347275, 1.9448035), (-0.07612847, 5.1347275, 1.9448035), (-0.07616632, 5.1347275, 1.9448035), (-0.076204486, 5.1347275, 1.9448035), (-0.07624292, 5.1347275, 1.9448035), (-0.07628157, 5.1347275, 1.9448035), (-0.07632051, 5.1347275, 1.9448035), (-0.07635973, 5.1347275, 1.9448035), (-0.07639917, 5.1347275, 1.9448035), (-0.0764389, 5.1347275, 1.9448035), (-0.076478876, 5.1347275, 1.9448035), (-0.076519154, 5.1347275, 1.9448035), (-0.07655958, 5.1347275, 1.9448035), (-0.07660012, 5.1347275, 1.9448035), (-0.07664081, 5.1347275, 1.9448035), (-0.07668161, 5.1347275, 1.9448035), (-0.07672254, 5.1347275, 1.9448035), (-0.07676356, 5.1347275, 1.9448035), (-0.07680468, 5.1347275, 1.9448035), (-0.076846026, 5.1347275, 1.9448035), (-0.076887414, 5.1347275, 1.9448035), (-0.07692891, 5.1347275, 1.9448035), (-0.07697055, 5.1347275, 1.9448035), (-0.077012256, 5.1347275, 1.9448035), (-0.07705414, 5.1347275, 1.9448035), (-0.07709612, 5.1347275, 1.9448035), (-0.07713823, 5.1347275, 1.9448035), (-0.07718044, 5.1347275, 1.9448035), (-0.077222444, 5.1347275, 1.9448035), (-0.07726446, 5.1347275, 1.9448035), (-0.07730645, 5.1347275, 1.9448035), (-0.07734846, 5.1347275, 1.9448035), (-0.07739046, 5.1347275, 1.9448035), (-0.077432424, 5.1347275, 1.9448035), (-0.077474296, 5.1347275, 1.9448035), (-0.07751617, 5.1347275, 1.9448035), (-0.07755803, 5.1347275, 1.9448035), (-0.07759992, 5.1347275, 1.9448035), (-0.0776418, 5.1347275, 1.9448035), (-0.07768358, 5.1347275, 1.9448035), (-0.07772528, 5.1347275, 1.9448035), (-0.077767, 5.1347275, 1.9448035), (-0.077808745, 5.1347275, 1.9448035), (-0.07785044, 5.1347275, 1.9448035), (-0.07789211, 5.1347275, 1.9448035), (-0.07793365, 5.1347275, 1.9448035), (-0.077975206, 5.1347275, 1.9448035), (-0.07801677, 5.1347275, 1.9448035), (-0.07805833, 5.1347275, 1.9448035), (-0.078099936, 5.1347275, 1.9448035), (-0.07814134, 5.1347275, 1.9448035), (-0.078182764, 5.1347275, 1.9448035), (-0.07822417, 5.1347275, 1.9448035), (-0.07826559, 5.1347275, 1.9448035), (-0.078306995, 5.1347275, 1.9448035), (-0.07834828, 5.1347275, 1.9448035), (-0.07838958, 5.1347275, 1.9448035), (-0.07843086, 5.1347275, 1.9448035), (-0.078472175, 5.1347275, 1.9448035), (-0.07851345, 5.1347275, 1.9448035), (-0.078554586, 5.1347275, 1.9448035), (-0.07859571, 5.1347275, 1.9448035), (-0.078636646, 5.1347275, 1.9448035), (-0.07867743, 5.1347275, 1.9448035), (-0.07871803, 5.1347275, 1.9448035), (-0.07875843, 5.1347275, 1.9448035), (-0.078798674, 5.1347275, 1.9448035), (-0.07883876, 5.1347275, 1.9448035), (-0.07887862, 5.1347275, 1.9448035), (-0.07891833, 5.1347275, 1.9448035), (-0.07895788, 5.1347275, 1.9448035), (-0.07899725, 5.1347275, 1.9448035), (-0.07903641, 5.1347275, 1.9448035), (-0.07907539, 5.1347275, 1.9448035), (-0.07911419, 5.1347275, 1.9448035), (-0.079152845, 5.1347275, 1.9448035), (-0.079191364, 5.1347275, 1.9448035), (-0.079229645, 5.1347275, 1.9448035), (-0.079267696, 5.1347275, 1.9448035), (-0.079305574, 5.1347275, 1.9448035), (-0.079343274, 5.1347275, 1.9448035), (-0.079380855, 5.1347275, 1.9448035), (-0.07941822, 5.1347275, 1.9448035), (-0.079455435, 5.1347275, 1.9448035), (-0.07949245, 5.1347275, 1.9448035), (-0.07952929, 5.1347275, 1.9448035), (-0.07956596, 5.1347275, 1.9448035), (-0.07960248, 5.1347275, 1.9448035), (-0.07963879, 5.1347275, 1.9448035), (-0.079674914, 5.1347275, 1.9448035), (-0.079710886, 5.1347275, 1.9448035), (-0.07974667, 5.1347275, 1.9448035), (-0.07978227, 5.1347275, 1.9448035), (-0.0798177, 5.1347275, 1.9448035), (-0.07985294, 5.1347275, 1.9448035), (-0.079887904, 5.1347275, 1.9448035), (-0.079922624, 5.1347275, 1.9448035), (-0.07995713, 5.1347275, 1.9448035), (-0.07999137, 5.1347275, 1.9448035), (-0.08002536, 5.1347275, 1.9448035), (-0.08005909, 5.1347275, 1.9448035), (-0.0800926, 5.1347275, 1.9448035), (-0.08012581, 5.1347275, 1.9448035), (-0.08015883, 5.1347275, 1.9448035)]
+        color3f[] primvars:displayColor = [(0.1, 0.8, 1)]
+        uniform token type = "linear"
+        float[] widths = [0.008] (
+            interpolation = "constant"
+        )
+    }
+
+    def Camera "ReplayCamera"
+    {
+        float2 clippingRange = (0.05, 200)
+        float focalLength = 28
+        matrix4d xformOp:transform = ( (0.7071067811865475, -0.7071067811865475, 0, 0), (0.276172385369497, 0.276172385369497, 0.9205746178983234, 0), (-0.6509445549041194, -0.6509445549041194, 0.39056673294247163, 0), (-3, 1.9999999999999998, 3.8, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+}
+

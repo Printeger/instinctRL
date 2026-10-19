@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/package_r5_videos.py", line 73, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/package_r5_videos.py", line 37, in main
+    assert abs(frame['distance_m']-episode['geometry_distance_m'][frame['frame']])<1e-6
+                                   ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'geometry_distance_m'

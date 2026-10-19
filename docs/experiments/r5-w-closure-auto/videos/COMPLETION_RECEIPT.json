@@ -1,0 +1,51 @@
+{
+  "status": "COMPLETE",
+  "renderer_exit_code": 0,
+  "packaging_exit_code": 0,
+  "renderer_pid": 2253789,
+  "renderer_started_unix": 1792419544.2234402,
+  "renderer_finished_unix": 1792419634.9597702,
+  "render_wall_seconds": 90.73633003234863,
+  "entrypoint": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/source/e5c2912c53483dfbe757d23c016ba99246732846/render_r5_isaac_video.py",
+    "sha256": "e2f76947cc9bcaeb50bd9b42d2923ba5cdc4a71e1db1c1abc4a36becf1b3d3b7"
+  },
+  "source_commit": "e5c2912c53483dfbe757d23c016ba99246732846",
+  "command": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python",
+    "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/source/e5c2912c53483dfbe757d23c016ba99246732846/render_r5_isaac_video.py",
+    "--inputs",
+    "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/REPLAY_INPUTS.json",
+    "--output",
+    "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2",
+    "--source-commit",
+    "e5c2912c53483dfbe757d23c016ba99246732846"
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2.log",
+      "sha256": "f5dd9074472f557c5ea9a032d8e8dff08083c7988674308eea5ffa4de51cd2f7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/package-v2.log",
+      "sha256": "aaab43d5c8ddef3fe0bb48d274e57188cb6e1ce7d4678478029012c69bf44f5e"
+    }
+  ],
+  "resource_admission": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/RESOURCE_ADMISSION.json",
+    "sha256": "1dbd87a84347e01ce34bead6fe7922c89f49d9822a08a14538e9013fc52e3eb2"
+  },
+  "preview_failure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/PREVIEW_STATUS.json",
+    "sha256": "3712365718ef238fe900f4f3efa1b6826524e68ccbc3698849f2fccf6313f76f"
+  },
+  "manifest": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/VIDEO_MANIFEST.json",
+    "sha256": "fc41ffc375b58ba517c7420ce7777bf6312e74ebf62c5dadeb126b1978d17822"
+  },
+  "gpu_after": "3950, /usr/libexec/gnome-remote-desktop-daemon, 164 MiB\n",
+  "training_launched": false,
+  "physics_steps": 0,
+  "optimizer_updates": 0,
+  "checkpoint_writes": 0
+}

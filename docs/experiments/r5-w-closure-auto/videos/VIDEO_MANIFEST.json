@@ -1,0 +1,718 @@
+{
+  "schema": "r5-video-manifest-v1",
+  "status": "COMPLETE",
+  "render_type": "Isaac Sim 5.1 RTX 3D rendering of original evaluated trajectories",
+  "not_a_new_physics_validation": true,
+  "run": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/RUN_MANIFEST.json",
+    "sha256": "ccb4b2ab1aae45b203c392840b4b3ff959498b2f8a7fc80cb3cda48b422183f5",
+    "bytes": 19108
+  },
+  "replay_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/REPLAY_INPUTS.json",
+    "sha256": "7c91bb3aae69e9cc6d15174041684477f293c44ba844ecba6f58a5100fa1b2fb"
+  },
+  "render_source_commit": "e5c2912c53483dfbe757d23c016ba99246732846",
+  "packaging_entrypoint": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/package_r5_videos.py",
+    "sha256": "6916d91524fa85978d36bdf2d474491a28f49aea36ffed75a06d69b86717d2a0",
+    "bytes": 5546
+  },
+  "videos": [
+    {
+      "name": "Z_u640_m015",
+      "case": "Z",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/Z.jsonl",
+        "sha256": "dc69184414c00ed0c884f91822b78de66e77d17042de86f8820a634e6fc51165"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/Z_u640_m015.mp4",
+        "sha256": "1f9b26b72949235a01b70aa95b234bf5f8a045fa14ff4db7c5f9e8eedf569282"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/Z_u640_m015.json",
+        "sha256": "eeade38059a98d3238d9522f104680db5c3d58bfa42d0ab99e5b3e14a97e2d82"
+      },
+      "frames": 200,
+      "duration_s": 20.0,
+      "original_policy_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_policy_Z.json",
+        "sha256": "59af8ecb44ae0ecb9d972807803a971efac744c4d34a82ce9eb9389ddcc5f20c",
+        "bytes": 8625
+      },
+      "original_run_bindings": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/output_quota_binding.json",
+          "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+          "bytes": 248
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_profile_binding.json",
+          "sha256": "fd77e94ecc4aa2da08ed48a5f1478518de9d5bb0f7d04dd4d02fca503e8f0d1f",
+          "bytes": 3899
+        }
+      ],
+      "original_process_identity": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/process_identity.json",
+        "sha256": "09b9b7de92cc715e11ae7fbcd8db6a22c903d495b044c84bc26cd8ff9aa8a0a9",
+        "bytes": 293
+      }
+    },
+    {
+      "name": "T_u640_m015",
+      "case": "T",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/T.jsonl",
+        "sha256": "c672dd90954eb91ecc05c81c2122f9b5c90352cf30c1e135bd50bc129f01bd60"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/T_u640_m015.mp4",
+        "sha256": "06a40e18479ddaeb05184693dfbba171051acafc44467fb60fd0aa5b83ddad07"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/T_u640_m015.json",
+        "sha256": "09216ff024fe19effd55280a05331dfc1b535d7d9325a2187e50e66ce31e4569"
+      },
+      "frames": 100,
+      "duration_s": 10.0,
+      "original_policy_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_policy_T.json",
+        "sha256": "87a8c3453be33ccf01fdd1c43dd470ef33f58d2b7f67653314580cfe1a7f5934",
+        "bytes": 10120
+      },
+      "original_run_bindings": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/output_quota_binding.json",
+          "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+          "bytes": 248
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_profile_binding.json",
+          "sha256": "fd77e94ecc4aa2da08ed48a5f1478518de9d5bb0f7d04dd4d02fca503e8f0d1f",
+          "bytes": 3899
+        }
+      ],
+      "original_process_identity": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/process_identity.json",
+        "sha256": "09b9b7de92cc715e11ae7fbcd8db6a22c903d495b044c84bc26cd8ff9aa8a0a9",
+        "bytes": 293
+      }
+    },
+    {
+      "name": "S_u640_m015",
+      "case": "S",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/S.jsonl",
+        "sha256": "776e312d76a5846991fb32e6ce0e4504ffd8029c19ee108694a82358233e3531"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/S_u640_m015.mp4",
+        "sha256": "e1c979db09ac8923ed1086c0e95584414e1169f3be729160bbfdd0baa8b81ca1"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/S_u640_m015.json",
+        "sha256": "a3c8e44abcbac36f35d39dd228b24cc2d05a3b0ca39b1f2b035328d4fbba618e"
+      },
+      "frames": 330,
+      "duration_s": 33.0,
+      "original_policy_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_policy_S.json",
+        "sha256": "4fc0bd30b52c6b74c0b129ba3c134e1dc9651e1ec902fac7dbc1bce523cd3658",
+        "bytes": 14707
+      },
+      "original_run_bindings": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/output_quota_binding.json",
+          "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+          "bytes": 248
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_profile_binding.json",
+          "sha256": "fd77e94ecc4aa2da08ed48a5f1478518de9d5bb0f7d04dd4d02fca503e8f0d1f",
+          "bytes": 3899
+        }
+      ],
+      "original_process_identity": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/process_identity.json",
+        "sha256": "09b9b7de92cc715e11ae7fbcd8db6a22c903d495b044c84bc26cd8ff9aa8a0a9",
+        "bytes": 293
+      }
+    },
+    {
+      "name": "X_u640_m015",
+      "case": "X",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/X.jsonl",
+        "sha256": "f61f436f4fbfbf0cae0a927b4f73a406e36c21f18548333aff9faecb94fc19ff"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/X_u640_m015.mp4",
+        "sha256": "439f2ba6f62b957db875ac14e314d11b4af2163bc9ed9cc577137e843b0cc96b"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/X_u640_m015.json",
+        "sha256": "9304855d169ec0d44f387cfb1800618e5446d917aa3ab5d4e557b53968c23e06"
+      },
+      "frames": 200,
+      "duration_s": 20.0,
+      "original_policy_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_policy_X.json",
+        "sha256": "139d5a133599dad7f514742f5adb363054908159f4c3885c6e13aca815ad9460",
+        "bytes": 13812
+      },
+      "original_run_bindings": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/output_quota_binding.json",
+          "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+          "bytes": 248
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_profile_binding.json",
+          "sha256": "fd77e94ecc4aa2da08ed48a5f1478518de9d5bb0f7d04dd4d02fca503e8f0d1f",
+          "bytes": 3899
+        }
+      ],
+      "original_process_identity": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/process_identity.json",
+        "sha256": "09b9b7de92cc715e11ae7fbcd8db6a22c903d495b044c84bc26cd8ff9aa8a0a9",
+        "bytes": 293
+      }
+    },
+    {
+      "name": "W_x_wall_u640_m015",
+      "case": "W",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/W.jsonl",
+        "sha256": "3e4421880a52bbfec6b0a26b8466329697c664ce4dd8c1b3cf5310f265fffce9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u640_m015.mp4",
+        "sha256": "ae17353dfd8ea562cf8430c4fd09725d328275a199e2d1cc1e23b0dad7aeebb2"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u640_m015.json",
+        "sha256": "72f7b600e3374a1f9f37e4c3b2ec4abca5c0fb3efed2a7e8e7acd15421328113"
+      },
+      "frames": 200,
+      "duration_s": 20.0,
+      "original_policy_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_policy_W.json",
+        "sha256": "acd826b2fa0fbf52f4bd83f256ce807c73f5c84630ed63908a7dd469c46e40fe",
+        "bytes": 305499
+      },
+      "original_run_bindings": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/output_quota_binding.json",
+          "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+          "bytes": 248
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_profile_binding.json",
+          "sha256": "fd77e94ecc4aa2da08ed48a5f1478518de9d5bb0f7d04dd4d02fca503e8f0d1f",
+          "bytes": 3899
+        }
+      ],
+      "original_process_identity": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/process_identity.json",
+        "sha256": "09b9b7de92cc715e11ae7fbcd8db6a22c903d495b044c84bc26cd8ff9aa8a0a9",
+        "bytes": 293
+      }
+    },
+    {
+      "name": "W_y_wall_u640_m015",
+      "case": "W",
+      "lane": 16,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/W.jsonl",
+        "sha256": "3e4421880a52bbfec6b0a26b8466329697c664ce4dd8c1b3cf5310f265fffce9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+        "update": 640
+      },
+      "margin_m": 0.15,
+      "label": "L1 u640 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u640_m015.mp4",
+        "sha256": "683af3ff9262dd2cf69dfbf0388feffcd7d5501adf778e0b30f27f83f2618200"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u640_m015.json",
+        "sha256": "69eb7c8c8f996df849e3c9b3e643925ba3afb99e01f9dd46cc163f6ef98cf1c9"
+      },
+      "frames": 200,
+      "duration_s": 20.0,
+      "original_policy_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_policy_W.json",
+        "sha256": "acd826b2fa0fbf52f4bd83f256ce807c73f5c84630ed63908a7dd469c46e40fe",
+        "bytes": 305499
+      },
+      "original_run_bindings": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/output_quota_binding.json",
+          "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+          "bytes": 248
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_profile_binding.json",
+          "sha256": "fd77e94ecc4aa2da08ed48a5f1478518de9d5bb0f7d04dd4d02fca503e8f0d1f",
+          "bytes": 3899
+        }
+      ],
+      "original_process_identity": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/process_identity.json",
+        "sha256": "09b9b7de92cc715e11ae7fbcd8db6a22c903d495b044c84bc26cd8ff9aa8a0a9",
+        "bytes": 293
+      }
+    },
+    {
+      "name": "W_x_wall_u512_m000",
+      "case": "W",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/evaluation_raw/formal_R1_u512/W.jsonl",
+        "sha256": "1cc2ab19ed216b1c49264730e3997fba94ffa84e5fc2af02b609f649712b010c"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/formal_R1_u512.json",
+        "sha256": "895b26acd8734a14859e264a2358313fb863f48745d23a4e629928ad6d0738e2"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.0,
+      "label": "R1 u512 margin0",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m000.mp4",
+        "sha256": "932c554ec65c3e6476e5bfa98125cfcff0f5b6c382b117d02a9965f2e5d179c3"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m000.json",
+        "sha256": "008aaf437930d86ed89c16d9000812c31597752e472a1d44f17bb3c30d16c496"
+      },
+      "frames": 200,
+      "duration_s": 20.0,
+      "original_policy_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/formal_R1_u512_policy_W.json",
+        "sha256": "85036d4a3d034954d6b9bf9d051f13fc5e2e3a83527b23e4910211777cb2372d",
+        "bytes": 308025
+      },
+      "original_run_bindings": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/research_profile_binding.json",
+          "sha256": "7c9544c7ad18138f157af281ba0cf4b03a046713d04d99542026ab18f8ba49a6",
+          "bytes": 5739
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/output_quota_binding.json",
+          "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+          "bytes": 248
+        }
+      ],
+      "original_process_identity": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/process_identity.json",
+        "sha256": "b059f89f106181f325dd0e52fd5e1ea2d5ba7b229d5df552af3b80d15c14e8b9",
+        "bytes": 293
+      }
+    },
+    {
+      "name": "W_y_wall_u512_m000",
+      "case": "W",
+      "lane": 16,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/evaluation_raw/formal_R1_u512/W.jsonl",
+        "sha256": "1cc2ab19ed216b1c49264730e3997fba94ffa84e5fc2af02b609f649712b010c"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/formal_R1_u512.json",
+        "sha256": "895b26acd8734a14859e264a2358313fb863f48745d23a4e629928ad6d0738e2"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.0,
+      "label": "R1 u512 margin0",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m000.mp4",
+        "sha256": "5d6028bd3bd91f4ff17fc40b311e44ab7974b1c1b39e8dad5badbd2abe47e1fb"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m000.json",
+        "sha256": "2fb4b1717e8aeaa44fc9cc75328a68c18d65e1072a70f7e8f2509ceff7af6b1c"
+      },
+      "frames": 200,
+      "duration_s": 20.0,
+      "original_policy_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/formal_R1_u512_policy_W.json",
+        "sha256": "85036d4a3d034954d6b9bf9d051f13fc5e2e3a83527b23e4910211777cb2372d",
+        "bytes": 308025
+      },
+      "original_run_bindings": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/research_profile_binding.json",
+          "sha256": "7c9544c7ad18138f157af281ba0cf4b03a046713d04d99542026ab18f8ba49a6",
+          "bytes": 5739
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/output_quota_binding.json",
+          "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+          "bytes": 248
+        }
+      ],
+      "original_process_identity": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-EVALUATION-feb1e96f97e4/results/research-formal-evaluation/process_identity.json",
+        "sha256": "b059f89f106181f325dd0e52fd5e1ea2d5ba7b229d5df552af3b80d15c14e8b9",
+        "bytes": 293
+      }
+    },
+    {
+      "name": "W_x_wall_u512_m015",
+      "case": "W",
+      "lane": 0,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u512/W.jsonl",
+        "sha256": "a5944e0775d8f44656826e43b3bb6f0aa190cd44637aa575bee63543ae87e0b9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512.json",
+        "sha256": "19884c13340afb8919d4dcad5cd621b7fd0580c3c77f552d085d02ea6233ac97"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.15,
+      "label": "E1 u512 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m015.mp4",
+        "sha256": "d0dc7eff6089778bf43d120da275c5e1e20bd035c83499ed8d3aed2c20f7297d"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m015.json",
+        "sha256": "73e52f136665923517fc693c55524711776a0aafd4118a6119f4452c949bac54"
+      },
+      "frames": 200,
+      "duration_s": 20.0,
+      "original_policy_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512_policy_W.json",
+        "sha256": "d9eedd3599e6d0d3ff7dd8e4ddde8eca2b55a716aedd6c863cc5b127f563c998",
+        "bytes": 307147
+      },
+      "original_run_bindings": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/output_quota_binding.json",
+          "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+          "bytes": 248
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_profile_binding.json",
+          "sha256": "a3fbc22435f953f6d91240568d613b585d548df199107a8e683d667f4550c1ea",
+          "bytes": 3615
+        }
+      ],
+      "original_process_identity": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/process_identity.json",
+        "sha256": "9962782ec06182c0edb420fd8b09d1b61962c02cd2d9eb2005fd0e63352c2d28",
+        "bytes": 293
+      }
+    },
+    {
+      "name": "W_y_wall_u512_m015",
+      "case": "W",
+      "lane": 16,
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u512/W.jsonl",
+        "sha256": "a5944e0775d8f44656826e43b3bb6f0aa190cd44637aa575bee63543ae87e0b9"
+      },
+      "evaluation": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512.json",
+        "sha256": "19884c13340afb8919d4dcad5cd621b7fd0580c3c77f552d085d02ea6233ac97"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "margin_m": 0.15,
+      "label": "E1 u512 margin.15",
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m015.mp4",
+        "sha256": "9096c3e2326bbfa811799425deef247f55a4c5009dc04d9ea41c58657ecb606b"
+      },
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m015.json",
+        "sha256": "5cfac64a03691950243ad15de058d83fb52f367866af85a8ab37d09b14be3fc0"
+      },
+      "frames": 200,
+      "duration_s": 20.0,
+      "original_policy_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512_policy_W.json",
+        "sha256": "d9eedd3599e6d0d3ff7dd8e4ddde8eca2b55a716aedd6c863cc5b127f563c998",
+        "bytes": 307147
+      },
+      "original_run_bindings": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/output_quota_binding.json",
+          "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+          "bytes": 248
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_profile_binding.json",
+          "sha256": "a3fbc22435f953f6d91240568d613b585d548df199107a8e683d667f4550c1ea",
+          "bytes": 3615
+        }
+      ],
+      "original_process_identity": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/process_identity.json",
+        "sha256": "9962782ec06182c0edb420fd8b09d1b61962c02cd2d9eb2005fd0e63352c2d28",
+        "bytes": 293
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/W_x_wall_comparison.mp4",
+        "sha256": "db4dda722fd1ceba7599f72d131758bc392ec39a095e8e514d17302386d49124",
+        "bytes": 2011561
+      },
+      "inputs": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m000.mp4",
+          "sha256": "932c554ec65c3e6476e5bfa98125cfcff0f5b6c382b117d02a9965f2e5d179c3",
+          "bytes": 4225208
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m015.mp4",
+          "sha256": "d0dc7eff6089778bf43d120da275c5e1e20bd035c83499ed8d3aed2c20f7297d",
+          "bytes": 4038618
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u640_m015.mp4",
+          "sha256": "ae17353dfd8ea562cf8430c4fd09725d328275a199e2d1cc1e23b0dad7aeebb2",
+          "bytes": 4793957
+        }
+      ],
+      "layout": "Left: original u512 margin0; middle: same u512 margin0.15; right: u640 margin0.15. Synchronized original record indices.",
+      "verification": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/W_x_wall_comparison.mp4",
+        "decoded_frames": 200,
+        "fps": 10.0,
+        "shape": [
+          640,
+          2880
+        ]
+      }
+    },
+    {
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/W_y_wall_comparison.mp4",
+        "sha256": "7bc82e497fbf4b89c1b27d414cc5eda5fdbae3253471361b3328a64fa600528a",
+        "bytes": 2422896
+      },
+      "inputs": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m000.mp4",
+          "sha256": "5d6028bd3bd91f4ff17fc40b311e44ab7974b1c1b39e8dad5badbd2abe47e1fb",
+          "bytes": 7236111
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m015.mp4",
+          "sha256": "9096c3e2326bbfa811799425deef247f55a4c5009dc04d9ea41c58657ecb606b",
+          "bytes": 6985923
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u640_m015.mp4",
+          "sha256": "683af3ff9262dd2cf69dfbf0388feffcd7d5501adf778e0b30f27f83f2618200",
+          "bytes": 6965467
+        }
+      ],
+      "layout": "Left: original u512 margin0; middle: same u512 margin0.15; right: u640 margin0.15. Synchronized original record indices.",
+      "verification": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/W_y_wall_comparison.mp4",
+        "decoded_frames": 200,
+        "fps": 10.0,
+        "shape": [
+          640,
+          2880
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "decoded": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/Z_u640_m015.mp4",
+        "decoded_frames": 200,
+        "fps": 10.0,
+        "shape": [
+          640,
+          960
+        ]
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/T_u640_m015.mp4",
+        "decoded_frames": 100,
+        "fps": 10.0,
+        "shape": [
+          640,
+          960
+        ]
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/S_u640_m015.mp4",
+        "decoded_frames": 330,
+        "fps": 10.0,
+        "shape": [
+          640,
+          960
+        ]
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/X_u640_m015.mp4",
+        "decoded_frames": 200,
+        "fps": 10.0,
+        "shape": [
+          640,
+          960
+        ]
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u640_m015.mp4",
+        "decoded_frames": 200,
+        "fps": 10.0,
+        "shape": [
+          640,
+          960
+        ]
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u640_m015.mp4",
+        "decoded_frames": 200,
+        "fps": 10.0,
+        "shape": [
+          640,
+          960
+        ]
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m000.mp4",
+        "decoded_frames": 200,
+        "fps": 10.0,
+        "shape": [
+          640,
+          960
+        ]
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m000.mp4",
+        "decoded_frames": 200,
+        "fps": 10.0,
+        "shape": [
+          640,
+          960
+        ]
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_x_wall_u512_m015.mp4",
+        "decoded_frames": 200,
+        "fps": 10.0,
+        "shape": [
+          640,
+          960
+        ]
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/W_y_wall_u512_m015.mp4",
+        "decoded_frames": 200,
+        "fps": 10.0,
+        "shape": [
+          640,
+          960
+        ]
+      }
+    ],
+    "all_frozen_inputs_unchanged": true,
+    "telemetry_exact_raw_match": true
+  },
+  "selection": "Deterministic lane 0 for Z/T/S/X and x_wall; lane 16 for y_wall. Representative clips, not all 32 lanes.",
+  "timing": "Frame i displays postintegration state at (i+1)*0.1s and command/q/beta issued at i*0.1s from same raw record; no interpolation.",
+  "attribution": "E1 fixed u512 + 0.15m margin already passed. Controller engineering gain is not an isolated RL learning gain.",
+  "limitations": [
+    "No new dynamics or inference. Checkpoint is hash-verified provenance of recorded original policy execution.",
+    "Only representative lanes, not all evaluation trajectories.",
+    "Rotor joint phases were not logged; rotor meshes use asset default.",
+    "Replay materials, lighting, camera and safety lines are visualization additions; actor inputs unchanged."
+  ]
+}

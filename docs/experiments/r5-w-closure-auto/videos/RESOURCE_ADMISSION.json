@@ -1,0 +1,279 @@
+{
+  "status": "PASS",
+  "policy": {
+    "schema_version": "r5-w-resource-admission/2",
+    "sample_count": 13,
+    "minimum_span_seconds": 60,
+    "minimum_gap_seconds": 4,
+    "maximum_gap_seconds": 8,
+    "mean_utilization_max": 8,
+    "median_utilization_max": 5,
+    "peak_utilization_max": 20,
+    "elevated_utilization_threshold": 10,
+    "elevated_samples_max": 4,
+    "consecutive_elevated_max": 1,
+    "memory_used_max_mib": 1024,
+    "memory_free_min_mib": 10240,
+    "allowed_app": "gnome-remote-desktop-daemon",
+    "allowed_app_max_mib": 256
+  },
+  "window": {
+    "sample_count": 13,
+    "span_ns": 60354077146,
+    "samples": [
+      {
+        "monotonic_ns": 2367097392723537,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 559,
+          "free_memory_mib": 11668,
+          "utilization_percent": 6
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367102419577598,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 559,
+          "free_memory_mib": 11668,
+          "utilization_percent": 5
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367107446716862,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 559,
+          "free_memory_mib": 11668,
+          "utilization_percent": 2
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367112473766637,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 559,
+          "free_memory_mib": 11668,
+          "utilization_percent": 10
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367117500855358,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 559,
+          "free_memory_mib": 11668,
+          "utilization_percent": 6
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367122530458531,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 559,
+          "free_memory_mib": 11668,
+          "utilization_percent": 5
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367127562536064,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 559,
+          "free_memory_mib": 11668,
+          "utilization_percent": 3
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367132590470207,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 559,
+          "free_memory_mib": 11668,
+          "utilization_percent": 4
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367137618348732,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 559,
+          "free_memory_mib": 11668,
+          "utilization_percent": 3
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367142645367238,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 561,
+          "free_memory_mib": 11666,
+          "utilization_percent": 11
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367147673122241,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 560,
+          "free_memory_mib": 11667,
+          "utilization_percent": 6
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367152714598202,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 560,
+          "free_memory_mib": 11667,
+          "utilization_percent": 4
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      },
+      {
+        "monotonic_ns": 2367157746800683,
+        "gpu": {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5070",
+          "driver": "580.173.02",
+          "memory_total_mib": 12227,
+          "memory_used_mib": 560,
+          "free_memory_mib": 11667,
+          "utilization_percent": 10
+        },
+        "compute_apps": [
+          {
+            "pid": 3950,
+            "name": "/usr/libexec/gnome-remote-desktop-daemon",
+            "used_memory_mib": 164
+          }
+        ]
+      }
+    ]
+  },
+  "statistics": {
+    "mean": 5.769230769230769,
+    "median": 5,
+    "peak": 11,
+    "elevated_samples": 1
+  }
+}
