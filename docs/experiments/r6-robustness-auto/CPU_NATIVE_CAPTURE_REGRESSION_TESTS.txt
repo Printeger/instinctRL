@@ -1,0 +1,57 @@
+...............................F...........                              [100%]
+=================================== FAILURES ===================================
+_________ PrelaunchTests.test_only_fresh_pass_reaches_launcher_factory _________
+
+    def _r6_capture_binding() -> dict[str, Any]:
+        """Require the current dispatcher-owned bounded stdout/stderr pipe."""
+        try:
+>           binding=json.loads(os.environ['INSTINCTRL_R6_NATIVE_CAPTURE'])
+E           KeyError: 'INSTINCTRL_R6_NATIVE_CAPTURE'
+
+training_workloads/scale_003/resources.py:230: KeyError
+
+The above exception was the direct cause of the following exception:
+
+self = <test_r6_prelaunch.PrelaunchTests testMethod=test_only_fresh_pass_reaches_launcher_factory>
+
+    def test_only_fresh_pass_reaches_launcher_factory(self):
+        gate=partial(r.run_gate,resource_pins=self.pins,sample_provider=self.sample,sleeper=self.sleep,clock_ns=lambda:self.clock)
+        launches=[]
+        def launch(path):launches.append(self.calls);return SimpleNamespace(app='CPU_APP_SUBSTITUTE')
+        with patch.object(resources,'validate_shutdown_runtime_sources',return_value={}):
+>           result,launcher,app=resources.start_after_coexistence_gate(self.root,mode='research-r6-evaluation',attempt_id='CPU',authorization_sha256='a'*64,
+                gate_runner=gate,launcher_factory=launch,resource_pins=self.pins)
+
+tools/test_r6_prelaunch.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/scale_003/resources.py:307: in start_after_coexistence_gate
+    capture=_r6_capture_binding()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _r6_capture_binding() -> dict[str, Any]:
+        """Require the current dispatcher-owned bounded stdout/stderr pipe."""
+        try:
+            binding=json.loads(os.environ['INSTINCTRL_R6_NATIVE_CAPTURE'])
+            parent=os.getppid()
+            parent_start=Path(f'/proc/{parent}/stat').read_text().rsplit(')',1)[1].split()[19]
+            boot=Path('/proc/sys/kernel/random/boot_id').read_text().strip()
+            if (binding.get('schema_version')!='r6-native-capture/1'
+                    or type(binding.get('owner_pid')) is not int or binding['owner_pid']!=parent
+                    or binding.get('owner_starttime')!=parent_start or binding.get('boot_id')!=boot
+                    or type(binding.get('cap_bytes')) is not int or not 0<binding['cap_bytes']<=256*1024**2
+                    or type(binding.get('pipe_device')) is not int or type(binding.get('pipe_inode')) is not int
+                    or not isinstance(binding.get('path'),str) or not Path(binding['path']).is_absolute()):
+                raise ValueError('capture owner or limit mismatch')
+            for fd in (1,2):
+                info=os.fstat(fd)
+                if not stat.S_ISFIFO(info.st_mode) or (info.st_dev,info.st_ino)!=(binding['pipe_device'],binding['pipe_inode']):
+                    raise ValueError('capture pipe mismatch')
+            return binding
+        except (KeyError,ValueError,TypeError,OSError,AttributeError,IndexError) as error:
+>           raise RuntimeError('R6 bounded native capture required before AppLauncher') from error
+E           RuntimeError: R6 bounded native capture required before AppLauncher
+
+training_workloads/scale_003/resources.py:247: RuntimeError
+=========================== short test summary info ============================
+FAILED tools/test_r6_prelaunch.py::PrelaunchTests::test_only_fresh_pass_reaches_launcher_factory
+1 failed, 42 passed in 9.11s

@@ -65,7 +65,8 @@ class PrelaunchTests(unittest.TestCase):
         gate=partial(r.run_gate,resource_pins=self.pins,sample_provider=self.sample,sleeper=self.sleep,clock_ns=lambda:self.clock)
         launches=[]
         def launch(path):launches.append(self.calls);return SimpleNamespace(app='CPU_APP_SUBSTITUTE')
-        with patch.object(resources,'validate_shutdown_runtime_sources',return_value={}):
+        with patch.object(resources,'validate_shutdown_runtime_sources',return_value={}), \
+             patch.object(resources,'_r6_capture_binding',return_value={'test_only':'CPU_CAPTURE_SUBSTITUTE'}):
             result,launcher,app=resources.start_after_coexistence_gate(self.root,mode='research-r6-evaluation',attempt_id='CPU',authorization_sha256='a'*64,
                 gate_runner=gate,launcher_factory=launch,resource_pins=self.pins)
         self.assertEqual(launches,[13]);self.assertEqual(app,'CPU_APP_SUBSTITUTE')

@@ -99,6 +99,7 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
     native_r = native_w = release_w = -1; native_stream = None
     native_bytes = 0; native_eof = False; native_exit = None; native_error = None
     cleanup_errors = []; native_digest = hashlib.sha256()
+    native_capture = None
     native_path = identity_path.parent / "native-output.log"
 
     def pipe(api):
@@ -129,6 +130,16 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
                 raise DispatchError("native output receipt already exists")
             native_stream = native_path.open('xb',buffering=0)
             native_r,native_w = pipe(os); os.set_blocking(native_r,False)
+            pipe_info = os.fstat(native_w)
+            native_capture = dict(schema_version='r6-native-capture/1',
+                owner_pid=os.getpid(),
+                owner_starttime=Path('/proc/self/stat').read_text().rsplit(')',1)[1].split()[19],
+                boot_id=Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
+                pipe_device=pipe_info.st_dev,pipe_inode=pipe_info.st_ino,
+                cap_bytes=native_output_cap_bytes,path=str(native_path.resolve()))
+            # This key is deliberately not inherited by filtered_environment.
+            # Only this dispatcher may describe the pipe it actually bounds.
+            env['INSTINCTRL_R6_NATIVE_CAPTURE']=json.dumps(native_capture,sort_keys=True)
         identity_r,identity_w = pipe(process_api)
         release_r,release_w = pipe(process_api)
         pid = process_api.fork()
@@ -168,6 +179,7 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
             raise DispatchError('held child identity is not an owned session/process-group leader')
         record={"schema_version":"unified-h1-local-dispatch.v1","held_child":child,"argv":list(argv),
                 "cwd":str(cwd),"environment_keys":sorted(env),"released_after_durable_record":False}
+        if native_capture is not None: record['native_capture']=native_capture
         _atomic_json(identity_path,record)
         if before_release is not None: before_release()
         stop=_stop_present(stop_paths)

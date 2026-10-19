@@ -1,0 +1,95 @@
+{
+  "schema_version": "r6-native-capture-binding-tests/1",
+  "status": "CPU_CAPTURE_AND_LAUNCHER_WIRING_PASS_PENDING_REVIEW_AND_KIT_RUNTIME",
+  "tests_passed_distinct": 69,
+  "groups": [
+    {
+      "passed": 26,
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_CAPTURE_BINDING_TESTS.txt",
+        "sha256": "b3cc05ba2c9b56c87fc658c44e220228f61d441d99a344b813e62bd22fd93fc2"
+      }
+    },
+    {
+      "passed": 42,
+      "failed": 1,
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_CAPTURE_REGRESSION_TESTS.txt",
+        "sha256": "354f7cfac083d3b210f0e91030cf90cef5cc2303291b3efe5b167f4581487bdd"
+      },
+      "failure": "Existing prelaunch CPU launcher fixture omitted new mandatory capture substitute; original failed output retained"
+    },
+    {
+      "passed": 1,
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_CAPTURE_PRELAUNCH_FIXTURE_TEST.txt",
+        "sha256": "59907462a8d5fd93406cdf4c7d1eb2f7b7a96664ae85c4ec202693d419cd019e"
+      },
+      "scope": "Only corrected prelaunch fixture rerun; 42 unaffected passes not repeated"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "609de381ba9241d34d83eabc8b6380de5443e83d9484d8c6b83b08e4bdde6ad3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/resources.py",
+      "sha256": "02382f3f4f482c0e68a6e7e2fd112508340af687edf8efee92d6db04b32f32ec"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_capture_binding.py",
+      "sha256": "7321570b77923253aeb84301a7aaa1dc0b16971f7925a02bda065e941cdc66cd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_paths.py",
+      "sha256": "aef6d315bd852ec879d36670e530e9f203eb09004f42f016883d68e99f8d16f0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_output.py",
+      "sha256": "2f12b2a13d72b778e8f66e6b941b908a3d51bd4c0ffbc9e54e0925e03514015c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_prelaunch.py",
+      "sha256": "a9e33f1848a46c2f3a4a8da48b7accc9b852695ead985b0a6d9350cfdd2f78f0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_config.py",
+      "sha256": "1147ee5fb697fea5b6474d53c202c8428fe7c6e80ceb4c6d44e2e59eafae5fee"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_unified_h1_r3_local_dispatch.py",
+      "sha256": "fda4f14ad721f27ede6476561fe347f5be8ffe830d4f00960fea5d10dff28c25"
+    }
+  ],
+  "frozen_runtime_source_evidence": [
+    {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/dev/include/carb/logging/LoggingSettingsUtils.h",
+      "sha256": "c0bd10da980c365c933bc10813e4fa53d93e12d5cebc50ecb16a2d57fcdd404a"
+    },
+    {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/dev/include/carb/logging/StandardLogger2.h",
+      "sha256": "80c4b2d611760ab0ac5d61815dd318ed274653aab497010773a20521160e861d"
+    }
+  ],
+  "behavior": [
+    "Only bounded dispatcher capture injects the owner/start/boot/pipe identity and exact cap into child environment; externally supplied marker is filtered",
+    "R6 launcher requires current parent and both descriptors to match the actual bounded FIFO before AppLauncher; old launcher log path unchanged",
+    "R6 requests /log/file=/proc/self/fd/1 and checks exact setting readback after application registration for bounded cleanup",
+    "Real CPU subprocess opens the same proc-fd file path; combined console/file/stderr bytes preserved exactly and flood stops at the shared cap",
+    "Actual real R6 dispatcher cap remains256MiB; no disk allocation or native3GiB reserve reduced"
+  ],
+  "limitations": [
+    "No native Carb or Kit logger was loaded; CPU path semantics and AppLauncher substitutes do not prove actual Kit log-file behavior",
+    "Cache/crash/other native writer aggregate bounds remain unresolved; capacity_pass remainsfalse",
+    "New exact source/config/snapshot/control release and independent review required before live use"
+  ],
+  "gpu_queries": 0,
+  "simulator_starts": 0,
+  "model_calls": 0,
+  "capacity_pass": false,
+  "runtime_modified": false,
+  "budget_modified": false
+}

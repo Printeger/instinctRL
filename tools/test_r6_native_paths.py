@@ -18,6 +18,8 @@ class NativePathTests(unittest.TestCase):
         self.calls=[];self.module=ModuleType('isaaclab.app')
         def create(**kwargs):self.calls.append(kwargs);return SimpleNamespace(app='CPU_APP')
         self.module.AppLauncher=create
+        capture=patch.object(r,'_r6_capture_binding',return_value={'test_only':'CPU_CAPTURE_SUBSTITUTE'})
+        capture.start();self.addCleanup(capture.stop)
 
     def launch(self,mode='research-r6-evaluation',gate=None):
         with patch.dict(sys.modules,{'isaaclab.app':self.module}),patch.object(r,'validate_shutdown_runtime_sources',return_value={}):
@@ -29,6 +31,7 @@ class NativePathTests(unittest.TestCase):
         self.assertIn('--/crashreporter/dumpDir='+str(self.root/'native_crash'),args)
         self.assertIn('--/crashreporter/preserveDump=true',args)
         self.assertIn('--/crashreporter/skipOldDumpUpload=true',args)
+        self.assertEqual([x for x in args if x.startswith('--/log/file=')],['--/log/file=/proc/self/fd/1'])
         self.assertNotIn('enable_crashreporter',self.calls[0])
         self.assertTrue((self.root/'native_crash').is_dir())
         record=json.loads((self.root/'native_path_request.json').read_text())
@@ -60,6 +63,7 @@ class NativePathTests(unittest.TestCase):
     def test_legacy_launcher_args_remain_without_r6_settings(self):
         self.launch('research-formal-evaluation')
         self.assertNotIn('crashreporter',self.calls[0]['kit_args'])
+        self.assertIn('--/log/file='+str(self.root/'kit.log'),self.calls[0]['kit_args'])
         self.assertFalse((self.root/'native_crash').exists())
 
     def test_actual_backend_registers_app_for_cleanup_before_readback_failure(self):
@@ -86,6 +90,11 @@ class NativePathTests(unittest.TestCase):
         self.root=self.root/'has space';self.root.mkdir()
         with self.assertRaisesRegex(ValueError,'whitespace'):self.launch()
         self.assertEqual(self.calls,[])
+
+    def test_missing_capture_fails_before_launcher_and_crash_directory(self):
+        with patch.object(r,'_r6_capture_binding',side_effect=RuntimeError('bounded native capture required')):
+            with self.assertRaisesRegex(RuntimeError,'bounded native'):self.launch()
+        self.assertFalse((self.root/'native_crash').exists());self.assertEqual(self.calls,[])
 
 
 if __name__=='__main__':unittest.main()

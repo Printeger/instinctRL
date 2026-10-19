@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 import os
+import json
+import stat
 from pathlib import Path
 import subprocess
 import time
@@ -222,12 +224,36 @@ class RuntimeResourceGuard:
         return row
 
 
+def _r6_capture_binding() -> dict[str, Any]:
+    """Require the current dispatcher-owned bounded stdout/stderr pipe."""
+    try:
+        binding=json.loads(os.environ['INSTINCTRL_R6_NATIVE_CAPTURE'])
+        parent=os.getppid()
+        parent_start=Path(f'/proc/{parent}/stat').read_text().rsplit(')',1)[1].split()[19]
+        boot=Path('/proc/sys/kernel/random/boot_id').read_text().strip()
+        if (binding.get('schema_version')!='r6-native-capture/1'
+                or type(binding.get('owner_pid')) is not int or binding['owner_pid']!=parent
+                or binding.get('owner_starttime')!=parent_start or binding.get('boot_id')!=boot
+                or type(binding.get('cap_bytes')) is not int or not 0<binding['cap_bytes']<=256*1024**2
+                or type(binding.get('pipe_device')) is not int or type(binding.get('pipe_inode')) is not int
+                or not isinstance(binding.get('path'),str) or not Path(binding['path']).is_absolute()):
+            raise ValueError('capture owner or limit mismatch')
+        for fd in (1,2):
+            info=os.fstat(fd)
+            if not stat.S_ISFIFO(info.st_mode) or (info.st_dev,info.st_ino)!=(binding['pipe_device'],binding['pipe_inode']):
+                raise ValueError('capture pipe mismatch')
+        return binding
+    except (KeyError,ValueError,TypeError,OSError,AttributeError,IndexError) as error:
+        raise RuntimeError('R6 bounded native capture required before AppLauncher') from error
+
+
 def _r6_native_settings(output_root: Path) -> dict[str, Any]:
     """Pinned Kit setting names; no runtime import or disabled crash evidence."""
     if (not output_root.is_absolute() or output_root.resolve()!=output_root
             or output_root.is_symlink() or any(c.isspace() for c in str(output_root))):
         raise ValueError("R6 native output requires an exact whitespace-free path")
-    return {"/crashreporter/dumpDir":str(output_root/"native_crash"),
+    return {"/log/file":"/proc/self/fd/1",
+            "/crashreporter/dumpDir":str(output_root/"native_crash"),
             "/crashreporter/preserveDump":True,"/crashreporter/skipOldDumpUpload":True}
 
 
@@ -239,12 +265,13 @@ def _read_r6_native_settings(keys):
 
 
 def verify_r6_native_paths(output_root: Path) -> None:
+    capture=_r6_capture_binding()
     requested=_r6_native_settings(output_root)
     observed=_read_r6_native_settings(requested)
     matched=all(type(observed.get(k))is type(v) and observed.get(k)==v for k,v in requested.items())
     atomic_json_replace(output_root,'native_path_runtime.json',{
         'schema_version':'r6-native-paths/1','status':'SETTINGS_VERIFIED' if matched else 'SETTINGS_MISMATCH',
-        'requested':requested,'observed':observed,'total_native_capacity_verified':False})
+        'requested':requested,'observed':observed,'native_capture':capture,'total_native_capacity_verified':False})
     if not matched:raise RuntimeError('R6 native output settings differ after AppLauncher')
 
 
@@ -277,19 +304,21 @@ def start_after_coexistence_gate(
     kit_asset_args = "".join(f" --{setting}={asset_root}" for setting in kit_asset_settings)
     native_settings = _r6_native_settings(output_root) if mode=='research-r6-evaluation' else {}
     if native_settings:
+        capture=_r6_capture_binding()
         (output_root/'native_crash').mkdir(mode=0o700,exist_ok=False)
         atomic_json_replace(output_root,'native_path_request.json',{
             'schema_version':'r6-native-paths/1','status':'REQUESTED_NOT_VERIFIED',
             'settings':native_settings,'attempt_id':attempt_id,'authorization_sha256':authorization_sha256,
+            'native_capture':capture,
             'total_native_capacity_verified':False})
-    native_args=''.join(f" --{key}={str(value).lower() if type(value)is bool else value}" for key,value in native_settings.items())
+    native_args=''.join(f" --{key}={str(value).lower() if type(value)is bool else value}" for key,value in native_settings.items() if key!='/log/file')
     if launcher_factory is None:
         from isaaclab.app import AppLauncher
         launcher_factory = lambda log: AppLauncher(
             headless=True, enable_cameras=False, fast_shutdown=False,
             kit_args=f"--/log/file={log}{kit_asset_args}{native_args}",
         )
-    launcher = launcher_factory(output_root / "kit.log")
+    launcher = launcher_factory(Path('/proc/self/fd/1') if native_settings else output_root / "kit.log")
     if asset_root is not None:
         atomic_json_replace(output_root, "asset_root_runtime.json", {
             "schema_version":"unified-h1-local-asset-root.v2", "environment_variable":"ISAACSIM_ASSET_ROOT",
