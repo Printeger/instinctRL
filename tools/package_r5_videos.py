@@ -25,8 +25,18 @@ def main():
         raw=[json.loads(x) for x in Path(video['raw']['path']).read_text().splitlines()]
         assert pin(video['raw']['path'])['sha256']==video['raw']['sha256']
         assert len(side['frames'])==len(raw)-1
+        original_dir=Path(video['evaluation']['path']).parent
+        policy_path=original_dir/(Path(video['raw']['path']).parent.name+'_policy_'+video['case']+'.json')
+        policy=json.loads(policy_path.read_text())
+        episode=next(e for e in policy['episodes'] if e['env_index']==lane)
+        video['original_policy_record']=pin(policy_path)
+        video['original_run_bindings']=[pin(f) for f in original_dir.glob('*binding.json')]
+        video['original_process_identity']=pin(original_dir/'process_identity.json')
         for frame,row in zip(side['frames'],raw[1:]):
             assert frame['raw_step']==row['step']
+            assert abs(frame['distance_m']-episode['geometry_distance_m'][frame['frame']])<1e-6
+            expected=[a-b for a,b in zip(row['root_state_w'][lane][:3],raw[0]['env_origins_w_m'][lane])]
+            assert frame['position_local_m']==expected
             for a,b in [('actual_velocity_b','actual_velocity_b'),('target_velocity_b','command_b')]:assert frame[a]==row[b][lane]
             assert frame['quaternion_wxyz']==row['root_state_w'][lane][3:7]
             for a,b in [('q','q'),('ics_beta','ics_beta')]:
