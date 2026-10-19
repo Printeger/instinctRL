@@ -149,7 +149,7 @@
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
     "controller_deployed": false,
     "current_live_jobs": [],
-    "automatic_model_sessions_started": 8,
+    "automatic_model_sessions_started": 9,
     "exact_job_permission_required": true,
     "goal_complete": false,
     "baseline_cpu_audit": "docs/experiments/r6-robustness-auto/BASELINE_CPU_AUDIT.json",
@@ -158,7 +158,7 @@
     "metric_measurement_cpu_tests": "docs/experiments/r6-robustness-auto/CPU_METRIC_MEASUREMENT_TESTS.json",
     "archive_scenario_cpu_tests": "docs/experiments/r6-robustness-auto/CPU_ARCHIVE_SCENARIO_TESTS.json",
     "capacity_allocation_status": "DRAFT_FINAL_PROTECTION80GIB_24000SECONDS_PENDING_REVIEW",
-    "automatic_model_sessions_completed": 8,
+    "automatic_model_sessions_completed": 9,
     "cpu_review_findings": 0,
     "cpu_fix_tests": 67,
     "cpu_fix_evidence": "docs/experiments/r6-robustness-auto/CPU_REVIEW_FIX_TESTS.json",
@@ -192,7 +192,8 @@
     "source_native_review": "docs/experiments/r6-robustness-auto/reviews/cpu-source-native-review.json",
     "source_native_repair_evidence": "docs/experiments/r6-robustness-auto/CPU_SOURCE_NATIVE_REPAIR_TESTS.json",
     "source_native_accepted_review": "docs/experiments/r6-robustness-auto/reviews/cpu-source-native-fix-review.json",
-    "legacy_reconciliation_status": "MUST_FIX_UNRECONCILED",
-    "legacy_reconciliation_review": "docs/experiments/r6-robustness-auto/reviews/legacy-reconciliation-review.json"
+    "legacy_reconciliation_status": "EXACT_TWO_LEGACY_RECEIPTS_RECONCILED",
+    "legacy_reconciliation_review": "docs/experiments/r6-robustness-auto/reviews/legacy-reconciliation-review.json",
+    "legacy_reconciliation_accepted_review": "docs/experiments/r6-robustness-auto/reviews/legacy-reconciliation-fix-review.json"
   }
 }

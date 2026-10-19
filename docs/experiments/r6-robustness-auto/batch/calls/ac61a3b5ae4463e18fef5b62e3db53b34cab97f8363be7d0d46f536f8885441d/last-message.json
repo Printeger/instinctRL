@@ -1,0 +1,117 @@
+{
+  "decision": "PASS_LEGACY_MODEL_RECONCILIATION",
+  "must_fix": [],
+  "changed_files": [],
+  "next_plan": null,
+  "historical_descendant_cleanup_proven": false,
+  "ownership_ambiguity_remaining": false,
+  "runtime_dispatch_authorized": false,
+  "proposal": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LEGACY_MODEL_CLEANUP_RECONCILIATION_PROPOSAL_V2.json",
+    "sha256": "8dc7cfcd2f6869af1f26ca95f154c690da04b94beaa4cb2931ce1947a56758cd"
+  },
+  "source_pins": {
+    "tools/r6_legacy_model_reconciliation.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_legacy_model_reconciliation.py",
+      "sha256": "928ca9e22c6024b848d2a9de2f9b218e54c8214c9524974e560d7f92372fd6bf"
+    },
+    "tools/audit_r6_legacy_model_cleanup.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/audit_r6_legacy_model_cleanup.py",
+      "sha256": "0446d05c7267c1b29a1e736d76dbe5572a7821cff3062c6397f03fdf8da0e473"
+    },
+    "tools/r6_job_handoff.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+    },
+    "tools/r6_batch.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "2d0fb7f9b07d475b373a189061206cb0958bd7542016b8c91798609404515d0f"
+    },
+    "tools/r6_model_worker.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_model_worker.py",
+      "sha256": "188880d1da73a6142e343500db6bd23b49653b5f15ceb3df1def26c9577aa37f"
+    },
+    "tools/r6_recovery.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55"
+    },
+    "tools/r6_worker_processes.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_worker_processes.py",
+      "sha256": "7ce3a1276d8460445f442ef9e30ecbe3198de98e848d75198eaabe94c932cc10"
+    }
+  },
+  "original_receipts": {
+    "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/receipt.json",
+      "sha256": "60104087056120fbfc6f049d54fd508cb87859b7b2744f3dfe5ed99da22a0f0c"
+    },
+    "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/receipt.json",
+      "sha256": "82cdb6ba2ac8cb559d3055c7def8bc74537f477ab4c16b784b4251d347ae554e"
+    }
+  },
+  "remaining_budget": "23 of 32 automatic sessions remain; 9 are reserved, including this RUNNING review ac61a3b5ae4463e18fef5b62e3db53b34cab97f8363be7d0d46f536f8885441d (1 session and 67,174,400 output bytes). Total output reservations are 2,416,181,248 bytes; live/training usage remains zero. Protected allocations remain unchanged.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_LEGACY_RECONCILIATION_REPAIR_V2.json",
+      "sha256": "67d96a9ca14394c7b7e0056293bc87024137a3fc6214f9f104a0b64d0355aab3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_LEGACY_RECONCILIATION_REPAIR_V2.txt",
+      "sha256": "a6148779d0543cb4ed5f9cdb3eab491eae55e04154c80736fac3d9e6ec05622e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LEGACY_MODEL_SESSION_SUPPLEMENT.json",
+      "sha256": "75b2ccc8d85dd97dad666786b878ea30bc968bf24b0ac00a79353f7ae9bbedd6"
+    },
+    {
+      "path": "/home/mint/.codex/sessions/2026/10/20/rollout-2026-10-20T00-06-59-01a154ea-8241-7dd3-aa33-41e485f17ca8.jsonl",
+      "sha256": "222c3d0f6c0b76083d7641058d86931f16b573596f26e8198980f220ab3335df"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_cleanup_validation.py",
+      "sha256": "6d683ebde072f4c393a169644a97524351fb630252efca8b930981b0c1f34f3b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_legacy_model_reconciliation.py",
+      "sha256": "60a7daa944b79f702861a47140a7b3367a5c7b8a6f55a43778a79f2e05b04871"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_job_handoff.py",
+      "sha256": "05ffaf1593d65e6187efaebab5e083e877cb1f8af352077a177d10be1cee1716"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py",
+      "sha256": "1cb8f05479453f57993175e72388366868029fc68c8835beaa386e94ccbb3d46"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/events.jsonl",
+      "sha256": "8e4d55ba4ef8a9bbc00362c8cb39699cc141fabd414c0dd8eef8d60899bc0d21"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/events.jsonl",
+      "sha256": "382ebe60b3f6d1b86d58c78d106035f0ebc4ac750efce7869036e82527f5542b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/last-message.json",
+      "sha256": "4b16c9db3b3df5227c496e06d5b4b76530adfc3cee2896be8fe66469345cb941"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/last-message.json",
+      "sha256": "ad0cbca8cbe8864ef4b021986b7e128930eeea9679a9c77871746cd62b88ef95"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+      "sha256": "e9e8c7bd65f8279f898b1ccbde248cf5d1fafa3eb279ebabd51522e6715abe87"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/goal_budget.json",
+      "sha256": "029864fafddfdede524fd75c770614b942867679664917c4e7c6b76da7f72087"
+    }
+  ],
+  "notes": "Both original MUST_FIX findings are closed within this narrow scope. Checked source, test, output, supplement, raw-session and original-artifact hashes match. The 35-row original session has thread ID 01a154ea-8241-7dd3-aa33-41e485f17ca8, matching the first CLI JSONL. All six pinned call/output record hashes and the supplement's copied shell records match. The three paired exec wrappers contain only the exact foreground cat attempt terminating with exit 1 and the bwrap initialization error, in-memory tool metadata filtering, and two MCP metadata queries returning resource descriptions and an empty template list. Listed tool capabilities were not invoked. These records resolve the omitted-attempt evidence without indicating an unaccounted background launch or job submission. The second transcript has eleven exact matching terminal command pairs, including the preserved exit-1 command; its Python operation and historical imported budget implementation perform only in-memory arithmetic and reads. Original receipts, transcripts, stderr and last-message bindings remain intact. All four original worker/CLI PIDs are currently absent; that observation is supplementary, not historical cleanup proof. cleanup_verified now requires the complete modern record, strict integer counts excluding booleans, at least two stable empty scans, nonnegative signalling counts bounded by observed identities, structurally valid identities and current owns checks. verified_decision, no_model_workers and the narrow reconciliation validator use it. New fixtures supply successful exit and schema fields, exercise the real verified_decision path, and cover a valid record, status-only/missing fields, invalid types/counts and current owned identities. The recorded 49-test pass was inspected, not rerun; CPU fixtures and mocked reconciliation decisions are not independent acceptance. The validator explicitly binds this hard-pinned supplement in both decision and acceptance, rechecks its original raw session at handoff, restricts the exception to the two original receipt hashes, and preserves source/proposal/review bindings and current liveness gates. No acceptance is currently registered; this session must finish and its modern receipt pass validation before later handoff can consume the decision. No files or operational state were changed. This verdict proves no historical descendant cleanup and grants no runtime dispatch, live, scientific or capacity acceptance.",
+  "session_evidence": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LEGACY_MODEL_SESSION_SUPPLEMENT.json",
+    "sha256": "75b2ccc8d85dd97dad666786b878ea30bc968bf24b0ac00a79353f7ae9bbedd6"
+  }
+}
