@@ -1,0 +1,82 @@
+{
+  "status": "INTERMEDIATE_NOT_GOAL_COMPLETE",
+  "runs": [
+    {
+      "label": "E1 fixed u512 + .15m",
+      "inventory": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/live/R1-research-formal-evaluation/INVENTORY.json",
+        "sha256": "f58f4547178ab39822ba44c5063a23fbf45931bf731482d12983af2846bf9112"
+      },
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u512/W.jsonl",
+        "sha256": "a5944e0775d8f44656826e43b3bb6f0aa190cd44637aa575bee63543ae87e0b9"
+      },
+      "original_result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u512.json",
+        "sha256": "19884c13340afb8919d4dcad5cd621b7fd0580c3c77f552d085d02ea6233ac97"
+      },
+      "groups": {
+        "x": {
+          "minimum_geometry_m": 0.8643035888671875,
+          "maximum_stop_time_s": 2.3000000000000003
+        },
+        "y": {
+          "minimum_geometry_m": 0.864166259765625,
+          "maximum_stop_time_s": 2.3000000000000003
+        }
+      }
+    },
+    {
+      "label": "L1 u640 + .15m",
+      "inventory": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/INVENTORY.json",
+        "sha256": "5cfb83caa3580e126b469bd8500c103a67cee63bd4dc52fc3c13d7f02ded1812"
+      },
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/W.jsonl",
+        "sha256": "3e4421880a52bbfec6b0a26b8466329697c664ce4dd8c1b3cf5310f265fffce9"
+      },
+      "original_result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+        "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+      },
+      "groups": {
+        "x": {
+          "minimum_geometry_m": 0.867889404296875,
+          "maximum_stop_time_s": 2.3000000000000003
+        },
+        "y": {
+          "minimum_geometry_m": 0.8619446754455566,
+          "maximum_stop_time_s": 2.4000000000000004
+        }
+      }
+    },
+    {
+      "label": "L1 u768 + .15m",
+      "inventory": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/INVENTORY.json",
+        "sha256": "5cfb83caa3580e126b469bd8500c103a67cee63bd4dc52fc3c13d7f02ded1812"
+      },
+      "raw": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u768/W.jsonl",
+        "sha256": "638590334350e8bdd8e1270510755d6bfdbdbabef1c62277dad89db995bc9f84"
+      },
+      "original_result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u768.json",
+        "sha256": "58fa534a6df03b244a1d586a3040234117e924da54c3e417b1c71fb067de73f1"
+      },
+      "groups": {
+        "x": {
+          "minimum_geometry_m": 0.8560943603515625,
+          "maximum_stop_time_s": 2.3000000000000003
+        },
+        "y": {
+          "minimum_geometry_m": 0.8553390502929688,
+          "maximum_stop_time_s": 2.3000000000000003
+        }
+      }
+    }
+  ],
+  "interpretation": "E1 fixed policy already passes. L1 preserves original tasks and provides actual q-positive training exposure, but no isolated added safety benefit established. Original R1 no-margin negative baseline remains in W_CAUSAL_DIAGNOSIS. Independent seed verification pending.",
+  "timing": "Geometry and velocity observed after control; q/beta indexed by control issue. Group means are visualization only; pass requires every original lane."
+}

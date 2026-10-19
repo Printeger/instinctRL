@@ -1,0 +1,21 @@
+{
+  "verdict": "PASS",
+  "reviewer": "/root/seed_design_review",
+  "must_fix": [],
+  "scope": "Supplement correcting test-review provenance",
+  "identities": {
+    "test": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_w_independent.py",
+      "sha256": "ef2d597b3c7832a5543036ac9b3c61b9e05f2c6d33dfebf0db917c1122f7707c"
+    },
+    "recorded_test_result": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/w-independent-tests-r3.txt",
+      "sha256": "0d03c26519fb98f4ccf0e9c91837c2764c4f9ed9e9ccf4344b508ecfdb5d2832"
+    }
+  },
+  "checks": [
+    "Removing the two new explicit primary-seed rejection lines exactly restores originally reviewed test SHA3f2171d651e5c6ca5db1d9f9a9f3f163a587ef98c50000ee516da56093c4d028.",
+    "All three implementation source hashes unchanged. Recorded r3 result31 passed in1.28s.",
+    "Root earlier relay recorded new test hash before this supplemental review; this record makes provenance explicit. No tests rerun or files written by reviewer."
+  ]
+}

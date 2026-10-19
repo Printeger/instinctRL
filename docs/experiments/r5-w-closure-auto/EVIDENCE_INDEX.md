@@ -20,3 +20,13 @@ Latest terminal-event evidence:
 - Next controller input: coordination/batches/R5_W_CLOSURE_20261019/plan-l1-evaluation.json and after-l1-evaluation.prompt.md; independent controller review binds payload without review key.
 
 Still required: both trained nodes' original five-task32lane replay and full W motion; first passing node independent seed/initial-state full verification; controlled contribution comparison, W time series, full resource audit and final independent review. Ordinary negative performance prompts a bounded evidence-based single-variable correction within the same Goal, not a user approval request. Only full evidence supports final positive or scientifically complete negative status.
+
+## L1 原评价完成及独立验证交接
+
+- `experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/INVENTORY.json`：58项原件索引，106原件/归档hash核验，raw绝对路径不变。
+- `L1_EVALUATION_REPORT.md`、`L1_METHOD_COMPARISON.json`、`L1_W_TIMING.png`：全部任务/子组、工程/学习分离、W时序和当前资源。
+- `experiments/R5-W-L1-EVAL-01/L1_U640_CPU_REPLAY.json`、`L1_U768_CPU_REPLAY.json`：两节点独立调用冻结评分与每lane运动/事件。
+- `reviews/l1-evaluation-actual-independent.json`：实际两节点独审接受；非Goal完成。
+- `L1_EVALUATION_SETTLED_BUDGET_SNAPSHOT.json`：当前评价结算快照，不退款INCOMPLETE和失败。
+- `experiments/R5-W-L1-INDEPENDENT-01/`：独立seed协议、readonly source/config、精确packet/发行输入；当前尚未执行。
+- `reviews/v1-code-independent.json`、`v1-stage-independent.json`、`v1-prelive-independent.json`：CPU实现、累计授权和精确prelive独审。

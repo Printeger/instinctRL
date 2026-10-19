@@ -1,0 +1,32 @@
+{
+  "schema_version": "instinctrl-w-checkpoint-compatibility/1",
+  "scope": "W_MARGIN_AND_CURRICULUM_INTEGRATION",
+  "origin_source_identity": {
+    "product_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "product_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "workload_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "workload_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24"
+  },
+  "execution_source_identity": {
+    "config_sha256": "f702a6f8cce4ada89a81d34077d893504b2cd84958f07776ba799d0f6d3c203c",
+    "product_commit": "4386730b1ac026dd08e1fe628961bf4fcbc9c76c",
+    "product_tree": "c13ff161aaf3b7046197f7ff586a6a26aa3433c1",
+    "workload_commit": "4386730b1ac026dd08e1fe628961bf4fcbc9c76c",
+    "workload_tree": "c13ff161aaf3b7046197f7ff586a6a26aa3433c1"
+  },
+  "origin_config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-formal-mean10-integration-01-20261015/training_workloads/unified_h1/candidate_config.json",
+    "sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24"
+  },
+  "execution_config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-20261019/training_workloads/unified_h1/candidate_config.json",
+    "sha256": "f702a6f8cce4ada89a81d34077d893504b2cd84958f07776ba799d0f6d3c203c"
+  },
+  "changed_product_sources": {
+    "isaaclab-training/instinctlab/envs/unified_h1_direct_env.py": {
+      "origin": "0d5f6be7a16576b23cca0823d67d3d47acfc64484d71f36b1381cbffb89b91c9",
+      "execution": "6eb8728000ef1232019ba5bafe285b40e8c24a662e286bda35dc33cc2e385173"
+    }
+  }
+}

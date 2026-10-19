@@ -102,19 +102,24 @@
   "w_closure_execution": {
     "goal_id": "R5-W-CLOSURE-AUTO-20261019",
     "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
-    "registration": "docs/experiments/r5-w-closure-auto/registrations/W-L1-002.json",
+    "registration": "docs/experiments/r5-w-closure-auto/registrations/W-V1-001.json",
     "state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
-    "status": "L1_ACTUAL_ACCEPTED_TWO_NODE_EVALUATION_ISSUED_HANDOFF",
+    "status": "L1_PRIMARY_BOTH_PASS_INDEPENDENT_SEED_ISSUED_HANDOFF",
     "current_live_jobs": [],
     "exact_job_permission_required": true,
-    "current_exact_release": "A-f86ae4584e07d817",
-    "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-l1-evaluation.json",
-    "last_completed_job": "J-8bdfaca0488e524d",
+    "current_exact_release": "A-e3529b5fa1ba5f5e",
+    "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-independent-validation.json",
+    "last_completed_job": "J-3db27ce7c40e9542",
     "last_training_transitions": 131072,
     "actual_training_review": {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-recovery1-actual-independent.json",
       "sha256": "ce921180385c8b009151e7e71f94426c8f3052c4ad0cedc53cf2dc75275ea468"
     },
-    "next_evaluation_status": "NOT_EXECUTED"
+    "next_evaluation_status": "NOT_EXECUTED",
+    "primary_evaluation": "Both u640/u768 all original five32/32, motion32/32; independent review PASS; engineering gain not isolated RL gain",
+    "actual_evaluation_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-evaluation-actual-independent.json",
+      "sha256": "57c45dd5b8409ef09e86f8fa5e3c2d71ddfbfe9e5420731ee764a0f4111e9b2b"
+    }
   }
 }
