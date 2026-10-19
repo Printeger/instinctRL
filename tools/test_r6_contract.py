@@ -97,4 +97,16 @@ class ContractTests(unittest.TestCase):
             validate_compatibility(self.write('compatibility-metric-change.json',record),origin,{**new,'resolved_identity':execution})
 
 
+    def test_missing_or_changed_r6_resource_policy_is_rejected(self):
+        protocol=json.loads(Path(self.p['r6']['protocol']['path']).read_text())
+        changed=copy.deepcopy(protocol);changed.pop('resource_admission')
+        self.p['r6']['protocol']=self.write('missing-resource-policy.json',changed);self.card()
+        with self.assertRaisesRegex(PermissionError,'prelaunch resource policy differs'):
+            validate_parameters(MODE,self.p)
+        changed=copy.deepcopy(protocol);changed['resource_admission']['window_policy']['peak_utilization_max']=99
+        self.p['r6']['protocol']=self.write('changed-resource-policy.json',changed);self.card()
+        with self.assertRaisesRegex(PermissionError,'prelaunch resource policy differs'):
+            validate_parameters(MODE,self.p)
+
+
 if __name__=='__main__':unittest.main()

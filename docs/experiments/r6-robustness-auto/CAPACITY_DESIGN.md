@@ -117,3 +117,6 @@ capacity_pass继续为false。
 原字段/15%余量/分母不减。未隐式退款旧或新预留，也未发车。
 
 2026-10-20实际分块训练存储补证：`TRAINING_CHUNK_STORE_CAPACITY_CPU.json` 对历史原字节采用新codec，JSONL逐record flush/fsync，压缩与小文件合计415,677,048bytes，原1,958,329,318bytes。所有测量流重新核验原SHA，临时档验证后删除；无pickle加载。12项新CPU测试及11项原诊断回归通过，见 `CPU_LOSSLESS_TRAINING_TESTS.json`。新增适配层为opt-in，概率gate计算/顺序未改；默认R5保存方式保留。V3合并草案采用实际codec估计，最终92GiB/27000秒仍仅提案。训练lifecycle及消费者接线、独审、新噪声字段压缩率与live吞吐未验证，capacity_pass=false。
+
+
+实际R6 prelaunch新增独立13样本/至少60秒窗口，最大采集180秒；队列观测不能替代。下一版完整时间预算必须显式计入该窗口、初始化与清理，不能直接沿用旧R5吞吐外推或假定旧receipt已有相同窗口成本。`TEST_PROTOCOL.json`新增资源policy使其身份改变；已有容量草案及review保持历史身份，不视为重新接受。当前80GiB/24000秒保护、92GiB/27000秒提案和capacity_pass=false均不变。CPU证据见 `CPU_R6_PRELAUNCH_TESTS.json`，未发车。

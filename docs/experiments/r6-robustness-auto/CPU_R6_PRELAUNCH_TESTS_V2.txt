@@ -1,0 +1,28 @@
+test_bad_timestamp_failure_keeps_original_sample (tools.test_r6_prelaunch.PrelaunchTests.test_bad_timestamp_failure_keeps_original_sample) ... ok
+test_busy_full_window_preserved_and_launcher_not_constructed (tools.test_r6_prelaunch.PrelaunchTests.test_busy_full_window_preserved_and_launcher_not_constructed) ... ok
+test_collection_deadline_prevents_next_query (tools.test_r6_prelaunch.PrelaunchTests.test_collection_deadline_prevents_next_query) ... ok
+test_complete_fresh_window_and_authorization_binding (tools.test_r6_prelaunch.PrelaunchTests.test_complete_fresh_window_and_authorization_binding) ... ok
+test_future_timestamp_rejected (tools.test_r6_prelaunch.PrelaunchTests.test_future_timestamp_rejected) ... ok
+test_missing_review_prevents_r6_gate_selection (tools.test_r6_prelaunch.PrelaunchTests.test_missing_review_prevents_r6_gate_selection) ... ok
+test_old_queue_samples_are_rejected_and_preserved (tools.test_r6_prelaunch.PrelaunchTests.test_old_queue_samples_are_rejected_and_preserved) ... ok
+test_only_fresh_pass_reaches_launcher_factory (tools.test_r6_prelaunch.PrelaunchTests.test_only_fresh_pass_reaches_launcher_factory) ... ok
+test_partial_query_failure_preserved (tools.test_r6_prelaunch.PrelaunchTests.test_partial_query_failure_preserved) ... ok
+test_r6_selection_cannot_fall_back_to_legacy_gate (tools.test_r6_prelaunch.PrelaunchTests.test_r6_selection_cannot_fall_back_to_legacy_gate) ... ok
+test_stop_before_collection_has_zero_queries (tools.test_r6_prelaunch.PrelaunchTests.test_stop_before_collection_has_zero_queries) ... ok
+test_stop_during_collection_preserves_exact_samples (tools.test_r6_prelaunch.PrelaunchTests.test_stop_during_collection_preserves_exact_samples) ... ok
+test_baseline_cannot_omit_failed_domain_or_duplicate_blocks (tools.test_r6_contract.ContractTests.test_baseline_cannot_omit_failed_domain_or_duplicate_blocks) ... ok
+test_capacity_or_independent_review_missing (tools.test_r6_contract.ContractTests.test_capacity_or_independent_review_missing) ... ok
+test_compatibility_rejects_original_metric_change (tools.test_r6_contract.ContractTests.test_compatibility_rejects_original_metric_change) ... ok
+test_component_and_kernel_file_limits (tools.test_r6_contract.ContractTests.test_component_and_kernel_file_limits) ... ok
+test_exact_card_pin_drift_is_not_accepted (tools.test_r6_contract.ContractTests.test_exact_card_pin_drift_is_not_accepted) ... ok
+test_full_baseline_budget_and_research_dispatch (tools.test_r6_contract.ContractTests.test_full_baseline_budget_and_research_dispatch) ... ok
+test_initial_baseline_entry_cannot_reveal_final_holdout (tools.test_r6_contract.ContractTests.test_initial_baseline_entry_cannot_reveal_final_holdout) ... ok
+test_mass_nonfinite_or_drift_rejected (tools.test_r6_contract.ContractTests.test_mass_nonfinite_or_drift_rejected) ... ok
+test_missing_or_changed_r6_resource_policy_is_rejected (tools.test_r6_contract.ContractTests.test_missing_or_changed_r6_resource_policy_is_rejected) ... ok
+test_no_training_mode_and_no_unknown_fields (tools.test_r6_contract.ContractTests.test_no_training_mode_and_no_unknown_fields) ... ok
+test_original_seed_and_baseline_cannot_be_relabelled (tools.test_r6_contract.ContractTests.test_original_seed_and_baseline_cannot_be_relabelled) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.266s
+
+OK

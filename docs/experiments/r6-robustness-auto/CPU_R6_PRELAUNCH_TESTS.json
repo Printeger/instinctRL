@@ -1,0 +1,89 @@
+{
+  "status": "CPU_R6_FRESH_PRELAUNCH_PASS_PENDING_REVIEW",
+  "capacity_pass": false,
+  "real_gpu_queries": 0,
+  "simulator_launches": 0,
+  "training_runs": 0,
+  "validation": [
+    {
+      "log": "CPU_R6_PRELAUNCH_TESTS_V3.txt",
+      "passed": 25,
+      "scope": "14 prelaunch and 11 contract tests; lifecycle uses tensor Python separately"
+    },
+    {
+      "log": "CPU_R6_PRELAUNCH_LEGACY_FIXTURE.txt",
+      "passed": 1,
+      "scope": "legacy threshold with explicit fixture pins"
+    },
+    {
+      "log": "CPU_R6_PRELAUNCH_LIFECYCLE_TENSOR.txt",
+      "passed": 1,
+      "scope": "registered lifecycle dispatch"
+    },
+    {
+      "log": "CPU_R6_PRELAUNCH_V2_REGRESSION_V2.txt",
+      "passed": 24,
+      "scope": "original V2 admission regression"
+    }
+  ],
+  "distinct_primary_tests": 51,
+  "supplementary": {
+    "legacy_slow_first_sample": "PASS in CPU_R6_PRELAUNCH_LEGACY_REGRESSION.txt",
+    "legacy_cleanup": "PASS in CPU_R6_LEGACY_OBSERVABILITY_TENSOR.txt"
+  },
+  "retained_failures": [
+    {
+      "log": "CPU_R6_PRELAUNCH_TESTS_INITIAL.txt",
+      "reason": "Control Python lacks Torch; lifecycle passed with existing tensor Python"
+    },
+    {
+      "log": "CPU_R6_PRELAUNCH_LEGACY_REGRESSION.txt",
+      "reason": "One historical pinned product config mismatch; one missing Torch import",
+      "resolution": "Historical mismatch reproduced with pre-change source in CPU_R6_LEGACY_CONFIG_BASELINE.json; cleanup test passed under tensor Python; historical config unchanged"
+    }
+  ],
+  "interpreters": {
+    "control": "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+    "tensor": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11"
+  },
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": "",
+    "tensor_thread_limits": "OMP_NUM_THREADS=2 MKL_NUM_THREADS=2"
+  },
+  "behavior": [
+    "R6 actual launch collects a separate fresh 13-sample window spanning at least 60 seconds using unchanged V2 thresholds",
+    "No queue receipt accepted as prelaunch admission",
+    "STOP and absolute 180-second deadline checked before and after collection; each query uses remaining deadline capped at 15 seconds",
+    "Partial samples and rejection evidence retained; blocked window never reaches launcher",
+    "Exact policy bound into protocol validation; protocol remains unfrozen"
+  ],
+  "limitations": [
+    "CPU fixtures do not establish real GPU scheduling or simulator integration",
+    "Full controller, exact Store release and config source snapshot closure pending",
+    "Protocol change requires fresh exact review and capacity identity; old reviews do not transfer",
+    "Fresh prelaunch duration must be included in next complete wall/GPU reservation estimate; ledger unchanged",
+    "Outer live watchdog remains responsible for stalled process cleanup"
+  ],
+  "source_sha256": {
+    "training_workloads/unified_h1/robustness_prelaunch.py": "ddba5b8969d98c3f30b4c145ace23a8e01631ef23f3618d669952707116f809a",
+    "training_workloads/unified_h1/resource_admission.py": "c70cf5648443ffde3dd3e4cb065f6bf2cee34a55211eadd75a77ef0dc1c4ec18",
+    "training_workloads/unified_h1/robustness_contract.py": "c27932be22135ab5b9d93f89916fda0b50b4acc664dbf726d2ad7b8edcb7815e",
+    "training_workloads/scale_003/resources.py": "1b0526a808054adeba98ac2e5a028926f9596bb85c5ac72713601005f3633c0d",
+    "tools/test_r6_prelaunch.py": "a238172246d35ae2a915f5b4558efa8bf834dc8cbe763b6417730bb49f5ee934",
+    "tools/test_r6_contract.py": "bbe4e87a1bbe40554a837019516fc6a8b594a98ceac8ef719f8ac9d5d03d2983",
+    "docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0"
+  },
+  "evidence_sha256": {
+    "CPU_R6_LEGACY_OBSERVABILITY_TENSOR.txt": "730410d23add507d10274b5400f29dd16f80db2f65bf9ef1c50a875848f3486b",
+    "CPU_R6_PRELAUNCH_LEGACY_FIXTURE.txt": "a0fb1283d3abd209306d9c9f90e79a98cde8ce34f132ae674537269ed75b4c82",
+    "CPU_R6_PRELAUNCH_LEGACY_REGRESSION.txt": "fbc5b243245bfeab89017c97ccf2fa4e140d5c8ab69b4c88f7ba0527bf7a861b",
+    "CPU_R6_PRELAUNCH_LIFECYCLE_TENSOR.txt": "813c1be3e42c5507f8c766aa9e12d60ccb783c52a790170614920db62dc9d11b",
+    "CPU_R6_PRELAUNCH_TESTS_INITIAL.txt": "c74c08b6fe51a5389e518a29bdc9479974faac23a30860d1d73b9bd2c82715e7",
+    "CPU_R6_PRELAUNCH_TESTS_V2.txt": "0cdb299410334ca683c008b3e77f8ccd416777e413fcd143d74a897241714907",
+    "CPU_R6_PRELAUNCH_TESTS_V3.txt": "8c2bc2eed90009047f432b2b71ebc5ce8ab88da54035d9b4e853a751390540b0",
+    "CPU_R6_PRELAUNCH_V2_REGRESSION.txt": "cafad75a79093740238130e07207fe460b41db8a4f60deb3955765fccd7138fc",
+    "CPU_R6_PRELAUNCH_V2_REGRESSION_V2.txt": "cafad75a79093740238130e07207fe460b41db8a4f60deb3955765fccd7138fc"
+  }
+}

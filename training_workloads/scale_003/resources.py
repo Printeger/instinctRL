@@ -39,14 +39,22 @@ def _integer(value: str) -> int:
     return int(value.strip().replace(" MiB", "").replace(" %", ""))
 
 
-def collect_resource_sample(*, resource_pins: Mapping[str, Any] | None = None) -> dict[str, Any]:
+def collect_resource_sample(*, resource_pins: Mapping[str, Any] | None = None,
+                            deadline_monotonic_ns: int | None = None,
+                            before_query: Callable[[], None] | None = None) -> dict[str, Any]:
     pins = load_config()["pins"] if resource_pins is None else resource_pins
     executable = pins["nvidia_smi_path"]
     if sha256_file(Path(executable)) != pins["nvidia_smi_sha256"]:
         raise ValueError("nvidia-smi identity changed")
+    def timeout():
+        if before_query is not None: before_query()
+        if deadline_monotonic_ns is None: return 15
+        remaining = (deadline_monotonic_ns - time.monotonic_ns()) / 1e9
+        if remaining <= 0: raise TimeoutError("resource collection deadline before query")
+        return min(15, remaining)
     gpu = subprocess.run(
         [executable, "--query-gpu=index,name,driver_version,memory.total,memory.used,utilization.gpu", "--format=csv,noheader,nounits"],
-        check=False, capture_output=True, text=True, timeout=15,
+        check=False, capture_output=True, text=True, timeout=timeout(),
     )
     if gpu.returncode != 0:
         raise RuntimeError(f"nvidia-smi GPU query failed ({gpu.returncode}): {gpu.stderr.strip()}")
@@ -58,7 +66,7 @@ def collect_resource_sample(*, resource_pins: Mapping[str, Any] | None = None) -
         raise ValueError("GPU sample field count mismatch")
     apps_result = subprocess.run(
         [executable, "--query-compute-apps=pid,process_name,used_gpu_memory", "--format=csv,noheader,nounits"],
-        check=False, capture_output=True, text=True, timeout=15,
+        check=False, capture_output=True, text=True, timeout=timeout(),
     )
     if apps_result.returncode != 0:
         raise RuntimeError(f"nvidia-smi compute-app query failed ({apps_result.returncode}): {apps_result.stderr.strip()}")
@@ -70,6 +78,7 @@ def collect_resource_sample(*, resource_pins: Mapping[str, Any] | None = None) -
             if len(values) != 3:
                 raise ValueError("compute application field count mismatch")
             apps.append({"pid": int(values[0]), "name": values[1], "used_memory_mib": _integer(values[2])})
+    if before_query is not None: before_query()
     total = _integer(fields[3]); used = _integer(fields[4])
     return {
         "monotonic_ns": time.monotonic_ns(),

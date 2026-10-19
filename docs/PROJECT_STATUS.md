@@ -75,6 +75,7 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 新增R6资源排队记账/恢复接口：复用V2完整13样本/60秒判定，逐窗口预留180秒及1MiB，busy后本地退避60秒，重启保留原boot/monotonic时钟和全部样本，禁止拼接/旧样本复用。长时间退避/停机按实际耗时保守补计，累计6小时限制阻止新窗口，STOP结束等待计时；不占live start/init/model计数，队列PASS不授予发车。17项新CPU检查及24项原V2回归通过，见 `CPU_RESOURCE_QUEUE_TESTS.json`。真实有界采样worker/等待循环、AppLauncher新鲜准入和submit仍待接线，协议待独审，未做GPU查询或修改操作账本。
 新增单样本有界查询worker：固定两类argv、源码/可执行文件pin、每ordinal独占目录与原始claim、15秒单查询/30秒查询窗口、每query清理≤15秒、48KiB总输出及16KiB日志写前限额。保存原stdout/stderr/native退出码，解析结果从原stdout重算，STOP后可结算已清理失败；未确认receipt/清理不能关闭队列窗口。13项新采样检查与17项队列回归通过，见 `CPU_RESOURCE_SAMPLER_TESTS.json`，全部是假查询CPU进程，未调用真实GPU工具。60秒controller截止已登记但独立执行器/重启接回/本地等待循环仍待接线，不代表完整资源控制器或live准入。
 新增资源等待/采样交接控制：claim先于Popen，准确worker重接与原60秒截止保留，controller可清理SIGSTOP worker/所属后代且不碰无关进程；完整13样本假查询实际窗口跨度≥60秒，busy后60秒本地退避再采完整新窗口。旧未消费样本过期则保留receipt并中断旧窗口；晚到/取消样本不作为当前观测。未核对采样阻止模型/分析派发，活动模型/CPU/job阻止新采样。54项相关CPU检查通过，见 `CPU_RESOURCE_WAIT_TESTS.json`。仅假查询进程，未查询GPU；完整controller部署、exact Store/submit、AppLauncher R6新鲜准入及独审/容量仍未完成，队列PASS不授权发车。
+新增R6实际启动前新鲜资源窗口：research-r6-evaluation不再落入旧瞬时5%入口，另采完整13样本/至少60秒，沿用V2阈值，180秒总截止及逐查询剩余时间限制，STOP/旧样本/未来时间戳拒绝并保存失败前缀。51项相关CPU检查通过，见 `CPU_R6_PRELAUNCH_TESTS.json`；旧配置身份失败已在修改前源码复现，缺Torch检查改用既有张量Python通过，原失败记录保留。协议增加准确policy绑定但仍未冻结；未进行真实GPU查询或sim启动。容量时间重算、源码快照闭包、独审、Store发行及完整controller仍未完成，capacity_pass=false。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）

@@ -1,0 +1,46 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_resource_gates_order_thresholds_and_failure_persistence _________
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1110/test_resource_gates_order_thre0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ad70a255a30>
+
+    def test_resource_gates_order_thresholds_and_failure_persistence(tmp_path, monkeypatch):
+        assert validate_coexistence_window(resource_window())["status"] == "PASS"
+        with pytest.raises(MemoryError): validate_coexistence_window(resource_window(free=10239, used=1988))
+        with pytest.raises(RuntimeError): validate_coexistence_window(resource_window(utilization=6))
+>       evidence = run_prelaunch_gate(tmp_path / "pass", mode="training", attempt_id="INERT", authorization_sha256="a" * 64,
+                                      collector=lambda: resource_window())
+
+tests/training_workloads/test_scale_003.py:506: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/scale_003/resources.py:159: in run_prelaunch_gate
+    pins = load_config()["pins"] if resource_pins is None else resource_pins
+training_workloads/scale_003/config.py:123: in load_config
+    validate_config(value)
+training_workloads/scale_003/config.py:83: in validate_config
+    _require(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'pinned product source identity mismatch'
+
+    def _require(condition: bool, message: str) -> None:
+        if not condition:
+>           raise ConfigError(message)
+E           training_workloads.scale_003.config.ConfigError: pinned product source identity mismatch
+
+training_workloads/scale_003/config.py:62: ConfigError
+_________ test_gate_validation_failure_preserves_completed_acquisition _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ad70a0dd100>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1110/test_gate_validation_failure_p0')
+
+    def test_gate_validation_failure_preserves_completed_acquisition(monkeypatch, tmp_path):
+>       import torch
+E       ModuleNotFoundError: No module named 'torch'
+
+tests/training_workloads/test_scale_003_repair.py:390: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/training_workloads/test_scale_003.py::test_resource_gates_order_thresholds_and_failure_persistence
+FAILED tests/training_workloads/test_scale_003_repair.py::test_gate_validation_failure_preserves_completed_acquisition
+2 failed, 1 passed in 0.08s

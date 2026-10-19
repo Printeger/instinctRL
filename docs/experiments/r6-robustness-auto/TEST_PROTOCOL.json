@@ -359,5 +359,29 @@
     "numeric_tolerance": "16*dtype_epsilon*max(1,max(abs(expected))) for wrench arithmetic; exact unchanged torque and inactive rotor wrench",
     "reset_tolerance": "Recompute max(1e-5,2*dtype_epsilon*max(1,abs(actual_world_coordinates))); check archived world-to-local subtraction and seeded reset_spec",
     "physical_integration_verified": false
+  },
+  "resource_admission": {
+    "schema_version": "r6-prelaunch-admission/1",
+    "window_policy": {
+      "schema_version": "r5-w-resource-admission/2",
+      "sample_count": 13,
+      "minimum_span_seconds": 60,
+      "minimum_gap_seconds": 4,
+      "maximum_gap_seconds": 8,
+      "mean_utilization_max": 8,
+      "median_utilization_max": 5,
+      "peak_utilization_max": 20,
+      "elevated_utilization_threshold": 10,
+      "elevated_samples_max": 4,
+      "consecutive_elevated_max": 1,
+      "memory_used_max_mib": 1024,
+      "memory_free_min_mib": 10240,
+      "allowed_app": "gnome-remote-desktop-daemon",
+      "allowed_app_max_mib": 256
+    },
+    "fresh_window_required": true,
+    "maximum_collection_seconds": 180,
+    "maximum_final_sample_age_seconds": 8,
+    "queue_observation_is_admission": false
   }
 }

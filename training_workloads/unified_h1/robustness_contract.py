@@ -70,6 +70,8 @@ def validate_parameters(mode,value):
     if abs(r['expected_mass_kg']-1.181517923)>1e-8:raise PermissionError('R6 pinned measured mass')
     protocol=pinned_json(r['protocol'])
     if protocol.get('frozen')is not True:raise PermissionError('R6 protocol not frozen')
+    from .robustness_prelaunch import POLICY as resource_policy
+    if protocol.get('resource_admission')!=resource_policy:raise PermissionError('R6 prelaunch resource policy differs')
     if protocol['old_suite']['seed']!=20260909 or protocol['old_suite']['transitions']!=32960:raise PermissionError('R6 original suite changed')
     review=accepted_review(p['protocol_review'],'PASS_R6_PROTOCOL',protocol_sha256=r['protocol']['sha256'])
     capacity=pinned_json(review['capacity_report'])
