@@ -1,0 +1,63 @@
+{
+  "schema_version": "r6-submit-real-contract-cpu/1",
+  "status": "CPU_CONTROL_CONTRACT_PASS_PENDING_REVIEW",
+  "tests_passed": 46,
+  "new_tests": 15,
+  "existing_regressions": 31,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+    "sha256": "638c5a7bfc2d19cc678e132ef7ebfc174496b283a8baa07a006c69a713beaf43"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_real_contract.py",
+    "sha256": "d96d8ffcb756ff43a81816e3d994677874f4764f8d3359cbf6b6b8a470fb0cbe"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SUBMIT_REAL_CONTRACT_TESTS.txt",
+    "sha256": "408acc0a3e1954840150ad1bb5050537dd1ab0f25baee2fe3fba65f0a046b922"
+  },
+  "dependencies": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/experiments.py",
+      "sha256": "dd85dee9971a93137348320364c82a95f377d4e963e649262df5bfd3157a937d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py",
+      "sha256": "f8cfc2a16c01c7003dd8914755ddec922c7b2865801ac68f8689f29e24aea238"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/store.py",
+      "sha256": "b57f1e3f7c71a4150cdd3346cb753197c1170a9ffd952bff6521be83c6fb2a0d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/policy.py",
+      "sha256": "716b26c982a3fc7de06292317009b68d4f2a9fa924bfc0fff594cd4dcbbcc77d"
+    }
+  ],
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "9b272bf84588eeb8c3b064bcb99b89f7971176eb09e468b8440b14a8accb2668"
+  },
+  "operating_state_modified": false,
+  "capacity_pass": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "coverage": [
+    "Real-mode branch with actual H1 validate, experiments validate/authorized/submit, Store proposal and approval, Journal and complete queue validation",
+    "Each of six dimensions independently missing or one unit below required rejects before claim; event and ledger agree to isolate the minimum check",
+    "Minimum includes one start/init, spec wall plus180 seconds for both live wall and allocated GPU, all nontraining transitions and full authorization output cap",
+    "Complete reservation reaches actual Store START_INTENT and h1-authority persistence before injected Popen failure; recovery preserves job and budget without second launch",
+    "Changed inspected evaluation seed or mode wall budget rejected by real H1 validator before claim"
+  ],
+  "substitutes": [
+    "Runtime inspect_authority returns CPU fixture config/authorization; no interpreter or runtime validation subprocess",
+    "Review/capacity and resource samples/clock are synthetic fixture data, not actual independent acceptance or GPU observations",
+    "Release freeze replaced and Popen raises before child creation"
+  ],
+  "limitations": [
+    "No production exact source snapshot/config authorization inspection",
+    "No production Store issuance or runtime launch; no controller deployment or scientific acceptance",
+    "Capacity and zero-model background handoff remain unresolved"
+  ]
+}
