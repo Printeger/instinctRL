@@ -1,0 +1,44 @@
+{
+  "status": "CPU_R6_NATIVE_CONSOLE_BOUND_PASS_PENDING_REVIEW",
+  "validation": [
+    {
+      "log": "CPU_R6_NATIVE_OUTPUT_V2.txt",
+      "passed": 55,
+      "scope": "7 actual CPU fork/exec/pipe tests and48 dispatcher/H1 regressions including R6 seed"
+    },
+    {
+      "log": "CPU_R6_NATIVE_RUNNER_REGRESSION.txt",
+      "passed": 1,
+      "scope": "Existing rlflow CPU substitute exactly once and owned lifeguard cleanup"
+    }
+  ],
+  "total_distinct_tests": 56,
+  "behavior": [
+    "Only real research-r6-evaluation receives the new native_output_cap_bytes option from rlflow worker",
+    "stdout/stderr merge into exclusive job-directory native-output.log; maximum256MiB before further write",
+    "Byte count and SHA256 preserve exact written prefix; overflow/STOP/timeout terminate owned child and fail",
+    "Transport receipt preserves observed native nonzero exit separately from output completion",
+    "Native descendant cleanup still requires outer rlflow lifeguard receipt",
+    "R6 adapter requires evaluation_seed, rejects training seed"
+  ],
+  "native_console_cap_bytes": 268435456,
+  "existing_kit_per_file_kernel_ceiling_bytes": 2147483648,
+  "native_allowance_bytes": 3221225472,
+  "remaining_nominal_native_allowance_bytes": 805306368,
+  "capacity_pass": false,
+  "real_gpu_queries": 0,
+  "simulator_starts": 0,
+  "limitations": [
+    "Does not establish a bound on every native filesystem path or rotating log/cache/crash output",
+    "CPU substituted runner regression uses runner_cpu; real R6 worker launch is not validated live",
+    "New dispatcher/workload snapshot and new exact rlflow control release are required; old frozen identities retained",
+    "Capacity/protocol/source compatibility review and complete controller still pending"
+  ],
+  "source_sha256": {
+    "training_workloads/unified_h1/local_dispatch.py": "5b24935d192a8e1e6e607f09543b7dd494ff5fb227625f34d2f8d9e9f664792e",
+    "tools/rlflow/rlflow/experiments.py": "dd85dee9971a93137348320364c82a95f377d4e963e649262df5bfd3157a937d",
+    "tools/rlflow/rlflow/h1.py": "f8cfc2a16c01c7003dd8914755ddec922c7b2865801ac68f8689f29e24aea238",
+    "tools/test_r6_native_output.py": "c4aa5d9da8a6b863cffef29255ad326cd1bf66f381bf6798326964adeb003564",
+    "tools/rlflow/tests/test_h1_adapter.py": "167622481b042f2bdd9c08c051ef8143d27bb49908f87aff8fbe7f7276d12037"
+  }
+}

@@ -188,7 +188,7 @@ def test_pilot_training_keeps_training_seed(bound):
 @pytest.mark.parametrize('mode,seed_field',[
     ('research-training','training_seed'),('research-evaluation','evaluation_seed'),
     ('research-transition','evaluation_seed'),('research-formal-training','training_seed'),
-    ('research-formal-evaluation','evaluation_seed')])
+    ('research-formal-evaluation','evaluation_seed'),('research-r6-evaluation','evaluation_seed')])
 def test_exact_delegated_research_seed_from_validated_authority(bound,mode,seed_field):
     v,observed,d=bound
     observed['authorization']['mode']=mode

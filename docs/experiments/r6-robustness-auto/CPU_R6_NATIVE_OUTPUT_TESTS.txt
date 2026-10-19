@@ -1,0 +1,11 @@
+test_both_streams_preserved_byte_exact_with_native_nonzero_exit (tools.test_r6_native_output.NativeOutputTests.test_both_streams_preserved_byte_exact_with_native_nonzero_exit) ... ok
+test_exact_boundary_succeeds_and_existing_log_not_overwritten (tools.test_r6_native_output.NativeOutputTests.test_exact_boundary_succeeds_and_existing_log_not_overwritten) ... ok
+test_invalid_limit_rejected_before_spawn (tools.test_r6_native_output.NativeOutputTests.test_invalid_limit_rejected_before_spawn) ... ok
+test_output_flood_preserves_exact_cap_and_fails (tools.test_r6_native_output.NativeOutputTests.test_output_flood_preserves_exact_cap_and_fails) ... ok
+test_stop_before_spawn_creates_no_output (tools.test_r6_native_output.NativeOutputTests.test_stop_before_spawn_creates_no_output) ... ok
+test_timeout_preserves_output_and_failure (tools.test_r6_native_output.NativeOutputTests.test_timeout_preserves_output_and_failure) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.288s
+
+OK

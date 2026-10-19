@@ -125,3 +125,6 @@ capacity_pass继续为false。
 V4容量草案纠正快照与启动成本：当前工具每身份全额预留2GiB，实际第一份约0.922GiB且不退款；开发快照项包含这份既有预留。最终共享源码快照也按2GiB预留，最终总量92.8125GiB，保护提案93GiB、开发余35GiB。原两候选示例不再适配，V4以一个256update候选及一次“原套件+预登记受影响块”示例计算约30.953GiB；其余候选/控制需按真实剩余池准入，不能替代必要实验或删减最终覆盖。此示例不冻结方法或科学选择，操作保护仍80GiB/24000秒。
 
 最终七作业各增加完整180秒独立prelaunch采集上限，原历史外推未扣未知旧准入成本；最终样本外推25861.2秒，27000秒仍仅提案。完整32lane、全部16块的motion字段以长有限float64序列化，最大4,249,464bytes（约4.05MiB）；新增motion+result合计16MiB写前拒绝，保留全局累计配额。7项CPU检查通过，见 `CPU_R6_METADATA_QUOTA_TESTS.json`。样本是非物理序列化证据，不能证明科学有效性或原生日志跨路径上界；capacity_pass=false，原只读快照未改，新代码需新身份。
+
+
+原生控制台路径核验：rlflow的held-child原先继承supervisor.log，Kit另写结果目录kit.log；单文件2GiB限制不能证明二者合计≤3GiB。新R6专用分派选项将console合并到独占native-output.log并在256MiB处拒绝后续写入，保存前缀/SHA/原因，既有Kit单文件上限2GiB保留。名义余量768MiB仍需覆盖控制元数据、旋转/额外原生日志与其他路径，不能据此声明总native容量PASS。56项CPU检查通过，见 `CPU_R6_NATIVE_OUTPUT_TESTS.json`；旧控制release/快照不变，真实R6发行和独审尚未完成。

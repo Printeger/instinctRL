@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 from pathlib import Path
 import selectors
@@ -78,18 +79,34 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
                   coordination_root: Path, handshake_timeout_s: float = 1.0,
                   completion_timeout_s: float = 5.0, environment: Mapping[str, str] | None = None,
                   child_before_identity: Callable[[], None] | None = None,
-                  before_release: Callable[[], None] | None = None) -> int:
+                  before_release: Callable[[], None] | None = None,
+                  native_output_cap_bytes: int | None = None) -> int:
     if not argv or handshake_timeout_s <= 0 or completion_timeout_s <= 0:
         raise ValueError("argv and positive bounded timeouts are required")
     stop_paths = canonical_stop_paths(coordination_root)
     stop = _stop_present(stop_paths)
     if stop is not None: raise DispatchError(f"STOP present before spawn: {stop}")
+    native_r = native_w = -1; native_stream = None
+    native_digest = hashlib.sha256()
+    native_bytes = 0; native_eof = False; native_exit = None; native_error = None
+    if native_output_cap_bytes is not None:
+        if type(native_output_cap_bytes) is not int or not 0 < native_output_cap_bytes <= 256*1024**2:
+            raise ValueError("native output cap must be within256MiB")
+        native_path = identity_path.parent / "native-output.log"
+        if (identity_path.parent / "native-output.json").exists():
+            raise DispatchError("native output receipt already exists")
+        native_stream = native_path.open("xb", buffering=0)
+        native_r, native_w = os.pipe()
+        os.set_blocking(native_r, False)
     env = filtered_environment(environment); process_api = _PROCESS_API
     identity_r, identity_w = process_api.pipe(); release_r, release_w = process_api.pipe()
     pid = process_api.fork()
     if pid == 0:
         try:
             process_api.close(identity_r); process_api.close(release_w); process_api.setsid()
+            if native_stream is not None:
+                process_api.close(native_r); native_stream.close()
+                process_api.dup2(native_w, 1); process_api.dup2(native_w, 2); process_api.close(native_w)
             if child_before_identity is not None: child_before_identity()
             identity = {"pid": process_api.getpid(), "process_group_id": process_api.getpgid(0),
                         "session_id": process_api.getsid(0), "parent_pid": process_api.getppid()}
@@ -98,9 +115,24 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
             process_api.close(release_r); process_api.chdir(cwd); process_api.execve(argv[0], list(argv), env)
         except BaseException: process_api._exit(126)
     process_api.close(identity_w); process_api.close(release_r)
+    if native_w >= 0: os.close(native_w); native_w = -1
     pgid = pid
     selector = process_api.selector() if hasattr(process_api, "selector") else selectors.DefaultSelector()
     selector.register(identity_r, selectors.EVENT_READ)
+    def drain_native():
+        nonlocal native_bytes, native_eof
+        if native_stream is None or native_eof: return
+        try: data = os.read(native_r, 65536)
+        except BlockingIOError: return
+        if not data: native_eof = True; return
+        available = native_output_cap_bytes - native_bytes
+        accepted = data[:available]
+        view = memoryview(accepted)
+        while view:
+            written = native_stream.write(view)
+            if not written: raise DispatchError("native output short write")
+            native_digest.update(view[:written]); native_bytes += written; view = view[written:]
+        if len(data) > available: raise DispatchError("native output cap exceeded before further write")
     raw = b""; deadline = time.monotonic() + handshake_timeout_s
     try:
         while b"\n" not in raw:
@@ -125,22 +157,42 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
         process_api.write(release_w, b"1"); process_api.close(release_w); release_w = -1
         identity_record["released_after_durable_record"] = True; _atomic_json(identity_path, identity_record)
         deadline = time.monotonic() + completion_timeout_s
+        exited_at = None
         while True:
-            waited, status = process_api.waitpid(pid, os.WNOHANG)
-            if waited == pid: return os.waitstatus_to_exitcode(status)
+            drain_native()
+            if native_exit is None:
+                waited, status = process_api.waitpid(pid, os.WNOHANG)
+                if waited == pid:
+                    native_exit = os.waitstatus_to_exitcode(status); exited_at = time.monotonic()
+            if native_exit is not None:
+                if native_stream is None or native_eof: return native_exit
+                if time.monotonic() - exited_at > 5:
+                    raise DispatchError("native output pipe not closed after child exit")
             stop = _stop_present(stop_paths)
             if stop is not None: raise DispatchError(f"STOP present after release: {stop}")
             if time.monotonic() >= deadline: raise DispatchError("child completion timeout")
             time.sleep(0.01)
     except BaseException as error:
+        native_error = f"{type(error).__name__}: {error}"
         if release_w >= 0:
             try: process_api.close(release_w)
             except OSError: pass
-        _reclaim(pid, pgid, process_api=process_api)
+        if native_exit is None: _reclaim(pid, pgid, process_api=process_api)
         if isinstance(error, DispatchError):
             error.owned_pid = pid; error.owned_process_group_id = pgid
         raise
     finally:
         selector.close(); process_api.close(identity_r)
+        if native_r >= 0: os.close(native_r)
+        if native_stream is not None:
+            try: native_stream.flush(); os.fsync(native_stream.fileno())
+            finally: native_stream.close()
+            _atomic_json(identity_path.parent / "native-output.json", {
+                "schema_version":"r6-native-output/1", "path":str(native_path),
+                "cap_bytes":native_output_cap_bytes, "written_bytes":native_bytes, "sha256":native_digest.hexdigest(),
+                "owned_descendant_cleanup":"required from outer rlflow lifeguard receipt",
+                "pipe_eof":native_eof, "native_exit_code":native_exit, "error":native_error,
+                "status":"COMPLETE" if native_error is None and native_eof else "FAILED_PREFIX_PRESERVED",
+                "streams":"stdout+stderr merged at pipe", "automatic_retry":False})
 
 __all__ = ["DispatchError", "canonical_stop_paths", "dispatch_held", "filtered_environment"]

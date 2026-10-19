@@ -269,9 +269,12 @@ def worker(request):
         if spec['backend']=='real':
             from .h1 import environment as h1_environment
             environment=h1_environment(spec)
+        dispatch_options={}
+        if spec['backend']=='real' and spec.get('h1',{}).get('mode')=='research-r6-evaluation':
+            dispatch_options['native_output_cap_bytes']=256*1024**2
         code=module.dispatch_held(argv,cwd=Path(spec['cwd']),identity_path=d/'held-child.json',
                  coordination_root=store.root,completion_timeout_s=spec['resources']['wall_seconds'],
-                 environment=environment,before_release=gate)
+                 environment=environment,before_release=gate,**dispatch_options)
         status_value='SUCCEEDED' if code==0 else 'FAILED'
     except BaseException as exc:
         error=f'{type(exc).__name__}: {exc}'

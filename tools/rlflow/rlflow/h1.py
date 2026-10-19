@@ -66,7 +66,7 @@ def validate(spec,root,*,fresh=True):
     expected_seed = (config['training']['evaluation_seed'] if h['mode'] in {'evaluation', 'pilot-evaluation', 'control-diagnostic', 'enhanced-b0-diagnostic'}
                      else config['training']['seed'])
     if h["mode"].startswith("research-"):
-        evaluation_modes = {'research-evaluation', 'research-transition', 'research-formal-evaluation'}
+        evaluation_modes = {'research-r6-evaluation', 'research-evaluation', 'research-transition', 'research-formal-evaluation'}
         expected_seed = auth["parameters"]["evaluation_seed" if h["mode"] in evaluation_modes else "training_seed"]
     if spec['seed']!=expected_seed or spec['method']!=config['method']['version'] or spec['evaluation']!=config['versions']['metric'] or spec['runtime']!=config['execution']['frozen_runtime_root']:
         raise Conflict('H1 seed/method/evaluation/runtime mismatch')
