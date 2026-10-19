@@ -1,0 +1,626 @@
+{
+  "status": "CPU_ENCODING_PROBE_NOT_IMPLEMENTED_OR_ACCEPTED",
+  "capacity_pass": false,
+  "original_per_model_bytes": 14486159627,
+  "estimated_per_model_bytes": 14313947448,
+  "saved_per_model_bytes": 172212179,
+  "rows": [
+    {
+      "sequence": 0,
+      "block_id": "s0.0-d0",
+      "production_record_bytes": 2222402,
+      "estimated_record_bytes": 2222402,
+      "probe_encode_and_verify_seconds": 3.840308636426926e-06,
+      "replacements": []
+    },
+    {
+      "sequence": 1,
+      "block_id": "s0.0-d0",
+      "production_record_bytes": 2219688,
+      "estimated_record_bytes": 2219688,
+      "probe_encode_and_verify_seconds": 2.0097941160202026e-06,
+      "replacements": []
+    },
+    {
+      "sequence": 2,
+      "block_id": "s0.0-d0",
+      "production_record_bytes": 2219480,
+      "estimated_record_bytes": 2219480,
+      "probe_encode_and_verify_seconds": 5.035707727074623e-05,
+      "replacements": [
+        {
+          "field": "acquisition_time",
+          "xor_bytes": 17,
+          "delta_bytes": 14,
+          "metadata_allowance": 64,
+          "saved_bytes": 0
+        }
+      ]
+    },
+    {
+      "sequence": 3,
+      "block_id": "s0.0-d0",
+      "production_record_bytes": 2219340,
+      "estimated_record_bytes": 2219340,
+      "probe_encode_and_verify_seconds": 1.4598481357097626e-06,
+      "replacements": []
+    },
+    {
+      "sequence": 0,
+      "block_id": "s0.0-d1",
+      "production_record_bytes": 2237037,
+      "estimated_record_bytes": 2237037,
+      "probe_encode_and_verify_seconds": 1.7099082469940186e-06,
+      "replacements": []
+    },
+    {
+      "sequence": 1,
+      "block_id": "s0.0-d1",
+      "production_record_bytes": 2219484,
+      "estimated_record_bytes": 2219484,
+      "probe_encode_and_verify_seconds": 1.3099052011966705e-06,
+      "replacements": []
+    },
+    {
+      "sequence": 2,
+      "block_id": "s0.0-d1",
+      "production_record_bytes": 2219520,
+      "estimated_record_bytes": 2219520,
+      "probe_encode_and_verify_seconds": 5.4176896810531616e-05,
+      "replacements": [
+        {
+          "field": "delivery_time",
+          "xor_bytes": 17,
+          "delta_bytes": 14,
+          "metadata_allowance": 64,
+          "saved_bytes": 0
+        }
+      ]
+    },
+    {
+      "sequence": 3,
+      "block_id": "s0.0-d1",
+      "production_record_bytes": 2219396,
+      "estimated_record_bytes": 2219396,
+      "probe_encode_and_verify_seconds": 1.7900019884109497e-06,
+      "replacements": []
+    },
+    {
+      "sequence": 0,
+      "block_id": "s0.01-d0",
+      "production_record_bytes": 3673676,
+      "estimated_record_bytes": 3587532,
+      "probe_encode_and_verify_seconds": 0.030448502860963345,
+      "replacements": [
+        {
+          "field": "delivered_ranges",
+          "xor_bytes": 1451187,
+          "delta_bytes": 1364979,
+          "metadata_allowance": 64,
+          "saved_bytes": 86144
+        }
+      ]
+    },
+    {
+      "sequence": 1,
+      "block_id": "s0.01-d0",
+      "production_record_bytes": 3670400,
+      "estimated_record_bytes": 3585252,
+      "probe_encode_and_verify_seconds": 0.03044787608087063,
+      "replacements": [
+        {
+          "field": "delivered_ranges",
+          "xor_bytes": 1450759,
+          "delta_bytes": 1365547,
+          "metadata_allowance": 64,
+          "saved_bytes": 85148
+        }
+      ]
+    },
+    {
+      "sequence": 2,
+      "block_id": "s0.01-d0",
+      "production_record_bytes": 3670394,
+      "estimated_record_bytes": 3585195,
+      "probe_encode_and_verify_seconds": 0.03030827408656478,
+      "replacements": [
+        {
+          "field": "delivered_ranges",
+          "xor_bytes": 1450664,
+          "delta_bytes": 1365401,
+          "metadata_allowance": 64,
+          "saved_bytes": 85199
+        },
+        {
+          "field": "acquisition_time",
+          "xor_bytes": 17,
+          "delta_bytes": 14,
+          "metadata_allowance": 64,
+          "saved_bytes": 0
+        }
+      ]
+    },
+    {
+      "sequence": 3,
+      "block_id": "s0.01-d0",
+      "production_record_bytes": 2219607,
+      "estimated_record_bytes": 2219607,
+      "probe_encode_and_verify_seconds": 1.9399449229240417e-06,
+      "replacements": []
+    },
+    {
+      "sequence": 0,
+      "block_id": "s0.01-d1",
+      "production_record_bytes": 2236956,
+      "estimated_record_bytes": 2236956,
+      "probe_encode_and_verify_seconds": 1.4100223779678345e-06,
+      "replacements": []
+    },
+    {
+      "sequence": 1,
+      "block_id": "s0.01-d1",
+      "production_record_bytes": 3669390,
+      "estimated_record_bytes": 3584075,
+      "probe_encode_and_verify_seconds": 0.03094430174678564,
+      "replacements": [
+        {
+          "field": "delivered_ranges",
+          "xor_bytes": 1450034,
+          "delta_bytes": 1364655,
+          "metadata_allowance": 64,
+          "saved_bytes": 85315
+        }
+      ]
+    },
+    {
+      "sequence": 2,
+      "block_id": "s0.01-d1",
+      "production_record_bytes": 3669897,
+      "estimated_record_bytes": 3585047,
+      "probe_encode_and_verify_seconds": 0.03028168808668852,
+      "replacements": [
+        {
+          "field": "delivered_ranges",
+          "xor_bytes": 1450457,
+          "delta_bytes": 1365543,
+          "metadata_allowance": 64,
+          "saved_bytes": 84850
+        },
+        {
+          "field": "delivery_time",
+          "xor_bytes": 17,
+          "delta_bytes": 14,
+          "metadata_allowance": 64,
+          "saved_bytes": 0
+        }
+      ]
+    },
+    {
+      "sequence": 3,
+      "block_id": "s0.01-d1",
+      "production_record_bytes": 2219230,
+      "estimated_record_bytes": 2219230,
+      "probe_encode_and_verify_seconds": 1.550186425447464e-06,
+      "replacements": []
+    },
+    {
+      "sequence": 0,
+      "block_id": "s0.03-d0",
+      "production_record_bytes": 3819616,
+      "estimated_record_bytes": 3747673,
+      "probe_encode_and_verify_seconds": 0.03608679864555597,
+      "replacements": [
+        {
+          "field": "delivered_ranges",
+          "xor_bytes": 1597151,
+          "delta_bytes": 1525144,
+          "metadata_allowance": 64,
+          "saved_bytes": 71943
+        }
+      ]
+    },
+    {
+      "sequence": 1,
+      "block_id": "s0.03-d0",
+      "production_record_bytes": 3816235,
+      "estimated_record_bytes": 3744640,
+      "probe_encode_and_verify_seconds": 0.03663255088031292,
+      "replacements": [
+        {
+          "field": "delivered_ranges",
+          "xor_bytes": 1596671,
+          "delta_bytes": 1525012,
+          "metadata_allowance": 64,
+          "saved_bytes": 71595
+        }
+      ]
+    },
+    {
+      "sequence": 2,
+      "block_id": "s0.03-d0",
+      "production_record_bytes": 3816137,
+      "estimated_record_bytes": 3744220,
+      "probe_encode_and_verify_seconds": 0.035853924229741096,
+      "replacements": [
+        {
+          "field": "delivered_ranges",
+          "xor_bytes": 1596590,
+          "delta_bytes": 1524609,
+          "metadata_allowance": 64,
+          "saved_bytes": 71917
+        },
+        {
+          "field": "acquisition_time",
+          "xor_bytes": 17,
+          "delta_bytes": 14,
+          "metadata_allowance": 64,
+          "saved_bytes": 0
+        }
+      ]
+    },
+    {
+      "sequence": 3,
+      "block_id": "s0.03-d0",
+      "production_record_bytes": 2219387,
+      "estimated_record_bytes": 2219387,
+      "probe_encode_and_verify_seconds": 1.5301629900932312e-06,
+      "replacements": []
+    },
+    {
+      "sequence": 0,
+      "block_id": "s0.03-d1",
+      "production_record_bytes": 2237045,
+      "estimated_record_bytes": 2237045,
+      "probe_encode_and_verify_seconds": 1.4300458133220673e-06,
+      "replacements": []
+    },
+    {
+      "sequence": 1,
+      "block_id": "s0.03-d1",
+      "production_record_bytes": 3816002,
+      "estimated_record_bytes": 3744153,
+      "probe_encode_and_verify_seconds": 0.03539713704958558,
+      "replacements": [
+        {
+          "field": "delivered_ranges",
+          "xor_bytes": 1596347,
+          "delta_bytes": 1524434,
+          "metadata_allowance": 64,
+          "saved_bytes": 71849
+        }
+      ]
+    },
+    {
+      "sequence": 2,
+      "block_id": "s0.03-d1",
+      "production_record_bytes": 3815678,
+      "estimated_record_bytes": 3744251,
+      "probe_encode_and_verify_seconds": 0.03568217623978853,
+      "replacements": [
+        {
+          "field": "delivered_ranges",
+          "xor_bytes": 1596236,
+          "delta_bytes": 1524745,
+          "metadata_allowance": 64,
+          "saved_bytes": 71427
+        },
+        {
+          "field": "delivery_time",
+          "xor_bytes": 17,
+          "delta_bytes": 14,
+          "metadata_allowance": 64,
+          "saved_bytes": 0
+        }
+      ]
+    },
+    {
+      "sequence": 3,
+      "block_id": "s0.03-d1",
+      "production_record_bytes": 2219643,
+      "estimated_record_bytes": 2219643,
+      "probe_encode_and_verify_seconds": 1.3299286365509033e-06,
+      "replacements": []
+    }
+  ],
+  "blocks": [
+    {
+      "block_id": "S-clean-low",
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "S-clean-high",
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "S-noise",
+      "estimated_measurement_bytes": 1186720692
+    },
+    {
+      "block_id": "S-delay-drop",
+      "estimated_measurement_bytes": 734678389
+    },
+    {
+      "block_id": "X-clean",
+      "estimated_measurement_bytes": 446160002
+    },
+    {
+      "block_id": "X-noise",
+      "estimated_measurement_bytes": 720637932
+    },
+    {
+      "block_id": "P-clean",
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "P-combined",
+      "estimated_measurement_bytes": 1185302466
+    },
+    {
+      "block_id": "W-near",
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "W-middle",
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "W-far",
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "W-combined",
+      "estimated_measurement_bytes": 1185302466
+    },
+    {
+      "block_id": "stress-S-noise",
+      "estimated_measurement_bytes": 1239478873
+    },
+    {
+      "block_id": "stress-S-combined",
+      "estimated_measurement_bytes": 1234790659
+    },
+    {
+      "block_id": "stress-P-high",
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "stress-W-high",
+      "estimated_measurement_bytes": 1237839875
+    }
+  ],
+  "all_bit_pattern_roundtrip_count": 10007,
+  "production_record_roundtrip_count": 24,
+  "original_fixture": {
+    "status": "CPU_FIXTURE_NOT_CAPACITY_ACCEPTANCE",
+    "encoding_mode": "previous-frame-v2",
+    "seed": 2026102001,
+    "shape": [
+      32,
+      21240
+    ],
+    "dtype": "float32",
+    "cases": [
+      {
+        "sigma_m": 0.0,
+        "delay_cycles": 0,
+        "frame_bytes": [
+          2222402,
+          2219688,
+          2219480,
+          2219340
+        ],
+        "encoding_seconds": [
+          0.04964949702844024,
+          0.09239549096673727,
+          0.0922580361366272,
+          0.09222144773229957
+        ],
+        "bitwise_roundtrip": true
+      },
+      {
+        "sigma_m": 0.0,
+        "delay_cycles": 1,
+        "frame_bytes": [
+          2237037,
+          2219484,
+          2219520,
+          2219396
+        ],
+        "encoding_seconds": [
+          0.09503339696675539,
+          0.09261285793036222,
+          0.09091092413291335,
+          0.0908411662094295
+        ],
+        "bitwise_roundtrip": true
+      },
+      {
+        "sigma_m": 0.01,
+        "delay_cycles": 0,
+        "frame_bytes": [
+          3673676,
+          3670400,
+          3670394,
+          2219607
+        ],
+        "encoding_seconds": [
+          0.14956171391531825,
+          0.27643245784565806,
+          0.27624434186145663,
+          0.09159389790147543
+        ],
+        "bitwise_roundtrip": true
+      },
+      {
+        "sigma_m": 0.01,
+        "delay_cycles": 1,
+        "frame_bytes": [
+          2236956,
+          3669390,
+          3669897,
+          2219230
+        ],
+        "encoding_seconds": [
+          0.09577065985649824,
+          0.2790749710984528,
+          0.27811687532812357,
+          0.09196754917502403
+        ],
+        "bitwise_roundtrip": true
+      },
+      {
+        "sigma_m": 0.03,
+        "delay_cycles": 0,
+        "frame_bytes": [
+          3819616,
+          3816235,
+          3816137,
+          2219387
+        ],
+        "encoding_seconds": [
+          0.16151260677725077,
+          0.28999338392168283,
+          0.28633343474939466,
+          0.09146633325144649
+        ],
+        "bitwise_roundtrip": true
+      },
+      {
+        "sigma_m": 0.03,
+        "delay_cycles": 1,
+        "frame_bytes": [
+          2237045,
+          3816002,
+          3815678,
+          2219643
+        ],
+        "encoding_seconds": [
+          0.09578734682872891,
+          0.28888633707538247,
+          0.28743764385581017,
+          0.09120102459564805
+        ],
+        "bitwise_roundtrip": true
+      }
+    ],
+    "blocks": [
+      {
+        "block_id": "S-clean-low",
+        "frames": 331,
+        "estimated_measurement_bytes": 734719442
+      },
+      {
+        "block_id": "S-clean-high",
+        "frames": 331,
+        "estimated_measurement_bytes": 734719442
+      },
+      {
+        "block_id": "S-noise",
+        "frames": 331,
+        "estimated_measurement_bytes": 1214905676
+      },
+      {
+        "block_id": "S-delay-drop",
+        "frames": 331,
+        "estimated_measurement_bytes": 734678389
+      },
+      {
+        "block_id": "X-clean",
+        "frames": 201,
+        "estimated_measurement_bytes": 446160002
+      },
+      {
+        "block_id": "X-noise",
+        "frames": 201,
+        "estimated_measurement_bytes": 737753676
+      },
+      {
+        "block_id": "P-clean",
+        "frames": 331,
+        "estimated_measurement_bytes": 734719442
+      },
+      {
+        "block_id": "P-combined",
+        "frames": 331,
+        "estimated_measurement_bytes": 1213302966
+      },
+      {
+        "block_id": "W-near",
+        "frames": 331,
+        "estimated_measurement_bytes": 734719442
+      },
+      {
+        "block_id": "W-middle",
+        "frames": 331,
+        "estimated_measurement_bytes": 734719442
+      },
+      {
+        "block_id": "W-far",
+        "frames": 331,
+        "estimated_measurement_bytes": 734719442
+      },
+      {
+        "block_id": "W-combined",
+        "frames": 331,
+        "estimated_measurement_bytes": 1213302966
+      },
+      {
+        "block_id": "stress-S-noise",
+        "frames": 331,
+        "estimated_measurement_bytes": 1263177166
+      },
+      {
+        "block_id": "stress-S-combined",
+        "frames": 331,
+        "estimated_measurement_bytes": 1258324987
+      },
+      {
+        "block_id": "stress-P-high",
+        "frames": 331,
+        "estimated_measurement_bytes": 734719442
+      },
+      {
+        "block_id": "stress-W-high",
+        "frames": 331,
+        "estimated_measurement_bytes": 1261517705
+      }
+    ],
+    "per_model_measurement_bytes": 14486159627,
+    "final_four_measurement_bytes": 57944638508,
+    "aggregation": "Weight normal and dropped delivery by registered block counts; first preliminary v2 output used the largest sampled frame for every step, including blocks with no drop.",
+    "prior_estimate_limitation": "Prior same-frame fixture omitted delayed frames whose current clean and delivered ranges differ across acquisition times.",
+    "estimate_limitations": "Independent uniform clean frame each acquisition; includes initial invalid delay and one dropped delivery. This is not physical data or a worst-case bound. Does not include training, native logs, motion/force/reset audit, snapshots or videos.",
+    "protocol": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0"
+    },
+    "code": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_capacity_v2.py",
+        "sha256": "7aa35cf9ae1ec94b3d1e76b40786d7a9e7b79979e97603f70f54bd1f5a8eaa0f"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/range_archive.py",
+        "sha256": "e117de39cfa4ee0a057bff50893509fcf5dc31cbfa676331e158cd5e4c4b93ef"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness.py",
+        "sha256": "05fd977e751d4af3f78e13a1dee983c673fe4347988ee9a17449e497c20a488e"
+      }
+    ],
+    "gpu_queries": 0,
+    "simulator_initializations": 0
+  },
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_integer_delta.py",
+    "sha256": "f535948f0aa72c81af104cf401f5e75fe918f55b4df637867038919ef7b0023c"
+  },
+  "limitations": [
+    "Synthetic measurements only; not a worst-case storage bound",
+    "Replacement header schema/decoder not implemented; 64 bytes per replacement is a planning allowance",
+    "Probe timing includes compression plus reconstruction checks and existing encoding; not production throughput",
+    "No production source, protocol, quotas or ledger changed"
+  ],
+  "gpu_queries": 0,
+  "simulator_initializations": 0
+}

@@ -1,0 +1,30 @@
+{
+  "status": "PROBE_NOT_ADOPTED_FULL_GOAL_CAPACITY_STILL_INSUFFICIENT",
+  "capacity_pass": false,
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/INTEGER_DELTA_CPU_V2.json",
+      "sha256": "ecdfebb6431ae9920aadde6c671e306a854895ce8b0e1932bbf4efb94cf65bb9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_COMPOSED_DRAFT_V5.json",
+      "sha256": "56bb916565aea2c5d494b715172647d9dba27aa71d8719e800256838b1c141a8"
+    }
+  ],
+  "range_quota_savings_per_full_evaluation_bytes": 218103808,
+  "hypothetical_final_storage_protection_bytes": 108447924224,
+  "hypothetical_development_limit_bytes": 28991029248,
+  "hypothetical_baseline_only_bytes": 28991029248,
+  "hypothetical_baseline_only_fits": true,
+  "optimistic_full_development_deficit_bytes": 9177137152,
+  "production_changed": false,
+  "ledger_changed": false,
+  "coverage_reduced": false,
+  "limitations": [
+    "Codec/header integration and independent acceptance absent",
+    "Sample estimates are not bounds; native aggregate output remains unresolved",
+    "Baseline-only fit is not permission to start or evidence that the complete goal fits",
+    "No reduction of original/final coverage, native allowance, old snapshot reservations or repair margins"
+  ],
+  "initial_failure": "INTEGER_DELTA_CPU.stderr preserves initial numeric case-label mismatch; corrected to float normalization before V2."
+}

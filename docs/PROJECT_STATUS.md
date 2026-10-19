@@ -2,6 +2,12 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+整数位差值CPU探针完成24帧原解码器还原及10007位型可逆检查；每次完整评价估计节省164MiB，
+按原15%余量与16MiB取整可减少208MiB预留。假设接入后仅基线准备恰好装入开发池，
+完整开发示例即使乐观计入后续评价收益仍至少缺8.55GiB，不能作为完整Goal容量通过。
+见 `docs/experiments/r6-robustness-auto/INTEGER_DELTA_CAPACITY_ASSESSMENT_CPU.json`；
+生产格式未修改，native边界未解决；初次汇总标签错误原件保留，V2修复后完成。
+
 CPU容量对照排除单纯提高zlib等级的方案：同一24帧样本，等级3/9均经原解码器逐字节还原；
 完整评价range预留仅减少336MiB，编码外推由809秒增至14321秒，最终阶段时间外推约79909秒，
 超过43200秒总上限。见 `docs/experiments/r6-robustness-auto/COMPRESSION_LEVEL_COMPARISON_CPU.json`。
