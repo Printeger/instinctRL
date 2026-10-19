@@ -21,15 +21,15 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 3,
-    "simulator_initialization_reservations": 3,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 1127.0177343478426,
-    "wall_seconds_including_cleanup": 1135.718607312534,
-    "output_peak_and_reservations_bytes": 1999299775
+    "allocated_gpu_seconds": 1520.7087300447747,
+    "wall_seconds_including_cleanup": 1532.4889966598712,
+    "output_peak_and_reservations_bytes": 2057850324
   },
   "reservations": {
     "live_entries": [
@@ -143,6 +143,43 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 1969675045,
         "inventory": "experiments/R5-W-L1-NEARWALL-RECOVERY1/live/R1-research-formal-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2",
+        "job_id": "J-3db27ce7c40e9542",
+        "experiment_id": "R5-W-L1-EVAL-01",
+        "group": "R1",
+        "mode": "research-formal-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 65920,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 65920,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "raw_status_missing": false,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 58550549,
+        "inventory": "experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -168,6 +205,10 @@
     {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-L1-002.json",
       "sha256": "8ab9b2b84965e843e85f1d68784a2282b7195859088ffe6a058a60e70cdca10e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V1-001.json",
+      "sha256": "ec75c776b3ef33e4299bb973c1e577b1632c6575bfcb7998a956624f94cdacfa"
     }
   ],
   "historical_accounting": "New incremental envelope; every old ledger and reservation remains unchanged. No refunds inferred from raw data.",
@@ -179,7 +220,7 @@
   ],
   "observed": {
     "training_transitions": 131072,
-    "nontraining_transitions": 32960,
+    "nontraining_transitions": 98880,
     "optimizer_updates": 256,
     "training_checkpoint_writes": 2,
     "actor_optimizer_steps": 2048,

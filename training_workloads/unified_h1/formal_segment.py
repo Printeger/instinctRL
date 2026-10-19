@@ -18,6 +18,9 @@ FIELDS = {'experiment_id', 'group', 'training_seed', 'evaluation_seed', 'start_u
 
 
 def validate_parameters(mode, value):
+    if isinstance(value, dict) and 'independent_validation_protocol' in value:
+        from .w_independent import validate_parameters as independent_impl
+        return independent_impl(mode, value)
     if isinstance(value, dict) and 'w_closure_contract' in value:
         from .w_closure import validate_parameters as w_impl
         return w_impl(mode, value)
@@ -95,6 +98,9 @@ def validate_parameters(mode, value):
 
 
 def required_budget(mode, p):
+    if 'independent_validation_protocol' in p:
+        from .w_independent import required_budget as independent_impl
+        return independent_impl(mode, p)
     if 'w_closure_contract' in p:
         from .w_closure import required_budget as w_impl
         return w_impl(mode, p)
@@ -110,6 +116,9 @@ def required_budget(mode, p):
 
 
 def method_hashes(config, p):
+    if 'independent_validation_protocol' in p:
+        from .w_independent import method_hashes as independent_impl
+        return independent_impl(config, p)
     if 'w_closure_contract' in p:
         from .w_closure import method_hashes as w_impl
         return w_impl(config, p)
@@ -189,6 +198,9 @@ def train_segment(backend):
 
 
 def evaluate_segment(backend):
+    if 'independent_validation_protocol' in backend.research:
+        from .w_independent import evaluate_segment as independent_impl
+        return independent_impl(backend)
     if 'w_closure_contract' in backend.research:
         from .w_closure import evaluate_segment as w_impl
         return w_impl(backend)

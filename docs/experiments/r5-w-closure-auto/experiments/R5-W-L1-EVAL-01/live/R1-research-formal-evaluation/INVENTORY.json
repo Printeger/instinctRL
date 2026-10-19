@@ -1,0 +1,476 @@
+{
+  "job_id": "J-3db27ce7c40e9542",
+  "roots": {
+    "job": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542",
+    "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2"
+  },
+  "files": [
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/descendant-cleanup.json",
+      "category": "job",
+      "relative": "descendant-cleanup.json",
+      "bytes": 675,
+      "sha256": "111b7a099eefe9dd981b06a1514d5f5ac287bb71235fdaa5eff7823b8625b09d",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/descendant-cleanup.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/descendant-ledger.json",
+      "category": "job",
+      "relative": "descendant-ledger.json",
+      "bytes": 164,
+      "sha256": "2af9562e36eadbb4e10eb4526941ae7dc7f01ed36221da9d358d9352efda1d60",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/descendant-ledger.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/h1-authority.json",
+      "category": "job",
+      "relative": "h1-authority.json",
+      "bytes": 16381,
+      "sha256": "c2577a2e6ae205ce9c71db85ac97ccc1c8fef4d66939989bebc0bd088f4854b3",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/h1-authority.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/h1-collection.json",
+      "category": "job",
+      "relative": "h1-collection.json",
+      "bytes": 4719,
+      "sha256": "49bad8968865fc5bceaa05a5e415cd35b510193ac30154341585076a1dd32009",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/h1-collection.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/h1-collections/49bad8968865fc5bceaa05a5e415cd35b510193ac30154341585076a1dd32009.json",
+      "category": "job",
+      "relative": "h1-collections/49bad8968865fc5bceaa05a5e415cd35b510193ac30154341585076a1dd32009.json",
+      "bytes": 4719,
+      "sha256": "49bad8968865fc5bceaa05a5e415cd35b510193ac30154341585076a1dd32009",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/h1-collections/49bad8968865fc5bceaa05a5e415cd35b510193ac30154341585076a1dd32009.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/h1-evidence/6d84d414ca381875feb20c322afa710d76c17c2bb97feca7e9203f11ddbfb733/process_start.json",
+      "category": "job",
+      "relative": "h1-evidence/6d84d414ca381875feb20c322afa710d76c17c2bb97feca7e9203f11ddbfb733/process_start.json",
+      "bytes": 1359,
+      "sha256": "6d84d414ca381875feb20c322afa710d76c17c2bb97feca7e9203f11ddbfb733",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/h1-evidence/6d84d414ca381875feb20c322afa710d76c17c2bb97feca7e9203f11ddbfb733/process_start.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/h1-evidence/8a861bf46343abbd530850174a47b0afd25e49cafe35d54b03de213df8c2f957/status.json",
+      "category": "job",
+      "relative": "h1-evidence/8a861bf46343abbd530850174a47b0afd25e49cafe35d54b03de213df8c2f957/status.json",
+      "bytes": 946,
+      "sha256": "8a861bf46343abbd530850174a47b0afd25e49cafe35d54b03de213df8c2f957",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/h1-evidence/8a861bf46343abbd530850174a47b0afd25e49cafe35d54b03de213df8c2f957/status.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/h1-evidence/b1d7d81f5ec2272fd1b076f8202165a39c63552a4db2d992939656161002c354/process_identity.json",
+      "category": "job",
+      "relative": "h1-evidence/b1d7d81f5ec2272fd1b076f8202165a39c63552a4db2d992939656161002c354/process_identity.json",
+      "bytes": 292,
+      "sha256": "b1d7d81f5ec2272fd1b076f8202165a39c63552a4db2d992939656161002c354",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/h1-evidence/b1d7d81f5ec2272fd1b076f8202165a39c63552a4db2d992939656161002c354/process_identity.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/held-child.json",
+      "category": "job",
+      "relative": "held-child.json",
+      "bytes": 919,
+      "sha256": "09055b9f9ab0ee875fc57b3960e91fe713669cb994380faacef973e1a94ec695",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/held-child.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/lifeguard-ack.json",
+      "category": "job",
+      "relative": "lifeguard-ack.json",
+      "bytes": 830,
+      "sha256": "364566ddfb44db0670d1e50d26baadd14385b45109608e49d3e30e50202edf34",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/lifeguard-ack.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/lifeguard-done",
+      "category": "job",
+      "relative": "lifeguard-done",
+      "bytes": 4,
+      "sha256": "a4c3ed04a95a3da14a9d235c83d868bed7c0f45cf7f3faa751ee8f50598d2211",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/lifeguard-done"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/lifeguard-ready.json",
+      "category": "job",
+      "relative": "lifeguard-ready.json",
+      "bytes": 200,
+      "sha256": "253f05e9ce243d1d821a132fa691b76ad1a838504abaa1ba05d4def655f24e6b",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/lifeguard-ready.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/lifeguard-request.json",
+      "category": "job",
+      "relative": "lifeguard-request.json",
+      "bytes": 3638,
+      "sha256": "e034b83ab25ba2937ec55ee3506fa9f5f8f960a71f5881a1da84030135ac4211",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/lifeguard-request.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/lifeguard.log",
+      "category": "job",
+      "relative": "lifeguard.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/lifeguard.log"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/owner-subreaper.json",
+      "category": "job",
+      "relative": "owner-subreaper.json",
+      "bytes": 128,
+      "sha256": "8b642c78489289a39d242b660e4e251135ac7b135a569253361f417bf5171950",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/owner-subreaper.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/process-identity.json",
+      "category": "job",
+      "relative": "process-identity.json",
+      "bytes": 103,
+      "sha256": "6530f5a59b8c365ca9a7baf4683ec667d9c353c4e5739ebf196e963703ee02f1",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/process-identity.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/receipt.json",
+      "category": "job",
+      "relative": "receipt.json",
+      "bytes": 280,
+      "sha256": "6db80e8b19102adfd967302fa005686c3e0cd3c3b8eb3c07be8f1489ad95bc97",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/receipt.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/release-intent.json",
+      "category": "job",
+      "relative": "release-intent.json",
+      "bytes": 152,
+      "sha256": "a0684dc444356e9be7fb8711ca59ea814c4bb47d5cea8bb3e020a6941e380b55",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/release-intent.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/request.json",
+      "category": "job",
+      "relative": "request.json",
+      "bytes": 3332,
+      "sha256": "8f1c2cd6c26211348d2078e7620077a087136d1eb80fa718e5e15b767ce081e5",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/request.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/supervisor-release.json",
+      "category": "job",
+      "relative": "supervisor-release.json",
+      "bytes": 231,
+      "sha256": "412562a5aab2b96b1ad0ea1d6cae48cae834b2be06e540303aa4a71ca46138d6",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/supervisor-release.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/jobs/J-3db27ce7c40e9542/supervisor.log",
+      "category": "job",
+      "relative": "supervisor.log",
+      "bytes": 20560,
+      "sha256": "be53758b8c5f833b2086e9aa33d6a799cfc42f3869eb6c087ed416e19a118efc",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/job/supervisor.log"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/commands/AUTHORIZATION.json",
+      "category": "attempt",
+      "relative": "commands/AUTHORIZATION.json",
+      "bytes": 5267,
+      "sha256": "7c209baa0e6f69d3292bf778f3c281a9e8e9bd4b8ad3079a5dfeed92ccd9cae6",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/commands/AUTHORIZATION.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/prelaunch/asset_root_runtime.json",
+      "category": "attempt",
+      "relative": "results/prelaunch/asset_root_runtime.json",
+      "bytes": 387,
+      "sha256": "1c4ec2a7e242b94b5a96d91a7e88eef50a6bce22ffc177be2dd8058db7e18f19",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/prelaunch/asset_root_runtime.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/prelaunch/kit.log",
+      "category": "attempt",
+      "relative": "results/prelaunch/kit.log",
+      "bytes": 399917,
+      "sha256": "480b2b1975f5cebda7db378a34f9877b809a2003da963db8df67caa534ee1c04",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/prelaunch/kit.log"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/prelaunch/prelaunch_resource_gate.json",
+      "category": "attempt",
+      "relative": "results/prelaunch/prelaunch_resource_gate.json",
+      "bytes": 1428,
+      "sha256": "027cc29a939b584c49f07dd211dbd958a2cba8e794da1da8c8362275756d4783",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/prelaunch/prelaunch_resource_gate.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/prelaunch/runtime_resources.json",
+      "category": "attempt",
+      "relative": "results/prelaunch/runtime_resources.json",
+      "bytes": 388023,
+      "sha256": "2f8fc637e1645bdda3995596f830df1a56a2d21cb189f4d8ce3c8340f8b33a81",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/prelaunch/runtime_resources.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/cleanup_timeout.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/cleanup_timeout.json",
+      "bytes": 200,
+      "sha256": "2aeedc8f8d969b7a0fcc00363b2beeb8675290b43324fca3d6d926f6e77bf5f4",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/cleanup_timeout.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_progress.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/evaluation_progress.json",
+      "bytes": 114,
+      "sha256": "e0f4ac3f5b88cfade19151907d18a45aae6766f12255d510af3c67fa6e37e394",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/evaluation_progress.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/S.jsonl",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/evaluation_raw/w_R1_u640/S.jsonl",
+      "bytes": 8901082,
+      "sha256": "776e312d76a5846991fb32e6ce0e4504ffd8029c19ee108694a82358233e3531",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/T.jsonl",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/evaluation_raw/w_R1_u640/T.jsonl",
+      "bytes": 2619044,
+      "sha256": "c672dd90954eb91ecc05c81c2122f9b5c90352cf30c1e135bd50bc129f01bd60",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/W.jsonl",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/evaluation_raw/w_R1_u640/W.jsonl",
+      "bytes": 4662764,
+      "sha256": "3e4421880a52bbfec6b0a26b8466329697c664ce4dd8c1b3cf5310f265fffce9",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/X.jsonl",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/evaluation_raw/w_R1_u640/X.jsonl",
+      "bytes": 5295716,
+      "sha256": "f61f436f4fbfbf0cae0a927b4f73a406e36c21f18548333aff9faecb94fc19ff",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u640/Z.jsonl",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/evaluation_raw/w_R1_u640/Z.jsonl",
+      "bytes": 5460494,
+      "sha256": "dc69184414c00ed0c884f91822b78de66e77d17042de86f8820a634e6fc51165",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u768/S.jsonl",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/evaluation_raw/w_R1_u768/S.jsonl",
+      "bytes": 8945937,
+      "sha256": "d7cb8f9e3b8e81e742688daa27cf59485460e53777a78d566b4747304ecbab33",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u768/T.jsonl",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/evaluation_raw/w_R1_u768/T.jsonl",
+      "bytes": 2621970,
+      "sha256": "46d724819c196bc9116dc62573bb6aa6652b848ce5fbb688709d27c99b01573c",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u768/W.jsonl",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/evaluation_raw/w_R1_u768/W.jsonl",
+      "bytes": 4677621,
+      "sha256": "638590334350e8bdd8e1270510755d6bfdbdbabef1c62277dad89db995bc9f84",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u768/X.jsonl",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/evaluation_raw/w_R1_u768/X.jsonl",
+      "bytes": 5305513,
+      "sha256": "7a90cb82b8a46321dca7df82a3ea9551f980bdf4d6214100aaac8643d4eaf638",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/evaluation_raw/w_R1_u768/Z.jsonl",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/evaluation_raw/w_R1_u768/Z.jsonl",
+      "bytes": 5491722,
+      "sha256": "9efe0f7aff4d341dbf497a5da53b547e402caca9c7f3de082124ebfb3f139d91",
+      "archived": null
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/initialization_accounting.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/initialization_accounting.json",
+      "bytes": 269,
+      "sha256": "61d33061293905bf9cf69e78083b6310aaafb6b060780015d3bef60151f6ef21",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/initialization_accounting.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/output_quota_binding.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/output_quota_binding.json",
+      "bytes": 248,
+      "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/output_quota_binding.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/process_identity.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/process_identity.json",
+      "bytes": 293,
+      "sha256": "09b9b7de92cc715e11ae7fbcd8db6a22c903d495b044c84bc26cd8ff9aa8a0a9",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/process_identity.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/process_start.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/process_start.json",
+      "bytes": 1360,
+      "sha256": "053b1a11d02c1242d44492c4f341b19f78f8c6af1a9b7e694c9837d145de8177",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/process_start.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/status.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/status.json",
+      "bytes": 947,
+      "sha256": "2252bc65b019cfe9a8aa97d124d52e6caceb87f763e638c35762f7dce1efa39e",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/status.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u640.json",
+      "bytes": 354879,
+      "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u640.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_goal_motion.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u640_goal_motion.json",
+      "bytes": 244,
+      "sha256": "1de3d712c1b504c382476671e6a443ba3d6048372f37903326ee6bca1c13e762",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u640_goal_motion.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_policy_S.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u640_policy_S.json",
+      "bytes": 14707,
+      "sha256": "4fc0bd30b52c6b74c0b129ba3c134e1dc9651e1ec902fac7dbc1bce523cd3658",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u640_policy_S.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_policy_T.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u640_policy_T.json",
+      "bytes": 10120,
+      "sha256": "87a8c3453be33ccf01fdd1c43dd470ef33f58d2b7f67653314580cfe1a7f5934",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u640_policy_T.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_policy_W.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u640_policy_W.json",
+      "bytes": 305499,
+      "sha256": "acd826b2fa0fbf52f4bd83f256ce807c73f5c84630ed63908a7dd469c46e40fe",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u640_policy_W.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_policy_X.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u640_policy_X.json",
+      "bytes": 13812,
+      "sha256": "139d5a133599dad7f514742f5adb363054908159f4c3885c6e13aca815ad9460",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u640_policy_X.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u640_policy_Z.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u640_policy_Z.json",
+      "bytes": 8625,
+      "sha256": "59af8ecb44ae0ecb9d972807803a971efac744c4d34a82ce9eb9389ddcc5f20c",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u640_policy_Z.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u768.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u768.json",
+      "bytes": 358175,
+      "sha256": "58fa534a6df03b244a1d586a3040234117e924da54c3e417b1c71fb067de73f1",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u768.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u768_goal_motion.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u768_goal_motion.json",
+      "bytes": 244,
+      "sha256": "1de3d712c1b504c382476671e6a443ba3d6048372f37903326ee6bca1c13e762",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u768_goal_motion.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u768_policy_S.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u768_policy_S.json",
+      "bytes": 14714,
+      "sha256": "7ca6ae94b296d31e864481c5624322fb30a6b637adb6019c2fdb7b6b18135c69",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u768_policy_S.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u768_policy_T.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u768_policy_T.json",
+      "bytes": 10138,
+      "sha256": "897fabf4fabe986b3e04d4b672e0f3893af7310205f3a8a98fb0651b64dcd42f",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u768_policy_T.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u768_policy_W.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u768_policy_W.json",
+      "bytes": 308894,
+      "sha256": "1419a1cf6092c6d87b8269c45ae0473eced712d73625c2a2bad9bd98bd5ee218",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u768_policy_W.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u768_policy_X.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u768_policy_X.json",
+      "bytes": 13692,
+      "sha256": "24e32402ce617c0019f8203888cad716c6a8f21b552d5925a840adbd03b6f82f",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u768_policy_X.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_R1_u768_policy_Z.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_R1_u768_policy_Z.json",
+      "bytes": 8616,
+      "sha256": "d6c53763f98138b35a53ca11a43516ab1ad135a34613cfec07d41ece927fe38a",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_R1_u768_policy_Z.json"
+    },
+    {
+      "original": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/results/research-formal-evaluation/w_profile_binding.json",
+      "category": "attempt",
+      "relative": "results/research-formal-evaluation/w_profile_binding.json",
+      "bytes": 3899,
+      "sha256": "fd77e94ecc4aa2da08ed48a5f1478518de9d5bb0f7d04dd4d02fca503e8f0d1f",
+      "archived": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/attempt/results/research-formal-evaluation/w_profile_binding.json"
+    }
+  ],
+  "total_original_bytes": 56266206,
+  "total_archive_copy_bytes": 2284343,
+  "coverage": "Every original job and entire attempt file; no history rewrite or replacement of big originals."
+}

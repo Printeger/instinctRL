@@ -1,0 +1,44 @@
+{
+  "schema_version": "independent-review-relay/1",
+  "reviewer": "/root/eval_review",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "W-V1-001 cumulative stage registration and faithful actual-evaluation relay; not new packet or Goal completion",
+  "identities": {
+    "master": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+      "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+    },
+    "commander": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_commander.py",
+      "sha256": "cafb006b531087770e2035f75134f0ee51b60437379934bdfbd3fa4685de18e0"
+    },
+    "stage": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V1-001.json",
+      "sha256": "ec75c776b3ef33e4299bb973c1e577b1632c6575bfcb7998a956624f94cdacfa"
+    },
+    "ownership_helper": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_commander.py",
+      "sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4"
+    },
+    "snapshot_tool": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/prepare_r5_w_snapshot.py",
+      "sha256": "bb8336c6c5f3a8f206b26153e45fcfa91dfb5808a45408a12806531e7e7d4ac3"
+    },
+    "actual_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-evaluation-actual-independent.json",
+      "sha256": "57c45dd5b8409ef09e86f8fa5e3c2d71ddfbfe9e5420731ee764a0f4111e9b2b"
+    }
+  },
+  "checks": [
+    "Every cumulative cap within unchanged master, integer and >= prior W-L1-002.",
+    "Old failures and all reserves retained; adds one32960 nontraining/full five tasks/start-init and8GiB output plus2GiB snapshot; no training/updates/writes.",
+    "Prospective train131072/nontraining131840/5start-init/256updates/Adam2048each/2writes/GPU3330.7087300447747/wall3342.488996659871/output47244640256 fits stage/master.",
+    "Store425 not paused; STOP absent; idle and previous_quiescence PASS.",
+    "Actual-evaluation relay faithful; accepted checkpoint/source/method fields identical to prior independent RECOVERY1 acceptance; original checkpoint bytes rehashed."
+  ],
+  "release_boundary": "Registration only; separate exact prelive, issue, commit/tag/push and original controller release required.",
+  "reviewer_writes": 0,
+  "reviewer_gpu_queries": 0,
+  "controller_state_modified": false
+}

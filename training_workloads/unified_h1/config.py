@@ -47,6 +47,7 @@ WORKLOAD_SOURCES = {
     "training_workloads/unified_h1/mean_prior.py",
     "training_workloads/unified_h1/checkpoint_compatibility.py", "training_workloads/unified_h1/checkpoint_recalculation.py",
     "training_workloads/unified_h1/w_closure.py",
+    "training_workloads/unified_h1/w_independent.py",
     "training_workloads/unified_h1/transition_diagnostic.py", "training_workloads/unified_h1/formal_segment.py",
     "training_workloads/unified_h1/budget.py", "training_workloads/unified_h1/config.py",
     "training_workloads/unified_h1/driver.py", "training_workloads/unified_h1/evaluation.py",

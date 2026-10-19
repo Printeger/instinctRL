@@ -1,0 +1,225 @@
+{
+  "schema_version": "instinctrl-r5-w-budget/1",
+  "goal_id": "R5-W-CLOSURE-AUTO-20261019",
+  "master_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+    "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+  },
+  "caps": {
+    "training_transitions": 1048576,
+    "nontraining_transitions": 659200,
+    "live_starts": 24,
+    "simulator_initialization_reservations": 24,
+    "optimizer_updates": 2048,
+    "actor_optimizer_steps": 16384,
+    "critic_optimizer_steps": 16384,
+    "training_checkpoint_writes": 40,
+    "allocated_gpu_seconds": 86400,
+    "wall_seconds_including_cleanup": 86400,
+    "output_peak_and_reservations_bytes": 137438953472
+  },
+  "used": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0,
+    "training_checkpoint_writes": 0,
+    "allocated_gpu_seconds": 1520.7087300447747,
+    "wall_seconds_including_cleanup": 1532.4889966598712,
+    "output_peak_and_reservations_bytes": 2057850324
+  },
+  "reservations": {
+    "live_entries": [
+      {
+        "spec_id": "R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2",
+        "job_id": "J-79c61443f05bdaee",
+        "experiment_id": "R5-W-E1-CONTROL-01",
+        "group": "R1",
+        "mode": "research-formal-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 32960,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 32960,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "raw_status_missing": false,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 29545460,
+        "inventory": "experiments/R5-W-E1-CONTROL-01/live/R1-research-formal-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-W-L1-NEARWALL-01-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2",
+        "job_id": "J-06a095a1c78d517e",
+        "experiment_id": "R5-W-L1-NEARWALL-01",
+        "group": "R1",
+        "mode": "research-formal-training",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": 1,
+        "raw_status": "FAIL",
+        "raw_status_missing": false,
+        "formal_counter_completeness": "FINAL",
+        "formal_transitions": 0,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 79270,
+        "inventory": "experiments/R5-W-L1-NEARWALL-01/live/R1-research-formal-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2",
+        "job_id": "J-8bdfaca0488e524d",
+        "experiment_id": "R5-W-L1-NEARWALL-RECOVERY1",
+        "group": "R1",
+        "mode": "research-formal-training",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 2,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 2,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "raw_status_missing": false,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 1969675045,
+        "inventory": "experiments/R5-W-L1-NEARWALL-RECOVERY1/live/R1-research-formal-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2",
+        "job_id": "J-3db27ce7c40e9542",
+        "experiment_id": "R5-W-L1-EVAL-01",
+        "group": "R1",
+        "mode": "research-formal-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 65920,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 65920,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "raw_status_missing": false,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 58550549,
+        "inventory": "experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/INVENTORY.json"
+      }
+    ],
+    "source_snapshots": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019",
+        "reserved_bytes": 2147483648,
+        "status": "FROZEN_READ_ONLY",
+        "source_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+        "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+        "observed_file_bytes": 821095981
+      }
+    ]
+  },
+  "stage_allocation_history": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-E1-001.json",
+      "sha256": "1e540a514b50ea43b8d0a0af5f76b20d79535597184a885134364a08f5f978b5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-L1-001.json",
+      "sha256": "d5848a1efbb9f4a630f2d749cdca22ef2c4845dc39b6b6f7fc9d4cb51133529c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-L1-002.json",
+      "sha256": "8ab9b2b84965e843e85f1d68784a2282b7195859088ffe6a058a60e70cdca10e"
+    }
+  ],
+  "historical_accounting": "New incremental envelope; every old ledger and reservation remains unchanged. No refunds inferred from raw data.",
+  "models": [
+    {
+      "role": "independent-authority-and-diagnosis-review",
+      "agent": "/root/authority_review"
+    }
+  ],
+  "observed": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 98880,
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 2,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048
+  }
+}

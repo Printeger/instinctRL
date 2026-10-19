@@ -1,0 +1,27 @@
+{
+  "id": "W-V1-001",
+  "goal_id": "R5-W-CLOSURE-AUTO-20261019",
+  "evidence_id": "E-R5-W-CLOSURE-V1-001",
+  "master_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+    "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+  },
+  "cumulative_caps": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 131840,
+    "live_starts": 5,
+    "simulator_initialization_reservations": 5,
+    "optimizer_updates": 256,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048,
+    "training_checkpoint_writes": 2,
+    "allocated_gpu_seconds": 8000,
+    "wall_seconds_including_cleanup": 8000,
+    "output_peak_and_reservations_bytes": 51539607552
+  },
+  "scope": "Cumulative E1, failed L1, RECOVERY1, both-node evaluation, and independent seed20261020 full five-task validation of first passing u640; no new training. Prior full reserves retained.",
+  "previous_stage": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-L1-002.json",
+    "sha256": "8ab9b2b84965e843e85f1d68784a2282b7195859088ffe6a058a60e70cdca10e"
+  }
+}

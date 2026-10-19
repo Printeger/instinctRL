@@ -1,0 +1,125 @@
+{
+  "schema_version": "independent-review-relay/1",
+  "reviewer": "/root/eval_review",
+  "recorder": "root relay of independent read-only eval_review response; accepted checkpoint origin metadata retained from its reviewed prior acceptance",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "Actual two-node primary evaluation and frozen independent CPU replay; not final Goal acceptance",
+  "identities": {
+    "packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/launch_inputs.proposed.json",
+      "sha256": "a374f68336d24cce7f11e5e3abc2d33be7714155af70c5eaddfb8b2decc62f26"
+    },
+    "authorized_spec": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/inputs/R1-research-formal-evaluation.authorized.json",
+      "sha256": "a169bcf780c9c6b3f95c47bb13d756a764bb9ce6517e6d02cafb9b09a1f3eba7"
+    },
+    "final_job": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/R1-research-formal-evaluation-final-job.json",
+      "sha256": "29abc2c4bdffecd669ee1187328dceecf1a1780384a77120f299f061e5afcb1a"
+    },
+    "execution_summary": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/R1-research-formal-evaluation-execution-summary.json",
+      "sha256": "c71922b773db5918c81fd0e146ad50ebc15768bc30aa992e3135431312b0e8a9"
+    },
+    "inventory": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/live/R1-research-formal-evaluation/INVENTORY.json",
+      "sha256": "5cfb83caa3580e126b469bd8500c103a67cee63bd4dc52fc3c13d7f02ded1812"
+    },
+    "master": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+      "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+    }
+  },
+  "accepted_checkpoints": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+      "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+      "update": 512
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+      "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+      "update": 640
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u768.pt",
+      "sha256": "0c4a8b486280a3bb8dbc91778ed1949c085c4dedd3c6ff75ac7194a957111e41",
+      "update": 768
+    }
+  ],
+  "origin_method_hashes": {
+    "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+    "curriculum": "curriculum-h1-v1",
+    "reward": "reward-h1-zero-neutrality-v1",
+    "critic": "critic-h1-v2",
+    "checkpoint": "checkpoint-h1-v2",
+    "logging": "learning-log-h1-v1",
+    "metric": "metric-h1-v1",
+    "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+    "research_effective_method": "8afa2645dd181eb1e54c4c38e60f59db2c7cdda48df5d232b5e0628c451269cd",
+    "formal_phase": "103664d19c5e037d5903c86e2af11b61181a8722e599bdbdd87ae7c7f9414930",
+    "reset_distribution": "center-only-v1",
+    "initialization": "qualified-warmup-fresh-reset-v1",
+    "origin_checkpoint_sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768"
+  },
+  "origin_source_identity": {
+    "product_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "product_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "workload_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "workload_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24"
+  },
+  "candidate_source_identity": {
+    "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+    "product_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "product_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924",
+    "workload_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "workload_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924"
+  },
+  "candidate_method_hashes": {
+    "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+    "curriculum": "curriculum-h1-v1",
+    "reward": "reward-h1-zero-neutrality-v1",
+    "critic": "critic-h1-v2",
+    "checkpoint": "checkpoint-h1-v2",
+    "logging": "learning-log-h1-v1",
+    "metric": "metric-h1-v1",
+    "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+    "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+    "reset_distribution": "mixed-nearwall",
+    "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+    "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+    "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5",
+    "ics_clearance_margin_m": "0.15"
+  },
+  "findings": [
+    {
+      "classification": "PASS",
+      "detail": "58 inventory entries/106 originals+archives and25 packet/spec pins independently rehashed."
+    },
+    {
+      "classification": "PASS",
+      "detail": "Authorized spec equals final-job spec and receipt object hash; FAILED/-9, INCOMPLETE/null full65920 retained; normal ACK two stable empty scans/no survivors; settle/exactly2 postrun exit0."
+    },
+    {
+      "classification": "PASS",
+      "detail": "Frozen evaluate_checkpoint independently called per node from raw; exact full dictionary agreement; u640/u768 Z/T/S/X/W each32/32, each direction4/4 and walls16/16."
+    },
+    {
+      "classification": "PASS",
+      "detail": "Every W lane world normal speed>=.1 longest consecutive samples: u64030/u76828; original .8m/3s and all gates unchanged."
+    },
+    {
+      "classification": "PASS",
+      "detail": "Observed cumulative train131072/nontraining98880/256updates/Adam2048each/2writes;4start/init; GPU1520.7087300447747/wall1532.4889966598712; four8GiB output caps retained."
+    }
+  ],
+  "read_only_review": true,
+  "gpu_or_simulation_invoked": false,
+  "controller_state_modified": false,
+  "scientific_limitations": [
+    "E1 fixed u512+.15m already passed: cannot attribute L1 passing to RL gain. Keep original R1 no-margin W-negative baseline.",
+    "First passing u640 requires independently prereviewed independent seed or initial-state full validation; primary20260909 gate stays frozen; no Goal completion."
+  ]
+}
