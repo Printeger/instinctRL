@@ -1,0 +1,106 @@
+{
+  "status": "CPU_ANALYSIS_HANDOFF_PASS_PENDING_INDEPENDENT_REVIEW",
+  "capacity_pass": false,
+  "validation": [
+    {
+      "suites": [
+        "tools.test_r6_cpu_analysis",
+        "tools.test_r6_postrun"
+      ],
+      "passed": 48,
+      "seconds": 30.229,
+      "log": "CPU_ANALYSIS_WORKER_TESTS_V2.txt"
+    },
+    {
+      "suites": [
+        "tools.test_r6_cpu_analysis",
+        "tools.test_r6_batch"
+      ],
+      "passed": 40,
+      "seconds": 8.54,
+      "log": "CPU_ANALYSIS_WORKER_TESTS_V4.txt"
+    }
+  ],
+  "coverage": {
+    "analysis_binding_tests": 16,
+    "new_worker_tests": 16,
+    "postrun_tests": 18,
+    "model_handoff_tests": 8,
+    "total_distinct": 58
+  },
+  "retained_failed_invocation": {
+    "log": "CPU_ANALYSIS_WORKER_TESTS_V3.txt",
+    "reason": "Wrong test module name tools.test_r6_model_handoff; 32 available tests passed and one import error. Corrected to tools.test_r6_batch; V4 passed."
+  },
+  "command_prefix": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow:isaaclab-training CUDA_VISIBLE_DEVICES= /home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python -B -m unittest",
+  "worker_cpu_environment": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "limits": {
+    "timeout_seconds_max": 3600,
+    "controller_deadline_extra_seconds": 30,
+    "stream_and_worker_metadata_bytes": 1048576,
+    "report_bytes": 16777216,
+    "summary_bytes": 49152,
+    "reservation_bytes": 20971520
+  },
+  "findings": [
+    "Canonical one-analysis-per-job event with persistent prelaunch claim and exact source/input/executable pins",
+    "Real child worker completion, reattachment, half receipt rejection, nonzero output preservation, timeout, SIGSTOP deadline and STOP cleanup tested",
+    "No model invocation; unresolved CPU claim refuses new model dispatch",
+    "Actual tensor-runtime analyzer on missing originals retains all 16 blocks and explicit gaps",
+    "Summary must equal full report summary; bound report preserves native FAILED/-9 and prior control failure state",
+    "Fixed postrun cleanup reused; postrun and model-handoff regression suites passed"
+  ],
+  "limitations": [
+    "No full job/resource/submission/next-decision loop deployment yet",
+    "Actual analyzer worker integration test uses missing raw fixture, not real simulation trajectories",
+    "CPU component review pending; previously accepted reviews do not cover new code",
+    "Operating ledger and capacity_pass unchanged; no R6 live job, GPU query, model session or training started"
+  ],
+  "pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_cpu_analysis.py",
+      "sha256": "c799dedc1d3467ff42ad2ada21591e92ef0ab584002eb72cc8cccb174b7cb2d2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_cpu_analysis.py",
+      "sha256": "c45a515c3f17e4302605f78707c1d40dc3a1e726a1cf4a862450e7cba3602eeb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/analyze_r6_evaluation.py",
+      "sha256": "b085acd9257f85b3ba41044c0ebd9201332279d1fc63753b975b3fc570764b70"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "8057204ac70b266fbb691a3b65baa55bd6de5e9579f624da423a11e22abfb3f1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "704f2b6c5fa66d41e263642b92069941569c81f6212317753395adff4399d90b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_postrun.py",
+      "sha256": "8d8e061b37b24683c45d74bf6de32dae496b175f7e554a44ca7d642104fe0531"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ANALYSIS_WORKER_TESTS_INITIAL.txt",
+      "sha256": "cf986467407ea6f4dfcd23152cc41d1174728063df5299079a553bf02b6e62bc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ANALYSIS_WORKER_TESTS_V2.txt",
+      "sha256": "c12c549ad27b9889b40c13b76fbab1b5ccd13672bcf041ae7ee2bb565f03a742"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ANALYSIS_WORKER_TESTS_V3.txt",
+      "sha256": "126f34869a8e38814fa462991e1ccb03ac8c1b9087e6ed7b4787bb207007c775"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ANALYSIS_WORKER_TESTS_V4.txt",
+      "sha256": "a385bed851112e7db8261c3fe95ca28343bbce4eb506c00251cfd38ad8a5acec"
+    }
+  ]
+}

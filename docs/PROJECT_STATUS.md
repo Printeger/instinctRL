@@ -70,6 +70,7 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 完整容量补算与force无损二进制候选：45项CPU检查通过，旧JSON审计仍可读、逐record哈希/fsync/配额保留；`FORCE_ARCHIVE_CAPACITY_CPU_V3.json`最终四模型force样本估计2.54GiB。全control/reward step样本和新版CPU RNG测距已补测；旧训练1.958GB只读无损压缩估计0.411GB，原字节/冻结u640哈希核验，训练压缩writer未实现。`CAPACITY_COMPOSED_DRAFT_V2.json`保留最终774400非训练transitions，提出最终92GiB/27000秒（现80GiB/24000秒不足）；开发示例与最终共127.516GiB，未修改操作账本。原生/训练/元数据/视频精确配额和独审仍未闭合，capacity_pass=false。
 新增可选R6训练无损存储：分块哈希、完成footer、共享写前配额和直接随机读取，JSONL逐条flush/fsync，诊断张量原字节可恢复；12项新CPU检查与11项旧概率诊断回归通过，见 `CPU_LOSSLESS_TRAINING_TESTS.json`。实际错误概率gate仍在优化器前拒绝，默认旧入口不变。历史1.958GB按实际codec重测为0.416GB，见 `TRAINING_CHUNK_STORE_CAPACITY_CPU.json`；`CAPACITY_COMPOSED_DRAFT_V3.json`更新训练估计但不修改操作预算。live训练接线/关闭与消费者、独审及新数据容量仍待完成，capacity_pass=false。
 训练存储失败关闭补修：flush/fsync错误现在使共享池拒绝后续写入；统一关闭所有所属流，失败前缀不补成功footer，context清理保留原训练异常，关闭后拒绝新文件名。18项CPU检查通过，含6项新增磁盘错误/全局配额/生命周期检查，见 `CPU_TRAINING_STORAGE_LIFECYCLE_TESTS.json`。这是存储生命周期API补齐，尚未接入live训练分派；完整controller、容量和独审状态不变。
+新增本地CPU分析worker与 `r6_batch --cpu-analysis --analysis-store` 入口：准确job关闭/清单/postrun链校验、启动意图、源码与Python哈希、3600秒worker及额外30秒controller截止、1MiB日志/16MiB报告/48KiB摘要和20MiB事件预留；重启只接回准确进程，半写receipt/未知启动不重试，失败原件及原生FAILED/-9保留。新16项worker检查、16项绑定、18项postrun与8项模型交接回归通过，见 `CPU_ANALYSIS_WORKER_TESTS.json`；误写测试模块名的一次失败记录保留。真实CPU分析器缺件案例保留16块明确缺口，摘要须等于完整报告。未完成CPU事件阻止新模型派发。该组件尚未独审，完整资源/submit/下一决策控制器未部署，未启动R6 live。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）

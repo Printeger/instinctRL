@@ -1,0 +1,49 @@
+test_changed_analyzer (tools.test_r6_analysis_binding.BindingTests.test_changed_analyzer) ... ok
+test_changed_report_not_overwritten (tools.test_r6_analysis_binding.BindingTests.test_changed_report_not_overwritten) ... ok
+test_complete_claim_without_originals (tools.test_r6_analysis_binding.BindingTests.test_complete_claim_without_originals) ... ok
+test_crash_after_artifact_before_state_reuses_same_result (tools.test_r6_analysis_binding.BindingTests.test_crash_after_artifact_before_state_reuses_same_result) ... ok
+test_duplicate_input (tools.test_r6_analysis_binding.BindingTests.test_duplicate_input) ... ok
+test_missing_block (tools.test_r6_analysis_binding.BindingTests.test_missing_block) ... ok
+test_missing_evidence_remains_incomplete_native_failure_retained (tools.test_r6_analysis_binding.BindingTests.test_missing_evidence_remains_incomplete_native_failure_retained) ... ok
+test_not_terminal (tools.test_r6_analysis_binding.BindingTests.test_not_terminal) ... ok
+test_omitted_protocol (tools.test_r6_analysis_binding.BindingTests.test_omitted_protocol) ... ok
+test_other_attempt_input (tools.test_r6_analysis_binding.BindingTests.test_other_attempt_input) ... ok
+test_other_job_closure (tools.test_r6_analysis_binding.BindingTests.test_other_job_closure) ... ok
+test_raw_changed_after_inventory (tools.test_r6_analysis_binding.BindingTests.test_raw_changed_after_inventory) ... ok
+test_record_idempotent_and_preserves_control_failure (tools.test_r6_analysis_binding.BindingTests.test_record_idempotent_and_preserves_control_failure) ... ok
+test_stop_refuses_new_record (tools.test_r6_analysis_binding.BindingTests.test_stop_refuses_new_record) ... ok
+test_uninventoried_original (tools.test_r6_analysis_binding.BindingTests.test_uninventoried_original) ... ok
+test_wrong_seed (tools.test_r6_analysis_binding.BindingTests.test_wrong_seed) ... ok
+test_actual_analyzer_missing_raw_binds_incomplete_summary (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_actual_analyzer_missing_raw_binds_incomplete_summary) ... ok
+test_changed_analysis_request_cannot_create_second_event (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_changed_analysis_request_cannot_create_second_event) ... ok
+test_claim_without_handle_is_not_retried (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_claim_without_handle_is_not_retried) ... ok
+test_closed_job_binding_checked_before_dispatch (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_closed_job_binding_checked_before_dispatch) ... ok
+test_complete_bind_once_restarts_preserve_native_failure (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_complete_bind_once_restarts_preserve_native_failure) ... ok
+test_controller_deadline_kills_sigstopped_worker_and_owned_child (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_controller_deadline_kills_sigstopped_worker_and_owned_child) ... ok
+test_log_limit_is_enforced_before_write (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_log_limit_is_enforced_before_write) ... ok
+test_partial_receipt_is_not_retried (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_partial_receipt_is_not_retried) ... ok
+test_restart_rebinds_same_live_worker_without_second_call (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_restart_rebinds_same_live_worker_without_second_call) ... ok
+test_source_drift_is_rejected (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_source_drift_is_rejected) ... ok
+test_stop_cancels_owned_analysis (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_stop_cancels_owned_analysis) ... ok
+test_stop_prevents_dispatch (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_stop_prevents_dispatch) ... ok
+test_summary_drift_is_not_bound (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_summary_drift_is_not_bound) ... ok
+test_unresolved_cpu_dispatch_blocks_new_model_worker (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_unresolved_cpu_dispatch_blocks_new_model_worker) ... ok
+test_worker_nonzero_preserves_original_output_and_receipt (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_worker_nonzero_preserves_original_output_and_receipt) ... ok
+test_worker_timeout_preserves_receipt_and_no_retry (tools.test_r6_cpu_analysis.CPUAnalysisTests.test_worker_timeout_preserves_receipt_and_no_retry) ... ok
+test_r6_model_handoff (unittest.loader._FailedTest.test_r6_model_handoff) ... ERROR
+
+======================================================================
+ERROR: test_r6_model_handoff (unittest.loader._FailedTest.test_r6_model_handoff)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_r6_model_handoff
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'tools.test_r6_model_handoff'
+
+
+----------------------------------------------------------------------
+Ran 33 tests in 6.739s
+
+FAILED (errors=1)

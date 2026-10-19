@@ -1,6 +1,7 @@
 """CPU-only replay into a new directory, preserving all runtime originals."""
 import argparse
 from pathlib import Path
+from rlflow.store import atomic
 from training_workloads.unified_h1.robustness_analysis import analyze, encoded
 
 
@@ -21,8 +22,10 @@ def main():
     if len(data) > 16*1024**2:
         raise ValueError('REPORT_SIZE_BOUND')
     destination.mkdir(parents=True, exist_ok=False)
-    (destination/'report.json').write_bytes(data)
-    (destination/'summary.json').write_bytes(encoded(summary))
+    summary_data=encoded(summary)
+    if len(summary_data)>48*1024:raise ValueError('SUMMARY_SIZE_BOUND')
+    atomic(destination/'report.json',data)
+    atomic(destination/'summary.json',summary_data)
     print(str(destination/'summary.json'))
 
 

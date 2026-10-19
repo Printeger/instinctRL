@@ -15,7 +15,7 @@ def read(pin):
     return json.loads(checked(pin).read_text())
 
 
-def bind_analysis(entry, key, report_pin, store):
+def analysis_context(entry, key, store):
     spec = read(entry['request']['spec'])
     job = exact_job(store.replay(), entry, spec)
     if job['status'] not in TERMINAL:
@@ -52,6 +52,15 @@ def bind_analysis(entry, key, report_pin, store):
             or len(set(request['block_ids'])) != 16 or len(request['block_ids']) != 16
             or set(request['block_ids']) != {b['id'] for b in protocol['blocks']}):
         raise RecoveryError('ANALYSIS_PROTOCOL_NOT_FROZEN_OR_INCOMPLETE')
+    return dict(spec=spec,job=job,closure=closure,inventory=inventory,output=output,
+                auth_pin=auth_pin,parameters=parameters,request=request,protocol=protocol)
+
+
+def bind_analysis(entry, key, report_pin, store):
+    context=analysis_context(entry,key,store)
+    spec=context['spec'];job=context['job'];closure=context['closure'];inventory=context['inventory']
+    output=context['output'];auth_pin=context['auth_pin'];parameters=context['parameters']
+    request=context['request'];protocol=context['protocol']
     if checked(report_pin).stat().st_size > 16*1024**2:
         raise RecoveryError('ANALYSIS_REPORT_SIZE_BOUND')
     report = read(report_pin)

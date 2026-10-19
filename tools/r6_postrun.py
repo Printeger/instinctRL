@@ -168,7 +168,7 @@ def owned_tree(roots):
     return list(found.values())
 
 
-def cancel_bounded(journal,key,reason,proc=None):
+def cancel_bounded(journal,key,reason,proc=None,*,directory_kind="postrun",status_prefix="POSTRUN"):
     """Persist owned identities before signals. Never manufacture a query receipt.
 
     Five seconds maximum per recovery invocation; original cancellation start is
@@ -176,7 +176,9 @@ def cancel_bounded(journal,key,reason,proc=None):
     Unknown ownership remains ambiguous and cannot authorize another query.
     """
     state = journal.read(); entry = state['events'][key]
-    directory = journal.directory/'postrun'/key
+    if directory_kind not in {'postrun','cpu-analysis'} or status_prefix not in {'POSTRUN','CPU_ANALYSIS'}:
+        raise RecoveryError('CANCEL_DIRECTORY_KIND')
+    directory = journal.directory/directory_kind/key
     cancel = entry.get('controller_cancel')
     if cancel is None:
         cancel = dict(reason=reason,boot_id=identity(os.getpid())['boot_id'],
@@ -215,7 +217,7 @@ def cancel_bounded(journal,key,reason,proc=None):
             state = journal.read();cancel = state['events'][key]['controller_cancel']
             cancel.update(status='NO_KNOWN_OWNED_SURVIVORS' if empty >= 2 else 'CLEANUP_BOUND_EXCEEDED',
                 survivors=live,stable_empty_scans=empty)
-            state['status'] = 'POSTRUN_CANCELLED_REQUIRES_RECONCILIATION';journal.save(state)
+            state['status'] = status_prefix+'_CANCELLED_REQUIRES_RECONCILIATION';journal.save(state)
             if live:raise RecoveryError('POSTRUN_CLEANUP_BOUND_EXCEEDED')
             return
         time.sleep(.05)

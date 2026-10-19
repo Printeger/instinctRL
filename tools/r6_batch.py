@@ -2,7 +2,7 @@
 
 Consumes registered model events and closes already submitted jobs. No permission issuance, job
 submission, budget reservation, automatic retry or scientific acceptance here.
-Resource admission, dispatch and analysis/next-plan phases remain incomplete.
+Registered CPU analysis workers are supported; resource/live dispatch and next-plan phases remain incomplete.
 """
 from pathlib import Path
 import argparse
@@ -59,6 +59,9 @@ def model_handoff(journal,key,*,poll_seconds=15):
     if entry['receipt']:
         return verified_decision(journal,key)
     if not entry.get('dispatch_claim'):
+        if any(e['kind']=='cpu' and e.get('dispatch_claim') and not e.get('receipt')
+                for e in state['events'].values()):
+            raise RecoveryError('CPU_WORKER_HANDOFF_UNRESOLVED')
         journal.require_dispatch_budget()
         if entry['process'] is not None or entry['status']!='INTENT' or call.exists():
             raise RecoveryError('UNCLAIMED_SIDE_EFFECT_REQUIRES_RECONCILIATION')
@@ -108,13 +111,18 @@ def main():
     action.add_argument('--job-store',type=Path,help='Close an existing exact job in this rlflow Store; never submit')
     action.add_argument('--inventory-store',type=Path,help='Inventory exact closed-job originals; no GPU queries')
     action.add_argument('--postrun-keys',nargs=2,metavar=('GPU_EVENT','PROCESS_EVENT'),help='Complete two registered postrun queries for event_key job')
+    action.add_argument('--cpu-analysis',action='store_true',help='Execute/recover a registered CPU analysis event; never call a model')
     action.add_argument('--analysis-report',type=Path,help='Bind an existing CPU motion replay report; no scientific acceptance')
     ap.add_argument('--analysis-store',type=Path,help='Exact Store for --analysis-report')
     a=ap.parse_args();journal=Journal(a.directory.resolve())
-    if (a.analysis_report is None) != (a.analysis_store is None):
-        ap.error('--analysis-report and --analysis-store are required together')
+    if bool(a.analysis_report is not None or a.cpu_analysis) != (a.analysis_store is not None):
+        ap.error('--analysis-report or --cpu-analysis requires --analysis-store')
     with journal.writer():
-        if a.analysis_report is not None:
+        if a.cpu_analysis:
+            from rlflow.store import Store
+            from tools.r6_cpu_analysis import handoff
+            result=handoff(journal,a.event_key,Store(a.analysis_store.resolve()))
+        elif a.analysis_report is not None:
             from rlflow.store import Store
             from tools.r6_analysis_binding import record_analysis
             result=record_analysis(journal,a.event_key,file_pin(a.analysis_report),Store(a.analysis_store.resolve()))
