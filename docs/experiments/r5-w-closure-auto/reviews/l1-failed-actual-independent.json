@@ -1,0 +1,58 @@
+{
+  "schema_version": "independent-review-relay/1",
+  "reviewer": "/root/l1_audit",
+  "recorder": "root relay of independent read-only agent final response",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "Failure evidence acceptance and bounded recovery in principle; not training acceptance or final Goal review",
+  "classification": "PRELAUNCH_RESOURCE_GATE_FAILURE_NO_TRAINING",
+  "identities": {
+    "packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/launch_inputs.proposed.json",
+      "sha256": "972b07e4daefb82ea26e9c52dbce9bc38b655a76f91310f17c4ceefc9f6babb1"
+    },
+    "authorized_spec": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/inputs/R1-research-formal-training.authorized.json",
+      "sha256": "3ac1758573bb2df3a400f5def9310aa99dbd7cf87085ea6dc873999d4a9ec913"
+    },
+    "final_job": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/R1-research-formal-training-final-job.json",
+      "sha256": "18f0f772728590e78fdaf980155817114a2a95f775032d8c8db43d1a2a259a3b"
+    },
+    "execution_summary": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/R1-research-formal-training-execution-summary.json",
+      "sha256": "1c603b5a647a91b374f9e847d21f66e6b11856cf16118f38b1c83ac3fe4cc4b2"
+    },
+    "inventory": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/live/R1-research-formal-training/INVENTORY.json",
+      "sha256": "2aa0e3f5f8f740173f64f1b54f5805d8d119b50107d13d1953c304669aeef8ef"
+    },
+    "postrun0": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/R1-research-formal-training-postrun-0.json",
+      "sha256": "3c057e4d03083e4f3ab249063c75021331c807903a924113a7162e990964e0ad"
+    },
+    "postrun1": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/R1-research-formal-training-postrun-1.json",
+      "sha256": "70c37d58d511e23bf7fcf86b6d764e905dcba004a24a5352320c705c16b2262e"
+    },
+    "budget_at_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/L1_SETTLED_BUDGET_SNAPSHOT.json",
+      "sha256": "3c5cc6ee0f5412885bf4c310486e2a52029e32afb54a55af4a0c21656686f0f7"
+    }
+  },
+  "checks": [
+    "27 inventory entries,54 original/archive files,77 inventory and packet/spec pin checks; no mismatch; complete directory coverage",
+    "Receipt canonical spec sha fa5a4ffe92e489379fd342df71ed5e649b62dace72c26e74be1439d31eee52e6 matches",
+    "GPU utilization2/6/3>5; FINAL0 training/updates/Adam/checkpoint/physics; first512 not reached; no u640/u768",
+    "Normal owned ACK with2stable empty scans; no survivors; settle and exactly postrun0/1; controller operations exit0",
+    "STOP paths absent",
+    "Failed start/init1, GPU10.80898140091449s wall13.696870249230415s observed79270B; full8GiB output retained; E1INCOMPLETE32960 reserve retained"
+  ],
+  "recovery_requirements": [
+    "Fresh identity one-shot decision; no automatic retries",
+    "Same frozen science and original resource guards; no GPU probes or unrelated process changes",
+    "New stage covers4start/init and at least36GiB plus actual failed time",
+    "Independent prelive, legal register/issue, commit/tag/push and reviewed next_plan; existing controller only",
+    "Do not evaluate nonexistent nodes or claim learning"
+  ]
+}
