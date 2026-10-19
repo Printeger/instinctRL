@@ -1,0 +1,228 @@
+{
+  "status": "CPU_FIXTURE_NOT_CAPACITY_ACCEPTANCE",
+  "encoding_mode": "previous-frame-v2",
+  "seed": 2026102001,
+  "shape": [
+    32,
+    21240
+  ],
+  "dtype": "float32",
+  "cases": [
+    {
+      "sigma_m": 0.0,
+      "delay_cycles": 0,
+      "frame_bytes": [
+        2189947,
+        2189308,
+        2189036,
+        2189137
+      ],
+      "encoding_seconds": [
+        1.0162421432323754,
+        1.5245752348564565,
+        1.5516865160316229,
+        1.5379202631302178
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.0,
+      "delay_cycles": 1,
+      "frame_bytes": [
+        2193009,
+        2189169,
+        2189232,
+        2189438
+      ],
+      "encoding_seconds": [
+        2.041938953101635,
+        1.5360817261971533,
+        1.5361680909991264,
+        1.5197460921481252
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.01,
+      "delay_cycles": 0,
+      "frame_bytes": [
+        3602463,
+        3601803,
+        3601813,
+        2189536
+      ],
+      "encoding_seconds": [
+        2.4603030239231884,
+        4.093227139674127,
+        4.01414104225114,
+        1.5236431490629911
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.01,
+      "delay_cycles": 1,
+      "frame_bytes": [
+        2192986,
+        3601282,
+        3601319,
+        2189059
+      ],
+      "encoding_seconds": [
+        2.041628662031144,
+        4.500395976006985,
+        4.000885309185833,
+        1.5252798679284751
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.03,
+      "delay_cycles": 0,
+      "frame_bytes": [
+        3744470,
+        3743812,
+        3743430,
+        2189199
+      ],
+      "encoding_seconds": [
+        2.7394226416945457,
+        4.272691593039781,
+        4.3033066228963435,
+        1.528713250067085
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.03,
+      "delay_cycles": 1,
+      "frame_bytes": [
+        2192961,
+        3742966,
+        3743143,
+        2189239
+      ],
+      "encoding_seconds": [
+        2.049157061614096,
+        4.769074326846749,
+        4.294473914429545,
+        1.5219751331023872
+      ],
+      "bitwise_roundtrip": true
+    }
+  ],
+  "blocks": [
+    {
+      "block_id": "S-clean-low",
+      "frames": 331,
+      "estimated_measurement_bytes": 724661587
+    },
+    {
+      "block_id": "S-clean-high",
+      "frames": 331,
+      "estimated_measurement_bytes": 724661587
+    },
+    {
+      "block_id": "S-noise",
+      "frames": 331,
+      "estimated_measurement_bytes": 1192200753
+    },
+    {
+      "block_id": "S-delay-drop",
+      "frames": 331,
+      "estimated_measurement_bytes": 724639981
+    },
+    {
+      "block_id": "X-clean",
+      "frames": 201,
+      "estimated_measurement_bytes": 440051547
+    },
+    {
+      "block_id": "X-noise",
+      "frames": 201,
+      "estimated_measurement_bytes": 723965063
+    },
+    {
+      "block_id": "P-clean",
+      "frames": 331,
+      "estimated_measurement_bytes": 724661587
+    },
+    {
+      "block_id": "P-combined",
+      "frames": 331,
+      "estimated_measurement_bytes": 1190628256
+    },
+    {
+      "block_id": "W-near",
+      "frames": 331,
+      "estimated_measurement_bytes": 724661587
+    },
+    {
+      "block_id": "W-middle",
+      "frames": 331,
+      "estimated_measurement_bytes": 724661587
+    },
+    {
+      "block_id": "W-far",
+      "frames": 331,
+      "estimated_measurement_bytes": 724661587
+    },
+    {
+      "block_id": "W-combined",
+      "frames": 331,
+      "estimated_measurement_bytes": 1190628256
+    },
+    {
+      "block_id": "stress-S-noise",
+      "frames": 331,
+      "estimated_measurement_bytes": 1239202430
+    },
+    {
+      "block_id": "stress-S-combined",
+      "frames": 331,
+      "estimated_measurement_bytes": 1234322343
+    },
+    {
+      "block_id": "stress-P-high",
+      "frames": 331,
+      "estimated_measurement_bytes": 724661587
+    },
+    {
+      "block_id": "stress-W-high",
+      "frames": 331,
+      "estimated_measurement_bytes": 1237430151
+    }
+  ],
+  "per_model_measurement_bytes": 14245699889,
+  "final_four_measurement_bytes": 56982799556,
+  "aggregation": "Weight normal and dropped delivery by registered block counts; first preliminary v2 output used the largest sampled frame for every step, including blocks with no drop.",
+  "prior_estimate_limitation": "Prior same-frame fixture omitted delayed frames whose current clean and delivered ranges differ across acquisition times.",
+  "estimate_limitations": "Independent uniform clean frame each acquisition; includes initial invalid delay and one dropped delivery. This is not physical data or a worst-case bound. Does not include training, native logs, motion/force/reset audit, snapshots or videos.",
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+    "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0"
+  },
+  "code": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_capacity_v2.py",
+      "sha256": "7aa35cf9ae1ec94b3d1e76b40786d7a9e7b79979e97603f70f54bd1f5a8eaa0f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/range_archive.py",
+      "sha256": "e117de39cfa4ee0a057bff50893509fcf5dc31cbfa676331e158cd5e4c4b93ef"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "05fd977e751d4af3f78e13a1dee983c673fe4347988ee9a17449e497c20a488e"
+    }
+  ],
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "compression_level_probe": 9,
+  "production_compression_level_unchanged": 3,
+  "probe_tool": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_compression_levels.py",
+    "sha256": "6906d33765fade494a8771ead370a992e164b25f6f4cbbf980c9835dc3ae8c4a"
+  },
+  "capacity_pass": false
+}

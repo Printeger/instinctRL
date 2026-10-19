@@ -2,6 +2,11 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+CPU容量对照排除单纯提高zlib等级的方案：同一24帧样本，等级3/9均经原解码器逐字节还原；
+完整评价range预留仅减少336MiB，编码外推由809秒增至14321秒，最终阶段时间外推约79909秒，
+超过43200秒总上限。见 `docs/experiments/r6-robustness-auto/COMPRESSION_LEVEL_COMPARISON_CPU.json`。
+这是CPU估计而非live性能证明；生产codec/额度/协议未变，容量缺口及native输出总量边界仍未解决。
+
 新增准确作业登记入口从已获Store许可的spec计算完整预留；恢复复用原事件与原截止时间，
 不重复记账或延长窗口。23项CPU测试通过（新增8项），见
 `docs/experiments/r6-robustness-auto/CPU_JOB_REGISTRATION_TESTS.json`。

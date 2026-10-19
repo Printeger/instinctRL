@@ -1,0 +1,48 @@
+{
+  "status": "CPU_PROBE_REJECT_LEVEL9_AS_CAPACITY_SOLUTION",
+  "capacity_pass": false,
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/COMPRESSION_LEVEL3_CPU.json",
+      "sha256": "f7c2daf6f553728573c12fb937a55d72453c0d10992c1560483a8f4450edb70e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/COMPRESSION_LEVEL9_CPU.json",
+      "sha256": "431fdff19edb1291f74873377bcdd991c2633e0841b778adeb2bca840e64373e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_COMPOSED_DRAFT_V5.json",
+      "sha256": "56bb916565aea2c5d494b715172647d9dba27aa71d8719e800256838b1c141a8"
+    }
+  ],
+  "levels": [
+    {
+      "level": 3,
+      "measurement_bytes": 14486159627,
+      "range_quota_bytes": 16827547648,
+      "per_evaluation_encode_seconds": 809.3933525327593
+    },
+    {
+      "level": 9,
+      "measurement_bytes": 14245699889,
+      "range_quota_bytes": 16475226112,
+      "per_evaluation_encode_seconds": 14321.409111818764
+    }
+  ],
+  "range_quota_saved_per_evaluation_bytes": 352321536,
+  "added_final_four_evaluation_encode_seconds": 54048.06303714402,
+  "original_final_time_estimate_seconds": 25861.20468802213,
+  "final_time_with_measured_encoding_delta_seconds": 79909.26772516615,
+  "total_live_wall_cap_seconds": 43200,
+  "rationale": "Small storage reduction at substantially higher CPU cost; retain production level3. Timing is a CPU sample extrapolation, not measured live wall or a worst-case proof.",
+  "coverage": "Identical 24-frame CPU fixture per level; clean/noisy, immediate/delayed and dropped frames; original decoder bitwise reconstruction.",
+  "production_changed": false,
+  "ledger_changed": false,
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "unresolved": "Original capacity shortfall and native aggregate output bound remain unresolved."
+}

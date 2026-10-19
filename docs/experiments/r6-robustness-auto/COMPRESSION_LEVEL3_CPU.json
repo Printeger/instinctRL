@@ -1,0 +1,228 @@
+{
+  "status": "CPU_FIXTURE_NOT_CAPACITY_ACCEPTANCE",
+  "encoding_mode": "previous-frame-v2",
+  "seed": 2026102001,
+  "shape": [
+    32,
+    21240
+  ],
+  "dtype": "float32",
+  "cases": [
+    {
+      "sigma_m": 0.0,
+      "delay_cycles": 0,
+      "frame_bytes": [
+        2222402,
+        2219688,
+        2219480,
+        2219340
+      ],
+      "encoding_seconds": [
+        0.05039515579119325,
+        0.0909304772503674,
+        0.0908164563588798,
+        0.09056874318048358
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.0,
+      "delay_cycles": 1,
+      "frame_bytes": [
+        2237037,
+        2219484,
+        2219520,
+        2219396
+      ],
+      "encoding_seconds": [
+        0.09529732773080468,
+        0.09113717079162598,
+        0.09119985112920403,
+        0.09142647497355938
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.01,
+      "delay_cycles": 0,
+      "frame_bytes": [
+        3673676,
+        3670400,
+        3670394,
+        2219607
+      ],
+      "encoding_seconds": [
+        0.12224102392792702,
+        0.2475077798590064,
+        0.24974680971354246,
+        0.09001830499619246
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.01,
+      "delay_cycles": 1,
+      "frame_bytes": [
+        2236956,
+        3669390,
+        3669897,
+        2219230
+      ],
+      "encoding_seconds": [
+        0.09657893422991037,
+        0.2500621839426458,
+        0.24728560587391257,
+        0.08996071480214596
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.03,
+      "delay_cycles": 0,
+      "frame_bytes": [
+        3819616,
+        3816235,
+        3816137,
+        2219387
+      ],
+      "encoding_seconds": [
+        0.12391053698956966,
+        0.24857695400714874,
+        0.24901425978168845,
+        0.09095818921923637
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.03,
+      "delay_cycles": 1,
+      "frame_bytes": [
+        2237045,
+        3816002,
+        3815678,
+        2219643
+      ],
+      "encoding_seconds": [
+        0.09701971104368567,
+        0.253862245939672,
+        0.2506866133771837,
+        0.08916160371154547
+      ],
+      "bitwise_roundtrip": true
+    }
+  ],
+  "blocks": [
+    {
+      "block_id": "S-clean-low",
+      "frames": 331,
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "S-clean-high",
+      "frames": 331,
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "S-noise",
+      "frames": 331,
+      "estimated_measurement_bytes": 1214905676
+    },
+    {
+      "block_id": "S-delay-drop",
+      "frames": 331,
+      "estimated_measurement_bytes": 734678389
+    },
+    {
+      "block_id": "X-clean",
+      "frames": 201,
+      "estimated_measurement_bytes": 446160002
+    },
+    {
+      "block_id": "X-noise",
+      "frames": 201,
+      "estimated_measurement_bytes": 737753676
+    },
+    {
+      "block_id": "P-clean",
+      "frames": 331,
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "P-combined",
+      "frames": 331,
+      "estimated_measurement_bytes": 1213302966
+    },
+    {
+      "block_id": "W-near",
+      "frames": 331,
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "W-middle",
+      "frames": 331,
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "W-far",
+      "frames": 331,
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "W-combined",
+      "frames": 331,
+      "estimated_measurement_bytes": 1213302966
+    },
+    {
+      "block_id": "stress-S-noise",
+      "frames": 331,
+      "estimated_measurement_bytes": 1263177166
+    },
+    {
+      "block_id": "stress-S-combined",
+      "frames": 331,
+      "estimated_measurement_bytes": 1258324987
+    },
+    {
+      "block_id": "stress-P-high",
+      "frames": 331,
+      "estimated_measurement_bytes": 734719442
+    },
+    {
+      "block_id": "stress-W-high",
+      "frames": 331,
+      "estimated_measurement_bytes": 1261517705
+    }
+  ],
+  "per_model_measurement_bytes": 14486159627,
+  "final_four_measurement_bytes": 57944638508,
+  "aggregation": "Weight normal and dropped delivery by registered block counts; first preliminary v2 output used the largest sampled frame for every step, including blocks with no drop.",
+  "prior_estimate_limitation": "Prior same-frame fixture omitted delayed frames whose current clean and delivered ranges differ across acquisition times.",
+  "estimate_limitations": "Independent uniform clean frame each acquisition; includes initial invalid delay and one dropped delivery. This is not physical data or a worst-case bound. Does not include training, native logs, motion/force/reset audit, snapshots or videos.",
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+    "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0"
+  },
+  "code": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_capacity_v2.py",
+      "sha256": "7aa35cf9ae1ec94b3d1e76b40786d7a9e7b79979e97603f70f54bd1f5a8eaa0f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/range_archive.py",
+      "sha256": "e117de39cfa4ee0a057bff50893509fcf5dc31cbfa676331e158cd5e4c4b93ef"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "05fd977e751d4af3f78e13a1dee983c673fe4347988ee9a17449e497c20a488e"
+    }
+  ],
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "compression_level_probe": 3,
+  "production_compression_level_unchanged": 3,
+  "probe_tool": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_compression_levels.py",
+    "sha256": "6906d33765fade494a8771ead370a992e164b25f6f4cbbf980c9835dc3ae8c4a"
+  },
+  "capacity_pass": false
+}
