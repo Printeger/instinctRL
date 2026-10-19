@@ -1,5 +1,7 @@
 """CPU source-manifest rejection tests; no runtime or GPU tool execution."""
 import copy
+import ast
+import importlib.util
 import json
 from pathlib import Path
 import subprocess
@@ -12,17 +14,46 @@ from training_workloads.unified_h1.authorization import load_r3_authorization
 ROOT=Path(__file__).resolve().parents[1]
 
 
+def module(path):
+    s=path.removeprefix('isaaclab-training/').removesuffix('.py').replace('/','.')
+    return s.removesuffix('.__init__')
+def resolve(name):
+    if not name.startswith(('training_workloads','instinctlab','evaluation_workloads')):return None
+    base=ROOT/('isaaclab-training' if name.startswith('instinctlab') else '')/name.replace('.','/')
+    for p in [base.with_suffix('.py'),base/'__init__.py']:
+        if p.is_file():return str(p.relative_to(ROOT))
+def closure(seeds):
+    result=set(seeds);pending=list(seeds)
+    while pending:
+        path=pending.pop();name=module(path);package=name if path.endswith('/__init__.py') else name.rpartition('.')[0]
+        imports=set()
+        for i in range(1,len(name.split('.'))):imports.add('.'.join(name.split('.')[:i]))
+        for node in ast.walk(ast.parse((ROOT/path).read_text())):
+            if isinstance(node,ast.Import):imports.update(x.name for x in node.names)
+            if isinstance(node,ast.ImportFrom):
+                target=importlib.util.resolve_name('.'*node.level+(node.module or ''),package) if node.level else node.module
+                if target:
+                    imports.add(target);imports.update(target+'.'+x.name for x in node.names if x.name!='*')
+        for dep in imports:
+            f=resolve(dep)
+            if f and f not in result:result.add(f);pending.append(f)
+    return result
+
 class SourceConfigTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
         self.root=Path(self.tmp.name)
 
+    def test_transitive_local_imports_and_package_initializers_are_bound(self):
+        sources=c.R6_PRODUCT_SOURCES|c.R6_WORKLOAD_SOURCES
+        self.assertEqual(closure(sources)-sources,set())
+
     def test_legacy_sets_are_retained_and_r6_additions_exist(self):
         product,workload=c.required_source_sets('unified-h1-r2-config.v3')
         self.assertEqual((product,workload),(c.PRODUCT_SOURCES,c.WORKLOAD_SOURCES))
         product,workload=c.required_source_sets(c.R6_CONFIG_SCHEMA)
-        self.assertEqual(len(product-c.PRODUCT_SOURCES),3)
-        self.assertEqual(len(workload-c.WORKLOAD_SOURCES),13)
+        self.assertEqual(len(product-c.PRODUCT_SOURCES),26)
+        self.assertEqual(len(workload-c.WORKLOAD_SOURCES),16)
         for name in product|workload:self.assertTrue((ROOT/name).is_file(),name)
         with self.assertRaises(ValueError):c.required_source_sets('unknown')
 

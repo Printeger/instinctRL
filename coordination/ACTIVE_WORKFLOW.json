@@ -149,7 +149,7 @@
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
     "controller_deployed": false,
     "current_live_jobs": [],
-    "automatic_model_sessions_started": 5,
+    "automatic_model_sessions_started": 6,
     "exact_job_permission_required": true,
     "goal_complete": false,
     "baseline_cpu_audit": "docs/experiments/r6-robustness-auto/BASELINE_CPU_AUDIT.json",
@@ -158,7 +158,7 @@
     "metric_measurement_cpu_tests": "docs/experiments/r6-robustness-auto/CPU_METRIC_MEASUREMENT_TESTS.json",
     "archive_scenario_cpu_tests": "docs/experiments/r6-robustness-auto/CPU_ARCHIVE_SCENARIO_TESTS.json",
     "capacity_allocation_status": "DRAFT_FINAL_PROTECTION80GIB_24000SECONDS_PENDING_REVIEW",
-    "automatic_model_sessions_completed": 5,
+    "automatic_model_sessions_completed": 6,
     "cpu_review_findings": 0,
     "cpu_fix_tests": 67,
     "cpu_fix_evidence": "docs/experiments/r6-robustness-auto/CPU_REVIEW_FIX_TESTS.json",
@@ -187,6 +187,9 @@
     "accepted_cpu_control_review": "docs/experiments/r6-robustness-auto/reviews/cpu-control-fix-review.json",
     "cpu_snapshot_status": "ACTUAL_CONFIG_PASS_READ_ONLY_PENDING_COMPATIBILITY_REVIEW",
     "cpu_snapshot_evidence": "docs/experiments/r6-robustness-auto/CPU_R6_SNAPSHOT_VERIFICATION.json",
-    "cpu_snapshot_input_commit": "0add4b0eb914a2bd55e9f84bf8e344d58167cec7"
+    "cpu_snapshot_input_commit": "0add4b0eb914a2bd55e9f84bf8e344d58167cec7",
+    "source_native_review_status": "MUST_FIX_REPAIR_CANDIDATE_PENDING_REVIEW",
+    "source_native_review": "docs/experiments/r6-robustness-auto/reviews/cpu-source-native-review.json",
+    "source_native_repair_evidence": "docs/experiments/r6-robustness-auto/CPU_SOURCE_NATIVE_REPAIR_TESTS.json"
   }
 }

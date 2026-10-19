@@ -65,6 +65,24 @@ class SnapshotTests(unittest.TestCase):
         self.assertEqual(next(iter(state['events'].values()))['status'],'FAILED_PRESERVED_NO_RETRY')
         with self.assertRaisesRegex(RecoveryError,'PRIOR_FAILURE_NO_RETRY'):self.prepare()
 
+    def test_readonly_untracked_python_is_rejected(self):
+        self.prepare();self.target.chmod(self.target.stat().st_mode|0o200)
+        extra=self.target/'sitecustomize.py';extra.write_text('raise RuntimeError("must never execute")');extra.chmod(0o444)
+        self.target.chmod(self.target.stat().st_mode&~0o222)
+        with self.assertRaisesRegex(RecoveryError,'INVENTORY_DRIFT'):self.prepare()
+
+    def test_readonly_ignored_bytecode_is_rejected(self):
+        self.prepare();self.target.chmod(self.target.stat().st_mode|0o200)
+        extra=self.target/'unexpected.pyc';extra.write_bytes(b'not real bytecode');extra.chmod(0o444)
+        self.target.chmod(self.target.stat().st_mode&~0o222)
+        with self.assertRaisesRegex(RecoveryError,'INVENTORY_DRIFT'):self.prepare()
+
+    def test_symlink_addition_is_rejected(self):
+        self.prepare();self.target.chmod(self.target.stat().st_mode|0o200)
+        (self.target/'external.py').symlink_to(self.path)
+        self.target.chmod(self.target.stat().st_mode&~0o222)
+        with self.assertRaisesRegex(RecoveryError,'SYMLINK_ENTRY'):self.prepare()
+
     def test_stop_prevents_reservation_or_clone(self):
         (self.journal.directory/'STOP').touch()
         with self.assertRaisesRegex(RecoveryError,'STOP'):self.prepare()

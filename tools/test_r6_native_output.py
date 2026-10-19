@@ -1,6 +1,9 @@
 """Real CPU fork/exec/pipe tests for R6 native output bounds."""
 import json
 import hashlib
+import os
+from unittest.mock import patch
+from training_workloads.unified_h1 import local_dispatch as dispatch
 from pathlib import Path
 import sys
 import tempfile
@@ -52,6 +55,54 @@ class NativeOutputTests(unittest.TestCase):
         (self.coordination/'STOP').touch()
         with self.assertRaisesRegex(DispatchError,'STOP'):self.run_child('pass')
         self.assertFalse((self.root/'native-output.log').exists())
+
+    def test_timeout_retains_sigterm_diagnostics_and_exit_seven(self):
+        code="import os,time,signal;signal.signal(signal.SIGTERM,lambda *a:(os.write(2,b'term-tail'),os._exit(7)));os.write(1,b'prefix');time.sleep(30)"
+        with self.assertRaisesRegex(DispatchError,'completion timeout'):self.run_child(code,timeout=.15)
+        self.assertEqual((self.root/'native-output.log').read_bytes(),b'prefixterm-tail')
+        self.assertEqual(self.receipt()['native_exit_code'],7)
+
+    def test_already_exited_child_is_reaped_without_signalling_reused_group(self):
+        class API:
+            def waitpid(self,*args):return 4242,7<<8
+            def getpgid(self,*args):raise AssertionError('must not inspect reused PID')
+            def killpg(self,*args):raise AssertionError('must not signal reused group')
+        self.assertEqual(dispatch._reclaim(4242,4242,process_api=API()),7)
+
+    def test_fork_failure_closes_descriptors_and_saves_failure(self):
+        before=set(os.listdir('/proc/self/fd'))
+        with patch.object(os,'fork',side_effect=OSError('CPU fork EAGAIN')):
+            with self.assertRaisesRegex(OSError,'EAGAIN'):self.run_child('pass')
+        self.assertEqual(set(os.listdir('/proc/self/fd')),before)
+        self.assertIn('EAGAIN',self.receipt()['error'])
+        self.assertEqual(self.receipt()['status'],'FAILED_PREFIX_PRESERVED')
+
+    def test_selector_setup_failure_reaps_held_child_and_closes_descriptors(self):
+        before=set(os.listdir('/proc/self/fd'));children=[];fork=os.fork
+        def spawn():
+            pid=fork()
+            if pid:children.append(pid)
+            return pid
+        class Broken:
+            def register(self,*args):raise RuntimeError('CPU register failure')
+            def close(self):pass
+        with patch.object(os,'fork',side_effect=spawn),patch.object(dispatch.selectors,'DefaultSelector',return_value=Broken()):
+            with self.assertRaisesRegex(RuntimeError,'register failure'):self.run_child('pass')
+        self.assertEqual(set(os.listdir('/proc/self/fd')),before)
+        for pid in children:
+            with self.assertRaises(ChildProcessError):os.waitpid(pid,os.WNOHANG)
+        self.assertIn('register failure',self.receipt()['error'])
+
+    def test_native_fsync_failure_cannot_return_success(self):
+        original=os.fsync
+        def sync(fd):
+            if os.readlink('/proc/self/fd/'+str(fd)).endswith('native-output.log'):
+                raise OSError('CPU native fsync failure')
+            return original(fd)
+        with patch.object(os,'fsync',side_effect=sync):
+            with self.assertRaisesRegex(DispatchError,'cleanup/persistence failed'):self.run_child('pass')
+        self.assertEqual(self.receipt()['status'],'FAILED_PREFIX_PRESERVED')
+        self.assertEqual(self.receipt()['native_exit_code'],0)
 
     def test_invalid_limit_rejected_before_spawn(self):
         for cap in [0,-1,True,256*1024**2+1]:

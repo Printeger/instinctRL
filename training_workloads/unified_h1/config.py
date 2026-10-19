@@ -81,6 +81,39 @@ R6_WORKLOAD_SOURCES = WORKLOAD_SOURCES | {
 }
 
 
+# Executable package initializers and transitive local dependencies for R6 only.
+R6_PRODUCT_SOURCES |= {
+    'isaaclab-training/instinctlab/__init__.py',
+    'isaaclab-training/instinctlab/assets/__init__.py',
+    'isaaclab-training/instinctlab/assets/taslab_uav/__init__.py',
+    'isaaclab-training/instinctlab/assets/taslab_uav/config.py',
+    'isaaclab-training/instinctlab/control/__init__.py',
+    'isaaclab-training/instinctlab/control/command_adapter.py',
+    'isaaclab-training/instinctlab/control/rotor_actuation.py',
+    'isaaclab-training/instinctlab/evaluation/__init__.py',
+    'isaaclab-training/instinctlab/evaluation/audit.py',
+    'isaaclab-training/instinctlab/evaluation/baseline_controller_execution.py',
+    'isaaclab-training/instinctlab/evaluation/baseline_execution.py',
+    'isaaclab-training/instinctlab/evaluation/baseline_run.py',
+    'isaaclab-training/instinctlab/evaluation/baselines.py',
+    'isaaclab-training/instinctlab/evaluation/matrix.py',
+    'isaaclab-training/instinctlab/evaluation/metrics.py',
+    'isaaclab-training/instinctlab/evaluation/observability.py',
+    'isaaclab-training/instinctlab/evaluation/runtime.py',
+    'isaaclab-training/instinctlab/evaluation/scenarios.py',
+    'isaaclab-training/instinctlab/observations/__init__.py',
+    'isaaclab-training/instinctlab/observations/audit.py',
+    'isaaclab-training/instinctlab/sensors/__init__.py',
+    'isaaclab-training/instinctlab/task/critic.py',
+    'isaaclab-training/instinctlab/task/rewards.py',
+}
+R6_WORKLOAD_SOURCES |= {
+    'training_workloads/scale_003/__init__.py',
+    'training_workloads/scale_003/config.py',
+    'training_workloads/scale_003/schedule.py',
+}
+
+
 def required_source_sets(schema: str) -> tuple[set[str], set[str]]:
     if schema == R6_CONFIG_SCHEMA:
         return R6_PRODUCT_SOURCES, R6_WORKLOAD_SOURCES

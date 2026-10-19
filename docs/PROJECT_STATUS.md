@@ -5,7 +5,7 @@
 基线config/源码/method/runtime可执行文件及地面/UAV资产已完成CPU哈希审计。
 主委托、预算和证据位于 `docs/experiments/r6-robustness-auto/`。
 
-自动审核会话已完成5次，剩余27次。首次CLI认证/schema通过但沙箱核查失败，第二次独审提出5项MUST_FIX；
+自动审核会话已完成6次，剩余26次。首次CLI认证/schema通过但沙箱核查失败，第二次独审提出5项MUST_FIX；
 第三次已核验准确修复与新增模型交接路径，返回PASS_CPU_SCOPE/noMUST_FIX。
 `reviews/cpu-fix-handoff-review.json`、三次原始receipt/usage/事件完整保留。
 独审覆盖31项控制/worker、36项张量/评分/归档和7项交接测试；确认配对噪声、预算保护、
@@ -80,6 +80,7 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 实际CPU快照已固定：tag `r6-cpu-snapshot-input-01` / commit `0add4b0eb914a2bd55e9f84bf8e344d58167cec7`，路径 `coordination/research/workspaces/R6-baseline-source-candidate-01`。既有Python完整load_config通过，源码/方法/资产/工具身份校验无替身；全部文件只读，990,058,113bytes，创建前保守预留2GiB并保持全额计费。实际重放只核验同一快照，未再克隆/预留。4项新快照CPU测试通过，初次fixture预算计数失败保留；见 `CPU_R6_SNAPSHOT_VERIFICATION.json`。冻结基线全部旧source pin与原评分器核验不变，5个产品改动仅限两环境接线与3个R6测量/物理模块；兼容payload草案已保存但尚无独审签收。无GPU查询/live启动，capacity仍false；协议/容量、exact Store、完整controller及科学验证未完成。
 新增每块motion/result合计16MiB写前配额，超过时两个文件均不开始写，仍受全局累计额度约束。7项CPU检查通过；全部16块×32lane完整motion字段用长有限float64序列化，未删字段/降采样，见 `CPU_R6_METADATA_QUOTA_TESTS.json`。V4容量草案按每身份2GiB快照预留和最终七次180秒新鲜窗口重算，最终保护提案93GiB/27000秒；一个开发候选示例可装入剩35GiB，但额外候选/必要控制仍需独立容量准入。操作保护80GiB/24000秒及capacityfalse不变。原快照0add4b0未修改，新代码未进实际快照；原生跨路径总量、独审和完整controller仍未闭合。
 R6原生控制台接线候选：现有held-child分派可将stdout/stderr合并到job目录独占native-output.log，256MiB写前上限，超额保留准确前缀/SHA并失败；STOP/超时保留记录，已观测原生退出码与输出完成状态分开，后代清理仍由原rlflow lifeguard证明。56项相关CPU检查通过，见 `CPU_R6_NATIVE_OUTPUT_TESTS.json`。同时修正rlflow的R6评价seed分类，按evaluation_seed校验。Kit现有2GiB单文件上限加console256MiB不能代表所有跨路径native输出已受限；其余旋转日志/cache/crash路径仍待核对。新源码/控制工具发行尚未冻结或独审，原快照不变，capacityfalse且无R6 live。
+第六次独审为MUST_FIX，5项问题见 `reviews/cpu-source-native-review.json`，实际receipt/usage保留：依赖闭包遗漏、快照未拒绝额外文件、退出码/终止日志丢失、已回收PID复用误杀、setup资源泄漏。已形成修复候选并通过86项相关CPU检查，见 `CPU_SOURCE_NATIVE_REPAIR_TESTS.json`；新增反例测试还发现并修正fork至setsid间的清理竞态，原失败保留。R6新增26个传递依赖；快照完整清单含ignored/Git文件且拒绝软链；分派从首次资源获取起受清理保护，保留wait状态和终止日志，已回收PID不再发信号。原5项MUST_FIX尚未独立复核关闭，旧snapshot未改也未补造inventory。未创建新快照或启动live，capacityfalse；不能视为兼容/live/科学接受。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）

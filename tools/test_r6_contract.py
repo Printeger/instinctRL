@@ -97,6 +97,27 @@ class ContractTests(unittest.TestCase):
             validate_compatibility(self.write('compatibility-metric-change.json',record),origin,{**new,'resolved_identity':execution})
 
 
+    def test_newly_manifested_dependency_must_match_original_checkout(self):
+        metric='training_workloads/unified_h1/evaluation.py'
+        dependency='isaaclab-training/instinctlab/observations/audit.py'
+        for name in (metric,dependency):
+            path=self.root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_text('CPU original bytes')
+        metric_sha=pin(self.root/metric)['sha256'];dep_sha=pin(self.root/dependency)['sha256']
+        old=dict(versions={},actor={},training={},execution={},method=dict(version='same',proposal_sha256='same',hashes={}),
+                 product=dict(path=str(self.root),source_sha256={}),workload=dict(path=str(self.root),source_sha256={metric:metric_sha}))
+        new=copy.deepcopy(old);new['product']['source_sha256'][dependency]=dep_sha
+        old_pin=self.write('old-deps.json',old);new_pin=self.write('new-deps.json',new)
+        def identity(p):return dict(product_commit='1'*40,product_tree='2'*40,workload_commit='3'*40,workload_tree='4'*40,config_sha256=p['sha256'])
+        origin=identity(old_pin);execution=identity(new_pin)
+        record=dict(schema_version='r6-baseline-compatibility/1',origin_source_identity=origin,execution_source_identity=execution,
+                    origin_config=old_pin,execution_config=new_pin,changed_product_sources={dependency:dict(origin=None,execution=dep_sha)},independent_review={})
+        record_pin=self.write('compat-deps.json',record)
+        with patch('training_workloads.unified_h1.robustness_contract.accepted_review',return_value={}):
+            self.assertEqual(validate_compatibility(record_pin,origin,{**new,'resolved_identity':execution}),origin)
+            (self.root/dependency).write_text('changed source')
+            with self.assertRaises((ValueError,PermissionError)):
+                validate_compatibility(record_pin,origin,{**new,'resolved_identity':execution})
+
     def test_missing_or_changed_r6_resource_policy_is_rejected(self):
         protocol=json.loads(Path(self.p['r6']['protocol']['path']).read_text())
         changed=copy.deepcopy(protocol);changed.pop('resource_admission')

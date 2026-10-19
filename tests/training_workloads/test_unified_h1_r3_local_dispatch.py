@@ -144,7 +144,8 @@ class InertProductionDispatcherTests(unittest.TestCase):
                 with self.assertRaisesRegex(DispatchError, message) as caught:
                     self.dispatch(directory, api, handshake_timeout_s=.01, completion_timeout_s=.01)
                 self.assertEqual(caught.exception.owned_pid, api.pid)
-                self.assertEqual(api.signalled_groups, [api.pid])
+                self.assertEqual(api.signalled_groups, [] if api.identity_mode == 'early-exit' else [api.pid])
+                if api.identity_mode == 'early-exit':self.assertEqual(caught.exception.native_exit_code,23)
 
     def test_reclaim_refuses_nonowned_group(self):
         api = InertProcessApi()

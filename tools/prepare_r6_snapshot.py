@@ -55,9 +55,27 @@ def preflight(config_path,commit):
     return config,target,commit
 
 
+def execution_inventory(target):
+    """Every checkout entry, including ignored files and Git metadata."""
+    import stat
+    entries={}
+    for path in [target,*sorted(target.rglob('*'))]:
+        info=path.lstat();relative=str(path.relative_to(target))
+        if stat.S_ISLNK(info.st_mode):raise RecoveryError('SNAPSHOT_SYMLINK_ENTRY: '+relative)
+        if info.st_mode & 0o222:raise RecoveryError('SNAPSHOT_NOT_READ_ONLY')
+        if stat.S_ISREG(info.st_mode):
+            entries[relative]=dict(type='file',bytes=info.st_size,mode=stat.S_IMODE(info.st_mode),sha256=file_pin(path)['sha256'])
+        elif stat.S_ISDIR(info.st_mode):entries[relative]=dict(type='directory',mode=stat.S_IMODE(info.st_mode))
+        else:raise RecoveryError('SNAPSHOT_SPECIAL_ENTRY: '+relative)
+    return entries
+
+
 def verify_frozen(result,config):
     import hashlib
     target=Path(result['snapshot'])
+    if 'execution_inventory' not in result:raise RecoveryError('SNAPSHOT_INVENTORY_REQUIRED')
+    expected=json.loads(checked(result['execution_inventory']).read_text())
+    if execution_inventory(target)!=expected:raise RecoveryError('SNAPSHOT_INVENTORY_DRIFT')
     if (target.is_symlink() or not target.is_dir() or
             any(p.stat().st_mode & 0o222 for p in [target,*target.rglob('*')] if not p.is_symlink())):
         raise RecoveryError('SNAPSHOT_NOT_READ_ONLY')
@@ -123,6 +141,13 @@ def prepare(journal,config_path,commit):
         for p in sorted(target.rglob('*'),key=lambda p:len(p.parts),reverse=True):
             if not p.is_symlink():p.chmod(p.stat().st_mode & ~0o222)
         target.chmod(target.stat().st_mode & ~0o222)
+        inventory_path=journal.directory/'snapshots'/key/'execution-inventory.json'
+        inventory_bytes=canonical(execution_inventory(target))+b'\n'
+        if len(inventory_bytes)>16*1024**2 or result['observed_file_bytes']+len(inventory_bytes)>RESERVATION:
+            raise RecoveryError('SNAPSHOT_INVENTORY_OUTPUT_CAP')
+        atomic(inventory_path,inventory_bytes)
+        result['execution_inventory']=file_pin(inventory_path)
+        result['inventory_bytes']=len(inventory_bytes)
         result.update(status='CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY',read_only=True)
     except Exception as error:
         result.update(error_type=type(error).__name__,error=str(error))
@@ -131,7 +156,7 @@ def prepare(journal,config_path,commit):
     atomic(output,canonical(result)+b'\n')
     state=journal.read();state['events'][key].update(receipt=file_pin(output),status=result['status'])
     from tools.r6_budget import observe
-    state['budget']=observe(state['budget'],event_key=event,resources={'output_actual_plus_unreleased_reservations_bytes':result.get('observed_file_bytes',0)},evidence=file_pin(output))
+    state['budget']=observe(state['budget'],event_key=event,resources={'output_actual_plus_unreleased_reservations_bytes':result.get('observed_file_bytes',0)+result.get('inventory_bytes',0)},evidence=file_pin(output))
     journal.save(state)
     if result['status']!='CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY':raise RecoveryError('SNAPSHOT_FAILED_PRESERVED: '+str(output))
     return result

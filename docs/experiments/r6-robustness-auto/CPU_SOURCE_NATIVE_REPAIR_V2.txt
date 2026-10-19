@@ -1,0 +1,26 @@
+......F................................................................. [100%]
+=================================== FAILURES ===================================
+_ NativeOutputTests.test_selector_setup_failure_reaps_held_child_and_closes_descriptors _
+
+self = <test_r6_native_output.NativeOutputTests testMethod=test_selector_setup_failure_reaps_held_child_and_closes_descriptors>
+
+    def test_selector_setup_failure_reaps_held_child_and_closes_descriptors(self):
+        before=set(os.listdir('/proc/self/fd'));children=[];fork=os.fork
+        def spawn():
+            pid=fork()
+            if pid:children.append(pid)
+            return pid
+        class Broken:
+            def register(self,*args):raise RuntimeError('CPU register failure')
+            def close(self):pass
+        with patch.object(os,'fork',side_effect=spawn),patch.object(dispatch.selectors,'DefaultSelector',return_value=Broken()):
+            with self.assertRaisesRegex(RuntimeError,'register failure'):self.run_child('pass')
+        self.assertEqual(set(os.listdir('/proc/self/fd')),before)
+        for pid in children:
+>           with self.assertRaises(ChildProcessError):os.waitpid(pid,os.WNOHANG)
+E           AssertionError: ChildProcessError not raised
+
+tools/test_r6_native_output.py:93: AssertionError
+=========================== short test summary info ============================
+FAILED tools/test_r6_native_output.py::NativeOutputTests::test_selector_setup_failure_reaps_held_child_and_closes_descriptors
+1 failed, 71 passed in 10.36s

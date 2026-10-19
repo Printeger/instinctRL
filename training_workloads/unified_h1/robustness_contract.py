@@ -130,6 +130,13 @@ def validate_compatibility(pin,origin,config):
     changed={k:{'origin':a.get(k),'execution':b.get(k)} for k in a.keys()|b.keys() if a.get(k)!=b.get(k)}
     allowed={'isaaclab-training/instinctlab/envs/taslab_direct_env.py','isaaclab-training/instinctlab/envs/unified_h1_direct_env.py',
         *('isaaclab-training/instinctlab/observations/'+n+'.py' for n in ('robustness','robustness_adapter','robustness_physics'))}
+    # Newly manifested pre-existing dependencies must match the original
+    # checkpoint checkout byte-for-byte; this does not authorize product edits.
+    from .config import R6_PRODUCT_SOURCES, PRODUCT_SOURCES
+    for relative in (R6_PRODUCT_SOURCES-PRODUCT_SOURCES)-allowed:
+        if relative in changed and relative not in a and relative in b:
+            validate_pin({'path':str(Path(old['product']['path'])/relative),'sha256':b[relative]})
+            allowed.add(relative)
     if not set(changed)<=allowed or changed!=record['changed_product_sources']:raise PermissionError('R6 baseline product integration differs')
     accepted_review(record['independent_review'],'PASS_R6_EXECUTION_COMPATIBILITY',payload_sha256=object_sha({k:v for k,v in record.items() if k!='independent_review'}))
     # Old absolute evidence stays bound to its bytes; current config validation
