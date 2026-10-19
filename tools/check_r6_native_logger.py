@@ -16,12 +16,18 @@ PYTHON=Path('/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11')
 PYTHON_LIBRARY=PYTHON.parent.parent/'lib/libpython3.11.so.1.0'
 
 
-def child():
+def child(library=None, flood=False):
     ctypes.CDLL(str(PYTHON_LIBRARY),mode=ctypes.RTLD_GLOBAL)
     ctypes.CDLL(str(KIT/'libcarb.so'),mode=ctypes.RTLD_GLOBAL)
     sys.path.insert(0,str(KIT/'kernel/py'))
     import carb
     logging=carb.logging.acquire_logging()
+    if library is not None:
+        adapter=ctypes.CDLL(str(library))
+        function=adapter.r6_check_native_logger
+        function.argtypes=[ctypes.c_int];function.restype=ctypes.c_int
+        code=function(int(flood))
+        if code:raise RuntimeError(f'native logger returned {code}')
     # Inspect the installed binding before selecting a file-logger API. Never
     # start the framework or load plugins to make an unavailable API appear.
     print(json.dumps({'schema_version':'r6-native-logger-api/1',
@@ -32,7 +38,7 @@ def child():
         'framework_startup_called':False,'kit_started':False},sort_keys=True),flush=True)
 
 
-def run(output):
+def run(output,library=None,flood=False):
     from training_workloads.unified_h1.local_dispatch import dispatch_held
     from tools.r6_recovery import file_pin
     output=output.resolve();output.mkdir(exist_ok=False)
@@ -40,8 +46,13 @@ def run(output):
             KIT/'libcarb.so',KIT/'kernel/py/carb/__init__.py',
             KIT/'kernel/py/carb/_carb.cpython-311-x86_64-linux-gnu.so']
     pins=[file_pin(p) for p in inputs]
+    if library is not None:
+        library=library.resolve();inputs.append(library);pins.append(file_pin(library))
     (output/'inputs.json').write_text(json.dumps(pins,indent=2)+'\n')
-    code=dispatch_held([str(PYTHON),'-I','-S','-B',str(Path(__file__).resolve()),'--child'],
+    args=[str(PYTHON),'-I','-S','-B',str(Path(__file__).resolve()),'--child']
+    if library is not None:args+=['--library',str(library)]
+    if flood:args+=['--flood']
+    code=dispatch_held(args,
         cwd=output,identity_path=output/'held.json',coordination_root=ROOT/'coordination/research',
         completion_timeout_s=15,native_output_cap_bytes=256*1024,
         environment={'PYTHONDONTWRITEBYTECODE':'1','CUDA_VISIBLE_DEVICES':''})
@@ -53,7 +64,8 @@ def run(output):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--child',action='store_true');parser.add_argument('--output',type=Path)
+    parser.add_argument('--library',type=Path);parser.add_argument('--flood',action='store_true')
     args=parser.parse_args()
-    if args.child:child()
-    elif args.output is not None:sys.exit(run(args.output))
+    if args.child:child(args.library,args.flood)
+    elif args.output is not None:sys.exit(run(args.output,args.library,args.flood))
     else:parser.error('--output required')
