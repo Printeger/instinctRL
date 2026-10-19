@@ -1,0 +1,33 @@
+{
+  "schema_version": "independent-review-relay/1",
+  "reviewer": "/root/review_l1",
+  "recorder": "root relay of independent final controller review",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "Exact issued L1 controller plan; not training result or final Goal acceptance",
+  "identities": {
+    "plan_payload_sha256": "9b24e230329c8ab36a95cdd70425aaa338e295d0d0a26b7afe2e5f6670b11446",
+    "spec": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-01/inputs/R1-research-formal-training.authorized.json",
+      "sha256": "3ac1758573bb2df3a400f5def9310aa99dbd7cf87085ea6dc873999d4a9ec913"
+    },
+    "e1_actual_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/e1-actual-independent.json",
+      "sha256": "981152430c41e78e443c40afaec4e5d0491143bccc175207719c74ffcf531059"
+    }
+  },
+  "checks": [
+    "All eight plan pins verified",
+    "Immutable AUTH equals reviewed proposal; issued spec differs only in accepted conditions",
+    "experiments.validate and authorized PASS; Store A-16b87f0fbbf2df04; all evidence pins accepted",
+    "Idle ownership PASS; E1 actual evidence and full tasks/motion verified",
+    "Exact poll15/retries0/model7200/output67108864",
+    "After prompt preserves complete Goal and both actual nodes acceptance/evaluation plus independent validation"
+  ],
+  "release_requirement": "Add only review pin; commit/tag/push then verify_plan; existing controller submits",
+  "actions": {
+    "file_edits": 0,
+    "GPU_queries": 0,
+    "submissions": 0
+  }
+}

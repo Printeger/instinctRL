@@ -1,0 +1,27 @@
+{
+  "id": "W-L1-001",
+  "goal_id": "R5-W-CLOSURE-AUTO-20261019",
+  "evidence_id": "E-R5-W-CLOSURE-L1-001",
+  "master_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+    "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+  },
+  "cumulative_caps": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 98880,
+    "live_starts": 3,
+    "simulator_initialization_reservations": 3,
+    "optimizer_updates": 256,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048,
+    "training_checkpoint_writes": 2,
+    "allocated_gpu_seconds": 7230,
+    "wall_seconds_including_cleanup": 7230,
+    "output_peak_and_reservations_bytes": 30064771072
+  },
+  "scope": "Cumulative E1 plus L1 256-update nearwall training and subsequent two-node full evaluation; each exact job separately issued",
+  "previous_stage": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-E1-001.json",
+    "sha256": "1e540a514b50ea43b8d0a0af5f76b20d79535597184a885134364a08f5f978b5"
+  }
+}

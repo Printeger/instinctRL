@@ -21,18 +21,56 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 0,
-    "simulator_initialization_reservations": 0,
+    "live_starts": 1,
+    "simulator_initialization_reservations": 1,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 0,
-    "wall_seconds_including_cleanup": 0,
-    "output_peak_and_reservations_bytes": 0
+    "allocated_gpu_seconds": 207.57661264995113,
+    "wall_seconds_including_cleanup": 210.3869727072306,
+    "output_peak_and_reservations_bytes": 29545460
   },
   "reservations": {
-    "live_entries": [],
+    "live_entries": [
+      {
+        "spec_id": "R5-W-E1-CONTROL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2",
+        "job_id": "J-79c61443f05bdaee",
+        "experiment_id": "R5-W-E1-CONTROL-01",
+        "group": "R1",
+        "mode": "research-formal-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 32960,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 32960,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "raw_status_missing": false,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 29545460,
+        "inventory": "experiments/R5-W-E1-CONTROL-01/live/R1-research-formal-evaluation/INVENTORY.json"
+      }
+    ],
     "source_snapshots": [
       {
         "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019",
@@ -48,6 +86,10 @@
     {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-E1-001.json",
       "sha256": "1e540a514b50ea43b8d0a0af5f76b20d79535597184a885134364a08f5f978b5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-L1-001.json",
+      "sha256": "d5848a1efbb9f4a630f2d749cdca22ef2c4845dc39b6b6f7fc9d4cb51133529c"
     }
   ],
   "historical_accounting": "New incremental envelope; every old ledger and reservation remains unchanged. No refunds inferred from raw data.",
@@ -57,5 +99,12 @@
       "agent": "/root/authority_review"
     }
   ],
-  "observed": {}
+  "observed": {
+    "training_transitions": 0,
+    "nontraining_transitions": 32960,
+    "optimizer_updates": 0,
+    "training_checkpoint_writes": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0
+  }
 }
