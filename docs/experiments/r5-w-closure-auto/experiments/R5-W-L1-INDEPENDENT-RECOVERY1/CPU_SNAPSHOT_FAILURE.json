@@ -1,0 +1,15 @@
+{
+  "status": "CPU_CONFIG_PATH_MISMATCH_NO_LIVE",
+  "failed_config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/snapshot_config.json",
+    "sha256": "79031178c497942340cbe555fd6647b65fe49badbdbd4be6a5956d0ddbc94a27"
+  },
+  "failed_snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-recovery1-20261019",
+  "error": "ValueError: method identity mismatch",
+  "cause": "Method proposal_path retained old snapshot path; exact load_config rejected before live. Method bytes unchanged.",
+  "reservation": "Original2GiB retained; old snapshot not modified; new path/config r2",
+  "replacement_config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/snapshot_config.r2.json",
+    "sha256": "6a65b6aeaa3e970e1fd89637ce1f66908ff95e68a2e1579bd73ce3df77000ed1"
+  }
+}
