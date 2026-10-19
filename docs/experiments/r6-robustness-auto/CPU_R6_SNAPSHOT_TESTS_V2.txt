@@ -1,0 +1,12 @@
+test_failed_validation_keeps_reserve_and_blocks_retry (tools.test_r6_snapshot.SnapshotTests.test_failed_validation_keeps_reserve_and_blocks_retry) ... HEAD is now at 8c5ba44 fixture
+ok
+test_real_clone_freeze_and_replay_no_second_run_or_reservation (tools.test_r6_snapshot.SnapshotTests.test_real_clone_freeze_and_replay_no_second_run_or_reservation) ... HEAD is now at 8c5ba44 fixture
+ok
+test_replay_rejects_thawed_snapshot (tools.test_r6_snapshot.SnapshotTests.test_replay_rejects_thawed_snapshot) ... HEAD is now at 8c5ba44 fixture
+ok
+test_stop_prevents_reservation_or_clone (tools.test_r6_snapshot.SnapshotTests.test_stop_prevents_reservation_or_clone) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.143s
+
+OK

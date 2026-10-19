@@ -1,0 +1,36 @@
+test_failed_validation_keeps_reserve_and_blocks_retry (tools.test_r6_snapshot.SnapshotTests.test_failed_validation_keeps_reserve_and_blocks_retry) ... HEAD is now at d014a6a fixture
+FAIL
+test_real_clone_freeze_and_replay_no_second_run_or_reservation (tools.test_r6_snapshot.SnapshotTests.test_real_clone_freeze_and_replay_no_second_run_or_reservation) ... HEAD is now at d014a6a fixture
+ok
+test_replay_rejects_thawed_snapshot (tools.test_r6_snapshot.SnapshotTests.test_replay_rejects_thawed_snapshot) ... HEAD is now at 64d3d48 fixture
+ok
+test_stop_prevents_reservation_or_clone (tools.test_r6_snapshot.SnapshotTests.test_stop_prevents_reservation_or_clone) ... FAIL
+
+======================================================================
+FAIL: test_failed_validation_keeps_reserve_and_blocks_retry (tools.test_r6_snapshot.SnapshotTests.test_failed_validation_keeps_reserve_and_blocks_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_snapshot.py", line 65, in test_failed_validation_keeps_reserve_and_blocks_retry
+    state=self.journal.read();self.assertEqual(len(state['budget']['reservations']),1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 6 != 1
+
+======================================================================
+FAIL: test_stop_prevents_reservation_or_clone (tools.test_r6_snapshot.SnapshotTests.test_stop_prevents_reservation_or_clone)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_snapshot.py", line 72, in test_stop_prevents_reservation_or_clone
+    self.assertFalse(self.target.exists());self.assertEqual(self.journal.read()['budget']['reservations'],[])
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'event_key': '["CPU-PACKAGE-REVIEW-001",[2447 chars] 1}}] != []
+
+First list contains 5 additional elements.
+First extra element 0:
+{'event_key': '["CPU-PACKAGE-REVIEW-001","R6-ROBUSTNESS-AUTO-20261019","ac5d4ee21bd62ea42de7ec110e9bca48899eae869fc2d9ee709a3ffcf06a8487","CPU-NO-LIVE-JOB","independent-review"]', 'identity': {'event_id': 'CPU-PACKAGE-REVIEW-001', 'goal_id': 'R6-ROBUSTNESS-AUTO-20261019', 'input_sha256': 'ac5d4ee21bd62ea42de7ec110e9bca48899eae869fc2d9ee709a3ffcf06a8487', 'job_id': 'CPU-NO-LIVE-JOB', 'role': 'independent-review'}, 'purpose': 'development', 'resources': {'automatic_model_sessions': 1}}
+
+Diff is 2914 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.142s
+
+FAILED (failures=2)
