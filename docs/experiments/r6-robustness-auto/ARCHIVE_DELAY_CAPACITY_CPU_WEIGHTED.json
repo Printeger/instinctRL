@@ -1,0 +1,220 @@
+{
+  "status": "CPU_FIXTURE_NOT_CAPACITY_ACCEPTANCE",
+  "seed": 2026102001,
+  "shape": [
+    32,
+    21240
+  ],
+  "dtype": "float32",
+  "cases": [
+    {
+      "sigma_m": 0.0,
+      "delay_cycles": 0,
+      "frame_bytes": [
+        2222402,
+        2222628,
+        2222362,
+        4437615
+      ],
+      "encoding_seconds": [
+        0.04974354105070233,
+        0.048737573903054,
+        0.04854405019432306,
+        0.1366901327855885
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.0,
+      "delay_cycles": 1,
+      "frame_bytes": [
+        2237037,
+        4437637,
+        4437808,
+        4437712
+      ],
+      "encoding_seconds": [
+        0.09590544924139977,
+        0.13578929798677564,
+        0.13329200400039554,
+        0.13451096508651972
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.01,
+      "delay_cycles": 0,
+      "frame_bytes": [
+        3673246,
+        3673072,
+        3673316,
+        4437915
+      ],
+      "encoding_seconds": [
+        0.11893256194889545,
+        0.120690843090415,
+        0.11982443789020181,
+        0.13425710005685687
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.01,
+      "delay_cycles": 1,
+      "frame_bytes": [
+        2236956,
+        4437376,
+        4437616,
+        4437487
+      ],
+      "encoding_seconds": [
+        0.09616935299709439,
+        0.13487761095166206,
+        0.1359130791388452,
+        0.13569377595558763
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.03,
+      "delay_cycles": 0,
+      "frame_bytes": [
+        3819139,
+        3819011,
+        3819222,
+        4437981
+      ],
+      "encoding_seconds": [
+        0.12440394796431065,
+        0.12492686742916703,
+        0.12553365714848042,
+        0.13531117839738727
+      ],
+      "bitwise_roundtrip": true
+    },
+    {
+      "sigma_m": 0.03,
+      "delay_cycles": 1,
+      "frame_bytes": [
+        2237045,
+        4437702,
+        4437698,
+        4437980
+      ],
+      "encoding_seconds": [
+        0.094814398791641,
+        0.1347638093866408,
+        0.13451347406953573,
+        0.13649400928989053
+      ],
+      "bitwise_roundtrip": true
+    }
+  ],
+  "blocks": [
+    {
+      "block_id": "S-clean-low",
+      "frames": 331,
+      "estimated_measurement_bytes": 735689642
+    },
+    {
+      "block_id": "S-clean-high",
+      "frames": 331,
+      "estimated_measurement_bytes": 735689642
+    },
+    {
+      "block_id": "S-noise",
+      "frames": 331,
+      "estimated_measurement_bytes": 1215867526
+    },
+    {
+      "block_id": "S-delay-drop",
+      "frames": 331,
+      "estimated_measurement_bytes": 1466713485
+    },
+    {
+      "block_id": "X-clean",
+      "frames": 201,
+      "estimated_measurement_bytes": 446748002
+    },
+    {
+      "block_id": "X-noise",
+      "frames": 201,
+      "estimated_measurement_bytes": 738336446
+    },
+    {
+      "block_id": "P-clean",
+      "frames": 331,
+      "estimated_measurement_bytes": 735689642
+    },
+    {
+      "block_id": "P-combined",
+      "frames": 331,
+      "estimated_measurement_bytes": 1466650236
+    },
+    {
+      "block_id": "W-near",
+      "frames": 331,
+      "estimated_measurement_bytes": 735689642
+    },
+    {
+      "block_id": "W-middle",
+      "frames": 331,
+      "estimated_measurement_bytes": 735689642
+    },
+    {
+      "block_id": "W-far",
+      "frames": 331,
+      "estimated_measurement_bytes": 735689642
+    },
+    {
+      "block_id": "W-combined",
+      "frames": 331,
+      "estimated_measurement_bytes": 1466650236
+    },
+    {
+      "block_id": "stress-S-noise",
+      "frames": 331,
+      "estimated_measurement_bytes": 1264162399
+    },
+    {
+      "block_id": "stress-S-combined",
+      "frames": 331,
+      "estimated_measurement_bytes": 1466679261
+    },
+    {
+      "block_id": "stress-P-high",
+      "frames": 331,
+      "estimated_measurement_bytes": 735689642
+    },
+    {
+      "block_id": "stress-W-high",
+      "frames": 331,
+      "estimated_measurement_bytes": 1466678705
+    }
+  ],
+  "per_model_measurement_bytes": 16148313790,
+  "final_four_measurement_bytes": 64593255160,
+  "aggregation": "Weight normal and dropped delivery by registered block counts; first preliminary v2 output used the largest sampled frame for every step, including blocks with no drop.",
+  "prior_estimate_limitation": "Prior same-frame fixture omitted delayed frames whose current clean and delivered ranges differ across acquisition times.",
+  "estimate_limitations": "Independent uniform clean frame each acquisition; includes initial invalid delay and one dropped delivery. This is not physical data or a worst-case bound. Does not include training, native logs, motion/force/reset audit, snapshots or videos.",
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+    "sha256": "a4633a179b0cc343cb323e7df3559281f718fc95e290145da27a01c35feca7c0"
+  },
+  "code": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_capacity_v2.py",
+      "sha256": "1d8e73eb6c54bf6da0f7cee60b8d0c15e689c246edb7bfcbe4cb011fed9399a4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/range_archive.py",
+      "sha256": "3f0692547012cfa43f80efda912d935cc568d31930eb46bf5e5f0e1f852b4729"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "f3847b22632c35f8af3bede9e794f34fcd19d92fe141f4d2ace848e84b0b4215"
+    }
+  ],
+  "gpu_queries": 0,
+  "simulator_initializations": 0
+}

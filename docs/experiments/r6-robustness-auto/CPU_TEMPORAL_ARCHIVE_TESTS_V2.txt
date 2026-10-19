@@ -1,0 +1,28 @@
+test_bit_exact_roundtrip_dedup_signed_zero_and_float64 (tools.test_r6_range_archive.ArchiveTests.test_bit_exact_roundtrip_dedup_signed_zero_and_float64) ... ok
+test_delayed_frame_reference_saves_bytes_and_requires_exact_previous (tools.test_r6_range_archive.ArchiveTests.test_delayed_frame_reference_saves_bytes_and_requires_exact_previous) ... ok
+test_delayed_noise_uses_previous_xor_and_preserves_exact_float_bits (tools.test_r6_range_archive.ArchiveTests.test_delayed_noise_uses_previous_xor_and_preserves_exact_float_bits) ... ok
+test_duplicate_open_cannot_overwrite_evidence (tools.test_r6_range_archive.ArchiveTests.test_duplicate_open_cannot_overwrite_evidence) ... ok
+test_extra_frame_and_wrong_identity_rejected (tools.test_r6_range_archive.ArchiveTests.test_extra_frame_and_wrong_identity_rejected) ... ok
+test_nonfinite_and_missing_fields_rejected (tools.test_r6_range_archive.ArchiveTests.test_nonfinite_and_missing_fields_rejected) ... ok
+test_quota_rejects_before_write_and_keeps_previous_frame (tools.test_r6_range_archive.ArchiveTests.test_quota_rejects_before_write_and_keeps_previous_frame) ... ok
+test_reader_mutation_cannot_corrupt_next_frame_reference (tools.test_r6_range_archive.ArchiveTests.test_reader_mutation_cannot_corrupt_next_frame_reference) ... ok
+test_truncation_and_corruption_rejected (tools.test_r6_range_archive.ArchiveTests.test_truncation_and_corruption_rejected) ... ok
+test_writer_copies_previous_and_reads_legacy_independent_frames (tools.test_r6_range_archive.ArchiveTests.test_writer_copies_previous_and_reads_legacy_independent_frames) ... ok
+test_actor_history_and_ics_extract_same_delivered_ranges (tools.test_r6_range_delivery.DeliveryTests.test_actor_history_and_ics_extract_same_delivered_ranges) ... ok
+test_common_noise_survives_different_validity_masks (tools.test_r6_range_delivery.DeliveryTests.test_common_noise_survives_different_validity_masks) ... ok
+test_delay_and_drop_retain_acquisition_time (tools.test_r6_range_delivery.DeliveryTests.test_delay_and_drop_retain_acquisition_time) ... ok
+test_invalid_beams_not_noised_and_input_unmodified (tools.test_r6_range_delivery.DeliveryTests.test_invalid_beams_not_noised_and_input_unmodified) ... ok
+test_noise_is_bounded_reproducible_and_changes_by_seed (tools.test_r6_range_delivery.DeliveryTests.test_noise_is_bounded_reproducible_and_changes_by_seed) ... ok
+test_selected_reset_cannot_leak_previous_episode_frame (tools.test_r6_range_delivery.DeliveryTests.test_selected_reset_cannot_leak_previous_episode_frame) ... ok
+test_timestamp_regression_rejected (tools.test_r6_range_delivery.DeliveryTests.test_timestamp_regression_rejected) ... ok
+test_zero_noise_does_not_consume_random_stream (tools.test_r6_range_delivery.DeliveryTests.test_zero_noise_does_not_consume_random_stream) ... ok
+test_actual_backend_entry_rejects_old_authority_and_unfrozen_protocol (tools.test_r6_evaluation.EvaluationTests.test_actual_backend_entry_rejects_old_authority_and_unfrozen_protocol) ... ok
+test_audit_quota_corruption_and_no_overwrite (tools.test_r6_evaluation.EvaluationTests.test_audit_quota_corruption_and_no_overwrite) ... ok
+test_full_lane_raw_world_commands_archive_and_counts (tools.test_r6_evaluation.EvaluationTests.test_full_lane_raw_world_commands_archive_and_counts) ... ok
+test_last_sample_reset_keeps_32_lane_failure_denominator (tools.test_r6_evaluation.EvaluationTests.test_last_sample_reset_keeps_32_lane_failure_denominator) ... ok
+test_transition_cap_stops_before_second_physical_step (tools.test_r6_evaluation.EvaluationTests.test_transition_cap_stops_before_second_physical_step) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 33.606s
+
+OK

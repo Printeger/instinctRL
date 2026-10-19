@@ -1,0 +1,81 @@
+{
+  "status": "CPU_PASS_PENDING_INDEPENDENT_REVIEW",
+  "tests": 23,
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "unittest",
+    "tools.test_r6_range_archive",
+    "tools.test_r6_range_delivery",
+    "tools.test_r6_evaluation",
+    "-v"
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TEMPORAL_ARCHIVE_TESTS_V2.txt",
+    "sha256": "a057e6c63ad7807939b00ffa6f61fb176d09d84936046e9fe8bcd7cb51625807"
+  },
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/range_archive.py",
+      "sha256": "e117de39cfa4ee0a057bff50893509fcf5dc31cbfa676331e158cd5e4c4b93ef"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_range_archive.py",
+      "sha256": "61c36673dfa6d700adc518d175596e7bcd173c1818c0aabeacf9fe8a601d9c2b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_range_delivery.py",
+      "sha256": "156ef2ce9c3ac697e2822305f9f9615007690cbb5dc605e5d6a45317defae5f6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_evaluation.py",
+      "sha256": "3da2d56d86cf820f187b60bbf724a866469c1ea580f7a08a29b673c4bce7388c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "04411af293778a7c8d72905063fd66f559062458b7ff9db4841e646f53aa1cb9"
+    }
+  ],
+  "capacity_comparison": {
+    "independent": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/ARCHIVE_INDEPENDENT_CAPACITY_CPU_REPLAY.json",
+      "sha256": "8543c69bab0c058f2083b27c1ed5de6003337a8c43c0d41188431bf75ad72652"
+    },
+    "temporal": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/ARCHIVE_TEMPORAL_CAPACITY_CPU.json",
+      "sha256": "3796e82a51efe43682d948f265b0c270ca55c1648ca78532f734d20f16d194f8"
+    },
+    "independent_final_four_bytes": 64593255160,
+    "temporal_final_four_bytes": 57942727232,
+    "saved_bytes": 6650527928,
+    "worst_case_bound": false
+  },
+  "initial_failed_test": {
+    "output": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TEMPORAL_ARCHIVE_TESTS.txt",
+      "sha256": "f5d82d666b7b9a832a0147a4cc7f87b4d16b947db819d24a1e6787292c55b24c"
+    },
+    "reason": "Fixture corrupted only clean_ranges while decoder correctly referenced the identical delivered_ranges from the previous frame. Corrected mutation tests to corrupt both aliases; added explicit previous-XOR and sequence counterexamples."
+  },
+  "coverage": [
+    "Exact delayed reference and previous-XOR reconstruction",
+    "Previous frame required and wrong bytes/sequence rejected",
+    "Reader/writer cache isolation against caller mutation",
+    "Legacy v1 decoding, dtype/signed-zero, quota/truncation/duplicate-output checks",
+    "Actual delivery and full CPU substitute evaluation regressions"
+  ],
+  "not_proven": [
+    "independent codec acceptance",
+    "physical frame compressibility",
+    "complete final/development output capacity",
+    "live capacity admission"
+  ],
+  "gpu_queries": 0,
+  "simulator_initializations": 0
+}
