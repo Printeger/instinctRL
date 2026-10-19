@@ -6,6 +6,7 @@ import subprocess
 import sys
 import time
 import unittest
+from unittest.mock import patch
 
 from rlflow.jobs import owns
 from rlflow.store import sha
@@ -49,6 +50,65 @@ with j.writer():model_handoff(j,sys.argv[2],poll_seconds=.02)
         with self.j.writer():self.assertEqual(result,model_handoff(self.j,self.key,poll_seconds=.02))
         self.assertEqual(receipt,file_pin(self.call/'receipt.json'))
         self.assertEqual(len(self.j.read()['budget']['reservations']),1)
+
+    def test_crash_after_durable_receipt_has_no_stale_active_marker(self):
+        self.register();save=self.j.save
+        def crash(state):
+            save(state)
+            if state['events'][self.key].get('receipt'):raise RuntimeError('CPU after durable receipt')
+        with self.j.writer(),patch.object(self.j,'save',side_effect=crash):
+            with self.assertRaisesRegex(RuntimeError,'after durable receipt'):
+                model_handoff(self.j,self.key,poll_seconds=.01)
+        self.assertIsNone(self.j.read().get('current_model_event'))
+        receipt=file_pin(self.call/'receipt.json')
+        with self.j.writer(),patch('tools.r6_batch.subprocess.Popen',side_effect=AssertionError('NO REDISPATCH')):
+            self.assertEqual(model_handoff(self.j,self.key),{'decision':'CPU_FIXTURE_ONLY'})
+        self.assertEqual(file_pin(self.call/'receipt.json'),receipt)
+
+    def test_existing_split_state_clears_only_matching_marker(self):
+        self.register()
+        with self.j.writer():
+            model_handoff(self.j,self.key,poll_seconds=.01)
+            state=self.j.read();state.update(current_model_event=self.key,status='MODEL_REVIEW');self.j.save(state)
+            model_handoff(self.j,self.key,poll_seconds=.01)
+        self.assertIsNone(self.j.read()['current_model_event'])
+        self.assertEqual(self.j.read()['status'],'MODEL_RECEIPT_RECORDED')
+
+    def test_recovery_preserves_other_marker_and_later_phase(self):
+        self.register()
+        with self.j.writer():
+            model_handoff(self.j,self.key,poll_seconds=.01)
+            for marker in ('OTHER_EVENT',self.key,None):
+                state=self.j.read();state.update(current_model_event=marker,status='JOB_BOUND_EXCEEDED');self.j.save(state)
+                model_handoff(self.j,self.key,poll_seconds=.01)
+                self.assertEqual(self.j.read()['current_model_event'],None if marker==self.key else marker)
+                self.assertEqual(self.j.read()['status'],'JOB_BOUND_EXCEEDED')
+
+    def test_unverified_cleanup_preserves_receipt_and_active_marker(self):
+        self.register()
+        with self.j.writer():
+            model_handoff(self.j,self.key,poll_seconds=.01)
+            path=self.call/'receipt.json';receipt=json.loads(path.read_text());receipt.pop('cleanup')
+            path.write_text(json.dumps(receipt))
+            state=self.j.read();state['events'][self.key]['receipt']=file_pin(path)
+            state.update(current_model_event=self.key,status='MODEL_REVIEW');self.j.save(state)
+            before=self.j.read()
+            with self.assertRaisesRegex(RecoveryError,'MODEL_CLEANUP_NOT_VERIFIED'):
+                model_handoff(self.j,self.key)
+            self.assertEqual(self.j.read(),before)
+
+    def test_failed_schema_cleanup_recovery_clears_marker_without_accepting_failure(self):
+        self.register('malformed')
+        with self.j.writer():
+            with self.assertRaisesRegex(RecoveryError,'MODEL_FAILED_PRESERVE_RECEIPT'):
+                model_handoff(self.j,self.key,poll_seconds=.01)
+            state=self.j.read();state.update(current_model_event=self.key,status='STOPPED_AFTER_OWNED_CLEANUP');self.j.save(state)
+            receipt=file_pin(self.call/'receipt.json')
+            with self.assertRaisesRegex(RecoveryError,'MODEL_FAILED_PRESERVE_RECEIPT'):
+                model_handoff(self.j,self.key)
+            self.assertIsNone(self.j.read()['current_model_event'])
+            self.assertEqual(self.j.read()['status'],'STOPPED_AFTER_OWNED_CLEANUP')
+            self.assertEqual(file_pin(self.call/'receipt.json'),receipt)
 
     def test_budget_excess_after_intent_blocks_first_model_dispatch(self):
         self.register()

@@ -192,10 +192,11 @@
     "source_native_review": "docs/experiments/r6-robustness-auto/reviews/cpu-source-native-review.json",
     "source_native_repair_evidence": "docs/experiments/r6-robustness-auto/CPU_SOURCE_NATIVE_REPAIR_TESTS.json",
     "source_native_accepted_review": "docs/experiments/r6-robustness-auto/reviews/cpu-source-native-fix-review.json",
-    "legacy_reconciliation_status": "EXACT_TWO_LEGACY_RECEIPTS_RECONCILED",
+    "legacy_reconciliation_status": "PRIOR_ACCEPTANCE_SOURCE_DRIFT_REVALIDATION_REQUIRED",
     "legacy_reconciliation_review": "docs/experiments/r6-robustness-auto/reviews/legacy-reconciliation-review.json",
     "legacy_reconciliation_accepted_review": "docs/experiments/r6-robustness-auto/reviews/legacy-reconciliation-fix-review.json",
-    "pipeline_review_status": "MUST_FIX_ONE_RECEIPT_PHASE_RECOVERY",
-    "pipeline_review": "docs/experiments/r6-robustness-auto/reviews/cpu-pipeline-review.json"
+    "pipeline_review_status": "CPU_REPAIR_CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+    "pipeline_review": "docs/experiments/r6-robustness-auto/reviews/cpu-pipeline-review.json",
+    "pipeline_repair_evidence": "docs/experiments/r6-robustness-auto/CPU_MODEL_PHASE_REPAIR_TESTS.json"
   }
 }

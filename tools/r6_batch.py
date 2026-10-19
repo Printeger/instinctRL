@@ -13,6 +13,7 @@ import sys
 import time
 
 from rlflow.jobs import identity, owns
+from rlflow.store import sha
 from tools.r6_recovery import Journal, RecoveryError, checked, file_pin
 from tools.r6_model_worker import validate_request
 from tools.r6_worker_processes import cleanup_verified
@@ -42,6 +43,37 @@ def verified_decision(journal,key):
     return result
 
 
+def complete_model_receipt(journal,key,receipt_path):
+    """Atomically consume a receipt and clear only its verified terminal marker.
+
+Also repairs old consume-before-phase-save states. Failed results remain failed;
+unverified cleanup retains the active marker and its recorded receipt.
+"""
+    journal.require_writer()
+    observed=journal.observe(key,receipt_path=receipt_path)
+    if observed['action'] not in ('ACCEPT_RECEIPT','ALREADY_CONSUMED'):
+        raise RecoveryError('MODEL_RECEIPT_NOT_READY')
+    pin=observed['receipt'];receipt=json.loads(checked(pin).read_text())
+    state=journal.read();entry=state['events'][key]
+    if (entry['kind']!='model' or receipt.get('event_key')!=key
+            or receipt.get('request_sha256')!=sha(entry['request'])
+            or type(receipt.get('exit_code')) is not int
+            or (entry['process'] is not None and receipt.get('process')!=entry['process'])):
+        raise RecoveryError('MODEL_RECEIPT_IDENTITY')
+    terminal_cleanup=cleanup_verified(receipt.get('cleanup')) and not any(owns(i) for i in
+        [entry.get('process'),receipt.get('process'),receipt.get('child_identity'),
+         *receipt.get('cleanup',{}).get('observed_identities',[])])
+    changed=entry.get('receipt') is None
+    if changed:entry.update(receipt=pin,status='RECEIPT_RECORDED')
+    if terminal_cleanup and state.get('current_model_event')==key:
+        state['current_model_event']=None
+        if state.get('status')=='MODEL_REVIEW':state['status']='MODEL_RECEIPT_RECORDED'
+        changed=True
+    if changed:journal.save(state)
+    if not terminal_cleanup:raise RecoveryError('MODEL_CLEANUP_NOT_VERIFIED')
+    return verified_decision(journal,key)
+
+
 def model_handoff(journal,key,*,poll_seconds=15):
     """Caller holds the sole writer lock throughout the read-only review.
 
@@ -58,7 +90,7 @@ def model_handoff(journal,key,*,poll_seconds=15):
     receipt_path=call/'receipt.json'
     process=None
     if entry['receipt']:
-        return verified_decision(journal,key)
+        return complete_model_receipt(journal,key,receipt_path)
     if not entry.get('dispatch_claim'):
         if any(e['kind']=='cpu' and ((e.get('dispatch_claim') and not e.get('receipt'))
                 or any(not c.get('receipt') for c in e.get('sample_claims',{}).values()))
@@ -89,12 +121,8 @@ def model_handoff(journal,key,*,poll_seconds=15):
             if worker['event_key']!=key:raise RecoveryError('WORKER_EVENT_MISMATCH')
             if owns(worker['identity']):journal.bind_process(key,worker['identity'])
         action=journal.observe(key,receipt_path=receipt_path)['action']
-        if action=='ACCEPT_RECEIPT':
-            journal.consume(key,receipt_path)
-            state=journal.read();state.update(status='MODEL_RECEIPT_RECORDED',current_model_event=None)
-            journal.save(state)
-            return verified_decision(journal,key)
-        if action=='ALREADY_CONSUMED':return verified_decision(journal,key)
+        if action in ('ACCEPT_RECEIPT','ALREADY_CONSUMED'):
+            return complete_model_receipt(journal,key,receipt_path)
         if action=='RECONCILE':
             # A live process owned by this invocation may not have created its
             # worker.json yet; its exact Popen identity is already bound above.

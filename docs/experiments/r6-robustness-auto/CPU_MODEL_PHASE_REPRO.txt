@@ -1,0 +1,36 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____ BatchTests.test_crash_after_durable_receipt_has_no_stale_active_marker ____
+
+self = <test_r6_batch.BatchTests testMethod=test_crash_after_durable_receipt_has_no_stale_active_marker>
+
+    def test_crash_after_durable_receipt_has_no_stale_active_marker(self):
+        self.register();save=self.j.save
+        def crash(state):
+            save(state)
+            if state['events'][self.key].get('receipt'):raise RuntimeError('CPU after durable receipt')
+        with self.j.writer(),patch.object(self.j,'save',side_effect=crash):
+            with self.assertRaisesRegex(RuntimeError,'after durable receipt'):
+                model_handoff(self.j,self.key,poll_seconds=.01)
+>       self.assertIsNone(self.j.read().get('current_model_event'))
+E       AssertionError: 'dcb18a6886e7be84a0e3978d0d316502b9295aa8de9d3f14e534423905ecc6c2' is not None
+
+tools/test_r6_batch.py:62: AssertionError
+_______ BatchTests.test_existing_split_state_clears_only_matching_marker _______
+
+self = <test_r6_batch.BatchTests testMethod=test_existing_split_state_clears_only_matching_marker>
+
+    def test_existing_split_state_clears_only_matching_marker(self):
+        self.register()
+        with self.j.writer():
+            model_handoff(self.j,self.key,poll_seconds=.01)
+            state=self.j.read();state.update(current_model_event=self.key,status='MODEL_REVIEW');self.j.save(state)
+            model_handoff(self.j,self.key,poll_seconds=.01)
+>       self.assertIsNone(self.j.read()['current_model_event'])
+E       AssertionError: 'a235077f59a48e450ed24706ce382204d65b7e9951ac4b2c39fd6d2b6c47bd39' is not None
+
+tools/test_r6_batch.py:74: AssertionError
+=========================== short test summary info ============================
+FAILED tools/test_r6_batch.py::BatchTests::test_crash_after_durable_receipt_has_no_stale_active_marker
+FAILED tools/test_r6_batch.py::BatchTests::test_existing_split_state_clears_only_matching_marker
+2 failed, 9 deselected in 0.43s

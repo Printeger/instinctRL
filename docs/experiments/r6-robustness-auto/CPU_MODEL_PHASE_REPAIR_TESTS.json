@@ -1,0 +1,56 @@
+{
+  "schema_version": "r6-model-phase-repair-cpu/1",
+  "status": "CPU_FIX_CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+  "pytest_cases_passed": 61,
+  "new_tests": 6,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+    "sha256": "a5188e81eb75b4196d5fc469bbe19d90aaae4abd46f0f3440e2d87946323163d"
+  },
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_batch.py",
+      "sha256": "6465e29ff1958842a0a07f23df13521393a577d237f7e5928c892cd43a55ca9d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py",
+      "sha256": "a2b9b7d7d2c30ffe0211f2e2b776a4c1f2a756fde70cc503bb619bda2db8179d"
+    }
+  ],
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/cpu-pipeline-review.json",
+    "sha256": "83fae4e82f52309eaf8c1491618b18e284f1ef4af4542a805e6a0813ec3976dd"
+  },
+  "reproduction": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MODEL_PHASE_REPRO.txt",
+    "sha256": "a952e4b42222cd33846284b70fb1557a250a85ab41d7eb14c3d8c6098de96514"
+  },
+  "initial_fix_output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MODEL_PHASE_REPAIR_TESTS.txt",
+    "sha256": "d015c0cb6aced99d2e2c4bd9402c75cc1dda87b61bf7a114f966f0bb3c622a40"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MODEL_PHASE_REPAIR_TESTS_V2.txt",
+    "sha256": "7469f9f7e39b2245786f947148f6709fd2ccbb205d8658c62fb24d3d3f42787e"
+  },
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "8a2a42944b27dd7b43524c948017b3d3fc7a633529d9109413d47ee84b68ef81"
+  },
+  "operating_state_modified": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "coverage": [
+    "Two actual fake-CLI crash/split-state regressions reproduced before repair",
+    "New complete_model_receipt validates exact event/request/process/exit and terminal cleanup; receipt and matching-marker clearance share one durable save",
+    "Receipt fast path repairs old split states without redispatch; preserves other event markers, later phases and failed result/receipt facts",
+    "Missing cleanup refuses marker clearance; finalizer resumes stale-marker decision without another fake model call"
+  ],
+  "legacy_acceptance_current_result": "LEGACY_RECONCILIATION_SOURCE_DRIFT",
+  "limitations": [
+    "Repair not independently accepted; review MUST_FIX remains pending closure",
+    "Original legacy acceptance and receipts unchanged; changed r6_batch hash requires new scoped independent source revalidation",
+    "No capacity/live/science acceptance or full deployment"
+  ]
+}

@@ -136,6 +136,17 @@ class DecisionTests(unittest.TestCase):
         self.assertEqual(first,second);self.assertEqual(self.j.read(),before)
         self.assertEqual(self.exe.with_suffix('.count').read_text(),'call\n')
 
+    def test_finalizer_repairs_consumed_receipt_with_stale_model_marker(self):
+        from tools.r6_finalize_job import finish_and_decide
+        key=self.register();first=self.complete(key)
+        with self.j.writer():
+            state=self.j.read();state.update(current_model_event=key,status='MODEL_REVIEW');self.j.save(state)
+            result=finish_and_decide(self.j,self.key,self.store,file_pin(self.exe),file_pin(self.exe),
+                free_disk_bytes=500*1024**3,poll_seconds=.01)
+        self.assertEqual(result['decision'],first)
+        self.assertIsNone(self.j.read()['current_model_event'])
+        self.assertEqual(self.exe.with_suffix('.count').read_text(),'call\n')
+
     def mutate_response(self,key,change):
         s=self.j.read();entry=s['events'][key];r=json.loads(Path(entry['receipt']['path']).read_text())
         path=Path(r['last_message']['path']);value=json.loads(path.read_text());change(value)
