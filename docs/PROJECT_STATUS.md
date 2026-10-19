@@ -2,6 +2,11 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+准确spec现可在同一writer锁内完成登记→提交→本地等待/关闭；新预留前先校验资源窗口新鲜度，
+已有提交claim则恢复原作业，不要求运行中GPU重新空闲。18项CPU组合回归通过（新增4项），
+见 `docs/experiments/r6-robustness-auto/CPU_REGISTERED_CYCLE_TESTS.json`；原生失败与全额预留保留。
+此为临时Store/合成终态证据测试，未部署或独审，操作账本和native配额待办未变。
+
 已提出native总量约束的具体候选：每作业1.5GiB硬限额，覆盖日志/缓存/crash并保留原件。
 保持原测量归档与完整最终覆盖后，最终保护假设为92GiB，开发示例尚余约4.55GiB；
 见 `docs/experiments/r6-robustness-auto/NATIVE_STORAGE_REQUIREMENT_DRAFT.json`。

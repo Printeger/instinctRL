@@ -1,0 +1,48 @@
+{
+  "schema_version": "r6-registered-cycle-cpu/1",
+  "status": "CPU_PASS_PENDING_REVIEW_NOT_DEPLOYED",
+  "pytest_cases_passed": 18,
+  "new_test_cases": 4,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_register_job.py",
+    "sha256": "08f95b6c1caa5cbc920e23f1e3d5f597b9de706b8d600edd234b8449b998fb53"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_registered_cycle.py",
+    "sha256": "a8f3303a891695a272a4fb14c84fc4ff95e94dd5b7d1c51c03a95ada139ae57b"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_REGISTERED_CYCLE_TESTS_V2.txt",
+    "sha256": "08b3754a436791dadec1bcc0b79e8262148a6c04070d20ab7092c9554cd57728"
+  },
+  "initial_failure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_REGISTERED_CYCLE_TESTS.txt",
+    "sha256": "f2bd2049d40cb7e305851279309683e0e33a7c1ce0c8c4e30d858a0e0b3889b3"
+  },
+  "failure_resolution": "Test compared entire reservation including observations; actual closure correctly adds observations. Corrected test checks charge identity/resources/purpose and count unchanged, with terminal observations present.",
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "387b9581d1624ba14a0b5a72a372c5f0630fed0a47c823667be0e7bcdd7ea1a9"
+  },
+  "operating_state_modified": false,
+  "capacity_pass": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "coverage": [
+    "Actual queue freshness rejects nine-second-old synthetic window before live reservation",
+    "One held Journal writer spans exact registration, Store submission and terminal closure",
+    "Native FAILED/-9 remains failed; no scientific acceptance",
+    "Crash after reservation reuses exact event/deadline/charge on recovery",
+    "Completed replay under STOP does not request another idle window, submit again or rewind downstream state"
+  ],
+  "substitutes": [
+    "Temporary Store, CPU experiment authority and synthetic terminal receipt/cleanup",
+    "No subprocess launched; existing fixture detects competing writer rejection"
+  ],
+  "limitations": [
+    "No service deployment, production filesystem quota or native containment",
+    "Resource acquisition loop and subsequent finalizer/decision are separate existing components",
+    "Independent integration review, exact permissions and full scientific goal remain incomplete"
+  ]
+}

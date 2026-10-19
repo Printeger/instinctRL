@@ -1,0 +1,32 @@
+...F..............                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_crash_after_reservation_reuses_event_and_deadline ____________
+
+unregistered = namespace(store=<rlflow.store.Store object at 0x7cde38f73ce0>, journal=<tools.r6_recovery.Journal object at 0x7cde38fd...t_crash_after_reservation_r0/spec.json', 'sha256': 'cd200ae83de3f1fc82d4aa0223039c28da74dcda42dd3f26d69a8673c7029f5b'})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cde38f72570>
+
+    def test_crash_after_reservation_reuses_event_and_deadline(unregistered,monkeypatch):
+        b=unregistered
+        from tools import r6_submit
+        original=r6_submit.submit_and_close
+        def crash(*args,**kwargs):raise RuntimeError('CPU crash after reservation')
+        monkeypatch.setattr(r6_submit,'submit_and_close',crash)
+        with pytest.raises(RuntimeError,match='after reservation'):invoke(b)
+        state=b.journal.read();key=next(k for k,e in state['events'].items() if e['kind']=='job')
+        request=state['events'][key]['request']
+        reservations=state['budget']['reservations']
+        monkeypatch.setattr(r6_submit,'submit_and_close',original)
+        result=invoke(b)
+        assert result['event_key']==key
+        assert b.journal.read()['events'][key]['request']==request
+>       assert b.journal.read()['budget']['reservations']==reservations
+E       assert [{'event_key'...opment', ...}] == [{'event_key'...s': 1048576}}]
+E         
+E         At index 1 diff: {'event_key': '["JOB:J-676cabf405ac6bf0","R6-CPU-TEST-FIXTURE","fb2d6ed00e204c0f93b625cf6e180d4fe5ed233d23d91e0d26b7c8e661941af8","J-676cabf405ac6bf0","job"]', 'identity': {'event_id': 'JOB:J-676cabf405ac6bf0', 'goal_id': 'R6-CPU-TEST-FIXTURE', 'input_sha256': 'fb2d6ed00e204c0f93b625cf6e180d4fe5ed233d23d91e0d26b7c8e661941af8', 'job_id': 'J-676cabf405ac6bf0', 'role': 'job'}, 'observations': [{'evidence': {'path': '/tmp/pytest-of-mint/pytest-1129/test_crash_after_reservation_r0/batch/jobs/fbd8867fcde98ba4a3f00cb48742bb32699a0044ac39e0785a47eb404fc77f22/cl...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tools/test_r6_registered_cycle.py:79: AssertionError
+=========================== short test summary info ============================
+FAILED tools/test_r6_registered_cycle.py::test_crash_after_reservation_reuses_event_and_deadline
+1 failed, 17 passed in 4.76s

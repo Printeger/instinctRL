@@ -17,6 +17,28 @@ def require(condition, reason):
     if not condition:raise RecoveryError('REGISTER_JOB_'+reason)
 
 
+def register_and_close(journal, spec_pin, store, *, queue_key, free_disk_bytes,
+                       purpose='development'):
+    """Admit, reserve, submit and locally close under the caller's one writer.
+
+    A stale resource observation cannot consume a new live reservation. Once a
+    submission claim exists, recover its original exact job without demanding a
+    new idle-GPU observation of a job that may already be running.
+    """
+    from tools.r6_submit import queue_ready, submit_and_close
+    journal.require_writer()
+    spec=json.loads(checked(spec_pin).read_text())
+    jid='J-'+sha({'id':spec['id'],'spec':spec})[:16]
+    entries=[e for e in journal.read()['events'].values()
+             if e['kind']=='job' and e['identity']['job_id']==jid]
+    require(len(entries)<=1,'ALIAS')
+    if not entries or not entries[0].get('submission_claim'):
+        queue_ready(journal,queue_key,spec_pin)
+    key=register(journal,spec_pin,store,free_disk_bytes=free_disk_bytes,purpose=purpose)
+    result=submit_and_close(journal,key,store,queue_key=queue_key)
+    return dict(event_key=key,**result)
+
+
 def register(journal, spec_pin, store, *, free_disk_bytes, purpose='development'):
     journal.require_writer()
     state=journal.read();spec=json.loads(checked(spec_pin).read_text())
