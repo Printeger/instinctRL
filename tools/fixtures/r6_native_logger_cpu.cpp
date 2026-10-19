@@ -2,6 +2,7 @@
 // No Kit startup, plugin loading, graphics API or simulator calls.
 #include <carb/Framework.h>
 #include <carb/logging/ILogging.h>
+#include <carb/logging/Log.h>
 #include <cstring>
 
 extern "C" int r6_check_native_logger(int flood)

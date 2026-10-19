@@ -1,0 +1,13 @@
+/home/mint/rl_dev/instinctRL-dev/tools/fixtures/r6_native_logger_cpu.cpp: In function 'int r6_check_native_logger(int)':
+/home/mint/rl_dev/instinctRL-dev/tools/fixtures/r6_native_logger_cpu.cpp:19:47: error: 'kLevelVerbose' is not a member of 'carb::logging'
+   19 |     logging->setLevelThreshold(carb::logging::kLevelVerbose);
+      |                                               ^~~~~~~~~~~~~
+/home/mint/rl_dev/instinctRL-dev/tools/fixtures/r6_native_logger_cpu.cpp:20:56: error: 'kLevelVerbose' is not a member of 'carb::logging'
+   20 |     logger->setFileOutputLevelThreshold(carb::logging::kLevelVerbose);
+      |                                                        ^~~~~~~~~~~~~
+/home/mint/rl_dev/instinctRL-dev/tools/fixtures/r6_native_logger_cpu.cpp:21:51: error: 'kLevelVerbose' is not a member of 'carb::logging'
+   21 |     logger->setFileOuputFlushLevel(carb::logging::kLevelVerbose);
+      |                                                   ^~~~~~~~~~~~~
+/home/mint/rl_dev/instinctRL-dev/tools/fixtures/r6_native_logger_cpu.cpp:29:54: error: 'kLevelInfo' is not a member of 'carb::logging'
+   29 |         logging->log("R6_CPU_LOGGER", carb::logging::kLevelInfo, __FILE__, __func__, __LINE__,
+      |                                                      ^~~~~~~~~~

@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "/usr/bin/x86_64-linux-gnu-g++-13",
+    "-std=c++17",
+    "-shared",
+    "-fPIC",
+    "-O0",
+    "-MMD",
+    "-MF",
+    "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/native-logger-cpu-build-01/dependencies.d",
+    "-I/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/dev/include",
+    "/home/mint/rl_dev/instinctRL-dev/tools/fixtures/r6_native_logger_cpu.cpp",
+    "-L/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit",
+    "-lcarb",
+    "-Wl,-rpath,/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit",
+    "-o",
+    "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/native-logger-cpu-build-01/logger.so"
+  ],
+  "pins": [
+    {
+      "path": "/usr/bin/x86_64-linux-gnu-g++-13",
+      "sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/fixtures/r6_native_logger_cpu.cpp",
+      "sha256": "92922764db0b9dbbff34db5bc4cdaa498d3f3163785b1ac1b3473e3679dde0a5"
+    },
+    {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/libcarb.so",
+      "sha256": "873c1d7c3947c8e6e3c039a8ff6a531f2b54424f91698bba46211649c962a548"
+    }
+  ]
+}
