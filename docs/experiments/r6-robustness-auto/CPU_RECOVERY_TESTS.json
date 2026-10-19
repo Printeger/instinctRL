@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "exit_code": 0,
+  "argv": [
+    "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+    "-m",
+    "unittest",
+    "tools.test_r6_budget",
+    "tools.test_r6_recovery",
+    "-v"
+  ],
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "352d05e48620f4341b9791966edf1e31df8daff9702813a23921d0cb14a3d7d8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_recovery.py",
+      "sha256": "cbe880683c7e68f38e190932685c03cc9efe8d62f46e04c95f69060d232c0686"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_budget.py",
+      "sha256": "8f5d2c590392e7b1b5267ff4f43c27ae0eda4d2501fdf9853632b2fb8c0ef79c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_budget.py",
+      "sha256": "6ed7e9161a03e6127d16abf7e8e6443241a9048b340440c4e56c9587a40154a3"
+    }
+  ],
+  "test_output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RECOVERY_TESTS.txt",
+    "sha256": "7a68886ba4d736aa109ce0c2ec2714bb653178aefa90da19d07dbd946e910043"
+  },
+  "coverage": [
+    "budget hard caps/protected final and repair capacity",
+    "identical intent replay across journal reconstruction",
+    "partial receipt preserved",
+    "receipt identity/hash drift rejection",
+    "STOP blocks new intent while receipt can be recorded",
+    "real child live/dead identity, no relaunch",
+    "OS lock excludes competing process",
+    "mutation requires lock"
+  ],
+  "not_yet_verified": [
+    "Full job completion to structured model decision to next registered job chain",
+    "Controller crash/restart while real worker writes durable receipt",
+    "CLI authentication and schema with actual read-only review",
+    "Live submit/cancel/settle/postrun and zero-model wait audit"
+  ],
+  "automatic_model_calls": 0,
+  "gpu_jobs": 0
+}

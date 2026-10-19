@@ -1,0 +1,24 @@
+test_confirmation_cannot_be_borrowed (tools.test_r6_budget.BudgetTests.test_confirmation_cannot_be_borrowed) ... ok
+test_disk_floor_includes_reservations (tools.test_r6_budget.BudgetTests.test_disk_floor_includes_reservations) ... ok
+test_event_identity_requires_all_dimensions (tools.test_r6_budget.BudgetTests.test_event_identity_requires_all_dimensions) ... ok
+test_exact_replay_is_idempotent_after_serialization (tools.test_r6_budget.BudgetTests.test_exact_replay_is_idempotent_after_serialization) ... ok
+test_failed_check_does_not_mutate_ledger (tools.test_r6_budget.BudgetTests.test_failed_check_does_not_mutate_ledger) ... ok
+test_hard_limit_even_for_confirmation (tools.test_r6_budget.BudgetTests.test_hard_limit_even_for_confirmation) ... ok
+test_invalid_and_unknown_amounts (tools.test_r6_budget.BudgetTests.test_invalid_and_unknown_amounts) ... ok
+test_model_review_reserve_survives_confirmation (tools.test_r6_budget.BudgetTests.test_model_review_reserve_survives_confirmation) ... ok
+test_repairs_cannot_consume_final_review_slots (tools.test_r6_budget.BudgetTests.test_repairs_cannot_consume_final_review_slots) ... ok
+test_duplicate_controller_refused_by_os_lock (tools.test_r6_recovery.RecoveryTests.test_duplicate_controller_refused_by_os_lock) ... ok
+test_exact_job_recovery_validates_identity (tools.test_r6_recovery.RecoveryTests.test_exact_job_recovery_validates_identity) ... ok
+test_live_worker_then_dead_worker_not_restarted (tools.test_r6_recovery.RecoveryTests.test_live_worker_then_dead_worker_not_restarted) ... ok
+test_mutations_require_writer (tools.test_r6_recovery.RecoveryTests.test_mutations_require_writer) ... ok
+test_partial_receipt_preserved_without_retry (tools.test_r6_recovery.RecoveryTests.test_partial_receipt_preserved_without_retry) ... ok
+test_receipt_consumption_survives_restart (tools.test_r6_recovery.RecoveryTests.test_receipt_consumption_survives_restart) ... ok
+test_receipt_drift_rejected_after_consumption (tools.test_r6_recovery.RecoveryTests.test_receipt_drift_rejected_after_consumption) ... ok
+test_restarts_do_not_repeat_model_intent (tools.test_r6_recovery.RecoveryTests.test_restarts_do_not_repeat_model_intent) ... ok
+test_stop_blocks_new_intent_but_allows_receipt (tools.test_r6_recovery.RecoveryTests.test_stop_blocks_new_intent_but_allows_receipt) ... ok
+test_wrong_receipt_cannot_advance (tools.test_r6_recovery.RecoveryTests.test_wrong_receipt_cannot_advance) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.131s
+
+OK

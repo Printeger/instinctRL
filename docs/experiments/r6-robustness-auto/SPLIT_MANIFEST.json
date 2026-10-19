@@ -1,0 +1,34 @@
+{
+  "schema_version": "r6-split-manifest/1",
+  "status": "DRAFT_NOT_FROZEN",
+  "train": "Independent generator stream; curriculum registration pending baseline diagnosis. No final realization is training input.",
+  "development": {
+    "seed": 2026101901,
+    "protocol": "TEST_PROTOCOL.json",
+    "reuse_allowed": true
+  },
+  "confirmation_training_seeds": [
+    2026102101,
+    2026102201,
+    2026102301
+  ],
+  "confirmation_semantics": "Three new continuation trajectories from common frozen u640 after recipe freeze; preserve optimizer checkpoint, explicitly branch RNG after restoration and fresh physical reset. Not from-scratch replications.",
+  "final": {
+    "seed_realization_generated": false,
+    "protocol_distribution_public": true,
+    "realization_release": "Controller generates secret nonce only after final recipe/checkpoint-selection rule frozen, commits hash before final execution; runner derives common condition streams for baseline and each final model; nonce/raw revealed only after all model checkpoints frozen.",
+    "holdout_use": "Single batch only; no subsequent tuning with this holdout. Actual scoring bug requires independent review and contamination record."
+  },
+  "baseline_sufficient": "Three different realized environment streams, full original+new target+stress suites for each; training zero.",
+  "stream_domains": [
+    "split",
+    "condition",
+    "lane",
+    "reset",
+    "measurement_noise",
+    "pulse_direction",
+    "training_action",
+    "minibatch_shuffle"
+  ],
+  "random_effect_evidence": "Persist generator identities/states and sampled reset/measurement/pulse values; compare actual realization digests across seeds, not labels."
+}

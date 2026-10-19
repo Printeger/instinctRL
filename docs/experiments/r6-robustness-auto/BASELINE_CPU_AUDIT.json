@@ -1,0 +1,319 @@
+{
+  "schema_version": "r6-baseline-cpu-audit/1",
+  "status": "PASS",
+  "scope": "Checkpoint, original config, enumerated source hashes, method, runtime executable, ground closure and three provenance-bound UAV assets; no live equivalence claim.",
+  "auditor": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/audit_r6_baseline.py",
+    "sha256": "00b3d25dfca7c9e454fb2d22bc75597b0d8524c195c614afe733043fdab5f4ad"
+  },
+  "binding": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_BINDINGS.json",
+    "sha256": "6ebe90717fa2571816ba3392841f3690c2c3fe37225c3728f935bb80d3102623"
+  },
+  "source_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+  "config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/candidate_config.json",
+    "sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb"
+  },
+  "checkpoint": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+    "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+  },
+  "method": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/coordination/contracts/R5_FORMAL_READINESS_RESEARCH_V1.md",
+    "sha256": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec"
+  },
+  "runtime_executable": {
+    "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+  },
+  "sources": {
+    "isaaclab-training/instinctlab/assets/taslab_uav/articulation.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/articulation.py",
+      "sha256": "080eb6a30c76a63395effe2da38f0ffab22642b494651d0e195f74e14473598d"
+    },
+    "isaaclab-training/instinctlab/control/anchor.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/control/anchor.py",
+      "sha256": "2d73af1c2f58fee40e616826771b9e97b07758556f6ce5ab66b398bbcaea4c8d"
+    },
+    "isaaclab-training/instinctlab/control/baseline_b0.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/control/baseline_b0.py",
+      "sha256": "5fa2b8d746eb231a1bb12f331fe1a76e8f988005e9a315e1dbf622e0bf1ed3d1"
+    },
+    "isaaclab-training/instinctlab/control/governor.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/control/governor.py",
+      "sha256": "cd5cf6c73578bc69dc5f696ac6d294d9d4c8db0baaf12265e6715646554b7197"
+    },
+    "isaaclab-training/instinctlab/control/ics.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/control/ics.py",
+      "sha256": "87dba0e3f4d2e252b74fb8b89954b0673e07fe07748cf8b3a36dea6f7c03b6ac"
+    },
+    "isaaclab-training/instinctlab/control/lee_velocity_controller.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/control/lee_velocity_controller.py",
+      "sha256": "3818c21ff2550b7c10ad15a1e1d167ba8f20486b882a3944fff956692b915f95"
+    },
+    "isaaclab-training/instinctlab/control/pipeline.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/control/pipeline.py",
+      "sha256": "dd1e81f51f76422d7dfc6673dbf59c3c082b7fd9ceb12ff84a56272c745d1d2b"
+    },
+    "isaaclab-training/instinctlab/control/runtime_adapter.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/control/runtime_adapter.py",
+      "sha256": "dfb10aa31275e39b871f050397b8c941216c17b73c0dd6926521fe5434227e0f"
+    },
+    "isaaclab-training/instinctlab/envs/__init__.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/envs/__init__.py",
+      "sha256": "35fe24c13b1fea52f4eff09b29187dc642cf175bd054f2b86538879952843ef3"
+    },
+    "isaaclab-training/instinctlab/envs/taslab_direct_env.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/envs/taslab_direct_env.py",
+      "sha256": "35be09e97c24424e4cb5bb046d16302a4c49901825bf2eb61278a650e6cce639"
+    },
+    "isaaclab-training/instinctlab/envs/unified_h1_direct_env.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+      "sha256": "6eb8728000ef1232019ba5bafe285b40e8c24a662e286bda35dc33cc2e385173"
+    },
+    "isaaclab-training/instinctlab/evaluation/raycaster_observability.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/evaluation/raycaster_observability.py",
+      "sha256": "3d4433d33940baa4e413606cded6851440ec2c66fc10a4386930bd1a43312aa4"
+    },
+    "isaaclab-training/instinctlab/observations/actor.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/observations/actor.py",
+      "sha256": "dfc339233e146e585493bfcc1893b5ee87c46c827963e36d6f9ec79e4b81ce44"
+    },
+    "isaaclab-training/instinctlab/sensors/mid360.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/sensors/mid360.py",
+      "sha256": "a37a1c423d8818194f23023ba969f55025dc867d2280579633a699807a5aea44"
+    },
+    "isaaclab-training/instinctlab/task/__init__.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/task/__init__.py",
+      "sha256": "5ca71c76eede74601a11dc1b73acc7e5e0b33664896e52df8746599d364ec3f6"
+    },
+    "isaaclab-training/instinctlab/task/critic_h1.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/task/critic_h1.py",
+      "sha256": "ea00315e8ca67ba8cdb1c3a22bf11a466b06d98bdd46b2bc55d437c6758cbddf"
+    },
+    "isaaclab-training/instinctlab/task/rewards_h1.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/task/rewards_h1.py",
+      "sha256": "ff69134ae79afbda8627811a060341de350f5d4829166a01bdb423dc71c07027"
+    },
+    "isaaclab-training/instinctlab/task/scene_h1.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/task/scene_h1.py",
+      "sha256": "e94dd2e9614e8dae380f298650edc5cc91fcaacc7ca9ed80b678581bba087d59"
+    },
+    "isaaclab-training/instinctlab/task/termination.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/task/termination.py",
+      "sha256": "90be9cf7d68d54f520866737a1aef3c449f5b3b52bfe62a9666d405756b59d89"
+    },
+    "isaaclab-training/instinctlab/training/__init__.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/training/__init__.py",
+      "sha256": "43ed3f2b45c7678d09c05275e73ee669161ccae0caab9d09f35039f8560e1d24"
+    },
+    "isaaclab-training/instinctlab/training/checkpoint.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/training/checkpoint.py",
+      "sha256": "d04f77d3e443ed8466db5dc6f0c05d633fd012b799eedf4d6047d4e395e9b37b"
+    },
+    "isaaclab-training/instinctlab/training/checkpoint_h1.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/training/checkpoint_h1.py",
+      "sha256": "94337128716045da864eac88598d23191ad3ee74d41fb38cacee4eb7315462d9"
+    },
+    "isaaclab-training/instinctlab/training/networks.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/training/networks.py",
+      "sha256": "a0790d5f80c8a9f2f06d05fc80bcdcfe8fd3e1a5c71a482443f1b3f5769dc129"
+    },
+    "isaaclab-training/instinctlab/training/networks_h1.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/training/networks_h1.py",
+      "sha256": "e2039982cdd8249116ef8910c2ba0d28646d0ad17e35a5fe4b09afc3b8b0a0db"
+    },
+    "isaaclab-training/instinctlab/training/ppo.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/training/ppo.py",
+      "sha256": "13290128ecbc79f9c429e064abbb2505bd6830c815ef21b3cec93fc0581e2431"
+    },
+    "isaaclab-training/instinctlab/training/rollout.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/training/rollout.py",
+      "sha256": "a1d04a84a6099a711cab1d8cb8b6a550addf292dde4682ea82d3a9a0d32ab58d"
+    },
+    "isaaclab-training/instinctlab/training/rollout_h1.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/training/rollout_h1.py",
+      "sha256": "99368e65552960680e2fbf860fdf726ec51ab3671c420719cdec90b6992cdabc"
+    },
+    "training_workloads/scale_003/lifecycle.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/scale_003/lifecycle.py",
+      "sha256": "0ea28f1b6fea550dd7630054871ae302887b44d05b7b36abc3b23a49636a1978"
+    },
+    "training_workloads/scale_003/persistence.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/scale_003/persistence.py",
+      "sha256": "245b1fd5f603ba912eb512904d8daf51b5233771cf3b1df46da25faf170e0ac7"
+    },
+    "training_workloads/scale_003/resources.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/scale_003/resources.py",
+      "sha256": "1f47704f37134e02f24999dac5c6aba89e69b3b21ab74d0b230c875ebb92ac8c"
+    },
+    "training_workloads/unified_h1/__init__.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/__init__.py",
+      "sha256": "bff20b35d35477d6aafde01e55ff7de70df148b0925f91d93e22812006dc83ec"
+    },
+    "training_workloads/unified_h1/asset_closure.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/asset_closure.py",
+      "sha256": "99971d2daf7162874e29c42a3a1a3e54df13f5b4dcb5a06380bc10002be063e6"
+    },
+    "training_workloads/unified_h1/authorization.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/authorization.py",
+      "sha256": "fe77b382234986beb7a9066807162b50b999acfdeba952412d8a70ae1ac85111"
+    },
+    "training_workloads/unified_h1/b0_causal_analyzer.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/b0_causal_analyzer.py",
+      "sha256": "9172255d8f15ec93b055d4e094ddc56a4358993619e94602d9cb4519982f9f59"
+    },
+    "training_workloads/unified_h1/b0_enhanced.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/b0_enhanced.py",
+      "sha256": "ded9db1f6fce21cd5a3b6cb1ea228ac11da2c97130e1d1a0d073e16465302079"
+    },
+    "training_workloads/unified_h1/b0_handoff.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/b0_handoff.py",
+      "sha256": "a04bb8cdc64f1bebd24ef0fabaa0bc3a30f853cd69c033d5f480d4f0c463f2aa"
+    },
+    "training_workloads/unified_h1/b0_observer.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/b0_observer.py",
+      "sha256": "14b6410ccc778bfabbf842a9d9511a4382af444c79f389ed5d3b380390c2f625"
+    },
+    "training_workloads/unified_h1/backend.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/backend.py",
+      "sha256": "c7e1362a2f56f7815cb31da379674888babb367ba633c6f0b7021baceafcebc0"
+    },
+    "training_workloads/unified_h1/budget.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/budget.py",
+      "sha256": "e861364f9facf45020d02efca6bc5421fc84607c88fc4f01e4f965f69f76d5f8"
+    },
+    "training_workloads/unified_h1/checkpoint_compatibility.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/checkpoint_compatibility.py",
+      "sha256": "670ec6ff9dc4841f7e9d088422fecec22dc23bb7295fa4bbb094fdf03369bb80"
+    },
+    "training_workloads/unified_h1/checkpoint_recalculation.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/checkpoint_recalculation.py",
+      "sha256": "d23c77092a71fb69359bcef6bf50f3ff9ca01b34b61748e889c1b49e249fe626"
+    },
+    "training_workloads/unified_h1/config.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/config.py",
+      "sha256": "caae8b8d79746cb6820b1b3784b9851b6e6829e5a86683a03077fb6201f7dab0"
+    },
+    "training_workloads/unified_h1/control_diagnostic.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/control_diagnostic.py",
+      "sha256": "0825540779cf217d5a60b79a4e8d62b6e6724129aaba76a42dfec91aad098a61"
+    },
+    "training_workloads/unified_h1/driver.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/driver.py",
+      "sha256": "c000a3a5b37cf60dc638854f05d8edfa4e77273ed6f0468cd02b486237574502"
+    },
+    "training_workloads/unified_h1/evaluation.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/evaluation.py",
+      "sha256": "a6caedb36a5ddb408a9a9b8c6e073808b480252f6cc3ec12d201b69ab5e5583c"
+    },
+    "training_workloads/unified_h1/evidence_boundary.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/evidence_boundary.py",
+      "sha256": "3ee5a6c285eae6a0344807d74f67009c2cc9a7b0aea02a2119f606f894917b24"
+    },
+    "training_workloads/unified_h1/formal_segment.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/formal_segment.py",
+      "sha256": "dc347cfa8fbd137b685b38bfc5cd01dd02424ec5c06b7dfb7cdd458cd32f671e"
+    },
+    "training_workloads/unified_h1/formal_unified_h1.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/formal_unified_h1.py",
+      "sha256": "287b8384873b6e342d0f3e5e4b0eaf3b3fd4c6107057eefedb4ae50a4e03986e"
+    },
+    "training_workloads/unified_h1/live_adapter.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/live_adapter.py",
+      "sha256": "62cb0f243740dde52e10d2f4db421bc03d7c41097be5e5f91da2a1242ccfcbc3"
+    },
+    "training_workloads/unified_h1/local_dispatch.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+    },
+    "training_workloads/unified_h1/logging.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/logging.py",
+      "sha256": "69575a7de0d7e054c769d7968bf6a4e56d72a3d0640a0ccb2d4cd77c935385d9"
+    },
+    "training_workloads/unified_h1/mean_prior.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/mean_prior.py",
+      "sha256": "a7e8d3589f739636a337ca258d61f9e541bd576b98826019a012e8b5feab896c"
+    },
+    "training_workloads/unified_h1/pilot_contract.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/pilot_contract.py",
+      "sha256": "4e00ebde975491f5be10d2d19e13984be437f10547fe33b16bf28f48b4d2fc66"
+    },
+    "training_workloads/unified_h1/pilot_diagnostic.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/pilot_diagnostic.py",
+      "sha256": "8f3f6be315f423026335b4cdc42da5827dcc35355447f1aff2ec80df46d1fe18"
+    },
+    "training_workloads/unified_h1/preflight.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/preflight.py",
+      "sha256": "d4add8a45bde7959e0771ddb8bfbd8db2bd434871ae3c1137a880faf46dda5cd"
+    },
+    "training_workloads/unified_h1/r3_sequence.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/r3_sequence.py",
+      "sha256": "d612632bdf016fcaff4f9bd90a7cbf8b1a29fb951dd93c3f923fbf859efc8233"
+    },
+    "training_workloads/unified_h1/research_contract.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/research_contract.py",
+      "sha256": "d4d1e3fff6d20bf9b24fc3dfd8847f0630a1902929f47617c990828068e0259a"
+    },
+    "training_workloads/unified_h1/schedule.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/schedule.py",
+      "sha256": "726044a33a4bd188e7b289bf8e9c0dabdbfe99b70fb38d90a6d89c37594c1565"
+    },
+    "training_workloads/unified_h1/transition_diagnostic.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/transition_diagnostic.py",
+      "sha256": "7347ffa01d64b58b7342ea663d126313d4b5ae02d7b45a88b2e0ab6be8ae6eda"
+    },
+    "training_workloads/unified_h1/w_closure.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/w_closure.py",
+      "sha256": "5e30b39ee175781360a865b1f2f41925023bb6e321f1474e65e0b678fce4346d"
+    }
+  },
+  "ground_assets": {
+    "asset_root": "/home/mint/rl_dev/instinctRL-dev/runtime_assets/Assets/Isaac/5.1",
+    "manifest_sha256": "f64a0561477efcc612761f6b3034f9612f2d3cb42832138e86ff7a4c18e1ef52",
+    "opened_files": {
+      "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_basecolor.png": {
+        "bytes": 436257,
+        "sha256": "deab39088eaf39ed7be951966c5e6bd5e58b90ab64743b0cdc8e5579fd5a99d9"
+      },
+      "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_blue.png": {
+        "bytes": 1474958,
+        "sha256": "44fc0e82007bb0bd94631cd7ec45986a71ed74b9413899fbffac13efe151be4b"
+      },
+      "Isaac/Environments/Grid/Materials/Textures/Wireframe_blue.png": {
+        "bytes": 111895,
+        "sha256": "940b96ee8c8e53bd1acbc770d4ca0ac98bed9c96439ab386d1b27dbc9790cc4e"
+      },
+      "Isaac/Environments/Grid/default_environment.usd": {
+        "bytes": 13622,
+        "sha256": "8a21c317d638d33a4e6c20c958a7ed8f4d8c5195efd7e20f1b85178b4a15638a"
+      }
+    },
+    "material": {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/mdl/core/Base/OmniPBR.mdl",
+      "sha256": "685a82c18b381f1cd29831490e4c356e61dbeac2d86803babc115cd6a4a845db"
+    },
+    "network_fallback": false
+  },
+  "uav_provenance": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/PROVENANCE.json",
+    "sha256": "71a212c48274622b0d6cfca0859cd885ddc2c62ce837144d58dc3c60298a6688"
+  },
+  "uav_assets": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/taslab_uav.usd",
+      "sha256": "3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/taslab_uav.yaml",
+      "sha256": "91b7319fd844303eb8e18f946434f3369988c8789e6ba0172b67bfd89177e3e4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/assets/taslab_uav/lee_controller_taslab_uav.yaml",
+      "sha256": "e5e0496666f3f245d604a949eedc5060370d71b95de0d2337d39617bacd1f8e6"
+    }
+  ],
+  "gpu_queries": 0,
+  "simulator_initializations": 0
+}

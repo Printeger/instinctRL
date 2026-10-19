@@ -3,9 +3,10 @@
 2026-10-19 用户已提交 R6 启动委托；完整目标仍未完成。已核验本地/远端 main、
 R5 controller COMPLETE、Store 无未终结作业/暂停/STOP，以及 u640 实际 SHA256
 `aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429`。
-新委托与预算位于 `docs/experiments/r6-robustness-auto/`。当前只完成启动核验和预算检查核心
-9 项 CPU 测试；容量通过、测试冻结、资产全审计、控制器恢复验收、真实非交互审核和
-exact Store 许可均尚未完成。没有 R6 controller/job/自动模型调用，不是后台运行中。
+新委托与预算位于 `docs/experiments/r6-robustness-auto/`。已完成准确基线 config/源码/method/runtime 可执行文件/地面及 UAV 资产的 CPU 哈希审计，
+预算与恢复日志核心共 19 项 CPU 测试通过。新测试草案含 12 个目标块及 4 个压力块，
+最终三模型加基线共 774400 非训练 transitions；草案尚未独审冻结。完整容量通过、
+控制器端到端恢复验收、真实非交互审核和 exact Store 许可均尚未完成。没有 R6 controller/job/自动模型调用，不是后台运行中。
 聊天 Goal 自动续推理与零模型等待的交接限制已提出，尚未变更聊天状态。
 历史 R5 结论与原件保持，下方旧状态不覆盖本轮真实进度。
 

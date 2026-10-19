@@ -151,6 +151,9 @@
     "current_live_jobs": [],
     "automatic_model_sessions_started": 0,
     "exact_job_permission_required": true,
-    "goal_complete": false
+    "goal_complete": false,
+    "baseline_cpu_audit": "docs/experiments/r6-robustness-auto/BASELINE_CPU_AUDIT.json",
+    "recovery_core_tests": "docs/experiments/r6-robustness-auto/CPU_RECOVERY_TESTS.json",
+    "test_protocol_status": "DRAFT_NOT_FROZEN"
   }
 }
