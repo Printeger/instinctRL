@@ -33,7 +33,16 @@
   },
   "reservations": {
     "live_entries": [],
-    "source_snapshots": []
+    "source_snapshots": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019",
+        "reserved_bytes": 2147483648,
+        "status": "FROZEN_READ_ONLY",
+        "source_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+        "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+        "observed_file_bytes": 821095981
+      }
+    ]
   },
   "stage_allocation_history": [
     {

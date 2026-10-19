@@ -1,0 +1,35 @@
+{
+  "schema_version": "independent-review-relay/1",
+  "reviewer": "/root/authority_review",
+  "recorder": "root relay of independent exact prelive final message",
+  "verdict": "PASS",
+  "must_fix": [],
+  "identities": {
+    "master": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+      "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+    },
+    "stage": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-E1-001.json",
+      "sha256": "1e540a514b50ea43b8d0a0af5f76b20d79535597184a885134364a08f5f978b5"
+    },
+    "packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-E1-CONTROL-01/launch_inputs.proposed.json",
+      "sha256": "42062f0363a2fb238ee235ac87744a165ed4251d9fa57ea2162eaea464109ba2"
+    },
+    "commander": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_commander.py",
+      "sha256": "cafb006b531087770e2035f75134f0ee51b60437379934bdfbd3fa4685de18e0"
+    },
+    "ownership_helper": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_commander.py",
+      "sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4"
+    },
+    "source_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+    "expected_authorization_sha256": "90339a6a6b065b91a02ea7c272682def28290fd791b85ccc20d5e0f705fb25f8",
+    "checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776"
+  },
+  "scope": "Exact E1 issuance after frozen CPU loader/pins/source/readonly/compatibility/Store chain verification; controller separately reviewed before start",
+  "CPU_only": true
+}

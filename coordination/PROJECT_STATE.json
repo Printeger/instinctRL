@@ -380,40 +380,15 @@
     }
   },
   "current_goal": {
-    "target": "READY_FOR_FORMAL_R5_TRAINING",
-    "id": "R5-FORMAL-READINESS-AUTO-01",
-    "status": "READY_FOR_FORMAL_R5_TRAINING",
-    "requirements": "docs/goals/InstinctRL_R5_Formal_Training_Readiness_Autonomous_Goal.md",
-    "master_authority": "docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
-    "evidence_index": "docs/experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md",
-    "goal_state": "docs/experiments/r5-formal-readiness-auto/GOAL_STATE.md",
-    "budget": "docs/experiments/r5-formal-readiness-auto/goal_budget.json",
+    "id": "R5-W-CLOSURE-AUTO-20261019",
+    "status": "IN_PROGRESS",
+    "phase": "E1_READY_FOR_PUSH_AND_TMUX",
+    "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+    "state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
     "current_job": null,
-    "current_exact_release": null,
-    "completion_proven": true,
-    "remaining_required_work": [],
-    "next_action": "Exactly2boundpostrunqueries then realdataanalysis/independentreview; noblindretry.",
-    "training_authorizations_issued": 16,
-    "current_frozen_G4": "NEW_MEAN_METHOD_BOTH_UNUSED_CONFIRMATIONS_INDEPENDENT_PASS",
-    "new_candidate": "R5-MEAN10-DEV-02",
-    "historical_failed_G4": "OLD_W0_005_BOTH_CONFIRMATIONS_FAILED",
-    "historical_initial_prelive_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-exact-prelive.json",
-    "historical_initial_commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json",
-    "conditional_formal_training_authorizations_issued": 2,
-    "goal_achieved": true,
-    "independent_final_review": {
-      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/final-readiness.json",
-      "sha256": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0"
-    },
-    "formal_readiness": {
-      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_r5_readiness.json",
-      "sha256": "fc3561a9e1706fad33bed1367497b97f01436ca9e5cdfb9901c462331ad8b27b"
-    },
-    "formal_conditional_permission": {
-      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_conditional_permission.json",
-      "sha256": "f0aa8c1ce592430d2be03b4e441fa1bc8af3013297a152ad60a11b9fb335a183"
-    },
-    "formal_training_submitted": false
+    "current_exact_release": "A-9306976b2df3dee8",
+    "previous_state": "docs/experiments/r5-w-closure-auto/previous-project-state.json",
+    "next_action": "After controller independent PASS and commit/tag/push, tmux Python submits exact E1 then performs owned cleanup/settle/postrun and one autonomous decision model call."
   },
   "historical_prior_independent_review": {
     "path": "reviews/review-entry6-final-readiness.json",

@@ -1,0 +1,751 @@
+{
+  "schema_version": "instinctrl-project-state/1",
+  "as_of": "2026-10-17",
+  "development_repository": "/home/mint/rl_dev/instinctRL-dev",
+  "branch": "main",
+  "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
+  "phase": "R5_FIXED_FORMAL_FIRST_SEGMENT_SCIENTIFICALLY_COMPLETE",
+  "historical_cpu_receipt": {
+    "tests_run": 132,
+    "errors": 0,
+    "failures": 0,
+    "scope": "HISTORICAL_RECEIPT_ONLY",
+    "path": "../docs/history/consolidation-20261012/r5/review_evidence/HOST_CPU_EVIDENCE.json"
+  },
+  "latest_independent_review": {
+    "path": "../docs/experiments/r5-formal-readiness-auto/reviews/H128-actual-pair-H256-prelive.json",
+    "sha256": "ed8850681c073e1d42fd332b8d4538ea4b58d2f0a34d4e504f014b462de41efc",
+    "role_call": 10,
+    "independent_handle": "/root/pilot_reviewer",
+    "verdict": "PASS_ACTUAL_H128_PAIR_AND_CONDITIONAL_H256_PRELIVE",
+    "accepted": true,
+    "completion_allowed": false,
+    "candidate_commit": "a13c5a459d471799f30644a9a04189d6e1805f02"
+  },
+  "latest_real_diagnostic": {
+    "job_id": "J-ad3ac7db1fb82d89",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "scientific_status": "ACCEPTED_ORIGINAL_ZTS_ROLE15",
+    "process": "FAILED",
+    "exit_code": -9,
+    "raw_status": "PASS_PENDING_CLOSE",
+    "formal_counter_completeness": "INCOMPLETE",
+    "formal_nontraining_transitions": null,
+    "completed_policy_steps_observed": 630,
+    "nontraining_transitions_observed": 20160,
+    "transitions_reservation": 20160,
+    "owned_cleanup": "NORMAL_ACK_TWO_STABLE_EMPTY_SCANS_NO_SURVIVORS",
+    "training_updates": 0
+  },
+  "new_live_execution_authorized": false,
+  "new_training_authorized": false,
+  "migration_is_product_acceptance": false,
+  "current_candidate_config": "../docs/experiments/r5-formal-readiness-auto/experiments/R5-H128-DEV-01/snapshot_config.json",
+  "blocking_followups": [],
+  "migration_verification": {
+    "scope": "MIGRATION_CPU_REGRESSION_ONLY_NOT_INDEPENDENT_PRODUCT_ACCEPTANCE",
+    "product": {
+      "passed": 1264,
+      "skipped_gpu_tests": 8,
+      "deselected_gpu_required_tests": 2,
+      "subtests_passed": 40,
+      "record": "product-cpu-final.xml"
+    },
+    "workload": {
+      "modules": 22,
+      "tests": 239,
+      "failures": 0,
+      "errors": 0,
+      "modules_records": {
+        "test_evaluator_evidence_boundary.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_evaluator_evidence_boundary.xml",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_failure_evidence.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_failure_evidence.xml",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_a0004.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_a0004.xml",
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_control_diagnostic.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_control_diagnostic.xml",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_paired_pilot_unittest.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v2/test_paired_pilot_unittest.xml",
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_r4_evaluation_start.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_r4_evaluation_start.xml",
+          "tests": 21,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_rework.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_rework.xml",
+          "tests": 16,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_asset_closure.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_asset_closure.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_scale_003.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v2/test_scale_003.xml",
+          "tests": 17,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_r3_local_dispatch.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_r3_local_dispatch.xml",
+          "tests": 22,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_scale_003_repair.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v2/test_scale_003_repair.xml",
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1.xml",
+          "tests": 17,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_r3_process_identity.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_r3_process_identity.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_a0002.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_a0002.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_d7_cleanup_unittest.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_d7_cleanup_unittest.xml",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_a0003.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_a0003.xml",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_d7_cpu_unittest.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_d7_cpu_unittest.xml",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_a0005.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_a0005.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_r3_preflight_diagnostics.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_r3_preflight_diagnostics.xml",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_a0006.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_a0006.xml",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_b0_enhanced_stage1.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_b0_enhanced_stage1.xml",
+          "tests": 29,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "test_unified_h1_product_hook.xml": {
+          "record": "docs/history/consolidation-20261012/workload-isolated-v1/test_unified_h1_product_hook.xml",
+          "tests": 20,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      }
+    },
+    "scoped_tools": {
+      "passed": 310,
+      "failed": 2,
+      "record": "tool-tests.xml",
+      "limitation": "installed Codex CLI 0.161.0 mismatches the frozen isolation contract 0.153.4; real backend remains disabled"
+    },
+    "initial_failures_retained": true,
+    "initial_product_broad_tests_included_cuda_dependent_unit_checks": true,
+    "final_product_run_forces_cuda_invisible": true,
+    "simulation_starts": 0,
+    "training_starts": 0
+  },
+  "code_integration_commit": "e7d58d2bf2352eb9d91a0170de580ca9792e3366",
+  "historical_pre_goal_independent_review": {
+    "status": "NOT_ACCEPTED",
+    "task_status": "BUDGET_EXHAUSTED",
+    "reason": "Evaluator output rejected: MUST_FIX requires contract, evidence, impact and closure"
+  },
+  "historical_previous_independent_review": {
+    "id": "E-R5-ZERO-C0-Z-C1-FAILURE-CONDITIONAL-EXTRA-20261014",
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-C0-Z-C1-failure-extra-prelive.json",
+    "sha256": "0cf841431c6e0d6e61c531b5e4b03aa032db7dd4b164d3c8fac8f1ab3d8514b8",
+    "accepted": true,
+    "role_call": 5,
+    "independent_handle": "/root/pilot_reviewer",
+    "scope": "接受C0实际原Z负结果、C1实际启动前资源失败及准确追加入口提案的条件性预审；不接受Goal完成，不签发追加资源或release。",
+    "completion_allowed": false,
+    "live_resource_exception_granted": false,
+    "evidence_commit": "890381a40e856a0b7d30c85d6ff696424fea0d0b",
+    "candidate_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90"
+  },
+  "historical_previous_real_diagnostic": {
+    "status": "PHYSICAL_REGRESSION_ACCEPTED_INDEPENDENT_ROLE12_PROCESS_FAILED",
+    "job_id": "J-afe4bda51f5206e5",
+    "source_commit": "f726c019339494e74fbc6e7c90ec6d0fa7a45ff8",
+    "physical_rows": 403200,
+    "final_policy_counters": "UNAVAILABLE",
+    "transitions_reservation": 20160,
+    "process": "FAILED",
+    "training_updates": 0
+  },
+  "completed_diagnostic_goal": {
+    "requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
+    "evidence_index": "../docs/diagnostics/r5-readiness/STATE_AND_EVIDENCE.md",
+    "budget": "../docs/diagnostics/r5-readiness/goal_budget.json",
+    "target": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
+    "status": "COMPLETE",
+    "live_release_issued": false,
+    "training_authorized": false,
+    "independent_review": {
+      "path": "reviews/review-entry6-final-readiness.json",
+      "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
+      "verdict": "PASS",
+      "role_call": 15,
+      "independent_handle": "/root/pilot_reviewer",
+      "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "evidence_commit": "b7820f8",
+      "state_sync_condition": "SATISFIED_CURRENT_VS_HISTORICAL_FIELDS",
+      "training_authority": false,
+      "evidence": "../docs/diagnostics/r5-readiness/reviews/review-entry6-final-readiness.json",
+      "status": "PASS_FINAL_TECHNICAL_READINESS",
+      "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "closed": [
+        "DIAGNOSTIC_CLOSURE",
+        "CONTROL_BASELINE_REGRESSION",
+        "PILOT_TECHNICAL_READINESS"
+      ],
+      "open": []
+    },
+    "cli_compatibility": {
+      "installed": "0.161.0",
+      "scope": "new project compatibility candidate only",
+      "doctor": "../docs/diagnostics/r5-readiness/cli-doctor-v1.json",
+      "historical_pin": "0.153.4",
+      "result": "PASS_KERNEL_AND_INSTALLED_REGISTRY_CHECKS"
+    },
+    "exact_live_approval": "../docs/diagnostics/r5-readiness/entry6-commander-approval.json",
+    "live_entry_status": "ENTRY6_TERMINAL_FULL_COMMAND_ZTS_PASS_PROCESS_FAILED_MINUS9",
+    "latest_live_job": "J-ad3ac7db1fb82d89",
+    "current_live_release_effective": false,
+    "next_candidate": {
+      "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+      "status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
+      "live_release_issued": false,
+      "future_proposals": "../docs/diagnostics/r5-readiness/pilot_future_proposals.r3.json",
+      "training_authorization": "UNISSUED",
+      "first_real_rollout_gate": "PENDING_NEXT_PILOT"
+    },
+    "next_exact_live_approval": null,
+    "latest_actual_diagnostic": "../docs/diagnostics/r5-readiness/entry6-command-regression-summary.json",
+    "resource_decision": {
+      "status": "APPROVED_EXPLICIT_USER_START_INIT_CAP8",
+      "decision": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json",
+      "sha256": "e564defa071fd33f1fbdca4c5cdbdd3947a7936127021b1fe3107fd2f44be9ce",
+      "user_message_exact": "批准，扩额8-10次",
+      "caps_delta": "cumulative live starts/initreservation4to8 only",
+      "other_caps_unchanged": true
+    },
+    "readiness": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
+    "blocking_kind": null,
+    "prelaunch_retry_exception": {
+      "status": "CONSUMED_ONE_ENTRY_NO_FURTHER_REPEAT",
+      "proposal": "../docs/diagnostics/r5-readiness/inputs/passthrough_entry6_input_manifest.json",
+      "requested_additional_entries": 1,
+      "no_new_implementation_repair": true,
+      "independent_pre_review": "../docs/diagnostics/r5-readiness/reviews/review-entry6-conditional-prelive.json",
+      "decision": "docs/diagnostics/r5-readiness/user_entry6_prelaunch_exception.json",
+      "sha256": "f29d6cfff0a97b303a297820a21a018d006525d887c3dd9b67ab15dd043ea8ae"
+    },
+    "historical_blocked_audit": {
+      "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
+      "consecutive_goal_turns": 3,
+      "audit_epoch": "RESUMED_GOAL_FRESH_BLOCKED_AUDIT",
+      "resume_authority": "User resumed Goal active; no new live-start or initialization cap authorization received.",
+      "previous_blocked_audit": {
+        "condition": "Original four live starts and four conservative initialization reservations consumed; explicit fifth-entry cap authorization still absent.",
+        "consecutive_goal_turns": 3,
+        "previous_goal_turn": "PROGRESS: requirement evidence audit and stale state corrections committed; resource blocker remained.",
+        "current_verification": "No active jobs or live process handle; fifth attempt has no files or actual AUTHORIZATION. Caps remain4 with4used; user resource decision is pending.",
+        "independent_work_exhausted": true,
+        "remaining_actions_require_user_decision": true,
+        "goal_achieved": false,
+        "resume_action": "Obtain explicit decision on existing one-start/init reservation4to5 proposal; then existing Commander exact release and original command gates/final review.",
+        "budget_reset": false
+      },
+      "current_verification": "main and origin/main at 4d6314e5431c442e90bff0d0b36aa8abc4644cfe; all four jobs FAILED, STOP absent, fifth attempt empty and actual AUTHORIZATION absent. Caps4/used4, retained60480 and pending user decision unchanged. Exact input and independent review hashes match.",
+      "independent_work_exhausted": true,
+      "remaining_actions_require_user_decision": false,
+      "goal_achieved": false,
+      "resume_action": "Obtain explicit decision on existing one-start/init reservation4to5 proposal; then existing Commander exact release and original command gates/final review.",
+      "budget_reset": false,
+      "previous_goal_turn_classification": "NO_PROGRESS",
+      "resumed_turns": "Turn1: UI-resume bookkeeping only, cap decision absent. Turn2: authoritative cap/job/auth revalidation only, no live handle. Turn3: same authority and resource blocker verified; no independent action can complete missing command gates.",
+      "resolved_by": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json",
+      "scope": "HISTORICAL_RESOLVED_BLOCKER_NOT_CURRENT_STATE"
+    },
+    "historical_previous_independent_review": {
+      "candidate_commit": "643747a950fa1a49a7dfff6810bcca77122cf567",
+      "input_pack_commit": "1689d3cecb438f25cfe28d6689b3406e1ded9a85",
+      "verdict": "PASS_PRELIVE_ONLY",
+      "evidence": "../docs/diagnostics/r5-readiness/reviews/review-baseline-v3.json",
+      "closed": [
+        "PILOT-R1",
+        "PILOT-R2",
+        "MECHANICS-R1",
+        "BASELINE-R1",
+        "BASELINE-R2"
+      ],
+      "open": [],
+      "release_order": "INDEPENDENTLY_ACCEPTED_ENTRY_GATE_SEPARATION",
+      "latest_actual_failure_review": "../docs/diagnostics/r5-readiness/reviews/review-command-r3-coexistence-failure.json",
+      "latest_candidate": {
+        "status": "PASS_ZERO_PHYSICAL_AND_EXACT_PRELIVE_ONLY",
+        "role_call": 12,
+        "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+        "input_pack_commit": "b0b8df0c66d4a562e2cb6b4aa269bbf5d4fcfb99",
+        "evidence": "../docs/diagnostics/r5-readiness/reviews/review-zero-r2-command-r3-prelive.json",
+        "closed": [
+          "DIAGNOSTIC-DURABILITY-R1",
+          "PILOT-FUTURE-R1"
+        ],
+        "open": []
+      },
+      "latest_actual_command_review": "PENDING_ROLE15"
+    }
+  },
+  "current_goal": {
+    "target": "READY_FOR_FORMAL_R5_TRAINING",
+    "id": "R5-FORMAL-READINESS-AUTO-01",
+    "status": "READY_FOR_FORMAL_R5_TRAINING",
+    "requirements": "docs/goals/InstinctRL_R5_Formal_Training_Readiness_Autonomous_Goal.md",
+    "master_authority": "docs/experiments/r5-formal-readiness-auto/MASTER_AUTHORITY.json",
+    "evidence_index": "docs/experiments/r5-formal-readiness-auto/EVIDENCE_INDEX.md",
+    "goal_state": "docs/experiments/r5-formal-readiness-auto/GOAL_STATE.md",
+    "budget": "docs/experiments/r5-formal-readiness-auto/goal_budget.json",
+    "current_job": null,
+    "current_exact_release": null,
+    "completion_proven": true,
+    "remaining_required_work": [],
+    "next_action": "Exactly2boundpostrunqueries then realdataanalysis/independentreview; noblindretry.",
+    "training_authorizations_issued": 16,
+    "current_frozen_G4": "NEW_MEAN_METHOD_BOTH_UNUSED_CONFIRMATIONS_INDEPENDENT_PASS",
+    "new_candidate": "R5-MEAN10-DEV-02",
+    "historical_failed_G4": "OLD_W0_005_BOTH_CONFIRMATIONS_FAILED",
+    "historical_initial_prelive_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-exact-prelive.json",
+    "historical_initial_commander_adapter_review": "docs/experiments/r5-formal-readiness-auto/reviews/H128-commander-fixed.json",
+    "conditional_formal_training_authorizations_issued": 2,
+    "goal_achieved": true,
+    "independent_final_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/reviews/final-readiness.json",
+      "sha256": "9253f628e2b8e96cb192dce48a7d920d49950522fe8ce8910a1473dcdb6203b0"
+    },
+    "formal_readiness": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_r5_readiness.json",
+      "sha256": "fc3561a9e1706fad33bed1367497b97f01436ca9e5cdfb9901c462331ad8b27b"
+    },
+    "formal_conditional_permission": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-readiness-auto/formal_conditional_permission.json",
+      "sha256": "f0aa8c1ce592430d2be03b4e441fa1bc8af3013297a152ad60a11b9fb335a183"
+    },
+    "formal_training_submitted": false
+  },
+  "historical_prior_independent_review": {
+    "path": "reviews/review-entry6-final-readiness.json",
+    "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
+    "verdict": "PASS",
+    "role_call": 15,
+    "independent_handle": "/root/pilot_reviewer",
+    "candidate_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "evidence_commit": "b7820f8",
+    "state_sync_condition": "SATISFIED_CURRENT_VS_HISTORICAL_FIELDS",
+    "training_authority": false,
+    "evidence": "../docs/diagnostics/r5-readiness/reviews/review-entry6-final-readiness.json",
+    "status": "PASS_FINAL_TECHNICAL_READINESS",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "closed": [
+      "DIAGNOSTIC_CLOSURE",
+      "CONTROL_BASELINE_REGRESSION",
+      "PILOT_TECHNICAL_READINESS"
+    ],
+    "open": []
+  },
+  "latest_pair_scientific_result": {
+    "status": "VALID_EXPERIMENT_POSITIVE",
+    "goal_complete": true,
+    "source_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+    "original_Z_admission": false,
+    "u64_primary_maxima_C0_C1": {
+      "speed_rms_m_s": [
+        0.102369524538517,
+        0.02041279710829258
+      ],
+      "horizontal_drift_m": [
+        1.9598313570022583,
+        0.34779226779937744
+      ],
+      "height_deviation_m": [
+        0.47130560874938965,
+        0.09513425827026367
+      ]
+    },
+    "observed": {
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14,
+      "actor_optimizer_steps": 1024,
+      "critic_optimizer_steps": 1024
+    },
+    "reservations_retained": {
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14
+    },
+    "report": "../docs/experiments/r5-zero-correction-20261014/PAIR_ANALYSIS.md",
+    "independent_review": {
+      "id": "E-R5-ZERO-FINAL-SCIENTIFIC-20261014",
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-zero-final-scientific.json",
+      "sha256": "da09ded96ad8e806fce59bf2b5dcc177a5b58de2c7f9734d49058d6abea5949f",
+      "accepted": true,
+      "role_call": 6,
+      "independent_handle": "/root/pilot_reviewer",
+      "verdict": "PASS",
+      "scientific_status": "VALID_EXPERIMENT_POSITIVE",
+      "completion_allowed": true,
+      "evidence_commit": "0c54b7e5283c1afbeb6c023b3340e22cfaed526f",
+      "candidate_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+      "ordinary_final_sync": "SATISFIED_LOCAL_ARTIFACTS_FINAL_NORMAL_PUSH_REQUIRED",
+      "not_future_training_authority": true
+    },
+    "next_stage_authorized": false
+  },
+  "completed_p0_plr_goal": {
+    "target": "R5_P0_PLR_PAIRED_PILOT_SCIENTIFIC_CLOSURE",
+    "status": "COMPLETE",
+    "contract": "../docs/experiments/r5-paired-pilot-20261013/EXPERIMENT_CONTRACT.md",
+    "evidence_index": "../docs/experiments/r5-paired-pilot-20261013/STATE_AND_EVIDENCE.md",
+    "budget": "../docs/experiments/r5-paired-pilot-20261013/goal_budget.json",
+    "user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
+    "shared_baseline_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "baseline_readiness": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
+    "first_real_rollout_gate": {
+      "P0": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS",
+      "PLR": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS"
+    },
+    "current_exact_release": null,
+    "training_authorization_issued": false,
+    "training_execution_requested_by_user": true,
+    "current_job": null,
+    "next_action": "STOP_GOAL_COMPLETE; next CPU/experiment scope only proposed and not started.",
+    "independent_review": {
+      "path": "reviews/review-pair-final-scientific.json",
+      "sha256": "6810e089f658f430b31ceead64605239fc7b46647467858e9bf2070b306657f5",
+      "verdict": "PASS",
+      "role_call": 4,
+      "independent_handle": "/root/pilot_reviewer",
+      "evidence_commit": "52cd7701499508956fe9721426dec45f80cb476b",
+      "scope": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+      "ordinary_state_sync": "SATISFIED",
+      "not_future_training_authority": true
+    },
+    "actual_pair_data_collection_complete": true,
+    "observed_training_updates": 128,
+    "observed_training_transitions": 65536,
+    "observed_evaluation_transitions": 25600,
+    "observed_training_checkpoint_writes": 14,
+    "original_Z_u16_u64": {
+      "P0": [
+        "0/32",
+        "0/32"
+      ],
+      "PLR": [
+        "0/32",
+        "0/32"
+      ]
+    },
+    "scientific_decision": "NEITHER_LR_ESTABLISHES_ORIGINAL_Z_ADMISSION_DO_NOT_EXTEND_TRAINING",
+    "scientific_result_status": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+    "completion_proven": true,
+    "remaining_required_work": [],
+    "final_report": "../docs/experiments/r5-paired-pilot-20261013/PAIR_REPORT.md",
+    "machine_results": "../docs/experiments/r5-paired-pilot-20261013/pair_results.json",
+    "completion_audit": "../docs/experiments/r5-paired-pilot-20261013/COMPLETION_AUDIT.json"
+  },
+  "historical_previous_pair_review": {
+    "path": "reviews/review-pair-final-scientific.json",
+    "sha256": "6810e089f658f430b31ceead64605239fc7b46647467858e9bf2070b306657f5",
+    "verdict": "PASS",
+    "role_call": 4,
+    "independent_handle": "/root/pilot_reviewer",
+    "evidence_commit": "52cd7701499508956fe9721426dec45f80cb476b",
+    "scope": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+    "ordinary_state_sync": "SATISFIED",
+    "not_future_training_authority": true,
+    "evidence": "../docs/experiments/r5-paired-pilot-20261013/reviews/review-pair-final-scientific.json",
+    "status": "PASS_COMPLETE_SCIENTIFIC_NEGATIVE_RESULT"
+  },
+  "historical_previous_pair_scientific_result": {
+    "status": "PAIR_GOAL_SCIENTIFICALLY_COMPLETE_NEGATIVE_Z_RESULTS",
+    "source_commit": "ef68ebb5682b85aa83044fdea1c13b7d0edbf325",
+    "training_gate_P0_PLR": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS",
+    "original_Z_u16_u64_both": "ALL0_OF32",
+    "policy_original_Z_admission": false,
+    "observed": {
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14,
+      "actor_optimizer_steps": 1024,
+      "critic_optimizer_steps": 1024
+    },
+    "reservations_retained": {
+      "training_transitions": 65536,
+      "nontraining_transitions": 25600,
+      "optimizer_updates": 128,
+      "training_checkpoint_writes": 14
+    },
+    "report": "../docs/experiments/r5-paired-pilot-20261013/PAIR_REPORT.md",
+    "next_stage_authorized": false
+  },
+  "completed_zero_correction_goal": {
+    "target": "R5_ZERO_COMMAND_SINGLE_VARIABLE_SCIENTIFIC_CLOSURE",
+    "status": "COMPLETE",
+    "contract": "contracts/R5_ZERO_COMMAND_RESIDUAL_NEUTRALITY.md",
+    "requirements": "../docs/goals/InstinctRL_R5_Autonomous_Followup_Goal_Requirements.md",
+    "evidence_index": "../docs/experiments/r5-zero-correction-20261014/EVIDENCE_INDEX.md",
+    "budget": "../docs/experiments/r5-zero-correction-20261014/goal_budget.json",
+    "user_authority": "../docs/experiments/r5-zero-correction-20261014/user_task_authority.json",
+    "current_job": null,
+    "training_execution_requested_by_user": true,
+    "training_authorization_issued": false,
+    "current_exact_release": null,
+    "next_action": "STOP_GOAL_COMPLETE. OriginalZadmissionfalse; no further live/training/256updates. Future single-factor work only proposed.",
+    "independent_review": {
+      "id": "E-R5-ZERO-FINAL-SCIENTIFIC-20261014",
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-zero-final-scientific.json",
+      "sha256": "da09ded96ad8e806fce59bf2b5dcc177a5b58de2c7f9734d49058d6abea5949f",
+      "accepted": true,
+      "role_call": 6,
+      "independent_handle": "/root/pilot_reviewer",
+      "verdict": "PASS",
+      "scientific_status": "VALID_EXPERIMENT_POSITIVE",
+      "completion_allowed": true,
+      "evidence_commit": "0c54b7e5283c1afbeb6c023b3340e22cfaed526f",
+      "candidate_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+      "ordinary_final_sync": "SATISFIED_LOCAL_ARTIFACTS_FINAL_NORMAL_PUSH_REQUIRED",
+      "not_future_training_authority": true
+    },
+    "shared_baseline_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90",
+    "first_real_rollout_gate": {
+      "C0": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS",
+      "C1": "PASS_ACTUAL512_BEFORE_BOTH_OPTIMIZERS"
+    },
+    "actual_init_and_first512_comparison": "BIT_EXACT_MATCH_ACTOR_CRITIC_POLICY_PRIVILEGED_ACTION_OLD_BETA_LOGP",
+    "learning_signals_comparison": "ADVANTAGES_RETURNS_DIFFER_AS_ALLOWED_BY_W",
+    "C0_actual_training_acceptance": "ROLE3_PASS_COMPLETE64_AND_REAL_U16_U64",
+    "evaluation_authorization_issued": false,
+    "scientific_result_status": "VALID_EXPERIMENT_POSITIVE",
+    "completion_proven": true,
+    "remaining_required_work": [],
+    "goal_achieved": true,
+    "historical_resource_blocked_audit": {
+      "condition": "ExplicitnewuserresourceexceptionforonefreshC1originalZabsent; all4start/initand64GiBoutputreservationsconsumed.",
+      "consecutive_goal_turns": 3,
+      "original_turn_classification": "PROGRESS_ACTUAL_TRAINING_CONTROL_Z_FAILURE_REVIEW_AND_EXACT_RESOURCE_PROPOSAL",
+      "current_turn_classification": "NO_PROGRESS_REQUIRED_RESOURCE_APPROVAL_ABSENT",
+      "verification": "main/origin at a433fdea3e31cf09a2a27f60d827dbd73f717989; Store14jobs terminal/noowned/STOPclear; userexception/AUTH/freshattempt/extra proposal+job absent; caps4starts/initused4/output64GiBfullyreserved; remaining12800nontrainingcannotrunwithoutnewentryauthority.",
+      "goal_achieved": false,
+      "independent_work_completed_this_turn": "Newexplicitactualevaluationbinding andnewartifactpath; unregisteredheuristicclassificationremoved;9CPUregressions andC0metricreplayPASS; exactpost-grant recoveryroute prepared.",
+      "next_required_action": "One alreadyrequestedexplicituserresourceexception: freshC1originalZ only, starts/init4to5 andoutputreservation64to80GiB; no otherbudget/method/gatechanges.",
+      "independent_work_exhausted": true,
+      "blocked_threshold_satisfied": true,
+      "resolved_by": "docs/experiments/r5-zero-correction-20261014/user_resource_decision_extra_evaluation.json",
+      "scope": "HISTORICAL_RESOLVED_NOT_CURRENT"
+    },
+    "resource_decision": {
+      "path": "docs/experiments/r5-zero-correction-20261014/user_resource_decision_extra_evaluation.json",
+      "sha256": "f16b801199b8eb03bda7d7681b6f30c6b41652c503b5111fba6851d40c1c1d60"
+    },
+    "historical_specific_blocker": {
+      "failed_job": "J-c28f721ecfa2d171",
+      "coexistence_utilization_percent": [
+        4,
+        6,
+        2
+      ],
+      "unchanged_limit_percent": 5,
+      "failed_entry_native_status": "FAILED/1",
+      "formal_counter": "FINAL0",
+      "start_init_caps_used": "4/4",
+      "budget_reset": false,
+      "proposal": "../docs/experiments/r5-zero-correction-20261014/C1_EXTRA_EVALUATION_RESOURCE_PROPOSAL.json",
+      "user_decision": "APPROVED_SINGLE_FRESH_ENTRY",
+      "goal_tool_status": "ACTIVE_NOT_COMPLETE"
+    },
+    "historical_previous_independent_review": {
+      "id": "E-R5-ZERO-C0-Z-C1-FAILURE-CONDITIONAL-EXTRA-20261014",
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-zero-correction-20261014/reviews/review-C0-Z-C1-failure-extra-prelive.json",
+      "sha256": "0cf841431c6e0d6e61c531b5e4b03aa032db7dd4b164d3c8fac8f1ab3d8514b8",
+      "accepted": true,
+      "role_call": 5,
+      "independent_handle": "/root/pilot_reviewer",
+      "scope": "接受C0实际原Z负结果、C1实际启动前资源失败及准确追加入口提案的条件性预审；不接受Goal完成，不签发追加资源或release。",
+      "completion_allowed": false,
+      "live_resource_exception_granted": false,
+      "evidence_commit": "890381a40e856a0b7d30c85d6ff696424fea0d0b",
+      "candidate_commit": "d257f9ca8ec8639627d3a025c9352b9d29883d90"
+    },
+    "actual_pair_data_collection_complete": true,
+    "original_Z_admission": false,
+    "original_Z_u16_u64": {
+      "C0": [
+        "0/32",
+        "0/32"
+      ],
+      "C1": [
+        "0/32",
+        "0/32"
+      ]
+    },
+    "observed_training_updates": 128,
+    "observed_training_transitions": 65536,
+    "observed_evaluation_transitions": 25600,
+    "observed_training_checkpoint_writes": 14,
+    "final_report": "../docs/experiments/r5-zero-correction-20261014/PAIR_ANALYSIS.md",
+    "machine_results": "../docs/experiments/r5-zero-correction-20261014/pair_analysis.json",
+    "completion_audit": "../docs/experiments/r5-zero-correction-20261014/COMPLETION_AUDIT.json",
+    "next_stage_authorized": false
+  },
+  "formal_first_segment_execution": {
+    "task_id": "R5_FORMAL_FIRST_SEGMENT_20261015",
+    "authority": "coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/USER_AUTHORITY.md",
+    "state_path": "coordination/research/batches/R5-FORMAL-MEAN10-FIRST-SEGMENT-01/state.json",
+    "status_authority": "ONLY_LOCAL_BATCH_STATE_JSON",
+    "tmux_session": "instinctrl-r5-formal-first-20261015",
+    "frozen_experiment": "R5-FORMAL-MEAN10-FIRST-SEGMENT-01",
+    "live_entries_maximum": 4,
+    "runtime_model_calls_maximum": 3,
+    "automatic_retries": 0,
+    "automatic_budget_expansion": false,
+    "new_experiment_variables": 0,
+    "execution_instructions": "Only controller and its awaited independent model may write this workspace; read-only observers use local state/logs without model polling.",
+    "recovery_authority": "coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/recovery-20261016/USER_AUTHORITY.md",
+    "recovery_plan": "coordination/batches/R5_FORMAL_FIRST_SEGMENT_20261015/recovery-20261016/plan.json",
+    "recovery_status": "ORIGINAL_TRAINING_ACCEPTED_BOTH_ORIGINAL_EVALUATIONS_COMPLETE_FINAL_ANALYSIS_COMPLETE",
+    "recovery_tmux_session": "instinctrl-r5-formal-recovery-20261016",
+    "completed_training_jobs": [
+      "J-0a6d7c4f861968ed",
+      "J-838e67f829192ab7"
+    ],
+    "additional_training_authorized": false,
+    "additional_review_calls": 1,
+    "status": "FIXED_FIRST_SEGMENT_SCIENTIFICALLY_COMPLETE_PARTIAL_PERFORMANCE",
+    "current_live_jobs": [],
+    "completed_evaluation_jobs": [
+      "J-48cb8eaab9932820",
+      "J-365cda5a12a088d3"
+    ],
+    "runtime_model_calls_actual_including_final": 3,
+    "model_call_history": [
+      {
+        "slot": "checkpoint-review",
+        "result": "STOP_PRESERVED"
+      },
+      {
+        "slot": "checkpoint-recovery",
+        "result": "PASS_ACCEPT_ORIGINAL_RUNTIME_EVIDENCE"
+      },
+      {
+        "slot": "final-analysis",
+        "result": "PASS_VALID_DATA_PARTIAL_PERFORMANCE_FINAL_CALL"
+      }
+    ],
+    "scientific_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/reviews/final-scientific-review.json",
+      "sha256": "efd642a2ab48c85c5793bf1c1a7cf76baa512778cabc4bd188cef020b962e191"
+    },
+    "experiment_results": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/EXPERIMENT_RESULTS.json",
+      "sha256": "40f83379113f1b588726a3e9846d78a348197001a3a576835a24cd01497321c4"
+    },
+    "final_analysis": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-formal-first-segment-20261015/FINAL_ANALYSIS.md",
+      "sha256": "e8754426c0d123ce9b7e5a33d575f50de39665b9e21b30f131fcc4a437e8e8d4"
+    },
+    "performance": "Both arms: original Z32/32 at all5nodes; T/S/X32/32 at384/512; W0/32 at all5nodes. No complete R5 pass.",
+    "continue_training": false,
+    "task_ended": true,
+    "next_action": "No additional job or model call. Controller alone records COMPLETE after this third final invocation exits and validates committed/pushed artifacts.",
+    "controller_state_edited_by_analyst": false,
+    "controller_state_at_analysis": "RUNNING/MODEL:final-analysis",
+    "old_readiness_goal_unchanged": true
+  },
+  "current_execution_index": "formal_first_segment_execution"
+}

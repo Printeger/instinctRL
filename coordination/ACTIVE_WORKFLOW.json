@@ -12,11 +12,11 @@
   "history_rewrite_authorized": false,
   "migration_cpu_checks_authorized": true,
   "migration_normal_push_authorized": true,
-  "new_live_execution_authorized": false,
-  "new_training_authorized": false,
+  "new_live_execution_authorized": true,
+  "new_training_authorized": true,
   "diagnostic_goal_envelope_authorized": false,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "Fixed first segment four entries and third final analysis completed; no live job, no further training/evaluation/model call authorized. Unique controller state remains read-only to analyst and finalizes after exit.",
+  "live_permission_note": "New explicit 20261019 W Goal delegated envelope registered. Every new job still requires exact independent prelive/Store issuance and committed inputs; old formal-first-segment restrictions remain historical.",
   "diagnostic_goal_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "paired_pilot_task_requested": true,
   "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
@@ -103,9 +103,10 @@
     "goal_id": "R5-W-CLOSURE-AUTO-20261019",
     "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
     "registration": "docs/experiments/r5-w-closure-auto/registrations/W-E1-001.json",
-    "state_path": "docs/experiments/r5-w-closure-auto/RUN_STATE.json",
-    "status": "IMPLEMENTATION_AND_FREEZE",
+    "state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
+    "status": "E1_READY_FOR_PUSH_AND_TMUX",
     "current_live_jobs": [],
-    "exact_job_permission_required": true
+    "exact_job_permission_required": true,
+    "current_exact_release": "A-9306976b2df3dee8"
   }
 }

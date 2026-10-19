@@ -1,9 +1,12 @@
 {
   "goal_id": "R5-W-CLOSURE-AUTO-20261019",
   "status": "IN_PROGRESS",
-  "phase": "B_REVIEWED_IMPLEMENTATION_SOURCE_FREEZE",
+  "phase": "E1_READY_FOR_PUSH_AND_TMUX",
   "live_job": null,
   "controller_started": false,
   "master_registered": true,
-  "requirements_complete": false
+  "requirements_complete": false,
+  "current_exact_release": "A-9306976b2df3dee8",
+  "state_authority": "docs/experiments/r5-w-closure-auto/batch/state.json",
+  "note": "This is a handoff index. Once started only the exact batch state is authoritative; do not infer live or complete from this static index."
 }

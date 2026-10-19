@@ -4,7 +4,7 @@
 
 用户一次性授权完整诊断、工程修正、近墙训练与原五任务验收，总包络见 [新主委托](experiments/r5-w-closure-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md)。旧首段及旧预算记录保持历史身份。
 
-320lane W 原件离线重放与独立诊断通过，决定 MIXED：先在固定R1/u512验证已有ICS额外.15m裕量，再在共同工程基线上训练中心+近墙课程。当前完成CPU实现及独立控制面修复审核，新master/E1 stage已合法登记，源码冻结中；**尚未发行或启动任何新真实作业，未宣称R5通过**。唯一新进度见 `docs/experiments/r5-w-closure-auto/RUN_STATE.json`；controller启动后以其准确句柄为准。下文旧任务状态仅作历史。
+320lane W 原件离线重放与独立诊断通过，决定 MIXED：先在固定R1/u512验证已有ICS额外.15m裕量，再在共同工程基线上训练中心+近墙课程。当前完成CPU实现及独立控制面修复审核，新master/E1 stage已合法登记，源码0c6363b只读冻结，E1准确许可A-9306976b2df3dee8及controller独立审核通过；**等待输入push后tmux启动，未宣称R5通过**。唯一新进度见 `docs/experiments/r5-w-closure-auto/RUN_STATE.json`；controller启动后以其准确句柄为准。下文旧任务状态仅作历史。
 
 更新：2026-10-17。唯一日常开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一开发分支 `main`，
 远端 [Printeger/instinctRL](https://github.com/Printeger/instinctRL)。当前精确版本以 `git rev-parse HEAD` 为准。

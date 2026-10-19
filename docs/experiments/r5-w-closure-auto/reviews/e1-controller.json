@@ -1,0 +1,22 @@
+{
+  "schema_version": "independent-review-relay/1",
+  "reviewer": "/root/authority_review",
+  "recorder": "root relay of independent controller final review",
+  "verdict": "PASS",
+  "must_fix": [],
+  "identities": {
+    "plan_payload_sha256": "d4a18f1d601cfbae0b8862b75b1f6eccdb11055a461484d4bb6302431cde6994",
+    "controller": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_batch.py",
+      "sha256": "ebbe0328f335b6038b3f1f439df45177d6a623e6d6afb5189c29c746b95daa1c"
+    }
+  },
+  "independent_tests_passed": 3,
+  "scope": "Exact E1 event-driven plan; not actual live result or final scientific acceptance",
+  "closed_findings": [
+    "Runtime STOP exact cancel/owned cleanup",
+    "STOP resume allows already-owned job cleanup",
+    "Fresh CONTINUE and spec/AUTH plan identity",
+    "Durable side-effect intents no blind retries"
+  ]
+}
