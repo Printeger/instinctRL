@@ -12,6 +12,7 @@ from rlflow.jobs import owns
 from rlflow.store import sha
 from tools.audit_r6_legacy_model_cleanup import audit_event, LEGACY_EVENTS
 from tools.r6_recovery import RecoveryError, checked, file_pin
+from tools.r6_worker_processes import cleanup_verified
 
 ROOT = Path(__file__).resolve().parents[1]
 ORIGINAL_RECEIPTS = {
@@ -25,6 +26,7 @@ SOURCE_FILES = (
     'tools/audit_r6_legacy_model_cleanup.py',
     'tools/r6_job_handoff.py', 'tools/r6_batch.py',
     'tools/r6_model_worker.py', 'tools/r6_recovery.py',
+    'tools/r6_worker_processes.py',
 )
 
 
@@ -65,6 +67,7 @@ def validate_reconciliation(journal, key):
     require(approval['review_receipt']['path'] == str(
         (journal.directory / 'calls' / review_key / 'receipt.json').resolve()), 'REVIEW_RECEIPT_PATH')
     receipt = read_pin(approval['review_receipt'])
+    require(cleanup_verified(receipt.get('cleanup')), 'REVIEW_CLEANUP')
     require(receipt.get('event_key') == review_key
             and receipt.get('request_sha256') == sha(review['request'])
             and review['identity']['input_sha256'] == sha(review['request']), 'REVIEW_BINDING')

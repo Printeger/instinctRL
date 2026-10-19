@@ -15,6 +15,7 @@ import time
 from rlflow.jobs import identity, owns
 from tools.r6_recovery import Journal, RecoveryError, checked, file_pin
 from tools.r6_model_worker import validate_request
+from tools.r6_worker_processes import cleanup_verified
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -30,7 +31,7 @@ def verified_decision(journal,key):
     receipt=json.loads(checked(entry['receipt']).read_text())
     if receipt.get('exit_code')!=0 or receipt.get('error') is not None or receipt.get('schema_valid') is not True:
         raise RecoveryError('MODEL_FAILED_PRESERVE_RECEIPT')
-    if receipt.get('cleanup',{}).get('status')!='VERIFIED_NO_OWNED_DESCENDANTS':
+    if not cleanup_verified(receipt.get('cleanup')):
         raise RecoveryError('MODEL_CLEANUP_NOT_VERIFIED')
     for keyname in ('events','stderr','last_message'):
         checked(receipt[keyname])

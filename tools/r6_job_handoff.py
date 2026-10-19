@@ -15,6 +15,7 @@ from rlflow.jobs import identity, owns
 from rlflow.store import atomic, canonical, sha
 from tools.r6_recovery import RecoveryError, checked, file_pin
 from tools.r6_budget import observe
+from tools.r6_worker_processes import cleanup_verified
 
 TERMINAL = {'FAILED', 'STOPPED', 'SUCCEEDED'}
 
@@ -62,8 +63,7 @@ def no_model_workers(journal):
                 from tools.r6_legacy_model_reconciliation import validate_reconciliation
                 validate_reconciliation(journal, key)
                 continue
-            if (cleanup.get('status') != 'VERIFIED_NO_OWNED_DESCENDANTS'
-                    or any(owns(i) for i in cleanup.get('observed_identities', []))):
+            if not cleanup_verified(cleanup):
                 raise RecoveryError('MODEL_CLEANUP_UNCONFIRMED')
     return sum(e['kind'] == 'model' for e in state['events'].values())
 

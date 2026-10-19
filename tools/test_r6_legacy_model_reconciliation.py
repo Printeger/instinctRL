@@ -43,7 +43,8 @@ class ReconciliationTests(unittest.TestCase):
         receipt_path = self.j.directory / 'calls' / self.review_key / 'receipt.json'
         receipt_path.parent.mkdir(parents=True)
         self.review_receipt = dict(event_key=self.review_key, request_sha256=sha({}),
-            cleanup={'status': 'VERIFIED_NO_OWNED_DESCENDANTS', 'observed_identities': []})
+            cleanup={'status': 'VERIFIED_NO_OWNED_DESCENDANTS', 'observed_identities': [],
+                     'stable_empty_scans': 2, 'signalled_process_count': 0})
         receipt_path.write_text(json.dumps(self.review_receipt))
         self.state['events'][self.review_key] = dict(kind='model', status='RECEIPT_RECORDED',
             identity=event, request={}, receipt=file_pin(receipt_path))
@@ -131,7 +132,7 @@ class ReconciliationTests(unittest.TestCase):
         p.write_text(json.dumps(self.review_receipt))
         self.state['events'][self.review_key]['receipt'] = file_pin(p)
         self.state['legacy_model_reconciliation']['review_receipt'] = file_pin(p); self.save()
-        with self.assertRaisesRegex(RecoveryError, 'MODEL_CLEANUP_UNCONFIRMED'):
+        with self.assertRaisesRegex(RecoveryError, 'REVIEW_CLEANUP'):
             no_model_workers(self.j)
 
     def test_original_hash_cannot_be_refreshed_after_mutation(self):

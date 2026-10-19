@@ -1,0 +1,117 @@
+{
+  "schema_version": "r6-legacy-session-supplement/1",
+  "status": "EVIDENCE_ONLY_PENDING_INDEPENDENT_REVIEW",
+  "original_event_key": "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75",
+  "original_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/receipt.json",
+    "sha256": "82cdb6ba2ac8cb559d3055c7def8bc74537f477ab4c16b784b4251d347ae554e"
+  },
+  "original_events": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/events.jsonl",
+    "sha256": "382ebe60b3f6d1b86d58c78d106035f0ebc4ac750efce7869036e82527f5542b"
+  },
+  "session_id": "01a154ea-8241-7dd3-aa33-41e485f17ca8",
+  "session_source": {
+    "path": "/home/mint/.codex/sessions/2026/10/20/rollout-2026-10-20T00-06-59-01a154ea-8241-7dd3-aa33-41e485f17ca8.jsonl",
+    "sha256": "222c3d0f6c0b76083d7641058d86931f16b573596f26e8198980f220ab3335df"
+  },
+  "session_row_count": 35,
+  "all_recorded_tool_calls_have_outputs": true,
+  "tool_calls": [
+    {
+      "call_id": "call_cc5b0dd113264870b7bc876377dddaba",
+      "name": "exec",
+      "input": "text(await tools.exec_command({cmd:\"cat docs/PROJECT_STATUS.md coordination/ACTIVE_WORKFLOW.json coordination/protocols/SINGLE_BRANCH_WORKFLOW.md docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md docs/experiments/r6-robustness-auto/USER_AUTHORITY.txt\",\"max_output_tokens\":18000}));\n",
+      "call_line": 13,
+      "output_line": 15,
+      "call_record_sha256": "45fc2f32034d89cb10d03d539bbd241715fa428bd0d8ee9984845488cc6158c2",
+      "output_record_sha256": "d0a4cff4a616927066b0e1edae8f0b2391ba7b726975930fefb28695847e56e0"
+    },
+    {
+      "call_id": "call_ee8c993a74d0401896dea1960a446288",
+      "name": "exec",
+      "input": "text(ALL_TOOLS.filter(x=>/read_file|directory|terminal|python|file.*read/.test(x.name+\" \"+x.description)).map(x=>({name:x.name,description:x.description.slice(0,140)})));\n",
+      "call_line": 19,
+      "output_line": 21,
+      "call_record_sha256": "4537f05823dc36fb9360091528eeae7c47f99db951e42c4397518a173dd125d9",
+      "output_record_sha256": "89e8cb031198e108620e6e57cf969f567656c74b5c8daf358f0f6301b151a95a"
+    },
+    {
+      "call_id": "call_98af18b75737485a97ae1a897ef645a5",
+      "name": "exec",
+      "input": "text(await tools.list_mcp_resources({}));\ntext(await tools.list_mcp_resource_templates({}));\n",
+      "call_line": 25,
+      "output_line": 29,
+      "call_record_sha256": "fb4781a61127e31e46dd28120370af3d05c3a8f6c01bf9cb1df4643c30e02b07",
+      "output_record_sha256": "4122efe19f3acde6393ccc8e7e1dd4d4ddb12e347b21214579223c0b1fb1dab8"
+    }
+  ],
+  "shell_attempt_original_records": [
+    {
+      "line": 13,
+      "record": {
+        "timestamp": "2026-10-19T16:07:05.674Z",
+        "ordinal": 12,
+        "type": "response_item",
+        "payload": {
+          "type": "custom_tool_call",
+          "id": "ctc_0ce6b3972fb96337016ad64027f5c88191b90bd466ab94ba60",
+          "status": "completed",
+          "call_id": "call_cc5b0dd113264870b7bc876377dddaba",
+          "name": "exec",
+          "input": "text(await tools.exec_command({cmd:\"cat docs/PROJECT_STATUS.md coordination/ACTIVE_WORKFLOW.json coordination/protocols/SINGLE_BRANCH_WORKFLOW.md docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md docs/experiments/r6-robustness-auto/USER_AUTHORITY.txt\",\"max_output_tokens\":18000}));\n",
+          "internal_chat_message_metadata_passthrough": {
+            "turn_id": "01a154ea-8915-7701-8d7a-56cbc6d045e3",
+            "create_time": 1792426024.013403
+          }
+        }
+      }
+    },
+    {
+      "line": 15,
+      "record": {
+        "timestamp": "2026-10-19T16:07:05.784Z",
+        "ordinal": 14,
+        "type": "response_item",
+        "payload": {
+          "type": "custom_tool_call_output",
+          "id": "ctco_01a154ea-a338-7833-a487-a2aa04424f83",
+          "call_id": "call_cc5b0dd113264870b7bc876377dddaba",
+          "output": [
+            {
+              "type": "input_text",
+              "text": "Script completed\nWall time 0.0 seconds\nOutput:\n"
+            },
+            {
+              "type": "input_text",
+              "text": "{\"chunk_id\":\"3553da\",\"wall_time_seconds\":0,\"exit_code\":1,\"original_token_count\":16,\"output\":\"bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted\\n\"}"
+            }
+          ],
+          "internal_chat_message_metadata_passthrough": {
+            "turn_id": "01a154ea-8915-7701-8d7a-56cbc6d045e3",
+            "create_time": 1792426025.7841983
+          }
+        },
+        "metadata": {
+          "client_authored": false,
+          "fallback_token_limit_override": 12000
+        }
+      }
+    }
+  ],
+  "shell_result": {
+    "chunk_id": "3553da",
+    "wall_time_seconds": 0,
+    "exit_code": 1,
+    "original_token_count": 16,
+    "output": "bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted\n"
+  },
+  "historical_descendant_cleanup_proven": false,
+  "ownership_ambiguity_resolved_by_independent_review": false,
+  "runtime_dispatch_authorized": false,
+  "notes": [
+    "Raw session and CLI event stream are different evidence layers. Raw session contains the exec wrapper omitted from CLI command_execution events.",
+    "Three exec wrapper calls are paired: failed cat attempt, in-memory tool metadata listing, and MCP resource/template listing.",
+    "This supplement pins original records; it neither replays the failed command nor changes the original receipt or authorizes handoff."
+  ]
+}

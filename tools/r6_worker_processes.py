@@ -7,6 +7,28 @@ import time
 from rlflow.jobs import identity, owns
 
 
+def cleanup_verified(record):
+    """Require the complete modern cleanup evidence and recheck every identity."""
+    if not isinstance(record, dict) or record.get('status') != 'VERIFIED_NO_OWNED_DESCENDANTS':
+        return False
+    scans = record.get('stable_empty_scans')
+    count = record.get('signalled_process_count')
+    observed = record.get('observed_identities')
+    if (type(scans) is not int or scans < 2 or type(count) is not int or count < 0
+            or not isinstance(observed, list) or count > len(observed)):
+        return False
+    for ident in observed:
+        if (not isinstance(ident, dict)
+                or type(ident.get('pid')) is not int or ident['pid'] <= 0
+                or type(ident.get('pgid')) is not int or ident['pgid'] <= 0
+                or not isinstance(ident.get('boot_id'), str) or not ident['boot_id']
+                or not isinstance(ident.get('starttime'), str) or not ident['starttime'].isdigit()):
+            return False
+        if owns(ident):
+            return False
+    return True
+
+
 def become_subreaper():
     libc=ctypes.CDLL(None,use_errno=True)
     if libc.prctl(36,1,0,0,0)!=0:raise OSError(ctypes.get_errno(),'PR_SET_CHILD_SUBREAPER')
