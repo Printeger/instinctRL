@@ -1,0 +1,24 @@
+test_every_added_source_is_required_and_content_bound (tools.test_r6_source_config.SourceConfigTests.test_every_added_source_is_required_and_content_bound) ... ok
+test_legacy_sets_are_retained_and_r6_additions_exist (tools.test_r6_source_config.SourceConfigTests.test_legacy_sets_are_retained_and_r6_additions_exist) ... ok
+test_load_config_selects_r6_manifests_and_mode_without_live (tools.test_r6_source_config.SourceConfigTests.test_load_config_selects_r6_manifests_and_mode_without_live) ... ERROR
+test_old_config_cannot_authorize_r6 (tools.test_r6_source_config.SourceConfigTests.test_old_config_cannot_authorize_r6) ... ok
+test_r6_config_requires_declared_mode (tools.test_r6_source_config.SourceConfigTests.test_r6_config_requires_declared_mode) ... ok
+
+======================================================================
+ERROR: test_load_config_selects_r6_manifests_and_mode_without_live (tools.test_r6_source_config.SourceConfigTests.test_load_config_selects_r6_manifests_and_mode_without_live)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_config.py", line 72, in test_load_config_selects_r6_manifests_and_mode_without_live
+    configpath.write_text(json.dumps(value));result=c.load_config(configpath)
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py", line 176, in load_config
+    _exact_mapping(method, expected_method, "method identity")
+  File "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py", line 126, in _exact_mapping
+    if value != expected: raise ValueError(f"{label} mismatch")
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: method identity mismatch
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.099s
+
+FAILED (errors=1)

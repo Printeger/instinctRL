@@ -1,0 +1,58 @@
+{
+  "status": "CPU_R6_SOURCE_CONFIG_PASS_DRAFT_NOT_RELEASED",
+  "passed_tests": 31,
+  "log": "CPU_R6_SOURCE_CONFIG_REGRESSION.txt",
+  "initial_failure": {
+    "log": "CPU_R6_SOURCE_CONFIG_INITIAL.txt",
+    "reason": "Fixture retained historical method proposal path; corrected only the temporary fixture"
+  },
+  "new_product_sources": [
+    "isaaclab-training/instinctlab/observations/robustness.py",
+    "isaaclab-training/instinctlab/observations/robustness_adapter.py",
+    "isaaclab-training/instinctlab/observations/robustness_physics.py"
+  ],
+  "new_workload_sources": [
+    "training_workloads/unified_h1/force_archive.py",
+    "training_workloads/unified_h1/lossless_evidence.py",
+    "training_workloads/unified_h1/range_archive.py",
+    "training_workloads/unified_h1/robustness.py",
+    "training_workloads/unified_h1/robustness_analysis.py",
+    "training_workloads/unified_h1/robustness_audit.py",
+    "training_workloads/unified_h1/robustness_contract.py",
+    "training_workloads/unified_h1/robustness_evaluation.py",
+    "training_workloads/unified_h1/robustness_measurement_replay.py",
+    "training_workloads/unified_h1/robustness_physics_replay.py",
+    "training_workloads/unified_h1/robustness_prelaunch.py",
+    "training_workloads/unified_h1/robustness_scenarios.py",
+    "training_workloads/unified_h1/robustness_training_storage.py"
+  ],
+  "draft_config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXECUTION_CONFIG_DRAFT.json",
+    "sha256": "44fea8511ed57dd264dd5433a2277c9e18a08f9128267827e743c5927fb6c49e"
+  },
+  "origin_config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/candidate_config.json",
+    "sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb"
+  },
+  "snapshot_created": false,
+  "live_authorized": false,
+  "capacity_pass": false,
+  "checks": [
+    "All 16 added files rejected individually when absent or byte-modified in real temporary Git checkout",
+    "R6 mode rejects legacy config and missing declared R6 mode",
+    "Config loader selects extended manifests; runtime and asset checks replaced only in CPU fixture",
+    "Draft preserves exact baseline versions/actor/training/execution fields"
+  ],
+  "limitations": [
+    "Draft binds current source bytes; any code changes require a new draft identity",
+    "SELF resolves only upon exact detached snapshot creation and independent compatibility review",
+    "Full frozen runtime load_config on actual snapshot not yet run",
+    "Protocol, capacity, Store issuance and complete controller pending"
+  ],
+  "source_sha256": {
+    "training_workloads/unified_h1/config.py": "6fa2d2fd8d3e11af3bdd1fda2c9816680d6b155d78ea7654ac7f294147386086",
+    "training_workloads/unified_h1/authorization.py": "efa536c680db19d9cc3697f4c629183759fae51af17f9e16bc66c0456e71e02b",
+    "tools/test_r6_source_config.py": "5f0eb80a7ae1e63fb2c5505a57e021c41280dbe6c3437c81121d2bc849cd9d3d"
+  },
+  "supplementary_validation": "CPU_R6_SOURCE_CONFIG_V3.txt: same 5 tests pass with added legacy loader selection assertion; 31 distinct tests overall"
+}

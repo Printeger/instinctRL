@@ -64,6 +64,31 @@ WORKLOAD_SOURCES = {
 }
 
 
+R6_CONFIG_SCHEMA = "unified-h1-r6-config.v1"
+R6_PRODUCT_SOURCES = PRODUCT_SOURCES | {
+    "isaaclab-training/instinctlab/observations/robustness.py",
+    "isaaclab-training/instinctlab/observations/robustness_adapter.py",
+    "isaaclab-training/instinctlab/observations/robustness_physics.py",
+}
+R6_WORKLOAD_SOURCES = WORKLOAD_SOURCES | {
+    "training_workloads/unified_h1/" + name + ".py" for name in (
+        "robustness", "robustness_scenarios", "robustness_evaluation",
+        "robustness_contract", "robustness_prelaunch", "robustness_audit",
+        "range_archive", "force_archive", "robustness_analysis",
+        "robustness_measurement_replay", "robustness_physics_replay",
+        "robustness_training_storage", "lossless_evidence",
+    )
+}
+
+
+def required_source_sets(schema: str) -> tuple[set[str], set[str]]:
+    if schema == R6_CONFIG_SCHEMA:
+        return R6_PRODUCT_SOURCES, R6_WORKLOAD_SOURCES
+    if schema == "unified-h1-r2-config.v3":
+        return PRODUCT_SOURCES, WORKLOAD_SOURCES
+    raise ValueError("unified-h1 config schema mismatch")
+
+
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -134,7 +159,7 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
     if path.is_symlink() or not path.is_file(): raise ValueError("config must be a regular resolved file")
     value = json.loads(path.read_text(encoding="utf-8"))
     expected = {"schema_version", "status", "method", "product", "workload", "runtime", "execution", "actor", "training", "versions", "future_entry"}
-    if not isinstance(value, dict) or set(value) != expected or value["schema_version"] != "unified-h1-r2-config.v3":
+    if not isinstance(value, dict) or set(value) != expected or value["schema_version"] not in ("unified-h1-r2-config.v3", R6_CONFIG_SCHEMA):
         raise ValueError("unified-h1 config schema mismatch")
     if value["status"] != "R2_CPU_CANDIDATE_NOT_AUTHORIZED_FOR_LIVE_EXECUTION": raise ValueError("configuration overclaims live authorization")
     method = value["method"]
@@ -172,8 +197,9 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
     _exact_mapping(value["actor"], {"keys": ["lidar_grid", "state_vec"], "lidar_shape": [12,59,360], "state_dimension": 52}, "actor boundary")
     _exact_mapping(value["training"], {"num_envs":32, "horizon":16, "samples_per_update":512, "minibatch":64,
         "optimizer_steps_per_model_per_update":8, "seed":20260908, "evaluation_seed":20260909}, "training arithmetic")
-    product = _validate_repository(value["product"], label="product", required_sources=PRODUCT_SOURCES, self_identity=True)
-    workload = _validate_repository(value["workload"], label="workload", required_sources=WORKLOAD_SOURCES, self_identity=True)
+    product_sources, workload_sources = required_source_sets(value["schema_version"])
+    product = _validate_repository(value["product"], label="product", required_sources=product_sources, self_identity=True)
+    workload = _validate_repository(value["workload"], label="workload", required_sources=workload_sources, self_identity=True)
     entry = value["future_entry"]
     if not isinstance(entry, dict) or set(entry) != {"status", "module", "modes", "required_argv", "resource_checks", "budget_fields", "sequences"}:
         raise ValueError("future entry schema mismatch")
@@ -181,6 +207,10 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
         raise ValueError("future entry identity mismatch")
     expected_modes = ["main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic"]
     if method["version"] == "unified-h1-formal-readiness-v1": expected_modes += ["research-training", "research-evaluation", "research-transition", "research-formal-training", "research-formal-evaluation"]
+    if value["schema_version"] == R6_CONFIG_SCHEMA:
+        if method["version"] != "unified-h1-formal-readiness-v1":
+            raise ValueError("R6 config requires frozen research method")
+        expected_modes += ["research-r6-evaluation"]
     if entry["modes"] != expected_modes:
         raise ValueError("future mode set mismatch")
     result = dict(value)

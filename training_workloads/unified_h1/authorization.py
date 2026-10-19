@@ -90,6 +90,10 @@ def _parameters(mode: str, value: object) -> dict[str, Any]:
 
 def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any]:
     config = load_config()
+    if mode == "research-r6-evaluation":
+        from .config import R6_CONFIG_SCHEMA
+        if config["schema_version"] != R6_CONFIG_SCHEMA or mode not in config["future_entry"]["modes"]:
+            raise PermissionError("R6 requires complete R6 execution config")
     if mode not in MODES or not path.is_absolute() or not path.is_file() or path.is_symlink():
         raise PermissionError("R3 authorization must be an explicit regular file and known mode")
     value = json.loads(path.read_text(encoding="utf-8"))

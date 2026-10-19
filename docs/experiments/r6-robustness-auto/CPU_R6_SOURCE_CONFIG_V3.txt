@@ -1,0 +1,10 @@
+test_every_added_source_is_required_and_content_bound (tools.test_r6_source_config.SourceConfigTests.test_every_added_source_is_required_and_content_bound) ... ok
+test_legacy_sets_are_retained_and_r6_additions_exist (tools.test_r6_source_config.SourceConfigTests.test_legacy_sets_are_retained_and_r6_additions_exist) ... ok
+test_load_config_selects_r6_manifests_and_mode_without_live (tools.test_r6_source_config.SourceConfigTests.test_load_config_selects_r6_manifests_and_mode_without_live) ... ok
+test_old_config_cannot_authorize_r6 (tools.test_r6_source_config.SourceConfigTests.test_old_config_cannot_authorize_r6) ... ok
+test_r6_config_requires_declared_mode (tools.test_r6_source_config.SourceConfigTests.test_r6_config_requires_declared_mode) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.097s
+
+OK
