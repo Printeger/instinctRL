@@ -1,7 +1,7 @@
 {
   "status": "INTERIM_CPU_ONLY",
   "automatic_sessions_reserved": 4,
-  "automatic_sessions_completed": 3,
+  "automatic_sessions_completed": 4,
   "remaining_unreserved": 28,
   "initial_user_session_usage": "UNKNOWN",
   "calls": [
@@ -70,10 +70,31 @@
         },
         "unknown_turn_count": 0
       }
+    },
+    {
+      "event_key": "887b900723fa9007b3106427b6dc93cf73df663197b238c8ed611cf47084b11b",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/887b900723fa9007b3106427b6dc93cf73df663197b238c8ed611cf47084b11b/receipt.json",
+        "sha256": "ea96e2651f1c5098258335c92f2c779d78c3222b150196982ffc24cc4830a72f"
+      },
+      "purpose": "Independent job-close/inventory/budget/postrun review",
+      "result": "MUST_FIX_THREE_FINDINGS",
+      "usage": {
+        "availability": "REPORTED",
+        "malformed_event_lines": 0,
+        "reported_turn_count": 1,
+        "totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 402688,
+          "input_tokens": 470846,
+          "output_tokens": 4625,
+          "reasoning_output_tokens": 548
+        },
+        "unknown_turn_count": 0
+      }
     }
   ],
   "training_started": false,
   "zero_model_training_wait_verified": false,
-  "pure_wait_model_calls": 0,
-  "pending_event": "887b900723fa9007b3106427b6dc93cf73df663197b238c8ed611cf47084b11b"
+  "pure_wait_model_calls": 0
 }

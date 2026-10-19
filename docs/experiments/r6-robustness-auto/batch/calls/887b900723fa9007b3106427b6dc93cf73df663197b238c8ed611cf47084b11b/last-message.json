@@ -1,0 +1,38 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "Read-only session4 found three substantive defects: postrun deduplication can be bypassed through job-event aliases, budget overruns do not reliably block previously registered dispatches, and postrun controller waits have no independent deadline. Inspected code matches c223b94; current HEAD is 7b38ca0. Reviewed supplied reports, raw logs and relevant tests; ran only CPU in-memory counterexamples. No files changed or operational actions performed. Capacity, scientific validity and full controller acceptance remain unapproved.",
+  "evidence_pins": [
+    {"path":"tools/r6_job_handoff.py","sha256":"ee4f58d383f64f11a81a44699b9ab94ef6ce39904e86c33a13622ed52c842584"},
+    {"path":"tools/r6_job_inventory.py","sha256":"da23164c0856f7667dedf52b492054db39509bbd2118e76bda90425c0cda455e"},
+    {"path":"tools/r6_postrun.py","sha256":"102506037183f6d88dfa874f2c4cfecd126df92fd40b66602bcde56203dd2eb8"},
+    {"path":"tools/r6_budget.py","sha256":"30b13c18f6f1091d08ff2dab0f81a7cd24fe8cfb271feed20e18a045f6e2aa53"},
+    {"path":"tools/r6_batch.py","sha256":"a7996d964770fe3f516469df73a169243b8d02c9c4286ef5f4ebca6d17c27c6b"},
+    {"path":"tools/r6_recovery.py","sha256":"352d05e48620f4341b9791966edf1e31df8daff9702813a23921d0cb14a3d7d8"},
+    {"path":"tools/r6_worker_processes.py","sha256":"1431c182d12920e4d42dc99cb6a5d72289552ad2b87a79b065cb79c948ad6f01"},
+    {"path":"tools/test_r6_postrun.py","sha256":"9a60baac495c682ba67bb0181d811c91d49393c1eb4900591f62aeb83288e5ef"},
+    {"path":"tools/test_r6_budget.py","sha256":"1bae7e8b3977bf9e65654937249b4038c3993c6b28522b6be92b10c2e6d51621"},
+    {"path":"tools/test_r6_job_inventory.py","sha256":"702a0e6cacfbb9444a72b833dedf6dbedd431a4fe609a417012226951e473708"},
+    {"path":"tools/test_r6_job_handoff.py","sha256":"05ffaf1593d65e6187efaebab5e083e877cb1f8af352077a177d10be1cee1716"},
+    {"path":"docs/experiments/r6-robustness-auto/CPU_JOB_HANDOFF_TESTS.json","sha256":"f9f6dd7af036e3b9fa2d8f5cbdecb8d2d9dc14b1aaeb84c99a1880ff638506ca"},
+    {"path":"docs/experiments/r6-robustness-auto/CPU_JOB_INVENTORY_TESTS.json","sha256":"1138bc1402f084ec29d18ca033acb801e3a75605a106a082c49ac0d005564ced"},
+    {"path":"docs/experiments/r6-robustness-auto/CPU_POSTRUN_TESTS.json","sha256":"7c94f62809b8d4bc6c80bfcc23c6f73917e7a39730a9d35f6c9241e285797b18"},
+    {"path":"docs/experiments/r6-robustness-auto/CPU_JOB_HANDOFF_TESTS.txt","sha256":"bd94743f704487830922168a50419faa2e97f98b8dce2735a8d1a9b22bfd792d"},
+    {"path":"docs/experiments/r6-robustness-auto/CPU_JOB_HANDOFF_TESTS_V2.txt","sha256":"3d8b88f924c68358493f1927dfb566327cac5d2280d0b1b853fea0f95cf3fa6b"},
+    {"path":"docs/experiments/r6-robustness-auto/CPU_JOB_HANDOFF_TESTS_V3.txt","sha256":"423fc1f52f56695737c0adde8a65f1a41c8add74cfd216a7dfba1082e6b5d80b"},
+    {"path":"docs/experiments/r6-robustness-auto/CPU_JOB_INVENTORY_TESTS.txt","sha256":"531b58a74ee561e77430403d08644f3e1848aad052552ae5b60136d79bec2fce"},
+    {"path":"docs/experiments/r6-robustness-auto/CPU_POSTRUN_TESTS.txt","sha256":"8e27ba251a82e731bcc384453337cd416872b2dad6880b00f70927a6074dc3cd"},
+    {"path":"docs/experiments/r6-robustness-auto/CPU_POSTRUN_TESTS_V2.txt","sha256":"6cdce7d5f1245589b9e453626f9a1b05391ee1efb0794aeffe61926b7312e51f"},
+    {"path":"docs/experiments/r6-robustness-auto/CPU_POSTRUN_FINAL_CHECKS.txt","sha256":"fe7f036fcf3f12958d97a16bc991e17fe19751d493043c47ba42506dcd814379"},
+    {"path":"docs/experiments/r6-robustness-auto/CPU_POSTRUN_INCOMPLETE_CHECK.txt","sha256":"3e740ba100fb66e4f0bed534f1172d263dfd742bf99fa626d991c8195392d864"}
+  ],
+  "changed_files": [],
+  "next_plan": "Repair the three implemented-component defects and add isolated regression coverage before another independent review. Preserve native failures, reservations, ambiguous dispatch evidence and the two legacy receipts requiring separate cleanup reconciliation. Global metadata capacity accounting, resource admission, new-job submission, full CPU analysis and reviewed next-plan transitions remain planned work; capacity_pass must remain false pending their required reviews.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 28
+  },
+  "must_fix": [
+    "tools/r6_postrun.py register_postruns()/validate(), with tools/r6_recovery.py Journal.intent(): ordinal uniqueness is scoped to job_event_key, not the exact job. Journal.intent permits two job events with different event_id or request deadline for the same job_id/spec; close_terminal_job and record_inventory can produce separately bound evidence for both. Each alias can then register and execute ordinals 0 and 1. An in-memory execution of the actual registration/validation functions accepted four distinct postrun keys for one identical job_id. Impact: restart/rebinding can repeat both queries despite the exactly-two claim. Minimal repair: enforce an immutable canonical job-to-event binding and uniqueness of postrun ordinals across that exact job identity, including existing aliases; test different event IDs and deadlines without modifying original receipts.",
+    "tools/r6_budget.py reserve(), tools/r6_recovery.py Journal.intent(), tools/r6_postrun.py postrun_handoff(), and tools/r6_batch.py model_handoff(): observed overruns block some new reservations but do not reliably block future dispatch. Existing Journal.intent replays return without validating the current budget; both handoff launch paths check STOP but not current budget admissibility. Thus an unlaunched event reserved before another event exceeds a cap can still launch afterward. Separately, reserve()'s identical-replay branch checks only totals(), skipping protected-capacity checks: an in-memory fixture reserved one development model session, observed 25 sessions against the protected development allowance of 24, and successfully replayed the reservation. Impact: previously registered work can proceed after actual excess, including encroachment on confirmation/review protection. Minimal repair: centralize current-ledger hard/protected-limit validation and apply it before every first dispatch and relevant replay; retain observation/receipt consumption and owned cleanup when blocked. Add regressions for overrun between intent and dispatch and protected-limit breaches below the total cap.",
+    "tools/r6_postrun.py postrun_handoff(): its recovery loop has no controller-enforced deadline, and CANCEL_OWNED is handled identically to an ordinary wait. The 15-second query and cleanup limits run only inside the worker. If that worker is suspended or stuck before reaching its timeout handling, owns() remains true indefinitely; STOP also cannot make progress. An in-memory controller probe returned CANCEL_OWNED for 100 consecutive observations and encountered only sleeps, with no escalation or deadline check. Impact: the controller can hold its writer lock forever and leave an owned query unresolved across restart. Minimal repair: persist an immutable dispatch deadline, enforce it independently in the controller, and use bounded identity-checked cancellation/reconciliation for worker and recorded child ownership; preserve ambiguity and never retry the query. Test a non-progressing live worker, STOP, and restart past the original deadline."
+  ]
+}
