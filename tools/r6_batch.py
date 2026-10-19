@@ -59,7 +59,8 @@ def model_handoff(journal,key,*,poll_seconds=15):
     if entry['receipt']:
         return verified_decision(journal,key)
     if not entry.get('dispatch_claim'):
-        if any(e['kind']=='cpu' and e.get('dispatch_claim') and not e.get('receipt')
+        if any(e['kind']=='cpu' and ((e.get('dispatch_claim') and not e.get('receipt'))
+                or any(not c.get('receipt') for c in e.get('sample_claims',{}).values()))
                 for e in state['events'].values()):
             raise RecoveryError('CPU_WORKER_HANDOFF_UNRESOLVED')
         journal.require_dispatch_budget()

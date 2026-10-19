@@ -119,4 +119,14 @@ with j.writer():model_handoff(j,sys.argv[2],poll_seconds=.02)
             model_handoff(self.j,self.key,poll_seconds=.02)
 
 
+    def test_unresolved_resource_sample_blocks_model_launch(self):
+        self.register()
+        with self.j.writer():
+            state=self.j.read();state['events']['resource-fixture']={'kind':'cpu','sample_claims':{'0':{'receipt':None}}}
+            self.j.save(state)
+            with self.assertRaisesRegex(RecoveryError,'CPU_WORKER_HANDOFF_UNRESOLVED'):
+                model_handoff(self.j,self.key,poll_seconds=.01)
+        self.assertFalse(self.call.exists())
+
+
 if __name__=='__main__':unittest.main()

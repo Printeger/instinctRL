@@ -1,0 +1,16 @@
+test_claim_without_worker_is_not_relaunched (tools.test_r6_resource_wait.WaitTests.test_claim_without_worker_is_not_relaunched) ... ok
+test_fresh_dispatch_rechecks_budget_after_queue_reservation (tools.test_r6_resource_wait.WaitTests.test_fresh_dispatch_rechecks_budget_after_queue_reservation) ... ok
+test_full_thirteen_sample_local_window_has_zero_live_or_model_use (tools.test_r6_resource_wait.WaitTests.test_full_thirteen_sample_local_window_has_zero_live_or_model_use) ... ok
+test_handoff_launches_once_and_replays_same_receipt (tools.test_r6_resource_wait.WaitTests.test_handoff_launches_once_and_replays_same_receipt) ... ok
+test_late_receipt_cannot_become_current_resource_sample (tools.test_r6_resource_wait.WaitTests.test_late_receipt_cannot_become_current_resource_sample) ... ok
+test_partial_receipt_does_not_trigger_retry (tools.test_r6_resource_wait.WaitTests.test_partial_receipt_does_not_trigger_retry) ... ok
+test_reattach_unbound_live_worker_without_second_start (tools.test_r6_resource_wait.WaitTests.test_reattach_unbound_live_worker_without_second_start) ... ok
+test_recovered_gap_ends_partial_window_without_new_sample (tools.test_r6_resource_wait.WaitTests.test_recovered_gap_ends_partial_window_without_new_sample) ... ok
+test_sigstop_deadline_cleanup_does_not_kill_unrelated_process (tools.test_r6_resource_wait.WaitTests.test_sigstop_deadline_cleanup_does_not_kill_unrelated_process) ... ok
+test_stale_unconsumed_receipt_ends_window_without_requery (tools.test_r6_resource_wait.WaitTests.test_stale_unconsumed_receipt_ends_window_without_requery) ... ok
+test_stop_terminates_worker_without_waiting_for_its_query_timeout (tools.test_r6_resource_wait.WaitTests.test_stop_terminates_worker_without_waiting_for_its_query_timeout) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 69.033s
+
+OK

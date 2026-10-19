@@ -1,0 +1,124 @@
+{
+  "status": "CPU_RESOURCE_WAIT_AND_HANDOFF_PASS_PENDING_REVIEW",
+  "capacity_pass": false,
+  "validation": [
+    {
+      "suites": [
+        "tools.test_r6_resource_wait.WaitTests"
+      ],
+      "passed": 11,
+      "seconds": 69.033,
+      "log": "CPU_RESOURCE_WAIT_TESTS_V2.txt"
+    },
+    {
+      "suites": [
+        "tools.test_r6_batch",
+        "tools.test_r6_resource_queue"
+      ],
+      "passed": 26,
+      "seconds": 3.302,
+      "log": "CPU_RESOURCE_WAIT_REGRESSION.txt"
+    },
+    {
+      "suites": [
+        "tools.test_r6_resource_sampler.SamplerTests",
+        "two selected CPUAnalysisTests"
+      ],
+      "passed": 15,
+      "seconds": 34.01,
+      "log": "CPU_RESOURCE_WAIT_WORKER_REGRESSION.txt"
+    },
+    {
+      "suites": [
+        "busy/backoff integration"
+      ],
+      "passed": 1,
+      "seconds": 0.179,
+      "log": "CPU_RESOURCE_WAIT_BACKOFF_TEST.txt"
+    },
+    {
+      "suites": [
+        "idle guard and two handoff regressions"
+      ],
+      "passed": 3,
+      "log": "CPU_RESOURCE_WAIT_IDLE_TESTS.txt"
+    }
+  ],
+  "distinct_tests": 54,
+  "python": "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "checks": [
+    "Fresh sample claim before Popen; no retry on ambiguous claim or partial receipt",
+    "Exact worker reattachment and original deadline survive controller restart",
+    "Controller deadline and STOP clean SIGSTOP worker and exact children; unrelated process remains alive",
+    "Full actual local13sample fake-query window spans>=60seconds and consumes zero live starts/model calls",
+    "Stale unconsumed sample retained in receipt but not reused; partial window ends explicitly",
+    "Busy full window uses60second local backoff in<=15second waits then a fresh complete window; cumulative accounting checked on wake",
+    "Unresolved sample blocks model and analysis launch; active model/CPU/job prevents new sample launch",
+    "Receipts include start/finish monotonic time; late/cancelled samples cannot be accepted as current observations"
+  ],
+  "limitations": [
+    "Fake-query subprocesses only; no actual GPU query, simulation, training or model invocation",
+    "Queue observation pass remains distinct from fresh actual launch admission",
+    "Full controller deployment/exact Store issuance/submit and AppLauncher R6 gate binding still pending",
+    "Independent review and complete capacity allocation remain pending; operating state/budget unchanged"
+  ],
+  "pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_wait.py",
+      "sha256": "cbe43b8bc5c3a5c0f791f147fa36f2345956c133cf5634684b83e55de824b5d0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_resource_wait.py",
+      "sha256": "dd7015384aac84a2bf53f5c3c75495e104c7329a1c6979b67c6fc7fa7edda37d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_sampler.py",
+      "sha256": "0a769eaf427713795ba76982aac4b1fc6b60b30f224a18ddd6d3f12ebe7036c0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "e7cc69d7c738ff6a322c1216bd49dd21e66dcce3883ed15d7fca37d9fb46c267"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_cpu_analysis.py",
+      "sha256": "1e513fe296eb20fedf4715e2878a465f6ff8ce7ceac50250db5e7a89395f468f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_batch.py",
+      "sha256": "8c604d1205bee87b72649669134ac18cf13af079efa60171334b5e8279862e00"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_cpu_analysis.py",
+      "sha256": "33fedd737f10c0cfc94aa5a631e00b422936ffba0e4a969c0952c7c95107da6e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_WAIT_TESTS_INITIAL.txt",
+      "sha256": "aeaed52bd1ab648e154342e53e56b5014ddf69817c247cd3319edaa0b3e4741f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_WAIT_TESTS_V2.txt",
+      "sha256": "e3d55a8cb2783684c9ef9c168c820ffa31368fd7dce4ec4e13ca588a91f839ba"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_WAIT_REGRESSION.txt",
+      "sha256": "f6c10e0aa25dc1bce398d00c87d7fcad8554856bc30ac196f88453046cf211c4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_WAIT_WORKER_REGRESSION.txt",
+      "sha256": "9724ceec70715882872d9cb0dcf397cd6fce472c9a122ec9a243bbdc1ced7169"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_WAIT_BACKOFF_TEST.txt",
+      "sha256": "9972addaa142975b02ae3290019c5fe1a3846ab37c78fd4abdc4b426acc1d6b6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_WAIT_IDLE_TESTS.txt",
+      "sha256": "abe764064bae668312cd312b11e8f3eb656bd10ee140d5e57d2bda7a95643a6a"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 """One exact, bounded two-query sample worker. No CUDA, simulation or submit."""
 import argparse
 import json
+import math
 import os
 from pathlib import Path
 import selectors
@@ -44,6 +45,12 @@ def prepare(journal,key,ordinal,executable,*,review=None):
     if name in claims:
         if claims[name]['request']!=request:raise RecoveryError('RESOURCE_SAMPLE_REPLAY_DRIFT')
         return claims[name]
+    if state.get('current_job') is not None or state.get('current_model_event') is not None:
+        raise RecoveryError('RESOURCE_SAMPLE_NOT_IDLE')
+    from tools.r6_job_handoff import no_model_workers
+    no_model_workers(journal)
+    if any(e['kind']=='cpu' and k!=key and e.get('dispatch_claim') and not e.get('receipt') for k,e in state['events'].items()):
+        raise RecoveryError('RESOURCE_SAMPLE_OTHER_CPU_UNRESOLVED')
     if entry['queue_status']!='COLLECTING' or ordinal!=len(entry['samples']):raise RecoveryError('RESOURCE_SAMPLE_SEQUENCE')
     if any(not c.get('receipt') for c in claims.values()):raise RecoveryError('RESOURCE_SAMPLE_UNRESOLVED')
     _,elapsed=queue.tick(entry)
@@ -136,6 +143,7 @@ def run(journal,key,ordinal):
         for sig,handler in previous.items():signal.signal(sig,handler)
     result=dict(queue_event=key,ordinal=ordinal,request_sha256=sha(request),process=worker,
         exit_code=0 if error is None else 1,error=error,queries=records,sample=sample,
+        started_monotonic=started,finished_monotonic=time.monotonic(),
         elapsed_seconds=time.monotonic()-started,automatic_retry=False,launch_admission=False)
     write(directory/'receipt.json',result,CAP)
     return result['exit_code']
@@ -166,6 +174,11 @@ def consume(journal,key,ordinal):
             raise RecoveryError('RESOURCE_SAMPLE_OUTPUT_BINDING')
         if receipt['exit_code']==0 and receipt['error'] is None:
             outputs.append(checked(row['stdout']).read_text())
+    stamps=[receipt.get('started_monotonic'),receipt.get('finished_monotonic')]
+    if (not all(type(t) in (int,float) and math.isfinite(t) for t in stamps)
+            or stamps[1]<stamps[0] or stamps[1]>claim['deadline_monotonic'] or claim.get('cancel')):
+        claim['receipt']=pin;claim['sample_failed']=True;journal.save(state)
+        raise RecoveryError('RESOURCE_SAMPLE_LATE_OR_CANCELLED')
     if receipt['exit_code']!=0 or receipt['error'] is not None:
         claim['receipt']=pin;claim['sample_failed']=True;journal.save(state)
         raise RecoveryError('RESOURCE_SAMPLE_FAILED_PRESERVED')
@@ -175,9 +188,15 @@ def consume(journal,key,ordinal):
     if len(receipt['queries'])!=2 or any(r['exit_code']!=0 or r['error'] is not None for r in receipt['queries']):
         raise RecoveryError('RESOURCE_SAMPLE_QUERY_FAILED')
     if parse(*outputs,receipt['sample']['monotonic_ns'])!=receipt['sample']:raise RecoveryError('RESOURCE_SAMPLE_PARSE_DRIFT')
+    if claim.get('sample_stale'):raise RecoveryError('RESOURCE_SAMPLE_STALE_PRESERVED')
     if claim.get('receipt'):
         if entry['samples'][ordinal]!=receipt['sample']:raise RecoveryError('RESOURCE_SAMPLE_COMMITTED_DRIFT')
         return receipt['sample']
+    clock=queue.now()
+    if clock['boot_id']!=entry['queue_clock']['boot_id']:raise RecoveryError('RESOURCE_SAMPLE_BOOT_RECONCILIATION')
+    if clock['monotonic_ns']-receipt['sample']['monotonic_ns']>queue.POLICY['maximum_sample_age_seconds']*10**9:
+        claim['receipt']=pin;claim['sample_stale']=True;journal.save(state)
+        raise RecoveryError('RESOURCE_SAMPLE_STALE_PRESERVED')
     queue.append_sample(journal,key,ordinal,receipt['sample'])
     state=journal.read();state['events'][key]['sample_claims'][str(ordinal)]['receipt']=pin;journal.save(state)
     return receipt['sample']

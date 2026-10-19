@@ -187,7 +187,8 @@ def handoff(journal,key,store,*,poll_seconds=1):
         from tools.r6_job_handoff import no_model_workers
         no_model_workers(journal)
         for other_key,e in state['events'].items():
-            if e['kind']=='cpu' and other_key!=key and e.get('dispatch_claim') and not e.get('receipt'):
+            if e['kind']=='cpu' and other_key!=key and ((e.get('dispatch_claim') and not e.get('receipt'))
+                    or any(not c.get('receipt') for c in e.get('sample_claims',{}).values())):
                 raise RecoveryError('CPU_ANALYSIS_OTHER_EVENT_UNRESOLVED')
         if directory.exists() or entry.get('process') or entry['status']!='INTENT':raise RecoveryError('CPU_ANALYSIS_UNCLAIMED_SIDE_EFFECT')
         duration=entry['request']['timeout_seconds']+30

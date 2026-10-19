@@ -1,0 +1,31 @@
+test_budget_excess_after_intent_blocks_first_model_dispatch (tools.test_r6_batch.BatchTests.test_budget_excess_after_intent_blocks_first_model_dispatch) ... ok
+test_completed_artifact_drift_refuses_replay (tools.test_r6_batch.BatchTests.test_completed_artifact_drift_refuses_replay) ... ok
+test_consumed_review_is_not_relaunched (tools.test_r6_batch.BatchTests.test_consumed_review_is_not_relaunched) ... ok
+test_controller_restart_reattaches_exact_live_worker (tools.test_r6_batch.BatchTests.test_controller_restart_reattaches_exact_live_worker) ... ok
+test_dispatch_claim_without_handle_never_launches (tools.test_r6_batch.BatchTests.test_dispatch_claim_without_handle_never_launches) ... ok
+test_failed_schema_recorded_but_not_accepted (tools.test_r6_batch.BatchTests.test_failed_schema_recorded_but_not_accepted) ... ok
+test_restart_after_popen_before_binding_recovers_worker_identity (tools.test_r6_batch.BatchTests.test_restart_after_popen_before_binding_recovers_worker_identity) ... ok
+test_stop_before_dispatch_preserves_unstarted_event (tools.test_r6_batch.BatchTests.test_stop_before_dispatch_preserves_unstarted_event) ... ok
+test_unresolved_resource_sample_blocks_model_launch (tools.test_r6_batch.BatchTests.test_unresolved_resource_sample_blocks_model_launch) ... ok
+test_busy_full_window_local_backoff_and_next_slot (tools.test_r6_resource_queue.QueueTests.test_busy_full_window_local_backoff_and_next_slot) ... ok
+test_clock_reboot_requires_reconciliation (tools.test_r6_resource_queue.QueueTests.test_clock_reboot_requires_reconciliation) ... ok
+test_crash_after_record_before_state_reuses_same_evidence (tools.test_r6_resource_queue.QueueTests.test_crash_after_record_before_state_reuses_same_evidence) ... ok
+test_cumulative_queue_cap_blocks_next_window_without_live_start (tools.test_r6_resource_queue.QueueTests.test_cumulative_queue_cap_blocks_next_window_without_live_start) ... ok
+test_expired_partial_window_not_spliced_into_new_window (tools.test_r6_resource_queue.QueueTests.test_expired_partial_window_not_spliced_into_new_window) ... ok
+test_interrupted_is_not_busy_and_requires_new_full_window (tools.test_r6_resource_queue.QueueTests.test_interrupted_is_not_busy_and_requires_new_full_window) ... ok
+test_long_queue_downtime_over_cap_is_retained_and_blocks_new_slot (tools.test_r6_resource_queue.QueueTests.test_long_queue_downtime_over_cap_is_retained_and_blocks_new_slot) ... ok
+test_overrun_recorded_and_never_refunded (tools.test_r6_resource_queue.QueueTests.test_overrun_recorded_and_never_refunded) ... ok
+test_pass_is_complete_v2_observation_not_launch_permission (tools.test_r6_resource_queue.QueueTests.test_pass_is_complete_v2_observation_not_launch_permission) ... ok
+test_real_queue_requires_capacity_and_exact_review (tools.test_r6_resource_queue.QueueTests.test_real_queue_requires_capacity_and_exact_review) ... ok
+test_restart_after_long_backoff_charges_downtime_before_next_slot (tools.test_r6_resource_queue.QueueTests.test_restart_after_long_backoff_charges_downtime_before_next_slot) ... ok
+test_restart_preserves_clock_samples_and_reservation (tools.test_r6_resource_queue.QueueTests.test_restart_preserves_clock_samples_and_reservation) ... ok
+test_stale_future_and_duplicate_drift_rejected (tools.test_r6_resource_queue.QueueTests.test_stale_future_and_duplicate_drift_rejected) ... ok
+test_stop_preserves_partial_window (tools.test_r6_resource_queue.QueueTests.test_stop_preserves_partial_window) ... ok
+test_stop_wait_accounting_does_not_query_or_launch (tools.test_r6_resource_queue.QueueTests.test_stop_wait_accounting_does_not_query_or_launch) ... ok
+test_two_windows_cannot_collect_simultaneously (tools.test_r6_resource_queue.QueueTests.test_two_windows_cannot_collect_simultaneously) ... ok
+test_unknown_gpu_is_invalid_not_permanent_busy_loop (tools.test_r6_resource_queue.QueueTests.test_unknown_gpu_is_invalid_not_permanent_busy_loop) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 3.302s
+
+OK

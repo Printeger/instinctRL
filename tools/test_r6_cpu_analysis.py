@@ -212,4 +212,14 @@ class CPUAnalysisTests(unittest.TestCase):
         self.assertNotIn('analysis',self.j.read()['events'][self.key])
 
 
+    def test_unresolved_resource_sample_blocks_analysis_dispatch(self):
+        self.register()
+        with self.j.writer():
+            state=self.j.read();state['events']['resource-fixture']={'kind':'cpu',
+                'identity':{'job_id':'OTHER','role':'resource-window'},'sample_claims':{'0':{'receipt':None}}}
+            self.j.save(state)
+        with self.assertRaisesRegex(RecoveryError,'OTHER_EVENT_UNRESOLVED'):self.complete()
+        self.assertEqual(self.count(),0)
+
+
 if __name__=='__main__':unittest.main()
