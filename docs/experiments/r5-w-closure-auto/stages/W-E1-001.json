@@ -1,0 +1,24 @@
+{
+  "id": "W-E1-001",
+  "goal_id": "R5-W-CLOSURE-AUTO-20261019",
+  "evidence_id": "E-R5-W-CLOSURE-E1-001",
+  "master_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+    "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+  },
+  "cumulative_caps": {
+    "training_transitions": 0,
+    "nontraining_transitions": 32960,
+    "live_starts": 1,
+    "simulator_initialization_reservations": 1,
+    "optimizer_updates": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0,
+    "training_checkpoint_writes": 0,
+    "allocated_gpu_seconds": 1810,
+    "wall_seconds_including_cleanup": 1810,
+    "output_peak_and_reservations_bytes": 12884901888
+  },
+  "scope": "One full original five-task fixed R1/u512 E1 .15m margin control regression; no training",
+  "previous_stage": null
+}

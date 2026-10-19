@@ -1,0 +1,49 @@
+{
+  "schema_version": "instinctrl-r5-w-master-authority/1",
+  "id": "R5-W-CLOSURE-AUTO-20261019",
+  "status": "REGISTERED_USER_DELEGATION",
+  "user_prompt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/USER_GOAL_PROMPT.txt",
+    "sha256": "17879fa8dfc7be6b4373016017c90c4c895779397e23391adf8a5f8b64278073"
+  },
+  "requirements": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/goals/InstinctRL_R5_W_Safety_Closure_Autonomous_Goal.md",
+    "sha256": "de8a87e28e673f3dd2048383d6ccef651c000042eb2002c152bfb587ed7ce996"
+  },
+  "initial_main": "f4f759f4c38d0fd1e40d03e46392b05c5415cb71",
+  "master_caps": {
+    "training_transitions": 1048576,
+    "nontraining_transitions": 659200,
+    "live_starts": 24,
+    "simulator_initialization_reservations": 24,
+    "optimizer_updates": 2048,
+    "actor_optimizer_steps": 16384,
+    "critic_optimizer_steps": 16384,
+    "training_checkpoint_writes": 40,
+    "allocated_gpu_seconds": 86400,
+    "wall_seconds_including_cleanup": 86400,
+    "output_peak_and_reservations_bytes": 137438953472
+  },
+  "disk_safety_margin_bytes": 32212254720,
+  "parallel_GPU_jobs": 1,
+  "automatic_blind_retries": 0,
+  "maximum_scientific_candidate_branches": 2,
+  "initial_disk_free_bytes": 516055793664,
+  "delegation_scope": [
+    "Root Commander may register exact new master/stage/job permissions within caps after independent prelive review",
+    "Root sole main writer; independent reviewer read-only",
+    "Bounded causal diagnosis, control-engineering margin validation, near-wall curriculum training with center replay",
+    "Original full five-task evaluation, independent confirmation, scientific final audit, commit/tag/normal push"
+  ],
+  "immutable_boundaries": [
+    "External STOP and unknown ownership fail closed",
+    "Old Store evidence/receipts/FAILED/INCOMPLETE/null and conservative reservations unchanged",
+    "Original scoring and motion prerequisites unchanged",
+    "Actor approved measurements only; no privileged state injection",
+    "Frozen runtime/dependencies and historical directories read-only",
+    "Actual first512 probability gate before either optimizer",
+    "Inputs committed/tagged/pushed before live; exact readonly snapshot",
+    "No automatic blind retry; no GPU probing outside original coexistence gate"
+  ],
+  "registration_note": "This file preserves user delegation; machine acceptance requires separate independent review and append-only Store receipt. Status is intentionally immutable thereafter."
+}

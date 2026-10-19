@@ -18,6 +18,9 @@ FIELDS = {'experiment_id', 'group', 'training_seed', 'evaluation_seed', 'start_u
 
 
 def validate_parameters(mode, value):
+    if isinstance(value, dict) and 'w_closure_contract' in value:
+        from .w_closure import validate_parameters as w_impl
+        return w_impl(mode, value)
     from .research_contract import validate_pin, validate_parameters as research_parameters
     from .checkpoint_compatibility import pinned_json, validate_source_identity
     import json
@@ -92,6 +95,9 @@ def validate_parameters(mode, value):
 
 
 def required_budget(mode, p):
+    if 'w_closure_contract' in p:
+        from .w_closure import required_budget as w_impl
+        return w_impl(mode, p)
     validate_parameters(mode, p)
     common = {'live_process_starts': 1, 'simulator_initializations': 1, 'initialization_ticks': 10}
     if mode == MODES[0]:
@@ -104,6 +110,9 @@ def required_budget(mode, p):
 
 
 def method_hashes(config, p):
+    if 'w_closure_contract' in p:
+        from .w_closure import method_hashes as w_impl
+        return w_impl(config, p)
     from .research_contract import method_hashes as research_hashes
     result = research_hashes(config, p)
     result.update(curriculum='curriculum-h1-v1', formal_phase=p['phase_contract']['sha256'], reset_distribution='center-only-v1',
@@ -113,6 +122,9 @@ def method_hashes(config, p):
 
 
 def train_segment(backend):
+    if 'w_closure_contract' in backend.research:
+        from .w_closure import train_segment as w_impl
+        return w_impl(backend)
     from .config import load_config, sha256_file
     from .research_contract import method_hashes as research_hashes
     from .schedule import ScheduleClock, command_at
@@ -177,6 +189,9 @@ def train_segment(backend):
 
 
 def evaluate_segment(backend):
+    if 'w_closure_contract' in backend.research:
+        from .w_closure import evaluate_segment as w_impl
+        return w_impl(backend)
     from .config import load_config, sha256_file
     from .evaluation import CASES, evaluate_checkpoint
     from training_workloads.scale_003.persistence import atomic_json_replace

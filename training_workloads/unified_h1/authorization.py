@@ -125,8 +125,12 @@ def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any
         from .checkpoint_compatibility import validate_transition_compatibility
         validate_transition_compatibility(parameters["checkpoint_compatibility"], origin, config)
     elif mode in {"research-formal-training", "research-formal-evaluation"}:
-        from .checkpoint_compatibility import validate_formal_compatibility
-        validate_formal_compatibility(parameters["checkpoint_compatibility"], origin, config)
+        if 'w_closure_contract' in parameters:
+            from .w_closure import validate_compatibility
+            validate_compatibility(parameters["checkpoint_compatibility"], origin, config)
+        else:
+            from .checkpoint_compatibility import validate_formal_compatibility
+            validate_formal_compatibility(parameters["checkpoint_compatibility"], origin, config)
     elif origin is not None and any(origin[k] != identity[k] for k in ("product_commit", "product_tree")):
         raise PermissionError("evaluation checkpoint product identity differs from the evaluated product")
     expected_order = MODE_ORDERS[mode]

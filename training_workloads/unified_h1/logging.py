@@ -81,7 +81,12 @@ def _compact_step_evidence(evidence: Mapping[str, Any]) -> dict[str, Any]:
 
 
 class LearningLog:
-    def __init__(self, root: Path) -> None:
+    def __init__(self, root: Path, *, initial_start_types: tuple[str, ...] | None = None) -> None:
+        if initial_start_types is not None and (not isinstance(initial_start_types, tuple)
+                or len(initial_start_types) != 32
+                or any(v not in {"center", "near_x_wall", "near_y_wall"} for v in initial_start_types)):
+            raise ValueError("initial reset distribution requires exact 32 lane labels")
+        self._initial_start_types = initial_start_types
         self.root = root.resolve(); self.root.mkdir(parents=True, exist_ok=True)
         self._last_command: torch.Tensor | None = None
         self._block = 0
@@ -232,7 +237,9 @@ class LearningLog:
         if self._episode_return is None:
             self._episode_return = torch.zeros(batch); self._episode_length = torch.zeros(batch, dtype=torch.long)
             self._episode_id = torch.zeros(batch, dtype=torch.long); self._reset_id = torch.zeros(batch, dtype=torch.long)
-            self._episode_start_types = ["center"] * batch
+            if self._initial_start_types is not None and len(self._initial_start_types) != batch:
+                raise ValueError("initial reset labels do not match actual batch")
+            self._episode_start_types = list(self._initial_start_types) if self._initial_start_types is not None else ["center"] * batch
             self._episode_max_drift = torch.zeros(batch); self._episode_max_height = torch.zeros(batch)
             self._episode_min_clearance = torch.full((batch,), float("inf"))
             self._episode_start_pending = torch.zeros(batch, dtype=torch.bool)

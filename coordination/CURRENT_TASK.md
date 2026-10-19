@@ -1,3 +1,9 @@
+# 当前任务：R5 W 安全训练闭环（2026-10-19）
+
+新用户授权及进度：`docs/experiments/r5-w-closure-auto/`。新master/E1 stage已登记，无新live。先固定原R1/u512进行.15m ICS工程裕量全任务回归，之后近墙课程训练、全任务复评和独立确认。根为唯一写者，独立review只读；历史首段原件、失败与预算不改。
+
+以下为此前当前任务的原文历史，不限制新委托包络。
+
 # 当前任务
 
 2026-10-17最终结果：固定正式首段科学分析完成，本次结束；当前无live，不继续训练。R0/R1所有5节点原Z32/32，两组u384/u512原T/S/X32/32，全部节点W0/32，完整R5未通过。最终证据审核PASS/noMUST_FIX只表示完整数据科学有效，不能解释为所有性能门槛通过。见 `docs/experiments/r5-formal-first-segment-20261015/FINAL_ANALYSIS.md`、`EXPERIMENT_RESULTS.json` 和 `reviews/final-scientific-review.json`。

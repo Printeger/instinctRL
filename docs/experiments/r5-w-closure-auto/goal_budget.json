@@ -1,0 +1,52 @@
+{
+  "schema_version": "instinctrl-r5-w-budget/1",
+  "goal_id": "R5-W-CLOSURE-AUTO-20261019",
+  "master_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+    "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+  },
+  "caps": {
+    "training_transitions": 1048576,
+    "nontraining_transitions": 659200,
+    "live_starts": 24,
+    "simulator_initialization_reservations": 24,
+    "optimizer_updates": 2048,
+    "actor_optimizer_steps": 16384,
+    "critic_optimizer_steps": 16384,
+    "training_checkpoint_writes": 40,
+    "allocated_gpu_seconds": 86400,
+    "wall_seconds_including_cleanup": 86400,
+    "output_peak_and_reservations_bytes": 137438953472
+  },
+  "used": {
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "live_starts": 0,
+    "simulator_initialization_reservations": 0,
+    "optimizer_updates": 0,
+    "actor_optimizer_steps": 0,
+    "critic_optimizer_steps": 0,
+    "training_checkpoint_writes": 0,
+    "allocated_gpu_seconds": 0,
+    "wall_seconds_including_cleanup": 0,
+    "output_peak_and_reservations_bytes": 0
+  },
+  "reservations": {
+    "live_entries": [],
+    "source_snapshots": []
+  },
+  "stage_allocation_history": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-E1-001.json",
+      "sha256": "1e540a514b50ea43b8d0a0af5f76b20d79535597184a885134364a08f5f978b5"
+    }
+  ],
+  "historical_accounting": "New incremental envelope; every old ledger and reservation remains unchanged. No refunds inferred from raw data.",
+  "models": [
+    {
+      "role": "independent-authority-and-diagnosis-review",
+      "agent": "/root/authority_review"
+    }
+  ],
+  "observed": {}
+}

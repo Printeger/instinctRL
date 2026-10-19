@@ -98,5 +98,14 @@
     "controller_state_edited_by_analyst": false,
     "controller_state_at_analysis": "RUNNING/MODEL:final-analysis",
     "old_readiness_goal_unchanged": true
+  },
+  "w_closure_execution": {
+    "goal_id": "R5-W-CLOSURE-AUTO-20261019",
+    "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+    "registration": "docs/experiments/r5-w-closure-auto/registrations/W-E1-001.json",
+    "state_path": "docs/experiments/r5-w-closure-auto/RUN_STATE.json",
+    "status": "IMPLEMENTATION_AND_FREEZE",
+    "current_live_jobs": [],
+    "exact_job_permission_required": true
   }
 }

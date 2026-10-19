@@ -1,0 +1,82 @@
+..............F                                                          [100%]
+=================================== FAILURES ===================================
+_________________ test_margin_earlier_braking_and_away_motion __________________
+
+    def test_margin_earlier_braking_and_away_motion():
+        rays=mounted_mid360_rays_body(); grid=torch.zeros(1,12,59,360)
+        grid[:,0::3]=100.;grid[:,1::3]=0.;grid[:,2::3]=0.
+        # One actual mounted beam, commands exactly toward or away from it.
+        i=int(torch.argmax(rays[:,0]));e,a=divmod(i,360)
+        grid[:,0::3,e,a]=.94;grid[:,1::3,e,a]=1.;grid[:,2::3,e,a]=1.
+        toward=rays[i][None]*.2
+>       original=attenuate_command(grid,rays,toward,.1,ICSConfig())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_w_closure.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+isaaclab-training/instinctlab/control/ics.py:175: in attenuate_command
+    ranges, validity, reliability = _validate(lidar_grid, rays_body, v_gov_b, history_dt_s, config)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+lidar_grid = tensor([[[[100., 100., 100.,  ..., 100., 100., 100.],
+          [100., 100., 100.,  ..., 100., 100., 100.],
+          ...,   0.],
+          [  0.,   0.,   0.,  ...,   0.,   0.,   0.],
+          [  0.,   0.,   0.,  ...,   0.,   0.,   0.]]]])
+rays_body = tensor([[-9.2050e-01,  8.6771e-08,  3.9073e-01],
+        [-9.2037e-01, -1.7322e-02,  3.9066e-01],
+        [-9.1998e-01...1e-02,  9.8985e-01],
+        [-1.3885e-01,  2.1486e-02,  9.9008e-01],
+        [-1.3909e-01,  1.0745e-02,  9.9022e-01]])
+v_gov_b = tensor([[ 0.2000,  0.0000, -0.0013]]), history_dt_s = 0.1
+config = ICSConfig(d_safe_m=0.8, emergency_clearance_m=0.25, a_max_m_s2=2.0, active_horizon_margin_m=0.5, min_reliability=0.1, velocity_limit_m_s=2.0, latency_s=0.0, clearance_margin_m=0.0, range_rate_filter=False, empty_active_set_beta=1.0)
+
+    def _validate(
+        lidar_grid: torch.Tensor,
+        rays_body: torch.Tensor,
+        v_gov_b: torch.Tensor,
+        history_dt_s: float,
+        config: ICSConfig,
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        if not isinstance(config, ICSConfig):
+            raise TypeError("config must be ICSConfig")
+        ranges, validity, reliability = extract_lidar_history(lidar_grid)
+        if not isinstance(rays_body, torch.Tensor) or rays_body.shape != (RAY_COUNT, 3):
+            raise ValueError("rays_body must have shape (21240, 3)")
+        if not isinstance(v_gov_b, torch.Tensor) or v_gov_b.shape != (lidar_grid.shape[0], 3):
+            raise ValueError("v_gov_b must have shape (N, 3)")
+        if isinstance(history_dt_s, bool) or not isinstance(history_dt_s, (int, float)):
+            raise TypeError("history_dt_s must be a real scalar")
+        if not math.isfinite(float(history_dt_s)) or history_dt_s <= 0.0:
+            raise ValueError("history_dt_s must be finite and positive")
+        if lidar_grid.dtype not in (torch.float32, torch.float64):
+            raise TypeError("ICS tensors must use float32 or float64")
+        if rays_body.dtype != lidar_grid.dtype or v_gov_b.dtype != lidar_grid.dtype:
+            raise TypeError("ICS tensors must share one dtype")
+        if rays_body.device != lidar_grid.device or v_gov_b.device != lidar_grid.device:
+            raise ValueError("ICS tensors must share one device")
+        if not bool(torch.isfinite(lidar_grid).all().item()) or not bool(torch.isfinite(rays_body).all().item()) or not bool(torch.isfinite(v_gov_b).all().item()):
+            raise ValueError("ICS tensors must be finite")
+        validity_raw = lidar_grid[:, 1::3]
+        if not bool(((validity_raw == 0.0) | (validity_raw == 1.0)).all().item()):
+            raise ValueError("M4 validity history must be exactly binary")
+        if bool(((reliability < 0.0) | (reliability > 1.0)).any().item()) or bool(
+            (reliability > validity_raw).any().item()
+        ):
+            raise ValueError("M4 reliability history must preserve validity and [0, 1]")
+        lidar_zero = (
+            (ranges == 0.0).flatten(2).all(dim=-1)
+            & (validity_raw == 0.0).flatten(2).all(dim=-1)
+            & (reliability == 0.0).flatten(2).all(dim=-1)
+        )
+        populated = ~lidar_zero
+        populated_expanded = populated[:, :, None, None]
+        if bool((populated_expanded & ((ranges < M3_MIN_RANGE_M) | (ranges > M3_MAX_RANGE_M))).any().item()):
+>           raise ValueError("populated M4 ranges must preserve the M3 domain")
+E           ValueError: populated M4 ranges must preserve the M3 domain
+
+isaaclab-training/instinctlab/control/ics.py:157: ValueError
+=========================== short test summary info ============================
+FAILED tests/training_workloads/test_w_closure.py::test_margin_earlier_braking_and_away_motion
+1 failed, 14 passed in 0.62s

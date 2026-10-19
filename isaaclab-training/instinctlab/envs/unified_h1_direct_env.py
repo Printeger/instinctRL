@@ -522,6 +522,16 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
         self._h1_pure_hover_training = pure_hover
         self._h1_anchor_weight = float(anchor_weight)
 
+    def set_h1_ics_clearance_margin(self, margin_m: float) -> None:
+        """Explicit phase setting; retain measurement-only ICS and reset lifetime."""
+        from dataclasses import replace
+        from instinctlab.control.ics import ICSConfig
+        validated = ICSConfig(clearance_margin_m=margin_m)
+        self._h1_ics_clearance_margin_m = validated.clearance_margin_m
+        for pipeline in self._control_pipelines:
+            pipeline.config = replace(pipeline.config,
+                ics=replace(pipeline.config.ics, clearance_margin_m=validated.clearance_margin_m))
+
     def set_h1_residual_neutrality_weight(self, weight: float) -> None:
         import math
         if isinstance(weight, bool) or not isinstance(weight, (int, float)) or not math.isfinite(weight) or weight < 0:
@@ -647,6 +657,8 @@ class UnifiedH1DirectEnv(TaslabDirectEnv):
     def _reset_idx_impl(self, env_ids: Sequence[int] | torch.Tensor | None) -> None:
         indices = self._validate_reset_indices(env_ids)
         super()._reset_idx(indices)
+        if hasattr(self, "_h1_ics_clearance_margin_m"):
+            self.set_h1_ics_clearance_margin(self._h1_ics_clearance_margin_m)
         if indices.numel() and self._h1_evaluation_case is not None:
             configured = torch.zeros(self.num_envs, 3, device=self.device, dtype=self._actions.dtype)
             configured[:, 2] = 2.0

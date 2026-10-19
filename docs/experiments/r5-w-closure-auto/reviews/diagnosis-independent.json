@@ -1,0 +1,44 @@
+{
+  "schema_version": "independent-review-relay/1",
+  "reviewer": "/root/authority_review",
+  "recorder": "root sole writer, relaying independent tool-returned review",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "CPU temporal diagnosis and conditional E1 design; not live approval or machine master registration",
+  "identities": {
+    "diagnosis": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/W_CAUSAL_DIAGNOSIS.json",
+      "sha256": "3541d56872a7c9ec8b5d9b164b8527b7fd6c636195cbe3d45761578bcd35fa56"
+    },
+    "analyzer": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/analyze_r5_w_causality.py",
+      "sha256": "9b645c33774e77484a7005f0fda539e324325fe26009245e261dcb77932031b8"
+    }
+  },
+  "checks": {
+    "pins_and_checkpoints_rehashed": 24,
+    "lanes_original_metrics_and_event_indices_replayed": 320,
+    "original_source_bytes_verified": [
+      "evaluation.py",
+      "backend.py",
+      "unified_h1_direct_env.py",
+      "ics.py"
+    ]
+  },
+  "findings": [
+    "All320 q precedes first attenuation; beta0 step-return geometry below.8",
+    "u512 worst deficit.088452m; measured normal velocity max.179071m/s",
+    "Additional.02 is conservative allowance, not independent identified dynamics term",
+    "Root normal velocity is not exact mounted-sensor distance derivative",
+    "clearance_margin also affects active/emergency: require tangent/away motion and center regression",
+    "Enforce actual11-sample approach separately; old triggered W branch does not enforce it"
+  ],
+  "conditional_decision": "MIXED: fixed u512 E1 control regression before common-baseline nearwall training; no controller gain attributed to RL",
+  "actions": {
+    "CPU_only": true,
+    "file_writes_by_reviewer": 0,
+    "Store_mutations": 0,
+    "GPU_queries": 0,
+    "simulations": 0
+  }
+}
