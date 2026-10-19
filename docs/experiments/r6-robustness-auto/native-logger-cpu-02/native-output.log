@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/check_r6_native_logger.py", line 57, in <module>
+    if args.child:child()
+                  ^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/check_r6_native_logger.py", line 30, in child
+    'loaded_plugins':[str(p.name) for p in carb.get_framework().get_plugins()],
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/check_r6_native_logger.py", line 30, in <listcomp>
+    'loaded_plugins':[str(p.name) for p in carb.get_framework().get_plugins()],
+                          ^^^^^^
+AttributeError: 'carb._carb.PluginDesc' object has no attribute 'name'

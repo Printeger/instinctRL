@@ -27,7 +27,7 @@ def child():
     print(json.dumps({'schema_version':'r6-native-logger-api/1',
         'logging_members':{n:str(getattr(logging,n).__doc__) for n in dir(logging) if not n.startswith('_')},
         'logging_module_members':[n for n in dir(carb.logging) if not n.startswith('_')],
-        'loaded_plugins':[str(p.name) for p in carb.get_framework().get_plugins()],
+        'loaded_plugins':[str(p.impl.name) for p in carb.get_framework().get_plugins()],
         'mapped_files':sorted({line.split()[-1] for line in Path('/proc/self/maps').read_text().splitlines() if '/' in line}),
         'framework_startup_called':False,'kit_started':False},sort_keys=True),flush=True)
 
