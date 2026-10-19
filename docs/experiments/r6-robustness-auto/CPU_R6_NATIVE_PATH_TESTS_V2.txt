@@ -1,0 +1,28 @@
+test_actual_backend_registers_app_for_cleanup_before_readback_failure (tools.test_r6_native_paths.NativePathTests.test_actual_backend_registers_app_for_cleanup_before_readback_failure) ... ok
+test_declined_gate_creates_no_native_paths (tools.test_r6_native_paths.NativePathTests.test_declined_gate_creates_no_native_paths) ... ok
+test_existing_crash_directory_and_symlink_are_never_reused (tools.test_r6_native_paths.NativePathTests.test_existing_crash_directory_and_symlink_are_never_reused) ... ok
+test_legacy_launcher_args_remain_without_r6_settings (tools.test_r6_native_paths.NativePathTests.test_legacy_launcher_args_remain_without_r6_settings) ... ok
+test_readback_requires_exact_types_and_values (tools.test_r6_native_paths.NativePathTests.test_readback_requires_exact_types_and_values) ... ok
+test_requested_paths_pass_to_default_launcher_without_disabling_evidence (tools.test_r6_native_paths.NativePathTests.test_requested_paths_pass_to_default_launcher_without_disabling_evidence) ... ok
+test_whitespace_path_rejected_before_launcher_argument_split (tools.test_r6_native_paths.NativePathTests.test_whitespace_path_rejected_before_launcher_argument_split) ... ok
+test_bad_timestamp_failure_keeps_original_sample (tools.test_r6_prelaunch.PrelaunchTests.test_bad_timestamp_failure_keeps_original_sample) ... ok
+test_busy_full_window_preserved_and_launcher_not_constructed (tools.test_r6_prelaunch.PrelaunchTests.test_busy_full_window_preserved_and_launcher_not_constructed) ... ok
+test_collection_deadline_prevents_next_query (tools.test_r6_prelaunch.PrelaunchTests.test_collection_deadline_prevents_next_query) ... ok
+test_complete_fresh_window_and_authorization_binding (tools.test_r6_prelaunch.PrelaunchTests.test_complete_fresh_window_and_authorization_binding) ... ok
+test_deadline_before_second_query_prevents_it (tools.test_r6_prelaunch.PrelaunchTests.test_deadline_before_second_query_prevents_it) ... ok
+test_future_timestamp_rejected (tools.test_r6_prelaunch.PrelaunchTests.test_future_timestamp_rejected) ... ok
+test_legacy_three_sample_gate_keeps_original_threshold (tools.test_r6_prelaunch.PrelaunchTests.test_legacy_three_sample_gate_keeps_original_threshold) ... ok
+test_missing_review_prevents_r6_gate_selection (tools.test_r6_prelaunch.PrelaunchTests.test_missing_review_prevents_r6_gate_selection) ... ok
+test_old_queue_samples_are_rejected_and_preserved (tools.test_r6_prelaunch.PrelaunchTests.test_old_queue_samples_are_rejected_and_preserved) ... ok
+test_only_fresh_pass_reaches_launcher_factory (tools.test_r6_prelaunch.PrelaunchTests.test_only_fresh_pass_reaches_launcher_factory) ... ok
+test_partial_query_failure_preserved (tools.test_r6_prelaunch.PrelaunchTests.test_partial_query_failure_preserved) ... ok
+test_r6_selection_cannot_fall_back_to_legacy_gate (tools.test_r6_prelaunch.PrelaunchTests.test_r6_selection_cannot_fall_back_to_legacy_gate) ... ok
+test_real_collector_queries_share_remaining_deadline (tools.test_r6_prelaunch.PrelaunchTests.test_real_collector_queries_share_remaining_deadline) ... ok
+test_stop_before_collection_has_zero_queries (tools.test_r6_prelaunch.PrelaunchTests.test_stop_before_collection_has_zero_queries) ... ok
+test_stop_during_collection_preserves_exact_samples (tools.test_r6_prelaunch.PrelaunchTests.test_stop_during_collection_preserves_exact_samples) ... ok
+test_transitive_local_imports_and_package_initializers_are_bound (tools.test_r6_source_config.SourceConfigTests.test_transitive_local_imports_and_package_initializers_are_bound) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.471s
+
+OK

@@ -82,6 +82,7 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 R6原生控制台接线候选：现有held-child分派可将stdout/stderr合并到job目录独占native-output.log，256MiB写前上限，超额保留准确前缀/SHA并失败；STOP/超时保留记录，已观测原生退出码与输出完成状态分开，后代清理仍由原rlflow lifeguard证明。56项相关CPU检查通过，见 `CPU_R6_NATIVE_OUTPUT_TESTS.json`。同时修正rlflow的R6评价seed分类，按evaluation_seed校验。Kit现有2GiB单文件上限加console256MiB不能代表所有跨路径native输出已受限；其余旋转日志/cache/crash路径仍待核对。新源码/控制工具发行尚未冻结或独审，原快照不变，capacityfalse且无R6 live。
 第六次独审为MUST_FIX，5项问题见 `reviews/cpu-source-native-review.json`，实际receipt/usage保留：依赖闭包遗漏、快照未拒绝额外文件、退出码/终止日志丢失、已回收PID复用误杀、setup资源泄漏。已形成修复候选并通过86项相关CPU检查，见 `CPU_SOURCE_NATIVE_REPAIR_TESTS.json`；新增反例测试还发现并修正fork至setsid间的清理竞态，原失败保留。R6新增26个传递依赖；快照完整清单含ignored/Git文件且拒绝软链；分派从首次资源获取起受清理保护，保留wait状态和终止日志，已回收PID不再发信号。原5项MUST_FIX尚未独立复核关闭，旧snapshot未改也未补造inventory。未创建新快照或启动live，capacityfalse；不能视为兼容/live/科学接受。
 第七次独立复审已关闭上述5项缺陷，`reviews/cpu-source-native-fix-review.json`为PASS_CPU_SCOPE/noMUST_FIX；精确source/test/evidence哈希及receipt/usage/所属后代清理已核验。接受范围仅为受审的源码闭包、快照完整清单和分派恢复组件，不覆盖完整原生容量、执行兼容、Store/controller或科学结果。旧快照0add4b0保持原身份；新精确config/snapshot/control release仍待整合。另只读确认冻结SimulationApp默认启用crashreporter，因此不能以Kit+console限额推断所有native路径总量已通过。未查询GPU、未启动仿真/训练，capacityfalse，完整Goal未完成。
+新增R6崩溃原件路径绑定候选：基于冻结SDK已核实的dumpDir/preserveDump/skipOldDumpUpload设置，使用本attempt/results/prelaunch/native_crash独占目录，启动后读回类型和值，错误则在环境构造前失败；app先登记给既有有界清理生命周期。23项CPU检查通过，见 `CPU_R6_NATIVE_PATH_TESTS.json`；没有导入Carb或启动仿真。AppLauncher不支持enable_crashreporter构造透传，未使用无效禁用参数，也未修改冻结runtime。该改动只补路径/保全/读回，不证明启动前崩溃、缓存或native总字节上界；新代码待独审/新快照，capacityfalse。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）

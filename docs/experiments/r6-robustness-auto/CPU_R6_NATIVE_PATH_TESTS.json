@@ -1,0 +1,68 @@
+{
+  "status": "CPU_R6_CRASH_PATH_BINDING_PASS_PENDING_REVIEW_AND_LIVE",
+  "tests_passed": 23,
+  "log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_R6_NATIVE_PATH_TESTS_V2.txt",
+    "sha256": "8b1aa19fce02d45800aa33c7919a9cb56e17b9f2948e442b89edb3fa4056e055"
+  },
+  "runtime_source_evidence": [
+    {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/dev/include/carb/crashreporter/ICrashReporter.h",
+      "sha256": "d6bf9ed7c66bc9358d2a8384095ba2578776060d7b3858fb0fc77022ac829b87"
+    },
+    {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/dev/include/carb/crashreporter/CrashReporterUtils.h",
+      "sha256": "498d3cd329443b846b01593e4d8d6ae2993c9acb61e41302c1315258d5799d9f"
+    },
+    {
+      "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/app/app_launcher.py",
+      "sha256": "7ab2c742cfa64e2c4e2ea4601d9441e5e8c9bb8f556a121b0d10c337f9b6093e"
+    },
+    {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/exts/isaacsim.simulation_app/isaacsim/simulation_app/simulation_app.py",
+      "sha256": "7cbaa6f00e935a6f14bf1c28ec0db089fd924e931f3b0deee07a822f9b7d0090"
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/resources.py",
+      "sha256": "4790f29ae67aa596f86dc14fdd4801555da8abba186b165d1ed2ee5f5e17e261"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "f981ff0915dff111e6ea5f4a11bd8b2c00a68552cbcc6f206bbfaa7ce5642ac0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_paths.py",
+      "sha256": "6e89ab75c05c9d8d3a03516e6064cbf7de7d457349ec52fe0d17d6d78d7573cd"
+    }
+  ],
+  "supported_settings": [
+    "/crashreporter/dumpDir",
+    "/crashreporter/preserveDump",
+    "/crashreporter/skipOldDumpUpload"
+  ],
+  "behavior": [
+    "Fresh exclusive attempt/results/prelaunch/native_crash directory for R6, refuses existing paths or symlinks",
+    "Request binds attempt/auth identity and explicitly says capacity unverified",
+    "AppLauncher kit_args uses supported setting names; whitespace output paths rejected because pinned parser splits on whitespace",
+    "Runtime Carb readback requires exact types/values before environment construction",
+    "App resource is registered with existing lifecycle before readback can fail; no blind retry",
+    "Historical launcher receives no R6 crash flags"
+  ],
+  "runtime_source_findings": [
+    "Frozen SimulationApp defaults enable_crashreporter=True",
+    "Frozen AppLauncher config whitelist omits enable_crashreporter, so passing that keyword would not disable the plugin",
+    "ICrashReporter.h documents dumpDir and Linux stack trace/TOML outputs; CrashReporterUtils.h documents preservation and skipping old upload; this does not prove a total byte bound"
+  ],
+  "gpu_queries": 0,
+  "simulator_starts": 0,
+  "runtime_files_modified": false,
+  "capacity_pass": false,
+  "limitations": [
+    "CPU substitutes verify wiring and failure cleanup registration, not native Kit behavior",
+    "Settings are only observable after application startup; pre-startup crash behavior remains outside this proof",
+    "No claim that every runtime cache/crash/native writer honors this directory or that total native bytes fit3GiB",
+    "Exact source snapshot/control release, independent review and full native capacity still required"
+  ]
+}

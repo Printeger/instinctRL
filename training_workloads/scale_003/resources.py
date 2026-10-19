@@ -222,6 +222,32 @@ class RuntimeResourceGuard:
         return row
 
 
+def _r6_native_settings(output_root: Path) -> dict[str, Any]:
+    """Pinned Kit setting names; no runtime import or disabled crash evidence."""
+    if (not output_root.is_absolute() or output_root.resolve()!=output_root
+            or output_root.is_symlink() or any(c.isspace() for c in str(output_root))):
+        raise ValueError("R6 native output requires an exact whitespace-free path")
+    return {"/crashreporter/dumpDir":str(output_root/"native_crash"),
+            "/crashreporter/preserveDump":True,"/crashreporter/skipOldDumpUpload":True}
+
+
+def _read_r6_native_settings(keys):
+    # Only called after authorized AppLauncher construction, never CPU preflight.
+    import carb.settings
+    settings=carb.settings.get_settings()
+    return {key:settings.get(key) for key in keys}
+
+
+def verify_r6_native_paths(output_root: Path) -> None:
+    requested=_r6_native_settings(output_root)
+    observed=_read_r6_native_settings(requested)
+    matched=all(type(observed.get(k))is type(v) and observed.get(k)==v for k,v in requested.items())
+    atomic_json_replace(output_root,'native_path_runtime.json',{
+        'schema_version':'r6-native-paths/1','status':'SETTINGS_VERIFIED' if matched else 'SETTINGS_MISMATCH',
+        'requested':requested,'observed':observed,'total_native_capacity_verified':False})
+    if not matched:raise RuntimeError('R6 native output settings differ after AppLauncher')
+
+
 def start_after_coexistence_gate(
     output_root: Path, *, mode: str, attempt_id: str, authorization_sha256: str,
     gate_runner: Callable[..., dict[str, Any]] = run_prelaunch_gate,
@@ -249,11 +275,19 @@ def start_after_coexistence_gate(
             "/persistent/isaac/asset_root/cloud",
         )
     kit_asset_args = "".join(f" --{setting}={asset_root}" for setting in kit_asset_settings)
+    native_settings = _r6_native_settings(output_root) if mode=='research-r6-evaluation' else {}
+    if native_settings:
+        (output_root/'native_crash').mkdir(mode=0o700,exist_ok=False)
+        atomic_json_replace(output_root,'native_path_request.json',{
+            'schema_version':'r6-native-paths/1','status':'REQUESTED_NOT_VERIFIED',
+            'settings':native_settings,'attempt_id':attempt_id,'authorization_sha256':authorization_sha256,
+            'total_native_capacity_verified':False})
+    native_args=''.join(f" --{key}={str(value).lower() if type(value)is bool else value}" for key,value in native_settings.items())
     if launcher_factory is None:
         from isaaclab.app import AppLauncher
         launcher_factory = lambda log: AppLauncher(
             headless=True, enable_cameras=False, fast_shutdown=False,
-            kit_args=f"--/log/file={log}{kit_asset_args}",
+            kit_args=f"--/log/file={log}{kit_asset_args}{native_args}",
         )
     launcher = launcher_factory(output_root / "kit.log")
     if asset_root is not None:

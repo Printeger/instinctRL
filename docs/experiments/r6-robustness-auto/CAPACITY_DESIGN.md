@@ -128,3 +128,6 @@ V4容量草案纠正快照与启动成本：当前工具每身份全额预留2Gi
 
 
 原生控制台路径核验：rlflow的held-child原先继承supervisor.log，Kit另写结果目录kit.log；单文件2GiB限制不能证明二者合计≤3GiB。新R6专用分派选项将console合并到独占native-output.log并在256MiB处拒绝后续写入，保存前缀/SHA/原因，既有Kit单文件上限2GiB保留。名义余量768MiB仍需覆盖控制元数据、旋转/额外原生日志与其他路径，不能据此声明总native容量PASS。56项CPU检查通过，见 `CPU_R6_NATIVE_OUTPUT_TESTS.json`；旧控制release/快照不变，真实R6发行和独审尚未完成。
+
+
+R6崩溃原件现在有源码级路径绑定候选：冻结SDK支持dumpDir、preserveDump及skipOldDumpUpload，设置为每attempt独占prelaunch/native_crash目录、保留原件并跳过旧报告上传。启动后按实际Carb设置读回，app已登记给生命周期后才核对，失配保留错误并进入有界清理。23项CPU检查通过，见 `CPU_R6_NATIVE_PATH_TESTS.json`；未修改runtime或启动sim。这不是所有原生写入的总量约束，不能把SDK对Linux栈/TOML文件的说明当作大小证明；启动前异常、外部缓存路径和总native配额仍未闭合。
