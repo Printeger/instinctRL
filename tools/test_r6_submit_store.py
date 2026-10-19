@@ -16,7 +16,7 @@ from rlflow.store import Store, Conflict, sha
 from tools import r6_resource_queue as q
 from tools.r6_recovery import Journal, file_pin
 from tools.r6_recovery import RecoveryError
-from tools.r6_submit import submit_once
+from tools.r6_submit import submit_once, main
 from training_workloads.scale_003.resources import GPU_IDENTITY
 
 
@@ -156,3 +156,38 @@ def test_actual_store_reservation_recovered_without_second_submit(bound, monkeyp
     assert b.store.replay()['jobs'][b.jid] == job
     assert b.journal.read()['budget'] == budget
     assert first['job_observed_in_store'] and not first['scientific_acceptance']
+
+
+def cli_args(b, store=None):
+    return [str(b.journal.directory), b.key, '--store', str(store or b.store.root),
+            '--queue-key', b.queue_key]
+
+
+def test_cli_recovers_persisted_store_claim_and_emits_json(bound, monkeypatch, capsys):
+    b = bound
+    monkeypatch.setattr('rlflow.releases.freeze', lambda root:b.store.root)
+    with pytest.raises(OSError, match='before process launch'):main(cli_args(b))
+    assert capsys.readouterr().out == ''
+    main(cli_args(b))
+    first = json.loads(capsys.readouterr().out)
+    main(cli_args(b))
+    assert json.loads(capsys.readouterr().out) == first
+    assert first['job_id']==b.jid and not first['scientific_acceptance']
+    assert b.popen.call_count==1
+
+
+def test_cli_requires_existing_store_database(bound, tmp_path):
+    empty = tmp_path/'empty-store'; empty.mkdir()
+    with pytest.raises(RecoveryError, match='STORE_DATABASE_REQUIRED'):
+        main(cli_args(bound, empty))
+    assert list(empty.iterdir())==[]
+    assert 'submission_claim' not in bound.journal.read()['events'][bound.key]
+    bound.popen.assert_not_called()
+
+
+def test_cli_obeys_writer_lock_before_store_side_effects(bound):
+    with bound.journal.writer():
+        with pytest.raises(BlockingIOError):
+            main(cli_args(bound))
+    assert not bound.store.replay()['jobs']
+    bound.popen.assert_not_called()

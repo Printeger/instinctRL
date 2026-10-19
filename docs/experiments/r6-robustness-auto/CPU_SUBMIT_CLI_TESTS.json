@@ -1,0 +1,45 @@
+{
+  "schema_version": "r6-submit-cli-cpu/1",
+  "status": "CPU_COMPONENT_PASS_NOT_DEPLOYED_PENDING_REVIEW",
+  "tests_passed": 49,
+  "new_tests": 3,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+    "sha256": "35e3547442d5c48fbd3d292e0b8a50618dd00b23a9cac340eb2f5e5a28e77715"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_store.py",
+    "sha256": "4394aa9940219b89deb3b044fc25312dd4824f7fbd76aefd28c9286e373e95a5"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SUBMIT_CLI_TESTS_V2.txt",
+    "sha256": "4206601c2865746908e18939cb01106ba0cb817e1a9ca9ac26e1f9e50006c3d4"
+  },
+  "initial_output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SUBMIT_CLI_TESTS.txt",
+    "sha256": "2ad42ce645424693a8faf522a3bc2e0b495b69abaf646c109664ecc7176ffb52"
+  },
+  "initial_failure": "Test expected RecoveryError for a second Journal writer; actual nonblocking flock correctly raises BlockingIOError. Assertion corrected; first result retained.",
+  "command_template": "python -B -m tools.r6_submit DIRECTORY EVENT_KEY --store EXISTING_STORE --queue-key QUEUE_EVENT_KEY",
+  "followup_template": "python -B -m tools.r6_batch DIRECTORY EVENT_KEY --job-store EXISTING_STORE",
+  "coverage": [
+    "CLI acquires existing Journal writer lock before Store access",
+    "Requires existing research.db; empty destination remains empty",
+    "Actual temporary Store failure after reservation recovers through CLI to same job; repeated invocation emits same JSON without new Popen",
+    "No new permission, reservation, model call or automatic retry introduced"
+  ],
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "9b272bf84588eeb8c3b064bcb99b89f7971176eb09e468b8440b14a8accb2668"
+  },
+  "operating_state_modified": false,
+  "capacity_pass": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "limitations": [
+    "Popen and release freeze remain injected test boundaries; no subprocess job started",
+    "This entry submits/recovers only; it does not provide full controller orchestration or background deployment",
+    "Exact production config/snapshot authorization, capacity acceptance and independent review remain pending"
+  ]
+}

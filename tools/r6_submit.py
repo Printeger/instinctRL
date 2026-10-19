@@ -4,6 +4,7 @@ No permission issuance, budget reservation, retry, settlement or science decisio
 A persisted claim with no authoritative Store job is ambiguous, never retried.
 """
 import json
+import argparse
 import math
 import os
 import time
@@ -125,3 +126,26 @@ def submit_once(journal, key, store, *, queue_key):
     state['events'][key]['submission']=file_pin(path)
     state.update(current_job=jid,status='WAIT_EXACT_JOB');journal.save(state)
     return result
+
+
+def main(argv=None):
+    parser=argparse.ArgumentParser(description=__doc__, epilog=(
+        'Submits or recovers one registered job; does not wait or call a model. '
+        'Use tools.r6_batch DIRECTORY EVENT_KEY --job-store STORE for local wait/close.'))
+    parser.add_argument('directory',type=Path)
+    parser.add_argument('event_key')
+    parser.add_argument('--store',type=Path,required=True)
+    parser.add_argument('--queue-key',required=True)
+    args=parser.parse_args(argv)
+    from tools.r6_recovery import Journal
+    from rlflow.store import Store
+    journal=Journal(args.directory.resolve())
+    with journal.writer():
+        # A mistyped Store path must not create a new authority database.
+        root=args.store.resolve(strict=True)
+        require((root/'runtime/research.db').is_file(), 'STORE_DATABASE_REQUIRED')
+        result=submit_once(journal,args.event_key,Store(root),queue_key=args.queue_key)
+    print(json.dumps(result,ensure_ascii=False))
+
+
+if __name__=='__main__':main()
