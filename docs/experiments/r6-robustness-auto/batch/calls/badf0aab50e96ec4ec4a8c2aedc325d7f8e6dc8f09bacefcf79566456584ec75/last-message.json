@@ -1,0 +1,13 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "Audit blocked before file inspection: the read-only shell failed with 'bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted'. No implementation, protocol, or CPU evidence was inspected, so no substantive code findings or actual SHA256 pins can be reported. This is an audit-environment blocker, not an established implementation defect or scientific verdict.",
+  "evidence_pins": [],
+  "changed_files": [],
+  "next_plan": "Restore functioning read-only repository access, then complete the requested CPU-scope audit and hash the inspected files. Do not count this response as a completed audit or approval.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 31
+  },
+  "must_fix": [
+    "The review environment must permit reading the specified local files. The initial cat command failed during sandbox initialization before returning any file contents; no alternative local-file reader was available. Resolve that access failure and obtain an evidence-backed review before recording PASS_CPU_SCOPE."
+  ]
+}

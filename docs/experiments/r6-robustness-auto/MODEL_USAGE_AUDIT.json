@@ -1,0 +1,34 @@
+{
+  "status": "INTERIM_CPU_ONLY",
+  "automatic_sessions_reserved": 2,
+  "automatic_sessions_completed": 1,
+  "remaining_unreserved": 30,
+  "initial_user_session_usage": "UNKNOWN",
+  "calls": [
+    {
+      "event_key": "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/receipt.json",
+        "sha256": "82cdb6ba2ac8cb559d3055c7def8bc74537f477ab4c16b784b4251d347ae554e"
+      },
+      "purpose": "Actual CPU audit plus single auth/schema verification",
+      "result": "AUTH_SCHEMA_PASS_AUDIT_ENVIRONMENT_FAILED",
+      "usage": {
+        "availability": "REPORTED",
+        "malformed_event_lines": 0,
+        "reported_turns": [
+          {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 50688,
+            "input_tokens": 81205,
+            "output_tokens": 472,
+            "reasoning_output_tokens": 39
+          }
+        ]
+      }
+    }
+  ],
+  "training_started": false,
+  "zero_model_training_wait_verified": false,
+  "pure_wait_model_calls": 0
+}
