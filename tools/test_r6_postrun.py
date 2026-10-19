@@ -1,5 +1,7 @@
 """CPU fake-query receipts and restart tests; never execute nvidia-smi or Codex."""
 import json
+import copy
+import signal
 import os
 from pathlib import Path
 import subprocess
@@ -13,7 +15,9 @@ from tools.r6_recovery import RecoveryError,file_pin,Journal
 from tools.r6_postrun import register_postruns,complete_postruns,postrun_handoff,CAP
 from tools.r6_job_inventory import record_inventory
 from tools.r6_batch import worker_environment
-from rlflow.jobs import owns
+from rlflow.jobs import owns,identity
+from rlflow.store import sha
+from tools.r6_budget import observe,BudgetError
 
 ROOT = fixture.fixture.ROOT
 FAKE = '''#!{python}
@@ -182,6 +186,64 @@ Path(__file__).with_suffix('.descendant').write_text(__import__('json').dumps(id
             receipt=json.loads(Path(self.j.read()['events'][key]['receipt']['path']).read_text())
             self.assertGreaterEqual(receipt['cleanup']['signalled_process_count'],1)
             self.assertFalse(any(owns(i) for i in receipt['cleanup']['observed_identities']))
+
+    def test_existing_job_aliases_cannot_register_or_dispatch_queries(self):
+        self.register()
+        with self.j.writer():
+            state=self.j.read();alias=copy.deepcopy(state['events'][self.job_key])
+            alias['identity']['event_id']='CPU-ALIAS'
+            alias_key=sha(alias['identity']);state['events'][alias_key]=alias;self.j.save(state)
+            with self.assertRaisesRegex(RecoveryError,'JOB_EVENT_ALIAS'):
+                register_postruns(self.j,alias_key,file_pin(self.exe),free_disk_bytes=500*1024**3)
+            with self.assertRaisesRegex(RecoveryError,'JOB_EVENT_ALIAS'):
+                postrun_handoff(self.j,self.keys[0],poll_seconds=.01)
+        self.assertEqual(self.count(),0)
+
+    def test_budget_excess_between_intent_and_dispatch_blocks_query(self):
+        self.register()
+        with self.j.writer():
+            state=self.j.read();entry=state['events'][self.keys[0]]
+            state['budget']=observe(state['budget'],event_key=entry['identity'],
+                resources={'live_starts':65},evidence={'path':'/CPU_ONLY','sha256':'a'*64})
+            self.j.save(state)
+            with self.assertRaises(BudgetError):postrun_handoff(self.j,self.keys[0],poll_seconds=.01)
+        self.assertEqual(self.count(),0)
+        self.assertNotIn('dispatch_claim',self.j.read()['events'][self.keys[0]])
+
+    def stuck_worker(self, *, expired):
+        self.register()
+        self.controller=subprocess.Popen([sys.executable,'-c','import time;time.sleep(30)'],start_new_session=True)
+        worker=identity(self.controller.pid);os.kill(self.controller.pid,signal.SIGSTOP)
+        deadline=time.monotonic()-1 if expired else time.monotonic()+45
+        with self.j.writer():
+            self.j.bind_process(self.keys[0],worker)
+            state=self.j.read();state['events'][self.keys[0]]['dispatch_claim']=dict(
+                controller=identity(os.getpid()),worker=file_pin(ROOT/'tools/r6_postrun.py'),
+                deadline_monotonic=deadline,deadline_wall=time.time()+45)
+            self.j.save(state)
+        return worker,deadline
+
+    def test_restart_past_original_deadline_kills_stopped_worker_not_unrelated(self):
+        worker,deadline=self.stuck_worker(expired=True)
+        other=subprocess.Popen([sys.executable,'-c','import time;time.sleep(30)'],start_new_session=True)
+        unrelated=identity(other.pid)
+        try:
+            self.j=Journal(self.j.directory);start=time.monotonic()
+            with self.assertRaisesRegex(RecoveryError,'CANCELLED_NO_RETRY'):self.complete()
+            self.assertLess(time.monotonic()-start,7)
+            self.assertFalse(owns(worker));self.assertTrue(owns(unrelated))
+            entry=self.j.read()['events'][self.keys[0]]
+            self.assertEqual(entry['dispatch_claim']['deadline_monotonic'],deadline)
+            self.assertEqual(entry['controller_cancel']['status'],'NO_KNOWN_OWNED_SURVIVORS')
+            self.assertFalse((self.j.directory/'postrun'/self.keys[0]/'receipt.json').exists())
+            self.assertEqual(self.count(),0)
+        finally:other.terminate();other.wait(timeout=5)
+
+    def test_stop_cancels_stopped_worker_without_waiting_for_its_own_timer(self):
+        worker,_=self.stuck_worker(expired=False)
+        (self.j.directory/'STOP').touch();start=time.monotonic()
+        with self.assertRaisesRegex(RecoveryError,'CANCELLED_NO_RETRY'):self.complete()
+        self.assertLess(time.monotonic()-start,7);self.assertFalse(owns(worker));self.assertEqual(self.count(),0)
 
     def test_partial_receipt_does_not_launch_query(self):
         self.register();folder=self.j.directory/'postrun'/self.keys[0];folder.mkdir(parents=True)

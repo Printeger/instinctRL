@@ -9,6 +9,7 @@ import unittest
 from rlflow.jobs import identity
 from rlflow.store import sha
 from tools.r6_recovery import Journal, RecoveryError
+from tools.r6_budget import observe, BudgetError
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -46,6 +47,25 @@ class RecoveryTests(unittest.TestCase):
             self.assertEqual(self.intent(), (key, False))
         self.assertEqual(len(self.j.read()['budget']['reservations']), 1)
         self.assertEqual(self.j.observe(key)['action'], 'RECONCILE')
+
+    def test_same_job_cannot_get_an_alias_event_or_new_deadline(self):
+        job = dict(self.event,role='job')
+        with self.j.writer():
+            key,_=self.j.intent(job,kind='job',request=self.request,resources={},purpose='development',free_disk_bytes=500*1024**3)
+            for request in (self.request,dict(self.request,deadline=99)):
+                alias=dict(job,event_id='alias',input_sha256=sha(request))
+                with self.assertRaisesRegex(RecoveryError,'JOB_ALREADY_BOUND'):
+                    self.j.intent(alias,kind='job',request=request,resources={},purpose='development',free_disk_bytes=500*1024**3)
+            self.assertEqual(self.j.canonical_job(key)['identity'],job)
+
+    def test_intent_replay_checks_budget_but_receipt_consumption_survives_excess(self):
+        with self.j.writer():
+            key,_=self.intent();state=self.j.read()
+            state['budget']=observe(state['budget'],event_key=self.event,
+                resources={'automatic_model_sessions':33},evidence={'path':'/CPU_ONLY','sha256':'a'*64})
+            self.j.save(state)
+            with self.assertRaises(BudgetError):self.intent()
+            self.assertTrue(self.j.consume(key,self.receipt(key)))
 
     def test_partial_receipt_preserved_without_retry(self):
         with self.j.writer(): key, _ = self.intent()

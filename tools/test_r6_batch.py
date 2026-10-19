@@ -11,6 +11,7 @@ from rlflow.jobs import owns
 from rlflow.store import sha
 from tools.r6_batch import model_handoff,worker_environment
 from tools.r6_recovery import RecoveryError,file_pin
+from tools.r6_budget import observe,BudgetError
 from tools import test_r6_model_worker as fixture
 
 ROOT=fixture.ROOT
@@ -48,6 +49,17 @@ with j.writer():model_handoff(j,sys.argv[2],poll_seconds=.02)
         with self.j.writer():self.assertEqual(result,model_handoff(self.j,self.key,poll_seconds=.02))
         self.assertEqual(receipt,file_pin(self.call/'receipt.json'))
         self.assertEqual(len(self.j.read()['budget']['reservations']),1)
+
+    def test_budget_excess_after_intent_blocks_first_model_dispatch(self):
+        self.register()
+        with self.j.writer():
+            state=self.j.read();event=state['events'][self.key]
+            state['budget']=observe(state['budget'],event_key=event['identity'],
+                resources={'automatic_model_sessions':33},evidence={'path':'/CPU_ONLY','sha256':'a'*64})
+            self.j.save(state)
+            with self.assertRaises(BudgetError):model_handoff(self.j,self.key,poll_seconds=.01)
+        self.assertFalse(self.call.exists())
+        self.assertNotIn('dispatch_claim',self.j.read()['events'][self.key])
 
     def test_controller_restart_reattaches_exact_live_worker(self):
         self.restart_reattaches(clear_binding=False)

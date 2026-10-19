@@ -100,7 +100,7 @@ def cleanup_evidence(directory, job):
 def close_terminal_job(journal, key, store):
     """Idempotent CPU close record, not a resource refund or scientific verdict."""
     journal.require_writer()
-    state = journal.read(); entry = state['events'][key]
+    state = journal.read(); entry = journal.canonical_job(key,state=state)
     if entry['kind'] != 'job' or entry['identity']['input_sha256'] != sha(entry['request']):
         raise RecoveryError('JOB_EVENT_REQUIRED')
     spec = read(checked(entry['request']['spec']))
@@ -153,7 +153,7 @@ def job_handoff(journal, key, store, *, poll_seconds=15):
     journal.require_writer()
     if type(poll_seconds) not in (int, float) or not 0 < poll_seconds <= 60:
         raise RecoveryError('LOCAL_POLL_INTERVAL')
-    state = journal.read(); entry = state['events'][key]; request = entry['request']
+    state = journal.read(); entry = journal.canonical_job(key,state=state); request = entry['request']
     if (entry['kind'] != 'job' or set(request) != {'spec', 'wait_deadline_unix'}
             or entry['identity']['input_sha256'] != sha(request)):
         raise RecoveryError('JOB_REQUEST_IDENTITY')
@@ -178,7 +178,7 @@ def job_handoff(journal, key, store, *, poll_seconds=15):
             raise RecoveryError('NEW_MODEL_EVENT_DURING_JOB_WAIT')
         store_state = store.replay()
         job = exact_job(store_state, journal.read()['events'][key], spec)
-        state = journal.read(); entry = state['events'][key]
+        state = journal.read(); entry = journal.canonical_job(key,state=state)
         root = Path(__file__).resolve().parents[1]
         extra_stops = [journal.directory.parent/'STOP', root/'STOP',
             root/'coordination/STOP', root/'coordination/commander/STOP', root/'coordination/executor/STOP']
@@ -202,7 +202,7 @@ def job_handoff(journal, key, store, *, poll_seconds=15):
             job = exact_job(store.replay(), journal.read()['events'][key], spec)
         if job['status'] in TERMINAL:
             result = close_terminal_job(journal, key, store)
-            state = journal.read(); entry = state['events'][key]
+            state = journal.read(); entry = journal.canonical_job(key,state=state)
             state['current_job'] = None
             state['status'] = ('STOPPED_AFTER_OWNED_CLEANUP' if entry.get('stop_seen')
                 else 'JOB_BOUND_EXCEEDED' if entry.get('deadline_seen') or result['budget_violations']
@@ -213,7 +213,7 @@ def job_handoff(journal, key, store, *, poll_seconds=15):
             raise RecoveryError('JOB_HANDLE_MISSING_NO_RETRY')
         if time.time() >= deadline + 180:
             raise RecoveryError('OWNED_CLEANUP_TIMEOUT')
-        state = journal.read(); entry = state['events'][key]
+        state = journal.read(); entry = journal.canonical_job(key,state=state)
         entry['local_wait_observations'] = entry.get('local_wait_observations', 0) + 1
         entry['last_local_wait'] = dict(time=time.time(), job_id=job['id'], process=job['identity'],
             model_events=model_count, model_workers_present=False)

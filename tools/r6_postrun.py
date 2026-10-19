@@ -1,6 +1,7 @@
 """Two fixed R6 postrun queries with durable intent/receipt; never a live launcher."""
 import argparse
 import json
+import math
 import os
 from pathlib import Path
 import selectors
@@ -15,6 +16,7 @@ from rlflow.store import atomic, canonical, sha
 from tools.r6_recovery import Journal, RecoveryError, checked, file_pin
 from tools.r6_worker_processes import become_subreaper, cleanup
 from tools.r6_model_worker import output_size, write
+from tools.r6_budget import admissible
 
 ROOT = Path(__file__).resolve().parents[1]
 QUERIES = ('--query-gpu=index,name,driver_version,memory.total,memory.used,utilization.gpu',
@@ -34,10 +36,10 @@ def validate(journal, key):
             or entry['identity']['goal_id'] != state['goal_id']):
         raise RecoveryError('POSTRUN_CANONICAL_EVENT')
     matching = [e for e in state['events'].values() if e['kind'] == 'postrun'
-        and e['request'].get('job_event_key') == request['job_event_key']
+        and e['identity']['job_id'] == entry['identity']['job_id']
         and e['request'].get('ordinal') == request['ordinal']]
     if len(matching) != 1:raise RecoveryError('POSTRUN_DUPLICATE_ORDINAL')
-    job = state['events'][request['job_event_key']]
+    job = journal.canonical_job(request['job_event_key'],state=state)
     if (job['kind'] != 'job' or job.get('closure') != request['closure']
             or job.get('inventory') != request['inventory']
             or job['identity']['job_id'] != entry['identity']['job_id']):
@@ -74,6 +76,7 @@ def stop_paths(journal):
 def run_query(journal, key):
     """Separate bounded worker persists its identity before the query side effect."""
     entry, executable = validate(journal,key); request = entry['request']
+    admissible(journal.read()['budget'])
     if not entry.get('dispatch_claim') or checked(entry['dispatch_claim']['worker']) != Path(__file__).resolve():
         raise RecoveryError('POSTRUN_DISPATCH_CLAIM_REQUIRED')
     directory = journal.directory/'postrun'/key;directory.mkdir(parents=True,exist_ok=True)
@@ -149,6 +152,75 @@ def verified_receipt(journal,key):
     return receipt
 
 
+def owned_tree(roots):
+    """Reuse rlflow's coherent ancestry snapshots; never admit by numeric PID alone."""
+    from rlflow.lifeguard import _process_table, _ancestry_chain
+    first = _process_table(); second = _process_table(); third = _process_table()
+    found = {}
+    for owner in roots:
+        if not owner or first.get(owner['pid'],{}).get('identity') != owner:continue
+        for pid in first:
+            chain = _ancestry_chain(pid,owner['pid'],first)
+            if (chain and all(first[p] == second.get(p) == third.get(p) for p in chain)
+                    and all(owns(first[p]['identity']) for p in chain)):
+                ident = first[pid]['identity']
+                if ident['pid'] != os.getpid():found[(ident['pid'],ident['starttime'])] = ident
+    return list(found.values())
+
+
+def cancel_bounded(journal,key,reason,proc=None):
+    """Persist owned identities before signals. Never manufacture a query receipt.
+
+    Five seconds maximum per recovery invocation; original cancellation start is
+    retained on restart so repeated recovery does not restart the TERM grace.
+    Unknown ownership remains ambiguous and cannot authorize another query.
+    """
+    state = journal.read(); entry = state['events'][key]
+    directory = journal.directory/'postrun'/key
+    cancel = entry.get('controller_cancel')
+    if cancel is None:
+        cancel = dict(reason=reason,boot_id=identity(os.getpid())['boot_id'],
+            started_monotonic=time.monotonic(),known=[],status='CANCELLING')
+        entry['controller_cancel'] = cancel;journal.save(state)
+    end = time.monotonic()+5; empty = 0
+    while True:
+        if proc is not None:proc.poll()
+        state = journal.read(); entry = state['events'][key];cancel = entry['controller_cancel']
+        roots = [entry.get('process')]
+        for name in ('worker.json','child.json'):
+            path = directory/name
+            if path.exists():
+                record = json.loads(path.read_text())
+                if record['event_key'] != key:raise RecoveryError('POSTRUN_CANCEL_IDENTITY')
+                roots.append(record['identity'])
+        roots += cancel['known']
+        discovered = owned_tree(roots)
+        for ident in discovered:
+            if ident not in cancel['known']:cancel['known'].append(ident)
+        if len(cancel['known']) > 128:raise RecoveryError('POSTRUN_CLEANUP_IDENTITY_BOUND')
+        journal.save(state)  # before any kill; crash cannot discard known ownership
+        elapsed = time.monotonic()-cancel['started_monotonic']
+        sig = signal.SIGKILL if cancel['boot_id'] != identity(os.getpid())['boot_id'] or elapsed >= 1 else signal.SIGTERM
+        for ident in cancel['known']:
+            if owns(ident):
+                try:os.kill(ident['pid'],sig)
+                except ProcessLookupError:pass
+            if proc is None or ident['pid'] != proc.pid:
+                try:os.waitpid(ident['pid'],os.WNOHANG)
+                except ChildProcessError:pass
+        if proc is not None:proc.poll()
+        live = [i for i in cancel['known'] if owns(i)]
+        empty = empty+1 if not live and not discovered else 0
+        if empty >= 2 or time.monotonic() >= end:
+            state = journal.read();cancel = state['events'][key]['controller_cancel']
+            cancel.update(status='NO_KNOWN_OWNED_SURVIVORS' if empty >= 2 else 'CLEANUP_BOUND_EXCEEDED',
+                survivors=live,stable_empty_scans=empty)
+            state['status'] = 'POSTRUN_CANCELLED_REQUIRES_RECONCILIATION';journal.save(state)
+            if live:raise RecoveryError('POSTRUN_CLEANUP_BOUND_EXCEEDED')
+            return
+        time.sleep(.05)
+
+
 def postrun_handoff(journal,key,*,poll_seconds=1):
     """Recover one exact query. An unbound dispatch claim is never retried."""
     journal.require_writer()
@@ -158,7 +230,7 @@ def postrun_handoff(journal,key,*,poll_seconds=1):
     if entry.get('receipt'):return verified_receipt(journal,key)
     directory = journal.directory/'postrun'/key;proc = None
     if not entry.get('dispatch_claim'):
-        journal.guard()
+        journal.require_dispatch_budget()
         if stop_paths(journal):raise RecoveryError('STOP_BEFORE_POSTRUN')
         if directory.exists() or entry.get('process') or entry['status'] != 'INTENT':
             raise RecoveryError('POSTRUN_UNCLAIMED_SIDE_EFFECT')
@@ -174,8 +246,10 @@ def postrun_handoff(journal,key,*,poll_seconds=1):
             *records['descendant-cleanup.json']['discovered']]
         if any(owns(i) for i in ids):raise RecoveryError('POSTRUN_JOB_STILL_ALIVE')
         no_model_workers(journal)
-        entry['dispatch_claim'] = {'controller':identity(os.getpid()),'worker':file_pin(Path(__file__))}
+        entry['dispatch_claim'] = {'controller':identity(os.getpid()),'worker':file_pin(Path(__file__)),
+            'deadline_monotonic':time.monotonic()+45,'deadline_wall':time.time()+45}
         state['events'][key] = entry;state['status'] = 'POSTRUN_QUERY';journal.save(state)
+        become_subreaper()
         proc = subprocess.Popen([sys.executable,'-B','-m','tools.r6_postrun',str(journal.directory.resolve()),key],
             cwd=ROOT,stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,
             start_new_session=True,env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTHONPATH='.:tools/rlflow',CUDA_VISIBLE_DEVICES=''))
@@ -194,16 +268,25 @@ def postrun_handoff(journal,key,*,poll_seconds=1):
             journal.consume(key,directory/'receipt.json')
             return verified_receipt(journal,key)
         if action == 'ALREADY_CONSUMED':return verified_receipt(journal,key)
-        if action == 'RECONCILE':raise RecoveryError('POSTRUN_AMBIGUOUS_NO_RETRY')
+        if action == 'RECONCILE':
+            cancel_bounded(journal,key,'MISSING_WORKER_OR_RECEIPT',proc)
+            raise RecoveryError('POSTRUN_AMBIGUOUS_NO_RETRY')
         if action not in ('WAIT_OWNED_WORKER','WAIT_OWNED_EXIT','CANCEL_OWNED'):
             raise RecoveryError('POSTRUN_UNEXPECTED_OBSERVATION')
-        time.sleep(poll_seconds)
+        claim = entry.get('dispatch_claim',{})
+        deadline = claim.get('deadline_monotonic')
+        valid_deadline = (type(deadline) in (int,float) and math.isfinite(deadline)
+            and claim.get('controller',{}).get('boot_id') == identity(os.getpid())['boot_id'])
+        if entry.get('controller_cancel') or stop_paths(journal) or not valid_deadline or time.monotonic() >= deadline:
+            cancel_bounded(journal,key,'STOP_OR_DISPATCH_DEADLINE',proc)
+            raise RecoveryError('POSTRUN_CANCELLED_NO_RETRY')
+        time.sleep(min(poll_seconds,max(.001,deadline-time.monotonic())))
 
 
 def register_postruns(journal, job_key, executable, *, free_disk_bytes):
     """Reserve both fixed ordinals before launch; changed requests cannot rerun one."""
     journal.guard()
-    state = journal.read(); job = state['events'][job_key]
+    state = journal.read(); job = journal.canonical_job(job_key,state=state)
     if job['kind'] != 'job' or not job.get('closure') or not job.get('inventory'):
         raise RecoveryError('POSTRUN_CLOSED_INVENTORIED_JOB_REQUIRED')
     keys = []
@@ -211,7 +294,7 @@ def register_postruns(journal, job_key, executable, *, free_disk_bytes):
         request = dict(job_event_key=job_key,closure=job['closure'],inventory=job['inventory'],
             executable=executable,ordinal=ordinal)
         for prior in journal.read()['events'].values():
-            if (prior['kind'] == 'postrun' and prior['request'].get('job_event_key') == job_key
+            if (prior['kind'] == 'postrun' and prior['identity']['job_id'] == job['identity']['job_id']
                     and prior['request'].get('ordinal') == ordinal and prior['request'] != request):
                 raise RecoveryError('POSTRUN_ORDINAL_ALREADY_BOUND')
         event = dict(goal_id=state['goal_id'],event_id='POSTRUN:'+job_key+':'+str(ordinal),
@@ -231,7 +314,7 @@ def complete_postruns(journal, job_key, keys, *, poll_seconds=1):
         if entry['request']['ordinal'] != ordinal or entry['request']['job_event_key'] != job_key:
             raise RecoveryError('POSTRUN_ORDINAL_ORDER')
     for key in keys:postrun_handoff(journal,key,poll_seconds=poll_seconds)
-    state = journal.read(); job = state['events'][job_key]
+    state = journal.read(); job = journal.canonical_job(job_key,state=state)
     result = dict(schema_version='r6-postrun-summary/1',job_event_key=job_key,job_id=job['identity']['job_id'],
         closure=job['closure'],inventory=job['inventory'],postrun_queries_used=2,
         receipts=[state['events'][key]['receipt'] for key in keys],

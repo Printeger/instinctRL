@@ -143,13 +143,13 @@
   },
   "r6_robustness_execution": {
     "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
-    "status": "CPU_COMPONENTS_ACCEPTED_INTEGRATION_PENDING",
+    "status": "CPU_CONTROL_REPAIR_PENDING_REVIEW",
     "authority": "docs/experiments/r6-robustness-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md",
     "budget": "docs/experiments/r6-robustness-auto/goal_budget.json",
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
     "controller_deployed": false,
     "current_live_jobs": [],
-    "automatic_model_sessions_started": 3,
+    "automatic_model_sessions_started": 4,
     "exact_job_permission_required": true,
     "goal_complete": false,
     "baseline_cpu_audit": "docs/experiments/r6-robustness-auto/BASELINE_CPU_AUDIT.json",
@@ -158,8 +158,8 @@
     "metric_measurement_cpu_tests": "docs/experiments/r6-robustness-auto/CPU_METRIC_MEASUREMENT_TESTS.json",
     "archive_scenario_cpu_tests": "docs/experiments/r6-robustness-auto/CPU_ARCHIVE_SCENARIO_TESTS.json",
     "capacity_allocation_status": "DRAFT_FINAL_PROTECTION80GIB_24000SECONDS_PENDING_REVIEW",
-    "automatic_model_sessions_completed": 3,
-    "cpu_review_findings": 0,
+    "automatic_model_sessions_completed": 4,
+    "cpu_review_findings": 3,
     "cpu_fix_tests": 67,
     "cpu_fix_evidence": "docs/experiments/r6-robustness-auto/CPU_REVIEW_FIX_TESTS.json",
     "cpu_handoff_tests": 7,
@@ -180,6 +180,9 @@
     "job_inventory_status": "CPU63_PASS_PENDING_REVIEW_NOT_DEPLOYED",
     "job_inventory_evidence": "docs/experiments/r6-robustness-auto/CPU_JOB_INVENTORY_TESTS.json",
     "postrun_status": "CPU14_PASS_PENDING_REVIEW_NOT_DEPLOYED",
-    "postrun_evidence": "docs/experiments/r6-robustness-auto/CPU_POSTRUN_TESTS.json"
+    "postrun_evidence": "docs/experiments/r6-robustness-auto/CPU_POSTRUN_TESTS.json",
+    "cpu_control_review": "docs/experiments/r6-robustness-auto/reviews/cpu-control-review.json",
+    "cpu_control_repair_tests": 96,
+    "cpu_control_repair_evidence": "docs/experiments/r6-robustness-auto/CPU_CONTROL_REPAIR_TESTS.json"
   }
 }

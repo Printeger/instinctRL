@@ -12,7 +12,7 @@ import os
 
 from rlflow.jobs import identity, owns
 from rlflow.store import atomic, canonical, sha
-from tools.r6_budget import reserve
+from tools.r6_budget import reserve, admissible
 
 
 class RecoveryError(RuntimeError):
@@ -98,10 +98,14 @@ class Journal:
         key = sha(event)
         entry = {'identity': event, 'kind': kind, 'request': request,
                  'resources': resources, 'purpose': purpose}
+        if kind == 'job' and any(e['kind'] == 'job' and e['identity']['job_id'] == event['job_id'] and k != key
+                for k, e in state['events'].items()):
+            raise RecoveryError('JOB_ALREADY_BOUND_TO_EVENT')
         if key in state['events']:
             previous = state['events'][key]
             if any(previous[k] != v for k, v in entry.items()):
                 raise RecoveryError('EVENT_REPLAY_DRIFT')
+            admissible(state['budget'])
             state['duplicate_events_rejected'] += 1
             self.save(state)
             return key, False
@@ -111,6 +115,19 @@ class Journal:
                                 'receipt': None}
         self.save(state)
         return key, True
+
+    def require_dispatch_budget(self):
+        self.guard()
+        admissible(self.read()['budget'])
+
+    def canonical_job(self, key, *, state=None):
+        state = self.read() if state is None else state
+        entry = state['events'][key]
+        if entry['kind'] != 'job':raise RecoveryError('JOB_EVENT_REQUIRED')
+        aliases = [k for k,e in state['events'].items()
+                   if e['kind'] == 'job' and e['identity']['job_id'] == entry['identity']['job_id']]
+        if aliases != [key]:raise RecoveryError('JOB_EVENT_ALIAS_REQUIRES_RECONCILIATION')
+        return entry
 
     def bind_process(self, key, process):
         self.require_writer()

@@ -59,7 +59,7 @@ def model_handoff(journal,key,*,poll_seconds=15):
     if entry['receipt']:
         return verified_decision(journal,key)
     if not entry.get('dispatch_claim'):
-        journal.guard()
+        journal.require_dispatch_budget()
         if entry['process'] is not None or entry['status']!='INTENT' or call.exists():
             raise RecoveryError('UNCLAIMED_SIDE_EFFECT_REQUIRES_RECONCILIATION')
         validate_request(entry['request'])

@@ -81,6 +81,12 @@ class BudgetTests(unittest.TestCase):
         again=self.reserve({'training_transitions':100})
         self.assertEqual(again,self.ledger)
 
+    def test_identical_reservation_replay_rejects_protected_overrun(self):
+        self.ledger=self.reserve({'automatic_model_sessions':1})
+        self.ledger=self.observed({'automatic_model_sessions':25})
+        with self.assertRaisesRegex(BudgetError,'Protected capacity'):
+            self.reserve({'automatic_model_sessions':1})
+
     def test_observation_replay_idempotent_but_drift_rejected(self):
         self.ledger=self.reserve({'live_starts':1})
         self.ledger=self.observed({'live_starts':1})

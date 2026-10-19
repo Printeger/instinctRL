@@ -17,6 +17,7 @@ from rlflow.store import atomic, canonical, sha
 from rlflow import policy
 from tools.r6_recovery import checked, file_pin, Journal
 from tools.r6_worker_processes import become_subreaper,cleanup
+from tools.r6_budget import admissible
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -88,6 +89,7 @@ def run(directory,key):
     if entry['identity']['input_sha256']!=sha(request) or sha(entry['identity'])!=key:raise ValueError('EVENT_IDENTITY')
     if entry['status'] not in ('INTENT','RUNNING') or entry['receipt'] is not None:raise ValueError('EVENT_ALREADY_CONSUMED')
     prompt,schema,executable,schema_value=validate_request(request)
+    admissible(state['budget'])
     call=Path(directory)/'calls'/key;call.mkdir(parents=True,exist_ok=True)
     if any(call.iterdir()):raise ValueError('EXISTING_EVENT_DIRECTORY_NO_RETRY')
     # O_EXCL persists the possible side effect before launching, independent of

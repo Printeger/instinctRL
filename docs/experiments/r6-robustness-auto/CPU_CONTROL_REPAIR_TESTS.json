@@ -1,0 +1,117 @@
+{
+  "schema_version": "r6-control-review-repair/1",
+  "status": "CPU96_PASS_PENDING_INDEPENDENT_REVIEW",
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/cpu-control-review.json",
+    "sha256": "8d24f40b920299012e157c146bb17c969c4408ab1a328e3f6a6cc9b5edb8d3da"
+  },
+  "test_runs": [
+    {
+      "tests": 77,
+      "exit_code": 0,
+      "raw_log": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROL_REPAIR_TESTS_INITIAL.txt",
+        "sha256": "9c1dbf94f88a2acf15c638971fafa75797e390b17c3d2a275a67c2d1bef1f9a5"
+      },
+      "scope": "existing control component regressions"
+    },
+    {
+      "tests": 96,
+      "exit_code": 0,
+      "reported_seconds": 31.979,
+      "raw_log": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROL_REPAIR_TESTS_V2.txt",
+        "sha256": "0352e2f9e8f229493d31dce3e5acb8a39e462cd38ade1453e6a4913d56b4e542"
+      },
+      "scope": "budget/recovery/jobclose/inventory/modelhandoff/postrun/modelworker including new adversarial cases"
+    }
+  ],
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow CUDA_VISIBLE_DEVICES='' /home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python -m unittest tools.test_r6_budget tools.test_r6_recovery tools.test_r6_job_handoff tools.test_r6_job_inventory tools.test_r6_batch tools.test_r6_postrun tools.test_r6_model_worker",
+  "code": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_budget.py",
+      "sha256": "2fdee08edc08dcdb8411f56e36ffeaee930bf2dbfceba8149a07d7199f9e15b1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "8abe4d42fca1acc45935a4471365a53507ea437ff907b8d9dc9eb05c4debb8d6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_model_worker.py",
+      "sha256": "188880d1da73a6142e343500db6bd23b49653b5f15ceb3df1def26c9577aa37f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "0ae3fae820e6b5d5e1802c8e5762080d1b6f9455182ee83e6e5e1413307f1d14"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_postrun.py",
+      "sha256": "2447eb6bbe42e77ded7ea63119de8d11d0984355e4ddc2e19dad089a9c3d3806"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_budget.py",
+      "sha256": "6ba1af62b367cd453805f1342c455fc863ccc1626580170b7f9c5cd61d427dd0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_recovery.py",
+      "sha256": "252d081fa3ccdcb8e8d559bf2433f92da21333dc7ff4139221637989a5d219fc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_batch.py",
+      "sha256": "d0eadd85e9385f7753fff31829550f65b1db952dee4a46a43b82009460e8db52"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_postrun.py",
+      "sha256": "23b9ee9c728b732102f1dfbafb111189b65c3e04d2b59a41aa27e9f306d7a12f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py",
+      "sha256": "1cb8f05479453f57993175e72388366868029fc68c8835beaa386e94ccbb3d46"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_job_handoff.py",
+      "sha256": "05ffaf1593d65e6187efaebab5e083e877cb1f8af352077a177d10be1cee1716"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_job_inventory.py",
+      "sha256": "702a0e6cacfbb9444a72b833dedf6dbedd431a4fe609a417012226951e473708"
+    }
+  ],
+  "repairs": [
+    {
+      "finding": 1,
+      "change": "Journal permits one job event per exact job_id; existing alias groups fail canonical_job checks. Postrun uniqueness also checks job_id/ordinal across all events.",
+      "regression": "Different event IDs/deadlines rejected; pre-existing alias cannot register or dispatch a query."
+    },
+    {
+      "finding": 2,
+      "change": "One admissible() check covers hard caps, protected development/confirmation and model-review roles; applied on reservation replay, Journal intent replay and before first model/query dispatch, including workers. Observation and receipt consumption remain possible when over limit.",
+      "regression": "Protected allowance breach below total cap rejects identical replay; cap breach between intent and dispatch rejects both model and query launch; receipt consumption after excess remains allowed."
+    },
+    {
+      "finding": 3,
+      "change": "Postrun claim stores45second monotonic/wall deadlines and boot identity; controller enforces independently. STOP/deadline invokes bounded TERM/KILL with coherent ancestry/identity snapshots, persisted ownership, no fake query receipt and no retry. Cancellation grace survives restart; unknown cleanup stays unresolved.",
+      "regression": "Real SIGSTOP worker is reclaimed on STOP or after original deadline during restart; unrelated live subprocess is untouched. Existing restart, query timeout and orphan cleanup tests remain passing."
+    }
+  ],
+  "bounds": {
+    "query_seconds": 15,
+    "worker_cleanup_seconds": 15,
+    "dispatch_deadline_seconds": 45,
+    "controller_cancel_seconds_per_invocation": 5,
+    "term_grace_seconds": 1,
+    "recorded_cancel_identities_maximum": 128
+  },
+  "limits": [
+    "Controller cancellation records NO_KNOWN_OWNED_SURVIVORS, not a fabricated normal query receipt; missing receipt remains reconciliation-only.",
+    "No real GPU, simulator, Store job or model API calls in96tests.",
+    "No prelive, capacity, scientific or full unattended acceptance.",
+    "Independent review of this repair remains outstanding; prior review MUST_FIX is preserved."
+  ],
+  "actual_gpu_queries": 0,
+  "actual_model_api_calls_in_tests": 0
+}

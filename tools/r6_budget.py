@@ -47,6 +47,32 @@ def totals(ledger, *, enforce_caps=True):
     return result
 
 
+def admissible(ledger):
+    """Current hard and protected limits; also required before a first dispatch."""
+    usage = totals(ledger)
+    for resource, protected in ledger['protected_confirmation_delivery_repair'].items():
+        # Protected use cannot accidentally become available to exploration.
+        dev_used = amount(ledger['used'][resource])
+        dev_used += sum(charged(r, ledger['caps']).get(resource, 0) for r in ledger['reservations']
+                        if r['purpose'] == 'development')
+        if dev_used > ledger['caps'][resource] - amount(protected):
+            raise BudgetError('Protected capacity: ' + resource)
+    model_cap = ledger['caps']['automatic_model_sessions']
+    other_models = amount(ledger['used']['automatic_model_sessions']) + sum(charged(r, ledger['caps']).get('automatic_model_sessions', 0)
+                       for r in ledger['reservations']
+                       if r['purpose'] not in {'repair', 'final_review'})
+    if other_models > model_cap - sum(ledger['protected_model_sessions'].values()):
+        raise BudgetError('Protected review/repair sessions')
+    for protected_role, count in ledger['protected_model_sessions'].items():
+        outside_role = amount(ledger['used']['automatic_model_sessions'])
+        outside_role += sum(charged(r, ledger['caps']).get('automatic_model_sessions', 0)
+                            for r in ledger['reservations']
+                            if r['purpose'] != protected_role)
+        if outside_role > model_cap - count:
+            raise BudgetError('Protected model role: ' + protected_role)
+    return usage
+
+
 def reserve(ledger, *, event_key, resources, purpose, free_disk_bytes):
     """Return a new ledger; identical replays don't spend again, drift fails.
 
@@ -73,32 +99,11 @@ def reserve(ledger, *, event_key, resources, purpose, free_disk_bytes):
         if prior['event_key'] == key:
             if {k: prior[k] for k in entry} != entry:
                 raise BudgetError('Reservation replay drift')
-            totals(ledger)
+            admissible(ledger)
             return copy.deepcopy(ledger)
     candidate = copy.deepcopy(ledger)
     candidate['reservations'].append(copy.deepcopy(entry))
-    usage = totals(candidate)
-    if purpose == 'development':
-        for resource, protected in ledger['protected_confirmation_delivery_repair'].items():
-            # Protected use cannot accidentally become available to exploration.
-            dev_used = amount(ledger['used'][resource])
-            dev_used += sum(charged(r, ledger['caps']).get(resource, 0) for r in candidate['reservations']
-                            if r['purpose'] == 'development')
-            if dev_used > ledger['caps'][resource] - amount(protected):
-                raise BudgetError('Protected capacity: ' + resource)
-    model_cap = ledger['caps']['automatic_model_sessions']
-    other_models = amount(ledger['used']['automatic_model_sessions']) + sum(charged(r, ledger['caps']).get('automatic_model_sessions', 0)
-                       for r in candidate['reservations']
-                       if r['purpose'] not in {'repair', 'final_review'})
-    if other_models > model_cap - sum(ledger['protected_model_sessions'].values()):
-        raise BudgetError('Protected review/repair sessions')
-    for protected_role, count in ledger['protected_model_sessions'].items():
-        outside_role = amount(ledger['used']['automatic_model_sessions'])
-        outside_role += sum(charged(r, ledger['caps']).get('automatic_model_sessions', 0)
-                            for r in candidate['reservations']
-                            if r['purpose'] != protected_role)
-        if outside_role > model_cap - count:
-            raise BudgetError('Protected model role: ' + protected_role)
+    usage = admissible(candidate)
     disk_key = 'output_actual_plus_unreleased_reservations_bytes'
     if amount(free_disk_bytes) - usage[disk_key] < ledger['disk_free_floor_bytes']:
         raise BudgetError('Disk floor after reservations')
