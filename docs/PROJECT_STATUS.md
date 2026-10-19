@@ -64,6 +64,7 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 物理reset/force的实际验证、完整job/resource控制器、容量/协议冻结、exact Store许可及科学验证均未完成。
 聊天Goal自动续推理与零模型等待的交接限制尚未解决；不能称后台运行或科学完成。
 新增离线运动重放组件：沿原评分器重放原五任务，并逐块重算新增32lane运动评分；保存评分不一致、缺件、身份错误与性能失败分别记录。决策摘要写前限48KiB，完整指标/原件hash另存。CPU替身验证不授予科学验收；准确job/inventory/model绑定、测量/物理/RNG原件核验与controller接线仍未完成。见 `CPU_ANALYSIS_TESTS.json`。
+新增准确作业分析绑定入口：`r6_batch --analysis-report ... --analysis-store ...` 可消费已生成的CPU重放报告，核对spec/authorization/attempt/protocol、原件清单及关闭/postrun记录；记录保持幂等和原生失败/控制状态。54项CPU检查通过（含16项新增绑定测试），见 `CPU_ANALYSIS_BINDING_TESTS.json`。模型绑定缺失明确记为缺口；该入口不等于自动分析worker或科学接受，完整controller与下一决策派发仍未部署。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）

@@ -1,0 +1,66 @@
+{
+  "status": "CPU_PASS_PENDING_INDEPENDENT_REVIEW",
+  "tests": 54,
+  "new_binding_tests": 16,
+  "exit_code": 0,
+  "elapsed_seconds": 4.461,
+  "argv": [
+    "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "tools.test_r6_analysis_binding",
+    "tools.test_r6_batch",
+    "tools.test_r6_job_inventory",
+    "tools.test_r6_job_handoff",
+    "-v"
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ANALYSIS_BINDING_TESTS.txt",
+    "sha256": "09d818544f1d13a2a1d62c0add1297480f48e15fb8b3a81c9676721f8c9101c4"
+  },
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "6405b52b1fcaa97c4dc5c10d8e309155a147b1bd651501fe86908c530fa17c45"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_analysis_binding.py",
+      "sha256": "7ddbff0112b4a7e6d3a4fb7e483c9e9e4a948a7ea3662e53caf278adcf73a74f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "5fa9392ce62516dfd386e895c3b90ef50ddb6829800182a5c4238b6ae333f9e9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "0ae3fae820e6b5d5e1802c8e5762080d1b6f9455182ee83e6e5e1413307f1d14"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_inventory.py",
+      "sha256": "da23164c0856f7667dedf52b492054db39509bbd2118e76bda90425c0cda455e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_analysis.py",
+      "sha256": "1a3f0925530b7c0ad8fe80858e47302a12d32a9f798c1c77ccd61ce1e6e691ed"
+    }
+  ],
+  "scope": [
+    "Exact closed job, spec, authorization argv, attempt, frozen protocol, postrun and inventory binding",
+    "Read inputs individually rehashed against inventory; cross-attempt and omitted inputs rejected",
+    "Native failure retained; missing model/motion evidence explicit",
+    "Single-writer guarded idempotent record, STOP, crash after artifact before state, changed-report refusal"
+  ],
+  "limitations": [
+    "Binding unit tests replace cleanup_evidence with fixed terminal fixture; actual ownership checks covered by included existing handoff tests",
+    "Synthetic incomplete reports, not scientific baseline or full live pipeline acceptance",
+    "Existing replay report consumption only; bounded automatic CPU worker and next-decision dispatch not implemented",
+    "Full protocol review, capacity, measurement/physics/random-stream audit, exact prelive issuance and live validation remain incomplete"
+  ],
+  "scientific_acceptance": false
+}
