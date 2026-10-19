@@ -1,0 +1,84 @@
+{
+  "status": "CPU_QUEUE_ACCOUNTING_RECOVERY_PASS_NOT_COLLECTOR_OR_LIVE_ADMISSION",
+  "capacity_pass": false,
+  "tests": [
+    {
+      "command": "python -B -m unittest tools.test_r6_resource_queue -v",
+      "passed": 17,
+      "log": "CPU_RESOURCE_QUEUE_TESTS_V4.txt"
+    },
+    {
+      "command": "python -B -m pytest tests/training_workloads/test_resource_admission.py -q",
+      "passed": 24,
+      "seconds": 0.05,
+      "log": "CPU_RESOURCE_V2_REGRESSION.txt"
+    }
+  ],
+  "python": "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "accounting": {
+    "reserved_queue_seconds_per_window": 180,
+    "backoff_seconds": 60,
+    "output_reservation_bytes_per_window": 1048576,
+    "implicit_refund": false,
+    "actual_overrun_charged": true,
+    "controller_downtime_in_wait_included": true,
+    "stop_ends_wait": true
+  },
+  "checks": [
+    "Reuses exact V2 13-sample/60-second numeric rules without changing historical entry",
+    "Complete busy windows and partial interrupted windows preserved with exact spec/event/source identities",
+    "Reservation and original monotonic/boot clock saved together before observations",
+    "Restart never resets timer, splices windows or reuses stale/future samples",
+    "Busy queue/backoff costs zero live starts, simulator initializations and model sessions",
+    "Actual elapsed over reservation is retained; cumulative cap blocks next window",
+    "Clock/identity/schema failures require reconciliation rather than an infinite busy retry",
+    "Queue pass explicitly not launch permission; fresh actual admission still required",
+    "Real queue registration refuses capacity false and missing exact policy/code review"
+  ],
+  "limitations": [
+    "No GPU sample collector or local waiting loop is wired yet; collector must call account_wait on wake and STOP",
+    "No fresh AppLauncher R6 resource gate binding or live submit integration yet",
+    "CPU timestamp/window substitutes only, no GPU query or real resource observation",
+    "Queue protocol and per-window conservative allocation pending independent review before operational use",
+    "No operating ledger/state changes or capacity acceptance"
+  ],
+  "pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py",
+      "sha256": "51256bc4edd0472b4b61b760fd87e1e901f08b41d81be57195eafeb79bc048c0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_resource_queue.py",
+      "sha256": "68961767900507fe24231dc38df04f961a9010f472fb23fe5fc93cb1585f3a28"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "a4ff348bdb532db94ff60dc1b575ec81cad6e4f817e4cdecd287c3b578ffcdfe"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_QUEUE_TESTS_INITIAL.txt",
+      "sha256": "f401a39a6c0ad8b1630557465086c58de08ff001e39f3f33a45047eab72bbaee"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_QUEUE_TESTS_V2.txt",
+      "sha256": "495b0dfcd94c5d24b0f3bfc7b884f8030ef3c3d98dc56a52e105452e9e670437"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_QUEUE_TESTS_V3.txt",
+      "sha256": "be1f1c0ffa438f45ee00fa43cf826f81bb5df11a0c96fcc19796ec833e6ba606"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_QUEUE_TESTS_V4.txt",
+      "sha256": "425c837957441f09e2d7112acabe055ad94c6c747860d080abcd8491771f70f6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_V2_REGRESSION.txt",
+      "sha256": "cafad75a79093740238130e07207fe460b41db8a4f60deb3955765fccd7138fc"
+    }
+  ]
+}

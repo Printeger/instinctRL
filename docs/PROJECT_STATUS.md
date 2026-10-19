@@ -72,6 +72,7 @@ job事件别名可重复postrun、超额后已预留事件仍可派发、postrun
 训练存储失败关闭补修：flush/fsync错误现在使共享池拒绝后续写入；统一关闭所有所属流，失败前缀不补成功footer，context清理保留原训练异常，关闭后拒绝新文件名。18项CPU检查通过，含6项新增磁盘错误/全局配额/生命周期检查，见 `CPU_TRAINING_STORAGE_LIFECYCLE_TESTS.json`。这是存储生命周期API补齐，尚未接入live训练分派；完整controller、容量和独审状态不变。
 新增本地CPU分析worker与 `r6_batch --cpu-analysis --analysis-store` 入口：准确job关闭/清单/postrun链校验、启动意图、源码与Python哈希、3600秒worker及额外30秒controller截止、1MiB日志/16MiB报告/48KiB摘要和20MiB事件预留；重启只接回准确进程，半写receipt/未知启动不重试，失败原件及原生FAILED/-9保留。新16项worker检查、16项绑定、18项postrun与8项模型交接回归通过，见 `CPU_ANALYSIS_WORKER_TESTS.json`；误写测试模块名的一次失败记录保留。真实CPU分析器缺件案例保留16块明确缺口，摘要须等于完整报告。未完成CPU事件阻止新模型派发。该组件尚未独审，完整资源/submit/下一决策控制器未部署，未启动R6 live。
 新增分析后决策交接：有界不可变packet包含原生状态/缺口/原件索引和预算保护，提示合计≤64KiB；先预留再落盘，崩溃可从原请求重建，同一job只登记一次决策事件。`r6_batch --decision --analysis-store` 核对实际receipt、packet/report引用、预算及只读输出，持久化下一阶段提案，不授予发车或科学接受。预算变化阻止旧提示首次派发，缺件不能转训练候选。15项新检查及8项旧模型交接回归通过，含本地CPU替身→模型CLI替身→提案的单次执行与重放；见 `CPU_DECISION_PACKET_TESTS.json`，初次测试fixture漏role的失败记录保留。完整资源/submit/下一步骤实际执行仍未闭合，未调用真实模型或启动live。
+新增R6资源排队记账/恢复接口：复用V2完整13样本/60秒判定，逐窗口预留180秒及1MiB，busy后本地退避60秒，重启保留原boot/monotonic时钟和全部样本，禁止拼接/旧样本复用。长时间退避/停机按实际耗时保守补计，累计6小时限制阻止新窗口，STOP结束等待计时；不占live start/init/model计数，队列PASS不授予发车。17项新CPU检查及24项原V2回归通过，见 `CPU_RESOURCE_QUEUE_TESTS.json`。真实有界采样worker/等待循环、AppLauncher新鲜准入和submit仍待接线，协议待独审，未做GPU查询或修改操作账本。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）
