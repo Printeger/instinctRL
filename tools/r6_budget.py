@@ -78,7 +78,7 @@ def reserve(ledger, *, event_key, resources, purpose, free_disk_bytes):
             if dev_used > ledger['caps'][resource] - amount(protected):
                 raise BudgetError('Protected capacity: ' + resource)
     model_cap = ledger['caps']['automatic_model_sessions']
-    other_models = sum(r['resources'].get('automatic_model_sessions', 0)
+    other_models = amount(ledger['used']['automatic_model_sessions']) + sum(r['resources'].get('automatic_model_sessions', 0)
                        for r in candidate['reservations']
                        if r['purpose'] not in {'repair', 'final_review'})
     if other_models > model_cap - sum(ledger['protected_model_sessions'].values()):

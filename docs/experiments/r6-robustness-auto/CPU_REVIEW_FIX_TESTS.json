@@ -1,0 +1,155 @@
+{
+  "status": "CPU_PASS_PENDING_INDEPENDENT_REVIEW",
+  "tests": 67,
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "real_model_calls_in_tests": 0,
+  "runs": [
+    {
+      "status": "PASS",
+      "tests": 31,
+      "argv": [
+        "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_r6_budget",
+        "tools.test_r6_recovery",
+        "tools.test_r6_model_worker",
+        "-v"
+      ],
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "CUDA_VISIBLE_DEVICES": "",
+        "PYTHONPATH": ".:tools/rlflow"
+      },
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_REVIEW_FIX_CONTROL_TESTS.txt",
+        "sha256": "7b6c0f06a67739b34ba9ea7f9c02c3d8c376e368ed98438dd86f06c8db904ce9"
+      }
+    },
+    {
+      "status": "PASS",
+      "tests": 36,
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_r6_robustness",
+        "tools.test_r6_range_delivery",
+        "tools.test_r6_range_archive",
+        "tools.test_r6_scenarios",
+        "-v"
+      ],
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "CUDA_VISIBLE_DEVICES": "",
+        "PYTHONPATH": ".:tools/rlflow:isaaclab-training"
+      },
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_REVIEW_FIX_TENSOR_TESTS.txt",
+        "sha256": "9c32c80bf298b0ddec577ad91e863d475892af9594d935f03fcd98f50d8e9732"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_budget.py",
+      "sha256": "e6a6c373c05bf6c13d73d2eb478fa036e6910a8406d1a6a824ebaa0ea884ce47"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "352d05e48620f4341b9791966edf1e31df8daff9702813a23921d0cb14a3d7d8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_model_worker.py",
+      "sha256": "8c2d4b92121193d7e96aebe2225208d16ca5184a259654e8723c75c517cc14b7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_worker_processes.py",
+      "sha256": "1431c182d12920e4d42dc99cb6a5d72289552ad2b87a79b065cb79c948ad6f01"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/fixtures/r6_budget.json",
+      "sha256": "50d7f6a56944b8d2ef9a47c24452e137b080d80f9e06e181b3f5e8e53cd0ff18"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_budget.py",
+      "sha256": "6afc42324594a1b4bcd1b6bf5874f8f5ae19f4e7279aba9763bf0aac58856192"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_recovery.py",
+      "sha256": "8873d0afae0912bb43b857508ff801d102e370c24435d937a95c909c43109334"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py",
+      "sha256": "1cb8f05479453f57993175e72388366868029fc68c8835beaa386e94ccbb3d46"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_robustness.py",
+      "sha256": "a30274cd019f04160ccbbecf7aadbe346c8678c14831f5586f641b31748e53d8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_range_delivery.py",
+      "sha256": "156ef2ce9c3ac697e2822305f9f9615007690cbb5dc605e5d6a45317defae5f6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_range_archive.py",
+      "sha256": "110bea868ba768d49d260d711d2b424ec7f5b7deffa4992894fda908a531976c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_scenarios.py",
+      "sha256": "7a95171e1c7bd03e800308ae7b13f858ab951dff1af911d3e55fb7563a7658a4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "f3847b22632c35f8af3bede9e794f34fcd19d92fe141f4d2ace848e84b0b4215"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness.py",
+      "sha256": "37935ef61bbcb49c89c9293c4dead7fd418fd1663195e508a4948442eed50804"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_scenarios.py",
+      "sha256": "630cbdf15d217644fae7bf0be8fb7db4be1f07abacd62ea9c9cb6e7ef34a22f3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/range_archive.py",
+      "sha256": "3f0692547012cfa43f80efda912d935cc568d31930eb46bf5e5f0e1f852b4729"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "4f13004065cbc497b08e23b7f45d5b493307c3b9a3de94680f51b5c9b8642aa2"
+    }
+  ],
+  "prior_failed_run": {
+    "output": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_REVIEW_FIX_TESTS.txt",
+      "sha256": "92430e713d0153203c4d625e9e7d361ff9af000c8543a3d2d7e4e5b36d74416f"
+    },
+    "tests": 66,
+    "failures": 2,
+    "errors": 8,
+    "reason": "Worker subprocess uses sys.executable; frozen simulation Python lacks jsonschema. Reran workers in existing orchestrator Python and tensors in existing simulation Python; no dependency/runtime edits."
+  },
+  "independent_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/cpu-review-recovery1.json",
+    "sha256": "4b16c9db3b3df5227c496e06d5b4b76530adfc3cee2896be8fe66469345cb941"
+  },
+  "fixes": [
+    "Conservatively include unclassified used sessions in combined final-review/repair protection.",
+    "Worker subreaper cleans exact owned descendants even after CLI exit; CPU tests cover open and closed pipes.",
+    "Worker alone extracts/writes final JSON from bounded JSONL; aggregate usage, reserve receipt space and check metadata/stream/final/receipt before write. Minimum64KiB cap counterexample tested.",
+    "Nonzero noise draws all beams each acquisition independently of validity masks; mask application only.",
+    "Pinned isolated CPU budget fixture replaces mutable operational ledger."
+  ],
+  "not_proven": [
+    "independent acceptance of fixes",
+    "controller end-to-end deployment",
+    "live measurement/reset/force integration",
+    "complete capacity and protocol freeze",
+    "scientific pass",
+    "zero-model training wait"
+  ]
+}

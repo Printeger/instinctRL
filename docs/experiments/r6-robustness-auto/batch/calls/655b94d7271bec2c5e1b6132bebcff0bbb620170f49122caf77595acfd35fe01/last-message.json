@@ -1,0 +1,78 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "Read-only CPU audit found substantive accounting, worker containment, output-cap, and paired-randomness defects. Existing tests also depend on a mutable budget and no longer support a current all-pass claim. Complete lane denominators, reset geometry, native-exit separation, and explicit scientific-acceptance limitations are sound within the inspected component scope. Missing live integration and unfinished capacity accounting are remaining tasks, not themselves reasons for this verdict. No files changed, GPU queries, simulation, model calls, or write-requiring tests were initiated.",
+  "evidence_pins": [
+    {
+      "path": "tools/r6_budget.py",
+      "sha256": "8f5d2c590392e7b1b5267ff4f43c27ae0eda4d2501fdf9853632b2fb8c0ef79c"
+    },
+    {
+      "path": "tools/r6_recovery.py",
+      "sha256": "352d05e48620f4341b9791966edf1e31df8daff9702813a23921d0cb14a3d7d8"
+    },
+    {
+      "path": "tools/r6_model_worker.py",
+      "sha256": "008a3e4d39fa4e62d920231620748ec104323113a3397535796667b71d540199"
+    },
+    {
+      "path": "tools/test_r6_model_worker.py",
+      "sha256": "cc09c21514bc1bfad47b975ffd79ac14a038f72f6799c0d2e870dda99d236ad7"
+    },
+    {
+      "path": "tools/test_r6_recovery.py",
+      "sha256": "cbe880683c7e68f38e190932685c03cc9efe8d62f46e04c95f69060d232c0686"
+    },
+    {
+      "path": "training_workloads/unified_h1/robustness.py",
+      "sha256": "37935ef61bbcb49c89c9293c4dead7fd418fd1663195e508a4948442eed50804"
+    },
+    {
+      "path": "training_workloads/unified_h1/robustness_scenarios.py",
+      "sha256": "630cbdf15d217644fae7bf0be8fb7db4be1f07abacd62ea9c9cb6e7ef34a22f3"
+    },
+    {
+      "path": "training_workloads/unified_h1/range_archive.py",
+      "sha256": "3f0692547012cfa43f80efda912d935cc568d31930eb46bf5e5f0e1f852b4729"
+    },
+    {
+      "path": "isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "cec597bad33eba37ab507ed8ca95f576bf14e97770c0649fef233a7bc6553046"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "f195d649f54acb2c3df7f41e1014a9873f376a2a8c8108730e160813e4365de1"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/SPLIT_MANIFEST.json",
+      "sha256": "5e7e74413b0d43909adb6e7c7c77d1af9f7a5d4cf17ae04f5102ae91cd2ec18e"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CAPACITY_ALLOCATION.json",
+      "sha256": "1f41ede3454688260826461c142a90236477fae6616c200ccec305e2abdc4a3e"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/goal_budget.json",
+      "sha256": "276dec9d54fe1bef9d26f4c0c868fdb970403ae66f62e79abb54a66ef41ab8f4"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_WORKER_TESTS.txt",
+      "sha256": "a56be96097a176e6d2b5dd0eaf61201b932be64e2b36f8dd4f47d8850e1a3da8"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_ARCHIVE_SCENARIO_TESTS.json",
+      "sha256": "ba13ae4c1ea3b26150a7ce124fb32f6716dcfcf133b391361819016e83d9c606"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Repair the identified components and add focused CPU counterexamples with isolated, pinned fixtures. Preserve historical evidence and obtain a subsequent substantive review before protocol freeze; complete controller integration and exact capacity accounting separately before prelive review.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 30
+  },
+  "must_fix": [
+    "tools/r6_budget.py:reserve omits used.automatic_model_sessions from the combined protected-session calculation (other_models). A read-only, in-memory counterexample with 10 used sessions and a 15-session confirmation_delivery reservation is accepted, leaving 7 although final_review=4 and repair=4 remain protected. The individual role checks do not enforce the combined reserve. Include purpose-aware historical usage in protection accounting, or conservatively include unclassified used sessions; test nonzero used balances and serialization.",
+    "tools/r6_model_worker.py:run cleanup only signals the child group while proc.poll() is None and owns(child) remains true. If the CLI leader exits while a descendant remains, cleanup skips that descendant. A descendant retaining stdout can trigger the timeout yet survive the finalizer; one closing its pipes can survive an apparently successful receipt. Journal.observe checks the worker identity, not surviving child descendants. Track and reconcile owned descendants independently of leader liveness, require verified cleanup before reporting completion, and test leader exit with a surviving CPU child. This is an implemented worker-cleanup defect, distinct from the undeployed controller.",
+    "tools/r6_model_worker.py:run enforces a before-write limit only for streamed stdout/stderr. The CLI writes last-message.json directly without that bound, and receipt.json is written after the final size check. usage() copies every reported usage object into the receipt, potentially duplicating a substantial part of the bounded event log and exceeding the overall cap. Enforce bounds on all worker artifacts, reserve bounded receipt space, and test oversized final messages and many usage records. Polling file size after writes does not establish a hard output cap.",
+    "isaaclab-training/instinctlab/observations/robustness.py:RangeDelivery.deliver draws only validity.sum() noise samples and assigns them in valid-beam order. Consequently, different policy-dependent validity masks change both beam-to-draw assignment and subsequent RNG state despite identical stream identities. This does not implement the common measurement-noise realization promised for paired baseline/final comparisons in TEST_PROTOCOL.json and SPLIT_MANIFEST.json. Use noise indexed independently by condition/lane/acquisition/beam, applying it only to valid beams. Test shared-beam noise and later frames under differing validity masks; identical-input reproducibility alone is insufficient.",
+    "tools/test_r6_recovery.py and tools/test_r6_model_worker.py load the current goal_budget.json, retain its reservations, then assert that adding one event leaves exactly one reservation. The current ledger already contains two reservations, so those assertions now see three. CPU_ARCHIVE_SCENARIO_TESTS.json also pins an earlier budget hash, and CPU_WORKER_TESTS.txt records an earlier six-test pass. Preserve those historical results, isolate test ledgers from operational accounting, and regenerate evidence with all fixture/input hashes. Do not present the old passes as verification of the current complete input set."
+  ]
+}

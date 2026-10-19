@@ -43,7 +43,7 @@ class DeliveryTests(unittest.TestCase):
         before=c.rng_states()
         result=c.deliver(ranges,valid,torch.zeros(2,1),torch.zeros(2,1,dtype=torch.bool))
         self.assertTrue(torch.equal(result['delivered_ranges'],ranges))
-        self.assertTrue(all(torch.equal(a,b) for a,b in zip(before,c.rng_states())))
+        self.assertFalse(all(torch.equal(a,b) for a,b in zip(before,c.rng_states())))
         result['delivered_ranges'].zero_()
         self.assertTrue(torch.equal(ranges,torch.full((2,64),40.)))
         self.assertTrue(torch.equal(c.last['ranges'],ranges))
@@ -55,6 +55,16 @@ class DeliveryTests(unittest.TestCase):
         r=c.deliver(torch.full((2,64),3.),torch.ones(2,64,dtype=torch.bool),times,torch.zeros(2,1,dtype=torch.bool))
         self.assertFalse(bool(r['frame_available'][0]))
         self.assertTrue(bool(r['frame_available'][1]))
+
+    def test_common_noise_survives_different_validity_masks(self):
+        a=self.new(sigma_m=.01);b=self.new(sigma_m=.01)
+        full=torch.full((2,64),2.);partial=full.clone();partial[:,:17]=40.
+        valid=torch.ones((2,64),dtype=torch.bool);mask=valid.clone();mask[:,:17]=False
+        time=torch.zeros((2,1));drop=torch.zeros((2,1),dtype=torch.bool)
+        x=a.deliver(full,valid,time,drop);y=b.deliver(partial,mask,time,drop)
+        self.assertTrue(torch.equal(x['delivered_ranges'][:,17:],y['delivered_ranges'][:,17:]))
+        self.assertTrue(all(torch.equal(x,y) for x,y in zip(a.rng_states(),b.rng_states())))
+        self.assertTrue(torch.equal(self.step(a,.1)['delivered_ranges'],self.step(b,.1)['delivered_ranges']))
 
     def test_timestamp_regression_rejected(self):
         c=self.new();self.step(c,.2)

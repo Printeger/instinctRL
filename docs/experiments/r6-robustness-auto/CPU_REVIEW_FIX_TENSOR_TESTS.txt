@@ -1,0 +1,41 @@
+test_all_time_height_after_hold_counts (tools.test_r6_robustness.RobustnessTests.test_all_time_height_after_hold_counts) ... ok
+test_declared_final_capacity_matches_blocks (tools.test_r6_robustness.RobustnessTests.test_declared_final_capacity_matches_blocks) ... ok
+test_duplicate_lane_rejected (tools.test_r6_robustness.RobustnessTests.test_duplicate_lane_rejected) ... ok
+test_finite_rectangles_and_origin_translation (tools.test_r6_robustness.RobustnessTests.test_finite_rectangles_and_origin_translation) ... ok
+test_initial_collision_and_transient_geometry_are_failures (tools.test_r6_robustness.RobustnessTests.test_initial_collision_and_transient_geometry_are_failures) ... ok
+test_missing_lane_keeps_denominator (tools.test_r6_robustness.RobustnessTests.test_missing_lane_keeps_denominator) ... ok
+test_nan_and_reset_and_missing_flag_fail (tools.test_r6_robustness.RobustnessTests.test_nan_and_reset_and_missing_flag_fail) ... ok
+test_nominal_stop_and_reverse (tools.test_r6_robustness.RobustnessTests.test_nominal_stop_and_reverse) ... ok
+test_pulse_motion_is_not_force_execution_acceptance (tools.test_r6_robustness.RobustnessTests.test_pulse_motion_is_not_force_execution_acceptance) ... ok
+test_seed_run_and_command_mismatch_do_not_relabel (tools.test_r6_robustness.RobustnessTests.test_seed_run_and_command_mismatch_do_not_relabel) ... ok
+test_static_low_speed_cannot_pass_with_small_rmse (tools.test_r6_robustness.RobustnessTests.test_static_low_speed_cannot_pass_with_small_rmse) ... ok
+test_stop_confirmation_requires_full_second_and_three_second_deadline (tools.test_r6_robustness.RobustnessTests.test_stop_confirmation_requires_full_second_and_three_second_deadline) ... ok
+test_stop_hold_not_enough_or_drifts (tools.test_r6_robustness.RobustnessTests.test_stop_hold_not_enough_or_drifts) ... ok
+test_wall_cannot_stop_first_then_move_late (tools.test_r6_robustness.RobustnessTests.test_wall_cannot_stop_first_then_move_late) ... ok
+test_wall_modes_and_subgroups (tools.test_r6_robustness.RobustnessTests.test_wall_modes_and_subgroups) ... ok
+test_wall_sensor_geometry_not_reported_clearance (tools.test_r6_robustness.RobustnessTests.test_wall_sensor_geometry_not_reported_clearance) ... ok
+test_actor_history_and_ics_extract_same_delivered_ranges (tools.test_r6_range_delivery.DeliveryTests.test_actor_history_and_ics_extract_same_delivered_ranges) ... ok
+test_common_noise_survives_different_validity_masks (tools.test_r6_range_delivery.DeliveryTests.test_common_noise_survives_different_validity_masks) ... ok
+test_delay_and_drop_retain_acquisition_time (tools.test_r6_range_delivery.DeliveryTests.test_delay_and_drop_retain_acquisition_time) ... ok
+test_invalid_beams_not_noised_and_input_unmodified (tools.test_r6_range_delivery.DeliveryTests.test_invalid_beams_not_noised_and_input_unmodified) ... ok
+test_noise_is_bounded_reproducible_and_changes_by_seed (tools.test_r6_range_delivery.DeliveryTests.test_noise_is_bounded_reproducible_and_changes_by_seed) ... ok
+test_selected_reset_cannot_leak_previous_episode_frame (tools.test_r6_range_delivery.DeliveryTests.test_selected_reset_cannot_leak_previous_episode_frame) ... ok
+test_timestamp_regression_rejected (tools.test_r6_range_delivery.DeliveryTests.test_timestamp_regression_rejected) ... ok
+test_zero_noise_does_not_consume_random_stream (tools.test_r6_range_delivery.DeliveryTests.test_zero_noise_does_not_consume_random_stream) ... ok
+test_bit_exact_roundtrip_dedup_signed_zero_and_float64 (tools.test_r6_range_archive.ArchiveTests.test_bit_exact_roundtrip_dedup_signed_zero_and_float64) ... ok
+test_duplicate_open_cannot_overwrite_evidence (tools.test_r6_range_archive.ArchiveTests.test_duplicate_open_cannot_overwrite_evidence) ... ok
+test_extra_frame_and_wrong_identity_rejected (tools.test_r6_range_archive.ArchiveTests.test_extra_frame_and_wrong_identity_rejected) ... ok
+test_nonfinite_and_missing_fields_rejected (tools.test_r6_range_archive.ArchiveTests.test_nonfinite_and_missing_fields_rejected) ... ok
+test_quota_rejects_before_write_and_keeps_previous_frame (tools.test_r6_range_archive.ArchiveTests.test_quota_rejects_before_write_and_keeps_previous_frame) ... ok
+test_truncation_and_corruption_rejected (tools.test_r6_range_archive.ArchiveTests.test_truncation_and_corruption_rejected) ... ok
+test_actual_root_position_cannot_substitute_sensor_distance (tools.test_r6_scenarios.ScenarioTests.test_actual_root_position_cannot_substitute_sensor_distance) ... ok
+test_force_duration_and_impulse (tools.test_r6_scenarios.ScenarioTests.test_force_duration_and_impulse) ... ok
+test_lane_reordering_does_not_change_draws (tools.test_r6_scenarios.ScenarioTests.test_lane_reordering_does_not_change_draws) ... ok
+test_mount_rotation_and_both_wall_distances (tools.test_r6_scenarios.ScenarioTests.test_mount_rotation_and_both_wall_distances) ... ok
+test_real_seed_and_split_changes_not_labels_only (tools.test_r6_scenarios.ScenarioTests.test_real_seed_and_split_changes_not_labels_only) ... ok
+test_reset_velocity_and_attitude_mismatch_fail (tools.test_r6_scenarios.ScenarioTests.test_reset_velocity_and_attitude_mismatch_fail) ... ok
+
+----------------------------------------------------------------------
+Ran 36 tests in 0.403s
+
+OK

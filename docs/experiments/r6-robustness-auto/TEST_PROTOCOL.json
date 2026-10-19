@@ -220,11 +220,11 @@
   },
   "lane_stratification": {
     "center": "8 world horizontal directions, four lanes each; lane j direction j%8. Yaw stratum (j//8+j%8)%5. Independent bounded xy offsets per lane. Commands converted world-to-body using current orientation at each control boundary.",
-    "wall": "lanes 0..15 x wall,16..31 y wall; within each wall four lanes per toward/away/parallel/zero mode; parallel signs balanced. Yaw and tangent vary. Report wall \u00d7 mode separately.",
+    "wall": "lanes 0..15 x wall,16..31 y wall; within each wall four lanes per toward/away/parallel/zero mode; parallel signs balanced. Yaw and tangent vary. Report wall × mode separately.",
     "pulse": "8 world force directions with four lanes each; zero commanded velocity throughout."
   },
   "measurement_chain": {
-    "noise": "Independent additive normal draws clipped to +/-3 sigma, applied to finite valid ranges only; clip physical ranges to declared sensor min/max; preserve invalid validity. Zero noise consumes no noise draws.",
+    "noise": "Independent additive normal draws clipped to +/-3 sigma, applied to finite valid ranges only; clip physical ranges to declared sensor min/max; preserve invalid validity. Zero noise consumes no noise draws. For nonzero sigma, draw every beam on every acquisition from the condition/lane stream independently of validity; mask only application. Different validity masks cannot shift shared-beam or subsequent-acquisition draws.",
     "delivery": "A single impaired measurement frame feeds both actor and ICS, including consistent validity and acquisition/delivery timestamps. Clean measurement is audit/evaluation only.",
     "delay_cycles": [
       0,
@@ -294,7 +294,7 @@
     }
   },
   "aggregation": {
-    "target": "Every target block must have32/32 successful lanes; every direction and wall\u00d7mode subgroup must have all its lanes pass. Each final seed passes separately. No averaging away failed seeds.",
+    "target": "Every target block must have32/32 successful lanes; every direction and wall×mode subgroup must have all its lanes pass. Each final seed passes separately. No averaging away failed seeds.",
     "stress": "Same lane rules and full denominators, report failure boundary; not required for target PASS.",
     "confidence": "Wilson two-sided95% per block/subgroup and per seed, report n; no iid or universal safety claim from correlated lanes or3seeds.",
     "learning": "Paired common realization comparison to frozen u640; controller changes need fixed-policy control before RL attribution."

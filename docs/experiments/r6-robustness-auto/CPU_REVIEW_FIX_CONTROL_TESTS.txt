@@ -1,0 +1,36 @@
+test_confirmation_cannot_be_borrowed (tools.test_r6_budget.BudgetTests.test_confirmation_cannot_be_borrowed) ... ok
+test_disk_floor_includes_reservations (tools.test_r6_budget.BudgetTests.test_disk_floor_includes_reservations) ... ok
+test_event_identity_requires_all_dimensions (tools.test_r6_budget.BudgetTests.test_event_identity_requires_all_dimensions) ... ok
+test_exact_replay_is_idempotent_after_serialization (tools.test_r6_budget.BudgetTests.test_exact_replay_is_idempotent_after_serialization) ... ok
+test_failed_check_does_not_mutate_ledger (tools.test_r6_budget.BudgetTests.test_failed_check_does_not_mutate_ledger) ... ok
+test_hard_limit_even_for_confirmation (tools.test_r6_budget.BudgetTests.test_hard_limit_even_for_confirmation) ... ok
+test_invalid_and_unknown_amounts (tools.test_r6_budget.BudgetTests.test_invalid_and_unknown_amounts) ... ok
+test_model_review_reserve_survives_confirmation (tools.test_r6_budget.BudgetTests.test_model_review_reserve_survives_confirmation) ... ok
+test_repairs_cannot_consume_final_review_slots (tools.test_r6_budget.BudgetTests.test_repairs_cannot_consume_final_review_slots) ... ok
+test_unclassified_used_sessions_preserve_combined_reserve (tools.test_r6_budget.BudgetTests.test_unclassified_used_sessions_preserve_combined_reserve) ... ok
+test_duplicate_controller_refused_by_os_lock (tools.test_r6_recovery.RecoveryTests.test_duplicate_controller_refused_by_os_lock) ... ok
+test_exact_job_recovery_validates_identity (tools.test_r6_recovery.RecoveryTests.test_exact_job_recovery_validates_identity) ... ok
+test_live_worker_then_dead_worker_not_restarted (tools.test_r6_recovery.RecoveryTests.test_live_worker_then_dead_worker_not_restarted) ... ok
+test_mutations_require_writer (tools.test_r6_recovery.RecoveryTests.test_mutations_require_writer) ... ok
+test_partial_receipt_preserved_without_retry (tools.test_r6_recovery.RecoveryTests.test_partial_receipt_preserved_without_retry) ... ok
+test_receipt_consumption_survives_restart (tools.test_r6_recovery.RecoveryTests.test_receipt_consumption_survives_restart) ... ok
+test_receipt_drift_rejected_after_consumption (tools.test_r6_recovery.RecoveryTests.test_receipt_drift_rejected_after_consumption) ... ok
+test_restarts_do_not_repeat_model_intent (tools.test_r6_recovery.RecoveryTests.test_restarts_do_not_repeat_model_intent) ... ok
+test_stop_blocks_new_intent_but_allows_receipt (tools.test_r6_recovery.RecoveryTests.test_stop_blocks_new_intent_but_allows_receipt) ... ok
+test_wrong_receipt_cannot_advance (tools.test_r6_recovery.RecoveryTests.test_wrong_receipt_cannot_advance) ... ok
+test_cli_exit_with_child_holding_pipes_is_cleaned_on_timeout (tools.test_r6_model_worker.WorkerTests.test_cli_exit_with_child_holding_pipes_is_cleaned_on_timeout) ... ok
+test_cli_exit_with_detached_child_closed_pipes_is_cleaned (tools.test_r6_model_worker.WorkerTests.test_cli_exit_with_detached_child_closed_pipes_is_cleaned) ... ok
+test_cpu_job_completion_event_and_registered_next_step (tools.test_r6_model_worker.WorkerTests.test_cpu_job_completion_event_and_registered_next_step) ... ok
+test_final_message_and_usage_summary_stay_bounded (tools.test_r6_model_worker.WorkerTests.test_final_message_and_usage_summary_stay_bounded) ... ok
+test_invalid_schema_is_not_accepted_as_decision (tools.test_r6_model_worker.WorkerTests.test_invalid_schema_is_not_accepted_as_decision) ... ok
+test_many_usage_records_do_not_expand_receipt (tools.test_r6_model_worker.WorkerTests.test_many_usage_records_do_not_expand_receipt) ... ok
+test_minimum_cap_rejects_stream_before_overflow (tools.test_r6_model_worker.WorkerTests.test_minimum_cap_rejects_stream_before_overflow) ... ok
+test_schema_usage_receipt_and_recovery_consume_once (tools.test_r6_model_worker.WorkerTests.test_schema_usage_receipt_and_recovery_consume_once) ... ok
+test_stop_during_worker_no_retry_or_stop_removal (tools.test_r6_model_worker.WorkerTests.test_stop_during_worker_no_retry_or_stop_removal) ... ok
+test_timeout_cleans_child_and_keeps_session_charge (tools.test_r6_model_worker.WorkerTests.test_timeout_cleans_child_and_keeps_session_charge) ... ok
+test_worker_death_preserves_ambiguous_event_without_retry (tools.test_r6_model_worker.WorkerTests.test_worker_death_preserves_ambiguous_event_without_retry) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 3.414s
+
+OK

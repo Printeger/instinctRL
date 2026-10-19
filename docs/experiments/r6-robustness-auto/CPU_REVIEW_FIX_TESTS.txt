@@ -1,0 +1,231 @@
+test_confirmation_cannot_be_borrowed (tools.test_r6_budget.BudgetTests.test_confirmation_cannot_be_borrowed) ... ok
+test_disk_floor_includes_reservations (tools.test_r6_budget.BudgetTests.test_disk_floor_includes_reservations) ... ok
+test_event_identity_requires_all_dimensions (tools.test_r6_budget.BudgetTests.test_event_identity_requires_all_dimensions) ... ok
+test_exact_replay_is_idempotent_after_serialization (tools.test_r6_budget.BudgetTests.test_exact_replay_is_idempotent_after_serialization) ... ok
+test_failed_check_does_not_mutate_ledger (tools.test_r6_budget.BudgetTests.test_failed_check_does_not_mutate_ledger) ... ok
+test_hard_limit_even_for_confirmation (tools.test_r6_budget.BudgetTests.test_hard_limit_even_for_confirmation) ... ok
+test_invalid_and_unknown_amounts (tools.test_r6_budget.BudgetTests.test_invalid_and_unknown_amounts) ... ok
+test_model_review_reserve_survives_confirmation (tools.test_r6_budget.BudgetTests.test_model_review_reserve_survives_confirmation) ... ok
+test_repairs_cannot_consume_final_review_slots (tools.test_r6_budget.BudgetTests.test_repairs_cannot_consume_final_review_slots) ... ok
+test_unclassified_used_sessions_preserve_combined_reserve (tools.test_r6_budget.BudgetTests.test_unclassified_used_sessions_preserve_combined_reserve) ... ok
+test_duplicate_controller_refused_by_os_lock (tools.test_r6_recovery.RecoveryTests.test_duplicate_controller_refused_by_os_lock) ... ok
+test_exact_job_recovery_validates_identity (tools.test_r6_recovery.RecoveryTests.test_exact_job_recovery_validates_identity) ... ok
+test_live_worker_then_dead_worker_not_restarted (tools.test_r6_recovery.RecoveryTests.test_live_worker_then_dead_worker_not_restarted) ... ok
+test_mutations_require_writer (tools.test_r6_recovery.RecoveryTests.test_mutations_require_writer) ... ok
+test_partial_receipt_preserved_without_retry (tools.test_r6_recovery.RecoveryTests.test_partial_receipt_preserved_without_retry) ... ok
+test_receipt_consumption_survives_restart (tools.test_r6_recovery.RecoveryTests.test_receipt_consumption_survives_restart) ... ok
+test_receipt_drift_rejected_after_consumption (tools.test_r6_recovery.RecoveryTests.test_receipt_drift_rejected_after_consumption) ... ok
+test_restarts_do_not_repeat_model_intent (tools.test_r6_recovery.RecoveryTests.test_restarts_do_not_repeat_model_intent) ... ok
+test_stop_blocks_new_intent_but_allows_receipt (tools.test_r6_recovery.RecoveryTests.test_stop_blocks_new_intent_but_allows_receipt) ... ok
+test_wrong_receipt_cannot_advance (tools.test_r6_recovery.RecoveryTests.test_wrong_receipt_cannot_advance) ... ok
+test_all_time_height_after_hold_counts (tools.test_r6_robustness.RobustnessTests.test_all_time_height_after_hold_counts) ... ok
+test_declared_final_capacity_matches_blocks (tools.test_r6_robustness.RobustnessTests.test_declared_final_capacity_matches_blocks) ... ok
+test_duplicate_lane_rejected (tools.test_r6_robustness.RobustnessTests.test_duplicate_lane_rejected) ... ok
+test_finite_rectangles_and_origin_translation (tools.test_r6_robustness.RobustnessTests.test_finite_rectangles_and_origin_translation) ... ok
+test_initial_collision_and_transient_geometry_are_failures (tools.test_r6_robustness.RobustnessTests.test_initial_collision_and_transient_geometry_are_failures) ... ok
+test_missing_lane_keeps_denominator (tools.test_r6_robustness.RobustnessTests.test_missing_lane_keeps_denominator) ... ok
+test_nan_and_reset_and_missing_flag_fail (tools.test_r6_robustness.RobustnessTests.test_nan_and_reset_and_missing_flag_fail) ... ok
+test_nominal_stop_and_reverse (tools.test_r6_robustness.RobustnessTests.test_nominal_stop_and_reverse) ... ok
+test_pulse_motion_is_not_force_execution_acceptance (tools.test_r6_robustness.RobustnessTests.test_pulse_motion_is_not_force_execution_acceptance) ... ok
+test_seed_run_and_command_mismatch_do_not_relabel (tools.test_r6_robustness.RobustnessTests.test_seed_run_and_command_mismatch_do_not_relabel) ... ok
+test_static_low_speed_cannot_pass_with_small_rmse (tools.test_r6_robustness.RobustnessTests.test_static_low_speed_cannot_pass_with_small_rmse) ... ok
+test_stop_confirmation_requires_full_second_and_three_second_deadline (tools.test_r6_robustness.RobustnessTests.test_stop_confirmation_requires_full_second_and_three_second_deadline) ... ok
+test_stop_hold_not_enough_or_drifts (tools.test_r6_robustness.RobustnessTests.test_stop_hold_not_enough_or_drifts) ... ok
+test_wall_cannot_stop_first_then_move_late (tools.test_r6_robustness.RobustnessTests.test_wall_cannot_stop_first_then_move_late) ... ok
+test_wall_modes_and_subgroups (tools.test_r6_robustness.RobustnessTests.test_wall_modes_and_subgroups) ... ok
+test_wall_sensor_geometry_not_reported_clearance (tools.test_r6_robustness.RobustnessTests.test_wall_sensor_geometry_not_reported_clearance) ... ok
+test_actor_history_and_ics_extract_same_delivered_ranges (tools.test_r6_range_delivery.DeliveryTests.test_actor_history_and_ics_extract_same_delivered_ranges) ... ok
+test_common_noise_survives_different_validity_masks (tools.test_r6_range_delivery.DeliveryTests.test_common_noise_survives_different_validity_masks) ... ok
+test_delay_and_drop_retain_acquisition_time (tools.test_r6_range_delivery.DeliveryTests.test_delay_and_drop_retain_acquisition_time) ... ok
+test_invalid_beams_not_noised_and_input_unmodified (tools.test_r6_range_delivery.DeliveryTests.test_invalid_beams_not_noised_and_input_unmodified) ... ok
+test_noise_is_bounded_reproducible_and_changes_by_seed (tools.test_r6_range_delivery.DeliveryTests.test_noise_is_bounded_reproducible_and_changes_by_seed) ... ok
+test_selected_reset_cannot_leak_previous_episode_frame (tools.test_r6_range_delivery.DeliveryTests.test_selected_reset_cannot_leak_previous_episode_frame) ... ok
+test_timestamp_regression_rejected (tools.test_r6_range_delivery.DeliveryTests.test_timestamp_regression_rejected) ... ok
+test_zero_noise_does_not_consume_random_stream (tools.test_r6_range_delivery.DeliveryTests.test_zero_noise_does_not_consume_random_stream) ... ok
+test_bit_exact_roundtrip_dedup_signed_zero_and_float64 (tools.test_r6_range_archive.ArchiveTests.test_bit_exact_roundtrip_dedup_signed_zero_and_float64) ... ok
+test_duplicate_open_cannot_overwrite_evidence (tools.test_r6_range_archive.ArchiveTests.test_duplicate_open_cannot_overwrite_evidence) ... ok
+test_extra_frame_and_wrong_identity_rejected (tools.test_r6_range_archive.ArchiveTests.test_extra_frame_and_wrong_identity_rejected) ... ok
+test_nonfinite_and_missing_fields_rejected (tools.test_r6_range_archive.ArchiveTests.test_nonfinite_and_missing_fields_rejected) ... ok
+test_quota_rejects_before_write_and_keeps_previous_frame (tools.test_r6_range_archive.ArchiveTests.test_quota_rejects_before_write_and_keeps_previous_frame) ... ok
+test_truncation_and_corruption_rejected (tools.test_r6_range_archive.ArchiveTests.test_truncation_and_corruption_rejected) ... ok
+test_actual_root_position_cannot_substitute_sensor_distance (tools.test_r6_scenarios.ScenarioTests.test_actual_root_position_cannot_substitute_sensor_distance) ... ok
+test_force_duration_and_impulse (tools.test_r6_scenarios.ScenarioTests.test_force_duration_and_impulse) ... ok
+test_lane_reordering_does_not_change_draws (tools.test_r6_scenarios.ScenarioTests.test_lane_reordering_does_not_change_draws) ... ok
+test_mount_rotation_and_both_wall_distances (tools.test_r6_scenarios.ScenarioTests.test_mount_rotation_and_both_wall_distances) ... ok
+test_real_seed_and_split_changes_not_labels_only (tools.test_r6_scenarios.ScenarioTests.test_real_seed_and_split_changes_not_labels_only) ... ok
+test_reset_velocity_and_attitude_mismatch_fail (tools.test_r6_scenarios.ScenarioTests.test_reset_velocity_and_attitude_mismatch_fail) ... ok
+test_cli_exit_with_child_holding_pipes_is_cleaned_on_timeout (tools.test_r6_model_worker.WorkerTests.test_cli_exit_with_child_holding_pipes_is_cleaned_on_timeout) ... ERROR
+test_cli_exit_with_detached_child_closed_pipes_is_cleaned (tools.test_r6_model_worker.WorkerTests.test_cli_exit_with_detached_child_closed_pipes_is_cleaned) ... ERROR
+test_cpu_job_completion_event_and_registered_next_step (tools.test_r6_model_worker.WorkerTests.test_cpu_job_completion_event_and_registered_next_step) ... ERROR
+test_final_message_and_usage_summary_stay_bounded (tools.test_r6_model_worker.WorkerTests.test_final_message_and_usage_summary_stay_bounded) ... ERROR
+test_invalid_schema_is_not_accepted_as_decision (tools.test_r6_model_worker.WorkerTests.test_invalid_schema_is_not_accepted_as_decision) ... ERROR
+test_many_usage_records_do_not_expand_receipt (tools.test_r6_model_worker.WorkerTests.test_many_usage_records_do_not_expand_receipt) ... ERROR
+test_schema_usage_receipt_and_recovery_consume_once (tools.test_r6_model_worker.WorkerTests.test_schema_usage_receipt_and_recovery_consume_once) ... ERROR
+test_stop_during_worker_no_retry_or_stop_removal (tools.test_r6_model_worker.WorkerTests.test_stop_during_worker_no_retry_or_stop_removal) ... FAIL
+test_timeout_cleans_child_and_keeps_session_charge (tools.test_r6_model_worker.WorkerTests.test_timeout_cleans_child_and_keeps_session_charge) ... ERROR
+test_worker_death_preserves_ambiguous_event_without_retry (tools.test_r6_model_worker.WorkerTests.test_worker_death_preserves_ambiguous_event_without_retry) ... FAIL
+
+======================================================================
+ERROR: test_cli_exit_with_child_holding_pipes_is_cleaned_on_timeout (tools.test_r6_model_worker.WorkerTests.test_cli_exit_with_child_holding_pipes_is_cleaned_on_timeout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 153, in test_cli_exit_with_child_holding_pipes_is_cleaned_on_timeout
+    self.launch('descendant',timeout=.3);r=self.result()
+                                           ^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 71, in result
+    return json.loads((self.call/'receipt.json').read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpg62c7glz/batch/calls/376e3c78b3cea67eb21cb3f6e8090f41bcc44d992050dd33502269c81029df71/receipt.json'
+
+======================================================================
+ERROR: test_cli_exit_with_detached_child_closed_pipes_is_cleaned (tools.test_r6_model_worker.WorkerTests.test_cli_exit_with_detached_child_closed_pipes_is_cleaned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 145, in test_cli_exit_with_detached_child_closed_pipes_is_cleaned
+    self.launch('descendant closed');r=self.result()
+                                       ^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 71, in result
+    return json.loads((self.call/'receipt.json').read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp0n2d4ya8/batch/calls/0b6142ff561c3e32a1b4bb2cc1ce902f6c2d8fc0e0e5b44c00b9daf8236e1ef2/receipt.json'
+
+======================================================================
+ERROR: test_cpu_job_completion_event_and_registered_next_step (tools.test_r6_model_worker.WorkerTests.test_cpu_job_completion_event_and_registered_next_step)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 132, in test_cpu_job_completion_event_and_registered_next_step
+    self.launch();r=self.result();self.assertTrue(r['schema_valid'])
+                    ^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 71, in result
+    return json.loads((self.call/'receipt.json').read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpzkrv61ux/batch/calls/867c7e41a6269ca14f6b5fcce11c4f95db5c68a5ba2541f7900ef1faa9aa50cf/receipt.json'
+
+======================================================================
+ERROR: test_final_message_and_usage_summary_stay_bounded (tools.test_r6_model_worker.WorkerTests.test_final_message_and_usage_summary_stay_bounded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 160, in test_final_message_and_usage_summary_stay_bounded
+    self.launch('oversize');r=self.result()
+                              ^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 71, in result
+    return json.loads((self.call/'receipt.json').read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp0kioe074/batch/calls/766bd9ba6e05b3fa8f0c728926589a3a0200afb3bdd62dc2cac0ea5a3ff07bd1/receipt.json'
+
+======================================================================
+ERROR: test_invalid_schema_is_not_accepted_as_decision (tools.test_r6_model_worker.WorkerTests.test_invalid_schema_is_not_accepted_as_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 87, in test_invalid_schema_is_not_accepted_as_decision
+    self.launch('malformed');r=self.result()
+                               ^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 71, in result
+    return json.loads((self.call/'receipt.json').read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp8yrp29j7/batch/calls/f1363a8bb5108780e066e799bd99c0ca9ee97daefc2a31e53110fcaa1c78622f/receipt.json'
+
+======================================================================
+ERROR: test_many_usage_records_do_not_expand_receipt (tools.test_r6_model_worker.WorkerTests.test_many_usage_records_do_not_expand_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 166, in test_many_usage_records_do_not_expand_receipt
+    self.launch('manyusage');r=self.result()
+                               ^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 71, in result
+    return json.loads((self.call/'receipt.json').read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpyo1a9yn1/batch/calls/9eeca3bdf21e298a32c752de75f380bc816c1dd4ac8e908b2c613480d756be8b/receipt.json'
+
+======================================================================
+ERROR: test_schema_usage_receipt_and_recovery_consume_once (tools.test_r6_model_worker.WorkerTests.test_schema_usage_receipt_and_recovery_consume_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 74, in test_schema_usage_receipt_and_recovery_consume_once
+    self.launch();r=self.result()
+                    ^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 71, in result
+    return json.loads((self.call/'receipt.json').read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp2f4ov4yj/batch/calls/62f90893fa4df606dff89edb69e4f6b9d368e5dadc086a8b22122bc333a3fb73/receipt.json'
+
+======================================================================
+ERROR: test_timeout_cleans_child_and_keeps_session_charge (tools.test_r6_model_worker.WorkerTests.test_timeout_cleans_child_and_keeps_session_charge)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 93, in test_timeout_cleans_child_and_keeps_session_charge
+    self.launch('wait',timeout=.3);r=self.result()
+                                     ^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 71, in result
+    return json.loads((self.call/'receipt.json').read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpl51r3idp/batch/calls/235a6d7199490317b668fb103469431b5b2f801a3fccaba75dab2b7368d682ab/receipt.json'
+
+======================================================================
+FAIL: test_stop_during_worker_no_retry_or_stop_removal (tools.test_r6_model_worker.WorkerTests.test_stop_during_worker_no_retry_or_stop_removal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 103, in test_stop_during_worker_no_retry_or_stop_removal
+    self.assertTrue((self.call/'child.json').exists())
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_worker_death_preserves_ambiguous_event_without_retry (tools.test_r6_model_worker.WorkerTests.test_worker_death_preserves_ambiguous_event_without_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_model_worker.py", line 113, in test_worker_death_preserves_ambiguous_event_without_retry
+    self.assertTrue((self.call/'child.json').exists())
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 66 tests in 20.909s
+
+FAILED (failures=2, errors=8)

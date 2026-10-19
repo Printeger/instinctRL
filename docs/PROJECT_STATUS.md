@@ -1,16 +1,22 @@
-# 当前 Goal：R6 鲁棒性与课程学习闭环（CPU 准备）
+# 当前 Goal：R6 鲁棒性与课程学习闭环（CPU 修复待复审）
 
-2026-10-19 用户已提交 R6 启动委托；完整目标仍未完成。已核验本地/远端 main、
-R5 controller COMPLETE、Store 无未终结作业/暂停/STOP，以及 u640 实际 SHA256
-`aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429`。
-新委托与预算位于 `docs/experiments/r6-robustness-auto/`。已完成准确基线 config/源码/method/runtime 可执行文件/地面及 UAV 资产的 CPU 哈希审计，
-预算、恢复日志、运动评分、测量送达、无损归档与 reset/force 计划共 54 项 CPU 测试通过；均未接入 live。新测试草案含 12 个目标块及 4 个压力块，
-最终三模型加基线共 774400 非训练 transitions；草案尚未独审冻结。新增全测量归档的
-无损编码已有完整32-lane合成帧 CPU 测量，四模型新评价归档估计54.5GiB（非最坏界）。
-未发车的内部最终保护调整为80GiB/24000秒，总caps不变；精确容量仍待独审。完整容量通过、
-控制器端到端恢复验收、真实非交互审核和 exact Store 许可均尚未完成。没有 R6 controller/job/自动模型调用，不是后台运行中。
-聊天 Goal 自动续推理与零模型等待的交接限制已提出，尚未变更聊天状态。
-历史 R5 结论与原件保持，下方旧状态不覆盖本轮真实进度。
+2026-10-20：完整目标未完成，R6 controller 尚未部署，没有 R6 live 作业。
+冻结 u640 SHA256 为 `aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429`；
+基线 config/源码/method/runtime 可执行文件及地面/UAV 资产已完成 CPU 哈希审计。
+主委托、预算和证据位于 `docs/experiments/r6-robustness-auto/`。
+
+已使用两次自动审核会话，剩余30次。首次验证CLI认证/schema，但read-only沙箱无法执行核查；
+第二次实际独审提出5项MUST_FIX，原始receipt和输出保留。已局部修复会话预留、
+worker后代清理、所有输出写入限额、配对测量噪声流及可变账本测试依赖，尚未独立复审通过。
+新CPU验证：现有编排Python的31项控制/worker测试、现有张量Python的36项测量/评分/归档测试全部通过。
+此前误用仿真Python执行worker测试导致缺少jsonschema，66项合并测试失败的记录原样保留；未安装依赖。
+见 `CPU_REVIEW_FIX_TESTS.json` 的准确输入、命令和结果，旧测试通过记录仅代表各自历史输入。
+
+新测试仍为草案：12个目标块及4个压力块，最终三模型加基线共774400非训练transitions。
+四模型归档的合成CPU估计54.5GiB不是最坏界；内部最终保护80GiB/24000秒仍待完整容量审核。
+协议冻结、live接入、完整控制器恢复验收、exact Store许可和科学验证均未完成。
+聊天Goal自动续推理与零模型等待的交接限制尚未解决；不能称后台运行或科学完成。
+下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）
 

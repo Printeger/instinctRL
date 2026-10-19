@@ -1,7 +1,7 @@
 {
   "status": "INTERIM_CPU_ONLY",
   "automatic_sessions_reserved": 2,
-  "automatic_sessions_completed": 1,
+  "automatic_sessions_completed": 2,
   "remaining_unreserved": 30,
   "initial_user_session_usage": "UNKNOWN",
   "calls": [
@@ -23,6 +23,28 @@
             "input_tokens": 81205,
             "output_tokens": 472,
             "reasoning_output_tokens": 39
+          }
+        ]
+      }
+    },
+    {
+      "event_key": "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/receipt.json",
+        "sha256": "60104087056120fbfc6f049d54fd508cb87859b7b2744f3dfe5ed99da22a0f0c"
+      },
+      "purpose": "Substantive CPU review after sandbox repair",
+      "result": "MUST_FIX_FIVE_FINDINGS",
+      "usage": {
+        "availability": "REPORTED",
+        "malformed_event_lines": 0,
+        "reported_turns": [
+          {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 370432,
+            "input_tokens": 444538,
+            "output_tokens": 3975,
+            "reasoning_output_tokens": 843
           }
         ]
       }

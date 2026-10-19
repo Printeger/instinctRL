@@ -18,7 +18,7 @@ class RecoveryTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.directory = Path(self.tmp.name)
         self.j = Journal(self.directory)
-        budget = json.loads((ROOT/'docs/experiments/r6-robustness-auto/goal_budget.json').read_text())
+        budget = json.loads((ROOT/'tools/fixtures/r6_budget.json').read_text())
         self.request = {'prompt': 'cpu fixture', 'schema': 'fixture', 'argv': ['CPU_ONLY']}
         self.event = dict(goal_id=budget['goal_id'], event_id='decision-01', job_id='CPU-01',
                           input_sha256=sha(self.request), role='review')

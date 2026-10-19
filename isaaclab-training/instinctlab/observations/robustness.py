@@ -73,10 +73,11 @@ class RangeDelivery:
         if self.sigma:
             for lane,generator in enumerate(self.generators):
                 mask=validity[lane]
-                count=int(mask.sum().item())
-                if count:
-                    noise=torch.randn((count,),device=self.device,dtype=self.dtype,generator=generator)
-                    noisy[lane,mask]=(noisy[lane,mask]+noise.clamp(-3.,3.)*self.sigma).clamp(.1,40.)
+                # Draw by acquisition/lane/beam, never by a policy-dependent
+                # validity mask. Paired policies therefore receive the same
+                # noise on shared beams and keep identical subsequent streams.
+                noise=torch.randn((self.rays,),device=self.device,dtype=self.dtype,generator=generator)
+                noisy[lane,mask]=(noisy[lane,mask]+noise[mask].clamp(-3.,3.)*self.sigma).clamp(.1,40.)
         acquired=dict(ranges=noisy,valid=validity.clone(),time=acquisition_time_s.clone(),
                       available=torch.ones((self.lanes,1),device=self.device,dtype=torch.bool))
         candidate=acquired if self.delay==0 else self.pending

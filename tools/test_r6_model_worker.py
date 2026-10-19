@@ -14,13 +14,20 @@ from tools.r6_recovery import Journal,file_pin
 
 ROOT=Path(__file__).resolve().parents[1]
 FAKE='''#!{python}
-import json,sys,time
+import json,sys,time,subprocess
 from pathlib import Path
 prompt=sys.stdin.read()
-p=Path(sys.argv[sys.argv.index('--output-last-message')+1])
+if 'descendant' in prompt:
+ from rlflow.jobs import identity
+ child=subprocess.Popen([sys.executable,'-c','import time;time.sleep(10)'],start_new_session=True,
+     stdout=subprocess.DEVNULL if 'closed' in prompt else None,stderr=subprocess.DEVNULL)
+ Path(sys.argv[0]).with_suffix('.child').write_text(json.dumps(identity(child.pid)))
 if 'wait' in prompt:time.sleep(10)
-if 'malformed' in prompt:p.write_text('{{}}')
-else:p.write_text(json.dumps({{'decision':'CPU_FIXTURE_ONLY'}}))
+text='{{}}' if 'malformed' in prompt else json.dumps({{'decision':'CPU_FIXTURE_ONLY'}})
+if 'oversize' in prompt:text='x'*300000
+print(json.dumps({{'type':'item.completed','item':{{'type':'agent_message','text':text}}}}))
+if 'manyusage' in prompt:
+ for i in range(1000):print(json.dumps({{'type':'turn.completed','usage':{{'input_tokens':7,'output_tokens':3,'cached_input_tokens':0}}}}))
 print(json.dumps({{'type':'turn.completed','usage':{{'input_tokens':7,'output_tokens':3,'cached_input_tokens':0}}}}))
 '''
 
@@ -34,7 +41,7 @@ class WorkerTests(unittest.TestCase):
         self.request=dict(prompt=file_pin(prompt),schema=file_pin(schema),executable=file_pin(exe),cwd=str(ROOT),
                           sandbox='read-only',timeout_seconds=5,output_cap_bytes=1024**2,stop_paths=[])
         self.j=Journal(self.base/'batch')
-        budget=json.loads((ROOT/'docs/experiments/r6-robustness-auto/goal_budget.json').read_text())
+        budget=json.loads((ROOT/'tools/fixtures/r6_budget.json').read_text())
         with self.j.writer():self.j.initialize(budget)
         self.proc=None
 
@@ -61,12 +68,14 @@ class WorkerTests(unittest.TestCase):
 
     def result(self):
         self.proc.wait(timeout=20)
+        self.assertTrue((self.call/'receipt.json').exists(),
+                        f'Worker exited {self.proc.returncode} without receipt; run with the existing orchestrator Python (jsonschema required).')
         return json.loads((self.call/'receipt.json').read_text())
 
     def test_schema_usage_receipt_and_recovery_consume_once(self):
         self.launch();r=self.result()
         self.assertTrue(r['schema_valid']);self.assertIsNone(r['error']);self.assertEqual(r['exit_code'],0)
-        self.assertEqual(r['usage']['reported_turns'][0]['input_tokens'],7)
+        self.assertEqual(r['usage']['totals']['input_tokens'],7)
         recovered=Journal(self.j.directory)
         with recovered.writer():
             self.assertTrue(recovered.consume(self.key,self.call/'receipt.json'))
@@ -133,6 +142,40 @@ class WorkerTests(unittest.TestCase):
         self.assertEqual(jobs.status(root,'CPU-REGISTERED-NEXT')['start_attempts'],1)
         for proc in jobs._CHILDREN:
             proc.wait(timeout=5)
+
+    def test_cli_exit_with_detached_child_closed_pipes_is_cleaned(self):
+        self.launch('descendant closed');r=self.result()
+        from rlflow.jobs import owns
+        child=json.loads((self.base/'fake-codex.child').read_text())
+        self.assertFalse(owns(child))
+        self.assertEqual(r['cleanup']['status'],'VERIFIED_NO_OWNED_DESCENDANTS')
+        self.assertGreaterEqual(r['cleanup']['signalled_process_count'],1)
+
+    def test_cli_exit_with_child_holding_pipes_is_cleaned_on_timeout(self):
+        self.launch('descendant',timeout=.3);r=self.result()
+        from rlflow.jobs import owns
+        child=json.loads((self.base/'fake-codex.child').read_text())
+        self.assertFalse(owns(child));self.assertIn('MODEL_TIMEOUT',r['error'])
+        self.assertEqual(r['exit_code'],0)
+
+    def test_final_message_and_usage_summary_stay_bounded(self):
+        self.launch('oversize');r=self.result()
+        self.assertIn('FINAL_MESSAGE_CAP',r['error'])
+        self.assertIsNone(r['last_message'])
+        self.assertLess(sum(p.stat().st_size for p in self.call.iterdir()),self.request['output_cap_bytes'])
+
+    def test_many_usage_records_do_not_expand_receipt(self):
+        self.launch('manyusage');r=self.result()
+        self.assertEqual(r['usage']['reported_turn_count'],1001)
+        self.assertEqual(r['usage']['totals']['input_tokens'],7007)
+        self.assertLess((self.call/'receipt.json').stat().st_size,4096)
+
+    def test_minimum_cap_rejects_stream_before_overflow(self):
+        self.request['output_cap_bytes']=65536
+        self.launch('manyusage');r=self.result()
+        self.assertIn('MODEL_LOG_CAP_BEFORE_WRITE',r['error'])
+        self.assertLessEqual(sum(p.stat().st_size for p in self.call.iterdir()),65536)
+        self.assertFalse(r['schema_valid'])
 
 
 if __name__=='__main__':unittest.main()

@@ -9,7 +9,7 @@ from tools.r6_budget import BudgetError, reserve, totals
 class BudgetTests(unittest.TestCase):
     def setUp(self):
         self.ledger = json.loads((Path(__file__).resolve().parents[1] /
-            'docs/experiments/r6-robustness-auto/goal_budget.json').read_text())
+            'tools/fixtures/r6_budget.json').read_text())
         self.ledger['used'] = dict.fromkeys(self.ledger['caps'], 0)
         self.ledger['reservations'] = []
         self.key = dict(goal_id=self.ledger['goal_id'], event_id='review-01',
@@ -48,6 +48,12 @@ class BudgetTests(unittest.TestCase):
     def test_repairs_cannot_consume_final_review_slots(self):
         with self.assertRaises(BudgetError):
             self.reserve({'automatic_model_sessions': 29}, purpose='repair')
+
+    def test_unclassified_used_sessions_preserve_combined_reserve(self):
+        self.ledger['used']['automatic_model_sessions']=10
+        self.ledger=json.loads(json.dumps(self.ledger))
+        with self.assertRaises(BudgetError):
+            self.reserve({'automatic_model_sessions':15},purpose='confirmation_delivery')
 
     def test_disk_floor_includes_reservations(self):
         with self.assertRaises(BudgetError):
