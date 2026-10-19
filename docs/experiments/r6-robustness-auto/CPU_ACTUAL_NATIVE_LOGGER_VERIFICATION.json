@@ -1,0 +1,71 @@
+{
+  "schema_version": "r6-native-logger-cpu-verification/1",
+  "status": "ACTUAL_FROZEN_STANDARD_LOGGER_PIPE_PASS_NOT_KIT_STARTUP",
+  "source_commit": "1650fae",
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/fixtures/r6_native_logger_cpu.cpp",
+    "sha256": "6f57e16911d0af639c1136e3e901dd5a797a0a92ae891f9f709c73f4aeefd7b9"
+  },
+  "harness": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/check_r6_native_logger.py",
+    "sha256": "c1cbdc1e96d9b353125e8312e380234d376dda5034060a7ce7486d8f5eaddf4a"
+  },
+  "compiled_adapter": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/native-logger-cpu-build-02/logger.so",
+    "sha256": "29607a1385eb78367e36f2cf8c948d1b6d9b454fbbfdd775f61390be40f89276"
+  },
+  "compiler_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/native-logger-cpu-build-02/inputs.json",
+    "sha256": "f505eb69c1068a0af9ce83c5bebec2e8be78f350c21ef0b8a90cacf647c0b429"
+  },
+  "dependency_pins": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/native-logger-cpu-build-02/dependency-pins.json",
+    "sha256": "883de835ccaa5295c3b752b279f668c4b07cb67103815b516bf2c246d214ac62"
+  },
+  "normal_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/native-logger-cpu-04/native-output.json",
+    "sha256": "4b6774ca5baa6cfec3bc4705e27d78bb9186b514b88b3f83e436b9ae9f158dba"
+  },
+  "normal_output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/native-logger-cpu-04/native-output.log",
+    "sha256": "126ae4d3b8d36c75d5ff34a0947877bd23214676064b2bd7fa5981c8ac304314"
+  },
+  "flood_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/native-logger-cpu-05/native-output.json",
+    "sha256": "12697507e31df22c5415e4866e24acf8dd8665ad11a441f75c31eed74308bab0"
+  },
+  "flood_output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/native-logger-cpu-05/native-output.log",
+    "sha256": "a4007dd2886538bdacbbbfb66d24ee17e3fc8417a635b7cbcbad551e29717588"
+  },
+  "file_path_readback": "/proc/self/fd/1",
+  "marker_occurrences": 1,
+  "standard_stream_logger_disabled_for_test": true,
+  "actual_test_cap_bytes": 262144,
+  "production_cap_bytes_unchanged": 268435456,
+  "loaded_plugins": [
+    "carb.error.plugin",
+    "carb.python-threading.plugin",
+    "carb.logging-framework.plugin",
+    "carb.filesystem-framework.plugin",
+    "carb.assert-framework.plugin",
+    "carb.threadutil-framework.plugin"
+  ],
+  "loaded_gpu_physx_libraries": [],
+  "runtime_inputs_rechecked_unchanged": true,
+  "prior_failures_preserved": [
+    "native-logger-cpu-01: libpython lookup before Carb import",
+    "native-logger-cpu-02: wrong PluginDesc inspection property after import",
+    "native-logger-cpu-build-01: missing SDK log-level header"
+  ],
+  "limitations": [
+    "Tests invoke frozen StandardLogger directly after standalone Carb import; full Kit/AppLauncher startup, setting precedence and shutdown are not exercised",
+    "Native flood is an expected bounded failure and retains its native exit and exact log prefix",
+    "Other cache/crash/native filesystem output totals remain unresolved; this does not establish aggregate native allowance"
+  ],
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "model_calls": 0,
+  "capacity_pass": false,
+  "operating_budget_modified": false
+}
