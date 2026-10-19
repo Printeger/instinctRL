@@ -1,0 +1,93 @@
+{
+  "status": "CPU_DECISION_INPUT_AND_PROPOSAL_HANDOFF_PASS_PENDING_REVIEW",
+  "capacity_pass": false,
+  "tests": [
+    {
+      "command": "python -B -m unittest tools.test_r6_decision.DecisionTests tools.test_r6_batch -v",
+      "passed": 22,
+      "seconds": 4.368,
+      "log": "CPU_DECISION_PACKET_TESTS_V3.txt"
+    },
+    {
+      "command": "python -B -m unittest tools.test_r6_decision.DecisionTests -v",
+      "passed": 15,
+      "seconds": 2.58,
+      "log": "CPU_DECISION_PACKET_TESTS_V4.txt"
+    }
+  ],
+  "distinct_tests": 23,
+  "python": "/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "retained_failure": {
+    "log": "CPU_DECISION_PACKET_TESTS_INITIAL.txt",
+    "errors": 10,
+    "reason": "Synthetic legacy job fixture omitted identity.role; completed fixture identity, without relaxing production validation. V2/V3/V4 passed."
+  },
+  "checks": [
+    "Exact closed-job analysis revalidated before immutable decision input",
+    "Prompt plus summary <=64KiB, with raw index, native status, issues, budget caps/charged/remaining/protection",
+    "Packet reservation persists full reconstruction input before writing artifacts; crash recovery reuses it",
+    "One decision model event per job; exact prompt/schema/CLI pins and model/output reservations",
+    "Budget drift prevents first model launch; protected capacity checks remain active",
+    "Model response requires packet/report evidence, correct budget snapshot and zero changed_files",
+    "Evidence gaps only route to repair; model proposal never authorizes dispatch or scientific acceptance",
+    "Actual local substitute CPU worker -> substitute model worker -> durable next-step proposal replay runs each once",
+    "Crash after proposal file before state update recovers without another model call"
+  ],
+  "next_step_routes": [
+    "REPAIR_AND_REVIEW",
+    "REGISTER_CANDIDATE_AND_REVIEW",
+    "FREEZE_RECIPE_AND_REVIEW",
+    "REGISTER_DISTINCT_STREAM_VALIDATION",
+    "FINAL_REQUIREMENTS_AUDIT"
+  ],
+  "limitations": [
+    "Routes are durable proposals, not implemented job/repair dispatch or acceptance",
+    "Full resource/submit/stage/controller integration and independent review remain pending",
+    "Substitute CLI only; no paid model call, GPU query, live job, training or simulator invocation",
+    "Operational budget/state and capacity_pass remain unchanged",
+    "Current integration coverage begins from synthetic closed-job/inventory/postrun evidence; not a real R6 run"
+  ],
+  "pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py",
+      "sha256": "2d47f5e1ae593dbcc14886f7757483f62d8326970084aba3fd07bea6e1c1621e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py",
+      "sha256": "5e4a00dccdb3e0da7ba66731fd9c2631896c24f759445e6fca4fa0f9cf1d283e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py",
+      "sha256": "5f1dbe6adfe7652441bc886459281db42f03bf19a61193d934a08e3f86b65f04"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "363543dfd22b5553b91174bbee97b0b18e385745cceaf714931afdabb7f0c1bb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/post-analysis-decision.schema.json",
+      "sha256": "8f5401936edd8503ff7cd09cdd69ac9de95b53bd6ffba171190578b50499f073"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DECISION_PACKET_TESTS_INITIAL.txt",
+      "sha256": "f29f49e24f1502acb8e0bb32685e606c6c787f9b4c943e0d73cda03d9828a899"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DECISION_PACKET_TESTS_V2.txt",
+      "sha256": "bd64387487cd90e3a3e09f406fffafe04167867056367fdc4b58188c166551b0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DECISION_PACKET_TESTS_V3.txt",
+      "sha256": "b33f0154c0fa357216731225488ccfb35d09b864fa93a7cabc96f2c7c67a7505"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DECISION_PACKET_TESTS_V4.txt",
+      "sha256": "14e61168a1c31e52eb508660d7c2868bca1bfa979ca2d0c8dd3aa486d748e9a8"
+    }
+  ]
+}

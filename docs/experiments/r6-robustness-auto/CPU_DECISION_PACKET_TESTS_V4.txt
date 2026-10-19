@@ -1,0 +1,20 @@
+test_changed_budget_blocks_first_dispatch (tools.test_r6_decision.DecisionTests.test_changed_budget_blocks_first_dispatch) ... ok
+test_cpu_analysis_to_decision_to_next_step_survives_replay (tools.test_r6_decision.DecisionTests.test_cpu_analysis_to_decision_to_next_step_survives_replay) ... ok
+test_crash_after_decision_artifact_recovers_without_model_call (tools.test_r6_decision.DecisionTests.test_crash_after_decision_artifact_recovers_without_model_call) ... ok
+test_crash_before_artifacts_reconstructs_reserved_original_packet (tools.test_r6_decision.DecisionTests.test_crash_before_artifacts_reconstructs_reserved_original_packet) ... ok
+test_evidence_gaps_cannot_become_candidate_proposal (tools.test_r6_decision.DecisionTests.test_evidence_gaps_cannot_become_candidate_proposal) ... ok
+test_fake_model_event_records_proposal_once_without_dispatch (tools.test_r6_decision.DecisionTests.test_fake_model_event_records_proposal_once_without_dispatch) ... ok
+test_model_cannot_invent_budget (tools.test_r6_decision.DecisionTests.test_model_cannot_invent_budget) ... ok
+test_new_model_request_cannot_alias_same_decision (tools.test_r6_decision.DecisionTests.test_new_model_request_cannot_alias_same_decision) ... ok
+test_oversized_summary_is_refused_before_reservation (tools.test_r6_decision.DecisionTests.test_oversized_summary_is_refused_before_reservation) ... ok
+test_packet_and_prompt_are_bounded_and_include_failure_budget (tools.test_r6_decision.DecisionTests.test_packet_and_prompt_are_bounded_and_include_failure_budget) ... ok
+test_packet_restart_has_identical_bytes_and_single_reservation (tools.test_r6_decision.DecisionTests.test_packet_restart_has_identical_bytes_and_single_reservation) ... ok
+test_raw_change_refuses_packet (tools.test_r6_decision.DecisionTests.test_raw_change_refuses_packet) ... ok
+test_report_citation_required (tools.test_r6_decision.DecisionTests.test_report_citation_required) ... ok
+test_stop_does_not_create_packet (tools.test_r6_decision.DecisionTests.test_stop_does_not_create_packet) ... ok
+test_wrong_packet_hash_rejected (tools.test_r6_decision.DecisionTests.test_wrong_packet_hash_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 2.580s
+
+OK

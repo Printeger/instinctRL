@@ -1,0 +1,27 @@
+test_changed_budget_blocks_first_dispatch (tools.test_r6_decision.DecisionTests.test_changed_budget_blocks_first_dispatch) ... ok
+test_crash_after_decision_artifact_recovers_without_model_call (tools.test_r6_decision.DecisionTests.test_crash_after_decision_artifact_recovers_without_model_call) ... ok
+test_crash_before_artifacts_reconstructs_reserved_original_packet (tools.test_r6_decision.DecisionTests.test_crash_before_artifacts_reconstructs_reserved_original_packet) ... ok
+test_evidence_gaps_cannot_become_candidate_proposal (tools.test_r6_decision.DecisionTests.test_evidence_gaps_cannot_become_candidate_proposal) ... ok
+test_fake_model_event_records_proposal_once_without_dispatch (tools.test_r6_decision.DecisionTests.test_fake_model_event_records_proposal_once_without_dispatch) ... ok
+test_model_cannot_invent_budget (tools.test_r6_decision.DecisionTests.test_model_cannot_invent_budget) ... ok
+test_new_model_request_cannot_alias_same_decision (tools.test_r6_decision.DecisionTests.test_new_model_request_cannot_alias_same_decision) ... ok
+test_oversized_summary_is_refused_before_reservation (tools.test_r6_decision.DecisionTests.test_oversized_summary_is_refused_before_reservation) ... ok
+test_packet_and_prompt_are_bounded_and_include_failure_budget (tools.test_r6_decision.DecisionTests.test_packet_and_prompt_are_bounded_and_include_failure_budget) ... ok
+test_packet_restart_has_identical_bytes_and_single_reservation (tools.test_r6_decision.DecisionTests.test_packet_restart_has_identical_bytes_and_single_reservation) ... ok
+test_raw_change_refuses_packet (tools.test_r6_decision.DecisionTests.test_raw_change_refuses_packet) ... ok
+test_report_citation_required (tools.test_r6_decision.DecisionTests.test_report_citation_required) ... ok
+test_stop_does_not_create_packet (tools.test_r6_decision.DecisionTests.test_stop_does_not_create_packet) ... ok
+test_wrong_packet_hash_rejected (tools.test_r6_decision.DecisionTests.test_wrong_packet_hash_rejected) ... ok
+test_budget_excess_after_intent_blocks_first_model_dispatch (tools.test_r6_batch.BatchTests.test_budget_excess_after_intent_blocks_first_model_dispatch) ... ok
+test_completed_artifact_drift_refuses_replay (tools.test_r6_batch.BatchTests.test_completed_artifact_drift_refuses_replay) ... ok
+test_consumed_review_is_not_relaunched (tools.test_r6_batch.BatchTests.test_consumed_review_is_not_relaunched) ... ok
+test_controller_restart_reattaches_exact_live_worker (tools.test_r6_batch.BatchTests.test_controller_restart_reattaches_exact_live_worker) ... ok
+test_dispatch_claim_without_handle_never_launches (tools.test_r6_batch.BatchTests.test_dispatch_claim_without_handle_never_launches) ... ok
+test_failed_schema_recorded_but_not_accepted (tools.test_r6_batch.BatchTests.test_failed_schema_recorded_but_not_accepted) ... ok
+test_restart_after_popen_before_binding_recovers_worker_identity (tools.test_r6_batch.BatchTests.test_restart_after_popen_before_binding_recovers_worker_identity) ... ok
+test_stop_before_dispatch_preserves_unstarted_event (tools.test_r6_batch.BatchTests.test_stop_before_dispatch_preserves_unstarted_event) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 4.368s
+
+OK

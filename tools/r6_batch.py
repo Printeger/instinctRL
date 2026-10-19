@@ -111,14 +111,19 @@ def main():
     action.add_argument('--job-store',type=Path,help='Close an existing exact job in this rlflow Store; never submit')
     action.add_argument('--inventory-store',type=Path,help='Inventory exact closed-job originals; no GPU queries')
     action.add_argument('--postrun-keys',nargs=2,metavar=('GPU_EVENT','PROCESS_EVENT'),help='Complete two registered postrun queries for event_key job')
+    action.add_argument('--decision',action='store_true',help='Recover a registered post-analysis decision and validate its proposal')
     action.add_argument('--cpu-analysis',action='store_true',help='Execute/recover a registered CPU analysis event; never call a model')
     action.add_argument('--analysis-report',type=Path,help='Bind an existing CPU motion replay report; no scientific acceptance')
     ap.add_argument('--analysis-store',type=Path,help='Exact Store for --analysis-report')
     a=ap.parse_args();journal=Journal(a.directory.resolve())
-    if bool(a.analysis_report is not None or a.cpu_analysis) != (a.analysis_store is not None):
-        ap.error('--analysis-report or --cpu-analysis requires --analysis-store')
+    if bool(a.analysis_report is not None or a.cpu_analysis or a.decision) != (a.analysis_store is not None):
+        ap.error('--analysis-report, --cpu-analysis or --decision requires --analysis-store')
     with journal.writer():
-        if a.cpu_analysis:
+        if a.decision:
+            from rlflow.store import Store
+            from tools.r6_decision import handoff
+            result=handoff(journal,a.event_key,Store(a.analysis_store.resolve()))
+        elif a.cpu_analysis:
             from rlflow.store import Store
             from tools.r6_cpu_analysis import handoff
             result=handoff(journal,a.event_key,Store(a.analysis_store.resolve()))

@@ -1,0 +1,182 @@
+test_crash_before_artifacts_reconstructs_reserved_original_packet (tools.test_r6_decision.DecisionTests.test_crash_before_artifacts_reconstructs_reserved_original_packet) ... ERROR
+test_evidence_gaps_cannot_become_candidate_proposal (tools.test_r6_decision.DecisionTests.test_evidence_gaps_cannot_become_candidate_proposal) ... ERROR
+test_fake_model_event_records_proposal_once_without_dispatch (tools.test_r6_decision.DecisionTests.test_fake_model_event_records_proposal_once_without_dispatch) ... ERROR
+test_model_cannot_invent_budget (tools.test_r6_decision.DecisionTests.test_model_cannot_invent_budget) ... ERROR
+test_new_model_request_cannot_alias_same_decision (tools.test_r6_decision.DecisionTests.test_new_model_request_cannot_alias_same_decision) ... ERROR
+test_oversized_summary_is_refused_before_reservation (tools.test_r6_decision.DecisionTests.test_oversized_summary_is_refused_before_reservation) ... ERROR
+test_packet_and_prompt_are_bounded_and_include_failure_budget (tools.test_r6_decision.DecisionTests.test_packet_and_prompt_are_bounded_and_include_failure_budget) ... ERROR
+test_packet_restart_has_identical_bytes_and_single_reservation (tools.test_r6_decision.DecisionTests.test_packet_restart_has_identical_bytes_and_single_reservation) ... ERROR
+test_raw_change_refuses_packet (tools.test_r6_decision.DecisionTests.test_raw_change_refuses_packet) ... ok
+test_report_citation_required (tools.test_r6_decision.DecisionTests.test_report_citation_required) ... ERROR
+test_stop_does_not_create_packet (tools.test_r6_decision.DecisionTests.test_stop_does_not_create_packet) ... ok
+test_wrong_packet_hash_rejected (tools.test_r6_decision.DecisionTests.test_wrong_packet_hash_rejected) ... ERROR
+
+======================================================================
+ERROR: test_crash_before_artifacts_reconstructs_reserved_original_packet (tools.test_r6_decision.DecisionTests.test_crash_before_artifacts_reconstructs_reserved_original_packet)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 67, in test_crash_before_artifacts_reconstructs_reserved_original_packet
+    with self.assertRaisesRegex(RuntimeError,'crash'):prepare(self.j,self.key,self.store,free_disk_bytes=500*1024**3)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py", line 47, in prepare
+    and e['identity']['role']=='decision-packet']
+        ~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'role'
+
+======================================================================
+ERROR: test_evidence_gaps_cannot_become_candidate_proposal (tools.test_r6_decision.DecisionTests.test_evidence_gaps_cannot_become_candidate_proposal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 88, in test_evidence_gaps_cannot_become_candidate_proposal
+    key=self.register();self.complete(key)
+        ^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 48, in register
+    with self.j.writer():return register(self.j,self.key,self.store,executable=file_pin(self.exe),free_disk_bytes=500*1024**3)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py", line 25, in register
+    packet=prepare(journal,job_key,store,free_disk_bytes=free_disk_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py", line 47, in prepare
+    and e['identity']['role']=='decision-packet']
+        ~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'role'
+
+======================================================================
+ERROR: test_fake_model_event_records_proposal_once_without_dispatch (tools.test_r6_decision.DecisionTests.test_fake_model_event_records_proposal_once_without_dispatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 73, in test_fake_model_event_records_proposal_once_without_dispatch
+    key=self.register();result=self.complete(key)
+        ^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 48, in register
+    with self.j.writer():return register(self.j,self.key,self.store,executable=file_pin(self.exe),free_disk_bytes=500*1024**3)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py", line 25, in register
+    packet=prepare(journal,job_key,store,free_disk_bytes=free_disk_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py", line 47, in prepare
+    and e['identity']['role']=='decision-packet']
+        ~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'role'
+
+======================================================================
+ERROR: test_model_cannot_invent_budget (tools.test_r6_decision.DecisionTests.test_model_cannot_invent_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 93, in test_model_cannot_invent_budget
+    key=self.register();self.complete(key)
+        ^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 48, in register
+    with self.j.writer():return register(self.j,self.key,self.store,executable=file_pin(self.exe),free_disk_bytes=500*1024**3)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py", line 25, in register
+    packet=prepare(journal,job_key,store,free_disk_bytes=free_disk_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py", line 47, in prepare
+    and e['identity']['role']=='decision-packet']
+        ~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'role'
+
+======================================================================
+ERROR: test_new_model_request_cannot_alias_same_decision (tools.test_r6_decision.DecisionTests.test_new_model_request_cannot_alias_same_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 113, in test_new_model_request_cannot_alias_same_decision
+    self.register();self.exe.write_text(self.exe.read_text()+'\n# different identity\n')
+    ^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 48, in register
+    with self.j.writer():return register(self.j,self.key,self.store,executable=file_pin(self.exe),free_disk_bytes=500*1024**3)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py", line 25, in register
+    packet=prepare(journal,job_key,store,free_disk_bytes=free_disk_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py", line 47, in prepare
+    and e['identity']['role']=='decision-packet']
+        ~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'role'
+
+======================================================================
+ERROR: test_oversized_summary_is_refused_before_reservation (tools.test_r6_decision.DecisionTests.test_oversized_summary_is_refused_before_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 130, in test_oversized_summary_is_refused_before_reservation
+    with self.assertRaisesRegex(RecoveryError,'SUMMARY_BOUND'):self.prepare()
+                                                               ^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 45, in prepare
+    with self.j.writer():return prepare(self.j,self.key,self.store,free_disk_bytes=500*1024**3)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py", line 47, in prepare
+    and e['identity']['role']=='decision-packet']
+        ~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'role'
+
+======================================================================
+ERROR: test_packet_and_prompt_are_bounded_and_include_failure_budget (tools.test_r6_decision.DecisionTests.test_packet_and_prompt_are_bounded_and_include_failure_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 54, in test_packet_and_prompt_are_bounded_and_include_failure_budget
+    p=self.prepare();packet=json.loads(Path(p['packet']['path']).read_text())
+      ^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 45, in prepare
+    with self.j.writer():return prepare(self.j,self.key,self.store,free_disk_bytes=500*1024**3)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py", line 47, in prepare
+    and e['identity']['role']=='decision-packet']
+        ~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'role'
+
+======================================================================
+ERROR: test_packet_restart_has_identical_bytes_and_single_reservation (tools.test_r6_decision.DecisionTests.test_packet_restart_has_identical_bytes_and_single_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 61, in test_packet_restart_has_identical_bytes_and_single_reservation
+    first=self.prepare();self.j=Journal(self.j.directory);second=self.prepare()
+          ^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 45, in prepare
+    with self.j.writer():return prepare(self.j,self.key,self.store,free_disk_bytes=500*1024**3)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py", line 47, in prepare
+    and e['identity']['role']=='decision-packet']
+        ~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'role'
+
+======================================================================
+ERROR: test_report_citation_required (tools.test_r6_decision.DecisionTests.test_report_citation_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 103, in test_report_citation_required
+    key=self.register();self.complete(key)
+        ^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 48, in register
+    with self.j.writer():return register(self.j,self.key,self.store,executable=file_pin(self.exe),free_disk_bytes=500*1024**3)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py", line 25, in register
+    packet=prepare(journal,job_key,store,free_disk_bytes=free_disk_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py", line 47, in prepare
+    and e['identity']['role']=='decision-packet']
+        ~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'role'
+
+======================================================================
+ERROR: test_wrong_packet_hash_rejected (tools.test_r6_decision.DecisionTests.test_wrong_packet_hash_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 98, in test_wrong_packet_hash_rejected
+    key=self.register();self.complete(key)
+        ^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py", line 48, in register
+    with self.j.writer():return register(self.j,self.key,self.store,executable=file_pin(self.exe),free_disk_bytes=500*1024**3)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py", line 25, in register
+    packet=prepare(journal,job_key,store,free_disk_bytes=free_disk_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py", line 47, in prepare
+    and e['identity']['role']=='decision-packet']
+        ~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'role'
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.197s
+
+FAILED (errors=10)
