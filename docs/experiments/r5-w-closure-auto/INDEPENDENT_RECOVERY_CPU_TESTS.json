@@ -1,0 +1,13 @@
+{
+  "command": "CUDA_VISIBLE_DEVICES= PYTHONDONTWRITEBYTECODE=1 python3.11 -m pytest -q tests/training_workloads/test_w_independent.py tests/training_workloads/test_w_closure.py",
+  "result": "32 passed in 1.89s",
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/w_independent.py",
+    "sha256": "701631450696e52020f24a14c89417691c079f7ad7814caaa8bb6223a954913e"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tests/training_workloads/test_w_independent.py",
+    "sha256": "a83598dccf0d34cfc28bcffbef38e6626c07349bcd9a21ff9120df84b5bb2224"
+  },
+  "scope": "CPU regression, not actual independent seed execution"
+}

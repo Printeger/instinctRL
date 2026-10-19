@@ -1,0 +1,109 @@
+{
+  "approval_id": "A-e3529b5fa1ba5f5e",
+  "id": "J-fd7e0e132dca6e7d",
+  "identity": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pgid": 2231119,
+    "pid": 2231119,
+    "starttime": "235179915"
+  },
+  "reserved_resources": {
+    "gpu_seconds": 1810,
+    "starts": 1,
+    "transitions": 32960,
+    "wall_seconds": 1810
+  },
+  "spec": {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--authorization",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-01-R1-RESEARCH-FORMAL-EVALUATION-4386730b1ac0/commands/AUTHORIZATION.json",
+      "--attempt",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-01-R1-RESEARCH-FORMAL-EVALUATION-4386730b1ac0",
+      "--mode",
+      "research-formal-evaluation"
+    ],
+    "backend": "real",
+    "conditions": [
+      {
+        "evidence_id": "E-R5-W-CLOSURE-AUTO-20261019-MASTER",
+        "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+      },
+      {
+        "evidence_id": "E-R5-W-CLOSURE-V1-001",
+        "sha256": "ec75c776b3ef33e4299bb973c1e577b1632c6575bfcb7998a956624f94cdacfa"
+      },
+      {
+        "evidence_id": "E-R5-W-L1-INDEPENDENT-01-PRELIVE",
+        "sha256": "ab4c40c325b24687de613410cf2ee888460e5c83e6ee7a11d7c9f1b67d7a8bbe"
+      },
+      {
+        "evidence_id": "E-R5-W-L1-INDEPENDENT-01-CHECKPOINT",
+        "sha256": "57c45dd5b8409ef09e86f8fa5e3c2d71ddfbfe9e5420731ee764a0f4111e9b2b"
+      }
+    ],
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-20261019",
+    "evaluation": "metric-h1-v1",
+    "h1": {
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-01-R1-RESEARCH-FORMAL-EVALUATION-4386730b1ac0",
+      "config_sha256": "f702a6f8cce4ada89a81d34077d893504b2cd84958f07776ba799d0f6d3c203c",
+      "gpu_accounting": "allocated_device_wall_seconds",
+      "gpu_devices": [
+        "0"
+      ],
+      "mode": "research-formal-evaluation",
+      "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-20261019"
+    },
+    "id": "R5-W-L1-INDEPENDENT-01-R1-RESEARCH-FORMAL-EVALUATION-4386730b1ac0",
+    "method": "unified-h1-formal-readiness-v1",
+    "observations": [
+      "status",
+      "counters",
+      "process_identity",
+      "process_start",
+      "cleanup",
+      "evaluation_raw"
+    ],
+    "pins": {
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-INDEPENDENT-01-R1-RESEARCH-FORMAL-EVALUATION-4386730b1ac0/commands/AUTHORIZATION.json",
+        "sha256": "6204bbed6e850f92776775082474ce024c7da5a4d37a2108d7b873d4e6b8a092"
+      },
+      "dispatcher": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-20261019/training_workloads/unified_h1/local_dispatch.py",
+        "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+      },
+      "executable": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "product": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-20261019/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+        "sha256": "6eb8728000ef1232019ba5bafe285b40e8c24a662e286bda35dc33cc2e385173"
+      },
+      "runtime": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "workload": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-v1-20261019/training_workloads/unified_h1/formal_unified_h1.py",
+        "sha256": "287b8384873b6e342d0f3e5e4b0eaf3b3fd4c6107057eefedb4ae50a4e03986e"
+      }
+    },
+    "resources": {
+      "gpu_seconds": 1810,
+      "starts": 1,
+      "transitions": 32960,
+      "wall_seconds": 1810
+    },
+    "runtime": "/home/mint/rl_blackwell_test",
+    "seed": 20261020,
+    "stage_id": "R5-W-CLOSURE-AUTO-20261019"
+  },
+  "stage": "R5-W-CLOSURE-AUTO-20261019",
+  "status": "RUNNING",
+  "used_resources": {}
+}

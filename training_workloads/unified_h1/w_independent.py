@@ -10,6 +10,7 @@ from .checkpoint_compatibility import pinned_json, validate_source_identity
 from .research_contract import validate_pin
 
 EXPERIMENT = 'R5-W-L1-INDEPENDENT-01'
+RECOVERY_EXPERIMENT = 'R5-W-L1-INDEPENDENT-RECOVERY1'
 SEED = 20261020
 
 
@@ -42,7 +43,9 @@ def validate_parameters(mode, value):
     if set(p) != primary.FIELDS | {'checkpoints', 'independent_validation_protocol'}:
         raise PermissionError('independent parameters differ')
     r, original, _ = protocol(p)
-    expected = dict(original, experiment_id=EXPERIMENT, evaluation_seed=SEED,
+    if p.get('experiment_id') not in (EXPERIMENT, RECOVERY_EXPERIMENT):
+        raise PermissionError('independent experiment identity differs')
+    expected = dict(original, experiment_id=p['experiment_id'], evaluation_seed=SEED,
                     evaluation_updates=[640], checkpoints=[r['checkpoint']],
                     experiment_card=p['experiment_card'], checkpoint_compatibility=p['checkpoint_compatibility'],
                     independent_validation_protocol=p['independent_validation_protocol'])
@@ -50,7 +53,7 @@ def validate_parameters(mode, value):
         raise PermissionError('independent suite changed more than seed/node/identity')
     card = pinned_json(p['experiment_card'])
     pinned_json(p['checkpoint_compatibility'])
-    if card['experiment_id'] != EXPERIMENT or card['profiles']['R1'] != {k:v for k,v in p.items() if k not in ('checkpoints','experiment_card')}:
+    if card['experiment_id'] != p['experiment_id'] or card['profiles']['R1'] != {k:v for k,v in p.items() if k not in ('checkpoints','experiment_card')}:
         raise PermissionError('independent card differs')
     return p
 

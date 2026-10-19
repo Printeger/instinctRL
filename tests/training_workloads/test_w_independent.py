@@ -81,3 +81,15 @@ def test_backend_loads_original_candidate_and_all_cases(tmp_path,monkeypatch,tra
     w.evaluate_segment(backend)
     assert calls==list(CASES)
     assert json.loads((tmp_path/'w_independent_R1_u640.json').read_text())['original_metric_result']['all_gates_pass']
+
+
+def test_exact_recovery_identity_only(tmp_path):
+    p=profile(tmp_path)
+    p['experiment_id']=w.RECOVERY_EXPERIMENT
+    p['experiment_card']=write(tmp_path/'recovery-card.json',dict(
+        experiment_id=w.RECOVERY_EXPERIMENT,
+        profiles={'R1':{k:v for k,v in p.items() if k not in ('checkpoints','experiment_card')}}))
+    assert w.validate_parameters(primary.EVAL,p)==p
+    assert w.required_budget(primary.EVAL,p)['nontraining_transitions']==32960
+    for key,value in [('experiment_id','R5-W-L1-INDEPENDENT-RECOVERY2'),('evaluation_seed',20261021),('evaluation_updates',[768]),('ics_clearance_margin_m',.16)]:
+        with pytest.raises(PermissionError):w.validate_parameters(primary.EVAL,dict(p,**{key:value}))

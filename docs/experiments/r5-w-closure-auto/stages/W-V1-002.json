@@ -1,0 +1,27 @@
+{
+  "id": "W-V1-002",
+  "goal_id": "R5-W-CLOSURE-AUTO-20261019",
+  "evidence_id": "E-R5-W-CLOSURE-V1-002",
+  "master_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+    "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+  },
+  "cumulative_caps": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 131840,
+    "live_starts": 6,
+    "simulator_initialization_reservations": 6,
+    "optimizer_updates": 256,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048,
+    "training_checkpoint_writes": 2,
+    "allocated_gpu_seconds": 8000,
+    "wall_seconds_including_cleanup": 8000,
+    "output_peak_and_reservations_bytes": 68719476736
+  },
+  "scope": "One independently reviewed fresh independent-seed recovery after FINAL0 transient prelaunch failure; all old failures/output reservations retained, no scientific method change.",
+  "previous_stage": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V1-001.json",
+    "sha256": "ec75c776b3ef33e4299bb973c1e577b1632c6575bfcb7998a956624f94cdacfa"
+  }
+}

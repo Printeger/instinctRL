@@ -1,0 +1,35 @@
+{
+  "verdict": "PASS",
+  "must_fix": [],
+  "reviewer": "/root/audit",
+  "scope": "Stage registration, audited recovery decision and narrow exact ID change; not issue",
+  "identities": {
+    "master": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+      "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+    },
+    "commander": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_commander.py",
+      "sha256": "cafb006b531087770e2035f75134f0ee51b60437379934bdfbd3fa4685de18e0"
+    },
+    "stage": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V1-002.json",
+      "sha256": "f702c3f2e4a7c575844ecdfc31ac39ff09c4559e0699b860bee1b8852c8a2396"
+    },
+    "ownership_helper": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_commander.py",
+      "sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4"
+    },
+    "snapshot_tool": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/prepare_r5_w_snapshot.py",
+      "sha256": "bb8336c6c5f3a8f206b26153e45fcfa91dfb5808a45408a12806531e7e7d4ac3"
+    }
+  },
+  "checks": [
+    "Only start/init5→6 and output48→64GiB; other caps unchanged, within master",
+    "Decision10 pins match; persistent blocker not established; CPU preparation backoff exceeds100s",
+    "Only validate_parameters and explicit RECOVERY1 identity change; protocol/scoring/seed/checkpoint/budget unchanged"
+  ],
+  "reviewer_writes": 0,
+  "reviewer_gpu_queries": 0
+}

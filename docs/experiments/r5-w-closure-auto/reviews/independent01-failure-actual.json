@@ -1,0 +1,56 @@
+{
+  "verdict": "PASS",
+  "must_fix": [],
+  "reviewer": "/root/audit",
+  "scope": "Actual FINAL0 failure integrity only; independent scientific evaluation NOT_EXECUTED",
+  "identities": {
+    "launch_inputs.proposed.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/launch_inputs.proposed.json",
+      "sha256": "abba5d3e6d37972943c153302558f35d6d1e646452a54737534250c4a62f9883"
+    },
+    "R1-research-formal-evaluation.authorized.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/inputs/R1-research-formal-evaluation.authorized.json",
+      "sha256": "320ad7481351b04f94d790afaff505e221c19121fb891b73448cd19ad5bb5ac8"
+    },
+    "R1-research-formal-evaluation-execution-summary.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/R1-research-formal-evaluation-execution-summary.json",
+      "sha256": "9ebd665d6372eeae4abf73d6bfb456205084b3c9b7ea7fa24a83fb1fc7d87a0e"
+    },
+    "R1-research-formal-evaluation-final-job.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/R1-research-formal-evaluation-final-job.json",
+      "sha256": "3adb075c1914327679b9c9de862da6358130a64adce52aee8f154a5492270a5f"
+    },
+    "INVENTORY.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/live/R1-research-formal-evaluation/INVENTORY.json",
+      "sha256": "aaa04fec2eb537e42948bb7dd9b4daac209fd9b81b927bcdf44a87f67e4af7c9"
+    },
+    "receipt.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/live/R1-research-formal-evaluation/job/receipt.json",
+      "sha256": "0fb79486ac22a49423a28d3ee306e69ffe8b94b23dd98975c5be461b94f627c2"
+    },
+    "lifeguard-ack.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/live/R1-research-formal-evaluation/job/lifeguard-ack.json",
+      "sha256": "ba7548ea02e3a4647f414c4be14ec1d2032c1194a66ffd093cfc25836b29d6ac"
+    },
+    "R1-research-formal-evaluation-postrun-0.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/R1-research-formal-evaluation-postrun-0.json",
+      "sha256": "7f1c2c24bf2654a696905164184e9200087557012bf8213fd7f2bbe5238d4954"
+    },
+    "R1-research-formal-evaluation-postrun-1.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/R1-research-formal-evaluation-postrun-1.json",
+      "sha256": "f2812abaa08fefad8857628ca09349309ca4cc895b4e174cc4f7532bb240601c"
+    },
+    "prelaunch_resource_gate_failure.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/live/R1-research-formal-evaluation/attempt/results/prelaunch/prelaunch_resource_gate_failure.json",
+      "sha256": "f0921be9376f1df019183ba38dc5d8a64c4a3052875878f48f15f25f7b2fc1d0"
+    }
+  },
+  "checks": [
+    "27 inventory originals and archives SHA/bytes match; packet19 pins match; final spec and receipt match",
+    "Normal owned ACK two stable empty scans; settled and exactly two postrun; STOP absent",
+    "No raw evaluation; utilization2/12/3 with postrun3; persistent blocker not established, service causation not established",
+    "1start/init 8GiB output retained; GPU10.843686652835459/wall14.03191545791924; historical INCOMPLETE/null/full reserves unchanged"
+  ],
+  "reviewer_writes": 0,
+  "reviewer_gpu_queries": 0
+}
