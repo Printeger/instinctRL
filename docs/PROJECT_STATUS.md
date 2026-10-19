@@ -8,7 +8,9 @@
 
 L1原入口 `R5-W-L1-NEARWALL-01` / `J-06a095a1c78d517e` 在prelaunch共存门因GPU2/6/3%中6%超过原5%限制而FAILED/1、FINAL0：训练/更新/Adam/checkpoint均0，无u640/u768。27份原件与归档已独立核验，正常owned ACK、settle、恰好两postrun完成；失败start/init及8GiB输出预留保留。详见 `experiments/r5-w-closure-auto/reviews/l1-failed-actual-independent.json` 与 `L1_RECOVERY_DECISION.json`。
 
-新身份 `R5-W-L1-NEARWALL-RECOVERY1` 已独立预审、合法发行 `A-e685757b2203d20f`，精确controller计划独审PASS，提交/tag/push后由原controller接续。继续同一L1科学候选和只读source0c6363b/configdf96f98d：原u512全trainer/Adam/RNG恢复、24center/4x/4y近墙课程、256updates与u640/u768两节点；无科学参数/评分/资源门槛变更、无GPU补探测、无自动重试。新累计stage `W-L1-002` 在原master内计入失败入口及未来两节点评价：4start/init、40GiB、8000s；其他训练/评价/更新/writes额度不变。**完整Goal仍IN_PROGRESS**，实际训练、两节点评价与首通过训练node独立seed/初态验证均未完成。唯一运行状态 `docs/experiments/r5-w-closure-auto/batch/state.json` 由controller独占，本次未改其state。下文旧任务状态仅作历史。
+恢复入口 `R5-W-L1-NEARWALL-RECOVERY1` / `J-8bdfaca0488e524d` 已独立接受实际训练与准确u640/u768：原u512全trainer/Adam/RNG恢复，first512 gate先于两optimizer，绝对u513–768、131072训练transitions、256updates、两类各2048Adam、2writes。实际覆盖center98304/x16384/y16384，危险q2004（x1342/y662），ICS干预x1946/y993；全部reward有限。覆盖不是学习效果。53项原件/100原件归档哈希核验，正常owned ACK/settle/恰好2postrun；native FAILED/-9、INCOMPLETE/null、131072训练及8GiB全reserve保持。见 [实际独审](experiments/r5-w-closure-auto/reviews/l1-recovery1-actual-independent.json)。
+
+新评价身份 `R5-W-L1-EVAL-01` 准确许可 `A-f86ae4584e07d817` 已独立预审并合法发行，尚未执行。使用同一冻结source0c6363b/configdf96f98d、CANDIDATE合同和原seed20260909，完整评价u640/u768两个节点原五任务各32lanes及W连续11样本真实接近；新增65920非训练，无训练或checkpoint写。累计W-L1-002内4start/init、36GiB保守预留（stage cap40GiB）。提交/tag/push及精确计划独审后由原controller接续；本次未submit、未改controller state、未作GPU探测。**完整Goal仍IN_PROGRESS**：两节点评价、首通过训练node独立seed/初态完整验证、方法消融/时序/最终证据与独审尚待完成。唯一运行状态 `docs/experiments/r5-w-closure-auto/batch/state.json`。下文旧任务状态仅作历史。
 
 更新：2026-10-17。唯一日常开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一开发分支 `main`，
 远端 [Printeger/instinctRL](https://github.com/Printeger/instinctRL)。当前精确版本以 `git rev-parse HEAD` 为准。

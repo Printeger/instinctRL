@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "input_commit": "3ce268391ff0d3f346624d07337cc23bad05a985",
+  "job_id": "J-8bdfaca0488e524d",
+  "spec_id": "R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2",
+  "approval_id": "A-e685757b2203d20f",
+  "STOP": [],
+  "old_jobs_terminal_noowned": true,
+  "disk_free_bytes": 515125669888,
+  "remaining_check": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 32960,
+    "live_starts": 3,
+    "simulator_initialization_reservations": 3,
+    "optimizer_updates": 256,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048,
+    "training_checkpoint_writes": 2,
+    "allocated_gpu_seconds": 3828.3855940508656,
+    "wall_seconds_including_cleanup": 3834.083842956461,
+    "output_peak_and_reservations_bytes": 30064771072
+  },
+  "prelaunch_GPU_queries": 0
+}

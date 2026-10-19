@@ -379,17 +379,7 @@
       "latest_actual_command_review": "PENDING_ROLE15"
     }
   },
-  "current_goal": {
-    "id": "R5-W-CLOSURE-AUTO-20261019",
-    "status": "IN_PROGRESS",
-    "phase": "E1_READY_FOR_PUSH_AND_TMUX",
-    "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
-    "state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
-    "current_job": null,
-    "current_exact_release": "A-9306976b2df3dee8",
-    "previous_state": "docs/experiments/r5-w-closure-auto/previous-project-state.json",
-    "next_action": "After controller independent PASS and commit/tag/push, tmux Python submits exact E1 then performs owned cleanup/settle/postrun and one autonomous decision model call."
-  },
+  "current_goal": "R5-W-CLOSURE-AUTO-20261019",
   "historical_prior_independent_review": {
     "path": "reviews/review-entry6-final-readiness.json",
     "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
@@ -722,5 +712,23 @@
     "controller_state_at_analysis": "RUNNING/MODEL:final-analysis",
     "old_readiness_goal_unchanged": true
   },
-  "current_execution_index": "formal_first_segment_execution"
+  "current_execution_index": "formal_first_segment_execution",
+  "w_closure_execution": {
+    "goal_id": "R5-W-CLOSURE-AUTO-20261019",
+    "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+    "registration": "docs/experiments/r5-w-closure-auto/registrations/W-L1-002.json",
+    "state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
+    "status": "L1_ACTUAL_ACCEPTED_TWO_NODE_EVALUATION_ISSUED_HANDOFF",
+    "current_live_jobs": [],
+    "exact_job_permission_required": true,
+    "current_exact_release": "A-f86ae4584e07d817",
+    "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-l1-evaluation.json",
+    "last_completed_job": "J-8bdfaca0488e524d",
+    "last_training_transitions": 131072,
+    "actual_training_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-recovery1-actual-independent.json",
+      "sha256": "ce921180385c8b009151e7e71f94426c8f3052c4ad0cedc53cf2dc75275ea468"
+    },
+    "next_evaluation_status": "NOT_EXECUTED"
+  }
 }

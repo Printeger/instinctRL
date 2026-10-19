@@ -1,0 +1,141 @@
+{
+  "schema_version": "independent-review-relay/1",
+  "reviewer": "/root/actual_review",
+  "recorder": "root relay of independent read-only final response",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "Accept actual L1 RECOVERY1 training evidence and exact u640/u768 for evaluation; not RL improvement/evaluation/final Goal acceptance",
+  "identities": {
+    "packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/launch_inputs.proposed.json",
+      "sha256": "0e7e9bf94a2a771fdb50b397178857662c8ba4038decdc6bb3ccf0e5717a719f"
+    },
+    "authorized_spec": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/inputs/R1-research-formal-training.authorized.json",
+      "sha256": "9df70df988fa4339ddabd08facb360fc0c21e273067843b3084cd6888f66abfe"
+    },
+    "final_job": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/R1-research-formal-training-final-job.json",
+      "sha256": "829e04ea84be0f640077ec895b939528af6c645f700ccd67b168b9ca309593dc"
+    },
+    "execution_summary": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/R1-research-formal-training-execution-summary.json",
+      "sha256": "2651d1503299e3b6682c8e6ca1549f9d7af8d407127024d07ed0a7354637d1f8"
+    },
+    "inventory": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/live/R1-research-formal-training/INVENTORY.json",
+      "sha256": "4a94eb9ce9e3391ee5ecf626835919f8904d4e44c2c21f26570c93c6b851a4ea"
+    },
+    "master": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+      "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+    }
+  },
+  "accepted_checkpoints": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+      "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+      "update": 512
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+      "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+      "update": 640
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u768.pt",
+      "sha256": "0c4a8b486280a3bb8dbc91778ed1949c085c4dedd3c6ff75ac7194a957111e41",
+      "update": 768
+    }
+  ],
+  "origin_method_hashes": {
+    "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+    "curriculum": "curriculum-h1-v1",
+    "reward": "reward-h1-zero-neutrality-v1",
+    "critic": "critic-h1-v2",
+    "checkpoint": "checkpoint-h1-v2",
+    "logging": "learning-log-h1-v1",
+    "metric": "metric-h1-v1",
+    "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+    "research_effective_method": "8afa2645dd181eb1e54c4c38e60f59db2c7cdda48df5d232b5e0628c451269cd",
+    "formal_phase": "103664d19c5e037d5903c86e2af11b61181a8722e599bdbdd87ae7c7f9414930",
+    "reset_distribution": "center-only-v1",
+    "initialization": "qualified-warmup-fresh-reset-v1",
+    "origin_checkpoint_sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768"
+  },
+  "origin_source_identity": {
+    "product_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "product_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "workload_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+    "workload_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+    "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24"
+  },
+  "candidate_source_identity": {
+    "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+    "product_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "product_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924",
+    "workload_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "workload_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924"
+  },
+  "candidate_method_hashes": {
+    "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+    "curriculum": "curriculum-h1-v1",
+    "reward": "reward-h1-zero-neutrality-v1",
+    "critic": "critic-h1-v2",
+    "checkpoint": "checkpoint-h1-v2",
+    "logging": "learning-log-h1-v1",
+    "metric": "metric-h1-v1",
+    "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+    "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+    "reset_distribution": "mixed-nearwall",
+    "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+    "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+    "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5",
+    "ics_clearance_margin_m": "0.15"
+  },
+  "findings": [
+    {
+      "classification": "PASS",
+      "detail": "53 inventory entries/100 original and archive hashes; 23 additional packet/spec pins independently checked without mismatch."
+    },
+    {
+      "classification": "PASS",
+      "detail": "J-8bdfaca0488e524d FAILED/-9/raw PASS_PENDING_CLOSE preserved; normal ACK two stable empty scans/quiescent/no survivors; settled true; exactly two postrun exit0 after ACK; GPU1%, only unrelated desktop process."
+    },
+    {
+      "classification": "PASS",
+      "detail": "Frozen strict loader restores full original u512 actor/critic/Adam/RNG including curriculum generator; update512/global policy step8192. Fresh physical reset explicitly does not claim physical/history/actuator continuity."
+    },
+    {
+      "classification": "PASS",
+      "detail": "Actual first512 gate PASS at u513/eight minibatches. Frozen driver diagnostic.before_update precedes trainer.update and both optimizers; actual probe has eight pre/post actor boundaries; no policy RNG consumption."
+    },
+    {
+      "classification": "PASS",
+      "detail": "256 rows exactly u513-768; every update512 samples covered once; Adam counters u*8 each; 2048 minibatches/4096policy steps/131072transitions/exactly2writes. CPU u640/u768 actual Adam5120/6144, transitions327680/393216, clocks10240/12288."
+    },
+    {
+      "classification": "PASS",
+      "detail": "Both checkpoints carry reported candidate source/method and original u512 origin, full trainer/RNG; actorLR1e-4/criticLR3e-4/reward.05/anchor4/meanprior10/margin.15 bound."
+    },
+    {
+      "classification": "PASS",
+      "detail": "Actual positions match24center/4x/4y at.02m tolerance; all4096 compact rows scanned: center98304/x16384/y16384, nonzero commands49152/8192/8192."
+    },
+    {
+      "classification": "PASS",
+      "detail": "q2004 across65updates: x1342/y662/center0 independently corroborated from raw dangerous_command and rollout groups. ICS beta<1 x1946/y993/center0. All reward components finite; clearance sum-209.53314945101738/intervention-169.73822294418642/total-23603.401982694864; collisions0. Limited danger coverage is not learned safety."
+    },
+    {
+      "classification": "NON_BLOCKING",
+      "detail": "FAILED/-9 INCOMPLETE/null and full131072/8GiB remain. Observed1969675045bytes, GPU908.632140296977s/wall911.634764356073s/start1/init1 charged; acceptance does not change receipt or refund."
+    },
+    {
+      "classification": "FOLLOW_UP",
+      "detail": "Evaluate both nodes all original five tasks32lanes/W11 approach. Separate E1 engineering gains. First passing trained node requires independently reviewed independent seed or initial-state complete verification."
+    }
+  ],
+  "read_only_review": true,
+  "gpu_or_simulation_invoked": false,
+  "controller_state_modified": false
+}

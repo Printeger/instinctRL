@@ -1,0 +1,19 @@
+你是同一完整R5 W安全训练Goal的事件触发Commander/Builder，本次仅在R5-W-L1-EVAL-01真实作业终态、正常owned ACK、settle和恰好两次postrun后运行。不是新的用户审批阶段。先完整读取 docs/experiments/r5-w-closure-auto/USER_GOAL_PROMPT.txt、docs/goals/InstinctRL_R5_W_Safety_Closure_Autonomous_Goal.md、docs/PROJECT_STATUS.md、coordination/ACTIVE_WORKFLOW.json、coordination/protocols/SINGLE_BRANCH_WORKFLOW.md。用户已授权master caps内完整研究开发训练验收闭环，普通阴性不停止问用户。
+
+唯一controller tools/r5_w_batch.py 在tmux等待你；state docs/experiments/r5-w-closure-auto/batch/state.json 只读。你是它等待的唯一写者，禁止编辑state、新起controller、直接submit。允许CPU实现/验证、新source/config/实验身份、独立只读subagent、合法register/issue、commit/tag/push；返回精确独立review过的next_plan，由原controller执行。不得模型忙等。发现外部STOP保全并停止新动作，不清除STOP，不终止无关进程、不放宽共存守卫。若prelaunch再拒绝，准确分析原件和持续外部资源阻塞，不无条件重试。
+
+先核对当前评价 packet、authorized spec、final-job、execution-summary、live INVENTORY所有原件哈希、receipt、normal owned ACK、settle、恰好两postrun、资源和输出。旧FAILED/INCOMPLETE/null/full reserve和旧snapshot只读保留。读取 L1_RECOVERY_DECISION.json、L1_RECOVERY1_ORIGINALS_AUDIT.json、L1_RECOVERY1_SETTLED_BUDGET_SNAPSHOT.json、reviews/l1-recovery1-actual-independent.json、reviews/l1-evaluation-prelive.json。原L1第一次GPU2/6/3>5导致FINAL0/未训练，其start/init/8GiB保留；RECOVERY1是同一科学候选恢复。实际RECOVERY1已完成u513–768/131072transitions/256updates/两类各2048Adam/两writes，native FAILED/-9、INCOMPLETE/null与131072全reserve保持。
+
+本次准确评价身份R5-W-L1-EVAL-01，复用source0c6363bbc0d2947a272f533c02e73d2995ac225a/configdf96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb。CANDIDATE参数合同保持原evaluation_seed20260909，实际checkpoint位于RECOVERY1 attempt：u640 SHA aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429，u768 SHA 0c4a8b486280a3bb8dbc91778ed1949c085c4dedd3c6ff75ac7194a957111e41。原u512 a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776完整trainer/Adam/RNG恢复后，原24center4x4y与command schedule，reward.05/anchor4/meanprior10/actorLR1e-4/criticLR3e-4/工程.15未变。核对独审实际覆盖；q=0不可宣称危险训练，不以loss代替验收。
+
+必须对两个实际节点从原evaluation_raw分别调用同一冻结evaluate_checkpoint独立重放原Z/T/S/X/W全部32lanes，检查所有方向/两墙子组，并从真实世界法向速度检验每个W lane连续11样本>=.1m/s接近。原几何>=.8m、停车<=3s和所有门槛不变。独立只读subagent审核准确结果/节点/来源。不能把未执行、部分输出或status通过当完整评价。E1固定原u512+.15m的原五任务各32/32及运动32/32是控制工程收益，必须与L1学习效果分开比较；保留原R1无margin的W负基线用于方法消融。
+
+若训练节点全任务及运动通过，首个通过节点必须另做至少一次独立seed或初态的完整五任务验证。当前w_closure primary entry只承认原20260909；新seed必须严格独立等价协议、明确新身份、新source/config和独立预审，保留原函数验证与阈值，不偷改primary入口。首通过节点不是Goal终点，不能直接COMPLETE。
+
+若训练退化或W不改善，按真实时序（q/ICS beta/命令/实际几何/速度/停车）设计一个单变量修正或最小对照，并在包络内自主继续；不能盲加时长、叠多变量、以普通阴性停问用户。Z/T/S/X退化时停止该候选长训，切回已冻结原u512设计有依据的小修正。最多两个科学候选分支，每次新身份/预审；本RECOVERY1不算第二科学候选。普通实现问题先有界修复并独审。旧失败和所有保守预留保持，参数和原评分不放宽。
+
+master总封顶训练1048576/nontraining659200/2048逻辑更新/24starts与init/40writes/GPU与wall各86400含cleanup/128GiB保守输出与30GiB空余地板。可在caps内调整累计stage，不能改master或退款旧账。W-L1-002已累计覆盖E1+失败L1+RECOVERY1+本次两节点评价；后续新阶段须独审合法register/issue。输入commit/tag/push后返回已发行且已push的exact spec计划。
+
+next_plan结构参照当前plan：准确pins spec/commander/stage/controller/ownership_helper/codex/after_prompt/schema，experiment_id，poll_seconds15、automatic_retries0、model_timeout_seconds7200、model_output_cap_bytes67108864。独立review用rlflow.store.sha绑定去掉independent_review键后的payload，避免循环。不得改当前controller。新after_prompt须保留真实下一阶段及整个Goal目标。
+
+最终交付完整原件索引、模型SHA/source/method、五任务及分组报告、训练和评价覆盖、W时序图/归因、方法消融（工程与学习分开）、独立验证、完整资源审核和独立final_review。只有全部执行且审核通过，final_result状态R5_ALL_ORIGINAL_GATES_PASS或有完整科学实验的SCIENTIFIC_NEGATIVE_WITH_COMPLETE_EVIDENCE才可COMPLETE；不能用未执行计划或单次阴性冒充科学负结论。final_review须PASS/noMUST_FIX且identities.final_result精确pin。正常返回CONTINUE及next_plan准确pin；仅真实外部STOP、所有权/证据异常、硬风险、无法合法总委托或资源耗尽才返回对应停止状态。完整用户Goal继续，不是交计划即完成。

@@ -1,0 +1,265 @@
+{
+  "approval_id": "A-e685757b2203d20f",
+  "h1_evidence": {
+    "allocation_basis": "allocated_device_wall_seconds",
+    "allocation_gpu_seconds": 908.632140296977,
+    "counter_completeness": "INCOMPLETE",
+    "counters": {
+      "actor_optimizer_steps": 2048,
+      "attempted_policy_steps": 4096,
+      "attempted_updates": 256,
+      "automatic_resets": 128,
+      "completed_policy_steps": 4096,
+      "completed_updates": 256,
+      "critic_optimizer_steps": 2048,
+      "explicit_resets": 1,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 2,
+      "real_environment_transitions": 131072,
+      "real_optimizer_updates": 256,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 131072
+    },
+    "exit_fact": "FAILED",
+    "formal_verdict": "NOT_GRANTED",
+    "manifest": {
+      "actor_mean_prior_binding.json": {
+        "bytes": 458,
+        "sha256": "3280986ed476f6bd03bb40f9cbe943c0e56358069b2966c096a38e1329fcdafe"
+      },
+      "checkpoints/u640.json": {
+        "bytes": 288,
+        "sha256": "162b3e242d8cd65dab7d7259700ee4c1e92a3eaf1295fb9a0defbb304d1c6c6f"
+      },
+      "checkpoints/u640.pt": {
+        "bytes": 1510761,
+        "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+      },
+      "checkpoints/u768.json": {
+        "bytes": 288,
+        "sha256": "6280591cf446b80b9e0f20083198c8e11d0d8a7f348dcb06965bbcffea627ed0"
+      },
+      "checkpoints/u768.pt": {
+        "bytes": 1510761,
+        "sha256": "0c4a8b486280a3bb8dbc91778ed1949c085c4dedd3c6ff75ac7194a957111e41"
+      },
+      "cleanup_timeout.json": {
+        "bytes": 200,
+        "sha256": "0f9764e9cc9c093df17b5f6d18b85bf5823fbd8b01231a0092fd8759c55898a2"
+      },
+      "initial_training_distribution.json": {
+        "bytes": 1572,
+        "sha256": "6d6e9ca89bbc6860ff551261ddadc71e0fd4ee84e08965aee11d99dde681de51"
+      },
+      "initialization_accounting.json": {
+        "bytes": 269,
+        "sha256": "61d33061293905bf9cf69e78083b6310aaafb6b060780015d3bef60151f6ef21"
+      },
+      "learning_log/accounting.jsonl": {
+        "bytes": 1271848,
+        "sha256": "9249419735730262821d4dcc5b2369b95f6c17c397661b736dce2cf1b6eb4084"
+      },
+      "learning_log/command_blocks.jsonl": {
+        "bytes": 782061,
+        "sha256": "88b4e7dbe7664534b52bae04620158ee886ee346840a116dfd5af2a4e3638aea"
+      },
+      "learning_log/compact_rollouts.jsonl": {
+        "bytes": 292764978,
+        "sha256": "787635d839a2379ec53987f69c8bea6b328cd837b0c5fb9cab4f856f0f0a0efe"
+      },
+      "learning_log/episodes.jsonl": {
+        "bytes": 156678,
+        "sha256": "2aeaa1ab31d9c062e61d1bda087875f6c7a0d686bfb3a00e0536a970b932da96"
+      },
+      "learning_log/measurement_windows.jsonl": {
+        "bytes": 294978055,
+        "sha256": "dbbc75aa13e06e9e2da9da748ccee1d557d2f5cbbf71b59f14073e749d3ee877"
+      },
+      "learning_log/minibatches.jsonl": {
+        "bytes": 976398,
+        "sha256": "2f37e845762824cb28c3848412ce6630be533440b4500b25347b838c5b55f062"
+      },
+      "learning_log/partial_rollout_steps.jsonl": {
+        "bytes": 305324753,
+        "sha256": "c467186f5d3d9ff90eb8b838fc6095aa274f66c32f3e694414d1f593a89a9bcd"
+      },
+      "learning_log/rollouts.jsonl": {
+        "bytes": 1693278,
+        "sha256": "bca81478f0531e641ec7a08435140d1abf0d48ebce2c461f48893e17ccc596a0"
+      },
+      "learning_log/updates.jsonl": {
+        "bytes": 701177,
+        "sha256": "77d202e606bd9a37d00cb1e905986720fa6577f94d859bd971692fdbaa954782"
+      },
+      "output_quota_binding.json": {
+        "bytes": 248,
+        "sha256": "fe5e7c32d36eb7b8e3d6af3ce7d6f039b340dbed0f0066e00163bf5cf5a9f76b"
+      },
+      "pilot_diagnostic/first_update_gate.json": {
+        "bytes": 229,
+        "sha256": "bd6aa99a65c82fc93fe6d7ffaa4f6957704a88f72a3aca77007faf744edb65d3"
+      },
+      "pilot_diagnostic/first_update_probe.pt": {
+        "bytes": 12289599,
+        "sha256": "c6bb100c558c33438b25160f43b6459d12a70d75e65909f3e1328f86e11f8918"
+      },
+      "pilot_diagnostic/update_513_full_input.pt": {
+        "bytes": 522177865,
+        "sha256": "abd6987bc18e42ed456a99e3bbf1ad47933d7118432205560982b6b2f432a284"
+      },
+      "pilot_diagnostic/update_514_full_input.pt": {
+        "bytes": 522177865,
+        "sha256": "d98b099fc39ae1f4984b38c9568e7869d2be7db6233a3f6df834139305a3488d"
+      },
+      "process_identity.json": {
+        "bytes": 293,
+        "sha256": "629e6b55af5884a9d09200e296bdc7ae3f79db721e51aef7f4ee71cd3bd28706"
+      },
+      "process_start.json": {
+        "bytes": 1361,
+        "sha256": "dbfd46162ad2b6b9332ab9d308595493ee89c224addae0e0770410739956c3d4"
+      },
+      "status.json": {
+        "bytes": 962,
+        "sha256": "131b064ae89dd2247dac0318cd6c07b3b805215e3ee33223d691b9b3032676ec"
+      },
+      "w_initialization.json": {
+        "bytes": 3727,
+        "sha256": "d8b39a652c4d134dfc1678d8c45c9f3ae54c0ddbbdf60aeba51f96199eef22d5"
+      },
+      "w_profile_binding.json": {
+        "bytes": 3346,
+        "sha256": "4a6a071b035256e3cc702391194b0ca9cc2def94969bc2d90a88dac8d9b46ae2"
+      }
+    },
+    "raw_status": "PASS_PENDING_CLOSE",
+    "scientific_validity": "UNASSESSED",
+    "scope": "H1_RAW_EXECUTION",
+    "transitions": null
+  },
+  "id": "J-8bdfaca0488e524d",
+  "identity": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pgid": 2223322,
+    "pid": 2223322,
+    "starttime": "234918111"
+  },
+  "receipt": {
+    "allocated_seconds": 908.632140296977,
+    "definitely_not_released": false,
+    "elapsed_seconds": 911.634764356073,
+    "error": null,
+    "exit_code": -9,
+    "job_id": "J-8bdfaca0488e524d",
+    "released": true,
+    "spec_sha256": "953486e3bd9b966532ab09840b3352227e9da59de486bd6032a4d71b5e81a341",
+    "status": "FAILED"
+  },
+  "reserved_resources": {
+    "transitions": 131072
+  },
+  "spec": {
+    "argv": [
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "training_workloads.unified_h1.formal_unified_h1",
+      "--authorization",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/commands/AUTHORIZATION.json",
+      "--attempt",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2",
+      "--mode",
+      "research-formal-training"
+    ],
+    "backend": "real",
+    "conditions": [
+      {
+        "evidence_id": "E-R5-W-CLOSURE-AUTO-20261019-MASTER",
+        "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+      },
+      {
+        "evidence_id": "E-R5-W-CLOSURE-L1-002",
+        "sha256": "8ab9b2b84965e843e85f1d68784a2282b7195859088ffe6a058a60e70cdca10e"
+      },
+      {
+        "evidence_id": "E-R5-W-L1-NEARWALL-RECOVERY1-PRELIVE",
+        "sha256": "6134b454b6c57b10589b0c0b2dfb5b492f2acea7cc63b3be628d34f5a0497484"
+      },
+      {
+        "evidence_id": "E-R5-W-L1-NEARWALL-RECOVERY1-CHECKPOINT",
+        "sha256": "9c3b929279c83ecee2fc7605793b822428406ca07cc15bbf947752b61aa5242b"
+      }
+    ],
+    "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019",
+    "evaluation": "metric-h1-v1",
+    "h1": {
+      "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2",
+      "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+      "gpu_accounting": "allocated_device_wall_seconds",
+      "gpu_devices": [
+        "0"
+      ],
+      "mode": "research-formal-training",
+      "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019"
+    },
+    "id": "R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2",
+    "method": "unified-h1-formal-readiness-v1",
+    "observations": [
+      "status",
+      "counters",
+      "process_identity",
+      "process_start",
+      "cleanup",
+      "evaluation_raw"
+    ],
+    "pins": {
+      "authorization": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/commands/AUTHORIZATION.json",
+        "sha256": "06cb780fb16baacb54e222eccf838582cb098a71824c1889d7ed2dc206a5ed6d"
+      },
+      "dispatcher": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/local_dispatch.py",
+        "sha256": "6cb2940b02f9019ac0039658976702e08d7b182ecf75be90c765503d95149c65"
+      },
+      "executable": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "product": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+        "sha256": "6eb8728000ef1232019ba5bafe285b40e8c24a662e286bda35dc33cc2e385173"
+      },
+      "runtime": {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+      },
+      "workload": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/formal_unified_h1.py",
+        "sha256": "287b8384873b6e342d0f3e5e4b0eaf3b3fd4c6107057eefedb4ae50a4e03986e"
+      }
+    },
+    "resources": {
+      "gpu_seconds": 3610,
+      "starts": 1,
+      "transitions": 131072,
+      "wall_seconds": 3610
+    },
+    "runtime": "/home/mint/rl_blackwell_test",
+    "seed": 20260908,
+    "stage_id": "R5-W-CLOSURE-AUTO-20261019"
+  },
+  "stage": "R5-W-CLOSURE-AUTO-20261019",
+  "status": "FAILED",
+  "used_resources": {
+    "gpu_seconds": 908.632140296977,
+    "starts": 1,
+    "transitions": null,
+    "wall_seconds": 911.634764356073
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "status": "PASS_ORIGINAL_HASH_AND_DIRECTORY_COVERAGE",
+  "inputs": {
+    "packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/launch_inputs.proposed.json",
+      "sha256": "0e7e9bf94a2a771fdb50b397178857662c8ba4038decdc6bb3ccf0e5717a719f"
+    },
+    "authorized_spec": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/inputs/R1-research-formal-training.authorized.json",
+      "sha256": "9df70df988fa4339ddabd08facb360fc0c21e273067843b3084cd6888f66abfe"
+    },
+    "final_job": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/R1-research-formal-training-final-job.json",
+      "sha256": "829e04ea84be0f640077ec895b939528af6c645f700ccd67b168b9ca309593dc"
+    },
+    "execution_summary": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/R1-research-formal-training-execution-summary.json",
+      "sha256": "2651d1503299e3b6682c8e6ca1549f9d7af8d407127024d07ed0a7354637d1f8"
+    },
+    "inventory": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/live/R1-research-formal-training/INVENTORY.json",
+      "sha256": "4a94eb9ce9e3391ee5ecf626835919f8904d4e44c2c21f26570c93c6b851a4ea"
+    },
+    "receipt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/live/R1-research-formal-training/job/receipt.json",
+      "sha256": "c4487db560e1c6d2d368924d7b2b4ec5d76b49604d4c6c2f8a662e574ddf4174"
+    },
+    "owned_ack": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/live/R1-research-formal-training/job/lifeguard-ack.json",
+      "sha256": "e9d25dee719671a867687ac3bf3f4b01cb2ab269fc403ff0e991c3d2684de199"
+    },
+    "postrun0": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/R1-research-formal-training-postrun-0.json",
+      "sha256": "1472c37ca38cbea0dab72b85278d57a83d5dcadb613482e1a60aea7ef750e154"
+    },
+    "postrun1": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/R1-research-formal-training-postrun-1.json",
+      "sha256": "c2fbd18caf7dc0e975797fec6dc7a436a7d9d30049b3e3bfaed262e3a1ad9bb5"
+    }
+  },
+  "inventory_entries": 53,
+  "original_and_archive_checks": 100,
+  "output_bytes": 1969675045,
+  "output_full_reservation": 8589934592,
+  "budget": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/L1_RECOVERY1_SETTLED_BUDGET_SNAPSHOT.json",
+    "sha256": "b08c4c8c70dc8cf3579d0cb38e52335171b2f66f2bc12bc0ec24d92923fe6961"
+  },
+  "disk_free_bytes": 513132310528,
+  "GPU_queries": 0,
+  "live_submissions": 0
+}

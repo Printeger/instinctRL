@@ -1,6 +1,6 @@
 # 当前任务：R5 W 安全训练闭环（2026-10-19）
 
-新用户授权及进度：`docs/experiments/r5-w-closure-auto/`。新master/E1 stage已登记，无新live。先固定原R1/u512进行.15m ICS工程裕量全任务回归，之后近墙课程训练、全任务复评和独立确认。根为唯一写者，独立review只读；历史首段原件、失败与预算不改。
+当前事件：L1 RECOVERY1真实256updates/131072transitions及u640/u768已独立接受（q2004），原FAILED/-9、INCOMPLETE/null/full reserve保持。E1固定策略工程通过不算RL提升。R5-W-L1-EVAL-01两节点原五任务完整评价已独审/issue A-f86ae4584e07d817，尚未执行；精确plan-l1-evaluation.json提交/tag/push并独审后由原controller接续。唯一batch/state.json只读；当前模型为唯一写者，无直接submit/新controller/GPU探测。完整Goal还需评价、首通过节点独立验证、方法消融与最终审核，不能阶段通过即完成。
 
 以下为此前当前任务的原文历史，不限制新委托包络。
 

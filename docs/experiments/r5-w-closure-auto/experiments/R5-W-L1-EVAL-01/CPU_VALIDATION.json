@@ -1,0 +1,43 @@
+{
+  "status": "PASS_CPU_ONLY_NOT_EVALUATION",
+  "packet": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-EVAL-01/launch_inputs.proposed.json",
+    "sha256": "a374f68336d24cce7f11e5e3abc2d33be7714155af70c5eaddfb8b2decc62f26"
+  },
+  "source_snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019",
+  "checks": [
+    "Frozen snapshot load_config and source manifests PASS",
+    "Frozen validate_parameters and required_budget PASS",
+    "Frozen validate_compatibility original source/config PASS",
+    "Frozen candidate method_hashes identical between actual training and new evaluation parameters",
+    "Both checkpoint hashes equal actual inventory originals",
+    "Stage cumulative resource check PASS"
+  ],
+  "budget": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "initialization_ticks": 10,
+    "training_transitions": 0,
+    "nontraining_transitions": 65920,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "explicit_resets": 10,
+    "automatic_resets": 65920,
+    "wall_seconds": 1800
+  },
+  "projected_cumulative_resources": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 98880,
+    "live_starts": 4,
+    "simulator_initialization_reservations": 4,
+    "optimizer_updates": 256,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048,
+    "training_checkpoint_writes": 2,
+    "allocated_gpu_seconds": 2937.0177343478426,
+    "wall_seconds_including_cleanup": 2945.718607312534,
+    "output_peak_and_reservations_bytes": 38654705664
+  },
+  "GPU_queries": 0,
+  "live_submissions": 0
+}

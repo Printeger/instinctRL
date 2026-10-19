@@ -1,6 +1,6 @@
 # R5 W closure evidence index — IN PROGRESS
 
-The complete Goal remains active. No new live result exists at this preparation boundary. This index is not a completion audit.
+The complete Goal remains active. E1 engineering and L1 training evidence are accepted; both trained nodes still await full evaluation. This index is not a completion audit.
 
 - User scope, immutable incremental master and caps: USER_GOAL_PROMPT.txt, GOAL_SCOPE_AND_MASTER_AUTHORITY.md, MASTER_AUTHORITY.json, goal_budget.json; accepted registration registrations/W-E1-001.json.
 - Original accepted model and source: BASELINE_IDENTITY.json and reviews/baseline-accepted.json. Original R1/u512 SHA a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776.
@@ -10,4 +10,13 @@ The complete Goal remains active. No new live result exists at this preparation 
 - CPU tests and preserved initial fixture failure: w-cpu-tests*.txt/.xml; w-batch-tests*; w-batch-gate-tests-r2.*. Independent findings closed before issue: initial episode labels, STOP chain, ownership helper pin, incomplete counters and resumable settlement, large original archive boundary.
 - Controller source tools/r5_w_batch.py; batch input/prompt/schema in coordination/batches/R5_W_CLOSURE_20261019/. Future sole runtime authority batch/state.json, controller.log and calls/*/request/receipt/events/stderr. No model token polling.
 
-Still required: actual engineering regression; accepted real safety baseline; near-wall training with measured q and per-condition coverage; both preregistered nodes' full original five-task replay; required independent confirmation for a positive model; controlled contribution comparison; all receipts/owned cleanup/settle/2postrun and resource audit; final independent review and requirement-by-requirement completion audit. Only full evidence supports a final positive or scientifically complete negative status.
+Latest terminal-event evidence:
+
+- E1 original five-task replay and W motion: experiments/R5-W-E1-CONTROL-01/E1_CPU_REPLAY.json and reviews/e1-actual-independent.json; fixed-policy engineering gain only.
+- First L1 prelaunch FINAL0 failure: L1_RECOVERY_DECISION.json and reviews/l1-failed-actual-independent.json; failed start/init/full8GiB preserved.
+- RECOVERY1 exact originals: L1_RECOVERY1_ORIGINALS_AUDIT.json, experiments/R5-W-L1-NEARWALL-RECOVERY1/live/R1-research-formal-training/INVENTORY.json, receipt/ACK, execution summary and postrun0/1. All53 originals and100 file references rehashed. Full budget at event: L1_RECOVERY1_SETTLED_BUDGET_SNAPSHOT.json.
+- Actual training/checkpoint independent acceptance: reviews/l1-recovery1-actual-independent.json includes full original/candidate source and method dictionaries and exact u512/u640/u768 pins; q2004 is measured danger coverage, not performance acceptance.
+- New two-node evaluation: experiments/R5-W-L1-EVAL-01/ contains card, compatibility, packet, CPU checks, exact issued spec and approval A-f86ae4584e07d817. reviews/l1-evaluation-prelive.json. No new snapshot; stage W-L1-002 already covers cumulative resources. Evaluation NOT_EXECUTED at this handoff.
+- Next controller input: coordination/batches/R5_W_CLOSURE_20261019/plan-l1-evaluation.json and after-l1-evaluation.prompt.md; independent controller review binds payload without review key.
+
+Still required: both trained nodes' original five-task32lane replay and full W motion; first passing node independent seed/initial-state full verification; controlled contribution comparison, W time series, full resource audit and final independent review. Ordinary negative performance prompts a bounded evidence-based single-variable correction within the same Goal, not a user approval request. Only full evidence supports final positive or scientifically complete negative status.

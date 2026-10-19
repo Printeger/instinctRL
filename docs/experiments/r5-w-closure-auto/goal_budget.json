@@ -21,15 +21,15 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 2,
-    "simulator_initialization_reservations": 2,
+    "live_starts": 3,
+    "simulator_initialization_reservations": 3,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 218.38559405086562,
-    "wall_seconds_including_cleanup": 224.083842956461,
-    "output_peak_and_reservations_bytes": 29624730
+    "allocated_gpu_seconds": 1127.0177343478426,
+    "wall_seconds_including_cleanup": 1135.718607312534,
+    "output_peak_and_reservations_bytes": 1999299775
   },
   "reservations": {
     "live_entries": [
@@ -106,6 +106,43 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 79270,
         "inventory": "experiments/R5-W-L1-NEARWALL-01/live/R1-research-formal-training/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2",
+        "job_id": "J-8bdfaca0488e524d",
+        "experiment_id": "R5-W-L1-NEARWALL-RECOVERY1",
+        "group": "R1",
+        "mode": "research-formal-training",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 2,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 131072,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 256,
+          "training_checkpoint_writes": 2,
+          "actor_optimizer_steps": 2048,
+          "critic_optimizer_steps": 2048
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": -9,
+        "raw_status": "PASS_PENDING_CLOSE",
+        "raw_status_missing": false,
+        "formal_counter_completeness": "INCOMPLETE",
+        "formal_transitions": null,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 1969675045,
+        "inventory": "experiments/R5-W-L1-NEARWALL-RECOVERY1/live/R1-research-formal-training/INVENTORY.json"
       }
     ],
     "source_snapshots": [
@@ -141,11 +178,11 @@
     }
   ],
   "observed": {
-    "training_transitions": 0,
+    "training_transitions": 131072,
     "nontraining_transitions": 32960,
-    "optimizer_updates": 0,
-    "training_checkpoint_writes": 0,
-    "actor_optimizer_steps": 0,
-    "critic_optimizer_steps": 0
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 2,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048
   }
 }

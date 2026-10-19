@@ -104,12 +104,17 @@
     "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
     "registration": "docs/experiments/r5-w-closure-auto/registrations/W-L1-002.json",
     "state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
-    "status": "L1_PRELAUNCH_FINAL_ZERO_RECOVERY1_REVIEWED_CONTROLLER_HANDOFF",
+    "status": "L1_ACTUAL_ACCEPTED_TWO_NODE_EVALUATION_ISSUED_HANDOFF",
     "current_live_jobs": [],
     "exact_job_permission_required": true,
-    "current_exact_release": "A-e685757b2203d20f",
-    "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-l1-recovery1.json",
-    "last_completed_job": "J-06a095a1c78d517e",
-    "last_training_transitions": 0
+    "current_exact_release": "A-f86ae4584e07d817",
+    "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-l1-evaluation.json",
+    "last_completed_job": "J-8bdfaca0488e524d",
+    "last_training_transitions": 131072,
+    "actual_training_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-recovery1-actual-independent.json",
+      "sha256": "ce921180385c8b009151e7e71f94426c8f3052c4ad0cedc53cf2dc75275ea468"
+    },
+    "next_evaluation_status": "NOT_EXECUTED"
   }
 }
