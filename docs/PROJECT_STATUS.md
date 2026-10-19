@@ -1,3 +1,14 @@
+# 当前 Goal：R6 鲁棒性与课程学习闭环（CPU 准备）
+
+2026-10-19 用户已提交 R6 启动委托；完整目标仍未完成。已核验本地/远端 main、
+R5 controller COMPLETE、Store 无未终结作业/暂停/STOP，以及 u640 实际 SHA256
+`aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429`。
+新委托与预算位于 `docs/experiments/r6-robustness-auto/`。当前只完成启动核验和预算检查核心
+9 项 CPU 测试；容量通过、测试冻结、资产全审计、控制器恢复验收、真实非交互审核和
+exact Store 许可均尚未完成。没有 R6 controller/job/自动模型调用，不是后台运行中。
+聊天 Goal 自动续推理与零模型等待的交接限制已提出，尚未变更聊天状态。
+历史 R5 结论与原件保持，下方旧状态不覆盖本轮真实进度。
+
 # 当前完成：R5 W 全原门槛通过（2026-10-19）
 
 **R5_ALL_ORIGINAL_GATES_PASS，最终独审PASS/noMUST_FIX。** 选定R1/u640 SHA `aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429`；u640/u768原seed20260909五任务均32/32，独立seed20261020的u640完整160case/lane重放通过、全部方向4/4、W两墙16/16及真实运动32/32。W最差几何.861944675m、停车2.4s。

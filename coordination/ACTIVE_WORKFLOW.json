@@ -140,5 +140,17 @@
     "controller_state_modified": false,
     "controller_completion_pending_return": true,
     "independent_seed_limitation": "Actual20261020; fixed initial states and identical step dictionaries to primaryu640; T0 only seed differs; no new distribution coverage."
+  },
+  "r6_robustness_execution": {
+    "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+    "status": "CPU_PREPARE",
+    "authority": "docs/experiments/r6-robustness-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md",
+    "budget": "docs/experiments/r6-robustness-auto/goal_budget.json",
+    "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
+    "controller_deployed": false,
+    "current_live_jobs": [],
+    "automatic_model_sessions_started": 0,
+    "exact_job_permission_required": true,
+    "goal_complete": false
   }
 }

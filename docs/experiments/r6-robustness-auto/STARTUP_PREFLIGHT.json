@@ -1,0 +1,44 @@
+{
+  "schema_version": "r6-startup-preflight/1",
+  "observed_at": "2026-10-19T15:40:42.735364+00:00",
+  "requirements": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md",
+    "sha256": "200fb9daa96606ae3a58516219121d2ae243de51a8b1e02d10077a4b15e2f12b"
+  },
+  "user_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/USER_AUTHORITY.txt",
+    "sha256": "b45cbca50cf944ea2b2abe2b6fd57998224784f5de2e2545cc7ae69fc8a2d706"
+  },
+  "head": "171ed9387f4fcec094bf91dad52b24c63d18bbd2",
+  "remote_main": "171ed9387f4fcec094bf91dad52b24c63d18bbd2",
+  "branch": "main",
+  "baseline_checkpoint": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+    "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+  },
+  "r5_controller_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/batch-resource-v2/state.json",
+    "sha256": "f6aab52d78553293b52dee15ea32d732a19f92e743aa7cd914f75d75c944ada5"
+  },
+  "r5_controller_status": "COMPLETE",
+  "store_nonterminal_jobs": [],
+  "store_paused": false,
+  "stop_paths_present": [],
+  "disk_available_bytes": 508737318912,
+  "cli_version": "codex-cli 0.161.0",
+  "cli_help_support": [
+    "stdin",
+    "--json",
+    "--output-schema",
+    "--output-last-message"
+  ],
+  "noninteractive_auth_schema_verified": false,
+  "r6_controller_deployed": false,
+  "r6_job_id": null,
+  "platform_handoff": "Active Goal automatically continues; no exposed active-without-continuation operation. Conditional chat-only pause authorization requested; no pause performed.",
+  "untouched_preexisting_untracked": [
+    "docs/experiments/r5-w-closure-auto/batch-resource-v2/",
+    "docs/experiments/r5-w-closure-auto/batch/",
+    "docs/goal/"
+  ]
+}

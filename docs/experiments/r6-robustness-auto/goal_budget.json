@@ -1,0 +1,62 @@
+{
+  "schema_version": "r6-budget/1",
+  "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+  "status": "CPU_PREPARE_NO_LIVE_PERMISSION",
+  "caps": {
+    "major_scientific_candidates": 3,
+    "training_transitions": 3000000,
+    "nontraining_transitions": 2000000,
+    "allocated_gpu_seconds": 43200,
+    "live_wall_seconds": 43200,
+    "live_starts": 64,
+    "simulator_initializations": 64,
+    "training_checkpoint_writes": 96,
+    "output_actual_plus_unreleased_reservations_bytes": 137438953472,
+    "queue_seconds": 21600,
+    "automatic_model_sessions": 32
+  },
+  "disk_free_floor_bytes": 32212254720,
+  "protected_confirmation_delivery_repair": {
+    "training_transitions": 1572864,
+    "nontraining_transitions": 800000,
+    "allocated_gpu_seconds": 18000,
+    "live_wall_seconds": 18000,
+    "live_starts": 16,
+    "simulator_initializations": 16,
+    "training_checkpoint_writes": 24,
+    "output_actual_plus_unreleased_reservations_bytes": 42949672960,
+    "automatic_model_sessions": 8
+  },
+  "protected_model_sessions": {
+    "final_review": 4,
+    "repair": 4
+  },
+  "used": {
+    "major_scientific_candidates": 0,
+    "training_transitions": 0,
+    "nontraining_transitions": 0,
+    "allocated_gpu_seconds": 0,
+    "live_wall_seconds": 0,
+    "live_starts": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "automatic_model_sessions": 0
+  },
+  "reservations": [],
+  "initial_user_session": {
+    "count": 1,
+    "included_in_automatic_limit": false,
+    "usage": "UNKNOWN"
+  },
+  "model_session_target": [
+    10,
+    16
+  ],
+  "model_session_max_seconds": 3600,
+  "model_session_max_output_bytes": 67108864,
+  "model_context_max_bytes": 65536,
+  "settlement_policy": "No implicit refund; preserve native failures. New settlement protocol requires independent review before first use.",
+  "capacity_pass": false
+}
