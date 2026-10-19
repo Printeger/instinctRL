@@ -1,0 +1,6 @@
+{
+  "result": "12 failed, 64 passed",
+  "command": "CPU pytest resource_admission, w_batch, w_independent, h1_resource_binding, w_commander, scale_003",
+  "failure_scope": "All 12 failures in historical test_scale_003.py; initial traced cause ConfigError pinned product source identity mismatch; old SCALE source/config bindings were not changed",
+  "limitation": "Not claiming full legacy SCALE suite pass; focused new/legacy utilization behavior tests run separately with explicit fixtures"
+}

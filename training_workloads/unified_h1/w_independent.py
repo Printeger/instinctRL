@@ -43,7 +43,7 @@ def validate_parameters(mode, value):
     if set(p) != primary.FIELDS | {'checkpoints', 'independent_validation_protocol'}:
         raise PermissionError('independent parameters differ')
     r, original, _ = protocol(p)
-    if p.get('experiment_id') not in (EXPERIMENT, RECOVERY_EXPERIMENT):
+    if p.get('experiment_id') not in (EXPERIMENT, RECOVERY_EXPERIMENT, 'R5-W-L1-INDEPENDENT-RESOURCE-V2'):
         raise PermissionError('independent experiment identity differs')
     expected = dict(original, experiment_id=p['experiment_id'], evaluation_seed=SEED,
                     evaluation_updates=[640], checkpoints=[r['checkpoint']],

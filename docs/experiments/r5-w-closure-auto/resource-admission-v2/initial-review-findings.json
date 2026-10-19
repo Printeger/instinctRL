@@ -1,0 +1,9 @@
+{
+  "reviewer": "/root/resource_review",
+  "verdict": "REQUEST_CHANGES",
+  "must_fix": [
+    "Mid-window collection failure loses partial samples",
+    "Recovery safety paths need negative tests"
+  ],
+  "resolution_candidate": "Incremental durable observation journal, partial failure window, shared-lock/STOP/live-predecessor/terminal preservation/worker directory tests; pending rereview"
+}

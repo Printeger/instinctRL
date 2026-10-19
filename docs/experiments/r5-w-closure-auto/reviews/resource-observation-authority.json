@@ -1,0 +1,19 @@
+{
+  "reviewer": "/root/resource_review",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "Explicit supplemental user authority and bounded read-only diagnostic tool only; no live approval",
+  "identities": {
+    "user_authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/resource-admission-v2/USER_AUTHORITY.txt",
+      "sha256": "936d7dac52d05758e45f0037da4ce375a905de33568db7381ed16901c8af5d6a"
+    },
+    "observation_tool": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/observe_r5_w_resources.py",
+      "sha256": "2cd53563cd7cd462313ed5b99ccacc60e4488efd60748ba47f2be831d69afd3b"
+    }
+  },
+  "limitations": [
+    "300 seconds is nominal cadence; actual span must be reported; interrupted partial window cannot count as full observation"
+  ]
+}

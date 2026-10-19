@@ -7,13 +7,15 @@ from rlflow import experiments,policy
 from rlflow.jobs import identity,owns
 
 RUN=BASE/'batch'
+ORIGINAL_RUN=BASE/'batch'
+RESOURCE_RUN=BASE/'batch-resource-v2'
 CONTROL_PY='/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python'
 TERMINAL={'FAILED','STOPPED','SUCCEEDED'}
 
 def env():
     return dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTHONPATH='.:tools/rlflow:isaaclab-training',CUDA_VISIBLE_DEVICES='',GIT_TERMINAL_PROMPT='0')
 
-def stopped():return policy.stopped(CONTROL)+[str(p) for p in (BASE/'STOP',RUN/'STOP') if p.exists()]
+def stopped():return policy.stopped(CONTROL)+[str(p) for p in {BASE/'STOP',ORIGINAL_RUN/'STOP',RUN/'STOP'} if p.exists()]
 
 def guard():
     assert not stopped() and not Store(CONTROL).replay()['paused'],'STOP_OR_PAUSE'
@@ -22,6 +24,21 @@ def log(event,**kw):
     RUN.mkdir(parents=True,exist_ok=True)
     with (RUN/'controller.log').open('a') as f:
         f.write(json.dumps(dict(event=event,time=time.time(),**kw))+'\n');f.flush();os.fsync(f.fileno())
+
+def verify_resumption(p):
+    if RUN == RESOURCE_RUN:
+        assert p['run_directory']==str(RESOURCE_RUN)
+        predecessor=read(checked(p['predecessor_state']))
+        assert p['predecessor_state']['path']==str(ORIGINAL_RUN/'state.json')
+        assert predecessor['status']=='STOPPED_EXCEPTION' and not owns(predecessor.get('controller_identity'))
+        for call in predecessor['model_calls'].values():
+            assert not owns(call.get('worker_identity'))
+            receipt=read(checked(call['receipt']))
+            assert not owns(receipt.get('identity'))
+        supplement=checked(p['resource_user_authority'])
+        evidence=Store(CONTROL).replay()['evidence']['E-R5-W-RESOURCE-ADMISSION-USER-20261019']
+        assert evidence['accepted'] and evidence['path']==str(supplement) and evidence['sha256']==sha(supplement)
+        require_pushed([supplement])
 
 def verify_plan(planpath):
     p=read(planpath);r=read(checked(p['independent_review']))
@@ -37,6 +54,7 @@ def verify_plan(planpath):
     assert auth['mode']==spec['h1']['mode'] and auth['attempt']==spec['h1']['attempt']
     assert p['poll_seconds']==15 and p['automatic_retries']==0
     assert p['model_timeout_seconds']==7200 and p['model_output_cap_bytes']==64*1024**2
+    verify_resumption(p)
     require_pushed([planpath,Path(p['independent_review']['path']),Path(__file__),Path(p['ownership_helper']['path']),Path(p['after_prompt']['path']),Path(p['schema']['path'])])
     return p
 
@@ -92,9 +110,14 @@ def model_worker(callpath):
     return 0 if code==0 and error is None else 1
 
 
+def worker_argv(callpath):
+    return [CONTROL_PY,str(Path(__file__).resolve()),'_worker',str(callpath),'--run-directory',str(RUN)]
+
+
 def run(first_plan):
     RUN.mkdir(parents=True,exist_ok=True)
-    with (RUN/'writer.lock').open('a') as lock:
+    ORIGINAL_RUN.mkdir(parents=True,exist_ok=True)
+    with (ORIGINAL_RUN/'writer.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         path=RUN/'state.json'
         if path.exists():
@@ -148,7 +171,7 @@ def run(first_plan):
                     request=dict(argv=argv,prompt=p['after_prompt'],schema=p['schema'],codex=p['codex'],timeout_seconds=p['model_timeout_seconds'],output_cap_bytes=p['model_output_cap_bytes'])
                     save(callpath/'request.json',request,new=True)
                     call=dict(intent=True,request=pin(callpath/'request.json'));state['model_calls'][key]=call;state['phase']='MODEL:'+key;save(path,state)
-                    worker=subprocess.Popen([CONTROL_PY,str(Path(__file__).resolve()),'_worker',str(callpath)],cwd=ROOT,env=env(),stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+                    worker=subprocess.Popen(worker_argv(callpath),cwd=ROOT,env=env(),stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
                     call['worker_identity']=identity(worker.pid);save(path,state)
                 while not (callpath/'receipt.json').exists():
                     assert call.get('worker_identity') and owns(call['worker_identity']),'MODEL_WORKER_MISSING_NO_RETRY'
@@ -170,6 +193,8 @@ def run(first_plan):
             state.update(status='STOPPED_EXCEPTION',error=repr(exc));save(path,state);log('STOPPED_EXCEPTION',error=repr(exc));raise
 
 if __name__=='__main__':
-    ap=argparse.ArgumentParser();ap.add_argument('action',choices=['run','_worker']);ap.add_argument('path',type=Path);a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('action',choices=['run','_worker']);ap.add_argument('path',type=Path)
+    ap.add_argument('--run-directory',type=Path,default=ORIGINAL_RUN);a=ap.parse_args()
+    RUN=a.run_directory.resolve();assert RUN in (ORIGINAL_RUN,RESOURCE_RUN)
     if a.action=='_worker':raise SystemExit(model_worker(a.path.resolve()))
     run(a.path.resolve())

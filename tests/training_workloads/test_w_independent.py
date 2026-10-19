@@ -93,3 +93,18 @@ def test_exact_recovery_identity_only(tmp_path):
     assert w.required_budget(primary.EVAL,p)['nontraining_transitions']==32960
     for key,value in [('experiment_id','R5-W-L1-INDEPENDENT-RECOVERY2'),('evaluation_seed',20261021),('evaluation_updates',[768]),('ics_clearance_margin_m',.16)]:
         with pytest.raises(PermissionError):w.validate_parameters(primary.EVAL,dict(p,**{key:value}))
+
+
+def test_resource_v2_requires_exact_card_policy_and_preserves_science(tmp_path):
+    from training_workloads.unified_h1 import resource_admission as resource
+    p=profile(tmp_path);p['experiment_id']=resource.EXPERIMENT
+    card=dict(experiment_id=resource.EXPERIMENT,profiles={'R1':{k:v for k,v in p.items() if k not in ('checkpoints','experiment_card')}},resource_admission_policy=resource.POLICY)
+    p['experiment_card']=write(tmp_path/'resource-card.json',card)
+    assert w.validate_parameters(primary.EVAL,p)==p
+    selected=resource.select_gate({'mode':primary.EVAL,'parameters':p},{},None)
+    assert selected.func is resource.run_gate
+    r,original,c=w.protocol(p)
+    assert w.method_hashes({},p)==primary.method_hashes(c,original)
+    card['resource_admission_policy']=dict(resource.POLICY,mean_utilization_max=100)
+    p['experiment_card']=write(tmp_path/'bad-resource-card.json',card)
+    with pytest.raises(PermissionError):resource.select_gate({'mode':primary.EVAL,'parameters':p},{},None)

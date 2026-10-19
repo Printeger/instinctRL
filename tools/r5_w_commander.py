@@ -154,6 +154,13 @@ def main():
         spec['conditions']=[dict(evidence_id=MASTER_EVIDENCE,sha256=sha(masterpath)),dict(evidence_id=stage['evidence_id'],sha256=sha(stagepath)),
             accept(store,'E-'+args.experiment_id+'-PRELIVE',args.review.resolve(),'Independent exact new W packet/source/method'),
             accept(store,'E-'+args.experiment_id+'-CHECKPOINT',args.checkpoint_acceptance.resolve(),'Actual checkpoint/source/method identity accepted')]
+        if args.experiment_id=='R5-W-L1-INDEPENDENT-RESOURCE-V2':
+            supplemental=checked(packet['resource_user_authority'])
+            assert stage['resource_user_authority']==pin(supplemental)
+            eid='E-R5-W-RESOURCE-ADMISSION-USER-20261019'
+            evidence=store.replay()['evidence'][eid]
+            assert evidence['accepted'] and evidence['path']==str(supplemental) and evidence['sha256']==sha(supplemental)
+            spec['conditions'].append(dict(evidence_id=eid,sha256=sha(supplemental)))
         actual=Path(spec['pins']['authorization']['path']);assert not actual.exists() and not actual.parent.parent.exists()
         actual.parent.mkdir(parents=True);(actual.parent.parent/'results').mkdir();save(actual,auth,new=True);actual.chmod(0o444)
         assert sha(actual)==row['expected_authorization']['sha256']

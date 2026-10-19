@@ -1,0 +1,112 @@
+{
+  "observation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/resource-admission-v2/observation.jsonl",
+    "sha256": "f0db53db2002141ea96b7d01041c914e21ad38655713f2af066a5cd551042852"
+  },
+  "tool": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/observe_r5_w_resources.py",
+    "sha256": "2cd53563cd7cd462313ed5b99ccacc60e4488efd60748ba47f2be831d69afd3b"
+  },
+  "samples": 61,
+  "actual_first_to_last_seconds": 300.008236254,
+  "elapsed_tool_seconds": 300.96430351771414,
+  "utilization": {
+    "all": [
+      5,
+      2,
+      4,
+      3,
+      4,
+      5,
+      4,
+      3,
+      3,
+      5,
+      4,
+      6,
+      4,
+      6,
+      4,
+      2,
+      8,
+      6,
+      3,
+      2,
+      11,
+      5,
+      3,
+      6,
+      13,
+      5,
+      4,
+      3,
+      14,
+      3,
+      5,
+      3,
+      4,
+      4,
+      5,
+      2,
+      15,
+      4,
+      5,
+      3,
+      14,
+      3,
+      5,
+      2,
+      15,
+      2,
+      6,
+      2,
+      13,
+      4,
+      3,
+      6,
+      5,
+      3,
+      10,
+      6,
+      4,
+      3,
+      3,
+      5,
+      4
+    ],
+    "mean": 5.213114754098361,
+    "median": 4,
+    "max": 15,
+    "above5": 16
+  },
+  "memory_used_range_mib": [
+    560,
+    562
+  ],
+  "compute_app_sets": [
+    [
+      [
+        "/usr/libexec/gnome-remote-desktop-daemon",
+        164
+      ]
+    ]
+  ],
+  "policy": {
+    "schema_version": "r5-w-resource-admission/2",
+    "sample_count": 13,
+    "minimum_span_seconds": 60,
+    "minimum_gap_seconds": 4,
+    "maximum_gap_seconds": 8,
+    "mean_utilization_max": 5,
+    "peak_utilization_max": 20,
+    "elevated_utilization_threshold": 5,
+    "elevated_samples_max": 2,
+    "memory_used_max_mib": 1024,
+    "memory_free_min_mib": 10240,
+    "allowed_app": "gnome-remote-desktop-daemon",
+    "allowed_app_max_mib": 256
+  },
+  "live_starts": 0,
+  "simulator_initializations": 0,
+  "limitation": "Finite scheduling observation only; neither causal process attribution nor future admission proof. Live must collect its own full window."
+}

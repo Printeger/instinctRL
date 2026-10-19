@@ -814,9 +814,11 @@ def create_live_backend(*, authorization: Mapping[str, Any], attempt: Path,
                    else results / "prelaunch")
     gate_output.mkdir(exist_ok=False)
     resource_pins = resource_binding_pins()
+    from .resource_admission import select_gate
+    selected_gate = select_gate(authorization, resource_pins, partial(run_prelaunch_gate, resource_pins=resource_pins))
     gate, launcher, app = start_after_coexistence_gate(gate_output, mode=str(authorization["mode"]),
         attempt_id=attempt.name, authorization_sha256=str(authorization["authorization_sha256"]),
-        gate_runner=partial(run_prelaunch_gate, resource_pins=resource_pins), resource_pins=resource_pins,
+        gate_runner=selected_gate, resource_pins=resource_pins,
         asset_root=Path(config["execution"]["isaacsim_asset_root"]))
     if resources is not None: resources.update(launcher=launcher, app=app)
     validate_graceful_shutdown_configuration(app, resource_pins=resource_pins)
