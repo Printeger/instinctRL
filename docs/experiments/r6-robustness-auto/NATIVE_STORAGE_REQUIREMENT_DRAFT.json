@@ -1,0 +1,53 @@
+{
+  "status": "CONDITIONAL_NATIVE_STORAGE_REQUIREMENT_NOT_IMPLEMENTED",
+  "capacity_pass": false,
+  "input": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_COMPOSED_DRAFT_V5.json",
+    "sha256": "56bb916565aea2c5d494b715172647d9dba27aa71d8719e800256838b1c141a8"
+  },
+  "original_native_bytes_per_job": 3221225472,
+  "proposed_native_bytes_per_job": 1610612736,
+  "final_components_bytes": {
+    "four_full_evaluations": 80329310208,
+    "three_training_jobs": 11274289152,
+    "snapshots": 2147483648,
+    "videos": 2147483648,
+    "controller_and_reviews": 1073741824,
+    "failed_cleanup_and_delivery_margin": 1073741824
+  },
+  "development_components_bytes": {
+    "initial_full_baseline": 20082327552,
+    "one_affected_block_plus_original_evaluation": 3489660928,
+    "one_256_update_training_job": 2684354560,
+    "historical_snapshot_reservation": 2147483648,
+    "new_baseline_snapshot": 2147483648,
+    "controller_and_reviews": 1073741824,
+    "failed_prelaunch_and_repair_margin": 2147483648
+  },
+  "hypothetical_final_protection_bytes": 98784247808,
+  "hypothetical_development_limit_bytes": 38654705664,
+  "hypothetical_development_total_bytes": 33772535808,
+  "hypothetical_development_headroom_bytes": 4882169856,
+  "required_enforcement": [
+    "Hard aggregate limit of 1610612736 bytes for every job native output, including caches and crash artifacts; a per-file limit or periodic scan is insufficient",
+    "All writable native paths identified and contained; reads of frozen runtime/assets/extensions remain available without mutating them",
+    "Original console/crash evidence retained on exhaustion; fail closed and owned-process cleanup, without deleting old evidence or refunding reservations",
+    "Persistent per-job evidence identity and accounting across controller restart; no reuse of a previous job quota as an implicit refund",
+    "CPU multi-file and restart/exhaustion tests followed by exact independent review before permission issuance",
+    "Verify actual Kit path settings and output containment during authorized initialization; a configured mount alone is not a proof"
+  ],
+  "current_evidence": {
+    "namespace_probe": "NATIVE_FILESYSTEM_LIMITATION_CPU.json",
+    "native_paths": "NATIVE_WRITER_SOURCE_AUDIT.json",
+    "console_capture": "CPU_ACTUAL_NATIVE_LOGGER_VERIFICATION.json"
+  },
+  "constraints": [
+    "No filesystem quota or mount created by this planning tool",
+    "No lower native limit in production entry or ledger until enforcement and review pass",
+    "No compression probe assumed; original measurement quotas and complete final coverage retained",
+    "Existing snapshot/repair/video/controller reservations retained; additional candidates require remaining-budget admission"
+  ],
+  "ledger_changed": false,
+  "runtime_changed": false,
+  "coverage_reduced": false
+}

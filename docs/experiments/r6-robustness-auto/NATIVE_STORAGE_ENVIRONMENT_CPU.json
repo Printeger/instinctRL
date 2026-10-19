@@ -1,0 +1,31 @@
+{
+  "status": "READ_ONLY_ENVIRONMENT_EVIDENCE_NOT_ENFORCEMENT",
+  "argv": [
+    "findmnt",
+    "-T",
+    "/home/mint/rl_dev/instinctRL-dev",
+    "-o",
+    "TARGET,SOURCE,FSTYPE,OPTIONS"
+  ],
+  "exit_code": 0,
+  "stdout": "TARGET SOURCE         FSTYPE OPTIONS\n/      /dev/nvme0n1p2 ext4   rw,relatime\n",
+  "stderr": "",
+  "prior_evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_FILESYSTEM_LIMITATION_CPU.json",
+      "sha256": "e4bad3fc815eb1105e2c867b4c86b7123a1047292a33ab53fd027b7e4ddf84ed"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_WRITER_SOURCE_AUDIT.json",
+      "sha256": "890a47e970062cc00bf5b0e2953f673bc03471af33701cdd339cc5af124be41b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ACTUAL_NATIVE_LOGGER_VERIFICATION.json",
+      "sha256": "6e7ab68a506381b9d588a15a446109ccd9e80761ca468be9043ec7a4f951abec"
+    }
+  ],
+  "interpretation": "Mount output shows ext4 rw,relatime and no displayed quota options. This is not an exhaustive kernel quota capability test; no per-job aggregate quota has been established. Prior namespace permission failure remains unchanged.",
+  "runtime_modified": false,
+  "mount_created": false,
+  "gpu_queries": 0
+}
