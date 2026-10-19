@@ -1,8 +1,8 @@
 {
   "status": "INTERIM_CPU_ONLY",
-  "automatic_sessions_reserved": 4,
+  "automatic_sessions_reserved": 5,
   "automatic_sessions_completed": 4,
-  "remaining_unreserved": 28,
+  "remaining_unreserved": 27,
   "initial_user_session_usage": "UNKNOWN",
   "calls": [
     {
@@ -96,5 +96,6 @@
   ],
   "training_started": false,
   "zero_model_training_wait_verified": false,
-  "pure_wait_model_calls": 0
+  "pure_wait_model_calls": 0,
+  "pending_event": "1fe62477ac41ab5009c0ea53a827362a3e515017238893381a33c8d7aa1b7462"
 }
