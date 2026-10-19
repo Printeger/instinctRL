@@ -92,6 +92,40 @@ class CPUAnalysisTests(unittest.TestCase):
         self.assertEqual(s['budget']['reservations'][0]['resources']['output_actual_plus_unreleased_reservations_bytes'],RESERVATION)
         self.assertEqual(sum(e['kind']=='model' for e in s['events'].values()),0)
 
+    def finalize_analysis(self,timeout=10):
+        from tools.r6_finalize_job import analyze
+        with self.j.writer():
+            return analyze(self.j,self.key,self.store,free_disk_bytes=500*1024**3,
+                python=file_pin(sys.executable),program=file_pin(self.program),timeout_seconds=timeout)
+
+    def test_finalizer_registers_analysis_once_and_replay_preserves_state(self):
+        self.program.write_text(SCRIPT.format(body='pass'))
+        first=self.finalize_analysis();self.assertEqual(self.count(),1)
+        with self.j.writer():
+            state=self.j.read();state['status']='MODEL_DECISION_RECORDED';self.j.save(state)
+        before=self.j.read()
+        self.assertEqual(self.finalize_analysis(),first)
+        self.assertEqual(self.count(),1);self.assertEqual(self.j.read(),before)
+
+    def test_finalizer_rejects_changed_analysis_deadline_before_dispatch(self):
+        self.register(timeout=10)
+        with self.assertRaisesRegex(RecoveryError,'FINALIZE_ANALYSIS_BINDING'):
+            self.finalize_analysis(timeout=11)
+        self.assertEqual(self.count(),0)
+
+    def test_finalizer_recovers_same_live_analysis_worker(self):
+        self.register(body='time.sleep(.5)');self.launch_detached()
+        self.j=Journal(self.j.directory)
+        result=self.finalize_analysis();self.proc.wait(timeout=5)
+        self.assertEqual(result['native_status'],'FAILED');self.assertEqual(self.count(),1)
+
+    def test_finalizer_does_not_retry_failed_analysis(self):
+        self.program.write_text(SCRIPT.format(body='raise SystemExit(9)'))
+        for _ in range(2):
+            with self.assertRaisesRegex(RecoveryError,'CPU_ANALYSIS_FAILED_PRESERVED'):
+                self.finalize_analysis()
+        self.assertEqual(self.count(),1)
+
     def test_restart_rebinds_same_live_worker_without_second_call(self):
         self.register(body='time.sleep(.5)');self.launch_detached()
         self.j=Journal(self.j.directory)

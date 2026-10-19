@@ -1,0 +1,54 @@
+{
+  "schema_version": "r6-finalizer-analysis-cpu/1",
+  "status": "CPU_COMPOSITION_PASS_PENDING_REVIEW_NOT_DEPLOYED",
+  "pytest_cases_passed": 53,
+  "new_tests": 4,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_finalize_job.py",
+    "sha256": "946347a802b58053e250eb1c344fe7f9e398c09893796442dffbe1870c7e21b2"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_cpu_analysis.py",
+    "sha256": "a3685a46fc4839f6ddd561c17cd914931430cb904a803849a644f470e16780d8"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINALIZER_ANALYSIS_TESTS.txt",
+    "sha256": "25f9752cdfa55f5f6d41bcdf13d842a5d28819580063b9d0bfe7d2d10663b36e"
+  },
+  "dependencies": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_cpu_analysis.py",
+      "sha256": "1e513fe296eb20fedf4715e2878a465f6ff8ce7ceac50250db5e7a89395f468f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "8057204ac70b266fbb691a3b65baa55bd6de5e9579f624da423a11e22abfb3f1"
+    }
+  ],
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "9b272bf84588eeb8c3b064bcb99b89f7971176eb09e468b8440b14a8accb2668"
+  },
+  "operating_state_modified": false,
+  "capacity_pass": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "command_template": "python -B -m tools.r6_finalize_job DIRECTORY EVENT_KEY --store EXISTING_STORE --executable PINNED_QUERY_EXECUTABLE --analyze",
+  "coverage": [
+    "Optional analysis runs after inventory and two postrun queries under the same Journal writer lock",
+    "Existing exact CPU analysis event reused without new reservation or duplicate registration; interpreter/program/timeout drift refused",
+    "Actual bounded CPU worker executes fixture program once; live worker reattachment and completed receipt replay do not execute it again",
+    "Failed CPU analysis receipt preserved with no automatic retry",
+    "Repeated completed analysis preserves later model-decision status and all journal contents"
+  ],
+  "substitutes": [
+    "Analysis program emits fixture report; original job/Store/cleanup and report inputs use existing CPU fixture machinery",
+    "These are CPU control composition tests, not production science or full controller deployment"
+  ],
+  "limitations": [
+    "Finalizer does not yet trigger structured model decisions or execute approved next plans",
+    "Capacity, exact production source/snapshot authorization and independent review remain pending",
+    "Goal UI zero-model handoff, baseline/learning/final validation and delivery remain incomplete"
+  ]
+}
