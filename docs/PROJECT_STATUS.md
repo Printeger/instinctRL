@@ -98,6 +98,7 @@ R6提交桥接已提供本地CLI：`python -B -m tools.r6_submit DIRECTORY EVENT
 R6提交与关闭已组合为CLI可选 `--wait-close`：同一Journal写锁贯穿submit与既有本地job_handoff，无模型等待；提交前核对完整清理时间预留。已关闭步骤重放重新核验准确Store终态、关闭回执及原始清理pins，不回退后续分析状态。74项CPU检查通过（6新增组合、49提交、19既有handoff），见 `CPU_SUBMIT_CLOSE_TESTS.json`；首次fixture检查了CLI之外的Journal对象，改为竞争flock验证且保留失败原件。新增组合使用合成终态/原生回执，不能称live证据；实际运行账本未改、无GPU/live/模型调用、capacityfalse。inventory/postrun/analysis/decision完整编排与部署、独审及科学目标仍未完成。
 R6新增作业后finalizer组合原件清单、准确两次postrun登记与既有有界worker；CPU假查询实际执行两次，第一查询后重启只补剩余一次，完整重放不改后续状态。同时复现并修复清单成功重放、清单失败重放和postrun汇总重放的三处状态回退；已完成清单仍重验Store终态/原始清理/全部原件，汇总仍重验两份receipt。40项相关CPU检查通过（5新增），见 `CPU_POSTCLOSE_FINALIZER_TESTS.json`，三个修复前失败保留。`tools/r6_finalize_job.py`仅处理终态作业，不提交或调用模型；测试查询为临时假程序，未查询GPU/live，操作账本和capacityfalse不变。完整controller、独审、生产精确快照授权及科学目标仍未完成。
 R6 finalizer新增可选 `--analyze`，在原件清单与两次postrun后登记/接回既有有界CPU分析。已有准确事件直接复用；解释器/程序/timeout必须匹配，失败receipt不重跑。53项pytest CPU案例通过（4新增），见 `CPU_FINALIZER_ANALYSIS_TESTS.json`：实际CPU worker仅执行一次、可接回仍存活worker、完成重放保留后续状态。分析程序/报告及原job链为明确fixture，非科学验证；无GPU/live/模型调用，操作账本和capacityfalse不变。结构化决策/下一计划编排、controller部署、独审、生产输入冻结与科学验证仍未完成。
+R6 finalizer已接可选分析后结构化决策：沿用既有packet/预算/模型handoff，首次登记或准确接回同一事件；重查identity/request/schema/executable/sandbox和原分析证据。已登记决策优先恢复，不重走先前postclose/analysis；缺decision_input仅在无dispatch/receipt时恢复，未知在途拒绝重建。42项pytest CPU案例通过（6新增），见 `CPU_FINALIZER_DECISION_TESTS.json`；本地假CLI实际仅执行一次，未调用真实模型。输出仍为dispatch_authorized=false/scientific_acceptance=false提案。操作账本和capacityfalse不变、无GPU/live；提案到已审核下一计划的执行、完整部署及科学目标仍未完成。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）

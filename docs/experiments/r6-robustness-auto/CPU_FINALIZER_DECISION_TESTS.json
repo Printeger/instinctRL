@@ -1,0 +1,62 @@
+{
+  "schema_version": "r6-finalizer-decision-cpu/1",
+  "status": "CPU_COMPOSITION_PASS_PENDING_REVIEW_NOT_DEPLOYED",
+  "pytest_cases_passed": 42,
+  "new_tests": 6,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_finalize_job.py",
+    "sha256": "bf6ee0dcd15758c66d14604a8221963622493ed9d82b9752afed3a30c442dca9"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py",
+    "sha256": "683251b457510dbbef975936eb2dc937047820e0038c19158c8e6d987fb4f86c"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINALIZER_DECISION_TESTS_V2.txt",
+    "sha256": "aba5bfa91c8266dc7872a0cf2b54e0912ecb7260b695e0fc1d49675648c66ea2"
+  },
+  "earlier_output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINALIZER_DECISION_TESTS.txt",
+    "sha256": "7972494aa773da3251c979b9ae344214f598f62ab98d754ab7027a4443f8b3b6"
+  },
+  "dependencies": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py",
+      "sha256": "5e4a00dccdb3e0da7ba66731fd9c2631896c24f759445e6fca4fa0f9cf1d283e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py",
+      "sha256": "2d47f5e1ae593dbcc14886f7757483f62d8326970084aba3fd07bea6e1c1621e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "8057204ac70b266fbb691a3b65baa55bd6de5e9579f624da423a11e22abfb3f1"
+    }
+  ],
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "9b272bf84588eeb8c3b064bcb99b89f7971176eb09e468b8440b14a8accb2668"
+  },
+  "operating_state_modified": false,
+  "capacity_pass": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "actual_model_calls": 0,
+  "coverage": [
+    "Finalizer optionally registers or recovers one exact post-analysis model event using existing budgeted handoff",
+    "Existing event identity/request/schema/executable/sandbox and original analysis are checked before model dispatch",
+    "Missing decision_input before dispatch recovers original registration; missing input after dispatch claim fails without retry",
+    "Changed sandbox and raw evidence rejected before fake CLI execution",
+    "Registered decision recovery bypasses completed earlier phases; repeated result preserves journal and runs fake CLI once",
+    "Proposal remains scientific_acceptance=false and dispatch_authorized=false"
+  ],
+  "substitutes": [
+    "All model behavior is local CPU fake CLI producing synthetic JSONL and usage",
+    "Original job/Store/evidence use existing isolated CPU fixtures; this is not actual model or scientific acceptance"
+  ],
+  "limitations": [
+    "Recovery test covers an already registered decision; separate worker tests cover live process handoff",
+    "No automatic execution of proposed next plans or full controller deployment",
+    "Capacity, production snapshot/config authorization, independent review and zero-model Goal UI handoff remain pending"
+  ]
+}

@@ -79,6 +79,63 @@ class DecisionTests(unittest.TestCase):
         self.assertEqual(self.exe.with_suffix('.count').read_text(),'call\n')
         self.assertEqual(len(self.j.read()['budget']['reservations']),2)
 
+    def finalize_decision(self,sandbox='read-only'):
+        from tools.r6_finalize_job import decide
+        with self.j.writer():
+            return decide(self.j,self.key,self.store,file_pin(self.exe),
+                free_disk_bytes=500*1024**3,sandbox=sandbox,poll_seconds=.01)
+
+    def test_finalizer_decision_runs_once_and_preserves_replay_state(self):
+        first=self.finalize_decision()
+        before=self.j.read()
+        self.assertEqual(self.finalize_decision(),first)
+        self.assertEqual(self.j.read(),before)
+        self.assertEqual(self.exe.with_suffix('.count').read_text(),'call\n')
+        self.assertFalse(first['dispatch_authorized'])
+
+    def test_finalizer_rejects_changed_sandbox_before_model_dispatch(self):
+        self.register()
+        with self.assertRaisesRegex(RecoveryError,'FINALIZE_DECISION_BINDING'):
+            self.finalize_decision(sandbox='danger-full-access')
+        self.assertFalse(self.exe.with_suffix('.count').exists())
+
+    def test_finalizer_repairs_missing_input_binding_before_dispatch(self):
+        key=self.register()
+        with self.j.writer():
+            state=self.j.read();state['events'][key].pop('decision_input');self.j.save(state)
+        self.assertEqual(self.finalize_decision()['next_step'],'REPAIR_AND_REVIEW')
+        self.assertEqual(self.exe.with_suffix('.count').read_text(),'call\n')
+        self.assertEqual(len(self.j.read()['budget']['reservations']),2)
+
+    def test_finalizer_does_not_reconstruct_input_after_ambiguous_dispatch(self):
+        key=self.register()
+        with self.j.writer():
+            state=self.j.read();entry=state['events'][key]
+            entry.pop('decision_input');entry['dispatch_claim']={'fixture':'unknown'};self.j.save(state)
+        with self.assertRaisesRegex(RecoveryError,'FINALIZE_DECISION_INPUT_AMBIGUOUS'):
+            self.finalize_decision()
+        self.assertFalse(self.exe.with_suffix('.count').exists())
+
+    def test_finalizer_rechecks_raw_analysis_before_first_model_dispatch(self):
+        self.register();Path(self.raw['path']).write_text('changed raw')
+        with self.assertRaises(RecoveryError):self.finalize_decision()
+        self.assertFalse(self.exe.with_suffix('.count').exists())
+
+    def test_registered_decision_recovery_skips_completed_earlier_phases(self):
+        from tools.r6_finalize_job import finish_and_decide
+        self.register()
+        with patch('tools.r6_finalize_job.finalize',side_effect=AssertionError('repeat postclose')), \
+                patch('tools.r6_finalize_job.analyze',side_effect=AssertionError('repeat analysis')):
+            with self.j.writer():
+                first=finish_and_decide(self.j,self.key,self.store,file_pin(self.exe),file_pin(self.exe),
+                    free_disk_bytes=500*1024**3,poll_seconds=.01)
+            before=self.j.read()
+            with self.j.writer():
+                second=finish_and_decide(self.j,self.key,self.store,file_pin(self.exe),file_pin(self.exe),
+                    free_disk_bytes=500*1024**3,poll_seconds=.01)
+        self.assertEqual(first,second);self.assertEqual(self.j.read(),before)
+        self.assertEqual(self.exe.with_suffix('.count').read_text(),'call\n')
+
     def mutate_response(self,key,change):
         s=self.j.read();entry=s['events'][key];r=json.loads(Path(entry['receipt']['path']).read_text())
         path=Path(r['last_message']['path']);value=json.loads(path.read_text());change(value)
