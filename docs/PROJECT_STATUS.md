@@ -16,6 +16,8 @@ L1原入口 `R5-W-L1-NEARWALL-01` / `J-06a095a1c78d517e` 在prelaunch共存门�
 
 同Goal内准备一次有依据的 `R5-W-L1-INDEPENDENT-RECOVERY1`：固定首通过u640、seed20261020、32960非训练/5reset、0训练/写入。仅独立模块增加明确RECOVERY1身份白名单；primary/backend/evaluator/产品与评分门槛不变。首次CPU快照method路径绑定拒绝，原snapshot/config及2GiB预留保全；新r2候选 source032412b/config6a65b6ae已CPU冻结，32项回归PASS。W-V1-002已独审登记，6start/init、64GiB输出封顶在原master内；准确packet独审PASS，许可 `A-35403dcbfe28c1b1` 已合法签发，尚未submit；输入提交/tag/push和计划独审完成后由原controller执行。**完整Goal仍IN_PROGRESS**：独立seed实际全raw重放、最终交付和final_review尚待完成；不能把E1工程收益记为RL增益。唯一controller状态 `docs/experiments/r5-w-closure-auto/batch/state.json` 只读。下文旧任务仅作历史。
 
+最新实际终态：`R5-W-L1-INDEPENDENT-RECOVERY1` / `J-4c3d85af4438c260` 再次prelaunch FAILED/1、FINAL0，GPU6/5/4%，没有评价raw。27项原件及归档、40处pins独审PASS；normal owned ACK、settle、恰好2postrun完成，postrun3%。与原独立入口相隔484.72秒的两次完整窗口均拒绝，支持重复/间歇外部共存阻塞；不证明持续>5%或daemon因果。无资源改善证据时不再盲RECOVERY链，交原controller `STOPPED_EXCEPTION`；**完整Goal未完成，非科学阴性**。旧FAILED/-9、INCOMPLETE/null和全reserve保留，累计6start/init、四snapshot预留；master未耗尽。见 `INDEPENDENT_RECOVERY1_STOP_RESULT.json`、`reviews/independent-recovery1-failure-actual.json`。原独立seed实测、全raw重放和最终科学验收仍待完成。
+
 更新：2026-10-17。唯一日常开发目录 `/home/mint/rl_dev/instinctRL-dev`，唯一开发分支 `main`，
 远端 [Printeger/instinctRL](https://github.com/Printeger/instinctRL)。当前精确版本以 `git rev-parse HEAD` 为准。
 代码、状态、workload、必要工具和测试已整理到本仓库。源历史完整继承到 `903afc5`，

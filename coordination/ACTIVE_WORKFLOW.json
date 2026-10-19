@@ -104,18 +104,18 @@
     "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
     "registration": "docs/experiments/r5-w-closure-auto/registrations/W-V1-001.json",
     "state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
-    "status": "INDEPENDENT_PRELAUNCH_FINAL0_RECOVERY1_ISSUED_HANDOFF",
+    "status": "STOPPED_EXCEPTION_REPEATED_EXTERNAL_COEXISTENCE_REJECTION",
     "current_live_jobs": [],
     "exact_job_permission_required": true,
-    "current_exact_release": "A-35403dcbfe28c1b1",
-    "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-independent-recovery1.json",
-    "last_completed_job": "J-fd7e0e132dca6e7d",
+    "current_exact_release": null,
+    "next_plan": null,
+    "last_completed_job": "J-4c3d85af4438c260",
     "last_training_transitions": 131072,
     "actual_training_review": {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-recovery1-actual-independent.json",
       "sha256": "ce921180385c8b009151e7e71f94426c8f3052c4ad0cedc53cf2dc75275ea468"
     },
-    "next_evaluation_status": "RECOVERY1_NOT_EXECUTED",
+    "next_evaluation_status": "RECOVERY1_PRELAUNCH_FAILED_FINAL0_NO_RAW",
     "primary_evaluation": "Both u640/u768 all original five32/32, motion32/32; independent review PASS; engineering gain not isolated RL gain",
     "actual_evaluation_review": {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-evaluation-actual-independent.json",
@@ -123,6 +123,8 @@
     },
     "independent_original": "FAILED/1 prelaunch FINAL0; GPU2/12/3 postrun3; no raw. NormalACK/settle/exactly2postrun; failed start/init/full8GiB retained.",
     "recovery_source": "032412baee46a8fb510c557f23b541d5f8b4d0b0",
-    "recovery_config_sha256": "6a65b6aeaa3e970e1fd89637ce1f66908ff95e68a2e1579bd73ce3df77000ed1"
+    "recovery_config_sha256": "6a65b6aeaa3e970e1fd89637ce1f66908ff95e68a2e1579bd73ce3df77000ed1",
+    "independent_recovery_actual": "GPU6/5/4; normalACK/settle/exactly2postrun3%; repeated intermittent external rejection, not continuous high utilization; no blind recovery chain.",
+    "goal_complete": false
   }
 }

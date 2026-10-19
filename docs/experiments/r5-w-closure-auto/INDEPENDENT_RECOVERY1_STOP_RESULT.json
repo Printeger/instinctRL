@@ -1,0 +1,149 @@
+{
+  "schema_version": "instinctrl-r5-w-exception-result/1",
+  "status": "STOPPED_EXCEPTION",
+  "goal_status": "INCOMPLETE_EXTERNAL_COEXISTENCE_BLOCK",
+  "goal_complete": false,
+  "scientific_negative": false,
+  "reason": "Two independent-validation launch windows separated by approximately 485 seconds failed the unchanged 5 percent coexistence gate. No evidence of changed resource conditions supports another release; no blind recovery chain is authorized. Preserve evidence and return exception to the original controller.",
+  "external_resource_evidence": [
+    {
+      "experiment_id": "R5-W-L1-INDEPENDENT-01",
+      "evidence": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/live/R1-research-formal-evaluation/attempt/results/prelaunch/prelaunch_resource_gate_failure.json",
+        "sha256": "f0921be9376f1df019183ba38dc5d8a64c4a3052875878f48f15f25f7b2fc1d0"
+      },
+      "samples_percent": [
+        2,
+        12,
+        3
+      ],
+      "first_monotonic_ns": 2351805196294499,
+      "last_monotonic_ns": 2351815223476538,
+      "postrun": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/R1-research-formal-evaluation-postrun-0.json",
+          "sha256": "7f1c2c24bf2654a696905164184e9200087557012bf8213fd7f2bbe5238d4954"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-01/R1-research-formal-evaluation-postrun-1.json",
+          "sha256": "f2812abaa08fefad8857628ca09349309ca4cc895b4e174cc4f7532bb240601c"
+        }
+      ]
+    },
+    {
+      "experiment_id": "R5-W-L1-INDEPENDENT-RECOVERY1",
+      "evidence": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/live/R1-research-formal-evaluation/attempt/results/prelaunch/prelaunch_resource_gate_failure.json",
+        "sha256": "7eb4407f54c09e7cc925a7d5792034479f0e7b39c86b6f5d2bcc52dd6f67b69a"
+      },
+      "samples_percent": [
+        6,
+        5,
+        4
+      ],
+      "first_monotonic_ns": 2352289915798604,
+      "last_monotonic_ns": 2352299942995129,
+      "postrun": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/R1-research-formal-evaluation-postrun-0.json",
+          "sha256": "1340e74a7908ca2e4a20e9a77b8e9a081f09f17cb1085ae9c538a4cd6191b6f2"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/R1-research-formal-evaluation-postrun-1.json",
+          "sha256": "279ada5532a275ae33bf3f52b643ebf3b0dd8460a7ac440bfc78e3b1a780322a"
+        }
+      ]
+    }
+  ],
+  "first_sample_separation_seconds": 484.719504105,
+  "continuous_utilization_above_5_proven": false,
+  "postrun_utilization_percent": [
+    3,
+    3
+  ],
+  "process_attribution": "PID3950 gnome-remote-desktop-daemon observed in both windows; presence does not prove utilization causality. No unrelated process was modified.",
+  "actual_job": {
+    "job_id": "J-4c3d85af4438c260",
+    "native_status": "FAILED",
+    "native_exit_code": 1,
+    "counter_completeness": "FINAL",
+    "transitions": 0,
+    "training": 0,
+    "updates": 0,
+    "writes": 0,
+    "evaluation_raw": "ABSENT",
+    "independent_seed_validation": "NOT_EXECUTED",
+    "cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+    "settled": true,
+    "postrun_count": 2
+  },
+  "identities": {
+    "actual_audit": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/INDEPENDENT_RECOVERY1_ACTUAL_AUDIT.json",
+      "sha256": "1876b132008f90c7e1ed9efe7403044f068508d2838895a77092abd75c7003d6"
+    },
+    "budget": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/goal_budget.json",
+      "sha256": "26635ed05a1fb5584ccc357ab04bc0dee22a0f56511217e569890e1685f35694"
+    },
+    "snapshot": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/readonly-snapshot.json",
+      "sha256": "4a22310da08ea6afd8605ef00e2386b825e6674ae0f4adbee97ae03f41c6d563"
+    },
+    "packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RECOVERY1/launch_inputs.proposed.json",
+      "sha256": "63aaf2ba3c87581a6de182a78a926794e80fc232ad05faeec2c5611c78b352d7"
+    }
+  },
+  "resources": {
+    "used": {
+      "training_transitions": 0,
+      "nontraining_transitions": 0,
+      "live_starts": 6,
+      "simulator_initialization_reservations": 6,
+      "optimizer_updates": 0,
+      "actor_optimizer_steps": 0,
+      "critic_optimizer_steps": 0,
+      "training_checkpoint_writes": 0,
+      "allocated_gpu_seconds": 1542.3795480518602,
+      "wall_seconds_including_cleanup": 1560.6870957026258,
+      "output_peak_and_reservations_bytes": 2058015284
+    },
+    "observed_not_formal_settlement": {
+      "training_transitions": 131072,
+      "nontraining_transitions": 98880,
+      "optimizer_updates": 256,
+      "training_checkpoint_writes": 2,
+      "actor_optimizer_steps": 2048,
+      "critic_optimizer_steps": 2048
+    },
+    "retained_training_reservation": 131072,
+    "retained_nontraining_reservation": 98880,
+    "retained_updates": 256,
+    "retained_writes": 2,
+    "retained_adam_steps_each": 2048,
+    "full_live_output_reserves_bytes": 51539607552,
+    "four_snapshot_reserves_bytes": 8589934592,
+    "conservative_output_with_observed_bytes": 62187557428,
+    "caps_exhausted": false,
+    "old_FAILED_INCOMPLETE_null_preserved": true
+  },
+  "accepted_science_unchanged": {
+    "E1": "Original u512 plus .15m control margin passes five tasks; engineering benefit.",
+    "L1": "One scientific candidate, full restored trainer/Adam/RNG u513-768; q-positive coverage 2004. u640/u768 original primary seed five tasks each32/32; no isolated RL safety gain.",
+    "u640_sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+  },
+  "unfulfilled_goal_requirements": [
+    "Actual independent seed20261020 full five-task 160-lane raw evaluation and frozen replay",
+    "Independent-seed W motion and all original geometric/timing subgroup gates",
+    "Final full Goal delivery and independent final acceptance"
+  ],
+  "resumption_constraints": [
+    "External coexistence conditions must materially change with valid evidence before any newly reviewed exact release; no automatic retry or unconditional recovery chain.",
+    "Preserve same scientific protocol and all old evidence/reservations; never weaken5percent or terminate unrelated processes.",
+    "Entire Goal remains unfinished; no new scientific candidate implied by launch failures."
+  ],
+  "controller_state_modified": false,
+  "new_GPU_probes": 0,
+  "new_live_jobs": 0
+}

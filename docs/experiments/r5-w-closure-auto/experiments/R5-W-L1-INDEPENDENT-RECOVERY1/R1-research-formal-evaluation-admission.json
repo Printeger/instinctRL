@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "input_commit": "f2ff06e058cd86059f4b9494a127586af6e47bc4",
+  "job_id": "J-4c3d85af4438c260",
+  "spec_id": "R5-W-L1-INDEPENDENT-RECOVERY1-R1-RESEARCH-FORMAL-EVALUATION-032412baee46",
+  "approval_id": "A-35403dcbfe28c1b1",
+  "STOP": [],
+  "old_jobs_terminal_noowned": true,
+  "disk_free_bytes": 510443905024,
+  "remaining_check": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 131840,
+    "live_starts": 6,
+    "simulator_initialization_reservations": 6,
+    "optimizer_updates": 256,
+    "actor_optimizer_steps": 2048,
+    "critic_optimizer_steps": 2048,
+    "training_checkpoint_writes": 2,
+    "allocated_gpu_seconds": 3341.55241669761,
+    "wall_seconds_including_cleanup": 3356.5209121177904,
+    "output_peak_and_reservations_bytes": 62277025792
+  },
+  "prelaunch_GPU_queries": 0
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": "instinctrl-independent-final-review/1",
+  "reviewer": "/root/audit_failure",
+  "verdict": "PASS",
+  "must_fix": [],
+  "identities": {
+    "final_result": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/INDEPENDENT_RECOVERY1_STOP_RESULT.json",
+      "sha256": "d75bce6f594125755f0e9248268851b4f476f04f6b7cf9f72d8cab5e45b6f0cc"
+    }
+  },
+  "verification": {
+    "final_result_hash_matches": true,
+    "referenced_file_pins_verified": 10,
+    "pin_mismatches": 0,
+    "resource_used_dictionary_matches_budget": true,
+    "observed_dictionary_matches_budget": true,
+    "conservative_output_sum_matches": true,
+    "conservative_output_bytes": 62187557428,
+    "old_reservations_preserved": true
+  },
+  "conclusion": "PASS for accurate STOPPED_EXCEPTION evidence and accounting, not acceptance of full scientific Goal completion. Two prelaunch windows separated by484.719504105 seconds both violate unchanged coexistence gate. Result disclaims continuously excessive utilization and daemon causation, records both postrun at3%, prohibits blind recovery chain.",
+  "scientific_limits": [
+    "Independent seed evaluation did not execute.",
+    "No scientific negative or full Goal completion claimed.",
+    "Master resource exhaustion not claimed.",
+    "Existing engineering and training findings do not establish isolated RL safety gain or hardware safety."
+  ],
+  "writes": 0,
+  "new_GPU_probes": 0,
+  "new_live_jobs": 0
+}

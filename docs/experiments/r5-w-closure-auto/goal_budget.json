@@ -21,15 +21,15 @@
   "used": {
     "training_transitions": 0,
     "nontraining_transitions": 0,
-    "live_starts": 5,
-    "simulator_initialization_reservations": 5,
+    "live_starts": 6,
+    "simulator_initialization_reservations": 6,
     "optimizer_updates": 0,
     "actor_optimizer_steps": 0,
     "critic_optimizer_steps": 0,
     "training_checkpoint_writes": 0,
-    "allocated_gpu_seconds": 1531.5524166976102,
-    "wall_seconds_including_cleanup": 1546.5209121177904,
-    "output_peak_and_reservations_bytes": 2057932412
+    "allocated_gpu_seconds": 1542.3795480518602,
+    "wall_seconds_including_cleanup": 1560.6870957026258,
+    "output_peak_and_reservations_bytes": 2058015284
   },
   "reservations": {
     "live_entries": [
@@ -217,6 +217,43 @@
         "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
         "output_observed_bytes": 82088,
         "inventory": "experiments/R5-W-L1-INDEPENDENT-01/live/R1-research-formal-evaluation/INVENTORY.json"
+      },
+      {
+        "spec_id": "R5-W-L1-INDEPENDENT-RECOVERY1-R1-RESEARCH-FORMAL-EVALUATION-032412baee46",
+        "job_id": "J-4c3d85af4438c260",
+        "experiment_id": "R5-W-L1-INDEPENDENT-RECOVERY1",
+        "group": "R1",
+        "mode": "research-formal-evaluation",
+        "status": "FAILED",
+        "reserved": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0,
+          "allocated_gpu_seconds": 0,
+          "wall_seconds_including_cleanup": 0
+        },
+        "output_cap_bytes": 8589934592,
+        "observed": {
+          "training_transitions": 0,
+          "nontraining_transitions": 0,
+          "optimizer_updates": 0,
+          "training_checkpoint_writes": 0,
+          "actor_optimizer_steps": 0,
+          "critic_optimizer_steps": 0
+        },
+        "postrun_queries_used": 2,
+        "settled": true,
+        "native_exit_code": 1,
+        "raw_status": "FAIL",
+        "raw_status_missing": false,
+        "formal_counter_completeness": "FINAL",
+        "formal_transitions": 0,
+        "owned_cleanup": "NORMAL_ACK_2_STABLE_EMPTY_NO_SURVIVORS",
+        "output_observed_bytes": 82872,
+        "inventory": "experiments/R5-W-L1-INDEPENDENT-RECOVERY1/live/R1-research-formal-evaluation/INVENTORY.json"
       }
     ],
     "source_snapshots": [

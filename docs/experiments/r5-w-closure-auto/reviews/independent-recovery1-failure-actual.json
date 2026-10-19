@@ -1,0 +1,82 @@
+{
+  "schema_version": "instinctrl-independent-actual-review/1",
+  "reviewer": "/root/audit_failure",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "Read-only actual RECOVERY1 failure and cross-attempt resource audit; no scientific acceptance",
+  "experiment_id": "R5-W-L1-INDEPENDENT-RECOVERY1",
+  "job_id": "J-4c3d85af4438c260",
+  "verification": {
+    "current_inventory_entries": 27,
+    "current_original_and_archive_files_verified": 54,
+    "previous_inventory_entries": 27,
+    "previous_original_and_archive_files_verified": 54,
+    "hash_or_size_mismatches": 0,
+    "unindexed_original_files": 0,
+    "path_sha_pin_occurrences_verified": 40,
+    "unique_pinned_paths": 24,
+    "pin_mismatches": 0,
+    "authorized_spec_equals_final_spec": true,
+    "canonical_spec_sha256": "c31b4e795514dcc29367c4573fa7829861b4002ba8b0469393b1ea33c5fcd7e6",
+    "normal_owned_ACK": true,
+    "stable_empty_scans": 2,
+    "survivors": [],
+    "settled": true,
+    "postrun_queries": 2
+  },
+  "actual_execution": {
+    "status": "FAILED",
+    "exit_code": 1,
+    "counter_completeness": "FINAL",
+    "transitions": 0,
+    "updates": 0,
+    "writes": 0,
+    "evaluation_raw_files": 0,
+    "gpu_seconds": 10.827131354250014,
+    "wall_seconds": 14.16618358483538,
+    "start_init_charge_each": 1,
+    "output_reserve_bytes": 8589934592
+  },
+  "cross_attempt_resource_evidence": {
+    "original_gpu_percent": [
+      2,
+      12,
+      3
+    ],
+    "recovery_gpu_percent": [
+      6,
+      5,
+      4
+    ],
+    "postrun_gpu_percent": [
+      3,
+      3
+    ],
+    "window_start_separation_seconds": 484.719504105,
+    "same_compute_app_pid": 3950,
+    "interpretation": "Repeated intermittent external coexistence-gate rejection; does not prove continuously >5%, perpetual blocking, or daemon causation. No evidence of resource improvement sufficient to justify unchanged further recovery."
+  },
+  "cumulative_accounting": {
+    "starts": 6,
+    "initialization_reservations": 6,
+    "training_full_reserve": 131072,
+    "nontraining_full_reserve": 98880,
+    "updates_full_reserve": 256,
+    "adam_full_reserve_each": 2048,
+    "writes_full_reserve": 2,
+    "gpu_seconds": 1542.3795480518602,
+    "wall_seconds": 1560.6870957026258,
+    "live_output_reserve_bytes": 51539607552,
+    "four_snapshot_reserve_bytes": 8589934592,
+    "old_FAILED_INCOMPLETE_null_preserved": true,
+    "master_exhausted": false
+  },
+  "decision": "STOPPED_EXCEPTION supported as fail-closed suspension for repeated external coexistence rejection and prohibition of blind recovery chain. Not scientific negative or Goal completion.",
+  "scientific_limits": [
+    "Independent seed20261020 never executed; raw replay impossible.",
+    "Existing E1/L1 primary passes do not establish isolated RL safety gain, independent-seed performance, broad generalization or hardware safety."
+  ],
+  "writes": 0,
+  "GPU_queries": 0,
+  "live_launches": 0
+}
