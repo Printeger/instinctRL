@@ -1,0 +1,6 @@
+2026-10-19 explicit user follow-up:
+“改进资源准入机制，不能让一个未经充分论证的 5% 门槛无限阻断验证。然后继续该goal,”
+
+Scope: bounded read-only resource observation, evidence-based new prelaunch admission policy, tests and independent review, new exact source/config/Store authorization, resume original full R5 W Goal. Original scientific gates, actor boundaries, runtime dependencies, all historical failures and resource reservations remain unchanged. Original total master caps remain ceilings. No unrelated process termination or automatic blind retry.
+
+Observation preregistration: 61 samples at nominal five-second cadence over 300 seconds, exact existing nvidia-smi/tool pins, no CUDA/AppLauncher or simulation. Record every sample without discarding spikes. Stop on external STOP or ownership conflict. This is diagnostic evidence, not permission to launch or proof that a future window is safe.
