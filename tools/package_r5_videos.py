@@ -34,7 +34,16 @@ def main():
         video['original_process_identity']=pin(original_dir/'process_identity.json')
         for frame,row in zip(side['frames'],raw[1:]):
             assert frame['raw_step']==row['step']
-            assert abs(frame['distance_m']-episode['geometry_distance_m'][frame['frame']])<1e-6
+            if video['case']=='W':
+                assert abs(frame['distance_m']-episode['geometry_distance_m'][frame['frame']])<1e-6
+            sensor=[a-b for a,b in zip(row['sensor_positions_w_m'][lane],raw[0]['env_origins_w_m'][lane])]
+            rectangles=[(2,0,0,(-42,42),1,(-42,42)),(0,6,1,(-6,6),2,(0,12)),(1,6,0,(-6,6),2,(0,12))]
+            distances=[]
+            for axis,value,a,ab,b,bb in rectangles:
+                closest=sensor.copy();closest[axis]=value
+                closest[a]=max(ab[0],min(ab[1],sensor[a]));closest[b]=max(bb[0],min(bb[1],sensor[b]))
+                distances.append(sum((x-y)**2 for x,y in zip(sensor,closest))**.5)
+            assert abs(frame['distance_m']-min(distances))<1e-6
             expected=[a-b for a,b in zip(row['root_state_w'][lane][:3],raw[0]['env_origins_w_m'][lane])]
             assert frame['position_local_m']==expected
             for a,b in [('actual_velocity_b','actual_velocity_b'),('target_velocity_b','command_b')]:assert frame[a]==row[b][lane]
