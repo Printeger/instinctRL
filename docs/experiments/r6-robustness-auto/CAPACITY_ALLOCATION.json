@@ -84,5 +84,12 @@
   "training_size_breakdown": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TRAINING_STORAGE_CPU.json",
     "sha256": "dc33c02b9fa39e1a6bcb57ced379246d4790b00dd5b0c66940d4fcc0e96a6825"
-  }
+  },
+  "force_logging_fixture": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/FORCE_ARCHIVE_CAPACITY_CPU.json",
+    "sha256": "a824c734dad0b9b3e04876fa32414f13db3002885cf0cd27e8e80326279b0723"
+  },
+  "estimated_final_force_bytes": 4248164800,
+  "estimated_final_measurement_plus_force_bytes": 62190892032,
+  "force_estimate_is_not_worst_case_bound": true
 }

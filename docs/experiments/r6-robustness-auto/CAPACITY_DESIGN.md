@@ -69,3 +69,22 @@ J-c2412eb2e9c23e5a的GPU263.218s/wall266.579s（32960transitions）。每条真�
 约1.044GB、其他诊断、measurement windows、checkpoint和逐步日志，避免将固定开销
 线性乘到所有transitions。只读取目录大小，未改变旧证据；原生日志不在该目录总量中。
 R6训练窗口/字段上限、全体native预留、视频/快照和完整时间裕量仍未闭合，capacity_pass保持false。
+
+
+## 全物理步施力日志补算（仍未准入）
+
+`FORCE_ARCHIVE_CAPACITY_CPU.json`通过实际R6PhysicsMixin的force sink和AuditLog，
+以32lane×5body完整字段、随机float32旋翼力/力矩与归一化姿态，采样脉冲前、
+两端及撤除后的记录。18条记录全部按原JSON值重建；临时归档自动清理。
+fixture质量为1.16kg，明确不是基线质量或真实动力学验证，不调用GPU或simulator。
+
+按草案100400物理tick/模型、脉冲40tick逐块加权，估计1,062,041,200 bytes/模型，
+最终四模型4,248,164,800 bytes（约3.96GiB）。与测距合计约57.92GiB；仍未包括
+reset、step_attempt/step_complete、motion、训练、native、快照、视频及失败裕量。
+此前微型workload替身的force记录只有tick与fixture标记，不能用于这项容量推断。
+本工具改用实际完整sink字段，但随机样本最大值仍不是最坏界，不改变任何日志字段。
+
+每条计时含序列化、压缩、write、flush及fsync；样本存在计时尖峰且数量少，
+不能将其称为live吞吐，更未计入GPU到CPU同步。完整运行时间必须同时考虑测距编码
+与逐tick审计成本；原R5吞吐线性外推不足以批准R6。80GiB/24000秒内部保护不变，
+capacity_pass继续为false。

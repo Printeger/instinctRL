@@ -1,0 +1,39 @@
+{
+  "status": "CPU_PASS_NOT_LIVE_ACCEPTANCE",
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow:isaaclab-training CUDA_VISIBLE_DEVICES='' /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 -B -m unittest tools.test_r6_physics_adapter tools.test_r6_evaluation",
+  "exit_code": 0,
+  "tests": 13,
+  "reported_seconds": 33.694,
+  "result_source": "exec tool session22914 completion output; no separate raw log captured",
+  "reported_summary": "Ran 13 tests in 33.694s\n\nOK",
+  "capacity_fixture_validation": "18 records exact JSON roundtrip; source/protocol pins verified; 100400 ticks across16blocks; sums and final4 multiplier verified",
+  "files": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_physics_adapter.py",
+      "sha256": "c4d422bf6992a574192a73345d5f56001a3ba32ff1d2a71119e82ba2a76bd34f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_evaluation.py",
+      "sha256": "3da2d56d86cf820f187b60bbf724a866469c1ea580f7a08a29b673c4bce7388c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness_physics.py",
+      "sha256": "8eab4dcb39a173989a02e579042cd94927ebad51d25ddc1f93a6914318674467"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "04411af293778a7c8d72905063fd66f559062458b7ff9db4841e646f53aa1cb9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_audit.py",
+      "sha256": "c2271d4e4c5d05a0872eed5d1d7a048a56ea03d21ecf0d49801c9a3cb21dbf3c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_force_capacity.py",
+      "sha256": "d4d0bf2eb35a7c5603c7537b303942ce203c27b6c0e47c5cb073d578d0e445af"
+    }
+  ],
+  "limitations": "CPU substitutes only; no actual force integration, capacity approval or independent review",
+  "gpu_queries": 0,
+  "simulator_initializations": 0
+}

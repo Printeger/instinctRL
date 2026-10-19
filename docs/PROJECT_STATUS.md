@@ -39,6 +39,8 @@ world指令在实际观察边界转换后进入history，保持内外观察与�
 延迟感知CPU合成估计：独立帧约60.2GiB，新增上一帧无损引用后约54.0GiB；均非最坏界。
 23项归档/测量/完整评价替身回归通过，见 `CPU_TEMPORAL_ARCHIVE_TESTS.json`，新codec未独审。
 旧训练固定诊断与逐步日志已分开统计；内部最终保护80GiB/24000秒仍待完整容量审核。
+完整force sink的18条CPU归档样本精确重建；最终四模型额外估计3.96GiB，测距+force约57.92GiB。
+见 `FORCE_ARCHIVE_CAPACITY_CPU.json`；不含其余日志/训练/native/快照/视频，也不是最坏界或live吞吐。
 物理reset/force的实际验证、完整job/resource控制器、容量/协议冻结、exact Store许可及科学验证均未完成。
 聊天Goal自动续推理与零模型等待的交接限制尚未解决；不能称后台运行或科学完成。
 下方历史状态不覆盖上述事实。
