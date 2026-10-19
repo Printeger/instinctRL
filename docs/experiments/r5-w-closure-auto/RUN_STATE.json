@@ -1,15 +1,16 @@
 {
   "goal_id": "R5-W-CLOSURE-AUTO-20261019",
   "status": "IN_PROGRESS",
-  "phase": "L1_ACTUAL_ACCEPTED_EVALUATION_ISSUED_CONTROLLER_HANDOFF",
+  "phase": "RESOURCE_V2_EXACT_ISSUED_PENDING_CONTROLLER_START",
   "live_job": null,
-  "controller_started": true,
+  "controller_started": false,
   "master_registered": true,
   "requirements_complete": false,
-  "current_exact_release": "A-f86ae4584e07d817",
-  "state_authority": "docs/experiments/r5-w-closure-auto/batch/state.json",
+  "current_exact_release": "A-d9d376bb39e26342",
+  "state_authority": "docs/experiments/r5-w-closure-auto/batch-resource-v2/state.json",
   "note": "This is a handoff index. Once started only the exact batch state is authoritative; do not infer live or complete from this static index.",
-  "completed_job": "J-8bdfaca0488e524d",
-  "next_experiment": "R5-W-L1-EVAL-01",
-  "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-l1-evaluation.json"
+  "completed_job": "J-4c3d85af4438c260",
+  "next_experiment": "R5-W-L1-INDEPENDENT-RESOURCE-V2",
+  "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-resource-v2.json",
+  "historical_state_authority": "docs/experiments/r5-w-closure-auto/batch/state.json"
 }

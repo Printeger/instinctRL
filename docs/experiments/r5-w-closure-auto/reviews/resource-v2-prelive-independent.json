@@ -1,0 +1,55 @@
+{
+  "reviewer": "/root/resource_review",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "Exact packet prelive and full Goal continuation prompt; issue only, submission conditional on committed/tagged/pushed reviewed plan",
+  "identities": {
+    "master": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+      "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+    },
+    "stage": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V2-001.json",
+      "sha256": "d6fe6433a897a8e1bc88a23c2b0a5776be559677e0185885b8e3f7233c1f983e"
+    },
+    "packet": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RESOURCE-V2/launch_inputs.proposed.json",
+      "sha256": "008093bdc5f8ce130a31f383db53eb51cae4a05eb06a7cdcb4564b9409af420b"
+    },
+    "commander": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_commander.py",
+      "sha256": "f942a995b606c188502bfca304bc3b88a674b8bc55dd45792dc091590efbf19a"
+    },
+    "ownership_helper": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_commander.py",
+      "sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4"
+    },
+    "after_prompt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/batches/R5_W_CLOSURE_20261019/after-resource-v2.prompt.md",
+      "sha256": "c2246ab5a253c6a976dfee4b7be4ba972300fae557eccb7758296518a0785165"
+    }
+  },
+  "checks": [
+    "20 packet pins checked including proposedAUTH",
+    "AUTH equals proposal; parameter/budget validators PASS",
+    "Compatibility with exact new snapshot verified",
+    "Snapshot product/workload manifest and readonly modes verified",
+    "u640 seed20261020 original science retained; zero training/updates/writes",
+    "Prompt preserves full original Goal raw replay/independent final review/engineering attribution"
+  ],
+  "cumulative_reservation_check": {
+    "training_transitions": 131072,
+    "nontraining_transitions": 131840,
+    "live_starts": 7,
+    "simulator_initialization_reservations": 7,
+    "optimizer_updates": 256,
+    "training_checkpoint_writes": 2,
+    "allocated_gpu_seconds": 3352.37954805186,
+    "wall_seconds_including_cleanup": 3370.687095702626,
+    "output_peak_and_reservations_bytes": 73014444032,
+    "within_stage_and_master": true
+  },
+  "non_blocking": [
+    "Inherited first_rollout_gate metadata irrelevant to zero-training evaluation, no optimizer permission"
+  ]
+}

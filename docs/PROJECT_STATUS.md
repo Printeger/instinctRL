@@ -2,6 +2,8 @@
 
 ## 当前 Goal：R5 W 安全训练闭环（2026-10-19）
 
+2026-10-19 用户追加授权修订资源准入并继续原Goal。单次61样本/300.008秒只读观测完成；新V2窗口准入、补充Store授权和W-V2-001阶段已独审登记。保持旧5%入口及旧失败原件，新增exactID仅做u640/seed20261020完整五任务验证。源码bc9f623/configec64b14e冻结为只读新快照，CPU相关60项通过；精确packet独审/发行中，尚未live。旧batch终态保持只读，续接唯一运行目录为 `docs/experiments/r5-w-closure-auto/batch-resource-v2/`，共享原writer.lock及STOP。完整Goal未完成。
+
 用户一次性授权完整诊断、工程修正、近墙训练与原五任务验收，总包络见 [新主委托](experiments/r5-w-closure-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md)。旧首段及旧预算记录保持历史身份。
 
 320lane W 原件诊断后，E1固定原R1/u512及ICS额外.15m真实回归已独立核验：原Z/T/S/X/W各32/32、W两墙各16/16、全部lane连续11样本接近达标；这是控制工程收益，不是RL学习。native FAILED/-9、INCOMPLETE/null及32960全额预留保持。

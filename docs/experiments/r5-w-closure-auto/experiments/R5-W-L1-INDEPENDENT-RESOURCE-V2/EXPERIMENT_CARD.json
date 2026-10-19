@@ -1,0 +1,131 @@
+{
+  "experiment_id": "R5-W-L1-INDEPENDENT-RESOURCE-V2",
+  "profiles": {
+    "R1": {
+      "experiment_id": "R5-W-L1-INDEPENDENT-RESOURCE-V2",
+      "group": "R1",
+      "training_seed": 20260908,
+      "evaluation_seed": 20261020,
+      "start_update": 512,
+      "target_update": 768,
+      "checkpoint_updates": [
+        640,
+        768
+      ],
+      "evaluation_updates": [
+        640
+      ],
+      "command_profile": "mixed-nearwall",
+      "residual_neutrality_weight": 0.05,
+      "anchor_weight": 4.0,
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "mean_prior_weight": 10.0,
+      "mean_prior_contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/coordination/contracts/R5_ZERO_COMMAND_MEAN_PRIOR_V1.md",
+        "sha256": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9"
+      },
+      "output_cap_bytes": 8589934592,
+      "master_authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+        "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+      },
+      "w_closure_contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/coordination/contracts/R5_W_SAFETY_CLOSURE_V1.md",
+        "sha256": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5"
+      },
+      "checkpoint_source_identity": {
+        "product_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+        "product_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+        "workload_commit": "feb1e96f97e44c7d872cec44268fc2d8b352bc93",
+        "workload_tree": "6a60e9c6c48e59110c769b8836c4f1320bbad24b",
+        "config_sha256": "d263cdefa038ecf044e3679ffe470c5f2229e5768bb322e591aa05f0a8710d24"
+      },
+      "checkpoint_compatibility": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RESOURCE-V2/checkpoint-compatibility.json",
+        "sha256": "7c66e30d6f5359579426ed71266f0bb061256007da6375e798bbe0291375c62b"
+      },
+      "initialization_checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-FORMAL-MEAN10-FIRST-SEGMENT-01-R1-RESEARCH-FORMAL-TRAINING-feb1e96f97e4/results/research-formal-training/checkpoints/u512.pt",
+        "sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+        "update": 512
+      },
+      "origin_method_hashes": {
+        "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+        "curriculum": "curriculum-h1-v1",
+        "reward": "reward-h1-zero-neutrality-v1",
+        "critic": "critic-h1-v2",
+        "checkpoint": "checkpoint-h1-v2",
+        "logging": "learning-log-h1-v1",
+        "metric": "metric-h1-v1",
+        "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+        "research_effective_method": "8afa2645dd181eb1e54c4c38e60f59db2c7cdda48df5d232b5e0628c451269cd",
+        "formal_phase": "103664d19c5e037d5903c86e2af11b61181a8722e599bdbdd87ae7c7f9414930",
+        "reset_distribution": "center-only-v1",
+        "initialization": "qualified-warmup-fresh-reset-v1",
+        "origin_checkpoint_sha256": "120a82b54d1debdacd3b2fe38f24ef9fcf25f5e0dfe0ab9741938eaaab327768"
+      },
+      "evaluation_checkpoint_origin": "CANDIDATE",
+      "ics_clearance_margin_m": 0.15,
+      "independent_validation_protocol": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-INDEPENDENT-RESOURCE-V2/INDEPENDENT_PROTOCOL.json",
+        "sha256": "bc53f043025bbda3616f4e9178cc17f7bdb39ace5d43697d0c1e15a93b7f13ba"
+      }
+    }
+  },
+  "primary_variable": "INDEPENDENT_RESET_SEED_20261020_FIXED_FIRST_PASS_U640",
+  "RL_training_transitions": 0,
+  "resource_admission_policy": {
+    "schema_version": "r5-w-resource-admission/2",
+    "sample_count": 13,
+    "minimum_span_seconds": 60,
+    "minimum_gap_seconds": 4,
+    "maximum_gap_seconds": 8,
+    "mean_utilization_max": 8,
+    "median_utilization_max": 5,
+    "peak_utilization_max": 20,
+    "elevated_utilization_threshold": 10,
+    "elevated_samples_max": 4,
+    "consecutive_elevated_max": 1,
+    "memory_used_max_mib": 1024,
+    "memory_free_min_mib": 10240,
+    "allowed_app": "gnome-remote-desktop-daemon",
+    "allowed_app_max_mib": 256
+  },
+  "resource_user_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/resource-admission-v2/USER_AUTHORITY.txt",
+    "sha256": "936d7dac52d05758e45f0037da4ce375a905de33568db7381ed16901c8af5d6a"
+  },
+  "source": {
+    "status": "CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY",
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-resource-v2-20261019",
+    "snapshot_commit": "bc9f623dbff3bf73bc528447c97b7c290b4dd777",
+    "snapshot_tree": "e38fcdb7538c7ddeadba80d1ac4e78ff3e8cf367",
+    "config_sha256": "ec64b14ea63428ba74fb3052c6ca20a52675db1d33564031457ca10ecf8ac18b",
+    "snapshot_diff_sha256": "e26d902934bacaf5f032ebbe6c07de414f6f01c96fa32344c6aeda762de0dcc6",
+    "read_only": true,
+    "source_identity": {
+      "config_sha256": "ec64b14ea63428ba74fb3052c6ca20a52675db1d33564031457ca10ecf8ac18b",
+      "product_commit": "bc9f623dbff3bf73bc528447c97b7c290b4dd777",
+      "product_tree": "e38fcdb7538c7ddeadba80d1ac4e78ff3e8cf367",
+      "workload_commit": "bc9f623dbff3bf73bc528447c97b7c290b4dd777",
+      "workload_tree": "e38fcdb7538c7ddeadba80d1ac4e78ff3e8cf367"
+    },
+    "snapshot_observed_bytes": 833979552,
+    "snapshot_reserved_bytes": 2147483648,
+    "config_stdout": "{\"config_sha256\": \"ec64b14ea63428ba74fb3052c6ca20a52675db1d33564031457ca10ecf8ac18b\", \"product_commit\": \"bc9f623dbff3bf73bc528447c97b7c290b4dd777\", \"product_tree\": \"e38fcdb7538c7ddeadba80d1ac4e78ff3e8cf367\", \"workload_commit\": \"bc9f623dbff3bf73bc528447c97b7c290b4dd777\", \"workload_tree\": \"e38fcdb7538c7ddeadba80d1ac4e78ff3e8cf367\"}\n",
+    "config_stderr": "",
+    "GPU_queries": 0,
+    "live_starts": 0,
+    "training_updates": 0
+  },
+  "actual_seed": 20261020,
+  "canonical_scoring_seed": 20260909,
+  "scoring": "Separate protocol validates actual seed and all160 case/lanes, then only seed metadata of memory view is canonicalized for unchanged original evaluate_checkpoint. All physics/timing/commands/initial-state/validity gates retained. Raw unchanged; original per-case primary-seed mismatch diagnostics retained.",
+  "limitation": "Evaluation initial positions fixed by original suite; independent reset seed is not a new initial-state distribution or demonstrated broad generalization. E1 engineering gain remains separate.",
+  "original_primary_authorization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-EVAL-01-R1-RESEARCH-FORMAL-EVALUATION-0c6363bbc0d2/commands/AUTHORIZATION.json",
+    "sha256": "7c209baa0e6f69d3292bf778f3c281a9e8e9bd4b8ad3079a5dfeed92ccd9cae6"
+  },
+  "evaluation_status": "NOT_EXECUTED"
+}

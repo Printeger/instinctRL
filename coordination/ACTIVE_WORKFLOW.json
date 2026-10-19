@@ -102,20 +102,20 @@
   "w_closure_execution": {
     "goal_id": "R5-W-CLOSURE-AUTO-20261019",
     "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
-    "registration": "docs/experiments/r5-w-closure-auto/registrations/W-V1-001.json",
-    "state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
-    "status": "STOPPED_EXCEPTION_REPEATED_EXTERNAL_COEXISTENCE_REJECTION",
+    "registration": "docs/experiments/r5-w-closure-auto/registrations/W-V2-001.json",
+    "state_path": "docs/experiments/r5-w-closure-auto/batch-resource-v2/state.json",
+    "status": "RESOURCE_V2_EXACT_ISSUED_PENDING_CONTROLLER_START",
     "current_live_jobs": [],
     "exact_job_permission_required": true,
-    "current_exact_release": null,
-    "next_plan": null,
+    "current_exact_release": "A-d9d376bb39e26342",
+    "next_plan": "coordination/batches/R5_W_CLOSURE_20261019/plan-resource-v2.json",
     "last_completed_job": "J-4c3d85af4438c260",
     "last_training_transitions": 131072,
     "actual_training_review": {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-recovery1-actual-independent.json",
       "sha256": "ce921180385c8b009151e7e71f94426c8f3052c4ad0cedc53cf2dc75275ea468"
     },
-    "next_evaluation_status": "RECOVERY1_PRELAUNCH_FAILED_FINAL0_NO_RAW",
+    "next_evaluation_status": "NOT_EXECUTED_RESOURCE_V2",
     "primary_evaluation": "Both u640/u768 all original five32/32, motion32/32; independent review PASS; engineering gain not isolated RL gain",
     "actual_evaluation_review": {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/reviews/l1-evaluation-actual-independent.json",
@@ -125,6 +125,8 @@
     "recovery_source": "032412baee46a8fb510c557f23b541d5f8b4d0b0",
     "recovery_config_sha256": "6a65b6aeaa3e970e1fd89637ce1f66908ff95e68a2e1579bd73ce3df77000ed1",
     "independent_recovery_actual": "GPU6/5/4; normalACK/settle/exactly2postrun3%; repeated intermittent external rejection, not continuous high utilization; no blind recovery chain.",
-    "goal_complete": false
+    "goal_complete": false,
+    "historical_state_path": "docs/experiments/r5-w-closure-auto/batch/state.json",
+    "resource_user_authority": "docs/experiments/r5-w-closure-auto/resource-admission-v2/USER_AUTHORITY.txt"
   }
 }

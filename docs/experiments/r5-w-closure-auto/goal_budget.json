@@ -287,6 +287,14 @@
         "source_commit": "032412baee46a8fb510c557f23b541d5f8b4d0b0",
         "config_sha256": "6a65b6aeaa3e970e1fd89637ce1f66908ff95e68a2e1579bd73ce3df77000ed1",
         "observed_file_bytes": 833578699
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-resource-v2-20261019",
+        "reserved_bytes": 2147483648,
+        "status": "FROZEN_READ_ONLY",
+        "source_commit": "bc9f623dbff3bf73bc528447c97b7c290b4dd777",
+        "config_sha256": "ec64b14ea63428ba74fb3052c6ca20a52675db1d33564031457ca10ecf8ac18b",
+        "observed_file_bytes": 833979552
       }
     ]
   },
@@ -310,6 +318,10 @@
     {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V1-002.json",
       "sha256": "f702c3f2e4a7c575844ecdfc31ac39ff09c4559e0699b860bee1b8852c8a2396"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V2-001.json",
+      "sha256": "d6fe6433a897a8e1bc88a23c2b0a5776be559677e0185885b8e3f7233c1f983e"
     }
   ],
   "historical_accounting": "New incremental envelope; every old ledger and reservation remains unchanged. No refunds inferred from raw data.",

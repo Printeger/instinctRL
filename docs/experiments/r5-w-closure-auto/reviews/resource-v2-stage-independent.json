@@ -1,0 +1,59 @@
+{
+  "reviewer": "/root/resource_review",
+  "verdict": "PASS",
+  "must_fix": [],
+  "scope": "Supplemental authority, bounded observation, final provisional resource policy, recovery implementation and stage registration; not exact live packet approval",
+  "identities": {
+    "master": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
+      "sha256": "91bfab86b8d3ace1cb6c5b8a83b77776cf55d50a6424fdc9e9fdebfeb44ce1e2"
+    },
+    "commander": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_commander.py",
+      "sha256": "f942a995b606c188502bfca304bc3b88a674b8bc55dd45792dc091590efbf19a"
+    },
+    "stage": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/stages/W-V2-001.json",
+      "sha256": "d6fe6433a897a8e1bc88a23c2b0a5776be559677e0185885b8e3f7233c1f983e"
+    },
+    "ownership_helper": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_formal_commander.py",
+      "sha256": "4945c156e76cdcc895b38b8537d0af3a12c87c14bed1aac9f9b4beaf67a2e7a4"
+    },
+    "snapshot_tool": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/prepare_r5_w_snapshot.py",
+      "sha256": "bb8336c6c5f3a8f206b26153e45fcfa91dfb5808a45408a12806531e7e7d4ac3"
+    },
+    "controller": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r5_w_batch.py",
+      "sha256": "89c9c6dcf5ac9f96030ccbfa49ec4ee4afd2ca692861f03c4f34207b68d47afc"
+    },
+    "resource_policy": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "a4ff348bdb532db94ff60dc1b575ec81cad6e4f817e4cdecd287c3b578ffcdfe"
+    },
+    "observation": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/resource-admission-v2/observation.jsonl",
+      "sha256": "f0db53db2002141ea96b7d01041c914e21ad38655713f2af066a5cd551042852"
+    },
+    "decision": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/resource-admission-v2/DECISION.md",
+      "sha256": "76ba619072d54d9eab7013c142d541fb8607fb9e6b6753bc63e93071aeec6f26"
+    },
+    "user_authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/resource-admission-v2/USER_AUTHORITY.txt",
+      "sha256": "936d7dac52d05758e45f0037da4ce375a905de33568db7381ed16901c8af5d6a"
+    }
+  },
+  "independent_checks": {
+    "focused_CPU_tests": "51 passed in1.40s",
+    "observation": "61 ordinals mean5.213114754098361 median4 peak15 above5 count16 span300.008236254s",
+    "budget": "68GiB total with new snapshot/live/metadata <=72GiB; seventh start and131840nontraining fit"
+  },
+  "limitations": [
+    "Provisional scheduling choices, not universal safety/interference proof",
+    "Diagnostic gaps3.0679-7.1348seconds; not a live receipt. Production collector independently validates window.",
+    "No causal attribution to desktop process",
+    "Exact packet and plan still require review"
+  ]
+}

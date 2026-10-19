@@ -1,0 +1,23 @@
+{
+  "status": "CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY",
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-resource-v2-20261019",
+  "snapshot_commit": "bc9f623dbff3bf73bc528447c97b7c290b4dd777",
+  "snapshot_tree": "e38fcdb7538c7ddeadba80d1ac4e78ff3e8cf367",
+  "config_sha256": "ec64b14ea63428ba74fb3052c6ca20a52675db1d33564031457ca10ecf8ac18b",
+  "snapshot_diff_sha256": "e26d902934bacaf5f032ebbe6c07de414f6f01c96fa32344c6aeda762de0dcc6",
+  "read_only": true,
+  "source_identity": {
+    "config_sha256": "ec64b14ea63428ba74fb3052c6ca20a52675db1d33564031457ca10ecf8ac18b",
+    "product_commit": "bc9f623dbff3bf73bc528447c97b7c290b4dd777",
+    "product_tree": "e38fcdb7538c7ddeadba80d1ac4e78ff3e8cf367",
+    "workload_commit": "bc9f623dbff3bf73bc528447c97b7c290b4dd777",
+    "workload_tree": "e38fcdb7538c7ddeadba80d1ac4e78ff3e8cf367"
+  },
+  "snapshot_observed_bytes": 833979552,
+  "snapshot_reserved_bytes": 2147483648,
+  "config_stdout": "{\"config_sha256\": \"ec64b14ea63428ba74fb3052c6ca20a52675db1d33564031457ca10ecf8ac18b\", \"product_commit\": \"bc9f623dbff3bf73bc528447c97b7c290b4dd777\", \"product_tree\": \"e38fcdb7538c7ddeadba80d1ac4e78ff3e8cf367\", \"workload_commit\": \"bc9f623dbff3bf73bc528447c97b7c290b4dd777\", \"workload_tree\": \"e38fcdb7538c7ddeadba80d1ac4e78ff3e8cf367\"}\n",
+  "config_stderr": "",
+  "GPU_queries": 0,
+  "live_starts": 0,
+  "training_updates": 0
+}
