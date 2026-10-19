@@ -1,0 +1,14 @@
+You are the independent READ-ONLY R6 reviewer for the newly implemented source/snapshot/native-output integration. Do not edit files, run write-producing tests, commit, submit/cancel jobs, query GPU, launch simulation, invoke models, or spawn agents. Read-only inspection and CPU in-memory counterexamples are permitted. Return only required JSON; changed_files=[]. This is substantive automatic session6, leaving26; no authentication probe.
+
+Review current committed source at3a1a589, primarily:
+- training_workloads/unified_h1/config.py and authorization.py: opt-in R6 schema, complete added source set, mode binding, historical config isolation.
+- tools/prepare_r6_snapshot.py: exact committed config/source/tool checks, before-create reservation and single writer, interrupt/no retry, actual CPU validation, read-only snapshot and replay. Existing actual snapshot is0add4b0, not current HEAD; it must not silently inherit later changes.
+- training_workloads/unified_h1/local_dispatch.py and tools/rlflow/rlflow/experiments.py: R6-only bounded stdout/stderr pipe, original held-child/STOP/release semantics, complete retained prefix/native exit, crash/timeout/flood/EOF cleanup and no unrelated process signaling. Outer lifeguard remains descendant cleanup authority.
+- tools/rlflow/rlflow/h1.py: R6 evaluation seed validation.
+Consult only related helpers/tests needed to prove concrete findings. Do not repeat broad protocol/science review.
+
+Evidence: docs/experiments/r6-robustness-auto/CPU_R6_SOURCE_CONFIG_TESTS.json, CPU_R6_SNAPSHOT_VERIFICATION.json, CPU_R6_NATIVE_OUTPUT_TESTS.json and referenced raw logs/tests. Inspect code/hash and actual readonly snapshot receipt rather than trust summaries. First source-config and snapshot fixture failures are preserved; distinguish fixture issues from implementation bugs.
+
+Important unaccepted scope: native console cap256MiB plus Kit per-file2GiB does NOT establish all filesystem native/cache/crash bounds; full capacity remainsfalse. Exact new snapshot/control release, protocol freeze, compatibility review, Store issuance, full controller and science are not complete. Do not issue live or scientific approval. SOURCE snapshot payload has no independent compatibility approval; this review does not confer that approval. A PASS_CPU_SCOPE only accepts reviewed implemented components.
+
+For every concrete correctness/security/recovery/budget defect in implemented paths, return MUST_FIX with file/function, reproducible input or control-flow evidence and minimal remedy. Focus on actual bugs (e.g. exact input substitutions, losing a failure, descriptor/process ownership, false immutable-state claim, budget/retry bypass), not requests for generic infrastructure. Planned missing integration belongs in next_plan and cannot count as complete. Use actual SHA256 evidence pins, remaining_budget.automatic_sessions_remaining=26. Parent records actual receipt usage; do not invent usage.
