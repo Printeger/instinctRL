@@ -1,0 +1,111 @@
+{
+  "decision": "PASS_LEGACY_MODEL_RECONCILIATION",
+  "must_fix": [],
+  "changed_files": [],
+  "next_plan": null,
+  "historical_descendant_cleanup_proven": false,
+  "ownership_ambiguity_remaining": false,
+  "runtime_dispatch_authorized": false,
+  "proposal": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LEGACY_MODEL_CLEANUP_RECONCILIATION_PROPOSAL_V2.json",
+    "sha256": "8dc7cfcd2f6869af1f26ca95f154c690da04b94beaa4cb2931ce1947a56758cd"
+  },
+  "source_pins": {
+    "tools/r6_legacy_model_reconciliation.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_legacy_model_reconciliation.py",
+      "sha256": "928ca9e22c6024b848d2a9de2f9b218e54c8214c9524974e560d7f92372fd6bf"
+    },
+    "tools/audit_r6_legacy_model_cleanup.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/audit_r6_legacy_model_cleanup.py",
+      "sha256": "0446d05c7267c1b29a1e736d76dbe5572a7821cff3062c6397f03fdf8da0e473"
+    },
+    "tools/r6_job_handoff.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+    },
+    "tools/r6_batch.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "a5188e81eb75b4196d5fc469bbe19d90aaae4abd46f0f3440e2d87946323163d"
+    },
+    "tools/r6_model_worker.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_model_worker.py",
+      "sha256": "188880d1da73a6142e343500db6bd23b49653b5f15ceb3df1def26c9577aa37f"
+    },
+    "tools/r6_recovery.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55"
+    },
+    "tools/r6_worker_processes.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_worker_processes.py",
+      "sha256": "7ce3a1276d8460445f442ef9e30ecbe3198de98e848d75198eaabe94c932cc10"
+    }
+  },
+  "original_receipts": {
+    "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/receipt.json",
+      "sha256": "60104087056120fbfc6f049d54fd508cb87859b7b2744f3dfe5ed99da22a0f0c"
+    },
+    "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/receipt.json",
+      "sha256": "82cdb6ba2ac8cb559d3055c7def8bc74537f477ab4c16b784b4251d347ae554e"
+    }
+  },
+  "remaining_budget": "21 automatic sessions remaining, including the reservation for session 11.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/cpu-pipeline-review.json",
+      "sha256": "83fae4e82f52309eaf8c1491618b18e284f1ef4af4542a805e6a0813ec3976dd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/legacy-reconciliation-fix-review.json",
+      "sha256": "307d636b6bb8a702e7df0c050c7c7596af4c476ca9fd13e18a9b2b0f6a3e7744"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LEGACY_MODEL_RECONCILIATION_ACCEPTANCE.json",
+      "sha256": "1c2e66a798cffafd9fe57f08343dc79d50f48bddf6f828d236ce2c9db0afb5ba"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MODEL_PHASE_REPAIR_TESTS.json",
+      "sha256": "e9a86e80e6131fb89da0114a5f0ca483dc4f4fd04897276959ea8b333fec5aba"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MODEL_PHASE_REPRO.txt",
+      "sha256": "a952e4b42222cd33846284b70fb1557a250a85ab41d7eb14c3d8c6098de96514"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MODEL_PHASE_REPAIR_TESTS.txt",
+      "sha256": "d015c0cb6aced99d2e2c4bd9402c75cc1dda87b61bf7a114f966f0bb3c622a40"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MODEL_PHASE_REPAIR_TESTS_V2.txt",
+      "sha256": "7469f9f7e39b2245786f947148f6709fd2ccbb205d8658c62fb24d3d3f42787e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_batch.py",
+      "sha256": "6465e29ff1958842a0a07f23df13521393a577d237f7e5928c892cd43a55ca9d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py",
+      "sha256": "a2b9b7d7d2c30ffe0211f2e2b776a4c1f2a756fde70cc503bb619bda2db8179d"
+    },
+    {
+      "path": "/home/mint/.codex/sessions/2026/10/20/rollout-2026-10-20T00-06-59-01a154ea-8241-7dd3-aa33-41e485f17ca8.jsonl",
+      "sha256": "222c3d0f6c0b76083d7641058d86931f16b573596f26e8198980f220ab3335df"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/events.jsonl",
+      "sha256": "8e4d55ba4ef8a9bbc00362c8cb39699cc141fabd414c0dd8eef8d60899bc0d21"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/events.jsonl",
+      "sha256": "382ebe60b3f6d1b86d58c78d106035f0ebc4ac750efce7869036e82527f5542b"
+    }
+  ],
+  "notes": "Part A: reviewed ab1122f against 3078e95 and confirmed current repair source/tests equal ab1122f. The prior MUST_FIX is closed: complete_model_receipt checks event/request/process/exit identity and modern terminal cleanup, then records a fresh receipt and clears only its matching marker in one atomic Journal.save. Receipt replay repairs old split states without dispatch; other markers, later phases, receipt failure facts and reservations remain intact. Missing cleanup retains the active marker; failed decisions still raise after verified terminal cleanup. Inspected the actual save wrapper: it calls the durable save before injecting the exception when a receipt appears. Inspected the finalizer stale-marker regression and its single-call assertion. Hash-checked raw logs show both pre-repair failures, 57 initial passes and 61 final CPU passes; tests were not rerun. No new material defect found in this repair. Part B: all seven current pins checked; only r6_batch.py differs from review9. The unchanged validator's exact source comparison correctly invalidates the old approval with SOURCE_DRIFT; no approval was refreshed. A read-only attempted validator invocation could not complete because system Python lacks jsonschema, so this conclusion rests on inspected code and exact hash comparison, not a claimed successful validator run. Both original receipt/transcript/stderr/last-message bindings match, and read-only audit_event results exactly equal both original proposal rows. The exact supplement, raw 35-row session, six call/output record hashes and copied shell records match. The failed foreground cat attempt and metadata wrappers introduce no residual ownership ambiguity; listed capabilities were not invoked. Current process absence is supplementary only, never historical descendant-cleanup proof. The repair preserves the exact-two-receipt exception and strict modern cleanup enforcement. This reviewer must finish through its modern bounded worker receipt/usage/cleanup lifecycle before any later acceptance can consume this decision. No files, operational state or acceptance records were changed; no tests, GPU/simulator/model calls, subagents, background commands or installs were run. This grants no runtime dispatch, full-controller, capacity, protocol, production-snapshot compatibility or scientific acceptance.",
+  "session_evidence": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LEGACY_MODEL_SESSION_SUPPLEMENT.json",
+    "sha256": "75b2ccc8d85dd97dad666786b878ea30bc968bf24b0ac00a79353f7ae9bbedd6"
+  },
+  "pipeline_repair_decision": "PASS_CPU_SCOPE",
+  "pipeline_must_fix": []
+}

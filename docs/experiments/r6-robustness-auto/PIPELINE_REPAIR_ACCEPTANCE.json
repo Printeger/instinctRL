@@ -1,0 +1,127 @@
+{
+  "schema_version": "r6-pipeline-repair-and-legacy-revalidation/1",
+  "status": "PASS_SCOPED_CPU_REPAIR_AND_EXACT_LEGACY_REVALIDATION",
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/cpu-pipeline-fix-review.json",
+    "sha256": "d8b942619b78896b758e8dacd41c598ed5fb47cdd7e8bbcde90abe158935d006"
+  },
+  "review_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/b6866fedb83bacf044c94b0f11974b046c33a77ecbad07ba031974ee824dc111/receipt.json",
+    "sha256": "d3f83c4a8dbf465f657e3abc85b81248312a3579d5663799053fbcfe8526261c"
+  },
+  "prior_acceptance": {
+    "proposal": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LEGACY_MODEL_CLEANUP_RECONCILIATION_PROPOSAL_V2.json",
+      "sha256": "8dc7cfcd2f6869af1f26ca95f154c690da04b94beaa4cb2931ce1947a56758cd"
+    },
+    "review_event_key": "ac61a3b5ae4463e18fef5b62e3db53b34cab97f8363be7d0d46f536f8885441d",
+    "review_receipt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/ac61a3b5ae4463e18fef5b62e3db53b34cab97f8363be7d0d46f536f8885441d/receipt.json",
+      "sha256": "78b513555c20be61e3a3c1bdbca94a09aa5a318249a88d5cfbc851e9ffb3d9a5"
+    },
+    "session_evidence": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LEGACY_MODEL_SESSION_SUPPLEMENT.json",
+      "sha256": "75b2ccc8d85dd97dad666786b878ea30bc968bf24b0ac00a79353f7ae9bbedd6"
+    }
+  },
+  "new_acceptance": {
+    "review_event_key": "b6866fedb83bacf044c94b0f11974b046c33a77ecbad07ba031974ee824dc111",
+    "review_receipt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/b6866fedb83bacf044c94b0f11974b046c33a77ecbad07ba031974ee824dc111/receipt.json",
+      "sha256": "d3f83c4a8dbf465f657e3abc85b81248312a3579d5663799053fbcfe8526261c"
+    },
+    "proposal": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LEGACY_MODEL_CLEANUP_RECONCILIATION_PROPOSAL_V2.json",
+      "sha256": "8dc7cfcd2f6869af1f26ca95f154c690da04b94beaa4cb2931ce1947a56758cd"
+    },
+    "session_evidence": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LEGACY_MODEL_SESSION_SUPPLEMENT.json",
+      "sha256": "75b2ccc8d85dd97dad666786b878ea30bc968bf24b0ac00a79353f7ae9bbedd6"
+    }
+  },
+  "validator_results": {
+    "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01": {
+      "review_event_key": "b6866fedb83bacf044c94b0f11974b046c33a77ecbad07ba031974ee824dc111",
+      "original_receipts": {
+        "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/receipt.json",
+          "sha256": "60104087056120fbfc6f049d54fd508cb87859b7b2744f3dfe5ed99da22a0f0c"
+        },
+        "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/receipt.json",
+          "sha256": "82cdb6ba2ac8cb559d3055c7def8bc74537f477ab4c16b784b4251d347ae554e"
+        }
+      },
+      "historical_descendant_cleanup_proven": false,
+      "runtime_dispatch_authorized": false
+    },
+    "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75": {
+      "review_event_key": "b6866fedb83bacf044c94b0f11974b046c33a77ecbad07ba031974ee824dc111",
+      "original_receipts": {
+        "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01/receipt.json",
+          "sha256": "60104087056120fbfc6f049d54fd508cb87859b7b2744f3dfe5ed99da22a0f0c"
+        },
+        "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75/receipt.json",
+          "sha256": "82cdb6ba2ac8cb559d3055c7def8bc74537f477ab4c16b784b4251d347ae554e"
+        }
+      },
+      "historical_descendant_cleanup_proven": false,
+      "runtime_dispatch_authorized": false
+    }
+  },
+  "actual_model_events_checked": 11,
+  "source_pins": {
+    "tools/r6_legacy_model_reconciliation.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_legacy_model_reconciliation.py",
+      "sha256": "928ca9e22c6024b848d2a9de2f9b218e54c8214c9524974e560d7f92372fd6bf"
+    },
+    "tools/audit_r6_legacy_model_cleanup.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/audit_r6_legacy_model_cleanup.py",
+      "sha256": "0446d05c7267c1b29a1e736d76dbe5572a7821cff3062c6397f03fdf8da0e473"
+    },
+    "tools/r6_job_handoff.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+    },
+    "tools/r6_batch.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "a5188e81eb75b4196d5fc469bbe19d90aaae4abd46f0f3440e2d87946323163d"
+    },
+    "tools/r6_model_worker.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_model_worker.py",
+      "sha256": "188880d1da73a6142e343500db6bd23b49653b5f15ceb3df1def26c9577aa37f"
+    },
+    "tools/r6_recovery.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55"
+    },
+    "tools/r6_worker_processes.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_worker_processes.py",
+      "sha256": "7ce3a1276d8460445f442ef9e30ecbe3198de98e848d75198eaabe94c932cc10"
+    }
+  },
+  "repair_evidence": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MODEL_PHASE_REPAIR_TESTS.json",
+    "sha256": "e9a86e80e6131fb89da0114a5f0ca483dc4f4fd04897276959ea8b333fec5aba"
+  },
+  "usage": {
+    "availability": "REPORTED",
+    "malformed_event_lines": 0,
+    "reported_turn_count": 1,
+    "totals": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 376576,
+      "input_tokens": 448034,
+      "output_tokens": 4785,
+      "reasoning_output_tokens": 213
+    },
+    "unknown_turn_count": 0
+  },
+  "historical_descendant_cleanup_proven": false,
+  "runtime_dispatch_authorized": false,
+  "capacity_pass": false,
+  "scientific_acceptance": false,
+  "controller_deployed": false
+}

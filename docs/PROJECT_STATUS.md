@@ -5,7 +5,7 @@
 基线config/源码/method/runtime可执行文件及地面/UAV资产已完成CPU哈希审计。
 主委托、预算和证据位于 `docs/experiments/r6-robustness-auto/`。
 
-自动审核会话已完成10次，剩余22次。首次CLI认证/schema通过但沙箱核查失败，第二次独审提出5项MUST_FIX；
+自动审核会话已完成11次，剩余21次。首次CLI认证/schema通过但沙箱核查失败，第二次独审提出5项MUST_FIX；
 第三次已核验准确修复与新增模型交接路径，返回PASS_CPU_SCOPE/noMUST_FIX。
 `reviews/cpu-fix-handoff-review.json`、三次原始receipt/usage/事件完整保留。
 独审覆盖31项控制/worker、36项张量/评分/归档和7项交接测试；确认配对噪声、预算保护、
@@ -101,6 +101,7 @@ R6 finalizer新增可选 `--analyze`，在原件清单与两次postrun后登记/
 R6 finalizer已接可选分析后结构化决策：沿用既有packet/预算/模型handoff，首次登记或准确接回同一事件；重查identity/request/schema/executable/sandbox和原分析证据。已登记决策优先恢复，不重走先前postclose/analysis；缺decision_input仅在无dispatch/receipt时恢复，未知在途拒绝重建。42项pytest CPU案例通过（6新增），见 `CPU_FINALIZER_DECISION_TESTS.json`；本地假CLI实际仅执行一次，未调用真实模型。输出仍为dispatch_authorized=false/scientific_acceptance=false提案。操作账本和capacityfalse不变、无GPU/live；提案到已审核下一计划的执行、完整部署及科学目标仍未完成。
 第十次独立CPU流程审核返回MUST_FIX一项，见 `reviews/cpu-pipeline-review.json`：r6_batch.model_handoff在consume保存receipt与清除current_model_event的两次保存间崩溃，重启快速返回时不会清旧标记，导致后续提交/分析被阻断。审核已用内存反例复现，现有测试未覆盖此断点；待修，未记接受。原始CLI事件、结构化结果、usage和现代清理回执已保留，实际no_model_workers核验10个模型事件通过。usage input911724/cached814976/output4029/reasoning811；剩22次。审核未授权live/容量/科学结果。审核输入commit3b17264在443推送连接关闭后经标准SSH22正常推送，未修改持久SSH配置；capacityfalse，无GPU/live，完整Goal未完成。
 第十次审核的模型回执/阶段断点已形成修复候选：complete_model_receipt核验准确event/request/process/exit与终态清理后，在一次save内记录receipt并只清除匹配活动标记；旧split状态重启可修复，不重派、不清他人marker、不覆盖后续/失败状态。两个修复前CPU反例保留；61项pytest案例通过（6新增），含实际假CLI、保存后崩溃与finalizer恢复，见 `CPU_MODEL_PHASE_REPAIR_TESTS.json`。缺cleanup仍保留marker并拒绝放行。独审MUST_FIX尚未复核关闭；r6_batch源码改变使旧遗留对账绑定正确拒绝LEGACY_RECONCILIATION_SOURCE_DRIFT，原接受/原receipt未改，须新 scoped复审。无新真实模型/GPU/live，操作账本与capacityfalse不变，完整Goal未完成。
+第十一次独立复审通过：`reviews/cpu-pipeline-fix-review.json`同时给出PASS_CPU_SCOPE与PASS_LEGACY_MODEL_RECONCILIATION/noMUST_FIX，关闭第十次审核的回执/阶段断点。审核核对实际崩溃注入及61项CPU原件；确认七个遗留source pin仅r6_batch变化，原proposal/receipt/session补充证据不变。父控制端用既有含jsonschema环境执行实际validator，两个原事件均通过，no_model_workers核验11个模型事件通过；新接受见 `PIPELINE_REPAIR_ACCEPTANCE.json`，旧接受另存history且原件不改。reviewer一次系统Python验证因缺jsonschema未完成的尝试保留，未冒充成功或安装依赖。usage input448034/cached376576/output4785/reasoning213；剩21次。仅准确CPU修复/遗留对账接受，不证明历史后代清理，不授予live/容量/科学接受；capacityfalse、无R6 live，完整controller与科学目标仍未完成。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）
