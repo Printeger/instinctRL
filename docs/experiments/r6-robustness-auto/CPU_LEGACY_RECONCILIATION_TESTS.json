@@ -1,0 +1,66 @@
+{
+  "schema_version": "r6-cpu-legacy-reconciliation-tests/1",
+  "status": "CPU_PASS_PENDING_INDEPENDENT_REVIEW",
+  "tests_passed": 38,
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow:isaaclab-training CUDA_VISIBLE_DEVICES='' /home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python -m pytest -q tools/test_r6_legacy_model_reconciliation.py tools/test_r6_legacy_cleanup_audit.py tools/test_r6_job_handoff.py",
+  "sources": {
+    "tools/r6_legacy_model_reconciliation.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_legacy_model_reconciliation.py",
+      "sha256": "488b754ad803fc7cc57cd8c84ff6e44ea6d824410acc9a74b368673ed3232b2c"
+    },
+    "tools/audit_r6_legacy_model_cleanup.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/audit_r6_legacy_model_cleanup.py",
+      "sha256": "0446d05c7267c1b29a1e736d76dbe5572a7821cff3062c6397f03fdf8da0e473"
+    },
+    "tools/r6_job_handoff.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "39ce1af4951f3413bae20776105f0e12292d9dc73c3c236a2a8fcb77c21db18a"
+    },
+    "tools/r6_batch.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "e7cc69d7c738ff6a322c1216bd49dd21e66dcce3883ed15d7fca37d9fb46c267"
+    },
+    "tools/r6_model_worker.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_model_worker.py",
+      "sha256": "188880d1da73a6142e343500db6bd23b49653b5f15ceb3df1def26c9577aa37f"
+    },
+    "tools/r6_recovery.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55"
+    }
+  },
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_legacy_model_reconciliation.py",
+      "sha256": "ea9b9390d0dd818bcd2a70bce873b88918a07f470579b5fbf98e3ff8c17fd25a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_legacy_cleanup_audit.py",
+      "sha256": "79fb438005d4fbcc18a1e0133a6183150b9ccb51cac217f2a0ea5312c965c92a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_job_handoff.py",
+      "sha256": "05ffaf1593d65e6187efaebab5e083e877cb1f8af352077a177d10be1cee1716"
+    }
+  ],
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_LEGACY_RECONCILIATION_TESTS.txt",
+    "sha256": "fbe5c1b9453f2405fdea9ce18f639f98cb327ae07428e24a62e8ccdb8a3d1357"
+  },
+  "actual_batch_guard_result": "MODEL_CLEANUP_UNCONFIRMED",
+  "actual_batch_state_unchanged": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "08d96921248b3fcec2337b2bad7e4cd2c587609faf5bda191124f61de927e12f"
+  },
+  "actual_acceptance_registered": false,
+  "test_model_decisions": "CPU_MOCK_ONLY_NOT_INDEPENDENT_REVIEW",
+  "automatic_model_calls_started": 0,
+  "gpu_queries": 0,
+  "live_jobs_started": 0,
+  "historical_descendant_cleanup_proven": false,
+  "review_schema": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/legacy-reconciliation-review.schema.json",
+    "sha256": "a60c111d8ed146f6b6f1ceada60edec4c79399390cdd6a041afa8645294f2c2c"
+  },
+  "schema_meta_validation": "PASS"
+}

@@ -58,6 +58,10 @@ def no_model_workers(journal):
             if owns(receipt.get('process')) or owns(receipt.get('child_identity')):
                 raise RecoveryError('MODEL_RECEIPT_PROCESS_ALIVE_DURING_JOB')
             cleanup = receipt.get('cleanup', {})
+            if 'cleanup' not in receipt and state.get('legacy_model_reconciliation'):
+                from tools.r6_legacy_model_reconciliation import validate_reconciliation
+                validate_reconciliation(journal, key)
+                continue
             if (cleanup.get('status') != 'VERIFIED_NO_OWNED_DESCENDANTS'
                     or any(owns(i) for i in cleanup.get('observed_identities', []))):
                 raise RecoveryError('MODEL_CLEANUP_UNCONFIRMED')

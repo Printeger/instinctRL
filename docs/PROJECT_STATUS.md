@@ -84,6 +84,7 @@ R6原生控制台接线候选：现有held-child分派可将stdout/stderr合并�
 第七次独立复审已关闭上述5项缺陷，`reviews/cpu-source-native-fix-review.json`为PASS_CPU_SCOPE/noMUST_FIX；精确source/test/evidence哈希及receipt/usage/所属后代清理已核验。接受范围仅为受审的源码闭包、快照完整清单和分派恢复组件，不覆盖完整原生容量、执行兼容、Store/controller或科学结果。旧快照0add4b0保持原身份；新精确config/snapshot/control release仍待整合。另只读确认冻结SimulationApp默认启用crashreporter，因此不能以Kit+console限额推断所有native路径总量已通过。未查询GPU、未启动仿真/训练，capacityfalse，完整Goal未完成。
 新增R6崩溃原件路径绑定候选：基于冻结SDK已核实的dumpDir/preserveDump/skipOldDumpUpload设置，使用本attempt/results/prelaunch/native_crash独占目录，启动后读回类型和值，错误则在环境构造前失败；app先登记给既有有界清理生命周期。23项CPU检查通过，见 `CPU_R6_NATIVE_PATH_TESTS.json`；没有导入Carb或启动仿真。AppLauncher不支持enable_crashreporter构造透传，未使用无效禁用参数，也未修改冻结runtime。该改动只补路径/保全/读回，不证明启动前崩溃、缓存或native总字节上界；新代码待独审/新快照，capacityfalse。
 两份早期无cleanup字段的模型receipt已生成独立对账提案，见 `LEGACY_MODEL_CLEANUP_RECONCILIATION_PROPOSAL_V2.json`：第二会话11条命令均有匹配终态，首会话2次MCP资源查询均有匹配终态，准确worker/CLI身份当前均不存活。5项证据完整性CPU检查通过，见 `CPU_LEGACY_CLEANUP_AUDIT_TESTS.json`。原receipt未改，当前无进程不冒充历史后代清理；实际no_model_workers仍拒绝MODEL_CLEANUP_UNCONFIRMED。提案尚需独立审查和窄范围对账验证器，未增加模型调用或live准入。
+新增遗留模型回执对账验证候选：仅允许两份准确原receipt哈希；接受记录必须绑定已完成的独立审核事件、实际modern cleanup receipt、准确源码/提案/原件pins，并在交接时重查进程。38项CPU检查通过，见 `CPU_LEGACY_RECONCILIATION_TESTS.json`；测试模型决策均为替身，不算独立接受。审核prompt/schema已准备但未调用，实际batch未写入接受记录，no_model_workers仍拒绝MODEL_CLEANUP_UNCONFIRMED。原receipt与操作账本未改，没有新增模型调用、GPU查询或live作业；完整Goal仍未完成。
 下方历史状态不覆盖上述事实。
 
 # 当前完成：R5 W 全原门槛通过（2026-10-19）

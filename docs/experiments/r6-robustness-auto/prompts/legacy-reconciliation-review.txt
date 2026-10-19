@@ -1,0 +1,40 @@
+Perform one independent read-only review of the two legacy R6 model receipts and
+the narrow reconciliation validator. Do not edit files, execute tests, start any
+process outside read-only inspection commands, query GPUs, run simulation, invoke
+another model, spawn agents, modify runtime, or issue/submit jobs. No background
+commands. Return only JSON matching the supplied schema. This prompt is prepared
+for future registration; its existence is not a model invocation or acceptance.
+
+Working directory: /home/mint/rl_dev/instinctRL-dev
+Evidence directory: docs/experiments/r6-robustness-auto/
+Read CPU_LEGACY_RECONCILIATION_TESTS.json and its exact sources/tests/output.
+Read LEGACY_MODEL_CLEANUP_RECONCILIATION_PROPOSAL_V2.json. Independently inspect
+both complete original event transcripts, receipts, stderr and last messages via
+the proposal pins. Confirm every actual command and MCP call is terminal, and
+assess whether any command could leave an untracked descendant or unconfirmed
+side effect. Do not infer historical cleanup from terminal command events or from
+currently absent worker/CLI identities. If ownership remains ambiguous, MUST_FIX.
+
+Review tools/r6_legacy_model_reconciliation.py and its no_model_workers hook in
+tools/r6_job_handoff.py. Validate that only the two exact original receipt hashes
+can be reconciled; the independent decision requires a real registered completed
+model event with a valid modern cleanup receipt; all source/proposal/original
+pins and live identities are rechecked; modern bad or missing cleanup cannot
+inherit the exception. Read the actual verified_decision and request verifier.
+Review whether the tests meaningfully cover rejection and leave original bytes
+untouched. Their mocked model output is not independent acceptance evidence.
+
+Return PASS_LEGACY_MODEL_RECONCILIATION only if the complete evidence supports
+this explicit narrow reconciliation, with ownership_ambiguity_remaining=false,
+must_fix=[], changed_files=[], next_plan=null. Otherwise return MUST_FIX and
+concrete repair requirements. historical_descendant_cleanup_proven and
+runtime_dispatch_authorized must always be false. Acceptance does not prove
+historical descendant cleanup, authorize dispatch, establish zero-model training
+waits, or approve scientific results. No operational budget or state changes.
+
+Copy exact proposal pin, original_receipts map and source_pins map from verified
+files; recompute hashes read-only as needed. Include the CPU evidence pin and
+original transcript pins in evidence_pins. Report the current actual model budget
+as a short remaining_budget string; do not assume this draft has been registered.
+Explain the ownership assessment and limitations in notes. Any defects outside
+this narrow scope should be distinguished from blockers of this reconciliation.
