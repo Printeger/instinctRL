@@ -6,6 +6,7 @@ import unittest
 import torch
 from instinctlab.observations.actor import ActorObservationHistory,RAY_COUNT
 from instinctlab.observations.robustness_adapter import R6MeasurementMixin
+from instinctlab.observations.robustness_physics import R6PhysicsMixin
 from instinctlab.control.pipeline import extract_lidar_history
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -46,6 +47,20 @@ class Env(R6MeasurementMixin,Base):
 
 
 class AdapterTests(unittest.TestCase):
+    def test_world_command_uses_actual_boundary_attitude_before_history_update(self):
+        class Combined(R6PhysicsMixin,Env):pass
+        e=Combined();e._robot.data.root_state_w=e.root
+        e._validate_h1_command=lambda name,value:None # Shape validation belongs to live H1 environment.
+        e._r6_physics=dict(pending=set(),failed=False,world_command=None)
+        command=torch.tensor([[.2,0.,0.]]*2)
+        e.stage_r6_world_command(command);first=e._get_observations()
+        e.episode_length_buf+=1;e.root[:,3]=2**-.5;e.root[:,6]=2**-.5
+        e.stage_r6_world_command(command);second=e._get_observations()
+        expected=torch.tensor([[0.,-.2,0.]]*2)
+        self.assertTrue(torch.allclose(second['policy']['state_vec'][:,45:48],expected,atol=1e-6))
+        self.assertTrue(torch.equal(second['policy']['state_vec'][:,32:35],first['policy']['state_vec'][:,45:48]))
+        self.assertTrue(torch.equal(e._command_b,second['policy']['state_vec'][:,45:48]))
+
     def test_default_path_identity_and_unchanged_privileged_critic(self):
         e=Env();out=e._get_observations()
         ranges,_,_=extract_lidar_history(out['policy']['lidar_grid'])

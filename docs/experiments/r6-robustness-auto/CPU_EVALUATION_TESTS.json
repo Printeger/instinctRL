@@ -1,0 +1,109 @@
+{
+  "status": "CPU_PASS_PENDING_INDEPENDENT_AND_LIVE_VALIDATION",
+  "runs": [
+    {
+      "tests": 5,
+      "status": "PASS",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_r6_evaluation",
+        "-v"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_EVALUATION_TESTS_V2.txt",
+        "sha256": "739d4cd96c2b3bfb66477e37c7673b71715e0f61603226b45bcbaf3accb53ddb"
+      }
+    },
+    {
+      "tests": 15,
+      "status": "PASS",
+      "argv": [
+        "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_r6_measurement_adapter",
+        "tools.test_r6_physics_adapter",
+        "-v"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_WORLD_COMMAND_TESTS.txt",
+        "sha256": "49e28758ceb015e2b595e2c49f396a7bc056beff383716eeb6c69346e991df94"
+      }
+    }
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "04411af293778a7c8d72905063fd66f559062458b7ff9db4841e646f53aa1cb9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_audit.py",
+      "sha256": "c2271d4e4c5d05a0872eed5d1d7a048a56ea03d21ecf0d49801c9a3cb21dbf3c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "dc1fdef9d990b01a8864cf6e0c0a6b85c54544a193a3debe9e5e87e81127fbea"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/range_archive.py",
+      "sha256": "3f0692547012cfa43f80efda912d935cc568d31930eb46bf5e5f0e1f852b4729"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness.py",
+      "sha256": "37935ef61bbcb49c89c9293c4dead7fd418fd1663195e508a4948442eed50804"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/budget.py",
+      "sha256": "e861364f9facf45020d02efca6bc5421fc84607c88fc4f01e4f965f69f76d5f8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness_physics.py",
+      "sha256": "8eab4dcb39a173989a02e579042cd94927ebad51d25ddc1f93a6914318674467"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness_adapter.py",
+      "sha256": "3d41a275babc165c0dc75b3cba85ad45abe5d680bf79f50bae95ca57f56eb463"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_evaluation.py",
+      "sha256": "3da2d56d86cf820f187b60bbf724a866469c1ea580f7a08a29b673c4bce7388c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_measurement_adapter.py",
+      "sha256": "0928ffd19c95277249cd05cfd1fbdf680aa98eba8568d2dcaa5384d7546b495d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_physics_adapter.py",
+      "sha256": "c4d422bf6992a574192a73345d5f56001a3ba32ff1d2a71119e82ba2a76bd34f"
+    }
+  ],
+  "coverage": [
+    "Actual R6 block workload exercised with CPU substitute environment/actor;32 lanes330steps,6600 force sink records,331 measurement records",
+    "Full archive readback, dropout indices70/180, motion scoring, last-step reset fails without shrinking denominator",
+    "Quota before next environment step and before audit writes; preserve partial output; no duplicate block output",
+    "Actual backend-entry AST rejects old R5 authority and unfrozen protocol",
+    "Actual observation method plus real measurement mixin and new physics command hook preserve current and past body commands under90degree yaw change"
+  ],
+  "fixture_limits": "Substitute actor and environment are not policy performance or simulator evidence. Tiny2-beam frames in evaluation substitutes test wiring only; full21240-beam codec capacity measured separately.",
+  "not_proven": [
+    "new research-mode authorization/lifecycle dispatch",
+    "checkpoint/model binding in final R6 launcher",
+    "independent protocol/input-chain approval",
+    "physical simulator response",
+    "full controller/resource queue deployment",
+    "complete time/disk capacity",
+    "scientific target domain pass"
+  ],
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "model_calls": 0
+}

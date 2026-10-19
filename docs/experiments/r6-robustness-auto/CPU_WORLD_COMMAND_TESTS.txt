@@ -1,0 +1,20 @@
+test_actual_observation_path_delivers_delay_and_drop_to_shared_history (tools.test_r6_measurement_adapter.AdapterTests.test_actual_observation_path_delivers_delay_and_drop_to_shared_history) ... ok
+test_audit_sink_cannot_mutate_actor_frame (tools.test_r6_measurement_adapter.AdapterTests.test_audit_sink_cannot_mutate_actor_frame) ... ok
+test_default_path_identity_and_unchanged_privileged_critic (tools.test_r6_measurement_adapter.AdapterTests.test_default_path_identity_and_unchanged_privileged_critic) ... ok
+test_full_reset_required_and_partial_reset_clears_only_selected_delay (tools.test_r6_measurement_adapter.AdapterTests.test_full_reset_required_and_partial_reset_clears_only_selected_delay) ... ok
+test_original_suite_guard_and_dormant_method_resolution (tools.test_r6_measurement_adapter.AdapterTests.test_original_suite_guard_and_dormant_method_resolution) ... ok
+test_sink_failure_poison_and_frame_quota (tools.test_r6_measurement_adapter.AdapterTests.test_sink_failure_poison_and_frame_quota) ... ok
+test_world_command_uses_actual_boundary_attitude_before_history_update (tools.test_r6_measurement_adapter.AdapterTests.test_world_command_uses_actual_boundary_attitude_before_history_update) ... ok
+test_actual_hooks_follow_rotor_application_and_base_reset (tools.test_r6_physics_adapter.PhysicsTests.test_actual_hooks_follow_rotor_application_and_base_reset) ... ok
+test_exact_40_tick_pulse_and_no_residual_force (tools.test_r6_physics_adapter.PhysicsTests.test_exact_40_tick_pulse_and_no_residual_force) ... ok
+test_finish_requires_last_physics_tick_and_quota_rejects_extra_action (tools.test_r6_physics_adapter.PhysicsTests.test_finish_requires_last_physics_tick_and_quota_rejects_extra_action) ... ok
+test_mass_and_clock_drift_and_incomplete_finish_fail (tools.test_r6_physics_adapter.PhysicsTests.test_mass_and_clock_drift_and_incomplete_finish_fail) ... ok
+test_observed_reset_mismatch_is_saved_and_poisoned (tools.test_r6_physics_adapter.PhysicsTests.test_observed_reset_mismatch_is_saved_and_poisoned) ... ok
+test_rotated_reset_observed_sensor_position_and_float_world_precision (tools.test_r6_physics_adapter.PhysicsTests.test_rotated_reset_observed_sensor_position_and_float_world_precision) ... ok
+test_world_force_and_zero_com_moment_with_different_body_attitudes (tools.test_r6_physics_adapter.PhysicsTests.test_world_force_and_zero_com_moment_with_different_body_attitudes) ... ok
+test_zero_level_and_selected_reset_never_rewind_block_clock (tools.test_r6_physics_adapter.PhysicsTests.test_zero_level_and_selected_reset_never_rewind_block_clock) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.186s
+
+OK

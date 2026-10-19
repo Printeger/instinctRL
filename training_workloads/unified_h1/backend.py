@@ -543,6 +543,34 @@ class UnifiedH1LiveBackend:
         atomic_json_replace(self.output, f"evaluation_u{update:04d}.json", result)
         return result
 
+    def evaluate_r6_blocks(self) -> list[Mapping[str, Any]]:
+        """Separate exact-authorized R6 entry; never inherits an R5 receipt."""
+        import json
+        from .robustness_evaluation import evaluate_block
+        if self.authorization['mode'] != 'research-r6-evaluation':
+            raise PermissionError('R6 blocks require a new exact evaluation authorization')
+        parameters=self.authorization['parameters']['r6']
+        protocol_path=Path(parameters['protocol']['path'])
+        if not protocol_path.is_absolute() or protocol_path.is_symlink() or sha256_file(protocol_path)!=parameters['protocol']['sha256']:
+            raise PermissionError('R6 protocol pin drift')
+        protocol=json.loads(protocol_path.read_text())
+        if protocol['frozen'] is not True:raise PermissionError('R6 protocol is not independently frozen')
+        blocks={block['id']:block for block in protocol['blocks']}
+        selected=parameters['block_ids']
+        if not selected or len(set(selected))!=len(selected) or any(key not in blocks for key in selected):
+            raise ValueError('R6 exact block selection')
+        required=32*sum(blocks[key]['steps'] for key in selected)
+        if self.counters.nontraining_transitions+required>self.authorization['budgets']['nontraining_transitions']:
+            raise ValueError('R6 complete block batch exceeds exact transition budget')
+        results=[]
+        for key in selected:
+            quota=parameters['output_quotas'][key]
+            results.append(evaluate_block(self,blocks[key],run_id=parameters['run_id'],seed=parameters['seed'],
+                split=parameters['split'],expected_mass_kg=parameters['expected_mass_kg'],
+                range_quota_bytes=quota['range_bytes'],audit_quota_bytes=quota['audit_bytes']))
+        atomic_json_replace(self.output,'r6_block_results.json',results)
+        return results
+
     def _load_evaluation_checkpoint(self, checkpoint: Path, *, actor_learning_rate: float = 3.0e-4,
                                     expected_method_hashes=None, source_identity=None,
                                     restore_curriculum_generator: bool = False) -> Mapping[str, Any]:

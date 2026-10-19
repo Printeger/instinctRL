@@ -22,6 +22,13 @@
 `CPU_PHYSICS_ADAPTER_TESTS.json`记录20项CPU检查通过；这是施力暂存/接线证据，
 不是物理积分、轨迹恢复或独审通过。新增物理与测量接口均待合并独审和live验证。
 
+新评价block workload已串联reset、测量归档、6600物理步审计与完整32lane运动评分；
+新增独立R6 backend入口拒绝旧R5授权和未冻结协议。5项CPU替身workload测试通过，
+另15项实际观察接线/物理接口回归通过，准确输入见 `CPU_EVALUATION_TESTS.json`。
+world指令在实际观察边界转换后进入history，保持内外观察与过去command帧一致；
+丢帧索引明确定义为观察边界0..steps。真实research-mode发行/lifecycle dispatch和checkpoint
+绑定入口尚未完成，不能把CPU替身数据称为真实基线结果。
+
 协议仍为12目标块及4压力块草案，最终三模型加基线774400非训练transitions。
 合成归档估计54.5GiB不是最坏界；内部最终保护80GiB/24000秒待完整容量审核。
 物理reset/force的实际验证、完整job/resource控制器、容量/协议冻结、exact Store许可及科学验证均未完成。

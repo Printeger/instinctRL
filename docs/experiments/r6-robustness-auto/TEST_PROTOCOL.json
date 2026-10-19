@@ -221,7 +221,8 @@
   "lane_stratification": {
     "center": "8 world horizontal directions, four lanes each; lane j direction j%8. Yaw stratum (j//8+j%8)%5. Independent bounded xy offsets per lane. Commands converted world-to-body using current orientation at each control boundary.",
     "wall": "lanes 0..15 x wall,16..31 y wall; within each wall four lanes per toward/away/parallel/zero mode; parallel signs balanced. Yaw and tangent vary. Report wall × mode separately.",
-    "pulse": "8 world force directions with four lanes each; zero commanded velocity throughout."
+    "pulse": "8 world force directions with four lanes each; zero commanded velocity throughout.",
+    "command_execution": "Stage next world command before env.step. At actual next observation boundary, rotate with measured current attitude before history.update; both internal/external latest command and retained past command frames stay consistent. No world pose/attitude fields are appended to actor."
   },
   "measurement_chain": {
     "noise": "Independent additive normal draws clipped to +/-3 sigma, applied to finite valid ranges only; clip physical ranges to declared sensor min/max; preserve invalid validity. Zero noise consumes no noise draws. For nonzero sigma, draw every beam on every acquisition from the condition/lane stream independently of validity; mask only application. Different validity masks cannot shift shared-beam or subsequent-acquisition draws.",
@@ -244,7 +245,8 @@
       "noise_rng_identity",
       "frame_available"
     ],
-    "invalid_fill": "Every invalid beam preserves exact40.0m fill; reject other invalid representations before actor history."
+    "invalid_fill": "Every invalid beam preserves exact40.0m fill; reject other invalid representations before actor history.",
+    "drop_index_semantics": "Observation boundary index k at block time k*0.1s, including reset boundary0; frame k feeds action k. drop_policy_steps70/180 therefore drop delivery at t7.0/t18.0s, not post-action70/180."
   },
   "pulse": {
     "mass_reference": {

@@ -2,6 +2,7 @@
 import copy
 import torch
 from instinctlab.control.lee_velocity_controller import quaternion_to_rotation_matrix_wxyz
+from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz
 from training_workloads.unified_h1.robustness_scenarios import reset_spec,verify_reset
 
 
@@ -44,7 +45,16 @@ class R6PhysicsMixin:
             raise ValueError('pinned baseline total mass required')
         specs=[reset_spec(block,seed=seed,split=split,lane=i,mount_position_m=self.cfg.ray_caster.offset.pos) for i in range(32)]
         self._r6_physics=dict(block=copy.deepcopy(block),specs=specs,reset_sink=reset_sink,force_sink=force_sink,
-            pending=set(),ready=set(),ticks=0,last_sim_tick=None,failed=False,expected_mass=float(expected_mass_kg))
+            pending=set(),ready=set(),ticks=0,last_sim_tick=None,failed=False,expected_mass=float(expected_mass_kg),world_command=None)
+
+    def stage_r6_world_command(self,command):
+        """Command for the next observation boundary, not another actor field."""
+        state=getattr(self,'_r6_physics',None)
+        if state is None or state['failed']:raise RuntimeError('active R6 block required')
+        self._validate_h1_command('R6 world command',command)
+        if bool((torch.linalg.vector_norm(command,dim=-1)>.300001).any()) or bool(command[:,2].ne(0).any()):
+            raise ValueError('R6 low-speed horizontal command boundary')
+        state['world_command']=command.detach().clone()
 
     def _reset_r6_physics(self,indices):
         state=getattr(self,'_r6_physics',None)
@@ -96,6 +106,10 @@ class R6PhysicsMixin:
             except BaseException:
                 state['failed']=True
                 raise
+        if state is not None and state['world_command'] is not None:
+            # Rewards already used c_t. Convert c_(t+1) with actual t+1 attitude
+            # before history.update, so both current and retained history agree.
+            self._command_b.copy_(rotate_world_to_body_wxyz(self._robot.data.root_state_w[:,3:7],state['world_command']))
         return super()._policy_sensor_frame(ranges_m,validity,policy_time)
 
     def _apply_external_disturbance(self):
