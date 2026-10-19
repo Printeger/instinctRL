@@ -1,0 +1,155 @@
+{
+  "status": "ACTUAL_CPU_CODEC_HISTORICAL_BYTES_NOT_R6_TRAINING_ACCEPTANCE",
+  "capacity_pass": false,
+  "files": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+      "relative": "checkpoints/u640.pt",
+      "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+      "raw_bytes": 1510761,
+      "compressed_bytes": 1308428,
+      "chunks": 2,
+      "jsonl_records": 0,
+      "maximum_jsonl_record_bytes": 0,
+      "write_fsync_seconds": 0.03189006121829152,
+      "verified_read_seconds": 0.005244006868451834,
+      "exact_bytes": true
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u768.pt",
+      "relative": "checkpoints/u768.pt",
+      "sha256": "0c4a8b486280a3bb8dbc91778ed1949c085c4dedd3c6ff75ac7194a957111e41",
+      "raw_bytes": 1510761,
+      "compressed_bytes": 1306944,
+      "chunks": 2,
+      "jsonl_records": 0,
+      "maximum_jsonl_record_bytes": 0,
+      "write_fsync_seconds": 0.0305885118432343,
+      "verified_read_seconds": 0.004920966923236847,
+      "exact_bytes": true
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/learning_log/accounting.jsonl",
+      "relative": "learning_log/accounting.jsonl",
+      "sha256": "9249419735730262821d4dcc5b2369b95f6c17c397661b736dce2cf1b6eb4084",
+      "raw_bytes": 1271848,
+      "compressed_bytes": 1378520,
+      "chunks": 8448,
+      "jsonl_records": 8448,
+      "maximum_jsonl_record_bytes": 166,
+      "write_fsync_seconds": 16.90440588677302,
+      "verified_read_seconds": 0.020613713189959526,
+      "exact_bytes": true
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/learning_log/compact_rollouts.jsonl",
+      "relative": "learning_log/compact_rollouts.jsonl",
+      "sha256": "787635d839a2379ec53987f69c8bea6b328cd837b0c5fb9cab4f856f0f0a0efe",
+      "raw_bytes": 292764978,
+      "compressed_bytes": 78249988,
+      "chunks": 4096,
+      "jsonl_records": 4096,
+      "maximum_jsonl_record_bytes": 71908,
+      "write_fsync_seconds": 13.193613308947533,
+      "verified_read_seconds": 0.6169632701203227,
+      "exact_bytes": true
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/learning_log/measurement_windows.jsonl",
+      "relative": "learning_log/measurement_windows.jsonl",
+      "sha256": "dbbc75aa13e06e9e2da9da748ccee1d557d2f5cbbf71b59f14073e749d3ee877",
+      "raw_bytes": 294978055,
+      "compressed_bytes": 57449143,
+      "chunks": 288,
+      "jsonl_records": 16,
+      "maximum_jsonl_record_bytes": 18545013,
+      "write_fsync_seconds": 2.4921742249280214,
+      "verified_read_seconds": 0.4841475309804082,
+      "exact_bytes": true
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/learning_log/partial_rollout_steps.jsonl",
+      "relative": "learning_log/partial_rollout_steps.jsonl",
+      "sha256": "c467186f5d3d9ff90eb8b838fc6095aa274f66c32f3e694414d1f593a89a9bcd",
+      "raw_bytes": 305324753,
+      "compressed_bytes": 78097194,
+      "chunks": 4096,
+      "jsonl_records": 4096,
+      "maximum_jsonl_record_bytes": 74975,
+      "write_fsync_seconds": 12.300378177314997,
+      "verified_read_seconds": 0.62576939817518,
+      "exact_bytes": true
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/learning_log/rollouts.jsonl",
+      "relative": "learning_log/rollouts.jsonl",
+      "sha256": "bca81478f0531e641ec7a08435140d1abf0d48ebce2c461f48893e17ccc596a0",
+      "raw_bytes": 1693278,
+      "compressed_bytes": 393189,
+      "chunks": 256,
+      "jsonl_records": 256,
+      "maximum_jsonl_record_bytes": 7224,
+      "write_fsync_seconds": 0.5206796349957585,
+      "verified_read_seconds": 0.004574399907141924,
+      "exact_bytes": true
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/pilot_diagnostic/first_update_probe.pt",
+      "relative": "pilot_diagnostic/first_update_probe.pt",
+      "sha256": "c6bb100c558c33438b25160f43b6459d12a70d75e65909f3e1328f86e11f8918",
+      "raw_bytes": 12289599,
+      "compressed_bytes": 9961543,
+      "chunks": 12,
+      "jsonl_records": 0,
+      "maximum_jsonl_record_bytes": 0,
+      "write_fsync_seconds": 0.2560860370285809,
+      "verified_read_seconds": 0.04124594898894429,
+      "exact_bytes": true
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/pilot_diagnostic/update_513_full_input.pt",
+      "relative": "pilot_diagnostic/update_513_full_input.pt",
+      "sha256": "abd6987bc18e42ed456a99e3bbf1ad47933d7118432205560982b6b2f432a284",
+      "raw_bytes": 522177865,
+      "compressed_bytes": 87599173,
+      "chunks": 498,
+      "jsonl_records": 0,
+      "maximum_jsonl_record_bytes": 0,
+      "write_fsync_seconds": 2.4405576959252357,
+      "verified_read_seconds": 0.7572697871364653,
+      "exact_bytes": true
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/pilot_diagnostic/update_514_full_input.pt",
+      "relative": "pilot_diagnostic/update_514_full_input.pt",
+      "sha256": "d98b099fc39ae1f4984b38c9568e7869d2be7db6233a3f6df834139305a3488d",
+      "raw_bytes": 522177865,
+      "compressed_bytes": 97303371,
+      "chunks": 498,
+      "jsonl_records": 0,
+      "maximum_jsonl_record_bytes": 0,
+      "write_fsync_seconds": 2.6169123291037977,
+      "verified_read_seconds": 0.7823098520748317,
+      "exact_bytes": true
+    }
+  ],
+  "measured_compressed_bytes": 413047493,
+  "small_uncompressed_bytes": 2629555,
+  "projected_total_bytes": 415677048,
+  "original_total_bytes": 1958329318,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TRAINING_STORAGE_CPU.json",
+    "sha256": "dc33c02b9fa39e1a6bcb57ced379246d4790b00dd5b0c66940d4fcc0e96a6825"
+  },
+  "code": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_training_store.py",
+      "sha256": "ba4604b56bef98cbb24b9dba3490daa042101a094b612a7ae53c5fb5ce969de3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/lossless_evidence.py",
+      "sha256": "b25b1abca7f5f68a9d141c2ce188aa3b46adb70054e82d0b31781c1169afe71a"
+    }
+  ],
+  "limitations": "Actual original R5 bytes and new chunk codec, including per-JSONL-record flush/fsync. Temporary archives deleted only after exact verification. No original modification, no pickle loading, no R6 training. Future noisy fields may compress differently; no capacity acceptance."
+}

@@ -115,3 +115,5 @@ capacity_pass继续为false。
 最初step样本漏了lane的policy_step/command字段，保留原文件但合并计算只用V2；
 最初合并草案开发池超出0.203125GiB，V2只将小评价整GiB向上取整改为256MiB取整，
 原字段/15%余量/分母不减。未隐式退款旧或新预留，也未发车。
+
+2026-10-20实际分块训练存储补证：`TRAINING_CHUNK_STORE_CAPACITY_CPU.json` 对历史原字节采用新codec，JSONL逐record flush/fsync，压缩与小文件合计415,677,048bytes，原1,958,329,318bytes。所有测量流重新核验原SHA，临时档验证后删除；无pickle加载。12项新CPU测试及11项原诊断回归通过，见 `CPU_LOSSLESS_TRAINING_TESTS.json`。新增适配层为opt-in，概率gate计算/顺序未改；默认R5保存方式保留。V3合并草案采用实际codec估计，最终92GiB/27000秒仍仅提案。训练lifecycle及消费者接线、独审、新噪声字段压缩率与live吞吐未验证，capacity_pass=false。

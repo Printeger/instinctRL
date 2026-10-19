@@ -1,0 +1,45 @@
+"""Opt-in R6 evidence adapters; no training dispatcher or gate changes."""
+import json
+from pathlib import Path
+import torch
+from .logging import LearningLog,_jsonable
+from .pilot_diagnostic import FirstUpdateDiagnostic
+
+
+class R6LearningLog(LearningLog):
+    def __init__(self,root,*,pool,**kwargs):
+        super().__init__(root,**kwargs)
+        self.pool=pool;self.compressed_streams={}
+
+    def append(self,relative,record):
+        name='learning_log/'+relative
+        # Validate each request even when a stream has already been opened.
+        path=Path(relative)
+        if path.is_absolute() or '..' in path.parts or path.as_posix()!=relative:raise ValueError('R6_LOG_PATH')
+        data=(json.dumps(_jsonable(dict(record)),sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
+        if len(data)>64*1024**2:raise ValueError('R6_LOG_RECORD_BOUND')
+        if relative not in self.compressed_streams:self.compressed_streams[relative]=self.pool.open(name)
+        stream=self.compressed_streams[relative]
+        try:stream.write(data);stream.flush()
+        except BaseException:stream.abort();raise
+
+    def close(self):
+        errors=[]
+        for stream in self.compressed_streams.values():
+            try:stream.close()
+            except BaseException as error:errors.append(error)
+        if errors:raise errors[0]
+
+
+class R6FirstUpdateDiagnostic(FirstUpdateDiagnostic):
+    def __init__(self,output,*,pool,enabled=True,starting_update=0):
+        super().__init__(output,enabled=enabled,starting_update=starting_update)
+        self.pool=pool
+
+    def _save_tensor(self,value,path):
+        path=Path(path)
+        relative=path.relative_to(self.output)
+        stream=self.pool.open('pilot_diagnostic/'+relative.as_posix())
+        try:
+            torch.save(value,stream);stream.close()
+        except BaseException:stream.abort();raise

@@ -1,0 +1,72 @@
+{
+  "status": "CPU23_PASS_OPT_IN_NOT_LIVE_INTEGRATED",
+  "capacity_pass": false,
+  "tests": [
+    {
+      "command": "python -B -m unittest tools.test_r6_lossless_evidence -v",
+      "passed": 12,
+      "seconds": 0.647
+    },
+    {
+      "command": "python -B -m pytest tests/training_workloads/test_pilot_diagnostic_torch.py -q",
+      "passed": 11,
+      "seconds": 2.77
+    }
+  ],
+  "python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": ".:tools/rlflow:isaaclab-training",
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2"
+  },
+  "pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/lossless_evidence.py",
+      "sha256": "b25b1abca7f5f68a9d141c2ce188aa3b46adb70054e82d0b31781c1169afe71a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_storage.py",
+      "sha256": "bd56bde0d875ec1e910a0901d78ff2f5273e1fd69d96f3f915c7dab900ace67a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/pilot_diagnostic.py",
+      "sha256": "98f71905167598fc85886f9ace5f307908e65a8282c5a05c736b6282c5bc10ff"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_lossless_evidence.py",
+      "sha256": "78bc5a564220a46c1d7b7d5b1739d29acee36bec0ff555f0cdc91079d01fc4b8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/measure_r6_training_store.py",
+      "sha256": "ba4604b56bef98cbb24b9dba3490daa042101a094b612a7ae53c5fb5ce969de3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/build_r6_capacity_design.py",
+      "sha256": "b744729dfd76de45d0e41170a3bf58b2a530d9671aa0454f96764f7077a1dadd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_LOSSLESS_TRAINING_TESTS_V2.txt",
+      "sha256": "f0e8f6a42283c164665861b1bad96850dd0b957c5822d58969de2e765e1c81cb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_LEGACY_DIAGNOSTIC_REGRESSION.txt",
+      "sha256": "b34f5a73365f719678723257a60e474ef01d786435c85d2b839ee48024d6ae8b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TRAINING_CHUNK_STORE_CAPACITY_CPU.json",
+      "sha256": "87089d0bf64ee8cc9e945ca31622ab41ea127543a16948c0a47bb206666802dc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_COMPOSED_DRAFT_V3.json",
+      "sha256": "d619b125419aaad8b350d12e2454b8f7d1f564ab2dbf8c5c77964480c5d3f2cd"
+    }
+  ],
+  "limitations": [
+    "Opt-in adapters only; training dispatcher/lifecycle and downstream consumers still pending",
+    "CPU historical bytes do not bound new noisy training fields or live throughput",
+    "Independent review and capacity acceptance remain pending; operating ledger unchanged",
+    "No R6 live job, GPU query, training or simulator invocation"
+  ]
+}

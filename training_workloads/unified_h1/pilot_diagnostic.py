@@ -102,6 +102,9 @@ class FirstUpdateDiagnostic:
         self.starting_update = starting_update
         self.output=output; self.enabled=bool(enabled); self._probe=None; self._rows=[]; self._handles=[]; self._gradient_handles=[]; self._unclipped_gradients={}; self._before_parameters=None; self._step_count=0; self._completed_step_count=0; self._trainer=None
 
+    def _save_tensor(self,value,path):
+        return save_tensor_evidence(value,path)
+
     def _evaluate(self, trainer: Any, batch: Any, boundary: str) -> dict[str,Any]:
         rng=_rng_snapshot()
         try:
@@ -218,7 +221,7 @@ class FirstUpdateDiagnostic:
         if len(records) != MINIBATCHES: raise RuntimeError("pilot result did not report eight minibatches")
         for row,record in zip(self._rows,records,strict=True): row["unclipped_gradient_norm"]=record["actor_pre_clip_gradient_norm"]
         self.output.mkdir(parents=True,exist_ok=True)
-        save_tensor_evidence({"schema_version":"instinctrl-pilot-first-update-probe/2","sample_count":SAMPLES,
+        self._save_tensor({"schema_version":"instinctrl-pilot-first-update-probe/2","sample_count":SAMPLES,
                     "correction_heads":[1,2,3],"correction_frame":"body","correction_units":"m/s",
                     "sample_minus_mean_action_units":"dimensionless","minibatches":self._rows},self.output/"first_update_probe.pt")
         gate={"schema_version":"instinctrl-pilot-first-update-gate/1","status":"PASS","sample_count":SAMPLES,
@@ -237,7 +240,7 @@ class FirstUpdateDiagnostic:
         if not self.enabled: return
         self.detach_hooks()
         self.output.mkdir(parents=True,exist_ok=True)
-        save_tensor_evidence({"schema_version":"instinctrl-pilot-first-update-probe/2","status":"PARTIAL_FAILURE",
+        self._save_tensor({"schema_version":"instinctrl-pilot-first-update-probe/2","status":"PARTIAL_FAILURE",
                     "probe":self._probe,"minibatches":self._rows,
                     "actual_model_optimizer_state":_state(self._trainer) if self._trainer is not None else None},self.output/"first_update_partial_probe.pt")
         atomic_json_replace(self.output,"first_update_failure.json",{
@@ -248,7 +251,7 @@ class FirstUpdateDiagnostic:
     def retain_rollout(self, update: int, batch: Any, trainer: Any) -> None:
         if not self.enabled or update - self.starting_update not in RETAIN_FULL_INPUT_UPDATES: return
         _batch(batch); self.output.mkdir(parents=True,exist_ok=True)
-        save_tensor_evidence({"schema_version":"instinctrl-pilot-retained-input/1","update":update,"policy":_clone(batch.policy),"privileged":_clone(batch.privileged),
+        self._save_tensor({"schema_version":"instinctrl-pilot-retained-input/1","update":update,"policy":_clone(batch.policy),"privileged":_clone(batch.privileged),
                     "actions":_clone(batch.actions),"old_log_probabilities":_clone(batch.old_log_probabilities),"old_alpha":_clone(batch.old_alpha),"old_beta":_clone(batch.old_beta),
                     "advantages":_clone(batch.advantages),"returns":_clone(batch.returns)},
                    self.output/f"update_{update}_full_input.pt")

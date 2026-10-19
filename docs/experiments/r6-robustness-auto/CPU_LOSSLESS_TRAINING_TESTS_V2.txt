@@ -1,0 +1,17 @@
+test_actual_gate_rejects_drift_before_optimizer_with_compressed_storage (tools.test_r6_lossless_evidence.LosslessTests.test_actual_gate_rejects_drift_before_optimizer_with_compressed_storage) ... ok
+test_actual_retained_rollout_can_be_read_without_plain_copy (tools.test_r6_lossless_evidence.LosslessTests.test_actual_retained_rollout_can_be_read_without_plain_copy) ... ok
+test_chunk_boundaries_seek_readinto_and_exact_bytes (tools.test_r6_lossless_evidence.LosslessTests.test_chunk_boundaries_seek_readinto_and_exact_bytes) ... ok
+test_diagnostic_saver_preserves_tensor_and_rng (tools.test_r6_lossless_evidence.LosslessTests.test_diagnostic_saver_preserves_tensor_and_rng) ... ok
+test_failed_prefix_not_complete_and_no_retry (tools.test_r6_lossless_evidence.LosslessTests.test_failed_prefix_not_complete_and_no_retry) ... ok
+test_learning_log_bytes_equal_legacy_jsonl (tools.test_r6_lossless_evidence.LosslessTests.test_learning_log_bytes_equal_legacy_jsonl) ... ok
+test_output_quota_before_data_write (tools.test_r6_lossless_evidence.LosslessTests.test_output_quota_before_data_write) ... ok
+test_paths_and_symlink_rejected (tools.test_r6_lossless_evidence.LosslessTests.test_paths_and_symlink_rejected) ... ok
+test_raw_and_compressed_bounds_poison_pool (tools.test_r6_lossless_evidence.LosslessTests.test_raw_and_compressed_bounds_poison_pool) ... ok
+test_torch_bytes_and_tensor_reload (tools.test_r6_lossless_evidence.LosslessTests.test_torch_bytes_and_tensor_reload) ... ok
+test_truncation_append_and_corruption (tools.test_r6_lossless_evidence.LosslessTests.test_truncation_append_and_corruption) ... ok
+test_wrong_identity_and_read_bound (tools.test_r6_lossless_evidence.LosslessTests.test_wrong_identity_and_read_bound) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.647s
+
+OK

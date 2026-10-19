@@ -11,7 +11,7 @@ MIB=1024**2;GIB=1024**3
 
 def run():
     names=['TEST_PROTOCOL.json','ARCHIVE_TEMPORAL_CPU_RNG_CAPACITY.json','FORCE_ARCHIVE_CAPACITY_CPU_V3.json',
-        'STEP_ARCHIVE_CAPACITY_CPU_V2.json','TRAINING_LOSSLESS_CAPACITY_CPU.json','CAPACITY_ALLOCATION.json','goal_budget.json']
+        'STEP_ARCHIVE_CAPACITY_CPU_V2.json','TRAINING_CHUNK_STORE_CAPACITY_CPU.json','CAPACITY_ALLOCATION.json','goal_budget.json']
     p,r,f,s,t,allocation,budget=[json.loads((BASE/name).read_text()) for name in names]
     ranges={b['block_id']:b for b in r['blocks']};forces={b['block_id']:b for b in f['blocks']}
     blocks=[]
@@ -38,7 +38,7 @@ def run():
         two_256_update_training_jobs=2*GIB,snapshots=GIB,controller_and_reviews=GIB,failed_prelaunch_and_repair_margin=2*GIB)
     dev_total=sum(development.values())
     fixed=sum(row['compressed_bytes'] for row in t['files'] if row['relative'].startswith('pilot_diagnostic/'))
-    variable=t['projected_lossless_total_bytes']-fixed
+    variable=t['projected_total_bytes']-fixed
     training_1024=fixed+4*variable
     range_seconds=sum((b['steps']+1)*max(next(c for c in r['cases'] if c['sigma_m']==b['noise_std_m'] and c['delay_cycles']==b['delay_cycles'])['encoding_seconds']) for b in p['blocks'])
     force_seconds=sum(b['steps']*20*max(next(c for c in f['cases'] if c['acceleration_m_s2']==b.get('pulse_acceleration_m_s2',0.))['encode_write_fsync_seconds']) for b in p['blocks'])
@@ -61,14 +61,14 @@ def run():
         scope='Final all16blocks plus original suite for three confirmation models and paired baseline unchanged. Development example is two256-update candidates, each original suite plus one preregistered affected block. Not method registration or a promise all three maximum candidates fit simultaneously; longer segments/control arms require exact admission against the same pool.',
         training_compression=dict(historical_fixed_bytes=fixed,historical_variable_per256_bytes=variable,
             extrapolated_per1024_bytes=training_1024,proposed_per_confirmation_job_bytes=2*GIB,
-            implementation_status='NOT_IMPLEMENTED_FOR_R6; all raw bytes must remain exactly recoverable; checkpoints may remain uncompressed'),
+            implementation_status='OPT_IN_CPU_ADAPTER_TESTED_NOT_LIVE_INTEGRATED; exact historical bytes recovered including per-record flush/fsync; checkpoints may remain uncompressed'),
         final_time_seconds=dict(historical_scaled_physics_per_model=base_seconds,range_encode_per_model=range_seconds,
             force_encode_fsync_per_model=force_seconds,step_encode_fsync_per_model=step_seconds,
             three_training_1024=final_train_seconds,seven_cleanup_allowances=7*180,video_allowance=1200,
             total_sample_extrapolation=final_seconds,existing_protection=24000,proposed_protection=27000,
             development_remaining_if_accepted=43200-27000),
         unresolved=['Independent acceptance of output/time allocation changes; current ledger unchanged',
-            'Lossless bounded R6 training writer/reader and first-rollout diagnostic compatibility not implemented',
+            'Opt-in lossless training adapters CPU-tested; live lifecycle integration, consumers and independent review still required',
             'Reset/header/motion and new training-noise field quotas require actual serialization checks',
             'Native logs across runtime paths require bounded guards; job control-directory sizes alone insufficient',
             'Snapshot/video/runtime metadata quotas need exact implementation and input identities',
