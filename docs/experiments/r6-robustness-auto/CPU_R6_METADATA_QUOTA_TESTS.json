@@ -1,0 +1,30 @@
+{
+  "status": "CPU_BLOCK_METADATA_QUOTA_PASS_CAPACITY_PENDING",
+  "tests_passed": 7,
+  "test_log": "CPU_R6_METADATA_QUOTA_TESTS.txt",
+  "serialization_evidence": "CPU_R6_MOTION_METADATA_CAPACITY.json",
+  "combined_motion_and_result_cap_bytes": 16777216,
+  "checks": [
+    "Combined cap is checked before either artifact write",
+    "Exact boundary serializes unchanged records",
+    "Global cumulative write quota remains enforced",
+    "All32 lane denominator and last-sample reset failure regressions pass",
+    "All16 protocol blocks serialized using actual lane_sample fields and long finite float64 values; synthetic nonphysical input"
+  ],
+  "capacity_draft": "CAPACITY_COMPOSED_DRAFT_V4.json",
+  "capacity_pass": false,
+  "ledger_changed": false,
+  "source_sha256": {
+    "training_workloads/unified_h1/robustness_audit.py": "e39d2bb4b8f95bb9d5787d3bed930b8a203777af2929f41896f9f8aa3b7d99e6",
+    "training_workloads/unified_h1/robustness_evaluation.py": "3afb0e1707e22b9f723712e1e7168b2f20ea94008b0495df66c38ebc66cc409b",
+    "tools/test_r6_evaluation.py": "79d70ddf6e66394ab7c585b6b698ba38e4888f689a06f0385175691ad4dd97d2",
+    "tools/build_r6_capacity_design.py": "f00c8d53f9a3627759d394a34ca1350ee3e1ef02bfc1abf3147e8a2b23520b50"
+  },
+  "limitations": [
+    "Existing read-only snapshot remains at0add4b0 and does not include this new change",
+    "New source candidate requires new exact config/snapshot and review before use",
+    "Native logs across runtime paths remain an unresolved total-output boundary",
+    "Allocation proposal93GiB/27000seconds is not accepted; operating protection stays80GiB/24000seconds",
+    "Development example is a capacity illustration, not registered candidate/control coverage or authority to trim final confirmation"
+  ]
+}

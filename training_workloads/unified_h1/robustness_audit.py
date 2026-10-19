@@ -9,6 +9,20 @@ from .logging import _jsonable
 from training_workloads.scale_003.persistence import reserve_output_bytes
 from .force_archive import MAGIC,SHAPES,encode_force,decode_force
 
+BLOCK_METADATA_CAP_BYTES=16*1024**2
+
+
+def write_block_metadata(folder,traces,summary):
+    """Bound both complete replay artifacts before writing either one."""
+    from training_workloads.scale_003.config import canonical_bytes
+    from training_workloads.scale_003.persistence import atomic_json_replace
+    size=sum(len(canonical_bytes(value)) for value in (traces,summary))
+    if size>BLOCK_METADATA_CAP_BYTES:raise ValueError('R6_BLOCK_METADATA_QUOTA_BEFORE_WRITE')
+    atomic_json_replace(folder,'motion_traces.json',traces)
+    atomic_json_replace(folder,'result.json',summary)
+    return size
+
+
 HEADER=struct.Struct('<II32s')
 MAX_RECORD=8*1024**2
 

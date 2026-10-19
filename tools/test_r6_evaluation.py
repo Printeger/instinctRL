@@ -8,6 +8,7 @@ from pathlib import Path
 from types import SimpleNamespace
 import tempfile
 import unittest
+from unittest.mock import patch
 from typing import Any,Mapping
 import torch
 from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz,quaternion_to_rotation_matrix_wxyz
@@ -119,6 +120,33 @@ class EvaluationTests(unittest.TestCase):
             self.assertEqual(b.environment.step_index,1);self.assertEqual(b.counters.nontraining_transitions,32)
             self.assertFalse((Path(tmp)/'r6/S-fixture/result.json').exists())
             self.assertTrue((Path(tmp)/'r6/S-fixture/audit.bin').stat().st_size>0)
+
+    def test_metadata_combined_limit_rejects_before_either_write(self):
+        from training_workloads.unified_h1 import robustness_audit as audit
+        from training_workloads.scale_003.config import canonical_bytes
+        traces=[{'lane':i,'rows':[{'value':1.2345678901234567}]} for i in range(32)]
+        summary={'status':'CPU_FIXTURE'}
+        count=sum(len(canonical_bytes(v)) for v in (traces,summary))
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp)
+            with patch.object(audit,'BLOCK_METADATA_CAP_BYTES',count-1):
+                with self.assertRaisesRegex(ValueError,'METADATA_QUOTA_BEFORE_WRITE'):
+                    audit.write_block_metadata(folder,traces,summary)
+            self.assertEqual(list(folder.iterdir()),[])
+            with patch.object(audit,'BLOCK_METADATA_CAP_BYTES',count):
+                self.assertEqual(audit.write_block_metadata(folder,traces,summary),count)
+            self.assertEqual(json.loads((folder/'motion_traces.json').read_text()),traces)
+            self.assertEqual(sum(p.stat().st_size for p in folder.iterdir()),count)
+
+    def test_metadata_writer_retains_global_write_quota(self):
+        from training_workloads.unified_h1.robustness_audit import write_block_metadata
+        from training_workloads.scale_003 import persistence as p
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp);quota=p.OutputWriteQuota(folder,1)
+            with patch.object(p,'_output_quota',quota):
+                with self.assertRaises(p.PersistenceError):write_block_metadata(folder,[{'lane':0}],{})
+            self.assertFalse((folder/'result.json').exists())
+            self.assertFalse((folder/'motion_traces.json').exists())
 
     def test_audit_quota_corruption_and_no_overwrite(self):
         with tempfile.TemporaryDirectory() as tmp:

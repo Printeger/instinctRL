@@ -1,0 +1,130 @@
+{
+  "status": "CPU_SERIALIZATION_SAMPLE_NOT_PHYSICS",
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+    "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0",
+    "bytes": 16710
+  },
+  "blocks": [
+    {
+      "block_id": "S-clean-low",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249272,
+      "remaining_for_result_bytes": 12527944
+    },
+    {
+      "block_id": "S-clean-high",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249304,
+      "remaining_for_result_bytes": 12527912
+    },
+    {
+      "block_id": "S-noise",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249144,
+      "remaining_for_result_bytes": 12528072
+    },
+    {
+      "block_id": "S-delay-drop",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249304,
+      "remaining_for_result_bytes": 12527912
+    },
+    {
+      "block_id": "X-clean",
+      "lanes": 32,
+      "policy_steps": 200,
+      "motion_bytes": 2579384,
+      "remaining_for_result_bytes": 14197832
+    },
+    {
+      "block_id": "X-noise",
+      "lanes": 32,
+      "policy_steps": 200,
+      "motion_bytes": 2579384,
+      "remaining_for_result_bytes": 14197832
+    },
+    {
+      "block_id": "P-clean",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249144,
+      "remaining_for_result_bytes": 12528072
+    },
+    {
+      "block_id": "P-combined",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249240,
+      "remaining_for_result_bytes": 12527976
+    },
+    {
+      "block_id": "W-near",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249112,
+      "remaining_for_result_bytes": 12528104
+    },
+    {
+      "block_id": "W-middle",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249176,
+      "remaining_for_result_bytes": 12528040
+    },
+    {
+      "block_id": "W-far",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249080,
+      "remaining_for_result_bytes": 12528136
+    },
+    {
+      "block_id": "W-combined",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249240,
+      "remaining_for_result_bytes": 12527976
+    },
+    {
+      "block_id": "stress-S-noise",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249368,
+      "remaining_for_result_bytes": 12527848
+    },
+    {
+      "block_id": "stress-S-combined",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249464,
+      "remaining_for_result_bytes": 12527752
+    },
+    {
+      "block_id": "stress-P-high",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249336,
+      "remaining_for_result_bytes": 12527880
+    },
+    {
+      "block_id": "stress-W-high",
+      "lanes": 32,
+      "policy_steps": 330,
+      "motion_bytes": 4249336,
+      "remaining_for_result_bytes": 12527880
+    }
+  ],
+  "block_metadata_cap": 16777216,
+  "actual_lane_sample_used": true,
+  "fields_preserved": true,
+  "run_id_characters": 256,
+  "floating_values": "long finite IEEE754 float64 representations; deliberately not physically valid trajectories",
+  "result_limit": "Combined motion+result write guard enforced before either artifact; result still subject to remaining bytes",
+  "gpu_queries": 0,
+  "simulator_starts": 0
+}

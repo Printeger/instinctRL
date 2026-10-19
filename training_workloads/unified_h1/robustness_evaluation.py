@@ -9,7 +9,7 @@ from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxy
 from training_workloads.scale_003.persistence import atomic_json_replace
 from .robustness import command,score_block
 from .range_archive import RangeArchive
-from .robustness_audit import AuditLog
+from .robustness_audit import AuditLog,write_block_metadata
 
 
 def world_command(block,step,reference):
@@ -110,6 +110,5 @@ def evaluate_block(backend,block,*,run_id,seed,split,expected_mass_kg,range_quot
             physics_completion=physics_completion,
             evidence_status='COMPLETE_BLOCK_REQUIRES_INDEPENDENT_REPLAY',scientific_acceptance=False)
     # Preserve the complete replayable lane records separately for the pure scorer.
-    atomic_json_replace(folder,'motion_traces.json',traces)
-    atomic_json_replace(folder,'result.json',summary)
+    write_block_metadata(folder,traces,summary)
     return summary

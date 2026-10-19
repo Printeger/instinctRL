@@ -27,15 +27,15 @@ def run():
     native=3*GIB;original=64*MIB
     full=native+original+sum(b['range_quota_bytes']+b['audit_quota_bytes']+b['motion_metadata_quota_bytes'] for b in blocks)
     final_components=dict(four_full_evaluations=4*full,three_training_jobs=6*GIB,
-        snapshots=GIB,videos=2*GIB,controller_and_reviews=GIB,failed_cleanup_and_delivery_margin=GIB)
+        snapshots=2*GIB,videos=2*GIB,controller_and_reviews=GIB,failed_cleanup_and_delivery_margin=GIB)
     final_total=sum(final_components.values());final_protection=math.ceil(final_total/GIB)*GIB
     dev_limit=budget['caps']['output_actual_plus_unreleased_reservations_bytes']-final_protection
     subset=native+original+max(b['range_quota_bytes']+b['audit_quota_bytes']+b['motion_metadata_quota_bytes'] for b in blocks)
     # Retain every component and its15% sample margin; avoid wasting almost a
     # GiB merely rounding each small development evaluation to a whole GiB.
     subset_quota=math.ceil(subset/(256*MIB))*(256*MIB)
-    development=dict(initial_full_baseline=full,two_affected_block_plus_original_evaluations=2*subset_quota,
-        two_256_update_training_jobs=2*GIB,snapshots=GIB,controller_and_reviews=GIB,failed_prelaunch_and_repair_margin=2*GIB)
+    development=dict(initial_full_baseline=full,one_affected_block_plus_original_evaluation=subset_quota,
+        one_256_update_training_job=GIB,snapshots=2*GIB,controller_and_reviews=GIB,failed_prelaunch_and_repair_margin=2*GIB)
     dev_total=sum(development.values())
     fixed=sum(row['compressed_bytes'] for row in t['files'] if row['relative'].startswith('pilot_diagnostic/'))
     variable=t['projected_total_bytes']-fixed
@@ -47,7 +47,8 @@ def run():
     base_seconds=allocation['historical_evaluation']['elapsed_seconds']*transitions/32960
     per_model_seconds=base_seconds+range_seconds+force_seconds+step_seconds
     final_train_seconds=allocation['historical_training']['elapsed_seconds']*12
-    final_seconds=4*per_model_seconds+final_train_seconds+7*180+1200
+    fresh_prelaunch_seconds=7*180
+    final_seconds=4*per_model_seconds+final_train_seconds+7*180+1200+fresh_prelaunch_seconds
     return dict(schema_version='r6-composed-capacity-draft/1',status='PROPOSAL_NOT_ACCEPTED',capacity_pass=False,
         inputs=[pin(BASE/name) for name in names],tool=pin(Path(__file__).resolve()),blocks=blocks,
         unchanged_native_allowance_bytes=native,original_suite_metadata_allowance_bytes=original,
@@ -58,23 +59,26 @@ def run():
         existing_protection_deficit_bytes=max(0,final_total-80*GIB),
         development_limit_after_proposal_bytes=dev_limit,development_example_components_bytes=development,
         development_example_total_bytes=dev_total,development_example_fits=dev_total<=dev_limit,
-        scope='Final all16blocks plus original suite for three confirmation models and paired baseline unchanged. Development example is two256-update candidates, each original suite plus one preregistered affected block. Not method registration or a promise all three maximum candidates fit simultaneously; longer segments/control arms require exact admission against the same pool.',
+        scope='Final all16blocks plus original suite for three confirmation models and paired baseline unchanged. Development example is one256-update candidate with original suite plus one preregistered affected block; additional candidates/controls must fit remaining resources after actual measurements. Not method registration or a promise all three maximum candidates fit simultaneously; longer segments/control arms require exact admission against the same pool.',
         training_compression=dict(historical_fixed_bytes=fixed,historical_variable_per256_bytes=variable,
             extrapolated_per1024_bytes=training_1024,proposed_per_confirmation_job_bytes=2*GIB,
             implementation_status='OPT_IN_CPU_ADAPTER_TESTED_NOT_LIVE_INTEGRATED; exact historical bytes recovered including per-record flush/fsync; checkpoints may remain uncompressed'),
         final_time_seconds=dict(historical_scaled_physics_per_model=base_seconds,range_encode_per_model=range_seconds,
             force_encode_fsync_per_model=force_seconds,step_encode_fsync_per_model=step_seconds,
             three_training_1024=final_train_seconds,seven_cleanup_allowances=7*180,video_allowance=1200,
+            seven_separate_prelaunch_window_caps=fresh_prelaunch_seconds,
             total_sample_extrapolation=final_seconds,existing_protection=24000,proposed_protection=27000,
             development_remaining_if_accepted=43200-27000),
         unresolved=['Independent acceptance of output/time allocation changes; current ledger unchanged',
             'Opt-in lossless training adapters CPU-tested; live lifecycle integration, consumers and independent review still required',
-            'Reset/header/motion and new training-noise field quotas require actual serialization checks',
+            'Block motion/result combined16MiB write guard implemented; reset/header and new training-noise field coverage still requires review',
             'Native logs across runtime paths require bounded guards; job control-directory sizes alone insufficient',
-            'Snapshot/video/runtime metadata quotas need exact implementation and input identities',
+            'Snapshot reserve now2GiB per identity; actual first snapshot about0.922GiB charged2GiB. Further snapshots/video/runtime metadata must fit explicit pools',
             'GPU synchronization/CPU noise and scientific feasibility not measured by these CPU samples',
             'Full failed job may exceed repair pool; explicit future storage-release settlement needs independent review, never implicit refunds'],
         superseded_fixture_note='STEP_ARCHIVE_CAPACITY_CPU.json initial sample omitted per-lane policy_step/command fields and is excluded; V2 includes them. Initial record retained.',
+        snapshot_accounting='Development snapshot component includes the already charged2GiB first snapshot; it is not an additional free pool. Final2GiB component permits one shared exact source identity, further identities need remaining budget.',
+        prelaunch_accounting='Conservatively add full180s actual prelaunch per final job; earlier historical scaled timing retained, no subtraction based on unknown historical gate cost.',
         ledger_changed=False,final_coverage_reduced=False)
 
 
