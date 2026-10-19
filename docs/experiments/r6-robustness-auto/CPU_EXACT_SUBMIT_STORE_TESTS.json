@@ -1,0 +1,64 @@
+{
+  "schema_version": "r6-exact-submit-store-cpu/1",
+  "status": "CPU_INTEGRATION_PASS_PENDING_REVIEW_NOT_DEPLOYED",
+  "tests_passed": 24,
+  "new_store_integration_tests": 10,
+  "existing_submit_regression_tests": 14,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+    "sha256": "52d8864d15be227acff302640747ed0a588c29db2b25e11053aa331e7133fe4e"
+  },
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_store.py",
+      "sha256": "6f3b7a5fc586ffacd44721d25d3c7af6537e22bf7f74e4bbc899d322fbac61c7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit.py",
+      "sha256": "d184e24a94532fe9ebf06d16b7ea29b909bf6833da07d2a232a13a0d20529b8a"
+    }
+  ],
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_EXACT_SUBMIT_STORE_TESTS.txt",
+    "sha256": "8cc8a9a2fab0e9ef86ab69b9447d7f01e8a8c96ce5c31a66830c6f044129012f"
+  },
+  "dependencies": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/experiments.py",
+      "sha256": "dd85dee9971a93137348320364c82a95f377d4e963e649262df5bfd3157a937d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/store.py",
+      "sha256": "b57f1e3f7c71a4150cdd3346cb753197c1170a9ffd952bff6521be83c6fb2a0d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/policy.py",
+      "sha256": "716b26c982a3fc7de06292317009b68d4f2a9fa924bfc0fff594cd4dcbbcc77d"
+    }
+  ],
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "9b272bf84588eeb8c3b064bcb99b89f7971176eb09e468b8440b14a8accb2668"
+  },
+  "operating_state_modified": false,
+  "actual_capacity_pass": false,
+  "live_jobs_started": 0,
+  "gpu_queries": 0,
+  "model_calls": 0,
+  "coverage": [
+    "Real temporary append-only Store, propose/show/decide, validate and authorized functions without substitutes",
+    "Revoked approval/proposal, changed proposal version/content, rejected/drifted condition, paused Store, Store STOP and input pin drift rejected before claim",
+    "Actual submit reservation and request persistence followed by injected Popen failure; reconstructed Store recovery preserves START_INTENT and does not submit again",
+    "Original Journal budget preserved on rejection and recovery"
+  ],
+  "substitutes": [
+    "Synthetic resource observations and monotonic clock",
+    "Release freeze replaced with temporary Store directory",
+    "Popen always raises before creating any process"
+  ],
+  "limitations": [
+    "runner_cpu exact-spec integration only; real R6 authority/reservation coverage remains pending",
+    "No child launch, supervisor lifecycle or background controller deployment tested",
+    "No capacity acceptance, independent review or scientific acceptance"
+  ]
+}
