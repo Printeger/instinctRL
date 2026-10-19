@@ -104,10 +104,16 @@ def model_handoff(journal,key,*,poll_seconds=15):
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('directory',type=Path);ap.add_argument('event_key')
-    ap.add_argument('--job-store',type=Path,help='Close an existing exact job in this rlflow Store; never submit')
+    action=ap.add_mutually_exclusive_group()
+    action.add_argument('--job-store',type=Path,help='Close an existing exact job in this rlflow Store; never submit')
+    action.add_argument('--inventory-store',type=Path,help='Inventory exact closed-job originals; no GPU queries')
     a=ap.parse_args();journal=Journal(a.directory.resolve())
     with journal.writer():
-        if a.job_store is None:
+        if a.inventory_store is not None:
+            from rlflow.store import Store
+            from tools.r6_job_inventory import record_inventory
+            result=record_inventory(journal,a.event_key,Store(a.inventory_store.resolve()))
+        elif a.job_store is None:
             result=model_handoff(journal,a.event_key)
         else:
             from rlflow.store import Store

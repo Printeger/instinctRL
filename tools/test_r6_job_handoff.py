@@ -12,6 +12,7 @@ from unittest.mock import patch
 from rlflow.jobs import identity
 from rlflow.store import atomic, canonical, sha
 from tools.r6_recovery import Journal, RecoveryError, file_pin
+from tools.r6_budget import totals
 from tools.r6_job_handoff import close_terminal_job, job_handoff
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -85,7 +86,7 @@ class JobTests(unittest.TestCase):
         result=self.handoff()
         self.assertEqual((result['native_status'],result['native_exit_code']),('FAILED',-9))
         self.assertFalse(result['scientific_acceptance']);self.assertFalse(result['postrun_complete'])
-        self.assertEqual(before,self.j.read()['budget']);self.assertEqual(self.j.read()['status'],'CPU_ANALYZE')
+        self.assertEqual(totals(before),totals(self.j.read()['budget']));self.assertEqual(self.j.read()['status'],'CPU_ANALYZE')
         self.submit.assert_not_called()
 
     def test_real_live_handle_waits_locally_then_exact_terminal(self):

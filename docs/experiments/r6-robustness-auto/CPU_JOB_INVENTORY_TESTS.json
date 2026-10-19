@@ -1,0 +1,89 @@
+{
+  "schema_version": "r6-job-inventory-cpu-tests/1",
+  "status": "CPU63_PASS_PENDING_INDEPENDENT_REVIEW_NOT_DEPLOYED",
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow CUDA_VISIBLE_DEVICES='' /home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python -m unittest tools.test_r6_budget tools.test_r6_job_handoff tools.test_r6_job_inventory tools.test_r6_recovery tools.test_r6_batch",
+  "tests": 63,
+  "exit_code": 0,
+  "reported_seconds": 4.436,
+  "raw_log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_JOB_INVENTORY_TESTS.txt",
+    "sha256": "531b58a74ee561e77430403d08644f3e1848aad052552ae5b60136d79bec2fce"
+  },
+  "components": {
+    "budget": 16,
+    "job_handoff": 19,
+    "job_inventory": 11,
+    "recovery": 10,
+    "model_handoff": 7
+  },
+  "code": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_budget.py",
+      "sha256": "30b13c18f6f1091d08ff2dab0f81a7cd24fe8cfb271feed20e18a045f6e2aa53"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_inventory.py",
+      "sha256": "da23164c0856f7667dedf52b492054db39509bbd2118e76bda90425c0cda455e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "ee4f58d383f64f11a81a44699b9ab94ef6ce39904e86c33a13622ed52c842584"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "22009d5d6fc451fa130ff03f6059c3dd6c83a902d055a66421148fbc83e816ed"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_budget.py",
+      "sha256": "1bae7e8b3977bf9e65654937249b4038c3993c6b28522b6be92b10c2e6d51621"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_job_inventory.py",
+      "sha256": "702a0e6cacfbb9444a72b833dedf6dbedd431a4fe609a417012226951e473708"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_job_handoff.py",
+      "sha256": "05ffaf1593d65e6187efaebab5e083e877cb1f8af352077a177d10be1cee1716"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_recovery.py",
+      "sha256": "8873d0afae0912bb43b857508ff801d102e370c24435d937a95c909c43109334"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_batch.py",
+      "sha256": "80a60476df1fd4a6ce7aa81a96e7a11d6d2de776534d4933e8ccdca4ec0a8a06"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/fixtures/r6_budget.json",
+      "sha256": "50d7f6a56944b8d2ef9a47c24452e137b080d80f9e06e181b3f5e8e53cd0ff18"
+    }
+  ],
+  "cli_check": {
+    "command": "python -m tools.r6_batch --help",
+    "exit_code": 0,
+    "inventory_store_argument_exposed": true,
+    "note": "CLI wiring added after unittest run; help parsed successfully; callable inventory implementation is covered by tests"
+  },
+  "invariants": [
+    "All exact job and attempt originals hashed without copying or rewriting negative evidence",
+    "Symlinks/special files/overlapping roots and mutations during scan rejected",
+    "Hard links conservatively charged per pathname",
+    "Missing attempt remains explicitly incomplete",
+    "Inventory-file-before-journal crash resumes without repeated observation charges",
+    "Observed time and original-output bytes bind immutable evidence",
+    "Every resource charge is max(original reservation, all observed values); no refund on smaller actuals",
+    "Actual cap excess is durably recordable; later reservations fail closed",
+    "Protected confirmation and model-review/repair capacity includes observed overruns",
+    "STOP/deadline flags survive inventory collection"
+  ],
+  "scope_limitations": [
+    "CPU Store and short subprocess fixtures; no actual live job",
+    "Inventory covers original job/attempt only, not all controller/global metadata or later postrun outputs",
+    "Controller metadata still needs explicit capacity reservation before deployment",
+    "No postrun queries, snapshot release, permission issuance, resource admission, scientific acceptance or next-plan execution",
+    "Operational budget and batch state unchanged; observation semantics require independent integration review"
+  ],
+  "automatic_model_api_calls": 0,
+  "gpu_queries": 0,
+  "simulator_initializations": 0
+}

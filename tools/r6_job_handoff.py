@@ -14,6 +14,7 @@ from rlflow import experiments, policy
 from rlflow.jobs import identity, owns
 from rlflow.store import atomic, canonical, sha
 from tools.r6_recovery import RecoveryError, checked, file_pin
+from tools.r6_budget import observe
 
 TERMINAL = {'FAILED', 'STOPPED', 'SUCCEEDED'}
 
@@ -128,13 +129,15 @@ def close_terminal_job(journal, key, store):
     if entry.get('closure'):
         if read(checked(entry['closure'])) != result:
             raise RecoveryError('JOB_CLOSURE_DRIFT')
-        return result
     if path.exists():
         if read(path) != result:
             raise RecoveryError('JOB_CLOSURE_DRIFT')
     else:
         atomic(path, canonical(result) + b'\n')
     entry.update(closure=file_pin(path), status='JOB_CLOSED')
+    if observations:
+        state['budget'] = observe(state['budget'], event_key=entry['identity'],
+            resources=observations, evidence=entry['closure'])
     state.update(current_job=None, status='JOB_CLOSED_PENDING_ANALYSIS')
     journal.save(state)
     return result

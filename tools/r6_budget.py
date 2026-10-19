@@ -19,7 +19,18 @@ def amount(value):
     return value
 
 
-def totals(ledger):
+def charged(reservation, caps):
+    """Conservative charge: max(reserved, every pinned observation), never sum twice."""
+    result = {}
+    for resources in [reservation['resources'], *[o['resources'] for o in reservation.get('observations', [])]]:
+        for resource, value in resources.items():
+            if resource not in caps:
+                raise BudgetError('Unknown resource: ' + resource)
+            result[resource] = max(result.get(resource, 0), amount(value))
+    return result
+
+
+def totals(ledger, *, enforce_caps=True):
     caps = ledger['caps']
     result = {k: amount(ledger['used'][k]) for k in caps}
     seen = set()
@@ -28,12 +39,10 @@ def totals(ledger):
         if key in seen:
             raise BudgetError('Duplicate reservation event')
         seen.add(key)
-        for resource, value in reservation['resources'].items():
-            if resource not in caps:
-                raise BudgetError('Unknown resource: ' + resource)
-            result[resource] += amount(value)
+        for resource, value in charged(reservation, caps).items():
+            result[resource] += value
     for resource, value in result.items():
-        if value > amount(caps[resource]):
+        if enforce_caps and value > amount(caps[resource]):
             raise BudgetError('Cap exceeded: ' + resource)
     return result
 
@@ -62,7 +71,7 @@ def reserve(ledger, *, event_key, resources, purpose, free_disk_bytes):
     entry = {'event_key': key, 'identity': event_key, 'resources': resources, 'purpose': purpose}
     for prior in ledger['reservations']:
         if prior['event_key'] == key:
-            if prior != entry:
+            if {k: prior[k] for k in entry} != entry:
                 raise BudgetError('Reservation replay drift')
             totals(ledger)
             return copy.deepcopy(ledger)
@@ -73,19 +82,19 @@ def reserve(ledger, *, event_key, resources, purpose, free_disk_bytes):
         for resource, protected in ledger['protected_confirmation_delivery_repair'].items():
             # Protected use cannot accidentally become available to exploration.
             dev_used = amount(ledger['used'][resource])
-            dev_used += sum(r['resources'].get(resource, 0) for r in candidate['reservations']
+            dev_used += sum(charged(r, ledger['caps']).get(resource, 0) for r in candidate['reservations']
                             if r['purpose'] == 'development')
             if dev_used > ledger['caps'][resource] - amount(protected):
                 raise BudgetError('Protected capacity: ' + resource)
     model_cap = ledger['caps']['automatic_model_sessions']
-    other_models = amount(ledger['used']['automatic_model_sessions']) + sum(r['resources'].get('automatic_model_sessions', 0)
+    other_models = amount(ledger['used']['automatic_model_sessions']) + sum(charged(r, ledger['caps']).get('automatic_model_sessions', 0)
                        for r in candidate['reservations']
                        if r['purpose'] not in {'repair', 'final_review'})
     if other_models > model_cap - sum(ledger['protected_model_sessions'].values()):
         raise BudgetError('Protected review/repair sessions')
     for protected_role, count in ledger['protected_model_sessions'].items():
         outside_role = amount(ledger['used']['automatic_model_sessions'])
-        outside_role += sum(r['resources'].get('automatic_model_sessions', 0)
+        outside_role += sum(charged(r, ledger['caps']).get('automatic_model_sessions', 0)
                             for r in candidate['reservations']
                             if r['purpose'] != protected_role)
         if outside_role > model_cap - count:
@@ -94,3 +103,34 @@ def reserve(ledger, *, event_key, resources, purpose, free_disk_bytes):
     if amount(free_disk_bytes) - usage[disk_key] < ledger['disk_free_floor_bytes']:
         raise BudgetError('Disk floor after reservations')
     return candidate
+
+
+def observe(ledger, *, event_key, resources, evidence):
+    """Record pinned actuals, including overruns; never mutate/refund reservations.
+
+    Actual cap breaches must be durable even though further reserve() will fail.
+    Caller verifies evidence bytes and atomically saves this result with its event.
+    """
+    if (not isinstance(evidence, dict) or set(evidence) != {'path', 'sha256'}
+            or not isinstance(evidence['path'], str) or not evidence['path']
+            or not isinstance(evidence['sha256'], str) or len(evidence['sha256']) != 64
+            or any(c not in '0123456789abcdef' for c in evidence['sha256'])):
+        raise BudgetError('Observation evidence pin')
+    if not isinstance(resources, dict) or not resources:
+        raise BudgetError('Observation resources required')
+    charged({'resources': resources}, ledger['caps'])
+    result = copy.deepcopy(ledger)
+    entries = [r for r in result['reservations'] if r['identity'] == event_key]
+    if len(entries) != 1:
+        raise BudgetError('Observation requires one exact reservation')
+    observations = entries[0].setdefault('observations', [])
+    new = {'resources': copy.deepcopy(resources), 'evidence': copy.deepcopy(evidence)}
+    for old in observations:
+        if old['evidence'] == evidence:
+            if old != new:
+                raise BudgetError('Observation replay drift')
+            return result
+    observations.append(new)
+    usage = totals(result, enforce_caps=False)
+    result['observed_cap_excess'] = {k: v-result['caps'][k] for k, v in usage.items() if v > result['caps'][k]}
+    return result
