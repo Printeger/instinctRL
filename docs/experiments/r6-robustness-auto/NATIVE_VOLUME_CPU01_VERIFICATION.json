@@ -1,0 +1,78 @@
+{
+  "status": "ACTUAL_CPU_AGGREGATE_LIMIT_VERIFIED_INTEGRATION_PENDING",
+  "input_commit": "34308633a66218d3c9b079f8ba27880fe9b2da97",
+  "backing": {
+    "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/native.ext4",
+    "bytes": 1610612736,
+    "uid": 0,
+    "mode": "0o600"
+  },
+  "protected_parents": [
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01",
+      "uid": 0,
+      "mode": "0o755"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native",
+      "uid": 0,
+      "mode": "0o755"
+    }
+  ],
+  "files_verified": 23,
+  "data_bytes_verified": 1529872384,
+  "write_chunk_bytes": 1048576,
+  "remaining_statvfs_bytes": 372736,
+  "scope": "Multiple files each at most64MiB reached kernel ENOSPC; fresh independent process verified hashes and another1MiB append was rejected. This does not claim every final free byte was consumed.",
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_PLAN.json",
+      "sha256": "98d418829e2c9570abff5e8951b09fc830715011db208f95e33b8650100b9d31"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_REGISTRATION.json",
+      "sha256": "46fd98def77e30ec87a30c9006c9add8695790d6e41428276bedf460a8932350"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_INSPECTION.json",
+      "sha256": "db9b463da7053b3f4b8bd15e1319b9b526d18baad4deae57edacf289db9e86e9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_EXHAUSTION.json",
+      "sha256": "55f1fd1fdadb9616aa299b6cc390680203ffc6f40eeca6f664292c350363fc2e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_EXHAUSTION.stdout",
+      "sha256": "55f1fd1fdadb9616aa299b6cc390680203ffc6f40eeca6f664292c350363fc2e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_EXHAUSTION.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_REOPEN.json",
+      "sha256": "88aa984676d9ad88544039dd748bc96c2beb84847789ace56f0f45089aa86465"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_REOPEN.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/volume.json",
+      "sha256": "3b95e509d6f66f78acd7fe1393b0ef866b4bf26cc0129308b421f1deadcd3910"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/request.json",
+      "sha256": "98d418829e2c9570abff5e8951b09fc830715011db208f95e33b8650100b9d31"
+    }
+  ],
+  "metadata_bytes_before_this_record": 19381,
+  "charged_bytes": 1610678272,
+  "capacity_pass": false,
+  "native_path_containment_verified": false,
+  "remount_or_reboot_tested": false,
+  "volume_reusable": false,
+  "files_deleted": 0,
+  "new_live_starts": 0,
+  "new_gpu_queries": 0
+}

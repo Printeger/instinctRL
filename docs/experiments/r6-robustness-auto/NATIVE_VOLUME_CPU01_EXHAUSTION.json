@@ -1,0 +1,167 @@
+{
+  "status": "MULTIFILE_AGGREGATE_ENOSPC_PASS",
+  "before": {
+    "volume": {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/volume.json",
+      "sha256": "3b95e509d6f66f78acd7fe1393b0ef866b4bf26cc0129308b421f1deadcd3910"
+    },
+    "mount": {
+      "target": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output",
+      "source": "/dev/loop17",
+      "fstype": "ext4",
+      "options": "rw,nosuid,nodev,noexec,relatime"
+    },
+    "backing_file": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/native.ext4",
+    "filesystem_total_bytes": 1547051008,
+    "available_bytes": 1530249216
+  },
+  "after": {
+    "volume": {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/volume.json",
+      "sha256": "3b95e509d6f66f78acd7fe1393b0ef866b4bf26cc0129308b421f1deadcd3910"
+    },
+    "mount": {
+      "target": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output",
+      "source": "/dev/loop17",
+      "fstype": "ext4",
+      "options": "rw,nosuid,nodev,noexec,relatime"
+    },
+    "backing_file": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/native.ext4",
+    "filesystem_total_bytes": 1547051008,
+    "available_bytes": 372736
+  },
+  "files": [
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/000.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/001.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/002.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/003.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/004.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/005.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/006.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/007.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/008.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/009.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/010.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/011.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/012.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/013.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/014.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/015.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/016.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/017.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/018.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/019.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/020.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/021.bin",
+      "bytes": 67108864,
+      "sha256": "281e519df3077b557c6b03f5da83c4e8d397219259615dd7c3308f89cae8f2a6"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/022.bin",
+      "bytes": 53477376,
+      "sha256": "d12b484249a3b4caae4622723c06676a1c8cdc6e47ed879ebd7e9c835fbb1445"
+    }
+  ],
+  "failure": {
+    "errno": 28,
+    "name": "ENOSPC",
+    "file": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output/aggregate-test/022.bin"
+  },
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/check_r6_native_volume.py",
+    "sha256": "8835fc8c3805e5f8b9095676dcb444584571cc2faf56fafcef1b2bac1d0f0b47"
+  },
+  "maximum_individual_file_bytes": 67108864,
+  "write_ceiling_bytes": 1610612736,
+  "capacity_pass": false,
+  "native_path_containment_verified": false,
+  "remount_tested": false,
+  "gpu_queries": 0,
+  "simulator_initializations": 0,
+  "files_deleted": 0
+}

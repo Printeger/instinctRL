@@ -2,6 +2,13 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+管理员已创建CPU-QUOTA-01固定1.5GiB ext4卷，实际多文件ENOSPC及独立新进程复核通过：
+23文件共1529872384字节，单文件不超过64MiB；1MiB追加写入被内核拒绝。
+root所有的镜像/父目录与mount/backing身份已核对；保留全部测试原件及1.5GiB+64KiB收费。
+见 `docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_VERIFICATION.json`。
+该测试卷不复用；还未验证remount/reboot或Kit全部native写入路径，capacity仍false。
+管理员权限这一轮已用于创建测试卷，旧“尚未创建”段落仅为历史。
+
 用户已批准提供每作业1.5GiB总量硬限额目录。已准备独立ext4固定大小镜像配置脚本，
 6项CPU保护检查通过；CPU-QUOTA-01在操作账本显式预留1.5GiB+64KiB，未创建镜像或挂载。
 当前sudo需要密码，需管理员执行 `NATIVE_VOLUME_CPU01_REGISTRATION.json` 中准确命令。

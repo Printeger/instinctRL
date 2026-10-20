@@ -1,0 +1,21 @@
+{
+  "status": "FRESH_PROCESS_HASH_AND_ENOSPC_PASS",
+  "files_verified": 23,
+  "bytes_verified": 1529872384,
+  "mount": {
+    "volume": {
+      "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/volume.json",
+      "sha256": "3b95e509d6f66f78acd7fe1393b0ef866b4bf26cc0129308b421f1deadcd3910"
+    },
+    "mount": {
+      "target": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/output",
+      "source": "/dev/loop17",
+      "fstype": "ext4",
+      "options": "rw,nosuid,nodev,noexec,relatime"
+    },
+    "backing_file": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/native.ext4",
+    "filesystem_total_bytes": 1547051008,
+    "available_bytes": 372736
+  },
+  "remount_or_reboot_tested": false
+}
