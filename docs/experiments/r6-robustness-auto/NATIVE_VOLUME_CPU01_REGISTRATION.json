@@ -1,0 +1,27 @@
+{
+  "status": "ADMINISTRATOR_EXECUTION_REQUIRED",
+  "event_key": "b2ab5703a89374f4f2c69afdec69c1d2ca441dfa111b3173cd94403edf0959d1",
+  "reserved_bytes": 1610678272,
+  "created": false,
+  "request": {
+    "plan": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_PLAN.json",
+      "sha256": "98d418829e2c9570abff5e8951b09fc830715011db208f95e33b8650100b9d31"
+    },
+    "implementation": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_native_volume.py",
+      "sha256": "82e9e72b0a82061a5a6cb5f0f720065597f1d879c1f80d5af249f2beadc22f6a"
+    },
+    "volume_id": "CPU-QUOTA-01",
+    "user_authority": "批准提供支持每作业 1.5 GiB 总量硬配额的输出目录及配额机制",
+    "execution": "ADMINISTRATOR_PENDING_NO_VOLUME_CREATED"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_PROVISION_TESTS.txt",
+    "sha256": "d5be81bbe49b412357ba177be7fae47b32ba70b563d2a01ec6ee15df362cc215"
+  },
+  "test_cases_passed": 6,
+  "scope": "CPU guards only; no actual filesystem cap, mount or exhaustion test",
+  "privilege_check": "sudo -n true returned: a password is required",
+  "command": "sudo /usr/bin/python3 -I -B /home/mint/rl_dev/instinctRL-dev/tools/provision_r6_native_volume.py CPU-QUOTA-01 --apply"
+}
