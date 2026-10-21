@@ -1,0 +1,80 @@
+{
+  "status": "CPU_RENDER_FROZEN_INPUTS_PREPAID_STORAGE_REVIEW_MATERIALIZATION_CONTROLLER_RECOVERY_PASS_VIDEO_VALIDATION_PENDING",
+  "base_commit": "07c73e67afba8dbcc119c9da1ffe0dfbba462a71",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_render_preparation.py",
+      "sha256": "ea12a85f6295ad0e6d3e88c2dbee3d2a4d5ee8c2e00c51fb58d7b5cc047c5ac6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_render_review.py",
+      "sha256": "2ed304dc7a6f9ffcc5e9b5eb3847c7a26dc67a00dffd5e0662575ce226841c30"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_render_materialization.py",
+      "sha256": "cd99912512dff91632761e50274019f7044f66e7984e0e7136188cc2b4321256"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "fa60b7c34007f2eb2bb374a19ff08eb15ee15e543a68b0f7e9f2cfd342eb3c7c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_inputs.py",
+      "sha256": "45f8497a3d7c13d4e24d65a5a357ca160aa53b2ea2a0a65bf406b0fc8a780dc4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_render_preparation.py",
+      "sha256": "4a6973cb72f20f557bd2f3efddf30ec34209a2575f1412d19e426fc6a8767b6e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_render_review.py",
+      "sha256": "f1d7b38bde4611b3c54849b34579be47e6a079a7863b24aff4207139b5a8b099"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "4bd28d05fa76b83154e50a2df9265b579fe4509637e023bf7638b8b9bdfbd739"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_inputs.py",
+      "sha256": "323489b8fb9d7cd4a39831da5a88ce7bb01aefc8cbba0c8a86161f485570ff05"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/render-plan-review.schema.json",
+      "sha256": "b2172a87a99a02bf4b56a90f58daa69a5e65a538f823ea3fdeb1ecc4065e4d24"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_PREPARATION_FINAL.log",
+      "sha256": "9a9af8b121df743934e5c0467d9e9cd5f93f34d88a06e758a29ce04ef16d9d07"
+    }
+  ],
+  "checks": {
+    "initial_regression": 78,
+    "preparation": 4,
+    "review_materialization": 5,
+    "final_combined": 93,
+    "real_journal_guard": "PASS"
+  },
+  "scope": [
+    "Reuse exact final readonly snapshot after source/dependency/config/provenance validation; no inherited render review.",
+    "Prepay distinct native1.5GiB/result1GiB payload volume pair before provisioning; missing volumes resume without double charging.",
+    "Isolated frozen CPU authority validation followed by one registered read-only review and exact payload hash.",
+    "Materialize exact authorization/spec/runner then reuse existing issuer; top-level durable stages preserve prior review/issuance on restart.",
+    "Final experiment IDs now uppercase so production storage contract accepts their hexadecimal key."
+  ],
+  "boundaries": [
+    "Temporary Journal/Store accounting and fake CLI receipts are real; model review, mount and scientific provenance fixtures are explicit substitutes.",
+    "Isolated CPU subprocess executed substituted config/authority modules; no production frozen rendering validation claimed.",
+    "No production Store approval, volume provisioning, GPU query, simulation, training, baseline or rendered video.",
+    "Existing root-owned pytest temporary quota directories emit cleanup warnings; preserved unchanged."
+  ],
+  "remaining": [
+    "CPU video validation worker/controller and viewing manifest/visual audit",
+    "Final scientific/requirements review and final accounting, failure repair re-entry",
+    "Combined production prelive review and no-model-cost platform handoff",
+    "Actual baseline and all necessary scientific work"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}

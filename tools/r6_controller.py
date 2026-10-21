@@ -37,13 +37,15 @@ from tools import r6_final_plans_review as final_plans_review
 from tools import r6_final_sequence as final_sequence
 from tools import r6_delivery_evidence as delivery_evidence
 from tools import r6_video_extraction as video_extraction
+from tools import r6_render_preparation as render_preparation, r6_render_review as render_review
+from tools import r6_render_materialization as render_materialization, r6_run_job as render_runner
 from tools.r6_decision_packet import persist_exact
 from rlflow.store import canonical
 
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_RENDER_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_VIDEO_VALIDATION_REQUIRED'}
 
 
 def require(condition,reason):
@@ -141,6 +143,46 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 cursor.update(phase='FINAL_RENDER_REQUIRED',video_trajectories=outcome)
                 save(journal,key,cursor)
                 continue
+            if phase=='FINAL_RENDER_REQUIRED':
+                outcome=render_preparation.prepare(journal,key,store,free_disk_bytes=free)
+                if outcome['status']=='WAITING_FOR_ADMIN_PROVISION':
+                    save(journal,key,cursor,status=outcome['status'])
+                    return dict(status=outcome['status'],event_key=key,missing=outcome['missing'],goal_complete=False)
+                require(outcome['status']=='RENDER_INPUTS_READY_NOT_REVIEWED','RENDER_PREPARATION_STATUS')
+                pin=journal.read()['events'][outcome['event_key']]['preparation']
+                require(json.loads(checked(pin).read_text())==outcome,'RENDER_PREPARATION_PIN')
+                cursor.update(phase='RENDER_REVIEW',render_preparation=pin)
+                save(journal,key,cursor);continue
+            if phase=='RENDER_REVIEW':
+                outcome=render_review.prepare(journal,cursor['render_preparation'],store,
+                    executable=initial['review_executable'],free_disk_bytes=free)
+                require(outcome['status']=='RENDER_PLAN_REVIEWED_NOT_AUTHORIZED','RENDER_REVIEW_STATUS')
+                cursor.update(phase='RENDER_MATERIALIZE',render_review=outcome)
+                save(journal,key,cursor);continue
+            if phase=='RENDER_MATERIALIZE':
+                reviewed=cursor['render_review']
+                outcome=render_materialization.materialize(journal,cursor['render_preparation'],reviewed['event_key'],
+                    reviewed['review'],store,free_disk_bytes=free)
+                require(outcome['status']=='RENDER_EXACT_INPUTS_MATERIALIZED_NOT_AUTHORIZED','RENDER_MATERIALIZE_STATUS')
+                pin=journal.read()['events'][outcome['event_key']]['materialization']
+                require(json.loads(checked(pin).read_text())==outcome,'RENDER_MATERIALIZE_PIN')
+                cursor.update(phase='RENDER_ISSUE',render_materialization=pin)
+                save(journal,key,cursor);continue
+            if phase=='RENDER_ISSUE':
+                outcome=render_materialization.issue(journal,cursor['render_materialization'],store,free_disk_bytes=free)
+                require(outcome['status']=='EXACT_NEXT_JOB_AUTHORIZED_NOT_SUBMITTED','RENDER_ISSUE_STATUS')
+                cursor.update(phase='RENDER_RUN',render_issuance=outcome)
+                save(journal,key,cursor);continue
+            if phase=='RENDER_RUN':
+                materialized=json.loads(checked(cursor['render_materialization']).read_text())
+                plan=json.loads(checked(materialized['plan']).read_text())
+                outcome=render_runner.run(journal,store=store,free_disk_bytes=free,**plan)
+                if outcome['status']=='RESOURCE_OBSERVATION_REJECTED':
+                    save(journal,key,cursor,status=outcome['status'])
+                    return dict(status=outcome['status'],event_key=key,goal_complete=False)
+                require(outcome['status']=='RENDER_JOB_CLOSED_REQUIRES_VIDEO_VALIDATION','RENDER_RUN_STATUS')
+                cursor.update(phase='FINAL_VIDEO_VALIDATION_REQUIRED',render_job=outcome)
+                save(journal,key,cursor);continue
             if phase in TERMINAL_BOUNDARIES:
                 save(journal,key,cursor,status=phase)
                 return dict(status=phase,event_key=key,goal_complete=False)

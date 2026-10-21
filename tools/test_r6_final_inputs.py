@@ -1,5 +1,6 @@
 """Real temporary Git commit/tag/push recovery; published batch and snapshot execution are substitutes."""
 import json
+import re
 import subprocess
 from pathlib import Path
 from unittest.mock import Mock
@@ -53,6 +54,7 @@ def test_commit_tag_push_and_replay_preserve_unrelated_files(inputs):
     assert b.git('diff-tree','--no-commit-id','--name-only','-r',out['source_commit']).endswith('/config.json')
     assert b.git('rev-parse',out['tag'])==out['source_commit']==b.git('rev-parse','origin/main')
     q=m.read(out['inputs']);assert len(set(q['experiment_ids']))==3
+    assert all(re.fullmatch(r'R6-[A-Z0-9-]{1,90}',name) for name in q['experiment_ids'])
     assert q['wall_seconds']==60 and q['payload_bytes']==128*1024**2
     cfg=json.loads(b.snapshot.call_args.args[1].read_text())
     assert cfg['schema_version']==m.R6_FINAL_CONFIG_SCHEMA

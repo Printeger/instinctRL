@@ -127,7 +127,7 @@ def prepare(journal,controller_key,batch_pin,store,*,free_disk_bytes):
     snapshot_pin=journal.read()['events'][frozen['event_key']]['receipt']
     context=description['context'];context=dict(context,runner=dict(context['runner'],purpose='confirmation_delivery'))
     inputs=dict(batch=batch_pin,context=save('context.json',context),origin_configs=description['origin_configs'],
-        experiment_ids=['R6-FINAL-'+key[:12]+'-'+str(i) for i in range(len(description['origin_configs']))],
+        experiment_ids=['R6-FINAL-'+key[:12].upper()+'-'+str(i) for i in range(len(description['origin_configs']))],
         wall_seconds=description['wall_seconds'],payload_bytes=description['payload_bytes'])
     result=dict(status='FINAL_INPUTS_AND_SNAPSHOT_READY_NOT_REVIEWED',event_key=key,snapshot=snapshot_pin,
         inputs=save('inputs.json',inputs),source_commit=commit,tag=tag,scientific_acceptance=False,dispatch_authorized=False)

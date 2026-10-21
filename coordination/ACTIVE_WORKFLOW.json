@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 173,
-    "total_automatic_model_sessions_minimum": 203,
+    "platform_automatic_goal_wakes": 174,
+    "total_automatic_model_sessions_minimum": 204,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -381,6 +381,8 @@
     "render_contract_status": "CPU_RENDER_AUTHORITY_RESOURCES_NATIVE_GATE_AND_LIFECYCLE_PASS_STORE_ROUTING_PENDING",
     "render_contract_evidence": "docs/experiments/r6-robustness-auto/CPU_RENDER_CONTRACT.json",
     "render_store_status": "CPU_RENDER_STORE_SPEC_PROVENANCE_ISSUANCE_RESERVATION_SUBMIT_AND_CLOSE_PASS_PREPARATION_ROUTING_PENDING",
-    "render_store_evidence": "docs/experiments/r6-robustness-auto/CPU_RENDER_STORE.json"
+    "render_store_evidence": "docs/experiments/r6-robustness-auto/CPU_RENDER_STORE.json",
+    "render_preparation_status": "CPU_RENDER_FROZEN_INPUTS_PREPAID_STORAGE_REVIEW_MATERIALIZATION_CONTROLLER_RECOVERY_PASS_VIDEO_VALIDATION_PENDING",
+    "render_preparation_evidence": "docs/experiments/r6-robustness-auto/CPU_RENDER_PREPARATION.json"
   }
 }
