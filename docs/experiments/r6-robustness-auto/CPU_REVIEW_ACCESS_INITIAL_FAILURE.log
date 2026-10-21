@@ -1,0 +1,45 @@
+.F.................                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_bad_read_never_passes[] _________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-210/test_bad_read_never_passes__0')
+output = ''
+
+    @pytest.mark.parametrize('output',['','wrong','0'*64+'  fixture'])
+    def test_bad_read_never_passes(tmp_path,output):
+        p=tmp_path/'source';p.write_text('fixture');exe=tmp_path/'cli';exe.write_text('#!'+sys.executable+'\nprint('+repr(output)+')\n');exe.chmod(0o700)
+>       with pytest.raises(RecoveryError,match='LOCAL_READ_UNAVAILABLE'):access.check(file_pin(exe),file_pin(p))
+
+tools/test_r6_review_access.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+executable = {'path': '/tmp/pytest-of-mint/pytest-210/test_bad_read_never_passes__0/cli', 'sha256': 'ab35bad75482d3573febc3ec7a02a3ad51dc7e00e1cbd070abe9387328b3b38d'}
+source_pin = {'path': '/tmp/pytest-of-mint/pytest-210/test_bad_read_never_passes__0/source', 'sha256': 'f16d05ec6b29248d2c61adb1e9263f78e4f7bace1b955014a2d17872cfe4064d'}
+
+    def check(executable,source_pin):
+        exe=checked(executable);source=checked(source_pin)
+        argv=[str(exe),'sandbox','-P',':read-only','--','/usr/bin/sha256sum','--',str(source)]
+        try:
+            result=subprocess.run(argv,stdin=subprocess.DEVNULL,capture_output=True,text=True,timeout=15)
+        except subprocess.TimeoutExpired as error:
+            raise RecoveryError('REVIEW_LOCAL_READ_TIMEOUT_NO_MODEL_STARTED') from error
+        lines=result.stdout.splitlines()
+>       if result.returncode!=0 or len(lines)!=1 or lines[0].split(maxsplit=1)[0]!=source_pin['sha256']:
+E       IndexError: list index out of range
+
+tools/r6_review_access.py:14: IndexError
+=========================== short test summary info ============================
+FAILED tools/test_r6_review_access.py::test_bad_read_never_passes[] - IndexEr...
+1 failed, 18 passed in 3.96s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-8cd714c1-c24d-488c-b5e1-022f1ccf9b72/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-8cd714c1-c24d-488c-b5e1-022f1ccf9b72/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-8cd714c1-c24d-488c-b5e1-022f1ccf9b72/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-8cd714c1-c24d-488c-b5e1-022f1ccf9b72
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-8cd714c1-c24d-488c-b5e1-022f1ccf9b72'
+  warnings.warn(

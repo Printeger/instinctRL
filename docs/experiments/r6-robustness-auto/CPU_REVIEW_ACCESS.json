@@ -1,0 +1,53 @@
+{
+  "status": "INITIAL_BASELINE_LOCAL_REVIEW_READ_PREFLIGHT_VERIFIED_FAILS_BEFORE_MODEL_CHARGE",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_review_access.py",
+      "sha256": "b859b454f5b7aa6602a3c562c6c42347079a46149d525f4a90647c4177684f3e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_initial_baseline.py",
+      "sha256": "6a7b634bcf45691f42a5b7eb12c84df4e957136bf33420358278e1e5b520f874"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_review_access.py",
+      "sha256": "c2f5f50b2d1cdedd0afbedfc232de8444da5796267957b925a16246bcd948433"
+    }
+  ],
+  "diagnosis": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LOCAL_REVIEW_SANDBOX_DIAGNOSIS.json",
+    "sha256": "bb1cd16e999398441aaae56aa9f61247d391eb3b5c2c6ca5cf52ea250e6a6acd"
+  },
+  "actual_verification": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/LOCAL_REVIEW_PREFLIGHT_VERIFICATION.json",
+    "sha256": "17c74b65a240432454b1b9103a513d6021647dc13edaa67a8e97879d56b0b33b"
+  },
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_REVIEW_ACCESS_INITIAL_FAILURE.log",
+      "sha256": "2f939392e7305a48fa7804578ab037b8032f0d4bef58bfdd82877bc07f469e23"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_REVIEW_ACCESS_FINAL.log",
+      "sha256": "0d3fc449c85c84a6fc5b9c612446d5854fa848d824dbd5fad99af821256c2cce"
+    }
+  ],
+  "checks": {
+    "final_tests": 19,
+    "real_journal_guard": "PASS",
+    "actual_model_reservations_added": 0
+  },
+  "boundaries": [
+    "Pinned Codex0.161.0 sandbox subcommand only; no paid model, GPU, package installation, persistent config or OS security change.",
+    "Preflight proves source reading only when successful; current environment is unavailable and therefore blocks before model intent.",
+    "One initial test exposed empty stdout parsing; corrected and all19 checks passed; initial log preserved.",
+    "This gate does not repair the OS namespace limitation or validate all future reviewer tools. Successful admin remediation still needs read/write-denial verification."
+  ],
+  "remaining": [
+    "OS administrator restores supported bwrap namespace access",
+    "Engineering repair worker and failed-event replacement",
+    "Platform model-free controller handoff and actual inactivity evidence",
+    "Actual first baseline and full scientific goal"
+  ],
+  "goal_complete": false
+}

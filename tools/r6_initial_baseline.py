@@ -57,6 +57,10 @@ def register_review(journal, plan_pin, store, *, executable, free_disk_bytes):
         require(path.is_relative_to(journal.directory.parent.resolve()), 'FIXTURE_EXECUTABLE')
     else:
         require(executable == {'path': str(CLI), 'sha256': CLI_SHA}, 'PINNED_CLI')
+        # This invokes `sandbox`, never `exec`: fail before reserving/spending a
+        # model session if the reviewer cannot read its local evidence at all.
+        from tools.r6_review_access import check
+        check(executable,plan_pin)
     packet = dict(plan=plan_pin, spec=plan['spec_pin'], store_root=str(store.root))
     prompt = ('Independently review this exact initial R6 baseline plan, read-only, then exit. '
         'There is no parent R6 job. Read the pinned plan/spec and original supporting evidence. '

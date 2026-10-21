@@ -1,0 +1,102 @@
+{
+  "status": "LOCAL_READONLY_SANDBOX_UNAVAILABLE_OS_ADMIN_REMEDIATION_REQUIRED",
+  "cli": {
+    "path": "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+    "sha256": "9a820c17865fa825d04db416818679a9d63bd72e50835c396f496e5684626c9c"
+  },
+  "checks": [
+    {
+      "name": "readonly_true",
+      "argv": [
+        "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+        "sandbox",
+        "-P",
+        ":read-only",
+        "--",
+        "/usr/bin/true"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted\n"
+    },
+    {
+      "name": "readonly_network_enabled_diagnostic",
+      "argv": [
+        "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+        "sandbox",
+        "-c",
+        "permissions.r6_review_check.extends=\":read-only\"",
+        "-c",
+        "permissions.r6_review_check.network.enabled=true",
+        "-P",
+        "r6_review_check",
+        "--",
+        "/usr/bin/true"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "bwrap: setting up uid map: Permission denied\n"
+    },
+    {
+      "name": "legacy_backend_diagnostic",
+      "argv": [
+        "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+        "sandbox",
+        "--enable",
+        "use_legacy_landlock",
+        "-P",
+        ":read-only",
+        "--",
+        "/usr/bin/true"
+      ],
+      "exit_code": 101,
+      "stdout": "",
+      "stderr": "\nthread 'main' (2550788) panicked at linux-sandbox/src/linux_run_main.rs:417:9:\nfilesystem-restricted execution requires bubblewrap to isolate app-server sockets\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n"
+    },
+    {
+      "name": "sudo_capability",
+      "argv": [
+        "sudo",
+        "-n",
+        "-l"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "sudo: a password is required\n"
+    }
+  ],
+  "profile_files": {
+    "/usr/bin/bwrap": true,
+    "/etc/apparmor.d/bwrap": false,
+    "/etc/apparmor.d/bwrap-userns-restrict": false,
+    "/usr/share/apparmor/extra-profiles/bwrap-userns-restrict": false
+  },
+  "apparmor_restrict_unprivileged_userns": "1",
+  "process_apparmor_profile": "unconfined",
+  "official_sources": [
+    "https://learn.chatgpt.com/docs/sandboxing",
+    "https://learn.chatgpt.com/docs/config-file/config-reference"
+  ],
+  "findings": [
+    "Pinned CLI unchanged. Default read-only sandbox cannot initialize loopback; a named read-only filesystem profile with networking enabled also cannot establish uid map.",
+    "Deprecated legacy backend rejects filesystem-restricted operation without bubblewrap; it is not a usable fallback.",
+    "Documented bwrap AppArmor profiles are absent and noninteractive sudo needs a password. No admin credentials available in this session.",
+    "Do not issue another paid local-original review until the same non-model sandbox check succeeds. Existing remote-source MUST_FIX remains diagnosis only."
+  ],
+  "changes": {
+    "persistent_cli_config": false,
+    "os_security_policy": false,
+    "dependencies_installed": false,
+    "runtime_modified": false,
+    "model_calls": 0,
+    "gpu_calls": 0
+  },
+  "required_followup": [
+    "Administrator restores supported bwrap namespace access while retaining machine security policy, using documented distribution-specific profile setup.",
+    "Re-run exact default read-only sandbox check and verify reads plus denied writes before production local-original reviews.",
+    "Continue authorized failed-event replacement and repair-worker implementation independently; this does not resolve platform no-model-wait handoff."
+  ],
+  "goal_complete": false,
+  "os_release": "PRETTY_NAME=\"Ubuntu 24.04.4 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.4 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo\n",
+  "admin_remediation_note": "Official Ubuntu24.04 instructions load /usr/share/apparmor/extra-profiles/bwrap-userns-restrict into /etc/apparmor.d via apparmor_parser. Those files are absent here; prerequisite packages require an administrator. Do not disable the global restriction as an automatic workaround."
+}

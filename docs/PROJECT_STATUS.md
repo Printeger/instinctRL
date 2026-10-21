@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：已用无模型Codex sandbox命令复现本地审核失败；Ubuntu24.04缺bwrap AppArmor profile。
+默认只读模式loopback失败，临时只读联网诊断仍UID映射拒绝；legacy后端不能替代bwrap；sudo需密码。
+增加首次审核前的本地原件读取预检；真实计划入口在模型intent之前拒绝，Journal和Store逐字节状态未变。
+19项检查及真实Journal guard通过；证据 CPU_REVIEW_ACCESS.json，原失败/诊断均保留。
+没有修改OS安全策略、全局CLI配置、runtime或安装依赖；需管理员恢复受支持的bwrap命名空间访问。
+工程修复worker/事件替换和平台交接仍待完成，生产基线未发车；完整Goal未完成。
+181次自动唤醒+31 worker=212/256，剩44，本轮没有新增CLI模型调用。
+
 2026-10-22：真实首次计划CPU校验通过（J-f9edc8f6f35dde13，Store未变），完成一次执行链独审。
 独审返回MUST_FIX；本地bwrap loopback权限失败后改读准确远端Git，36项证据哈希均本地核对一致。
 发现并修正NEEDS_REPAIR误入普通profile路径；现在进入专用修复输入，保留失败原件/父决策/游标，不发下一作业。
