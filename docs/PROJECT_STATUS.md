@@ -2,6 +2,13 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：结果卷CPU-QUOTA-02真实测试包已就绪：固定16MiB ext4结果卷，另留1MiB
+元数据/证据；17MiB已登记并保留。新空目标为R6-CPU-RESULT-QUOTA-02/results。
+耗尽脚本绕过Python计账直接多文件写入，随后验证继承限制的exec后代及新解释器追加失败，
+保留全部原件；输入提交fbb9b05，尚未执行。管理员命令见
+`docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02_REGISTRATION.json`。
+sudo非交互检查确认需要密码，尚未创建结果卷；旧CPU-QUOTA-01不复用。无GPU/live/model。
+
 2026-10-21：结果目录内核配额已接入候选：准确authority必须绑定result_volume，dispatcher
 在fork前核验挂载/镜像/目标/余额；无配额结果目录拒绝开放写权限。结果镜像大小严格等于
 作业输出cap减1.5GiB原生镜像及64MiB控制余量；原件逐文件哈希，镜像与内部文件不重复收费。

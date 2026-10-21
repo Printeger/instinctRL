@@ -1,0 +1,34 @@
+{
+  "key": "731dd876aedb53298c40a9ac527710b62c65240b1df5c1a3e1aa6e69dc8bf8ba",
+  "request": {
+    "plan": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02_PLAN.json",
+      "sha256": "41f1e54e6f95bfce57c3c878527113ca479c96822ba12ea700e34df250bb5804"
+    },
+    "implementation": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_result_volume.py",
+      "sha256": "221b3db6f38690e01f46868f845ec36b5519030be43474815b3554ff3010c0cd"
+    },
+    "probe": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/check_r6_result_volume.py",
+      "sha256": "b304829b32f72994c210e5d615ae33fd50c3b145bbce49faa0de06f1e112e619"
+    },
+    "input_commit": "fbb9b05",
+    "command": [
+      "sudo",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_result_volume.py",
+      "CPU-QUOTA-02",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-CPU-RESULT-QUOTA-02/results",
+      "16777216",
+      "--apply"
+    ],
+    "execution": "ADMINISTRATOR_PENDING_RESULT_VOLUME",
+    "authority": "Full R6 goal CPU checks and approved hard quota mechanism; no training or simulator execution"
+  },
+  "reserved_bytes": 17825792,
+  "actual_mount_created": false,
+  "capacity_pass": false
+}

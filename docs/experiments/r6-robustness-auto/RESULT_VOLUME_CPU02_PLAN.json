@@ -1,0 +1,33 @@
+{
+  "volume_id": "CPU-QUOTA-02",
+  "target": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-CPU-RESULT-QUOTA-02/results",
+  "image": "/var/lib/instinctrl-r6-results/CPU-QUOTA-02/results.ext4",
+  "maximum_backing_bytes": 16777216,
+  "owner_uid": 1000,
+  "owner_gid": 1000,
+  "commands": [
+    [
+      "/usr/bin/fallocate",
+      "--length",
+      "16777216",
+      "/var/lib/instinctrl-r6-results/CPU-QUOTA-02/results.ext4"
+    ],
+    [
+      "/usr/sbin/mkfs.ext4",
+      "-q",
+      "-F",
+      "-m",
+      "0",
+      "/var/lib/instinctrl-r6-results/CPU-QUOTA-02/results.ext4"
+    ],
+    [
+      "/usr/bin/mount",
+      "-t",
+      "ext4",
+      "-o",
+      "loop,nodev,nosuid,noexec",
+      "/var/lib/instinctrl-r6-results/CPU-QUOTA-02/results.ext4",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-CPU-RESULT-QUOTA-02/results"
+    ]
+  ]
+}
