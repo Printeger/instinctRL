@@ -1,0 +1,76 @@
+........F.................                                               [100%]
+=================================== FAILURES ===================================
+________ test_real_prepaid_storage_issuance_then_next_job_registration _________
+
+ready = namespace(journal=<tools.r6_recovery.Journal object at 0x739a470c6900>, store=<rlflow.store.Store object at 0x739a47cf...d7457405e09b6932d773d8509b'}, 'store': <rlflow.store.Store object at 0x739a47cf5520>, 'free_disk_bytes': 536870912000})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x739a47cf5a00>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1197/test_real_prepaid_storage_issu0')
+
+    def test_real_prepaid_storage_issuance_then_next_job_registration(ready,monkeypatch,tmp_path):
+        from tools.test_r6_storage_allocation import case as storage_case,register,spec as storage_spec
+        from tools import r6_storage_allocation as allocation,r6_next_job
+        b=ready;storage=storage_case.__wrapped__(tmp_path/'storage',monkeypatch)
+        owner=register(storage);value,pin=storage_spec(storage,monkeypatch)
+        params=json.loads(Path(value['pins']['authorization']['path']).read_text())['parameters']
+        b.observed['authorization']['parameters'].update(params)
+        authpath=tmp_path/'merged-auth.json';authpath.write_text(json.dumps(b.observed['authorization']))
+        b.newspec['id']='R6-FIXTURE';b.newspec['pins']=dict(b.newspec['pins'],authorization=file_pin(authpath))
+        b.newspec['h1']=dict(b.newspec['h1'],attempt=str(storage.target.parent))
+        storage.target.mkdir(parents=True,exist_ok=True)
+        sp=tmp_path/'merged-spec.json';sp.write_text(json.dumps(b.newspec));b.plan['spec_pin']=file_pin(sp)
+        pp=tmp_path/'merged-plan.json';pp.write_text(json.dumps(b.plan));b.args['plan_pin']=file_pin(pp)
+        b.jid='J-'+sha(dict(id=b.newspec['id'],spec=b.newspec))[:16]
+        b.journal=storage.j
+        with b.journal.writer():
+            s=b.journal.read();s['budget']['capacity_pass']=True;b.journal.save(s)
+        b.review.return_value=(b.plan,b.newspec,b.jid)
+        monkeypatch.setattr(allocation,'for_spec',real_for_spec)
+        monkeypatch.setattr(r6_next_job,'reviewed_plan',b.review)
+>       result=issue(b)
+
+tools/test_r6_issue_next.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_issue_next.py:31: in issue
+    with b.journal.writer():return m.issue(b.journal,**b.args)
+tools/r6_issue_next.py:43: in issue
+    experiments.validate(spec,store.root)
+tools/rlflow/rlflow/experiments.py:62: in validate
+    validate_h1(spec,root)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+spec = {'argv': ['/usr/bin/python3.12', '-B', '-m', 'training_workloads.unified_h1.formal_unified_h1', '--authorization', '/t...1111111111111111111111111111111'}], 'cwd': '/tmp/pytest-of-mint/pytest-1197/test_real_prepaid_storage_issu0/work', ...}
+root = PosixPath('/tmp/pytest-of-mint/pytest-1197/test_real_prepaid_storage_issu0/store')
+
+    def validate(spec,root,*,fresh=True):
+        h=spec.get('h1')
+        if not isinstance(h,dict) or set(h)!={'workload_root','attempt','mode','config_sha256','gpu_devices','gpu_accounting'}:
+            raise Conflict('real H1 requires complete adapter binding')
+        if h['gpu_devices']!=['0'] or h['gpu_accounting']!='allocated_device_wall_seconds':
+            raise Conflict('H1 requires exact device 0 and declared allocation-time accounting')
+        work=Path(h['workload_root']);attempt=Path(h['attempt'])
+        if not work.is_absolute() or work.is_symlink() or work.resolve()!=work or not attempt.is_absolute() or attempt.is_symlink() or attempt.resolve()!=attempt:
+            raise Conflict('H1 paths must be exact resolved paths')
+        config_path=work/'training_workloads/unified_h1/candidate_config.json'
+        if digest(config_path)!=h['config_sha256']:raise Conflict('H1 config drift')
+        if spec['cwd']!=str(work) or spec['pins']['workload']['path']!=str(work/'training_workloads/unified_h1/formal_unified_h1.py') or spec['pins']['dispatcher']['path']!=str(work/'training_workloads/unified_h1/local_dispatch.py'):
+            raise Conflict('H1 workload/dispatcher binding mismatch')
+        expected=[spec['pins']['executable']['path'],'-B','-m','training_workloads.unified_h1.formal_unified_h1','--authorization',spec['pins']['authorization']['path'],'--attempt',str(attempt),'--mode',h['mode']]
+>       if spec['argv']!=expected:raise Conflict('real runner must execute the exact reviewed H1 formal entry')
+E       rlflow.store.Conflict: real runner must execute the exact reviewed H1 formal entry
+
+tools/rlflow/rlflow/h1.py:58: Conflict
+=========================== short test summary info ============================
+FAILED tools/test_r6_issue_next.py::test_real_prepaid_storage_issuance_then_next_job_registration
+1 failed, 25 passed in 3.22s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-214cf1a7-fc69-4a06-b629-123896ad2aed/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-214cf1a7-fc69-4a06-b629-123896ad2aed/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-214cf1a7-fc69-4a06-b629-123896ad2aed/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-214cf1a7-fc69-4a06-b629-123896ad2aed
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-214cf1a7-fc69-4a06-b629-123896ad2aed'
+  warnings.warn(

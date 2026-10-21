@@ -9,6 +9,7 @@ from tools.r6_recovery import file_pin,RecoveryError
 from tools.r6_budget import BudgetError
 from rlflow.store import Conflict,sha
 from rlflow import policy
+from tools.r6_storage_allocation import for_spec as real_for_spec
 
 
 @pytest.fixture
@@ -97,3 +98,44 @@ def test_changed_plan_cannot_rebind_same_parent(ready):
     b.args['plan_pin']=file_pin(path)
     with pytest.raises(RecoveryError,match='PARENT_ALREADY_BOUND'):issue(b)
     assert b.store.replay()==before
+
+
+def test_real_prepaid_storage_issuance_then_next_job_registration(ready,monkeypatch,tmp_path):
+    from tools.test_r6_storage_allocation import case as storage_case,register,spec as storage_spec
+    from tools import r6_storage_allocation as allocation,r6_next_job
+    b=ready;storage=storage_case.__wrapped__(tmp_path/'storage',monkeypatch)
+    owner=register(storage);value,pin=storage_spec(storage,monkeypatch)
+    params=json.loads(Path(value['pins']['authorization']['path']).read_text())['parameters']
+    b.observed['authorization']['parameters'].update(params)
+    authpath=tmp_path/'merged-auth.json';authpath.write_text(json.dumps(b.observed['authorization']))
+    b.newspec['id']='R6-FIXTURE';b.newspec['pins']=dict(b.newspec['pins'],authorization=file_pin(authpath))
+    b.newspec['h1']=dict(b.newspec['h1'],attempt=str(storage.target.parent))
+    b.newspec['argv']=list(b.newspec['argv']);b.newspec['argv'][5]=str(authpath)
+    b.newspec['argv'][7]=str(storage.target.parent)
+    storage.target.mkdir(parents=True,exist_ok=True)
+    sp=tmp_path/'merged-spec.json';sp.write_text(json.dumps(b.newspec));b.plan['spec_pin']=file_pin(sp)
+    pp=tmp_path/'merged-plan.json';pp.write_text(json.dumps(b.plan));b.args['plan_pin']=file_pin(pp)
+    b.jid='J-'+sha(dict(id=b.newspec['id'],spec=b.newspec))[:16]
+    b.journal=storage.j
+    with b.journal.writer():
+        s=b.journal.read();s['budget']['capacity_pass']=True;b.journal.save(s)
+    b.review.return_value=(b.plan,b.newspec,b.jid)
+    monkeypatch.setattr(allocation,'for_spec',real_for_spec)
+    monkeypatch.setattr(r6_next_job,'reviewed_plan',b.review)
+    result=issue(b)
+    assert 'storage_binding' not in b.journal.read()['events'][owner]
+    with b.journal.writer():
+        edge=r6_next_job.register(b.journal,b.args['parent_key'],b.args['plan_pin'],
+            b.args['review_key'],b.args['review_pin'],b.store,free_disk_bytes=500*1024**3)
+    assert b.journal.read()['events'][edge]['identity']['job_id']==result['job_id']
+    assert b.jid not in b.store.replay()['jobs']
+    from tools.r6_register_job import register as register_job
+    from tools.r6_budget import totals
+    before=totals(b.journal.read()['budget'])[allocation.DISK]
+    with b.journal.writer():
+        job=register_job(b.journal,b.plan['spec_pin'],b.store,free_disk_bytes=500*1024**3)
+        assert register_job(b.journal,b.plan['spec_pin'],b.store,free_disk_bytes=500*1024**3)==job
+    state=b.journal.read()
+    assert state['events'][owner]['storage_binding']['job_id']==b.jid
+    assert state['events'][job]['resources'][allocation.DISK]==0
+    assert totals(state['budget'])[allocation.DISK]==before

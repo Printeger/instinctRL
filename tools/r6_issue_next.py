@@ -59,7 +59,7 @@ def issue(journal,parent_key,plan_pin,review_key,review_pin,master_pin,store,*,f
     # Check the complete next-job allowance without consuming it here. Actual
     # reservation remains at existing resource admission, and rechecks budget.
     from tools.r6_storage_allocation import for_spec
-    storage=for_spec(journal,plan['spec_pin'],purpose=plan['purpose'],bind_new=False)
+    storage=for_spec(journal,plan['spec_pin'],purpose=plan['purpose'],preview=True)
     auth=json.loads(checked(spec['pins']['authorization']).read_text())
     resources=dict(live_starts=1,simulator_initializations=1,
         live_wall_seconds=spec['resources']['wall_seconds']+180,

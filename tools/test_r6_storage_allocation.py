@@ -89,3 +89,24 @@ def test_stop_and_preexisting_volume_reject_before_charge(case):
     Path(b.native['image']).parent.mkdir(parents=True)
     with pytest.raises(RecoveryError,match='PREEXISTING_VOLUME'):register(b)
     assert not b.j.read()['budget']['reservations']
+
+
+def test_unbound_preview_preserves_ledger_and_then_actual_binding_succeeds(case,monkeypatch):
+    b=case;key=register(b);value,pin=spec(b,monkeypatch);before=b.j.read()
+    with b.j.writer():
+        entry=allocation.for_spec(b.j,pin,purpose='development',preview=True)
+        assert 'storage_binding' not in entry and b.j.read()==before
+        with pytest.raises(RecoveryError,match='UNBOUND_OWNER'):
+            allocation.for_spec(b.j,pin,purpose='development')
+        bound=allocation.for_spec(b.j,pin,purpose='development',bind_new=True)
+    assert bound['storage_binding']['spec']==pin
+    assert b.j.read()['budget']==before['budget']
+
+
+def test_preview_rejects_existing_owner_drift_without_modification(case,monkeypatch):
+    b=case;key=register(b);value,pin=spec(b,monkeypatch)
+    with b.j.writer():allocation.bind(b.j,key,pin)
+    value['id']='OTHER';other=b.write('other.json',value);before=b.j.read()
+    with b.j.writer(),pytest.raises(RecoveryError,match='ALREADY_BOUND'):
+        allocation.for_spec(b.j,other,purpose='development',preview=True)
+    assert b.j.read()==before

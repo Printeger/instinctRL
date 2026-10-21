@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 111,
-    "total_automatic_model_sessions_minimum": 133,
+    "platform_automatic_goal_wakes": 112,
+    "total_automatic_model_sessions_minimum": 134,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -244,7 +244,8 @@
     "current_baseline_snapshot_status": "PASS_EXACT_SOURCE_CONFIG_COMPATIBILITY",
     "execution_compatibility_record": "docs/experiments/r6-robustness-auto/BASELINE_COMPATIBILITY_ACCEPTED_02.json",
     "execution_compatibility_evidence": "docs/experiments/r6-robustness-auto/CPU_EXECUTION_COMPATIBILITY_ACCEPTED_02.json",
-    "next_job_issuance": "CPU29_PASS_REVIEW_PENDING",
-    "next_job_issuance_evidence": "docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_ISSUANCE.json"
+    "next_job_issuance": "CPU47_PASS_REVIEW_PENDING",
+    "next_job_issuance_evidence": "docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_ISSUANCE.json",
+    "issuance_storage_evidence": "docs/experiments/r6-robustness-auto/CPU_ISSUANCE_STORAGE_INTEGRATION.json"
   }
 }

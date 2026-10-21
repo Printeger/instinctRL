@@ -73,7 +73,7 @@ def register(journal,experiment_id,native_plan,result_plan,*,purpose,free_disk_b
     return key
 
 
-def bind(journal,key,spec_pin):
+def bind(journal,key,spec_pin,*,persist=True):
     """Claim the prepaid storage for one exact spec, never issue permission."""
     journal.require_writer();entry,native,result,cap=validate(journal,key)
     spec=json.loads(checked(spec_pin).read_text())
@@ -96,13 +96,15 @@ def bind(journal,key,spec_pin):
     binding=dict(spec=spec_pin,job_id='J-'+sha({'id':spec['id'],'spec':spec})[:16])
     if entry.get('storage_binding'):
         require(entry['storage_binding']==binding,'ALREADY_BOUND');return binding
+    if not persist:return binding
     journal.guard();require(not stop_paths(journal),'STOP')
     state=journal.read();state['events'][key]['storage_binding']=binding;journal.save(state)
     return binding
 
 
-def for_spec(journal,spec_pin,*,purpose,bind_new=False):
-    """Find the one storage owner; fixed layouts may not omit preallocation."""
+def for_spec(journal,spec_pin,*,purpose,bind_new=False,preview=False):
+    """Find the prepaid owner. Preview validates unbound storage without claiming it."""
+    require(not (bind_new and preview),'PREVIEW_CANNOT_BIND')
     spec=json.loads(checked(spec_pin).read_text())
     if spec['backend']!='real':return None
     params=json.loads(checked(spec['pins']['authorization']).read_text())['parameters']
@@ -125,8 +127,8 @@ def for_spec(journal,spec_pin,*,purpose,bind_new=False):
         return None
     key,entry=matches[0]
     require(entry['purpose']==purpose,'PURPOSE_DRIFT')
-    require(bind_new or bool(entry.get('storage_binding')),'UNBOUND_OWNER')
-    bind(journal,key,spec_pin)
+    require(preview or bind_new or bool(entry.get('storage_binding')),'UNBOUND_OWNER')
+    bind(journal,key,spec_pin,persist=not preview)
     return validate(journal,key)[0]
 
 
