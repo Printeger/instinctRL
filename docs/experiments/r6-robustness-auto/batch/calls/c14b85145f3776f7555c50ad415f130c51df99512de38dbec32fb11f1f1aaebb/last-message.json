@@ -1,0 +1,98 @@
+{
+  "decision": "PASS_R6_PROTOCOL",
+  "summary": "No concrete defect invalidates this proposed first-baseline freeze. Verified package pins and unchanged scientific fields: original gates/denominators, all 12 target and 4 stress blocks, timing, movement prerequisites and repaired wall confirmation. Commit/reveal derivation preserves common realizations without model-identity indexing; no actual secrets generated. All 46 targeted CPU tests passed. Exact baseline mounts, backing identities and inodes verified; result free space 18502488064 bytes covers 18471714816-byte payload with 30773248 bytes spare. No-refund reconciliation retains existing charges, including this review within the controller pool: development headroom 598409216 bytes; final headroom 637534208 bytes under proposed 93GiB protection. Full final coverage remains intact. Hard reservations total 37190<=43200 seconds; final 29720<=30000. Training/nontraining margins are 1296064/972480 transitions; final nontraining 790400<=800000 protected. Model sessions remaining: 106, subject also to disk and protected-role limits. Historical timings, including failed-process receipts, and CPU compression samples do not guarantee R6 throughput, learning success or physical integration. Operating capacity remains false. This accepts proposed protocol/capacity content only, not deployment or dispatch.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/package.json",
+      "sha256": "6c9402408c231696882e4f8b42b7820ec0f11a5e65183708ad4e10513e0373bd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/protocol.json",
+      "sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/split.json",
+      "sha256": "348eebbca030c74034d19b554cfdb3e4f0cc5dc287360f3347c7866c2adcc748"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/capacity.json",
+      "sha256": "1f8288688318066502561424519c83924ca2158642a28bd976d531c79ed51509"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/disk.json",
+      "sha256": "cca2c9ac9b78c0384c563d33c9f55437c97af139700c50ab47db81109e143ba1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/budget-input-state.json",
+      "sha256": "88093a2450ebcfe1e57b24dc9d8c58806a620ca9e34645200780f255c0e8ca01"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/PRODUCTION_BASELINE_VOLUME_VERIFICATION.json",
+      "sha256": "7c1a96f8a42fcde29c21b635fcffabde101c8e5df19edfbe2313d04aa6395594"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-native/J-d737390980235144/volume.json",
+      "sha256": "8e997a12d7fd72c55fc2ee4c4fba72655d8cf4a71581e836e93b63933c1a978b"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-results/J-d737390980235144/volume.json",
+      "sha256": "082966da51638ecd3734bff4e8a7b85bb08700da1de3b7d580b35b4bc3f5572b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/SPLIT_MANIFEST.json",
+      "sha256": "7e743b68fb9f346a16cbb7eaabb9c0e9df2e875d44f40de26a0a6369b87ca208"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/wall-confirmation-repair-review.json",
+      "sha256": "7a7427e30de35f85b28f0d0816419e844304ff8261d89aca5e0b5923e1a26104"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_COMPOSED_DRAFT_V5.json",
+      "sha256": "56bb916565aea2c5d494b715172647d9dba27aa71d8719e800256838b1c141a8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/INITIAL_BASELINE_INPUT_DRAFT.json",
+      "sha256": "63718b1bf5be11de1395e46a54ae0cbcab49a3a31b65b03ed370d3439d4289df"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_budget.py",
+      "sha256": "2fdee08edc08dcdb8411f56e36ffeaee930bf2dbfceba8149a07d7199f9e15b1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/reconcile_r6_capacity.py",
+      "sha256": "96604e6824a711a31ba10edbab0c421a8dd828874eea77644d5d557fa8ca39d6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness.py",
+      "sha256": "263aa23a624ff973202e2a94ce1d8346c211343ba23701687c2ca59a5a4402b4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "eaba8026a70d58deac0530b9261b5500b8e1e6b0d759eb478aac0129f32ed5fe"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_holdout.py",
+      "sha256": "68ab46969db55ec4fbcda4120e2ac4f3e77cbb79fef239e4870ed54a6b86c811"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_holdout.py",
+      "sha256": "343012e38d9d2f1ef4e8859fe6ac349e5b15498811e08122967b7288e20d40fa"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Record exact acceptance and separately apply reviewed ledger protection before exact prelive review, Store issuance and deployment. Full autonomous controller deployment remains unmet. Only initial volumes exist; future phases require privileged exact provisioning, fresh volume/budget checks, accepted contracts and per-file quotas. Preserve failures without refunds and reassess measured baseline throughput before further reservations. Require actual raw integration evidence before scientific acceptance.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 106
+  },
+  "must_fix": [],
+  "reviewer": "r6-independent-protocol-capacity-01",
+  "protocol_sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822",
+  "capacity_report": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/capacity.json",
+    "sha256": "1f8288688318066502561424519c83924ca2158642a28bd976d531c79ed51509"
+  }
+}

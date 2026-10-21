@@ -1,0 +1,39 @@
+{
+  "status": "EXACT_PROTOCOL_SPLIT_CAPACITY_ACCEPTED_NOT_DISPATCH_AUTHORITY",
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/protocol.json",
+    "sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822"
+  },
+  "split": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/split.json",
+    "sha256": "348eebbca030c74034d19b554cfdb3e4f0cc5dc287360f3347c7866c2adcc748"
+  },
+  "capacity": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/capacity.json",
+    "sha256": "1f8288688318066502561424519c83924ca2158642a28bd976d531c79ed51509"
+  },
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/protocol-capacity-freeze-01-review.json",
+    "sha256": "a4f2c630ac5a151dc05460c1214b8e5432392f84031e4d6e1b944903ea355698"
+  },
+  "review_event_key": "c14b85145f3776f7555c50ad415f130c51df99512de38dbec32fb11f1f1aaebb",
+  "review_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/c14b85145f3776f7555c50ad415f130c51df99512de38dbec32fb11f1f1aaebb/receipt.json",
+    "sha256": "e119a2deb71467f976def846eff5c68aa82a4cd17ff2110655fc2ab733bee6a4"
+  },
+  "applied_final_protection": {
+    "allocated_gpu_seconds": 30000,
+    "automatic_model_sessions": 8,
+    "live_starts": 16,
+    "live_wall_seconds": 30000,
+    "nontraining_transitions": 800000,
+    "output_actual_plus_unreleased_reservations_bytes": 99857989632,
+    "simulator_initializations": 16,
+    "training_checkpoint_writes": 24,
+    "training_transitions": 1572864
+  },
+  "results_revealed": false,
+  "holdout_generated": false,
+  "production_store_issued": false,
+  "controller_deployed": false
+}

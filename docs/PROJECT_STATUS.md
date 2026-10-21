@@ -1,4 +1,11 @@
-# 当前 Goal：R6 鲁棒性与课程学习闭环（正式双卷已验证，容量审核待完成）
+# 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
+
+2026-10-21：第28次独审PASS_R6_PROTOCOL，46项针对CPU检查通过；准确冻结protocol/split
+与容量内容见 PROTOCOL_CAPACITY_ACCEPTED_01.json。账本应用最终93GiB/30000秒保护，
+总caps不变、无退款，capacity_pass=true仅解除容量门槛；未发Store许可/未部署controller。
+初始完整card/参数已通过实际冻结快照/解释器校验，无mock；授权仅提案未发行。
+见 CPU_INITIAL_BASELINE_PARAMETERS.json。未来卷/阶段契约仍须逐项验证。
+122次唤醒+28worker=150，余106；无R6 live、未揭晓holdout，Goal未完成。
 
 2026-10-21：恢复后实测正式双卷已创建，原凭证阻塞解除。准确manifest/helper/
 内核挂载身份与结果payload容量检查通过：结果可用18502488064，所需18471714816字节。

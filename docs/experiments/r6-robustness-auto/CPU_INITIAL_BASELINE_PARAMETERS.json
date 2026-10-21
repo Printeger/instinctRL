@@ -1,0 +1,58 @@
+{
+  "status": "PASS_ACTUAL_FROZEN_SNAPSHOT_PARAMETERS_NOT_STORE_AUTHORITY",
+  "request": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/prepare-request.json",
+    "sha256": "116da9bed63226783f8449756d601fd9db2b06a8a6aeed47ba09d026a319e99a"
+  },
+  "parameters": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/parameters.json",
+    "sha256": "0b8709b1701d503c423c2a356c07e79fa5df0af156da5856d657eca46b5f0486"
+  },
+  "card": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/experiment-card.json",
+    "sha256": "7cc964830f203d5c92e8e4ac0050df055a1563c7cf4eb73f188ed41f71f9e85f"
+  },
+  "proposal": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/authorization-proposal.json",
+    "sha256": "9b5daa71b95e3e18992f4bc2bb2084fbfaafd1e760b12cb4b658944def661d05"
+  },
+  "log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/prepare-validation.txt",
+    "sha256": "5d9fc0b9671a6fceef09d8f58cee84d5e3fcaf73a121a5479307e4f9df5af738"
+  },
+  "tool": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_prepare_authorization.py",
+    "sha256": "76808653da4e5acdf769d641799d16a715f8a7bd4be7d94f30b90f6a340684a8"
+  },
+  "protocol_acceptance": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/PROTOCOL_CAPACITY_ACCEPTED_01.json",
+    "sha256": "738aca2b423b739081fa9ada00db0de0a751040eb472e769907c4fa43fbe2ad1"
+  },
+  "no_mocks": true,
+  "checks": [
+    "Full read-only frozen snapshot identity/inventory verification",
+    "Actual frozen interpreter and snapshot config/parameter validation",
+    "Original baseline selected model bytes, method/source/config compatibility",
+    "Actual production-volume kernel/mount/owner/payload checks",
+    "Extension input tree and pinned user config integrity",
+    "Exact protocol review binding and accepted capacity content",
+    "Card/profile equality and required budgets"
+  ],
+  "budgets": {
+    "automatic_resets": 193600,
+    "checkpoint_writes": 0,
+    "explicit_resets": 21,
+    "initialization_ticks": 10,
+    "live_process_starts": 1,
+    "nontraining_transitions": 193600,
+    "optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "training_transitions": 0,
+    "wall_seconds": 3600
+  },
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "store_permission_issued": false,
+  "controller_deployed": false,
+  "goal_complete": false
+}
