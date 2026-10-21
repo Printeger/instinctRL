@@ -1,4 +1,11 @@
-# 当前 Goal：R6 鲁棒性与课程学习闭环（生产卷凭证阻塞，未完成）
+# 当前 Goal：R6 鲁棒性与课程学习闭环（正式双卷已验证，容量审核待完成）
+
+2026-10-21：恢复后实测正式双卷已创建，原凭证阻塞解除。准确manifest/helper/
+内核挂载身份与结果payload容量检查通过：结果可用18502488064，所需18471714816字节。
+见 PRODUCTION_BASELINE_VOLUME_VERIFICATION.json；inode/主机空盘地板通过。
+完整硬时限提案总37190秒，最终29720秒，建议最终保护30000秒（总cap43200不变）；
+磁盘仍建议93GiB最终保护，尚未变更ledger或capacity_pass。容量独审/协议冻结、
+真实prelive与部署仍待完成。121次唤醒+27worker=148，余108；无R6 live。
 
 2026-10-21：第27次独审PASS_CPU_SCOPE，首次入口37项检查与6个真实假CLI场景通过。
 receipt/schema/evidence pins及worker退出核验完成。正式双卷仍缺、sudo -n要求密码，

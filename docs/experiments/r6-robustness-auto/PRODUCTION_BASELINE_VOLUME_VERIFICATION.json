@@ -1,0 +1,79 @@
+{
+  "schema_version": "r6-prepared-storage-check/1",
+  "event_key": "6fb2fb5a07a1c13e091bff09e881f9213605031b821e891abd2442ac7711744d",
+  "experiment_id": "R6-BASELINE-ROBUSTNESS-01",
+  "output_cap_bytes": 20250099712,
+  "manifests": {
+    "native_volume": {
+      "path": "/var/lib/instinctrl-r6-native/J-d737390980235144/volume.json",
+      "sha256": "8e997a12d7fd72c55fc2ee4c4fba72655d8cf4a71581e836e93b63933c1a978b"
+    },
+    "result_volume": {
+      "path": "/var/lib/instinctrl-r6-results/J-d737390980235144/volume.json",
+      "sha256": "082966da51638ecd3734bff4e8a7b85bb08700da1de3b7d580b35b4bc3f5572b"
+    }
+  },
+  "missing": [],
+  "capacity_pass": false,
+  "dispatch_authorized": false,
+  "status": "VOLUMES_VERIFIED_NOT_ACCEPTED",
+  "native": {
+    "target": "/var/lib/instinctrl-r6-native/J-d737390980235144/output",
+    "manifest": {
+      "path": "/var/lib/instinctrl-r6-native/J-d737390980235144/volume.json",
+      "sha256": "8e997a12d7fd72c55fc2ee4c4fba72655d8cf4a71581e836e93b63933c1a978b"
+    },
+    "mount_id": "9243",
+    "device": "/dev/loop22",
+    "maximum_bytes": 1610612736,
+    "free_bytes": 1530249216
+  },
+  "result": {
+    "target": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results",
+    "manifest": {
+      "path": "/var/lib/instinctrl-r6-results/J-d737390980235144/volume.json",
+      "sha256": "082966da51638ecd3734bff4e8a7b85bb08700da1de3b7d580b35b4bc3f5572b"
+    },
+    "mount_id": "9267",
+    "device": "/dev/loop23",
+    "maximum_bytes": 18572378112,
+    "free_bytes": 18502488064,
+    "payload_cap_bytes": 18471714816
+  },
+  "observed_at": "2026-10-21T15:09:19.766729+00:00",
+  "filesystem_measurements": {
+    "native": {
+      "available_bytes": 1530249216,
+      "available_inodes": 98293,
+      "total_inodes": 98304,
+      "uid": 1000,
+      "gid": 1000,
+      "device": 1814,
+      "is_mount": true
+    },
+    "result": {
+      "available_bytes": 18502488064,
+      "available_inodes": 71157,
+      "total_inodes": 71168,
+      "uid": 1000,
+      "gid": 1000,
+      "device": 1815,
+      "is_mount": true
+    }
+  },
+  "result_payload_headroom_bytes": 30773248,
+  "host_free_bytes": 504842809344,
+  "quota_mechanism_accepted_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
+    "sha256": "4c49f6b6b2eb9efe8e0a917c9a2611e9fec4df45b25764f1e7232e33c7b156dc"
+  },
+  "registration": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
+    "sha256": "7e07946d6c600ed669be48373f81ee4e164218b8700f87140c7cc4d2ed75746c"
+  },
+  "prior_blocker": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/PRODUCTION_CREDENTIAL_BLOCKED_AUDIT.json",
+    "sha256": "498da51745794ead88b0002b344e7df3d84ad339caa995ec989473b28774476b"
+  },
+  "old_blocker_resolved": true
+}

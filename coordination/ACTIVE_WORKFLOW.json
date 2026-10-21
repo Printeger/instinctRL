@@ -143,7 +143,7 @@
   },
   "r6_robustness_execution": {
     "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
-    "status": "BLOCKED_EXTERNAL_PRODUCTION_VOLUME_CREDENTIAL",
+    "status": "PRODUCTION_BASELINE_VOLUMES_VERIFIED_CAPACITY_REVIEW_PENDING",
     "authority": "docs/experiments/r6-robustness-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md",
     "budget": "docs/experiments/r6-robustness-auto/goal_budget.json",
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 120,
-    "total_automatic_model_sessions_minimum": 147,
+    "platform_automatic_goal_wakes": 121,
+    "total_automatic_model_sessions_minimum": 148,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -228,7 +228,7 @@
     "training_core_status": "PASS_CPU_SCOPE_ENTRY_AND_COMPATIBILITY_PENDING",
     "serializer_compatibility": "CPU17_PASS_EXACT_EXECUTION_REVIEW_PENDING",
     "serializer_compatibility_evidence": "docs/experiments/r6-robustness-auto/CPU_SERIALIZER_COMPATIBILITY.json",
-    "prepared_storage_check": "CPU12_PASS_WAITING_FOR_ADMIN_PROVISION",
+    "prepared_storage_check": "VOLUMES_VERIFIED_NOT_ACCEPTED",
     "prepared_storage_check_evidence": "docs/experiments/r6-robustness-auto/CPU_PREPARED_STORAGE_CHECK.json",
     "next_job_handoff_status": "PASS_CPU_SCOPE_STOP_REPAIR_ACCEPTED_NOT_DEPLOYED",
     "next_job_handoff_evidence": "docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_HANDOFF.json",
@@ -265,6 +265,8 @@
     "initial_baseline_entry": "PASS_CPU_SCOPE_NOT_DEPLOYED",
     "initial_baseline_entry_evidence": "docs/experiments/r6-robustness-auto/CPU_FIRST_BASELINE_ENTRY.json",
     "initial_baseline_entry_review": "docs/experiments/r6-robustness-auto/reviews/first-baseline-entry-review.json",
-    "external_credential_blocked_audit": "docs/experiments/r6-robustness-auto/PRODUCTION_CREDENTIAL_BLOCKED_AUDIT.json"
+    "external_credential_blocked_audit": "docs/experiments/r6-robustness-auto/PRODUCTION_CREDENTIAL_BLOCKED_AUDIT.json",
+    "production_baseline_volume_verification": "docs/experiments/r6-robustness-auto/PRODUCTION_BASELINE_VOLUME_VERIFICATION.json",
+    "measured_capacity_proposal": "docs/experiments/r6-robustness-auto/CAPACITY_MEASURED_BASELINE_PROPOSAL.json"
   }
 }
