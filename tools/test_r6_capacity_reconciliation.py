@@ -29,3 +29,10 @@ def test_overrun_consumes_headroom_instead_of_refunding_or_disappearing():
 
 def test_read_only_reconciliation_preserves_ledger():
     p=BASE/'batch/state.json';before=p.read_bytes();run();assert p.read_bytes()==before
+
+
+def test_exact_new_snapshot_consumes_planned_bucket_without_refund():
+    r=run();new=r['components']['new_baseline_snapshot'];old=r['components']['historical_snapshot_reservation']
+    assert new['charged_bytes']==new['planned_bytes']==2*1024**3
+    assert new['remaining_planned_bytes']==0
+    assert old['charged_bytes']==2*1024**3

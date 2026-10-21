@@ -9,6 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT/'docs/experiments/r6-robustness-auto'
 DISK = 'output_actual_plus_unreleased_reservations_bytes'
 MIB = 1024**2
+# Exact second snapshot consumes the already planned allowance; no refund.
+NEW_BASELINE_SNAPSHOT_EVENT = '4cd9a0dfd5957c2b6521621fe928ef48bc640374b63018e86796c4f1cb96a246'
 
 
 def reconcile(state, draft, allocation_key):
@@ -31,7 +33,9 @@ def reconcile(state, draft, allocation_key):
         if event is None or event['identity'] != reservation['identity']:
             raise ValueError('RESERVATION_EVENT_MISSING')
         size=charged(reservation,state['budget']['caps']).get(DISK,0)
-        if event['kind']=='model':bucket='controller_and_reviews'
+        if key==NEW_BASELINE_SNAPSHOT_EVENT and event['identity']['role']=='source-snapshot':
+            bucket='new_baseline_snapshot'
+        elif event['kind']=='model':bucket='controller_and_reviews'
         elif key==allocation_key and event['identity']['role']=='job-storage-allocation':
             bucket='initial_full_baseline'
         else:bucket=role_buckets.get(event['identity']['role'],'unclassified_reservations')

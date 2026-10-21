@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 108,
-    "total_automatic_model_sessions_minimum": 129,
+    "platform_automatic_goal_wakes": 109,
+    "total_automatic_model_sessions_minimum": 130,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -238,6 +238,9 @@
     "next_job_stop_repair": "docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_STOP_REPAIR.json",
     "next_job_stop_accepted_review": "docs/experiments/r6-robustness-auto/reviews/next-job-stop-repair-review.json",
     "baseline_spec_builder": "CPU4_PASS_REVIEW_PENDING",
-    "baseline_spec_builder_evidence": "docs/experiments/r6-robustness-auto/CPU_BASELINE_SPEC_BUILDER.json"
+    "baseline_spec_builder_evidence": "docs/experiments/r6-robustness-auto/CPU_BASELINE_SPEC_BUILDER.json",
+    "current_baseline_snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02",
+    "current_baseline_snapshot_evidence": "docs/experiments/r6-robustness-auto/CPU_SNAPSHOT02_VERIFICATION.json",
+    "current_baseline_snapshot_status": "ACTUAL_READ_ONLY_SNAPSHOT_CONFIG_PASS_COMPATIBILITY_REVIEW_PENDING"
   }
 }

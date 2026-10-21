@@ -1,5 +1,14 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：第二份实际只读baseline快照完成，输入7f9e2ca/tag r6-cpu-snapshot-input-02，
+冻结解释器load_config通过，重放逐文件inventory核验通过且不新增预留。快照约1.00GB，
+仍全额计2GiB；旧快照2GiB保留，新项替代原planned额度，对账余量598409216字节。
+预检发现并修复4个quota模块漏绑，13项source/snapshot与4项容量检查通过，失败原件保留。
+新兼容payload核验原源码及actor/training/execution/versions不变；准确serializer差异一致，
+审查前检查通过，但未生成独审接受/运行许可。见
+`docs/experiments/r6-robustness-auto/CPU_SNAPSHOT02_VERIFICATION.json`。
+109次唤醒+21worker=130，余126次；无GPU/live，完整Goal未完成。
+
 2026-10-21：冻结config/authorization到准确baseline Store规格的生成入口完成，4项CPU
 检查通过，复用真实H1/experiment结构校验；解释器、源码、seed、argv和资源精确绑定。
 拒绝pin漂移、已消费attempt与训练额度；不写Store/不授予许可。runtime授权检查明确mock，
