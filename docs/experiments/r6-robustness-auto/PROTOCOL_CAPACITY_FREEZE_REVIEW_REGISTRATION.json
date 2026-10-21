@@ -1,0 +1,30 @@
+{
+  "key": "c14b85145f3776f7555c50ad415f130c51df99512de38dbec32fb11f1f1aaebb",
+  "request": {
+    "cwd": "/home/mint/rl_dev/instinctRL-dev",
+    "executable": {
+      "path": "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+      "sha256": "9a820c17865fa825d04db416818679a9d63bd72e50835c396f496e5684626c9c"
+    },
+    "output_cap_bytes": 67108864,
+    "prompt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/prompt.txt",
+      "sha256": "e9f405031cb8dc88ded9fa416c5e93e1e1869fdea78be4af5641e07d184d5520"
+    },
+    "sandbox": "danger-full-access",
+    "schema": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/review.schema.json",
+      "sha256": "905801f8a65c3e10cda8abf4eabc53e48335e8c3b75a873e2411744c959ccac0"
+    },
+    "stop_paths": [
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/commander/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/executor/STOP"
+    ],
+    "timeout_seconds": 3600
+  },
+  "input_commit": "32c30eb0602ac41bafe4456d4395e8fccd6d72dd"
+}
