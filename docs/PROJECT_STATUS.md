@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：第21次定向复审PASS_CPU_SCOPE，关闭第20次独审的STOP传播MUST_FIX。
+复审21项定向测试通过，核验八个真实worker+假程序的STOP receipt；本地组合34项通过。
+原审查保留，receipt/schema/source pins及审核worker退出清理已核验，见
+`docs/experiments/r6-robustness-auto/reviews/next-job-stop-repair-review.json`。
+此为接续组件CPU范围接受，不代表计划生成、Store发行、controller部署或生产容量接受。
+107次自动唤醒+21worker=128，256总上限余128次；无R6 live，完整Goal未完成。
+
 2026-10-21：第20次独审MUST_FIX：登记后工作区STOP未传播给review worker。
 修复为登记完整四个工作区STOP路径；实际worker+本地假可执行程序验证启动前拒绝与
 运行中停止/后代清理，34项CPU检查通过，无真实模型用于测试。首轮4项测试错误要求

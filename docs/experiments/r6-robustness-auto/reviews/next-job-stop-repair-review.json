@@ -1,0 +1,36 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "Sole MUST_FIX resolved by 039e088; reviewed source bytes match. Registration hashes all four workspace STOP paths into the request. Actual worker tests prove launch prevention and interruption with owned-process cleanup for each path. All 21 targeted tests passed; no real model launched. Before-start receipts correctly have no child and cleanup=None, and are not successful model reviews. Repair evidence pins verified. This focused acceptance grants no deployment, live or scientific acceptance. Model cap remains 256.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_next_job.py",
+      "sha256": "a55eb095969d461c43563e3d5760900842f334bbe7ae4eb7903e069ecdb2ffa4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_next_job.py",
+      "sha256": "01397dd3df74f95168555166e64add8624be8b127f72de354be6a0a9111e809f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_model_worker.py",
+      "sha256": "188880d1da73a6142e343500db6bd23b49653b5f15ceb3df1def26c9577aa37f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_worker_processes.py",
+      "sha256": "7ce3a1276d8460445f442ef9e30ecbe3198de98e848d75198eaabe94c932cc10"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_STOP_REPAIR.json",
+      "sha256": "4e39192125b72352fd49a535e81f40abfd30e340354b3a1a0ef8b288a3f76428"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/next-job-integration-review.json",
+      "sha256": "4f57f43f34b5b72fbd53516b80d62a8e3d9eb13b372d8d8863b41729c57a0968"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Plan generation, exact Store issuance, full controller deployment and production volumes/capacity remain incomplete.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 128
+  },
+  "must_fix": []
+}
