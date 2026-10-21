@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：首更概率gate离线重算接入训练分析：准确初始actor严格加载，512样本CPU前向，
+按原1e-6/1e-5容差逐项核对log-prob/alpha/beta，失败不放宽；原件与实现pin绑定关闭作业清单。
+CPU RNG成功/失败均恢复，禁止CUDA查询；28项tensor检查、59项控制组合与7项最终针对检查通过。
+真实冻结u640权重也通过CPU重算，但输入为明确合成零观察/固定动作，不是实际R6 rollout结果。
+证据CPU_TRAINING_PROBABILITY.json；严格Adam/RNG语义、候选/最终评价、组合独审/交接仍未完成。
+145次自动唤醒+30worker=175，模型余81；无生产GPU/仿真/训练，完整Goal未完成。
+
 2026-10-22：训练结构证据分析→关闭作业原件清单绑定→CPU worker恢复→决策摘要路由接通。
 压缩完整尾标/哈希、阶段更新计数、episode汇总、terminal counters、checkpoint元数据及有限tensor核验。
 17项tensor检查通过；控制组合104通过/1项fixture缺role失败，修复后6项新检查全部通过。

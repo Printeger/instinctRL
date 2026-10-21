@@ -160,14 +160,31 @@ def analyze(output,authorization_pin):
             row.update(checkpoint_metadata(path,plan,recipe,update))
         except (OSError,ValueError,KeyError,TypeError,RuntimeError,EOFError,pickle.UnpicklingError) as error:issue(str(path.relative_to(output)),error)
         checkpoints.append(row)
+    probability=None
+    probability_name=f"pilot_diagnostic/update_{plan['start_update']+1}_full_input.pt"
+    try:
+        import torch
+        from tools.r6_training_probability import recompute
+        origin_path=checked(plan['initialization']['checkpoint'])
+        require(origin_path.stat().st_size<=plan['storage']['checkpoint_bytes'],'ORIGIN_CHECKPOINT_SIZE')
+        pin(origin_path)
+        require(streams.get(probability_name,{}).get('complete') is True,'PROBABILITY_INPUT_INCOMPLETE')
+        with codec.ChunkReader(compressed/(probability_name+'.r6z'),run_id=plan['experiment_id'],
+                logical_name=probability_name,maximum_raw_bytes=plan['storage']['maximum_raw_file_bytes']) as reader:
+            retained=torch.load(reader,map_location='cpu',weights_only=True)
+        origin=torch.load(origin_path,map_location='cpu',weights_only=True)
+        probability=recompute(origin,retained,plan)
+    except (OSError,ValueError,KeyError,TypeError,RuntimeError,ArithmeticError,EOFError,pickle.UnpicklingError) as error:
+        issue('first_update_probability_replay',error)
     summary=dict(schema_version='r6-training-summary/1',experiment_id=plan['experiment_id'],phase=plan['phase'],
         training_seed=plan['training_seed'],start_update=plan['start_update'],target_update=plan['target_update'],
         expected_counters=expected,observed_counters=None if status is None else status.get('counters'),
         stream_count=len(streams),complete_stream_count=sum(s['complete'] for s in streams.values()),
         checkpoints=checkpoints,phases=phases,issue_count=len(issues),scientific_acceptance=False,
         learning_gain_established=False,physical_replay_performed=False,strict_checkpoint_restore_performed=False,
-        rng_state_semantics_verified=False,probability_gate_recomputed=False)
+        rng_state_semantics_verified=False,probability_gate_recomputed=probability is not None,probability_replay=probability)
     report=dict(schema_version='r6-training-analysis/1',authorization=authorization_pin,plan_sha256=contract.object_sha(plan),
-        analyzer=file_pin(__file__),codec=file_pin(codec.__file__),inputs=sorted(inputs.values(),key=lambda p:p['path']),
+        analyzer=file_pin(__file__),codec=file_pin(codec.__file__),
+        probability_replayer=file_pin(Path(__file__).with_name('r6_training_probability.py')),inputs=sorted(inputs.values(),key=lambda p:p['path']),
         streams=list(streams.values()),issues=issues,summary=summary,scientific_acceptance=False)
     return report,summary

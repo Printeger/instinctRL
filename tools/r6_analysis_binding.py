@@ -182,9 +182,18 @@ def bind_training_analysis(entry,key,report_pin,context):
     if (summary.get('schema_version')!='r6-training-summary/1'
             or any(summary.get(k)!=plan[k] for k in ('experiment_id','phase','training_seed','start_update','target_update'))
             or any(summary.get(k) is not False for k in ('scientific_acceptance','learning_gain_established',
-                'physical_replay_performed','strict_checkpoint_restore_performed','rng_state_semantics_verified','probability_gate_recomputed'))
+                'physical_replay_performed','strict_checkpoint_restore_performed','rng_state_semantics_verified'))
             or summary.get('issue_count')!=len(report['issues'])):
         raise RecoveryError('ANALYSIS_TRAINING_SUMMARY')
+    probability=summary.get('probability_replay')
+    if type(summary.get('probability_gate_recomputed'))is not bool or summary['probability_gate_recomputed']!=(probability is not None):
+        raise RecoveryError('ANALYSIS_PROBABILITY_REPLAY_FLAG')
+    if probability is not None and any(type(probability.get(k))is not type(v) or probability[k]!=v for k,v in dict(
+            status='PASS',sample_count=512,starting_update=plan['start_update'],float32_atol=1e-6,float32_rtol=1e-5,
+            cpu_actor_forward=True,cpu_rng_preserved=True,gpu_sampling_reproduced=False,optimizer_restored=False).items()):
+        raise RecoveryError('ANALYSIS_PROBABILITY_REPLAY_RESULT')
+    if report.get('probability_replayer')!=file_pin(Path(__file__).with_name('r6_training_probability.py')):
+        raise RecoveryError('ANALYSIS_IMPLEMENTATION_DRIFT')
     indexed={r['path']:r for r in inventory['files']}
     if len(indexed)!=len(inventory['files']):raise RecoveryError('ANALYSIS_DUPLICATE_INVENTORY_PATH')
     seen=set()
@@ -192,11 +201,17 @@ def bind_training_analysis(entry,key,report_pin,context):
         path=Path(pin['path']);row=indexed.get(str(path))
         if str(path) in seen:raise RecoveryError('ANALYSIS_DUPLICATE_INPUT')
         seen.add(str(path))
+        if {k:pin[k] for k in ('path','sha256')}==plan['initialization']['checkpoint']:
+            if checked(plan['initialization']['checkpoint']).stat().st_size!=pin['bytes']:raise RecoveryError('ANALYSIS_ORIGIN_SIZE')
+            continue
         if path!=Path(context['auth_pin']['path']) and output not in path.parents:
             raise RecoveryError('ANALYSIS_OTHER_ATTEMPT_INPUT')
         if row is None or any(pin.get(k)!=row[k] for k in ('sha256','bytes')) or checked(dict(path=str(path),sha256=pin['sha256'])).stat().st_size!=row['bytes']:
             raise RecoveryError('ANALYSIS_INPUT_NOT_IN_EXACT_INVENTORY')
     required={context['auth_pin']['path']}
+    if probability is not None:
+        required.add(plan['initialization']['checkpoint']['path'])
+        required.add(str(output/'compressed_evidence'/f"pilot_diagnostic/update_{plan['start_update']+1}_full_input.pt.r6z"))
     for name in indexed:
         path=Path(name)
         if (output/'compressed_evidence' in path.parents and path.suffix=='.r6z') or (output/'checkpoints'==path.parent and path.suffix in ('.pt','.json')) or path in (output/'status.json',output/'pilot_diagnostic/first_update_gate.json'):

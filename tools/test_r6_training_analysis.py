@@ -67,7 +67,7 @@ def test_complete_structural_evidence_is_not_learning_or_physics_acceptance(evid
     def forbidden(*args,**kwargs):raise AssertionError('CPU analysis must not probe CUDA')
     monkeypatch.setattr(torch.cuda,'is_available',forbidden);monkeypatch.setattr(torch.cuda,'device_count',forbidden)
     report,summary=run(b)
-    assert report['issues']==[]
+    assert [i['input'] for i in report['issues']]==['first_update_probability_replay']
     assert summary['checkpoints'][0]['metadata_verified']
     assert summary['phases'][0]['episodes']['center:phase_end']['count']==32
     assert summary['phases'][0]['episodes']['center:phase_end']['return_sum']==sum(range(32))

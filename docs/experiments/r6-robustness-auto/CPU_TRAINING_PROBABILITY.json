@@ -1,0 +1,68 @@
+{
+  "status": "CPU_FIRST_ROLLOUT_PROBABILITY_RECOMPUTATION_PASS_NOT_LIVE",
+  "input_commit": "582e7c66",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_probability.py",
+      "sha256": "59f52747ed68c4de73d8d1c56127f3244fe0bb2f061039fd57e5880aecaa67ed"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_analysis.py",
+      "sha256": "b774a9f4aee3ef8ed6ea614191d57385f950bd8df1c69879646a6f15e9147aa2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "f7547f9fb686b81020af8cd1702769861f443a55e38d491787446b55668be80d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_cpu_analysis.py",
+      "sha256": "b3657fa455aa0c1a9b669af3c4753ccc38c93d0c89e619013fd6279a9adb7266"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PROBABILITY_TENSOR_INITIAL.log",
+      "sha256": "869cd63026386d9df7da41d11c7780bc1f2202cafab8ad4b410a7cb08a332e48"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PROBABILITY_CONTROL.log",
+      "sha256": "ae0739af0b1a1db7a1ebb338114d5d453795a8f903ba9ef1c74be900e31a4ca4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PROBABILITY_TENSOR_FINAL.log",
+      "sha256": "b75fead6b597c00c0750ee34fe203fb624d66cc44ef0df15d1a6aaa3e071dc93"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PROBABILITY_CONTROL_FINAL.log",
+      "sha256": "e195b7b9531fd99b5a278f918b36fe4dd7eb0761ee697ba5a4c69ab3019310b3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PROBABILITY_ACTUAL_CHECK.py",
+      "sha256": "9bc152b849bd30e040f57e51b7580e32250d347ba07dcbbff48a82b9a7b60ca3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PROBABILITY_ACTUAL.json",
+      "sha256": "4abdabe7d7cfc60f0e85b1920de53affe29b948ba35337186e5b70a87b967252"
+    }
+  ],
+  "tests": {
+    "tensor_final": 28,
+    "control_combined": 59,
+    "control_final_targeted": 7,
+    "initial_failures": 0
+  },
+  "scope": [
+    "Exact pinned initial actor strict key/shape/dtype/finite state load, exact source/method/update clock, retained first-rollout input identity and actor-only fields.",
+    "CPU forward of all 512 samples in batches of 32; original probability_distribution_gate with fixed atol 1e-6 / rtol 1e-5 for log-probability, alpha and beta.",
+    "CPU RNG restored even on rejected evidence; tests forbid CUDA queries and catch last-sample corruption, dtype changes, nonfinite weights and privileged actor fields.",
+    "Report pins origin checkpoint and replayer implementation; closed-job binding requires exact origin and inventoried retained stream before claiming recomputation.",
+    "Actual frozen u640 hash and actor weights passed the same replay with explicitly synthetic observations/actions; no mocked actor or CUDA access."
+  ],
+  "limitations": [
+    "No actual R6 rollout exists. Actual-weight CPU check is not a live probability gate result or science.",
+    "CPU/GPU numerical mismatch will be recorded as an issue under unchanged original tolerances.",
+    "No strict Adam/critic/RNG restore, GPU sampling reproduction, physics replay or learning acceptance. RNG semantic audit and candidate/final evaluation contracts remain.",
+    "Control lifecycle tests retain explicit synthetic report/Store cleanup fixtures. Existing pytest temporary-directory cleanup warnings preserved."
+  ],
+  "goal_complete": false
+}
