@@ -15,11 +15,12 @@ def setup(tmp_path,monkeypatch):
     coordination=tmp_path/'coordination';coordination.mkdir()
     binding=dict(target=str(target),manifest={'fixture':True})
     monkeypatch.setattr(native_volume,'validate',lambda pin:binding)
-    def run(code):
+    def run(code,output_root=None,timeout=5):
         return dispatch.dispatch_held([sys.executable,'-B','-c',code],cwd=tmp_path,
             identity_path=control/'held.json',coordination_root=coordination,
             native_output_cap_bytes=4096,native_volume_pin={'fixture':True},
-            environment={'TMPDIR':'/unverified','CUDA_CACHE_PATH':'/unverified','WARP_CACHE_PATH':'/unverified'},completion_timeout_s=5)
+            native_workload_output_root=str(output_root) if output_root else None,
+            environment={'TMPDIR':'/unverified','CUDA_CACHE_PATH':'/unverified','WARP_CACHE_PATH':'/unverified','CUDA_VISIBLE_DEVICES':''},completion_timeout_s=timeout)
     return target,control,run
 
 
@@ -83,3 +84,21 @@ def test_dispatch_child_cannot_write_control_or_outside_volume(setup):
     assert run(code)==0
     assert (target/'native-output.log').read_text()=='DENIED\n'
     assert not (control/'escape').exists()
+
+
+def test_cpu_torch_and_proc_fd_logger_inside_boundary(setup):
+    pytest.importorskip('torch')
+    target,control,run=setup
+    code="import torch;value=int(torch.tensor(6)*7)\nwith open('/proc/self/fd/1','w') as stream:stream.write(str(value)+'\\n')"
+    assert run(code,timeout=20)==0
+    assert (target/'native-output.log').read_text()=='42\n'
+
+
+def test_exact_workload_output_root_can_write_but_parent_cannot(setup):
+    target,control,run=setup
+    output=control/'results';output.mkdir()
+    code=f"from pathlib import Path\nPath({str(output/'measurement')!r}).write_text('raw')\n"
+    code+=f"try:Path({str(control/'outside-result')!r}).write_text('bad')\nexcept PermissionError:print('DENIED')\nelse:raise AssertionError('escaped')"
+    assert run(code,output_root=output)==0
+    assert (output/'measurement').read_text()=='raw'
+    assert not (control/'outside-result').exists()

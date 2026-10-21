@@ -77,13 +77,20 @@ def enforce(policy):
     context=sec.seccomp_init(0x7fff0000)
     if not context:raise RuntimeError('R6 seccomp context unavailable')
     try:
+        # x86_64 syscall numbers from the running kernel's generated UAPI.
+        # Older libseccomp does not yet name these Linux 7.0 entry points.
+        newer={'setxattrat':463,'removexattrat':466,'open_tree_attr':467,'file_setattr':469}
         for name in ('chmod','fchmod','fchmodat','fchmodat2','chown','lchown','fchown','fchownat',
                      'utime','utimes','futimesat','utimensat','mount','umount2','pivot_root',
                      'unshare','setns','ptrace','process_vm_writev','pidfd_getfd','open_by_handle_at',
                      'setxattr','lsetxattr','fsetxattr','removexattr','lremovexattr','fremovexattr',
-                     'io_uring_setup','io_uring_enter','io_uring_register'):
+                     'io_uring_setup','io_uring_enter','io_uring_register',
+                     'fsopen','fsconfig','fsmount','fspick','open_tree','move_mount','mount_setattr',
+                     *newer):
             number=sec.seccomp_syscall_resolve_name(name.encode())
-            if number>=0 and sec.seccomp_rule_add(context,0x50000|1,number,0)!=0:
+            if number<0:number=newer.get(name,-1)
+            if number<0:raise RuntimeError('R6 seccomp syscall unavailable: '+name)
+            if sec.seccomp_rule_add(context,0x50000|1,number,0)!=0:
                 raise RuntimeError('R6 seccomp rule failed: '+name)
         if sec.seccomp_load(context)!=0:raise RuntimeError('R6 seccomp load failed')
     finally:sec.seccomp_release(context)

@@ -14,7 +14,7 @@ def test_actual_kernel_boundary_and_descendant(tmp_path):
     escape=tmp_path/'escape';(output/'outside-link').symlink_to(escape)
     fd=os.open(source,os.O_WRONLY);os.set_inheritable(fd,True)
     program=r'''
-import os,json,subprocess,sys
+import os,json,subprocess,sys,ctypes
 from pathlib import Path
 from training_workloads.unified_h1.write_boundary import prepare,enforce
 root,source,escape=map(Path,sys.argv[1:4]);old_fd=int(sys.argv[4])
@@ -22,6 +22,9 @@ enforce(prepare([root],['/dev/null']))
 (root/'allowed').write_text('ok')
 assert source.read_text()=='immutable'
 results={}
+libc=ctypes.CDLL(None,use_errno=True)
+for syscall in (452,463,466,467,469):
+ assert libc.syscall(syscall,0,0,0,0,0,0)==-1 and ctypes.get_errno()==1
 operations={'absolute':lambda:escape.write_text('bad'),'input':lambda:source.write_text('bad'),
  'truncate':lambda:os.truncate(source,0),'metadata':lambda:os.chmod(source,0o777),
  'xattr':lambda:os.setxattr(source,'user.r6probe',b'bad'),
