@@ -27,11 +27,13 @@ from tools import r6_training_preparation as training
 from tools import r6_candidate_preparation as candidate
 from tools import r6_confirmation_inputs as confirmation_inputs
 from tools import r6_confirmation_preparation as confirmation
+from tools import r6_final_models as final_models
+from tools import r6_final_freeze_review as final_freeze_review
 
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_MODEL_FREEZE_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','HOLDOUT_PREPARATION_REQUIRED'}
 
 
 def require(condition,reason):
@@ -145,7 +147,7 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                     require(all(r['job_event_key']!=evidence['job_event_key'] for r in sequence['results']),
                         'CONFIRMATION_REPEATED_JOB')
                     sequence['results'].append(evidence)
-                    if len(sequence['results'])==3:cursor['phase']='FINAL_MODEL_FREEZE_REQUIRED'
+                    if len(sequence['results'])==3:cursor['phase']='FINAL_MODEL_PREPARATION'
                     else:cursor.update(phase='PROFILE',context=sequence['contexts'][index+1])
                 elif decision=='PROPOSE_CONFIRMATION':cursor['phase']='CONFIRMATION_INPUTS'
                 elif decision=='REQUEST_FINAL_REVIEW':cursor['phase']='FINAL_DELIVERY_REQUIRED'
@@ -156,6 +158,15 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                     executable=initial['review_executable'],free_disk_bytes=free)
                 require(outcome['status']=='CONFIRMATION_INPUTS_PREPARED_NOT_REVIEWED','CONFIRMATION_INPUT_STATUS')
                 cursor.update(phase='CONFIRMATION_PREPARATION',confirmation_inputs=outcome['inputs'])
+            elif phase=='FINAL_MODEL_PREPARATION':
+                outcome=final_models.prepare(journal,key,store,free_disk_bytes=free)
+                require(outcome['status']=='FINAL_MODELS_BOUND_REVIEW_REQUIRED','FINAL_MODELS_STATUS')
+                cursor.update(phase='FINAL_MODEL_REVIEW',final_models=outcome)
+            elif phase=='FINAL_MODEL_REVIEW':
+                outcome=final_freeze_review.prepare(journal,cursor['final_models']['freeze'],store,
+                    executable=initial['review_executable'],free_disk_bytes=free)
+                require(outcome['status']=='FINAL_MODEL_FREEZE_REVIEWED_NOT_RELEASED','FINAL_FREEZE_REVIEW_STATUS')
+                cursor.update(phase='HOLDOUT_PREPARATION_REQUIRED',final_freeze=outcome)
             elif phase=='CONFIRMATION_PREPARATION':
                 outcome=confirmation.prepare(journal,cursor['parent_key'],cursor['confirmation_inputs'],store,
                     executable=initial['review_executable'],free_disk_bytes=free)

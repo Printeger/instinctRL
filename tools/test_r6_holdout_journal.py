@@ -16,14 +16,16 @@ def setup(tmp_path, monkeypatch):
         return file_pin(p)
     baseline = write('baseline', {'fixture': True})
     monkeypatch.setattr(h, 'BASELINE_SHA', baseline['sha256'])
-    freeze = write('freeze.json', dict(schema_version='r6-final-freeze/1',
+    freeze = write('freeze.json', dict(schema_version='r6-final-freeze/2',
         branch='BASELINE_SUFFICIENT', protocol=write('protocol.json', {'frozen': True}),
         recipe=write('recipe.json', {}), selection_rule=write('selection.json', {}),
-        models={'baseline': baseline}))
+        models={'baseline': baseline},evidence={'fixture':True}))
     review = write('review.json', dict(decision='PASS_R6_FINAL_FREEZE', must_fix=[],
         reviewer='independent-fixture', freeze_sha256=freeze['sha256']))
     # Review-worker lifecycle is tested separately; these cases isolate holdout persistence.
     monkeypatch.setattr(h, "verify_model_review", Mock(return_value="fixture-review"))
+    # Final model provenance is tested separately. This fixture isolates entropy lifecycle.
+    monkeypatch.setattr(h.final_models,'validate',Mock(side_effect=lambda j,f:f))
     monkeypatch.setattr(h, "ROOT", tmp_path)
     j = Journal(tmp_path / 'batch')
     with j.writer():
@@ -70,6 +72,23 @@ def test_freeze_drift_and_unreviewed_freeze_never_draw(setup, monkeypatch):
     with pytest.raises(RecoveryError): prepare(j, request)
     draw.assert_not_called()
     assert not j.read()['events']
+
+
+def test_incomplete_model_provenance_rejected_before_reservation_or_entropy(setup,monkeypatch):
+    j,request,_=setup;draw=Mock();monkeypatch.setattr(h.secrets,'token_hex',draw)
+    monkeypatch.setattr(h.final_models,'validate',Mock(side_effect=RecoveryError('FINAL_MODELS_INCOMPLETE')))
+    before=j.read()
+    with pytest.raises(RecoveryError,match='FINAL_MODELS_INCOMPLETE'):prepare(j,request)
+    assert j.read()==before;draw.assert_not_called()
+
+
+def test_old_pin_only_freeze_cannot_authorize_entropy(setup,monkeypatch):
+    j,request,write=setup;freeze=json.loads(h.checked(request['freeze']).read_text())
+    freeze['schema_version']='r6-final-freeze/1';freeze.pop('evidence')
+    request['freeze']=write('legacy-freeze.json',freeze)
+    draw=Mock();monkeypatch.setattr(h.secrets,'token_hex',draw)
+    with pytest.raises(RecoveryError,match='FREEZE_FIELDS'):prepare(j,request)
+    draw.assert_not_called();assert not j.read()['events']
 
 
 def test_stop_blocks_entropy_and_release(setup, monkeypatch):

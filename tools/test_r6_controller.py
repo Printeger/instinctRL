@@ -298,6 +298,10 @@ def test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect
     def collect(j,key,context,store):
         collected.append((key,context));return dict(job_event_key=key,context=context,scientific_acceptance=False)
     monkeypatch.setattr(c.confirmation,'collect',collect)
+    final_models=Mock(return_value=dict(status='FINAL_MODELS_BOUND_REVIEW_REQUIRED',freeze=b.context))
+    monkeypatch.setattr(c.final_models,'prepare',final_models)
+    final_review=Mock(return_value=dict(status='FINAL_MODEL_FREEZE_REVIEWED_NOT_RELEASED',freeze=b.context,review=b.context))
+    monkeypatch.setattr(c.final_freeze_review,'prepare',final_review)
     original_save=c.save;failed=[]
     def save(j,key,cursor,**kw):
         if crash and len(cursor.get('confirmation',{}).get('results',[]))==1 and not failed:
@@ -307,12 +311,14 @@ def test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect
     if crash:
         with pytest.raises(RuntimeError,match='collection cursor crash'):run(b)
         assert entry(b)['cursor']['phase']=='DECIDE'
-    result=run(b);assert result['status']=='FINAL_MODEL_FREEZE_REQUIRED' and result['goal_complete']is False
+    result=run(b);assert result['status']=='HOLDOUT_PREPARATION_REQUIRED' and result['goal_complete']is False
     assert [call.args[2] for call in profile.call_args_list]==contexts
     assert [call.args[1] for call in b.next.call_args_list]==[b.parent,'confirm-0-parent','confirm-1-parent']
     assert [r['job_event_key'] for r in entry(b)['cursor']['confirmation']['results']]==['confirm-0','confirm-1','confirm-2']
     assert run(b)==result and b.next.call_count==3
     inputs.assert_called_once();preparation.assert_called_once();b.source.assert_not_called()
+    final_models.assert_called_once()
+    final_review.assert_called_once()
 
 
 def test_confirmation_input_interruption_keeps_exact_phase(controller,monkeypatch):

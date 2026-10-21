@@ -19,6 +19,7 @@ from tools.r6_budget import admissible
 from tools.r6_batch import verified_decision
 from training_workloads.unified_h1.robustness_holdout import commitment, reveal
 from training_workloads.unified_h1.robustness_contract import BASELINE_SHA
+from tools import r6_final_models as final_models
 
 ROLE = 'final-holdout'
 DISK = 'output_actual_plus_unreleased_reservations_bytes'
@@ -78,11 +79,12 @@ def verify_model_review(journal, review_pin):
 def validate_freeze(journal, request):
     require(set(request) == {'freeze', 'review'}, 'REQUEST_FIELDS')
     freeze = json.loads(checked(request['freeze']).read_text())
-    require(set(freeze) == {'schema_version', 'branch', 'protocol', 'recipe', 'selection_rule', 'models'}, 'FREEZE_FIELDS')
-    require(freeze['schema_version'] == 'r6-final-freeze/1', 'FREEZE_SCHEMA')
+    require(set(freeze) == {'schema_version', 'branch', 'protocol', 'recipe', 'selection_rule', 'models','evidence'}, 'FREEZE_FIELDS')
+    require(freeze['schema_version'] == 'r6-final-freeze/2', 'FREEZE_SCHEMA')
     protocol = json.loads(checked(freeze['protocol']).read_text())
     require(protocol.get('frozen') is True, 'PROTOCOL_NOT_FROZEN')
-    checked(freeze['recipe']); checked(freeze['selection_rule'])
+    checked(freeze['recipe'])
+    final_models.validate(journal,freeze)
     models = freeze['models']
     expected = {'baseline'} if freeze['branch'] == 'BASELINE_SUFFICIENT' else {'baseline', 'seed1', 'seed2', 'seed3'}
     require(freeze['branch'] in {'BASELINE_SUFFICIENT', 'THREE_CONTINUATIONS'} and set(models) == expected, 'MODEL_SET')

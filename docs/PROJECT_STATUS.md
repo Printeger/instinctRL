@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：三确认轨迹终点模型的v2冻结清单、注册独审及保留集入口原件核验接通。
+从真实controller/Store/准备事件/三关闭作业推导固定终点，核验共同u640源码/方法、seed、checkpoint清单。
+原生FAILED保留；独审为final_review预算事件，准确receipt可被holdout核验，MUST_FIX不释放。
+53项初检、47项证据、59项审核/控制器、60项最终组合检查通过，无初轮失败。
+证据CPU_FINAL_MODELS.json；明确frozen/collect替身及本地fake CLI，没有生产审核、熵揭晓或发车。
+BASELINE_SUFFICIENT证据路径尚未完成并拒绝放行；holdout/final评价/交付、修复重入及平台交接待接通。
+157次自动唤醒+30worker=187/256，模型剩69；完整Goal未完成。
+
 2026-10-22：确认输入只读worker→freeze审核→三条轨迹顺序执行→关闭证据汇总的顶层路由接通。
 已审训练plan/seed/experiment/capacity/compatibility禁止profile改写；每条绑定独立父决策和原有发行边界。
 科学审核待办从无条件错误分离，原件缺损仍阻断；收集校验plan、概率/RNG及各checkpoint张量/Adam审计。

@@ -1,0 +1,87 @@
+{
+  "status": "CPU_THREE_TERMINAL_MODEL_FREEZE_REGISTERED_REVIEW_AND_HOLDOUT_PROVENANCE_PASS_FINAL_EVALUATION_PENDING",
+  "input_commit": "ffc1e4ec",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_models.py",
+      "sha256": "6a173a8542c08fd0b7070b2db172693bd6239a74bd9829c620815b6ef0b162f7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_freeze_review.py",
+      "sha256": "72ca05b43c5f4e7c559e9f293cbd440a4b1daac58e7a5ba2545f7ddd68987d7a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_holdout.py",
+      "sha256": "4a79838b0534ca03f136c75a74537e00f9a054cc13cc80a4caef3bd0c9489f9d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "edce1c50d92f4130e7effa2043da72603b578ea41fb7f8404d08d4fd7de6a845"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/final-freeze-review.schema.json",
+      "sha256": "ab8e1a234f91c7c29eaee89f5874a66092dbe53579686e5f9a4afdf55eb56b48"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_models.py",
+      "sha256": "56e16de780a5d9e533679f852ae1d1264875427cc3c3cc3c978d58b1c7b1084b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_freeze_review.py",
+      "sha256": "28a83196afb7b488d477b2ebfd8095b782eb8f3c881f460ba7d99167fde2cb7d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_holdout_journal.py",
+      "sha256": "d43a485f8a68f038ede9563d503872926fe011f602ab21da2df27863e59eeb81"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "e7229feb9448b6a3cdca1782c05f5811ccaa192ff52ac9e1792993cce69ebc75"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_MODELS_INITIAL.log",
+      "sha256": "67bc5523b195eafba6e3ec5e136e0d7961e19240f26d07c371be7aa198b40402"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_MODELS_PROVENANCE.log",
+      "sha256": "cbc107776606e6808f55dbf30e318cf375574ec45bd71414b1948710d323cfea"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_MODELS_REVIEW.log",
+      "sha256": "248905832ca9b19ed94ff0e545d17c49f32f89129f6deb97539da95f6ec10221"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_MODELS_FINAL.log",
+      "sha256": "4027854f6edcf60bfe9349751ec9d8f0687f1d235c1888b2fcd54d856efdb6f8"
+    }
+  ],
+  "verification": {
+    "initial": 53,
+    "provenance": 47,
+    "review_controller": 59,
+    "final_contract_review_holdout": 60
+  },
+  "initial_failures": [],
+  "guarantees": [
+    "Final-freeze v2 is reconstructed from the exact registered controller/store, persisted confirmation preparation, three unique closed jobs, frozen recipe/seed order and the predeclared terminal update.",
+    "Revalidates the complete training plan and closed-analysis collection, initial u640 checkpoint/source/method identity, frozen execution identity, terminal checkpoint path/hash/size and exact inventory. Native FAILED status and exit code are retained.",
+    "Final-model review uses registered final_review budget, exact worker receipt/schema/cleanup provenance, readonly prompt, deduplicated intent and replay; MUST_FIX or changed source/evidence cannot release holdout.",
+    "Controller routes three collected trajectories to final payload and independent review, then HOLDOUT_PREPARATION_REQUIRED; no automatic entropy draw, dispatch or scientific success.",
+    "Holdout entropy preparation and release revalidate v2 model provenance before effects. Legacy pin-only freeze cannot authorize entropy."
+  ],
+  "boundaries": [
+    "Real temporary Journal, file pins, inventories, local fake CLI receipts and Git publication fixtures; frozen source/recipe/training validator and collect boundaries explicitly substituted in final-model fixture.",
+    "Final-model source, rule and inventory mutation tests plus existing confirmation contract tests included. No real confirmation trajectories, production reviewer, entropy draw, simulation, GPU or Store issuance.",
+    "Only THREE_CONTINUATIONS has the new provenance validator. BASELINE_SUFFICIENT evidence construction/validation remains pending and fails closed; entropy lifecycle tests substitute that provenance boundary explicitly."
+  ],
+  "remaining": [
+    "BASELINE_SUFFICIENT provenance and three distinct validation streams",
+    "Holdout commitment publication/release controller integration, final evaluation mode and full delivery",
+    "Confirmation/final-review MUST_FIX repair re-entry, combined independent review and platform handoff"
+  ],
+  "goal_complete": false
+}
