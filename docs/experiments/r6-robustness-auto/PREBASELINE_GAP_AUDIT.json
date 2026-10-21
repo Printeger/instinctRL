@@ -1,0 +1,63 @@
+{
+  "schema_version": "r6-prebaseline-gap-audit/1",
+  "first_baseline_ready": false,
+  "goal_complete": false,
+  "observed": {
+    "storage": {
+      "schema_version": "r6-prepared-storage-check/1",
+      "event_key": "6fb2fb5a07a1c13e091bff09e881f9213605031b821e891abd2442ac7711744d",
+      "experiment_id": "R6-BASELINE-ROBUSTNESS-01",
+      "output_cap_bytes": 20250099712,
+      "manifests": {},
+      "missing": [
+        "/var/lib/instinctrl-r6-native/J-d737390980235144/volume.json",
+        "/var/lib/instinctrl-r6-results/J-d737390980235144/volume.json"
+      ],
+      "capacity_pass": false,
+      "dispatch_authorized": false,
+      "status": "WAITING_FOR_ADMIN_PROVISION"
+    },
+    "protocol_frozen": false,
+    "capacity_pass": false,
+    "current_job": null,
+    "current_model_event": null,
+    "r6_store_jobs": {},
+    "controller_deployed": false,
+    "automatic_model_sessions": 141,
+    "remaining_model_sessions": 115
+  },
+  "accepted_evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/execution-compatibility-02-review.json",
+      "sha256": "5fa8c541e93aa08eaace6bde3c95b1cc310ad62fbe216f63b646b325ae8352e3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/issuance-integration-review.json",
+      "sha256": "5d32a2e008f140b0bc70964e85d903ff9c9c2d3fb68320f4788c460bbb966688"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/prompt-recovery-repair-review.json",
+      "sha256": "7ed6d990df1cd1113157756d9f45e32e4d266d3b5c8ed3b549e207c7e43a5b8c"
+    }
+  ],
+  "external_dependency": {
+    "action": "Run already-authorized administrator provisioning commands with local sudo credential",
+    "commands": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/production-storage-baseline-01/ADMIN_COMMANDS.txt",
+      "sha256": "a4714934a39911452ab0afd784d35e3257830936b83b5bf456eb3c505097f846"
+    },
+    "reason": "Both exact production manifests absent; last sudo-n check requires password"
+  },
+  "internal_remaining": [
+    "Accept measured production capacity and full time/disk allocation, freeze protocol/split with exact review",
+    "Generate complete initial baseline card/authority/spec; independent prelive review and exact Store issuance",
+    "Deploy and verify detached controller identity/locks/STOP and event-triggered plan generation; current entry consumes an already prepared plan",
+    "Finish continuation-training and final-model/holdout execution contracts before those phases; existing CPU core is not whole pipeline"
+  ],
+  "scientific_remaining": [
+    "Run frozen baseline and diagnose weaknesses",
+    "Evidence-led candidate training or baseline-sufficient distinct-stream validation",
+    "Frozen confirmation/holdout, final independent audit, actual simulation videos and all deliveries"
+  ],
+  "next_action": "Resolve production-volume evidence and finish initial baseline/plan-generation integration; no further generic framework or unrelated re-audit"
+}

@@ -1,0 +1,48 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "Sole MUST_FIX resolved. Undispatched/no-receipt recovery reconstructs and verifies the original prompt while preserving the exact event/reservation. Existing claims retain model_handoff recovery; STOP blocks reconstruction; corrupt prompts are rejected without overwrite. Independently reran all 19 CPU checks successfully using local fake CLI only. Pytest reported unrelated stale temporary-directory cleanup warnings. No production capacity, authority, deployment or scientific acceptance.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_continue_job.py",
+      "sha256": "23528dd3d41a9027e162a2b760fa521a3e42ba01add0c4e288794c6636809911"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_next_job.py",
+      "sha256": "1869994b48d93a064163904f8aa454957c72d24a3dc29d47e30ea9b61e3b439f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py",
+      "sha256": "2d47f5e1ae593dbcc14886f7757483f62d8326970084aba3fd07bea6e1c1621e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_continue_worker_integration.py",
+      "sha256": "d91fffc034965466726e512d5b4aee074ac073115d1806bd784e1a7347c84bc3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_continue_job.py",
+      "sha256": "ac6df77ec02dbb5b8ff1f12002faa68432011b3759dd9e864a9f190dcbaff153"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_prepare_authorization.py",
+      "sha256": "6785f03913c47359b321fe7cb772fab96c45415c7ce30af99a70400d347e1b5a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/local-continuation-authority-review.json",
+      "sha256": "5075e629eacab3ede0192ab018b552380ab728f2dd7a8f121d66dbaef4ded708"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTINUATION_PROMPT_RECOVERY.json",
+      "sha256": "fab18fd4653ff5476e45cd3eae1b871329f403bbbf1ef098338fcd38f1bee5cc"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Record scoped repair closure.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 115
+  },
+  "must_fix": []
+}

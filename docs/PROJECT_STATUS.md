@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：第25次定向复审PASS_CPU_SCOPE，关闭第24次prompt持久化恢复MUST_FIX；
+receipt/schema/pins/worker清理核验完成，见reviews/prompt-recovery-repair-review.json。
+新增 `docs/experiments/r6-robustness-auto/PREBASELINE_GAP_AUDIT.json`：真实Store无R6作业，
+当前job/model均空；正式双卷仍缺失，协议未冻结、capacity=false、controller未部署。
+外部管理员卷操作与内部计划生成/初始发行/部署缺口分别列明，不归因于单一阻塞，
+不以组件接受冒充完整CPU_READY。116次唤醒+25worker=141，余115次；Goal未完成。
+
 2026-10-21：第24次独审MUST_FIX复现未dispatch的review INTENT缺prompt时无法恢复。
 已修复为未claim/无receipt时重放准确登记并重建原prompt，已claim仍走原handoff。
 19项CPU检查通过，含真实假CLI恢复、STOP阻止重建、已有prompt漂移拒绝与不重复预留。
