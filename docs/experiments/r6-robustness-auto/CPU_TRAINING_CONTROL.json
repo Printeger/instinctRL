@@ -1,0 +1,62 @@
+{
+  "status": "CPU_TRAINING_CONTROL_PASS_NOT_DEPLOYED",
+  "input_commit": "eb395ac4",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_resources.py",
+      "sha256": "294ec38307bc1b60da43f6c75cc4046d75287d88b9979a37dbb950a6a22e3b32"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_issue_next.py",
+      "sha256": "4167eb6abce62e4c14f4913894a04406df7ede0d2a9590e16ffdd1b67d69232e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_register_job.py",
+      "sha256": "7d09ffeb55da34199fb2b0f081bdce045dda87deff242cd3ab9d3ac580ff07c9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "3e451d99ad988b9aa0247815d8122b76cc2fc4953b05102af0aee339f6985f68"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_storage_allocation.py",
+      "sha256": "c4b9c66951ed6e1d3b8e3ee86aa89b323184decf7b68c860afa1557f23d064ed"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_inventory.py",
+      "sha256": "74bcef1a15aa53781c811938f51c06a4bd2d3752b0fb1c2d27ef8955155c9bf0"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_CONTROL_INITIAL_TESTS.log",
+      "sha256": "3511319550c4c357908612e579884cb1f65271fb21e2e650b7432e9456effa9f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_CONTROL_TESTS.log",
+      "sha256": "e32b4a12227a3e7224e04f0ce45f57efc2a28071a7458a9175fe8b05b8fe99c5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_CONTROL_REGRESSION.log",
+      "sha256": "d85c4160bf788ec4d12f4f396fd3f0931950f3ee86062e794e695e7fcd8f7fdc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_CONTROL_CAP_TESTS.log",
+      "sha256": "48e54f86772b2083d6154d90fe524cd1e7af177937dba1e4d01c2946b24a2210"
+    }
+  ],
+  "tests_passed": 123,
+  "initial_failure": "88 passed/1 failed: imported parametrized training fixture exposed baseline-only expected resource assertion in registration test; corrected expectation, 89 passed. Initial accounting command used system Python without jsonschema, no state mutation; rerun existing control interpreter succeeded.",
+  "scope": [
+    "Shared issuance/registration/submission training transition and checkpoint ledger dimensions; pretrained output allocation avoids double disk charge",
+    "Both modes exercised through real temporary Store, registration replay, submission reservation guards, STOP and recovery",
+    "Native/result storage binding and inventory include training mode"
+  ],
+  "limitations": [
+    "Frozen authority inspection, independent reviews, resource samples and Popen are explicit CPU fixtures; no GPU or production authority issued",
+    "Training profile/authorization/spec materialization and CPU analysis still pending; combined independent review and platform handoff required",
+    "Baseline and scientific work incomplete"
+  ],
+  "goal_complete": false,
+  "additional_cap_regression_tests": 22
+}

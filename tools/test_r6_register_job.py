@@ -7,7 +7,7 @@ import pytest
 from rlflow.store import Conflict
 from tools.r6_recovery import RecoveryError
 from tools.r6_register_job import register
-from tools.test_r6_submit_real_contract import bound, MINIMUM
+from tools.test_r6_submit_real_contract import bound
 
 
 @pytest.fixture
@@ -27,7 +27,7 @@ def invoke(b,**kwargs):
 
 def test_real_contract_reservation_matches_full_minimum_and_never_submits(fresh):
     b=fresh;key=invoke(b);state=b.journal.read();entry=state['events'][key]
-    assert entry['resources']==MINIMUM
+    assert entry['resources']==b.minimum
     assert entry['identity']['job_id']==b.jid
     assert not b.store.replay()['jobs']
     b.popen.assert_not_called()

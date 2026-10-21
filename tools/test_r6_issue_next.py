@@ -59,10 +59,13 @@ def test_stop_or_missing_condition_never_issues(ready):
     assert b.store.replay()==before
 
 
-def test_budget_cannot_issue_unaffordable_job(ready):
+@pytest.mark.parametrize('dimension', ['live_starts','training_transitions','training_checkpoint_writes'])
+def test_budget_cannot_issue_unaffordable_job(ready,dimension):
     b=ready
+    if dimension.startswith('training_') and b.newspec['h1']['mode']!='research-r6-training':
+        return
     with b.journal.writer():
-        s=b.journal.read();s['budget']['used']['live_starts']=s['budget']['caps']['live_starts'];b.journal.save(s)
+        s=b.journal.read();s['budget']['used'][dimension]=s['budget']['caps'][dimension];b.journal.save(s)
     before=b.store.replay()
     with pytest.raises(BudgetError):issue(b)
     assert b.store.replay()==before

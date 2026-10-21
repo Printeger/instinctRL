@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：控制器发行/登记/提交接通训练模式，统一预留training transitions与checkpoint写入，
+预付输出卷不重复计费；训练双卷绑定与输出清单纳入原核验路径。
+89项组合CPU检查、34项预算/提交恢复回归通过；首轮旧固定baseline预算断言失败保留并修正。
+证据CPU_TRAINING_CONTROL.json；真实临时Store测试，冻结authority/审核/资源/Popen边界为明确替身。
+训练profile/auth/spec生成与分析仍待接线，组合独审和平台交接未完成；无生产发车，完整Goal未完成。
+138次自动唤醒+30worker=168，剩88。
+
 2026-10-22：R6训练阶段契约与正式入口接通：独立配置schema、准确card/plan预算、
 训练容量独审与源码/方法差异独审分别绑定；baseline许可不能代用。原actor/runtime/评分器边界保留。
 正式CLI/authorization/backend及native双卷、resource窗口/STOP路径支持训练模式；

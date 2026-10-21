@@ -76,11 +76,10 @@ def register(journal, spec_pin, store, *, free_disk_bytes, purpose='development'
     resources=dict(live_starts=1,live_wall_seconds=spec['resources']['wall_seconds']+180,
                    allocated_gpu_seconds=spec['resources']['wall_seconds']+180)
     if spec['backend']=='real':
-        require(spec.get('h1',{}).get('mode')=='research-r6-evaluation','R6_MODE_REQUIRED')
+        require(spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training'),'R6_MODE_REQUIRED')
         auth=json.loads(checked(spec['pins']['authorization']).read_text())
-        resources.update(simulator_initializations=1,
-            nontraining_transitions=spec['resources']['transitions'],
-            output_actual_plus_unreleased_reservations_bytes=0 if storage is not None else auth['parameters']['output_cap_bytes'])
+        from tools.r6_job_resources import resources as job_resources
+        resources=job_resources(spec,auth,prepaid=storage is not None)
     else:
         require(spec['backend']=='runner_cpu' and state['goal_id']=='R6-CPU-TEST-FIXTURE','CPU_FIXTURE_BOUNDARY')
         resources['output_actual_plus_unreleased_reservations_bytes']=1024**2

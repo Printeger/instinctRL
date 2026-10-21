@@ -52,7 +52,7 @@ def _issue_reviewed(journal,parent_key,plan_pin,review_key,review_pin,master_pin
     s=journal.read();require(s['budget']['capacity_pass'] is True,'CAPACITY')
     require(s.get('current_job') is None,'ACTIVE_JOB')
     experiments.validate(spec,store.root)
-    require(spec['backend']=='real' and spec.get('h1',{}).get('mode')=='research-r6-evaluation','MODE')
+    require(spec['backend']=='real' and spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training'),'MODE')
     st=store.replay();require(jid not in st['jobs'],'CHILD_EXISTS')
     require(not st['paused'] and not policy.stopped(store.root),'STORE_STOP')
     require(st['stages'].get(spec['stage_id'],{}).get('status')!='REVOKED','STAGE_REVOKED')
@@ -72,11 +72,8 @@ def _issue_reviewed(journal,parent_key,plan_pin,review_key,review_pin,master_pin
     from tools.r6_storage_allocation import for_spec
     storage=for_spec(journal,plan['spec_pin'],purpose=plan['purpose'],preview=True)
     auth=json.loads(checked(spec['pins']['authorization']).read_text())
-    resources=dict(live_starts=1,simulator_initializations=1,
-        live_wall_seconds=spec['resources']['wall_seconds']+180,
-        allocated_gpu_seconds=spec['resources']['wall_seconds']+180,
-        nontraining_transitions=spec['resources']['transitions'],
-        output_actual_plus_unreleased_reservations_bytes=0 if storage else auth['parameters']['output_cap_bytes'])
+    from tools.r6_job_resources import resources as job_resources
+    resources=job_resources(spec,auth,prepaid=storage is not None)
     # Include this control record in the hypothetical budget before mutations.
     hypothetical=reserve(s['budget'],event_key=identity,resources={DISK:CAP},
         purpose=plan['purpose'],free_disk_bytes=free_disk_bytes)

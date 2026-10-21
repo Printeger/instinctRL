@@ -68,15 +68,12 @@ def submit_once(journal, key, store, *, queue_key, refresh_observation=None):
                 and reservations[0]['resources']==entry['resources']
                 and reservations[0]['purpose']==entry['purpose'], 'RESERVATION_BINDING')
         if spec.get('backend')=='real':
-            require(spec.get('h1',{}).get('mode')=='research-r6-evaluation', 'R6_MODE_REQUIRED')
+            require(spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training'), 'R6_MODE_REQUIRED')
             auth=json.loads(checked(spec['pins']['authorization']).read_text())
             reserved=dict(entry['resources'],output_actual_plus_unreleased_reservations_bytes=
                 storage['resources'].get('output_actual_plus_unreleased_reservations_bytes',0))
-            minimum={'live_starts':1,'simulator_initializations':1,
-                'live_wall_seconds':spec['resources']['wall_seconds']+180,
-                'allocated_gpu_seconds':spec['resources']['wall_seconds']+180,
-                'nontraining_transitions':spec['resources']['transitions'],
-                'output_actual_plus_unreleased_reservations_bytes':auth['parameters']['output_cap_bytes']}
+            from tools.r6_job_resources import resources as job_resources
+            minimum=job_resources(spec,auth)
             require(all(type(reserved.get(k)) in (int,float) and math.isfinite(reserved[k])
                         and reserved[k]>=v for k,v in minimum.items()), 'RESERVATION_INCOMPLETE')
         else:

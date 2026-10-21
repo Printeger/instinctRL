@@ -25,8 +25,13 @@ MINIMUM = dict(live_starts=1, simulator_initializations=1,
     nontraining_transitions=512, output_actual_plus_unreleased_reservations_bytes=1024**3)
 
 
-@pytest.fixture
-def bound(tmp_path, monkeypatch):
+@pytest.fixture(params=['research-r6-evaluation','research-r6-training'])
+def bound(tmp_path, monkeypatch, request):
+    mode = request.param
+    minimum = dict(MINIMUM)
+    if mode == 'research-r6-training':
+        minimum['training_transitions'] = minimum.pop('nontraining_transitions')
+        minimum['training_checkpoint_writes'] = 2
     def write(path, value):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(value))
@@ -44,18 +49,21 @@ def bound(tmp_path, monkeypatch):
     config_pin = write(entry/'candidate_config.json', config)
     auth = dict(parameters=dict(evaluation_seed=19, output_cap_bytes=1024**3),
                 budgets=dict(wall_seconds=60, training_transitions=0, nontraining_transitions=512))
+    if mode == 'research-r6-training':
+        auth['mode'] = mode
+        auth['parameters']['training_seed'] = 17
+        auth['budgets'].update(training_transitions=512, nontraining_transitions=0, checkpoint_writes=2)
     auth_pin = write(tmp_path/'fixture-auth.json', auth)
     observed = dict(config=config, authorization=auth)
     monkeypatch.setattr(h1, 'inspect_authority', lambda spec:copy.deepcopy(observed))
     attempt = tmp_path/'attempt'; (attempt/'results').mkdir(parents=True)
     executable = file_pin(sys.executable)
-    mode = 'research-r6-evaluation'
     spec = dict(id='R6-REAL-CONTRACT-CPU-FIXTURE', stage_id='CPU', backend='real',
         argv=[executable['path'], '-B', '-m', 'training_workloads.unified_h1.formal_unified_h1',
               '--authorization', auth_pin['path'], '--attempt', str(attempt), '--mode', mode],
         cwd=str(work), pins=dict(dispatcher=file_pin(dispatcher), executable=executable,
             product=product, workload=workload, runtime=executable, authorization=auth_pin),
-        method='fixture', evaluation='fixture', runtime='CPU-NOT-RUNTIME', seed=19,
+        method='fixture', evaluation='fixture', runtime='CPU-NOT-RUNTIME', seed=17 if mode=='research-r6-training' else 19,
         resources=dict(starts=1, wall_seconds=70, gpu_seconds=70, transitions=512),
         conditions=[dict(evidence_id='cpu', sha256='1'*64)],
         observations=['status','counters','process_identity','process_start'],
@@ -90,12 +98,12 @@ def bound(tmp_path, monkeypatch):
         event = dict(goal_id=budget['goal_id'], event_id=spec['id'], job_id=jid,
                      input_sha256=sha(request), role='job')
         key, _ = journal.intent(event, kind='job', request=request,
-            resources=dict(MINIMUM), purpose='development', free_disk_bytes=500*1024**3)
+            resources=dict(minimum), purpose='development', free_disk_bytes=500*1024**3)
     popen = Mock(side_effect=OSError('CPU stop before Popen'))
     monkeypatch.setattr(experiments.subprocess, 'Popen', popen)
     monkeypatch.setattr('rlflow.releases.freeze', lambda root:store.root)
     return SimpleNamespace(journal=journal, store=store, key=key, queue_key=queue_key,
-        jid=jid, spec=spec, observed=observed, popen=popen)
+        jid=jid, spec=spec, observed=observed, popen=popen, minimum=minimum)
 
 
 def invoke(b):
@@ -106,9 +114,11 @@ def invoke(b):
 @pytest.mark.parametrize('missing', [True, False])
 def test_missing_or_underreserved_real_dimension_never_claims(bound, resource, missing):
     b = bound
+    if resource=='nontraining_transitions' and 'training_transitions' in b.minimum:
+        resource='training_transitions'
     with b.journal.writer():
         state = b.journal.read(); event = state['events'][b.key]
-        reserved = dict(MINIMUM)
+        reserved = dict(b.minimum)
         if missing:reserved.pop(resource)
         else:reserved[resource] -= 1
         event['resources'] = reserved
@@ -132,8 +142,26 @@ def test_complete_real_reservation_reaches_store_then_recovers(bound):
 @pytest.mark.parametrize('field', ['evaluation_seed', 'wall_seconds'])
 def test_real_h1_validation_still_rejects_authority_drift(bound, field):
     b = bound
-    section = 'parameters' if field=='evaluation_seed' else 'budgets'
+    if field=='evaluation_seed' and b.spec['h1']['mode']=='research-r6-training':
+        field='training_seed'
+    section = 'parameters' if field.endswith('_seed') else 'budgets'
     b.observed['authorization'][section][field] += 1
     with pytest.raises(Conflict, match='H1'):invoke(b)
     assert 'submission_claim' not in b.journal.read()['events'][b.key]
+    b.popen.assert_not_called()
+
+@pytest.mark.parametrize('missing', [True, False])
+def test_training_checkpoint_allowance_required(bound, missing):
+    b = bound
+    if b.spec['h1']['mode'] != 'research-r6-training':
+        return
+    with b.journal.writer():
+        state=b.journal.read(); event=state['events'][b.key]
+        if missing: event['resources'].pop('training_checkpoint_writes')
+        else: event['resources']['training_checkpoint_writes']-=1
+        next(r for r in state['budget']['reservations'] if r['identity']==event['identity'])['resources']=dict(event['resources'])
+        b.journal.save(state)
+    with pytest.raises(RecoveryError, match='RESERVATION_INCOMPLETE'): invoke(b)
+    assert 'submission_claim' not in b.journal.read()['events'][b.key]
+    assert not b.store.replay()['jobs']
     b.popen.assert_not_called()
