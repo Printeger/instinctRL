@@ -1,0 +1,116 @@
+{
+  "status": "CPU_RENDER_AUTHORITY_RESOURCES_NATIVE_GATE_AND_LIFECYCLE_PASS_STORE_ROUTING_PENDING",
+  "base_commit": "c57131f63f4b9260a943b7899b61a72cfbab758b",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_render_contract.py",
+      "sha256": "b7d7baf996a80c502e5a4027a45597d18076cf280ec5bfd34f74af6c3fe70d6f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/run_r6_render.py",
+      "sha256": "fe0efc8996bd115b7976c7c397ec6964538955c373eb9384c03cb0a023ee97d5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_resources.py",
+      "sha256": "4c742c4bc129dbc5dc435949ee9d02e76cf18f2b907e83e5abb7c136a5800929"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/render_r6_isaac_video.py",
+      "sha256": "5a2c840fad7c67f41dae41e3b9bf97e576256c197d36f0feda0147b069f66ea1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_render_contract.py",
+      "sha256": "36114204ca202836d83e3a44d9ceea9919cb3073ecc7be33d2ecf6a2aa0b330f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_volume_binding.py",
+      "sha256": "2cd7a5476510ba148119b6d8282c0a1b5fb405cc502a7bc2facff6dd6075e8d4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_prelaunch.py",
+      "sha256": "653c1dd319c0a9bb274e83a732ee6d0a80c1b4d3980a9d97f679ba4c228413ba"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/resources.py",
+      "sha256": "f00212678e8bddf1bae2414571b2094ac8f702d6ee67219a63bf07796008cf61"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_prelaunch.py",
+      "sha256": "7649c7f21c9c310b950523e3e137a025b99816cad8ae78798a10fe4d8e206822"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_CONTRACT_INITIAL.log",
+      "sha256": "cec719ca1c78a99520f0047505f69e5684c95975ee3b6e9db947a24663abd10b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_CONTRACT_FINAL.log",
+      "sha256": "b0ffa4427bca37c858766f2eb36c850ea943137f88e77171f2afd90ec7cf7b35"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_CONTRACT_COMBINED.log",
+      "sha256": "aca65c7ccadb82d764f9642cbc6f0f5e7c7f80b26558257e34aa75cc8ff83b21"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_CONTRACT_VIDEO_REGRESSION.log",
+      "sha256": "b5129951606e266ccf384f0e7e865d472761203d88405d52dbeca69bbd13f9c7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_CONTRACT_SOURCE_FINAL.log",
+      "sha256": "af8b9414d5137473d20b8afe86bfa6e5856913bab868afec9f27e3a281d44b30"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_CONTRACT_AUTHORITY_FINAL.log",
+      "sha256": "764921d0818b95fa60bd59ab863d6630d58a2e725b4c3ef8bb9e4372492d84f1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_CONTRACT_REAL_GUARD.log",
+      "sha256": "fe5bd851e6314f6b52a42dd17ab5eee5e17ab1cbc72fe68b003533e386327127"
+    }
+  ],
+  "checks": {
+    "initial": 89,
+    "lifecycle": 101,
+    "combined": 103,
+    "video_regression": 11,
+    "source_final": 46,
+    "authority_final": 31,
+    "real_guard": "PASS"
+  },
+  "capacity_reference": {
+    "manifest": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/videos/render-v2/RUN_MANIFEST.json",
+      "sha256": "ccb4b2ab1aae45b203c392840b4b3ff959498b2f8a7fc80cb3cda48b422183f5"
+    },
+    "all_video_pins_verified": true,
+    "frames": 2030,
+    "mp4_bytes": 60657574,
+    "maximum_r6_frames": 4620,
+    "scaled_reference_mp4_bytes": 138048271,
+    "planned_result_payload_bytes": 1073741824,
+    "scope": "Empirical capacity reference, not a guaranteed compression bound or R6 result."
+  },
+  "scope": [
+    "Renderer no longer constructs SimulationApp; caller owns admitted application and cleanup.",
+    "Replay charged as one live start/simulator initialization, wall/GPU including cleanup; strict zero transitions/optimizer/checkpoint/reset counters reject boolean impostors.",
+    "41 replay/control source pins, readonly implementation, exact user authority/config/attempt, raw/extraction/scene checks and exact independent-review payload.",
+    "Mandatory native volume, unchanged fresh 13-sample admission, frozen extension inputs, native path readback, returning shutdown and camera-enabled launcher.",
+    "Bounded entry reuses existing resource guard, process records, pre-cleanup failure persistence and owner-thread watchdog; evidence-write failure cannot skip app close."
+  ],
+  "boundaries": [
+    "No Store issuance/submission or controller render routing yet; new authorization schema requires combined independent review before production.",
+    "AppLauncher, mounts for render, review receipt, GPU guard and rendering in lifecycle checks are explicit CPU substitutes.",
+    "Existing CPU-QUOTA-01 read-only checks remain real; no provisioning or runtime changes.",
+    "No actual R6 extraction/render/MP4/GPU job or baseline; synthetic MP4 regression only."
+  ],
+  "remaining": [
+    "Exact frozen render configuration/manifest, H1 Store validation/issuance and controller routing/recovery",
+    "Render output inventory/postrun, CPU video validation worker, synchronized comparison/viewing manifest",
+    "Final independent scientific/requirements review and accounting, repair re-entry",
+    "Combined prelive review and platform no-model-wait handoff",
+    "All actual baseline/necessary training or distinct-stream baseline validation/final holdout"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}

@@ -7,6 +7,9 @@ DISK = 'output_actual_plus_unreleased_reservations_bytes'
 
 def resources(spec, auth, *, prepaid=False):
     mode = spec.get('h1', {}).get('mode')
+    if mode == 'research-r6-video-replay':
+        from tools.r6_render_contract import resources as render_resources
+        return render_resources(spec, auth, prepaid=prepaid)
     if spec.get('backend') != 'real' or mode not in MODES:
         raise RecoveryError('R6_JOB_RESOURCES_MODE')
     result = dict(live_starts=1, simulator_initializations=1,

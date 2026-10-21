@@ -54,7 +54,7 @@ def wired(tmp_path,monkeypatch):
     def launch(**kwargs):calls.append(kwargs);return SimpleNamespace(app='CPU_ONLY')
     module.AppLauncher=launch;monkeypatch.setitem(sys.modules,'isaaclab.app',module)
     gate=Mock(return_value={'status':'PASS'})
-    def start():return resources.start_after_coexistence_gate(output,mode='research-r6-evaluation',
+    def start(mode='research-r6-evaluation'):return resources.start_after_coexistence_gate(output,mode=mode,
         attempt_id='CPU',authorization_sha256='a'*64,gate_runner=gate,native_volume_pin={'fixture':True},extension_inputs_pin=input_pin)
     return SimpleNamespace(target=target,output=output,capture=capture,calls=calls,gate=gate,start=start,inputs=inputs,config=config)
 

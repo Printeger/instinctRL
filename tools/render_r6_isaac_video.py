@@ -12,8 +12,9 @@ from tools.r6_recovery import checked, file_pin
 from tools import r6_video_presentation as presentation
 
 
-def render(extraction_pin, output, *, source_snapshot, asset_root, check):
-    """Render all selected full clips. `check` is the admitted worker's guard."""
+def render(extraction_pin, output, *, source_snapshot, asset_root, app, check):
+    """Use the caller-owned, admitted app; caller also owns bounded shutdown."""
+    presentation.require(app is not None, 'ADMITTED_APP_REQUIRED')
     check()
     clips = presentation.load(extraction_pin)
     source = Path(source_snapshot).resolve()
@@ -32,14 +33,7 @@ def render(extraction_pin, output, *, source_snapshot, asset_root, check):
     closure = validate_asset_closure(Path(asset_root), 'f64a0561477efcc612761f6b3034f9612f2d3cb42832138e86ff7a4c18e1ef52')
     os.environ['ISAACSIM_ASSET_ROOT'] = str(asset_root)
     out.mkdir(parents=True, exist_ok=False)
-    from isaacsim import SimulationApp
-    app = SimulationApp({'headless': True, 'width': 960, 'height': 640,
-                         'renderer': 'RayTracedLighting', 'anti_aliasing': 2,
-                         'multi_gpu': False, 'active_gpu': 0, 'hide_ui': True})
-    try:
-        return _render(app, clips, extraction_pin, out, source, scene_sources, closure, check)
-    finally:
-        app.close()  # Outer registered worker must enforce cleanup deadline.
+    return _render(app, clips, extraction_pin, out, source, scene_sources, closure, check)
 
 
 def _render(app, clips, extraction_pin, out, source, scene_sources, closure, check):

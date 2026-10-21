@@ -29,7 +29,7 @@ class PrelaunchTests(unittest.TestCase):
             free_memory_mib=11667,utilization_percent=u),compute_apps=[])
 
     def gate(self,**kwargs):
-        return r.run_gate(self.root,mode='research-r6-evaluation',attempt_id='CPU',authorization_sha256='a'*64,
+        return r.run_gate(self.root,mode=kwargs.pop('mode','research-r6-evaluation'),attempt_id='CPU',authorization_sha256='a'*64,
             resource_pins=self.pins,sample_provider=kwargs.pop('sample_provider',self.sample),
             sleeper=self.sleep,clock_ns=lambda:self.clock,**kwargs)
 
@@ -39,6 +39,13 @@ class PrelaunchTests(unittest.TestCase):
         self.assertEqual(result['status'],'PASS');self.assertFalse(result['queue_receipt_used'])
         self.assertEqual(result['phase'],'ACTUAL_PRELAUNCH_FRESH_WINDOW')
         self.assertEqual(result['authorization_sha256'],'a'*64)
+
+    def test_render_requires_the_same_complete_fresh_window(self):
+        result=self.gate(mode='research-r6-video-replay')
+        self.assertEqual(self.calls,13)
+        self.assertEqual(result['window']['span_ns'],60*10**9)
+        self.assertEqual(result['mode'],'research-r6-video-replay')
+        self.assertFalse(result['queue_receipt_used'])
 
     def test_old_queue_samples_are_rejected_and_preserved(self):
         old=self.sample();self.calls=0;self.clock+=10**9
