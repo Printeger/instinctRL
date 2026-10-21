@@ -1,0 +1,59 @@
+.......................................................................F [ 51%]
+FF..................................................................     [100%]
+=================================== FAILURES ===================================
+_ test_real_prepaid_storage_issuance_then_next_job_registration[research-r6-evaluation] _
+
+ready = namespace(journal=<tools.r6_recovery.Journal object at 0x739b7c6f6180>, store=<rlflow.store.Store object at 0x739b7c72...20be0aed7abe76ddb0cba29b5b'}, 'store': <rlflow.store.Store object at 0x739b7c72f680>, 'free_disk_bytes': 536870912000})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x739b7d7a5490>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-132/test_real_prepaid_storage_issu0')
+
+    def test_real_prepaid_storage_issuance_then_next_job_registration(ready,monkeypatch,tmp_path):
+        from tools.test_r6_storage_allocation import case as storage_case,register,spec as storage_spec
+        from tools import r6_storage_allocation as allocation,r6_next_job
+>       b=ready;storage=storage_case.__wrapped__(tmp_path/'storage',monkeypatch)
+E       TypeError: case() missing 1 required positional argument: 'request'
+
+tools/test_r6_issue_next.py:109: TypeError
+_ test_real_prepaid_storage_issuance_then_next_job_registration[research-r6-training] _
+
+ready = namespace(journal=<tools.r6_recovery.Journal object at 0x739b7c83c770>, store=<rlflow.store.Store object at 0x739b7c6f...302c57b28f6237b1d5d57caa8e'}, 'store': <rlflow.store.Store object at 0x739b7c6f4e90>, 'free_disk_bytes': 536870912000})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x739b7c6f6120>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-132/test_real_prepaid_storage_issu1')
+
+    def test_real_prepaid_storage_issuance_then_next_job_registration(ready,monkeypatch,tmp_path):
+        from tools.test_r6_storage_allocation import case as storage_case,register,spec as storage_spec
+        from tools import r6_storage_allocation as allocation,r6_next_job
+>       b=ready;storage=storage_case.__wrapped__(tmp_path/'storage',monkeypatch)
+E       TypeError: case() missing 1 required positional argument: 'request'
+
+tools/test_r6_issue_next.py:109: TypeError
+_ test_real_prepaid_storage_issuance_then_next_job_registration[research-r6-candidate-evaluation] _
+
+ready = namespace(journal=<tools.r6_recovery.Journal object at 0x739b7d770fe0>, store=<rlflow.store.Store object at 0x739b7c83...50cb618b3682a913883d8d8613'}, 'store': <rlflow.store.Store object at 0x739b7c83e000>, 'free_disk_bytes': 536870912000})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x739b7c83d880>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-132/test_real_prepaid_storage_issu2')
+
+    def test_real_prepaid_storage_issuance_then_next_job_registration(ready,monkeypatch,tmp_path):
+        from tools.test_r6_storage_allocation import case as storage_case,register,spec as storage_spec
+        from tools import r6_storage_allocation as allocation,r6_next_job
+>       b=ready;storage=storage_case.__wrapped__(tmp_path/'storage',monkeypatch)
+E       TypeError: case() missing 1 required positional argument: 'request'
+
+tools/test_r6_issue_next.py:109: TypeError
+=========================== short test summary info ============================
+FAILED tools/test_r6_issue_next.py::test_real_prepaid_storage_issuance_then_next_job_registration[research-r6-evaluation]
+FAILED tools/test_r6_issue_next.py::test_real_prepaid_storage_issuance_then_next_job_registration[research-r6-training]
+FAILED tools/test_r6_issue_next.py::test_real_prepaid_storage_issuance_then_next_job_registration[research-r6-candidate-evaluation]
+3 failed, 137 passed in 22.59s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-839358dd-a274-420e-b3b9-4de3145158b7/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-839358dd-a274-420e-b3b9-4de3145158b7/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-839358dd-a274-420e-b3b9-4de3145158b7/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-839358dd-a274-420e-b3b9-4de3145158b7
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-839358dd-a274-420e-b3b9-4de3145158b7'
+  warnings.warn(

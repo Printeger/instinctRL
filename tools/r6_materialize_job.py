@@ -54,6 +54,9 @@ def materialize(journal,input_pin,store,*,free_disk_bytes):
         and runner['purpose'] in {'development','repair','confirmation_delivery'}
         and runner['sandbox'] in {'read-only','danger-full-access'},'RUNNER_FIELDS')
     for field in ('query_executable','decision_executable','queue_review','sampler_review'):checked(runner[field])
+    if 'final_selection' in profile:
+        from tools.r6_final_job import validate
+        validate(journal,profile,runner['purpose'])
     allocation,native,result,cap=storage.validate(journal,inputs['storage_key'])
     require(profile.get('experiment_id')==allocation['request']['experiment_id']
         and allocation['purpose']==runner['purpose'],'STORAGE_BINDING')

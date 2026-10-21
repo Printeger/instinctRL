@@ -9,7 +9,7 @@ from tools.r6_recovery import file_pin,RecoveryError
 from training_workloads.unified_h1 import native_volume
 
 
-@pytest.fixture(params=['research-r6-evaluation','research-r6-candidate-evaluation'])
+@pytest.fixture(params=['research-r6-evaluation','research-r6-candidate-evaluation','research-r6-final-evaluation'])
 def inventory_mode(request):
     return request.param
 

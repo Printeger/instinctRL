@@ -9,7 +9,7 @@ from tools.r6_recovery import Journal,file_pin,RecoveryError
 from tools.r6_budget import totals
 
 
-@pytest.fixture(params=['research-r6-evaluation','research-r6-candidate-evaluation'])
+@pytest.fixture(params=['research-r6-evaluation','research-r6-candidate-evaluation','research-r6-final-evaluation'])
 def case(tmp_path,monkeypatch,request):
     monkeypatch.setattr(allocation.native_tool,'BASE',tmp_path/'native')
     monkeypatch.setattr(allocation.result_tool,'BASE',tmp_path/'results')

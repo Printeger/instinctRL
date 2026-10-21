@@ -1,0 +1,119 @@
+{
+  "status": "CPU_FINAL_AUTH_SPEC_ISSUANCE_SUBMIT_PROVENANCE_AND_STORAGE_PASS_BATCH_PREPARATION_ANALYSIS_PENDING",
+  "input_commit": "def98df31b98574afd31237e00ead2a8e6e27d25",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_issue_next.py",
+      "sha256": "84434ef319e756ea11c4358926899bda392ddca8aa1f9c88dd0151de0ea470ba"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_inventory.py",
+      "sha256": "b904e5936ad901ee7aaf6e5325b5ea57fd87296b80de81c348a1d1e4d9ac807d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_resources.py",
+      "sha256": "14b5c7269ac2aadc66193b10bc1b11fb2c0066268c539546961adc1f640218e4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_materialize_job.py",
+      "sha256": "bbff5533d2717e1e7b273dbd97abce8f8c5fdbd50f703a3035f12609a2b38875"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_prepare_authorization.py",
+      "sha256": "1f1201f9df322065399f70aaa760351305418f780d9c49b2c65231681f147335"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_register_job.py",
+      "sha256": "7ae6532d2ad77d492f24f98ba8ea66e621858a4780ddf04f1cbf517c09a1559e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_storage_allocation.py",
+      "sha256": "3c4956ce4fe5ce7199d14d738402f8c92848e24d4f824de60e0f253e941bf673"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "70cac907324822054683251639f9a89ec5e12579e68d7942fc775dad475c3efc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_issue_next.py",
+      "sha256": "6049a00f1e589adf99809e881a14edc14ad5bdb8b820e2b90f162ce2a8159326"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_volume_inventory.py",
+      "sha256": "05001a4395bb4a4abb61cb2ad2befb28dac7bb9b4325d0486ff62bc9a40c718c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_prepare_authorization.py",
+      "sha256": "4e86c72e2b87d7a25e9f969e44910e55fa0a0882fcf98741c4c4aeebefd54206"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_storage_allocation.py",
+      "sha256": "0e0c4747f9658697735192cd8596660e25ed080619d5fe153ad667b81d331c07"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_real_contract.py",
+      "sha256": "3984cd01a834f47c3ac70a11c35ac632dc48f1755acdb4fc3b613a2df0ad4df4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_job.py",
+      "sha256": "90b14def7b2b13f06cd5cf32b1f28b2bad3b507a6895c48f2b9c7e7e9b89687c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_profile.py",
+      "sha256": "25cc578a270efeab0db9b35abe6a3fc04e293a40b0972fa5ea0116e8826b521a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_control.py",
+      "sha256": "9aed0b6f62d3ec55673f8894e0c1d7f6de8bf7c4c68372a4693a8e89290d8b99"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_profile.py",
+      "sha256": "d3a7cb69fa33f2a340b2f3a84c718430b5dc09468ef4b86adf8c3a051e383085"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_CONTROL_INITIAL.log",
+      "sha256": "44ecb48c3eae3fa22ab089fb48d3db8857134f3a8a09fb2dd93c6d5b865c70dd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_CONTROL_TRANSPORT.log",
+      "sha256": "028121b281ae4b2cb8de74e73812f9c62eb7b12c775a0c752df1ebe886cd7a61"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_CONTROL_CORRECTED.log",
+      "sha256": "ce613f5a9966570f780edf124b3737fd80be30568db6f1d171266aefc46589e9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_CONTROL_FINAL.log",
+      "sha256": "7a1d7b5b2ad110a78e085f7f3185d2902c70a41cbfb1c6cd9badd306575c1bcd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_CONTROL_FINAL_CORRECTED.log",
+      "sha256": "f03f3f9d2b2025ad7ce4a6c0890fd526f368cb33c6817392434809ff4f51fd73"
+    }
+  ],
+  "tests": {
+    "initial_pass": 137,
+    "transport": 64,
+    "corrected_issuance_storage_inventory": 97,
+    "final_corrected": 125
+  },
+  "initial_failures": [
+    "Three existing prepaid storage integration tests called a parametrized fixture without its request; corrected to bind each actual mode.",
+    "New crash test initially expected rejection; authoritative Store already contains START_INTENT, so recovery correctly returns that same job without a second Popen. Test corrected to assert exact recovery and preserved single attempt."
+  ],
+  "scope": [
+    "Final authorization proposal uses frozen dedicated config, exact final parameter/compatibility/budget validators; mixed training/development/final fields rejected.",
+    "Final source profile CPU transport validates frozen snapshot identity and exact payload with bounded isolated interpreter.",
+    "Resource charging requires zero training/optimizer/checkpoint writes; exact spec uses original evaluation seed and nontraining budget.",
+    "Materialization, issuance, fresh registration and submission revalidate published/released batch before new job side effects; protected confirmation_delivery purpose, exact protocol order/final random stream and baseline binding required.",
+    "Final dual-volume reservation and closed native/raw inventory routes retained. Real temporary Store approval/replay and submission intent recovery do not issue duplicate approval or process attempt."
+  ],
+  "limitations": [
+    "Publication validator in controller integration tests is an explicit fixture; real Git/Journal publication tests are recorded separately in CPU_HOLDOUT_CONTROLLER_PUBLICATION.json.",
+    "Frozen authority, resource samples, kernel mounts, release/Popen and independent review are explicit CPU fixture boundaries. No production approval, submission, GPU query, simulation or training.",
+    "Final batch preparation/source compatibility review routing, sequential batch collection/raw analysis, repair re-entry and delivery remain required; full Goal not complete."
+  ],
+  "goal_complete": false
+}

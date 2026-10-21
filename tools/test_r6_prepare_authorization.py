@@ -8,7 +8,7 @@ import pytest
 from tools import r6_prepare_authorization as m
 from tools.r6_recovery import file_pin,RecoveryError
 
-@pytest.fixture(params=['research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation'])
+@pytest.fixture(params=['research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation','research-r6-final-evaluation'])
 def case(tmp_path,monkeypatch,request):
     mode=request.param
     def pin(name,obj):
@@ -19,6 +19,7 @@ def case(tmp_path,monkeypatch,request):
     params={'experiment_id':'R6-FIXTURE'}
     if mode=='research-r6-training':params['r6_training_plan']={'fixture':True}
     if mode=='research-r6-candidate-evaluation':params['evaluation_selection']={'fixture':True}
+    if mode=='research-r6-final-evaluation':params['final_selection']={'fixture':True}
     parameters=pin('parameters.json',params)
     attempt=tmp_path/'attempt';(attempt/'results').mkdir(parents=True)
     checker=Mock();monkeypatch.setattr(m,'verify_frozen',checker)
@@ -49,11 +50,13 @@ def test_subprocess_identity_drift_rejected(case):
     with pytest.raises(RecoveryError,match='IDENTITY_DRIFT'):m.prepare(**case.args)
 
 
-@pytest.mark.parametrize('stage',['baseline','training','candidate'])
+@pytest.mark.parametrize('stage',['baseline','training','candidate','final'])
 def test_frozen_program_assembles_exact_budget_with_declared_validator_stubs(monkeypatch,stage):
     training=stage=='training'
     import training_workloads.unified_h1.config as config
-    if stage=='candidate':
+    if stage=='final':
+        import training_workloads.unified_h1.robustness_final_contract as contract
+    elif stage=='candidate':
         import training_workloads.unified_h1.robustness_candidate_contract as contract
     elif training:
         import training_workloads.unified_h1.robustness_training_contract as contract
@@ -62,6 +65,8 @@ def test_frozen_program_assembles_exact_budget_with_declared_validator_stubs(mon
     identity=dict(config_sha256='1'*64,product_commit='2'*40,product_tree='3'*40,workload_commit='2'*40,workload_tree='3'*40)
     c=dict(method={'proposal_sha256':'4'*64},resolved_identity=identity)
     p=dict(experiment_id='R6-FIXTURE',group='R1',checkpoint_compatibility={'fixture':True})
+    if stage=='final':
+        p['final_selection']={'fixture':'final-selection'};c['schema_version']=config.R6_FINAL_CONFIG_SCHEMA
     if training:p['r6_training_plan']={'fixture':'exact-plan'}
     if stage=='candidate':p['evaluation_selection']={'fixture':'exact-selection'}
     budget={'nontraining_transitions':0 if training else 193600,'training_transitions':512 if training else 0}
@@ -78,10 +83,10 @@ def test_frozen_program_assembles_exact_budget_with_declared_validator_stubs(mon
     finally:sys.path[:]=original
     a=json.loads(out.getvalue());assert a['budgets']==budget
     assert a['order_id']=='R6-FIXTURE-R1-'+contract.MODE.upper()
-    assert compat.call_args.args[1]==(p['evaluation_selection'] if stage=='candidate' else p['r6_training_plan'] if training else {'origin':True})
+    assert compat.call_args.args[1]==(p['final_selection'] if stage=='final' else p['evaluation_selection'] if stage=='candidate' else p['r6_training_plan'] if training else {'origin':True})
     assert all(a[k]==v for k,v in identity.items());compat.assert_called_once()
 
-@pytest.mark.parametrize('consumed_mode',['research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation'])
+@pytest.mark.parametrize('consumed_mode',['research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation','research-r6-final-evaluation'])
 def test_either_consumed_mode_prevents_authority_reuse(case,consumed_mode):
     from pathlib import Path
     (Path(case.args['attempt'])/'results'/consumed_mode).mkdir()

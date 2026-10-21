@@ -16,7 +16,13 @@ from pathlib import Path
 sys.path.insert(0,sys.argv[1])
 from training_workloads.unified_h1.config import load_config
 c=load_config();request=json.load(sys.stdin)
-if 'evaluation_selection' in request['parameters']:
+if 'final_selection' in request['parameters']:
+ from training_workloads.unified_h1.config import R6_FINAL_CONFIG_SCHEMA
+ from training_workloads.unified_h1.robustness_final_contract import MODE,validate_parameters,required_budget,validate_compatibility
+ if c['schema_version']!=R6_FINAL_CONFIG_SCHEMA:raise PermissionError('final config schema required')
+ p=validate_parameters(MODE,request['parameters'])
+ validate_compatibility(p['checkpoint_compatibility'],p['final_selection'],c)
+elif 'evaluation_selection' in request['parameters']:
  from training_workloads.unified_h1.robustness_candidate_contract import MODE,validate_parameters,required_budget,validate_compatibility
  p=validate_parameters(MODE,request['parameters'])
  validate_compatibility(p['checkpoint_compatibility'],p['evaluation_selection'],c)
@@ -43,9 +49,9 @@ def prepare(snapshot_receipt,parameters_pin,attempt):
     config=json.loads(checked(receipt['config']).read_text())
     verify_frozen(receipt,config)
     params=json.loads(checked(parameters_pin).read_text())
-    if 'evaluation_selection' in params and 'r6_training_plan' in params:
+    if sum(k in params for k in ('evaluation_selection','r6_training_plan','final_selection'))>1:
         raise RecoveryError('PREPARE_AUTH_AMBIGUOUS_STAGE')
-    mode=MODES[2] if 'evaluation_selection' in params else MODES[1] if 'r6_training_plan' in params else MODES[0]
+    mode=MODES[3] if 'final_selection' in params else MODES[2] if 'evaluation_selection' in params else MODES[1] if 'r6_training_plan' in params else MODES[0]
     attempt=Path(attempt)
     if (not attempt.is_absolute() or attempt.resolve()!=attempt or attempt.is_symlink()
             or not attempt.is_dir() or not (attempt/'results').is_dir()):

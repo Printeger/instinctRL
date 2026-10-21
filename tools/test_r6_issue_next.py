@@ -106,7 +106,8 @@ def test_changed_plan_cannot_rebind_same_parent(ready):
 def test_real_prepaid_storage_issuance_then_next_job_registration(ready,monkeypatch,tmp_path):
     from tools.test_r6_storage_allocation import case as storage_case,register,spec as storage_spec
     from tools import r6_storage_allocation as allocation,r6_next_job
-    b=ready;storage=storage_case.__wrapped__(tmp_path/'storage',monkeypatch)
+    from types import SimpleNamespace
+    b=ready;storage=storage_case.__wrapped__(tmp_path/'storage',monkeypatch,SimpleNamespace(param=b.newspec['h1']['mode']))
     owner=register(storage);value,pin=storage_spec(storage,monkeypatch)
     params=json.loads(Path(value['pins']['authorization']['path']).read_text())['parameters']
     b.observed['authorization']['parameters'].update(params)

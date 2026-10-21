@@ -35,7 +35,7 @@ def baseline_bound(tmp_path, monkeypatch):
     return make_bound(tmp_path, monkeypatch, 'research-r6-evaluation')
 
 
-def make_bound(tmp_path, monkeypatch, mode):
+def make_bound(tmp_path, monkeypatch, mode, *, final_parameters=None):
     minimum = dict(MINIMUM)
     if mode == 'research-r6-training':
         minimum['training_transitions'] = minimum.pop('nontraining_transitions')
@@ -61,9 +61,12 @@ def make_bound(tmp_path, monkeypatch, mode):
         auth['mode'] = mode
         auth['parameters']['training_seed'] = 17
         auth['budgets'].update(training_transitions=512, nontraining_transitions=0, checkpoint_writes=2)
-    if mode == 'research-r6-candidate-evaluation':
+    if mode in ('research-r6-candidate-evaluation','research-r6-final-evaluation'):
         auth['mode'] = mode
         auth['budgets'].update(optimizer_updates=0, checkpoint_writes=0)
+    if final_parameters is not None:
+        assert mode=='research-r6-final-evaluation'
+        auth['parameters'].update(final_parameters)
     auth_pin = write(tmp_path/'fixture-auth.json', auth)
     observed = dict(config=config, authorization=auth)
     monkeypatch.setattr(h1, 'inspect_authority', lambda spec:copy.deepcopy(observed))
@@ -74,7 +77,7 @@ def make_bound(tmp_path, monkeypatch, mode):
               '--authorization', auth_pin['path'], '--attempt', str(attempt), '--mode', mode],
         cwd=str(work), pins=dict(dispatcher=file_pin(dispatcher), executable=executable,
             product=product, workload=workload, runtime=executable, authorization=auth_pin),
-        method='fixture', evaluation='fixture', runtime='CPU-NOT-RUNTIME', seed=17 if mode=='research-r6-training' else 19,
+        method='fixture', evaluation='fixture', runtime='CPU-NOT-RUNTIME', seed=17 if mode=='research-r6-training' else auth['parameters']['evaluation_seed'],
         resources=dict(starts=1, wall_seconds=70, gpu_seconds=70, transitions=512),
         conditions=[dict(evidence_id='cpu', sha256='1'*64)],
         observations=['status','counters','process_identity','process_start'],
@@ -109,7 +112,7 @@ def make_bound(tmp_path, monkeypatch, mode):
         event = dict(goal_id=budget['goal_id'], event_id=spec['id'], job_id=jid,
                      input_sha256=sha(request), role='job')
         key, _ = journal.intent(event, kind='job', request=request,
-            resources=dict(minimum), purpose='development', free_disk_bytes=500*1024**3)
+            resources=dict(minimum), purpose='confirmation_delivery' if final_parameters is not None else 'development', free_disk_bytes=500*1024**3)
     popen = Mock(side_effect=OSError('CPU stop before Popen'))
     monkeypatch.setattr(experiments.subprocess, 'Popen', popen)
     monkeypatch.setattr('rlflow.releases.freeze', lambda root:store.root)

@@ -1,7 +1,7 @@
 """Control-plane charges; full frozen workload validation remains mandatory."""
 from tools.r6_recovery import RecoveryError
 
-MODES = ('research-r6-evaluation', 'research-r6-training', 'research-r6-candidate-evaluation')
+MODES = ('research-r6-evaluation', 'research-r6-training', 'research-r6-candidate-evaluation', 'research-r6-final-evaluation')
 DISK = 'output_actual_plus_unreleased_reservations_bytes'
 
 
@@ -14,7 +14,7 @@ def resources(spec, auth, *, prepaid=False):
         allocated_gpu_seconds=spec['resources']['wall_seconds']+180)
     result[DISK] = 0 if prepaid else auth['parameters']['output_cap_bytes']
     if mode != MODES[1]:
-        if mode == MODES[2]:
+        if mode in MODES[2:]:
             budget = auth.get('budgets', {})
             transitions = budget.get('nontraining_transitions')
             if (auth.get('mode') != mode or type(transitions) is not int or transitions <= 0

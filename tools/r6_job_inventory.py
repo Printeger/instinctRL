@@ -129,7 +129,7 @@ def record_inventory(journal, key, store):
         raise RecoveryError('INVENTORY_EXACT_ATTEMPT_ROOT')
     roots={'job':store.root.resolve()/'jobs'/closure['job_id'], 'attempt':attempt}
     native=None;binding=None;result_volume=None;result_binding=None
-    if spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation'):
+    if spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation','research-r6-final-evaluation'):
         authorization=read(checked(spec['pins']['authorization']))
         native_pin=authorization['parameters'].get('native_volume')
         result_pin=authorization['parameters'].get('result_volume')

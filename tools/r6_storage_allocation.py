@@ -77,7 +77,7 @@ def bind(journal,key,spec_pin,*,persist=True):
     """Claim the prepaid storage for one exact spec, never issue permission."""
     journal.require_writer();entry,native,result,cap=validate(journal,key)
     spec=json.loads(checked(spec_pin).read_text())
-    require(spec['backend']=='real' and spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation'),'MODE')
+    require(spec['backend']=='real' and spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation','research-r6-final-evaluation'),'MODE')
     params=json.loads(checked(spec['pins']['authorization']).read_text())['parameters']
     require(params['experiment_id']==entry['request']['experiment_id']
         and params['output_cap_bytes']==cap

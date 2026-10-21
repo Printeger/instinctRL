@@ -1,0 +1,35 @@
+...................F.................................................... [ 57%]
+.....................................................                    [100%]
+=================================== FAILURES ===================================
+____ test_final_submission_passes_provenance_before_single_process_attempt _____
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-135/test_final_submission_passes_p0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a288bc512b0>
+batch = ({'baseline_bindings': {'path': '/tmp/pytest-of-mint/pytest-135/test_final_submission_passes_p0/baseline.json', 'sha25... 'split': 'final'}}, <Mock id='134314562238512'>, {'evaluation_seed': 171, 'model_role': 'baseline', 'split': 'final'})
+
+    def test_final_submission_passes_provenance_before_single_process_attempt(tmp_path,monkeypatch,batch):
+        from tools.test_r6_submit_real_contract import make_bound,invoke
+        p,verified,_=batch
+        b=make_bound(tmp_path,monkeypatch,'research-r6-final-evaluation',final_parameters=p)
+        with pytest.raises(OSError,match='CPU stop before Popen'):invoke(b)
+        verified.assert_called_once();b.popen.assert_called_once()
+        assert b.journal.read()['events'][b.key]['submission_claim']['job_id']==b.jid
+>       with pytest.raises(RecoveryError):invoke(b)
+E       Failed: DID NOT RAISE <class 'tools.r6_recovery.RecoveryError'>
+
+tools/test_r6_final_control.py:129: Failed
+=========================== short test summary info ============================
+FAILED tools/test_r6_final_control.py::test_final_submission_passes_provenance_before_single_process_attempt
+1 failed, 124 passed in 7.47s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d75290b8-bb02-488a-9165-50d7e2e8e109/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d75290b8-bb02-488a-9165-50d7e2e8e109/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d75290b8-bb02-488a-9165-50d7e2e8e109/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d75290b8-bb02-488a-9165-50d7e2e8e109
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-d75290b8-bb02-488a-9165-50d7e2e8e109'
+  warnings.warn(
