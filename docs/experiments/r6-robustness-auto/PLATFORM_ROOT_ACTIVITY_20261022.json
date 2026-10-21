@@ -1,0 +1,29 @@
+{
+  "status": "ACTUAL_ROOT_SESSION_ACTIVE_PREFLIGHT_REJECTED_NO_DISPATCH",
+  "source": {
+    "session_id": "01a154cf-f2bb-79e3-8019-d6c78e8e0fc8",
+    "repository": "/home/mint/rl_dev/instinctRL-dev",
+    "anchor": {
+      "bytes": 78648611,
+      "path": "/home/mint/.codex/sessions/2026/10/19/rollout-2026-10-19T23-37-56-01a154cf-f2bb-79e3-8019-d6c78e8e0fc8.jsonl",
+      "sha256": "5d418507d629ecb62cf66e5fe6cc282b5470142a38a5cb2ddbceba03f707bac9"
+    }
+  },
+  "prefix": {
+    "path": "/home/mint/.codex/sessions/2026/10/19/rollout-2026-10-19T23-37-56-01a154cf-f2bb-79e3-8019-d6c78e8e0fc8.jsonl",
+    "bytes": 78868653,
+    "sha256": "e580147ffa46623d91f94faf42deb9f4d3e820cbf0434f0b0b1f14801423979a"
+  },
+  "completed_turns": 193,
+  "active_turn": {
+    "turn_id": "01a160d8-d8e8-70f2-8636-ffc346efdd3b",
+    "started_at": 1792626186.474,
+    "finished_at": null
+  },
+  "external_agents_seen": false,
+  "preflight_error": "PLATFORM_WAIT_ROOT_TURN_ACTIVE_NO_DISPATCH",
+  "state_unchanged": true,
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "goal_complete": false
+}

@@ -210,7 +210,7 @@
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
     "platform_automatic_goal_wakes": 181,
-    "total_automatic_model_sessions_minimum": 219,
+    "total_automatic_model_sessions_minimum": 220,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 512,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -415,6 +415,9 @@
     "model_budget_amendment": "docs/experiments/r6-robustness-auto/BUDGET_INCREASE_USER_AUTHORITY_20261022.json",
     "effective_budget_ledger": "docs/experiments/r6-robustness-auto/batch/state.json",
     "engineering_rework_status": "CPU_REJECTED_ENGINEERING_REWORK_AND_BUDGET_AMENDMENT_PASS_NOT_DEPLOYED",
-    "engineering_rework_evidence": "docs/experiments/r6-robustness-auto/CPU_ENGINEERING_REWORK.json"
+    "engineering_rework_evidence": "docs/experiments/r6-robustness-auto/CPU_ENGINEERING_REWORK.json",
+    "platform_wait_capture_status": "CPU_PINNED_PLATFORM_WAIT_CAPTURE_AND_AUDIT_PASS_NOT_DEPLOYED",
+    "platform_wait_capture_evidence": "docs/experiments/r6-robustness-auto/CPU_PLATFORM_WAIT.json",
+    "platform_handoff_verified": false
   }
 }

@@ -33,4 +33,6 @@ def job_handoff(journal,key,store,*,poll_seconds=15):
     audit.record(journal,key)
     result=original.job_handoff(ObservedJournal(journal,key),key,store,poll_seconds=poll_seconds)
     original.no_model_workers(journal);audit.record(journal,key,finish=True)
+    from tools.r6_platform_wait import capture
+    capture(journal,key)
     return result

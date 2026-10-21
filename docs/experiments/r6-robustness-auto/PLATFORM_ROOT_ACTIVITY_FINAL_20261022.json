@@ -1,0 +1,30 @@
+{
+  "status": "ROOT_ACTIVITY_REVALIDATED_BEFORE_COMMIT",
+  "implementation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_wait.py",
+    "sha256": "ef9b8254b2b439c884ebf2052ee12a14c0dcb3d7edeae02beac1853c71218a0d"
+  },
+  "source": {
+    "session_id": "01a154cf-f2bb-79e3-8019-d6c78e8e0fc8",
+    "repository": "/home/mint/rl_dev/instinctRL-dev",
+    "anchor": {
+      "bytes": 78648611,
+      "path": "/home/mint/.codex/sessions/2026/10/19/rollout-2026-10-19T23-37-56-01a154cf-f2bb-79e3-8019-d6c78e8e0fc8.jsonl",
+      "sha256": "5d418507d629ecb62cf66e5fe6cc282b5470142a38a5cb2ddbceba03f707bac9"
+    }
+  },
+  "prefix": {
+    "path": "/home/mint/.codex/sessions/2026/10/19/rollout-2026-10-19T23-37-56-01a154cf-f2bb-79e3-8019-d6c78e8e0fc8.jsonl",
+    "bytes": 79045350,
+    "sha256": "49fad175f17b0b31373b1b2270ca3ddd61457af3bd7b3578c5210090743e86e1"
+  },
+  "active_turn": {
+    "turn_id": "01a160d8-d8e8-70f2-8636-ffc346efdd3b",
+    "started_at": 1792626186.474,
+    "finished_at": null
+  },
+  "preflight_error": "PLATFORM_WAIT_ROOT_TURN_ACTIVE_NO_DISPATCH",
+  "model_calls_added": 0,
+  "production_jobs": 0,
+  "goal_complete": false
+}

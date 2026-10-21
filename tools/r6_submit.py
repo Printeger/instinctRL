@@ -101,6 +101,8 @@ def submit_once(journal, key, store, *, queue_key, refresh_observation=None):
         # Last STOP/budget check immediately before recording possible effects.
         journal.require_dispatch_budget();require(not stop_paths(journal), 'STOP')
         require(0<deadline-time.time()<=spec['resources']['wall_seconds'], 'DEADLINE')
+        from tools.r6_platform_wait import preflight
+        preflight(journal)
         claim=dict(store_root=root,job_id=jid,spec_sha256=sha(spec),queue_key=queue_key,
             queue_window=window,approval_id=approval['approval_id'],controller=identity(os.getpid()),
             implementation=file_pin(Path(__file__)))
@@ -119,6 +121,7 @@ def submit_once(journal, key, store, *, queue_key, refresh_observation=None):
                 window=queue_ready(journal,queue_key,request['spec'])
             journal.require_dispatch_budget();require(not stop_paths(journal), 'STOP')
             require(0<deadline-time.time()<=spec['resources']['wall_seconds'], 'DEADLINE')
+            preflight(journal)
             # Preserve the initial claim and every boundary observation. The
             # latest binding is the sole recovery key, never a retry permit.
             claim.setdefault('admission_history',[]).append(dict(boundary=boundary,
@@ -186,6 +189,8 @@ analysis/decision state backwards. Unknown submission effects never retry.
         require(all(closure.get(k)==v for k,v in expected.items()), 'CLOSURE_BINDING')
     else:
         closure=job_handoff(journal,key,store)
+    from tools.r6_platform_wait import capture
+    capture(journal,key)
     return dict(submission=submission,closure=closure)
 
 

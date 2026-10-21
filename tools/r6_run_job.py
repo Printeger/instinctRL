@@ -53,6 +53,8 @@ def run(journal, spec_pin, store, query_executable, decision_executable, *,
             if decision_executable!={'path':str(CLI),'sha256':CLI_SHA}:
                 raise RecoveryError('RUN_JOB_DECISION_PINNED_CLI')
         no_model_workers(journal)
+        from tools.r6_platform_wait import preflight
+        preflight(journal)
         # Reject missing/revoked authority before spending queue queries.
         # Existing submit still revalidates authority immediately before effects.
         experiments.validate(spec,store.root)

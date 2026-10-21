@@ -1,0 +1,77 @@
+{
+  "status": "CPU_PINNED_PLATFORM_WAIT_CAPTURE_AND_AUDIT_PASS_NOT_DEPLOYED",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_wait.py",
+      "sha256": "ef9b8254b2b439c884ebf2052ee12a14c0dcb3d7edeae02beac1853c71218a0d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_audited_job_handoff.py",
+      "sha256": "e0832b8a70322fc6a505052e4e419c83b9ce9122f433b7a883bdb766d9802aea"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_delivery_evidence.py",
+      "sha256": "8d1b21eea576536402b5d6d9a7e20f976f52927dc6c8575e14b1b59a5d368638"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_run_job.py",
+      "sha256": "3e4c7076d7dc861635d94976cae38e14baa0ba1905e0bf263765b7e142bd3bb2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "1cce225475f49220c444bee4ac04f78c759bc05b66361e4d04bb48ea5c45f02c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_platform_wait.py",
+      "sha256": "33474a6320a03fa1c585fe27f753439bb8ca3c890084c2ebfa53933c703d450a"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PLATFORM_WAIT_INITIAL.log",
+      "sha256": "0521f3bcb80857cc6eae42f6f079f890d3d2528711dfbda0d6e9578e5859844e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PLATFORM_WAIT_FINAL.log",
+      "sha256": "0aa7e487b3e0b8437b58d87d37f90f62ddfcf9c6a8816c26c2b86ad61f6af33d"
+    }
+  ],
+  "actual_root_preflight": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/PLATFORM_ROOT_ACTIVITY_FINAL_20261022.json",
+    "sha256": "0d9189b95b6ef0f522b4174e11bb30e330715114df959674f84d05ed417bb381"
+  },
+  "checks": {
+    "initial_tests": 106,
+    "final_tests": 272,
+    "real_journal_guard": "PASS",
+    "real_active_root_preflight": "REJECTED_WITHOUT_STATE_CHANGE",
+    "production_model_calls_added": 0
+  },
+  "behavior": [
+    "Fixed production root session and native contiguous ordinals bind the original source; no arbitrary idle session can substitute.",
+    "Pre-queue and exact submit boundaries refuse open root turns. This observes activity, not a mechanism for disabling Goal continuation.",
+    "After exact local wait closure, a newly reserved CPU capture binds source prefix, wait windows, job identity and all overlapping root turns. Replay preserves the same capture; no historical closure receives invented wait evidence.",
+    "Delivery/final/terminal audits revalidate root prefix, later appended activity and local wait evidence. Missing proof remains UNKNOWN, overlapping turns remain nonzero, and complete zero-activity evidence can satisfy the platform audit.",
+    "Partial records, prefix drift, ordinal gaps, unmatched turns, model activity outside a turn, unaccounted delegated agents, local restart gaps and transplanted evidence refuse zero-activity proof."
+  ],
+  "boundaries": [
+    "Native session JSONL and scientific reports in tests are synthetic fixtures; actual Journal/files, CPU subprocess wait tests and temporary Store transactions are exercised. GPU/simulator launch and final scientific/visual results remain fixtures.",
+    "Actual current root session scan proves an active turn and correctly blocks new dispatch. It does not prove any production zero-model wait or platform handoff.",
+    "Supported parser bounds are 128 MiB source prefix and 8 MiB per record. Unsupported/aborted/delegated-root histories need additional evidence; they are not silently accepted.",
+    "Registered CLI worker ownership/cleanup and immutable original r6_job_handoff remain unchanged. Existing root-owned pytest garbage was preserved."
+  ],
+  "remaining": [
+    "Administrator bwrap/AppArmor repair; sudo still requires a password.",
+    "Actual detached-controller handoff with platform automatic continuation stopped, plus deployed observation/STOP/recovery evidence.",
+    "Controller-code repair/fresh-process supervision and remaining failure recovery.",
+    "Actual baseline and the full scientific, validation, video and independent-delivery goal."
+  ],
+  "budget": {
+    "automatic_wakes": 189,
+    "worker_sessions": 31,
+    "charged": 220,
+    "cap": 512,
+    "remaining": 292
+  },
+  "goal_complete": false
+}

@@ -10,6 +10,7 @@ from tools.r6_decision_packet import persist_exact
 from tools.r6_budget import admissible, charged, reserve
 from tools import r6_profile_preparation as profile
 from tools import r6_final_collection as collection
+from tools import r6_platform_wait as platform
 
 ROLE='delivery-evidence-preparation'
 CAP=4*1024**2
@@ -59,16 +60,21 @@ def model_audit(state):
                 and audit.get('complete') and audit.get('segments')
                 and not audit.get('unobserved_restart_gap') and all(s['checks']>0 and
                 s['registered_model_workers_present']is False and not s['interrupted'] for s in audit['segments']))
+            external=platform.verify(state,key) if entry.get('platform_wait_evidence') else None
             waits.append(dict(event_key=key,job_id=entry['identity']['job_id'],audit=audit,
-                registered_local_wait_verified=verified,platform_inactivity_proven=False,
+                registered_local_wait_verified=verified,platform_inactivity_proven=bool(verified and external and external['platform_inactivity_proven']),
+                platform_evidence=external,
                 observed_local_wait_seconds=sum(s['last_checked_at']-s['started_at'] for s in audit['segments']) if audit else 'UNKNOWN'))
+    platform_proven=bool(waits) and all(w['platform_inactivity_proven'] for w in waits)
+    covered=bool(waits) and all(w['registered_local_wait_verified'] and w['platform_evidence'] for w in waits)
+    overlaps={t for w in waits if w['platform_evidence'] for t in w['platform_evidence']['overlapping_root_turns']}
     return dict(schema_version='r6-model-usage-audit/1',calls=calls,registered_model_event_count=len(calls),
         automatic_sessions_charged=admissible(state['budget'])['automatic_model_sessions'],
         platform_wake_accounting=state.get('platform_automatic_wake_accounting'),
         reported_token_subtotals=reported,unknown_usage_events=unknown,platform_token_usage='UNKNOWN',
         waits=waits,all_registered_local_waits_verified=bool(waits) and all(w['registered_local_wait_verified'] for w in waits),
-        pure_wait_model_calls='UNKNOWN',duplicate_event_rejections='UNKNOWN',platform_inactivity_proven=False,
-        scope='REGISTERED_RECEIPTS_AND_LOCAL_WAIT_RECORDS_PLATFORM_AUDIT_STILL_REQUIRED')
+        pure_wait_model_calls=len(overlaps) if covered else 'UNKNOWN',duplicate_event_rejections='UNKNOWN',platform_inactivity_proven=platform_proven,
+        scope='REGISTERED_RECEIPTS_LOCAL_WAITS_AND_PINNED_PLATFORM_LOG_WHERE_PRESENT')
 
 
 def jobs_manifest(state):
@@ -118,12 +124,13 @@ def prepare(journal,controller_key,store,*,free_disk_bytes):
     final=outcome['collection'];require(final==collection.collect(journal,final['batch'],outcome['completed_jobs'],store),'COLLECTION_DRIFT')
     name='DELIVERY_EVIDENCE:'+controller_key+':'+sha(final)
     prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name];require(len(prior)<=1,'ALIAS')
-    implementation=[file_pin(__file__),file_pin(collection.__file__)]
+    implementation=[file_pin(__file__),file_pin(collection.__file__),file_pin(platform.__file__)]
     if prior:
         key,entry=prior[0];request=entry['request']
         require(request['final']==final and request['implementation']==implementation,'INPUT_DRIFT')
     else:
-        request=dict(final=final,implementation=implementation,controller_key=controller_key,
+        request=dict(final=final,implementation=implementation,controller_key=controller_key,goal_id=state['goal_id'],
+            **({'platform_session_fixture':state['platform_session_fixture']} if 'platform_session_fixture' in state else {}),
             budget=state['budget'],events=state['events'],platform_wake_accounting=state.get('platform_automatic_wake_accounting'))
         event=dict(goal_id=state['goal_id'],event_id=name,job_id='FINAL-BATCH',input_sha256=sha(request),role=ROLE)
         require(len(canonical(request))<CAP//2,'INPUT_CAP')
@@ -154,7 +161,8 @@ def prepare(journal,controller_key,store,*,free_disk_bytes):
     artifacts['EVIDENCE_INDEX.json']=save('EVIDENCE_INDEX.json',dict(artifacts=artifacts,freeze=read(final['batch'])['freeze'],batch=final['batch'],
         raw_inventories=[j['evidence'].get('inventory') for j in manifest['jobs']],
         note='All attempted jobs are retained, including native failures and missing evidence.'))
-    pending=['INDEPENDENT_SCIENTIFIC_AUDIT','ACTUAL_SIMULATION_VIDEO_DELIVERY','PLATFORM_ZERO_MODEL_WAIT_AUDIT','FINAL_RESOURCE_AND_USAGE_ACCOUNTING','REQUIREMENTS_COMPLETION_AUDIT']
+    pending=['INDEPENDENT_SCIENTIFIC_AUDIT','ACTUAL_SIMULATION_VIDEO_DELIVERY','FINAL_RESOURCE_AND_USAGE_ACCOUNTING','REQUIREMENTS_COMPLETION_AUDIT']
+    if not audit['platform_inactivity_proven']:pending.append('PLATFORM_ZERO_MODEL_WAIT_AUDIT')
     if any(j['missing_evidence'] for j in manifest['jobs']):pending.append('ATTEMPT_EVIDENCE_GAPS')
     if not audit['all_registered_local_waits_verified']:pending.append('LOCAL_WAIT_EVIDENCE_GAPS')
     output=dict(status='DELIVERY_EVIDENCE_PREPARED_NOT_ACCEPTED',event_key=key,artifacts=artifacts,pending_requirements=pending,
