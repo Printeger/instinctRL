@@ -1,0 +1,54 @@
+{
+  "schema_version": "r6-training-storage-factory-cpu/1",
+  "status": "CPU_COMPONENT_PASS_NOT_TRAINING_AUTHORIZATION",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/driver.py",
+      "sha256": "7dfd5fa922d93dbb199600d77ae50c4827fc5255fd08e6e645bb6149867c7a35"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_storage.py",
+      "sha256": "f07012f70f91887f2822810bc829643c6a935587893f4ee9dd5adbe287f93075"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_training_storage_lifecycle.py",
+      "sha256": "cd7764d979c659915e2b0c25723ce1a5fd5a280035ee0d8ae0d30542f466bec0"
+    }
+  ],
+  "test_outputs": {
+    "r6-training-factory-tests": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-training-factory-tests.txt",
+      "sha256": "8d2f8f8f6c363b3632136f90f4134c16c07eaf7c6a3a749b2ba90f44fa7a4ba8"
+    },
+    "r6-training-factory-recheck": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-training-factory-recheck.txt",
+      "sha256": "7f6778d588227f700dceddee35296bbca1921d2d7496390fd2b8ef7a649d8284"
+    },
+    "r6-training-loop-legacy-recheck": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-training-loop-legacy-recheck.txt",
+      "sha256": "90e547f384e22f15312f2a9dd6eb6c6fec65883702b7ff6e8fc2bf837329a375"
+    },
+    "r6-training-loop-isolated-recheck": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-training-loop-isolated-recheck.txt",
+      "sha256": "e2ccc6989017fc98938c248a867907868d238e0d8fa317e2bade535a2d616a53"
+    }
+  },
+  "results": {
+    "factory_initial": "31 passed, 1 test NameError from misplaced assertion; corrected, original output retained",
+    "factory_recheck": "32 passed; shared pool, quota math, construction failure, backend closure, actual loop error preservation with full pool",
+    "legacy_combined": "32 passed, 4 failed; not accepted as all-pass",
+    "legacy_isolated": "3 targeted actual rollout/PPO/accounting tests passed; 13 deselected"
+  },
+  "failure_analysis": [
+    "Old test_paired_pilot_unittest reloads driver while torch is a stub and leaves module reference; three actual tensor tests pass in fresh isolated process",
+    "Remaining historical authorization test rejects existing product source manifest set; source manifest and authorization/config code unchanged in this patch",
+    "Four pytest cleanup warnings in each run concern old /tmp garbage directory; no runtime directory touched"
+  ],
+  "limits": [
+    "Factory is not yet called by an authorized R6 training entry; no training mode added",
+    "Shared pool maximum is enforced; plain output allowance is capacity planning within existing global output cap, not a separate plain-file quota",
+    "Exact R6 continuation/curriculum/seed contract, training dispatch, capacity and independent acceptance still required"
+  ],
+  "capacity_pass": false,
+  "live_started": false
+}

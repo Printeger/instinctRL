@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：训练压缩日志/首轮诊断共享池factory完成，校验payload与压缩/普通输出
+分配；构造失败关闭并保留原件。实际训练循环修复：配额满时补写失败记录不再覆盖
+原rollout/PPO错误，仍尝试独立记录并保留优化器计数。32项组件检查与3项隔离实际
+训练循环CPU回归通过，见 `docs/experiments/r6-robustness-auto/CPU_TRAINING_STORAGE_FACTORY.json`。
+旧组合测试32通过/4失败（3项fake-torch污染隔离后通过，1项历史授权fixture清单不匹配）；
+首次新增测试NameError及修正结果均保留，不声称全套通过。factory尚未接入授权R6训练
+合同/dispatch，capacity=false，生产双卷仍不存在，无R6 live。99次唤醒+18worker=117，余139次。
+
 2026-10-21：R6压缩证据接入实际backend的preserve/close生命周期；正常收尾只写一次
 终止汇总并关闭共享日志/诊断池，未收尾清理中止流，磁盘错误不覆盖原训练异常。
 24项CPU检查通过（6项实际backend方法检查+18项既有codec/gate检查），见

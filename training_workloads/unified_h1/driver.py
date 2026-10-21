@@ -173,21 +173,28 @@ class UnifiedH1TrainingLoop:
                 try: self.diagnostic.abort(error)
                 except BaseException as diagnostic_error:
                     error.add_note(f"diagnostic failure preservation failed: {diagnostic_error}")
-            self.journal.record_partial_episodes(self.driver.evidence_buffer)
-            self.journal.record_partial_rollout_boundary(
+            # A full output volume can fail every recovery write. Keep trying
+            # independent records, but never replace the original rollout/PPO
+            # error with an evidence-persistence error.
+            def preserve_failure(name, operation):
+                try:operation()
+                except BaseException as persistence_error:
+                    error.add_note(f"{name} preservation failed: {persistence_error!r}")
+            preserve_failure('partial episodes', lambda: self.journal.record_partial_episodes(self.driver.evidence_buffer))
+            preserve_failure('partial rollout boundary', lambda: self.journal.record_partial_rollout_boundary(
                 attempted_policy_steps=counters.attempted_policy_steps,
                 completed_policy_steps=counters.completed_policy_steps,
                 durable_step_rows=self.journal.durable_step_rows - durable_at_start,
-                buffered_step_rows=len(self.driver.evidence_buffer), error=error)
+                buffered_step_rows=len(self.driver.evidence_buffer), error=error))
             try: actor = optimizer_steps(self.trainer.actor_optimizer)
             except BaseException: actor = -1
             try: critic = optimizer_steps(self.trainer.critic_optimizer)
             except BaseException: critic = -1
             counters.actor_optimizer_steps = actor - self.optimizer_step_origin[0] if actor >= 0 else -1
             counters.critic_optimizer_steps = critic - self.optimizer_step_origin[1] if critic >= 0 else -1
-            self.journal.record_partial_failure(attempted_updates=counters.attempted_updates,
+            preserve_failure('partial failure', lambda: self.journal.record_partial_failure(attempted_updates=counters.attempted_updates,
                 completed_updates=counters.completed_updates, actor_optimizer_steps=actor,
-                critic_optimizer_steps=critic, error=error)
+                critic_optimizer_steps=critic, error=error))
             raise
 
 

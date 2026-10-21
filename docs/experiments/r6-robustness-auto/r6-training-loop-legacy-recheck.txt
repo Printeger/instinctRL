@@ -1,0 +1,185 @@
+........................FF.F.F......                                     [100%]
+=================================== FAILURES ===================================
+__________ test_actual_driver_rollout_ppo_logging_and_durable_attempt __________
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1178/test_actual_driver_rollout_ppo0')
+
+    def test_actual_driver_rollout_ppo_logging_and_durable_attempt(tmp_path):
+>       loop,trainer,counters=_training(tmp_path); result=loop.run_update()
+                                                          ^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1_rework.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/driver.py:150: in run_update
+    rollout = collect_h1_rollout(self.driver, self.trainer, self.driver.observation, RolloutConfig(16, 32))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:99: in collect_h1_rollout
+    transition, current = collect_h1_transition(environment, trainer, current, config); transitions.append(transition)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:37: in collect_h1_transition
+    returned = environment.step(action)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x749713389150>
+action = tensor([[0.4808, 0.4619, 0.3674, 0.5278],
+        [0.4861, 0.4211, 0.4066, 0.2927],
+        [0.4680, 0.5389, 0.4780, 0... [0.3498, 0.4085, 0.6034, 0.5151],
+        [0.6328, 0.7015, 0.5412, 0.3137],
+        [0.6129, 0.5546, 0.4128, 0.4128]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+>       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError
+_____ test_env_and_partial_critic_optimizer_failures_keep_actual_counters ______
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1178/test_env_and_partial_critic_op0')
+
+    def test_env_and_partial_critic_optimizer_failures_keep_actual_counters(tmp_path):
+        loop,trainer,counters=_training(tmp_path/"env",fail_step=3)
+>       with pytest.raises(RuntimeError,match="env.step"): loop.run_update()
+                                                           ^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1_rework.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/driver.py:150: in run_update
+    rollout = collect_h1_rollout(self.driver, self.trainer, self.driver.observation, RolloutConfig(16, 32))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:99: in collect_h1_rollout
+    transition, current = collect_h1_transition(environment, trainer, current, config); transitions.append(transition)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+isaaclab-training/instinctlab/training/rollout_h1.py:37: in collect_h1_transition
+    returned = environment.step(action)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x749707ea02d0>
+action = tensor([[0.4167, 0.4224, 0.4188, 0.2392],
+        [0.3493, 0.5809, 0.4191, 0.5369],
+        [0.4928, 0.4904, 0.2553, 0... [0.5584, 0.4388, 0.1880, 0.4927],
+        [0.4737, 0.5620, 0.3196, 0.4584],
+        [0.3489, 0.4213, 0.2646, 0.3493]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+>       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError
+_____ test_step_budget_and_resource_decline_stop_before_environment_action _____
+
+    def test_step_budget_and_resource_decline_stop_before_environment_action():
+        observation={"policy":{"state_vec":torch.zeros(32,52)}}
+        class Env:
+            calls=[]
+            def prepare_h1_step(self,**kwargs): self.calls.append("prepare")
+            def step(self,action): self.calls.append("step")
+        env=Env(); counters=ExecutionCounters()
+        driver=UnifiedH1Driver(env,observation,counters=counters,transition_limit=0)
+>       with pytest.raises(RuntimeError,match="training-transition"): driver.step(torch.zeros(32,4))
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1_rework.py:208: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <training_workloads.unified_h1.driver.UnifiedH1Driver object at 0x749707d50590>
+action = tensor([[0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0..., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.]])
+
+    def step(self, action: torch.Tensor):
+        policy = self.observation["policy"]
+        latest_command = policy["state_vec"][:, 45:48]
+        plan = self.clock.plan(device=latest_command.device, dtype=latest_command.dtype)
+>       if not torch.equal(latest_command, plan.command_b):
+               ^^^^^^^^^^^
+E       AttributeError: module 'torch' has no attribute 'equal'
+
+training_workloads/unified_h1/driver.py:37: AttributeError
+__________ test_authorization_exact_budget_order_and_checkpoint_bytes __________
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1178/test_authorization_exact_budge0')
+
+    def test_authorization_exact_budget_order_and_checkpoint_bytes(tmp_path):
+        from training_workloads.unified_h1.authorization import load_r3_authorization
+>       config=load_config(); identity=config["resolved_identity"]; attempt=(tmp_path/"attempt").resolve(); attempt.mkdir()
+               ^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1_rework.py:240: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/config.py:234: in load_config
+    product = _validate_repository(value["product"], label="product", required_sources=product_sources, self_identity=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+spec = {'base_commit': '903afc5abd0fbf82297527e5790c2cd40827b0b2', 'branch': 'main', 'candidate_commit': 'SELF', 'candidate_tree': 'SELF', ...}
+label = 'product'
+required_sources = {'isaaclab-training/instinctlab/assets/taslab_uav/articulation.py', 'isaaclab-training/instinctlab/control/anchor.py',...isaaclab-training/instinctlab/control/ics.py', 'isaaclab-training/instinctlab/control/lee_velocity_controller.py', ...}
+self_identity = True
+
+    def _validate_repository(spec: object, *, label: str, required_sources: set[str], self_identity: bool = False) -> dict[str, str]:
+        required = {"path", "base_commit", "candidate_commit", "candidate_tree", "branch", "source_sha256"}
+        if not isinstance(spec, dict) or set(spec) != required: raise ValueError(f"{label} repository schema mismatch")
+        root = Path(spec["path"])
+        if not root.is_absolute() or root.is_symlink() or root.resolve() != root or not root.is_dir():
+            raise ValueError(f"{label} repository path is not an exact checkout")
+        try: repository_root=Path(_git(root,"rev-parse","--show-toplevel")).resolve()
+        except (OSError,subprocess.CalledProcessError) as error: raise ValueError(f"{label} repository is unavailable") from error
+        if repository_root not in (root,*root.parents): raise ValueError(f"{label} repository root mismatch")
+        actual = {"commit": _git(root, "rev-parse", "HEAD"), "tree": _git(root, "rev-parse", "HEAD^{tree}"),
+                  "branch": _git(root, "branch", "--show-current")}
+        if _git(root, "merge-base", "--is-ancestor", spec["base_commit"], actual["commit"]) != "":
+            raise AssertionError("git merge-base emitted unexpected output")
+        expected_commit = actual["commit"] if self_identity and spec["candidate_commit"] == "SELF" else spec["candidate_commit"]
+        expected_tree = actual["tree"] if self_identity and spec["candidate_tree"] == "SELF" else spec["candidate_tree"]
+        if actual != {"commit": expected_commit, "tree": expected_tree, "branch": spec["branch"]}:
+            raise ValueError(f"{label} candidate identity mismatch")
+        sources = spec["source_sha256"]
+>       if not isinstance(sources, dict) or set(sources) != required_sources: raise ValueError(f"{label} source manifest set mismatch")
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: product source manifest set mismatch
+
+training_workloads/unified_h1/config.py:180: ValueError
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-e40d19ca-a020-493a-9868-d24719fddec9/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-e40d19ca-a020-493a-9868-d24719fddec9/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-e40d19ca-a020-493a-9868-d24719fddec9/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-e40d19ca-a020-493a-9868-d24719fddec9
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-e40d19ca-a020-493a-9868-d24719fddec9'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/training_workloads/test_unified_h1_rework.py::test_actual_driver_rollout_ppo_logging_and_durable_attempt
+FAILED tests/training_workloads/test_unified_h1_rework.py::test_env_and_partial_critic_optimizer_failures_keep_actual_counters
+FAILED tests/training_workloads/test_unified_h1_rework.py::test_step_budget_and_resource_decline_stop_before_environment_action
+FAILED tests/training_workloads/test_unified_h1_rework.py::test_authorization_exact_budget_order_and_checkpoint_bytes
+4 failed, 32 passed, 4 warnings in 2.73s

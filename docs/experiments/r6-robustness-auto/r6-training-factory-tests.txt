@@ -1,0 +1,45 @@
+........F.......................                                         [100%]
+=================================== FAILURES ===================================
+__________ test_factory_partial_construction_preserves_original_error __________
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1176/test_factory_partial_construct0')
+
+    def test_factory_partial_construction_preserves_original_error(tmp_path):
+        pools=[]
+        original=RuntimeError('diagnostic constructor failed')
+        def fail(*args,**kwargs):
+            pools.append(kwargs['pool']);raise original
+        with patch('training_workloads.unified_h1.robustness_training_storage.R6FirstUpdateDiagnostic',side_effect=fail):
+            with pytest.raises(RuntimeError) as caught:factory(tmp_path)
+        assert caught.value is original and pools[0].closed and pools[0].failed
+        with pytest.raises(FileExistsError):factory(tmp_path)
+>       b.environment.close.assert_called_once();b.app.close.assert_called_once()
+        ^
+E       NameError: name 'b' is not defined
+
+tools/test_r6_training_storage_lifecycle.py:111: NameError
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d6cd9a71-e753-47f2-aa4d-fb7f2efa00cc/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d6cd9a71-e753-47f2-aa4d-fb7f2efa00cc/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d6cd9a71-e753-47f2-aa4d-fb7f2efa00cc/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d6cd9a71-e753-47f2-aa4d-fb7f2efa00cc
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-d6cd9a71-e753-47f2-aa4d-fb7f2efa00cc'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tools/test_r6_training_storage_lifecycle.py::test_factory_partial_construction_preserves_original_error
+1 failed, 31 passed, 4 warnings in 1.25s

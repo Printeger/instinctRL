@@ -6,6 +6,38 @@ from .logging import LearningLog,_jsonable
 from .pilot_diagnostic import FirstUpdateDiagnostic
 
 
+def create_training_evidence(output, *, run_id, payload_bytes, compressed_bytes,
+                             plain_bytes, maximum_raw_file_bytes, starting_update,
+                             initial_start_types=None):
+    """Build both observers on one pool within an already admitted payload.
+
+    This factory grants no training authority. The prospective R6 training
+    contract must supply the exact payload and allowances before calling it.
+    Plain checkpoint/metadata writes still use the installed global write cap.
+    """
+    limits=(payload_bytes,compressed_bytes,plain_bytes,maximum_raw_file_bytes)
+    if any(type(v) is not int or v<=0 for v in limits):
+        raise ValueError('R6_TRAINING_STORAGE_LIMITS')
+    if compressed_bytes+plain_bytes>payload_bytes:
+        raise ValueError('R6_TRAINING_STORAGE_PAYLOAD')
+    if type(starting_update) is not int or starting_update<0:
+        raise ValueError('R6_TRAINING_STORAGE_START')
+    from .lossless_evidence import EvidencePool
+    output=Path(output)
+    pool=EvidencePool(output/'compressed_evidence',run_id=run_id,
+        maximum_bytes=compressed_bytes,maximum_raw_file_bytes=maximum_raw_file_bytes)
+    try:
+        journal=R6LearningLog(output/'learning_log',pool=pool,
+            initial_start_types=initial_start_types)
+        diagnostic=R6FirstUpdateDiagnostic(output/'pilot_diagnostic',pool=pool,
+            enabled=True,starting_update=starting_update)
+    except BaseException as error:
+        try:pool.abort()
+        except BaseException as cleanup:error.add_note('Evidence construction cleanup failed: '+repr(cleanup))
+        raise
+    return journal,diagnostic
+
+
 class R6LearningLog(LearningLog):
     def __init__(self,root,*,pool,**kwargs):
         super().__init__(root,**kwargs)

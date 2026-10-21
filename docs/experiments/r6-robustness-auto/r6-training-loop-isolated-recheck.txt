@@ -1,0 +1,24 @@
+...                                                                      [100%]
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-4db8d4c6-1287-48e2-ad5a-ca16e549f800/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-4db8d4c6-1287-48e2-ad5a-ca16e549f800/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-4db8d4c6-1287-48e2-ad5a-ca16e549f800/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-4db8d4c6-1287-48e2-ad5a-ca16e549f800
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-4db8d4c6-1287-48e2-ad5a-ca16e549f800'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+3 passed, 13 deselected, 4 warnings in 4.73s
