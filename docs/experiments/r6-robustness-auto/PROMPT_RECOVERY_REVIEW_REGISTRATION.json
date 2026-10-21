@@ -1,0 +1,30 @@
+{
+  "key": "429e4be0867d498ccf3b0dcb179287a415df739637071d96fc9b2d2da5c1512b",
+  "request": {
+    "cwd": "/home/mint/rl_dev/instinctRL-dev",
+    "executable": {
+      "path": "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+      "sha256": "9a820c17865fa825d04db416818679a9d63bd72e50835c396f496e5684626c9c"
+    },
+    "output_cap_bytes": 67108864,
+    "prompt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/prompt-recovery-repair-review.txt",
+      "sha256": "40fc8d284ad5e59cd2871d9dc6b87f5a897f0d5bfc34ae3394c22da4f5ea5757"
+    },
+    "sandbox": "danger-full-access",
+    "schema": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/cpu-review.schema.json",
+      "sha256": "88a36ded28626acf67be2c6b6b78746cae66ff6d746ebd5d08122ec353c9d78d"
+    },
+    "stop_paths": [
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/commander/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/executor/STOP"
+    ],
+    "timeout_seconds": 3600
+  },
+  "input_commit": "6f5359afc43e41221b903ba8c281c69f4e0a62ab"
+}
