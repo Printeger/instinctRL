@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "/home/mint/rl_dev/instinctRL-dev/tools/check_r6_result_volume.py"
+  ],
+  "process": {
+    "pid": 2423251,
+    "pgid": 2423251,
+    "starttime": "250792657",
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa"
+  },
+  "exit_code": 0,
+  "stdout": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02_DRIVER.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02_DRIVER.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "verification": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02/verification.json",
+    "sha256": "c1e28d6f0138099c0fb5d37b5b0fc8c09bd9aaff22ff3d5c44f7bf7f2bfeebbe"
+  },
+  "status": "PASS_CPU_MULTI_FILE_DESCENDANT_AND_REOPEN",
+  "manifest": {
+    "path": "/var/lib/instinctrl-r6-results/CPU-QUOTA-02/volume.json",
+    "sha256": "c3d6d42de558143e65a1e54c3e103ceba57a0126248cb49226733ac99abab021"
+  },
+  "reservation_retained_bytes": 17825792
+}

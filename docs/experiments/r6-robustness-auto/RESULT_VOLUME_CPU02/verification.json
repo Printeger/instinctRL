@@ -1,0 +1,75 @@
+{
+  "status": "PASS_CPU_MULTI_FILE_DESCENDANT_AND_REOPEN",
+  "capacity_pass": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "manifest": {
+    "path": "/var/lib/instinctrl-r6-results/CPU-QUOTA-02/volume.json",
+    "sha256": "c3d6d42de558143e65a1e54c3e103ceba57a0126248cb49226733ac99abab021"
+  },
+  "binding": {
+    "target": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-CPU-RESULT-QUOTA-02/results",
+    "manifest": {
+      "path": "/var/lib/instinctrl-r6-results/CPU-QUOTA-02/volume.json",
+      "sha256": "c3d6d42de558143e65a1e54c3e103ceba57a0126248cb49226733ac99abab021"
+    },
+    "mount_id": "5350",
+    "device": "/dev/loop21",
+    "maximum_bytes": 16777216,
+    "free_bytes": 11157504
+  },
+  "tool": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/check_r6_result_volume.py",
+    "sha256": "b304829b32f72994c210e5d615ae33fd50c3b145bbce49faa0de06f1e112e619"
+  },
+  "fill": {
+    "bytes_written": 10485760,
+    "aggregate_errno": 28,
+    "descendant": {
+      "append_errno": 28,
+      "requested_bytes": 1048576
+    }
+  },
+  "originals": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-CPU-RESULT-QUOTA-02/results/cpu-multifile-00.bin",
+      "sha256": "6932fd31e5daf4739b9fa78ff777b2831b0995cc1d0b0093cac80601902013bc",
+      "bytes": 2097152
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-CPU-RESULT-QUOTA-02/results/cpu-multifile-01.bin",
+      "sha256": "6932fd31e5daf4739b9fa78ff777b2831b0995cc1d0b0093cac80601902013bc",
+      "bytes": 2097152
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-CPU-RESULT-QUOTA-02/results/cpu-multifile-02.bin",
+      "sha256": "6932fd31e5daf4739b9fa78ff777b2831b0995cc1d0b0093cac80601902013bc",
+      "bytes": 2097152
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-CPU-RESULT-QUOTA-02/results/cpu-multifile-03.bin",
+      "sha256": "6932fd31e5daf4739b9fa78ff777b2831b0995cc1d0b0093cac80601902013bc",
+      "bytes": 2097152
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-CPU-RESULT-QUOTA-02/results/cpu-multifile-04.bin",
+      "sha256": "6932fd31e5daf4739b9fa78ff777b2831b0995cc1d0b0093cac80601902013bc",
+      "bytes": 2097152
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-CPU-RESULT-QUOTA-02/results/cpu-multifile-05.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "reopen": {
+    "append_errno": 28,
+    "requested_bytes": 1048576
+  },
+  "backing_bytes": 16777216,
+  "limitations": [
+    "16MiB CPU ext4 fixture, not production result or native volume acceptance",
+    "1MiB append granularity, not proof every last allocatable byte is consumed",
+    "No remount/reboot or Kit/CUDA execution"
+  ]
+}

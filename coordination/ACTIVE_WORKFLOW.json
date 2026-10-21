@@ -143,7 +143,7 @@
   },
   "r6_robustness_execution": {
     "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
-    "status": "BLOCKED_EXTERNAL_ADMIN_RESULT_VOLUME",
+    "status": "CPU_RESULT_QUOTA_VERIFIED_REVIEW_PENDING",
     "authority": "docs/experiments/r6-robustness-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md",
     "budget": "docs/experiments/r6-robustness-auto/goal_budget.json",
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
@@ -204,6 +204,7 @@
     "native_quota_repair_review": "docs/experiments/r6-robustness-auto/reviews/native-quota-repair-review.json",
     "local_job_entry_status": "CPU_PASS_PENDING_REVIEW_NOT_DEPLOYED",
     "local_job_entry_evidence": "docs/experiments/r6-robustness-auto/CPU_LOCAL_JOB_ENTRY.json",
-    "external_blocker": "docs/experiments/r6-robustness-auto/RESULT_VOLUME_ADMIN_BLOCKER.json"
+    "resolved_external_blocker": "docs/experiments/r6-robustness-auto/RESULT_VOLUME_ADMIN_BLOCKER.json",
+    "result_quota_cpu_evidence": "docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02/verification.json"
   }
 }

@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：用户恢复Goal后核实CPU-QUOTA-02已由管理员创建，外部挂载阻塞解除。
+准确已登记脚本完成真实16MiB ext4测试：多文件共10MiB后ENOSPC，各非空文件2MiB；
+exec后代和新解释器1MiB追加均ENOSPC，所有原件哈希不变。17MiB全额预留保留，
+卷不复用。证据 `docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02/verification.json`。
+下一步独审结果目录总量限制修复；生产布局/容量、Kit兼容性与controller部署仍待完成，
+capacity=false，无R6 live，完整科学Goal未完成。下方旧blocked记录仅描述历史。
+
 2026-10-21：当前外部阻塞为CPU-QUOTA-02结果卷未创建，sudo非交互仍需密码，
 已连续超过三轮。CPU修复/接线/布局计算已保全并推送；真实多文件/后代耗尽证明与
 准确可用容量不能用这些替身替代。记录为BLOCKED_EXTERNAL_ADMIN_RESULT_VOLUME，
