@@ -53,7 +53,7 @@ class SourceConfigTests(unittest.TestCase):
         self.assertEqual((product,workload),(c.PRODUCT_SOURCES,c.WORKLOAD_SOURCES))
         product,workload=c.required_source_sets(c.R6_CONFIG_SCHEMA)
         self.assertEqual(len(product-c.PRODUCT_SOURCES),26)
-        self.assertEqual(len(workload-c.WORKLOAD_SOURCES),27)
+        self.assertEqual(len(workload-c.WORKLOAD_SOURCES),29)
         self.assertTrue({'training_workloads/unified_h1/robustness_training_plan.py',
                          'training_workloads/unified_h1/robustness_training_rng.py',
                          'training_workloads/unified_h1/robustness_training_driver.py'} <= workload)

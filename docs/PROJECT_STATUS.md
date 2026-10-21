@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：候选开发评价的已审模型选择与严格加载核心完成：u640控制对照/训练候选绑定同一
+method/protocol/stream；训练模型必须来自准确关闭作业与计划节点，原件/审计/选择独审逐项绑定。
+严格serializer恢复模型/Adam/RNG并读回方法，旧baseline授权拒绝，失败恢复RNG且不暴露trainer。
+46项最终控制/源码检查、19项tensor检查通过；初轮源码数量断言27→29的失败保留并修正。
+实际u640张量的CPU副本与合成u896计数用于加载测试；selection/审核边界为明确fixture，非训练结果。
+证据CPU_CANDIDATE_SELECTION.json；候选mode尚未注册，阶段契约/执行/控制路由及最终holdout仍待完成。
+148次自动唤醒+30worker=178，模型余78；无生产GPU/仿真，完整Goal未完成。
+
 2026-10-22：训练RNG初始化审计接通：准确plan/recipe/origin身份，分叉原始状态与checkpoint比对，
 用批准seed独立生成CPU Torch/课程/Python/NumPy状态；续训逐字节比较全部保存RNG含CUDA原件。
 记录PPO/permutation绑定，CPU审计不改全局随机流；不宣称CUDA seed重建、实际rollout使用或落盘时序已证实。

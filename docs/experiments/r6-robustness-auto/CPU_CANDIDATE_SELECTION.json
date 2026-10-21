@@ -1,0 +1,60 @@
+{
+  "status": "CPU_REVIEWED_DEVELOPMENT_SELECTION_AND_STRICT_RESTORE_CORE_PASS_STAGE_ENTRY_PENDING",
+  "input_commit": "14b5f62f",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation_selection.py",
+      "sha256": "df2584466413d5a8929c05ec3f02ac8c2a7bc1f783830ce006b916bf7bbe0408"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_candidate_restore.py",
+      "sha256": "fade2be005a3a507488b034a4937ffa24d56bd3b390767f26b7a9a1e791452be"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "0855fd95fa84b705d545dbeed1fcb5cc1b82833b1712d44dc3f923d46bbff307"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_SELECTION_CONTROL_INITIAL.log",
+      "sha256": "5c112b11bfd8206462bf46ad28b2b0a1c4dfae1a50c3c862e8eea63815538f59"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_SELECTION_CONTROL_CHAIN.log",
+      "sha256": "829a1cfdce55392855a7dfd5c05a0b84021c5bb4dfe81c87cd891732a809cf83"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_SELECTION_SOURCE_INITIAL.log",
+      "sha256": "3b7adc97a3090e64dbcb8e999f314099591a7209de4ab1e14ebfbfd46668804b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_SELECTION_CONTROL_FINAL.log",
+      "sha256": "f335fe575dd44ebb350c0902d14541218f837e3b42cf9130d31bf9268e84adbb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_SELECTION_TENSOR.log",
+      "sha256": "b71dfd80e21823fa93c142f0b4187207cd5ee76fc5e37e71e09cda32b9550412"
+    }
+  ],
+  "tests": {
+    "control_final": 46,
+    "tensor": 19
+  },
+  "initial_failure": "One source manifest test expected 27 R6 additions; added two new modules and updated exact expected count to 29. Initial 12 pass/1 failure retained.",
+  "scope": [
+    "Reviewed paired comparison fixes identical method, protocol block order and development random stream for frozen-u640 control and trained policy.",
+    "Trained selection binds exact reviewed recipe/plan, closed training spec/authorization/inventory/postrun/native state and complete CPU report; registered checkpoint node and bytes must match.",
+    "Revalidate report inputs and exact original checkpoint; require probability/RNG initialization and actor/critic/Adam audits plus independent PASS_R6_EVALUATION_SELECTION over all selection inputs.",
+    "Strict restore core rejects baseline authorization, restores exact selected model/Adam/RNG through unchanged serializer, verifies seed/clock/curriculum and applies reviewed method with runtime readback.",
+    "CPU restore tests use real frozen-u640 tensors in explicit CPU-only derivative and constructed u896 counters; verify weights/Adam/counters unchanged, eval mode and failure rollback.",
+    "New modules added to R6 frozen source manifest; old source sets preserved."
+  ],
+  "limitations": [
+    "Selection tests use explicit baseline-pin and independent-review/closed-job fixtures; no production review or training evidence exists.",
+    "Restore tests isolate selection validator with an explicit fixture; actual serializer/method binding run on CPU derivative. No claim of restoring original CUDA RNG on CPU.",
+    "Prospective candidate mode remains unregistered. Exact stage contract, config/authorization/backend evaluation and control routing are still required.",
+    "Final holdout is explicitly rejected by development selection; freeze/release/batch evaluation/delivery remain required. No GPU/simulation/production launch."
+  ],
+  "goal_complete": false
+}
