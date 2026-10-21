@@ -169,7 +169,8 @@ analysis/decision state backwards. Unknown submission effects never retry.
     submission=submit_once(journal,key,store,queue_key=queue_key,
                            refresh_observation=refresh_observation)
     entry=journal.canonical_job(key)
-    from tools.r6_job_handoff import job_handoff, exact_job, cleanup_evidence, TERMINAL
+    from tools.r6_job_handoff import exact_job, cleanup_evidence, TERMINAL
+    from tools.r6_audited_job_handoff import job_handoff
     if entry.get('closure'):
         closure=json.loads(checked(entry['closure']).read_text())
         job=exact_job(store.replay(),entry,spec)

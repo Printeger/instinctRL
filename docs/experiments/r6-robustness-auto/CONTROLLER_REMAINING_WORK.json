@@ -1,6 +1,6 @@
 {
-  "status": "CPU_DELIVERY_EVIDENCE_AND_LOCAL_WAIT_AUDIT_PASS_MEDIA_FINAL_AUDIT_PENDING",
-  "checked_commit": "700f15dd576fbeb0a7fcfac39c3db6f1f7d2f890",
+  "status": "REAL_LEGACY_GUARD_RESTORED_AUDITED_HANDOFF_AND_VIDEO_SELECTION_CPU_PASS_RENDERING_PENDING",
+  "checked_commit": "98a1c114392a316f4081e014814d021b3146e2db",
   "concrete_first_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
     "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
@@ -30,7 +30,7 @@
   ],
   "next_implementation": {
     "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs; persistent first/decision/profile/materialization/next cursor and actual detached CPU wait/STOP fixture; exact baseline-compatible source payload/review/frozen validation/new-context routing; exact training-plan budget/seed/checkpoint provenance and RNG branch/resume composition; R6 world-command training driver with actual next-attitude conversion and exact clock provenance; registered phase curriculum and actual CPU condition/reset sampling with audit separation and phase reset budgeting; training phase reset/measurement/physics adapter composition including resumed phase pulse offset and audited noise stream fork; loaded-trainer phase execution with shared first-update diagnostic, bounded logs/RNG, original/robust driver switching and exact checkpoint callback; strict checkpoint restore, explicit complete method schema, actual runtime/optimizer readback and pre-execution drift guard; exact training profile/capacity/source compatibility contracts and dedicated config/formal entry/native/resource lifecycle route",
-    "next": "Actual video generation and viewing deliverables; independent scientific/requirements audit and final resource/model-usage accounting; confirmation/final-review repair re-entry; combined production review and platform handoff. Immutable report/manifest/resource/model/decision candidates and bounded local wait evidence are CPU verified, not final acceptance.",
+    "next": "R6 raw trajectory decoding, Isaac Sim replay renderer and MP4 validation, with exact render resources/quotas/permission and media routing; final independent audit/accounting/requirements; confirmation/final-review repair re-entry; combined production review and platform handoff. Original legacy source guard restored; audited handoff is an additive adapter. Deterministic paired video-source selection CPU verified, no actual videos.",
     "deployment": "Full final route CPU verified; repair/delivery, independent combined review and platform handoff remain before production.",
     "invariants": [
       "No Journal or Store authority mutation by source-preparation worker",
@@ -224,5 +224,9 @@
   "delivery_evidence": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DELIVERY_EVIDENCE.json",
     "sha256": "327bafda6482e458dced2c5fffd1bf39b6a092360fa26ae783874106ea020869"
+  },
+  "video_selection": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_SELECTION.json",
+    "sha256": "96faa585a264afc914a60668014281de0bcd63dcaed23cc88ed343709364c905"
   }
 }

@@ -6,6 +6,10 @@ from tools.r6_recovery import RecoveryError
 
 
 class WaitAuditTests(JobTests):
+    def handoff(self):
+        from tools.r6_audited_job_handoff import job_handoff
+        with self.j.writer():return job_handoff(self.j,self.key,self.store,poll_seconds=.01)
+
     def test_complete_local_window_has_no_platform_claim(self):
         with patch('tools.r6_job_handoff.time.sleep',side_effect=lambda _:self.finish()):self.handoff()
         value=self.j.read()['events'][self.key]['local_wait_audit']

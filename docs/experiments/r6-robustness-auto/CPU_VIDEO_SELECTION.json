@@ -1,0 +1,75 @@
+{
+  "status": "REAL_LEGACY_GUARD_RESTORED_AUDITED_HANDOFF_AND_VIDEO_SELECTION_CPU_PASS_RENDERING_PENDING",
+  "base_commit": "98a1c114392a316f4081e014814d021b3146e2db",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_audited_job_handoff.py",
+      "sha256": "c8019dcfd3aadac91906930941f161172d74f52873f8775678dfad0b7c43bfc3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "6a2c6bafd05d887325d0d94dac7eee7d86cf3ddb7207d12db42df0fa5528809b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_video_selection.py",
+      "sha256": "e809fe0d814e8ec2cdac1396054fa246244a80bcfe0d3038974d89a9748e12bd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_wait_audit.py",
+      "sha256": "ab802dcee1da54b8e9b8edd1892b39ff4b40235e56bbc4db249c3fda863fdece"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_video_selection.py",
+      "sha256": "0a91960edd4c50cefef716c43c12cbd8a180a88878c97c777d004e9c95464d5e"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_AUDITED_HANDOFF_INITIAL.log",
+      "sha256": "770dd37cc3086d46e00ef067771ad2e8689dea8f8291d0351861b9eee5c93019"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_SELECTION_INITIAL.log",
+      "sha256": "62b275e73cb7b30a8bfd59665c730bd46a8683899e02adc08a7dc5d94c464529"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_SELECTION_FINAL.log",
+      "sha256": "a942ce6dbb2b330ea52207c4688bdae02eb0c65edcd1943dc87cf6eb56b37b29"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_REAL_GUARD_RESTORATION.log",
+      "sha256": "6d58dac21d63dd9c62d1b77c6fd7fa897abdf74ee7e863dc9598b94b2e93e4a3"
+    }
+  ],
+  "checks": {
+    "audited_handoff": 60,
+    "selection_initial": 8,
+    "final_combined": 86
+  },
+  "regression": {
+    "detected": "Real Journal profile.guard failed LEGACY_RECONCILIATION_SOURCE_DRIFT after previous commit changed an independently pinned legacy source.",
+    "repair": "Restored exact original r6_job_handoff.py bytes; new audited adapter delegates the unchanged waiter and observes durable local wait writes. Only current submit route uses the new adapter.",
+    "validation": "Original reviewed source_pins and full real Journal guard pass; no old receipt/proposal/source exception was edited or renewed."
+  },
+  "scope": [
+    "Deterministic full-trajectory success/failure selections per final assignment, target before stress then protocol/lane order.",
+    "Exact baseline companions for every selected confirmed-model condition/lane/realization; unavailable outcomes explicit, at most fourteen clips.",
+    "Each source audit/motion/result file matches both closed-job inventory and analyzed hashes/bytes; source model/spec/authorization/report pins retained."
+  ],
+  "boundaries": [
+    "Local CPU child/Journal recovery checks real; no production wait window.",
+    "Video scores synthetic and raw-binding fixtures are not decoded physical trajectories; no renderer invoked or MP4 produced.",
+    "Actual historical guard and original review sources checked read-only; no production model review, Store issuance, GPU query/simulation/training."
+  ],
+  "remaining": [
+    "R6 raw trajectory decoding and Isaac Sim replay renderer/MP4 verification",
+    "Render job budget/quotas/exact permission and media routing",
+    "Final independent audit/accounting/requirements, repair re-entry, combined prelive and platform handoff"
+  ],
+  "goal_complete": false,
+  "scientific_acceptance": false
+}

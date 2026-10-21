@@ -1,0 +1,45 @@
+{
+  "status": "REAL_JOURNAL_GUARD_AND_ORIGINAL_LEGACY_SOURCE_PINS_PASS",
+  "old_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/b6866fedb83bacf044c94b0f11974b046c33a77ecbad07ba031974ee824dc111/receipt.json",
+    "sha256": "d3f83c4a8dbf465f657e3abc85b81248312a3579d5663799053fbcfe8526261c"
+  },
+  "sources": {
+    "tools/r6_legacy_model_reconciliation.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_legacy_model_reconciliation.py",
+      "sha256": "928ca9e22c6024b848d2a9de2f9b218e54c8214c9524974e560d7f92372fd6bf"
+    },
+    "tools/audit_r6_legacy_model_cleanup.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/audit_r6_legacy_model_cleanup.py",
+      "sha256": "0446d05c7267c1b29a1e736d76dbe5572a7821cff3062c6397f03fdf8da0e473"
+    },
+    "tools/r6_job_handoff.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+    },
+    "tools/r6_batch.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "a5188e81eb75b4196d5fc469bbe19d90aaae4abd46f0f3440e2d87946323163d"
+    },
+    "tools/r6_model_worker.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_model_worker.py",
+      "sha256": "188880d1da73a6142e343500db6bd23b49653b5f15ceb3df1def26c9577aa37f"
+    },
+    "tools/r6_recovery.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py",
+      "sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55"
+    },
+    "tools/r6_worker_processes.py": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_worker_processes.py",
+      "sha256": "7ce3a1276d8460445f442ef9e30ecbe3198de98e848d75198eaabe94c932cc10"
+    }
+  },
+  "prior_regression_commit": "98a1c114",
+  "prior_handoff_sha256": "556c9a63a84fb2862e4e970cfc5c9186026a5324015cec951419e9b02afed256",
+  "restored_handoff": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+    "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+  },
+  "current_job": null,
+  "wakes": 168
+}
