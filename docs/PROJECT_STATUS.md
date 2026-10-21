@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：首次基线本地入口串联review→Store发行→既有runner，37项CPU检查通过。
+6个真实worker/假CLI场景验证PASS/MUST_FIX、已消费receipt与缺prompt恢复只启动一次；
+已登记未提交的作业可恢复，已有claim在STOP下交原runner清理，完成结果准确缓存。
+见 CPU_FIRST_BASELINE_ENTRY.json；runtime/master/kernel/最终runner边界替身明确，
+未部署、待独审；正式双卷仍缺且sudo需要密码，无GPU/仿真。
+119次唤醒+26worker=145，余111次；Goal未完成。
+
 2026-10-21：第26次独审PASS_CPU_SCOPE，首次基线审核/Store发行组件接受，
 独立38项CPU回归通过；receipt/schema/evidence pins与worker退出核验完成。
 见 reviews/initial-baseline-issuance-review.json。未发行生产许可，正式双卷仍缺；

@@ -92,6 +92,12 @@ def register_review(journal, plan_pin, store, *, executable, free_disk_bytes):
 
 def reviewed_plan(journal, plan_pin, review_key, review_pin, store):
     plan, spec, jid = first_plan(journal, plan_pin, store)
+    verify_review(journal, plan_pin, review_key, review_pin, plan, jid)
+    return plan, spec, jid
+
+
+def verify_review(journal, plan_pin, review_key, review_pin, plan, jid):
+    """Recheck original evidence on an issued, not-yet-submitted job's recovery."""
     state = journal.read(); entry = state['events'][review_key]; identity = entry['identity']
     require(entry['kind'] == 'model' and identity == dict(goal_id=state['goal_id'],
         event_id='INITIAL_BASELINE_REVIEW:'+plan_pin['sha256'], job_id=jid,
@@ -114,7 +120,6 @@ def reviewed_plan(journal, plan_pin, review_key, review_pin, store):
     require(plan_pin in result['evidence_pins'] and plan['spec_pin'] in result['evidence_pins'], 'REVIEW_EVIDENCE')
     for pin in result['evidence_pins']:
         checked(pin)
-    return plan, spec, jid
 
 
 def issue(journal, plan_pin, review_key, review_pin, master_pin, store, *, free_disk_bytes):

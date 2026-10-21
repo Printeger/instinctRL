@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 118,
-    "total_automatic_model_sessions_minimum": 144,
+    "platform_automatic_goal_wakes": 119,
+    "total_automatic_model_sessions_minimum": 145,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -261,6 +261,8 @@
     "initial_baseline_input_draft": "docs/experiments/r6-robustness-auto/INITIAL_BASELINE_INPUT_DRAFT.json",
     "initial_baseline_issuance": "PASS_CPU_SCOPE_NOT_PRODUCTION_ISSUED",
     "initial_baseline_issuance_evidence": "docs/experiments/r6-robustness-auto/CPU_INITIAL_BASELINE_ISSUANCE.json",
-    "initial_baseline_issuance_review": "docs/experiments/r6-robustness-auto/reviews/initial-baseline-issuance-review.json"
+    "initial_baseline_issuance_review": "docs/experiments/r6-robustness-auto/reviews/initial-baseline-issuance-review.json",
+    "initial_baseline_entry": "CPU37_PASS_INDEPENDENT_REVIEW_PENDING_NOT_DEPLOYED",
+    "initial_baseline_entry_evidence": "docs/experiments/r6-robustness-auto/CPU_FIRST_BASELINE_ENTRY.json"
   }
 }

@@ -1,0 +1,49 @@
+{
+  "status": "CPU37_PASS_INDEPENDENT_REVIEW_PENDING_NOT_DEPLOYED",
+  "scope": "First-baseline local review, issuance and exact existing-runner handoff; claimed jobs preserve original recovery under STOP",
+  "source_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_start_baseline.py",
+      "sha256": "2df746e146db0b7901f34a860f29d7e48df03d717bc227b56d2f5209c00079db"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_initial_baseline.py",
+      "sha256": "2acbe9b26b3d47f12e30472f0a22b7c1f197bd0de414b82cc019225618f96cd3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_start_baseline.py",
+      "sha256": "2e3d46d547b9e9e4b54ba72fc1195c54098d3dda1e53840da01a2069bcc2f580"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FIRST_BASELINE_ENTRY_TEST.txt",
+      "sha256": "f791f95d9eb0b759ecec05c7e9b1dbf13162c22eeb98702bef588813da89b4a1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FIRST_BASELINE_ENTRY_FINAL.txt",
+      "sha256": "82f4d11cd1bbbb7cd6bcf6e126a13cf9ac7b5099f03bb880ec78d465b5addb5a"
+    }
+  ],
+  "tests_passed": 37,
+  "actual_fake_worker_cases": 6,
+  "checks": [
+    "Real local worker with fake CLI, receipt/schema/evidence validation and exact Store approval",
+    "PASS and MUST_FIX each start one fake CLI across repetition",
+    "Consumed receipt and missing undispatched prompt recover without another model reservation",
+    "Unclaimed registered job reaches existing runner without first-job rejection",
+    "Existing submission claim reaches original runner even under STOP",
+    "Completed result bound to canonical job is cached",
+    "Plan/evidence changes reject before another launch",
+    "Crash after issuance before runner recovers existing approval"
+  ],
+  "limitations": [
+    "Fake CLI tests make no API call; runtime/master/kernel checks are fixtures",
+    "Final runner is a resource-rejection stub; no GPU query or simulator executes",
+    "Claimed-job STOP test verifies delegation to runner, not new process cleanup evidence",
+    "Independent review and detached deployment remain pending",
+    "Full autonomous scientific plan generation/training/final execution contracts remain incomplete"
+  ],
+  "production_store_issued": false,
+  "goal_complete": false
+}
