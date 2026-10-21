@@ -1,0 +1,85 @@
+{
+  "status": "CPU_FAILED_DECISION_REPLACEMENT_AND_ACTIVE_PARENT_ROUTING_PASS_NOT_DEPLOYED",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_repair.py",
+      "sha256": "42f6c21d89dcd0d331ddbf271b1f9098943aea6dedb0928a1ceeea5e429b0a18"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py",
+      "sha256": "e7d4be886213ae19072ad59a888d23678aef6fe472c4ead8ed15054d1f95e1e3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py",
+      "sha256": "0594bc32d56aa8fe07fd47a78238dc51947e52e34aee11a85324753e3279fe9f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_finalize_job.py",
+      "sha256": "7967e52e12544d6af5887d7b241252b070fc9511784a20611cc4f17aa9d18eb4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "d890957ff368d85cc1230396fa7a8a555fd31c2a1c9f2b8ff4ac802f138d86bc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_source_preparation.py",
+      "sha256": "7ecdfacc8a6289ffdd4cbf068d5ed99b684715e037a9d07137b5492f11cf3f70"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_profile_preparation.py",
+      "sha256": "ae780f29b6885a7f99453c12a7c869d51ebda9ec34d47fa6ae67facf0a7f25ac"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision_repair.py",
+      "sha256": "97d3b77744be3ed9b8d6fe9572c8c42f1699384c65292ecb5c41b23f117e2248"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DECISION_REPAIR_INITIAL.log",
+      "sha256": "bc980b48f0ecb711cc898c785089eb60769426de1afc6cb5028baab5f07d045b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DECISION_REPAIR_COMBINED.log",
+      "sha256": "75759aaaafea58093c75c7448354c12a8cc3ad3805ef6bb53f5a0164de059612"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DECISION_REPAIR_FINAL.log",
+      "sha256": "6c524f4c78173b43e430e20f95a3ff1e8e3cb2695299e72a110fa1536d41ee61"
+    }
+  ],
+  "checks": {
+    "initial_tests": 53,
+    "combined_tests": 153,
+    "final_tests": 55,
+    "real_journal_guard": "PASS",
+    "production_decision_events": 0,
+    "production_model_calls_added": 0
+  },
+  "behavior": [
+    "Explicit repair pins bind a failed model receipt, reason, evidence and unchanged scientific analysis. Valid scientific NEEDS_REPAIR proposals cannot be replaced as model failures.",
+    "Fresh packet and model reservations charge repair budget with a fresh exact budget snapshot. Previous failure artifacts and charges remain intact.",
+    "Only the active linked decision can be handed off, recorded or selected by controller/source/profile entry points; forks and stale parents fail.",
+    "Tested real local fake CLI nonzero failure, zero-exit invalid schema, successful replacement, immutable predecessor, restart deduplication, input binding/artifact crash recovery, missing receipts/cleanup, STOP and stale budget.",
+    "Production registration checks local read-only source access before creating a new packet/model intent."
+  ],
+  "boundaries": [
+    "Fake CLI emits synthetic decisions; no actual model review, GPU, production analysis decision or scientific result.",
+    "Source/profile downstream worker actions in the new parent-selection test are mocked; their selection is checked and existing suites cover their independent contracts.",
+    "Automatic repair supervisor and source-preparation failure replacement remain incomplete; successful but semantically invalid decisions and ambiguous missing receipts are not silently replaced.",
+    "Existing root-owned CPU-QUOTA-01 pytest garbage could not be removed; unrelated files preserved."
+  ],
+  "sandbox_recheck": {
+    "default_readonly_exit_code": 1,
+    "stderr": "bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted",
+    "sudo_noninteractive": "password required",
+    "model_calls": 0
+  },
+  "remaining": [
+    "Engineering repair worker/supervisor with exact reviewed reentry",
+    "Source-preparation failed-event replacement",
+    "Supported local read-only sandbox access and model-free platform handoff",
+    "Actual first baseline and full scientific goal"
+  ],
+  "goal_complete": false
+}

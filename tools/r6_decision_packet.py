@@ -34,7 +34,7 @@ def persist_exact(path,data):
     else:atomic(path,data)
 
 
-def prepare(journal,job_key,store,*,free_disk_bytes):
+def prepare(journal,job_key,store,*,free_disk_bytes,repair_pin=None):
     journal.guard();state=journal.read();job=journal.canonical_job(job_key,state=state)
     if state.get('current_job') is not None or state.get('current_model_event') is not None:
         raise RecoveryError('DECISION_PACKET_NOT_IDLE')
@@ -43,8 +43,13 @@ def prepare(journal,job_key,store,*,free_disk_bytes):
     if not job.get('analysis'):raise RecoveryError('DECISION_PACKET_ANALYSIS_REQUIRED')
     binding=json.loads(checked(job['analysis']).read_text())
     if binding!=bind_analysis(job,job_key,binding['report'],store):raise RecoveryError('DECISION_PACKET_BINDING_DRIFT')
+    name='DECISION_PACKET:'+job_key
+    if repair_pin is not None:
+        from tools.r6_decision_repair import predecessor
+        predecessor(journal,repair_pin,job_key)
+        name+=':REPAIR:'+repair_pin['sha256']
     old=[(k,e) for k,e in state['events'].items() if e['identity']['job_id']==job['identity']['job_id']
-        and e['identity']['role']=='decision-packet']
+        and e['identity']['role']=='decision-packet' and e['identity']['event_id']==name]
     if len(old)>1:raise RecoveryError('DECISION_PACKET_ALIAS')
     if old:
         key,entry=old[0];request=entry['request'];packet=request['packet']
@@ -67,19 +72,22 @@ def prepare(journal,job_key,store,*,free_disk_bytes):
                 protected_model_sessions=state['budget']['protected_model_sessions']),
             capacity_pass=state['budget']['capacity_pass'],scientific_acceptance=False,
             source=file_pin(Path(__file__)))
+        if repair_pin is not None:packet['repair']=repair_pin
         request=dict(analysis=job['analysis'],packet=packet)
         # Both duplicate stored packet bytes and the model prompt fit within
         # the reserved256KiB. Crash recovery uses this committed request.
         if len(canonical(request))+len(INSTRUCTIONS.encode())>CAP:raise RecoveryError('DECISION_PACKET_CONTEXT_CAP')
-        event=dict(goal_id=state['goal_id'],event_id='DECISION_PACKET:'+job_key,job_id=job['identity']['job_id'],
+        event=dict(goal_id=state['goal_id'],event_id=name,job_id=job['identity']['job_id'],
             input_sha256=sha(request),role='decision-packet')
         key,_=journal.intent(event,kind='cpu',request=request,
             resources={'output_actual_plus_unreleased_reservations_bytes':RESERVATION},
-            purpose=job['purpose'],free_disk_bytes=free_disk_bytes)
+            purpose='repair' if repair_pin is not None else job['purpose'],free_disk_bytes=free_disk_bytes)
     checked(packet['source'])
     directory=journal.directory/'decisions'/key
     packet_data=canonical(packet)+b'\n'
-    prompt=('Input packet path: '+str((directory/'packet.json').resolve())+'\nInput packet SHA256: '+hashlib.sha256(packet_data).hexdigest()+'\n'+INSTRUCTIONS+json.dumps(packet,sort_keys=True,separators=(',',':'),ensure_ascii=False)+'\n').encode()
+    repair_instructions=('Read the repair document and original failed call before deciding. '
+        'Re-evaluate the complete packet; inherit no result from the failed call.\n' if repair_pin is not None else '')
+    prompt=('Input packet path: '+str((directory/'packet.json').resolve())+'\nInput packet SHA256: '+hashlib.sha256(packet_data).hexdigest()+'\n'+repair_instructions+INSTRUCTIONS+json.dumps(packet,sort_keys=True,separators=(',',':'),ensure_ascii=False)+'\n').encode()
     if len(prompt)>CAP:raise RecoveryError('DECISION_PACKET_CONTEXT_CAP')
     directory=journal.directory/'decisions'/key
     persist_exact(directory/'packet.json',packet_data);persist_exact(directory/'prompt.txt',prompt)

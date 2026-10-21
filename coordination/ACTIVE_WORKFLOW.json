@@ -403,6 +403,8 @@
     "initial_review_replacement_status": "CPU_INITIAL_REVIEW_REPLACEMENT_PASS_NOT_DEPLOYED",
     "initial_review_replacement_evidence": "docs/experiments/r6-robustness-auto/CPU_INITIAL_REVIEW_REPAIR.json",
     "cpu_analysis_replacement_status": "CPU_ANALYSIS_FAILED_WORKER_REPLACEMENT_PASS_NOT_DEPLOYED",
-    "cpu_analysis_replacement_evidence": "docs/experiments/r6-robustness-auto/CPU_ANALYSIS_REPAIR.json"
+    "cpu_analysis_replacement_evidence": "docs/experiments/r6-robustness-auto/CPU_ANALYSIS_REPAIR.json",
+    "failed_decision_replacement_status": "CPU_FAILED_DECISION_REPLACEMENT_AND_ACTIVE_PARENT_ROUTING_PASS_NOT_DEPLOYED",
+    "failed_decision_replacement_evidence": "docs/experiments/r6-robustness-auto/CPU_DECISION_REPAIR.json"
   }
 }

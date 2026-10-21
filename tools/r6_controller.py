@@ -117,11 +117,9 @@ def save(journal,key,cursor,*,status='RUNNING',error=None):
 
 def parent_for_job(journal,job_key,store):
     state=journal.read();job=journal.canonical_job(job_key,state=state)
-    matches=[k for k,e in state['events'].items() if e['kind']=='model'
-        and e['identity']['role']=='post-analysis-decision'
-        and e['identity']['job_id']==job['identity']['job_id']]
-    require(len(matches)==1,'EXACT_JOB_DECISION')
-    parent=matches[0]
+    from tools.r6_decision_repair import active
+    parent=active(journal,job_key)
+    require(parent is not None,'EXACT_JOB_DECISION')
     require(state['events'][parent].get('decision_input',{}).get('job_event_key')==job_key,'PARENT_JOB')
     return parent,decision_record(journal,parent,store)
 

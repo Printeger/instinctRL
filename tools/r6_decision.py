@@ -37,7 +37,7 @@ def check_budget_snapshot(state,packet_input,*,model_reserved):
         raise RecoveryError('DECISION_BUDGET_SNAPSHOT_STALE')
 
 
-def register(journal,job_key,store,*,executable,free_disk_bytes,sandbox='read-only'):
+def register(journal,job_key,store,*,executable,free_disk_bytes,sandbox='read-only',repair_pin=None):
     journal.guard()
     from tools.r6_postrun import stop_paths
     if stop_paths(journal):raise RecoveryError('DECISION_STOP')
@@ -45,7 +45,20 @@ def register(journal,job_key,store,*,executable,free_disk_bytes,sandbox='read-on
     if state['goal_id']=='R6-CPU-TEST-FIXTURE':
         if not exe.is_relative_to(journal.directory.parent.resolve()):raise RecoveryError('DECISION_FIXTURE_EXECUTABLE')
     elif executable!={'path':str(CLI),'sha256':CLI_SHA}:raise RecoveryError('DECISION_PINNED_CLI_REQUIRED')
-    packet=prepare(journal,job_key,store,free_disk_bytes=free_disk_bytes)
+    name='DECISION:'+job_key
+    if repair_pin is not None:
+        from tools import r6_decision_repair as repair
+        from tools.r6_profile_preparation import guard
+        guard(journal)
+        if sandbox!='read-only':raise RecoveryError('DECISION_REPAIR_READ_ONLY')
+        parent=repair.predecessor(journal,repair_pin,job_key)
+        name+=':REPAIR:'+repair_pin['sha256'];tip=repair.active(journal,job_key)
+        if not (tip==parent or (tip is not None and state['events'][tip]['identity']['event_id']==name)):
+            raise RecoveryError('DECISION_REPAIR_NOT_ACTIVE_TIP')
+    if state['goal_id']!='R6-CPU-TEST-FIXTURE':
+        from tools.r6_review_access import check
+        check(executable,journal.canonical_job(job_key)['analysis'])
+    packet=prepare(journal,job_key,store,free_disk_bytes=free_disk_bytes,repair_pin=repair_pin)
     state=journal.read();job=journal.canonical_job(job_key,state=state)
     request=dict(prompt=packet['prompt'],schema=file_pin(SCHEMA),executable=executable,cwd=str(ROOT),
         sandbox=sandbox,timeout_seconds=3600,output_cap_bytes=MODEL_CAP,
@@ -53,16 +66,17 @@ def register(journal,job_key,store,*,executable,free_disk_bytes,sandbox='read-on
     validate_request(request)
     for prior in state['events'].values():
         if (prior['kind']=='model' and prior['identity']['job_id']==job['identity']['job_id']
-                and prior['identity']['role']=='post-analysis-decision' and prior['request']!=request):
+                and prior['identity']['role']=='post-analysis-decision'
+                and prior['identity']['event_id']==name and prior['request']!=request):
             raise RecoveryError('DECISION_JOB_ALREADY_BOUND')
     if not any(e['kind']=='model' and e['identity']['job_id']==job['identity']['job_id']
-            and e['identity']['role']=='post-analysis-decision' for e in state['events'].values()):
+            and e['identity']['role']=='post-analysis-decision' and e['identity']['event_id']==name for e in state['events'].values()):
         check_budget_snapshot(state,packet,model_reserved=False)
-    event=dict(goal_id=state['goal_id'],event_id='DECISION:'+job_key,job_id=job['identity']['job_id'],
+    event=dict(goal_id=state['goal_id'],event_id=name,job_id=job['identity']['job_id'],
         input_sha256=sha(request),role='post-analysis-decision')
     key,_=journal.intent(event,kind='model',request=request,
         resources={'automatic_model_sessions':1,'output_actual_plus_unreleased_reservations_bytes':MODEL_CAP+65536},
-        purpose=job['purpose'],free_disk_bytes=free_disk_bytes)
+        purpose='repair' if repair_pin is not None else job['purpose'],free_disk_bytes=free_disk_bytes)
     state=journal.read();entry=state['events'][key]
     if entry.get('decision_input') is not None and entry['decision_input']!=packet:
         raise RecoveryError('DECISION_INPUT_DRIFT')
@@ -79,11 +93,20 @@ def record(journal,key,store):
         raise RecoveryError('DECISION_EVENT_IDENTITY')
     packet_input=entry['decision_input'];packet=json.loads(checked(packet_input['packet']).read_text())
     job_key=packet_input['job_event_key'];job=journal.canonical_job(job_key,state=state)
+    from tools.r6_decision_repair import active,for_entry
+    repair=for_entry(journal,entry,job_key)
+    if active(journal,job_key)!=key:raise RecoveryError('DECISION_NOT_ACTIVE')
+    name='DECISION:'+job_key+(':REPAIR:'+repair['sha256'] if repair else '')
+    if repair is not None:
+        from tools.r6_profile_preparation import reservation
+        reservation(state,key,'model',{'automatic_model_sessions':1,
+            'output_actual_plus_unreleased_reservations_bytes':MODEL_CAP+65536},'repair')
+        if packet.get('repair')!=repair:raise RecoveryError('DECISION_REPAIR_PACKET')
     # Revalidate the original analysis, not only the model's evidence citations.
     from tools.r6_analysis_binding import bind_analysis
     binding=json.loads(checked(job['analysis']).read_text())
     if (job['analysis']!=packet['analysis'] or binding!=bind_analysis(job,job_key,binding['report'],store)
-            or entry['identity']['job_id']!=job['identity']['job_id'] or entry['identity']['event_id']!='DECISION:'+job_key
+            or entry['identity']['job_id']!=job['identity']['job_id'] or entry['identity']['event_id']!=name
             or entry['request']['prompt']!=packet_input['prompt'] or entry['request']['schema']!=file_pin(SCHEMA)):
         raise RecoveryError('DECISION_ANALYSIS_DRIFT')
     result=verified_decision(journal,key)
@@ -117,6 +140,8 @@ def handoff(journal,key,store,*,poll_seconds=15):
     journal.require_writer()
     entry=journal.read()['events'][key]
     if not entry.get('decision_input'):raise RecoveryError('DECISION_INPUT_NOT_BOUND')
+    from tools.r6_decision_repair import active
+    if active(journal,entry['decision_input']['job_event_key'])!=key:raise RecoveryError('DECISION_NOT_ACTIVE')
     if not entry.get('dispatch_claim') and not entry.get('receipt'):
         check_budget_snapshot(journal.read(),entry['decision_input'],model_reserved=True)
     model_handoff(journal,key,poll_seconds=poll_seconds)

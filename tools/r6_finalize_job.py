@@ -74,15 +74,15 @@ def decide(journal, key, store, executable, *, free_disk_bytes, sandbox='read-on
             raise RecoveryError('FINALIZE_DECISION_FIXTURE_EXECUTABLE')
     elif executable!={'path':str(decision.CLI),'sha256':decision.CLI_SHA}:
         raise RecoveryError('FINALIZE_DECISION_PINNED_CLI')
-    existing=[event_key for event_key,event in state['events'].items()
-        if event['kind']=='model' and event['identity']['job_id']==job['identity']['job_id']
-        and event['identity']['role']=='post-analysis-decision']
-    if len(existing)>1:raise RecoveryError('FINALIZE_DECISION_ALIAS')
+    from tools.r6_decision_repair import active,for_entry
+    selected=active(journal,key)
+    existing=[] if selected is None else [selected]
+    repair_pin=None if selected is None else for_entry(journal,state['events'][selected],key)
     if not existing or not state['events'][existing[0]].get('decision_input'):
         if existing and (state['events'][existing[0]].get('dispatch_claim') or state['events'][existing[0]].get('receipt')):
             raise RecoveryError('FINALIZE_DECISION_INPUT_AMBIGUOUS')
         event_key=decision.register(journal,key,store,executable=executable,
-            free_disk_bytes=free_disk_bytes,sandbox=sandbox)
+            free_disk_bytes=free_disk_bytes,sandbox=sandbox,repair_pin=repair_pin)
     else:
         event_key=existing[0];entry=state['events'][event_key];packet_input=entry['decision_input']
         expected=dict(prompt=packet_input['prompt'],schema=file_pin(decision.SCHEMA),
@@ -91,6 +91,7 @@ def decide(journal, key, store, executable, *, free_disk_bytes, sandbox='read-on
             stop_paths=decision.model_stop_paths(journal))
         identity=dict(goal_id=state['goal_id'],event_id='DECISION:'+key,
             job_id=job['identity']['job_id'],input_sha256=sha(expected),role='post-analysis-decision')
+        if repair_pin is not None:identity['event_id']+=':REPAIR:'+repair_pin['sha256']
         if (entry['request']!=expected or entry['identity']!=identity or sha(identity)!=event_key
                 or packet_input['job_event_key']!=key):
             raise RecoveryError('FINALIZE_DECISION_BINDING')

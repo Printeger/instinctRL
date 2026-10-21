@@ -260,14 +260,13 @@ def prepare_source(journal,parent_key,store,*,executable,free_disk_bytes):
 def after_job(journal,job_key,store,*,executable,free_disk_bytes):
     """Resolve the finished job's unique decision, then prepare its new source."""
     journal.require_writer();state=journal.read();job=journal.canonical_job(job_key,state=state)
-    decisions=[k for k,e in state['events'].items() if e['kind']=='model'
-        and e['identity']['role']=='post-analysis-decision'
-        and e['identity']['job_id']==job['identity']['job_id']]
-    require(len(decisions)==1,'EXACT_JOB_DECISION')
+    from tools.r6_decision_repair import active
+    parent=active(journal,job_key)
+    require(parent is not None,'EXACT_JOB_DECISION')
     # Do not re-enter a new-action STOP gate before reconnecting an already
     # claimed worker. Existing handoff owns its cancellation and receipt.
-    require(state['events'][decisions[0]].get('decision_input',{}).get('job_event_key')==job_key,'PARENT_JOB')
-    return prepare_source(journal,decisions[0],store,executable=executable,
+    require(state['events'][parent].get('decision_input',{}).get('job_event_key')==job_key,'PARENT_JOB')
+    return prepare_source(journal,parent,store,executable=executable,
                           free_disk_bytes=free_disk_bytes)
 
 
