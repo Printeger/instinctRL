@@ -1,5 +1,11 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-21：补齐作业后决策worker的全部工作区STOP路径，并同步finalize恢复契约。
+54项CPU回归通过，包含真实假CLI被STOP阻止启动、正常决策单次调用与恢复；
+证据CPU_DECISION_STOP.json，待与controller完整衔接合并独审，无新增付费审核。
+现有决策仍为文字提案，下一计划准备/控制器部署未完成，具体缺口见CONTROLLER_REMAINING_WORK.json。
+125次自动唤醒+30worker=155，剩101；无R6 GPU作业，Goal未完成。
+
 2026-10-21：独审30 PASS_R6_RESOURCE_BUNDLE，资源新鲜度MUST_FIX关闭；准确queue/sampler
 接受与receipt见 RESOURCE_ADMISSION_ACCEPTED_02.json。独审159项通过；7个旧mock签名问题
 已修复并单独14项全过。完整baseline-prelive-01/plan.json已实际校验，未发行/未提交。

@@ -1,0 +1,40 @@
+{
+  "status": "CPU_PASS_PENDING_COMBINED_CONTROLLER_REVIEW",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py",
+      "sha256": "66005a2c76e5c5070c57ad280f7df883ae29ca1dc80f7e2f00839b00bccfc57f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_finalize_job.py",
+      "sha256": "bafb96968cc982735619c2dac8a48d2d8014197e99e92e3fd2d347f9409f0f13"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_decision.py",
+      "sha256": "f9560f543f8b43f2f95cc059769b6c6f58cc3f149192a429f18c395204002d96"
+    }
+  ],
+  "tests": {
+    "passed": 54,
+    "log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DECISION_STOP_FINAL_TEST.txt",
+      "sha256": "21085ebdc5987bff64df869f008d41ddf01d8022671f370712e3d84f976f6814"
+    },
+    "earlier_passed": 45,
+    "earlier_log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DECISION_STOP_TEST.txt",
+      "sha256": "22c7e96e1e635e1e3eb2e510c6553a5f8cb6fdebf38d9273a750949f5d6dc78d"
+    }
+  },
+  "coverage": [
+    "All four workspace STOP paths reject registration before packet/reservation",
+    "STOP after registration produces a stopped receipt without launching actual fake CLI",
+    "Consumed stopped event never retries",
+    "Completed decision resumes through actual finalize interface with original STOP request and exactly one fake CLI call"
+  ],
+  "production_model_invocations": 0,
+  "gpu_queries": 0,
+  "live_jobs": 0,
+  "scientific_acceptance": false,
+  "controller_deployed": false
+}

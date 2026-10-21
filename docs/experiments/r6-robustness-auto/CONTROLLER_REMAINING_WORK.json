@@ -1,0 +1,52 @@
+{
+  "status": "INCOMPLETE_NOT_DEPLOYED",
+  "checked_commit": "8696113ffe0eebe07c5fda8af17ba8c789ce5d31",
+  "concrete_first_plan": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-01/plan.json",
+    "sha256": "21e5dc48b3c5ea9e52882e002b547d17669ded0f0e27c934f8df09fd3e31ceb2"
+  },
+  "existing_entry": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_start_baseline.py",
+    "sha256": "2df746e146db0b7901f34a860f29d7e48df03d717bc227b56d2f5209c00079db"
+  },
+  "existing_next_entry": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_continue_job.py",
+    "sha256": "23528dd3d41a9027e162a2b760fa521a3e42ba01add0c4e288794c6636809911"
+  },
+  "decision_schema": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/post-analysis-decision.schema.json",
+    "sha256": "8f5401936edd8503ff7cd09cdd69ac9de95b53bd6ffba171190578b50499f073"
+  },
+  "decision_registration": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py",
+    "sha256": "66005a2c76e5c5070c57ad280f7df883ae29ca1dc80f7e2f00839b00bccfc57f"
+  },
+  "facts": [
+    "Post-analysis decision schema returns hypothesis/comparison/text steps, not an executable plan pin",
+    "Continue entry requires an already prepared exact plan",
+    "Source snapshot helper requires controller Journal writer and prepaid reservation; model cannot create unaccounted snapshots",
+    "Worker may edit task code and prepare inputs; controller alone reserves resources and issues/submits",
+    "No production post-analysis decision exists, so updated STOP request does not reinterpret an existing production receipt"
+  ],
+  "next_implementation": {
+    "worker": "Budgeted source/input preparation event bound to consumed post-analysis decision; concrete pinned artifacts, not another prose-only decision",
+    "controller": "Consume prepared artifact requests through existing snapshot/storage/authorization/spec tools, then exact review and continue_job",
+    "phases": "First prepare source/config and experiment card; controller freezes and provisions; then resolve actual receipt/volume pins and build exact parameters/auth/spec",
+    "invariants": [
+      "No Journal or Store authority mutation by source-preparation worker",
+      "No model or paid probe while waiting for a live job",
+      "Do not mutate/reload controller implementation underneath an active run; pin control inputs and use an explicit process restart boundary for newly prepared code",
+      "Do not accept partial preparation as dispatch-ready; retain failures and no ambiguous retries"
+    ]
+  },
+  "remaining_external": [
+    "Future privileged volume provisioning requires actual local credential/service; baseline pair already exists",
+    "Platform Goal has no exposed active-without-continuation transition; resolve before live handoff"
+  ],
+  "remaining_science": [
+    "Baseline measurement and diagnosis",
+    "Evidence-driven training or distinct-stream baseline validation",
+    "Final frozen confirmation and holdout, independent audit, videos and complete delivery"
+  ],
+  "goal_complete": false
+}

@@ -16,6 +16,13 @@ CLI=Path('/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-l
 CLI_SHA='9a820c17865fa825d04db416818679a9d63bd72e50835c396f496e5684626c9c'
 
 
+def model_stop_paths(journal):
+    from tools.r6_postrun import ROOT as stop_root
+    return [str(p.resolve()) for p in (journal.directory.parent/'STOP',
+        journal.directory/'STOP',stop_root/'STOP',stop_root/'coordination/STOP',
+        stop_root/'coordination/commander/STOP',stop_root/'coordination/executor/STOP')]
+
+
 def check_budget_snapshot(state,packet_input,*,model_reserved):
     packet=json.loads(checked(packet_input['packet']).read_text())
     snapshot=packet['budget_before_packet_reservation'];expected=dict(snapshot['charged'])
@@ -32,6 +39,8 @@ def check_budget_snapshot(state,packet_input,*,model_reserved):
 
 def register(journal,job_key,store,*,executable,free_disk_bytes,sandbox='read-only'):
     journal.guard()
+    from tools.r6_postrun import stop_paths
+    if stop_paths(journal):raise RecoveryError('DECISION_STOP')
     exe=checked(executable);state=journal.read()
     if state['goal_id']=='R6-CPU-TEST-FIXTURE':
         if not exe.is_relative_to(journal.directory.parent.resolve()):raise RecoveryError('DECISION_FIXTURE_EXECUTABLE')
@@ -40,7 +49,7 @@ def register(journal,job_key,store,*,executable,free_disk_bytes,sandbox='read-on
     state=journal.read();job=journal.canonical_job(job_key,state=state)
     request=dict(prompt=packet['prompt'],schema=file_pin(SCHEMA),executable=executable,cwd=str(ROOT),
         sandbox=sandbox,timeout_seconds=3600,output_cap_bytes=MODEL_CAP,
-        stop_paths=[str((journal.directory.parent/'STOP').resolve()),str((journal.directory/'STOP').resolve())])
+        stop_paths=model_stop_paths(journal))
     validate_request(request)
     for prior in state['events'].values():
         if (prior['kind']=='model' and prior['identity']['job_id']==job['identity']['job_id']

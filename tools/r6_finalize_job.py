@@ -88,7 +88,7 @@ def decide(journal, key, store, executable, *, free_disk_bytes, sandbox='read-on
         expected=dict(prompt=packet_input['prompt'],schema=file_pin(decision.SCHEMA),
             executable=executable,cwd=str(decision.ROOT),sandbox=sandbox,
             timeout_seconds=3600,output_cap_bytes=decision.MODEL_CAP,
-            stop_paths=[str((journal.directory.parent/'STOP').resolve()),str((journal.directory/'STOP').resolve())])
+            stop_paths=decision.model_stop_paths(journal))
         identity=dict(goal_id=state['goal_id'],event_id='DECISION:'+key,
             job_id=job['identity']['job_id'],input_sha256=sha(expected),role='post-analysis-decision')
         if (entry['request']!=expected or entry['identity']!=identity or sha(identity)!=event_key

@@ -179,6 +179,47 @@ class DecisionTests(unittest.TestCase):
         with self.assertRaisesRegex(RecoveryError,'STOP'):self.prepare()
         self.assertFalse((self.j.directory/'decisions').exists())
 
+    def test_all_workspace_stops_block_before_packet_and_reservation(self):
+        for relative in ('STOP','coordination/STOP','coordination/commander/STOP',
+                         'coordination/executor/STOP'):
+            with self.subTest(relative=relative),patch('tools.r6_postrun.ROOT',self.root):
+                stop=self.root/relative;stop.parent.mkdir(parents=True,exist_ok=True);stop.touch()
+                before=self.j.read()
+                try:
+                    with self.assertRaisesRegex(RecoveryError,'DECISION_STOP'):self.register()
+                    self.assertEqual(self.j.read(),before)
+                    self.assertFalse((self.j.directory/'decisions').exists())
+                finally:stop.unlink()
+
+    def test_workspace_stop_after_registration_blocks_real_fake_cli_launch(self):
+        with patch('tools.r6_postrun.ROOT',self.root):
+            key=self.register()
+            stop=self.root/'coordination/executor/STOP'
+            stop.parent.mkdir(parents=True,exist_ok=True);stop.touch()
+            request=self.j.read()['events'][key]['request']
+            self.assertIn(str(stop),request['stop_paths'])
+            with self.assertRaises(RecoveryError):self.complete(key)
+            self.assertFalse(self.exe.with_suffix('.count').exists())
+            receipt=self.j.read()['events'][key]['receipt']
+            self.assertIsNotNone(receipt)
+            value=json.loads(Path(receipt['path']).read_text())
+            self.assertIn('STOP_BEFORE_MODEL_START',value['error'])
+            self.assertIsNone(value['child_identity'])
+            # An already consumed stopped event cannot start the CLI on replay.
+            with self.assertRaises(RecoveryError):self.complete(key)
+            self.assertFalse(self.exe.with_suffix('.count').exists())
+
+    def test_finalize_replay_uses_same_stop_contract_without_another_model(self):
+        from tools.r6_finalize_job import finish_and_decide
+        with patch('tools.r6_postrun.ROOT',self.root):
+            key=self.register();original=self.complete(key)
+            with self.j.writer():
+                result=finish_and_decide(self.j,self.key,self.store,
+                    file_pin(self.exe),file_pin(self.exe),free_disk_bytes=500*1024**3,
+                    poll_seconds=.01)
+            self.assertEqual(result['decision'],original)
+            self.assertEqual(self.exe.with_suffix('.count').read_text(),'call\n')
+
     def test_new_model_request_cannot_alias_same_decision(self):
         self.register();self.exe.write_text(self.exe.read_text()+'\n# different identity\n')
         with self.assertRaisesRegex(RecoveryError,'ALREADY_BOUND'):self.register()
