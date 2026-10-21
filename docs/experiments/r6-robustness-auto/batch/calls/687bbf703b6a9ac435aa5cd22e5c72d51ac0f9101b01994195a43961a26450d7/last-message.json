@@ -1,0 +1,32 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "No substantive defect found in the incremental scope. All 38 CPU tests passed. Verified first-baseline admission, gates, review/schema/receipt/evidence binding, budget and storage preview, crash/replay and revoked-authority rejection. Existing next-job identities and transactions remain unchanged. Runtime/master/kernel boundaries and first-review receipts remain fixtures. No production capacity, protocol freeze, prelive approval, deployment or science acceptance is implied.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_initial_baseline.py",
+      "sha256": "6421d9cb3e6a52645f5b01558cfbd7fbfca464f694a7fabb3da30f1d6d110e94"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_issue_next.py",
+      "sha256": "11d2f9fdad92182ecffc50ebb2bad80d8a836a3a8102a2815e1493aca4c795b9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_initial_baseline.py",
+      "sha256": "eefeb600410de15d537a1c45f72f5f9e4ed6e768b8428b84c90d022aae54fde3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/initial-baseline-review.schema.json",
+      "sha256": "cb30ffd315c5658bd727b68e409e722c585d2bcae857ae351b2ee9f4535f6a6c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_INITIAL_BASELINE_ISSUANCE.json",
+      "sha256": "626e08274e58f33b0de7b967fab7993e96165cad06c0670431bea3fa4f3685c5"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Resolve production prerequisites before actual prelive review.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 112
+  },
+  "must_fix": []
+}

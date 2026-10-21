@@ -1,5 +1,11 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：第26次独审PASS_CPU_SCOPE，首次基线审核/Store发行组件接受，
+独立38项CPU回归通过；receipt/schema/evidence pins与worker退出核验完成。
+见 reviews/initial-baseline-issuance-review.json。未发行生产许可，正式双卷仍缺；
+协议/容量接受、首次实际prelive审核和controller部署仍待完成。
+118次唤醒+26worker=144，余112次；无R6 live，Goal未完成。
+
 2026-10-21：补齐无parent的首次基线审核登记与准确Store发行路径，复用已有事务。
 38项CPU检查通过：schema/receipt绑定、一次批准、批准后崩溃恢复、撤销/STOP/容量拒绝，
 既有next-job与假CLI继续链回归通过。边界替身明确，待独审；非生产许可或controller部署。
