@@ -30,7 +30,7 @@ def queue_ready(journal, queue_key, spec_pin):
     return entry['window_record']
 
 
-def submit_once(journal, key, store, *, queue_key):
+def submit_once(journal, key, store, *, queue_key, refresh_observation=None):
     journal.require_writer()
     state=journal.read();entry=journal.canonical_job(key,state=state);request=entry['request']
     require(set(request)=={'spec','wait_deadline_unix'} and sha(request)==entry['identity']['input_sha256']
@@ -84,9 +84,17 @@ def submit_once(journal, key, store, *, queue_key):
         journal.require_dispatch_budget()
         experiments.validate(spec,store.root)
         approval=experiments.authorized(store.replay(),spec,store.root)
-        window=queue_ready(journal,queue_key,request['spec'])
+        try:
+            window=queue_ready(journal,queue_key,request['spec'])
+        except RecoveryError as error:
+            if str(error)!='SUBMIT_QUEUE_STALE' or refresh_observation is None:raise
+            # Complete expensive input validation first. Re-observation uses
+            # the existing bounded collector, never a relaxed freshness limit.
+            queue_key=refresh_observation()
+            window=queue_ready(journal,queue_key,request['spec'])
         # Last STOP/budget check immediately before recording possible effects.
         journal.require_dispatch_budget();require(not stop_paths(journal), 'STOP')
+        require(0<deadline-time.time()<=spec['resources']['wall_seconds'], 'DEADLINE')
         claim=dict(store_root=root,job_id=jid,spec_sha256=sha(spec),queue_key=queue_key,
             queue_window=window,approval_id=approval['approval_id'],controller=identity(os.getpid()),
             implementation=file_pin(Path(__file__)))
@@ -120,7 +128,7 @@ def submit_once(journal, key, store, *, queue_key):
     return result
 
 
-def submit_and_close(journal, key, store, *, queue_key):
+def submit_and_close(journal, key, store, *, queue_key, refresh_observation=None):
     """One writer owns submit and the existing model-free local wait/close.
 
 Replay of a closed step verifies its original evidence without moving later
@@ -133,7 +141,8 @@ analysis/decision state backwards. Unknown submission effects never retry.
         value=entry['resources'].get(name)
         require(type(value) in (int,float) and math.isfinite(value)
                 and value>=spec['resources']['wall_seconds']+180, 'CLOSE_RESERVATION_REQUIRED')
-    submission=submit_once(journal,key,store,queue_key=queue_key)
+    submission=submit_once(journal,key,store,queue_key=queue_key,
+                           refresh_observation=refresh_observation)
     entry=journal.canonical_job(key)
     from tools.r6_job_handoff import job_handoff, exact_job, cleanup_evidence, TERMINAL
     if entry.get('closure'):

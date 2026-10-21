@@ -18,7 +18,7 @@ def require(condition, reason):
 
 
 def register_and_close(journal, spec_pin, store, *, queue_key, free_disk_bytes,
-                       purpose='development'):
+                       purpose='development', refresh_observation=None):
     """Admit, reserve, submit and locally close under the caller's one writer.
 
     A stale resource observation cannot consume a new live reservation. Once a
@@ -35,7 +35,8 @@ def register_and_close(journal, spec_pin, store, *, queue_key, free_disk_bytes,
     if not entries or not entries[0].get('submission_claim'):
         queue_ready(journal,queue_key,spec_pin)
     key=register(journal,spec_pin,store,free_disk_bytes=free_disk_bytes,purpose=purpose)
-    result=submit_and_close(journal,key,store,queue_key=queue_key)
+    result=submit_and_close(journal,key,store,queue_key=queue_key,
+                            refresh_observation=refresh_observation)
     return dict(event_key=key,**result)
 
 

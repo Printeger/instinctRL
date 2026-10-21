@@ -1,5 +1,11 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：完整扩展树实际CPU核验耗时7.01秒，重复校验会使8秒资源窗口过期。
+提交桥现支持在完整校验后按需调用原有有界采样器取得新完整窗口，再记录claim；
+不放宽阈值、不缓存跳过输入哈希，已有claim恢复不重采样。刷新后再次检查STOP/预算/
+原截止时间。42项CPU回归通过，证据 `docs/experiments/r6-robustness-auto/CPU_POSTVALIDATION_QUEUE.json`。
+仍待独审和生产集成验证；CPU-QUOTA-02尚不存在，capacity=false，无新增GPU/live/model。
+
 2026-10-21：新增单作业本地入口 tools/r6_run_job.py，在同一writer下组合资源等待、
 准确登记/提交/关闭和已有分析/决策交接。82项CPU回归通过；恢复使用原queue claim，
 不重新排队或提交，歧义claim拒绝重试。证据见

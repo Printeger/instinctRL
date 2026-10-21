@@ -61,9 +61,16 @@ def run(journal, spec_pin, store, query_executable, decision_executable, *,
             return dict(status='RESOURCE_OBSERVATION_REJECTED',observation=observation,
                         scientific_acceptance=False)
         queue_key=observation['event_key']
+    def refresh_observation():
+        observation=wait_for_observation(journal,spec_pin,query_executable,
+            free_disk_bytes=min(free_disk_bytes,shutil.disk_usage(journal.directory).free),
+            queue_review=queue_review,sampler_review=sampler_review)
+        if observation['status']!='OBSERVATION_PASS':
+            raise RecoveryError('RUN_JOB_REFRESH_OBSERVATION_REJECTED')
+        return observation['event_key']
     closed=register_and_close(journal,spec_pin,store,queue_key=queue_key,
         free_disk_bytes=min(free_disk_bytes,shutil.disk_usage(journal.directory).free),
-        purpose=purpose)
+        purpose=purpose,refresh_observation=refresh_observation)
     result=finish_and_decide(journal,closed['event_key'],store,
         query_executable,decision_executable,
         free_disk_bytes=min(free_disk_bytes,shutil.disk_usage(journal.directory).free),

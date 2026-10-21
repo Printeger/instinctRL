@@ -1,0 +1,49 @@
+{
+  "schema_version": "r6-postvalidation-observation-cpu/1",
+  "status": "CPU_PASS_PENDING_REVIEW_NOT_DEPLOYED",
+  "pytest_cases_passed": 42,
+  "new_test_cases": 4,
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "9ee4af0e81441e25bc03d7a1b24e906ebff5dc2c9f7dd370bd4947d211985e33"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_register_job.py",
+      "sha256": "3224dda2c8eeb428ba820892eddf9dfcd5174f3499901e3bae97b209ad5b7a13"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_run_job.py",
+      "sha256": "d65779f5a1449de75d33026a8198e5d545f147a4ce6d2ba40a64582a9b82e904"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_refresh.py",
+      "sha256": "ad2e5b5b8b72a81126c146b54a8b2b52fef953e56e8548931e97d958d12c8541"
+    }
+  ],
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_POSTVALIDATION_QUEUE_TESTS.txt",
+    "sha256": "4a1f3f79de78e44cd661fd37530ec68a1a1725110dfbae802daaa69e571ad0a5"
+  },
+  "actual_input_timing": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_EXTENSION_VALIDATION_TIMING.json",
+    "sha256": "be0a0a3f4f41eebdf812f0a23fef1370bf2fb544567130eb6995db055c8db47e"
+  },
+  "coverage": [
+    "Full authority validation precedes optional refresh of stale observation",
+    "Callback result must pass unchanged exact-spec and eight-second freshness checks",
+    "Original PASS record remains preserved",
+    "Existing submission claim never refreshes or retries",
+    "Final STOP, budget and immutable deadline checks after refresh"
+  ],
+  "limitations": [
+    "Synthetic queue time and samples; no real GPU queries or job processes",
+    "Full production path not yet deployed or independently reviewed",
+    "CPU-QUOTA-02 result mount remains absent",
+    "No relaxation of capacity or authorization gates"
+  ],
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "capacity_pass": false
+}
