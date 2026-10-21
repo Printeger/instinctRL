@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：机器授权提案生成器复用准确只读snapshot内config/参数/compatibility/budget
+校验，不写authorization文件或Store。8项CPU检查通过，实际冻结解释器对不完整参数
+正确拒绝；成功路径测试明确替身，不宣称完整真实提案已生成。初轮fixture解释器symlink
+pin失败保留并修正，见 `docs/experiments/r6-robustness-auto/CPU_BASELINE_AUTH_PROPOSAL.json`。
+正式卷/冻结协议/容量尚缺，独审、计划生成与controller部署未完成。
+115次自动唤醒+23worker=138，余118次；无R6 live，Goal未完成。
+
 2026-10-21：本地实际worker→JSONL/receipt/schema→精确review→真实Store→next-job
 登记CPU链验证通过，4项真实假CLI场景+5项组合恢复共9项；PASS/MUST_FIX和审核后
 新Journal恢复均只启动一次假CLI、不重复预留，所有worker清理核验。

@@ -1,0 +1,40 @@
+{
+  "schema_version": "r6-auth-proposal-cpu/1",
+  "status": "CPU8_PASS_ACTUAL_INCOMPLETE_INPUT_REJECTION",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_prepare_authorization.py",
+      "sha256": "76808653da4e5acdf769d641799d16a715f8a7bd4be7d94f30b90f6a340684a8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_prepare_authorization.py",
+      "sha256": "6785f03913c47359b321fe7cb772fab96c45415c7ce30af99a70400d347e1b5a"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-prepare-auth-initial.txt",
+      "sha256": "5317f255e18df85fcfb14b024168851ef56ad36dc84145cac3c42125ec84a0df"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-prepare-auth-recheck.txt",
+      "sha256": "a214f4081bbb54d62506097b300fa42b01555360c8dab341e489fedae82ccf3e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-prepare-auth-actual.txt",
+      "sha256": "5cb491353e928eb77de547c90959f34dcdec302ea4b99771da4a8f89a6a566b9"
+    }
+  ],
+  "coverage": [
+    "Snapshot inventory/pins checked before invoking pinned isolated interpreter",
+    "Snapshot own config/parameter/compatibility/budget validators assemble proposal",
+    "Actual frozen snapshot rejects incomplete parameters before generating a proposal",
+    "Output wrapper explicitly proposed/not issued; no Store or authority-file writes"
+  ],
+  "limits": [
+    "Success-path unit validators/process are explicit substitutes",
+    "Initial5pass/3fixture symlink-pin failures corrected to resolved interpreter path; original log retained",
+    "No complete real proposal: volumes, frozen protocol/capacity required",
+    "Independent review and scientific plan generation still pending"
+  ]
+}

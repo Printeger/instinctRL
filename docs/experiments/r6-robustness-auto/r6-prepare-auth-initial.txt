@@ -1,0 +1,121 @@
+FFF.....                                                                 [100%]
+=================================== FAILURES ===================================
+_______ test_proposal_does_not_issue_and_checks_snapshot_before_process ________
+
+case = namespace(args={'snapshot_receipt': {'path': '/tmp/pytest-of-mint/pytest-1205/test_proposal_does_not_issue_a0/receipt....attempt': '/tmp/pytest-of-mint/pytest-1205/test_proposal_does_not_issue_a0/attempt', 'mode': 'research-r6-evaluation'})
+
+    def test_proposal_does_not_issue_and_checks_snapshot_before_process(case):
+>       r=m.prepare(**case.args)
+
+tools/test_r6_prepare_authorization.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_prepare_authorization.py:42: in prepare
+    executable=checked(dict(path=config['execution']['python_path'],sha256=config['execution']['python_sha256']))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pin = {'path': '/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python', 'sha256': '1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118'}
+
+    def checked(pin):
+        path = Path(pin['path'])
+        if path.is_symlink() or file_pin(path) != pin:
+>           raise RecoveryError('PIN_DRIFT')
+E           tools.r6_recovery.RecoveryError: PIN_DRIFT
+
+tools/r6_recovery.py:32: RecoveryError
+___________ test_snapshot_or_frozen_validator_failure_is_not_hidden ____________
+
+case = namespace(args={'snapshot_receipt': {'path': '/tmp/pytest-of-mint/pytest-1205/test_snapshot_or_frozen_valida0/receipt....attempt': '/tmp/pytest-of-mint/pytest-1205/test_snapshot_or_frozen_valida0/attempt', 'mode': 'research-r6-evaluation'})
+
+    def test_snapshot_or_frozen_validator_failure_is_not_hidden(case):
+        case.checker.side_effect=RecoveryError('inventory drift')
+        with pytest.raises(RecoveryError,match='inventory drift'):m.prepare(**case.args)
+        case.run.assert_not_called();case.checker.side_effect=None
+        case.run.return_value=SimpleNamespace(returncode=1,stdout='',stderr='protocol not frozen')
+>       with pytest.raises(RecoveryError,match='protocol not frozen'):m.prepare(**case.args)
+
+tools/test_r6_prepare_authorization.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_prepare_authorization.py:42: in prepare
+    executable=checked(dict(path=config['execution']['python_path'],sha256=config['execution']['python_sha256']))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pin = {'path': '/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python', 'sha256': '1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118'}
+
+    def checked(pin):
+        path = Path(pin['path'])
+        if path.is_symlink() or file_pin(path) != pin:
+>           raise RecoveryError('PIN_DRIFT')
+E           tools.r6_recovery.RecoveryError: PIN_DRIFT
+
+tools/r6_recovery.py:32: RecoveryError
+
+During handling of the above exception, another exception occurred:
+
+case = namespace(args={'snapshot_receipt': {'path': '/tmp/pytest-of-mint/pytest-1205/test_snapshot_or_frozen_valida0/receipt....attempt': '/tmp/pytest-of-mint/pytest-1205/test_snapshot_or_frozen_valida0/attempt', 'mode': 'research-r6-evaluation'})
+
+    def test_snapshot_or_frozen_validator_failure_is_not_hidden(case):
+        case.checker.side_effect=RecoveryError('inventory drift')
+        with pytest.raises(RecoveryError,match='inventory drift'):m.prepare(**case.args)
+        case.run.assert_not_called();case.checker.side_effect=None
+        case.run.return_value=SimpleNamespace(returncode=1,stdout='',stderr='protocol not frozen')
+>       with pytest.raises(RecoveryError,match='protocol not frozen'):m.prepare(**case.args)
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'protocol not frozen'
+E        Input: 'PIN_DRIFT'
+
+tools/test_r6_prepare_authorization.py:39: AssertionError
+___________________ test_subprocess_identity_drift_rejected ____________________
+
+case = namespace(args={'snapshot_receipt': {'path': '/tmp/pytest-of-mint/pytest-1205/test_subprocess_identity_drift0/receipt....attempt': '/tmp/pytest-of-mint/pytest-1205/test_subprocess_identity_drift0/attempt', 'mode': 'research-r6-evaluation'})
+
+    def test_subprocess_identity_drift_rejected(case):
+        bad=dict(case.auth,config_sha256='0'*64)
+        case.run.return_value.stdout=json.dumps(bad)
+>       with pytest.raises(RecoveryError,match='IDENTITY_DRIFT'):m.prepare(**case.args)
+
+tools/test_r6_prepare_authorization.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_prepare_authorization.py:42: in prepare
+    executable=checked(dict(path=config['execution']['python_path'],sha256=config['execution']['python_sha256']))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pin = {'path': '/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python', 'sha256': '1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118'}
+
+    def checked(pin):
+        path = Path(pin['path'])
+        if path.is_symlink() or file_pin(path) != pin:
+>           raise RecoveryError('PIN_DRIFT')
+E           tools.r6_recovery.RecoveryError: PIN_DRIFT
+
+tools/r6_recovery.py:32: RecoveryError
+
+During handling of the above exception, another exception occurred:
+
+case = namespace(args={'snapshot_receipt': {'path': '/tmp/pytest-of-mint/pytest-1205/test_subprocess_identity_drift0/receipt....attempt': '/tmp/pytest-of-mint/pytest-1205/test_subprocess_identity_drift0/attempt', 'mode': 'research-r6-evaluation'})
+
+    def test_subprocess_identity_drift_rejected(case):
+        bad=dict(case.auth,config_sha256='0'*64)
+        case.run.return_value.stdout=json.dumps(bad)
+>       with pytest.raises(RecoveryError,match='IDENTITY_DRIFT'):m.prepare(**case.args)
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'IDENTITY_DRIFT'
+E        Input: 'PIN_DRIFT'
+
+tools/test_r6_prepare_authorization.py:45: AssertionError
+=========================== short test summary info ============================
+FAILED tools/test_r6_prepare_authorization.py::test_proposal_does_not_issue_and_checks_snapshot_before_process
+FAILED tools/test_r6_prepare_authorization.py::test_snapshot_or_frozen_validator_failure_is_not_hidden
+FAILED tools/test_r6_prepare_authorization.py::test_subprocess_identity_drift_rejected
+3 failed, 5 passed in 0.93s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-effac62f-c312-43f6-b1bd-91c1750a3ffe/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-effac62f-c312-43f6-b1bd-91c1750a3ffe/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-effac62f-c312-43f6-b1bd-91c1750a3ffe/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-effac62f-c312-43f6-b1bd-91c1750a3ffe
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-effac62f-c312-43f6-b1bd-91c1750a3ffe'
+  warnings.warn(
