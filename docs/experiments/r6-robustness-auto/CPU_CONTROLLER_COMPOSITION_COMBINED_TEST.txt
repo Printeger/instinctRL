@@ -1,0 +1,123 @@
+.............F.................................                          [100%]
+=================================== FAILURES ===================================
+___ test_detached_process_wait_has_no_new_models_and_enforces_writer[False] ____
+
+controller = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-18/test_detached_process_wait_has0')
+stop = False
+
+    @pytest.mark.parametrize('stop',[False,True])
+    def test_detached_process_wait_has_no_new_models_and_enforces_writer(controller,tmp_path,stop):
+        """Actual detached controller process; only live wait/frozen verifier substituted."""
+        import os
+        import subprocess
+        import sys
+        import time
+        from pathlib import Path
+        from rlflow.jobs import owns
+        from tools.r6_job_handoff import no_model_workers
+        b=controller
+        fixture=b.write('detached-fixture.json',dict(request=b.request,store_state=b.store.replay(),
+            batch=str(b.j.directory),root=str(b.root),job_key=b.key))
+        ready=b.root/'wait-ready';release=b.root/'wait-release'
+        script=r'''
+    import json,sys,time
+    from pathlib import Path
+    from types import SimpleNamespace
+    from tools import r6_controller as c
+    from tools.r6_recovery import Journal,RecoveryError
+    v=json.loads(Path(sys.argv[1]).read_text());root=Path(v['root']);j=Journal(Path(v['batch']))
+    c.profile.verify_frozen=lambda *a:None
+    c.profile.storage.native_tool.BASE=root/'native-volumes'
+    c.profile.storage.result_tool.BASE=root/'result-volumes'
+    c.profile.storage.result_tool.ATTEMPTS=root/'attempts'
+    def wait(*a,**kw):
+     (root/'wait-ready').touch()
+     deadline=time.monotonic()+10
+     while not (root/'wait-release').exists():
+      if (j.directory/'STOP').exists():raise RecoveryError('CPU owned wait STOP')
+      if time.monotonic()>deadline:raise RuntimeError('CPU bounded fixture timeout')
+      time.sleep(.02)
+     return dict(status='DECISION_PROPOSAL_RETURNED',event_key=v['job_key'])
+    c.first.start=wait
+    # Real profile process, with a short test-only poll; production remains 15 s.
+    from tools.r6_batch import model_handoff
+    c.profile.model_handoff=lambda j,k:model_handoff(j,k,poll_seconds=.01)
+    with j.writer():
+     result=c.run(j,v['request'],SimpleNamespace(root=root,replay=lambda:v['store_state']),free_disk_bytes=500*1024**3)
+    print(json.dumps(result))
+    '''
+        before_models=len([e for e in b.j.read()['events'].values() if e['kind']=='model'])
+        proc=subprocess.Popen([sys.executable,'-B','-c',script,fixture['path']],cwd=c.ROOT,
+            env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',CUDA_VISIBLE_DEVICES='',
+                     PYTHONPATH='.:tools/rlflow:isaaclab-training'),start_new_session=True,
+            stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+        try:
+            deadline=time.monotonic()+8
+            while not ready.exists():
+                assert proc.poll() is None
+                assert time.monotonic()<deadline
+                time.sleep(.02)
+            assert os.getsid(proc.pid)==proc.pid
+            assert owns(entry(b)['controller_process'])
+            no_model_workers(b.j)
+            assert len([e for e in b.j.read()['events'].values() if e['kind']=='model'])==before_models
+            assert not b.builder.with_suffix('.count').exists()
+            with pytest.raises(BlockingIOError):
+                with Journal(b.j.directory).writer():pass
+            if stop:(b.j.directory/'STOP').touch()
+            else:release.touch()
+            stdout,stderr=proc.communicate(timeout=20)
+            if stop:
+                assert proc.returncode!=0 and 'CPU owned wait STOP' in stderr
+                assert entry(b)['status']=='INCOMPLETE_EXCEPTION'
+                assert not b.builder.with_suffix('.count').exists()
+            else:
+>               assert proc.returncode==0,stderr
+E               AssertionError: Traceback (most recent call last):
+E                   File "<string>", line 25, in <module>
+E                   File "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py", line 130, in run
+E                     parent,result=parent_for_job(journal,cursor['job_key'],store)
+E                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   File "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py", line 95, in parent_for_job
+E                     return parent,decision_record(journal,parent,store)
+E                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   File "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision.py", line 85, in record
+E                     if (job['analysis']!=packet['analysis'] or binding!=bind_analysis(job,job_key,binding['report'],store)
+E                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   File "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py", line 60, in bind_analysis
+E                     context=analysis_context(entry,key,store)
+E                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   File "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py", line 23, in analysis_context
+E                     _, native = cleanup_evidence(store.root/'jobs'/job['id'], job)
+E                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   File "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py", line 76, in cleanup_evidence
+E                     pins = {name: file_pin(directory / name) for name in names}
+E                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   File "/home/mint/rl_dev/instinctRL-dev/tools/r6_recovery.py", line 24, in file_pin
+E                     with path.open('rb') as stream:
+E                          ^^^^^^^^^^^^^^^
+E                   File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+E                     return io.open(self, mode, buffering, encoding, errors, newline)
+E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                 FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpbg1kay3d/jobs/J-abc49c509e7ef268/receipt.json'
+E                 
+E               assert 1 == 0
+E                +  where 1 = <Popen: returncode: 1 args: ['/home/mint/rl_dev/instinctRL_orchestrator/.ven...>.returncode
+
+tools/test_r6_controller.py:226: AssertionError
+=========================== short test summary info ============================
+FAILED tools/test_r6_controller.py::test_detached_process_wait_has_no_new_models_and_enforces_writer[False]
+1 failed, 46 passed in 20.97s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-c0ea5a11-ce71-4ddc-8e70-964f8930b0a8/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-c0ea5a11-ce71-4ddc-8e70-964f8930b0a8/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-c0ea5a11-ce71-4ddc-8e70-964f8930b0a8/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-c0ea5a11-ce71-4ddc-8e70-964f8930b0a8
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-c0ea5a11-ce71-4ddc-8e70-964f8930b0a8'
+  warnings.warn(

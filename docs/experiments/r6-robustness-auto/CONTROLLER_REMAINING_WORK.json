@@ -1,6 +1,6 @@
 {
-  "status": "PROFILE_SOURCE_MATERIALIZATION_CPU_READY_FULL_PIPELINE_INCOMPLETE",
-  "checked_commit": "8696113ffe0eebe07c5fda8af17ba8c789ce5d31",
+  "status": "CONTROLLER_COMPOSITION_CPU_PASS_UNSUPPORTED_PHASES_AND_DEPLOYMENT_PENDING",
+  "checked_commit": "4cefc402",
   "concrete_first_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
     "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
@@ -29,9 +29,9 @@
     "No production post-analysis decision exists, so updated STOP request does not reinterpret an existing production receipt"
   ],
   "next_implementation": {
-    "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs",
-    "next": "Compose event routing and preparation/materialization with first/next entries; future actual provisioning and new source compatibility required; extend training/final contracts before use",
-    "deployment": "Compose first/next entry and preparation/materialization under one detached local controller; independently validate full handoff before any production invocation",
+    "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs; persistent first/decision/profile/materialization/next cursor and actual detached CPU wait/STOP fixture",
+    "next": "Implement source compatibility acceptance/context generation and training/final contracts, final delivery/review routes; future actual provisioning remains external",
+    "deployment": "Composition exists and detached CPU fixture passes; no production deployment until unsupported boundaries, combined review and platform handoff resolved",
     "invariants": [
       "No Journal or Store authority mutation by source-preparation worker",
       "No model or paid probe while waiting for a live job",
@@ -60,5 +60,9 @@
   "profile_preparation": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PROFILE_PREPARATION.json",
     "sha256": "c2a100d49ae9dadcecfced2318d017c42e931dae328b0294c2e76a19b88fdc95"
+  },
+  "controller_composition": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_COMPOSITION.json",
+    "sha256": "f7c108b863a25b8273a35e876272fa5cde1224e575eede3ad909f06882f1bb4c"
   }
 }

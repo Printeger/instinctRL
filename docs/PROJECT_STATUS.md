@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：本地controller持久接通首次入口→决策→参数/卷预留→materializer→后续入口。
+15项最终CPU检查通过；实际独立session进程验证写锁、等待无新增模型事件/worker、
+释放后单次假CLI和STOP退出。首轮组合46通过/1失败为子进程缺测试替身，原件保留并修复。
+live runner、冻结源码和native cleanup明确为替身，不声称生产部署；
+新源码兼容性/阶段契约与最终交付仍为明确未完成边界。证据CPU_CONTROLLER_COMPOSITION.json。
+129次自动唤醒+30worker=159，剩97；无R6 GPU作业，完整Goal未完成。
+
 2026-10-22：新增只读参数准备worker→控制器卷计划/预付登记→materializer输入。
 47项组合CPU检查通过，最终13项针对检查全过；实际假CLI/receipt与临时Journal验证，
 冻结源码校验明确为替身，未作生产调用。首轮事件扫描KeyError原件保留并修复。

@@ -1,0 +1,63 @@
+{
+  "status": "CPU_COMPOSITION_AND_DETACHED_FIXTURE_PASS_NOT_DEPLOYED",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "e27747856fc349d95ecab297278dba5819af4ab82cf23e2850ff6d6c660e01e3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "ab0d01d8fbbb164c110a17afc7e62b82b85dff200b6bddc531508e245f60e3e5"
+    }
+  ],
+  "tests": {
+    "initial_passed": 13,
+    "combined_passed": 46,
+    "combined_failed": 1,
+    "final_targeted_passed": 15,
+    "initial": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_COMPOSITION_TEST.txt",
+      "sha256": "382f174f51bace8733ec2973120f64428c989ecdcfb440c88be7ebea556edf64"
+    },
+    "preserved_combined_failure": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_COMPOSITION_COMBINED_TEST.txt",
+      "sha256": "f383a853ab3b1525d7b63123277a0e44a5d6fad898e0e8f3dc7274e202c431cb"
+    },
+    "final": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_COMPOSITION_FINAL_TEST.txt",
+      "sha256": "e7ef8adc2fa249b3c297a885efe5be0e1386600e309125a678541a7dcd98ef22"
+    },
+    "repair": "Detached child lacked parent test fixture cleanup_evidence substitute; inherited it explicitly; no production validation weakened"
+  },
+  "coverage": [
+    "One persistent CPU controller intent and charge; exact request/Store/control implementation binding",
+    "First job -> exact decision -> actual profile fake worker -> real prepaid allocation -> real materializer missing-volume boundary",
+    "Crash after profile receipt before cursor advance reuses worker and allocation",
+    "Crash after intent before first cursor recovers without a second controller",
+    "Ready materializer -> next entry -> next decision cursor tested with explicit live runner substitutes",
+    "Candidate routes directly to charged source helper; source compatibility/final delivery remain incomplete boundaries",
+    "Actual detached process/session ownership, single writer exclusion, no new model event or live model worker during CPU wait, release and STOP paths",
+    "Changed inputs/control identity/missing reservation rejected; existing first phase delegates claimed-action recovery to original runner"
+  ],
+  "fixture_boundaries": [
+    "First/next live runner substituted; no GPU job",
+    "Native cleanup evidence and frozen source verification substituted by inherited test fixture",
+    "Source preparation and final scientific delivery are explicit stubs in routing tests",
+    "Detached process uses actual controller/profile worker/allocation/materializer with fixture roots; not production deployment"
+  ],
+  "draft_request": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/controller-candidate-01/request.json",
+    "sha256": "4a21a73cb775b37ae1699f6b1fefc6d68ad1ec2c0e266f6f2de8e3c5e90cf9e5"
+  },
+  "remaining": [
+    "New-source compatibility review and accepted profile-context generation",
+    "Training/final stage contracts and final artifact/review routing",
+    "Future privileged volume provisioning capability",
+    "Combined independent review and exact initial prelive",
+    "Platform no-model-wait handoff before live"
+  ],
+  "production_model_calls": 0,
+  "GPU_queries": 0,
+  "live_starts": 0,
+  "goal_complete": false
+}
