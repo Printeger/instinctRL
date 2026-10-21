@@ -41,6 +41,8 @@ def controller(case,monkeypatch):
     monkeypatch.setattr(c.final_plans_review,'prepare',b.final_review)
     b.final_sequence=Mock(return_value=dict(status='FINAL_BATCH_COLLECTED_REQUIRES_INDEPENDENT_AUDIT',collection={'fixture':True}))
     monkeypatch.setattr(c.final_sequence,'advance',b.final_sequence)
+    b.delivery=Mock(return_value=dict(status='DELIVERY_EVIDENCE_PREPARED_NOT_ACCEPTED',scientific_acceptance=False))
+    monkeypatch.setattr(c.delivery_evidence,'prepare',b.delivery)
     return b
 
 
@@ -327,7 +329,7 @@ def test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect
     if crash:
         with pytest.raises(RuntimeError,match='collection cursor crash'):run(b)
         assert entry(b)['cursor']['phase']=='DECIDE'
-    result=run(b);assert result['status']=='FINAL_DELIVERY_REQUIRED' and result['goal_complete']is False
+    result=run(b);assert result['status']=='FINAL_MEDIA_REQUIRED' and result['goal_complete']is False
     assert [call.args[2] for call in profile.call_args_list]==contexts
     assert [call.args[1] for call in b.next.call_args_list]==[b.parent,'confirm-0-parent','confirm-1-parent']
     assert [r['job_event_key'] for r in entry(b)['cursor']['confirmation']['results']]==['confirm-0','confirm-1','confirm-2']
@@ -372,7 +374,7 @@ def test_baseline_validation_routes_to_freeze_review_without_training_preparatio
     monkeypatch.setattr(c.final_models,'prepare',freeze);monkeypatch.setattr(c.final_freeze_review,'prepare',review)
     holdout=Mock(return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context))
     monkeypatch.setattr(c.holdout_publication,'prepare',holdout)
-    result=run(b);assert result['status']=='FINAL_DELIVERY_REQUIRED' and not result['goal_complete']
+    result=run(b);assert result['status']=='FINAL_MEDIA_REQUIRED' and not result['goal_complete']
     assert entry(b)['cursor']['baseline_validation']==dict(parent_key=b.parent,job_key=b.key,context=b.context)
     assert run(b)==result;freeze.assert_called_once();review.assert_called_once()
     holdout.assert_called_once()
@@ -390,7 +392,7 @@ def test_holdout_publication_interruption_does_not_repeat_final_review(controlle
         with pytest.raises(RuntimeError,match='publication interrupted'):run(b)
     assert entry(b)['cursor']['phase']=='HOLDOUT_PREPARATION'
     publication.side_effect=None;publication.return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context)
-    assert run(b)['status']=='FINAL_DELIVERY_REQUIRED'
+    assert run(b)['status']=='FINAL_MEDIA_REQUIRED'
     freeze.assert_called_once();review.assert_called_once();b.next.assert_not_called()
 
 
@@ -406,7 +408,7 @@ def test_final_route_restart_does_not_repeat_prior_phases(controller,monkeypatch
     with pytest.raises(RuntimeError,match='final interruption'):run(b)
     assert entry(b)['cursor']['phase']==phase
     target.side_effect=original
-    assert run(b)['status']=='FINAL_DELIVERY_REQUIRED'
+    assert run(b)['status']=='FINAL_MEDIA_REQUIRED'
     b.final_inputs.assert_called_once()
     assert b.final_sequence.call_count==(2 if phase=='FINAL_SEQUENCE' else 1)
     b.first.assert_not_called();b.next.assert_not_called()
@@ -423,5 +425,19 @@ def test_final_missing_volumes_preserves_phase_and_reports_all(controller):
     assert entry(b)['cursor']['phase']=='FINAL_MATERIALIZE'
     b.final_review.assert_not_called();b.final_sequence.assert_not_called()
     b.final_materialize.return_value=good
-    assert run(b)['status']=='FINAL_DELIVERY_REQUIRED'
+    assert run(b)['status']=='FINAL_MEDIA_REQUIRED'
     b.final_inputs.assert_called_once();b.final_prepare.assert_called_once()
+
+
+def test_delivery_interruption_reuses_final_sequence(controller):
+    b=controller
+    with b.j.writer():
+        key,_=c.register(b.j,b.request,b.store,free_disk_bytes=500*1024**3)
+        state=b.j.read();state['events'][key]['cursor'].update(phase='FINAL_SEQUENCE',final_materializations=b.context,
+            final_plans_review={'event_key':'fixture-review','review':b.context});b.j.save(state)
+    b.delivery.side_effect=RuntimeError('delivery interruption')
+    with pytest.raises(RuntimeError,match='delivery interruption'):run(b)
+    assert entry(b)['cursor']['phase']=='FINAL_DELIVERY_REQUIRED'
+    b.delivery.side_effect=None
+    assert run(b)['status']=='FINAL_MEDIA_REQUIRED'
+    b.final_sequence.assert_called_once()

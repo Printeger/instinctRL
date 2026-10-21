@@ -1,0 +1,28 @@
+{
+  "model_events": 30,
+  "charged": 197,
+  "unknown_usage_events": [],
+  "reported_token_subtotals": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 12543232,
+    "input_tokens": 14656310,
+    "output_tokens": 114368,
+    "reasoning_output_tokens": 13147
+  },
+  "waits": [],
+  "pure_wait_model_calls": "UNKNOWN",
+  "all_registered_local_waits_verified": false,
+  "resource_charged": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 197,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 27856404480,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  }
+}

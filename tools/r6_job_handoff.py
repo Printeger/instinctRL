@@ -16,6 +16,7 @@ from rlflow.store import atomic, canonical, sha
 from tools.r6_recovery import RecoveryError, checked, file_pin
 from tools.r6_budget import observe
 from tools.r6_worker_processes import cleanup_verified
+from tools import r6_wait_audit as wait_audit
 
 TERMINAL = {'FAILED', 'STOPPED', 'SUCCEEDED'}
 
@@ -174,12 +175,15 @@ def job_handoff(journal, key, store, *, poll_seconds=15):
     if state.get('current_job') not in (None, job['id']):
         raise RecoveryError('OTHER_JOB_HANDOFF_ACTIVE')
     model_count = no_model_workers(journal)
+    wait_audit.record(journal,key)
     directory = store.root / 'jobs' / job['id']
+    state = journal.read()
     state.update(current_job=job['id'], controller_identity=identity(os.getpid()), status='WAIT_EXACT_JOB')
     journal.save(state)
     while True:
         if no_model_workers(journal) != model_count:
             raise RecoveryError('NEW_MODEL_EVENT_DURING_JOB_WAIT')
+        wait_audit.record(journal,key)
         store_state = store.replay()
         job = exact_job(store_state, journal.read()['events'][key], spec)
         state = journal.read(); entry = journal.canonical_job(key,state=state)
@@ -205,6 +209,7 @@ def job_handoff(journal, key, store, *, poll_seconds=15):
             experiments.reconcile(store, job['id'])
             job = exact_job(store.replay(), journal.read()['events'][key], spec)
         if job['status'] in TERMINAL:
+            wait_audit.record(journal,key,finish=True)
             result = close_terminal_job(journal, key, store)
             state = journal.read(); entry = journal.canonical_job(key,state=state)
             state['current_job'] = None

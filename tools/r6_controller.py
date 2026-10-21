@@ -35,13 +35,14 @@ from tools import r6_final_preparation as final_preparation
 from tools import r6_final_storage as final_storage
 from tools import r6_final_plans_review as final_plans_review
 from tools import r6_final_sequence as final_sequence
+from tools import r6_delivery_evidence as delivery_evidence
 from tools.r6_decision_packet import persist_exact
 from rlflow.store import canonical
 
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_MEDIA_REQUIRED'}
 
 
 def require(condition,reason):
@@ -122,6 +123,12 @@ def run(journal,request_pin,store,*,free_disk_bytes):
         cursor=journal.read()['events'][key]['cursor'];phase=cursor['phase']
         free=min(free_disk_bytes,shutil.disk_usage(journal.directory).free)
         try:
+            if phase=='FINAL_DELIVERY_REQUIRED' and 'final_collection' in cursor:
+                outcome=delivery_evidence.prepare(journal,key,store,free_disk_bytes=free)
+                require(outcome['status']=='DELIVERY_EVIDENCE_PREPARED_NOT_ACCEPTED','DELIVERY_EVIDENCE_STATUS')
+                cursor.update(phase='FINAL_MEDIA_REQUIRED',delivery_evidence=outcome)
+                save(journal,key,cursor)
+                continue
             if phase in TERMINAL_BOUNDARIES:
                 save(journal,key,cursor,status=phase)
                 return dict(status=phase,event_key=key,goal_complete=False)

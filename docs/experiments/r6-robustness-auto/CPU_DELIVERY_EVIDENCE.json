@@ -1,0 +1,90 @@
+{
+  "status": "CPU_DELIVERY_EVIDENCE_AND_LOCAL_WAIT_AUDIT_PASS_MEDIA_FINAL_AUDIT_PENDING",
+  "base_commit": "700f15dd576fbeb0a7fcfac39c3db6f1f7d2f890",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_delivery_evidence.py",
+      "sha256": "023e01f2928d709d8df0e3a8fbed4e9a13d0a6fb73a46467cfb355d65bb95098"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_wait_audit.py",
+      "sha256": "d3094972577162cde80291d4d105604bbda715f26bbf2b26af9340eabf832dff"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_handoff.py",
+      "sha256": "556c9a63a84fb2862e4e970cfc5c9186026a5324015cec951419e9b02afed256"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "fb1b0fc786e40ab5a68380160c97e662fbb296a3c8dd8d1b8f86842f25e6a1b6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_delivery_evidence.py",
+      "sha256": "3249106cf76edbb8890ecb2edbb6b393a9d658996bb9d370bf25be1bf8677abe"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_wait_audit.py",
+      "sha256": "0faa64dd55a453cb92558aa2cedde2bda2b82cb8416a30e16dd666d4b9058912"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "01454821e1e5f0fc1ecc07302939dfa35d0d5ed41d01a52953bc4f3406996158"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DELIVERY_WAIT.log",
+      "sha256": "ca358e66dc77483827997cf73a308b993c46e9b1f972120405b1db718ad42849"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DELIVERY_EVIDENCE_INITIAL.log",
+      "sha256": "18b152baeb4a7b7ba586e954524159ce8107829358be800e7c75f362ac5b580a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DELIVERY_COMBINED.log",
+      "sha256": "bdc1c6fb7e63e040e48a733e6f1489bb188a43776ed28f4049fc9156c1ef7f55"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DELIVERY_FINAL.log",
+      "sha256": "df4dc093149990ca2457b0291f1e9212c5f6e1c443b5a46a3d665655edec8f0a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_DELIVERY_ACTUAL_AUDIT.log",
+      "sha256": "389ff6850578403b1443497056b62a59a97452629561a4144e6d1863370049c3"
+    }
+  ],
+  "checks": {
+    "wait": 42,
+    "initial_delivery": 14,
+    "combined": 94,
+    "final": 44
+  },
+  "actual_readonly_audit": {
+    "registered_model_records": 30,
+    "automatic_sessions_charged": 197,
+    "live_starts": 0,
+    "training_transitions": 0,
+    "pure_wait_model_calls": "UNKNOWN",
+    "real_training_wait_window_verified": false
+  },
+  "scope": [
+    "Bounded persistent per-controller local wait segments, exact job binding and model/platform wake-accounting drift guard. Interrupted restart gaps and historical missing observations remain unverified.",
+    "Immutable delivery candidates with every attempted job, exact model/source/argv/raw inventory pins, native failures, per-condition full denominators, decision log, conservative resources and reported model token subtotals.",
+    "Controller proceeds from complete final collection to evidence preparation and explicit media/audit boundary.",
+    "No overwrite of historical MODEL_USAGE_AUDIT or other original reports."
+  ],
+  "boundaries": [
+    "Real local CPU child and Journal wait checks; no production training window.",
+    "Synthetic full final reports; publication/closed-chain collection and top-level execution are explicit substitutes.",
+    "Read-only audit of 30 actual prior model receipts and current budget; no new model worker.",
+    "No production Store issuance, GPU/simulation/training, video, final independent audit or scientific acceptance."
+  ],
+  "remaining": [
+    "Actual video generation and viewing deliverables",
+    "Independent scientific/requirements audit and final resource/model-usage accounting",
+    "Confirmation/final-review repair re-entry",
+    "Combined production review and platform no-model-wait handoff"
+  ],
+  "goal_complete": false,
+  "scientific_acceptance": false
+}
