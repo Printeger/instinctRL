@@ -34,16 +34,15 @@ def start(journal, plan_pin, master_pin, review_executable, store, *, free_disk_
         require(request['plan'] == plan_pin and request['master'] == master_pin
             and request['store_root'] == str(store.root.resolve()), 'ISSUANCE_DRIFT')
     if not edges or not edges[0][1].get('authorization_result'):
-        event_id = 'INITIAL_BASELINE_REVIEW:'+plan_pin['sha256']
-        reviews = [(k, e) for k, e in state['events'].items()
-                   if e['identity']['role'] == initial.ROLE and e['identity']['event_id'] == event_id]
-        require(len(reviews) <= 1, 'REVIEW_ALIAS')
+        active=initial.active_review(journal,plan_pin)
+        reviews=[] if active is None else [(active,state['events'][active])]
         if reviews:
             key, review = reviews[0]
             require(review['request']['executable'] == review_executable, 'REVIEW_EXECUTABLE_DRIFT')
             if not review.get('dispatch_claim') and not review.get('receipt'):
                 recovered = initial.register_review(journal, plan_pin, store,
-                    executable=review_executable, free_disk_bytes=free_disk_bytes)
+                    executable=review_executable, free_disk_bytes=free_disk_bytes,
+                    repair_pin=initial.repair_for_entry(journal,review,plan_pin))
                 require(recovered == key, 'REVIEW_RECOVERY_DRIFT')
         else:
             key = initial.register_review(journal, plan_pin, store,

@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：首次基线失败审核可由显式修复证据登记新审核；旧 receipt/request 保留，新增额度不退款。
+只接受唯一替换链的最新 PASS，禁止已通过审核重替换、分叉、未清理重试及发行后替换；缺提示文件恢复去重。
+38 项初检、43 项最终检查与真实 Journal guard 通过；证据 CPU_INITIAL_REVIEW_REPAIR.json。
+仅同计划首次审核恢复完成，其他阶段修复执行及平台交接仍待完成，生产基线/训练均未启动。
+无模型 sandbox 复核仍报 bwrap loopback 权限拒绝，sudo 仍需密码；预算增加不能替代管理员凭证。
+182 次自动唤醒+31 worker=213/256，剩43，本轮未新增 CLI 模型调用；完整 Goal 未完成。
+
 2026-10-22：已用无模型Codex sandbox命令复现本地审核失败；Ubuntu24.04缺bwrap AppArmor profile。
 默认只读模式loopback失败，临时只读联网诊断仍UID映射拒绝；legacy后端不能替代bwrap；sudo需密码。
 增加首次审核前的本地原件读取预检；真实计划入口在模型intent之前拒绝，Journal和Store逐字节状态未变。

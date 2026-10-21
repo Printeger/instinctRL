@@ -1,0 +1,54 @@
+{
+  "status": "CPU_INITIAL_REVIEW_REPLACEMENT_PASS_NOT_DEPLOYED",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_initial_baseline.py",
+      "sha256": "91805c3a4fc5431b54bb1b95d960faaefc1eed7453a536b8239ba13b66e770c1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_start_baseline.py",
+      "sha256": "57a1891d9e3d31fac60c76f8290112df2a393d75c1c588a82d081843dfdcd821"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_initial_review_repair.py",
+      "sha256": "3dd8602fafa5147fea93e91f019fcfbddd2a7c080edab6d5ffd17ec5e7ba6836"
+    }
+  ],
+  "checks": {
+    "initial_tests": 38,
+    "final_tests": 43,
+    "real_journal_guard": "PASS",
+    "production_model_calls_added": 0
+  },
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_INITIAL_REVIEW_REPAIR_INITIAL.log",
+      "sha256": "108fe1a4495d3181ba7dba74a6b7c978d688927bddcfb3ee288030784df0f7b2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_INITIAL_REVIEW_REPAIR_FINAL.log",
+      "sha256": "e41d93d5c81e476d73b0090d3d464ae625b9a2b0a8d2fb13aae206917e9dd029"
+    }
+  ],
+  "boundaries": [
+    "CPU fixture receipts and mocked runtime/kernel/delegation; real Journal and Store transactions. No production baseline, GPU, training or scientific acceptance.",
+    "Replacement requires explicit pinned repair evidence, verified predecessor cleanup and failed/MUST_FIX receipt; accepted reviews cannot be replaced.",
+    "Original receipt/request remain immutable; new CPU/model reservations use repair budget; a unique active chain prevents forks and stale approval.",
+    "Tests include missing-prompt crash recovery, repeated admission, rejected live/malformed process identities, absent receipt and missing exit code.",
+    "Only same-plan initial review replacement is implemented; other failed phases and engineering repair execution remain pending.",
+    "pytest reported inability to remove existing root-owned CPU-QUOTA-01 temporary directories; those unrelated files were left untouched."
+  ],
+  "sandbox_recheck": {
+    "exit_code": 1,
+    "stderr": "bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted",
+    "sudo_noninteractive": "password required",
+    "model_calls": 0
+  },
+  "remaining": [
+    "Administrator restores supported local read-only sandbox access",
+    "Other failed phase replacement and engineering repair worker",
+    "Platform model-free handoff and actual inactivity evidence",
+    "Actual baseline and full scientific goal"
+  ],
+  "goal_complete": false
+}

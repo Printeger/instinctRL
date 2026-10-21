@@ -399,6 +399,8 @@
     "engineering_repair_route_evidence": "docs/experiments/r6-robustness-auto/CPU_REPAIR_ROUTE.json",
     "local_review_access_status": "INITIAL_BASELINE_LOCAL_REVIEW_READ_PREFLIGHT_VERIFIED_FAILS_BEFORE_MODEL_CHARGE",
     "local_review_access_evidence": "docs/experiments/r6-robustness-auto/CPU_REVIEW_ACCESS.json",
-    "local_review_admin_remediation_required": true
+    "local_review_admin_remediation_required": true,
+    "initial_review_replacement_status": "CPU_INITIAL_REVIEW_REPLACEMENT_PASS_NOT_DEPLOYED",
+    "initial_review_replacement_evidence": "docs/experiments/r6-robustness-auto/CPU_INITIAL_REVIEW_REPAIR.json"
   }
 }
