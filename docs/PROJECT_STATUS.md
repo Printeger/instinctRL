@@ -1,4 +1,12 @@
-# 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
+# 当前 Goal：R6 鲁棒性与课程学习闭环（生产卷凭证阻塞，未完成）
+
+2026-10-21：第27次独审PASS_CPU_SCOPE，首次入口37项检查与6个真实假CLI场景通过。
+receipt/schema/evidence pins及worker退出核验完成。正式双卷仍缺、sudo -n要求密码，
+连续117–120次唤醒均确认同一外部条件。详见 PRODUCTION_CREDENTIAL_BLOCKED_AUDIT.json。
+CPU入口接受不能替代实测生产容量；停止重复自动准备，申请平台blocked而非complete。
+已授权管理员操作见 production-storage-baseline-01/ADMIN_COMMANDS.txt，无需重复批准，
+只缺本机凭证执行。协议/容量冻结、真实prelive、controller部署和科学闭环仍未完成。
+120次唤醒+27worker=147，余109次；真实Store无R6作业，无遗留模型worker。
 
 2026-10-21：首次基线本地入口串联review→Store发行→既有runner，37项CPU检查通过。
 6个真实worker/假CLI场景验证PASS/MUST_FIX、已消费receipt与缺prompt恢复只启动一次；

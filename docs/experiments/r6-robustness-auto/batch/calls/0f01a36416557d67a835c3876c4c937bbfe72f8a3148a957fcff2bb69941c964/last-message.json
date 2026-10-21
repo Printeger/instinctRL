@@ -1,0 +1,44 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "No substantive defect found. Independently reran all 37 CPU tests successfully, including six actual fake-CLI/worker scenarios. Verified immutable bindings, unchanged review validation, INTENT/prompt and receipt recovery, issuance crash recovery, unsubmitted-job recovery, claimed-job STOP delegation, canonical completion caching, and duplicate prevention. In-flight recovery preserves existing model_handoff behavior. Runtime/master/kernel/final-runner boundaries remain fixtures; no production capacity, protocol, deployment, or science acceptance.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_start_baseline.py",
+      "sha256": "2df746e146db0b7901f34a860f29d7e48df03d717bc227b56d2f5209c00079db"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_initial_baseline.py",
+      "sha256": "2acbe9b26b3d47f12e30472f0a22b7c1f197bd0de414b82cc019225618f96cd3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_start_baseline.py",
+      "sha256": "2e3d46d547b9e9e4b54ba72fc1195c54098d3dda1e53840da01a2069bcc2f580"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FIRST_BASELINE_ENTRY.json",
+      "sha256": "5d065598ad8cbc568a03f62aa4d85b7f8e7b63ceb0bf232ef4d1754082b1abb5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/initial-baseline-issuance-review.json",
+      "sha256": "0d051d50d5e093734d667b7afcf71555729d2cdd95ac48fd8ad3ef4466737af5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_run_job.py",
+      "sha256": "d65779f5a1449de75d33026a8198e5d545f147a4ce6d2ba40a64582a9b82e904"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "a5188e81eb75b4196d5fc469bbe19d90aaae4abd46f0f3440e2d87946323163d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_issue_next.py",
+      "sha256": "11d2f9fdad92182ecffc50ebb2bad80d8a836a3a8102a2815e1493aca4c795b9"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Resolve production prerequisites before actual prelive review.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 109
+  },
+  "must_fix": []
+}
