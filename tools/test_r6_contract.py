@@ -18,6 +18,43 @@ def pin(path):return {'path':str(path.resolve()),'sha256':hashlib.sha256(path.re
 
 
 class ContractTests(unittest.TestCase):
+    def serializer_compatibility(self,execution_sha=None):
+        import subprocess
+        from training_workloads.unified_h1.robustness_contract import SERIALIZER_PATH,SERIALIZER_DELTA
+        metric='training_workloads/unified_h1/evaluation.py'
+        for name in (metric,SERIALIZER_PATH):(self.root/name).parent.mkdir(parents=True,exist_ok=True)
+        (self.root/metric).write_text('CPU original metric')
+        (self.root/SERIALIZER_PATH).write_bytes(subprocess.check_output([
+            'git','-C',str(ROOT),'show','0c6363bbc0d2947a272f533c02e73d2995ac225a:'+SERIALIZER_PATH]))
+        self.assertEqual(pin(self.root/SERIALIZER_PATH)['sha256'],SERIALIZER_DELTA['origin'])
+        self.assertEqual(pin(ROOT/SERIALIZER_PATH)['sha256'],SERIALIZER_DELTA['execution'])
+        old=dict(versions={},actor={},training={},execution={},method=dict(version='same',proposal_sha256='same',hashes={}),
+            product=dict(path=str(self.root),source_sha256={SERIALIZER_PATH:SERIALIZER_DELTA['origin']}),
+            workload=dict(path=str(self.root),source_sha256={metric:pin(self.root/metric)['sha256']}))
+        new=copy.deepcopy(old);new['product']['source_sha256'][SERIALIZER_PATH]=execution_sha or SERIALIZER_DELTA['execution']
+        old_pin=self.write('serializer-old.json',old);new_pin=self.write('serializer-new.json',new)
+        def identity(p):return dict(product_commit='1'*40,product_tree='2'*40,workload_commit='3'*40,workload_tree='4'*40,config_sha256=p['sha256'])
+        origin=identity(old_pin);execution=identity(new_pin)
+        record=dict(schema_version='r6-baseline-compatibility/1',origin_source_identity=origin,execution_source_identity=execution,
+            origin_config=old_pin,execution_config=new_pin,
+            changed_product_sources={SERIALIZER_PATH:dict(origin=SERIALIZER_DELTA['origin'],execution=new['product']['source_sha256'][SERIALIZER_PATH])},
+            independent_review={})
+        return self.write('serializer-compat.json',record),origin,{**new,'resolved_identity':execution}
+
+    def test_exact_serializer_delta_still_requires_execution_review(self):
+        args=self.serializer_compatibility()
+        with self.assertRaises((ValueError,PermissionError)):validate_compatibility(*args)
+        with patch('training_workloads.unified_h1.robustness_contract.accepted_review',return_value={}) as review:
+            self.assertEqual(validate_compatibility(*args),args[1])
+            self.assertEqual(review.call_args.args[1],'PASS_R6_EXECUTION_COMPATIBILITY')
+            self.assertIn('payload_sha256',review.call_args.kwargs)
+
+    def test_other_serializer_bytes_are_not_eligible(self):
+        args=self.serializer_compatibility('0'*64)
+        with patch('training_workloads.unified_h1.robustness_contract.accepted_review') as review:
+            with self.assertRaisesRegex(PermissionError,'product integration differs'):validate_compatibility(*args)
+            review.assert_not_called()
+
     def test_lifecycle_dispatches_only_to_registered_r6_wrapper(self):
         from training_workloads.unified_h1.live_adapter import _dispatch
         backend=SimpleNamespace()

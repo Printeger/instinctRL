@@ -17,6 +17,12 @@ REQUIREMENTS_SHA='200fb9daa96606ae3a58516219121d2ae243de51a8b1e02d10077a4b15e2f1
 FIELDS={'experiment_id','group','training_seed','evaluation_seed','output_cap_bytes','wall_seconds',
         'master_authority','experiment_card','baseline_bindings','checkpoint_compatibility','protocol_review','r6'}
 R6_FIELDS={'protocol','block_ids','run_id','seed','split','expected_mass_kg','output_quotas'}
+# CPU-reviewed R6 serializer addition. This exact source pair is eligible for
+# a new execution-compatibility review, not automatically accepted for live.
+SERIALIZER_PATH='isaaclab-training/instinctlab/training/checkpoint_h1.py'
+SERIALIZER_DELTA={
+    'origin':'94337128716045da864eac88598d23191ad3ee74d41fb38cacee4eb7315462d9',
+    'execution':'45171db5ae2719fcd81b78d67ee06450cc73b737b74f3850797591e9eccc13b7'}
 
 
 def pinned_json(pin):
@@ -137,6 +143,8 @@ def validate_compatibility(pin,origin,config):
     changed={k:{'origin':a.get(k),'execution':b.get(k)} for k in a.keys()|b.keys() if a.get(k)!=b.get(k)}
     allowed={'isaaclab-training/instinctlab/envs/taslab_direct_env.py','isaaclab-training/instinctlab/envs/unified_h1_direct_env.py',
         *('isaaclab-training/instinctlab/observations/'+n+'.py' for n in ('robustness','robustness_adapter','robustness_physics'))}
+    if changed.get(SERIALIZER_PATH)==SERIALIZER_DELTA:
+        allowed.add(SERIALIZER_PATH)
     # Newly manifested pre-existing dependencies must match the original
     # checkpoint checkout byte-for-byte; this does not authorize product edits.
     from .config import R6_PRODUCT_SOURCES, PRODUCT_SOURCES

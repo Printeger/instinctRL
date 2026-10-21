@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 102,
-    "total_automatic_model_sessions_minimum": 121,
+    "platform_automatic_goal_wakes": 103,
+    "total_automatic_model_sessions_minimum": 122,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -225,6 +225,8 @@
     "training_checkpoint_branch": "CPU33_PASS_SERIALIZER_COMPATIBILITY_AND_ENTRY_PENDING",
     "training_checkpoint_evidence": "docs/experiments/r6-robustness-auto/CPU_R6_CHECKPOINT_BRANCH.json",
     "training_core_review": "docs/experiments/r6-robustness-auto/reviews/training-core-integration-review.json",
-    "training_core_status": "PASS_CPU_SCOPE_ENTRY_AND_COMPATIBILITY_PENDING"
+    "training_core_status": "PASS_CPU_SCOPE_ENTRY_AND_COMPATIBILITY_PENDING",
+    "serializer_compatibility": "CPU17_PASS_EXACT_EXECUTION_REVIEW_PENDING",
+    "serializer_compatibility_evidence": "docs/experiments/r6-robustness-auto/CPU_SERIALIZER_COMPATIBILITY.json"
   }
 }

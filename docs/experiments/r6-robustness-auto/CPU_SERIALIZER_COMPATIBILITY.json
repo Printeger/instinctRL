@@ -1,0 +1,51 @@
+{
+  "schema_version": "r6-serializer-compatibility-cpu/1",
+  "status": "CPU_PASS_EXACT_DELTA_ELIGIBLE_REVIEW_STILL_REQUIRED",
+  "source_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "eaba8026a70d58deac0530b9261b5500b8e1e6b0d759eb478aac0129f32ed5fe"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_contract.py",
+      "sha256": "0fbed8984a4b6ac2f7a094e506775141265ad97a39159587c72fd858caae78fe"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/training/checkpoint_h1.py",
+      "sha256": "45171db5ae2719fcd81b78d67ee06450cc73b737b74f3850797591e9eccc13b7"
+    }
+  ],
+  "delta": {
+    "isaaclab-training/instinctlab/training/checkpoint_h1.py": {
+      "origin": "94337128716045da864eac88598d23191ad3ee74d41fb38cacee4eb7315462d9",
+      "execution": "45171db5ae2719fcd81b78d67ee06450cc73b737b74f3850797591e9eccc13b7"
+    }
+  },
+  "component_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/training-core-integration-review.json",
+    "sha256": "da2ab2b8a665d54a522c06df099db9d69a725d05d208de504df0b4674715384c"
+  },
+  "test_logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-serializer-compatibility-tests.txt",
+      "sha256": "22dd1289ba5a3dc7216566dc0ce1966df0be05f0da0240d6bf3a69cc9e46a3d7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-serializer-compatibility-tensor-tests.txt",
+      "sha256": "dcd3c62ec1aa95c643b0f40cd7c7f3b96c072dab18a1dd8bc16b8f356d491b2d"
+    }
+  ],
+  "results": [
+    "First control Python:16 passed,1 missing torch failure in lifecycle dispatch test; output retained",
+    "Existing tensor Python:17 passed; exact delta passes only with declared CPU fixture review substitute, missing actual review refuses; arbitrary source hash refuses before review"
+  ],
+  "limitations": [
+    "New checker change not independently accepted yet",
+    "No PASS_R6_EXECUTION_COMPATIBILITY record generated; accurate new execution config still requires independent payload-bound review",
+    "No snapshot created, no inherited old acceptance, no volume or capacity acceptance"
+  ],
+  "production_native_manifest_present": false,
+  "production_result_manifest_present": false,
+  "sudo_noninteractive_result": "password required",
+  "capacity_pass": false
+}

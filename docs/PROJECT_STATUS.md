@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：回到首个基线关键路径；新增serializer精确94337128→45171db5源码对可进入
+新的执行兼容审核，其余hash拒绝。仍强制PASS_R6_EXECUTION_COMPATIBILITY及准确payload绑定，
+不是沿用组件独审当执行许可。17项CPU检查通过；首轮控制Python缺Torch的失败原件保留。
+见 `docs/experiments/r6-robustness-auto/CPU_SERIALIZER_COMPATIBILITY.json`。尚未生成执行兼容
+接受记录/新快照。生产双卷仍缺失，sudo -n需密码；实际容量验收必须待管理员创建。
+不再提前扩展未经基线诊断支持的课程。103次唤醒+19worker=122，余134次；无R6 live。
+
 2026-10-21：第19次独审PASS_CPU_SCOPE，49项定向CPU检查通过，无MUST_FIX。
 接受共享压缩池/退出收尾、失败写入保留原异常、u640随机分叉含PPO shuffle、显式R6
 checkpoint身份绑定的本次组件范围。receipt/schema、源证据pins与worker清理已核验，见
