@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：第19次独审PASS_CPU_SCOPE，49项定向CPU检查通过，无MUST_FIX。
+接受共享压缩池/退出收尾、失败写入保留原异常、u640随机分叉含PPO shuffle、显式R6
+checkpoint身份绑定的本次组件范围。receipt/schema、源证据pins与worker清理已核验，见
+`docs/experiments/r6-robustness-auto/reviews/training-core-integration-review.json`。
+不授予训练合同/dispatch、baseline源码兼容性扩展、生产容量或真实CUDA/物理接受。
+生产双卷仍不存在；102次自动唤醒+19worker=121，256上限余135次。
+下一步准确训练合同与新源码兼容接线；capacity=false，无R6 live，完整Goal未完成。
+
 2026-10-21：发现旧mixed课程checkpoint仅接受20260908；新增显式R6课程元数据分支，
 绑定共同u640、配方hash、training/branch/permutation seed，保留旧分支校验。
 33项CPU检查通过、1项历史config fixture未选；原u640哈希复核不变，原CUDA RNG加载

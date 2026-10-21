@@ -1,0 +1,52 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "No substantive defects found in the scoped diff and adjacent code. All 49 targeted CPU tests passed. Shared quota cleanup, once-only finalization, original exception preservation, unchanged gate/legacy branches, RNG rollback and PPO permutation seeding, Adam/counter preservation, and checkpoint identity validation are sound in the declared scope. No compatibility extension, training authorization, production-capacity, CUDA/physics, or scientific acceptance is granted.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_storage.py",
+      "sha256": "f07012f70f91887f2822810bc829643c6a935587893f4ee9dd5adbe287f93075"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "e20ae3ded49e23630da5196170b043f89d780a66b91889a0a0f5b08474ba9029"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/driver.py",
+      "sha256": "7dfd5fa922d93dbb199600d77ae50c4827fc5255fd08e6e645bb6149867c7a35"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_rng.py",
+      "sha256": "3068b3cf5384c803412b2f999c7398240430251f286a79f6a2af25e507290eec"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/training/checkpoint_h1.py",
+      "sha256": "45171db5ae2719fcd81b78d67ee06450cc73b737b74f3850797591e9eccc13b7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/lossless_evidence.py",
+      "sha256": "82684c9bdf7be9bf19e910f12f016092ffff41d022e7b0a537d7f965ca8779d4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_EVIDENCE_LIFECYCLE.json",
+      "sha256": "ffa1cbb4183afdbee0bfd2b8c8bb76fe6b651b08f5dee51d3319718311b3fb0e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_STORAGE_FACTORY.json",
+      "sha256": "606f341c68bbb82112660d7b383fbabdf501c5c2ee67ddacaccf665fc2737271"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_RNG_BRANCH.json",
+      "sha256": "179f5111658db2caf755a495048cc2a6edabc38d58c7ec3dade2ea19b5fe22c2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_R6_CHECKPOINT_BRANCH.json",
+      "sha256": "afd59e8f5cd1d6cc694825d93077020d1a17192ae784a025b2ddb9b94207e77b"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Return to controller for the already-declared integration steps.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 135
+  },
+  "must_fix": []
+}
