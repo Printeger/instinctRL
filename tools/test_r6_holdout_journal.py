@@ -22,6 +22,8 @@ def setup(tmp_path, monkeypatch):
         models={'baseline': baseline}))
     review = write('review.json', dict(decision='PASS_R6_FINAL_FREEZE', must_fix=[],
         reviewer='independent-fixture', freeze_sha256=freeze['sha256']))
+    # Review-worker lifecycle is tested separately; these cases isolate holdout persistence.
+    monkeypatch.setattr(h, "verify_model_review", Mock(return_value="fixture-review"))
     monkeypatch.setattr(h, "ROOT", tmp_path)
     j = Journal(tmp_path / 'batch')
     with j.writer():

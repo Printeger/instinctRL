@@ -16,6 +16,7 @@ from tools.r6_recovery import checked, file_pin, RecoveryError
 from tools.r6_postrun import stop_paths
 from tools.r6_job_handoff import no_model_workers
 from tools.r6_budget import admissible
+from tools.r6_batch import verified_decision
 from training_workloads.unified_h1.robustness_holdout import commitment, reveal
 from training_workloads.unified_h1.robustness_contract import BASELINE_SHA
 
@@ -43,7 +44,38 @@ def validate_entry(state, key):
     return entry
 
 
-def validate_freeze(request):
+def verify_model_review(journal, review_pin):
+    """Accept only exact output bytes from a registered, consumed review."""
+    state = journal.read()
+    matches = []
+    for key, event in state['events'].items():
+        if event['kind'] != 'model' or event['identity']['role'] != 'final-freeze-review':
+            continue
+        require(event['identity']['goal_id'] == state['goal_id']
+                and event['identity']['input_sha256'] == sha(event['request'])
+                and sha(event['identity']) == key, 'REVIEW_EVENT_IDENTITY')
+        if not event.get('receipt'):
+            continue
+        receipt = json.loads(checked(event['receipt']).read_text())
+        if receipt.get('last_message', {}).get('sha256') != review_pin['sha256']:
+            continue
+        require(event['status'] == 'RECEIPT_RECORDED'
+                and receipt.get('event_key') == key
+                and receipt.get('request_sha256') == sha(event['request'])
+                and receipt.get('process') == event.get('process'), 'REVIEW_RECEIPT_IDENTITY')
+        reservations = [r for r in state['budget']['reservations']
+                        if r['identity'] == event['identity']]
+        require(len(reservations) == 1 and reservations[0]['resources'] == event['resources']
+                and reservations[0]['purpose'] == event['purpose']
+                and event['resources'].get('automatic_model_sessions') == 1, 'REVIEW_RESERVATION')
+        decision = verified_decision(journal, key)
+        require(decision == json.loads(checked(review_pin).read_text()), 'REVIEW_OUTPUT')
+        matches.append(key)
+    require(len(matches) == 1, 'EXACT_REGISTERED_REVIEW_REQUIRED')
+    return matches[0]
+
+
+def validate_freeze(journal, request):
     require(set(request) == {'freeze', 'review'}, 'REQUEST_FIELDS')
     freeze = json.loads(checked(request['freeze']).read_text())
     require(set(freeze) == {'schema_version', 'branch', 'protocol', 'recipe', 'selection_rule', 'models'}, 'FREEZE_FIELDS')
@@ -61,12 +93,13 @@ def validate_freeze(request):
     require(review.get('decision') == 'PASS_R6_FINAL_FREEZE' and review.get('must_fix') == []
             and review.get('reviewer') not in (None, '', 'root')
             and review.get('freeze_sha256') == request['freeze']['sha256'], 'INDEPENDENT_FREEZE_REVIEW')
+    verify_model_review(journal, request['review'])
     return freeze
 
 
 def prepare(journal, request, *, free_disk_bytes):
     journal.guard(); require(not stop_paths(journal), 'STOP'); no_model_workers(journal)
-    freeze = validate_freeze(request)
+    freeze = validate_freeze(journal, request)
     state = journal.read()
     event = dict(goal_id=state['goal_id'], event_id='FINAL-HOLDOUT-01', job_id='FINAL-BATCH',
                  input_sha256=sha(request), role=ROLE)
@@ -124,7 +157,7 @@ def verify_publication(pin, commit):
 def release(journal, key, published_commitment, *, publication_commit):
     journal.guard(); require(not stop_paths(journal), 'STOP'); no_model_workers(journal)
     state = journal.read(); entry = validate_entry(state, key)
-    validate_freeze(entry['request'])
+    validate_freeze(journal, entry['request'])
     public = json.loads(checked(published_commitment).read_text())
     require(public == entry.get('commitment'), 'PUBLICATION_BINDING')
     verify_publication(published_commitment, publication_commit)

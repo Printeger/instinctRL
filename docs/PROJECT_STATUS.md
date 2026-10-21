@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：保留集prepare/release新增已登记独审来源核验；准确final-freeze-review
+事件、预算、receipt和输出hash均需绑定，调用既有模型退出/schema/清理验证器。
+16项CPU回归通过（新增7项来源检查），见
+`docs/experiments/r6-robustness-auto/CPU_HOLDOUT_REVIEW.json`。
+来源测试对既有worker验证器使用明确替身，未新增真实模型会话；组件尚待独审与阶段接线。
+无真实保留集、GPU或live新增。后续回到首个基线协议/容量与运行交接，完整Goal未完成。
+
 2026-10-21：保留集release现要求公开commitment已写入准确40位Git commit，
 提交为当前HEAD祖先且blob与pin一致；不能用未提交文件或后续提交替换已消费绑定。
 9项CPU检查通过（新增3项真实临时Git仓库检查），见

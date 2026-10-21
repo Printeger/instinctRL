@@ -1,0 +1,40 @@
+{
+  "status": "CPU_PASS_PENDING_INDEPENDENT_REVIEW_AND_PHASE_WIRING",
+  "tests": 16,
+  "new_review_provenance_tests": 7,
+  "log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_HOLDOUT_REVIEW_TEST.txt",
+    "sha256": "1c3adb216641c9abf092eb18d1c73fbfacf818ac51b0c2cf3bd3cfa73f102fd6"
+  },
+  "source_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_holdout.py",
+      "sha256": "343012e38d9d2f1ef4e8859fe6ac349e5b15498811e08122967b7288e20d40fa"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_holdout_journal.py",
+      "sha256": "9545a5c3d1067c4ec010ef44862b52d494e0218fe22f4b485f45f8d5a4bb593e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_holdout_review.py",
+      "sha256": "2e67af24cbe35754495b53f5fa73839296274d4ebe531d9ef13544d39878914a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "a5188e81eb75b4196d5fc469bbe19d90aaae4abd46f0f3440e2d87946323163d"
+    }
+  ],
+  "checks": [
+    "Only exact final-freeze-review model event in same goal with one charged session and recorded receipt can authorize freeze.",
+    "Event/request/process/output identities checked; common worker validator supplies exit/schema/cleanup checks.",
+    "Replays revalidate freeze and review before entropy use or reveal."
+  ],
+  "test_boundaries": [
+    "Existing verified_decision is replaced by declared mock in new provenance tests; its call and failure propagation checked.",
+    "Persistence tests substitute review gate to isolate crash/Git/STOP behavior. No new end-to-end real model receipt generated."
+  ],
+  "production_holdout_generated": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_sessions_added": 0
+}
