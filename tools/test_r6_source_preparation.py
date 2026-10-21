@@ -37,6 +37,13 @@ if settings.get('training'):
  plan=settings['plan_template'];plan['experiment_id']=design['experiment_id']
  draft=out/'training-design.json';draft.write_text(json.dumps(dict(schema_version='r6-training-design/1',recipe_template=recipe,plan_template=plan,origin_config=pin(config))))
  design.update(schema_version='r6-source-design-card/2',training_design=pin(draft))
+if settings.get('candidate'):
+ config.write_text(json.dumps({'schema_version':'unified-h1-r6-candidate-config.v1'}))
+ comparison=out/'comparison.json';comparison.write_text(json.dumps({'hypothesis':design['hypothesis']}))
+ selected=settings['selection_template'];selected.update(comparison=pin(comparison),method=pin(config))
+ evaluation=dict(experiment_id=design['experiment_id'],wall_seconds=60,protocol_review=pin(config),r6={})
+ draft=out/'candidate-design.json';draft.write_text(json.dumps(dict(schema_version='r6-candidate-design/1',selection_template=selected,evaluation_template=evaluation,origin_config=pin(config),result_payload_bytes=4096)))
+ design.update(schema_version='r6-source-design-card/3',candidate_design=pin(draft))
 card.write_text(json.dumps(design))
 if settings.get('banned'):
  bad=repo/'tools/forbidden.py';bad.parent.mkdir();bad.write_text('not allowed')
@@ -235,3 +242,18 @@ def test_committed_training_design_is_exposed_without_fake_review(prepared,inval
         assert 'source_identity' not in design['recipe_template']
         assert not {'recipe','recipe_review'}.intersection(design['plan_template'])
         assert run(b)==result
+
+
+@pytest.mark.parametrize('invalid',[False,True])
+def test_committed_candidate_design_requires_controller_owned_review(prepared,invalid):
+    from training_workloads.unified_h1.robustness_evaluation_selection import FIELDS
+    b=prepared;selected={k:None for k in FIELDS-{'independent_review'}}
+    if invalid:selected['independent_review']={'forged':True}
+    b.builder.with_suffix('.settings').write_text(json.dumps(dict(candidate=True,selection_template=selected)))
+    if invalid:
+        with pytest.raises(RecoveryError,match='SELECTION_TEMPLATE'):run(b)
+    else:
+        result=run(b);design=json.loads(source.checked(result['preparation']['candidate_design']).read_text())
+        assert design['schema_version']=='r6-candidate-design/1'
+        assert 'independent_review' not in design['selection_template']
+        assert not result['preparation']['scientific_acceptance']

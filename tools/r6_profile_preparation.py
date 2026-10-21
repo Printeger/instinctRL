@@ -186,6 +186,8 @@ def record(journal,key,packet_key,packet_pin,store,*,free_disk_bytes):
         expected=(FIELDS-{'experiment_card','output_cap_bytes'})|{'extension_inputs','evaluation_selection'}
         require(set(profile)==expected,'PROFILE_FIELDS')
         immutable+=('protocol_review',)
+        if 'evaluation_selection' in reference:
+            immutable+=('evaluation_selection','checkpoint_compatibility')
     elif not training:
         require(set(profile)==set(reference)-materializer.MANAGED,'PROFILE_FIELDS')
         immutable+=('checkpoint_compatibility','protocol_review','training_seed')

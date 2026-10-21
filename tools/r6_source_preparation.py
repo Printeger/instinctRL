@@ -108,7 +108,12 @@ def register(journal,parent_key,store,*,executable,free_disk_bytes):
         'with null source_commit/config/card and concrete must_fix; do not fabricate readiness. '
         'Include parent pin in evidence_pins and every git diff path since base_commit in '
         'changed_files. Controller freezes source only after receipt, cleanup and input verification. '
-        'Future actual volume bindings, compatibility and prelive reviews remain mandatory.\n'
+        'For candidate evaluation use r6-source-design-card/3 with candidate_design pin to committed '
+        'r6-candidate-design/1: selection_template (all selection fields except independent_review), '
+        'evaluation_template (experiment_id, wall_seconds, protocol_review, r6), origin_config, '
+        'result_payload_bytes. Use dedicated unified-h1-r6-candidate-config.v1. Commit comparison '
+        'input with the same hypothesis; controller owns independent selection and compatibility '
+        'reviews. Never fabricate reviewer pins. Future actual volume bindings and prelive reviews remain mandatory.\n'
         +json.dumps(packet,sort_keys=True)+'\n')
     require(len(prompt.encode())<=65536,'CONTEXT_CAP')
     target=journal.directory/'source-preparation'/parent_key/'prompt.txt'
@@ -177,9 +182,10 @@ def record(journal,key,store):
     require(result['config'] in result['evidence_pins'] and result['card'] in result['evidence_pins'],'ARTIFACT_EVIDENCE')
     design=json.loads(card.read_text())
     training=isinstance(design,dict) and design.get('schema_version')=='r6-source-design-card/2'
+    candidate=isinstance(design,dict) and design.get('schema_version')=='r6-source-design-card/3'
     fields={'schema_version','parent_decision_sha256','experiment_id','hypothesis','comparison','source_scope','planned_resources'}
-    require(isinstance(design,dict) and set(design)==(fields|{'training_design'} if training else fields)
-        and design['schema_version'] in ('r6-source-design-card/1','r6-source-design-card/2')
+    require(isinstance(design,dict) and set(design)==(fields|{'training_design'} if training else fields|{'candidate_design'} if candidate else fields)
+        and design['schema_version'] in ('r6-source-design-card/1','r6-source-design-card/2','r6-source-design-card/3')
         and design['parent_decision_sha256']==packet['parent']['sha256'],'DESIGN_CARD')
     if training:
         from training_workloads.unified_h1.robustness_training_plan import FIELDS,RECIPE_FIELDS
@@ -197,6 +203,17 @@ def record(journal,key,store):
         checked(draft['origin_config'])
         for name in ('method','curriculum'):
             require(committed(recipe[name],commit,repo).is_relative_to(repo/output),'TRAINING_INPUT_PATH')
+    if candidate:
+        from tools.r6_candidate_preparation import validate_design
+        path=committed(design['candidate_design'],commit,repo)
+        require(path.is_relative_to(repo/output),'CANDIDATE_DESIGN_PATH')
+        draft=json.loads(path.read_text());validate_design(draft)
+        require(draft['evaluation_template']['experiment_id']==design['experiment_id'],'CANDIDATE_EXPERIMENT')
+        require(json.loads(config.read_text()).get('schema_version')=='unified-h1-r6-candidate-config.v1','CANDIDATE_CONFIG')
+        selected=draft['selection_template']
+        comparison=committed(selected['comparison'],commit,repo)
+        require(json.loads(comparison.read_text())['hypothesis']==design['hypothesis'],'CANDIDATE_HYPOTHESIS')
+        checked(selected['method'])
     require(all(isinstance(design[k],str) and design[k].strip()
         for k in ('experiment_id','hypothesis','comparison','source_scope')),'DESIGN_CARD_FIELDS')
     planned=design['planned_resources']
@@ -208,6 +225,7 @@ def record(journal,key,store):
         source_commit=commit,config=result['config'],card=result['card'],review_required=True,
         worker_receipt=entry['receipt'],scientific_acceptance=False)
     if training:artifact['training_design']=design['training_design']
+    if candidate:artifact['candidate_design']=design['candidate_design']
     path=journal.directory/'source-preparation'/packet['parent_key']/'result.json'
     persist_exact(path,canonical(artifact)+b'\n')
     state=journal.read();state['events'][key]['source_result']=file_pin(path);journal.save(state)

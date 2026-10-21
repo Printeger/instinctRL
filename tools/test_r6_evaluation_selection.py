@@ -85,3 +85,32 @@ def test_loaded_metadata_cannot_substitute_seed_or_clock(selection):
     assert s.verify_loaded(r,metadata)==model
     metadata['training_seed']=12
     with pytest.raises(PermissionError):s.verify_loaded(r,metadata)
+
+
+def test_selection_draft_retains_evidence_checks_but_is_not_accepted(selection):
+    b=selection;draft={k:v for k,v in b.selection.items() if k!='independent_review'}
+    result=s.validate_draft(draft)
+    assert result['model']==s.validate(b.selection)['model'] and not result['dispatch_authorized']
+    with pytest.raises(PermissionError):s.validate(draft)
+    with pytest.raises(PermissionError):s.validate_draft(b.selection)
+    draft['checkpoint']=b.ev
+    with pytest.raises(PermissionError):s.validate_draft(draft)
+
+
+def test_frozen_selection_review_program_rechecks_unreviewed_evidence(selection,monkeypatch):
+    import io,sys
+    from pathlib import Path
+    from tools import r6_candidate_review_inputs as tool
+    from training_workloads.unified_h1 import config
+    b=selection;draft={k:v for k,v in b.selection.items() if k!='independent_review'}
+    draft_pin=b.pin('draft-selection.json',draft);root=Path(draft_pin['path']).parent/'snapshot'
+    cp=root/'training_workloads/unified_h1/candidate_config.json';cp.parent.mkdir(parents=True);cp.write_text('{}')
+    cfg=dict(schema_version=config.R6_CANDIDATE_CONFIG_SCHEMA,resolved_identity=b.identity)
+    monkeypatch.setattr(config,'load_config',lambda:cfg)
+    monkeypatch.setattr(sys,'stdin',io.StringIO(json.dumps(dict(kind='selection',selection=draft_pin))))
+    out=io.StringIO();monkeypatch.setattr(sys,'stdout',out);monkeypatch.setattr(sys,'argv',['fixture',str(root)])
+    before=list(sys.path)
+    try:exec(tool.PROGRAM,{})
+    finally:sys.path[:]=before
+    result=json.loads(out.getvalue());assert result['payload']==draft and result['source_identity']==b.identity
+    with pytest.raises(PermissionError):s.validate(result['payload'])

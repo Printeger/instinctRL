@@ -22,8 +22,10 @@ def transport(tmp_path,monkeypatch):
     return SimpleNamespace(snapshot=snapshot,payload=payload,run=run,identity=identity)
 
 
-def test_transport_never_accepts_or_issues(transport):
-    b=transport;request=dict(selection=b.payload,origin_config=b.payload)
+@pytest.mark.parametrize('kind',['selection','compatibility'])
+def test_transport_never_accepts_or_issues(transport,kind):
+    b=transport;request=dict(kind=kind,selection=b.payload)
+    if kind=='compatibility':request['origin_config']=b.payload
     r=m.prepare(b.snapshot,request)
     assert r['status']=='REVIEW_PAYLOAD_PREPARED_NOT_ACCEPTED' and not r['dispatch_authorized']
     args,kw=b.run.call_args

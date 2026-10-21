@@ -205,3 +205,17 @@ def test_candidate_profile_validates_before_storage_and_replays(case,monkeypatch
         assert b.j.read()['budget']==budget and b.builder.with_suffix('.count').read_text()=='call\n'
     if fault=='mixed':assert not seen
     else:assert seen and seen[0][1]['training_seed']==456
+
+
+@pytest.mark.parametrize('field',['evaluation_selection','checkpoint_compatibility'])
+def test_candidate_profile_cannot_replace_prepared_reviews(case,monkeypatch,field):
+    b=case;context=json.loads(p.checked(b.context).read_text())
+    reference=json.loads(p.checked(context['baseline_profile']).read_text())
+    reference['evaluation_selection']={'fixture':'reviewed-selection' if field=='checkpoint_compatibility' else 'another-reviewed-selection'}
+    context['baseline_profile']=b.write('candidate-reference.json',reference)
+    b.context=b.write('candidate-context.json',context)
+    b.builder.with_suffix('.settings').write_text(json.dumps(dict(candidate=True,immutable=field=='checkpoint_compatibility')))
+    validator=Mock();monkeypatch.setattr(p.candidate_profile,'validate',validator)
+    with pytest.raises(RecoveryError,match='IMMUTABLE_PROFILE_BINDING'):run(b)
+    validator.assert_not_called()
+    assert not any(e['identity']['role']==p.storage.ROLE for e in b.j.read()['events'].values())

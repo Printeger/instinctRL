@@ -11,19 +11,27 @@ sys.path.insert(0,sys.argv[1])
 from training_workloads.unified_h1.config import load_config,R6_CANDIDATE_CONFIG_SCHEMA
 from training_workloads.unified_h1.robustness_contract import pinned_json
 from training_workloads.unified_h1.robustness_candidate_contract import compatibility_payload
+from training_workloads.unified_h1.robustness_evaluation_selection import validate_draft
 c=load_config();q=json.load(sys.stdin)
 if c['schema_version']!=R6_CANDIDATE_CONFIG_SCHEMA:raise PermissionError('candidate config schema required')
 p=Path(sys.argv[1])/'training_workloads/unified_h1/candidate_config.json'
 cp=dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest())
-payload=compatibility_payload(q['origin_config'],cp,pinned_json(q['selection']),c)
+if q.get('kind')=='selection':
+ payload=pinned_json(q['selection']);validate_draft(payload)
+else:
+ payload=compatibility_payload(q['origin_config'],cp,pinned_json(q['selection']),c)
 print(json.dumps(dict(source_identity=c['resolved_identity'],payload=payload),sort_keys=True))
 '''
 
 
 def prepare(snapshot_pin,request):
-    if not isinstance(request,dict) or set(request)!={'origin_config','selection'}:
+    if not isinstance(request,dict):raise RecoveryError('CANDIDATE_REVIEW_FIELDS')
+    kind=request.get('kind','compatibility')
+    fields={'kind','selection'} if kind=='selection' else {'kind','origin_config','selection'}
+    if kind not in ('selection','compatibility') or set(request) not in (fields,fields-{'kind'} if kind=='compatibility' else fields):
         raise RecoveryError('CANDIDATE_REVIEW_FIELDS')
-    for pin in request.values():checked(pin)
+    for name,pin in request.items():
+        if name!='kind':checked(pin)
     snapshot=json.loads(checked(snapshot_pin).read_text())
     if snapshot.get('status')!='CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY':raise RecoveryError('CANDIDATE_REVIEW_SNAPSHOT')
     config=json.loads(checked(snapshot['config']).read_text());verify_frozen(snapshot,config)

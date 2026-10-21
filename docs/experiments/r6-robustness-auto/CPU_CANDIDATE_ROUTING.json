@@ -1,0 +1,114 @@
+{
+  "status": "CPU_CANDIDATE_SOURCE_SELECTION_COMPATIBILITY_REVIEWS_AND_CONTEXT_ROUTE_PASS_NOT_DEPLOYED",
+  "input_commit": "bf0dabc3",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation_selection.py",
+      "sha256": "4b95dc6ebfeed8967e77ae6a579f213611359013274b509b222daa8dcf52c436"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_candidate_review_inputs.py",
+      "sha256": "07ec6d2331378bbe6dcd3c2ea5eaf955a36bdcf6211d173f524a99db48194a2c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_candidate_review.py",
+      "sha256": "e2bbe2054f1612d0150ca5e7d903b1db022f43b49d8a7b6f6b229020bb2c56fb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_candidate_preparation.py",
+      "sha256": "69706711d3fd94884bde246541e09bfa5f7d156e8ee83cf1bae408400cd59dfd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_source_preparation.py",
+      "sha256": "7276dabf45a81399f46ee4d948f6d106c0eb6eadfeaedf206ebb3ce1c8e8d635"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "3bc0ab9e8cef00fd922eca5ecf77fb0be5eea7cf36c82e714af0a125087e646d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_profile_preparation.py",
+      "sha256": "60711c6b0737ecb6a3c79aaf95269628ff94a18e4939bea84aaf97a69cb3aac0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/candidate-review.schema.json",
+      "sha256": "c669c394dd47fe6b70559af64286ca1e3c926eb41a36beea265f4e39ae2b3a50"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_candidate_review.py",
+      "sha256": "6b37b3372f8da03b2b15df1ca2940de12ad52114fd558c65e01cb3ff858e2ef0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_candidate_preparation.py",
+      "sha256": "4b34309ec9bee2658a55f26ab8199a9e48ad13ce562a7dc8faab692b839239be"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_evaluation_selection.py",
+      "sha256": "fc6b4f895ce129d000d6b8ae8f8bf831b69e94edbc497fdee43040de0c27df63"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_candidate_review_inputs.py",
+      "sha256": "5ad93094770605b5bfe0a46aa37883735ad4a98002c0c6e3af8e770fbd6eae3f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "a2c497226c844fa533a8d09a496fed1c4d2457783837b2ce56945bb6fbc0df64"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_preparation.py",
+      "sha256": "a8f408c5a0662cb8363af32dc6af68a1fbd93cef61a15c5d2f2f60a09d4e99b0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_profile_preparation.py",
+      "sha256": "376b047278f621cbc7dc4eaf1217d96140dd5891f566b9fbed912d8b78a69412"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ROUTING_INITIAL.log",
+      "sha256": "1cb5e099661e4c9785684f148f2d2874e60c951f4649c6f9dff3a1c6c94461a0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ROUTING_PREPARATION.log",
+      "sha256": "8c433eed099b290f27d9b389ea8e4a760a4a834e498a32d18f45ccfbfcbb3d77"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ROUTING_FINAL.log",
+      "sha256": "72490a1c5b5d61183de0df70a0e72f8bc925b73a42edaa629110b6ba617ea542"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ROUTING_PROFILE_PIN.log",
+      "sha256": "40c6525c8f11cd8258d2b4533f925dd9ab2106392330df057f628c0dd442fbc9"
+    }
+  ],
+  "verification": {
+    "initial_combined": 73,
+    "source_preparation": 23,
+    "final_combined": 108,
+    "prepared_review_pin_regression": 2
+  },
+  "initial_failures": [],
+  "guarantees": [
+    "Unreviewed selection draft retains every provenance/closed-job/checkpoint/gate/RNG/method/comparison check; formal selection still rejects missing review.",
+    "Budgeted independent selection and source compatibility review events use exact payloads, source revalidation, parent/Store/budget checks, bounded read-only workers and original receipts.",
+    "Replay, prompt/acceptance crash, rejected item/hash/evidence, reservation loss and STOP do not repeat a consumed model event or silently accept a review.",
+    "Committed source card v3 exposes exact candidate design; templates cannot supply reviewer or overwrite controller-owned bindings.",
+    "Candidate preparation caches selection result while compatibility review is active, then validates frozen profile and publishes a new pinned context.",
+    "Controller SOURCE to CANDIDATE_PREPARATION to PROFILE route persists across interruption; profile cannot replace context-selected model or compatibility review."
+  ],
+  "boundaries": [
+    "Temporary real Git/Journal/model receipts with local fake CLI; source preflight/config/selection baseline identity and frozen validation have explicit fixture boundaries.",
+    "Prepared design and live review/event integration do not establish real scientific candidate selection or learning gain.",
+    "No production review worker, Store issuance/submission, GPU query, simulation, training, new dependency or runtime change.",
+    "Historical root-owned pytest cleanup warnings retained; no test failures this turn."
+  ],
+  "remaining": [
+    "Final method/seed freeze and confirmation/holdout release contracts plus controller route",
+    "Final delivery, independent audit and real videos",
+    "Combined integration review and platform handoff before production",
+    "Actual baseline and evidence-driven scientific loop"
+  ],
+  "goal_complete": false
+}

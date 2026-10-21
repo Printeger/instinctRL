@@ -259,3 +259,22 @@ def test_training_review_interruption_keeps_cursor_for_exact_recovery(controller
     training.side_effect=None;training.return_value=dict(status='TRAINING_REVIEWS_ACCEPTED_CONTEXT_READY',context=b.context)
     assert run(b)['status']=='WAITING_FOR_ADMIN_PROVISION'
     b.source.assert_called_once();b.compat.assert_not_called()
+
+def test_candidate_source_routes_to_candidate_reviews_then_profile(controller,monkeypatch):
+    b=controller;monkeypatch.setattr(c,'parent_for_job',lambda *a:(b.parent,{'decision':{'decision':'PROPOSE_CANDIDATE'}}))
+    b.source.return_value['preparation']['candidate_design']=b.context
+    candidate=Mock(return_value=dict(status='CANDIDATE_REVIEWS_ACCEPTED_CONTEXT_READY',context=b.context,dispatch_authorized=False))
+    monkeypatch.setattr(c.candidate,'prepare',candidate)
+    assert run(b)['status']=='WAITING_FOR_ADMIN_PROVISION'
+    candidate.assert_called_once();b.compat.assert_not_called();b.source.assert_called_once()
+
+
+def test_candidate_review_interruption_keeps_cursor_for_exact_recovery(controller,monkeypatch):
+    b=controller;monkeypatch.setattr(c,'parent_for_job',lambda *a:(b.parent,{'decision':{'decision':'PROPOSE_CANDIDATE'}}))
+    b.source.return_value['preparation']['candidate_design']=b.context
+    candidate=Mock(side_effect=RuntimeError('candidate review in flight'));monkeypatch.setattr(c.candidate,'prepare',candidate)
+    with pytest.raises(RuntimeError,match='candidate review in flight'):run(b)
+    assert entry(b)['cursor']['phase']=='CANDIDATE_PREPARATION'
+    candidate.side_effect=None;candidate.return_value=dict(status='CANDIDATE_REVIEWS_ACCEPTED_CONTEXT_READY',context=b.context)
+    assert run(b)['status']=='WAITING_FOR_ADMIN_PROVISION'
+    b.source.assert_called_once();b.compat.assert_not_called()

@@ -17,7 +17,15 @@ def require(ok,reason):
 
 
 def validate(value):
-    require(isinstance(value,dict) and set(value)==FIELDS and value['schema_version']=='r6-evaluation-selection/1','FIELDS')
+    return _validate(value,reviewed=True)
+
+
+def validate_draft(value):
+    return _validate(value,reviewed=False)
+
+
+def _validate(value,*,reviewed):
+    require(isinstance(value,dict) and set(value)==(FIELDS if reviewed else FIELDS-{'independent_review'}) and value['schema_version']=='r6-evaluation-selection/1','FIELDS')
     require(value['phase']=='development' and value['role'] in ('baseline_control','trained_candidate'),'DEVELOPMENT_ROLE')
     baseline=base.baseline(value);validate_pin(value['checkpoint'])
     method=validate_method(base.pinned_json(value['method']))
@@ -85,8 +93,9 @@ def validate(value):
             ppo_config=dict(method['ppo'],permutation_seed=plan['training_seed']))
     # Review explicitly adjudicates the pinned training evidence/native status,
     # comparison design and the selected node; no analysis alone grants selection.
-    base.accepted_review(value['independent_review'],'PASS_R6_EVALUATION_SELECTION',
-        payload_sha256=base.object_sha({k:v for k,v in value.items() if k!='independent_review'}))
+    if reviewed:
+        base.accepted_review(value['independent_review'],'PASS_R6_EVALUATION_SELECTION',
+            payload_sha256=base.object_sha({k:v for k,v in value.items() if k!='independent_review'}))
     return dict(selection=value,model=model,method=method,comparison=comparison,
         scientific_acceptance=False,dispatch_authorized=False)
 
