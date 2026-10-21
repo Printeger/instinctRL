@@ -1,5 +1,10 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：补齐无parent的首次基线审核登记与准确Store发行路径，复用已有事务。
+38项CPU检查通过：schema/receipt绑定、一次批准、批准后崩溃恢复、撤销/STOP/容量拒绝，
+既有next-job与假CLI继续链回归通过。边界替身明确，待独审；非生产许可或controller部署。
+见 CPU_INITIAL_BASELINE_ISSUANCE.json。118次唤醒+25worker=143，余113次；Goal未完成。
+
 2026-10-21：收拢首次基线准确输入草案 INITIAL_BASELINE_INPUT_DRAFT.json：16条件、
 193600非训练transitions、18471714816字节结果payload；3600秒wall为待审核提案。
 逐条件配额与已预付生产包对齐；缺四个参数字段及冻结协议/容量接受，不能发车。

@@ -40,6 +40,17 @@ def issue(journal,parent_key,plan_pin,review_key,review_pin,master_pin,store,*,f
     s=journal.read();require(s['budget']['capacity_pass'] is True,'CAPACITY')
     require(s.get('current_job') is None,'ACTIVE_JOB')
     plan,spec,jid=reviewed_plan(journal,parent_key,plan_pin,review_key,review_pin,store)
+    return _issue_reviewed(journal,parent_key,plan_pin,review_key,review_pin,master_pin,store,
+        plan,spec,jid,free_disk_bytes=free_disk_bytes)
+
+
+def _issue_reviewed(journal,parent_key,plan_pin,review_key,review_pin,master_pin,store,
+                    plan,spec,jid,*,free_disk_bytes,role=ROLE):
+    """Shared transaction after either exact first-job or next-job review checks."""
+    journal.require_writer();journal.guard();require(not stop_paths(journal),'STOP')
+    no_model_workers(journal);delegation(journal,master_pin,store)
+    s=journal.read();require(s['budget']['capacity_pass'] is True,'CAPACITY')
+    require(s.get('current_job') is None,'ACTIVE_JOB')
     experiments.validate(spec,store.root)
     require(spec['backend']=='real' and spec.get('h1',{}).get('mode')=='research-r6-evaluation','MODE')
     st=store.replay();require(jid not in st['jobs'],'CHILD_EXISTS')
@@ -50,12 +61,12 @@ def issue(journal,parent_key,plan_pin,review_key,review_pin,master_pin,store,*,f
         require(evidence.get('accepted') and evidence.get('sha256')==c['sha256'],'CONDITION')
     request=dict(parent_key=parent_key,plan=plan_pin,review_key=review_key,review=review_pin,
         master=master_pin,store_root=str(store.root.resolve()))
-    prior=[(k,e) for k,e in s['events'].items() if e['identity']['role']==ROLE
+    prior=[(k,e) for k,e in s['events'].items() if e['identity']['role']==role
         and e['request']['parent_key']==parent_key]
     require(len(prior)<=1,'PARENT_ALIAS')
     if prior:require(prior[0][1]['request']==request,'PARENT_ALREADY_BOUND')
     identity=dict(goal_id=s['goal_id'],event_id='AUTHORIZE_NEXT:'+parent_key,job_id=jid,
-        input_sha256=sha(request),role=ROLE)
+        input_sha256=sha(request),role=role)
     # Check the complete next-job allowance without consuming it here. Actual
     # reservation remains at existing resource admission, and rechecks budget.
     from tools.r6_storage_allocation import for_spec
@@ -90,7 +101,9 @@ def issue(journal,parent_key,plan_pin,review_key,review_pin,master_pin,store,*,f
         require(not stop_paths(journal),'STOP')
         policy.decide(store,pid,digest,'APPROVED','R6 delegated exact next-job approval; journal event '+key)
     approval=experiments.authorized(store.replay(),spec,store.root)
-    result=dict(status='EXACT_NEXT_JOB_AUTHORIZED_NOT_SUBMITTED',event_key=key,
+    status=('EXACT_INITIAL_BASELINE_AUTHORIZED_NOT_SUBMITTED'
+        if role=='initial-baseline-authorization' else 'EXACT_NEXT_JOB_AUTHORIZED_NOT_SUBMITTED')
+    result=dict(status=status,event_key=key,
         proposal_id=pid,approval_id=approval['approval_id'],spec_sha256=sha(spec),job_id=jid)
     s=journal.read();old=s['events'][key].get('authorization_result')
     require(old is None or old==result,'RESULT_DRIFT')

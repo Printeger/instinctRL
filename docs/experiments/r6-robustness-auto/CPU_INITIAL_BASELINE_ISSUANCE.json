@@ -1,0 +1,51 @@
+{
+  "status": "CPU38_PASS_INDEPENDENT_REVIEW_PENDING",
+  "scope": "Initial fixed-baseline review registration/receipt/schema validation and exact Store issuance; shared next-job transaction regression",
+  "source_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_initial_baseline.py",
+      "sha256": "6421d9cb3e6a52645f5b01558cfbd7fbfca464f694a7fabb3da30f1d6d110e94"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_issue_next.py",
+      "sha256": "11d2f9fdad92182ecffc50ebb2bad80d8a836a3a8102a2815e1493aca4c795b9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_initial_baseline.py",
+      "sha256": "eefeb600410de15d537a1c45f72f5f9e4ed6e768b8428b84c90d022aae54fde3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/initial-baseline-review.schema.json",
+      "sha256": "cb30ffd315c5658bd727b68e409e722c585d2bcae857ae351b2ee9f4535f6a6c"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_INITIAL_BASELINE_ISSUANCE_TEST.txt",
+      "sha256": "662a92161fcf15040f221d0ea5efdb47badfe22af24ec52c9023ea1d8a737cbe"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_INITIAL_BASELINE_ISSUANCE_FINAL.txt",
+      "sha256": "a81ea303c5f2780e6dfa20cbc34239bc8f3d1b75c02177b26bdb04d170d0af33"
+    }
+  ],
+  "checks": [
+    "No fictional parent decision required; only exact initial experiment accepted",
+    "Real schema/receipt/evidence bindings before real Store transaction",
+    "Single approval/reservation across replay and crash after Store approval",
+    "MUST_FIX, modified plan/output, cleanup failure, receipt mismatch and reservation tampering reject",
+    "STOP, capacity=false, prior journal/Store R6 job and revoked approval reject",
+    "Missing undispatched prompt replay reconstructs same event",
+    "Existing next-job and local fake-worker continuation regressions pass"
+  ],
+  "limitations": [
+    "Tests mock runtime inspection, master delegation and kernel volume validation",
+    "Review receipts in first-baseline tests are synthetic; no actual initial prelive review",
+    "No production Store permission, model worker or simulator started by new module",
+    "Caller must use existing exact-job runner for submission and its claim recovery; detached controller not deployed",
+    "Historical root-owned pytest cleanup warnings retained"
+  ],
+  "production_issued": false,
+  "live_starts": 0,
+  "goal_complete": false
+}
