@@ -1,0 +1,148 @@
+{
+  "schema_version": "r6-capacity-freeze-candidate/1",
+  "status": "FROZEN_CONTENT_PENDING_INDEPENDENT_REVIEW",
+  "capacity_pass": true,
+  "production_baseline_volume_verification": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/PRODUCTION_BASELINE_VOLUME_VERIFICATION.json",
+    "sha256": "7c1a96f8a42fcde29c21b635fcffabde101c8e5df19edfbe2313d04aa6395594"
+  },
+  "disk_reconciliation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/disk.json",
+    "sha256": "cca2c9ac9b78c0384c563d33c9f55437c97af139700c50ab47db81109e143ba1"
+  },
+  "historical_time_basis": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_COMPOSED_DRAFT_V5.json",
+    "sha256": "56bb916565aea2c5d494b715172647d9dba27aa71d8719e800256838b1c141a8"
+  },
+  "initial_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/INITIAL_BASELINE_INPUT_DRAFT.json",
+    "sha256": "63718b1bf5be11de1395e46a54ae0cbcab49a3a31b65b03ed370d3439d4289df"
+  },
+  "job_time_bounds": [
+    {
+      "phase": "initial_baseline",
+      "jobs": 1,
+      "proposed_workload_wall_seconds": 3600,
+      "dispatcher_allowance_seconds": 10,
+      "admission_cleanup_allowance_seconds": 180,
+      "reservation_per_job_seconds": 3790,
+      "total_reserved_seconds": 3790,
+      "training_transitions": 0,
+      "nontraining_transitions": 193600,
+      "final_protected": false
+    },
+    {
+      "phase": "development_training_256",
+      "jobs": 1,
+      "proposed_workload_wall_seconds": 2100,
+      "dispatcher_allowance_seconds": 10,
+      "admission_cleanup_allowance_seconds": 180,
+      "reservation_per_job_seconds": 2290,
+      "total_reserved_seconds": 2290,
+      "training_transitions": 131072,
+      "nontraining_transitions": 0,
+      "final_protected": false
+    },
+    {
+      "phase": "development_affected_block_and_original",
+      "jobs": 1,
+      "proposed_workload_wall_seconds": 1200,
+      "dispatcher_allowance_seconds": 10,
+      "admission_cleanup_allowance_seconds": 180,
+      "reservation_per_job_seconds": 1390,
+      "total_reserved_seconds": 1390,
+      "training_transitions": 0,
+      "nontraining_transitions": 43520,
+      "final_protected": false
+    },
+    {
+      "phase": "final_full_evaluation",
+      "jobs": 4,
+      "proposed_workload_wall_seconds": 3600,
+      "dispatcher_allowance_seconds": 10,
+      "admission_cleanup_allowance_seconds": 180,
+      "reservation_per_job_seconds": 3790,
+      "total_reserved_seconds": 15160,
+      "training_transitions": 0,
+      "nontraining_transitions": 774400,
+      "final_protected": true
+    },
+    {
+      "phase": "confirmation_training_1024",
+      "jobs": 3,
+      "proposed_workload_wall_seconds": 4200,
+      "dispatcher_allowance_seconds": 10,
+      "admission_cleanup_allowance_seconds": 180,
+      "reservation_per_job_seconds": 4390,
+      "total_reserved_seconds": 13170,
+      "training_transitions": 1572864,
+      "nontraining_transitions": 0,
+      "final_protected": true
+    },
+    {
+      "phase": "video_delivery",
+      "jobs": 1,
+      "proposed_workload_wall_seconds": 1200,
+      "dispatcher_allowance_seconds": 10,
+      "admission_cleanup_allowance_seconds": 180,
+      "reservation_per_job_seconds": 1390,
+      "total_reserved_seconds": 1390,
+      "training_transitions": 0,
+      "nontraining_transitions": 16000,
+      "final_protected": true
+    }
+  ],
+  "final_reserved_seconds": 29720,
+  "development_reserved_seconds": 7470,
+  "total_reserved_seconds": 37190,
+  "hard_time_cap_seconds": 43200,
+  "unallocated_time_seconds": 6010,
+  "proposed_final_protection": {
+    "allocated_gpu_seconds": 30000,
+    "live_wall_seconds": 30000,
+    "output_actual_plus_unreleased_reservations_bytes": 99857989632
+  },
+  "existing_final_protection": {
+    "allocated_gpu_seconds": 24000,
+    "live_wall_seconds": 24000,
+    "output_actual_plus_unreleased_reservations_bytes": 85899345920
+  },
+  "maximum_initial_job_output_bytes": 20250099712,
+  "maximum_initial_workload_wall_seconds": 3600,
+  "full_plan_training_transitions": 1703936,
+  "full_plan_nontraining_transitions": 1027520,
+  "scope": [
+    "One development256-update candidate is a capacity example, not a scientific recipe; diagnose baseline before choosing training",
+    "Four full final suites preserve baseline+three-model common-realization comparison; BASELINE_SUFFICIENT instead uses three distinct streams with zero training",
+    "Video16000transitions is a conservative allowance; raw replay is preferred and must be labeled as no new physical validation",
+    "Full job bounds include10s dispatcher and180s admission/cleanup, not just historical mean throughput",
+    "Keep93GiB final storage allocation proposed in reconciliation; do not overwrite80GiB ledger before acceptance"
+  ],
+  "remaining_before_acceptance": [
+    "Independent protocol/split/numerical feasibility/capacity review tied to exact freeze candidate",
+    "Future job volumes require exact provisioning and fresh statvfs/kernel verification; baseline mount does not prove their existence",
+    "Training/holdout/video contracts and exact per-file quotas must be accepted before those phases",
+    "Future per-job reservations and hard guards must fit this plan; no implicit refund or promise of success within estimated throughput",
+    "Current disk reconciliation retains historical text saying layout unmeasured; actual baseline measurement above supersedes that statement only for this exact baseline pair"
+  ],
+  "ledger_allocation_changed": false,
+  "total_caps_changed": false,
+  "dispatch_authorized": false,
+  "protocol_sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822",
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/protocol.json",
+    "sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822"
+  },
+  "split": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/split.json",
+    "sha256": "348eebbca030c74034d19b554cfdb3e4f0cc5dc287360f3347c7866c2adcc748"
+  },
+  "storage": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/storage.json",
+    "sha256": "d400154c135f62cefe2488b4055d38a85bfcc2030ce81a86de28ea55b3bcba40"
+  },
+  "maximum_job_output_bytes": 20250099712,
+  "maximum_job_wall_seconds": 3600,
+  "candidate_semantics": "capacity_pass=true is the proposed frozen report content, not current ledger acceptance. Effective only with registered independent PASS_R6_PROTOCOL naming these exact protocol/report hashes and separately applied ledger protection. Current ledger remains capacity_pass=false.",
+  "future_volume_authority_limitation": "Only initial pair exists. Every future volume needs a separately reserved exact plan and privileged provisioning. No passwordless provisioning or fully autonomous production controller is claimed."
+}

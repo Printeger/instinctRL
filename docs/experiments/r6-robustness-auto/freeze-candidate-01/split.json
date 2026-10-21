@@ -1,0 +1,45 @@
+{
+  "schema_version": "r6-split-manifest/1",
+  "status": "FROZEN_CONTENT_PENDING_INDEPENDENT_REVIEW",
+  "train": "Independent generator stream; curriculum registration pending baseline diagnosis. No final realization is training input.",
+  "development": {
+    "seed": 2026101901,
+    "protocol": "TEST_PROTOCOL.json",
+    "reuse_allowed": true
+  },
+  "confirmation_training_seeds": [
+    2026102101,
+    2026102201,
+    2026102301
+  ],
+  "confirmation_semantics": "Three new continuation trajectories from common frozen u640 after recipe freeze; preserve optimizer checkpoint, explicitly branch RNG after restoration and fresh physical reset. Not from-scratch replications.",
+  "final": {
+    "seed_realization_generated": false,
+    "protocol_distribution_public": true,
+    "realization_release": "Controller generates secret nonce only after final recipe/checkpoint-selection rule frozen, commits hash before final execution; runner derives common condition streams for baseline and each final model; nonce/raw revealed only after all model checkpoints frozen.",
+    "holdout_use": "Single batch only; no subsequent tuning with this holdout. Actual scoring bug requires independent review and contamination record.",
+    "derivation_candidate": {
+      "version": "r6-final-realization/1",
+      "implementation": "training_workloads/unified_h1/robustness_holdout.py",
+      "status": "FROZEN_DERIVATION_PENDING_REVIEW_NOT_RELEASED",
+      "evidence": "CPU_HOLDOUT_STREAMS.json",
+      "pairing": "Use realization index0 for common baseline/three-model comparison. BASELINE_SUFFICIENT uses all three distinct realizations. Never derive realization index from model identity.",
+      "implementation_pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_holdout.py",
+        "sha256": "68ab46969db55ec4fbcda4120e2ac4f3e77cbb79fef239e4870ed54a6b86c811"
+      }
+    }
+  },
+  "baseline_sufficient": "Three different realized environment streams, full original+new target+stress suites for each; training zero.",
+  "stream_domains": [
+    "split",
+    "condition",
+    "lane",
+    "reset",
+    "measurement_noise",
+    "pulse_direction",
+    "training_action",
+    "minibatch_shuffle"
+  ],
+  "random_effect_evidence": "Persist generator identities/states and sampled reset/measurement/pulse values; compare actual realization digests across seeds, not labels."
+}

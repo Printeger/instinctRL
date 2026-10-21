@@ -1,0 +1,417 @@
+{
+  "schema_version": "r6-test-protocol/1",
+  "status": "FROZEN_CONTENT_PENDING_INDEPENDENT_REVIEW",
+  "frozen": true,
+  "results_revealed": false,
+  "old_suite": {
+    "source": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/evaluation.py",
+      "sha256": "a6caedb36a5ddb408a9a9b8c6e073808b480252f6cc3ec12d201b69ab5e5583c"
+    },
+    "seed": 20260909,
+    "lanes_per_case": 32,
+    "transitions": 32960,
+    "rule": "Unmodified original Z/T/S/X/W evaluator and complete denominators; no seed substitution."
+  },
+  "blocks": [
+    {
+      "id": "S-clean-low",
+      "task": "stop",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0.1,
+      "noise_std_m": 0,
+      "delay_cycles": 0
+    },
+    {
+      "id": "S-clean-high",
+      "task": "stop",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0.3,
+      "noise_std_m": 0,
+      "delay_cycles": 0
+    },
+    {
+      "id": "S-noise",
+      "task": "stop",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0.2,
+      "noise_std_m": 0.01,
+      "delay_cycles": 0
+    },
+    {
+      "id": "S-delay-drop",
+      "task": "stop",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0.2,
+      "noise_std_m": 0,
+      "delay_cycles": 1,
+      "drop_policy_steps": [
+        70,
+        180
+      ]
+    },
+    {
+      "id": "X-clean",
+      "task": "reverse",
+      "steps": 200,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0.2,
+      "noise_std_m": 0,
+      "delay_cycles": 0
+    },
+    {
+      "id": "X-noise",
+      "task": "reverse",
+      "steps": 200,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0.2,
+      "noise_std_m": 0.01,
+      "delay_cycles": 0
+    },
+    {
+      "id": "P-clean",
+      "task": "pulse_hold",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0,
+      "noise_std_m": 0,
+      "delay_cycles": 0,
+      "pulse_acceleration_m_s2": 0.5
+    },
+    {
+      "id": "P-combined",
+      "task": "pulse_hold",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0,
+      "noise_std_m": 0.01,
+      "delay_cycles": 1,
+      "pulse_acceleration_m_s2": 0.5
+    },
+    {
+      "id": "W-near",
+      "task": "wall_modes",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0.2,
+      "noise_std_m": 0,
+      "delay_cycles": 0,
+      "sensor_to_wall_distance_m": 1.3
+    },
+    {
+      "id": "W-middle",
+      "task": "wall_modes",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0.2,
+      "noise_std_m": 0,
+      "delay_cycles": 0,
+      "sensor_to_wall_distance_m": 1.5
+    },
+    {
+      "id": "W-far",
+      "task": "wall_modes",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0.2,
+      "noise_std_m": 0,
+      "delay_cycles": 0,
+      "sensor_to_wall_distance_m": 1.8
+    },
+    {
+      "id": "W-combined",
+      "task": "wall_modes",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "target",
+      "speed_m_s": 0.2,
+      "noise_std_m": 0.01,
+      "delay_cycles": 1,
+      "sensor_to_wall_distance_m": 1.5
+    },
+    {
+      "id": "stress-S-noise",
+      "task": "stop",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "stress",
+      "noise_std_m": 0.03,
+      "delay_cycles": 0,
+      "speed_m_s": 0.3
+    },
+    {
+      "id": "stress-S-combined",
+      "task": "stop",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "stress",
+      "noise_std_m": 0.03,
+      "delay_cycles": 1,
+      "drop_policy_steps": [
+        70,
+        180
+      ],
+      "speed_m_s": 0.3
+    },
+    {
+      "id": "stress-P-high",
+      "task": "pulse_hold",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "stress",
+      "noise_std_m": 0,
+      "delay_cycles": 0,
+      "speed_m_s": 0,
+      "pulse_acceleration_m_s2": 1.0
+    },
+    {
+      "id": "stress-W-high",
+      "task": "wall_modes",
+      "steps": 330,
+      "lanes": 32,
+      "domain": "stress",
+      "noise_std_m": 0.03,
+      "delay_cycles": 1,
+      "speed_m_s": 0.3,
+      "sensor_to_wall_distance_m": 1.3
+    }
+  ],
+  "policy_dt_s": 0.1,
+  "physics_dt_s": 0.005,
+  "decimation": 20,
+  "action_mode": "deterministic_mean",
+  "geometry": {
+    "minimum_distance_m": 0.8,
+    "definition": "Distance from actual sensor origin to finite floor/x-wall/y-wall rectangles, including initial state and all subsequent observations.",
+    "max_abs_height_deviation_m": 0.2,
+    "collision_or_height_violation": "FAIL_RETAIN_LANE",
+    "initial_xy_offset_m": [
+      -0.2,
+      0.2
+    ],
+    "yaw_strata_degrees": [
+      0,
+      -15,
+      15,
+      -30,
+      30
+    ],
+    "wall_tangent_offset_m": [
+      -0.2,
+      0.2
+    ],
+    "reset": "Solve root position from rotated sensor offset to achieve specified sensor distance, verify actual reset state; never use body-centre distance as sensor distance.",
+    "reset_velocity": "Initial root linear/angular velocity zero; audit actual reset against generated specification. Speed factor in these blocks varies command magnitude, not initial velocity."
+  },
+  "lane_stratification": {
+    "center": "8 world horizontal directions, four lanes each; lane j direction j%8. Yaw stratum (j//8+j%8)%5. Independent bounded xy offsets per lane. Commands converted world-to-body using current orientation at each control boundary.",
+    "wall": "lanes 0..15 x wall,16..31 y wall; within each wall four lanes per toward/away/parallel/zero mode; parallel signs balanced. Yaw and tangent vary. Report wall \u00d7 mode separately.",
+    "pulse": "8 world force directions with four lanes each; zero commanded velocity throughout.",
+    "command_execution": "Stage next world command before env.step. At actual next observation boundary, rotate with measured current attitude before history.update; both internal/external latest command and retained past command frames stay consistent. No world pose/attitude fields are appended to actor."
+  },
+  "measurement_chain": {
+    "noise": "Independent additive normal draws clipped to +/-3 sigma, applied to finite valid ranges only; clip physical ranges to declared sensor min/max; preserve invalid validity. Zero noise consumes no noise draws. For nonzero sigma, draw every beam on every acquisition from the condition/lane stream independently of validity; mask only application. Different validity masks cannot shift shared-beam or subsequent-acquisition draws.",
+    "delivery": "A single impaired measurement frame feeds both actor and ICS, including consistent validity and acquisition/delivery timestamps. Clean measurement is audit/evaluation only.",
+    "delay_cycles": [
+      0,
+      1
+    ],
+    "delay_initialization": "No prior frame: invalid unavailable sample, not a synthetic fresh frame; preserve this transient. Placeholder timestamp0 is marked frame_available=false and all beam validity=false; it is not a received frame.",
+    "drop": "At specified policy steps, no new frame; retain prior frame with original acquisition timestamp and increment age; dropped-delivery flag true. No fabricated new timestamp.",
+    "audit_fields": [
+      "clean_ranges",
+      "clean_validity",
+      "delivered_ranges",
+      "delivered_validity",
+      "acquisition_time",
+      "delivery_time",
+      "frame_age",
+      "drop",
+      "noise_rng_identity",
+      "frame_available"
+    ],
+    "invalid_fill": "Every invalid beam preserves exact40.0m fill; reject other invalid representations before actor history.",
+    "drop_index_semantics": "Observation boundary index k at block time k*0.1s, including reset boundary0; frame k feeds action k. drop_policy_steps70/180 therefore drop delivery at t7.0/t18.0s, not post-action70/180.",
+    "noise_replay_algorithm": {
+      "version": "R6/range-noise/cpu-v1",
+      "generator_device": "cpu",
+      "arithmetic_device": "cpu",
+      "identity_input": "R6/range-noise/cpu-v1/{seed}/{split}/{block_id}/{lane}",
+      "seed_derivation": "int(SHA256(identity_input)[:16],16) modulo 2**63",
+      "delivery_device": "Transfer noised ranges to runtime device after CPU addition and clipping",
+      "verification": "Bit-exact CPU replay from archived clean ranges, validity, delivery time and audit reset masks; real GPU transfer and timing remain unverified",
+      "change_status": "New prelive candidate; previous device-dependent stream identities remain historical. Capacity and independent review pending."
+    }
+  },
+  "pulse": {
+    "mass_reference": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/diagnostics/r5-readiness/CONTROL_BASELINE_DIAGNOSIS.json",
+      "sha256": "4e831430469fff64b47cf9e374eb18ace2a748cd7c1e5374dc122afa83da15cb"
+    },
+    "reference_mass_kg": 1.1815179230179638,
+    "force_formula": "force_N = registered acceleration * verified runtime mass; world horizontal force at COM, no extra torque, in addition to rotor forces.",
+    "start_policy_step": 50,
+    "duration_physics_ticks": 40,
+    "duration_seconds": 0.2,
+    "nominal_delta_v_m_s": [
+      0.1,
+      0.2
+    ],
+    "nominal_force_N": [
+      0.5907589615089819,
+      1.1815179230179638
+    ],
+    "verification": "Record applied force every physics tick and actual mass. No direct velocity overwrite. Confirm force composition does not erase rotor wrench.",
+    "recovery_clock": "Starts at removal of final force tick (t=5.2s), not at pulse onset.",
+    "runtime_staging": {
+      "status": "DRAFT_CPU_WIRED_NOT_PHYSICALLY_VERIFIED",
+      "distribution": "F_body_world = measured_body_mass * registered_acceleration_world, transform each by actual body link orientation, add to fresh rotor forces; preserve rotor torques",
+      "time": "zero-based block physics ticks1000..1039; check actual simulator tick increments each call; no reset rewinds block clock",
+      "mass": "Caller supplies pinned baseline total mass; every tick measured sum must agree within1e-5kg; no mass mutation",
+      "audit": "Every physics tick records dt, simulator/block ticks, dtype, measured per-body mass, actual body-link quaternion, fresh rotor wrench, added world/local forces and staged total local wrench. Result records completed simulator tick after last stage. Staging/clock records are not independent physical integration proof."
+    }
+  },
+  "metrics": {
+    "all": "Every lane retains all initial transients, collisions, height failures, reset interruptions and missing required audit records. Missing record fails; intentional measured dropout with complete audit is not missing evidence. All numerics finite.",
+    "stop": {
+      "command": "100 steps constant world-direction speed then 230 steps zero.",
+      "incoming_rmse_max": 0.15,
+      "incoming_stable_rmse_max": 0.1,
+      "stable_start_step": 20,
+      "vz_rms_max": 0.08,
+      "motion_prerequisite": "Projection along commanded direction >= speed/2 for 11 consecutive observations before stop.",
+      "stop_confirmation": "3D speed <= .08 for 11 consecutive samples, confirmation within 3s of zero command PRE_STEP boundary.",
+      "hold": "201 observations starting at confirmation, speed RMS <= .08, max horizontal displacement from confirmation position <= .30m; global height constraint still applies."
+    },
+    "reverse": {
+      "command": "steps0..49 zero,50..124 positive,125..199 negative.",
+      "rules": "Original X numeric thresholds: error <=.10 for 11 samples confirmed within3s of each switch; nonzero RMSE<=.15/stable<=.10; zero RMS<=.08/drift<=.30; projected peak<=1.5*speed. Add signed motion>=speed/2 for11 samples in each nonzero block."
+    },
+    "pulse_hold": {
+      "before_pulse": "Original Z speed<=.08/drift<=.30 on t0..5s.",
+      "recovery": "11 consecutive samples speed<=.08 confirmed within3s after force removal; hold201 observations from confirmation with RMS<=.08/drift<=.30. Reference is post-recovery confirmation, not old position; no H2 claim."
+    },
+    "wall_modes": {
+      "toward": "Require actual world wall-normal speed>=speed/2 for11 consecutive observations before the first qualifying sample of stopping confirmation. First geometric clearance<=1.1m triggers 3s stop confirmation; otherwise proactive confirmation within20s from start. After confirmation speed RMS<=.08 with at least101 observations, all-time distance>=.8 and height gate.",
+      "away_parallel": "100 steps assigned direction then230 zero, stop rules; geometry still all-time. Parallel signs balanced.",
+      "zero": "Original Z metrics over entire330 steps, all-time geometry/height."
+    }
+  },
+  "aggregation": {
+    "target": "Every target block must have32/32 successful lanes; every direction and wall\u00d7mode subgroup must have all its lanes pass. Each final seed passes separately. No averaging away failed seeds.",
+    "stress": "Same lane rules and full denominators, report failure boundary; not required for target PASS.",
+    "confidence": "Wilson two-sided95% per block/subgroup and per seed, report n; no iid or universal safety claim from correlated lanes or3seeds.",
+    "learning": "Paired common realization comparison to frozen u640; controller changes need fixed-policy control before RL attribution."
+  },
+  "capacity": {
+    "target_policy_steps_per_model": 3700,
+    "target_transitions_per_model": 118400,
+    "stress_transitions_per_model": 42240,
+    "original_plus_all_new_per_model": 193600,
+    "final_three_models_plus_baseline": 774400
+  },
+  "open_before_freeze": [],
+  "metric_implementation": {
+    "path": "training_workloads/unified_h1/robustness.py",
+    "scope": "Motion and finite-rectangle geometry only; motion_pass requires separate input-chain/force/reset/RNG provenance acceptance before scientific PASS.",
+    "source": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/robustness.py",
+      "sha256": "263aa23a624ff973202e2a94ce1d8346c211343ba23701687c2ca59a5a4402b4"
+    }
+  },
+  "reset_execution": {
+    "status": "DRAFT_CPU_WIRED_NOT_LIVE_VERIFIED",
+    "root_pose": "reset_spec for every lane, sensor-relative target corrected by rotated mount; write pose and zero velocities after base history/rotor reset",
+    "verification": "After actual sensor refresh, compare public root state and composed actual sensor parent/mount pose against spec; persist mismatches before rejection",
+    "position_atol_m": "max(1e-5, 2*finfo(root_dtype).eps*max(1, abs(actual root/sensor world coordinates)))",
+    "position_tolerance_reason": "Float32 world-origin addition/subtraction precision; does not round observations or alter0.8m geometric scoring",
+    "quaternion_atol": 1e-06,
+    "velocity_atol": 1e-06,
+    "automatic_resets": "Reapply same registered per-lane reset pose; do not rewind block physics clock or measurement random stream. Record actual reset and mark metric reset failures."
+  },
+  "physics_replay": {
+    "status": "DRAFT_NOT_INDEPENDENTLY_REVIEWED",
+    "mount_position_m": [
+      0.0,
+      0.0,
+      0.05
+    ],
+    "mount_source": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/isaaclab-training/instinctlab/sensors/mid360.py",
+      "sha256": "a37a1c423d8818194f23023ba969f55025dc867d2280579633a699807a5aea44"
+    },
+    "numeric_tolerance": "16*dtype_epsilon*max(1,max(abs(expected))) for wrench arithmetic; exact unchanged torque and inactive rotor wrench",
+    "reset_tolerance": "Recompute max(1e-5,2*dtype_epsilon*max(1,abs(actual_world_coordinates))); check archived world-to-local subtraction and seeded reset_spec",
+    "physical_integration_verified": false
+  },
+  "resource_admission": {
+    "schema_version": "r6-prelaunch-admission/1",
+    "window_policy": {
+      "schema_version": "r5-w-resource-admission/2",
+      "sample_count": 13,
+      "minimum_span_seconds": 60,
+      "minimum_gap_seconds": 4,
+      "maximum_gap_seconds": 8,
+      "mean_utilization_max": 8,
+      "median_utilization_max": 5,
+      "peak_utilization_max": 20,
+      "elevated_utilization_threshold": 10,
+      "elevated_samples_max": 4,
+      "consecutive_elevated_max": 1,
+      "memory_used_max_mib": 1024,
+      "memory_free_min_mib": 10240,
+      "allowed_app": "gnome-remote-desktop-daemon",
+      "allowed_app_max_mib": 256
+    },
+    "fresh_window_required": true,
+    "maximum_collection_seconds": 180,
+    "maximum_final_sample_age_seconds": 8,
+    "queue_observation_is_admission": false
+  },
+  "split_manifest": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/split.json",
+    "sha256": "348eebbca030c74034d19b554cfdb3e4f0cc5dc287360f3347c7866c2adcc748"
+  },
+  "remaining_before_live": [
+    "Independent exact protocol/capacity acceptance and ledger allocation update",
+    "Actual exact prelive review, Store issuance and deployed autonomous controller handoff",
+    "Real physics/measurement/force/reset integration evidence must be evaluated from baseline raw before scientific acceptance"
+  ],
+  "implementation_evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
+      "sha256": "a43e7879faf77ba07e447e11b95349243eb30e0287af1932651153116b394abb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/wall-confirmation-repair-review.json",
+      "sha256": "7a7427e30de35f85b28f0d0816419e844304ff8261d89aca5e0b5923e1a26104"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/execution-compatibility-02-review.json",
+      "sha256": "5fa8c541e93aa08eaace6bde3c95b1cc310ad62fbe216f63b646b325ae8352e3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/first-baseline-entry-review.json",
+      "sha256": "41d1394c3bef23f58010502e295cdb4e1f815ab4559e9c4a3d947e12f8c84794"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/PRODUCTION_BASELINE_VOLUME_VERIFICATION.json",
+      "sha256": "7c1a96f8a42fcde29c21b635fcffabde101c8e5df19edfbe2313d04aa6395594"
+    }
+  ]
+}
