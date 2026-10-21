@@ -289,10 +289,15 @@ def start_after_coexistence_gate(
     asset_root: Path | None = None,
     resource_pins: Mapping[str, Any] | None = None,
     native_volume_pin: Mapping[str, str] | None = None,
+    extension_inputs_pin: Mapping[str, str] | None = None,
 ) -> tuple[dict[str, Any], Any, Any]:
     """Make the resource gate a mandatory predecessor of AppLauncher creation."""
+    extension_args=''
     if native_volume_pin is not None:
         if mode!='research-r6-evaluation':raise ValueError('Native volume requires exact R6 mode')
+        if extension_inputs_pin is None:raise ValueError('R6 native volume requires frozen extension inputs')
+        from training_workloads.unified_h1.extension_inputs import validate as validate_extensions
+        extension_args=' --ext-folder '+validate_extensions(extension_inputs_pin)
         from training_workloads.unified_h1.native_volume import validate, require_capture
         require_capture(validate(dict(native_volume_pin)),_r6_capture_binding())
     gate = gate_runner(
@@ -334,7 +339,7 @@ def start_after_coexistence_gate(
         from isaaclab.app import AppLauncher
         launcher_factory = lambda log: AppLauncher(
             headless=True, enable_cameras=False, fast_shutdown=False,
-            kit_args=f"--/log/file={log}{kit_asset_args}{native_args}",
+            kit_args=f"--/log/file={log}{kit_asset_args}{native_args}{extension_args}",
         )
     launcher = launcher_factory(Path('/proc/self/fd/1') if native_settings else output_root / "kit.log")
     if asset_root is not None:

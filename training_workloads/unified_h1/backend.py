@@ -851,7 +851,8 @@ def create_live_backend(*, authorization: Mapping[str, Any], attempt: Path,
         attempt_id=attempt.name, authorization_sha256=str(authorization["authorization_sha256"]),
         gate_runner=selected_gate, resource_pins=resource_pins,
         asset_root=Path(config["execution"]["isaacsim_asset_root"]),
-        native_volume_pin=authorization.get('parameters',{}).get('native_volume'))
+        native_volume_pin=authorization.get('parameters',{}).get('native_volume'),
+        extension_inputs_pin=authorization.get('parameters',{}).get('extension_inputs'))
     if resources is not None: resources.update(launcher=launcher, app=app)
     if authorization['mode']=='research-r6-evaluation':
         # Register the application first so a readback failure uses the existing

@@ -147,6 +147,7 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
                     directory.mkdir(mode=0o700,exist_ok=False)
                     env[name]=str(directory)
                 env['TMP']=env['TEMP']=env['TMPDIR']
+                env['PYTHONDONTWRITEBYTECODE']='1'
             native_r,native_w = pipe(os); os.set_blocking(native_r,False)
             pipe_info = os.fstat(native_w)
             native_capture = dict(schema_version='r6-native-capture/1',

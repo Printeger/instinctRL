@@ -40,6 +40,12 @@ def wired(tmp_path,monkeypatch):
     # Only mount validation is substituted. Path membership/device checks and
     # actual resources.py launcher argument construction are exercised.
     monkeypatch.setattr(volume,'validate',lambda *a,**k:binding)
+    from training_workloads.unified_h1 import extension_inputs
+    inputs=tmp_path/'installed_extensions';inputs.mkdir()
+    metadata=tmp_path/'extensions.json'
+    import json
+    metadata.write_text(json.dumps(dict(schema_version='r6-extension-inputs/1',tree=extension_inputs.tree_identity(inputs))))
+    input_pin=dict(path=str(metadata),sha256=hashlib.sha256(metadata.read_bytes()).hexdigest())
     monkeypatch.setattr(resources,'_r6_capture_binding',lambda:capture)
     monkeypatch.setattr(resources,'validate_shutdown_runtime_sources',lambda:None)
     calls=[];module=ModuleType('isaaclab.app')
@@ -47,8 +53,14 @@ def wired(tmp_path,monkeypatch):
     module.AppLauncher=launch;monkeypatch.setitem(sys.modules,'isaaclab.app',module)
     gate=Mock(return_value={'status':'PASS'})
     def start():return resources.start_after_coexistence_gate(output,mode='research-r6-evaluation',
-        attempt_id='CPU',authorization_sha256='a'*64,gate_runner=gate,native_volume_pin={'fixture':True})
-    return SimpleNamespace(target=target,output=output,capture=capture,calls=calls,gate=gate,start=start)
+        attempt_id='CPU',authorization_sha256='a'*64,gate_runner=gate,native_volume_pin={'fixture':True},extension_inputs_pin=input_pin)
+    return SimpleNamespace(target=target,output=output,capture=capture,calls=calls,gate=gate,start=start,inputs=inputs)
+
+
+def test_extension_drift_rejected_before_gpu_gate(wired):
+    (wired.inputs/'unexpected.py').write_text('changed')
+    with pytest.raises(ValueError,match='content mismatch'):wired.start()
+    wired.gate.assert_not_called();assert not wired.calls
 
 
 def test_capture_outside_volume_rejected_before_gpu_gate(wired):
@@ -63,6 +75,7 @@ def test_capture_outside_volume_rejected_before_gpu_gate(wired):
     '/app/extensions/registryCacheFull','/exts/omni.kit.registry.nucleus/cachePath'])
 def test_exact_settings_reach_launcher_and_readback_rejects_drift(wired,monkeypatch,setting):
     wired.start()
+    assert ' --ext-folder ' in wired.calls[0]['kit_args']
     requested=resources._r6_native_settings(wired.output,{'fixture':True})
     assert '--'+setting+'='+requested[setting] in wired.calls[0]['kit_args'].split()
     assert Path(requested[setting]).is_dir()
