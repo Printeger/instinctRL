@@ -1,0 +1,35 @@
+{
+  "status": "EXACT_PLANS_PENDING_PREALLOCATION_AND_ADMIN",
+  "experiment_id": "R6-BASELINE-ROBUSTNESS-01",
+  "allocation_label": "J-d737390980235144",
+  "plans": {
+    "native": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/production-storage-baseline-01/native-plan.json",
+      "sha256": "5f58edab0f558c9109a5050e8cce20c818d8494e380d1dc0dd692c79c7df535a"
+    },
+    "results": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/production-storage-baseline-01/results-plan.json",
+      "sha256": "5c7dc8d62cc41d1b0e715f163c80e09964772baa15235af75b1129dba694fddd"
+    }
+  },
+  "tools": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_native_volume.py",
+      "sha256": "4a4489bf36fec2b6207a7d0fc96fc4c06013a1c226268f9d1270a899e527e5eb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_fixed_result_volume.py",
+      "sha256": "54cf055a4c263d7496077e04ca7993a962ce60d4292f60109972ae66564c1efa"
+    }
+  ],
+  "payload_bytes": 18471714816,
+  "total_charge_bytes": 20250099712,
+  "minimum_free_inodes": 4096,
+  "inode_requirement_note": "Conservative provisioning floor, not accepted workload upper bound: 16 block folders each with audit/measurement/motion/result files; extra margin for original-suite metadata and atomic temporary files. Complete entry inode enumeration remains part of prelive acceptance.",
+  "accepted_engineering_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
+    "sha256": "4c49f6b6b2eb9efe8e0a917c9a2611e9fec4df45b25764f1e7232e33c7b156dc"
+  },
+  "capacity_pass": false,
+  "live_permission": false
+}

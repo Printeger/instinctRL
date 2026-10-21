@@ -1,0 +1,39 @@
+{
+  "volume_id": "J-d737390980235144",
+  "image": "/var/lib/instinctrl-r6-native/J-d737390980235144/native.ext4",
+  "target": "/var/lib/instinctrl-r6-native/J-d737390980235144/output",
+  "maximum_backing_bytes": 1610612736,
+  "owner_uid": 1000,
+  "owner_gid": 1000,
+  "commands": [
+    [
+      "/usr/bin/fallocate",
+      "--length",
+      "1610612736",
+      "/var/lib/instinctrl-r6-native/J-d737390980235144/native.ext4"
+    ],
+    [
+      "/usr/sbin/mkfs.ext4",
+      "-q",
+      "-F",
+      "-m",
+      "0",
+      "/var/lib/instinctrl-r6-native/J-d737390980235144/native.ext4"
+    ],
+    [
+      "/usr/bin/mount",
+      "-t",
+      "ext4",
+      "-o",
+      "loop,nodev,nosuid,noexec",
+      "/var/lib/instinctrl-r6-native/J-d737390980235144/native.ext4",
+      "/var/lib/instinctrl-r6-native/J-d737390980235144/output"
+    ]
+  ],
+  "limitations": [
+    "Only writes inside the mounted output directory are bounded",
+    "CPU exhaustion, remount persistence and native-path containment not yet verified",
+    "Each identity retains its image; no deletion, reuse, refund or automatic startup mount",
+    "Account image plus metadata before administrator applies this plan"
+  ]
+}
