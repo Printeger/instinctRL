@@ -1,0 +1,84 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "Reviewed the exact-job runner composition and stale PASS recovery. Full authority validation precedes refresh; original deadlines and evidence are preserved; STOP/budget checks precede submission; existing claims never requeue or resubmit; terminal jobs enter verified closure and decision handling. No actionable must-fix found within scope. Targeted CPU tests: 62 passed, with old temporary-directory cleanup warnings. Acceptance excludes the full autonomous pipeline: production volumes remain missing, capacity=false, protocol unfrozen, deployment and Kit compatibility unproven.",
+  "evidence_pins": [
+    {
+      "path": "tools/r6_run_job.py",
+      "sha256": "d65779f5a1449de75d33026a8198e5d545f147a4ce6d2ba40a64582a9b82e904"
+    },
+    {
+      "path": "tools/r6_register_job.py",
+      "sha256": "a47c2614efae34c4cd2762e1b80dc02c5ee6d8b32fdc6aa14000a085695a18b3"
+    },
+    {
+      "path": "tools/r6_submit.py",
+      "sha256": "66aa805582a468fa56d013d63fbf2772f79cf0f3ccfab3fcfd6f8374a146b744"
+    },
+    {
+      "path": "tools/r6_resource_wait.py",
+      "sha256": "4cf9c6cbcfe231fd68a90b10df618600230cdad946f6764edfa750f0b13967f3"
+    },
+    {
+      "path": "tools/r6_resource_queue.py",
+      "sha256": "671cb3f09b1324cef90752e92387d0bda129c07e6f82177a8a61c87b25adca76"
+    },
+    {
+      "path": "tools/r6_resource_sampler.py",
+      "sha256": "0a769eaf427713795ba76982aac4b1fc6b60b30f224a18ddd6d3f12ebe7036c0"
+    },
+    {
+      "path": "tools/r6_finalize_job.py",
+      "sha256": "bf6ee0dcd15758c66d14604a8221963622493ed9d82b9752afed3a30c442dca9"
+    },
+    {
+      "path": "tools/r6_job_handoff.py",
+      "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+    },
+    {
+      "path": "tools/rlflow/rlflow/experiments.py",
+      "sha256": "cdda96c8f4ba91920626a612b76b460a61e47fdb2953e6ea80b06da4dfcfa5e1"
+    },
+    {
+      "path": "tools/test_r6_run_job.py",
+      "sha256": "11e2106e400bc527aaf0baf85e30dc21dc8569017ee7c324f7cd0d8a5fa3ebbe"
+    },
+    {
+      "path": "tools/test_r6_submit_refresh.py",
+      "sha256": "ad2e5b5b8b72a81126c146b54a8b2b52fef953e56e8548931e97d958d12c8541"
+    },
+    {
+      "path": "tools/test_r6_resource_queue.py",
+      "sha256": "337a7e7a87f267fc36d459971cd599f81fb0e7617927b9f2aa024dbfad8623fb"
+    },
+    {
+      "path": "tools/test_r6_registered_cycle.py",
+      "sha256": "a8f3303a891695a272a4fb14c84fc4ff95e94dd5b7d1c51c03a95ada139ae57b"
+    },
+    {
+      "path": "tools/test_r6_submit_store.py",
+      "sha256": "4394aa9940219b89deb3b044fc25312dd4824f7fbd76aefd28c9286e373e95a5"
+    },
+    {
+      "path": "tools/test_r6_submit_close.py",
+      "sha256": "d1a9865c7b9ca6016f1267999df26b1cdd3119cb18bcd8737c626172e17280f9"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_LOCAL_JOB_ENTRY.json",
+      "sha256": "5ec29644db98ad33884a92b403fe56daca81a2bca97089a4cbffdb94651366e8"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_POSTVALIDATION_QUEUE.json",
+      "sha256": "128e96faaf79286de283013ee5195ff3c792297d90fc167793aaab696b5d3e7f"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_STALE_QUEUE_RECOVERY.json",
+      "sha256": "85fe956606b83c7844bf5c89808716d4dc2e15fbe002da5450fc9966287a5899"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Retain this acceptance for the pinned local-runner composition only; resolve production capacity, protocol freeze and deployment validation through their existing gates.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 141
+  },
+  "must_fix": []
+}

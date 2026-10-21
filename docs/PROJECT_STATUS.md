@@ -1,5 +1,14 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：第18次独审PASS_CPU_SCOPE，62项定向CPU检查通过；本地准确作业入口、
+完整窗口过期刷新、原排队截止保留、claim恢复与禁止重复提交获得本次范围接受。
+receipt/schema、源证据pins（相对路径按登记cwd解析）及后代清理已核验，见
+`docs/experiments/r6-robustness-auto/reviews/local-entry-integration-review.json`。
+97次平台自动唤醒+18次worker共115次，256总上限余141次。预算阻塞已解除。
+生产双卷manifest仍不存在，sudo -n仍需密码；准确命令已在production-storage-baseline-01/
+ADMIN_COMMANDS.txt，无须重复授权。训练压缩适配器仍未接入真实训练生命周期，完整容量
+方案不能视为已接受；协议冻结及完整controller部署仍未完成，无R6 live，Goal继续。
+
 2026-10-21：第17次独审PASS_CPU_SCOPE，关闭近墙确认选择缺陷；确认停止窗口
 严格在完成有符号运动之后，原触发/起始截止不重置，几何/高度/保持要求不变。
 receipt/schema、源证据pins、后代清理均核验，pending_protocol_fixes清空，原MUST_FIX保留。
