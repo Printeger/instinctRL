@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：本地单入口串联已准备计划的review→Store发行→准确runner，35项CPU
+检查通过。已登记审核重启走原handoff；已有next-job边直接交runner恢复/STOP清理，
+不重复审核/发行。新增组合测试的phase明确替身，不能称端到端实际部署。
+见 `docs/experiments/r6-robustness-auto/CPU_LOCAL_CONTINUATION_ENTRY.json`；计划生成仍缺失。
+正式双卷仍不存在，sudo -n要求密码；不新增实验或伪称CPU准备完成。
+113次自动唤醒+23worker=136，余120次；完整Goal未完成。
+
 2026-10-21：第23次独审PASS_CPU_SCOPE，无MUST_FIX；接受准确next-job许可发行、
 只读预付卷preview与baseline规格生成器的本次CPU组合范围。receipt/schema/source pins
 与审核worker退出清理已核验，见 `docs/experiments/r6-robustness-auto/reviews/issuance-integration-review.json`。

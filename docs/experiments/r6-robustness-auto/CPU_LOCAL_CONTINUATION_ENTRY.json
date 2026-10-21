@@ -1,0 +1,30 @@
+{
+  "schema_version": "r6-continue-job-cpu/1",
+  "status": "CPU35_PASS_REVIEW_PENDING",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_continue_job.py",
+      "sha256": "47ec5c9bb64237641b515f634caf0a98d08f47fedc6df068fe116598e0423cf9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_continue_job.py",
+      "sha256": "0f2d81fba8aba8d97ea8327f80c4b5ec726d7588196bff0d7ee833ef0b4eb3e8"
+    }
+  ],
+  "log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-continue-job-tests.txt",
+    "sha256": "d53dd2fb957f1007506593cd79060bb61727aeed0bab49339454968024598350"
+  },
+  "coverage": [
+    "Local composed review/issuance/advance entry",
+    "Existing model event resumes through handoff rather than idle registration",
+    "Existing next-job edge routes directly to runner recovery under STOP, without review/issuance",
+    "Review or issuance error prevents later stages"
+  ],
+  "limits": [
+    "New composition tests use phase substitutes and a real persistent journal; no end-to-end real model/job demonstrated",
+    "Requires concrete prepared plan; scientific plan builder still incomplete",
+    "No controller deployment or initial baseline authority",
+    "Production pair still absent; sudo noninteractive requires user credential"
+  ]
+}
