@@ -98,7 +98,8 @@ def validate(plan):
         require(set(freeze)=={'schema_version','recipe','confirmation_seeds','selection_evidence','independent_review'}
             and freeze['schema_version']=='r6-recipe-freeze/1' and freeze['recipe']==plan['recipe']
             and freeze['confirmation_seeds']==r['confirmation_seeds'],'RECIPE_FREEZE')
-        validate_pin(freeze['selection_evidence'])
+        from .robustness_confirmation import validate_selection_evidence
+        validate_selection_evidence(freeze['selection_evidence'],plan['recipe'],r)
         accepted_review(freeze['independent_review'],'PASS_R6_RECIPE_FREEZE',
             payload_sha256=object_sha({k:v for k,v in freeze.items() if k!='independent_review'}))
     else:require(plan['selection_freeze'] is None,'DEVELOPMENT_FREEZE')

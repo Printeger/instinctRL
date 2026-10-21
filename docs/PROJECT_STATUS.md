@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：确认训练的recipe freeze新增完整选择证据校验，不再接受任意存在的selection_evidence文件。
+绑定已审protocol/split、三条预登记训练随机流、终点checkpoint规则、同方法/同条件控制与训练候选评价。
+核对关闭作业/原件清单/两次postrun、16块重算、原五任务能力保持及全部输入；原生FAILED保留。
+新目标域负结果仍可提交独审，不增加成功门槛；此检查不宣称物理重放、学习收益或最终完成。
+59项控制、69项tensor、37项worker检查通过，无初轮失败；证据CPU_CONFIRMATION_FREEZE.json。
+确认freeze审核/三轨迹计划、最终模型冻结/holdout/交付和组合独审/平台交接仍未完成；未生产发车。
+154次自动唤醒+30worker=184，模型剩72；完整Goal未完成。
+
 2026-10-22：候选source design v3→模型选择独审→准确源码兼容独审→冻结profile context控制器路由接通。
 selection草稿保持全部证据检查，正式入口仍拒绝未审选择；审核原始receipt/预算/STOP/去重保护复用。
 兼容审核在途时复用已持久化selection结果；模板不能伪造审核，profile不能替换已审选择/兼容记录。

@@ -1,0 +1,81 @@
+{
+  "status": "CPU_CONFIRMATION_RECIPE_SELECTION_EVIDENCE_GUARD_PASS_FINAL_MODEL_FREEZE_PENDING",
+  "input_commit": "745281c5",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_confirmation.py",
+      "sha256": "0a738c0f9d02b34715dd0da792e3ce9b762b7b41b12865d3861d49287f075f4d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_plan.py",
+      "sha256": "23e66e4e861d2717250ffc76c37a447cd3b5e60ec8ee7fc8b5220559d69f46a1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "089275dd3d4be741dac060a90306b0787b071c618bee7170c20013e2f661aed6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_cpu_analysis.py",
+      "sha256": "e861ea19d9e06af6b85b4cf36abfd3dd923323ad7fdc6552ede736b51d33b815"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_confirmation.py",
+      "sha256": "2fd08231977dd48110e9f5b1fcc5243cad525b085eb230f2c0eb7641d19d889e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_training_plan.py",
+      "sha256": "81b22d0d8324b80b51b885652676b13fc73752f0889366c0c65643b5a4bb1baf"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_config.py",
+      "sha256": "b5a076a7ab079fc7c45b2b328531b077f7b867295976baa4d45665fd39277bb0"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_FREEZE_INITIAL.log",
+      "sha256": "0efa9e9d1f85574c4c495c4821252496cb7da10e7651bad4a1d6655993c31cad"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_FREEZE_CONTROL_FINAL.log",
+      "sha256": "f6b6732d4f34b90a458319ee1907b319176e781a5525106117f854d1ed707d3c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_FREEZE_TENSOR.log",
+      "sha256": "68953d7c036a9b8e7ecf9303df35b4f128fdc6f1c892058b2a78ffdc088e2b5c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_FREEZE_WORKER.log",
+      "sha256": "655fce910a829a634f5d2c7600b395103847ca001eb54f9ca502660139d474e9"
+    }
+  ],
+  "verification": {
+    "initial": 37,
+    "final_control": 59,
+    "tensor": 69,
+    "worker": 37
+  },
+  "initial_failures": [],
+  "guarantees": [
+    "Confirmation training recipe freeze requires structured r6-recipe-selection-evidence/1, replacing mere existence of an arbitrary evidence file.",
+    "Evidence binds reviewed protocol and split, three registered confirmation streams distinct from development, terminal checkpoint rule fixed before holdout.",
+    "Both fixed-policy control and trained development candidate must have same comparison/method, complete closed-job/inventory/postrun chain, full 16 blocks, archived measurement/physics replay and all original-case inputs.",
+    "Original capability regression blocks confirmation selection; negative new-target scores remain admissible evidence for independent freeze review, with no invented new success threshold.",
+    "Exact checkpoint/selection identity and native FAILED are retained; unreadable or drifted originals, missing inputs, cross-job chains and reused postrun receipts reject.",
+    "New workload source is manifested and pinned by CPU analysis worker."
+  ],
+  "boundaries": [
+    "Synthetic original files/index, saved replay records and substituted selection validator exercise provenance constraints; not an actual physical replay or learning result.",
+    "Selection validator itself remains separately tested by candidate selection suite; recipe freeze independent review remains mandatory.",
+    "No production freeze/review issued, no holdout entropy generated/revealed, no GPU query, simulation, training or Store submission."
+  ],
+  "remaining": [
+    "Controller-owned recipe freeze review and three confirmation plan construction",
+    "Final model freeze with exact three confirmation trajectory identities; BASELINE_SUFFICIENT path",
+    "Final evaluation mode and holdout release integration; final delivery/audit/videos",
+    "Combined independent review and platform handoff before production"
+  ],
+  "goal_complete": false
+}

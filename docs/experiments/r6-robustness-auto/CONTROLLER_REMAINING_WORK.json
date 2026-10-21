@@ -1,6 +1,6 @@
 {
-  "status": "CPU_CANDIDATE_SOURCE_SELECTION_COMPATIBILITY_REVIEWS_AND_CONTEXT_ROUTE_PASS_NOT_DEPLOYED",
-  "checked_commit": "bf0dabc3",
+  "status": "CPU_CONFIRMATION_RECIPE_SELECTION_EVIDENCE_GUARD_PASS_FINAL_MODEL_FREEZE_PENDING",
+  "checked_commit": "745281c5",
   "concrete_first_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
     "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
@@ -30,7 +30,7 @@
   ],
   "next_implementation": {
     "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs; persistent first/decision/profile/materialization/next cursor and actual detached CPU wait/STOP fixture; exact baseline-compatible source payload/review/frozen validation/new-context routing; exact training-plan budget/seed/checkpoint provenance and RNG branch/resume composition; R6 world-command training driver with actual next-attitude conversion and exact clock provenance; registered phase curriculum and actual CPU condition/reset sampling with audit separation and phase reset budgeting; training phase reset/measurement/physics adapter composition including resumed phase pulse offset and audited noise stream fork; loaded-trainer phase execution with shared first-update diagnostic, bounded logs/RNG, original/robust driver switching and exact checkpoint callback; strict checkpoint restore, explicit complete method schema, actual runtime/optimizer readback and pre-execution drift guard; exact training profile/capacity/source compatibility contracts and dedicated config/formal entry/native/resource lifecycle route",
-    "next": "Final method/seed freeze, confirmation/holdout release/evaluation and delivery contracts/routes. Candidate source design, exact selection and compatibility review events, cached recovery and frozen profile context route CPU verified. Combined integration review and platform handoff precede production.",
+    "next": "Controller recipe-freeze review/three confirmation plan construction; exact final-model freeze (including BASELINE_SUFFICIENT), holdout/final evaluation and delivery. Confirmation plan now requires complete paired development evidence and reviewed split/terminal selection rule. Combined integration review and platform handoff precede production.",
     "deployment": "Controller composition and baseline-compatible source route CPU verified; independent combined review, remaining phase contracts and platform handoff precede production",
     "invariants": [
       "No Journal or Store authority mutation by source-preparation worker",
@@ -160,5 +160,9 @@
   "candidate_routing": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ROUTING.json",
     "sha256": "245eb0cacaed494c6fe294230dacdd51d3e05719d516646fcc134cbbfb41b988"
+  },
+  "confirmation_freeze": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_FREEZE.json",
+    "sha256": "61b6d4c513f1294c0b447a4b985737733a418d4c2ee22f67c435f841b19d67fa"
   }
 }

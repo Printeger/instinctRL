@@ -89,7 +89,7 @@ def test_confirmation_needs_frozen_recipe_and_distinct_registered_seeds(case):
     freeze=dict(schema_version='r6-recipe-freeze/1',recipe=b.plan['recipe'],confirmation_seeds=[21,22,23],selection_evidence=b.ev)
     review=b.pin('freeze-review.json',dict(decision='PASS_R6_RECIPE_FREEZE',must_fix=[],reviewer='fixture-independent',payload_sha256=p.object_sha(freeze)))
     b.plan['selection_freeze']=b.pin('freeze.json',dict(freeze,independent_review=review))
-    assert p.validate(b.plan)['phase']=='confirmation'
+    with pytest.raises(PermissionError,match='SELECTION_EVIDENCE'):p.validate(b.plan)
     b.recipe['confirmation_seeds']=[11,22,23];update_recipe(b)
     with pytest.raises(PermissionError,match='SEED_REUSE'):p.validate(b.plan)
 

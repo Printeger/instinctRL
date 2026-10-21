@@ -38,7 +38,7 @@ SOURCES=('tools/analyze_r6_evaluation.py','tools/r6_cpu_analysis.py',
  'tools/analyze_r6_training.py','tools/r6_training_analysis.py','tools/r6_training_probability.py','tools/r6_training_checkpoint_audit.py','tools/r6_training_rng_audit.py',
  'isaaclab-training/instinctlab/training/networks_h1.py','isaaclab-training/instinctlab/training/ppo.py',
  'isaaclab-training/instinctlab/training/networks.py','isaaclab-training/instinctlab/training/checkpoint.py','training_workloads/unified_h1/pilot_contract.py',
- 'training_workloads/unified_h1/robustness_training_plan.py',
+ 'training_workloads/unified_h1/robustness_training_plan.py','training_workloads/unified_h1/robustness_confirmation.py',
  'training_workloads/unified_h1/robustness_curriculum.py',
  'training_workloads/unified_h1/lossless_evidence.py',
  'isaaclab-training/instinctlab/training/checkpoint_h1.py')
