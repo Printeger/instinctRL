@@ -1,0 +1,365 @@
+............F........FFFFFFFF.....................                       [100%]
+=================================== FAILURES ===================================
+_ test_actual_original_scoring_uses_candidate_update_and_same_160_denominator __
+
+case = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-137/test_actual_original_scoring_u0'), output=PosixPath('/tmp/pyt...odel_role': 'seed1', 'evaluation_seed': 17, 'split': 'final'}}, write=<function case.<locals>.write at 0x74d2c8f53420>)
+
+    def test_actual_original_scoring_uses_candidate_update_and_same_160_denominator(case):
+        from tools.test_r6_analysis import AnalysisTests
+        b=AnalysisTests();b.setUp()
+        try:
+            raw=b.original_fixture();target=case.output/'evaluation_raw'/m.identity(case.selected)['original_label'];target.parent.mkdir()
+            raw.rename(target)
+            saved=json.loads((b.root/'r6_original_suite.json').read_text());saved['update']=896
+            case.write(case.output/'r6_original_suite.json',saved)
+            case.write(case.output/'r6_original_wall_motion.json',dict(per_lane=[False]*32,all32=False))
+            report,summary=m.analyze(case.output,case.ap)
+>           assert summary['original']['replay_complete'] and summary['original']['saved_result_equal']
+E           assert (False)
+
+tools/test_r6_final_analysis.py:93: AssertionError
+___ test_original_baseline_method_is_audited_without_candidate_method[None] ____
+
+case = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-137/test_original_baseline_method_0'), output=PosixPath('/tmp/pyt...l_role': 'baseline', 'evaluation_seed': 17, 'split': 'final'}}, write=<function case.<locals>.write at 0x74d2c7e90d60>)
+fault = None
+
+    @pytest.mark.parametrize('fault',[None,'ppo','margin','anchor','pipeline','counter','seed','assignment'])
+    def test_original_baseline_method_is_audited_without_candidate_method(case,fault):
+        s=case.selected;b=case.binding
+        s['method']=None;s['method_pin']=None;s['selection']['role']='baseline_control'
+        model=s['model'];model.update(update=640,training_seed=20260908)
+        s['assignment']['model_role']='baseline';ident=m.identity(s)
+        b.update(method=None,original_evaluation_label=ident['original_label'],ics_clearance_margin_m=.15)
+        b['metadata']=dict(counters=dict(update=640,transition=640*512,global_policy_step=640*16,actor_optimizer=640*8,critic_optimizer=640*8),
+            training_seed=20260908,curriculum=dict(version='curriculum-h1-v1',completed_policy_steps=640*16))
+        b['actual_method_binding']=dict(schema_version='r6-final-baseline-method-binding/1',unchanged_checkpoint_ppo=True,
+            baseline_method_hashes=model['method_hashes'],actual_environment=dict(pure_hover=False,residual_neutrality_weight=.05,
+                anchor_weight=4.,ics_clearance_margin_m=.15,pipeline_margins=[.15]*32))
+>       b['assignment']=copy.deepcopy(s['assignment']);m.validate_binding(b,s)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_final_analysis.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+binding = {'checkpoint': {'path': '/fixture/u896.pt', 'sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb...: {'fixture': True}, 'final_selection_sha256': '199b29f2f26572fe618677640428d0ac51dd7a0829cdce970b29dd42368cdf72', ...}
+selected = {'selection': {'role': 'baseline_control', 'baseline_bindings': {'fixture': True}, 'method': {'fixture': 'method'}, 'c...it': 'final', 'block_ids': ['S-clean-low', 'S-clean-high', 'S-noise', 'S-delay-drop', 'X-clean', 'X-noise', ...]}, ...}
+
+    def validate_binding(binding,selected):
+        model=selected['model'];method=selected['method'];ident=identity(selected)
+        expected=dict(checkpoint=model['checkpoint'],checkpoint_source_identity=model['source_identity'],
+            method_hashes=model['method_hashes'],final_selection=selected['final_selection'],
+            final_selection_sha256=ident['selection_sha256'],assignment=selected['assignment'],
+            comparison=ident['comparison'],method=ident['method'],original_evaluation_label=ident['original_label'],
+            ics_clearance_margin_m=.15 if method is None else method['ics_clearance_margin_m'],
+            physical_history_continuity_claimed=False,actor_input_extension=False)
+        if any(binding.get(k)!=v or type(binding.get(k))is not type(v) for k,v in expected.items()):
+>           raise RecoveryError('FINAL_ANALYSIS_MODEL_BINDING')
+E           tools.r6_recovery.RecoveryError: FINAL_ANALYSIS_MODEL_BINDING
+
+tools/r6_final_analysis.py:40: RecoveryError
+____ test_original_baseline_method_is_audited_without_candidate_method[ppo] ____
+
+case = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-137/test_original_baseline_method_1'), output=PosixPath('/tmp/pyt...l_role': 'baseline', 'evaluation_seed': 17, 'split': 'final'}}, write=<function case.<locals>.write at 0x74d2c7e91940>)
+fault = 'ppo'
+
+    @pytest.mark.parametrize('fault',[None,'ppo','margin','anchor','pipeline','counter','seed','assignment'])
+    def test_original_baseline_method_is_audited_without_candidate_method(case,fault):
+        s=case.selected;b=case.binding
+        s['method']=None;s['method_pin']=None;s['selection']['role']='baseline_control'
+        model=s['model'];model.update(update=640,training_seed=20260908)
+        s['assignment']['model_role']='baseline';ident=m.identity(s)
+        b.update(method=None,original_evaluation_label=ident['original_label'],ics_clearance_margin_m=.15)
+        b['metadata']=dict(counters=dict(update=640,transition=640*512,global_policy_step=640*16,actor_optimizer=640*8,critic_optimizer=640*8),
+            training_seed=20260908,curriculum=dict(version='curriculum-h1-v1',completed_policy_steps=640*16))
+        b['actual_method_binding']=dict(schema_version='r6-final-baseline-method-binding/1',unchanged_checkpoint_ppo=True,
+            baseline_method_hashes=model['method_hashes'],actual_environment=dict(pure_hover=False,residual_neutrality_weight=.05,
+                anchor_weight=4.,ics_clearance_margin_m=.15,pipeline_margins=[.15]*32))
+>       b['assignment']=copy.deepcopy(s['assignment']);m.validate_binding(b,s)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_final_analysis.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+binding = {'checkpoint': {'path': '/fixture/u896.pt', 'sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb...: {'fixture': True}, 'final_selection_sha256': '199b29f2f26572fe618677640428d0ac51dd7a0829cdce970b29dd42368cdf72', ...}
+selected = {'selection': {'role': 'baseline_control', 'baseline_bindings': {'fixture': True}, 'method': {'fixture': 'method'}, 'c...it': 'final', 'block_ids': ['S-clean-low', 'S-clean-high', 'S-noise', 'S-delay-drop', 'X-clean', 'X-noise', ...]}, ...}
+
+    def validate_binding(binding,selected):
+        model=selected['model'];method=selected['method'];ident=identity(selected)
+        expected=dict(checkpoint=model['checkpoint'],checkpoint_source_identity=model['source_identity'],
+            method_hashes=model['method_hashes'],final_selection=selected['final_selection'],
+            final_selection_sha256=ident['selection_sha256'],assignment=selected['assignment'],
+            comparison=ident['comparison'],method=ident['method'],original_evaluation_label=ident['original_label'],
+            ics_clearance_margin_m=.15 if method is None else method['ics_clearance_margin_m'],
+            physical_history_continuity_claimed=False,actor_input_extension=False)
+        if any(binding.get(k)!=v or type(binding.get(k))is not type(v) for k,v in expected.items()):
+>           raise RecoveryError('FINAL_ANALYSIS_MODEL_BINDING')
+E           tools.r6_recovery.RecoveryError: FINAL_ANALYSIS_MODEL_BINDING
+
+tools/r6_final_analysis.py:40: RecoveryError
+__ test_original_baseline_method_is_audited_without_candidate_method[margin] ___
+
+case = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-137/test_original_baseline_method_2'), output=PosixPath('/tmp/pyt...l_role': 'baseline', 'evaluation_seed': 17, 'split': 'final'}}, write=<function case.<locals>.write at 0x74d2c7e92520>)
+fault = 'margin'
+
+    @pytest.mark.parametrize('fault',[None,'ppo','margin','anchor','pipeline','counter','seed','assignment'])
+    def test_original_baseline_method_is_audited_without_candidate_method(case,fault):
+        s=case.selected;b=case.binding
+        s['method']=None;s['method_pin']=None;s['selection']['role']='baseline_control'
+        model=s['model'];model.update(update=640,training_seed=20260908)
+        s['assignment']['model_role']='baseline';ident=m.identity(s)
+        b.update(method=None,original_evaluation_label=ident['original_label'],ics_clearance_margin_m=.15)
+        b['metadata']=dict(counters=dict(update=640,transition=640*512,global_policy_step=640*16,actor_optimizer=640*8,critic_optimizer=640*8),
+            training_seed=20260908,curriculum=dict(version='curriculum-h1-v1',completed_policy_steps=640*16))
+        b['actual_method_binding']=dict(schema_version='r6-final-baseline-method-binding/1',unchanged_checkpoint_ppo=True,
+            baseline_method_hashes=model['method_hashes'],actual_environment=dict(pure_hover=False,residual_neutrality_weight=.05,
+                anchor_weight=4.,ics_clearance_margin_m=.15,pipeline_margins=[.15]*32))
+>       b['assignment']=copy.deepcopy(s['assignment']);m.validate_binding(b,s)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_final_analysis.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+binding = {'checkpoint': {'path': '/fixture/u896.pt', 'sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb...: {'fixture': True}, 'final_selection_sha256': '199b29f2f26572fe618677640428d0ac51dd7a0829cdce970b29dd42368cdf72', ...}
+selected = {'selection': {'role': 'baseline_control', 'baseline_bindings': {'fixture': True}, 'method': {'fixture': 'method'}, 'c...it': 'final', 'block_ids': ['S-clean-low', 'S-clean-high', 'S-noise', 'S-delay-drop', 'X-clean', 'X-noise', ...]}, ...}
+
+    def validate_binding(binding,selected):
+        model=selected['model'];method=selected['method'];ident=identity(selected)
+        expected=dict(checkpoint=model['checkpoint'],checkpoint_source_identity=model['source_identity'],
+            method_hashes=model['method_hashes'],final_selection=selected['final_selection'],
+            final_selection_sha256=ident['selection_sha256'],assignment=selected['assignment'],
+            comparison=ident['comparison'],method=ident['method'],original_evaluation_label=ident['original_label'],
+            ics_clearance_margin_m=.15 if method is None else method['ics_clearance_margin_m'],
+            physical_history_continuity_claimed=False,actor_input_extension=False)
+        if any(binding.get(k)!=v or type(binding.get(k))is not type(v) for k,v in expected.items()):
+>           raise RecoveryError('FINAL_ANALYSIS_MODEL_BINDING')
+E           tools.r6_recovery.RecoveryError: FINAL_ANALYSIS_MODEL_BINDING
+
+tools/r6_final_analysis.py:40: RecoveryError
+__ test_original_baseline_method_is_audited_without_candidate_method[anchor] ___
+
+case = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-137/test_original_baseline_method_3'), output=PosixPath('/tmp/pyt...l_role': 'baseline', 'evaluation_seed': 17, 'split': 'final'}}, write=<function case.<locals>.write at 0x74d2c7e92700>)
+fault = 'anchor'
+
+    @pytest.mark.parametrize('fault',[None,'ppo','margin','anchor','pipeline','counter','seed','assignment'])
+    def test_original_baseline_method_is_audited_without_candidate_method(case,fault):
+        s=case.selected;b=case.binding
+        s['method']=None;s['method_pin']=None;s['selection']['role']='baseline_control'
+        model=s['model'];model.update(update=640,training_seed=20260908)
+        s['assignment']['model_role']='baseline';ident=m.identity(s)
+        b.update(method=None,original_evaluation_label=ident['original_label'],ics_clearance_margin_m=.15)
+        b['metadata']=dict(counters=dict(update=640,transition=640*512,global_policy_step=640*16,actor_optimizer=640*8,critic_optimizer=640*8),
+            training_seed=20260908,curriculum=dict(version='curriculum-h1-v1',completed_policy_steps=640*16))
+        b['actual_method_binding']=dict(schema_version='r6-final-baseline-method-binding/1',unchanged_checkpoint_ppo=True,
+            baseline_method_hashes=model['method_hashes'],actual_environment=dict(pure_hover=False,residual_neutrality_weight=.05,
+                anchor_weight=4.,ics_clearance_margin_m=.15,pipeline_margins=[.15]*32))
+>       b['assignment']=copy.deepcopy(s['assignment']);m.validate_binding(b,s)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_final_analysis.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+binding = {'checkpoint': {'path': '/fixture/u896.pt', 'sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb...: {'fixture': True}, 'final_selection_sha256': '199b29f2f26572fe618677640428d0ac51dd7a0829cdce970b29dd42368cdf72', ...}
+selected = {'selection': {'role': 'baseline_control', 'baseline_bindings': {'fixture': True}, 'method': {'fixture': 'method'}, 'c...it': 'final', 'block_ids': ['S-clean-low', 'S-clean-high', 'S-noise', 'S-delay-drop', 'X-clean', 'X-noise', ...]}, ...}
+
+    def validate_binding(binding,selected):
+        model=selected['model'];method=selected['method'];ident=identity(selected)
+        expected=dict(checkpoint=model['checkpoint'],checkpoint_source_identity=model['source_identity'],
+            method_hashes=model['method_hashes'],final_selection=selected['final_selection'],
+            final_selection_sha256=ident['selection_sha256'],assignment=selected['assignment'],
+            comparison=ident['comparison'],method=ident['method'],original_evaluation_label=ident['original_label'],
+            ics_clearance_margin_m=.15 if method is None else method['ics_clearance_margin_m'],
+            physical_history_continuity_claimed=False,actor_input_extension=False)
+        if any(binding.get(k)!=v or type(binding.get(k))is not type(v) for k,v in expected.items()):
+>           raise RecoveryError('FINAL_ANALYSIS_MODEL_BINDING')
+E           tools.r6_recovery.RecoveryError: FINAL_ANALYSIS_MODEL_BINDING
+
+tools/r6_final_analysis.py:40: RecoveryError
+_ test_original_baseline_method_is_audited_without_candidate_method[pipeline] __
+
+case = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-137/test_original_baseline_method_4'), output=PosixPath('/tmp/pyt...l_role': 'baseline', 'evaluation_seed': 17, 'split': 'final'}}, write=<function case.<locals>.write at 0x74d2c7e92f20>)
+fault = 'pipeline'
+
+    @pytest.mark.parametrize('fault',[None,'ppo','margin','anchor','pipeline','counter','seed','assignment'])
+    def test_original_baseline_method_is_audited_without_candidate_method(case,fault):
+        s=case.selected;b=case.binding
+        s['method']=None;s['method_pin']=None;s['selection']['role']='baseline_control'
+        model=s['model'];model.update(update=640,training_seed=20260908)
+        s['assignment']['model_role']='baseline';ident=m.identity(s)
+        b.update(method=None,original_evaluation_label=ident['original_label'],ics_clearance_margin_m=.15)
+        b['metadata']=dict(counters=dict(update=640,transition=640*512,global_policy_step=640*16,actor_optimizer=640*8,critic_optimizer=640*8),
+            training_seed=20260908,curriculum=dict(version='curriculum-h1-v1',completed_policy_steps=640*16))
+        b['actual_method_binding']=dict(schema_version='r6-final-baseline-method-binding/1',unchanged_checkpoint_ppo=True,
+            baseline_method_hashes=model['method_hashes'],actual_environment=dict(pure_hover=False,residual_neutrality_weight=.05,
+                anchor_weight=4.,ics_clearance_margin_m=.15,pipeline_margins=[.15]*32))
+>       b['assignment']=copy.deepcopy(s['assignment']);m.validate_binding(b,s)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_final_analysis.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+binding = {'checkpoint': {'path': '/fixture/u896.pt', 'sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb...: {'fixture': True}, 'final_selection_sha256': '199b29f2f26572fe618677640428d0ac51dd7a0829cdce970b29dd42368cdf72', ...}
+selected = {'selection': {'role': 'baseline_control', 'baseline_bindings': {'fixture': True}, 'method': {'fixture': 'method'}, 'c...it': 'final', 'block_ids': ['S-clean-low', 'S-clean-high', 'S-noise', 'S-delay-drop', 'X-clean', 'X-noise', ...]}, ...}
+
+    def validate_binding(binding,selected):
+        model=selected['model'];method=selected['method'];ident=identity(selected)
+        expected=dict(checkpoint=model['checkpoint'],checkpoint_source_identity=model['source_identity'],
+            method_hashes=model['method_hashes'],final_selection=selected['final_selection'],
+            final_selection_sha256=ident['selection_sha256'],assignment=selected['assignment'],
+            comparison=ident['comparison'],method=ident['method'],original_evaluation_label=ident['original_label'],
+            ics_clearance_margin_m=.15 if method is None else method['ics_clearance_margin_m'],
+            physical_history_continuity_claimed=False,actor_input_extension=False)
+        if any(binding.get(k)!=v or type(binding.get(k))is not type(v) for k,v in expected.items()):
+>           raise RecoveryError('FINAL_ANALYSIS_MODEL_BINDING')
+E           tools.r6_recovery.RecoveryError: FINAL_ANALYSIS_MODEL_BINDING
+
+tools/r6_final_analysis.py:40: RecoveryError
+__ test_original_baseline_method_is_audited_without_candidate_method[counter] __
+
+case = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-137/test_original_baseline_method_5'), output=PosixPath('/tmp/pyt...l_role': 'baseline', 'evaluation_seed': 17, 'split': 'final'}}, write=<function case.<locals>.write at 0x74d2c7e93100>)
+fault = 'counter'
+
+    @pytest.mark.parametrize('fault',[None,'ppo','margin','anchor','pipeline','counter','seed','assignment'])
+    def test_original_baseline_method_is_audited_without_candidate_method(case,fault):
+        s=case.selected;b=case.binding
+        s['method']=None;s['method_pin']=None;s['selection']['role']='baseline_control'
+        model=s['model'];model.update(update=640,training_seed=20260908)
+        s['assignment']['model_role']='baseline';ident=m.identity(s)
+        b.update(method=None,original_evaluation_label=ident['original_label'],ics_clearance_margin_m=.15)
+        b['metadata']=dict(counters=dict(update=640,transition=640*512,global_policy_step=640*16,actor_optimizer=640*8,critic_optimizer=640*8),
+            training_seed=20260908,curriculum=dict(version='curriculum-h1-v1',completed_policy_steps=640*16))
+        b['actual_method_binding']=dict(schema_version='r6-final-baseline-method-binding/1',unchanged_checkpoint_ppo=True,
+            baseline_method_hashes=model['method_hashes'],actual_environment=dict(pure_hover=False,residual_neutrality_weight=.05,
+                anchor_weight=4.,ics_clearance_margin_m=.15,pipeline_margins=[.15]*32))
+>       b['assignment']=copy.deepcopy(s['assignment']);m.validate_binding(b,s)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_final_analysis.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+binding = {'checkpoint': {'path': '/fixture/u896.pt', 'sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb...: {'fixture': True}, 'final_selection_sha256': '199b29f2f26572fe618677640428d0ac51dd7a0829cdce970b29dd42368cdf72', ...}
+selected = {'selection': {'role': 'baseline_control', 'baseline_bindings': {'fixture': True}, 'method': {'fixture': 'method'}, 'c...it': 'final', 'block_ids': ['S-clean-low', 'S-clean-high', 'S-noise', 'S-delay-drop', 'X-clean', 'X-noise', ...]}, ...}
+
+    def validate_binding(binding,selected):
+        model=selected['model'];method=selected['method'];ident=identity(selected)
+        expected=dict(checkpoint=model['checkpoint'],checkpoint_source_identity=model['source_identity'],
+            method_hashes=model['method_hashes'],final_selection=selected['final_selection'],
+            final_selection_sha256=ident['selection_sha256'],assignment=selected['assignment'],
+            comparison=ident['comparison'],method=ident['method'],original_evaluation_label=ident['original_label'],
+            ics_clearance_margin_m=.15 if method is None else method['ics_clearance_margin_m'],
+            physical_history_continuity_claimed=False,actor_input_extension=False)
+        if any(binding.get(k)!=v or type(binding.get(k))is not type(v) for k,v in expected.items()):
+>           raise RecoveryError('FINAL_ANALYSIS_MODEL_BINDING')
+E           tools.r6_recovery.RecoveryError: FINAL_ANALYSIS_MODEL_BINDING
+
+tools/r6_final_analysis.py:40: RecoveryError
+___ test_original_baseline_method_is_audited_without_candidate_method[seed] ____
+
+case = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-137/test_original_baseline_method_6'), output=PosixPath('/tmp/pyt...l_role': 'baseline', 'evaluation_seed': 17, 'split': 'final'}}, write=<function case.<locals>.write at 0x74d2c7e93e20>)
+fault = 'seed'
+
+    @pytest.mark.parametrize('fault',[None,'ppo','margin','anchor','pipeline','counter','seed','assignment'])
+    def test_original_baseline_method_is_audited_without_candidate_method(case,fault):
+        s=case.selected;b=case.binding
+        s['method']=None;s['method_pin']=None;s['selection']['role']='baseline_control'
+        model=s['model'];model.update(update=640,training_seed=20260908)
+        s['assignment']['model_role']='baseline';ident=m.identity(s)
+        b.update(method=None,original_evaluation_label=ident['original_label'],ics_clearance_margin_m=.15)
+        b['metadata']=dict(counters=dict(update=640,transition=640*512,global_policy_step=640*16,actor_optimizer=640*8,critic_optimizer=640*8),
+            training_seed=20260908,curriculum=dict(version='curriculum-h1-v1',completed_policy_steps=640*16))
+        b['actual_method_binding']=dict(schema_version='r6-final-baseline-method-binding/1',unchanged_checkpoint_ppo=True,
+            baseline_method_hashes=model['method_hashes'],actual_environment=dict(pure_hover=False,residual_neutrality_weight=.05,
+                anchor_weight=4.,ics_clearance_margin_m=.15,pipeline_margins=[.15]*32))
+>       b['assignment']=copy.deepcopy(s['assignment']);m.validate_binding(b,s)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_final_analysis.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+binding = {'checkpoint': {'path': '/fixture/u896.pt', 'sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb...: {'fixture': True}, 'final_selection_sha256': '199b29f2f26572fe618677640428d0ac51dd7a0829cdce970b29dd42368cdf72', ...}
+selected = {'selection': {'role': 'baseline_control', 'baseline_bindings': {'fixture': True}, 'method': {'fixture': 'method'}, 'c...it': 'final', 'block_ids': ['S-clean-low', 'S-clean-high', 'S-noise', 'S-delay-drop', 'X-clean', 'X-noise', ...]}, ...}
+
+    def validate_binding(binding,selected):
+        model=selected['model'];method=selected['method'];ident=identity(selected)
+        expected=dict(checkpoint=model['checkpoint'],checkpoint_source_identity=model['source_identity'],
+            method_hashes=model['method_hashes'],final_selection=selected['final_selection'],
+            final_selection_sha256=ident['selection_sha256'],assignment=selected['assignment'],
+            comparison=ident['comparison'],method=ident['method'],original_evaluation_label=ident['original_label'],
+            ics_clearance_margin_m=.15 if method is None else method['ics_clearance_margin_m'],
+            physical_history_continuity_claimed=False,actor_input_extension=False)
+        if any(binding.get(k)!=v or type(binding.get(k))is not type(v) for k,v in expected.items()):
+>           raise RecoveryError('FINAL_ANALYSIS_MODEL_BINDING')
+E           tools.r6_recovery.RecoveryError: FINAL_ANALYSIS_MODEL_BINDING
+
+tools/r6_final_analysis.py:40: RecoveryError
+_ test_original_baseline_method_is_audited_without_candidate_method[assignment] _
+
+case = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-137/test_original_baseline_method_7'), output=PosixPath('/tmp/pyt...l_role': 'baseline', 'evaluation_seed': 17, 'split': 'final'}}, write=<function case.<locals>.write at 0x74d2c7ea4540>)
+fault = 'assignment'
+
+    @pytest.mark.parametrize('fault',[None,'ppo','margin','anchor','pipeline','counter','seed','assignment'])
+    def test_original_baseline_method_is_audited_without_candidate_method(case,fault):
+        s=case.selected;b=case.binding
+        s['method']=None;s['method_pin']=None;s['selection']['role']='baseline_control'
+        model=s['model'];model.update(update=640,training_seed=20260908)
+        s['assignment']['model_role']='baseline';ident=m.identity(s)
+        b.update(method=None,original_evaluation_label=ident['original_label'],ics_clearance_margin_m=.15)
+        b['metadata']=dict(counters=dict(update=640,transition=640*512,global_policy_step=640*16,actor_optimizer=640*8,critic_optimizer=640*8),
+            training_seed=20260908,curriculum=dict(version='curriculum-h1-v1',completed_policy_steps=640*16))
+        b['actual_method_binding']=dict(schema_version='r6-final-baseline-method-binding/1',unchanged_checkpoint_ppo=True,
+            baseline_method_hashes=model['method_hashes'],actual_environment=dict(pure_hover=False,residual_neutrality_weight=.05,
+                anchor_weight=4.,ics_clearance_margin_m=.15,pipeline_margins=[.15]*32))
+>       b['assignment']=copy.deepcopy(s['assignment']);m.validate_binding(b,s)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_final_analysis.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+binding = {'checkpoint': {'path': '/fixture/u896.pt', 'sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb...: {'fixture': True}, 'final_selection_sha256': '199b29f2f26572fe618677640428d0ac51dd7a0829cdce970b29dd42368cdf72', ...}
+selected = {'selection': {'role': 'baseline_control', 'baseline_bindings': {'fixture': True}, 'method': {'fixture': 'method'}, 'c...it': 'final', 'block_ids': ['S-clean-low', 'S-clean-high', 'S-noise', 'S-delay-drop', 'X-clean', 'X-noise', ...]}, ...}
+
+    def validate_binding(binding,selected):
+        model=selected['model'];method=selected['method'];ident=identity(selected)
+        expected=dict(checkpoint=model['checkpoint'],checkpoint_source_identity=model['source_identity'],
+            method_hashes=model['method_hashes'],final_selection=selected['final_selection'],
+            final_selection_sha256=ident['selection_sha256'],assignment=selected['assignment'],
+            comparison=ident['comparison'],method=ident['method'],original_evaluation_label=ident['original_label'],
+            ics_clearance_margin_m=.15 if method is None else method['ics_clearance_margin_m'],
+            physical_history_continuity_claimed=False,actor_input_extension=False)
+        if any(binding.get(k)!=v or type(binding.get(k))is not type(v) for k,v in expected.items()):
+>           raise RecoveryError('FINAL_ANALYSIS_MODEL_BINDING')
+E           tools.r6_recovery.RecoveryError: FINAL_ANALYSIS_MODEL_BINDING
+
+tools/r6_final_analysis.py:40: RecoveryError
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f386c088-ed46-4c55-b5f0-8a4977f1ae49/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f386c088-ed46-4c55-b5f0-8a4977f1ae49/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f386c088-ed46-4c55-b5f0-8a4977f1ae49/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f386c088-ed46-4c55-b5f0-8a4977f1ae49
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-f386c088-ed46-4c55-b5f0-8a4977f1ae49'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tools/test_r6_final_analysis.py::test_actual_original_scoring_uses_candidate_update_and_same_160_denominator
+FAILED tools/test_r6_final_analysis.py::test_original_baseline_method_is_audited_without_candidate_method[None]
+FAILED tools/test_r6_final_analysis.py::test_original_baseline_method_is_audited_without_candidate_method[ppo]
+FAILED tools/test_r6_final_analysis.py::test_original_baseline_method_is_audited_without_candidate_method[margin]
+FAILED tools/test_r6_final_analysis.py::test_original_baseline_method_is_audited_without_candidate_method[anchor]
+FAILED tools/test_r6_final_analysis.py::test_original_baseline_method_is_audited_without_candidate_method[pipeline]
+FAILED tools/test_r6_final_analysis.py::test_original_baseline_method_is_audited_without_candidate_method[counter]
+FAILED tools/test_r6_final_analysis.py::test_original_baseline_method_is_audited_without_candidate_method[seed]
+FAILED tools/test_r6_final_analysis.py::test_original_baseline_method_is_audited_without_candidate_method[assignment]
+9 failed, 41 passed, 4 warnings in 1.91s

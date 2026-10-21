@@ -1,0 +1,91 @@
+{
+  "status": "CPU_FINAL_RAW_REPLAY_CLOSED_JOB_BINDING_AND_COMPLETE_BATCH_COLLECTION_PASS_ROUTING_DELIVERY_PENDING",
+  "input_commit": "c6747840d4a9af8f3a887390c67a6b11dba99231",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "8246662c65c697d07a8e567541d96404b29ed5a73d180f4bd53c0e3e9dc971ac"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_candidate_analysis.py",
+      "sha256": "fba551d15c11c6f0097aa74ec6236d6bee62d3878448c0e9e2b68e3c6f6f28ce"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_cpu_analysis.py",
+      "sha256": "746963dc10b142bd0a53517ab74fd9af57323a43cb32c69d915ef75fb8d44fe4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_analysis.py",
+      "sha256": "e4424ff034d8053afe3a529317faf389ed6b101ad7036b6f6682a8c1ca2212f1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_analysis.py",
+      "sha256": "a0eb99d0e84781dcd88e551164ab700f02f3848ed94d820ccd5fca2d870d4588"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/analyze_r6_final.py",
+      "sha256": "24b41142eebe47f48834a7aaaf910c8f0c63e0d7bbbe1e47f3ef87e02844a141"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_collection.py",
+      "sha256": "f1f3650b630525b5ef8e2427380731c62a4ea2f04a03e2e5af33004d051cce8c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_analysis.py",
+      "sha256": "c98c4ea767cccd4492e1773d78afb347ca7139e947214ff2195dc9b14d9cfab1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_analysis_worker.py",
+      "sha256": "c66e73f544ea9ccc4f94bc70e7440e05bd3ebeda02c95e594acc7e3ca9bee3de"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_collection.py",
+      "sha256": "508f37ff936545adda43a26f75567cc9f407f84e5a15cbf21e12cf265c867a33"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_ANALYSIS_INITIAL.log",
+      "sha256": "e22279d01a512b7b1a7f947fe8463284618a98cc3044e4d8ba38ecad90c6314b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_ANALYSIS_CORRECTED.log",
+      "sha256": "0ff1ee5e9062a151a0f60802cf2129aaa7692ff2f5605c7af1e1b09c7728fe4a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_ANALYSIS_WORKER.log",
+      "sha256": "fa26d4a7c63e9ae7c95a72edb7f790bc19d82cd76c119bbd5ce5e1e623fb672c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_ANALYSIS_COLLECTION.log",
+      "sha256": "e287fdae087c02e38953faeb92becf3cdbddcc42848db09f83df79db351e5a18"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_ANALYSIS_COLLECTION_FINAL.log",
+      "sha256": "547bb36e415546f616b246e2ed619ef196819f0cecc5c6d7a8538bab8069915e"
+    }
+  ],
+  "tests": {
+    "tensor_corrected": 66,
+    "worker": 39,
+    "collection_baseline_regression": 51,
+    "collection_final": 31
+  },
+  "initial_failures": [
+    "Original scorer replay did not admit the final label; extended only exact r6_final_u{update}_original label.",
+    "Eight baseline-method cases used stale selection hashes after fixture conversion; corrected fixture identity before exercising negative mutations."
+  ],
+  "scope": [
+    "Final CPU analysis binds frozen selection/assignment, exact model/source/method/counters, final stream and original evaluation label; baseline ICS .15 and confirmed method readback audited separately.",
+    "Reuse original 160-episode scoring and all registered blocks, measurement delivery and physical staging replayers; closed-job spec/argv/inventory/postrun/raw hashes required and native FAILED preserved.",
+    "Bounded model-free CPU worker routes final jobs to the pinned authorization-aware analyzer.",
+    "Complete batch collector revalidates published batch and every closed analysis, requires distinct jobs in assignment order, full lane/subgroup denominators and complete original suite.",
+    "Complete target/original negative results are retained; stress failures are reported. Required confirmation models are separate from original-baseline control. No scientific acceptance claimed."
+  ],
+  "limitations": [
+    "New raw tests use explicit synthetic traces and selected-model fixtures; full score collection uses synthetic complete scores with publication/closed-chain substitutes.",
+    "Actual original scorer runs on synthetic static traces and preserves motion failures; not an R6 scientific result.",
+    "Batch preparation/source compatibility review/sequential routing, repair re-entry, independent audit and delivery remain required. No production GPU, simulation, training or job launch."
+  ],
+  "goal_complete": false
+}

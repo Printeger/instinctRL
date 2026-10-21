@@ -36,7 +36,7 @@ def analysis_context(entry, key, store):
         checked(receipt)
     attempt = Path(spec['h1']['attempt'])
     if (attempt.parent != store.root.resolve()/'attempts' or inventory['roots']['attempt'] != str(attempt)
-            or spec['h1']['mode'] not in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation')):
+            or spec['h1']['mode'] not in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation','research-r6-final-evaluation')):
         raise RecoveryError('ANALYSIS_EXACT_R6_ATTEMPT')
     mode=spec['h1']['mode']
     output = attempt/'results'/mode
@@ -55,7 +55,10 @@ def analysis_context(entry, key, store):
         return dict(spec=spec,job=job,closure=closure,inventory=inventory,output=output,
             auth_pin=auth_pin,parameters=parameters,request=plan,protocol=None)
     selected=None
-    if mode=='research-r6-candidate-evaluation':
+    if mode=='research-r6-final-evaluation':
+        from tools.r6_final_analysis import context as final_context
+        selected=final_context(auth,output)
+    elif mode=='research-r6-candidate-evaluation':
         from tools.r6_candidate_analysis import context as candidate_context
         selected=candidate_context(auth,output)
     request = parameters['r6']
@@ -76,6 +79,7 @@ def bind_analysis(entry, key, report_pin, store):
     output=context['output'];auth_pin=context['auth_pin'];parameters=context['parameters']
     request=context['request'];protocol=context['protocol']
     candidate=context.get('selected')
+    selected_kind='final' if spec['h1']['mode']=='research-r6-final-evaluation' else 'candidate'
     label='r6_baseline_u640_original'
     if checked(report_pin).stat().st_size > 16*1024**2:
         raise RecoveryError('ANALYSIS_REPORT_SIZE_BOUND')
@@ -83,14 +87,17 @@ def bind_analysis(entry, key, report_pin, store):
     if report.get('schema_version') != 'r6-motion-replay/1' or report.get('scientific_acceptance') is not False:
         raise RecoveryError('ANALYSIS_REPORT_SCHEMA')
     if candidate is not None:
-        from tools import r6_candidate_analysis as ca
+        if selected_kind=='final':
+            from tools import r6_final_analysis as ca
+        else:
+            from tools import r6_candidate_analysis as ca
         ident=ca.identity(candidate);label=ident['original_label']
-        if (report.get('candidate')!=ident or report.get('candidate_analyzer')!=file_pin(ca.__file__)
-                or report.get('authorization')!=auth_pin or report['summary'].get('candidate')!=ident
-                or not isinstance(report.get('candidate_binding_issues'),list)
-                or report['summary'].get('candidate_binding_issues')!=report['candidate_binding_issues']
+        if (report.get(selected_kind)!=ident or report.get(selected_kind+'_analyzer')!=file_pin(ca.__file__)
+                or report.get('authorization')!=auth_pin or report['summary'].get(selected_kind)!=ident
+                or not isinstance(report.get(selected_kind+'_binding_issues'),list)
+                or report['summary'].get(selected_kind+'_binding_issues')!=report[selected_kind+'_binding_issues']
                 or any(report['summary'].get(k)is not False for k in ('learning_gain_established','runtime_method_execution_verified'))):
-            raise RecoveryError('ANALYSIS_CANDIDATE_IDENTITY')
+            raise RecoveryError('ANALYSIS_'+selected_kind.upper()+'_IDENTITY')
     for field in ('run_id','seed','split'):
         if report[field] != request[field]:
             raise RecoveryError('ANALYSIS_RUN_IDENTITY')
@@ -161,7 +168,7 @@ def bind_analysis(entry, key, report_pin, store):
         binding = read(model_binding)
         if candidate is not None:
             ca.validate_binding(binding,candidate)
-            if str(binding_path) not in seen:raise RecoveryError('ANALYSIS_CANDIDATE_BINDING_INPUT')
+            if str(binding_path) not in seen:raise RecoveryError('ANALYSIS_'+selected_kind.upper()+'_BINDING_INPUT')
         else:
             from training_workloads.unified_h1.robustness_contract import baseline
             baseline_record = baseline(parameters)
@@ -172,8 +179,8 @@ def bind_analysis(entry, key, report_pin, store):
                     or binding['physical_history_continuity_claimed'] is not False):
                 raise RecoveryError('ANALYSIS_MODEL_BINDING')
     if candidate is not None:
-        if auth_pin['path'] not in seen:raise RecoveryError('ANALYSIS_CANDIDATE_AUTH_INPUT')
-        if report['candidate_binding_issues']:issues.append('CANDIDATE_MODEL_EVIDENCE_INCOMPLETE_OR_MISMATCHED')
+        if auth_pin['path'] not in seen:raise RecoveryError('ANALYSIS_'+selected_kind.upper()+'_AUTH_INPUT')
+        if report[selected_kind+'_binding_issues']:issues.append(selected_kind.upper()+'_MODEL_EVIDENCE_INCOMPLETE_OR_MISMATCHED')
     if not inventory['output_inventory_complete']:
         issues.append('INVENTORY_INCOMPLETE')
     if any(row.get('measurement_replay',{}).get('bit_exact_delivery') is not True for row in report['blocks']):

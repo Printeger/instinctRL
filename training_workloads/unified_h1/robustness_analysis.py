@@ -99,7 +99,7 @@ def replay_blocks(output, blocks, *, run_id, seed, split, inputs=None):
 
 def replay_original(output, *, inputs=None, update=640, label="r6_baseline_u640_original"):
     """Use the unchanged original evaluator; no canonicalized seed view."""
-    if type(update) is not int or update < 0 or label not in ("r6_baseline_u640_original", f"r6_candidate_u{update}_original"):
+    if type(update) is not int or update < 0 or label not in ("r6_baseline_u640_original", f"r6_candidate_u{update}_original", f"r6_final_u{update}_original"):
         raise ValueError("ORIGINAL_MODEL_IDENTITY")
     from . import evaluation as ev
     inputs = inputs if inputs is not None else Inputs()

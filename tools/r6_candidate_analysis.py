@@ -37,6 +37,11 @@ def validate_binding(binding,selected):
     if any(binding.get(k)!=v or type(binding.get(k))is not type(v) for k,v in expected.items()):
         raise RecoveryError('CANDIDATE_ANALYSIS_MODEL_BINDING')
     selection.verify_loaded(selected,binding['metadata'])
+    validate_method_binding(binding,selected)
+
+
+def validate_method_binding(binding,selected):
+    model=selected['model'];method=selected['method']
     actual=binding['actual_method_binding'];env=actual['actual_environment']
     expected_ppo=dict(method['ppo'],permutation_seed=model['training_seed'])
     if (actual['schema_version']!='r6-actual-method-binding/1' or actual['method_sha256']!=base.object_sha(method)
