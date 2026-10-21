@@ -38,6 +38,8 @@ def submit_once(journal, key, store, *, queue_key, refresh_observation=None):
     spec=json.loads(checked(request['spec']).read_text())
     jid='J-'+sha({'id':spec['id'],'spec':spec})[:16]
     require(jid==entry['identity']['job_id'], 'JOB_IDENTITY')
+    from tools.r6_storage_allocation import owner
+    storage=owner(journal,entry)
     root=str(store.root.resolve())
     claim=entry.get('submission_claim');job=store.replay()['jobs'].get(jid)
     if claim is None:
@@ -68,7 +70,8 @@ def submit_once(journal, key, store, *, queue_key, refresh_observation=None):
         if spec.get('backend')=='real':
             require(spec.get('h1',{}).get('mode')=='research-r6-evaluation', 'R6_MODE_REQUIRED')
             auth=json.loads(checked(spec['pins']['authorization']).read_text())
-            reserved=entry['resources']
+            reserved=dict(entry['resources'],output_actual_plus_unreleased_reservations_bytes=
+                storage['resources'].get('output_actual_plus_unreleased_reservations_bytes',0))
             minimum={'live_starts':1,'simulator_initializations':1,
                 'live_wall_seconds':spec['resources']['wall_seconds']+180,
                 'allocated_gpu_seconds':spec['resources']['wall_seconds']+180,

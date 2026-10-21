@@ -99,3 +99,41 @@ def bind(journal,key,spec_pin):
     journal.guard();require(not stop_paths(journal),'STOP')
     state=journal.read();state['events'][key]['storage_binding']=binding;journal.save(state)
     return binding
+
+
+def for_spec(journal,spec_pin,*,purpose,bind_new=False):
+    """Find the one storage owner; fixed layouts may not omit preallocation."""
+    spec=json.loads(checked(spec_pin).read_text())
+    if spec['backend']!='real':return None
+    params=json.loads(checked(spec['pins']['authorization']).read_text())['parameters']
+    matches=[]
+    for key,event in journal.read()['events'].items():
+        if event['identity']['role']!=ROLE:continue
+        entry,native,result,cap=validate(journal,key)
+        expected_native=str(Path(native['image']).parent/'volume.json')
+        expected_result=str(Path(result['image']).parent/'volume.json')
+        if (entry['request']['experiment_id']==params.get('experiment_id')
+            or params.get('native_volume',{}).get('path')==expected_native
+            or params.get('result_volume',{}).get('path')==expected_result
+            or str(Path(spec.get('h1',{}).get('attempt',''))/'results')==result['target']):
+            matches.append((key,entry))
+    require(len(matches)<=1,'OWNER_ALIAS')
+    if not matches:
+        if params.get('result_volume'):
+            record=json.loads(checked(params['result_volume']).read_text())
+            require(record.get('layout')!='fixed-results-v1','MISSING_OWNER')
+        return None
+    key,entry=matches[0]
+    require(entry['purpose']==purpose,'PURPOSE_DRIFT')
+    require(bind_new or bool(entry.get('storage_binding')),'UNBOUND_OWNER')
+    bind(journal,key,spec_pin)
+    return validate(journal,key)[0]
+
+
+def owner(journal,job):
+    """Validate the full storage charge without changing the job's reservation."""
+    entry=for_spec(journal,job['request']['spec'],purpose=job['purpose'])
+    if entry is None:return job
+    require(job['resources'].get(DISK)==0,'DUPLICATE_JOB_CHARGE')
+    require(entry['storage_binding']['job_id']==job['identity']['job_id'],'OWNER_JOB_DRIFT')
+    return entry

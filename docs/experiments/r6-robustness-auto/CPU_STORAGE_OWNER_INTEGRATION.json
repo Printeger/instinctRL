@@ -1,0 +1,57 @@
+{
+  "schema_version": "r6-storage-owner-integration-cpu/1",
+  "status": "CPU_PASS_PENDING_INDEPENDENT_REVIEW",
+  "pytest_cases_passed": 48,
+  "new_test_cases": 8,
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_storage_allocation.py",
+      "sha256": "1ed69e2899430d9593a339a9ed51755d0222dd373e12c66dc00d33ee8bf79f5e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_register_job.py",
+      "sha256": "a47c2614efae34c4cd2762e1b80dc02c5ee6d8b32fdc6aa14000a085695a18b3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "66aa805582a468fa56d013d63fbf2772f79cf0f3ccfab3fcfd6f8374a146b744"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_inventory.py",
+      "sha256": "b21f01bef482317ff619a32cb279bfb7457ceac8901563b91161413b2d7cb410"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_storage_owner_integration.py",
+      "sha256": "0ba5884d929c0e6dd8fc91976cc5474e83f8ed9697c485e0c5f15bd4c7189a50"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_STORAGE_OWNER_INTEGRATION_TESTS.txt",
+      "sha256": "4c19a78ef21581527e324325bd63ce0dd8b24e348130a71a8286465c7ce55ac8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_STORAGE_OWNER_INTEGRATION_TESTS_V2.txt",
+      "sha256": "a5ba94b619d0ea0b2c9724f07b91cd9ebf971e25ee72595a1983e32d0d96b80a"
+    }
+  ],
+  "accounting": "Preallocation retains whole-job disk cap. Its exact bound job reserves zero additional disk but all other resources normally. Submit verifies both ledger charges; inventory observes actual disk on the original preallocation, max(reserved,actual), without refund.",
+  "coverage": [
+    "Exact registration, submission and replay use one disk charge",
+    "Missing owner, reduced charge, altered purpose and wrong binding reject before submission claim",
+    "Crash after binding before job intent preserves storage and recovers the same spec",
+    "Native FAILED/-9 preserved during inventory",
+    "Actual output overrun raises owner charge and job inventory violation; replay is idempotent"
+  ],
+  "substitutes": [
+    "Temporary Store/Journal and actual registration/submit validation orchestration",
+    "Authority inspection, kernel volume checks and process submission replaced by CPU fixtures",
+    "Inventory routing uses explicit owner-boundary substitute; owner validation tested separately",
+    "No single full production end-to-end execution or real mount in this suite"
+  ],
+  "capacity_pass": false,
+  "operational_storage_allocations_created": 0,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0
+}

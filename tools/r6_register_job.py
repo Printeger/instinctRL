@@ -61,6 +61,8 @@ def register(journal, spec_pin, store, *, free_disk_bytes, purpose='development'
             and reservations[0]['identity']==identity and reservations[0]['event_key']==reservation_key
             and reservations[0]['resources']==entry['resources'] and reservations[0]['purpose']==purpose,
             'RESERVATION_DRIFT')
+        from tools.r6_storage_allocation import owner
+        owner(journal,entry)
         return key
     journal.guard();require(not stop_paths(journal),'STOP')
     require(state['budget']['capacity_pass'] is True,'CAPACITY_NOT_ACCEPTED')
@@ -69,6 +71,8 @@ def register(journal, spec_pin, store, *, free_disk_bytes, purpose='development'
     require(jid not in store.replay()['jobs'],'EXISTING_STORE_JOB')
     experiments.validate(spec,store.root)
     experiments.authorized(store.replay(),spec,store.root)
+    from tools.r6_storage_allocation import for_spec
+    storage=for_spec(journal,spec_pin,purpose=purpose,bind_new=True)
     resources=dict(live_starts=1,live_wall_seconds=spec['resources']['wall_seconds']+180,
                    allocated_gpu_seconds=spec['resources']['wall_seconds']+180)
     if spec['backend']=='real':
@@ -76,7 +80,7 @@ def register(journal, spec_pin, store, *, free_disk_bytes, purpose='development'
         auth=json.loads(checked(spec['pins']['authorization']).read_text())
         resources.update(simulator_initializations=1,
             nontraining_transitions=spec['resources']['transitions'],
-            output_actual_plus_unreleased_reservations_bytes=auth['parameters']['output_cap_bytes'])
+            output_actual_plus_unreleased_reservations_bytes=0 if storage is not None else auth['parameters']['output_cap_bytes'])
     else:
         require(spec['backend']=='runner_cpu' and state['goal_id']=='R6-CPU-TEST-FIXTURE','CPU_FIXTURE_BOUNDARY')
         resources['output_actual_plus_unreleased_reservations_bytes']=1024**2

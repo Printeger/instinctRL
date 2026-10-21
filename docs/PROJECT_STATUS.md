@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：预付双卷空间现已接入登记/submit/原件清单：allocation保留完整disk cap，
+准确job只新增其他资源；submit核对两笔身份，inventory将实际字节观察记回原空间预留，
+超额增加收费并保留失败，不退款。48项CPU组合回归通过（新增8项），见
+`docs/experiments/r6-robustness-auto/CPU_STORAGE_OWNER_INTEGRATION.json`。
+使用临时Store/ledger与明确替身，非生产端到端证明；新计账及固定布局候选尚待独审。
+本轮未新增操作账本空间预留、生产卷、GPU/live/model，capacity=false，完整Goal未完成。
+
 2026-10-21：生产双卷预留/绑定核心候选完成，24项CPU测试通过；准确计划在卷创建
 前预留全额空间，重复登记不重复收费，卷/target/experiment复用拒绝，真实manifest计划
 与工具身份核验后只绑定一个准确spec。见

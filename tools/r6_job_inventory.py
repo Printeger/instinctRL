@@ -119,6 +119,8 @@ def record_inventory(journal, key, store):
         closure = close_terminal_job(journal, key, store)
     state = journal.read(); entry = state['events'][key]
     spec = read(checked(entry['request']['spec']))
+    from tools.r6_storage_allocation import owner
+    storage=owner(journal,entry)
     attempt = Path(spec['h1']['attempt'])
     # The exact submitted spec owns this attempt. Do not accept caller-selected
     # roots that could omit failed outputs or scan unrelated historical runs.
@@ -181,6 +183,8 @@ def record_inventory(journal, key, store):
         native_status=closure['native_status'],native_exit_code=closure['native_exit_code'],
         metadata_accounting=('Native file contents inventoried; fixed backing image plus provisioning metadata charged once. Controller metadata separately reserved'
             if native is not None else 'Original job/attempt bytes only; controller metadata uses separate reserved capacity'))
+    if storage['identity']!=entry['identity']:
+        result['storage_allocation_event_key']=sha(storage['identity'])
     data = canonical(result)+b'\n'
     if len(data) > MAX_MANIFEST_BYTES:
         raise RecoveryError('INVENTORY_MANIFEST_BOUND')
@@ -196,11 +200,11 @@ def record_inventory(journal, key, store):
         atomic(path,data)
     pin = file_pin(path)
     charged_bytes=result.get('total_charged_output_bytes',result['total_original_bytes'])
-    state['budget'] = observe(state['budget'],event_key=entry['identity'],
+    state['budget'] = observe(state['budget'],event_key=storage['identity'],
         resources={DISK:charged_bytes},evidence=pin)
     entry['inventory'] = pin
     violations = list(closure['budget_violations'])
-    if charged_bytes > entry['resources'].get(DISK, 0):
+    if charged_bytes > storage['resources'].get(DISK, 0):
         violations.append('RESERVATION_EXCEEDED_'+DISK)
     entry['inventory_violations'] = violations
     if state['budget'].get('observed_cap_excess') or violations:
