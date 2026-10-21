@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：新增预付生产卷只读检查入口tools/r6_check_prepared_storage.py，12项CPU
+检查通过；检查计划/工具身份后调用原挂载验证器，要求完整payload可用空间，拒绝symlink/
+错误manifest。真实事件返回WAITING_FOR_ADMIN_PROVISION，两个manifest缺失；检查前后
+账本bytes一致，无新增预留/提交。见 `docs/experiments/r6-robustness-auto/CPU_PREPARED_STORAGE_CHECK.json`。
+首轮fixture mkdir失败及修复结果均保留。该组合待独审，不能替代完整容量接受。
+控制器仍仅返回proposal，下一阶段准确计划/许可自动接续未完成，不能把全部未完成归于管理员。
+104次唤醒+19worker=123，余133次；无R6 live，Goal未完成。
+
 2026-10-21：回到首个基线关键路径；新增serializer精确94337128→45171db5源码对可进入
 新的执行兼容审核，其余hash拒绝。仍强制PASS_R6_EXECUTION_COMPATIBILITY及准确payload绑定，
 不是沿用组件独审当执行许可。17项CPU检查通过；首轮控制Python缺Torch的失败原件保留。

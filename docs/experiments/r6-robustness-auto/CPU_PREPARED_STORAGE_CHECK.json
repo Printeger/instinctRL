@@ -1,0 +1,53 @@
+{
+  "schema_version": "r6-prepared-storage-cpu/1",
+  "status": "CPU12_PASS_ACTUAL_VOLUMES_MISSING",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_check_prepared_storage.py",
+      "sha256": "d5c0498dfd5b842369d4c1aa8a6995c710d94ee665e8b0dcf6229e4e40f4ff55"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_prepared_storage.py",
+      "sha256": "1e615fe9e6e5f0f3fe2178f5c3d2e3587f295ca23860a629e96f2b2ab89464a9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_storage_allocation.py",
+      "sha256": "1ed69e2899430d9593a339a9ed51755d0222dd373e12c66dc00d33ee8bf79f5e"
+    }
+  ],
+  "test_logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-prepared-storage-tests.txt",
+      "sha256": "73a1101bb01ebdb36eebb6b84307b69f5fd0a8e652b65a16d854de7c34155c94"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-prepared-storage-recheck.txt",
+      "sha256": "9952b0fcce636aa6dc473d79d40408a65f060ce38523e6705c31553274d8fbae"
+    }
+  ],
+  "results": [
+    "Initial11pass/1 fixture mkdir failure retained",
+    "Corrected fixture:12 passed"
+  ],
+  "actual_check": {
+    "schema_version": "r6-prepared-storage-check/1",
+    "event_key": "6fb2fb5a07a1c13e091bff09e881f9213605031b821e891abd2442ac7711744d",
+    "experiment_id": "R6-BASELINE-ROBUSTNESS-01",
+    "output_cap_bytes": 20250099712,
+    "manifests": {},
+    "missing": [
+      "/var/lib/instinctrl-r6-native/J-d737390980235144/volume.json",
+      "/var/lib/instinctrl-r6-results/J-d737390980235144/volume.json"
+    ],
+    "capacity_pass": false,
+    "dispatch_authorized": false,
+    "status": "WAITING_FOR_ADMIN_PROVISION"
+  },
+  "ledger_unchanged_by_inspection": true,
+  "limits": [
+    "Present-volume kernel checks mocked in new tests; existing validators reused unchanged",
+    "This new composition awaits independent review; no full capacity or execution acceptance",
+    "Controller still ends at a proposal; next-phase issuance/implementation remains incomplete"
+  ],
+  "capacity_pass": false
+}

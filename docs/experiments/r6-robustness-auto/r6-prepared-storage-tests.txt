@@ -1,0 +1,40 @@
+....F.......                                                             [100%]
+=================================== FAILURES ===================================
+________________ test_dangling_manifest_symlink_is_not_waiting _________________
+
+case = namespace(j=<tools.r6_recovery.Journal object at 0x7ef323470350>, n={'path': '/tmp/pytest-of-mint/pytest-1183/test_dan...7100>, target=PosixPath('/tmp/pytest-of-mint/pytest-1183/test_dangling_manifest_symlink0/attempts/R6-FIXTURE/results'))
+
+    def test_dangling_manifest_symlink_is_not_waiting(case):
+        key=register(case);path=Path(case.native['image']).with_name('volume.json')
+>       path.parent.mkdir();path.symlink_to(path.parent/'absent')
+
+tools/test_r6_prepared_storage.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-1183/test_dangling_manifest_symlink0/native/J-1111111111111111')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-1183/test_dangling_manifest_symlink0/native/J-1111111111111111'
+
+/usr/lib/python3.12/pathlib.py:1313: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tools/test_r6_prepared_storage.py::test_dangling_manifest_symlink_is_not_waiting
+1 failed, 11 passed in 0.22s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-17cd4b99-0fd0-4c99-9ef9-dfb94129036f/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-17cd4b99-0fd0-4c99-9ef9-dfb94129036f/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-17cd4b99-0fd0-4c99-9ef9-dfb94129036f/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-17cd4b99-0fd0-4c99-9ef9-dfb94129036f
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-17cd4b99-0fd0-4c99-9ef9-dfb94129036f'
+  warnings.warn(
