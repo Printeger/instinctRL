@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：训练独审事件接入既有模型handoff/receipt：配方单审、容量与源码兼容性合并审核。
+逐项decision/hash/证据绑定；接受记录保留原始worker输出与receipt，未授予Store许可或dispatch。
+预算/STOP/父决策/Store漂移、部分拒绝、重复项、冻结重验失败与提示/接受写入崩溃恢复均覆盖。
+66项CPU组合检查通过；首轮测试误用Store替身的2项失败保留并修正，无生产审核调用。
+证据CPU_TRAINING_REVIEW_EVENT.json；训练设计准备和controller路由、CPU分析仍待接线，完整Goal未完成。
+142次自动唤醒+30worker=172，剩84；尚未发车。
+
 2026-10-22：训练审核材料生成入口完成：配方草稿校验、已审配方的准确计划容量与源码兼容性payload。
 容量展开plan哈希/预算/双卷及control总量；源码绑定origin/execution、checkpoint/方法与真实文件差异。
 草稿与正式契约共用边界检查，未审核payload仍不能通过正式验收；冻结CPU入口明确返回NOT_ACCEPTED。

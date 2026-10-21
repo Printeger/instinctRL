@@ -1,0 +1,40 @@
+{
+  "status": "CPU_TRAINING_INDEPENDENT_REVIEW_EVENTS_PASS_NOT_DEPLOYED",
+  "input_commit": "287796a4",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_review.py",
+      "sha256": "3f43c162729fe86616e0d59d8a44fc7f9f3c19637d65ce3401f26327ce22c756"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/training-review.schema.json",
+      "sha256": "8dbaac97522717a9b7402bcb32cfead9d0d7663284d03e753ce8b34af95148db"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_REVIEW_EVENT_INITIAL_TESTS.log",
+      "sha256": "1c4d8305cc18d97f9f07d9bcd114b37ee95bad490a5e39391355d272a6594bb4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_REVIEW_EVENT_TESTS.log",
+      "sha256": "4298acf5416b1ec64ae2431f0b4d2d695f2ce0f59145e808f4837e9d386025d9"
+    }
+  ],
+  "cpu_tests": 66,
+  "initial_failure": "26 passed/2 failed: Store fixture is a read-only SimpleNamespace, not a real Store with transact. Corrected drift injection through replay fixture; final 66-test combination passed.",
+  "scope": [
+    "Budgeted read-only recipe review or combined capacity/source-compatibility review using existing model handoff, cleanup and receipt verification",
+    "Exact parent/snapshot/input/tool/payload hashes and caps/protected budget included; one model charge per event; replay and prompt/acceptance-write crash recovery do not launch another worker",
+    "Each component must pass its own decision/hash, with no duplicates/missing items; all evidence pins and post-review frozen payload reconstruction required",
+    "Component review artifacts preserve exact original worker response/receipt provenance; capacity/source accepted records bind independent_review pin, no Store permission or dispatch",
+    "Missing reservations, pre-dispatch Store drift, STOP, partial rejection and post-review frozen failure prevent acceptance"
+  ],
+  "limitations": [
+    "Local fake CLI processes exercise actual Journal/worker/receipt/schema paths; Store replay and frozen payload preparation are explicit fixtures",
+    "No real paid training review or scientific acceptance issued, no production controller deployment",
+    "Training source/design preparation and controller routing to review events still required, followed by profile integration and training CPU analysis",
+    "Full baseline/diagnosis/training-or-baseline-sufficiency/confirmation/holdout/audit/model/video delivery incomplete; platform handoff unresolved"
+  ],
+  "goal_complete": false
+}

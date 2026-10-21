@@ -1,0 +1,32 @@
+..........................FF                                             [100%]
+=================================== FAILURES ===================================
+_____________ test_changed_store_before_worker_is_rejected[recipe] _____________
+
+ready = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b0773d23470>
+
+    def test_changed_store_before_worker_is_rejected(ready,monkeypatch):
+        b=ready;handoff=r.model_handoff
+        monkeypatch.setattr(r,'model_handoff',Mock(side_effect=RuntimeError('before worker')))
+        with pytest.raises(RuntimeError):run(b)
+>       b.store.transact('FIXTURE_DRIFT','fixture',lambda s:s.update(paused=True))
+E       AttributeError: 'types.SimpleNamespace' object has no attribute 'transact'
+
+tools/test_r6_training_review.py:144: AttributeError
+_____________ test_changed_store_before_worker_is_rejected[stage] ______________
+
+ready = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b0774cf12e0>
+
+    def test_changed_store_before_worker_is_rejected(ready,monkeypatch):
+        b=ready;handoff=r.model_handoff
+        monkeypatch.setattr(r,'model_handoff',Mock(side_effect=RuntimeError('before worker')))
+        with pytest.raises(RuntimeError):run(b)
+>       b.store.transact('FIXTURE_DRIFT','fixture',lambda s:s.update(paused=True))
+E       AttributeError: 'types.SimpleNamespace' object has no attribute 'transact'
+
+tools/test_r6_training_review.py:144: AttributeError
+=========================== short test summary info ============================
+FAILED tools/test_r6_training_review.py::test_changed_store_before_worker_is_rejected[recipe]
+FAILED tools/test_r6_training_review.py::test_changed_store_before_worker_is_rejected[stage]
+2 failed, 26 passed in 13.67s
