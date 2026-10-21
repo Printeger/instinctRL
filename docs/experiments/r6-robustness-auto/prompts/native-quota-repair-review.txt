@@ -1,0 +1,19 @@
+Independent READ-ONLY repair review. Scope is exactly the two MUST_FIX findings in docs/experiments/r6-robustness-auto/reviews/native-quota-integration-review.json. Do not edit, spawn agents, query GPU, run Kit/CUDA, install, create mounts or change ledger. No live permission or scientific acceptance. Session13/32; remaining19, with4 final+4 repair protected. Return structured result using the supplied schema.
+
+Current repair code is committed at b998f8c, following a11976f. Review these files and directly relevant call sites only:
+ training_workloads/unified_h1/write_boundary.py
+ training_workloads/unified_h1/local_dispatch.py
+ training_workloads/unified_h1/native_volume.py
+ training_workloads/scale_003/resources.py (R6 settings, readback, launch)
+ tools/rlflow/rlflow/h1.py (native_dispatch_options)
+ tests tools/test_r6_write_boundary.py, tools/test_r6_native_volume_dispatch.py, tools/test_r6_native_volume_binding.py.
+
+Latest evidence docs/experiments/r6-robustness-auto/CPU_BOUNDARY_COMPATIBILITY_TESTS_V2.txt:57 passed+3subtests. Real kernel subprocesses tested absolute outside write, input modification/truncate/chmod/setxattr, symlink escape, hardlink, inherited writable FD, descendant exec, explicit result directory versus its parent. Newer x86_64 metadata syscalls452/463/466/467/469 denied even when libseccomp does not recognize names. Sources for numbers: /usr/src/linux-headers-7.0.0-28-generic/arch/x86/include/generated/uapi/asm/unistd_64.h. Real restricted child imported Torch and computed CPU42; /proc/self/fd/1 output worked. Tests substitute mount validation with temporary directories, not a production volume.
+
+Known admitted limitations, NOT claims to accept: Kit/CUDA/shared-memory startup untested; production volume absent; capacity=false and3GiB allowance unchanged. Results directory remains writable under separately defined workload output quotas; native1.5GiB is not a limit on all measurement/raw output. No runtime files were edited. Earlier CPU_NATIVE_WRITE_BOUNDARY_REPAIR.json pins the a11976f candidate; current b998f8c changes add metadata syscall coverage and compatibility tests, so do not mistake earlier pins for current-source acceptance.
+
+Decide whether telemetry routing and inherited OS write boundary now address the original engineering findings, whether any concrete escape/functional defect remains, and whether this candidate is fit for exact prelive admission work while retaining its explicit live-validation prerequisites. Assess the declared result-output exception honestly: if its actual enforcement undermines total native accounting, identify the concrete failure path and minimal repair rather than silently accepting a broad1.5GiB assertion. Do not reopen unrelated controller/protocol/history components. Read frozen telemetry docs only for exact settings if needed; avoid credential-bearing config dumps or huge log scans.
+
+Existing CPU tests can be inspected instead of rerun. If needed, use existing tensor interpreter /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 -B with PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' PYTHONPATH=.:tools/rlflow:isaaclab-training; no dependency changes. Tests already include real fork+Landlock and preserve raw test logs.
+
+PASS_CPU_SCOPE only if no substantive defect in these repairs; otherwise MUST_FIX with concise file-specific actionable findings. Summary distinguishes acceptance of the repaired engineering scope from total capacity/live acceptance. changed_files=[]; evidence_pins for relevant source and latest tests; next_plan is minimal next work; remaining_budget.automatic_sessions_remaining=19. Do not create acceptance files or modify operational state.
