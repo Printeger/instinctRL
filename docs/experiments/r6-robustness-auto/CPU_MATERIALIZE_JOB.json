@@ -1,0 +1,44 @@
+{
+  "status": "CPU_AND_ACTUAL_FROZEN_VALIDATION_PASS_PENDING_INDEPENDENT_REVIEW",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_materialize_job.py",
+      "sha256": "b4041fed952215537717c688d450915f29e0fec68a70b1f7ad607187fd3a66ff"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_materialize_job.py",
+      "sha256": "53f32bc0b0891cc548072f1372d9dbb1075279e5fab33febab724f576b8c57f8"
+    }
+  ],
+  "unit_tests": {
+    "passed": 24,
+    "log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MATERIALIZE_JOB_TEST.txt",
+      "sha256": "43b63426773a54d5461a07dcf94c77072675144b5c4aa994c4bc2781f09519ab"
+    },
+    "fixture_boundaries": "Unit composition tests substitute volume/kernel and frozen validators; separate actual verification uses all real validators without mocks"
+  },
+  "actual_verification": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-materialization-01/real-verification.json",
+    "sha256": "aa07fe67d21c0ec95705689bbf9345d711ccb1cfd3216c716490a8fc35bcb996"
+  },
+  "input_commit": "5d761de7",
+  "output_event_key": "8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6",
+  "artifact_reservation_bytes": 262144,
+  "coverage": [
+    "Resolve only actual manifests of one prepaid pair, never override controller-managed profile fields",
+    "Deterministic exact card/profile, frozen authority proposal, actual full spec, and concrete runner plan",
+    "Missing volumes persist wait and reuse original preparation reservation",
+    "STOP after slow validation, partial output/receipt recovery, output drift and missing reservation reject safely",
+    "Store unchanged, no storage claim, no experiment proposal/approval or job submission",
+    "Actual replay unchanged in artifacts, budget and Store; exact scientific profile matches prior baseline"
+  ],
+  "remaining": [
+    "Profile-draft generation after scientific decision and compatibility acceptance",
+    "Future reserved volume provisioning needs actual privileged capability",
+    "Training/final contracts before those phases",
+    "Complete detached controller, no-model-wait platform handoff, independent combined review and initial exact prelive"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}

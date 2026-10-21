@@ -1,0 +1,22 @@
+{
+  "status": "ACTUAL_MATERIALIZER_CANDIDATE_PENDING_EXACT_PRELIVE_AND_DEPLOYMENT",
+  "job_id": "J-f9edc8f6f35dde13",
+  "plan": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+    "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
+  },
+  "request": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-02/request.json",
+    "sha256": "3d2cd7feac62f6f0e21d996a2affa31c160e586a257740cd056dfc3a607a3857"
+  },
+  "actual_verification": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-materialization-01/real-verification.json",
+    "sha256": "aa07fe67d21c0ec95705689bbf9345d711ccb1cfd3216c716490a8fc35bcb996"
+  },
+  "old_candidate_preserved": "J-7a302eaf9d7714e7",
+  "old_exact_acceptance_inherited": false,
+  "source_and_scientific_parameters_unchanged": true,
+  "store_permission_issued": false,
+  "job_submitted": false,
+  "controller_deployed": false
+}

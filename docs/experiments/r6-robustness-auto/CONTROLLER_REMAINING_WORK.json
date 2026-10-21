@@ -1,9 +1,9 @@
 {
-  "status": "SOURCE_PREPARATION_CPU_PASS_REMAINING_PIPELINE_INCOMPLETE",
+  "status": "SOURCE_AND_EVALUATION_MATERIALIZER_CPU_READY_FULL_PIPELINE_INCOMPLETE",
   "checked_commit": "8696113ffe0eebe07c5fda8af17ba8c789ce5d31",
   "concrete_first_plan": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-01/plan.json",
-    "sha256": "21e5dc48b3c5ea9e52882e002b547d17669ded0f0e27c934f8df09fd3e31ceb2"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+    "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
   },
   "existing_entry": {
     "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_start_baseline.py",
@@ -29,8 +29,8 @@
     "No production post-analysis decision exists, so updated STOP request does not reinterpret an existing production receipt"
   ],
   "next_implementation": {
-    "completed_cpu": "Source-change preparation worker and after_job bridge; concrete committed source/config/design card; existing controller-owned snapshot helper",
-    "next": "Materialize actual storage and parameters after source freezing, reusing existing frozen sources for parameter-only changes; exact compatibility/prelive reviews before issuing next job",
+    "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan",
+    "next": "Generate concrete profile drafts/storage plans from decisions after source/compatibility readiness; controller reserves/provisions volumes, then invokes existing materializer; extend training/final contracts before their use",
     "deployment": "Compose first/next entry and preparation/materialization under one detached local controller; independently validate full handoff before any production invocation",
     "invariants": [
       "No Journal or Store authority mutation by source-preparation worker",
@@ -52,5 +52,9 @@
   "source_preparation": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_PREPARATION.json",
     "sha256": "22acd52e18061e1b95afd56c87619aaa169e86c8087c55166794f12a3954c716"
+  },
+  "job_materialization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MATERIALIZE_JOB.json",
+    "sha256": "cfd699ab598e827d644bb4b3d7030b0c03f8389b96d73ee61d8de84a7906b534"
   }
 }

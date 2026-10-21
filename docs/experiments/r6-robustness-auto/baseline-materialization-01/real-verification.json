@@ -1,0 +1,47 @@
+{
+  "status": "PASS_ACTUAL_FROZEN_MATERIALIZATION_AND_REPLAY_NOT_ISSUED",
+  "new_job_id": "J-f9edc8f6f35dde13",
+  "old_job_id": "J-7a302eaf9d7714e7",
+  "input_pin": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-materialization-01/inputs.json",
+    "sha256": "b4dddcf74f70ca27f994354c9681060e40141f024e275c1088d2f835f1b5edea"
+  },
+  "result": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-materialization-01/materialize.stdout.json",
+    "sha256": "c7883ddb57b3683602ee43dae95ff598e596086f3cdd0220ca39d33ae6c3ade3"
+  },
+  "spec": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/spec.json",
+    "sha256": "7191dd7ef7e022a4ce8956be6c1296f13fd7bd7563d9e5e8f337ad3e5dfba3a8"
+  },
+  "plan": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+    "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
+  },
+  "native_and_result_manifests": {
+    "native_volume": {
+      "path": "/var/lib/instinctrl-r6-native/J-d737390980235144/volume.json",
+      "sha256": "8e997a12d7fd72c55fc2ee4c4fba72655d8cf4a71581e836e93b63933c1a978b"
+    },
+    "result_volume": {
+      "path": "/var/lib/instinctrl-r6-results/J-d737390980235144/volume.json",
+      "sha256": "082966da51638ecd3734bff4e8a7b85bb08700da1de3b7d580b35b4bc3f5572b"
+    }
+  },
+  "actual_validators": true,
+  "mocks": false,
+  "scientific_parameters_identical": true,
+  "card_json_content_identical": true,
+  "authorization_content_identical_except_card_pin": true,
+  "spec_identical_except_authorization_path_and_pin": true,
+  "replay_equal": true,
+  "replay_seconds": 3.585,
+  "budget_unchanged_on_replay": true,
+  "store_state_sha256": "6ee2d33092b6d9376b0c90cee1263a03373f0ebb228ad88f4d58a292939fa310",
+  "store_unchanged": true,
+  "storage_unbound": true,
+  "job_submitted": false,
+  "capacity_acceptance_inherited": false,
+  "exact_prelive_required": true,
+  "charged_automatic_model_sessions": 157
+}

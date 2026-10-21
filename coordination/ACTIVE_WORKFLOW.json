@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 126,
-    "total_automatic_model_sessions_minimum": 156,
+    "platform_automatic_goal_wakes": 127,
+    "total_automatic_model_sessions_minimum": 157,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -281,6 +281,9 @@
     "decision_stop_evidence": "docs/experiments/r6-robustness-auto/CPU_DECISION_STOP.json",
     "controller_remaining_work": "docs/experiments/r6-robustness-auto/CONTROLLER_REMAINING_WORK.json",
     "source_preparation_status": "CPU_PASS_PENDING_REVIEW_NOT_DEPLOYED",
-    "source_preparation_evidence": "docs/experiments/r6-robustness-auto/CPU_SOURCE_PREPARATION.json"
+    "source_preparation_evidence": "docs/experiments/r6-robustness-auto/CPU_SOURCE_PREPARATION.json",
+    "initial_baseline_materializer_candidate": "docs/experiments/r6-robustness-auto/baseline-prelive-02/readiness.json",
+    "job_materialization_status": "CPU_AND_ACTUAL_VALIDATION_PASS_PENDING_REVIEW",
+    "job_materialization_evidence": "docs/experiments/r6-robustness-auto/CPU_MATERIALIZE_JOB.json"
   }
 }
