@@ -1,0 +1,60 @@
+{
+  "status": "RESULT_VOLUME_CPU_INTEGRATION_PENDING_REAL_EXHAUSTION_AND_REVIEW",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_result_volume.py",
+      "sha256": "221b3db6f38690e01f46868f845ec36b5519030be43474815b3554ff3010c0cd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/result_volume.py",
+      "sha256": "f2497142abc0445e58b18557398944b3209aebe4093e29f9b876648967c51a24"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/native_volume.py",
+      "sha256": "e1d7093df23a941e58a0776a612a8822b79c6027912b5c11806c7459c2906349"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "f3316cabd967d3bf82272734f9dde6348fce927ae2fc5fc0df47a3bdb756f135"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "9f1e2da221e83d8a2fb76e37bb30fb0ba3291af9f3793767703c4d1f96ba5c12"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py",
+      "sha256": "697d69e45105143456f891b48db3fa8bf7805c91c9fb9a1ca455c97f2ee4a825"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_inventory.py",
+      "sha256": "65f13644593c71c5e3acec73149523d959b8375d2dfb5f05f352de6423c7e477"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_result_volume.py",
+      "sha256": "6a979dbb5387c5e6fe13678af5a31d3b5fe7de20f7477a2851053abbacea37e2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_volume_inventory.py",
+      "sha256": "a34cb56048c413557795b3fedfe2442c13f8dfd02320c1f50d4b350ab60392e3"
+    }
+  ],
+  "tests_passed": 65,
+  "test_log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESULT_VOLUME_INTEGRATION_TESTS_V4.txt",
+    "sha256": "a8eba7abbc20f38510e3fc56bffc4fbcbb96f73c54ebbf3009644bb0d9a4cf0e"
+  },
+  "binding": "result image bytes = job output cap - 1610612736 native backing - 67108864 control allowance",
+  "enforcement": "dispatcher rejects writable result root without exact validated root-owned ext4 loop volume; same inherited Landlock boundary",
+  "accounting": "hash result files inside exact attempt, charge fixed backing image plus provisioning metadata once; native image also charged once",
+  "provisioning": "root-only new empty exact R6 result target, held directory descriptors, inaccessible underlying host directory, no cleanup/reuse/fstab",
+  "limitations": [
+    "No result volume has been mounted or exhausted; mounting success and cumulative multi-file/descendant denial remain to be tested on a small real volume.",
+    "Production result mount, metadata and all originals must be reserved and retained; no implicit refund.",
+    "CPU path validation uses explicit mount substitutes; actual native CPU volume read checks remain in regression.",
+    "Independent repair review and Kit/CUDA compatibility remain pending."
+  ],
+  "capacity_pass": false,
+  "live_starts": 0,
+  "gpu_queries": 0,
+  "additional_model_sessions": 0
+}

@@ -18,12 +18,13 @@ def signature(s):
     return (s.st_dev, s.st_ino, s.st_mode, s.st_size, s.st_mtime_ns, s.st_ctime_ns)
 
 
-def inventory(roots, *, same_device_roots=()):
+def inventory(roots, *, same_device_roots=(), same_device_subtrees=()):
     """Hash all regular files, checking directory/file stability and special files.
 
     Hard links count once per pathname conservatively. Missing roots are explicit,
     never silently presented as complete evidence. Roots must not overlap.
     """
+    boundaries={Path(path):Path(path).stat().st_dev for path in same_device_subtrees}
     resolved = {}
     for name, root in roots.items():
         root = Path(root)
@@ -50,6 +51,9 @@ def inventory(roots, *, same_device_roots=()):
             for path in sorted(directory.iterdir()):
                 info = path.lstat()
                 if name in same_device_roots and info.st_dev!=device:
+                    raise RecoveryError('INVENTORY_CROSS_DEVICE')
+                if any(path.is_relative_to(boundary) and info.st_dev!=device
+                       for boundary,device in boundaries.items()):
                     raise RecoveryError('INVENTORY_CROSS_DEVICE')
                 if stat.S_ISDIR(info.st_mode):
                     stack.append(path)
@@ -122,10 +126,22 @@ def record_inventory(journal, key, store):
     if attempt.parent != expected_parent or not attempt.name or attempt.is_symlink():
         raise RecoveryError('INVENTORY_EXACT_ATTEMPT_ROOT')
     roots={'job':store.root.resolve()/'jobs'/closure['job_id'], 'attempt':attempt}
-    native=None;binding=None
+    native=None;binding=None;result_volume=None;result_binding=None
     if spec.get('h1',{}).get('mode')=='research-r6-evaluation':
         authorization=read(checked(spec['pins']['authorization']))
         native_pin=authorization['parameters'].get('native_volume')
+        result_pin=authorization['parameters'].get('result_volume')
+        if result_pin is not None:
+            from training_workloads.unified_h1.result_volume import validate as validate_results
+            cap=authorization['parameters']['output_cap_bytes']
+            result_binding=validate_results(result_pin,output_cap_bytes=cap,
+                expected_target=attempt/'results',minimum_free_bytes=0)
+            manifest=checked(result_pin);request=manifest.parent/'request.json'
+            if request.is_symlink() or not request.is_file() or request.stat().st_size>65536:
+                raise RecoveryError('INVENTORY_RESULT_REQUEST')
+            result_volume=dict(manifest=result_pin,provision_request=file_pin(request),
+                target=result_binding['target'],backing_bytes=result_binding['maximum_bytes'],
+                metadata_bytes=manifest.stat().st_size+request.stat().st_size)
         if native_pin is not None:
             from training_workloads.unified_h1.native_volume import validate
             binding=validate(native_pin,minimum_free_bytes=0)
@@ -137,7 +153,8 @@ def record_inventory(journal, key, store):
             native=dict(manifest=native_pin,provision_request=file_pin(request),
                 target=binding['target'],backing_bytes=binding['maximum_bytes'],
                 metadata_bytes=manifest.stat().st_size+request.stat().st_size)
-    value = inventory(roots,same_device_roots=('native',) if native else ())
+    value = inventory(roots,same_device_roots=('native',) if native else (),
+        same_device_subtrees=(result_volume['target'],) if result_volume else ())
     if native is not None:
         after=validate(native['manifest'],minimum_free_bytes=0)
         if any(after[k]!=binding[k] for k in ('mount_id','device','target','maximum_bytes')):
@@ -148,6 +165,16 @@ def record_inventory(journal, key, store):
         # logical bytes and the image would double-count the same storage.
         value['total_charged_output_bytes']=(sum(row['bytes'] for row in value['files'] if row['category']!='native')
             +native['backing_bytes']+native['metadata_bytes'])
+    if result_volume is not None:
+        after=validate_results(result_volume['manifest'],output_cap_bytes=cap,
+            expected_target=attempt/'results',minimum_free_bytes=0)
+        if any(after[k]!=result_binding[k] for k in ('mount_id','device','target','maximum_bytes')):
+            raise RecoveryError('INVENTORY_RESULT_MOUNT_CHANGED')
+        checked(result_volume['provision_request'])
+        value['result_volume']=result_volume
+        inside=sum(row['bytes'] for row in value['files'] if Path(row['path']).is_relative_to(Path(result_volume['target'])))
+        value['total_charged_output_bytes']=(value.get('total_charged_output_bytes',value['total_original_bytes'])
+            -inside+result_volume['backing_bytes']+result_volume['metadata_bytes'])
     result = dict(schema_version='r6-job-inventory/1',event_key=key,job_id=closure['job_id'],
         closure=entry['closure'],spec=entry['request']['spec'],**value,
         output_inventory_complete=not value['missing_roots'],scientific_acceptance=False,

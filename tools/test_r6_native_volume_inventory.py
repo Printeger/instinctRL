@@ -10,7 +10,7 @@ from training_workloads.unified_h1 import native_volume
 
 
 @pytest.fixture
-def native_job(monkeypatch):
+def native_job(monkeypatch,request):
     b=fixtures.InventoryTests();b.setUp()
     try:
         metadata=b.base/'native';metadata.mkdir()
@@ -20,7 +20,18 @@ def native_job(monkeypatch):
         (metadata/'volume.json').write_text('{}');(metadata/'request.json').write_text('{}')
         native_pin=file_pin(metadata/'volume.json')
         authority=b.base/'authority.json'
-        authority.write_text(json.dumps(dict(parameters=dict(native_volume=native_pin))))
+        parameters=dict(native_volume=native_pin)
+        if getattr(request,'param',False):
+            from training_workloads.unified_h1 import result_volume
+            result_meta=b.base/'result-volume';result_meta.mkdir()
+            for name in ('volume.json','request.json'):(result_meta/name).write_text('{}')
+            result_pin=file_pin(result_meta/'volume.json')
+            b.result_target=b.attempt/'results';b.result_target.mkdir()
+            (b.result_target/'measurement').write_bytes(b'actual measurement')
+            parameters.update(result_volume=result_pin,output_cap_bytes=2*1024**3)
+            monkeypatch.setattr(result_volume,'validate',lambda *a,**kw:dict(target=str(b.result_target),
+                mount_id='RESULT',device='CPU',maximum_bytes=64*1024**2))
+        authority.write_text(json.dumps(dict(parameters=parameters)))
         b.spec['h1']['mode']='research-r6-evaluation'
         b.spec['pins']={'authorization':file_pin(authority)}
         specpath=Path(b.request['spec']['path']);specpath.write_text(json.dumps(b.spec))
@@ -52,6 +63,17 @@ def test_native_originals_are_hashed_and_image_is_charged_once(native_job):
     assert observation['resources'][DISK]==r['total_charged_output_bytes']
     assert r['native_exit_code']==-9 and r['output_inventory_complete']
     assert not r['scientific_acceptance']
+
+
+@pytest.mark.parametrize('native_job',[True],indirect=True)
+def test_both_images_charged_once_and_result_originals_preserved(native_job):
+    b=native_job;r=b.record()
+    assert any(row['path']==str(b.result_target/'measurement') for row in r['files'])
+    outside=sum(row['bytes'] for row in r['files'] if row['category']!='native'
+                and not Path(row['path']).is_relative_to(b.result_target))
+    assert r['total_charged_output_bytes']==outside+1610612736+64*1024**2+8
+    assert r['result_volume']['target']==str(b.result_target)
+    assert b.record()==r
 
 
 def test_replay_retains_later_phase_and_detects_external_changes(native_job):

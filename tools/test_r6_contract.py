@@ -60,7 +60,8 @@ class ContractTests(unittest.TestCase):
     def test_native_volume_requires_exact_card_and_runtime_validation(self):
         self.p['native_volume']={'path':'/fixture/volume.json','sha256':'1'*64}
         self.p['extension_inputs']={'path':'/fixture/extensions.json','sha256':'2'*64}
-        with patch('training_workloads.unified_h1.native_volume.validate',return_value={'fixture':True}) as check, patch('training_workloads.unified_h1.extension_inputs.validate',return_value='/fixture/installed'):
+        self.p['result_volume']={'path':'/fixture/result.json','sha256':'3'*64}
+        with patch('training_workloads.unified_h1.native_volume.validate',return_value={'fixture':True}) as check, patch('training_workloads.unified_h1.extension_inputs.validate',return_value='/fixture/installed'), patch('training_workloads.unified_h1.result_volume.validate',return_value={'fixture':True}):
             with self.assertRaisesRegex(PermissionError,'card/profile mismatch'):validate_parameters(MODE,self.p)
             self.card()
             self.assertEqual(validate_parameters(MODE,self.p),self.p)

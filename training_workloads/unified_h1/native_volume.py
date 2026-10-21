@@ -19,25 +19,32 @@ def require(condition, reason):
 
 
 def validate(pin, *, minimum_free_bytes=256*1024**2, allow_cpu_fixture=False):
-    require(type(minimum_free_bytes)is int and 0<=minimum_free_bytes<=MAXIMUM,'FREE_REQUIREMENT')
+    return validate_volume(pin,base=BASE,maximum=MAXIMUM,image_name='native.ext4',
+                           minimum_free_bytes=minimum_free_bytes,allow_cpu_fixture=allow_cpu_fixture)
+
+
+def validate_volume(pin, *, base, maximum, image_name, expected_target=None,
+                    minimum_free_bytes=256*1024**2, allow_cpu_fixture=False):
+    require(type(minimum_free_bytes)is int and 0<=minimum_free_bytes<=maximum,'FREE_REQUIREMENT')
     require(isinstance(pin,dict) and set(pin)=={'path','sha256'},'PIN')
     manifest=Path(pin['path'])
     require(manifest.is_absolute() and manifest.resolve()==manifest and manifest.name=='volume.json'
-            and manifest.parent.parent==BASE,'MANIFEST_PATH')
+            and manifest.parent.parent==base,'MANIFEST_PATH')
     require(hashlib.sha256(manifest.read_bytes()).hexdigest()==pin['sha256'],'MANIFEST_HASH')
     record=json.loads(manifest.read_text());name=manifest.parent.name
     require(bool(re.fullmatch(r'J-[0-9a-f]{16}',name)) or
             (allow_cpu_fixture and bool(re.fullmatch(r'CPU-QUOTA-[0-9]{2}',name))),'PRODUCTION_IDENTITY')
-    target=manifest.parent/'output';image=manifest.parent/'native.ext4'
+    target=manifest.parent/'output' if expected_target is None else Path(expected_target)
+    image=manifest.parent/image_name
     require(record['volume_id']==name and record['image']==str(image)
-            and record['target']==str(target) and record['maximum_backing_bytes']==MAXIMUM,'IDENTITY')
-    for parent in (BASE.parent,BASE,manifest.parent):
+            and record['target']==str(target) and record['maximum_backing_bytes']==maximum,'IDENTITY')
+    for parent in (base.parent,base,manifest.parent):
         info=parent.lstat()
         require(stat.S_ISDIR(info.st_mode) and info.st_uid==0 and not info.st_mode & 0o022,'PARENT_OWNERSHIP')
     for path in (manifest,image):
         info=path.lstat()
         require(stat.S_ISREG(info.st_mode) and info.st_uid==0 and not info.st_mode & 0o022,'FILE_OWNERSHIP')
-    require(image.stat().st_size==MAXIMUM,'BACKING_SIZE')
+    require(image.stat().st_size==maximum,'BACKING_SIZE')
     require(target.resolve()==target and target.is_mount(),'MOUNT_ABSENT')
     info=target.stat()
     require(info.st_uid==record['owner_uid']==os.getuid() and stat.S_IMODE(info.st_mode)==0o700,'OUTPUT_OWNER')
@@ -56,10 +63,10 @@ def validate(pin, *, minimum_free_bytes=256*1024**2, allow_cpu_fixture=False):
     require(bool(re.fullmatch(r'loop[0-9]+',device)),'LOOP_DEVICE')
     require((Path('/sys/class/block')/device/'loop/backing_file').read_text().strip()==str(image),'LOOP_BACKING')
     usage=os.statvfs(target)
-    require(usage.f_blocks*usage.f_frsize<=MAXIMUM,'FILESYSTEM_SIZE')
+    require(usage.f_blocks*usage.f_frsize<=maximum,'FILESYSTEM_SIZE')
     require(usage.f_bavail*usage.f_frsize>=minimum_free_bytes,'FREE_SPACE')
     return dict(target=str(target),manifest=pin,mount_id=fields[0],device=fs[1],
-                maximum_bytes=MAXIMUM,free_bytes=usage.f_bavail*usage.f_frsize)
+                maximum_bytes=maximum,free_bytes=usage.f_bavail*usage.f_frsize)
 
 
 def settings(binding):

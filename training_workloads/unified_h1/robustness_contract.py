@@ -47,13 +47,15 @@ def baseline(p):
 
 def validate_parameters(mode,value):
     from .research_contract import validate_pin
-    if mode!=MODE or not isinstance(value,dict) or set(value) not in (FIELDS,FIELDS|{'native_volume','extension_inputs'}):raise PermissionError('R6 baseline evaluation fields/mode')
+    if mode!=MODE or not isinstance(value,dict) or set(value) not in (FIELDS,FIELDS|{'native_volume','extension_inputs','result_volume'}):raise PermissionError('R6 baseline evaluation fields/mode')
     p=dict(value)
     if 'native_volume' in p:
         from .native_volume import validate
         validate(p['native_volume'])
         from .extension_inputs import validate as validate_extensions
         validate_extensions(p['extension_inputs'])
+        from .result_volume import validate as validate_results
+        validate_results(p['result_volume'],output_cap_bytes=p['output_cap_bytes'])
     if not isinstance(p['experiment_id'],str) or not re.fullmatch(r'R6-[A-Z0-9-]{1,90}',p['experiment_id']):raise PermissionError('R6 experiment identity')
     if p['group']!='R1' or type(p['training_seed'])is not int or p['training_seed']!=20260908 or type(p['evaluation_seed'])is not int or p['evaluation_seed']!=20260909:
         raise PermissionError('R6 baseline/original-suite seed identity')

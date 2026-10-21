@@ -15,11 +15,12 @@ def setup(tmp_path,monkeypatch):
     coordination=tmp_path/'coordination';coordination.mkdir()
     binding=dict(target=str(target),manifest={'fixture':True})
     monkeypatch.setattr(native_volume,'validate',lambda pin:binding)
-    def run(code,output_root=None,timeout=5):
+    def run(code,output_root=None,timeout=5,result_pin=None):
         return dispatch.dispatch_held([sys.executable,'-B','-c',code],cwd=tmp_path,
             identity_path=control/'held.json',coordination_root=coordination,
             native_output_cap_bytes=4096,native_volume_pin={'fixture':True},
             native_workload_output_root=str(output_root) if output_root else None,
+            result_volume_pin=result_pin,job_output_cap_bytes=4*1024**3,
             environment={'TMPDIR':'/unverified','CUDA_CACHE_PATH':'/unverified','WARP_CACHE_PATH':'/unverified','CUDA_VISIBLE_DEVICES':''},completion_timeout_s=timeout)
     return target,control,run
 
@@ -66,10 +67,10 @@ def test_previous_native_directory_is_preserved_and_not_reused(setup):
 def test_store_adapter_uses_validated_authority_not_untrusted_spec_path(monkeypatch):
     from rlflow import h1
     approved={'path':'/approved/volume.json','sha256':'1'*64}
-    check=Mock(return_value={'authorization':{'parameters':{'native_volume':approved}}})
+    check=Mock(return_value={'authorization':{'parameters':{'native_volume':approved,'result_volume':approved,'output_cap_bytes':4*1024**3}}})
     monkeypatch.setattr(h1,'inspect_authority',check)
     spec={'backend':'real','h1':{'mode':'research-r6-evaluation','attempt':'/exact/attempt'},'native_volume':{'path':'/untrusted'}}
-    assert h1.native_dispatch_options(spec)==dict(native_output_cap_bytes=256*1024**2,native_volume_pin=approved,native_workload_output_root='/exact/attempt/results')
+    assert h1.native_dispatch_options(spec)==dict(native_output_cap_bytes=256*1024**2,native_volume_pin=approved,native_workload_output_root='/exact/attempt/results',result_volume_pin=approved,job_output_cap_bytes=4*1024**3)
     check.assert_called_once_with(spec)
     check.side_effect=RuntimeError('CPU invalid authority')
     with pytest.raises(RuntimeError,match='invalid authority'):h1.native_dispatch_options(spec)
@@ -94,11 +95,21 @@ def test_cpu_torch_and_proc_fd_logger_inside_boundary(setup):
     assert (target/'native-output.log').read_text()=='42\n'
 
 
-def test_exact_workload_output_root_can_write_but_parent_cannot(setup):
+def test_exact_workload_output_root_can_write_but_parent_cannot(setup,monkeypatch):
     target,control,run=setup
     output=control/'results';output.mkdir()
+    from training_workloads.unified_h1 import result_volume
+    monkeypatch.setattr(result_volume,'validate',lambda *a,**k:dict(target=str(output)))
     code=f"from pathlib import Path\nPath({str(output/'measurement')!r}).write_text('raw')\n"
     code+=f"try:Path({str(control/'outside-result')!r}).write_text('bad')\nexcept PermissionError:print('DENIED')\nelse:raise AssertionError('escaped')"
-    assert run(code,output_root=output)==0
+    assert run(code,output_root=output,result_pin={'fixture':True})==0
     assert (output/'measurement').read_text()=='raw'
     assert not (control/'outside-result').exists()
+
+
+def test_unbounded_results_exception_rejected_before_fork(setup):
+    target,control,run=setup
+    output=control/"results";output.mkdir()
+    with pytest.raises(ValueError,match="kernel aggregate quota"):
+        run("raise AssertionError('must not run')",output_root=output)
+    assert not (control/"held.json").exists()

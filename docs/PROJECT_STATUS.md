@@ -2,6 +2,14 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：结果目录内核配额已接入候选：准确authority必须绑定result_volume，dispatcher
+在fork前核验挂载/镜像/目标/余额；无配额结果目录拒绝开放写权限。结果镜像大小严格等于
+作业输出cap减1.5GiB原生镜像及64MiB控制余量；原件逐文件哈希，镜像与内部文件不重复收费。
+新增管理员配置工具只处理新的空R6 results目录，使用持有的描述符挂载和改权限。
+65项CPU回归通过，见 `docs/experiments/r6-robustness-auto/CPU_RESULT_VOLUME_INTEGRATION.json`。
+尚未创建任何结果卷；下一步小容量真实多文件/后代耗尽验证和独审。没有新增GPU/live/model，
+capacity仍false，生产3GiB allowance未降低。
+
 2026-10-21：限制下真实Torch CPU计算、/proc/self/fd/1日志和准确结果目录写入通过；
 补齐Linux7.0新属性syscall拒绝，57测试+3子测试通过。第13次复审确认遥测修复，仍有
 一项MUST_FIX：结果目录例外只受合作式Python计账，原生/后代直接多文件写入可绕过。

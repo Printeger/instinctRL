@@ -88,7 +88,9 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
                   before_release: Callable[[], None] | None = None,
                   native_output_cap_bytes: int | None = None,
                   native_volume_pin: Mapping[str,str] | None = None,
-                  native_workload_output_root: str | None = None) -> int:
+                  native_workload_output_root: str | None = None,
+                  result_volume_pin: Mapping[str,str] | None = None,
+                  job_output_cap_bytes: int | None = None) -> int:
     if not argv or handshake_timeout_s <= 0 or completion_timeout_s <= 0:
         raise ValueError("argv and positive bounded timeouts are required")
     stop_paths = canonical_stop_paths(coordination_root)
@@ -112,7 +114,12 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
         native_path=Path(volume_binding['target'])/'native-output.log'
         from training_workloads.unified_h1.write_boundary import prepare, enforce
         roots=[volume_binding['target']]
-        if native_workload_output_root is not None:roots.append(native_workload_output_root)
+        if native_workload_output_root is not None:
+            if result_volume_pin is None:raise ValueError('R6 writable results require kernel aggregate quota')
+            from training_workloads.unified_h1.result_volume import validate as validate_results
+            result_binding=validate_results(result_volume_pin,output_cap_bytes=job_output_cap_bytes,
+                expected_target=native_workload_output_root)
+            roots.append(result_binding['target'])
         # These are character device endpoints, never writable host directories.
         # Actual GPU admission/identity checks remain in the existing gate.
         devices=[p for p in ('/dev/null','/dev/zero','/dev/nvidia0','/dev/nvidiactl',
