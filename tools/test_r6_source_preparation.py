@@ -34,6 +34,13 @@ if p.get('engineering_repair') and not settings.get('omit_engineering'):
  findings=repair['description']['decision']['decision']['must_fix']
  design['engineering_repair']={'input':p['engineering_repair'],'disposition':'NEW_REVIEWED_LIVE_ATTEMPT',
   'findings_addressed':[] if settings.get('omit_findings') else findings}
+if p.get('repair'):
+ document=json.loads(Path(p['repair']['path']).read_text())
+ if document.get('rejected_review'):
+  rejection=json.loads(Path(document['rejected_review']['path']).read_text())
+  design['engineering_repair']['review_findings_addressed']=rejection['must_fix']
+  design['experiment_id']='CPU-REWORK-'+p['repair']['sha256'][:16]
+  if not settings.get('unchanged_rework'):config.write_text(json.dumps({'fixture_repair':p['repair']['sha256']}))
 if settings.get('bad_card'):design['planned_resources']={'training_transitions':10**12}
 if settings.get('training'):
  config.write_text(json.dumps({'schema_version':'unified-h1-r6-training-config.v1'}))

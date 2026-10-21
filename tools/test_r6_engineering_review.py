@@ -12,6 +12,7 @@ REVIEW='''
 if 'source_result' in p and 'model_cap' in p:
  settings=json.loads(Path(__file__).with_suffix('.settings').read_text())
  with Path(__file__).with_suffix('.review-count').open('a') as f:f.write('review\\n')
+ settings['reject']=settings.get('reject') or (settings.get('reject_once') and len(Path(__file__).with_suffix('.review-count').read_text().splitlines())==1)
  checks={k:True for k in ['original_failure_preserved','all_findings_resolved','engineering_only','actor_boundary_preserved','scoring_and_split_preserved','no_holdout_tuning','source_and_snapshot_bound','fresh_attempt_required']}
  if settings.get('bad_check'):checks['all_findings_resolved']=False
  value={'decision':'MUST_FIX' if settings.get('reject') else 'PASS_R6_ENGINEERING_REPAIR',
@@ -81,10 +82,12 @@ def test_controller_reenters_compatibility_only_after_review_and_restarts_withou
 def test_controller_preserves_rejection_without_compatibility_or_repeat_review(case,monkeypatch):
     b=case;b.builder.with_suffix('.settings').write_text('{"reject":true}')
     compat=Mock(side_effect=AssertionError('must not advance'));monkeypatch.setattr(controller.compatibility,'prepare',compat)
-    with b.j.writer():first=controller.run(b.j,b.request,b.store,free_disk_bytes=FREE)
+    monkeypatch.setattr(controller.engineering_rework,'prepare',Mock(side_effect=RuntimeError('rework boundary')))
+    with b.j.writer(),pytest.raises(RuntimeError,match='rework boundary'):
+        controller.run(b.j,b.request,b.store,free_disk_bytes=FREE)
     budget=b.j.read()['budget']
-    with b.j.writer():second=controller.run(b.j,b.request,b.store,free_disk_bytes=FREE)
-    assert first==second and first['status']=='ENGINEERING_REPAIR_REVIEW_REJECTED'
+    with b.j.writer(),pytest.raises(RuntimeError,match='rework boundary'):
+        controller.run(b.j,b.request,b.store,free_disk_bytes=FREE)
     assert b.j.read()['budget']==budget and b.j.read()['events'][b.controller]['cursor']['phase']=='ENGINEERING_REPAIR_REJECTED'
     assert b.builder.with_suffix('.review-count').read_text()=='review\n';compat.assert_not_called()
 

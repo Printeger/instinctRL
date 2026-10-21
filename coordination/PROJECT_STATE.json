@@ -1,10 +1,10 @@
 {
   "schema_version": "instinctrl-project-state/1",
-  "as_of": "2026-10-19",
+  "as_of": "2026-10-22",
   "development_repository": "/home/mint/rl_dev/instinctRL-dev",
   "branch": "main",
   "base_product_commit": "903afc5abd0fbf82297527e5790c2cd40827b0b2",
-  "phase": "R5_W_ALL_ORIGINAL_GATES_PASS",
+  "phase": "R6_PRELIVE_ENGINEERING_INCOMPLETE",
   "historical_cpu_receipt": {
     "tests_run": 132,
     "errors": 0,
@@ -379,7 +379,7 @@
       "latest_actual_command_review": "PENDING_ROLE15"
     }
   },
-  "current_goal": "R5-W-CLOSURE-AUTO-20261019",
+  "current_goal": "R6-ROBUSTNESS-AUTO-20261019",
   "historical_prior_independent_review": {
     "path": "reviews/review-entry6-final-readiness.json",
     "sha256": "5fd1902b08ce2a968a3ceb07043ccc63a2bfc65606106f417358c6f9a9ede620",
@@ -712,7 +712,7 @@
     "controller_state_at_analysis": "RUNNING/MODEL:final-analysis",
     "old_readiness_goal_unchanged": true
   },
-  "current_execution_index": "w_closure_execution",
+  "current_execution_index": "r6_robustness_execution",
   "w_closure_execution": {
     "goal_id": "R5-W-CLOSURE-AUTO-20261019",
     "master_authority": "docs/experiments/r5-w-closure-auto/MASTER_AUTHORITY.json",
@@ -744,5 +744,19 @@
     "controller_state_modified": false,
     "controller_completion_pending_return": true,
     "independent_seed_limitation": "Actual20261020; fixed initial states and identical step dictionaries to primaryu640; T0 only seed differs; no new distribution coverage."
+  },
+  "historical_before_r6_execution_index": {
+    "current_goal": "R5-W-CLOSURE-AUTO-20261019",
+    "current_execution_index": "w_closure_execution",
+    "phase": "R5_W_ALL_ORIGINAL_GATES_PASS"
+  },
+  "r6_robustness_execution": {
+    "status": "INCOMPLETE_NO_PRODUCTION_BASELINE",
+    "workflow_index": "coordination/ACTIVE_WORKFLOW.json#r6_robustness_execution",
+    "ledger": "docs/experiments/r6-robustness-auto/batch/state.json",
+    "latest_cpu_evidence": "docs/experiments/r6-robustness-auto/CPU_ENGINEERING_REWORK.json",
+    "model_session_cap": 512,
+    "model_sessions_charged": 219,
+    "goal_complete": false
   }
 }

@@ -256,6 +256,10 @@ c.first.start=wait
 # integration is exercised by test_r6_engineering_source.
 c.engineering_source.prepare=lambda j,k,s,**kw:dict(status='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW',goal_complete=False)
 c.engineering_review.prepare=lambda j,k,s,**kw:dict(status='ENGINEERING_REPAIR_REVIEW_REJECTED',goal_complete=False)
+def rework_boundary(j,k,s,**kw):
+ print(json.dumps(j.read()['events'][k]['cursor']['engineering_review']))
+ sys.exit(0)
+c.engineering_rework.prepare=rework_boundary
 from tools.r6_batch import model_handoff
 c.profile.model_handoff=lambda j,k:model_handoff(j,k,poll_seconds=.01)
 with j.writer():

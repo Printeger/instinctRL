@@ -1,0 +1,106 @@
+{
+  "status": "CPU_REJECTED_ENGINEERING_REWORK_AND_BUDGET_AMENDMENT_PASS_NOT_DEPLOYED",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_engineering_rework.py",
+      "sha256": "0ac86c83362eb258deaaa08fcc579cf22d7d7520c6d85d1812d3317cc52cc9c0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_engineering_review.py",
+      "sha256": "168e3cc959e7be87bcba23fb33fb70ee31e010c692bc5eba78602911140bf450"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_engineering_source.py",
+      "sha256": "e7e83eb01fa37ffee45687d066b68c6f3bd1364d10e1902e383a3486703af2d6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_source_repair.py",
+      "sha256": "cb379d8c8156e40358a383a3fb4637b42dabae5092e6cd1d760a2f859582eeb6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_source_preparation.py",
+      "sha256": "bfef88109ad3b2303158b370b7e5ee84c7ccacf554a42b51d4c6496d7b143d52"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "53da9658c10b64fd863cdf4c2efbe8020b6f3443e986fc80a27fa8a097b046c0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_issue_next.py",
+      "sha256": "694bc664e6458da09a7c4ef82d914c159f8205ef2cc5597c6e3694082a631279"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_engineering_rework.py",
+      "sha256": "a4134d0efc8662ca652c7fe476206589f05d3ab8ebf426e0d47b0caee6edcdd8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_engineering_review.py",
+      "sha256": "51114b6db4bc60b019bc7b5d62a989932be36c1af008f45432b7f6e4a2867607"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_preparation.py",
+      "sha256": "db2013db661995c0788370fe1aae43484c4aeed03e73fe1ead9f05ae210871a2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "19bbed320789a9d01cbfdf7b52dc4c0952ec8b6dc33bafc9a8a8e9118b2c67a9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_budget_amendment.py",
+      "sha256": "088be9b9be966f1ea9e24a0afb7e8af0b8abc5351d2d89868094e04564cb45c2"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ENGINEERING_REWORK_INITIAL.log",
+      "sha256": "e28a592b2c27cce517f5a1c2179f67e38f2dab7faaa70e8a724c3aceecb838e8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ENGINEERING_REWORK_TARGETED.log",
+      "sha256": "362a3b5623ba7da7f37c572f1c9e00f2e9d276880935cbe11bc74b3c2fb718af"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ENGINEERING_REWORK_FINAL.log",
+      "sha256": "e08eebe543b271b97963ad86cbf19a8924719a23f8123fe863bbeb1b8c806455"
+    }
+  ],
+  "checks": {
+    "initial_passed": 76,
+    "initial_failed": 4,
+    "targeted_passed": 14,
+    "final_passed": 157,
+    "real_journal_guard": "PASS",
+    "real_amended_delegation": "PASS",
+    "production_model_calls_added": 0,
+    "production_controllers": 0,
+    "current_job": null
+  },
+  "budget": {
+    "cap": 512,
+    "charged": 219,
+    "remaining": 293,
+    "authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BUDGET_INCREASE_USER_AUTHORITY_20261022.json",
+      "sha256": "481bb57c4800589c3f763b59f49e14ce60d1bedcf974e4a2580dd3f8771aeb0f"
+    },
+    "no_refund": true
+  },
+  "behavior": [
+    "Preserve rejected source, commit, snapshot and independent review; reserve one fresh repair worker and restore only the exact original repair cursor.",
+    "Crash after reservation resumes the same event; source outputs use separate paths and history preserves both candidates. STOP, uncommitted edits, wrong-source and frozen-phase rework refuse new model dispatch.",
+    "Rework must bind all original and reviewer findings, use a new experiment ID and change config or implementation/tests; fresh independent review precedes compatibility.",
+    "Pinned user budget amendment is recognized by exact issuance without modifying historical master authority or any scientific resource cap."
+  ],
+  "boundaries": [
+    "Real temporary Git and separate fake CLI subprocesses; scientific evidence, Store and native snapshot/compatibility are explicit CPU fixtures. No production review, job, GPU, training or science result.",
+    "Initial four failures were missing event_id in synthetic legacy event identity; selector now handles those identities. Original failure logs preserved.",
+    "Existing root-owned pytest CPU-QUOTA-01 garbage preserved."
+  ],
+  "remaining": [
+    "Administrator restores bwrap sandbox access; current sudo requires a password.",
+    "Controller-code repair/fresh-process supervision and remaining failed-worker/offline recovery.",
+    "Validated no-model-wait platform handoff and external evidence ingestion.",
+    "Actual baseline, scientific iteration/validation, three streams, holdout, real videos, independent final audit and delivery."
+  ],
+  "goal_complete": false
+}

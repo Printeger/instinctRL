@@ -16,6 +16,8 @@ from tools.r6_budget import reserve
 ROOT=Path(__file__).resolve().parents[1]
 MASTER=ROOT/'docs/experiments/r6-robustness-auto/MASTER_AUTHORITY_V2.json'
 MASTER_SHA='465c4e79bf64bad04a3dd4878eee307319966c58119e17506b1cfc9cbccf2f2c'
+MODEL_AMENDMENT=dict(path=str(ROOT/'docs/experiments/r6-robustness-auto/BUDGET_INCREASE_USER_AUTHORITY_20261022.json'),
+    sha256='481bb57c4800589c3f763b59f49e14ce60d1bedcf974e4a2580dd3f8771aeb0f')
 ROLE='next-job-authorization'
 DISK='output_actual_plus_unreleased_reservations_bytes'
 CAP=65536
@@ -29,8 +31,17 @@ def delegation(journal,master_pin,store):
     require(master_pin=={'path':str(MASTER),'sha256':MASTER_SHA},'MASTER_PIN')
     master=json.loads(checked(master_pin).read_text());s=journal.read()
     for name in ('user_authority','requirements','scope','budget_amendment','supersedes'):checked(master[name])
+    caps=dict(master['caps'])
+    amendments=[a for a in s['budget'].get('budget_amendments',[]) if a.get('authority')==MODEL_AMENDMENT]
+    require(len(amendments)<=1,'AMENDMENT_ALIAS')
+    if amendments:
+        amendment=json.loads(checked(MODEL_AMENDMENT).read_text())
+        require(amendment['previous_model_cap']==caps['automatic_model_sessions']
+            and amendments[0]['old_caps']==caps,'AMENDMENT_PREDECESSOR')
+        caps['automatic_model_sessions']=amendment['new_model_cap']
+        require(amendments[0]['new_caps']==caps,'AMENDMENT_SCOPE')
     require(master['status']=='REGISTERED_USER_DELEGATION' and master['id']==s['goal_id']
-        and master['caps']==s['budget']['caps'],'MASTER_SCOPE')
+        and caps==s['budget']['caps'],'MASTER_SCOPE')
     require(store.root.resolve()==ROOT/'coordination/research','STORE_ROOT')
 
 

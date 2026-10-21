@@ -43,6 +43,7 @@ from tools import r6_final_delivery as final_delivery, r6_publish_final_delivery
 from tools import r6_repair_input as repair_input
 from tools import r6_engineering_source as engineering_source
 from tools import r6_engineering_review as engineering_review
+from tools import r6_engineering_rework as engineering_rework
 from tools import r6_render_preparation as render_preparation, r6_render_review as render_review
 from tools import r6_render_materialization as render_materialization, r6_run_job as render_runner
 from tools.r6_decision_packet import persist_exact
@@ -51,7 +52,7 @@ from rlflow.store import canonical
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_AUDIT_REPAIR_REQUIRED','ENGINEERING_REPAIR_REJECTED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_AUDIT_REPAIR_REQUIRED'}
 
 
 def require(condition,reason):
@@ -234,7 +235,9 @@ def run(journal,request_pin,store,*,free_disk_bytes):
             if phase in {'FINAL_TERMINAL_AUDIT_REQUIRED','COMPLETE'}:
                 return terminal_audit.finish(journal,key,store)
             if phase=='ENGINEERING_REPAIR_REJECTED':
-                return dict(cursor['engineering_review'],controller_key=key)
+                engineering_rework.prepare(journal,key,store,
+                    executable=initial['review_executable'],free_disk_bytes=free)
+                continue
             if phase=='REPAIR_AND_REVIEW':
                 if any(name in cursor for name in ('confirmation','final_batch','final_models','final_collection')):
                     outcome=repair_input.prepare(journal,key,store,free_disk_bytes=free)
@@ -253,7 +256,7 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 cursor['engineering_review']=outcome
                 if outcome['status']=='ENGINEERING_REPAIR_REVIEW_REJECTED':
                     cursor['phase']='ENGINEERING_REPAIR_REJECTED';save(journal,key,cursor,status=cursor['phase'])
-                    return dict(outcome,controller_key=key)
+                    continue
                 repaired=json.loads(checked(outcome['source']).read_text())
                 preparation=json.loads(checked(outcome['source_result']).read_text())
                 cursor.update(source_preparation=dict(preparation=preparation,snapshot=repaired['snapshot']),

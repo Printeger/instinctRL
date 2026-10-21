@@ -48,7 +48,7 @@ def predecessor(journal,pin,parent_key):
     from tools.r6_batch import verified_decision
     path=checked(pin);require(path.stat().st_size<=65536,'INPUT_CAP');data=json.loads(path.read_text())
     state=journal.read()
-    require(set(data)=={'parent_key','predecessor','predecessor_receipt','reason','evidence_pins','repository_state'}
+    require(set(data)-{'rejected_review'}=={'parent_key','predecessor','predecessor_receipt','reason','evidence_pins','repository_state'}
         and data['parent_key']==parent_key and isinstance(data['reason'],str) and data['reason'].strip()
         and isinstance(data['evidence_pins'],list) and data['evidence_pins'],'FIELDS')
     for evidence in data['evidence_pins']:checked(evidence)
@@ -56,7 +56,7 @@ def predecessor(journal,pin,parent_key):
     require(old['identity']['role']==source.ROLE and packet['parent_key']==parent_key
         and old['identity']['job_id']==state['events'][parent_key]['identity']['job_id']
         and packet['parent']==state['events'][parent_key]['decision_record']
-        and old.get('source_result') is None and isinstance(old.get('receipt'),dict)
+        and (old.get('source_result') is None or 'rejected_review' in data) and isinstance(old.get('receipt'),dict)
         and old['receipt']==data['predecessor_receipt'] and old['status']=='RECEIPT_RECORDED','PREDECESSOR')
     require(source.pin_bytes(Path(old['request']['prompt']['path']),packet['prompt'].encode())==old['request']['prompt'],'PROMPT_BINDING')
     resources=dict(automatic_model_sessions=1,
@@ -77,9 +77,20 @@ def predecessor(journal,pin,parent_key):
         require(ident is None or not owns(ident),'PROCESS_ALIVE')
     for field in ('events','stderr','last_message'):
         if receipt.get(field):checked(receipt[field])
+    rejection=None
+    if 'rejected_review' in data:
+        from tools import r6_engineering_review as review
+        rejection=json.loads(checked(data['rejected_review']).read_text())
+        bound=json.loads(checked(rejection['source']).read_text())
+        reviewed=review.rejected(journal,bound['controller_key'],rejection)
+        require(bound['source_event_key']==key and bound['source_result']==old.get('source_result')
+            and reviewed['source_result']==old.get('source_result')
+            and reviewed['repair_input']==packet.get('engineering_repair'),'REJECTED_SOURCE_BINDING')
+        require(receipt['exit_code']==0 and receipt['error'] is None and receipt['schema_valid'],'REJECTED_SOURCE_RECEIPT')
     if receipt['exit_code']==0 and receipt['error'] is None and receipt['schema_valid']:
         result=verified_decision(journal,key)
-        require(result['decision']=='PREPARATION_INCOMPLETE' and result['must_fix']
+        require(((result['decision']=='PREPARATION_INCOMPLETE' and result['must_fix']) if rejection is None
+            else (result['decision']=='SOURCE_READY' and not result['must_fix']))
             and result['parent_decision_sha256']==packet['parent']['sha256'],'ACCEPTED_PREDECESSOR')
     repo=source.repository(journal);git=source.snapshot.git
     require(packet['repository']==str(repo),'REPOSITORY')

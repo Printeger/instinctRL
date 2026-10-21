@@ -51,8 +51,11 @@ def prepare(journal,controller_key,store,*,executable,free_disk_bytes):
         source_result=entry['source_result'],snapshot=outcome['snapshot'],
         dispatch_authorized=False,scientific_acceptance=False,goal_complete=False)
     path=journal.directory/'engineering-repairs'/value['event_key']/'source-result.json'
+    if entry['source_input'].get('repair'):
+        path=path.parent/'source-results'/key/'result.json'
     data=canonical(result)+b'\n';require(len(data)<65536,'OUTPUT_CAP');persist_exact(path,data)
     state=journal.read();owner=state['events'][controller_key];owner['engineering_source_result']=file_pin(path)
     owner.setdefault('engineering_source_attempts',{}).setdefault(cursor_hash,{'input':binding})['result']=file_pin(path)
+    owner.setdefault('engineering_source_results',{})[key]=file_pin(path)
     journal.save(state)
     return result

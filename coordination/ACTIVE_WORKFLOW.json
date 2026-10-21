@@ -210,9 +210,9 @@
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
     "platform_automatic_goal_wakes": 181,
-    "total_automatic_model_sessions_minimum": 212,
+    "total_automatic_model_sessions_minimum": 219,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
-    "model_session_cap": 256,
+    "model_session_cap": 512,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
     "protocol_repair_accepted_review": "docs/experiments/r6-robustness-auto/reviews/wall-confirmation-repair-review.json",
     "local_job_entry_accepted_review": "docs/experiments/r6-robustness-auto/reviews/local-entry-integration-review.json",
@@ -398,7 +398,7 @@
     "engineering_repair_route_status": "NEEDS_REPAIR_EXPLICIT_ROUTE_CPU_PASS_REPAIR_WORKER_AND_REPLACEMENT_ATTEMPTS_PENDING",
     "engineering_repair_route_evidence": "docs/experiments/r6-robustness-auto/CPU_REPAIR_ROUTE.json",
     "local_review_access_status": "INITIAL_BASELINE_LOCAL_REVIEW_READ_PREFLIGHT_VERIFIED_FAILS_BEFORE_MODEL_CHARGE",
-    "local_review_access_evidence": "docs/experiments/r6-robustness-auto/CPU_REVIEW_ACCESS.json",
+    "local_review_access_evidence": "docs/experiments/r6-robustness-auto/ACCESS_RECHECK_20261022_BUDGET_512.json",
     "local_review_admin_remediation_required": true,
     "initial_review_replacement_status": "CPU_INITIAL_REVIEW_REPLACEMENT_PASS_NOT_DEPLOYED",
     "initial_review_replacement_evidence": "docs/experiments/r6-robustness-auto/CPU_INITIAL_REVIEW_REPAIR.json",
@@ -411,6 +411,10 @@
     "automatic_workload_repair_status": "CPU_AUTOMATIC_WORKLOAD_SOURCE_REPAIR_PASS_INDEPENDENT_REPAIR_REVIEW_PENDING",
     "automatic_workload_repair_evidence": "docs/experiments/r6-robustness-auto/CPU_ENGINEERING_SOURCE.json",
     "engineering_review_reentry_status": "CPU_INDEPENDENT_ENGINEERING_REVIEW_AND_ACCEPTED_REENTRY_PASS_NOT_DEPLOYED",
-    "engineering_review_reentry_evidence": "docs/experiments/r6-robustness-auto/CPU_ENGINEERING_REVIEW.json"
+    "engineering_review_reentry_evidence": "docs/experiments/r6-robustness-auto/CPU_ENGINEERING_REVIEW.json",
+    "model_budget_amendment": "docs/experiments/r6-robustness-auto/BUDGET_INCREASE_USER_AUTHORITY_20261022.json",
+    "effective_budget_ledger": "docs/experiments/r6-robustness-auto/batch/state.json",
+    "engineering_rework_status": "CPU_REJECTED_ENGINEERING_REWORK_AND_BUDGET_AMENDMENT_PASS_NOT_DEPLOYED",
+    "engineering_rework_evidence": "docs/experiments/r6-robustness-auto/CPU_ENGINEERING_REWORK.json"
   }
 }

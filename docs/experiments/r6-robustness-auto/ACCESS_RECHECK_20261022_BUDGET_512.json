@@ -1,0 +1,30 @@
+{
+  "checks": [
+    {
+      "argv": [
+        "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+        "sandbox",
+        "-P",
+        ":read-only",
+        "--",
+        "/usr/bin/true"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted\n"
+    },
+    {
+      "argv": [
+        "sudo",
+        "-n",
+        "/usr/bin/true"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "sudo: a password is required\n"
+    }
+  ],
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "goal_complete": false
+}

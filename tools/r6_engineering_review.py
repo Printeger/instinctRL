@@ -143,8 +143,8 @@ def prepare(journal,controller_key,store,*,executable,free_disk_bytes):
     return output
 
 
-def accepted(journal,controller_key,outcome):
-    """Revalidate the original accepted review on a later controller wake."""
+def validated(journal,controller_key,outcome,*,rejected=False):
+    """Revalidate an original PASS or MUST_FIX without relying on current HEAD."""
     state=journal.read();key=outcome['event_key'];entry=state['events'][key]
     require(entry['identity']['role']==ROLE and sha(entry['identity'])==key
         and entry['identity']['input_sha256']==sha(entry['request'])
@@ -158,9 +158,13 @@ def accepted(journal,controller_key,outcome):
         and entry['request']['sandbox']=='read-only'
         and json.loads(checked(entry['request']['prompt']).read_text().splitlines()[-1])==packet,'ACCEPTANCE_INPUT')
     result=verified_decision(journal,key);receipt=read(entry['receipt'])
-    require(outcome['status']=='ENGINEERING_REPAIR_REVIEW_ACCEPTED' and result['decision']=='PASS_R6_ENGINEERING_REPAIR'
-        and result['packet_sha256']==sha(packet) and not result['must_fix'] and not result['changed_files']
-        and all(result['checks'].values()) and result['reviewer']=='r6-independent-engineering-repair'
+    require(outcome['status']==('ENGINEERING_REPAIR_REVIEW_REJECTED' if rejected else 'ENGINEERING_REPAIR_REVIEW_ACCEPTED')
+        and result['decision']==('MUST_FIX' if rejected else 'PASS_R6_ENGINEERING_REPAIR')
+        and result['packet_sha256']==sha(packet) and bool(result['must_fix'])==rejected and not result['changed_files']
+        and (rejected or all(result['checks'].values()))
+        and outcome['must_fix']==result['must_fix']
+        and result['automatic_sessions_remaining']==packet['model_cap']-packet['budget']['automatic_model_sessions']-1
+        and receipt.get('process')==entry.get('process') and result['reviewer']=='r6-independent-engineering-repair'
         and receipt['event_key']==key and receipt['request_sha256']==sha(entry['request'])
         and receipt['last_message']==outcome['review'],'ACCEPTANCE_REVIEW')
     for field in ('source','source_result','snapshot'):
@@ -168,3 +172,11 @@ def accepted(journal,controller_key,outcome):
     for pin in result['evidence_pins']:checked(pin)
     require(all(packet[n] in result['evidence_pins'] for n in ('source','repair_input','source_result','snapshot','card','config','parent')),'ACCEPTANCE_EVIDENCE')
     return packet
+
+
+def accepted(journal,controller_key,outcome):
+    return validated(journal,controller_key,outcome)
+
+
+def rejected(journal,controller_key,outcome):
+    return validated(journal,controller_key,outcome,rejected=True)

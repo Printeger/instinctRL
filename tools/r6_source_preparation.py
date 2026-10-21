@@ -136,11 +136,16 @@ def register(journal,parent_key,store,*,executable,free_disk_bytes,repair_pin=No
         'reviews. Never fabricate reviewer pins. Future actual volume bindings and prelive reviews remain mandatory.\n'
         +('Read the repair document and reconcile all predecessor writes and commits. '
           'Preserve prior attempt outputs; only this fresh output_directory may receive new artifacts. '
-          'This is repair of the same scientific candidate, not permission for another candidate.\n' if repair_pin is not None else '')
+          'This is repair of the same scientific candidate, not permission for another candidate. '
+          'If repair includes rejected_review, read every reviewer finding, include exact '
+          'review_findings_addressed in card.engineering_repair, and change implementation, '
+          'tests or config to resolve it; new artifact names alone are not a repair. '
+          'Use an experiment ID different from the rejected candidate.\n' if repair_pin is not None else '')
         +('This is an engineering repair. Read engineering_repair and every original finding. '
           'Do not change scientific method, actor inputs, scoring or splits to hide a failure. '
           'Add engineering_repair to the design card, exactly {input: the pinned engineering_repair, '
-          'disposition: NEW_REVIEWED_LIVE_ATTEMPT, findings_addressed: all original must_fix strings}. '
+          'disposition: NEW_REVIEWED_LIVE_ATTEMPT, findings_addressed: all original must_fix strings}, '
+          'plus review_findings_addressed when the repair document pins a rejected_review. '
           'Use a new experiment ID. SOURCE_READY only proposes a fresh reviewed attempt; it never '
           'authorizes dispatch. If repair only needs offline reanalysis, needs controller changes, '
           'has an external blocker, or cannot address every finding, return PREPARATION_INCOMPLETE '
@@ -226,8 +231,20 @@ def record(journal,key,store):
         from tools.r6_repair_input import validate
         repair=validate(journal,packet['engineering_repair'],packet['parent_key'],store)
         findings=repair['description']['decision']['decision']['must_fix']
-        require(design['engineering_repair']==dict(input=packet['engineering_repair'],
-            disposition='NEW_REVIEWED_LIVE_ATTEMPT',findings_addressed=findings),'ENGINEERING_FINDINGS')
+        expected=dict(input=packet['engineering_repair'],disposition='NEW_REVIEWED_LIVE_ATTEMPT',findings_addressed=findings)
+        if packet.get('repair'):
+            document=json.loads(checked(packet['repair']).read_text())
+            if document.get('rejected_review'):
+                rejected=json.loads(checked(document['rejected_review']).read_text())
+                expected['review_findings_addressed']=rejected['must_fix']
+                prior=json.loads(checked(rejected['source_result']).read_text())
+                prior_card=json.loads(checked(prior['card']).read_text())
+                require(design['experiment_id']!=prior_card['experiment_id'],'REWORK_EXPERIMENT_ID')
+                diff=snapshot.git(repo,'diff','--name-only','-z',prior['source_commit'],commit).decode().split('\0')[:-1]
+                require(result['config']['sha256']!=prior['config']['sha256'] or
+                    any(n.startswith(('isaaclab-training/','training_workloads/','tests/')) for n in diff),
+                    'REWORK_NO_IMPLEMENTATION_CHANGE')
+        require(design['engineering_repair']==expected,'ENGINEERING_FINDINGS')
         old_spec=json.loads(checked(repair['description']['job_spec']).read_text())
         require(design['experiment_id']!=old_spec['id'],'ENGINEERING_NEW_EXPERIMENT')
     if training:
