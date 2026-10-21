@@ -37,7 +37,13 @@ def seeds(values,count=None):
 
 
 def recipe(pin,review_pin):
-    r=pinned_json(pin)
+    r=validate_recipe(pinned_json(pin))
+    accepted_review(review_pin,'PASS_R6_TRAINING_RECIPE',payload_sha256=object_sha(r))
+    return r
+
+
+def validate_recipe(r):
+    """Validate prospective recipe content; this never supplies review acceptance."""
     require(isinstance(r,dict) and set(r)==RECIPE_FIELDS and r['schema_version']=='r6-training-recipe/1','RECIPE_FIELDS')
     require(isinstance(r['candidate_id'],str) and re.fullmatch(r'R6-CANDIDATE-[A-Z0-9-]{1,64}',r['candidate_id']),'CANDIDATE')
     require(r['baseline_sha256']==BASELINE_SHA,'ORIGIN')
@@ -62,8 +68,7 @@ def recipe(pin,review_pin):
     require(isinstance(nodes,list) and 1<=len(nodes)<=96,'CHECKPOINTS')
     for node in nodes:integer(node,1,r['branch_updates'],'CHECKPOINT')
     require(nodes==sorted(set(nodes)) and nodes[-1]==r['branch_updates'],'FINAL_CHECKPOINT')
-    accepted_review(review_pin,'PASS_R6_TRAINING_RECIPE',payload_sha256=object_sha(r))
-    return r
+    return dict(r)
 
 
 def validate(plan):

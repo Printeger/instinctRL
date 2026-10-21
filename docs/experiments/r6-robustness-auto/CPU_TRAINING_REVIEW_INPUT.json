@@ -1,0 +1,45 @@
+{
+  "status": "CPU_TRAINING_REVIEW_PAYLOAD_PREPARATION_PASS_NOT_REVIEWED",
+  "input_commit": "73c7db9a",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_review_inputs.py",
+      "sha256": "b9ed7e91b6b27fe04a767e2b93a9d2cd2540a17b1ba4f92f6b750ce872dca053"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_plan.py",
+      "sha256": "05da6c8cb8472eb461456249a5e1eadad8c5464264ce76918c8aac6f16bdd445"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_contract.py",
+      "sha256": "950d1b90adf21cdce227d94ca335c214b5e3b31b57bcc4220040f5085817b14a"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_REVIEW_INPUT_TESTS.log",
+      "sha256": "da5ef0ee96c80e296b86b60b794f5fc86490cec82f33ef800e7013cdf1716ffc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_REVIEW_INPUT_TENSOR.log",
+      "sha256": "89f389469b6a48b1b8d1f445d8944649e0bb0cac3b89987a348884f31857446f"
+    }
+  ],
+  "control_tests": 68,
+  "tensor_tests": 37,
+  "initial_test_failures": [],
+  "scope": [
+    "Prospective recipe content validator shares formal constraints but never supplies review acceptance",
+    "After exact recipe review, generate capacity payload with plan hash, training/checkpoint/wall budgets and native/result/control aggregate bytes",
+    "Generate source compatibility payload from exact origin/execution configs, recipe/checkpoint/method and both source manifests; same boundary checks as formal acceptance",
+    "Frozen isolated CPU request entry checks snapshot/source identity, exact request fields and bounded transport; returns REVIEW_PAYLOADS_PREPARED_NOT_ACCEPTED",
+    "Direct frozen program tests use actual prospective recipe, capacity and source byte validation; explicit fixture checkpoint provenance/config loader; unreviewed payloads rejected by formal entry"
+  ],
+  "limitations": [
+    "No production training snapshot or independent recipe/capacity/compatibility reviews issued",
+    "Transport tests substitute subprocess result; direct frozen-program tests substitute config loader and checkpoint fixture provenance",
+    "Budgeted model review event/receipt preparation and source-controller routing remain to integrate; training CPU analysis and candidate/final evaluation remain incomplete",
+    "No GPU, simulation, production Store issuance or deployment; combined independent integration review/platform handoff and full scientific deliverables pending"
+  ],
+  "goal_complete": false
+}

@@ -85,12 +85,22 @@ def source_changes(old,new):
 
 
 def validate_compatibility(pin,plan,config):
+    record=pinned_json(pin)
+    require('independent_review' in record,'COMPATIBILITY_FIELDS')
+    payload={k:v for k,v in record.items() if k!='independent_review'}
+    origin=validate_compatibility_payload(payload,plan,config)
+    accepted_review(record['independent_review'],'PASS_R6_TRAINING_COMPATIBILITY',
+        payload_sha256=object_sha(payload))
+    return origin
+
+
+def validate_compatibility_payload(record,plan,config):
+    """Check prospective source bindings; only validate_compatibility accepts a review."""
     plan=validate_plan(plan);recipe=pinned_json(plan['recipe']);initial=plan['initialization']
     origin=validate_source_identity(initial['source_identity']);execution=validate_source_identity(config['resolved_identity'])
     require(execution==recipe['source_identity'],'RECIPE_EXECUTION')
-    record=pinned_json(pin)
     fields={'schema_version','origin_source_identity','execution_source_identity','origin_config','execution_config',
-        'recipe','checkpoint','method','changed_product_sources','changed_workload_sources','independent_review'}
+        'recipe','checkpoint','method','changed_product_sources','changed_workload_sources'}
     require(set(record)==fields and record['schema_version']=='r6-training-compatibility/1','COMPATIBILITY_FIELDS')
     require(record['origin_source_identity']==origin and record['execution_source_identity']==execution
         and record['recipe']==plan['recipe'] and record['checkpoint']==initial['checkpoint']
@@ -130,6 +140,28 @@ def validate_compatibility(pin,plan,config):
             for relative,digest in value[section]['source_sha256'].items():
                 require(not Path(relative).is_absolute() and '..' not in Path(relative).parts,'SOURCE_PATH')
                 validate_pin(dict(path=str(Path(value[section]['path'])/relative),sha256=digest))
-    accepted_review(record['independent_review'],'PASS_R6_TRAINING_COMPATIBILITY',
-        payload_sha256=object_sha({k:v for k,v in record.items() if k!='independent_review'}))
     return dict(origin)
+
+
+def capacity_payload(plan):
+    plan=validate_plan(plan)
+    from .native_volume import MAXIMUM
+    from .result_volume import CONTROL_ALLOWANCE
+    payload=plan['storage']['payload_bytes']
+    return dict(schema_version='r6-training-capacity/1',plan_sha256=object_sha(plan),
+        payload_bytes=payload,job_output_cap_bytes=payload+96*1024**2+MAXIMUM+CONTROL_ALLOWANCE,
+        budgets=plan_budget(plan))
+
+
+def compatibility_payload(origin_config,execution_config,plan,config):
+    plan=validate_plan(plan);recipe=pinned_json(plan['recipe'])
+    old=pinned_json(origin_config);new=pinned_json(execution_config)
+    value=dict(schema_version='r6-training-compatibility/1',
+        origin_source_identity=plan['initialization']['source_identity'],
+        execution_source_identity=config['resolved_identity'],origin_config=origin_config,
+        execution_config=execution_config,recipe=plan['recipe'],
+        checkpoint=plan['initialization']['checkpoint'],method=recipe['method'],
+        changed_product_sources=source_changes(old['product']['source_sha256'],new['product']['source_sha256']),
+        changed_workload_sources=source_changes(old['workload']['source_sha256'],new['workload']['source_sha256']))
+    validate_compatibility_payload(value,plan,config)
+    return value
