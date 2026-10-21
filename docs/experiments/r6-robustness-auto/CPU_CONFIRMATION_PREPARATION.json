@@ -1,0 +1,49 @@
+{
+  "status": "CPU_THREE_CONFIRMATION_CONTEXT_PREPARATION_AND_REVIEW_RECOVERY_PASS_SEQUENCE_PENDING",
+  "input_commit": "69bdea7f",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_confirmation_preparation.py",
+      "sha256": "b30bcaf085e796139b5c25b336b3ed1b427373a39f7e339a859e6fd2a1899fd4"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_confirmation_preparation.py",
+      "sha256": "f205d33df90b5186f1fb4124259ba4c6cb66b19e151c63b2e74756ebab502724"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_PREPARATION_INITIAL.log",
+      "sha256": "0b9e71fb204f0b6b9f3c6703e1c774aa9a5ea5fe4ae6cc51c109d3eff0c6ae46"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_PREPARATION_REGRESSION.log",
+      "sha256": "fdfc940fe53aa808d7e19008f8579eaee5f4abe2a5e15683da526439e8b8cea4"
+    }
+  ],
+  "verification": {
+    "initial": 21,
+    "combined_regression": 84
+  },
+  "initial_failures": [],
+  "guarantees": [
+    "Exact PROPOSE_CONFIRMATION parent and confirmation_delivery purpose required before preparation reservation.",
+    "Recipe source identity must match the supplied existing frozen training snapshot; no source rebuild or identity substitution.",
+    "One immutable preparation per parent; accepted freeze and each independent stage review persist before advancing; recovery reuses completed reviews and reconnects an in-flight second review.",
+    "Three ordered contexts retain frozen plan, seed, capacity and compatibility reviews; STOP, input/source/pin drift prevent publishing a complete result.",
+    "Only bounded preparation output is reserved here. No training-job reservation, Store mutation, volume provisioning, scientific acceptance or dispatch authority."
+  ],
+  "boundaries": [
+    "Real temporary Journal and files; independent reviewer, frozen plan builder and profile validator are explicit fixtures in the new orchestration tests.",
+    "Existing review fake-CLI and frozen transport tests included in combined regression; no production review or GPU/simulation/training.",
+    "Top-level decision-to-input preparation and sequential dispatch/result collection are not yet connected."
+  ],
+  "remaining": [
+    "Confirmation input preparation, top-level routing, sequential three-stream dispatch and closed-job collection",
+    "Final model freeze including BASELINE_SUFFICIENT, holdout/final evaluation and delivery",
+    "Combined independent review and platform handoff before production"
+  ],
+  "goal_complete": false
+}
