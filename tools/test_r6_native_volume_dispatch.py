@@ -19,15 +19,15 @@ def setup(tmp_path,monkeypatch):
         return dispatch.dispatch_held([sys.executable,'-B','-c',code],cwd=tmp_path,
             identity_path=control/'held.json',coordination_root=coordination,
             native_output_cap_bytes=4096,native_volume_pin={'fixture':True},
-            environment={'TMPDIR':'/unverified','CUDA_CACHE_PATH':'/unverified'},completion_timeout_s=5)
+            environment={'TMPDIR':'/unverified','CUDA_CACHE_PATH':'/unverified','WARP_CACHE_PATH':'/unverified'},completion_timeout_s=5)
     return target,control,run
 
 
 def test_actual_child_console_and_environment_are_bound_to_volume(setup):
     target,control,run=setup
-    assert run("import os,json;print(json.dumps({k:os.environ[k] for k in ['TMPDIR','TMP','TEMP','XDG_CACHE_HOME','CUDA_CACHE_PATH','INSTINCTRL_R6_NATIVE_CAPTURE']}))")==0
+    assert run("import os,json;print(json.dumps({k:os.environ[k] for k in ['TMPDIR','TMP','TEMP','XDG_CACHE_HOME','CUDA_CACHE_PATH','WARP_CACHE_PATH','INSTINCTRL_R6_NATIVE_CAPTURE']}))")==0
     record=json.loads((target/'native-output.log').read_text())
-    for key in ('TMPDIR','TMP','TEMP','XDG_CACHE_HOME','CUDA_CACHE_PATH'):
+    for key in ('TMPDIR','TMP','TEMP','XDG_CACHE_HOME','CUDA_CACHE_PATH','WARP_CACHE_PATH'):
         assert Path(record[key]).is_relative_to(target) and Path(record[key]).is_dir()
     capture=json.loads(record['INSTINCTRL_R6_NATIVE_CAPTURE'])
     assert capture['path']==str(target/'native-output.log')

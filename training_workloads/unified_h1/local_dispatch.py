@@ -142,7 +142,7 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
                 # These variables are set by this dispatcher after filtering,
                 # not inherited from an unverified caller environment.
                 for name,dirname in (('TMPDIR','tmp'),('XDG_CACHE_HOME','xdg_cache'),
-                                     ('CUDA_CACHE_PATH','cuda_cache')):
+                                     ('CUDA_CACHE_PATH','cuda_cache'),('WARP_CACHE_PATH','warp_cache')):
                     directory=Path(volume_binding['target'])/dirname
                     directory.mkdir(mode=0o700,exist_ok=False)
                     env[name]=str(directory)

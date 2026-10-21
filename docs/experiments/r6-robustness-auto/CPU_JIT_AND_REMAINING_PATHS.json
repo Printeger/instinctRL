@@ -1,0 +1,33 @@
+{
+  "status": "CPU_JIT_PASS_REMAINING_PATHS_IDENTIFIED",
+  "sources": [
+    {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/config/kit-core.json",
+      "sha256": "34f44e3169839980fccb47194d18393c5b2c95f5f64ed283006d3325b165144f",
+      "bytes": 7977
+    },
+    {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/data/Kit/Isaac-Sim/5.1/user.config.json",
+      "sha256": "e07f92cfe55f73688b8fd86a092711aa62549e23b4bdca88b735aa3501f874ad",
+      "bytes": 114926
+    },
+    {
+      "path": "/home/mint/.local/share/ov/data/exts/v2/omni.warp.core-1.8.2+lx64/warp/build.py",
+      "sha256": "02fa528a673d66d15e32737a51637cb9313530b6f37631580954824ff45d5fb5",
+      "bytes": 18708
+    }
+  ],
+  "cpu_probe": "CPU_JIT_NOEXEC_01/result.json",
+  "dispatcher_tests": "CPU_WARP_CACHE_DISPATCH_TESTS.txt",
+  "tests_passed": 5,
+  "known_remaining_paths": {
+    "/app/userConfigPath": "${data}/user.config.json",
+    "/app/extensions/registryCache": "${data}/exts",
+    "/exts/omni.kit.pipapi/envPath": "${data}/pip3-envs/default"
+  },
+  "next_action": "Preserve current persistent settings as pinned input copied to quota before launch; redirect these remaining write paths without replacing settings with defaults.",
+  "capacity_verified": false,
+  "native_allowance_reduced": false,
+  "live_starts": 0,
+  "gpu_queries": 0
+}

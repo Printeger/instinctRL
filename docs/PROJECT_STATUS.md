@@ -2,6 +2,13 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：冻结Warp编译库的实际CPU noexec探针通过：文件执行映射被拒绝，LLVM
+载入同一目标文件并计算42；无CUDA/Kit初始化。原件和副本保留，账本保留3MiB预留。
+WARP_CACHE_PATH已显式绑定native卷，5项dispatcher测试通过。见
+`docs/experiments/r6-robustness-auto/CPU_JIT_AND_REMAINING_PATHS.json`。
+Kit core另有userConfigPath、registryCache和pip envPath写入路径；用户持久设置存在，
+下一步需绑定其输入并复制到配额目录，不能用空默认配置替代。总容量尚未验收。
+
 2026-10-21：已接回本机现有扩展依赖：native卷作业必须在准确实验卡绑定
 extension_inputs manifest；完整内容校验在GPU gate之前，使用显式ext-folder，禁止Python
 写入字节码缓存。旧global cache两次实际全树哈希一致，45070普通文件/12500721684字节；
