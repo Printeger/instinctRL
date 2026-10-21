@@ -2,6 +2,14 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：native作业输入manifest升级为v2，绑定原Kit持久配置；启动前哈希核验，
+运行时逐字节复制到卷内0600独立文件，拒绝覆盖旧输出。registryCache/pip envPath也已
+接入卷内，关闭在线pip索引及自动升级；48测试和3子测试通过。真实114926字节配置和
+扩展树核验通过，原配置未变，旧pip环境为空。见
+`docs/experiments/r6-robustness-auto/CPU_PERSISTENT_CONFIG_VERIFICATION.json`。
+候选为 `EXTENSION_INPUTS_CANDIDATE_02.json`；v1保留历史身份、不再用于新native作业。
+这些是CPU输入/接线证据，仍非完整Kit启动或总native容量验收，无新增GPU/live。
+
 2026-10-21：冻结Warp编译库的实际CPU noexec探针通过：文件执行映射被拒绝，LLVM
 载入同一目标文件并计算42；无CUDA/Kit初始化。原件和副本保留，账本保留3MiB预留。
 WARP_CACHE_PATH已显式绑定native卷，5项dispatcher测试通过。见
