@@ -143,7 +143,7 @@
   },
   "r6_robustness_execution": {
     "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
-    "status": "FIXED_STORAGE_CPU_ACCEPTED_PRODUCTION_CAPACITY_PENDING",
+    "status": "STOP_MODEL_BUDGET_EXCEEDED_INCOMPLETE",
     "authority": "docs/experiments/r6-robustness-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md",
     "budget": "docs/experiments/r6-robustness-auto/goal_budget.json",
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
@@ -208,6 +208,9 @@
     "result_quota_cpu_evidence": "docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02/verification.json",
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
-    "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json"
+    "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
+    "platform_automatic_goal_wakes": 92,
+    "total_automatic_model_sessions_minimum": 107,
+    "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_AUDIT.json"
   }
 }
