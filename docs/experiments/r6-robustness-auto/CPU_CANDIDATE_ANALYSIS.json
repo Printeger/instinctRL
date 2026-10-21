@@ -1,0 +1,95 @@
+{
+  "status": "CPU_CANDIDATE_REPLAY_CLOSED_JOB_BINDING_AND_WORKER_ROUTE_PASS_NOT_DEPLOYED",
+  "input_commit": "19f11efb",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_candidate_analysis.py",
+      "sha256": "8520ec3f542ae9c61f533731bf2d0b680d2cd271b0e655607287cf8110f9f1f0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/analyze_r6_candidate.py",
+      "sha256": "8aca211b399a6c3a8a5c531697dc95ea45805a2bf388b2b62d1e908db6970fc8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "780e3150c299b6cfbc9c40083ceff8b3581431358d05587d0ddefcc7f316e6e2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_cpu_analysis.py",
+      "sha256": "c450c2964ed221f05d000300aa969f68c3d3a422f9580353a53935cec417022e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_analysis.py",
+      "sha256": "0d58c1d9ab5b123b4cd2711cf15116a188f187cda75f0e6df9b1f03507828897"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_candidate_analysis.py",
+      "sha256": "a7ab90d4ef4e387d93d08db1ef5a99843eca57a5b0b403da34dea47f79e2c311"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_candidate_analysis_worker.py",
+      "sha256": "0aa7fde8dc2807b5324f7c03a0ec9aa90d0233b01bb5fdd75dcfd5d443df53de"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ANALYSIS_CONTROL_INITIAL.log",
+      "sha256": "d8e0f539daef36c205f6f658584e01018e4e3909792c522ed39cb64ae8d17859"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ANALYSIS_TENSOR.log",
+      "sha256": "78fbfe19ac4f18727c9e2156edaa08ea4dd31d460a7d4ec75d159441a67410b0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ANALYSIS_INTEGRATION.log",
+      "sha256": "84975a5c005e15286e07631e380251f0041e0442da7c2c732c1e3e138f74436a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ANALYSIS_CONTROL_FINAL.log",
+      "sha256": "57929d07383c2e65e975204768ef9a6f259c2b1e9e18079aa2d6618c4a496b58"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ANALYSIS_CONTROL_CORRECTED.log",
+      "sha256": "db529e25c86d19018c412f85ca43019d2230859b4889606ec614baa407c4e1e2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ANALYSIS_TENSOR_FINAL.log",
+      "sha256": "906eea008ff03fe2953055ca6582ea99adc581e54ef984ae331fe043fab1da26"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ANALYSIS_WORKER_FINAL.log",
+      "sha256": "82348862f6ce71d7bff3fcb350f5c5de19cb32d18c58a7d14a8756262ec2804a"
+    }
+  ],
+  "verification": {
+    "tensor_final": 73,
+    "control_combination_passed": 99,
+    "control_combination_fixture_error": 1,
+    "corrected_worker_and_binding": 17
+  },
+  "corrections": [
+    "Initial tensor integration: 21 passed, worker import failed because jsonschema is absent in tensor environment; worker validation moved to existing control interpreter.",
+    "First control command named nonexistent test_r6_decision_packet.py and collected no tests; corrected to test_r6_decision.py.",
+    "Control worker fixture then imported NumPy via real replay; isolated the motion analyzer explicitly for this event-only fixture. Final targeted worker and binder tests all passed.",
+    "Progress commentary said 18 final targeted checks; actual log proves 17."
+  ],
+  "guarantees": [
+    "Candidate metadata, method readback record, selected checkpoint and paired protocol/seed binding checked; no runtime method execution claim.",
+    "Original scorer unchanged; synthetic stationary candidate u896 raw retains 160 episodes, all 32 lanes per case and failed wall-motion prerequisite.",
+    "Full 16 new blocks retained when raw missing; native FAILED -9 retained through closed-job binding.",
+    "CPU worker selects dedicated candidate program with exact authorization pin, bounded separate output, source pins and event deduplication."
+  ],
+  "boundaries": [
+    "Selection validator/review in new fixtures is explicitly substituted. No actual candidate selection or scientific result produced.",
+    "Synthetic original traces and temporary Store/job-chain evidence; cleanup is a fixture.",
+    "No GPU query, simulation, training, production issuance/submission or controller deployment."
+  ],
+  "remaining": [
+    "Candidate profile and compatibility-review preparation route",
+    "Final freeze, confirmation/holdout and delivery",
+    "Combined independent review and platform handoff before production"
+  ],
+  "goal_complete": false
+}

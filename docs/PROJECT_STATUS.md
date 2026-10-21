@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：候选CPU重算/关闭作业原件绑定/独立worker程序路由接通。
+按准确selection的update/标签重用原评分器；模型、方法读回记录、配对protocol/seed与原件逐项绑定。
+73项tensor回归、99项控制检查通过；worker fixture的解释器依赖失败纠正后17项针对检查通过。
+早期缺jsonschema/NumPy和错误测试路径的原始日志均保留，无依赖安装；证据CPU_CANDIDATE_ANALYSIS.json。
+合成u896静止raw保留160 episode及W运动失败，selection/cleanup为明确替身；不声称科学通过。
+候选profile/兼容审核准备、最终freeze/holdout/交付、组合独审及平台交接仍待完成；未生产发车。
+151次自动唤醒+30worker=181，模型剩75；完整Goal未完成。
+
 2026-10-22：候选评价授权提案/精确spec/物化/发行/登记/提交/双卷清单路由接通。
 资源严格计入非训练，training/optimizer_updates/checkpoint写入为0；混合训练计划与selection拒绝。
 221项最终控制回归、36项阶段检查、46项双卷/原件检查通过；首轮185项通过后发现替身与实现

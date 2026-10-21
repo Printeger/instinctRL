@@ -1,0 +1,57 @@
+.....................F                                                   [100%]
+=================================== FAILURES ===================================
+________ test_candidate_cpu_event_uses_pinned_authorization_and_program ________
+
+closed = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-90/test_candidate_cpu_event_uses_0'), output=PosixPath('/tmp/pyte...empts/CPU', '--mode', 'research-r6-candidate-evaluation']}, bind=<function closed.<locals>.<lambda> at 0x733698206fc0>)
+
+    def test_candidate_cpu_event_uses_pinned_authorization_and_program(closed):
+>       from tools import r6_cpu_analysis as worker
+
+tools/test_r6_candidate_analysis.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_cpu_analysis.py:17: in <module>
+    from tools.r6_model_worker import write, output_size
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """One durable R6 noninteractive model event; derived from r5_w_batch worker.
+    
+    The controller reserves the session and commits its exact request first. This
+    process never submits a job, changes a plan, retries an event or refunds a budget.
+    """
+    from pathlib import Path
+    import argparse
+    import json
+    import os
+    import signal
+    import selectors
+    import subprocess
+    import time
+>   import jsonschema
+E   ModuleNotFoundError: No module named 'jsonschema'
+
+tools/r6_model_worker.py:14: ModuleNotFoundError
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-ab0fb75c-9ee4-4935-8da7-c0ee4948128d/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-ab0fb75c-9ee4-4935-8da7-c0ee4948128d/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-ab0fb75c-9ee4-4935-8da7-c0ee4948128d/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-ab0fb75c-9ee4-4935-8da7-c0ee4948128d
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-ab0fb75c-9ee4-4935-8da7-c0ee4948128d'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tools/test_r6_candidate_analysis.py::test_candidate_cpu_event_uses_pinned_authorization_and_program
+1 failed, 21 passed, 4 warnings in 1.40s

@@ -1,0 +1,57 @@
+E....................................................................... [ 72%]
+............................                                             [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_candidate_cpu_event_uses_pinned_authorization_and_program _
+
+case = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-91/test_candidate_cpu_event_uses_0'), output=PosixPath('/tmp/pyte...ise', 'stress-S-combined', 'stress-P-high', 'stress-W-high']}}, write=<function case.<locals>.write at 0x7c1bc3914860>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c1bc47a7140>
+
+    @pytest.fixture
+    def closed(case,monkeypatch):
+        from types import SimpleNamespace
+        from rlflow.store import sha
+        from tools.r6_analysis_binding import bind_analysis
+        b=case;key='CPU-CANDIDATE';spec=dict(id='CPU',backend='real',h1=dict(attempt=b.auth['attempt'],mode=m.MODE),
+            pins=dict(authorization=b.ap),argv=['python','--authorization',b.ap['path'],'--attempt',b.auth['attempt'],'--mode',m.MODE])
+        # analysis_context requires the exact Store attempts parent.
+        store_root=b.root/'store';store_root.mkdir();attempt=store_root/'attempts/CPU';attempt.parent.mkdir()
+        Path(b.auth['attempt']).rename(attempt);b.output=attempt/'results'/m.MODE;b.auth['attempt']=str(attempt)
+        b.ap=b.write('auth.json',b.auth);spec['h1']['attempt']=str(attempt);spec['pins']['authorization']=b.ap
+        spec['argv']=['python','--authorization',b.ap['path'],'--attempt',str(attempt),'--mode',m.MODE]
+        sp=b.write('spec.json',spec);jid='J-'+sha(dict(id='CPU',spec=spec))[:16]
+        closure=b.write('close.json',dict(event_key=key,job_id=jid,spec_sha256=sha(spec),native_status='FAILED',native_exit_code=-9))
+>       report,summary=m.analyze(b.output,b.ap);rp=b.write('report.json',report)
+
+tools/test_r6_candidate_analysis.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_candidate_analysis.py:58: in analyze
+    report,summary=replay.analyze(output,checked(request['protocol']),run_id=request['run_id'],
+training_workloads/unified_h1/robustness_analysis.py:161: in analyze
+    from .robustness_measurement_replay import replay_block_measurements
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Streaming CPU verification of archived delivery, not physical sensor truth.
+    
+    Replays the versioned production impairment algorithm. Independent review must
+    still validate that algorithm and actor/ICS wiring, reset physics and clocks.
+    """
+    from pathlib import Path
+>   import numpy as np
+E   ModuleNotFoundError: No module named 'numpy'
+
+training_workloads/unified_h1/robustness_measurement_replay.py:7: ModuleNotFoundError
+=========================== short test summary info ============================
+ERROR tools/test_r6_candidate_analysis_worker.py::test_candidate_cpu_event_uses_pinned_authorization_and_program
+99 passed, 1 error in 24.79s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-942aa9bc-41f4-4e4b-9d44-2015b48fc916/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-942aa9bc-41f4-4e4b-9d44-2015b48fc916/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-942aa9bc-41f4-4e4b-9d44-2015b48fc916/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-942aa9bc-41f4-4e4b-9d44-2015b48fc916
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-942aa9bc-41f4-4e4b-9d44-2015b48fc916'
+  warnings.warn(

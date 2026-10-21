@@ -97,12 +97,14 @@ def replay_blocks(output, blocks, *, run_id, seed, split, inputs=None):
     return results
 
 
-def replay_original(output, *, inputs=None):
+def replay_original(output, *, inputs=None, update=640, label="r6_baseline_u640_original"):
     """Use the unchanged original evaluator; no canonicalized seed view."""
+    if type(update) is not int or update < 0 or label not in ("r6_baseline_u640_original", f"r6_candidate_u{update}_original"):
+        raise ValueError("ORIGINAL_MODEL_IDENTITY")
     from . import evaluation as ev
     inputs = inputs if inputs is not None else Inputs()
     output = Path(output)
-    raw = output/'evaluation_raw'/'r6_baseline_u640_original'
+    raw = output/'evaluation_raw'/label
     traces = []
     for case in ev.CASE_ORDER:
         path = raw/(case+'.jsonl')
@@ -118,7 +120,7 @@ def replay_original(output, *, inputs=None):
                 if len(row[key]) != 32:
                     raise ValueError('ORIGINAL_LANE_DENOMINATOR')
         traces.extend(ev.replay_raw_case(str(path), case=case))
-    score = ev.evaluate_checkpoint(traces, update=640)
+    score = ev.evaluate_checkpoint(traces, update=update)
     wrows = inputs.read(raw/'W.jsonl', MAX_RAW_BYTES, lines=True)[1:]
     motion = [ev.wall_motion_prerequisite([r['root_state_w'][lane][7+(lane>=16)] for r in wrows]) for lane in range(32)]
     wall = dict(per_lane=motion, all32=all(motion))
@@ -152,7 +154,7 @@ def summarize(blocks, original):
     return result
 
 
-def analyze(output, protocol_path, *, run_id, seed, split):
+def analyze(output, protocol_path, *, run_id, seed, split, original_update=640, original_label="r6_baseline_u640_original"):
     inputs = Inputs()
     protocol = inputs.read(protocol_path)
     blocks = replay_blocks(output, protocol['blocks'], run_id=run_id, seed=seed, split=split, inputs=inputs)
@@ -193,7 +195,7 @@ def analyze(output, protocol_path, *, run_id, seed, split):
     original = None
     original_summary = dict(replay_complete=False, error=None)
     try:
-        original = replay_original(output, inputs=inputs)
+        original = replay_original(output, inputs=inputs, update=original_update, label=original_label)
         if original['evaluator']['sha256'] != protocol['old_suite']['source']['sha256']:
             raise ValueError('ORIGINAL_EVALUATOR_HASH')
         original_summary.update(replay_complete=True, saved_result_equal=original['saved_result_equal'],

@@ -24,6 +24,10 @@ PYTHON=Path('/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11')
 LOG_CAP=1024**2
 RESERVATION=20*1024**2
 SOURCES=('tools/analyze_r6_evaluation.py','tools/r6_cpu_analysis.py',
+ 'tools/analyze_r6_candidate.py','tools/r6_candidate_analysis.py',
+ 'training_workloads/unified_h1/robustness_evaluation_selection.py',
+ 'training_workloads/unified_h1/robustness_contract.py','training_workloads/unified_h1/evaluation.py',
+ 'training_workloads/unified_h1/robustness_training_method.py',
  'tools/r6_analysis_binding.py','tools/r6_recovery.py','tools/r6_postrun.py',
  'tools/r6_worker_processes.py','tools/r6_model_worker.py',
  'training_workloads/unified_h1/robustness_analysis.py','training_workloads/unified_h1/robustness.py',
@@ -41,6 +45,7 @@ SOURCES=('tools/analyze_r6_evaluation.py','tools/r6_cpu_analysis.py',
 
 
 def program_for(mode):
+    if mode=='research-r6-candidate-evaluation':return ROOT/'tools/analyze_r6_candidate.py'
     if mode=='research-r6-training':return ROOT/'tools/analyze_r6_training.py'
     if mode=='research-r6-evaluation':return ROOT/SOURCES[0]
     raise RecoveryError('CPU_ANALYSIS_MODE')
@@ -81,13 +86,13 @@ def validate(journal,key):
         raise RecoveryError('CPU_ANALYSIS_FIXTURE_BOUNDARY')
     auth=json.loads(checked(spec['pins']['authorization']).read_text())
     mode=spec['h1']['mode']
-    if mode not in ('research-r6-evaluation','research-r6-training') or auth['mode']!=mode:
+    if mode not in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation') or auth['mode']!=mode:
         raise RecoveryError('CPU_ANALYSIS_MODE')
     output=Path(spec['h1']['attempt'])/'results'/mode
     directory=journal.directory/'cpu-analysis'/key
     if output.resolve()!=output or any(output==p or output in p.parents or p in output.parents for p in (directory.resolve(),)):
         raise RecoveryError('CPU_ANALYSIS_OUTPUT_SEPARATION')
-    if mode=='research-r6-training':
+    if mode in ('research-r6-training','research-r6-candidate-evaluation'):
         auth_pin=spec['pins']['authorization']
         argv=[str(checked(request['python'])),'-B',str(checked(request['program'])),str(output),auth_pin['path'],
             str(directory.resolve()/'result'),'--authorization-sha256',auth_pin['sha256']]
