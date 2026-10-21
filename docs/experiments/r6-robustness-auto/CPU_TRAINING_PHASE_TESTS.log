@@ -1,0 +1,40 @@
+.F.........................................                              [100%]
+=================================== FAILURES ===================================
+___________________ test_actual_noise_replay_and_new_streams ___________________
+
+    def test_actual_noise_replay_and_new_streams():
+        outputs=[]
+        for seed in (17,17,18):
+            e=Env(seed);e.install();e.reset();e.observe();outputs.append(e.step()[0])
+        assert torch.equal(outputs[0],outputs[1])
+>       assert not torch.equal(outputs[0],outputs[2])
+E       assert not True
+E        +  where True = <built-in method equal of type object at 0x7d9453da7f80>(tensor([[40., 40., 40.,  ..., 40., 40., 40.],\n        [40., 40., 40.,  ..., 40., 40., 40.],\n        [40., 40., 40.,  ....40.,  ..., 40., 40., 40.],\n        [40., 40., 40.,  ..., 40., 40., 40.],\n        [40., 40., 40.,  ..., 40., 40., 40.]]), tensor([[40., 40., 40.,  ..., 40., 40., 40.],\n        [40., 40., 40.,  ..., 40., 40., 40.],\n        [40., 40., 40.,  ....40.,  ..., 40., 40., 40.],\n        [40., 40., 40.,  ..., 40., 40., 40.],\n        [40., 40., 40.,  ..., 40., 40., 40.]]))
+E        +    where <built-in method equal of type object at 0x7d9453da7f80> = torch.equal
+
+tools/test_r6_training_phase.py:76: AssertionError
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-99796682-d915-491c-830b-e8a2df2146c8/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-99796682-d915-491c-830b-e8a2df2146c8/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-99796682-d915-491c-830b-e8a2df2146c8/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-99796682-d915-491c-830b-e8a2df2146c8
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-99796682-d915-491c-830b-e8a2df2146c8'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tools/test_r6_training_phase.py::test_actual_noise_replay_and_new_streams
+1 failed, 42 passed, 4 warnings in 1.13s

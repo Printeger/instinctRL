@@ -17,7 +17,7 @@ class Base:
 
 
 class Env(R6PhysicsMixin,Base):
-    def __init__(self,task='pulse_hold',origin=1000.,steps=330):
+    def __init__(self,task='pulse_hold',origin=1000.,steps=330,configure=True):
         self.num_envs=32;self._h1_evaluation_case=None
         self.cfg=SimpleNamespace(ray_caster=SimpleNamespace(offset=SimpleNamespace(pos=(.02,.01,.1))))
         self.scene=SimpleNamespace(env_origins=torch.full((32,3),origin))
@@ -33,7 +33,7 @@ class Env(R6PhysicsMixin,Base):
         self.sim=SimpleNamespace(current_time_step_index=40,get_physics_dt=lambda:.005);self.reset_rows=[];self.force_rows=[]
         block=dict(id='P-fixture',task=task,steps=steps,pulse_acceleration_m_s2=.5)
         if task=='wall_modes':block.update(id='W-fixture',pulse_acceleration_m_s2=0.,sensor_to_wall_distance_m=1.3)
-        self.configure_r6_physics(block=block,seed=17,split='development',reset_sink=self.reset_rows.append,
+        if configure:self.configure_r6_physics(block=block,seed=17,split='development',reset_sink=self.reset_rows.append,
             force_sink=self.force_rows.append,expected_mass_kg=1.16)
     def set_wrench(self,forces,torques,**kw):
         assert kw=={'is_global':False}

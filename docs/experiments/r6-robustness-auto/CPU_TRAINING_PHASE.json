@@ -1,0 +1,45 @@
+{
+  "status": "CPU_ADAPTER_COMPOSITION_PASS_NOT_ISAAC_INTEGRATION",
+  "input_commit": "4c7ce1da",
+  "implementation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness_physics.py",
+    "sha256": "33741b457a879086e6261e3a887b58bcc7f63e799b108751d41ae49bff0fee4c"
+  },
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PHASE_TESTS.log",
+      "sha256": "b3ead8b9480b3fcc05e94c853da27a0bdc4b611c71c5d097aa128aedbe735a13"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PHASE_TESTS_FINAL.log",
+      "sha256": "b743f95d66aa7a031fbf309b6a8c1c4a8c333b9b07f4621595714e57d9afa577"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PHASE_SOURCE_TESTS.log",
+      "sha256": "5b42d38f8a04f115a4f20139efe8cda08bb604bb1fb04ccb57ff37ccdb3f0c4c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PHASE_FAILURE_BOUNDARIES.log",
+      "sha256": "c4c8608a5de7206f8b0ed5b7bc2ba61af2ad88d00fe7a42f54ed2766ae4ced03"
+    }
+  ],
+  "final_tensor_tests": 63,
+  "replay_subtests": 15,
+  "source_snapshot_tests": 13,
+  "initial_failure": "42 passed/1 failed: first frame under test was deliberately dropped. Test now requires available/valid delivered frame, bounded nonzero noise, same-stream replay and distinct streams.",
+  "scope": [
+    "Actual R6 physics/measurement mixin composition with CPU plant writes and sensor producers",
+    "Per-lane sampled reset specifications verified against sensor/root outputs; automatic reset draws new seed without rewinding phase",
+    "Resumed segment offset determines true phase-relative 40-tick pulse; mass-proportional staging preserves rotor torques",
+    "Actual RangeDelivery noise seeded from registered curriculum generator, delayed/dropped frame handling and RNG audit",
+    "Measurement or completion audit failure preserves adapters and forbids further phase use; global policy clock checked against physics ticks",
+    "Existing evaluation reset/physics/measurement replay regressions"
+  ],
+  "limitations": [
+    "CPU plant fixture substitutes public simulator writers, sensor producers and physics clock; no physical integration proved",
+    "No production recipe selected, baseline measurement still pending",
+    "Training backend checkpoint/log/driver wiring, phase issuance/analysis and final delivery remain pending",
+    "Independent combined review pending; no new paid review or GPU job"
+  ],
+  "goal_complete": false
+}
