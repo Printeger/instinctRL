@@ -10,6 +10,34 @@ class R6LearningLog(LearningLog):
     def __init__(self,root,*,pool,**kwargs):
         super().__init__(root,**kwargs)
         self.pool=pool;self.compressed_streams={};self.closed=False
+        self.finalization_error=None
+        self.evidence_finalized=False
+
+    def finalize_evidence(self):
+        """Write terminal rows once, then seal the shared diagnostic/log pool.
+
+        A complete stream certifies bytes, not successful training. Failed runs
+        may retain complete evidence; an I/O failure leaves an incomplete prefix.
+        """
+        if self.finalization_error is not None:raise self.finalization_error
+        if self.evidence_finalized:return
+        try:
+            if self.closed:raise ValueError('R6_LOG_CLOSED_BEFORE_FINALIZATION')
+            self.finalize_right_censored()
+            self.pool.close()
+            self.evidence_finalized=True
+        except BaseException as error:
+            self.finalization_error=error
+            try:self.pool.abort()
+            except BaseException as cleanup:error.add_note('Evidence abort failed: '+repr(cleanup))
+            raise
+        finally:self.closed=True
+
+    def abort_evidence(self):
+        """Fallback before simulator close if preservation did not seal evidence."""
+        if self.pool.closed:return
+        self.closed=True
+        self.pool.abort()
 
     def append(self,relative,record):
         if self.closed:raise ValueError('R6_LOG_CLOSED')

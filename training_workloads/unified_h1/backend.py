@@ -814,7 +814,11 @@ class UnifiedH1LiveBackend:
 
     def preserve(self, status: str, outcome: LifecycleOutcome | None = None) -> None:
         if status in {"PASS_PENDING_CLOSE", "FAIL_PENDING_CLOSE", "EXPECTED_FAILURE_PENDING_CLOSE"} and self.journal is not None:
-            self.journal.finalize_right_censored()
+            from .robustness_training_storage import R6LearningLog
+            if isinstance(self.journal, R6LearningLog):
+                self.journal.finalize_evidence()
+            else:
+                self.journal.finalize_right_censored()
         atomic_json_replace(self.output, "status.json", {"schema_version": "unified-h1-status.v3", "status": status,
             "primary_error": None if outcome is None or outcome.primary_error is None else exception_record(outcome.primary_error),
             "cleanup_errors": [] if outcome is None else [{"cleanup": row.name, **exception_record(row.error)} for row in outcome.cleanup_failures],
@@ -823,6 +827,10 @@ class UnifiedH1LiveBackend:
 
     def close_bounded(self) -> None:
         errors = []
+        from .robustness_training_storage import R6LearningLog
+        if isinstance(self.journal, R6LearningLog):
+            try:self.journal.abort_evidence()
+            except BaseException as error:errors.append(("r6_evidence", error))
         for name, resource in (("environment", self.environment), ("app", self.app)):
             try:
                 if resource is not None: resource.close()

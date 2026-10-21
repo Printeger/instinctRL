@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：R6压缩证据接入实际backend的preserve/close生命周期；正常收尾只写一次
+终止汇总并关闭共享日志/诊断池，未收尾清理中止流，磁盘错误不覆盖原训练异常。
+24项CPU检查通过（6项实际backend方法检查+18项既有codec/gate检查），见
+`docs/experiments/r6-robustness-auto/CPU_TRAINING_EVIDENCE_LIFECYCLE.json`。
+训练合同/创建入口仍未接线，独审与完整容量接受仍待完成；不得称训练入口已可用。
+98次自动唤醒+18次worker共116次，256上限余140次。无R6 live，Goal未完成。
+
 2026-10-21：第18次独审PASS_CPU_SCOPE，62项定向CPU检查通过；本地准确作业入口、
 完整窗口过期刷新、原排队截止保留、claim恢复与禁止重复提交获得本次范围接受。
 receipt/schema、源证据pins（相对路径按登记cwd解析）及后代清理已核验，见

@@ -1,0 +1,47 @@
+{
+  "schema_version": "r6-training-evidence-lifecycle-cpu/1",
+  "status": "CPU_PASS_NOT_TRAINING_ENTRY_ACCEPTANCE",
+  "source_parent_commit": "423407a79dc05e6fd3a2719fd4c4ab3a0596ba52",
+  "source_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "e20ae3ded49e23630da5196170b043f89d780a66b91889a0a0f5b08474ba9029"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_storage.py",
+      "sha256": "ab2c3a19c804e200438080025eae3da81b721967d9cbe2f84d0cd3b92244ae1d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_training_storage_lifecycle.py",
+      "sha256": "7df6fb256d84e04eed5282914c7b694b7d18860ee70bd8589cb09c37e6c10f8a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_lossless_evidence.py",
+      "sha256": "f91f7155eaa6bdb8442a2578230cda762980905767d64eb6a9c86300a0fef5ed"
+    }
+  ],
+  "test_command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow:isaaclab-training CUDA_VISIBLE_DEVICES='' OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 -B -m pytest -q tools/test_r6_training_storage_lifecycle.py tools/test_r6_lossless_evidence.py",
+  "test_result": {
+    "passed": 24,
+    "warnings": 4,
+    "seconds": 1.23,
+    "exit_code": 0,
+    "warnings_scope": "Existing pytest temporary-directory cleanup; no test failure"
+  },
+  "coverage": [
+    "Real backend methods imported and run on CPU with environment/app close spies; no AST substitute",
+    "Normal preserve seals log and shared diagnostic pool once before app close",
+    "Unpreserved cleanup aborts stream; incomplete prefix rejected",
+    "Training exception retained when fsync also fails; all resources closed",
+    "Failed finalization is not retried or certified",
+    "Premature log-only close cannot certify evidence pool",
+    "Legacy LearningLog remains on existing path"
+  ],
+  "remaining": [
+    "Create and validate exact R6 training contract and instantiate shared pool/adapters in training entry",
+    "Independent integration review",
+    "Full production capacity and actual volumes",
+    "No GPU/Kit or real training performed"
+  ],
+  "capacity_pass": false
+}
