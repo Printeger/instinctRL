@@ -10,7 +10,7 @@ from unittest.mock import Mock
 import pytest
 from rlflow import policy
 from rlflow.store import sha, Conflict
-from tools.test_r6_submit_real_contract import bound
+from tools.test_r6_submit_real_contract import baseline_bound as bound
 from tools.r6_recovery import Journal, file_pin, RecoveryError
 from tools import r6_initial_baseline as m, r6_issue_next
 

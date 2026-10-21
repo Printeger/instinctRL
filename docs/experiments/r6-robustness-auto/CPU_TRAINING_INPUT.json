@@ -1,0 +1,47 @@
+{
+  "status": "CPU_TRAINING_AUTHORITY_SPEC_MATERIALIZATION_PASS_NOT_DEPLOYED",
+  "input_commit": "faf227f5",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_prepare_authorization.py",
+      "sha256": "7ebe73a90be7102b571a95daec97316e81e39b245f027db3a40cc632c65d6a79"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_build_spec.py",
+      "sha256": "0c71c40c621dd0f8e46b147fdf4156913580cab6875f4f53750ab89fce59dbb1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_materialize_job.py",
+      "sha256": "f69bb82a9524cfb113581c96ec22da8cffbd361b8aaa1ca3acba4dadee23268a"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_INPUT_TESTS.log",
+      "sha256": "551f5fa21433dcca9f61b8f0ea8c09b766622129ac45f1cf3ca6762ff2107410"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_INPUT_ENTRY_TESTS.log",
+      "sha256": "0b069c05c77cc76fc4ee9c0a7869b3c48c391ec75f669167c7748551a68f057c"
+    }
+  ],
+  "cpu_tests": 112,
+  "actual_baseline_validation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_INPUT_BASELINE_VERIFICATION.json",
+    "sha256": "6af96f3e1ee993924feb91c20a9b92f2cd27541361a71de2df381895ad586dab"
+  },
+  "scope": [
+    "Frozen subprocess selects exact evaluation/training contract and corresponding compatibility validator from plan presence",
+    "Training spec binds training seed and complete transition budget; shared resource arithmetic rejects missing checkpoint allowance",
+    "Either R6 output directory prevents authority reuse; returned source/mode/parameters must remain exact",
+    "Real temporary Store/H1/materializer composition for both modes; immutable outputs and replay retain budget and no authority issuance",
+    "First-baseline tests retain evaluation-only fixtures; continuation worker composition tests both modes"
+  ],
+  "limitations": [
+    "CPU composition substitutes frozen authority inspection and kernel volumes; validator routing tests use explicit stubs",
+    "Actual existing baseline authority/spec rebuilt unchanged without mocks or GPU query; no actual training authorization issued",
+    "Profile preparation, training source/method review preparation and CPU analysis remain incomplete; combined review and platform handoff required",
+    "No baseline results, training results, final confirmation or delivery; full goal incomplete"
+  ],
+  "goal_complete": false
+}

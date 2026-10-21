@@ -7,7 +7,7 @@ from unittest.mock import Mock
 import subprocess
 REAL_POPEN = subprocess.Popen
 import pytest
-from tools.test_r6_submit_real_contract import bound
+from tools.test_r6_submit_real_contract import baseline_bound as bound
 from tools.test_r6_initial_baseline import ready
 from tools import r6_start_baseline as m
 from tools.r6_recovery import Journal, RecoveryError

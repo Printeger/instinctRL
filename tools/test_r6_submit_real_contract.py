@@ -27,7 +27,15 @@ MINIMUM = dict(live_starts=1, simulator_initializations=1,
 
 @pytest.fixture(params=['research-r6-evaluation','research-r6-training'])
 def bound(tmp_path, monkeypatch, request):
-    mode = request.param
+    return make_bound(tmp_path, monkeypatch, request.param)
+
+
+@pytest.fixture
+def baseline_bound(tmp_path, monkeypatch):
+    return make_bound(tmp_path, monkeypatch, 'research-r6-evaluation')
+
+
+def make_bound(tmp_path, monkeypatch, mode):
     minimum = dict(MINIMUM)
     if mode == 'research-r6-training':
         minimum['training_transitions'] = minimum.pop('nontraining_transitions')

@@ -1,4 +1,4 @@
-"""CPU-only proposed baseline authority from exact frozen inputs.
+"""CPU-only proposed evaluation or training authority from exact frozen inputs.
 
 Uses the snapshot's own config, parameter, compatibility and budget validators.
 Prints a reviewable proposal; does not write an authority file or mutate Store.
@@ -14,10 +14,15 @@ PROGRAM='''import json,sys
 from pathlib import Path
 sys.path.insert(0,sys.argv[1])
 from training_workloads.unified_h1.config import load_config
-from training_workloads.unified_h1.robustness_contract import MODE,validate_parameters,required_budget,validate_compatibility,baseline
 c=load_config();request=json.load(sys.stdin)
-p=validate_parameters(MODE,request['parameters'])
-validate_compatibility(p['checkpoint_compatibility'],baseline(p)['source_identity'],c)
+if 'r6_training_plan' in request['parameters']:
+ from training_workloads.unified_h1.robustness_training_contract import MODE,validate_parameters,required_budget,validate_compatibility
+ p=validate_parameters(MODE,request['parameters'])
+ validate_compatibility(p['checkpoint_compatibility'],p['r6_training_plan'],c)
+else:
+ from training_workloads.unified_h1.robustness_contract import MODE,validate_parameters,required_budget,validate_compatibility,baseline
+ p=validate_parameters(MODE,request['parameters'])
+ validate_compatibility(p['checkpoint_compatibility'],baseline(p)['source_identity'],c)
 a=dict(schema_version='unified-h1-r3-authorization.v2',status='AUTHORIZED',
  order_id=p['experiment_id']+'-'+p['group']+'-'+MODE.upper(),method_sha256=c['method']['proposal_sha256'],
  **c['resolved_identity'],attempt=request['attempt'],mode=MODE,
@@ -33,11 +38,12 @@ def prepare(snapshot_receipt,parameters_pin,attempt):
     config=json.loads(checked(receipt['config']).read_text())
     verify_frozen(receipt,config)
     params=json.loads(checked(parameters_pin).read_text())
+    mode='research-r6-training' if 'r6_training_plan' in params else 'research-r6-evaluation'
     attempt=Path(attempt)
     if (not attempt.is_absolute() or attempt.resolve()!=attempt or attempt.is_symlink()
             or not attempt.is_dir() or not (attempt/'results').is_dir()):
         raise RecoveryError('PREPARE_AUTH_ATTEMPT_REQUIRED')
-    if (attempt/'results/research-r6-evaluation').exists() or list((attempt/'results').glob('*/process_start.json')):
+    if any((attempt/'results'/m).exists() for m in ('research-r6-evaluation','research-r6-training')) or list((attempt/'results').glob('*/process_start.json')):
         raise RecoveryError('PREPARE_AUTH_ATTEMPT_CONSUMED')
     executable=checked(dict(path=config['execution']['python_path'],sha256=config['execution']['python_sha256']))
     stdin=json.dumps(dict(parameters=params,attempt=str(attempt)),sort_keys=True)
@@ -50,7 +56,7 @@ def prepare(snapshot_receipt,parameters_pin,attempt):
     auth=json.loads(result.stdout)
     if (any(auth.get(k)!=v for k,v in receipt['source_identity'].items())
         or auth.get('parameters')!=params or auth.get('attempt')!=str(attempt)
-        or auth.get('mode')!='research-r6-evaluation'):
+        or auth.get('mode')!=mode):
         raise RecoveryError('PREPARE_AUTH_IDENTITY_DRIFT')
     return dict(status='PROPOSED_NOT_ISSUED',snapshot_receipt=snapshot_receipt,
         parameters=parameters_pin,authorization_proposal=auth,

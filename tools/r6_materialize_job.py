@@ -1,8 +1,8 @@
-"""Resolve prepaid volumes into immutable R6 evaluation inputs and an exact spec.
+"""Resolve prepaid volumes into immutable R6 evaluation/training inputs and an exact spec.
 
 Pure preparation: no provisioning, accepted-condition import, approval, binding
 or submission. The existing frozen validator and real Store spec validator own
-the execution contract. Unsupported training/final contracts remain rejected.
+the execution contract. New stages still require their exact frozen validators.
 """
 import argparse
 import json
@@ -18,6 +18,7 @@ from tools import r6_storage_allocation as storage
 from tools import r6_check_prepared_storage as volumes
 from tools import r6_prepare_authorization as authority
 from tools import r6_build_spec as builder
+from tools import r6_job_resources as job_resources
 
 ROLE='job-input-materialization'
 CAP=256*1024
@@ -30,7 +31,7 @@ def require(value,reason):
 
 
 def implementation():
-    return [file_pin(m.__file__) for m in (storage,volumes,authority,builder)]+[file_pin(__file__)]
+    return [file_pin(m.__file__) for m in (storage,volumes,authority,builder,job_resources)]+[file_pin(__file__)]
 
 
 def guards(journal):

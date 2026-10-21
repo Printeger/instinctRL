@@ -1,0 +1,24 @@
+{
+  "status": "ACTUAL_BASELINE_AUTHORITY_AND_SPEC_UNCHANGED",
+  "elapsed_seconds": 25.122725496068597,
+  "source_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/snapshots/4cd9a0dfd5957c2b6521621fe928ef48bc640374b63018e86796c4f1cb96a246/receipt.json",
+    "sha256": "58503cbccf3f28fdf8151f83b320aa3841658758fceefec143f258a31f6bf51b"
+  },
+  "parameters": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/parameters.json",
+    "sha256": "5f101087a22640feea990de2071f2e7139d04203c0db9f9067d2e26cf79e62bd"
+  },
+  "config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+    "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+  },
+  "spec": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/spec.json",
+    "sha256": "7191dd7ef7e022a4ce8956be6c1296f13fd7bd7563d9e5e8f337ad3e5dfba3a8"
+  },
+  "mocked_boundaries": [],
+  "gpu_query": false,
+  "job_submitted": false,
+  "initial_check_failure": "SPEC_EXACT_PATHS: verification script incorrectly passed receipt origin config path instead of snapshot execution config. Builder rejected before Store validation. Repeated using materializer exact snapshot config."
+}
