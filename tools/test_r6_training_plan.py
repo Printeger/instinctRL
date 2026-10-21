@@ -7,6 +7,14 @@ import pytest
 from training_workloads.unified_h1 import robustness_training_plan as p
 
 
+def curriculum_fixture():
+    return dict(schema_version='r6-training-curriculum/1',conditions={
+        'wall':dict(id='wall',task='wall_modes',speed_m_s=.2,sensor_to_wall_distance_m=1.5,pulse_acceleration_m_s2=0),
+        'pulse':dict(id='pulse',task='pulse_hold',speed_m_s=.2,sensor_to_wall_distance_m=None,pulse_acceleration_m_s2=.5)},
+        phases=[dict(kind='original',end_offset=64,cycle_steps=0,lane_counts_per_half={},noise_std_m=0,delay_cycles=0,drop_every_steps=0),
+                dict(kind='robust',end_offset=1024,cycle_steps=192,lane_counts_per_half={'wall':8,'pulse':8},noise_std_m=.01,delay_cycles=1,drop_every_steps=7)])
+
+
 @pytest.fixture
 def case(tmp_path,monkeypatch):
     from types import SimpleNamespace
@@ -17,7 +25,7 @@ def case(tmp_path,monkeypatch):
     ev=pin('diagnosis.json',{'fixture':True})
     r=dict(schema_version='r6-training-recipe/1',candidate_id='R6-CANDIDATE-CPU',baseline_sha256=p.BASELINE_SHA,
         diagnosis=[ev],hypothesis='CPU fixture curriculum',comparison='same u640 control',source_identity=identity,
-        curriculum=pin('curriculum.json',{'fixture':True}),method=pin('method.json',{'ppo':{'minibatch_size':64,'epoch_count':1}}),
+        curriculum=pin('curriculum.json',curriculum_fixture()),method=pin('method.json',{'ppo':{'minibatch_size':64,'epoch_count':1}}),
         branch_updates=1024,development_seeds=[11],confirmation_seeds=[21,22,23],checkpoint_offsets=[256,512,1024])
     rp=pin('recipe.json',r);review=pin('review.json',dict(decision='PASS_R6_TRAINING_RECIPE',must_fix=[],reviewer='fixture-independent',payload_sha256=p.object_sha(r)))
     initial=dict(kind='COMMON_U640_NEW_STREAM',checkpoint=dict(path=ev['path'],sha256=p.BASELINE_SHA),
@@ -43,11 +51,11 @@ def metadata(update=640,seed=20260908,curriculum=None):
 
 
 def test_development_exact_training_checkpoint_and_physics_arithmetic(case):
-    result=p.expanded_budget(case.plan,physics_decimation=4)
+    result=p.expanded_budget(case.plan,physics_decimation=20)
     assert result['budgets']==dict(live_process_starts=1,simulator_initializations=1,initialization_ticks=10,
         training_transitions=131072,nontraining_transitions=0,optimizer_updates=256,checkpoint_writes=1,
-        explicit_resets=1,automatic_resets=131072,wall_seconds=2290)
-    assert result['policy_steps']==4096 and result['physics_steps']==16384
+        explicit_resets=2,automatic_resets=131072,wall_seconds=2290)
+    assert result['policy_steps']==4096 and result['physics_steps']==81920
     assert result['actor_optimizer_steps']==result['critic_optimizer_steps']==2048
     assert not result['dispatch_authorized']
     assert p.verify_loaded(case.plan,metadata())['branch_new_rng']

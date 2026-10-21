@@ -1,0 +1,43 @@
+{
+  "status": "CPU_PASS_NOT_PHYSICAL_EXPOSURE_OR_DISPATCH",
+  "input_commit": "daa87a20",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_curriculum.py",
+      "sha256": "87f2af1287c9c4a2e45de35697c14a0bf70084723d852f22014d5657cb1ae1fe"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_plan.py",
+      "sha256": "82bfbaa98f00bab9432f3f50e8b61098698b755a8b6189b8ecf3675971fb17e3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "12218faa90fce1ab5e1f982b915441d45b5122a30f9040aa1f79754af77ada5a"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CURRICULUM_TESTS.log",
+      "sha256": "8ccbf6ad97ef27802348a2aa4ec545a7b3a1302a03220c78d637da5602f07be2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CURRICULUM_TESTS_FINAL.log",
+      "sha256": "8d84093fa55c8b1c3bda35a180268c0a5490f754505ae325e44e735446e1571c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CURRICULUM_SOURCE_TESTS.log",
+      "sha256": "dfd267d8432344362e9baaa7b10c3324f52b1edce973751e28b518a5fa2bba06"
+    }
+  ],
+  "tensor_checks": 46,
+  "control_checks": 28,
+  "initial_failure": "45 passed / 1 failed: exact float32 diagonal norm equality; repaired test to absolute tolerance 1e-7, unchanged implementation",
+  "scope": "Actual CPU torch generator, deterministic replay/distinct streams, half-lane counts, reset seed variation, isolated audit payload, disk-failure stop, world commands/pulse timing, resumed measurement drop indices, recipe validation and phase reset arithmetic.",
+  "limitations": [
+    "Synthetic recipe and checkpoint-pin fixture; no production recipe selected before baseline diagnosis",
+    "No actual physical reset, measurement delivery, force application, loaded u640 training or GPU use",
+    "Runtime assembly, training dispatch, phase authorization and final delivery still pending",
+    "Independent combined review pending"
+  ],
+  "goal_complete": false
+}

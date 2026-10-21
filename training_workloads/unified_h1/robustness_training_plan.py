@@ -5,6 +5,7 @@ Store authority. Live integration must also validate actual trainer/RNG state,
 install the curriculum, and retain the existing pre-optimizer probability gate.
 """
 import re
+from . import robustness_curriculum
 from .research_contract import validate_pin
 from .checkpoint_compatibility import pinned_json,validate_source_identity
 from .robustness_contract import BASELINE_SHA,accepted_review,object_sha
@@ -53,6 +54,7 @@ def recipe(pin,review_pin):
     epochs=integer(ppo.get('epoch_count'),1,8,'EPOCHS')
     require(epochs*((512+batch-1)//batch)==8,'CHECKPOINT_OPTIMIZER_CLOCK')
     integer(r['branch_updates'],1,3000000//(3*512),'BRANCH_UPDATES')
+    robustness_curriculum.validate(pinned_json(r['curriculum']),branch_updates=r['branch_updates'])
     seeds(r['development_seeds']);seeds(r['confirmation_seeds'],3)
     require(not set(r['development_seeds']) & set(r['confirmation_seeds']),'CONFIRMATION_SEED_REUSE')
     nodes=r['checkpoint_offsets']
@@ -106,14 +108,16 @@ def validate(plan):
 
 def required_budget(plan):
     p=validate(plan);updates=p['target_update']-p['start_update'];transitions=updates*512
+    curriculum=pinned_json(pinned_json(p['recipe'])['curriculum'])
+    resets=len(robustness_curriculum.slices(curriculum,p['start_update'],p['target_update']))
     return dict(live_process_starts=1,simulator_initializations=1,initialization_ticks=10,
         training_transitions=transitions,nontraining_transitions=0,optimizer_updates=updates,
-        checkpoint_writes=len(p['checkpoint_updates']),explicit_resets=1,
+        checkpoint_writes=len(p['checkpoint_updates']),explicit_resets=resets,
         automatic_resets=transitions,wall_seconds=p['wall_seconds'])
 
 
 def expanded_budget(plan,*,physics_decimation):
-    p=validate(plan);integer(physics_decimation,1,1000,'PHYSICS_DECIMATION')
+    p=validate(plan);integer(physics_decimation,20,20,'PHYSICS_DECIMATION')
     updates=p['target_update']-p['start_update']
     return dict(budgets=required_budget(p),policy_steps=updates*16,
         physics_steps=updates*16*physics_decimation,
