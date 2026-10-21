@@ -1,0 +1,170 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____ test_local_worker_receipt_exact_approval_and_replay[PASS_R6_NEXT_JOB] _____
+
+bound = namespace(journal=<tools.r6_recovery.Journal object at 0x791e5aff04a0>, store=<rlflow.store.Store object at 0x791e5a21...: {'wall_seconds': 60, 'training_transitions': 0, 'nontraining_transitions': 512}}}, popen=<Mock id='133171267886672'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x791e5a2172c0>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1202/test_local_worker_receipt_exac0')
+decision = 'PASS_R6_NEXT_JOB'
+
+    @pytest.mark.parametrize('decision',['PASS_R6_NEXT_JOB','MUST_FIX'])
+    def test_local_worker_receipt_exact_approval_and_replay(bound,monkeypatch,tmp_path,decision):
+        b=bound;j=b.journal
+        def write(name,value):
+            p=tmp_path/name;p.write_text(json.dumps(value));return file_pin(p)
+        proposal={'decision':{'decision':'PROPOSE_CANDIDATE'}}
+        parent_pin=write('parent-decision.json',proposal)
+        req={'fixture':'already analyzed parent'}
+        ident=dict(goal_id=j.read()['goal_id'],event_id='PARENT',job_id='J-parent',input_sha256=sha(req),role='post-analysis-decision')
+        with j.writer():
+            parent,_=j.intent(ident,kind='model',request=req,resources={'automatic_model_sessions':1},purpose='development',free_disk_bytes=500*1024**3)
+            s=j.read();s['events'][parent]['decision_record']=parent_pin;j.save(s)
+        spec=dict(b.spec,id='R6-LOCAL-WORKER-CPU')
+        spec_pin=write('next-spec.json',spec)
+        plan=dict(spec_pin=spec_pin,query_executable=file_pin(sys.executable),decision_executable=file_pin(sys.executable),
+            queue_review=None,sampler_review=None,purpose='development',sandbox='read-only')
+        plan_pin=write('next-plan.json',plan)
+        result=dict(decision=decision,parent_decision_sha256=parent_pin['sha256'],plan_sha256=plan_pin['sha256'],
+            summary='Unpaid CPU fake reviewer',evidence_pins=[parent_pin,plan_pin],changed_files=[],
+            must_fix=[] if decision=='PASS_R6_NEXT_JOB' else ['CPU deliberate rejection'])
+        launch_log=tmp_path/'fake-launches.txt';exe=tmp_path/'fake-cli'
+        event={'type':'item.completed','item':{'type':'agent_message','text':json.dumps(result)}}
+        exe.write_text('#!'+sys.executable+'\nimport sys,time\nfrom pathlib import Path\n'
+            +'sys.stdin.read()\nwith Path('+repr(str(launch_log))+').open("a") as f:f.write("launch\\n")\n'
+            +'time.sleep(.2)\nprint('+repr(json.dumps(event))+')\n')
+        exe.chmod(0o700);exe_pin=file_pin(exe)
+        monkeypatch.setattr(r6_next_job,'record_decision',Mock(return_value=proposal))
+        monkeypatch.setattr(r6_issue_next,'delegation',Mock())
+        monkeypatch.setattr(continuation,'model_handoff',functools.partial(model_handoff,poll_seconds=.05))
+        runner=Mock(return_value={'status':'RESOURCE_OBSERVATION_REJECTED'})
+        monkeypatch.setattr(r6_next_job,'run_job',runner)
+        args=dict(parent_key=parent,plan_pin=plan_pin,master_pin=parent_pin,
+            review_executable=exe_pin,store=b.store,free_disk_bytes=500*1024**3)
+        approvals=len(b.store.replay()['approvals'])
+        for iteration in range(2):
+            with j.writer():
+                if decision=='MUST_FIX':
+                    with pytest.raises(RecoveryError,match='REVIEW_BINDING'):
+                        continuation.continue_job(j,**args)
+                else:
+>                   outcome=continuation.continue_job(j,**args)
+
+tools/test_r6_continue_worker_integration.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_continue_job.py:42: in continue_job
+    model_handoff(journal,key)
+tools/r6_batch.py:107: in model_handoff
+    process=subprocess.Popen([sys.executable,'-B','-m','tools.r6_model_worker',
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='133171267886672'>
+args = (['/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python', '-B', '-m', 'tools.r6_model_worker', '/tmp/pytest-of-m...test-1202/test_local_worker_receipt_exac0/batch', 'f3c19e592ca09f64c9ec7b84d050b9aee9eec8a6e4caa26ea025d5f8e1a9a2af'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'env': {'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'CMAKE_PREFIX_PA...', 'CODEX_APPLY_PATCH_PRESERVE_LINE_ENDINGS': '1', 'CODEX_CI': '1', ...}, 'start_new_session': True, 'stderr': -3, ...}
+effect = OSError('CPU stop before Popen')
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               OSError: CPU stop before Popen
+
+/usr/lib/python3.12/unittest/mock.py:1193: OSError
+________ test_local_worker_receipt_exact_approval_and_replay[MUST_FIX] _________
+
+bound = namespace(journal=<tools.r6_recovery.Journal object at 0x791e5aff2780>, store=<rlflow.store.Store object at 0x791e5a11...: {'wall_seconds': 60, 'training_transitions': 0, 'nontraining_transitions': 512}}}, popen=<Mock id='133171280568224'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x791e5a216a80>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-1202/test_local_worker_receipt_exac1')
+decision = 'MUST_FIX'
+
+    @pytest.mark.parametrize('decision',['PASS_R6_NEXT_JOB','MUST_FIX'])
+    def test_local_worker_receipt_exact_approval_and_replay(bound,monkeypatch,tmp_path,decision):
+        b=bound;j=b.journal
+        def write(name,value):
+            p=tmp_path/name;p.write_text(json.dumps(value));return file_pin(p)
+        proposal={'decision':{'decision':'PROPOSE_CANDIDATE'}}
+        parent_pin=write('parent-decision.json',proposal)
+        req={'fixture':'already analyzed parent'}
+        ident=dict(goal_id=j.read()['goal_id'],event_id='PARENT',job_id='J-parent',input_sha256=sha(req),role='post-analysis-decision')
+        with j.writer():
+            parent,_=j.intent(ident,kind='model',request=req,resources={'automatic_model_sessions':1},purpose='development',free_disk_bytes=500*1024**3)
+            s=j.read();s['events'][parent]['decision_record']=parent_pin;j.save(s)
+        spec=dict(b.spec,id='R6-LOCAL-WORKER-CPU')
+        spec_pin=write('next-spec.json',spec)
+        plan=dict(spec_pin=spec_pin,query_executable=file_pin(sys.executable),decision_executable=file_pin(sys.executable),
+            queue_review=None,sampler_review=None,purpose='development',sandbox='read-only')
+        plan_pin=write('next-plan.json',plan)
+        result=dict(decision=decision,parent_decision_sha256=parent_pin['sha256'],plan_sha256=plan_pin['sha256'],
+            summary='Unpaid CPU fake reviewer',evidence_pins=[parent_pin,plan_pin],changed_files=[],
+            must_fix=[] if decision=='PASS_R6_NEXT_JOB' else ['CPU deliberate rejection'])
+        launch_log=tmp_path/'fake-launches.txt';exe=tmp_path/'fake-cli'
+        event={'type':'item.completed','item':{'type':'agent_message','text':json.dumps(result)}}
+        exe.write_text('#!'+sys.executable+'\nimport sys,time\nfrom pathlib import Path\n'
+            +'sys.stdin.read()\nwith Path('+repr(str(launch_log))+').open("a") as f:f.write("launch\\n")\n'
+            +'time.sleep(.2)\nprint('+repr(json.dumps(event))+')\n')
+        exe.chmod(0o700);exe_pin=file_pin(exe)
+        monkeypatch.setattr(r6_next_job,'record_decision',Mock(return_value=proposal))
+        monkeypatch.setattr(r6_issue_next,'delegation',Mock())
+        monkeypatch.setattr(continuation,'model_handoff',functools.partial(model_handoff,poll_seconds=.05))
+        runner=Mock(return_value={'status':'RESOURCE_OBSERVATION_REJECTED'})
+        monkeypatch.setattr(r6_next_job,'run_job',runner)
+        args=dict(parent_key=parent,plan_pin=plan_pin,master_pin=parent_pin,
+            review_executable=exe_pin,store=b.store,free_disk_bytes=500*1024**3)
+        approvals=len(b.store.replay()['approvals'])
+        for iteration in range(2):
+            with j.writer():
+                if decision=='MUST_FIX':
+                    with pytest.raises(RecoveryError,match='REVIEW_BINDING'):
+>                       continuation.continue_job(j,**args)
+
+tools/test_r6_continue_worker_integration.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_continue_job.py:42: in continue_job
+    model_handoff(journal,key)
+tools/r6_batch.py:107: in model_handoff
+    process=subprocess.Popen([sys.executable,'-B','-m','tools.r6_model_worker',
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='133171280568224'>
+args = (['/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python', '-B', '-m', 'tools.r6_model_worker', '/tmp/pytest-of-m...test-1202/test_local_worker_receipt_exac1/batch', '13b829af3d41dbf2114073a213c792afbb9ee374f29a613ee0126b63180ba743'],)
+kwargs = {'cwd': PosixPath('/home/mint/rl_dev/instinctRL-dev'), 'env': {'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'CMAKE_PREFIX_PA...', 'CODEX_APPLY_PATCH_PRESERVE_LINE_ENDINGS': '1', 'CODEX_CI': '1', ...}, 'start_new_session': True, 'stderr': -3, ...}
+effect = OSError('CPU stop before Popen')
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               OSError: CPU stop before Popen
+
+/usr/lib/python3.12/unittest/mock.py:1193: OSError
+=========================== short test summary info ============================
+FAILED tools/test_r6_continue_worker_integration.py::test_local_worker_receipt_exact_approval_and_replay[PASS_R6_NEXT_JOB]
+FAILED tools/test_r6_continue_worker_integration.py::test_local_worker_receipt_exact_approval_and_replay[MUST_FIX]
+2 failed in 8.10s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-df149037-6768-4bde-a343-9cf96472b05d/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-df149037-6768-4bde-a343-9cf96472b05d/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-df149037-6768-4bde-a343-9cf96472b05d/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-df149037-6768-4bde-a343-9cf96472b05d
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-df149037-6768-4bde-a343-9cf96472b05d'
+  warnings.warn(

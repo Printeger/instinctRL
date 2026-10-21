@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：本地实际worker→JSONL/receipt/schema→精确review→真实Store→next-job
+登记CPU链验证通过，4项真实假CLI场景+5项组合恢复共9项；PASS/MUST_FIX和审核后
+新Journal恢复均只启动一次假CLI、不重复预留，所有worker清理核验。
+parent/delegation/runtime明确替身，最终runner为资源拒绝stub；未作真实dispatch。
+首轮全局Popen替身阻止worker的测试失败保留，修正仅允许准确CPU worker命令。
+见 `docs/experiments/r6-robustness-auto/CPU_LOCAL_WORKER_CONTINUATION.json`；部署与计划生成未完成。
+114次自动唤醒+23worker=137，余119次；无新增真实模型或R6 live，Goal未完成。
+
 2026-10-21：本地单入口串联已准备计划的review→Store发行→准确runner，35项CPU
 检查通过。已登记审核重启走原handoff；已有next-job边直接交runner恢复/STOP清理，
 不重复审核/发行。新增组合测试的phase明确替身，不能称端到端实际部署。

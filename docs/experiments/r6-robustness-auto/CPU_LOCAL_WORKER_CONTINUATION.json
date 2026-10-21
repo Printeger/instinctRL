@@ -1,0 +1,42 @@
+{
+  "schema_version": "r6-local-worker-integration/1",
+  "status": "CPU9_PASS_REVIEW_PENDING",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_continue_worker_integration.py",
+      "sha256": "5cdce128ee942f4c753655c9776ace71807bace46dda167ef3aab2d25c9c325c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_continue_job.py",
+      "sha256": "47ec5c9bb64237641b515f634caf0a98d08f47fedc6df068fe116598e0423cf9"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-continue-worker-initial.txt",
+      "sha256": "e1e4dcbd1afa8f04f970f8dbcaa26a0afd25ea75099b761e5dd66219dc28ddcd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-continue-worker-recheck.txt",
+      "sha256": "3ab5e8612721e7605c04beb0172b7a45faeb644559a0ba925d4ffb7aaf00fb64"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-continue-worker-final.txt",
+      "sha256": "ed5478f5618c3385f28c54e154fc529a9acc15d326dbf1d2eddbc645a25d2ad2"
+    }
+  ],
+  "coverage": [
+    "Actual r6_model_worker subprocess and unpaid fake CLI, actual JSONL/receipt/schema/cleanup",
+    "PASS and MUST_FIX: real next-job review validation and real Store issuance path",
+    "Repeat call launches no second CLI and does not spend another model reservation",
+    "New Journal resumes after actual review receipt, before issuance",
+    "All owned worker identities gone and current_model_event cleared"
+  ],
+  "limits": [
+    "Parent decision verification, delegated authority and runtime inspector remain declared substitutes",
+    "Final runner replaced by resource-rejection stub; no GPU query, live dispatch or training",
+    "Initial global Popen fixture prevented worker launch; corrected to permit only the exact local worker command",
+    "9pass =4 real local worker scenarios plus5 composition recovery tests",
+    "No real model session added; no deployment claim"
+  ]
+}

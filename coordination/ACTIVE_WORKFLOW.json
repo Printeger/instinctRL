@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 113,
-    "total_automatic_model_sessions_minimum": 136,
+    "platform_automatic_goal_wakes": 114,
+    "total_automatic_model_sessions_minimum": 137,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -249,6 +249,8 @@
     "issuance_storage_evidence": "docs/experiments/r6-robustness-auto/CPU_ISSUANCE_STORAGE_INTEGRATION.json",
     "issuance_accepted_review": "docs/experiments/r6-robustness-auto/reviews/issuance-integration-review.json",
     "local_continuation_entry": "CPU35_PASS_REVIEW_PENDING",
-    "local_continuation_evidence": "docs/experiments/r6-robustness-auto/CPU_LOCAL_CONTINUATION_ENTRY.json"
+    "local_continuation_evidence": "docs/experiments/r6-robustness-auto/CPU_LOCAL_CONTINUATION_ENTRY.json",
+    "local_worker_continuation": "CPU9_PASS_REVIEW_PENDING",
+    "local_worker_continuation_evidence": "docs/experiments/r6-robustness-auto/CPU_LOCAL_WORKER_CONTINUATION.json"
   }
 }
