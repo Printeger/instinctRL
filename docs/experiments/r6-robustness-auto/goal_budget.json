@@ -1,1 +1,430 @@
-{"allocation_revision":{"new_disk_bytes":85899345920,"new_final_seconds":24000,"prior_disk_bytes":42949672960,"prior_final_seconds":18000,"reason":"Full-frame lossless measurement storage and observed per-job R5 runtime require greater final reserve. No live job or reservation has consumed any allocation.","status":"CPU_DESIGN_PENDING_INDEPENDENT_REVIEW","total_caps_unchanged":true},"capacity_pass":false,"caps":{"allocated_gpu_seconds":43200,"automatic_model_sessions":32,"live_starts":64,"live_wall_seconds":43200,"major_scientific_candidates":3,"nontraining_transitions":2000000,"output_actual_plus_unreleased_reservations_bytes":137438953472,"queue_seconds":21600,"simulator_initializations":64,"training_checkpoint_writes":96,"training_transitions":3000000},"disk_free_floor_bytes":32212254720,"goal_id":"R6-ROBUSTNESS-AUTO-20261019","initial_user_session":{"count":1,"included_in_automatic_limit":false,"usage":"UNKNOWN"},"model_context_max_bytes":65536,"model_session_max_output_bytes":67108864,"model_session_max_seconds":3600,"model_session_target":[10,16],"observed_cap_excess":{},"protected_confirmation_delivery_repair":{"allocated_gpu_seconds":24000,"automatic_model_sessions":8,"live_starts":16,"live_wall_seconds":24000,"nontraining_transitions":800000,"output_actual_plus_unreleased_reservations_bytes":85899345920,"simulator_initializations":16,"training_checkpoint_writes":24,"training_transitions":1572864},"protected_model_sessions":{"final_review":4,"repair":4},"reservations":[{"event_key":"[\"CPU-PACKAGE-REVIEW-001\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ac5d4ee21bd62ea42de7ec110e9bca48899eae869fc2d9ee709a3ffcf06a8487\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]","identity":{"event_id":"CPU-PACKAGE-REVIEW-001","goal_id":"R6-ROBUSTNESS-AUTO-20261019","input_sha256":"ac5d4ee21bd62ea42de7ec110e9bca48899eae869fc2d9ee709a3ffcf06a8487","job_id":"CPU-NO-LIVE-JOB","role":"independent-review"},"purpose":"development","resources":{"automatic_model_sessions":1}},{"event_key":"[\"CPU-PACKAGE-REVIEW-RECOVERY1\",\"R6-ROBUSTNESS-AUTO-20261019\",\"4d22e0399f11358585149b0aded280e679b8a0d270836d223ec1b2ff734b18e6\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]","identity":{"event_id":"CPU-PACKAGE-REVIEW-RECOVERY1","goal_id":"R6-ROBUSTNESS-AUTO-20261019","input_sha256":"4d22e0399f11358585149b0aded280e679b8a0d270836d223ec1b2ff734b18e6","job_id":"CPU-NO-LIVE-JOB","role":"independent-review"},"purpose":"development","resources":{"automatic_model_sessions":1}},{"event_key":"[\"CPU-FIX-HANDOFF-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"33fa81920c57697318dbb6f79a3b05c3b9dc69b5404d4b1f68361f98f6be3604\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]","identity":{"event_id":"CPU-FIX-HANDOFF-REVIEW-01","goal_id":"R6-ROBUSTNESS-AUTO-20261019","input_sha256":"33fa81920c57697318dbb6f79a3b05c3b9dc69b5404d4b1f68361f98f6be3604","job_id":"CPU-NO-LIVE-JOB","role":"independent-review"},"purpose":"development","resources":{"automatic_model_sessions":1}},{"event_key":"[\"CPU-CONTROL-COMPONENTS-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ee9f95db0301d7ebd99baf954d717b546f9c7551d7a05e7bd97d699f807bba04\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]","identity":{"event_id":"CPU-CONTROL-COMPONENTS-REVIEW-01","goal_id":"R6-ROBUSTNESS-AUTO-20261019","input_sha256":"ee9f95db0301d7ebd99baf954d717b546f9c7551d7a05e7bd97d699f807bba04","job_id":"CPU-NO-LIVE-JOB","role":"independent-review"},"purpose":"development","resources":{"automatic_model_sessions":1}},{"event_key":"[\"CPU-CONTROL-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"94f5e60821c0c9454cc10ad7f47452e48e7785c845d40e0b65e12618e2641c85\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]","identity":{"event_id":"CPU-CONTROL-FIX-REVIEW-01","goal_id":"R6-ROBUSTNESS-AUTO-20261019","input_sha256":"94f5e60821c0c9454cc10ad7f47452e48e7785c845d40e0b65e12618e2641c85","job_id":"CPU-NO-LIVE-JOB","role":"independent-review"},"purpose":"development","resources":{"automatic_model_sessions":1}},{"event_key":"[\"SOURCE_SNAPSHOT:R6-baseline-source-candidate-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"b317250363086f46942f83ccbc820c57bb8b737c85c63d8876da4514f98d92e3\",\"CPU-SNAPSHOT:R6-baseline-source-candidate-01\",\"source-snapshot\"]","identity":{"event_id":"SOURCE_SNAPSHOT:R6-baseline-source-candidate-01","goal_id":"R6-ROBUSTNESS-AUTO-20261019","input_sha256":"b317250363086f46942f83ccbc820c57bb8b737c85c63d8876da4514f98d92e3","job_id":"CPU-SNAPSHOT:R6-baseline-source-candidate-01","role":"source-snapshot"},"observations":[{"evidence":{"path":"/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/snapshots/dac0f3d535ca1c68d0764a7bbc34b3bb2921590c46e1f86747785ca3a978395e/receipt.json","sha256":"3ae074fed7e56feaf684bdd467149adc1fad96b1d4dd70d6c4b6a83168dbf5a0"},"resources":{"output_actual_plus_unreleased_reservations_bytes":990058113}}],"purpose":"development","resources":{"output_actual_plus_unreleased_reservations_bytes":2147483648}},{"event_key":"[\"CPU-SOURCE-NATIVE-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"c6464cb79be169e46f4ab45b8e015271f1d00431c4422b82c77ce2fd1354cb55\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]","identity":{"event_id":"CPU-SOURCE-NATIVE-REVIEW-01","goal_id":"R6-ROBUSTNESS-AUTO-20261019","input_sha256":"c6464cb79be169e46f4ab45b8e015271f1d00431c4422b82c77ce2fd1354cb55","job_id":"CPU-NO-LIVE-JOB","role":"independent-review"},"purpose":"development","resources":{"automatic_model_sessions":1,"output_actual_plus_unreleased_reservations_bytes":67174400}},{"event_key":"[\"CPU-SOURCE-NATIVE-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"3e6ed52234fa563e219a6c44878f8f6e37a56cbc859b03e866a9ddc560f74db9\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]","identity":{"event_id":"CPU-SOURCE-NATIVE-FIX-REVIEW-01","goal_id":"R6-ROBUSTNESS-AUTO-20261019","input_sha256":"3e6ed52234fa563e219a6c44878f8f6e37a56cbc859b03e866a9ddc560f74db9","job_id":"CPU-NO-LIVE-JOB","role":"independent-review"},"purpose":"repair","resources":{"automatic_model_sessions":1,"output_actual_plus_unreleased_reservations_bytes":67174400}},{"event_key":"[\"LEGACY-MODEL-RECONCILIATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"41bd4b582d30518fd70b79e13ec5c5c0bfd52b222a5c738e2d91d74bbde1a6fd\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]","identity":{"event_id":"LEGACY-MODEL-RECONCILIATION-REVIEW-01","goal_id":"R6-ROBUSTNESS-AUTO-20261019","input_sha256":"41bd4b582d30518fd70b79e13ec5c5c0bfd52b222a5c738e2d91d74bbde1a6fd","job_id":"CPU-NO-LIVE-JOB","role":"independent-review"},"purpose":"development","resources":{"automatic_model_sessions":1,"output_actual_plus_unreleased_reservations_bytes":67174400}},{"event_key":"[\"LEGACY-MODEL-RECONCILIATION-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"14b46b34448c8abf3852f0de95c054c3b3f86e68992ccbb028d404a3751d89c7\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]","identity":{"event_id":"LEGACY-MODEL-RECONCILIATION-FIX-REVIEW-01","goal_id":"R6-ROBUSTNESS-AUTO-20261019","input_sha256":"14b46b34448c8abf3852f0de95c054c3b3f86e68992ccbb028d404a3751d89c7","job_id":"CPU-NO-LIVE-JOB","role":"independent-review"},"purpose":"development","resources":{"automatic_model_sessions":1,"output_actual_plus_unreleased_reservations_bytes":67174400}}],"schema_version":"r6-budget/1","settlement_policy":"No implicit refund; preserve native failures. New settlement protocol requires independent review before first use.","status":"CPU_PREPARE_NO_LIVE_PERMISSION","used":{"allocated_gpu_seconds":0,"automatic_model_sessions":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0}}
+{
+  "allocation_revision": {
+    "new_disk_bytes": 85899345920,
+    "new_final_seconds": 24000,
+    "prior_disk_bytes": 42949672960,
+    "prior_final_seconds": 18000,
+    "reason": "Full-frame lossless measurement storage and observed per-job R5 runtime require greater final reserve. No live job or reservation has consumed any allocation.",
+    "status": "CPU_DESIGN_PENDING_INDEPENDENT_REVIEW",
+    "total_caps_unchanged": true
+  },
+  "capacity_pass": false,
+  "caps": {
+    "allocated_gpu_seconds": 43200,
+    "automatic_model_sessions": 256,
+    "live_starts": 64,
+    "live_wall_seconds": 43200,
+    "major_scientific_candidates": 3,
+    "nontraining_transitions": 2000000,
+    "output_actual_plus_unreleased_reservations_bytes": 137438953472,
+    "queue_seconds": 21600,
+    "simulator_initializations": 64,
+    "training_checkpoint_writes": 96,
+    "training_transitions": 3000000
+  },
+  "disk_free_floor_bytes": 32212254720,
+  "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+  "initial_user_session": {
+    "count": 1,
+    "included_in_automatic_limit": false,
+    "usage": "UNKNOWN"
+  },
+  "model_context_max_bytes": 65536,
+  "model_session_max_output_bytes": 67108864,
+  "model_session_max_seconds": 3600,
+  "model_session_target": [
+    10,
+    16
+  ],
+  "observed_cap_excess": {},
+  "protected_confirmation_delivery_repair": {
+    "allocated_gpu_seconds": 24000,
+    "automatic_model_sessions": 8,
+    "live_starts": 16,
+    "live_wall_seconds": 24000,
+    "nontraining_transitions": 800000,
+    "output_actual_plus_unreleased_reservations_bytes": 85899345920,
+    "simulator_initializations": 16,
+    "training_checkpoint_writes": 24,
+    "training_transitions": 1572864
+  },
+  "protected_model_sessions": {
+    "final_review": 4,
+    "repair": 4
+  },
+  "reservations": [
+    {
+      "event_key": "[\"CPU-PACKAGE-REVIEW-001\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ac5d4ee21bd62ea42de7ec110e9bca48899eae869fc2d9ee709a3ffcf06a8487\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-PACKAGE-REVIEW-001",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "ac5d4ee21bd62ea42de7ec110e9bca48899eae869fc2d9ee709a3ffcf06a8487",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "event_key": "[\"CPU-PACKAGE-REVIEW-RECOVERY1\",\"R6-ROBUSTNESS-AUTO-20261019\",\"4d22e0399f11358585149b0aded280e679b8a0d270836d223ec1b2ff734b18e6\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-PACKAGE-REVIEW-RECOVERY1",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "4d22e0399f11358585149b0aded280e679b8a0d270836d223ec1b2ff734b18e6",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "event_key": "[\"CPU-FIX-HANDOFF-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"33fa81920c57697318dbb6f79a3b05c3b9dc69b5404d4b1f68361f98f6be3604\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-FIX-HANDOFF-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "33fa81920c57697318dbb6f79a3b05c3b9dc69b5404d4b1f68361f98f6be3604",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "event_key": "[\"CPU-CONTROL-COMPONENTS-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ee9f95db0301d7ebd99baf954d717b546f9c7551d7a05e7bd97d699f807bba04\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-CONTROL-COMPONENTS-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "ee9f95db0301d7ebd99baf954d717b546f9c7551d7a05e7bd97d699f807bba04",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "event_key": "[\"CPU-CONTROL-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"94f5e60821c0c9454cc10ad7f47452e48e7785c845d40e0b65e12618e2641c85\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-CONTROL-FIX-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "94f5e60821c0c9454cc10ad7f47452e48e7785c845d40e0b65e12618e2641c85",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "event_key": "[\"SOURCE_SNAPSHOT:R6-baseline-source-candidate-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"b317250363086f46942f83ccbc820c57bb8b737c85c63d8876da4514f98d92e3\",\"CPU-SNAPSHOT:R6-baseline-source-candidate-01\",\"source-snapshot\"]",
+      "identity": {
+        "event_id": "SOURCE_SNAPSHOT:R6-baseline-source-candidate-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "b317250363086f46942f83ccbc820c57bb8b737c85c63d8876da4514f98d92e3",
+        "job_id": "CPU-SNAPSHOT:R6-baseline-source-candidate-01",
+        "role": "source-snapshot"
+      },
+      "observations": [
+        {
+          "evidence": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/snapshots/dac0f3d535ca1c68d0764a7bbc34b3bb2921590c46e1f86747785ca3a978395e/receipt.json",
+            "sha256": "3ae074fed7e56feaf684bdd467149adc1fad96b1d4dd70d6c4b6a83168dbf5a0"
+          },
+          "resources": {
+            "output_actual_plus_unreleased_reservations_bytes": 990058113
+          }
+        }
+      ],
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 2147483648
+      }
+    },
+    {
+      "event_key": "[\"CPU-SOURCE-NATIVE-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"c6464cb79be169e46f4ab45b8e015271f1d00431c4422b82c77ce2fd1354cb55\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-SOURCE-NATIVE-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "c6464cb79be169e46f4ab45b8e015271f1d00431c4422b82c77ce2fd1354cb55",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "event_key": "[\"CPU-SOURCE-NATIVE-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"3e6ed52234fa563e219a6c44878f8f6e37a56cbc859b03e866a9ddc560f74db9\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-SOURCE-NATIVE-FIX-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "3e6ed52234fa563e219a6c44878f8f6e37a56cbc859b03e866a9ddc560f74db9",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "repair",
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "event_key": "[\"LEGACY-MODEL-RECONCILIATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"41bd4b582d30518fd70b79e13ec5c5c0bfd52b222a5c738e2d91d74bbde1a6fd\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "LEGACY-MODEL-RECONCILIATION-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "41bd4b582d30518fd70b79e13ec5c5c0bfd52b222a5c738e2d91d74bbde1a6fd",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "event_key": "[\"LEGACY-MODEL-RECONCILIATION-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"14b46b34448c8abf3852f0de95c054c3b3f86e68992ccbb028d404a3751d89c7\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "LEGACY-MODEL-RECONCILIATION-FIX-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "14b46b34448c8abf3852f0de95c054c3b3f86e68992ccbb028d404a3751d89c7",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "event_key": "[\"CPU-PIPELINE-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"d54289b6a3a7546b1e9686928c0a1891e89d90b1a09642553778be2e8f699a40\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-PIPELINE-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "d54289b6a3a7546b1e9686928c0a1891e89d90b1a09642553778be2e8f699a40",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "event_key": "[\"CPU-PIPELINE-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"40bce972dc5b32729037d9462d4c5e9dbf9a4d8374a470957d2f6bc8de7175c6\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-PIPELINE-FIX-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "40bce972dc5b32729037d9462d4c5e9dbf9a4d8374a470957d2f6bc8de7175c6",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "repair",
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "event_key": "[\"NATIVE-VOLUME-CPU01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"5f8251f002ab475f951c0bfacdfa8accb0dc6d55337dbf289267ea6a33fe3094\",\"CPU-QUOTA-01\",\"native-volume-provision\"]",
+      "identity": {
+        "event_id": "NATIVE-VOLUME-CPU01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "5f8251f002ab475f951c0bfacdfa8accb0dc6d55337dbf289267ea6a33fe3094",
+        "job_id": "CPU-QUOTA-01",
+        "role": "native-volume-provision"
+      },
+      "observations": [
+        {
+          "evidence": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_VERIFICATION.json",
+            "sha256": "c25dde818d863cb00bae9695cac6003d935828ad80084299ea6a80dd91db2d02"
+          },
+          "resources": {
+            "output_actual_plus_unreleased_reservations_bytes": 1610678272
+          }
+        }
+      ],
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 1610678272
+      }
+    },
+    {
+      "event_key": "[\"CPU-JIT-NOEXEC-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"6bbf6a03ce33f9735bf18226423bd516703255f5632cf51cda1a20d1bba3a27d\",\"CPU-NO-LIVE-JOB\",\"cpu-native-jit\"]",
+      "identity": {
+        "event_id": "CPU-JIT-NOEXEC-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "6bbf6a03ce33f9735bf18226423bd516703255f5632cf51cda1a20d1bba3a27d",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "cpu-native-jit"
+      },
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 3145728
+      }
+    },
+    {
+      "event_key": "[\"CPU-NATIVE-QUOTA-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"fe9f11c678cfae19dd6a801efc86cbdad9e068500b394343363bc4c321191186\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-NATIVE-QUOTA-INTEGRATION-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "fe9f11c678cfae19dd6a801efc86cbdad9e068500b394343363bc4c321191186",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "event_key": "[\"CPU-NATIVE-QUOTA-REPAIR-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"53e7743cb2b66dbbc68413a0fbab039293bcef267351d64d9769687d6f873c4c\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-NATIVE-QUOTA-REPAIR-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "53e7743cb2b66dbbc68413a0fbab039293bcef267351d64d9769687d6f873c4c",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "event_key": "[\"RESULT-VOLUME-CPU02\",\"R6-ROBUSTNESS-AUTO-20261019\",\"7e20986df2ac8f1cd77f88f3a93696f75f05d81d248f0b7fce5ef1676d3aa6ee\",\"CPU-QUOTA-02\",\"result-volume-provision\"]",
+      "identity": {
+        "event_id": "RESULT-VOLUME-CPU02",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "7e20986df2ac8f1cd77f88f3a93696f75f05d81d248f0b7fce5ef1676d3aa6ee",
+        "job_id": "CPU-QUOTA-02",
+        "role": "result-volume-provision"
+      },
+      "observations": [
+        {
+          "evidence": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02_RECEIPT.json",
+            "sha256": "248ce932c3e709635ea382fb8eb88fcafd720ae610997a745b5e9747a78eb711"
+          },
+          "resources": {
+            "output_actual_plus_unreleased_reservations_bytes": 17825792
+          }
+        }
+      ],
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 17825792
+      }
+    },
+    {
+      "event_key": "[\"CPU-RESULT-QUOTA-ACTUAL-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"a0919d615ef1e55ede8451c6a75ccf56cea192634a0ea19d9875de26aa08a643\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-RESULT-QUOTA-ACTUAL-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "a0919d615ef1e55ede8451c6a75ccf56cea192634a0ea19d9875de26aa08a643",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "event_key": "[\"CPU-FIXED-STORAGE-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"8f8c17cc3122d680adeceeca71d66ada9d962c4516481766a202203f35e4de07\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "identity": {
+        "event_id": "CPU-FIXED-STORAGE-INTEGRATION-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "8f8c17cc3122d680adeceeca71d66ada9d962c4516481766a202203f35e4de07",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "purpose": "development",
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "event_key": "[\"STORAGE:J-d737390980235144\",\"R6-ROBUSTNESS-AUTO-20261019\",\"2f5f8f4a8cdf6d96711b93a8a25071cb83ca1fd3c1b52c4ab9a96accf25da520\",\"STORAGE:J-d737390980235144\",\"job-storage-allocation\"]",
+      "identity": {
+        "event_id": "STORAGE:J-d737390980235144",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "2f5f8f4a8cdf6d96711b93a8a25071cb83ca1fd3c1b52c4ab9a96accf25da520",
+        "job_id": "STORAGE:J-d737390980235144",
+        "role": "job-storage-allocation"
+      },
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 20250099712
+      }
+    }
+  ],
+  "schema_version": "r6-budget/1",
+  "settlement_policy": "No implicit refund; preserve native failures. New settlement protocol requires independent review before first use.",
+  "status": "USER_BUDGET_INCREASED_PRELIVE_PENDING",
+  "used": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 94,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "budget_amendments": [
+    {
+      "authority": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BUDGET_INCREASE_USER_AUTHORITY_20261021.json",
+        "sha256": "0aede845a9cb48e88253816be23aeb98f89d0d2bd05940cec70bb603ea01f22b"
+      },
+      "old_caps": {
+        "allocated_gpu_seconds": 43200,
+        "automatic_model_sessions": 32,
+        "live_starts": 64,
+        "live_wall_seconds": 43200,
+        "major_scientific_candidates": 3,
+        "nontraining_transitions": 2000000,
+        "output_actual_plus_unreleased_reservations_bytes": 137438953472,
+        "queue_seconds": 21600,
+        "simulator_initializations": 64,
+        "training_checkpoint_writes": 96,
+        "training_transitions": 3000000
+      },
+      "new_caps": {
+        "allocated_gpu_seconds": 43200,
+        "automatic_model_sessions": 256,
+        "live_starts": 64,
+        "live_wall_seconds": 43200,
+        "major_scientific_candidates": 3,
+        "nontraining_transitions": 2000000,
+        "output_actual_plus_unreleased_reservations_bytes": 137438953472,
+        "queue_seconds": 21600,
+        "simulator_initializations": 64,
+        "training_checkpoint_writes": 96,
+        "training_transitions": 3000000
+      }
+    }
+  ]
+}

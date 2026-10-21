@@ -143,7 +143,7 @@
   },
   "r6_robustness_execution": {
     "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
-    "status": "STOP_MODEL_BUDGET_EXCEEDED_INCOMPLETE",
+    "status": "USER_BUDGET_INCREASED_PRELIVE_PENDING",
     "authority": "docs/experiments/r6-robustness-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md",
     "budget": "docs/experiments/r6-robustness-auto/goal_budget.json",
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
@@ -172,7 +172,7 @@
     "evaluation_block_evidence": "docs/experiments/r6-robustness-auto/CPU_EVALUATION_TESTS.json",
     "baseline_lifecycle_status": "CPU61_PASS_PENDING_REVIEW_CAPACITY_AND_STORE_RELEASE",
     "baseline_lifecycle_evidence": "docs/experiments/r6-robustness-auto/CPU_CONTRACT_TESTS.json",
-    "master_machine_authority": "docs/experiments/r6-robustness-auto/MASTER_AUTHORITY.json",
+    "master_machine_authority": "docs/experiments/r6-robustness-auto/MASTER_AUTHORITY_V2.json",
     "temporal_archive_status": "CPU23_PASS_PENDING_REVIEW",
     "temporal_archive_evidence": "docs/experiments/r6-robustness-auto/CPU_TEMPORAL_ARCHIVE_TESTS.json",
     "job_close_status": "CPU19_PASS_RECOVERY17_PASS_PENDING_REVIEW_NOT_DEPLOYED",
@@ -209,8 +209,9 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 92,
-    "total_automatic_model_sessions_minimum": 107,
-    "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_AUDIT.json"
+    "platform_automatic_goal_wakes": 94,
+    "total_automatic_model_sessions_minimum": 109,
+    "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
+    "model_session_cap": 256
   }
 }
