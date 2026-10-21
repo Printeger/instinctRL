@@ -1,0 +1,71 @@
+{
+  "status": "CPU_PASS_NOT_INDEPENDENTLY_ACCEPTED_NOT_DEPLOYED",
+  "scope": "Closed-job decision -> budgeted source preparation worker -> committed config/design card -> controller-owned charged snapshot",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_source_preparation.py",
+      "sha256": "b86287301a2c57a2673ef5ebdb9d805927fd824f2b0d1681de1fea3bd8e9c209"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_preparation.py",
+      "sha256": "830e6b64d525324be1ac02d81844969a5d72d5725170a531a6404ad9298bcb6f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/source-preparation.schema.json",
+      "sha256": "ab2985e2fc8fa6681dc15c2272ac4505fd239da942e954845afec72fa50dee8c"
+    }
+  ],
+  "tests": {
+    "broad_passed": 68,
+    "broad_log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_PREPARATION_CARD_TEST.txt",
+      "sha256": "705ee450fa30444b1292f530482438c593cb532c89c339c4f6572ea801f39234"
+    },
+    "final_targeted_passed": 15,
+    "final_targeted_log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_PREPARATION_BUDGET_TEST.txt",
+      "sha256": "7a86c09468d8cc61368e40a81c41efe44c2b495b41c420ffb64bfd1aee89e307"
+    },
+    "earlier_logs": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_PREPARATION_TEST.txt",
+        "sha256": "c4591877cdf35fb97e6a02f35f1cb0fbf9fcb9ea4a17579db2ac1693f6e6130d"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_PREPARATION_FINAL_TEST.txt",
+        "sha256": "4bf61f59c12c8fc324f782166c095b16f909dafca8b9171880119df8d7cee1f7"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_PREPARATION_INTEGRATED_TEST.txt",
+        "sha256": "5a0bc8ac3567665c5e9f3c41016469bcb193a9c07ad9a8e426d5ca684206531b"
+      }
+    ],
+    "overlap_not_additive": true
+  },
+  "verified": [
+    "Actual subprocess fake CLI commits config and JSON design card in temporary Git main",
+    "Controller verifies exact parent decision, receipt/schema/cleanup, evidence and committed bytes",
+    "Source change scope, protected controller fingerprint, immutable master/requirements, Store and budget drift checks",
+    "Missing prompt replay uses one reservation and one worker; partial intent metadata fails closed without retry",
+    "Incomplete, forbidden-path, missing-change-list, oversized planned resources and pin drift outputs do not freeze",
+    "Missing decision/STOP/budget drift reject before source worker effects",
+    "Actual Git clone/read-only filesystem/inventory and prepaid 2GiB snapshot; replay does not clone or call verifier twice"
+  ],
+  "fixture_boundaries": [
+    "No paid model call; real local CLI substitutes only",
+    "Actual production config preflight and frozen interpreter config resolver replaced in tiny Git fixture; not production config acceptance",
+    "Most boundary cases stub snapshot creation; dedicated integration case uses real snapshot creation and original Journal budget",
+    "Source step only for changes requiring a new snapshot; parameter-only continuation still needs its own materializer"
+  ],
+  "remaining": [
+    "Independent combined review before using this new source-preparation worker",
+    "Resolve actual future storage manifests and generate full parameters/authorization/spec from the frozen source",
+    "Support training/final/holdout execution contracts and parameter-only reuse without unnecessary snapshots",
+    "Detached controller and platform no-model-wait handoff",
+    "Initial exact prelive review, baseline measurement and full scientific closure"
+  ],
+  "paid_model_calls": 0,
+  "gpu_queries": 0,
+  "live_jobs": 0,
+  "goal_complete": false
+}

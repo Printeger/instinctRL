@@ -1,5 +1,5 @@
 {
-  "status": "INCOMPLETE_NOT_DEPLOYED",
+  "status": "SOURCE_PREPARATION_CPU_PASS_REMAINING_PIPELINE_INCOMPLETE",
   "checked_commit": "8696113ffe0eebe07c5fda8af17ba8c789ce5d31",
   "concrete_first_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-01/plan.json",
@@ -29,9 +29,9 @@
     "No production post-analysis decision exists, so updated STOP request does not reinterpret an existing production receipt"
   ],
   "next_implementation": {
-    "worker": "Budgeted source/input preparation event bound to consumed post-analysis decision; concrete pinned artifacts, not another prose-only decision",
-    "controller": "Consume prepared artifact requests through existing snapshot/storage/authorization/spec tools, then exact review and continue_job",
-    "phases": "First prepare source/config and experiment card; controller freezes and provisions; then resolve actual receipt/volume pins and build exact parameters/auth/spec",
+    "completed_cpu": "Source-change preparation worker and after_job bridge; concrete committed source/config/design card; existing controller-owned snapshot helper",
+    "next": "Materialize actual storage and parameters after source freezing, reusing existing frozen sources for parameter-only changes; exact compatibility/prelive reviews before issuing next job",
+    "deployment": "Compose first/next entry and preparation/materialization under one detached local controller; independently validate full handoff before any production invocation",
     "invariants": [
       "No Journal or Store authority mutation by source-preparation worker",
       "No model or paid probe while waiting for a live job",
@@ -48,5 +48,9 @@
     "Evidence-driven training or distinct-stream baseline validation",
     "Final frozen confirmation and holdout, independent audit, videos and complete delivery"
   ],
-  "goal_complete": false
+  "goal_complete": false,
+  "source_preparation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_PREPARATION.json",
+    "sha256": "22acd52e18061e1b95afd56c87619aaa169e86c8087c55166794f12a3954c716"
+  }
 }
