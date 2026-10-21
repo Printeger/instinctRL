@@ -67,12 +67,24 @@ class ContractTests(unittest.TestCase):
             self.assertEqual(validate_parameters(MODE,self.p),self.p)
             check.assert_called_with(self.p['native_volume'])
             payload=64*1024**2+sum(sum(q.values())+16*1024**2 for q in self.p['r6']['output_quotas'].values())
-            result_check.assert_called_with(self.p['result_volume'],output_cap_bytes=self.p['output_cap_bytes'],minimum_free_bytes=payload)
+            result_check.assert_called_with(self.p['result_volume'],output_cap_bytes=self.p['output_cap_bytes'],expected_target=None,minimum_free_bytes=payload)
             # A large nominal job cap cannot override insufficient mounted space.
             result_check.side_effect=ValueError('RESULT_FREE_SPACE')
             with self.assertRaisesRegex(ValueError,'RESULT_FREE_SPACE'):validate_parameters(MODE,self.p)
         with patch('training_workloads.unified_h1.native_volume.validate',side_effect=ValueError('MOUNT_ABSENT')):
             with self.assertRaisesRegex(ValueError,'MOUNT_ABSENT'):validate_parameters(MODE,self.p)
+
+    def test_fixed_dual_volume_payload_covers_all_blocks_without_old_double_deduction(self):
+        payload=64*1024**2+sum(sum(q.values())+16*1024**2 for q in self.p['r6']['output_quotas'].values())
+        self.p.update(native_volume={'path':'/fixture/native','sha256':'1'*64},
+                      result_volume={'path':'/fixture/results','sha256':'2'*64},
+                      extension_inputs={'path':'/fixture/extensions','sha256':'3'*64},
+                      output_cap_bytes=payload+1610612736+64*1024**2+96*1024**2)
+        self.card()
+        with patch('training_workloads.unified_h1.native_volume.validate'),patch('training_workloads.unified_h1.extension_inputs.validate'),patch('training_workloads.unified_h1.result_volume.validate',return_value={'payload_cap_bytes':payload}) as volume:
+            self.assertEqual(validate_parameters(MODE,self.p),self.p)
+            volume.return_value={'payload_cap_bytes':payload-1}
+            with self.assertRaisesRegex(PermissionError,'components exceed'):validate_parameters(MODE,self.p)
     def test_baseline_cannot_omit_failed_domain_or_duplicate_blocks(self):
         self.p['r6']['block_ids'].pop();self.card()
         with self.assertRaisesRegex(PermissionError,'all frozen blocks'):validate_parameters(MODE,self.p)

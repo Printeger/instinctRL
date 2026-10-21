@@ -90,20 +90,16 @@ def validate_parameters(mode,value):
     if not isinstance(ids,list) or not ids or len(set(ids))!=len(ids) or any(key not in indexed for key in ids):raise PermissionError('R6 selected blocks')
     if set(ids)!=set(indexed):raise PermissionError('R6 baseline requires all frozen blocks')
     if set(r['output_quotas'])!=set(ids):raise PermissionError('R6 per-block output quotas')
-    required=3*1024**3+64*1024**2 # Existing native/controller allowance + original-suite/metadata.
+    required=64*1024**2 # Original suite and metadata belong to the result payload.
     for key in ids:
         b=indexed[key]
         if b['lanes']!=32 or b['steps']!=(200 if b['task']=='reverse' else 330):raise PermissionError('R6 block denominator')
         quota=r['output_quotas'][key]
         if set(quota)!={'range_bytes','audit_bytes'} or any(type(v)is not int or v<=0 or v>2*1024**3 for v in quota.values()):raise PermissionError('R6 quota schema/per-file ceiling')
         required+=sum(quota.values())+16*1024**2 # Complete motion JSON and block result.
-    if required>p['output_cap_bytes']:raise PermissionError('R6 components exceed job output cap')
-    if 'native_volume' in p:
-        from .result_volume import validate as validate_results
-        # Backing-image bytes include ext4 metadata; they are not all payload.
-        # Require the complete frozen result quotas in actual available space.
-        validate_results(p['result_volume'],output_cap_bytes=p['output_cap_bytes'],
-                         minimum_free_bytes=required-3*1024**3)
+    from .result_volume import workload_write_cap
+    if required>workload_write_cap(p,minimum_free_bytes=required):
+        raise PermissionError('R6 components exceed job output cap')
     card=pinned_json(p['experiment_card'])
     if card.get('experiment_id')!=p['experiment_id'] or card.get('profiles',{}).get('R1')!={k:v for k,v in p.items() if k!='experiment_card'}:
         raise PermissionError('R6 exact card/profile mismatch')

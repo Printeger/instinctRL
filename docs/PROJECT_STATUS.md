@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：固定双卷R6评价候选的payload已接到合同与真实entry配额安装位置，
+消除旧3GiB重复扣减；仅准确双卷固定布局启用，其他模式保留旧规则。36项CPU测试
+通过，包括完整原分母配额、少1字节拒绝、无效native绑定拒绝和entry安装前拦截。见
+`docs/experiments/r6-robustness-auto/CPU_FIXED_PAYLOAD_WIRING.json`。
+这是第14次接受之后的新候选，仍需独审；训练双卷接线、生产卷预留与准确job关联、
+真实布局容量及完整controller交接尚未完成。capacity=false，无GPU/live/model。
+
 2026-10-21：固定结果卷布局形成独立配置工具候选，保留CPU02已审工具不变。新工具
 要求准确payload+96MiB与inode最低数，挂载后记录实测容量；不足则保留卷和失败manifest。
 运行前重验可用字节/inode，postrun允许清点已满卷。53项CPU回归通过，见

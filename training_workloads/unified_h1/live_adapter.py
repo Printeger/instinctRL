@@ -306,12 +306,16 @@ def run_main_sequence(*, authorization: Mapping[str, Any], attempt: Path,
         if research_mode:
             PILOT_OUTPUT_CAP_BYTES = authorization["parameters"]["output_cap_bytes"]
             PILOT_WORKLOAD_WRITE_CAP_BYTES = PILOT_OUTPUT_CAP_BYTES - 3 * 1024**3
+            if mode == "research-r6-evaluation" and "native_volume" in authorization["parameters"]:
+                from .result_volume import workload_write_cap
+                PILOT_WORKLOAD_WRITE_CAP_BYTES = workload_write_cap(
+                    authorization["parameters"],expected_target=output.parent)
         if authorization["parameters"]["output_cap_bytes"] != PILOT_OUTPUT_CAP_BYTES:
             raise PermissionError("new pilot output cap differs from exact authorization")
         install_output_write_quota(output, PILOT_WORKLOAD_WRITE_CAP_BYTES)
         # Inherited stdout/native files have a kernel before-write ceiling.
-        # The separate 3-GiB allowance includes the 2-GiB merged native log
-        # and bounded controller/metadata/archive outputs.
+        # Legacy modes retain the 3-GiB allowance. Exact fixed-volume R6 jobs
+        # separately bind native image, control allowance and filesystem space.
         soft, hard = resource.getrlimit(resource.RLIMIT_FSIZE)
         ceiling = 2 * 1024**3
         resource.setrlimit(resource.RLIMIT_FSIZE, (min(ceiling, soft) if soft >= 0 else ceiling,
@@ -319,7 +323,7 @@ def run_main_sequence(*, authorization: Mapping[str, Any], attempt: Path,
         atomic_json_replace(output, "output_quota_binding.json", {
             "entry_output_cap_bytes": PILOT_OUTPUT_CAP_BYTES,
             "workload_cumulative_write_cap_bytes": PILOT_WORKLOAD_WRITE_CAP_BYTES,
-            "native_control_archive_reserved_bytes": 3 * 1024**3,
+            "native_control_archive_reserved_bytes": PILOT_OUTPUT_CAP_BYTES - PILOT_WORKLOAD_WRITE_CAP_BYTES,
             "per_file_kernel_ceiling_bytes": ceiling,
             "accounting": "charge_before_write; no overwrite or failure refund"})
     # Persist synchronously from inside the actual entry process.  An external

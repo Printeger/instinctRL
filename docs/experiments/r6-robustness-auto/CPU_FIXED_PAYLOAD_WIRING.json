@@ -1,0 +1,59 @@
+{
+  "schema_version": "r6-fixed-payload-wiring-cpu/1",
+  "status": "CPU_PASS_NEW_CANDIDATE_PENDING_REVIEW",
+  "pytest_cases_passed": 36,
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/result_volume.py",
+      "sha256": "d28cc9129522f96c805238e2cf2d6f97b190d07d0632f9e53935fc36f66eba2b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "613b2b59cf0c8214acc3087a7dbf8a4ac59dd5e1655852998ab676d0d8a9cc69"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/live_adapter.py",
+      "sha256": "79cd8ce3b37a87687889f35036c6e72968a6a1e664fc5e653e0976c6fcbcc600"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_payload_wiring.py",
+      "sha256": "e878da386b0ba2efd9a4055efe1d06e758577fe9c02a48d65c96582d1fe01f51"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_contract.py",
+      "sha256": "89caa2680ac7089a71740340428d8284de0a67cab7e7d88af546ecb34b41a0a5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_fixed_result_volume.py",
+      "sha256": "9f92e7cd3386e61f27f43bc16aed93b6673b6b790801bf79d3fb36e16448e3db"
+    }
+  ],
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FIXED_PAYLOAD_WIRING_TESTS.txt",
+    "sha256": "b065886bca1381e697ef61e300bb2c4fab07c2d948b9263d1a273c1c4b43d4af"
+  },
+  "coverage": [
+    "Real live entry executes up to quota installation; backend creation intercepted and never called",
+    "Fixed R6 dual-volume payload replaces legacy three-GiB deduction only after native/result binding validation",
+    "Other modes and default-layout jobs retain legacy deduction",
+    "Full frozen baseline quotas accepted at exact fixed payload, rejected at one byte below",
+    "Quota receipt reports actual cap minus workload payload rather than an incorrect constant"
+  ],
+  "arithmetic": {
+    "native_fixed_bytes": 1610612736,
+    "external_control_bytes": 67108864,
+    "result_filesystem_padding_bytes": 100663296,
+    "whole_job_cap_equals": "native image + result payload + result filesystem padding + external control allowance"
+  },
+  "limitations": [
+    "Temporary filesystem, mocked volume validation and quota-install boundary; no simulator/backend/GPU execution",
+    "New wiring and fixed layout need independent acceptance; earlier review14 covers prior quota repair only",
+    "No global reduction to legacy allowances, no operational capacity flag or budget changed",
+    "Training dual-volume integration and its exact authority remain required before confirming final conditional capacity",
+    "Production provisioning reservations must be tied to later exact jobs without double charging or implicit refund before administrator package is issued"
+  ],
+  "capacity_pass": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0
+}

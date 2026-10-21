@@ -34,4 +34,20 @@ def validate(pin, *, output_cap_bytes, expected_target=None, minimum_free_bytes=
         if minimum_free_bytes:
             require(binding['free_bytes']>=max(payload,minimum_free_bytes),'RESULT_LAYOUT_FREE_SPACE')
             require(os.statvfs(target).f_favail>=inodes,'RESULT_LAYOUT_FREE_INODES')
+        binding=dict(binding,payload_cap_bytes=payload)
     return binding
+
+
+def workload_write_cap(parameters, *, expected_target=None, minimum_free_bytes=256*1024**2):
+    """Use the measured fixed-layout payload only for an exact dual-volume job.
+
+    Legacy/default layouts retain the old deduction. This is not authority or
+    capacity approval; callers still require the reviewed exact experiment.
+    """
+    cap=parameters['output_cap_bytes']
+    if 'native_volume' not in parameters:return cap-3*1024**3
+    from .native_volume import validate as validate_native
+    validate_native(parameters['native_volume'])
+    binding=validate(parameters['result_volume'],output_cap_bytes=cap,
+        expected_target=expected_target,minimum_free_bytes=minimum_free_bytes)
+    return binding.get('payload_cap_bytes',cap-3*1024**3)

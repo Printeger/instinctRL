@@ -54,12 +54,12 @@ def test_runtime_rechecks_fixed_layout_bytes_and_inodes(tmp_path,monkeypatch):
     monkeypatch.setattr(result,'validate_volume',lambda *a,**kw:binding)
     usage=SimpleNamespace(f_favail=1024);monkeypatch.setattr(result.os,'statvfs',lambda p:usage)
     cap=result.MAXIMUM+result.CONTROL_ALLOWANCE+size
-    assert result.validate(pin(),output_cap_bytes=cap)==binding
+    assert result.validate(pin(),output_cap_bytes=cap)==dict(binding,payload_cap_bytes=payload)
     usage.f_favail=1023
     with pytest.raises(ValueError,match='FREE_INODES'):result.validate(pin(),output_cap_bytes=cap)
     usage.f_favail=1024;binding['free_bytes']=payload-1
     with pytest.raises(ValueError,match='FREE_SPACE'):result.validate(pin(),output_cap_bytes=cap)
     usage.f_favail=0;binding['free_bytes']=0
-    assert result.validate(pin(),output_cap_bytes=cap,minimum_free_bytes=0)==binding
+    assert result.validate(pin(),output_cap_bytes=cap,minimum_free_bytes=0)==dict(binding,payload_cap_bytes=payload)
     binding['free_bytes']=payload;record['status']='MOUNT_CAPACITY_FAILED_PRESERVED'
     with pytest.raises(ValueError,match='LAYOUT_STATUS'):result.validate(pin(),output_cap_bytes=cap)
