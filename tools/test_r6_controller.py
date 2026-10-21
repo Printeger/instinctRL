@@ -69,6 +69,12 @@ def controller(case,monkeypatch):
         return value
     b.audit_prepare=Mock(side_effect=audit_prepare);monkeypatch.setattr(c.final_audit_packet,'prepare',b.audit_prepare)
     b.final_audit=Mock(return_value=dict(status='FINAL_AUDIT_ACCEPTED_PENDING_PUBLICATION',event_key='fixture-final-audit-review',review=b.context));monkeypatch.setattr(c.final_audit,'prepare',b.final_audit)
+    def delivery_prepare(j,*args,**kw):
+        value=dict(status='FINAL_DELIVERY_READY_NOT_PUBLISHED',event_key='fixture-final-delivery')
+        state=j.read();state['events']['fixture-final-delivery']={'kind':'cpu','identity':{'role':'final-delivery-preparation'},'delivery':b.write('final-delivery.json',value)};j.save(state)
+        return value
+    b.delivery_prepare=Mock(side_effect=delivery_prepare);monkeypatch.setattr(c.final_delivery,'prepare',b.delivery_prepare)
+    b.publication=Mock(return_value=dict(status='FINAL_DELIVERY_PUBLISHED_PENDING_TERMINAL_AUDIT'));monkeypatch.setattr(c.final_publication,'publish',b.publication)
     return b
 
 
@@ -355,7 +361,7 @@ def test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect
     if crash:
         with pytest.raises(RuntimeError,match='collection cursor crash'):run(b)
         assert entry(b)['cursor']['phase']=='DECIDE'
-    result=run(b);assert result['status']=='FINAL_PUBLICATION_REQUIRED' and result['goal_complete']is False
+    result=run(b);assert result['status']=='FINAL_TERMINAL_AUDIT_REQUIRED' and result['goal_complete']is False
     assert [call.args[2] for call in profile.call_args_list]==contexts
     assert [call.args[1] for call in b.next.call_args_list]==[b.parent,'confirm-0-parent','confirm-1-parent']
     assert [r['job_event_key'] for r in entry(b)['cursor']['confirmation']['results']]==['confirm-0','confirm-1','confirm-2']
@@ -400,7 +406,7 @@ def test_baseline_validation_routes_to_freeze_review_without_training_preparatio
     monkeypatch.setattr(c.final_models,'prepare',freeze);monkeypatch.setattr(c.final_freeze_review,'prepare',review)
     holdout=Mock(return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context))
     monkeypatch.setattr(c.holdout_publication,'prepare',holdout)
-    result=run(b);assert result['status']=='FINAL_PUBLICATION_REQUIRED' and not result['goal_complete']
+    result=run(b);assert result['status']=='FINAL_TERMINAL_AUDIT_REQUIRED' and not result['goal_complete']
     assert entry(b)['cursor']['baseline_validation']==dict(parent_key=b.parent,job_key=b.key,context=b.context)
     assert run(b)==result;freeze.assert_called_once();review.assert_called_once()
     holdout.assert_called_once()
@@ -418,7 +424,7 @@ def test_holdout_publication_interruption_does_not_repeat_final_review(controlle
         with pytest.raises(RuntimeError,match='publication interrupted'):run(b)
     assert entry(b)['cursor']['phase']=='HOLDOUT_PREPARATION'
     publication.side_effect=None;publication.return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context)
-    assert run(b)['status']=='FINAL_PUBLICATION_REQUIRED'
+    assert run(b)['status']=='FINAL_TERMINAL_AUDIT_REQUIRED'
     freeze.assert_called_once();review.assert_called_once();b.next.assert_not_called()
 
 
@@ -434,7 +440,7 @@ def test_final_route_restart_does_not_repeat_prior_phases(controller,monkeypatch
     with pytest.raises(RuntimeError,match='final interruption'):run(b)
     assert entry(b)['cursor']['phase']==phase
     target.side_effect=original
-    assert run(b)['status']=='FINAL_PUBLICATION_REQUIRED'
+    assert run(b)['status']=='FINAL_TERMINAL_AUDIT_REQUIRED'
     b.final_inputs.assert_called_once()
     assert b.final_sequence.call_count==(2 if phase=='FINAL_SEQUENCE' else 1)
     b.first.assert_not_called();b.next.assert_not_called()
@@ -451,7 +457,7 @@ def test_final_missing_volumes_preserves_phase_and_reports_all(controller):
     assert entry(b)['cursor']['phase']=='FINAL_MATERIALIZE'
     b.final_review.assert_not_called();b.final_sequence.assert_not_called()
     b.final_materialize.return_value=good
-    assert run(b)['status']=='FINAL_PUBLICATION_REQUIRED'
+    assert run(b)['status']=='FINAL_TERMINAL_AUDIT_REQUIRED'
     b.final_inputs.assert_called_once();b.final_prepare.assert_called_once()
 
 
@@ -465,7 +471,7 @@ def test_delivery_interruption_reuses_final_sequence(controller):
     with pytest.raises(RuntimeError,match='delivery interruption'):run(b)
     assert entry(b)['cursor']['phase']=='FINAL_DELIVERY_REQUIRED'
     b.delivery.side_effect=None
-    assert run(b)['status']=='FINAL_PUBLICATION_REQUIRED'
+    assert run(b)['status']=='FINAL_TERMINAL_AUDIT_REQUIRED'
     b.final_sequence.assert_called_once()
 
 
@@ -478,7 +484,7 @@ def test_video_worker_interruption_reconnects_registered_event(controller):
     with pytest.raises(RuntimeError,match='video worker interruption'):run(b)
     assert entry(b)['cursor']['phase']=='VIDEO_EXTRACTION'
     b.video_handoff.side_effect=None
-    assert run(b)['status']=='FINAL_PUBLICATION_REQUIRED'
+    assert run(b)['status']=='FINAL_TERMINAL_AUDIT_REQUIRED'
     b.video_register.assert_called_once();assert b.video_handoff.call_count==2
 
 
@@ -494,7 +500,7 @@ def test_render_restart_preserves_completed_phases(controller,phase):
     with pytest.raises(RuntimeError,match='render interruption'):run(b)
     assert entry(b)['cursor']['phase']==phase
     target.side_effect=original
-    out=run(b);assert out['status']=='FINAL_PUBLICATION_REQUIRED' and not out['goal_complete']
+    out=run(b);assert out['status']=='FINAL_TERMINAL_AUDIT_REQUIRED' and not out['goal_complete']
     assert run(b)==out
     for stage in stages:assert stage.call_count==(2 if stage is target else 1)
     b.first.assert_not_called();b.next.assert_not_called()
@@ -514,7 +520,7 @@ def test_render_missing_volume_and_resource_rejection_preserve_phase(controller)
     assert run(b)['status']=='RESOURCE_OBSERVATION_REJECTED'
     assert entry(b)['cursor']['phase']=='RENDER_RUN'
     b.render_run.return_value=dict(status='RENDER_JOB_CLOSED_REQUIRES_VIDEO_VALIDATION')
-    assert run(b)['status']=='FINAL_PUBLICATION_REQUIRED'
+    assert run(b)['status']=='FINAL_TERMINAL_AUDIT_REQUIRED'
     b.render_review.assert_called_once();b.render_issue.assert_called_once()
 
 
@@ -527,7 +533,7 @@ def test_video_validation_interruption_reconnects_registered_event(controller):
     with pytest.raises(RuntimeError,match='validation interrupted'):run(b)
     assert entry(b)['cursor']['phase']=='VIDEO_VALIDATION'
     b.video_validation_handoff.side_effect=None
-    assert run(b)['status']=='FINAL_PUBLICATION_REQUIRED'
+    assert run(b)['status']=='FINAL_TERMINAL_AUDIT_REQUIRED'
     b.video_validation_register.assert_called_once();assert b.video_validation_handoff.call_count==2
 
 
@@ -550,4 +556,20 @@ def test_final_audit_restart_keeps_original_packet(controller):
     with pytest.raises(RuntimeError,match='audit interrupted'):run(b)
     assert entry(b)['cursor']['phase']=='FINAL_INDEPENDENT_AUDIT'
     b.final_audit.side_effect=None
-    assert run(b)['status']=='FINAL_PUBLICATION_REQUIRED';b.audit_prepare.assert_called_once()
+    assert run(b)['status']=='FINAL_TERMINAL_AUDIT_REQUIRED';b.audit_prepare.assert_called_once()
+
+
+@pytest.mark.parametrize('phase',['FINAL_PUBLICATION_REQUIRED','FINAL_COMMIT_PUSH'])
+def test_final_publication_restart_does_not_repeat_independent_review(controller,phase):
+    b=controller
+    with b.j.writer():
+        key,_=c.register(b.j,b.request,b.store,free_disk_bytes=500*1024**3)
+        s=b.j.read();s['events'][key]['cursor'].update(phase='FINAL_PUBLICATION_REQUIRED');b.j.save(s)
+    target=b.delivery_prepare if phase=='FINAL_PUBLICATION_REQUIRED' else b.publication
+    original=target.side_effect;target.side_effect=RuntimeError('publication interrupted')
+    with pytest.raises(RuntimeError,match='publication interrupted'):run(b)
+    assert entry(b)['cursor']['phase']==phase
+    target.side_effect=original
+    out=run(b);assert out['status']=='FINAL_TERMINAL_AUDIT_REQUIRED' and not out['goal_complete']
+    b.final_audit.assert_not_called();assert run(b)==out
+    assert b.publication.call_count==(2 if phase=='FINAL_COMMIT_PUSH' else 1)

@@ -39,6 +39,7 @@ from tools import r6_delivery_evidence as delivery_evidence
 from tools import r6_video_extraction as video_extraction
 from tools import r6_video_validation as video_validation
 from tools import r6_final_audit_packet as final_audit_packet, r6_final_independent_review as final_audit
+from tools import r6_final_delivery as final_delivery, r6_publish_final_delivery as final_publication
 from tools import r6_render_preparation as render_preparation, r6_render_review as render_review
 from tools import r6_render_materialization as render_materialization, r6_run_job as render_runner
 from tools.r6_decision_packet import persist_exact
@@ -47,7 +48,7 @@ from rlflow.store import canonical
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_AUDIT_REPAIR_REQUIRED','FINAL_PUBLICATION_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_AUDIT_REPAIR_REQUIRED','FINAL_TERMINAL_AUDIT_REQUIRED'}
 
 
 def require(condition,reason):
@@ -206,6 +207,18 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                     executable=initial['review_executable'],free_disk_bytes=free)
                 require(outcome['status'] in ('FINAL_AUDIT_MUST_FIX_REQUIRED','FINAL_AUDIT_ACCEPTED_PENDING_PUBLICATION'),'FINAL_AUDIT_STATUS')
                 cursor.update(phase='FINAL_AUDIT_REPAIR_REQUIRED' if outcome['status']=='FINAL_AUDIT_MUST_FIX_REQUIRED' else 'FINAL_PUBLICATION_REQUIRED',final_independent_audit=outcome)
+                save(journal,key,cursor);continue
+            if phase=='FINAL_PUBLICATION_REQUIRED':
+                outcome=final_delivery.prepare(journal,key,store,free_disk_bytes=free)
+                require(outcome['status']=='FINAL_DELIVERY_READY_NOT_PUBLISHED','FINAL_DELIVERY_STATUS')
+                pin=journal.read()['events'][outcome['event_key']]['delivery']
+                require(json.loads(checked(pin).read_text())==outcome,'FINAL_DELIVERY_PIN')
+                cursor.update(phase='FINAL_COMMIT_PUSH',final_delivery=pin)
+                save(journal,key,cursor);continue
+            if phase=='FINAL_COMMIT_PUSH':
+                outcome=final_publication.publish(journal,cursor['final_delivery'],store)
+                require(outcome['status']=='FINAL_DELIVERY_PUBLISHED_PENDING_TERMINAL_AUDIT','FINAL_PUBLICATION_STATUS')
+                cursor.update(phase='FINAL_TERMINAL_AUDIT_REQUIRED',final_publication=outcome)
                 save(journal,key,cursor);continue
             if phase in TERMINAL_BOUNDARIES:
                 save(journal,key,cursor,status=phase)

@@ -1,0 +1,70 @@
+{
+  "status": "CPU_POST_REVIEW_ACCOUNTING_IMMUTABLE_DELIVERY_EXACT_GIT_PUBLICATION_AND_CONTROLLER_RECOVERY_PASS_TERMINAL_AUDIT_PENDING",
+  "base_commit": "ff16d0f2",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_delivery.py",
+      "sha256": "3abb09b99aa4f57a8cfe721e66619e969c13bd839f5a56484b4fe96113376a3c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_publish_final_delivery.py",
+      "sha256": "558b5b917ff229c0b40a3f8f2c692a0b085c72123ee791487fa15ac7a5517673"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "ce24922b29d4611c151a6cb11e277b7790d9e5a8f996e785d98043d0242a8ed2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_delivery.py",
+      "sha256": "2cba36eb648fc02033d53f31db4fd72d9ec0046fbeca43416e6f9c85cf62654e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "1c8380ba8ad4c8129788eea7b19c52065ad76cf53ef1a61be778dcd4aa275259"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_DELIVERY_INITIAL.log",
+      "sha256": "3b48b78a54bb907e2f43f3cf80bc6b72df84e50755863ff4e9d324f77ea3eaa6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_DELIVERY_FINAL.log",
+      "sha256": "07364a761f11c7b077193a2a2b45b7dafc80110939dbe7a08122635c9b0b724e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_DELIVERY_PUBLICATION.log",
+      "sha256": "7e8a41cbc57cbcdfc3da906b0583491723ff6b6ddc6793c20d4edf480b9a4456"
+    }
+  ],
+  "checks": {
+    "initial": 52,
+    "combined": 102,
+    "publication_final": 17,
+    "real_journal_guard": "PASS"
+  },
+  "scope": [
+    "Revalidate accepted final review and exact unchanged reviewed job set before delivery; MUST_FIX cannot publish.",
+    "Immutable versioned deliveries preserve early MODEL_USAGE_AUDIT.json and all earlier reports; copy exact frozen baseline bindings/protocol/split/authority rather than draft root documents.",
+    "Post-review accounting includes original final model receipt, every registered model usage and this delivery/publication reservation. Any later wake/model or budget drift rejects replay.",
+    "Prepare all19 named documents plus DELIVERY_MANIFEST.json, preserving native failures and complete report/model/raw/media source references without copying or reencoding large artifacts.",
+    "Exact main commit/tag/normal push with exact remote-ref verification; restart after commit reuses same commit and preserves unrelated staged files.",
+    "Controller routes publication success to required terminal audit, never treats push as Goal completion.",
+    "Reject nested output symlinks before writes; external file bytes preserved in test."
+  ],
+  "boundaries": [
+    "Actual Git operations used temporary local repositories/remotes; no production delivery commit/Store approval/job executed.",
+    "Science, independent final acceptance and source provenance are explicit test substitutes; actual baseline remains unrun.",
+    "Original fake-CLI model receipt, Journal reservation and accounting are real fixture data, not real final review.",
+    "Resource figures retain reservations; unknown physical disk/token quantities are not reported as zero.",
+    "Historical root-owned pytest quota directories retained; cleanup warnings preserved."
+  ],
+  "remaining": [
+    "Terminal completion audit and controller final state after all required evidence/publication checks",
+    "Engineering/MUST_FIX repair re-entry",
+    "Combined production prelive review and platform no-model-cost handoff",
+    "Actual baseline and required science/confirmation/holdout/video/final independent review"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}
