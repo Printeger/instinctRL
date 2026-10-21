@@ -1,0 +1,173 @@
+{
+  "schema_version": "r6-initial-baseline-input-draft/1",
+  "status": "INCOMPLETE_NOT_AUTHORIZATION",
+  "parameters_partial": {
+    "experiment_id": "R6-BASELINE-ROBUSTNESS-01",
+    "group": "R1",
+    "training_seed": 20260908,
+    "evaluation_seed": 20260909,
+    "output_cap_bytes": 20250099712,
+    "wall_seconds": 3600,
+    "master_authority": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/MASTER_AUTHORITY_V2.json",
+      "sha256": "465c4e79bf64bad04a3dd4878eee307319966c58119e17506b1cfc9cbccf2f2c"
+    },
+    "baseline_bindings": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_BINDINGS.json",
+      "sha256": "6ebe90717fa2571816ba3392841f3690c2c3fe37225c3728f935bb80d3102623"
+    },
+    "checkpoint_compatibility": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_COMPATIBILITY_ACCEPTED_02.json",
+      "sha256": "1e8242a18370cf26d58c720c9b0d96b3a8eaf6f125b5a2b4972c7b320accd148"
+    },
+    "extension_inputs": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXTENSION_INPUTS_CANDIDATE_02.json",
+      "sha256": "7d36890b12c5da14caf67905197bdad2298c080080e7049be6d714d5cce35dff"
+    },
+    "r6": {
+      "protocol": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+        "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0"
+      },
+      "block_ids": [
+        "S-clean-low",
+        "S-clean-high",
+        "S-noise",
+        "S-delay-drop",
+        "X-clean",
+        "X-noise",
+        "P-clean",
+        "P-combined",
+        "W-near",
+        "W-middle",
+        "W-far",
+        "W-combined",
+        "stress-S-noise",
+        "stress-S-combined",
+        "stress-P-high",
+        "stress-W-high"
+      ],
+      "run_id": "R6-BASELINE-ROBUSTNESS-01",
+      "seed": 2026101901,
+      "split": "development",
+      "expected_mass_kg": 1.181517923,
+      "output_quotas": {
+        "S-clean-low": {
+          "range_bytes": 855638016,
+          "audit_bytes": 83886080
+        },
+        "S-clean-high": {
+          "range_bytes": 855638016,
+          "audit_bytes": 83886080
+        },
+        "S-noise": {
+          "range_bytes": 1409286144,
+          "audit_bytes": 83886080
+        },
+        "S-delay-drop": {
+          "range_bytes": 855638016,
+          "audit_bytes": 83886080
+        },
+        "X-clean": {
+          "range_bytes": 520093696,
+          "audit_bytes": 67108864
+        },
+        "X-noise": {
+          "range_bytes": 855638016,
+          "audit_bytes": 67108864
+        },
+        "P-clean": {
+          "range_bytes": 855638016,
+          "audit_bytes": 83886080
+        },
+        "P-combined": {
+          "range_bytes": 1409286144,
+          "audit_bytes": 83886080
+        },
+        "W-near": {
+          "range_bytes": 855638016,
+          "audit_bytes": 83886080
+        },
+        "W-middle": {
+          "range_bytes": 855638016,
+          "audit_bytes": 83886080
+        },
+        "W-far": {
+          "range_bytes": 855638016,
+          "audit_bytes": 83886080
+        },
+        "W-combined": {
+          "range_bytes": 1409286144,
+          "audit_bytes": 83886080
+        },
+        "stress-S-noise": {
+          "range_bytes": 1459617792,
+          "audit_bytes": 83886080
+        },
+        "stress-S-combined": {
+          "range_bytes": 1459617792,
+          "audit_bytes": 83886080
+        },
+        "stress-P-high": {
+          "range_bytes": 855638016,
+          "audit_bytes": 83886080
+        },
+        "stress-W-high": {
+          "range_bytes": 1459617792,
+          "audit_bytes": 83886080
+        }
+      }
+    }
+  },
+  "execution_config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXECUTION_CONFIG_CANDIDATE_02.json",
+    "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+  },
+  "storage_registration": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
+    "sha256": "7e07946d6c600ed669be48373f81ee4e164218b8700f87140c7cc4d2ed75746c"
+  },
+  "quota_source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_COMPOSED_DRAFT_V5.json",
+    "sha256": "56bb916565aea2c5d494b715172647d9dba27aa71d8719e800256838b1c141a8"
+  },
+  "split": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/SPLIT_MANIFEST.json",
+    "sha256": "7e743b68fb9f346a16cbb7eaabb9c0e9df2e875d44f40de26a0a6369b87ca208"
+  },
+  "required_payload_bytes": 18471714816,
+  "nontraining_transitions": 193600,
+  "wall_proposal": {
+    "seconds": 3600,
+    "basis": {
+      "historical_scaled_physics_per_model": 1565.8275567861817,
+      "range_encode_per_model": 808.2033000150695,
+      "force_encode_fsync_per_model": 379.3166343122721,
+      "step_encode_fsync_per_model": 47.04938782379031,
+      "three_training_1024": 10939.617172272876,
+      "seven_cleanup_allowances": 1260,
+      "video_allowance": 1200,
+      "seven_separate_prelaunch_window_caps": 1260,
+      "total_sample_extrapolation": 25861.20468802213,
+      "existing_protection": 24000,
+      "proposed_protection": 27000,
+      "development_remaining_if_accepted": 16200
+    },
+    "note": "Per-model historical physics plus range/force/step encoding extrapolation is about2800.4s;3600s is an unaccepted proposal, not measured R6 throughput. Controller separately accounts admission/cleanup."
+  },
+  "missing_parameter_fields": [
+    "experiment_card",
+    "protocol_review",
+    "native_volume",
+    "result_volume"
+  ],
+  "required_before_materialization": [
+    "Measured production volume manifests with verified kernel mount/ownership/capacity",
+    "Freeze exact protocol/split and accept whole-project capacity; replace draft protocol pin with accepted frozen pin",
+    "Independent PASS_R6_PROTOCOL receipt tied to frozen protocol and accepted capacity",
+    "Materialize exact card with profile equal to completed parameters excluding experiment_card; then pin card",
+    "Use frozen snapshot parameter/compatibility checks to create proposal; exact initial Store review/issuance and detached controller deployment remain required"
+  ],
+  "goal_complete": false,
+  "dispatch_authorized": false
+}

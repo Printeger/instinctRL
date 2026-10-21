@@ -1,5 +1,11 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：收拢首次基线准确输入草案 INITIAL_BASELINE_INPUT_DRAFT.json：16条件、
+193600非训练transitions、18471714816字节结果payload；3600秒wall为待审核提案。
+逐条件配额与已预付生产包对齐；缺四个参数字段及冻结协议/容量接受，不能发车。
+正式双卷实查仍缺、sudo需要本机密码；已提供既有ADMIN_COMMANDS路径。
+117次自动唤醒+25worker=142，余114次；未启动GPU/仿真，Goal未完成。
+
 2026-10-21：第25次定向复审PASS_CPU_SCOPE，关闭第24次prompt持久化恢复MUST_FIX；
 receipt/schema/pins/worker清理核验完成，见reviews/prompt-recovery-repair-review.json。
 新增 `docs/experiments/r6-robustness-auto/PREBASELINE_GAP_AUDIT.json`：真实Store无R6作业，

@@ -1,0 +1,291 @@
+{
+  "status": "ARITHMETIC_ONLY_NOT_ACCEPTED",
+  "capacity_pass": false,
+  "components": {
+    "consumed_cpu_volume_and_jit_reservations": {
+      "planned_bytes": 1613824000,
+      "charged_bytes": 1613824000,
+      "remaining_planned_bytes": 0,
+      "projected_bytes": 1613824000
+    },
+    "controller_and_reviews": {
+      "planned_bytes": 2147483648,
+      "charged_bytes": 1343488000,
+      "remaining_planned_bytes": 803995648,
+      "projected_bytes": 2147483648
+    },
+    "failed_prelaunch_and_repair_margin": {
+      "planned_bytes": 2147483648,
+      "charged_bytes": 0,
+      "remaining_planned_bytes": 2147483648,
+      "projected_bytes": 2147483648
+    },
+    "historical_snapshot_reservation": {
+      "planned_bytes": 2147483648,
+      "charged_bytes": 2147483648,
+      "remaining_planned_bytes": 0,
+      "projected_bytes": 2147483648
+    },
+    "initial_full_baseline": {
+      "planned_bytes": 20250099712,
+      "charged_bytes": 20250099712,
+      "remaining_planned_bytes": 0,
+      "projected_bytes": 20250099712
+    },
+    "new_baseline_snapshot": {
+      "planned_bytes": 2147483648,
+      "charged_bytes": 2147483648,
+      "remaining_planned_bytes": 0,
+      "projected_bytes": 2147483648
+    },
+    "one_256_update_training_job": {
+      "planned_bytes": 2684354560,
+      "charged_bytes": 0,
+      "remaining_planned_bytes": 2684354560,
+      "projected_bytes": 2684354560
+    },
+    "one_affected_block_plus_original_evaluation": {
+      "planned_bytes": 3489660928,
+      "charged_bytes": 0,
+      "remaining_planned_bytes": 3489660928,
+      "projected_bytes": 3489660928
+    },
+    "result_volume_cpu02_reservation": {
+      "planned_bytes": 17825792,
+      "charged_bytes": 17825792,
+      "remaining_planned_bytes": 0,
+      "projected_bytes": 17825792
+    },
+    "ten_result_volume_metadata_allowances": {
+      "planned_bytes": 655360,
+      "charged_bytes": 0,
+      "remaining_planned_bytes": 655360,
+      "projected_bytes": 655360
+    },
+    "ten_volume_metadata_allowances": {
+      "planned_bytes": 655360,
+      "charged_bytes": 0,
+      "remaining_planned_bytes": 655360,
+      "projected_bytes": 655360
+    },
+    "three_result_filesystem_allowances": {
+      "planned_bytes": 201326592,
+      "charged_bytes": 0,
+      "remaining_planned_bytes": 201326592,
+      "projected_bytes": 201326592
+    },
+    "three_result_volume_control_allowances": {
+      "planned_bytes": 134217728,
+      "charged_bytes": 0,
+      "remaining_planned_bytes": 134217728,
+      "projected_bytes": 134217728
+    },
+    "unclassified_used_disk": {
+      "planned_bytes": 0,
+      "charged_bytes": 0,
+      "remaining_planned_bytes": 0,
+      "projected_bytes": 0
+    }
+  },
+  "reservation_mapping": [
+    {
+      "event_key": "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 0
+    },
+    {
+      "event_key": "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 0
+    },
+    {
+      "event_key": "ccc3c84352ee756df0fea28bd9a4ccbd0af6637fa3123415b165217346b6fbe8",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 0
+    },
+    {
+      "event_key": "887b900723fa9007b3106427b6dc93cf73df663197b238c8ed611cf47084b11b",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 0
+    },
+    {
+      "event_key": "1fe62477ac41ab5009c0ea53a827362a3e515017238893381a33c8d7aa1b7462",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 0
+    },
+    {
+      "event_key": "dac0f3d535ca1c68d0764a7bbc34b3bb2921590c46e1f86747785ca3a978395e",
+      "bucket": "historical_snapshot_reservation",
+      "charged_bytes": 2147483648
+    },
+    {
+      "event_key": "b63b99ca62ed9c5baecf43238e44e4f823da9df1d28c21879eee3ce57d964640",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "47a62879ac080b882642e52de46308af24982962175a41da99cd4172571cea67",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "e0df9f2398efe8c5a416d95395c68516e41fb37eee5212e03d24db224aa44890",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "ac61a3b5ae4463e18fef5b62e3db53b34cab97f8363be7d0d46f536f8885441d",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "7c46e3635b161dc2a19cb273865f769d54558ec5c734c461e6e2db2c5d8d7b57",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "b6866fedb83bacf044c94b0f11974b046c33a77ecbad07ba031974ee824dc111",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "b2ab5703a89374f4f2c69afdec69c1d2ca441dfa111b3173cd94403edf0959d1",
+      "bucket": "consumed_cpu_volume_and_jit_reservations",
+      "charged_bytes": 1610678272
+    },
+    {
+      "event_key": "c0e5df7ac159f20d6768d1826a25b82899489bf7bbf68ca09f748676bb07a23b",
+      "bucket": "consumed_cpu_volume_and_jit_reservations",
+      "charged_bytes": 3145728
+    },
+    {
+      "event_key": "760ceb8f20da50dbd2adfb446caae261dc67ae40b6ed243b7ee4b5e2e8d82700",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "682d4fa1e33feb5d51e84081ebd3cd6114389669a8b7cd0f75fb24e92595f81c",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "731dd876aedb53298c40a9ac527710b62c65240b1df5c1a3e1aa6e69dc8bf8ba",
+      "bucket": "result_volume_cpu02_reservation",
+      "charged_bytes": 17825792
+    },
+    {
+      "event_key": "246f1f5f800331f39673f199876fb9a5a09f1e0f8ce7f43b973b9c36cdd93319",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "d79e30f0fa33725ab3a440aa4ff5053957d943210aa10a6b46c6d58223d796dc",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "6fb2fb5a07a1c13e091bff09e881f9213605031b821e891abd2442ac7711744d",
+      "bucket": "initial_full_baseline",
+      "charged_bytes": 20250099712
+    },
+    {
+      "event_key": "8476525b1057bbc592deb20011469b13bb949375f6fb7a2f25395cfb5c4790f7",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "54a3e2b1dcf289f1b0cecf52c5c46d881ea43dc9ea53cd373b1c33ec91bc244a",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "a6538bf78d594e07a8d7b65ce121dafe0500a0af960476f612077d920343e199",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "6a18baa245b0b28e236c6bfcfb4c60c63232847a824d215f199fb962d022171d",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "71a422e3341bf6c92b41d054ea873722820582f4bcef76ccca9d62ac2da7d620",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "5c6eea20d3d1ef36c65d7235a267ea1d2932a6ae5e3acd50e19838e32e59e9bb",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "4cd9a0dfd5957c2b6521621fe928ef48bc640374b63018e86796c4f1cb96a246",
+      "bucket": "new_baseline_snapshot",
+      "charged_bytes": 2147483648
+    },
+    {
+      "event_key": "02e3378fa06eb12b15f520e5ae0599de2bbfc19a59202caad1383208e8ba3734",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "1f2356c5694c11baea8c927f2219196e204a35c28b24c53b8f683dc961170311",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "fc9f5026cb68abf374921169d53df6d75bde67116c7e26cf37e2abe68bea6427",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    },
+    {
+      "event_key": "429e4be0867d498ccf3b0dcb179287a415df739637071d96fc9b2d2da5c1512b",
+      "bucket": "controller_and_reviews",
+      "charged_bytes": 67174400
+    }
+  ],
+  "current_charged_bytes": 27520204800,
+  "future_planned_bytes": 9462349824,
+  "development_projected_bytes": 36982554624,
+  "development_limit_bytes": 37580963840,
+  "development_headroom_bytes": 598409216,
+  "final_components": {
+    "four_full_evaluations": 80329310208,
+    "three_training_jobs": 11274289152,
+    "snapshots": 2147483648,
+    "videos": 2147483648,
+    "controller_and_reviews": 1073741824,
+    "failed_cleanup_and_delivery_margin": 1073741824,
+    "seven_result_volume_control_allowances": 469762048,
+    "seven_result_filesystem_allowances": 704643072
+  },
+  "final_projected_bytes": 99220455424,
+  "proposed_final_protection_bytes": 99857989632,
+  "existing_ledger_final_protection_bytes": 85899345920,
+  "arithmetic_fits": true,
+  "ledger_changed": false,
+  "limitations": [
+    "Fixed-layout capacity remains unmeasured; no production admission.",
+    "Training dual-volume wiring and accepted time allocation remain incomplete.",
+    "All existing model charges, including repair, conservatively remain in development controller pool.",
+    "No implicit refund: each bucket charges max(plan, actual plus unreleased reservation)."
+  ],
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+      "sha256": "18b2d7d6abb8787bdbc4b7eb6670264842485d4ec48877001113477ca594fad5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_DUAL_VOLUME_DRAFT.json",
+      "sha256": "9557d49ada3568a8ab88270d49cb7f6fc390dbd49249d586bd4341e8f812390a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
+      "sha256": "7e07946d6c600ed669be48373f81ee4e164218b8700f87140c7cc4d2ed75746c"
+    }
+  ],
+  "tool": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/reconcile_r6_capacity.py",
+    "sha256": "96604e6824a711a31ba10edbab0c421a8dd828874eea77644d5d557fa8ca39d6"
+  }
+}

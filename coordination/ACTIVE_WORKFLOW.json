@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 116,
-    "total_automatic_model_sessions_minimum": 141,
+    "platform_automatic_goal_wakes": 117,
+    "total_automatic_model_sessions_minimum": 142,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -257,6 +257,7 @@
     "local_continuation_review": "docs/experiments/r6-robustness-auto/reviews/local-continuation-authority-review.json",
     "local_continuation_repair": "docs/experiments/r6-robustness-auto/CPU_CONTINUATION_PROMPT_RECOVERY.json",
     "local_continuation_accepted_review": "docs/experiments/r6-robustness-auto/reviews/prompt-recovery-repair-review.json",
-    "prebaseline_gap_audit": "docs/experiments/r6-robustness-auto/PREBASELINE_GAP_AUDIT.json"
+    "prebaseline_gap_audit": "docs/experiments/r6-robustness-auto/PREBASELINE_GAP_AUDIT.json",
+    "initial_baseline_input_draft": "docs/experiments/r6-robustness-auto/INITIAL_BASELINE_INPUT_DRAFT.json"
   }
 }

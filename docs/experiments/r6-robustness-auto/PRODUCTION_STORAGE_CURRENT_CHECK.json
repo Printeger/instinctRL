@@ -1,0 +1,14 @@
+{
+  "schema_version": "r6-prepared-storage-check/1",
+  "event_key": "6fb2fb5a07a1c13e091bff09e881f9213605031b821e891abd2442ac7711744d",
+  "experiment_id": "R6-BASELINE-ROBUSTNESS-01",
+  "output_cap_bytes": 20250099712,
+  "manifests": {},
+  "missing": [
+    "/var/lib/instinctrl-r6-native/J-d737390980235144/volume.json",
+    "/var/lib/instinctrl-r6-results/J-d737390980235144/volume.json"
+  ],
+  "capacity_pass": false,
+  "dispatch_authorized": false,
+  "status": "WAITING_FOR_ADMIN_PROVISION"
+}
