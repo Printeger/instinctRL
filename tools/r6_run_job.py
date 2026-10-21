@@ -25,7 +25,8 @@ def run(journal, spec_pin, store, query_executable, decision_executable, *,
     journal.require_writer()
     spec=json.loads(checked(spec_pin).read_text())
     final=spec.get('h1',{}).get('mode')=='research-r6-final-evaluation'
-    if final and purpose!='confirmation_delivery':raise RecoveryError('RUN_JOB_FINAL_PURPOSE')
+    replay=spec.get('h1',{}).get('mode')=='research-r6-video-replay'
+    if (final or replay) and purpose!='confirmation_delivery':raise RecoveryError('RUN_JOB_FINAL_PURPOSE')
     jid='J-'+sha({'id':spec['id'],'spec':spec})[:16]
     entries=[e for e in journal.read()['events'].values()
              if e['kind']=='job' and e['identity']['job_id']==jid]
@@ -73,6 +74,12 @@ def run(journal, spec_pin, store, query_executable, decision_executable, *,
     closed=register_and_close(journal,spec_pin,store,queue_key=queue_key,
         free_disk_bytes=min(free_disk_bytes,shutil.disk_usage(journal.directory).free),
         purpose=purpose,refresh_observation=refresh_observation)
+    if replay:
+        from tools.r6_finalize_job import finalize
+        result=finalize(journal,closed['event_key'],store,query_executable,
+            free_disk_bytes=min(free_disk_bytes,shutil.disk_usage(journal.directory).free))
+        return dict(status='RENDER_JOB_CLOSED_REQUIRES_VIDEO_VALIDATION',event_key=closed['event_key'],
+                    closure=closed['closure'],result=result,scientific_acceptance=False)
     if final:
         result=finish_final(journal,closed['event_key'],store,query_executable,
             free_disk_bytes=min(free_disk_bytes,shutil.disk_usage(journal.directory).free))

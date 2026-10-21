@@ -52,7 +52,7 @@ def _issue_reviewed(journal,parent_key,plan_pin,review_key,review_pin,master_pin
     s=journal.read();require(s['budget']['capacity_pass'] is True,'CAPACITY')
     require(s.get('current_job') is None,'ACTIVE_JOB')
     experiments.validate(spec,store.root)
-    require(spec['backend']=='real' and spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation','research-r6-final-evaluation'),'MODE')
+    require(spec['backend']=='real' and spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation','research-r6-final-evaluation','research-r6-video-replay'),'MODE')
     st=store.replay();require(jid not in st['jobs'],'CHILD_EXISTS')
     require(not st['paused'] and not policy.stopped(store.root),'STORE_STOP')
     require(st['stages'].get(spec['stage_id'],{}).get('status')!='REVOKED','STAGE_REVOKED')
@@ -72,6 +72,9 @@ def _issue_reviewed(journal,parent_key,plan_pin,review_key,review_pin,master_pin
     from tools.r6_storage_allocation import for_spec
     storage=for_spec(journal,plan['spec_pin'],purpose=plan['purpose'],preview=True)
     auth=json.loads(checked(spec['pins']['authorization']).read_text())
+    if spec['h1']['mode']=='research-r6-video-replay':
+        from tools.r6_render_job import validate
+        validate(journal,auth['parameters'],plan['purpose'])
     if spec['h1']['mode']=='research-r6-final-evaluation':
         from tools.r6_final_job import validate
         validate(journal,auth['parameters'],plan['purpose'])

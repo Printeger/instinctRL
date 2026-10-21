@@ -7,6 +7,8 @@ import hashlib,json,math,os,subprocess
 from pathlib import Path
 from .store import Conflict,sha,atomic,canonical
 
+REPLAY_MODE = 'research-r6-video-replay'
+
 
 def digest(path):
     with Path(path).open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
@@ -25,13 +27,40 @@ def inspect_authority(spec):
             path=base/relative
             if path.is_symlink() or not path.resolve().is_relative_to(base.resolve()) or digest(path)!=expected:
                 raise Conflict('H1 source manifest drift: '+relative)
+    if h['mode'] == REPLAY_MODE:
+        auth=json.loads(Path(spec['pins']['authorization']['path']).read_text())
+        pins=auth['parameters']['implementation']
+        expected={'contract':root/'tools/r6_render_contract.py', 'entry':root/'tools/run_r6_render.py',
+                  'renderer':root/'tools/render_r6_isaac_video.py', 'presentation':root/'tools/r6_video_presentation.py',
+                  'recovery':root/'tools/r6_recovery.py','budget':root/'tools/r6_budget.py',
+                  'trajectory':root/'tools/r6_video_trajectory.py',
+                  'launcher':root/'training_workloads/scale_003/resources.py',
+                  'prelaunch':root/'training_workloads/unified_h1/robustness_prelaunch.py'}
+        package=root/'tools/rlflow/rlflow'
+        expected.update({'rlflow:'+str(p.relative_to(package)):p for p in package.rglob('*.py')})
+        for name in ('__init__.py','store.py','jobs.py'):expected['rlflow:'+name]=package/name
+        if set(pins)!=set(expected):raise Conflict('H1 replay source set mismatch')
+        for name,path in expected.items():
+            if pins.get(name,{}).get('path')!=str(path):raise Conflict('H1 replay source path mismatch')
+        for pin in pins.values():
+            path=Path(pin['path'])
+            if (set(pin)!={'path','sha256'} or path.is_symlink() or path.resolve()!=path
+                    or not path.is_relative_to(root) or path.stat().st_mode & 0o222 or digest(path)!=pin['sha256']):
+                raise Conflict('H1 replay source manifest drift')
     program='''import json,sys
 from pathlib import Path
 sys.dont_write_bytecode=True
 sys.path.insert(0,sys.argv[1])
 from training_workloads.unified_h1.config import load_config
-from training_workloads.unified_h1.authorization import load_r3_authorization
-c=load_config();a=load_r3_authorization(Path(sys.argv[2]),Path(sys.argv[3]),sys.argv[4])
+c=load_config()
+if sys.argv[4]=='research-r6-video-replay':
+    sys.path.insert(0,str(Path(sys.argv[1])/'tools/rlflow'))
+    from tools.r6_render_contract import authorization
+    from tools.r6_recovery import file_pin
+    a=authorization(file_pin(sys.argv[2]),Path(sys.argv[3]),c)
+else:
+    from training_workloads.unified_h1.authorization import load_r3_authorization
+    a=load_r3_authorization(Path(sys.argv[2]),Path(sys.argv[3]),sys.argv[4])
 print(json.dumps({'config':c,'authorization':a},sort_keys=True))
 '''
     env={'PATH':'/usr/bin:/bin','PYTHONDONTWRITEBYTECODE':'1','CUDA_VISIBLE_DEVICES':''}
@@ -52,14 +81,30 @@ def validate(spec,root,*,fresh=True):
         raise Conflict('H1 paths must be exact resolved paths')
     config_path=work/'training_workloads/unified_h1/candidate_config.json'
     if digest(config_path)!=h['config_sha256']:raise Conflict('H1 config drift')
-    if spec['cwd']!=str(work) or spec['pins']['workload']['path']!=str(work/'training_workloads/unified_h1/formal_unified_h1.py') or spec['pins']['dispatcher']['path']!=str(work/'training_workloads/unified_h1/local_dispatch.py'):
+    replay=h['mode']==REPLAY_MODE
+    entry='tools/run_r6_render.py' if replay else 'training_workloads/unified_h1/formal_unified_h1.py'
+    if spec['cwd']!=str(work) or spec['pins']['workload']['path']!=str(work/entry) or spec['pins']['dispatcher']['path']!=str(work/'training_workloads/unified_h1/local_dispatch.py'):
         raise Conflict('H1 workload/dispatcher binding mismatch')
-    expected=[spec['pins']['executable']['path'],'-B','-m','training_workloads.unified_h1.formal_unified_h1','--authorization',spec['pins']['authorization']['path'],'--attempt',str(attempt),'--mode',h['mode']]
+    expected=[spec['pins']['executable']['path'],'-B','-m', 'tools.run_r6_render' if replay else 'training_workloads.unified_h1.formal_unified_h1','--authorization',spec['pins']['authorization']['path'],'--attempt',str(attempt)]
+    if not replay:expected+=['--mode',h['mode']]
     if spec['argv']!=expected:raise Conflict('real runner must execute the exact reviewed H1 formal entry')
     if not attempt.is_dir() or not (attempt/'results').is_dir():raise Conflict('H1 attempt results root absent')
     if fresh and ((attempt/'results'/h['mode']).exists() or list((attempt/'results').glob('*/process_start.json'))):
         raise Conflict('H1 attempt start budget already consumed')
     observed=inspect_authority(spec);config=observed['config'];auth=observed['authorization']
+    if replay:
+        from tools.r6_render_contract import resources as replay_resources
+        replay_resources(spec,auth)
+        if (auth['parameters']['experiment_id']!=spec['id'] or auth['parameters']['source_snapshot']!=str(work)
+                or auth['attempt']!=str(attempt) or auth['config']!={'path':str(config_path),'sha256':h['config_sha256']}
+                or spec['seed']!=0 or spec['method']!='r6-recorded-trajectory-replay-v1'
+                or spec['evaluation']!='NO_NEW_PHYSICS' or spec['runtime']!=config['execution']['frozen_runtime_root']
+                or spec['pins']['product']['path']!=str(work/'isaaclab-training/instinctlab/task/scene_h1.py')
+                or spec['pins']['runtime']!=spec['pins']['executable']):
+            raise Conflict('H1 replay identity mismatch')
+        if not {'status','counters','process_identity','process_start'}<=set(spec['observations']):
+            raise Conflict('H1 required raw observations omitted')
+        return observed
     budget=auth['budgets'];limit=budget['wall_seconds']+10
     if spec['resources']!={'starts':1,'wall_seconds':limit,'gpu_seconds':limit,'transitions':budget['training_transitions']+budget['nontraining_transitions']}:
         raise Conflict('H1 resources must bind exact mode budget and two five-second cleanup margins')
@@ -79,7 +124,7 @@ def validate(spec,root,*,fresh=True):
 
 def native_dispatch_options(spec):
     """Take native paths only from the exact snapshot-validated authority."""
-    if spec.get('backend')!='real' or spec.get('h1',{}).get('mode') not in ('research-r6-evaluation','research-r6-training','research-r6-final-evaluation','research-r6-candidate-evaluation'):
+    if spec.get('backend')!='real' or spec.get('h1',{}).get('mode') not in ('research-r6-evaluation','research-r6-training','research-r6-final-evaluation','research-r6-candidate-evaluation',REPLAY_MODE):
         return {}
     parameters=inspect_authority(spec)['authorization']['parameters']
     result={'native_output_cap_bytes':256*1024**2}
@@ -93,8 +138,10 @@ def native_dispatch_options(spec):
 
 def environment(spec):
     config=json.loads((Path(spec['h1']['workload_root'])/'training_workloads/unified_h1/candidate_config.json').read_text())
+    paths=[spec['h1']['workload_root'],str(Path(config['product']['path'])/'isaaclab-training')]
+    if spec['h1']['mode']==REPLAY_MODE:paths.append(str(Path(spec['h1']['workload_root'])/'tools/rlflow'))
     return {'PATH':'/usr/bin:/bin','PYTHONDONTWRITEBYTECODE':'1','PYTHONNOUSERSITE':'1','CUDA_VISIBLE_DEVICES':'0',
-        'PYTHONPATH':os.pathsep.join([spec['h1']['workload_root'],str(Path(config['product']['path'])/'isaaclab-training')]),
+        'PYTHONPATH':os.pathsep.join(paths),
         'ISAACSIM_ASSET_ROOT':config['execution']['isaacsim_asset_root']}
 
 

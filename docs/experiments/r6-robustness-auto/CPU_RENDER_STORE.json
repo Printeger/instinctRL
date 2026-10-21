@@ -1,0 +1,111 @@
+{
+  "status": "CPU_RENDER_STORE_SPEC_PROVENANCE_ISSUANCE_RESERVATION_SUBMIT_AND_CLOSE_PASS_PREPARATION_ROUTING_PENDING",
+  "base_commit": "c94b6471c5bffcc6826c234fbcc5edf4380e2b3a",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py",
+      "sha256": "f2eafed40b7b059e5d97398ea868f33f854a8bc40ae226b59f777eefcb97764a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_render_job.py",
+      "sha256": "a87602d656413505095ae4ea8aeec9f0e9cea9b3376790694ff18f3073cb6a00"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_build_spec.py",
+      "sha256": "be6fec54abfbcb919c03b0da9444de479ef3df3b0937fcbb96b7c915d14cfd0f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_issue_next.py",
+      "sha256": "fb28cafc78d0a754fc460e570c869e8c074a58d34c9ab8fcebc973c1b58647fc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_inventory.py",
+      "sha256": "3b9ab6319722a6009e8f939a4a9efeedc387f23e653883404d8aa88033bf8ff6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_register_job.py",
+      "sha256": "49385ec1007b875580a625cc81f45dffa2a5e99ace1b431fd9f94927563608cd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_run_job.py",
+      "sha256": "aaecf7640803b95ae5ea86bc50cc8ee843ba5b262988d3afd87b5b145202324a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_storage_allocation.py",
+      "sha256": "39f80d48ef2f7116d51373e0a9247823155f3a7b1f82e1f0fadf3ff5aad6086d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "3bb0a6c0862bc5d9758832fc8de7d4445863de87dade04e64082c8b67a621441"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_storage_allocation.py",
+      "sha256": "034c00f0395219d705809a08a60a0675800c2b1c3a94ba7be080203b8165b30b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_real_contract.py",
+      "sha256": "7016504fd56cc2a7d3f01b92da0050315456cb85c46727aedfe5d30000a198f2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_render_store.py",
+      "sha256": "ac989c8562826f88778205e844a6113e14b9cb4dd5c41909eef34a1f59b7f6ad"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_STORE_INITIAL.log",
+      "sha256": "b475474e0835d58bdd5c989e0c2f13052735d9f0e32a4947619282a93f448d0e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_STORE_COMBINED.log",
+      "sha256": "951e1d9262b107f4e5c9a20a5da763eca7e1194424a8ab23e69b173c3d28002e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_STORE_ROUTING.log",
+      "sha256": "5c3e19dd388f29e80ca32dd7c45712e1ce4fc4168e0ab8dd73091189da8973b7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_STORE_FINAL.log",
+      "sha256": "6345b757276ef9238538481e27cd6355a08424100e2ac8cf8c5667d107d472dd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_STORE_INSPECTION_FINAL.log",
+      "sha256": "b82b3e8217260aea34e38b29a8e8da67d1fd6a1fbc5ad42c94285dca5741875e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RENDER_STORE_REAL_GUARD.log",
+      "sha256": "1a411fb6e896868b1ec3c11323850a904330692641505aa496812d6aa1ff95d4"
+    }
+  ],
+  "checks": {
+    "initial": 124,
+    "combined": 109,
+    "routing": 94,
+    "final": 76,
+    "inspection-final": 63,
+    "real_journal_guard": "PASS"
+  },
+  "scope": [
+    "Real backend replay spec with frozen entry, seed0/no-new-physics identity, explicit zero transitions and nonzero GPU/wall/start/init charges.",
+    "Exact readonly source/dependency pins checked before importing frozen replay authority validator; isolated CPU program selects replay validation.",
+    "Controller extraction receipt/result and persistent cursor must agree before issuance, reservation or new submission; old failed attempts are preserved without blocking a distinct verified extraction.",
+    "Existing Store exact-approval transaction, quota owner, resource reservation, submit-once claim and recovery reused; no CPU backend disguise.",
+    "Closed replay enters inventory and two postrun queries without a scientific/model-decision call; native FAILED remains separate from zero-transition raw counters."
+  ],
+  "boundaries": [
+    "Store, Journal, deterministic spec/budget/proposal/approval and submit intent are real temporary fixtures.",
+    "Frozen authority validation, approved review, extraction receipt verification and actual Popen/closure/render execution are explicit test substitutes.",
+    "Isolated inspection program is executed in-process with controlled config/validator substitutes; it does not prove a production frozen render snapshot.",
+    "No production Store permission, GPU query, render, new volume, training or baseline execution."
+  ],
+  "remaining": [
+    "Prepare exact frozen replay inputs/config/snapshot and prepaid dual-volume plans",
+    "Register one actual render review and materialize authority/spec; connect top-level controller recovery",
+    "CPU MP4 validation worker, visual audit/synchronized comparison and viewing manifest",
+    "Final independent scientific/requirements/accounting audit, repair re-entry",
+    "Combined production prelive review and platform no-model-wait handoff",
+    "Actual baseline and all required scientific work"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}

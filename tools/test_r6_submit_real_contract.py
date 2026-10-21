@@ -67,23 +67,37 @@ def make_bound(tmp_path, monkeypatch, mode, *, final_parameters=None):
     if final_parameters is not None:
         assert mode=='research-r6-final-evaluation'
         auth['parameters'].update(final_parameters)
+    attempt = tmp_path/'attempt'; (attempt/'results').mkdir(parents=True)
+    if mode=='research-r6-video-replay':
+        from tools import r6_render_contract as replay
+        workload=write(work/'tools/run_r6_render.py', {'fixture':'never execute'})
+        product=write(work/'isaaclab-training/instinctlab/task/scene_h1.py', {})
+        auth=dict(mode=mode, attempt=str(attempt), config=config_pin,
+            parameters=dict(wall_seconds=60, experiment_id='R6-REAL-CONTRACT-CPU-FIXTURE',
+                source_snapshot=str(work), extraction={'fixture':'not a real extraction'},
+                output_cap_bytes=replay.PAYLOAD+96*1024**2+replay.native_volume.MAXIMUM+replay.result_volume.CONTROL_ALLOWANCE),
+            budgets=replay.budget(60))
     auth_pin = write(tmp_path/'fixture-auth.json', auth)
     observed = dict(config=config, authorization=auth)
     monkeypatch.setattr(h1, 'inspect_authority', lambda spec:copy.deepcopy(observed))
-    attempt = tmp_path/'attempt'; (attempt/'results').mkdir(parents=True)
     executable = file_pin(sys.executable)
     spec = dict(id='R6-REAL-CONTRACT-CPU-FIXTURE', stage_id='CPU', backend='real',
         argv=[executable['path'], '-B', '-m', 'training_workloads.unified_h1.formal_unified_h1',
               '--authorization', auth_pin['path'], '--attempt', str(attempt), '--mode', mode],
         cwd=str(work), pins=dict(dispatcher=file_pin(dispatcher), executable=executable,
             product=product, workload=workload, runtime=executable, authorization=auth_pin),
-        method='fixture', evaluation='fixture', runtime='CPU-NOT-RUNTIME', seed=17 if mode=='research-r6-training' else auth['parameters']['evaluation_seed'],
+        method='fixture', evaluation='fixture', runtime='CPU-NOT-RUNTIME', seed=0 if mode=='research-r6-video-replay' else 17 if mode=='research-r6-training' else auth['parameters']['evaluation_seed'],
         resources=dict(starts=1, wall_seconds=70, gpu_seconds=70, transitions=512),
         conditions=[dict(evidence_id='cpu', sha256='1'*64)],
         observations=['status','counters','process_identity','process_start'],
         h1=dict(workload_root=str(work), attempt=str(attempt), mode=mode,
             config_sha256=config_pin['sha256'], gpu_devices=['0'],
             gpu_accounting='allocated_device_wall_seconds'))
+    if mode=='research-r6-video-replay':
+        spec['argv']=[executable['path'],'-B','-m','tools.run_r6_render','--authorization',auth_pin['path'],'--attempt',str(attempt)]
+        spec.update(method='r6-recorded-trajectory-replay-v1',evaluation='NO_NEW_PHYSICS')
+        spec['resources']['transitions']=0
+        minimum=replay.resources(spec,auth)
     store.transact('FIXTURE_CONDITION', 'cpu', lambda s:s['evidence'].update(
         cpu=dict(id='cpu', sha256='1'*64, accepted=True)))
     proposal = experiments.propose(store, spec)
@@ -112,7 +126,7 @@ def make_bound(tmp_path, monkeypatch, mode, *, final_parameters=None):
         event = dict(goal_id=budget['goal_id'], event_id=spec['id'], job_id=jid,
                      input_sha256=sha(request), role='job')
         key, _ = journal.intent(event, kind='job', request=request,
-            resources=dict(minimum), purpose='confirmation_delivery' if final_parameters is not None else 'development', free_disk_bytes=500*1024**3)
+            resources=dict(minimum), purpose='confirmation_delivery' if final_parameters is not None or mode=='research-r6-video-replay' else 'development', free_disk_bytes=500*1024**3)
     popen = Mock(side_effect=OSError('CPU stop before Popen'))
     monkeypatch.setattr(experiments.subprocess, 'Popen', popen)
     monkeypatch.setattr('rlflow.releases.freeze', lambda root:store.root)

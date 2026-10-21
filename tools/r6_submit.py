@@ -68,8 +68,11 @@ def submit_once(journal, key, store, *, queue_key, refresh_observation=None):
                 and reservations[0]['resources']==entry['resources']
                 and reservations[0]['purpose']==entry['purpose'], 'RESERVATION_BINDING')
         if spec.get('backend')=='real':
-            require(spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation','research-r6-final-evaluation'), 'R6_MODE_REQUIRED')
+            require(spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation','research-r6-final-evaluation','research-r6-video-replay'), 'R6_MODE_REQUIRED')
             auth=json.loads(checked(spec['pins']['authorization']).read_text())
+            if spec['h1']['mode']=='research-r6-video-replay':
+                from tools.r6_render_job import validate
+                validate(journal,auth['parameters'],entry['purpose'])
             if spec['h1']['mode']=='research-r6-final-evaluation':
                 from tools.r6_final_job import validate
                 validate(journal,auth['parameters'],entry['purpose'])

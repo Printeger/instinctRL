@@ -18,7 +18,8 @@ def build(config_pin,authorization_pin,attempt,stage_id,conditions,store_root):
     config=json.loads(config_path.read_text())
     authority=json.loads(checked(authorization_pin).read_text())
     mode=authority.get('mode')
-    if mode not in MODES:raise RecoveryError('SPEC_R6_MODE')
+    replay=mode=='research-r6-video-replay'
+    if mode not in MODES and not replay:raise RecoveryError('SPEC_R6_MODE')
     work=Path(config['workload']['path']);attempt=Path(attempt)
     if (not work.is_absolute() or work.resolve()!=work or work.is_symlink()
             or config_path!=work/'training_workloads/unified_h1/candidate_config.json'
@@ -30,15 +31,18 @@ def build(config_pin,authorization_pin,attempt,stage_id,conditions,store_root):
     if executable['sha256']!=config['execution']['python_sha256']:
         raise RecoveryError('SPEC_INTERPRETER_DRIFT')
     limit=budget['wall_seconds']+10
+    module='tools.run_r6_render' if replay else 'training_workloads.unified_h1.formal_unified_h1'
+    argv=[executable['path'],'-B','-m',module,'--authorization',authorization_pin['path'],'--attempt',str(attempt)]
+    if not replay:argv+=['--mode',mode]
     spec=dict(id=parameters['experiment_id'],stage_id=stage_id,backend='real',
-        argv=[executable['path'],'-B','-m','training_workloads.unified_h1.formal_unified_h1',
-            '--authorization',authorization_pin['path'],'--attempt',str(attempt),'--mode',mode],
+        argv=argv,
         cwd=str(work),pins=dict(dispatcher=file_pin(work/'training_workloads/unified_h1/local_dispatch.py'),
-            executable=executable,product=file_pin(Path(config['product']['path'])/'isaaclab-training/instinctlab/envs/unified_h1_direct_env.py'),
-            workload=file_pin(work/'training_workloads/unified_h1/formal_unified_h1.py'),
+            executable=executable,product=file_pin(Path(config['product']['path'])/('isaaclab-training/instinctlab/task/scene_h1.py' if replay else 'isaaclab-training/instinctlab/envs/unified_h1_direct_env.py')),
+            workload=file_pin(work/('tools/run_r6_render.py' if replay else 'training_workloads/unified_h1/formal_unified_h1.py')),
             runtime=dict(executable),authorization=dict(authorization_pin)),
-        method=config['method']['version'],evaluation=config['versions']['metric'],
-        runtime=config['execution']['frozen_runtime_root'],seed=parameters['training_seed' if mode==MODES[1] else 'evaluation_seed'],
+        method='r6-recorded-trajectory-replay-v1' if replay else config['method']['version'],
+        evaluation='NO_NEW_PHYSICS' if replay else config['versions']['metric'],
+        runtime=config['execution']['frozen_runtime_root'],seed=0 if replay else parameters['training_seed' if mode==MODES[1] else 'evaluation_seed'],
         resources=dict(starts=1,wall_seconds=limit,gpu_seconds=limit,transitions=budget['nontraining_transitions']+budget['training_transitions']),
         conditions=[dict(c) for c in conditions],
         observations=['status','counters','process_identity','process_start'],

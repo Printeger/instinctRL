@@ -1,5 +1,14 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：R6 replay接入真实Store spec/准确发行事务、注册/提交/存储owner和原件清单；准备/顶层路由待接。
+冻结源码在导入前验pin；独立回放身份/入口/零transitions仍计GPU/live/sim/wall，不能冒充CPU作业。
+发车前核验控制器已完成提取receipt和cursor；失败旧attempt保留，准确提交claim恢复不重发。
+渲染关闭只做inventory/postrun，不调用科学决策；原生FAILED与零步完整计数分别保留。
+124项初检、109项组合、94项路由、76项最终组合与63项源码/H1检查通过；真实Journal guard通过。
+证据 CPU_RENDER_STORE.json；冻结执行/审核/发车仍为明确CPU替身，无生产许可/GPU/基线。
+尚需冻结渲染输入/独审/物化和顶层路由、验帧交付/最终独审/修复/平台交接；完整Goal未完成。
+173次自动唤醒+30worker=203/256，剩53。
+
 2026-10-22：R6 回放改用受控 AppLauncher；新增准确渲染参数/预算和有界入口，尚未接 Store 发车。
 强制 native 硬配额、冻结扩展、原13样本完整准入、路径readback与清理；渲染计live/sim/GPU/wall，零物理/策略步。
 原件/场景/只读源码/配置/审核绑定；写证据失败仍执行app清理，原失败状态保留，不复用已开始attempt。

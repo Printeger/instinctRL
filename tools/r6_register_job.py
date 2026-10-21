@@ -71,6 +71,9 @@ def register(journal, spec_pin, store, *, free_disk_bytes, purpose='development'
     require(jid not in store.replay()['jobs'],'EXISTING_STORE_JOB')
     experiments.validate(spec,store.root)
     experiments.authorized(store.replay(),spec,store.root)
+    if spec.get('h1',{}).get('mode')=='research-r6-video-replay':
+        from tools.r6_render_job import validate
+        validate(journal,json.loads(checked(spec['pins']['authorization']).read_text())['parameters'],purpose)
     if spec.get('h1',{}).get('mode')=='research-r6-final-evaluation':
         from tools.r6_final_job import validate
         validate(journal,json.loads(checked(spec['pins']['authorization']).read_text())['parameters'],purpose)
@@ -79,7 +82,7 @@ def register(journal, spec_pin, store, *, free_disk_bytes, purpose='development'
     resources=dict(live_starts=1,live_wall_seconds=spec['resources']['wall_seconds']+180,
                    allocated_gpu_seconds=spec['resources']['wall_seconds']+180)
     if spec['backend']=='real':
-        require(spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation','research-r6-final-evaluation'),'R6_MODE_REQUIRED')
+        require(spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation','research-r6-final-evaluation','research-r6-video-replay'),'R6_MODE_REQUIRED')
         auth=json.loads(checked(spec['pins']['authorization']).read_text())
         from tools.r6_job_resources import resources as job_resources
         resources=job_resources(spec,auth,prepaid=storage is not None)
