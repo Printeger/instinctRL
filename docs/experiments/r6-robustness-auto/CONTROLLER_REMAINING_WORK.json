@@ -1,6 +1,6 @@
 {
-  "status": "CPU_FINAL_BATCH_PLANS_REVIEW_ISSUANCE_SEQUENCE_PASS_TOP_LEVEL_INPUTS_PENDING",
-  "checked_commit": "d54b9b8c85106b3a0a18c69e0db24d5db9957522",
+  "status": "CPU_FINAL_INPUTS_EXACT_CONFIG_COMMIT_SNAPSHOT_AND_TOP_LEVEL_ROUTE_PASS_DELIVERY_PENDING",
+  "checked_commit": "237796bd283c848a8641c7212af286dcf7f6b7ff",
   "concrete_first_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
     "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
@@ -30,8 +30,8 @@
   ],
   "next_implementation": {
     "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs; persistent first/decision/profile/materialization/next cursor and actual detached CPU wait/STOP fixture; exact baseline-compatible source payload/review/frozen validation/new-context routing; exact training-plan budget/seed/checkpoint provenance and RNG branch/resume composition; R6 world-command training driver with actual next-attitude conversion and exact clock provenance; registered phase curriculum and actual CPU condition/reset sampling with audit separation and phase reset budgeting; training phase reset/measurement/physics adapter composition including resumed phase pulse offset and audited noise stream fork; loaded-trainer phase execution with shared first-update diagnostic, bounded logs/RNG, original/robust driver switching and exact checkpoint callback; strict checkpoint restore, explicit complete method schema, actual runtime/optimizer readback and pre-execution drift guard; exact training profile/capacity/source compatibility contracts and dedicated config/formal entry/native/resource lifecycle route",
-    "next": "Final snapshot/input generation and top-level wiring into complete-batch preparation, storage, review and sequence. Exact complete-batch review/issuance and model-free final sequence CPU verified. Confirmation/final-review repair re-entry, independent delivery, combined production review and platform handoff remain.",
-    "deployment": "Controller composition and baseline-compatible source route CPU verified; independent combined review, remaining phase contracts and platform handoff precede production",
+    "next": "Confirmation/final-review repair re-entry; independent final audit, complete report/manifest/resource/model-usage/video delivery; combined production integration review and platform handoff. Deterministic final inputs/config commit/tag/push, protected snapshot and full top-level final sequence are CPU verified.",
+    "deployment": "Full final route CPU verified; repair/delivery, independent combined review and platform handoff remain before production.",
     "invariants": [
       "No Journal or Store authority mutation by source-preparation worker",
       "No model or paid probe while waiting for a live job",
@@ -216,5 +216,9 @@
   "final_plans": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_PLANS.json",
     "sha256": "e211ad1b56b5fcd7cbb0445214be677c6ce4de8fd325d8168cbcde2f7e0b55a6"
+  },
+  "final_routing": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_ROUTING.json",
+    "sha256": "2bbb4894b3ce9714965a6c71ee4d140ad50bdc7e114ca06ec6b3b32fdad001d6"
   }
 }

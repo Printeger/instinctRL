@@ -1,0 +1,70 @@
+{
+  "status": "CPU_FINAL_INPUTS_EXACT_CONFIG_COMMIT_SNAPSHOT_AND_TOP_LEVEL_ROUTE_PASS_DELIVERY_PENDING",
+  "base_commit": "237796bd283c848a8641c7212af286dcf7f6b7ff",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_inputs.py",
+      "sha256": "9ec7cf35dd1c679cc4112f4c88f14844d4e2db71734510be5bbacdfcb010fb3e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/prepare_r6_snapshot.py",
+      "sha256": "8998f10aa85d4f1d68ad9700c2771160d7863f6d78544c0b19a914dbd7bdf6cd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "5152462462ff30c6f4db022f918f5358d659b65b340779924a44e2b775bd49a8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_inputs.py",
+      "sha256": "f891210afed9700871f96a4f87a514e9af7bee86d836692b41e2822236b5fe05"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "f28b7164d98338d4d1ab71f3f102aeb488d53224b0f46eff09e4e8e17d8ae929"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_snapshot.py",
+      "sha256": "e49131df61a67197483431e9390fae3a3ee70ffeb5f3f527c05cabbe28bed716"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_ROUTING_INITIAL.log",
+      "sha256": "e1423384cd20613bce69c94e96ceaa68529cd9d7e6e008bf9d7c6a50f2b0e813"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_ROUTING_CORRECTED.log",
+      "sha256": "984b195d3e44e2714c8d14ff41ed63e7006db8312994356bce71258bb019febe"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_ROUTING_FINAL.log",
+      "sha256": "0fc97273d21b1e500c10900cce95975b949c0f43c993943ea4cf10f395ccb7cd"
+    }
+  ],
+  "checks": {
+    "initial_passed": 25,
+    "initial_failed": 7,
+    "corrected_passed": 63,
+    "final_passed": 73
+  },
+  "initial_failure": "New CPU test events omitted kind; populated the fixture events without weakening production guards.",
+  "scope": [
+    "Deterministic original/confirmed origin configs and complete baseline wall/payload capacity; no new model decision.",
+    "Exact one-file Git commit, tag and normal push before snapshot; preserve unrelated staged data and recover same commit.",
+    "Final snapshot reservation uses confirmation_delivery; changing purpose on replay rejects.",
+    "Persistent top-level holdout to final inputs/preparation/materialization/batch review/sequence/independent delivery boundary.",
+    "All missing final volumes are reported; phase recovery reuses completed inputs/reviews."
+  ],
+  "boundaries": [
+    "Real tiny local Git repository, bare remote, tag/push and Journal; frozen final snapshot execution and scientific publication are explicit substitutes.",
+    "Controller tests stub final science/issuance/execution; earlier exact batch and runner tests remain separate evidence.",
+    "No production holdout release, snapshot creation, model review, Store issuance, GPU/simulation/training or science acceptance."
+  ],
+  "remaining": [
+    "Confirmation/final-review repair re-entry",
+    "Independent final audit, full reports/manifests and actual video delivery",
+    "Combined production integration review and platform no-model-wait handoff"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}

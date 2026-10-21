@@ -89,12 +89,14 @@ def verify_frozen(result,config):
     checked(dict(path=str(target/'training_workloads/unified_h1/candidate_config.json'),sha256=result['config']['sha256']))
 
 
-def prepare(journal,config_path,commit):
+def prepare(journal,config_path,commit,*,purpose="development"):
+    if purpose not in {"development","confirmation_delivery","repair"}:raise RecoveryError("SNAPSHOT_PURPOSE")
     journal.guard();config,target,commit=preflight(config_path,commit)
     state=journal.read()
     if state.get('current_job') or state.get('current_model_event') or any(owns(e.get('process')) for e in state['events'].values()):
         raise RecoveryError('SNAPSHOT_REQUIRES_IDLE')
     request=dict(source_commit=commit,config=file_pin(config_path),target=str(target),tool=file_pin(__file__),reserved_bytes=RESERVATION)
+    if purpose!='development':request['purpose']=purpose
     event=dict(goal_id=state['goal_id'],event_id='SOURCE_SNAPSHOT:'+target.name,job_id='CPU-SNAPSHOT:'+target.name,input_sha256=sha(request),role='source-snapshot')
     key=sha(event)
     aliases=[k for k,e in state['events'].items() if e['identity']['role']=='source-snapshot' and e['request']['target']==str(target)]
@@ -114,7 +116,7 @@ def prepare(journal,config_path,commit):
     checkout_bytes=sum(int(row.split()[3]) for row in rows if row.split()[3]!='-')
     gitdir=Path(git(ROOT,'rev-parse','--absolute-git-dir').decode().strip())
     if checkout_bytes+size(gitdir)+64*1024**2>RESERVATION:raise RecoveryError('SNAPSHOT_CAPACITY_BEFORE_CLONE')
-    key,_=journal.intent(event,kind='cpu',request=request,resources={'output_actual_plus_unreleased_reservations_bytes':RESERVATION},purpose='development',free_disk_bytes=shutil.disk_usage(ROOT).free)
+    key,_=journal.intent(event,kind='cpu',request=request,resources={'output_actual_plus_unreleased_reservations_bytes':RESERVATION},purpose=purpose,free_disk_bytes=shutil.disk_usage(ROOT).free)
     state=journal.read();state['events'][key]['dispatch_claim']=dict(controller=identity(os.getpid()),source_commit=commit);journal.save(state)
     result=dict(event_key=key,input_sha256=sha(request),source_commit=commit,snapshot=str(target),reserved_bytes=RESERVATION,GPU_queries=0,live_starts=0,status='FAILED_PRESERVED_NO_RETRY')
     try:

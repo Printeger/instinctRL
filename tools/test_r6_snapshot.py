@@ -43,9 +43,9 @@ class SnapshotTests(unittest.TestCase):
             return subprocess.CompletedProcess(argv,0,json.dumps(value),'')
         return self.realrun(argv,**kwargs)
 
-    def prepare(self):
+    def prepare(self,*,purpose="development"):
         with patch.object(s,'ROOT',self.repo),patch.object(s,'preflight',return_value=(self.config,self.target,self.commit)),patch.object(s.subprocess,'run',side_effect=self.command):
-            with self.journal.writer():return s.prepare(self.journal,self.path,self.commit)
+            with self.journal.writer():return s.prepare(self.journal,self.path,self.commit,purpose=purpose)
 
     def test_real_clone_freeze_and_replay_no_second_run_or_reservation(self):
         result=self.prepare();before=self.journal.read()['budget']
@@ -53,6 +53,15 @@ class SnapshotTests(unittest.TestCase):
         self.assertFalse(self.target.stat().st_mode&0o222)
         self.assertEqual(self.prepare(),result);self.assertEqual(self.runs,1)
         self.assertEqual(self.journal.read()['budget'],before)
+
+    def test_final_snapshot_uses_protected_purpose_and_cannot_change_it(self):
+        result=self.prepare(purpose='confirmation_delivery')
+        self.assertEqual(self.prepare(purpose='confirmation_delivery'),result)
+        state=self.journal.read();reservation=state['budget']['reservations'][0]
+        self.assertEqual(reservation['purpose'],'confirmation_delivery')
+        self.assertEqual(state['events'][result['event_key']]['request']['purpose'],'confirmation_delivery')
+        with self.assertRaisesRegex(RecoveryError,'TARGET_ALREADY_BOUND'):self.prepare()
+        self.assertEqual(self.runs,1)
 
     def test_replay_rejects_thawed_snapshot(self):
         self.prepare();self.target.chmod(self.target.stat().st_mode|0o200)

@@ -1,0 +1,330 @@
+F...FF....................FF..FF                                         [100%]
+=================================== FAILURES ===================================
+___________ test_commit_tag_push_and_replay_preserve_unrelated_files ___________
+
+inputs = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_commit_tag_push_and_replay_preserve_unrelated_files(inputs):
+        b=inputs;(b.repo/'unrelated.txt').write_text('keep staged\n');b.git('add','unrelated.txt')
+>       out=run(b);budget=b.j.read()['budget'];assert run(b)==out and b.j.read()['budget']==budget
+
+tools/test_r6_final_inputs.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_inputs.py:46: in run
+    with b.j.writer():return m.prepare(b.j,'controller',b.context,b.store,free_disk_bytes=FREE)
+tools/r6_final_inputs.py:129: in prepare
+    inputs=dict(batch=batch_pin,context=save('context.json',context),origin_configs=description['origin_configs'],
+tools/r6_final_inputs.py:102: in save
+    profile.guard(journal);data=canonical(value)+b'\n'
+tools/r6_profile_preparation.py:37: in guard
+    no_model_workers(journal);require(journal.read().get('current_job') is None,'ACTIVE_JOB')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x744bec2ee7e0>
+
+    def no_model_workers(journal):
+        state = journal.read()
+        if state.get('current_model_event') is not None:
+            raise RecoveryError('MODEL_HANDOFF_STILL_ACTIVE')
+        for key, event in state['events'].items():
+>           if event['kind'] != 'model':
+E           KeyError: 'kind'
+
+tools/r6_job_handoff.py:44: KeyError
+----------------------------- Captured stderr call -----------------------------
+To /tmp/pytest-of-mint/pytest-151/test_commit_tag_push_and_repla0/remote.git
+ * [new branch]      main -> main
+ * [new tag]         r6-final-inputs-8fd2cceef90ad817 -> r6-final-inputs-8fd2cceef90ad817
+___________________ test_drift_refuses_snapshot[description] ___________________
+
+inputs = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+fault = 'description'
+
+    @pytest.mark.parametrize('fault',['stop','tool','description','tag'])
+    def test_drift_refuses_snapshot(inputs,fault):
+        b=inputs
+>       if fault in ('description','tag'):run(b)
+
+tools/test_r6_final_inputs.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_inputs.py:46: in run
+    with b.j.writer():return m.prepare(b.j,'controller',b.context,b.store,free_disk_bytes=FREE)
+tools/r6_final_inputs.py:129: in prepare
+    inputs=dict(batch=batch_pin,context=save('context.json',context),origin_configs=description['origin_configs'],
+tools/r6_final_inputs.py:102: in save
+    profile.guard(journal);data=canonical(value)+b'\n'
+tools/r6_profile_preparation.py:37: in guard
+    no_model_workers(journal);require(journal.read().get('current_job') is None,'ACTIVE_JOB')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x744bec2ee1e0>
+
+    def no_model_workers(journal):
+        state = journal.read()
+        if state.get('current_model_event') is not None:
+            raise RecoveryError('MODEL_HANDOFF_STILL_ACTIVE')
+        for key, event in state['events'].items():
+>           if event['kind'] != 'model':
+E           KeyError: 'kind'
+
+tools/r6_job_handoff.py:44: KeyError
+----------------------------- Captured stderr call -----------------------------
+To /tmp/pytest-of-mint/pytest-151/test_drift_refuses_snapshot_de0/remote.git
+ * [new branch]      main -> main
+ * [new tag]         r6-final-inputs-fad5da11b70ffd8b -> r6-final-inputs-fad5da11b70ffd8b
+_______________________ test_drift_refuses_snapshot[tag] _______________________
+
+inputs = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+fault = 'tag'
+
+    @pytest.mark.parametrize('fault',['stop','tool','description','tag'])
+    def test_drift_refuses_snapshot(inputs,fault):
+        b=inputs
+>       if fault in ('description','tag'):run(b)
+
+tools/test_r6_final_inputs.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_inputs.py:46: in run
+    with b.j.writer():return m.prepare(b.j,'controller',b.context,b.store,free_disk_bytes=FREE)
+tools/r6_final_inputs.py:129: in prepare
+    inputs=dict(batch=batch_pin,context=save('context.json',context),origin_configs=description['origin_configs'],
+tools/r6_final_inputs.py:102: in save
+    profile.guard(journal);data=canonical(value)+b'\n'
+tools/r6_profile_preparation.py:37: in guard
+    no_model_workers(journal);require(journal.read().get('current_job') is None,'ACTIVE_JOB')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x744bec36cbc0>
+
+    def no_model_workers(journal):
+        state = journal.read()
+        if state.get('current_model_event') is not None:
+            raise RecoveryError('MODEL_HANDOFF_STILL_ACTIVE')
+        for key, event in state['events'].items():
+>           if event['kind'] != 'model':
+E           KeyError: 'kind'
+
+tools/r6_job_handoff.py:44: KeyError
+----------------------------- Captured stderr call -----------------------------
+To /tmp/pytest-of-mint/pytest-151/test_drift_refuses_snapshot_ta0/remote.git
+ * [new branch]      main -> main
+ * [new tag]         r6-final-inputs-7597509714b8fcdb -> r6-final-inputs-7597509714b8fcdb
+_ test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect[False] _
+
+controller = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x744bec2ecdd0>
+crash = False
+
+    @pytest.mark.parametrize('crash',[False,True])
+    def test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect(controller,monkeypatch,crash):
+        b=controller
+        contexts=[b.write(f'confirmed-{i}.json',{'fixture':i}) for i in range(3)]
+        inputs=Mock(return_value=dict(status='CONFIRMATION_INPUTS_PREPARED_NOT_REVIEWED',inputs=b.context))
+        preparation=Mock(return_value=dict(status='THREE_CONFIRMATION_CONTEXTS_READY_NOT_RESERVED',contexts=contexts))
+        monkeypatch.setattr(c.confirmation_inputs,'prepare',inputs);monkeypatch.setattr(c.confirmation,'prepare',preparation)
+        profile=Mock(return_value=dict(status='PROFILE_AND_STORAGE_PLANS_READY_NOT_PROVISIONED',inputs=b.context))
+        monkeypatch.setattr(c.profile,'prepare_profile',profile)
+        monkeypatch.setattr(c.materializer,'materialize',Mock(return_value=dict(status='EXACT_INPUTS_MATERIALIZED_NOT_AUTHORIZED',artifacts={'plan':b.context})))
+        monkeypatch.setattr(c,'parent_for_job',lambda j,key,s:(b.parent if key==b.key else key+'-parent',{'decision':{'decision':'PROPOSE_CONFIRMATION'}}))
+        original_job=b.j.canonical_job
+        monkeypatch.setattr(b.j,'canonical_job',lambda key,**kw:original_job(b.key,**kw))
+        b.next.side_effect=[dict(status='DECISION_PROPOSAL_RETURNED',child_job_event_key='confirm-'+str(i)) for i in range(3)]
+        collected=[]
+        def collect(j,key,context,store):
+            collected.append((key,context));return dict(job_event_key=key,context=context,scientific_acceptance=False)
+        monkeypatch.setattr(c.confirmation,'collect',collect)
+        final_models=Mock(return_value=dict(status='FINAL_MODELS_BOUND_REVIEW_REQUIRED',freeze=b.context))
+        monkeypatch.setattr(c.final_models,'prepare',final_models)
+        final_review=Mock(return_value=dict(status='FINAL_MODEL_FREEZE_REVIEWED_NOT_RELEASED',freeze=b.context,review=b.context))
+        monkeypatch.setattr(c.final_freeze_review,'prepare',final_review)
+        holdout=Mock(return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context))
+        monkeypatch.setattr(c.holdout_publication,'prepare',holdout)
+        original_save=c.save;failed=[]
+        def save(j,key,cursor,**kw):
+            if crash and len(cursor.get('confirmation',{}).get('results',[]))==1 and not failed:
+                failed.append(True);raise RuntimeError('collection cursor crash')
+            return original_save(j,key,cursor,**kw)
+        monkeypatch.setattr(c,'save',save)
+        if crash:
+            with pytest.raises(RuntimeError,match='collection cursor crash'):run(b)
+            assert entry(b)['cursor']['phase']=='DECIDE'
+>       result=run(b);assert result['status']=='FINAL_DELIVERY_REQUIRED' and result['goal_complete']is False
+
+tools/test_r6_controller.py:330: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller.py:48: in run
+    with b.j.writer():return c.run(b.j,b.request,b.store,free_disk_bytes=500*1024**3)
+tools/r6_controller.py:206: in run
+    profile.guard(journal);persist_exact(path,data)
+tools/r6_profile_preparation.py:37: in guard
+    no_model_workers(journal);require(journal.read().get('current_job') is None,'ACTIVE_JOB')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x744bec256d50>
+
+    def no_model_workers(journal):
+        state = journal.read()
+        if state.get('current_model_event') is not None:
+            raise RecoveryError('MODEL_HANDOFF_STILL_ACTIVE')
+        for key, event in state['events'].items():
+>           if event['kind'] != 'model':
+E           KeyError: 'kind'
+
+tools/r6_job_handoff.py:44: KeyError
+_ test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect[True] _
+
+controller = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x744bec2548c0>
+crash = True
+
+    @pytest.mark.parametrize('crash',[False,True])
+    def test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect(controller,monkeypatch,crash):
+        b=controller
+        contexts=[b.write(f'confirmed-{i}.json',{'fixture':i}) for i in range(3)]
+        inputs=Mock(return_value=dict(status='CONFIRMATION_INPUTS_PREPARED_NOT_REVIEWED',inputs=b.context))
+        preparation=Mock(return_value=dict(status='THREE_CONFIRMATION_CONTEXTS_READY_NOT_RESERVED',contexts=contexts))
+        monkeypatch.setattr(c.confirmation_inputs,'prepare',inputs);monkeypatch.setattr(c.confirmation,'prepare',preparation)
+        profile=Mock(return_value=dict(status='PROFILE_AND_STORAGE_PLANS_READY_NOT_PROVISIONED',inputs=b.context))
+        monkeypatch.setattr(c.profile,'prepare_profile',profile)
+        monkeypatch.setattr(c.materializer,'materialize',Mock(return_value=dict(status='EXACT_INPUTS_MATERIALIZED_NOT_AUTHORIZED',artifacts={'plan':b.context})))
+        monkeypatch.setattr(c,'parent_for_job',lambda j,key,s:(b.parent if key==b.key else key+'-parent',{'decision':{'decision':'PROPOSE_CONFIRMATION'}}))
+        original_job=b.j.canonical_job
+        monkeypatch.setattr(b.j,'canonical_job',lambda key,**kw:original_job(b.key,**kw))
+        b.next.side_effect=[dict(status='DECISION_PROPOSAL_RETURNED',child_job_event_key='confirm-'+str(i)) for i in range(3)]
+        collected=[]
+        def collect(j,key,context,store):
+            collected.append((key,context));return dict(job_event_key=key,context=context,scientific_acceptance=False)
+        monkeypatch.setattr(c.confirmation,'collect',collect)
+        final_models=Mock(return_value=dict(status='FINAL_MODELS_BOUND_REVIEW_REQUIRED',freeze=b.context))
+        monkeypatch.setattr(c.final_models,'prepare',final_models)
+        final_review=Mock(return_value=dict(status='FINAL_MODEL_FREEZE_REVIEWED_NOT_RELEASED',freeze=b.context,review=b.context))
+        monkeypatch.setattr(c.final_freeze_review,'prepare',final_review)
+        holdout=Mock(return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context))
+        monkeypatch.setattr(c.holdout_publication,'prepare',holdout)
+        original_save=c.save;failed=[]
+        def save(j,key,cursor,**kw):
+            if crash and len(cursor.get('confirmation',{}).get('results',[]))==1 and not failed:
+                failed.append(True);raise RuntimeError('collection cursor crash')
+            return original_save(j,key,cursor,**kw)
+        monkeypatch.setattr(c,'save',save)
+        if crash:
+            with pytest.raises(RuntimeError,match='collection cursor crash'):run(b)
+            assert entry(b)['cursor']['phase']=='DECIDE'
+>       result=run(b);assert result['status']=='FINAL_DELIVERY_REQUIRED' and result['goal_complete']is False
+
+tools/test_r6_controller.py:330: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller.py:48: in run
+    with b.j.writer():return c.run(b.j,b.request,b.store,free_disk_bytes=500*1024**3)
+tools/r6_controller.py:206: in run
+    profile.guard(journal);persist_exact(path,data)
+tools/r6_profile_preparation.py:37: in guard
+    no_model_workers(journal);require(journal.read().get('current_job') is None,'ACTIVE_JOB')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x744bec2ec110>
+
+    def no_model_workers(journal):
+        state = journal.read()
+        if state.get('current_model_event') is not None:
+            raise RecoveryError('MODEL_HANDOFF_STILL_ACTIVE')
+        for key, event in state['events'].items():
+>           if event['kind'] != 'model':
+E           KeyError: 'kind'
+
+tools/r6_job_handoff.py:44: KeyError
+_ test_baseline_validation_routes_to_freeze_review_without_training_preparation _
+
+controller = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x744bec077410>
+
+    def test_baseline_validation_routes_to_freeze_review_without_training_preparation(controller,monkeypatch):
+        b=controller;monkeypatch.setattr(c,'parent_for_job',lambda *a:(b.parent,{'decision':{'decision':'PROPOSE_BASELINE_VALIDATION'}}))
+        freeze=Mock(return_value=dict(status='FINAL_MODELS_BOUND_REVIEW_REQUIRED',freeze=b.context))
+        review=Mock(return_value=dict(status='FINAL_MODEL_FREEZE_REVIEWED_NOT_RELEASED',freeze=b.context,review=b.context))
+        monkeypatch.setattr(c.final_models,'prepare',freeze);monkeypatch.setattr(c.final_freeze_review,'prepare',review)
+        holdout=Mock(return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context))
+        monkeypatch.setattr(c.holdout_publication,'prepare',holdout)
+>       result=run(b);assert result['status']=='FINAL_DELIVERY_REQUIRED' and not result['goal_complete']
+
+tools/test_r6_controller.py:375: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller.py:48: in run
+    with b.j.writer():return c.run(b.j,b.request,b.store,free_disk_bytes=500*1024**3)
+tools/r6_controller.py:206: in run
+    profile.guard(journal);persist_exact(path,data)
+tools/r6_profile_preparation.py:37: in guard
+    no_model_workers(journal);require(journal.read().get('current_job') is None,'ACTIVE_JOB')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x744bec27fa40>
+
+    def no_model_workers(journal):
+        state = journal.read()
+        if state.get('current_model_event') is not None:
+            raise RecoveryError('MODEL_HANDOFF_STILL_ACTIVE')
+        for key, event in state['events'].items():
+>           if event['kind'] != 'model':
+E           KeyError: 'kind'
+
+tools/r6_job_handoff.py:44: KeyError
+______ test_holdout_publication_interruption_does_not_repeat_final_review ______
+
+controller = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x744bec15f350>
+
+    def test_holdout_publication_interruption_does_not_repeat_final_review(controller,monkeypatch):
+        b=controller;monkeypatch.setattr(c,'parent_for_job',lambda *a:(b.parent,{'decision':{'decision':'PROPOSE_BASELINE_VALIDATION'}}))
+        freeze=Mock(return_value=dict(status='FINAL_MODELS_BOUND_REVIEW_REQUIRED',freeze=b.context))
+        review=Mock(return_value=dict(status='FINAL_MODEL_FREEZE_REVIEWED_NOT_RELEASED',freeze=b.context,review=b.context))
+        monkeypatch.setattr(c.final_models,'prepare',freeze);monkeypatch.setattr(c.final_freeze_review,'prepare',review)
+        publication=Mock(side_effect=RuntimeError('publication interrupted'))
+        monkeypatch.setattr(c.holdout_publication,'prepare',publication)
+        for _ in range(2):
+            with pytest.raises(RuntimeError,match='publication interrupted'):run(b)
+        assert entry(b)['cursor']['phase']=='HOLDOUT_PREPARATION'
+        publication.side_effect=None;publication.return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context)
+>       assert run(b)['status']=='FINAL_DELIVERY_REQUIRED'
+
+tools/test_r6_controller.py:393: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller.py:48: in run
+    with b.j.writer():return c.run(b.j,b.request,b.store,free_disk_bytes=500*1024**3)
+tools/r6_controller.py:206: in run
+    profile.guard(journal);persist_exact(path,data)
+tools/r6_profile_preparation.py:37: in guard
+    no_model_workers(journal);require(journal.read().get('current_job') is None,'ACTIVE_JOB')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x744bec15c2c0>
+
+    def no_model_workers(journal):
+        state = journal.read()
+        if state.get('current_model_event') is not None:
+            raise RecoveryError('MODEL_HANDOFF_STILL_ACTIVE')
+        for key, event in state['events'].items():
+>           if event['kind'] != 'model':
+E           KeyError: 'kind'
+
+tools/r6_job_handoff.py:44: KeyError
+=========================== short test summary info ============================
+FAILED tools/test_r6_final_inputs.py::test_commit_tag_push_and_replay_preserve_unrelated_files
+FAILED tools/test_r6_final_inputs.py::test_drift_refuses_snapshot[description]
+FAILED tools/test_r6_final_inputs.py::test_drift_refuses_snapshot[tag] - KeyE...
+FAILED tools/test_r6_controller.py::test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect[False]
+FAILED tools/test_r6_controller.py::test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect[True]
+FAILED tools/test_r6_controller.py::test_baseline_validation_routes_to_freeze_review_without_training_preparation
+FAILED tools/test_r6_controller.py::test_holdout_publication_interruption_does_not_repeat_final_review
+7 failed, 25 passed in 15.40s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-83af5f9c-ef35-41ac-b317-c8da1e032dd4/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-83af5f9c-ef35-41ac-b317-c8da1e032dd4/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-83af5f9c-ef35-41ac-b317-c8da1e032dd4/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-83af5f9c-ef35-41ac-b317-c8da1e032dd4
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-83af5f9c-ef35-41ac-b317-c8da1e032dd4'
+  warnings.warn(

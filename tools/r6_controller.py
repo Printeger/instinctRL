@@ -30,11 +30,18 @@ from tools import r6_confirmation_preparation as confirmation
 from tools import r6_final_models as final_models
 from tools import r6_final_freeze_review as final_freeze_review
 from tools import r6_holdout_publication as holdout_publication
+from tools import r6_final_inputs as final_inputs
+from tools import r6_final_preparation as final_preparation
+from tools import r6_final_storage as final_storage
+from tools import r6_final_plans_review as final_plans_review
+from tools import r6_final_sequence as final_sequence
+from tools.r6_decision_packet import persist_exact
+from rlflow.store import canonical
 
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_EVALUATION_PREPARATION_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED'}
 
 
 def require(condition,reason):
@@ -176,6 +183,42 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 outcome=holdout_publication.prepare(journal,request,free_disk_bytes=free)
                 require(outcome['status']=='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY','HOLDOUT_STATUS')
                 cursor.update(phase='FINAL_EVALUATION_PREPARATION_REQUIRED',final_batch=outcome)
+            elif phase=='FINAL_EVALUATION_PREPARATION_REQUIRED':
+                outcome=final_inputs.prepare(journal,key,cursor['final_batch']['batch'],store,free_disk_bytes=free)
+                require(outcome['status']=='FINAL_INPUTS_AND_SNAPSHOT_READY_NOT_REVIEWED','FINAL_INPUTS_STATUS')
+                cursor.update(phase='FINAL_PREPARATION',final_inputs=outcome)
+            elif phase=='FINAL_PREPARATION':
+                inputs=cursor['final_inputs']
+                outcome=final_preparation.prepare(journal,inputs['snapshot'],inputs['inputs'],store,
+                    executable=initial['review_executable'],free_disk_bytes=free)
+                require(outcome['status']=='FINAL_BATCH_CONTEXTS_READY_NOT_RESERVED','FINAL_PREPARATION_STATUS')
+                pin=journal.read()['events'][outcome['event_key']]['result']
+                require(json.loads(checked(pin).read_text())==outcome,'FINAL_PREPARATION_PIN')
+                cursor.update(phase='FINAL_MATERIALIZE',final_preparation=pin)
+            elif phase=='FINAL_MATERIALIZE':
+                outcome=final_storage.materialize_all(journal,cursor['final_preparation'],store,free_disk_bytes=free)
+                if outcome['status']=='WAITING_FOR_ADMIN_PROVISION':
+                    save(journal,key,cursor,status='WAITING_FOR_ADMIN_PROVISION')
+                    return dict(status='WAITING_FOR_ADMIN_PROVISION',event_key=key,missing=outcome['missing'],goal_complete=False)
+                require(outcome['status']=='FINAL_BATCH_PLANS_READY_NOT_AUTHORIZED','FINAL_MATERIALIZE_STATUS')
+                path=journal.directory/'controllers'/key/'final-materializations.json'
+                data=canonical(outcome)+b'\n';require(len(data)<65536,'FINAL_MATERIALIZATIONS_CAP')
+                profile.guard(journal);persist_exact(path,data)
+                cursor.update(phase='FINAL_PLANS_REVIEW',final_materializations=file_pin(path))
+            elif phase=='FINAL_PLANS_REVIEW':
+                outcome=final_plans_review.prepare(journal,cursor['final_materializations'],store,
+                    executable=initial['review_executable'],free_disk_bytes=free)
+                require(outcome['status']=='FINAL_BATCH_PLANS_REVIEWED_NOT_AUTHORIZED','FINAL_PLANS_REVIEW_STATUS')
+                cursor.update(phase='FINAL_SEQUENCE',final_plans_review=outcome)
+            elif phase=='FINAL_SEQUENCE':
+                reviewed=cursor['final_plans_review']
+                outcome=final_sequence.advance(journal,cursor['final_materializations'],reviewed['event_key'],
+                    reviewed['review'],initial['master_pin'],store,free_disk_bytes=free)
+                if outcome['status']=='RESOURCE_OBSERVATION_REJECTED':
+                    save(journal,key,cursor,status=outcome['status'])
+                    return dict(status=outcome['status'],event_key=key,goal_complete=False)
+                require(outcome['status']=='FINAL_BATCH_COLLECTED_REQUIRES_INDEPENDENT_AUDIT','FINAL_SEQUENCE_STATUS')
+                cursor.update(phase='FINAL_DELIVERY_REQUIRED',final_collection=outcome)
             elif phase=='CONFIRMATION_PREPARATION':
                 outcome=confirmation.prepare(journal,cursor['parent_key'],cursor['confirmation_inputs'],store,
                     executable=initial['review_executable'],free_disk_bytes=free)

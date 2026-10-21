@@ -27,6 +27,20 @@ def controller(case,monkeypatch):
     monkeypatch.setattr(c.compatibility,'prepare',b.compat)
     monkeypatch.setattr(c.source,'prepare_source',b.source)
     b.next=Mock();monkeypatch.setattr(c.next_entry,'continue_job',b.next)
+    # Final science/execution remains a stub in these cursor-composition tests.
+    b.final_inputs=Mock(return_value=dict(status='FINAL_INPUTS_AND_SNAPSHOT_READY_NOT_REVIEWED',snapshot=b.context,inputs=b.context))
+    monkeypatch.setattr(c.final_inputs,'prepare',b.final_inputs)
+    def final_prepare(j,*args,**kw):
+        value=dict(status='FINAL_BATCH_CONTEXTS_READY_NOT_RESERVED',event_key='fixture-final-preparation')
+        state=j.read();state['events']['fixture-final-preparation']={'kind':'cpu','identity':{'role':'final-batch-preparation'},'result':b.write('final-prepared.json',value)};j.save(state)
+        return value
+    b.final_prepare=Mock(side_effect=final_prepare);monkeypatch.setattr(c.final_preparation,'prepare',b.final_prepare)
+    b.final_materialize=Mock(return_value=dict(status='FINAL_BATCH_PLANS_READY_NOT_AUTHORIZED',assignments=[],dispatch_authorized=False))
+    monkeypatch.setattr(c.final_storage,'materialize_all',b.final_materialize)
+    b.final_review=Mock(return_value=dict(status='FINAL_BATCH_PLANS_REVIEWED_NOT_AUTHORIZED',event_key='fixture-final-review',review=b.context))
+    monkeypatch.setattr(c.final_plans_review,'prepare',b.final_review)
+    b.final_sequence=Mock(return_value=dict(status='FINAL_BATCH_COLLECTED_REQUIRES_INDEPENDENT_AUDIT',collection={'fixture':True}))
+    monkeypatch.setattr(c.final_sequence,'advance',b.final_sequence)
     return b
 
 
@@ -313,7 +327,7 @@ def test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect
     if crash:
         with pytest.raises(RuntimeError,match='collection cursor crash'):run(b)
         assert entry(b)['cursor']['phase']=='DECIDE'
-    result=run(b);assert result['status']=='FINAL_EVALUATION_PREPARATION_REQUIRED' and result['goal_complete']is False
+    result=run(b);assert result['status']=='FINAL_DELIVERY_REQUIRED' and result['goal_complete']is False
     assert [call.args[2] for call in profile.call_args_list]==contexts
     assert [call.args[1] for call in b.next.call_args_list]==[b.parent,'confirm-0-parent','confirm-1-parent']
     assert [r['job_event_key'] for r in entry(b)['cursor']['confirmation']['results']]==['confirm-0','confirm-1','confirm-2']
@@ -358,7 +372,7 @@ def test_baseline_validation_routes_to_freeze_review_without_training_preparatio
     monkeypatch.setattr(c.final_models,'prepare',freeze);monkeypatch.setattr(c.final_freeze_review,'prepare',review)
     holdout=Mock(return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context))
     monkeypatch.setattr(c.holdout_publication,'prepare',holdout)
-    result=run(b);assert result['status']=='FINAL_EVALUATION_PREPARATION_REQUIRED' and not result['goal_complete']
+    result=run(b);assert result['status']=='FINAL_DELIVERY_REQUIRED' and not result['goal_complete']
     assert entry(b)['cursor']['baseline_validation']==dict(parent_key=b.parent,job_key=b.key,context=b.context)
     assert run(b)==result;freeze.assert_called_once();review.assert_called_once()
     holdout.assert_called_once()
@@ -376,5 +390,38 @@ def test_holdout_publication_interruption_does_not_repeat_final_review(controlle
         with pytest.raises(RuntimeError,match='publication interrupted'):run(b)
     assert entry(b)['cursor']['phase']=='HOLDOUT_PREPARATION'
     publication.side_effect=None;publication.return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context)
-    assert run(b)['status']=='FINAL_EVALUATION_PREPARATION_REQUIRED'
+    assert run(b)['status']=='FINAL_DELIVERY_REQUIRED'
     freeze.assert_called_once();review.assert_called_once();b.next.assert_not_called()
+
+
+@pytest.mark.parametrize('phase',['FINAL_PREPARATION','FINAL_MATERIALIZE','FINAL_PLANS_REVIEW','FINAL_SEQUENCE'])
+def test_final_route_restart_does_not_repeat_prior_phases(controller,monkeypatch,phase):
+    b=controller
+    with b.j.writer():
+        key,_=c.register(b.j,b.request,b.store,free_disk_bytes=500*1024**3)
+        state=b.j.read();state['events'][key]['cursor'].update(phase='FINAL_EVALUATION_PREPARATION_REQUIRED',final_batch={'batch':b.context});b.j.save(state)
+    target={'FINAL_PREPARATION':b.final_prepare,'FINAL_MATERIALIZE':b.final_materialize,
+        'FINAL_PLANS_REVIEW':b.final_review,'FINAL_SEQUENCE':b.final_sequence}[phase]
+    original=target.side_effect;target.side_effect=RuntimeError('final interruption')
+    with pytest.raises(RuntimeError,match='final interruption'):run(b)
+    assert entry(b)['cursor']['phase']==phase
+    target.side_effect=original
+    assert run(b)['status']=='FINAL_DELIVERY_REQUIRED'
+    b.final_inputs.assert_called_once()
+    assert b.final_sequence.call_count==(2 if phase=='FINAL_SEQUENCE' else 1)
+    b.first.assert_not_called();b.next.assert_not_called()
+
+
+def test_final_missing_volumes_preserves_phase_and_reports_all(controller):
+    b=controller
+    with b.j.writer():
+        key,_=c.register(b.j,b.request,b.store,free_disk_bytes=500*1024**3)
+        state=b.j.read();state['events'][key]['cursor'].update(phase='FINAL_EVALUATION_PREPARATION_REQUIRED',final_batch={'batch':b.context});b.j.save(state)
+    good=b.final_materialize.return_value
+    b.final_materialize.return_value=dict(status='WAITING_FOR_ADMIN_PROVISION',missing=[{'assignment_index':0,'missing':['native','result']}])
+    out=run(b);assert out['missing']==b.final_materialize.return_value['missing']
+    assert entry(b)['cursor']['phase']=='FINAL_MATERIALIZE'
+    b.final_review.assert_not_called();b.final_sequence.assert_not_called()
+    b.final_materialize.return_value=good
+    assert run(b)['status']=='FINAL_DELIVERY_REQUIRED'
+    b.final_inputs.assert_called_once();b.final_prepare.assert_called_once()
