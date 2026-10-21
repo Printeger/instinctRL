@@ -1,0 +1,78 @@
+{
+  "schema_version": "r6-fixed-result-layout-cpu/1",
+  "status": "CPU_PLAN_AND_GUARDS_PASS_NOT_PROVISIONED",
+  "pytest_cases_passed": 53,
+  "source": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_fixed_result_volume.py",
+      "sha256": "54cf055a4c263d7496077e04ca7993a962ce60d4292f60109972ae66564c1efa"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/result_volume.py",
+      "sha256": "38566ff50295041da1166153ff360b6d7858d99fc25885f254ddbdf323ff348d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_fixed_result_volume.py",
+      "sha256": "04da5f534c8f1addeed9478b5541f7cfd19842b4d7618899154b7f59674b229d"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FIXED_RESULT_LAYOUT_TESTS_V2.txt",
+      "sha256": "39f5ebdb740c068f2b8c1db79aa1c7e516bc147018e7822d5fea6809a5bc34a2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FIXED_RESULT_LAYOUT_DISPATCH_TESTS.txt",
+      "sha256": "ca124dd826330babc3bb595a2f39033b1e1fb039b0b4e6516a89cdedfea8061f"
+    }
+  ],
+  "initial_output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FIXED_RESULT_LAYOUT_TESTS.txt",
+    "sha256": "8593627942bb0e0f98f7c4add2e6bc216f585b0f5cc39903284808d7f8e89430"
+  },
+  "initial_skip": "Torch compatibility skipped under controlPython; existing tensorPython subsequently ran all9 dispatch tests successfully.",
+  "unchanged_cpu02_helper": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_result_volume.py",
+    "sha256": "221b3db6f38690e01f46868f845ec36b5519030be43474815b3554ff3010c0cd"
+  },
+  "layout_candidate": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_FIXED_LAYOUT_CPU_CANDIDATE.json",
+    "sha256": "3476ba6c8de4c4dc56ae7b39f9900e67a74603480384218dd0e9e9edd4ce02ee"
+  },
+  "historical_file_count": {
+    "root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training",
+    "regular_and_other_nondirectory_entries": 27,
+    "directories_below_root": 3,
+    "symlinks": 0,
+    "limitation": "Read-only current count of one R5 training output; not a maximum for R6 or inode acceptance."
+  },
+  "codec_observation": {
+    "source": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/lossless_evidence.py",
+      "sha256": "82684c9bdf7be9bf19e910f12f016092ffff41d022e7b0a537d7f965ca8779d4"
+    },
+    "historical_codec_report": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TRAINING_CHUNK_STORE_CAPACITY_CPU.json",
+      "sha256": "87089d0bf64ee8cc9e945ca31622ab41ea127543a16948c0a47bb206666802dc"
+    },
+    "streams": 10,
+    "chunks": 18196,
+    "note": "ChunkWriter appends chunks within one .r6z file per logical stream; chunks are not individual filesystem files."
+  },
+  "coverage": [
+    "Exact fixed format options and immutable plan equality before administrator effects",
+    "Fresh identity, empty target and host free-floor rejection before allocating/mounting",
+    "Byte or inode shortfall produces preserved failed-capacity status",
+    "Launch rechecks fixed-layout payload/inode floor; postrun zero-free mode still inventories full failed volumes"
+  ],
+  "limitations": [
+    "No new image, mount, sudo invocation or GPU execution",
+    "Fixed-layout candidate has not been formatted or independently accepted",
+    "Per-job required inode floor must be frozen from actual workload file plan; historical count alone is insufficient",
+    "Production native3GiB allowance, total128GiB cap and final coverage unchanged"
+  ],
+  "capacity_pass": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0
+}

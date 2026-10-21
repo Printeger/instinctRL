@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：固定结果卷布局形成独立配置工具候选，保留CPU02已审工具不变。新工具
+要求准确payload+96MiB与inode最低数，挂载后记录实测容量；不足则保留卷和失败manifest。
+运行前重验可用字节/inode，postrun允许清点已满卷。53项CPU回归通过，见
+`docs/experiments/r6-robustness-auto/CPU_FIXED_RESULT_LAYOUT.json`。
+历史文件数仅供参考，压缩chunk在单一流文件内；不能据此宣称R6 inode上界已验收。
+本轮未创建新卷，布局仍待真实验证与独审，capacity=false，无GPU/live/model。
+
 2026-10-21：第14次独审PASS_CPU_SCOPE，无MUST_FIX；确认实际CPU02多文件/后代
 ENOSPC证据、准确挂载/底层目录保护、双卷完整计账及实际可用空间准入关闭结果目录
 绕过缺口。见 `docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json`。
