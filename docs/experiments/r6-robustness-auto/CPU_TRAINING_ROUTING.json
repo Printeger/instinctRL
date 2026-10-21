@@ -1,0 +1,53 @@
+{
+  "status": "CPU_TRAINING_SOURCE_REVIEW_CONTEXT_ROUTING_PASS_NOT_DEPLOYED",
+  "input_commit": "20be2165",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_source_preparation.py",
+      "sha256": "746ac7c44c33317586bf7fb29e9ba6f30287a1ed08b70c30488c164aa2cd640a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_preparation.py",
+      "sha256": "4c7bc7725b5e4b36b93ea509651904df67b999c20d9b0c61183954cf96e9366c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "e5ae4f8a9208300f1f12a124d10ae345c453243cc545625ff89f882c32166d67"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_profile_preparation.py",
+      "sha256": "cf8c6b757a345b49d047489420a8980a78ca2251cea1d0f3d7b0bb1d8d85cae7"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_ROUTING_INITIAL_TESTS.log",
+      "sha256": "1b8f157341eadebe236088bffa59a8d552575111a624bef38d5b3f49bf5acbea"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_ROUTING_TESTS.log",
+      "sha256": "603e792a87dd642b560f6db591f9ba043f375e3fec70a3c9d1ddc59372e4b2f8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_ROUTING_RECOVERY_TESTS.log",
+      "sha256": "b0cb4dbe54caa2b3b68b14500340d70dddc1a9e4acf6f3619721ad384b940074"
+    }
+  ],
+  "combined_tests": 84,
+  "additional_recovery_tests": 4,
+  "initial_failure": "4 preparation tests failed because synthetic source receipt omitted verified cleanup metadata; replaced with explicitly reused completed fixture receipt. No production receipt synthesized.",
+  "scope": [
+    "Committed source design card v2 carries training recipe/plan templates and exact origin config; controller-owned source identity and recipe/review pins cannot be supplied in templates",
+    "Source preparation checks committed new method/curriculum/design files, training schema and scientific card bindings before snapshot",
+    "Controller chooses TRAINING_PREPARATION for training design, otherwise retains baseline compatibility route",
+    "Preparation binds frozen identity, exact recipe review to plan, combined capacity/source review to profile, then validates frozen training draft before publishing context",
+    "Durable recipe-review result permits stage review recovery while current_model_event remains active; cached pins, source reservation, snapshot/source commit, confirmation purpose, output cap and STOP are guarded"
+  ],
+  "limitations": [
+    "Source tests use real temporary Git and local fake CLI with explicit snapshot validation/creation fixtures",
+    "Preparation tests use real Journal and files with declared completed source receipt/review/frozen-validator fixtures; controller routing has live runners/reviews substituted",
+    "No production training snapshot, independent review, Store permission, GPU, simulation or deployed controller",
+    "Training CPU analysis, candidate/final evaluation contracts and full scientific delivery remain; combined independent integration review and platform handoff pending"
+  ],
+  "goal_complete": false
+}

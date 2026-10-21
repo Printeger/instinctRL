@@ -1,0 +1,264 @@
+FFFF.................................                                    [100%]
+=================================== FAILURES ===================================
+___ test_exact_frozen_identity_and_recipe_receipt_flow_to_stage_and_profile ____
+
+ready = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_exact_frozen_identity_and_recipe_receipt_flow_to_stage_and_profile(ready):
+>       b=ready;first=run(b);budget=b.j.read()['budget'];assert run(b)==first and b.j.read()['budget']==budget
+
+tools/test_r6_training_preparation.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_preparation.py:38: in run
+    with b.j.writer():return t.prepare(b.j,b.parent,b.snapshot,b.context,b.result,b.store,
+tools/r6_training_preparation.py:45: in prepare
+    profile.guard(journal)
+tools/r6_profile_preparation.py:36: in guard
+    no_model_workers(journal);require(journal.read().get('current_job') is None,'ACTIVE_JOB')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7a88e0f483e0>
+
+    def no_model_workers(journal):
+        state = journal.read()
+        if state.get('current_model_event') is not None:
+            raise RecoveryError('MODEL_HANDOFF_STILL_ACTIVE')
+        for key, event in state['events'].items():
+            if event['kind'] != 'model':
+                continue
+            if owns(event.get('process')):
+                raise RecoveryError('MODEL_WORKER_ALIVE_DURING_JOB')
+            call = journal.directory / 'calls' / key
+            for filename in ('worker.json', 'child.json'):
+                path = call / filename
+                if path.exists() and owns(read(path).get('identity')):
+                    raise RecoveryError('MODEL_PROCESS_ALIVE_DURING_JOB')
+            # An unconsumed dispatch can hide an as-yet-unbound child. Never infer
+            # absence from a missing PID/receipt alone.
+            if event.get('dispatch_claim') and not event.get('receipt'):
+                raise RecoveryError('MODEL_DISPATCH_UNRESOLVED')
+            if event.get('receipt'):
+                receipt = read(checked(event['receipt']))
+                if owns(receipt.get('process')) or owns(receipt.get('child_identity')):
+                    raise RecoveryError('MODEL_RECEIPT_PROCESS_ALIVE_DURING_JOB')
+                cleanup = receipt.get('cleanup', {})
+                if 'cleanup' not in receipt and state.get('legacy_model_reconciliation'):
+                    from tools.r6_legacy_model_reconciliation import validate_reconciliation
+                    validate_reconciliation(journal, key)
+                    continue
+                if not cleanup_verified(cleanup):
+>                   raise RecoveryError('MODEL_CLEANUP_UNCONFIRMED')
+E                   tools.r6_recovery.RecoveryError: MODEL_CLEANUP_UNCONFIRMED
+
+tools/r6_job_handoff.py:67: RecoveryError
+_____ test_stage_interruption_reconnects_without_reentering_recipe_review ______
+
+ready = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_stage_interruption_reconnects_without_reentering_recipe_review(ready):
+        b=ready;original=b.review.side_effect;failed=[]
+        def review(*args,**kwargs):
+            q=json.loads(t.checked(args[3]).read_text())
+            if q['kind']=='stage' and not failed:failed.append(True);raise RuntimeError('stage in flight')
+            if failed and q['kind']=='recipe':raise AssertionError('must resume stage directly')
+            return original(*args,**kwargs)
+        b.review.side_effect=review
+>       with pytest.raises(RuntimeError,match='stage in flight'):run(b)
+
+tools/test_r6_training_preparation.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_preparation.py:38: in run
+    with b.j.writer():return t.prepare(b.j,b.parent,b.snapshot,b.context,b.result,b.store,
+tools/r6_training_preparation.py:45: in prepare
+    profile.guard(journal)
+tools/r6_profile_preparation.py:36: in guard
+    no_model_workers(journal);require(journal.read().get('current_job') is None,'ACTIVE_JOB')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7a88e101e060>
+
+    def no_model_workers(journal):
+        state = journal.read()
+        if state.get('current_model_event') is not None:
+            raise RecoveryError('MODEL_HANDOFF_STILL_ACTIVE')
+        for key, event in state['events'].items():
+            if event['kind'] != 'model':
+                continue
+            if owns(event.get('process')):
+                raise RecoveryError('MODEL_WORKER_ALIVE_DURING_JOB')
+            call = journal.directory / 'calls' / key
+            for filename in ('worker.json', 'child.json'):
+                path = call / filename
+                if path.exists() and owns(read(path).get('identity')):
+                    raise RecoveryError('MODEL_PROCESS_ALIVE_DURING_JOB')
+            # An unconsumed dispatch can hide an as-yet-unbound child. Never infer
+            # absence from a missing PID/receipt alone.
+            if event.get('dispatch_claim') and not event.get('receipt'):
+                raise RecoveryError('MODEL_DISPATCH_UNRESOLVED')
+            if event.get('receipt'):
+                receipt = read(checked(event['receipt']))
+                if owns(receipt.get('process')) or owns(receipt.get('child_identity')):
+                    raise RecoveryError('MODEL_RECEIPT_PROCESS_ALIVE_DURING_JOB')
+                cleanup = receipt.get('cleanup', {})
+                if 'cleanup' not in receipt and state.get('legacy_model_reconciliation'):
+                    from tools.r6_legacy_model_reconciliation import validate_reconciliation
+                    validate_reconciliation(journal, key)
+                    continue
+                if not cleanup_verified(cleanup):
+>                   raise RecoveryError('MODEL_CLEANUP_UNCONFIRMED')
+E                   tools.r6_recovery.RecoveryError: MODEL_CLEANUP_UNCONFIRMED
+
+tools/r6_job_handoff.py:67: RecoveryError
+
+During handling of the above exception, another exception occurred:
+
+ready = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_stage_interruption_reconnects_without_reentering_recipe_review(ready):
+        b=ready;original=b.review.side_effect;failed=[]
+        def review(*args,**kwargs):
+            q=json.loads(t.checked(args[3]).read_text())
+            if q['kind']=='stage' and not failed:failed.append(True);raise RuntimeError('stage in flight')
+            if failed and q['kind']=='recipe':raise AssertionError('must resume stage directly')
+            return original(*args,**kwargs)
+        b.review.side_effect=review
+>       with pytest.raises(RuntimeError,match='stage in flight'):run(b)
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'stage in flight'
+E        Input: 'MODEL_CLEANUP_UNCONFIRMED'
+
+tools/test_r6_training_preparation.py:61: AssertionError
+_________ test_frozen_profile_failure_or_stop_does_not_publish_context _________
+
+ready = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_frozen_profile_failure_or_stop_does_not_publish_context(ready):
+        b=ready;b.validate.side_effect=RecoveryError('frozen failure')
+>       with pytest.raises(RecoveryError,match='frozen failure'):run(b)
+
+tools/test_r6_training_preparation.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_preparation.py:38: in run
+    with b.j.writer():return t.prepare(b.j,b.parent,b.snapshot,b.context,b.result,b.store,
+tools/r6_training_preparation.py:45: in prepare
+    profile.guard(journal)
+tools/r6_profile_preparation.py:36: in guard
+    no_model_workers(journal);require(journal.read().get('current_job') is None,'ACTIVE_JOB')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7a88e0ff8890>
+
+    def no_model_workers(journal):
+        state = journal.read()
+        if state.get('current_model_event') is not None:
+            raise RecoveryError('MODEL_HANDOFF_STILL_ACTIVE')
+        for key, event in state['events'].items():
+            if event['kind'] != 'model':
+                continue
+            if owns(event.get('process')):
+                raise RecoveryError('MODEL_WORKER_ALIVE_DURING_JOB')
+            call = journal.directory / 'calls' / key
+            for filename in ('worker.json', 'child.json'):
+                path = call / filename
+                if path.exists() and owns(read(path).get('identity')):
+                    raise RecoveryError('MODEL_PROCESS_ALIVE_DURING_JOB')
+            # An unconsumed dispatch can hide an as-yet-unbound child. Never infer
+            # absence from a missing PID/receipt alone.
+            if event.get('dispatch_claim') and not event.get('receipt'):
+                raise RecoveryError('MODEL_DISPATCH_UNRESOLVED')
+            if event.get('receipt'):
+                receipt = read(checked(event['receipt']))
+                if owns(receipt.get('process')) or owns(receipt.get('child_identity')):
+                    raise RecoveryError('MODEL_RECEIPT_PROCESS_ALIVE_DURING_JOB')
+                cleanup = receipt.get('cleanup', {})
+                if 'cleanup' not in receipt and state.get('legacy_model_reconciliation'):
+                    from tools.r6_legacy_model_reconciliation import validate_reconciliation
+                    validate_reconciliation(journal, key)
+                    continue
+                if not cleanup_verified(cleanup):
+>                   raise RecoveryError('MODEL_CLEANUP_UNCONFIRMED')
+E                   tools.r6_recovery.RecoveryError: MODEL_CLEANUP_UNCONFIRMED
+
+tools/r6_job_handoff.py:67: RecoveryError
+
+During handling of the above exception, another exception occurred:
+
+ready = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_frozen_profile_failure_or_stop_does_not_publish_context(ready):
+        b=ready;b.validate.side_effect=RecoveryError('frozen failure')
+>       with pytest.raises(RecoveryError,match='frozen failure'):run(b)
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'frozen failure'
+E        Input: 'MODEL_CLEANUP_UNCONFIRMED'
+
+tools/test_r6_training_preparation.py:67: AssertionError
+___________________ test_cached_recipe_result_drift_rejected ___________________
+
+ready = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_cached_recipe_result_drift_rejected(ready):
+>       b=ready;run(b)
+
+tools/test_r6_training_preparation.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_preparation.py:38: in run
+    with b.j.writer():return t.prepare(b.j,b.parent,b.snapshot,b.context,b.result,b.store,
+tools/r6_training_preparation.py:45: in prepare
+    profile.guard(journal)
+tools/r6_profile_preparation.py:36: in guard
+    no_model_workers(journal);require(journal.read().get('current_job') is None,'ACTIVE_JOB')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7a88e0f1ef60>
+
+    def no_model_workers(journal):
+        state = journal.read()
+        if state.get('current_model_event') is not None:
+            raise RecoveryError('MODEL_HANDOFF_STILL_ACTIVE')
+        for key, event in state['events'].items():
+            if event['kind'] != 'model':
+                continue
+            if owns(event.get('process')):
+                raise RecoveryError('MODEL_WORKER_ALIVE_DURING_JOB')
+            call = journal.directory / 'calls' / key
+            for filename in ('worker.json', 'child.json'):
+                path = call / filename
+                if path.exists() and owns(read(path).get('identity')):
+                    raise RecoveryError('MODEL_PROCESS_ALIVE_DURING_JOB')
+            # An unconsumed dispatch can hide an as-yet-unbound child. Never infer
+            # absence from a missing PID/receipt alone.
+            if event.get('dispatch_claim') and not event.get('receipt'):
+                raise RecoveryError('MODEL_DISPATCH_UNRESOLVED')
+            if event.get('receipt'):
+                receipt = read(checked(event['receipt']))
+                if owns(receipt.get('process')) or owns(receipt.get('child_identity')):
+                    raise RecoveryError('MODEL_RECEIPT_PROCESS_ALIVE_DURING_JOB')
+                cleanup = receipt.get('cleanup', {})
+                if 'cleanup' not in receipt and state.get('legacy_model_reconciliation'):
+                    from tools.r6_legacy_model_reconciliation import validate_reconciliation
+                    validate_reconciliation(journal, key)
+                    continue
+                if not cleanup_verified(cleanup):
+>                   raise RecoveryError('MODEL_CLEANUP_UNCONFIRMED')
+E                   tools.r6_recovery.RecoveryError: MODEL_CLEANUP_UNCONFIRMED
+
+tools/r6_job_handoff.py:67: RecoveryError
+=========================== short test summary info ============================
+FAILED tools/test_r6_training_preparation.py::test_exact_frozen_identity_and_recipe_receipt_flow_to_stage_and_profile
+FAILED tools/test_r6_training_preparation.py::test_stage_interruption_reconnects_without_reentering_recipe_review
+FAILED tools/test_r6_training_preparation.py::test_frozen_profile_failure_or_stop_does_not_publish_context
+FAILED tools/test_r6_training_preparation.py::test_cached_recipe_result_drift_rejected
+4 failed, 33 passed in 18.51s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-822a6d2b-046f-416a-b434-945ef415ae36/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-822a6d2b-046f-416a-b434-945ef415ae36/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-822a6d2b-046f-416a-b434-945ef415ae36/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-822a6d2b-046f-416a-b434-945ef415ae36
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-822a6d2b-046f-416a-b434-945ef415ae36'
+  warnings.warn(

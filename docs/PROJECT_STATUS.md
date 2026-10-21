@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：训练设计卡v2/已提交模板→冻结身份→配方独审→容量/源码合审→训练profile控制器路由接通。
+不允许模板伪造source identity或recipe审核pin；方法/课程/设计JSON需已提交且处于新准备目录。
+第二次审核活跃时直接恢复原事件，已完成配方审核通过持久化结果与receipt复核，不阻断接续。
+84项组合CPU检查及4项追加恢复检查通过；首轮4项fixture缺cleanup失败保留并纠正。
+证据CPU_TRAINING_ROUTING.json；Git/本地fake CLI/Journal测试，冻结/审核/live边界替身明确，无生产发车。
+训练CPU分析、候选/最终评价与交付仍待完成，待组合独审/平台交接；143次自动唤醒+30worker=173，剩83。
+
 2026-10-22：训练独审事件接入既有模型handoff/receipt：配方单审、容量与源码兼容性合并审核。
 逐项decision/hash/证据绑定；接受记录保留原始worker输出与receipt，未授予Store许可或dispatch。
 预算/STOP/父决策/Store漂移、部分拒绝、重复项、冻结重验失败与提示/接受写入崩溃恢复均覆盖。

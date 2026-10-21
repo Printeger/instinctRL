@@ -239,3 +239,23 @@ print(json.dumps(result))
         with Journal(b.j.directory).writer():pass
     finally:
         if proc.poll() is None:proc.terminate();proc.wait(timeout=5)
+
+
+def test_training_source_routes_to_training_reviews_then_profile(controller,monkeypatch):
+    b=controller;monkeypatch.setattr(c,'parent_for_job',lambda *a:(b.parent,{'decision':{'decision':'PROPOSE_CANDIDATE'}}))
+    b.source.return_value['preparation']['training_design']=b.context
+    training=Mock(return_value=dict(status='TRAINING_REVIEWS_ACCEPTED_CONTEXT_READY',context=b.context,dispatch_authorized=False))
+    monkeypatch.setattr(c.training,'prepare',training)
+    assert run(b)['status']=='WAITING_FOR_ADMIN_PROVISION'
+    training.assert_called_once();b.compat.assert_not_called();b.source.assert_called_once()
+
+
+def test_training_review_interruption_keeps_cursor_for_exact_recovery(controller,monkeypatch):
+    b=controller;monkeypatch.setattr(c,'parent_for_job',lambda *a:(b.parent,{'decision':{'decision':'PROPOSE_CANDIDATE'}}))
+    b.source.return_value['preparation']['training_design']=b.context
+    training=Mock(side_effect=RuntimeError('training review in flight'));monkeypatch.setattr(c.training,'prepare',training)
+    with pytest.raises(RuntimeError,match='training review in flight'):run(b)
+    assert entry(b)['cursor']['phase']=='TRAINING_PREPARATION'
+    training.side_effect=None;training.return_value=dict(status='TRAINING_REVIEWS_ACCEPTED_CONTEXT_READY',context=b.context)
+    assert run(b)['status']=='WAITING_FOR_ADMIN_PROVISION'
+    b.source.assert_called_once();b.compat.assert_not_called()

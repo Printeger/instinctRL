@@ -23,6 +23,7 @@ from tools import r6_profile_preparation as profile
 from tools import r6_source_preparation as source
 from tools import r6_materialize_job as materializer
 from tools import r6_execution_compatibility as compatibility
+from tools import r6_training_preparation as training
 
 ROLE='r6-controller'
 CAP=256*1024
@@ -153,7 +154,13 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 snapshot=outcome['snapshot'];snapshot_event=journal.read()['events'][snapshot['event_key']]
                 snapshot_pin=snapshot_event['receipt']
                 require(json.loads(checked(snapshot_pin).read_text())==snapshot,'SNAPSHOT_RESULT')
-                cursor.update(phase='COMPATIBILITY',source_preparation=outcome,snapshot_receipt=snapshot_pin)
+                cursor.update(phase='TRAINING_PREPARATION' if 'training_design' in outcome['preparation'] else 'COMPATIBILITY',
+                    source_preparation=outcome,snapshot_receipt=snapshot_pin)
+            elif phase=='TRAINING_PREPARATION':
+                outcome=training.prepare(journal,cursor['parent_key'],cursor['snapshot_receipt'],cursor['context'],
+                    cursor['source_preparation']['preparation'],store,executable=initial['review_executable'],free_disk_bytes=free)
+                require(outcome['status']=='TRAINING_REVIEWS_ACCEPTED_CONTEXT_READY','TRAINING_PREPARATION_STATUS')
+                cursor.update(phase='PROFILE',context=outcome['context'])
             elif phase=='COMPATIBILITY':
                 outcome=compatibility.prepare(journal,cursor['parent_key'],cursor['snapshot_receipt'],
                     cursor['context'],store,executable=initial['review_executable'],free_disk_bytes=free)

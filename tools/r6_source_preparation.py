@@ -93,7 +93,15 @@ def register(journal,parent_key,store,*,executable,free_disk_bytes):
         'Keep total changed-file bytes within 8 MiB. The JSON design card must contain exactly '
         'schema_version=r6-source-design-card/1, parent_decision_sha256, experiment_id, hypothesis, '
         'comparison, source_scope (nonempty strings), and planned_resources (a nonempty map of '
-        'ledger resource names to nonnegative finite amounts). It is a proposal, not acceptance. Config must satisfy '
+        'ledger resource names to nonnegative finite amounts). For training use schema_version=r6-source-design-card/2 '
+        'and additionally training_design pin to a committed r6-training-design/1 JSON with exactly '
+        'schema_version, recipe_template, plan_template, origin_config. recipe_template has all '
+        'r6-training-recipe/1 fields except source_identity; plan_template has all r6-training-plan/1 '
+        'fields except recipe and recipe_review. Controller binds frozen identity and real review pins. '
+        'Commit method and curriculum JSON inside output_directory and pin them in recipe_template; '
+        'plan experiment_id must equal card experiment_id, hypothesis/comparison must match recipe. '
+        'Training config uses unified-h1-r6-training-config.v1. Never invent review receipts. '
+        'It is a proposal, not acceptance. Config must satisfy '
         'tools.prepare_r6_snapshot.preflight with a fresh target and exact source hashes. '
         'Return SOURCE_READY with the exact 40-character commit and config/card pins only if '
         'ready for the existing CPU snapshot helper. Otherwise return PREPARATION_INCOMPLETE '
@@ -168,10 +176,27 @@ def record(journal,key,store):
     require(config.is_relative_to(repo/output) and card.is_relative_to(repo/output),'OUTPUT_DIRECTORY')
     require(result['config'] in result['evidence_pins'] and result['card'] in result['evidence_pins'],'ARTIFACT_EVIDENCE')
     design=json.loads(card.read_text())
-    require(isinstance(design,dict) and set(design)=={'schema_version','parent_decision_sha256',
-        'experiment_id','hypothesis','comparison','source_scope','planned_resources'}
-        and design['schema_version']=='r6-source-design-card/1'
+    training=isinstance(design,dict) and design.get('schema_version')=='r6-source-design-card/2'
+    fields={'schema_version','parent_decision_sha256','experiment_id','hypothesis','comparison','source_scope','planned_resources'}
+    require(isinstance(design,dict) and set(design)==(fields|{'training_design'} if training else fields)
+        and design['schema_version'] in ('r6-source-design-card/1','r6-source-design-card/2')
         and design['parent_decision_sha256']==packet['parent']['sha256'],'DESIGN_CARD')
+    if training:
+        from training_workloads.unified_h1.robustness_training_plan import FIELDS,RECIPE_FIELDS
+        path=committed(design['training_design'],commit,repo)
+        require(path.is_relative_to(repo/output),'TRAINING_DESIGN_PATH')
+        draft=json.loads(path.read_text())
+        require(set(draft)=={'schema_version','recipe_template','plan_template','origin_config'}
+            and draft['schema_version']=='r6-training-design/1','TRAINING_DESIGN')
+        recipe=draft['recipe_template'];plan=draft['plan_template']
+        require(isinstance(recipe,dict) and set(recipe)==RECIPE_FIELDS-{'source_identity'}
+            and isinstance(plan,dict) and set(plan)==FIELDS-{'recipe','recipe_review'},'TRAINING_TEMPLATES')
+        require(plan['experiment_id']==design['experiment_id'] and all(recipe[k]==design[k]
+            for k in ('hypothesis','comparison')),'TRAINING_SCIENTIFIC_BINDING')
+        require(json.loads(config.read_text()).get('schema_version')=='unified-h1-r6-training-config.v1','TRAINING_CONFIG')
+        checked(draft['origin_config'])
+        for name in ('method','curriculum'):
+            require(committed(recipe[name],commit,repo).is_relative_to(repo/output),'TRAINING_INPUT_PATH')
     require(all(isinstance(design[k],str) and design[k].strip()
         for k in ('experiment_id','hypothesis','comparison','source_scope')),'DESIGN_CARD_FIELDS')
     planned=design['planned_resources']
@@ -182,6 +207,7 @@ def record(journal,key,store):
     artifact=dict(status='SOURCE_INPUTS_READY_NOT_LIVE_AUTHORITY',parent=packet['parent'],
         source_commit=commit,config=result['config'],card=result['card'],review_required=True,
         worker_receipt=entry['receipt'],scientific_acceptance=False)
+    if training:artifact['training_design']=design['training_design']
     path=journal.directory/'source-preparation'/packet['parent_key']/'result.json'
     persist_exact(path,canonical(artifact)+b'\n')
     state=journal.read();state['events'][key]['source_result']=file_pin(path);journal.save(state)

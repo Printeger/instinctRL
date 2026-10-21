@@ -30,6 +30,13 @@ design={'schema_version':'r6-source-design-card/1','parent_decision_sha256':p['p
  'experiment_id':'CPU-PREPARATION','hypothesis':'CPU evidence repair','comparison':'Original failed fixture',
  'source_scope':'CPU fixture only','planned_resources':{'live_starts':0}}
 if settings.get('bad_card'):design['planned_resources']={'training_transitions':10**12}
+if settings.get('training'):
+ config.write_text(json.dumps({'schema_version':'unified-h1-r6-training-config.v1'}))
+ method=out/'method.json';method.write_text('{}');curriculum=out/'curriculum.json';curriculum.write_text('{}')
+ recipe=settings['recipe_template'];recipe.update(hypothesis=design['hypothesis'],comparison=design['comparison'],method=pin(method),curriculum=pin(curriculum))
+ plan=settings['plan_template'];plan['experiment_id']=design['experiment_id']
+ draft=out/'training-design.json';draft.write_text(json.dumps(dict(schema_version='r6-training-design/1',recipe_template=recipe,plan_template=plan,origin_config=pin(config))))
+ design.update(schema_version='r6-source-design-card/2',training_design=pin(draft))
 card.write_text(json.dumps(design))
 if settings.get('banned'):
  bad=repo/'tools/forbidden.py';bad.parent.mkdir();bad.write_text('not allowed')
@@ -211,3 +218,20 @@ def test_actual_charged_clone_freeze_and_recovery(prepared,monkeypatch):
 
 
 ORIGINAL_PREPARE=source.snapshot.prepare
+
+
+@pytest.mark.parametrize('invalid',[False,True])
+def test_committed_training_design_is_exposed_without_fake_review(prepared,invalid):
+    from training_workloads.unified_h1.robustness_training_plan import FIELDS,RECIPE_FIELDS
+    b=prepared;recipe={k:None for k in RECIPE_FIELDS-{'source_identity'}}
+    plan={k:None for k in FIELDS-{'recipe','recipe_review'}}
+    if invalid:recipe['source_identity']={'forged':True}
+    b.builder.with_suffix('.settings').write_text(json.dumps(dict(training=True,recipe_template=recipe,plan_template=plan)))
+    if invalid:
+        with pytest.raises(RecoveryError,match='TRAINING_TEMPLATES'):run(b)
+        b.freeze.assert_not_called()
+    else:
+        result=run(b);design=json.loads(source.checked(result['preparation']['training_design']).read_text())
+        assert 'source_identity' not in design['recipe_template']
+        assert not {'recipe','recipe_review'}.intersection(design['plan_template'])
+        assert run(b)==result
