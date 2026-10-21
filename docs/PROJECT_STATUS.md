@@ -2,6 +2,14 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：已接回本机现有扩展依赖：native卷作业必须在准确实验卡绑定
+extension_inputs manifest；完整内容校验在GPU gate之前，使用显式ext-folder，禁止Python
+写入字节码缓存。旧global cache两次实际全树哈希一致，45070普通文件/12500721684字节；
+仅读取现有输入，没有复制或安装。46测试及3子测试通过，见
+`docs/experiments/r6-robustness-auto/CPU_EXTENSION_INPUTS_VERIFICATION.json`。
+候选输入 `EXTENSION_INPUTS_CANDIDATE_01.json` 尚非live许可；Kit依赖解析、JIT/noexec及
+剩余原生写入边界仍待验证，capacity=false，controller未部署。
+
 2026-10-21：扩展注册表新增候选接线：索引/安装缓存写入native卷，关闭在线获取及自动
 清理，21项CPU路径/设置回读检查通过。静态核对发现8项直接依赖仅存在旧global cache，
 不能仅关闭registry后发车；必须把这些已安装输入显式冻结为读取搜索路径。
