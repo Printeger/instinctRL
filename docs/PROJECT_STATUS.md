@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：训练RNG初始化审计接通：准确plan/recipe/origin身份，分叉原始状态与checkpoint比对，
+用批准seed独立生成CPU Torch/课程/Python/NumPy状态；续训逐字节比较全部保存RNG含CUDA原件。
+记录PPO/permutation绑定，CPU审计不改全局随机流；不宣称CUDA seed重建、实际rollout使用或落盘时序已证实。
+38项tensor、44项控制组合、8项最终针对检查通过，无初轮失败；合成origin身份/计数边界明确。
+证据CPU_TRAINING_RNG_AUDIT.json；候选/最终评价契约、组合独审及平台交接仍待完成，未生产发车。
+147次自动唤醒+30worker=177，模型余79；完整Goal未完成。
+
 2026-10-22：训练checkpoint审计新增actor/critic/Adam完整状态校验和CPU副本加载，逐参数核对
 coverage/order/超参数/矩shape/dtype/有限值/非负二阶矩/精确step，加载后逐tensor确认不漂移。
 CPU/Python/NumPy/curriculum RNG格式可解析；保留CUDA原件，不宣称CUDA语义验证或严格live恢复。

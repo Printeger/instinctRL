@@ -187,6 +187,13 @@ def bind_training_analysis(entry,key,report_pin,context):
         raise RecoveryError('ANALYSIS_TRAINING_SUMMARY')
     if report.get('checkpoint_auditor')!=file_pin(Path(__file__).with_name('r6_training_checkpoint_audit.py')):
         raise RecoveryError('ANALYSIS_IMPLEMENTATION_DRIFT')
+    if report.get('rng_auditor')!=file_pin(Path(__file__).with_name('r6_training_rng_audit.py')):
+        raise RecoveryError('ANALYSIS_IMPLEMENTATION_DRIFT')
+    rng_audit=summary.get('rng_initialization_audit')
+    if rng_audit is not None and (rng_audit.get('status')!='PASS' or rng_audit.get('kind')!=plan['initialization']['kind']
+            or rng_audit.get('training_seed')!=plan['training_seed'] or rng_audit.get('starting_update')!=plan['start_update']
+            or any(rng_audit.get(k) is not False for k in ('cuda_seed_derivation_verified','actual_rollout_rng_use_verified','persistence_order_verified','physical_continuity'))):
+        raise RecoveryError('ANALYSIS_RNG_AUDIT_RESULT')
     probability=summary.get('probability_replay')
     if type(summary.get('probability_gate_recomputed'))is not bool or summary['probability_gate_recomputed']!=(probability is not None):
         raise RecoveryError('ANALYSIS_PROBABILITY_REPLAY_FLAG')
@@ -211,6 +218,9 @@ def bind_training_analysis(entry,key,report_pin,context):
         if row is None or any(pin.get(k)!=row[k] for k in ('sha256','bytes')) or checked(dict(path=str(path),sha256=pin['sha256'])).stat().st_size!=row['bytes']:
             raise RecoveryError('ANALYSIS_INPUT_NOT_IN_EXACT_INVENTORY')
     required={context['auth_pin']['path']}
+    if rng_audit is not None:
+        required.add(plan['initialization']['checkpoint']['path'])
+        required.add(str(output/'compressed_evidence/rng/initialization.pt.r6z'))
     if probability is not None:
         required.add(plan['initialization']['checkpoint']['path'])
         required.add(str(output/'compressed_evidence'/f"pilot_diagnostic/update_{plan['start_update']+1}_full_input.pt.r6z"))

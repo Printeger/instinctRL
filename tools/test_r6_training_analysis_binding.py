@@ -32,6 +32,7 @@ def bound(case,tmp_path,monkeypatch):
         **{k:False for k in ('scientific_acceptance','learning_gain_established','physical_replay_performed','strict_checkpoint_restore_performed','rng_state_semantics_verified','probability_gate_recomputed')})
     report=dict(schema_version='r6-training-analysis/1',authorization=b.auth,plan_sha256=a.contract.object_sha(b.plan),
         analyzer=file_pin(a.__file__),codec=file_pin(a.codec.__file__),
+        rng_auditor=file_pin(Path(a.__file__).with_name('r6_training_rng_audit.py')),
         checkpoint_auditor=file_pin(Path(a.__file__).with_name('r6_training_checkpoint_audit.py')),
         probability_replayer=file_pin(Path(a.__file__).with_name('r6_training_probability.py')),scientific_acceptance=False,summary=summary,
         issues=[{'reason':'explicit synthetic incomplete fixture'}],streams=[],
@@ -70,13 +71,14 @@ def test_closed_training_analysis_worker_recovery_and_decision_packet(bound):
     assert program_for('research-r6-training').name=='analyze_r6_training.py'
 
 
-@pytest.mark.parametrize('fault',['missing','duplicate','drift','acceptance','plan','fake_probability'])
+@pytest.mark.parametrize('fault',['missing','duplicate','drift','acceptance','plan','fake_probability','fake_rng'])
 def test_training_report_cannot_escape_closed_inventory(bound,fault):
     b=bound;r=b.report
     if fault=='missing':r['inputs'].pop()
     if fault=='duplicate':r['inputs'].append(r['inputs'][0])
     if fault=='drift':r['inputs'][0]['sha256']='0'*64
     if fault=='acceptance':r['summary']['strict_checkpoint_restore_performed']=True
+    if fault=='fake_rng':r['summary']['rng_initialization_audit']={'status':'PASS'}
     if fault=='fake_probability':r['summary'].update(probability_gate_recomputed=True,probability_replay={'status':'PASS','sample_count':512})
     if fault=='plan':r['plan_sha256']='0'*64
     with pytest.raises(RecoveryError):bind_analysis(b.entry,b.key,b.pin('bad-report.json',r),b.store)

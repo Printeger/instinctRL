@@ -1,0 +1,56 @@
+{
+  "status": "CPU_INITIAL_RNG_SEED_AND_RESUME_RECORD_AUDIT_PASS_NOT_LIVE",
+  "input_commit": "93cc346e",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_rng_audit.py",
+      "sha256": "6840a065bb8cd5c1727e69f34076f392526c06998a4c2d116cf042710f69c7f7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_analysis.py",
+      "sha256": "3bebb3e83156bb324a92efd5452b61513721e8854902052004182d02bc903cf1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "909c8289f6b70c9fd5a1453d05026f898bcd252921974f428e7e0759c6bf8d67"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_cpu_analysis.py",
+      "sha256": "015b2c748b19209d26f47d6cadac40d1d2dd8f9abbaf70b57e71bdbc1c2655d6"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_RNG_AUDIT_TENSOR.log",
+      "sha256": "e61b708411ab0c03c0c986014997b50c3f41289ad3246f854d9430622185e707"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_RNG_AUDIT_CONTROL.log",
+      "sha256": "aae7e5f3184da5a96b66c520c217e074fee7cb1d042a70f7264405be6acbe36b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_RNG_AUDIT_CONTROL_FINAL.log",
+      "sha256": "93e3ee8b37ff1e4b629b98bcf8c86b869ef0e38369caebefd5b4b89e511cbf61"
+    }
+  ],
+  "tests": {
+    "tensor": 38,
+    "control_combined": 44,
+    "control_final_targeted": 8,
+    "initial_failures": 0
+  },
+  "scope": [
+    "Bind exact plan/recipe, origin source/method/counters, fresh reset and branch/resume record identities.",
+    "Common-u640 branch compares original RNG bytes with pinned checkpoint; independently derives CPU Torch, curriculum, Python and NumPy initial states from approved seed using private generators.",
+    "Verify pre/post branch PPO settings and permutation seed against reviewed method and exact origin permutation seed.",
+    "Resume compares all RNG payload bytes with exact initial checkpoint, including retained CUDA states, without calling CUDA.",
+    "CPU analyzer deserializes bounded compressed initialization record safely and binds origin/record/replayer pins through closed-job inventory.",
+    "Tests use actual branch/resume producer and CPU random generators with synthetic origin identity/counters; global Torch/Python/NumPy states unchanged by audit."
+  ],
+  "limitations": [
+    "CUDA seed derivation and actual GPU sampling are not verified; resume byte identity is not proof of RNG use during rollout.",
+    "Persistence-before-rollout order and physical continuity are not inferred from this offline record; runtime evidence and independent review still required.",
+    "No R6 production baseline, training, simulation or deployment. Candidate/final evaluation contracts, combined integration review and platform handoff remain."
+  ],
+  "goal_complete": false
+}

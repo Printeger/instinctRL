@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 146,
-    "total_automatic_model_sessions_minimum": 176,
+    "platform_automatic_goal_wakes": 147,
+    "total_automatic_model_sessions_minimum": 177,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -323,6 +323,8 @@
     "training_probability_status": "CPU_FIRST_ROLLOUT_PROBABILITY_RECOMPUTATION_PASS_NOT_LIVE",
     "training_probability_evidence": "docs/experiments/r6-robustness-auto/CPU_TRAINING_PROBABILITY.json",
     "training_checkpoint_audit_status": "CPU_ACTOR_CRITIC_ADAM_LOAD_AND_RNG_FORMAT_AUDIT_PASS_NOT_LIVE",
-    "training_checkpoint_audit_evidence": "docs/experiments/r6-robustness-auto/CPU_TRAINING_CHECKPOINT_AUDIT.json"
+    "training_checkpoint_audit_evidence": "docs/experiments/r6-robustness-auto/CPU_TRAINING_CHECKPOINT_AUDIT.json",
+    "training_rng_audit_status": "CPU_INITIAL_RNG_SEED_AND_RESUME_RECORD_AUDIT_PASS_NOT_LIVE",
+    "training_rng_audit_evidence": "docs/experiments/r6-robustness-auto/CPU_TRAINING_RNG_AUDIT.json"
   }
 }
