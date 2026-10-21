@@ -60,6 +60,7 @@ def prepare(journal,job_key,store,*,free_disk_bytes):
             original_evidence_inventory=job['inventory'],protocol=binding['protocol'],
             native_status=binding['native_status'],native_exit_code=binding['native_exit_code'],
             issues=binding['issues'],summary=summary,
+            pending_requirements=binding.get('pending_requirements',[]),
             budget_before_packet_reservation=dict(caps=state['budget']['caps'],charged=used,
                 remaining={k:v-used[k] for k,v in state['budget']['caps'].items()},
                 protected=state['budget']['protected_confirmation_delivery_repair'],

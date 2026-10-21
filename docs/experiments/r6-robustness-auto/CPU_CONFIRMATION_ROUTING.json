@@ -1,0 +1,106 @@
+{
+  "status": "CPU_CONFIRMATION_INPUTS_THREE_STREAM_CONTROLLER_ROUTE_AND_COLLECTION_PASS_FINAL_FREEZE_PENDING",
+  "input_commit": "34c72191",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_confirmation_inputs.py",
+      "sha256": "578cf2a5433d541ce93e7ddae13a69113294dc6ce41ab2869a3823ce3828ac8f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_confirmation_preparation.py",
+      "sha256": "f6a70c98d689b265f05668fa3b79e26b13ab3ae1d01190fc7968a4777e42d5e6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "6455761f7ae8a2df5b2dc7d752dea0468016504bbd3a39df7bf6983bb6bdc94c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_profile_preparation.py",
+      "sha256": "bb16de4d307f4d8e6e54ea01f609ef7cfaed2074d9075f01d7d8f6fbecfed7e0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "24dd5763f3778e44f2a46aa99dd96e8d4dc01daef2ff62872d204b9ddf6d75de"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_decision_packet.py",
+      "sha256": "95bf082db63b97f73e75d11c9ce794db463471fdfe966999b8a95c1a99b81659"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/confirmation-inputs.schema.json",
+      "sha256": "871dd7b51d4b6a6bcc8bb215115aaec963692e866dd3b916dfa5ac0963f93ffb"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_confirmation_inputs.py",
+      "sha256": "d8dae060a7e593f767b4b037307e00724e59148cd6ffb6d79fbdf45d5c74e93f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_confirmation_preparation.py",
+      "sha256": "ec0e74f70f10b7cec8a565ae2d4dd69a583481b511521f1f8cc14d8302260844"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "850f8d63304ed1ea1de5adc4f8828a4a59901ace60f40590e22f046b4ef726af"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_profile_preparation.py",
+      "sha256": "805200cbfa6abf79274f867291e38fd70f5c8ddd5dbb16a38b60795121d9e13b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_training_analysis_binding.py",
+      "sha256": "8cd2e761624c7985b5861540fee43cec78a8eb7b0350429f1d5dc1ffbac88a2a"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_ROUTING_INITIAL.log",
+      "sha256": "62525ee3e9e64b121e128de6cf04690f51b6dfe536377bea8e0facc7e8884075"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_ROUTING_ANALYSIS.log",
+      "sha256": "b587cec1fe8f72a2cebf0e25303e7191b44eafbe6cb3d2f445972f5be069d5d1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_ROUTING_REGRESSION.log",
+      "sha256": "096fa27e7c881868a30609ca8b7b4d76991af51ecd8ac1eef25833d9874c9ed4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_ROUTING_TENSOR.log",
+      "sha256": "a1e311570a507e69b183cf23a08e9daa43f9d63a3bfb7c4b1a64e3ed72322c7f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_ROUTING_REPAIR.log",
+      "sha256": "6f00b5b263b34baf8d0f260c57ccc5f945f72f6931812af75947f041574bf7e1"
+    }
+  ],
+  "verification": {
+    "initial_control": 61,
+    "combined_control": 125,
+    "tensor_analysis": 17,
+    "repair_gate": 1
+  },
+  "initial_failures": [
+    "Training-analysis binding test collection used tensor interpreter without jsonschema; rerun binding in existing control interpreter and tensor analyzer separately. No dependencies installed."
+  ],
+  "guarantees": [
+    "One read-only confirmation input worker per exact parent, budgeted intent/receipt, replay, STOP, original parent/Store binding and bounded data-only output; controller writes input artifacts.",
+    "PROPOSE_CONFIRMATION routes through frozen confirmation preparation and three ordered contexts; each next job uses the previous closed job decision parent, preserving existing one-child-per-parent authority.",
+    "Completed collection is persisted with cursor; crash between collection and cursor save repeats only validation, not job dispatch. Exactly three records reach FINAL_MODEL_FREEZE_REQUIRED, never goal completion.",
+    "Collector revalidates exact closed analysis, full plan hash/seed/update, probability/RNG and every checkpoint actor/critic/Adam audit. NEEDS_REPAIR stops further seeds without reissuing the prior job.",
+    "Registered training profile cannot change the reviewed plan, experiment ID, seed, capacity or compatibility records; frozen confirmation cannot route through source replacement.",
+    "Pending semantic audit/evaluation is explicitly retained as pending_requirements rather than unconditional error. Actual evidence/inventory defects remain errors, native failure preserved, all scientific acceptance flags remain false."
+  ],
+  "boundaries": [
+    "Controller three-job and collection crash tests use explicit live runner/parent/collect stubs. Collector separately tested with pinned synthetic reports and bind_analysis substitution.",
+    "Input worker exercised with local fake CLI and original receipt/replay path; scientific parent is a fixture. No production paid review, Store authorization, GPU/simulation/training or privileged volume creation.",
+    "Final freeze/holdout/delivery remain unimplemented routes. Confirmation MUST_FIX preserves evidence and blocks additional seeds; autonomous repair/review re-entry still requires completion."
+  ],
+  "remaining": [
+    "Final-model freeze including baseline-sufficient path and holdout/final evaluation integration",
+    "Confirmation failure repair/review re-entry without changing frozen recipe or reusing failed attempts",
+    "Delivery/audits/videos, combined independent integration review and platform handoff before production"
+  ],
+  "goal_complete": false
+}

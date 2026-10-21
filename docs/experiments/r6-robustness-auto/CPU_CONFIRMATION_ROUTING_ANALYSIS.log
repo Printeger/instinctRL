@@ -1,0 +1,20 @@
+
+==================================== ERRORS ====================================
+_________ ERROR collecting tools/test_r6_training_analysis_binding.py __________
+ImportError while importing test module '/home/mint/rl_dev/instinctRL-dev/tools/test_r6_training_analysis_binding.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/test_r6_training_analysis_binding.py:12: in <module>
+    from tools.r6_cpu_analysis import register_analysis,handoff,validate,program_for
+tools/r6_cpu_analysis.py:17: in <module>
+    from tools.r6_model_worker import write, output_size
+tools/r6_model_worker.py:14: in <module>
+    import jsonschema
+E   ModuleNotFoundError: No module named 'jsonschema'
+=========================== short test summary info ============================
+ERROR tools/test_r6_training_analysis_binding.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.58s

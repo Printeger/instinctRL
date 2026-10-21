@@ -257,7 +257,9 @@ def bind_training_analysis(entry,key,report_pin,context):
         pin=stream.get('pin')
         if pin and (pin['path'] not in seen or pin['sha256']!=indexed[pin['path']]['sha256']):
             raise RecoveryError('ANALYSIS_TRAINING_STREAM_BINDING')
-    issues=['TRAINING_SEMANTIC_AUDIT_AND_EVALUATION_REQUIRED']
+    # Outstanding scientific work is not an implementation defect. Otherwise
+    # every intact training result is forced into NEEDS_REPAIR indefinitely.
+    issues=[]
     if report['issues']:issues.append('TRAINING_EVIDENCE_INCOMPLETE_OR_MISMATCHED')
     if not inventory['output_inventory_complete']:issues.append('INVENTORY_INCOMPLETE')
     closure=context['closure']
@@ -265,6 +267,7 @@ def bind_training_analysis(entry,key,report_pin,context):
         spec=entry['request']['spec'],authorization=context['auth_pin'],protocol=None,
         training_plan_sha256=training.object_sha(plan),closure=entry['closure'],inventory=entry['inventory'],
         postrun=entry['postrun'],report=report_pin,model_binding=None,issues=issues,
+        pending_requirements=['TRAINING_SEMANTIC_AUDIT_AND_EVALUATION_REQUIRED'],
         native_status=closure['native_status'],native_exit_code=closure['native_exit_code'],
         scientific_acceptance=False,status='BOUND_STRUCTURAL_TRAINING_REQUIRES_SEMANTIC_AUDIT_AND_EVALUATION')
 

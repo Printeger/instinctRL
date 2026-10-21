@@ -278,3 +278,65 @@ def test_candidate_review_interruption_keeps_cursor_for_exact_recovery(controlle
     candidate.side_effect=None;candidate.return_value=dict(status='CANDIDATE_REVIEWS_ACCEPTED_CONTEXT_READY',context=b.context)
     assert run(b)['status']=='WAITING_FOR_ADMIN_PROVISION'
     b.source.assert_called_once();b.compat.assert_not_called()
+
+
+@pytest.mark.parametrize('crash',[False,True])
+def test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect(controller,monkeypatch,crash):
+    b=controller
+    contexts=[b.write(f'confirmed-{i}.json',{'fixture':i}) for i in range(3)]
+    inputs=Mock(return_value=dict(status='CONFIRMATION_INPUTS_PREPARED_NOT_REVIEWED',inputs=b.context))
+    preparation=Mock(return_value=dict(status='THREE_CONFIRMATION_CONTEXTS_READY_NOT_RESERVED',contexts=contexts))
+    monkeypatch.setattr(c.confirmation_inputs,'prepare',inputs);monkeypatch.setattr(c.confirmation,'prepare',preparation)
+    profile=Mock(return_value=dict(status='PROFILE_AND_STORAGE_PLANS_READY_NOT_PROVISIONED',inputs=b.context))
+    monkeypatch.setattr(c.profile,'prepare_profile',profile)
+    monkeypatch.setattr(c.materializer,'materialize',Mock(return_value=dict(status='EXACT_INPUTS_MATERIALIZED_NOT_AUTHORIZED',artifacts={'plan':b.context})))
+    monkeypatch.setattr(c,'parent_for_job',lambda j,key,s:(b.parent if key==b.key else key+'-parent',{'decision':{'decision':'PROPOSE_CONFIRMATION'}}))
+    original_job=b.j.canonical_job
+    monkeypatch.setattr(b.j,'canonical_job',lambda key,**kw:original_job(b.key,**kw))
+    b.next.side_effect=[dict(status='DECISION_PROPOSAL_RETURNED',child_job_event_key='confirm-'+str(i)) for i in range(3)]
+    collected=[]
+    def collect(j,key,context,store):
+        collected.append((key,context));return dict(job_event_key=key,context=context,scientific_acceptance=False)
+    monkeypatch.setattr(c.confirmation,'collect',collect)
+    original_save=c.save;failed=[]
+    def save(j,key,cursor,**kw):
+        if crash and len(cursor.get('confirmation',{}).get('results',[]))==1 and not failed:
+            failed.append(True);raise RuntimeError('collection cursor crash')
+        return original_save(j,key,cursor,**kw)
+    monkeypatch.setattr(c,'save',save)
+    if crash:
+        with pytest.raises(RuntimeError,match='collection cursor crash'):run(b)
+        assert entry(b)['cursor']['phase']=='DECIDE'
+    result=run(b);assert result['status']=='FINAL_MODEL_FREEZE_REQUIRED' and result['goal_complete']is False
+    assert [call.args[2] for call in profile.call_args_list]==contexts
+    assert [call.args[1] for call in b.next.call_args_list]==[b.parent,'confirm-0-parent','confirm-1-parent']
+    assert [r['job_event_key'] for r in entry(b)['cursor']['confirmation']['results']]==['confirm-0','confirm-1','confirm-2']
+    assert run(b)==result and b.next.call_count==3
+    inputs.assert_called_once();preparation.assert_called_once();b.source.assert_not_called()
+
+
+def test_confirmation_input_interruption_keeps_exact_phase(controller,monkeypatch):
+    b=controller;monkeypatch.setattr(c,'parent_for_job',lambda *a:(b.parent,{'decision':{'decision':'PROPOSE_CONFIRMATION'}}))
+    inputs=Mock(side_effect=RuntimeError('confirmation inputs in flight'))
+    monkeypatch.setattr(c.confirmation_inputs,'prepare',inputs)
+    for _ in range(2):
+        with pytest.raises(RuntimeError,match='inputs in flight'):run(b)
+    assert entry(b)['cursor']['phase']=='CONFIRMATION_INPUTS'
+    b.first.assert_called_once();b.source.assert_not_called();b.next.assert_not_called()
+
+
+def test_confirmation_repair_decision_cannot_launch_next_seed(controller,monkeypatch):
+    b=controller
+    monkeypatch.setattr(c,'parent_for_job',lambda j,key,s:(b.parent,{'decision':{'decision':
+        'PROPOSE_CONFIRMATION' if key==b.key else 'NEEDS_REPAIR'}}))
+    monkeypatch.setattr(c.confirmation_inputs,'prepare',Mock(return_value=dict(status='CONFIRMATION_INPUTS_PREPARED_NOT_REVIEWED',inputs=b.context)))
+    monkeypatch.setattr(c.confirmation,'prepare',Mock(return_value=dict(status='THREE_CONFIRMATION_CONTEXTS_READY_NOT_RESERVED',contexts=[b.context]*3)))
+    monkeypatch.setattr(c.profile,'prepare_profile',Mock(return_value=dict(status='PROFILE_AND_STORAGE_PLANS_READY_NOT_PROVISIONED',inputs=b.context)))
+    monkeypatch.setattr(c.materializer,'materialize',Mock(return_value=dict(status='EXACT_INPUTS_MATERIALIZED_NOT_AUTHORIZED',artifacts={'plan':b.context})))
+    original=b.j.canonical_job;monkeypatch.setattr(b.j,'canonical_job',lambda key,**kw:original(b.key,**kw))
+    b.next.return_value=dict(status='DECISION_PROPOSAL_RETURNED',child_job_event_key='failed-confirmation')
+    collect=Mock();monkeypatch.setattr(c.confirmation,'collect',collect)
+    for _ in range(2):
+        with pytest.raises(RecoveryError,match='CONFIRMATION_REQUIRES_REPAIR'):run(b)
+    assert entry(b)['cursor']['phase']=='DECIDE' and entry(b)['cursor']['confirmation']['results']==[]
+    b.next.assert_called_once();collect.assert_not_called()

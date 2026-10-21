@@ -181,6 +181,9 @@ def record(journal,key,packet_key,packet_pin,store,*,free_disk_bytes):
     candidate='evaluation_selection' in profile
     require(not (training and candidate),'AMBIGUOUS_STAGE')
     immutable=('master_authority','baseline_bindings','extension_inputs','group','evaluation_seed')
+    if 'r6_training_plan' in reference:
+        require(training and not candidate,'REGISTERED_TRAINING_STAGE')
+        immutable+=('r6_training_plan','training_seed','experiment_id','capacity_review','checkpoint_compatibility')
     if candidate:
         from training_workloads.unified_h1.robustness_contract import FIELDS
         expected=(FIELDS-{'experiment_card','output_cap_bytes'})|{'extension_inputs','evaluation_selection'}

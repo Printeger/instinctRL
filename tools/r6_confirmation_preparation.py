@@ -105,3 +105,28 @@ def prepare(journal,parent_key,input_pin,store,*,executable,free_disk_bytes):
         training_jobs_reserved=False,dispatch_authorized=False,scientific_acceptance=False)
     save('result.json',result)
     return result
+
+
+def collect(journal,job_key,context_pin,store):
+    """Bind one closed training result to its exact registered confirmation plan."""
+    from tools.r6_analysis_binding import bind_analysis
+    journal.require_writer();job=journal.canonical_job(job_key)
+    context=json.loads(checked(context_pin).read_text())
+    draft=json.loads(checked(context['baseline_profile']).read_text());plan=draft['r6_training_plan']
+    require(plan['phase']=='confirmation' and plan['start_update']==640,'CONFIRMATION_PLAN')
+    bound=json.loads(checked(job['analysis']).read_text())
+    require(bound==bind_analysis(job,job_key,bound['report'],store),'RESULT_BINDING')
+    require(bound['schema_version']=='r6-bound-training-analysis/1'
+        and bound['training_plan_sha256']==sha(plan) and not bound['issues'],'COMPLETE_TRAINING_ANALYSIS')
+    report=json.loads(checked(bound['report']).read_text());summary=report['summary']
+    require(all(summary[k]==plan[k] for k in ('experiment_id','phase','training_seed','start_update','target_update'))
+        and not report['issues'] and summary['issue_count']==0,'RESULT_PLAN')
+    require(summary['probability_gate_recomputed']is True and summary['rng_initialization_audit']['status']=='PASS',
+        'RESULT_AUDITS')
+    rows=summary['checkpoints']
+    require([r['update'] for r in rows]==plan['checkpoint_updates'] and all(r['metadata_verified']is True
+        and r['state_audit']['actor_critic_state_loaded']is True and r['state_audit']['adam_state_loaded']is True
+        for r in rows),'RESULT_CHECKPOINTS')
+    return dict(job_event_key=job_key,context=context_pin,analysis=job['analysis'],
+        plan_sha256=sha(plan),training_seed=plan['training_seed'],target_update=plan['target_update'],
+        scientific_acceptance=False)

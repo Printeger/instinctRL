@@ -136,6 +136,19 @@ def test_stop_before_new_event_has_no_effect(case):
     assert b.j.read()==before
 
 
+@pytest.mark.parametrize('training',[False,True])
+def test_registered_training_plan_cannot_be_replaced_by_profile_worker(case,training):
+    b=case;context=json.loads(p.checked(b.context).read_text())
+    reference=json.loads(p.checked(context['baseline_profile']).read_text())
+    reference['r6_training_plan']={'fixture':'registered-confirmation-plan'}
+    context['baseline_profile']=b.write('registered-training-profile.json',reference)
+    b.context=b.write('registered-training-context.json',context)
+    b.builder.with_suffix('.settings').write_text(json.dumps({'training':training}))
+    # The fixture also renames the experiment, which must be immutable now.
+    with pytest.raises(RecoveryError,match='IMMUTABLE_PROFILE_BINDING'):run(b)
+    assert not any(e['identity']['role']==p.storage.ROLE for e in b.j.read()['events'].values())
+
+
 @pytest.mark.parametrize('kind',['packet','model'])
 def test_missing_reservation_rejected_without_storage(case,kind):
     b=case;key,packet_key,packet_pin=register(b)

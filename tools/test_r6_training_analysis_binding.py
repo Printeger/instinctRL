@@ -64,9 +64,11 @@ def test_closed_training_analysis_worker_recovery_and_decision_packet(bound):
         packet=prepare(b.j,b.key,b.store,free_disk_bytes=500*1024**3)
     assert result['native_exit_code']==-9 and not result['scientific_acceptance']
     assert result['protocol'] is None and result['training_plan_sha256']==a.contract.object_sha(b.plan)
-    assert 'TRAINING_SEMANTIC_AUDIT_AND_EVALUATION_REQUIRED' in result['issues']
+    assert result['pending_requirements']==['TRAINING_SEMANTIC_AUDIT_AND_EVALUATION_REQUIRED']
+    assert result['issues']==['TRAINING_EVIDENCE_INCOMPLETE_OR_MISMATCHED']
     value=json.loads(Path(packet['packet']['path']).read_text())
     assert value['summary']['schema_version']=='r6-training-summary/1'
+    assert value['pending_requirements']==result['pending_requirements']
     assert not any(e['kind']=='model' for e in b.j.read()['events'].values())
     assert program_for('research-r6-training').name=='analyze_r6_training.py'
 

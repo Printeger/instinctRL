@@ -25,11 +25,13 @@ from tools import r6_materialize_job as materializer
 from tools import r6_execution_compatibility as compatibility
 from tools import r6_training_preparation as training
 from tools import r6_candidate_preparation as candidate
+from tools import r6_confirmation_inputs as confirmation_inputs
+from tools import r6_confirmation_preparation as confirmation
 
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_MODEL_FREEZE_REQUIRED'}
 
 
 def require(condition,reason):
@@ -135,13 +137,37 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 parent,result=parent_for_job(journal,cursor['job_key'],store)
                 decision=result['decision']['decision']
                 cursor['parent_key']=parent
-                if decision=='REQUEST_FINAL_REVIEW':cursor['phase']='FINAL_DELIVERY_REQUIRED'
+                if 'confirmation' in cursor:
+                    sequence=cursor['confirmation'];index=len(sequence['results'])
+                    require(index<3 and decision in {'PROPOSE_CONFIRMATION','REQUEST_FINAL_REVIEW'},
+                        'CONFIRMATION_REQUIRES_REPAIR')
+                    evidence=confirmation.collect(journal,cursor['job_key'],sequence['contexts'][index],store)
+                    require(all(r['job_event_key']!=evidence['job_event_key'] for r in sequence['results']),
+                        'CONFIRMATION_REPEATED_JOB')
+                    sequence['results'].append(evidence)
+                    if len(sequence['results'])==3:cursor['phase']='FINAL_MODEL_FREEZE_REQUIRED'
+                    else:cursor.update(phase='PROFILE',context=sequence['contexts'][index+1])
+                elif decision=='PROPOSE_CONFIRMATION':cursor['phase']='CONFIRMATION_INPUTS'
+                elif decision=='REQUEST_FINAL_REVIEW':cursor['phase']='FINAL_DELIVERY_REQUIRED'
                 elif decision=='PROPOSE_CANDIDATE':cursor['phase']='SOURCE'
                 else:cursor['phase']='PROFILE'
+            elif phase=='CONFIRMATION_INPUTS':
+                outcome=confirmation_inputs.prepare(journal,cursor['parent_key'],cursor['context'],store,
+                    executable=initial['review_executable'],free_disk_bytes=free)
+                require(outcome['status']=='CONFIRMATION_INPUTS_PREPARED_NOT_REVIEWED','CONFIRMATION_INPUT_STATUS')
+                cursor.update(phase='CONFIRMATION_PREPARATION',confirmation_inputs=outcome['inputs'])
+            elif phase=='CONFIRMATION_PREPARATION':
+                outcome=confirmation.prepare(journal,cursor['parent_key'],cursor['confirmation_inputs'],store,
+                    executable=initial['review_executable'],free_disk_bytes=free)
+                require(outcome['status']=='THREE_CONFIRMATION_CONTEXTS_READY_NOT_RESERVED'
+                    and len(outcome['contexts'])==3,'CONFIRMATION_PREPARATION_STATUS')
+                cursor.update(phase='PROFILE',context=outcome['contexts'][0],
+                    confirmation=dict(preparation=outcome,contexts=outcome['contexts'],results=[]))
             elif phase=='PROFILE':
                 outcome=profile.prepare_profile(journal,cursor['parent_key'],cursor['context'],store,
                     executable=initial['review_executable'],free_disk_bytes=free)
                 if outcome['status']=='SOURCE_PREPARATION_REQUIRED':
+                    require('confirmation' not in cursor,'FROZEN_CONFIRMATION_SOURCE_CHANGE')
                     require('source_preparation' not in cursor,'SOURCE_CHANGE_DID_NOT_RESOLVE')
                     cursor['phase']='SOURCE'
                 else:

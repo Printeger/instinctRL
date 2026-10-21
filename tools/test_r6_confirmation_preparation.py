@@ -104,3 +104,30 @@ def test_cached_review_pin_drift_rejected(ready):
     event=next(e for e in b.j.read()['events'].values() if e['identity']['role']==t.ROLE)
     t.checked(event['stage-0']).write_text('{}')
     with pytest.raises(RecoveryError,match='PIN_DRIFT'):run(b)
+
+
+@pytest.mark.parametrize('fault',[None,'plan','issue','seed','gate','rng','checkpoint','binding'])
+def test_collection_requires_exact_plan_and_all_training_audits(ready,monkeypatch,fault):
+    from tools import r6_analysis_binding
+    b=ready;plan=dict(experiment_id='R6-C1',phase='confirmation',training_seed=21,start_update=640,
+        target_update=896,checkpoint_updates=[896])
+    c=b.write('collect-context.json',{'baseline_profile':b.write('collect-profile.json',{'r6_training_plan':plan})})
+    summary=dict(plan,issue_count=0,probability_gate_recomputed=True,rng_initialization_audit={'status':'PASS'},
+        checkpoints=[dict(update=896,metadata_verified=True,state_audit={'actor_critic_state_loaded':True,'adam_state_loaded':True})])
+    if fault=='seed':summary['training_seed']=22
+    if fault=='gate':summary['probability_gate_recomputed']=False
+    if fault=='rng':summary['rng_initialization_audit']['status']='FAIL'
+    if fault=='checkpoint':summary['checkpoints'][0]['state_audit']['adam_state_loaded']=False
+    report=b.write('collect-report.json',dict(summary=summary,issues=[]))
+    bound=dict(schema_version='r6-bound-training-analysis/1',training_plan_sha256=t.sha(plan),issues=[],report=report)
+    if fault=='plan':bound['training_plan_sha256']='0'*64
+    if fault=='issue':bound['issues']=['INCOMPLETE']
+    job={'analysis':b.write('collect-bound.json',bound)}
+    monkeypatch.setattr(b.j,'canonical_job',lambda key:job)
+    monkeypatch.setattr(r6_analysis_binding,'bind_analysis',lambda *a:{} if fault=='binding' else bound)
+    with b.j.writer():
+        if fault:
+            with pytest.raises(RecoveryError):t.collect(b.j,'job',c,b.store)
+        else:
+            result=t.collect(b.j,'job',c,b.store)
+            assert result['training_seed']==21 and result['analysis']==job['analysis'] and not result['scientific_acceptance']

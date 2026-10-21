@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：确认输入只读worker→freeze审核→三条轨迹顺序执行→关闭证据汇总的顶层路由接通。
+已审训练plan/seed/experiment/capacity/compatibility禁止profile改写；每条绑定独立父决策和原有发行边界。
+科学审核待办从无条件错误分离，原件缺损仍阻断；收集校验plan、概率/RNG及各checkpoint张量/Adam审计。
+125项组合控制、17项tensor及1项修复阻断检查通过；最初解释器缺jsonschema的收集失败原日志保留。
+证据CPU_CONFIRMATION_ROUTING.json；三作业是明确CPU替身，实际基线/训练未发车。
+最终模型冻结/holdout/交付、确认失败修复重入、组合独审及平台交接仍待完成。
+156次自动唤醒+30worker=186/256，模型剩70；完整Goal未完成。
+
 2026-10-22：三确认轨迹的控制器准备函数完成：准确父决策/保护用途、既有冻结训练源码绑定、
 配方freeze独审及三条stage审核依次持久化，生成固定seed顺序的三个独立profile context。
 中断恢复复用已完成审核，第二条审核在途可重接；同父决策换输入、源码/pin漂移和STOP拒绝。

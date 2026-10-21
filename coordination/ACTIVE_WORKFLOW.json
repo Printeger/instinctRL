@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 155,
-    "total_automatic_model_sessions_minimum": 185,
+    "platform_automatic_goal_wakes": 156,
+    "total_automatic_model_sessions_minimum": 186,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -343,6 +343,8 @@
     "confirmation_plans_status": "CPU_RECIPE_FREEZE_REVIEW_AND_THREE_COMMON_ORIGIN_PLAN_BUILDER_PASS_CONTROLLER_SEQUENCE_PENDING",
     "confirmation_plans_evidence": "docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_PLANS.json",
     "confirmation_preparation_status": "CPU_THREE_CONFIRMATION_CONTEXT_PREPARATION_AND_REVIEW_RECOVERY_PASS_SEQUENCE_PENDING",
-    "confirmation_preparation_evidence": "docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_PREPARATION.json"
+    "confirmation_preparation_evidence": "docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_PREPARATION.json",
+    "confirmation_routing_status": "CPU_CONFIRMATION_INPUTS_THREE_STREAM_CONTROLLER_ROUTE_AND_COLLECTION_PASS_FINAL_FREEZE_PENDING",
+    "confirmation_routing_evidence": "docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_ROUTING.json"
   }
 }
