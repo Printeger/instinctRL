@@ -3,7 +3,8 @@
 2026-10-21：真实Store规格校验发现授权order_id错误（实验名缺组别/模式），已修复生成器；
 保留失败原件，8项CPU回归及真实冻结加载器/完整spec校验通过，无mock。
 准确候选job J-7a302eaf9d7714e7，193600 transitions、3610秒外层时限；
-见 CPU_BASELINE_REAL_SPEC_ORDER_REPAIR.json。未批准/提交，资源审核记录及部署仍待完成。
+见 CPU_BASELINE_REAL_SPEC_ORDER_REPAIR.json。3项准确独审证据已导入Store条件，
+审批/提案/作业均未新增；readiness见baseline-input-02/readiness.json。资源审核记录及部署待完成。
 123次唤醒+28worker=151，余105；Goal未完成。
 
 2026-10-21：第28次独审PASS_R6_PROTOCOL，46项针对CPU检查通过；准确冻结protocol/split

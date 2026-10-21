@@ -1,0 +1,71 @@
+{
+  "status": "THREE_EXACT_REVIEWED_CONDITIONS_IMPORTED_NO_JOB_APPROVAL",
+  "event_key": "a73de2a32985b6b1b10778d9e0c83343eab48b1cfa3c5d7a7bdc609a9d6ade4f",
+  "input": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/condition-inputs.json",
+    "sha256": "1180943ef49d886aa24670e81d8786ec6caabc7faacd3acad4cea97fc9dbc74d"
+  },
+  "records": [
+    {
+      "id": "R6-PROTOCOL-CAPACITY-FREEZE-01",
+      "accepted": true,
+      "sha256": "738aca2b423b739081fa9ada00db0de0a751040eb472e769907c4fa43fbe2ad1",
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/PROTOCOL_CAPACITY_ACCEPTED_01.json",
+        "sha256": "738aca2b423b739081fa9ada00db0de0a751040eb472e769907c4fa43fbe2ad1"
+      },
+      "review_event_key": "c14b85145f3776f7555c50ad415f130c51df99512de38dbec32fb11f1f1aaebb",
+      "review_receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/c14b85145f3776f7555c50ad415f130c51df99512de38dbec32fb11f1f1aaebb/receipt.json",
+        "sha256": "e119a2deb71467f976def846eff5c68aa82a4cd17ff2110655fc2ab733bee6a4"
+      },
+      "review_output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/c14b85145f3776f7555c50ad415f130c51df99512de38dbec32fb11f1f1aaebb/last-message.json",
+        "sha256": "a4f2c630ac5a151dc05460c1214b8e5432392f84031e4d6e1b944903ea355698"
+      },
+      "scope": "EXACT_R6_BASELINE_CONDITION_NOT_EXPERIMENT_APPROVAL"
+    },
+    {
+      "id": "R6-EXECUTION-COMPATIBILITY-02",
+      "accepted": true,
+      "sha256": "1e8242a18370cf26d58c720c9b0d96b3a8eaf6f125b5a2b4972c7b320accd148",
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_COMPATIBILITY_ACCEPTED_02.json",
+        "sha256": "1e8242a18370cf26d58c720c9b0d96b3a8eaf6f125b5a2b4972c7b320accd148"
+      },
+      "review_event_key": "02e3378fa06eb12b15f520e5ae0599de2bbfc19a59202caad1383208e8ba3734",
+      "review_receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/02e3378fa06eb12b15f520e5ae0599de2bbfc19a59202caad1383208e8ba3734/receipt.json",
+        "sha256": "4bf1439c1b0b2fff9abe78cde7ae9f6f58d22f885b8fcbd56035b7624187772f"
+      },
+      "review_output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/02e3378fa06eb12b15f520e5ae0599de2bbfc19a59202caad1383208e8ba3734/last-message.json",
+        "sha256": "5fa8c541e93aa08eaace6bde3c95b1cc310ad62fbe216f63b646b325ae8352e3"
+      },
+      "scope": "EXACT_R6_BASELINE_CONDITION_NOT_EXPERIMENT_APPROVAL"
+    },
+    {
+      "id": "R6-FIRST-BASELINE-ENTRY-01",
+      "accepted": true,
+      "sha256": "41d1394c3bef23f58010502e295cdb4e1f815ab4559e9c4a3d947e12f8c84794",
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/first-baseline-entry-review.json",
+        "sha256": "41d1394c3bef23f58010502e295cdb4e1f815ab4559e9c4a3d947e12f8c84794"
+      },
+      "review_event_key": "0f01a36416557d67a835c3876c4c937bbfe72f8a3148a957fcff2bb69941c964",
+      "review_receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/0f01a36416557d67a835c3876c4c937bbfe72f8a3148a957fcff2bb69941c964/receipt.json",
+        "sha256": "7349ec95b876be8df4cef2594f2718656da92af45240554255815ef98b54423e"
+      },
+      "review_output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/0f01a36416557d67a835c3876c4c937bbfe72f8a3148a957fcff2bb69941c964/last-message.json",
+        "sha256": "41d1394c3bef23f58010502e295cdb4e1f815ab4559e9c4a3d947e12f8c84794"
+      },
+      "scope": "EXACT_R6_BASELINE_CONDITION_NOT_EXPERIMENT_APPROVAL"
+    }
+  ],
+  "store_version": 458,
+  "jobs_unchanged": true,
+  "approvals_unchanged": true,
+  "proposals_unchanged": true
+}

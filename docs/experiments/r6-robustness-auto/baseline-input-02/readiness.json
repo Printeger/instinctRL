@@ -1,0 +1,33 @@
+{
+  "status": "EXACT_SPEC_AND_CONDITIONS_READY_NOT_PRELIVE_ACCEPTED",
+  "spec": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/spec.json",
+    "sha256": "20445dd09a901da4ab66dca822992a9d131008a4cc83aaafdc15586e838bd5a7"
+  },
+  "job_id": "J-7a302eaf9d7714e7",
+  "authorization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/authorization.json",
+    "sha256": "dde24b69f63ffab74e7d3a7ebf652ec518113c18d40779a326b42a06b6edaba8"
+  },
+  "actual_validation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_REAL_SPEC_ORDER_REPAIR.json",
+    "sha256": "c050cef22d6ce73e1f2474bf5b9ec0cc5aca15f2c0af16c05b6449a0e258fde6"
+  },
+  "condition_import": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/conditions-imported.json",
+    "sha256": "3d327c106da2c2312a547c88f0e1280f2969aa64e21c580be225ceea6c904b9b"
+  },
+  "store_stage_namespace": "R6-ROBUSTNESS-AUTO-20261019",
+  "stage_note": "Experiment namespace only; no inherited CPU stage or old R5 live permission. Exact EXPERIMENT approval is still absent.",
+  "remaining": [
+    "Exact resource queue/sampler acceptance records required by production runner; current generic CPU review output is not that schema",
+    "Complete concrete runner plan and actual initial-baseline prelive review",
+    "Detached controller deployment/recovery/STOP handoff and event-triggered scientific plan production",
+    "Future privileged volume provisioning and stage contracts before later jobs"
+  ],
+  "resource_queries": 0,
+  "production_store_approval": false,
+  "job_submitted": false,
+  "controller_deployed": false,
+  "goal_complete": false
+}
