@@ -1,0 +1,77 @@
+{
+  "status": "CPU_LOADED_TRAINER_PHASE_EXECUTION_PASS_NOT_LIVE_DISPATCH",
+  "input_commit": "baab8522",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_execution.py",
+      "sha256": "5133dd238055a042b26378c3875c1aa47cb2329de77146ff6d3bfd9526945443"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "434b2cb1f84745345d9d82e3fe9593b66b1b07ec32d7faaa41a6702c39dd3e5d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/logging.py",
+      "sha256": "ab723bcc7b5f263bdbe391b4ac6b6f64a3eca55a7ba17967b8d48f838caf06e5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_storage.py",
+      "sha256": "79f77cf45cc285ff22720ea5ba6ea986b3fd05f751c1422726ea5ab081a37501"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "5be51ed292421c9317086e0a7d115539d57a8a47edbced9c2c7e03764b197b54"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_EXECUTION_TESTS.log",
+      "sha256": "40dcd676db0d4ddb97882526f4b61443f45808b741724a6227734d5bda345395"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_EXECUTION_TESTS_FINAL.log",
+      "sha256": "ca15d65809837c49473104a623886d1af27c0881844f49e3db215b3aea432cd7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_EXECUTION_SOURCE_TESTS.log",
+      "sha256": "5457c7691fb2eec58f3a79a1398f61e7814f0a87a44960f098f3ba7093208a6a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_EXECUTION_LEGACY_CONFIG.json",
+      "sha256": "af15c19b1c157c81a2aa20660c574db8fe040add64919047ec3de0ebfefa7ec8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_EXECUTION_REGRESSION.log",
+      "sha256": "d6f51c445eb7c9ae470b236be095c006ea8774af197ee5673bbb65c47a4d267a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_EXECUTION_REGRESSION_FINAL.log",
+      "sha256": "fc0a1fea59093f445a467bcb5b2aa077737f15a24f8d7d284c31c99a2e822b9b"
+    }
+  ],
+  "final_tests": 74,
+  "source_snapshot_tests": 13,
+  "excluded_test": {
+    "name": "test_authorization_exact_budget_order_and_checkpoint_bytes",
+    "reason": "Historical default config rejects product source manifest; same failure reproduced using pre-change baab8522 config implementation. Frozen historical input unchanged; not claimed passing."
+  },
+  "initial_test_repairs": [
+    "Fixture lacked required environment prepare_h1_step/step callables; explicit unused physics stubs added",
+    "New episode-label test lacked mandatory actual_velocity_b field; complete synthetic evidence supplied"
+  ],
+  "scope": [
+    "Backend loaded-trainer entry validates exact proposed plan/budgets/source/recipe and actual PPO settings",
+    "Actual RNG branch/resume evidence sealed before reset; shared bounded compressed pool and first-update diagnostic",
+    "Original and robust phase drivers, fresh reset per phase, right-censored old phase logs, registered checkpoint callback",
+    "R6 checkpoint curriculum provenance even for original replay phase; retained origin/reset count and curriculum RNG",
+    "Sampled lane reset labels retained in actual compressed episode rows after automatic resets",
+    "Existing real CPU tensor checkpoint/RNG/logging/rollout/probability checks included"
+  ],
+  "limitations": [
+    "New orchestration test substitutes PPO loop, simulator and checkpoint writer; real component tests do not establish full integration",
+    "No actual u640 tensor restore through this entry, no production method binding, no stage issuance/dispatch enabled",
+    "Runtime method/checkpoint load and compatibility contract, exact output capacity, analysis and final delivery still pending",
+    "Independent combined review pending; no GPU or paid worker"
+  ],
+  "goal_complete": false
+}

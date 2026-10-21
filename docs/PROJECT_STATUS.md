@@ -1,5 +1,14 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：新增已恢复trainer的R6阶段执行入口：准确plan/budget、RNG先落盘、
+原任务/鲁棒性driver切换、阶段完整reset与截尾日志、共享首更诊断及准确checkpoint节点。
+修正随机课程自动reset后仍沿用旧lane规则的日志标签；实际压缩episode行验证通过。
+74项CPU回归、13项源码/快照检查通过；1项历史默认config授权测试因源码清单不匹配，
+在改动前baab8522代码复现并保留，明确不计通过。初轮fixture缺字段失败亦保留并修复。
+证据CPU_TRAINING_EXECUTION.json；组合测试替代PPO/物理/serializer边界，非完整live验证。
+准确checkpoint加载/运行方法绑定、阶段发行/dispatch、分析与最终交付仍未完成，待组合独审。
+135次自动唤醒+30worker=165，剩91；无GPU/仿真，完整Goal未完成。
+
 2026-10-22：课程已接入原R6物理/测量适配器，逐lane真实抽样规格驱动root写入与传感器核验；
 分段脉冲按课程绝对偏移、自动reset不重播时钟，测量噪声从课程RNG分叉并审计。
 63项CPU tensor检查及15个replay子检查通过，13项源码/快照检查通过；

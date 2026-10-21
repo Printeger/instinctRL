@@ -1,0 +1,71 @@
+................................................F......                  [100%]
+=================================== FAILURES ===================================
+__________ test_authorization_exact_budget_order_and_checkpoint_bytes __________
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-34/test_authorization_exact_budge0')
+
+    def test_authorization_exact_budget_order_and_checkpoint_bytes(tmp_path):
+        from training_workloads.unified_h1.authorization import load_r3_authorization
+>       config=load_config(); identity=config["resolved_identity"]; attempt=(tmp_path/"attempt").resolve(); attempt.mkdir()
+               ^^^^^^^^^^^^^
+
+tests/training_workloads/test_unified_h1_rework.py:240: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/config.py:236: in load_config
+    product = _validate_repository(value["product"], label="product", required_sources=product_sources, self_identity=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+spec = {'base_commit': '903afc5abd0fbf82297527e5790c2cd40827b0b2', 'branch': 'main', 'candidate_commit': 'SELF', 'candidate_tree': 'SELF', ...}
+label = 'product'
+required_sources = {'isaaclab-training/instinctlab/assets/taslab_uav/articulation.py', 'isaaclab-training/instinctlab/control/anchor.py',...isaaclab-training/instinctlab/control/ics.py', 'isaaclab-training/instinctlab/control/lee_velocity_controller.py', ...}
+self_identity = True
+
+    def _validate_repository(spec: object, *, label: str, required_sources: set[str], self_identity: bool = False) -> dict[str, str]:
+        required = {"path", "base_commit", "candidate_commit", "candidate_tree", "branch", "source_sha256"}
+        if not isinstance(spec, dict) or set(spec) != required: raise ValueError(f"{label} repository schema mismatch")
+        root = Path(spec["path"])
+        if not root.is_absolute() or root.is_symlink() or root.resolve() != root or not root.is_dir():
+            raise ValueError(f"{label} repository path is not an exact checkout")
+        try: repository_root=Path(_git(root,"rev-parse","--show-toplevel")).resolve()
+        except (OSError,subprocess.CalledProcessError) as error: raise ValueError(f"{label} repository is unavailable") from error
+        if repository_root not in (root,*root.parents): raise ValueError(f"{label} repository root mismatch")
+        actual = {"commit": _git(root, "rev-parse", "HEAD"), "tree": _git(root, "rev-parse", "HEAD^{tree}"),
+                  "branch": _git(root, "branch", "--show-current")}
+        if _git(root, "merge-base", "--is-ancestor", spec["base_commit"], actual["commit"]) != "":
+            raise AssertionError("git merge-base emitted unexpected output")
+        expected_commit = actual["commit"] if self_identity and spec["candidate_commit"] == "SELF" else spec["candidate_commit"]
+        expected_tree = actual["tree"] if self_identity and spec["candidate_tree"] == "SELF" else spec["candidate_tree"]
+        if actual != {"commit": expected_commit, "tree": expected_tree, "branch": spec["branch"]}:
+            raise ValueError(f"{label} candidate identity mismatch")
+        sources = spec["source_sha256"]
+>       if not isinstance(sources, dict) or set(sources) != required_sources: raise ValueError(f"{label} source manifest set mismatch")
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: product source manifest set mismatch
+
+training_workloads/unified_h1/config.py:182: ValueError
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-4a74bf10-13f8-4b24-b436-0994051b8443/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-4a74bf10-13f8-4b24-b436-0994051b8443/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-4a74bf10-13f8-4b24-b436-0994051b8443/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-4a74bf10-13f8-4b24-b436-0994051b8443
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-4a74bf10-13f8-4b24-b436-0994051b8443'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/training_workloads/test_unified_h1_rework.py::test_authorization_exact_budget_order_and_checkpoint_bytes
+1 failed, 54 passed, 4 warnings in 6.93s

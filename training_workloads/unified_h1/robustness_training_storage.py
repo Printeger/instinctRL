@@ -39,11 +39,21 @@ def create_training_evidence(output, *, run_id, payload_bytes, compressed_bytes,
 
 
 class R6LearningLog(LearningLog):
-    def __init__(self,root,*,pool,**kwargs):
+    def __init__(self,root,*,pool,logical_prefix="learning_log",fixed_reset_types=None,**kwargs):
+        path=Path(logical_prefix)
+        if not logical_prefix or path.is_absolute() or '..' in path.parts or path.as_posix()!=logical_prefix:
+            raise ValueError('R6_LOG_PREFIX')
+        if fixed_reset_types is not None:
+            if kwargs.get('initial_start_types')!=fixed_reset_types:raise ValueError('R6_LOG_RESET_TYPES')
+        self.logical_prefix=logical_prefix;self.fixed_reset_types=fixed_reset_types
         super().__init__(root,**kwargs)
         self.pool=pool;self.compressed_streams={};self.closed=False
         self.finalization_error=None
         self.evidence_finalized=False
+
+    def next_reset_start_type(self,lane,driver):
+        if self.fixed_reset_types is not None:return self.fixed_reset_types[lane]
+        return super().next_reset_start_type(lane,driver)
 
     def finalize_evidence(self):
         """Write terminal rows once, then seal the shared diagnostic/log pool.
@@ -73,7 +83,7 @@ class R6LearningLog(LearningLog):
 
     def append(self,relative,record):
         if self.closed:raise ValueError('R6_LOG_CLOSED')
-        name='learning_log/'+relative
+        name=self.logical_prefix+'/'+relative
         # Validate each request even when a stream has already been opened.
         path=Path(relative)
         if path.is_absolute() or '..' in path.parts or path.as_posix()!=relative:raise ValueError('R6_LOG_PATH')

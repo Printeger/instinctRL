@@ -1,0 +1,89 @@
+.......F................................................................ [ 97%]
+..                                                                       [100%]
+=================================== FAILURES ===================================
+______ test_episode_rows_keep_sampled_reset_labels_after_automatic_reset _______
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-35/test_episode_rows_keep_sampled0')
+
+    def test_episode_rows_keep_sampled_reset_labels_after_automatic_reset(tmp_path):
+        import json
+        from training_workloads.unified_h1.lossless_evidence import EvidencePool,ChunkReader
+        pool=EvidencePool(tmp_path/'pool',run_id='CPU',maximum_bytes=1024**2,maximum_raw_file_bytes=1024**2)
+        labels=tuple('near_x_wall' if i==0 else 'center' for i in range(32))
+        log=R6LearningLog(tmp_path/'log',pool=pool,initial_start_types=labels,fixed_reset_types=labels)
+        transition=SimpleNamespace(reward=torch.zeros(32),reset_boundary=torch.ones(32,dtype=torch.bool))
+        root=torch.zeros(32,13);root[:,2]=2
+        for step in range(2):
+>           log._record_blocks_and_episodes(transition,{'pre_reset':{'root_state_w':root,
+                'task':{'exact_clearance_m':torch.ones(32,1)}},'_h1_driver':{'global_policy_step':10240+step}},
+                torch.zeros(32,3),update=641,step=step)
+
+tools/test_r6_training_execution.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/logging.py:256: in _record_blocks_and_episodes
+    self._update_command_blocks(evidence, current, transition.reset_boundary.detach().cpu().reshape(-1))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <training_workloads.unified_h1.robustness_training_storage.R6LearningLog object at 0x7ec489e0ee90>
+evidence = {'pre_reset': {'root_state_w': tensor([[0., 0., 2., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+        [0., 0., 2., 0., ...
+        [1.],
+        [1.],
+        [1.],
+        [1.],
+        [1.]])}}, '_h1_driver': {'global_policy_step': 10240}}
+command = tensor([[0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.],
+        ...0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.]])
+reset = tensor([True, True, True, True, True, True, True, True, True, True, True, True,
+        True, True, True, True, True, True, True, True, True, True, True, True,
+        True, True, True, True, True, True, True, True])
+
+    def _update_command_blocks(self, evidence: Mapping[str, Any], command: torch.Tensor,
+                               reset: torch.Tensor) -> None:
+        pre = evidence.get("pre_reset", {})
+        task = pre.get("task", {}) if isinstance(pre, Mapping) else {}
+        root = pre.get("root_state_w") if isinstance(pre, Mapping) else None
+        velocity = task.get("actual_velocity_b") if isinstance(task, Mapping) else None
+        driver = evidence.get("_h1_driver", {})
+        policy_step = driver.get("global_policy_step") if isinstance(driver, Mapping) else None
+        if (not isinstance(root, torch.Tensor) or root.shape[0] != command.shape[0]
+                or not isinstance(velocity, torch.Tensor) or velocity.shape != command.shape
+                or type(policy_step) is not int):
+>           raise ValueError("command-block analysis requires actual root/velocity/clock evidence")
+E           ValueError: command-block analysis requires actual root/velocity/clock evidence
+
+training_workloads/unified_h1/logging.py:330: ValueError
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-563b0356-3a7b-41ae-8151-88a2df2ee31a/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-563b0356-3a7b-41ae-8151-88a2df2ee31a/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-563b0356-3a7b-41ae-8151-88a2df2ee31a/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-563b0356-3a7b-41ae-8151-88a2df2ee31a
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-563b0356-3a7b-41ae-8151-88a2df2ee31a'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tools/test_r6_training_execution.py::test_episode_rows_keep_sampled_reset_labels_after_automatic_reset
+1 failed, 73 passed, 1 deselected, 4 warnings in 7.06s

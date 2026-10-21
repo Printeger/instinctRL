@@ -371,6 +371,16 @@ class UnifiedH1LiveBackend:
             "authorization_sha256":self.authorization["authorization_sha256"],
             "method_hashes":self._checkpoint_method_hashes(load_config())})
 
+    def run_loaded_r6_training(self, *, plan, metadata, source_identity, method_hashes, expected_mass_kg):
+        """Execute only after exact checkpoint restore and method application.
+
+        The R6 training dispatch/phase contract must call this explicitly;
+        existing evaluation and historical training entries cannot route here.
+        """
+        from .robustness_training_execution import run_loaded
+        return run_loaded(self,plan=plan,metadata=metadata,source_identity=source_identity,
+            method_hashes=method_hashes,expected_mass_kg=expected_mass_kg)
+
     def train_research(self):
         p = self.research
         self.cold_start(); self.save_checkpoint("init0000")
