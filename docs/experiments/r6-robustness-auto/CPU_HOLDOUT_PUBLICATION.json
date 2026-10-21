@@ -1,0 +1,32 @@
+{
+  "status": "CPU_PASS_NOT_DEPLOYED",
+  "tests": 9,
+  "new_tests": 3,
+  "log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_HOLDOUT_PUBLICATION_TEST.txt",
+    "sha256": "816a394a40d452938f9de87edbf8a98aa24109162d1fd54f97d76ca5e82c198b"
+  },
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_holdout.py",
+      "sha256": "6f25a4796a8a81a2ae8e50727d59fd1ed851d6c893d4df0f0d6fed681ba4e16d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_holdout_journal.py",
+      "sha256": "02583376ab63b641e45ac6fb08c170e975b6df5e4a719f61a85da0f46b3979bc"
+    }
+  ],
+  "checks": [
+    "Temporary real Git repositories exercise committed publication and idempotent recovery.",
+    "Uncommitted publication, changed blob and replay rebinding to another commit rejected before release state mutation.",
+    "Full40hex commit required; publication must be inside repository and commit an ancestor of HEAD."
+  ],
+  "limitations": [
+    "Local Git commit proof only, not remote push or run-input tag proof.",
+    "Registered independent freeze-review receipt verification and controller phase wiring remain incomplete.",
+    "No production holdout created or revealed."
+  ],
+  "live_starts": 0,
+  "gpu_queries": 0,
+  "model_sessions_added": 0
+}

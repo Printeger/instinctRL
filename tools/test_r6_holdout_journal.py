@@ -1,4 +1,5 @@
 import json
+import subprocess
 from pathlib import Path
 from unittest.mock import Mock
 import pytest
@@ -21,10 +22,21 @@ def setup(tmp_path, monkeypatch):
         models={'baseline': baseline}))
     review = write('review.json', dict(decision='PASS_R6_FINAL_FREEZE', must_fix=[],
         reviewer='independent-fixture', freeze_sha256=freeze['sha256']))
+    monkeypatch.setattr(h, "ROOT", tmp_path)
     j = Journal(tmp_path / 'batch')
     with j.writer():
         j.initialize(json.loads((Path(__file__).parent/'fixtures/r6_budget.json').read_text()))
     return j, dict(freeze=freeze, review=review), write
+
+
+def publish(j, pin):
+    root = j.directory.parent
+    def git(*args):
+        return subprocess.check_output(["git", "-C", str(root), *args]).decode().strip()
+    git("init", "-q")
+    git("add", str(Path(pin["path"]).relative_to(root)))
+    git("-c", "user.name=CPU Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "Publish fixture commitment")
+    return git("rev-parse", "HEAD")
 
 
 def prepare(j, request):
@@ -42,9 +54,10 @@ def test_single_draw_recovery_and_repeated_release(setup, monkeypatch):
     assert draw.call_count == 1
     assert totals(j.read()['budget'])[h.DISK] == 65536
     pub = write('published.json', public)
+    commit = publish(j, pub)
     with restarted.writer():
-        first = h.release(restarted, key, pub)
-        assert h.release(restarted, key, pub) == first
+        first = h.release(restarted, key, pub, publication_commit=commit)
+        assert h.release(restarted, key, pub, publication_commit=commit) == first
     assert 'nonce' not in j.read()['events'][key]
 
 
@@ -64,7 +77,7 @@ def test_stop_blocks_entropy_and_release(setup, monkeypatch):
     (j.directory/'STOP').unlink()  # Isolated fixture only.
     key, record = prepare(j, request); pub = write('published.json', record)
     (j.directory/'STOP').touch()
-    with j.writer(), pytest.raises(RecoveryError): h.release(j, key, pub)
+    with j.writer(), pytest.raises(RecoveryError): h.release(j, key, pub, publication_commit="0"*40)
 
 
 def test_crash_after_claim_does_not_redraw(setup, monkeypatch):
@@ -82,7 +95,7 @@ def test_publication_and_private_tampering_rejected(setup):
     j, request, write = setup
     key, record = prepare(j, request)
     bad = write('bad.json', dict(record, nonce_commitment='ab'*32))
-    with j.writer(), pytest.raises(RecoveryError): h.release(j, key, bad)
+    with j.writer(), pytest.raises(RecoveryError): h.release(j, key, bad, publication_commit="0"*40)
     private = Path(j.read()['events'][key]['private_pin']['path'])
     private.write_text('{}')
     with pytest.raises(RecoveryError): prepare(j, request)
@@ -99,3 +112,33 @@ def test_other_freeze_cannot_create_second_holdout(setup):
     with pytest.raises(RecoveryError, match='ALREADY_BOUND'):
         prepare(j, dict(freeze=freeze, review=review))
     assert len(j.read()['events']) == 1
+
+
+def test_uncommitted_publication_cannot_release(setup):
+    j, request, write = setup
+    key, record = prepare(j, request)
+    prior = publish(j, write('unrelated.json', {}))
+    pub = write('published.json', record)
+    with j.writer(), pytest.raises(RecoveryError, match='PUBLICATION_GIT'):
+        h.release(j, key, pub, publication_commit=prior)
+    assert 'release' not in j.read()['events'][key]
+
+
+def test_changed_worktree_publication_does_not_match_committed_blob(setup):
+    j, request, write = setup
+    key, record = prepare(j, request)
+    commit = publish(j, write('published.json', {}))
+    pub = write('published.json', record)
+    with j.writer(), pytest.raises(RecoveryError, match='CONTENT_DRIFT'):
+        h.release(j, key, pub, publication_commit=commit)
+    assert 'release' not in j.read()['events'][key]
+
+
+def test_release_replay_cannot_rebind_to_later_commit(setup):
+    j, request, write = setup
+    key, record = prepare(j, request)
+    pub = write('published.json', record); first = publish(j, pub)
+    with j.writer(): h.release(j, key, pub, publication_commit=first)
+    second = publish(j, write('later.json', {}))
+    with j.writer(), pytest.raises(RecoveryError, match='RELEASE_DRIFT'):
+        h.release(j, key, pub, publication_commit=second)

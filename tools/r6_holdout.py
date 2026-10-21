@@ -6,6 +6,9 @@ release. Missing/partial private files are never silently regenerated.
 import json
 import os
 import secrets
+import hashlib
+import re
+import subprocess
 from pathlib import Path
 
 from rlflow.store import sha
@@ -18,6 +21,7 @@ from training_workloads.unified_h1.robustness_contract import BASELINE_SHA
 
 ROLE = 'final-holdout'
 DISK = 'output_actual_plus_unreleased_reservations_bytes'
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def require(value, reason):
@@ -103,20 +107,34 @@ def prepare(journal, request, *, free_disk_bytes):
     return key, record
 
 
-def release(journal, key, published_commitment):
+def verify_publication(pin, commit):
+    require(isinstance(commit, str) and re.fullmatch('[0-9a-f]{40}', commit), 'EXACT_PUBLICATION_COMMIT')
+    path = checked(pin)
+    require(path.is_relative_to(ROOT), 'PUBLICATION_OUTSIDE_REPOSITORY')
+    relative = path.relative_to(ROOT).as_posix()
+    def git(*args):
+        result = subprocess.run(['git', '-C', str(ROOT), *args], capture_output=True, timeout=30)
+        require(result.returncode == 0, 'PUBLICATION_GIT_IDENTITY')
+        return result.stdout
+    git('merge-base', '--is-ancestor', commit, 'HEAD')
+    blob = git('show', commit + ':' + relative)
+    require(hashlib.sha256(blob).hexdigest() == pin['sha256'], 'PUBLICATION_CONTENT_DRIFT')
+
+
+def release(journal, key, published_commitment, *, publication_commit):
     journal.guard(); require(not stop_paths(journal), 'STOP'); no_model_workers(journal)
     state = journal.read(); entry = validate_entry(state, key)
     validate_freeze(entry['request'])
     public = json.loads(checked(published_commitment).read_text())
     require(public == entry.get('commitment'), 'PUBLICATION_BINDING')
-    # A pinned public artifact is necessary; caller must commit/tag it before
-    # any final job. This function does not assert a Git publication occurred.
+    verify_publication(published_commitment, publication_commit)
     private = checked(entry['private_pin'])
     require(private.stat().st_mode & 0o077 == 0, 'SECRET_PERMISSIONS')
     secret = json.loads(private.read_text())
     require(secret['request_sha256'] == sha(entry['request']), 'SECRET_BINDING')
     value = reveal(public, secret['nonce'])
-    binding = dict(publication=published_commitment, realization_sha256=sha(value))
+    binding = dict(publication=published_commitment, publication_commit=publication_commit,
+                   realization_sha256=sha(value))
     if 'release' in entry:
         require(entry['release'] == binding, 'RELEASE_DRIFT')
     else:

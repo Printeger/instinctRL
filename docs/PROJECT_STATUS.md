@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：保留集release现要求公开commitment已写入准确40位Git commit，
+提交为当前HEAD祖先且blob与pin一致；不能用未提交文件或后续提交替换已消费绑定。
+9项CPU检查通过（新增3项真实临时Git仓库检查），见
+`docs/experiments/r6-robustness-auto/CPU_HOLDOUT_PUBLICATION.json`。
+仅本地提交核验，远端push/tag及独审receipt接线仍待完整controller执行。
+无真实holdout生成、无GPU/live/model新增，完整Goal未完成。
+
 2026-10-21：保留集一次性journal候选完成，6项CPU测试通过，覆盖重启复用、
 STOP、冻结漂移、篡改和半写secret拒绝重新抽样。64KiB先预留，entropy claim先落盘，
 私有0600文件保存nonce；公开状态只存commitment/pin，gitignore防止常规暂存私有文件。
