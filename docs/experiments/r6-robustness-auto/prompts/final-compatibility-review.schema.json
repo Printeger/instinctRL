@@ -1,0 +1,128 @@
+{
+  "type": "object",
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": [
+        "PASS_R6_FINAL_COMPATIBILITY_REVIEW",
+        "MUST_FIX"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "evidence_pins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "changed_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 0
+    },
+    "next_plan": {
+      "type": "string"
+    },
+    "remaining_budget": {
+      "type": "object",
+      "properties": {
+        "automatic_sessions_remaining": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "automatic_sessions_remaining"
+      ],
+      "additionalProperties": false
+    },
+    "must_fix": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ]
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "PASS_R6_FINAL_COMPATIBILITY",
+              "MUST_FIX"
+            ]
+          },
+          "reviewer": {
+            "type": "string",
+            "const": "r6-independent-final-compatibility-review"
+          },
+          "payload_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "must_fix": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "maxItems": 32
+          }
+        },
+        "required": [
+          "kind",
+          "decision",
+          "reviewer",
+          "payload_sha256",
+          "summary",
+          "must_fix"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 3,
+      "maxItems": 4
+    }
+  },
+  "required": [
+    "decision",
+    "summary",
+    "evidence_pins",
+    "changed_files",
+    "next_plan",
+    "remaining_budget",
+    "must_fix",
+    "reviews"
+  ],
+  "additionalProperties": false
+}

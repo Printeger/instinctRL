@@ -1,0 +1,72 @@
+FF...................................................................... [100%]
+=================================== FAILURES ===================================
+_______ test_complete_profiles_replay_without_job_reservation[baseline] ________
+
+ready = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_complete_profiles_replay_without_job_reservation(ready):
+        b=ready;before=b.store.replay();result=run(b);budget=b.j.read()['budget'];assert run(b)==result and b.j.read()['budget']==budget
+        assert b.store.replay()==before and result['status']=='FINAL_BATCH_CONTEXTS_READY_NOT_RESERVED'
+        assert not result['dispatch_authorized'] and not result['scientific_acceptance']
+        for i,pin in enumerate(result['contexts']):
+            context=json.loads(m.checked(pin).read_text());p=json.loads(m.checked(context['baseline_profile']).read_text())
+            assert p['final_selection']['assignment_index']==i and p['final_selection']['batch']==b.inputs['batch']
+            assert p['r6']['seed']==b.value['assignments'][i]['evaluation_seed'] and p['r6']['split']=='final'
+            assert p['r6']['run_id']==p['experiment_id']==b.inputs['experiment_ids'][i]
+            assert p['training_seed']==(20260908 if b.value['assignments'][i]['model_role']=='baseline' else 20+i)
+            assert context['snapshot_receipt']==b.snapshot and context['runner']['purpose']=='confirmation_delivery'
+            assert p['checkpoint_compatibility']==b.review.return_value['accepted'][str(i)]
+>       assert not any(e['kind']=='job' and e['identity']['event_id'].startswith('FINAL') for e in b.j.read()['events'].values())
+
+tools/test_r6_final_preparation.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <dict_valueiterator object at 0x76b352300f40>
+
+>   assert not any(e['kind']=='job' and e['identity']['event_id'].startswith('FINAL') for e in b.j.read()['events'].values())
+E   KeyError: 'event_id'
+
+tools/test_r6_final_preparation.py:49: KeyError
+_____ test_complete_profiles_replay_without_job_reservation[confirmation] ______
+
+ready = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_complete_profiles_replay_without_job_reservation(ready):
+        b=ready;before=b.store.replay();result=run(b);budget=b.j.read()['budget'];assert run(b)==result and b.j.read()['budget']==budget
+        assert b.store.replay()==before and result['status']=='FINAL_BATCH_CONTEXTS_READY_NOT_RESERVED'
+        assert not result['dispatch_authorized'] and not result['scientific_acceptance']
+        for i,pin in enumerate(result['contexts']):
+            context=json.loads(m.checked(pin).read_text());p=json.loads(m.checked(context['baseline_profile']).read_text())
+            assert p['final_selection']['assignment_index']==i and p['final_selection']['batch']==b.inputs['batch']
+            assert p['r6']['seed']==b.value['assignments'][i]['evaluation_seed'] and p['r6']['split']=='final'
+            assert p['r6']['run_id']==p['experiment_id']==b.inputs['experiment_ids'][i]
+            assert p['training_seed']==(20260908 if b.value['assignments'][i]['model_role']=='baseline' else 20+i)
+            assert context['snapshot_receipt']==b.snapshot and context['runner']['purpose']=='confirmation_delivery'
+            assert p['checkpoint_compatibility']==b.review.return_value['accepted'][str(i)]
+>       assert not any(e['kind']=='job' and e['identity']['event_id'].startswith('FINAL') for e in b.j.read()['events'].values())
+
+tools/test_r6_final_preparation.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <dict_valueiterator object at 0x76b35239b7e0>
+
+>   assert not any(e['kind']=='job' and e['identity']['event_id'].startswith('FINAL') for e in b.j.read()['events'].values())
+E   KeyError: 'event_id'
+
+tools/test_r6_final_preparation.py:49: KeyError
+=========================== short test summary info ============================
+FAILED tools/test_r6_final_preparation.py::test_complete_profiles_replay_without_job_reservation[baseline]
+FAILED tools/test_r6_final_preparation.py::test_complete_profiles_replay_without_job_reservation[confirmation]
+2 failed, 70 passed in 18.52s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d73fcc79-f0d2-4e04-b50c-9062acef7dcc/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d73fcc79-f0d2-4e04-b50c-9062acef7dcc/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d73fcc79-f0d2-4e04-b50c-9062acef7dcc/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d73fcc79-f0d2-4e04-b50c-9062acef7dcc
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-d73fcc79-f0d2-4e04-b50c-9062acef7dcc'
+  warnings.warn(

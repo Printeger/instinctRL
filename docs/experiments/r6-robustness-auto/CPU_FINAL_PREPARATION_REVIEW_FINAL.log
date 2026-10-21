@@ -1,0 +1,52 @@
+.................FF...................................                   [100%]
+=================================== FAILURES ===================================
+_ test_real_snapshot_preflight_admits_exact_committed_stage[unified-h1-r6-candidate-config.v1] _
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-143/test_real_snapshot_preflight_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x798c94f1bbc0>
+schema = 'unified-h1-r6-candidate-config.v1'
+
+    @pytest.mark.parametrize('schema',['unified-h1-r6-candidate-config.v1','unified-h1-r6-final-config.v1'])
+    def test_real_snapshot_preflight_admits_exact_committed_stage(tmp_path,monkeypatch,schema):
+        import hashlib,subprocess
+        from tools import prepare_r6_snapshot as snap
+        repo=tmp_path/'repo';repo.mkdir();base=repo/'docs/experiments/r6-robustness-auto';base.mkdir(parents=True)
+        target=repo/'coordination/research/workspaces/R6-FINAL-FIXTURE'
+        source=repo/'source.py';source.write_text('fixture = True\n')
+>       tool=repo/'tools/prepare_r6_snapshot.py';tool.parent.mkdir();tool.write_bytes(Path(snap.__file__).read_bytes())
+E       NameError: name 'Path' is not defined
+
+tools/test_r6_final_review_inputs.py:79: NameError
+_ test_real_snapshot_preflight_admits_exact_committed_stage[unified-h1-r6-final-config.v1] _
+
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-143/test_real_snapshot_preflight_a1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x798c94f23e90>
+schema = 'unified-h1-r6-final-config.v1'
+
+    @pytest.mark.parametrize('schema',['unified-h1-r6-candidate-config.v1','unified-h1-r6-final-config.v1'])
+    def test_real_snapshot_preflight_admits_exact_committed_stage(tmp_path,monkeypatch,schema):
+        import hashlib,subprocess
+        from tools import prepare_r6_snapshot as snap
+        repo=tmp_path/'repo';repo.mkdir();base=repo/'docs/experiments/r6-robustness-auto';base.mkdir(parents=True)
+        target=repo/'coordination/research/workspaces/R6-FINAL-FIXTURE'
+        source=repo/'source.py';source.write_text('fixture = True\n')
+>       tool=repo/'tools/prepare_r6_snapshot.py';tool.parent.mkdir();tool.write_bytes(Path(snap.__file__).read_bytes())
+E       NameError: name 'Path' is not defined
+
+tools/test_r6_final_review_inputs.py:79: NameError
+=========================== short test summary info ============================
+FAILED tools/test_r6_final_review_inputs.py::test_real_snapshot_preflight_admits_exact_committed_stage[unified-h1-r6-candidate-config.v1]
+FAILED tools/test_r6_final_review_inputs.py::test_real_snapshot_preflight_admits_exact_committed_stage[unified-h1-r6-final-config.v1]
+2 failed, 52 passed in 12.94s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bddae16c-b72a-493b-add2-10a3c6b476d7/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bddae16c-b72a-493b-add2-10a3c6b476d7/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bddae16c-b72a-493b-add2-10a3c6b476d7/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bddae16c-b72a-493b-add2-10a3c6b476d7
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-bddae16c-b72a-493b-add2-10a3c6b476d7'
+  warnings.warn(

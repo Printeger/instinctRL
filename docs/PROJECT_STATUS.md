@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：最终批次冻结源码兼容 payload、一次整批独审及确定性 profile/context 准备完成。
+原快照预检漏接 candidate/final schema 已修复，准确 commit/source/hash/只读约束保留。
+固定全部 assignment/model/seed/原评分条件；一次审核覆盖三或四份兼容 payload，receipt/STOP/恢复去重检查。
+审核前后核算整批作业 transitions、双卷及初始化/清理 wall/GPU，不预留/发行作业，后续交付修复预算另列。
+74 项组合、33 项最终准备回归通过；两类新测试 fixture 错误已修复并保留日志。
+证据 CPU_FINAL_PREPARATION.json；本地 fake CLI 与发布/冻结边界明确，无生产审核或发车。
+仍需 final 快照输入/存储/顺序路由、修复重入、独审交付和平台交接；163+30=193/256，剩63。
+
 2026-10-22：最终评价 CPU raw 重算/关闭作业原件绑定/无模型 worker 及完整批次汇总完成。
 核验冻结模型/方法/计数、保留集 assignment/seed，原基线 ICS .15 与确认模型分别审计。
 三基线流或四模型必须齐全且作业独立；全 lanes/子组/原五任务完整性检查，保留压力域与目标域负结果。

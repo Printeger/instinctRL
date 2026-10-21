@@ -1,0 +1,84 @@
+{
+  "status": "CPU_FINAL_BATCH_FROZEN_COMPATIBILITY_REVIEW_AND_DETERMINISTIC_CONTEXT_PREPARATION_PASS_ROUTING_PENDING",
+  "input_commit": "93b5e4697844d6cb5ca7c570a83c1078fb0cbe27",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/prepare_r6_snapshot.py",
+      "sha256": "ee9a4b4550b4156c277dae3c345620e5745d5a2aadd96b3a35f5cd1d98ec58d0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_review_inputs.py",
+      "sha256": "34359dd485f48d69d8dce64daf24f287d64b9bbcae6020370e85042d63aefd26"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_compatibility_review.py",
+      "sha256": "f13b2a7c9e2b29639b2000e737bc5ff45550156718c44e709bb2e6dd90583957"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_preparation.py",
+      "sha256": "d522828120de8325bf411f5905645320bdf979070d7e3320948c889c42f24cd4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_review_inputs.py",
+      "sha256": "d680e25c1acd72a16c95ebd1486de60b95a62e1fb90933ec0d3d4a7e0f82a8e8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_compatibility_review.py",
+      "sha256": "43a9e557219c79d59040a51109657870dc595b2243fa66e9b5ac0d1c647fa8ef"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_preparation.py",
+      "sha256": "aab4b0f679de25bda8b19212957175bcb9ebaf780483a17f55079265ef7576cc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/final-compatibility-review.schema.json",
+      "sha256": "55a200463eea0489d1519c78d111b9441ab7062f07359a655afaa46343e9c238"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_PREPARATION_REVIEW_INITIAL.log",
+      "sha256": "8c257948095600b545a2f5dfe425f1dc0952e9dc72d4bd14310d9277a7d757ef"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_PREPARATION_REVIEW_FINAL.log",
+      "sha256": "fb28dc25d9bd610c6a5c4d1fedfe4e97e539b2ed26c0e762ae387c2ccafb8d54"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_PREPARATION_COMBINED.log",
+      "sha256": "5587180e8210f55f6f33ae88ee0459c28aa0a83b262c62cc8d63c34bc98422c3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_PREPARATION_CORRECTED.log",
+      "sha256": "f655409272db49ea50bbdb9857943a7e14572c03b1d5dea1db70fc98bf26654d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_PREPARATION_FINAL.log",
+      "sha256": "0488b9ce5706b3652d81f8619abb1eae41246d2a43811171695769f5e5e3781c"
+    }
+  ],
+  "tests": {
+    "review_initial": 51,
+    "combined_corrected": 74,
+    "final_preparation_regression": 33
+  },
+  "initial_failures": [
+    "Two new real-Git preflight tests omitted pathlib.Path import; corrected.",
+    "Two preparation tests assumed every historical fixture event had event_id; corrected test to inspect optional field."
+  ],
+  "scope": [
+    "Snapshot preflight now admits dedicated candidate and final schemas while retaining exact committed source/tool/hash and target checks; prior preflight rejected both.",
+    "Frozen CPU program derives compatibility payload for every registered assignment from exact model origin configs and one read-only final execution snapshot.",
+    "One budgeted read-only independent review covers all three or four assignments; durable receipts, per-assignment accepted records, STOP, Store/source drift, MUST_FIX and crash recovery guarded.",
+    "Model prompt carries payload pins, avoiding duplicated source contents; original payloads preserved.",
+    "Deterministic final profiles bind assignment index, final stream, original suite seed, baseline or confirmation training seed, reviewed compatibility and full protocol.",
+    "Entire final-job transition, dual-volume disk, live/simulator and wall/GPU allowance checked before review and after review without reserving jobs. Scope explicitly excludes later delivery/repair."
+  ],
+  "limitations": [
+    "Review tests use local fake CLI and explicit publication/frozen preparation substitutes, not a production independent review.",
+    "Real temporary Git preflight uses a declared tiny source manifest fixture; actual compatibility builder checks actual fixture source deltas with selection/config substituted.",
+    "Preparation takes an already charged frozen final snapshot; production snapshot generation/input selection and sequential controller routing remain required.",
+    "No volume provisioning, production entropy, actual baseline, GPU query, simulation, training or scientific acceptance. Full Goal incomplete."
+  ],
+  "goal_complete": false
+}

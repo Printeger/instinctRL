@@ -13,7 +13,7 @@ import subprocess
 from rlflow.jobs import identity, owns
 from rlflow.store import atomic, canonical, sha
 from tools.r6_recovery import Journal, RecoveryError, checked, file_pin
-from training_workloads.unified_h1.config import R6_CONFIG_SCHEMA, R6_TRAINING_CONFIG_SCHEMA, required_source_sets
+from training_workloads.unified_h1.config import R6_CONFIG_SCHEMA, R6_TRAINING_CONFIG_SCHEMA, R6_CANDIDATE_CONFIG_SCHEMA, R6_FINAL_CONFIG_SCHEMA, required_source_sets
 
 ROOT=Path(__file__).resolve().parents[1]
 BASE=ROOT/'docs/experiments/r6-robustness-auto'
@@ -36,7 +36,7 @@ def preflight(config_path,commit):
     data=git(ROOT,'show',commit+':'+str(config_path.relative_to(ROOT)))
     if config_path.read_bytes()!=data:raise RecoveryError('SNAPSHOT_CONFIG_NOT_COMMITTED')
     config=json.loads(data)
-    if config['schema_version'] not in (R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA):raise RecoveryError('SNAPSHOT_R6_CONFIG_REQUIRED')
+    if config['schema_version'] not in (R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA,R6_CANDIDATE_CONFIG_SCHEMA,R6_FINAL_CONFIG_SCHEMA):raise RecoveryError('SNAPSHOT_R6_CONFIG_REQUIRED')
     target=Path(config['workload']['path'])
     if (target.resolve()!=target or target.is_symlink() or target.parent!=ROOT/'coordination/research/workspaces'
             or not target.name.startswith('R6-') or config['product']['path']!=str(target)):
