@@ -1,0 +1,653 @@
+EEEEEEEEEEEEEEEE.........................F                               [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_confirmed_models_use_exact_terminal_and_common_final_stream _
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7738100494c0>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_confirmed_models_use_exac0/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_confirmed_models_use_exac0/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_baseline_sufficient_three_streams_keep_original_model_method _
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380fc4fe30>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_baseline_sufficient_three0/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_baseline_sufficient_three0/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+______ ERROR at setup of test_final_selection_rejects_substitution[seed] _______
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380f45da60>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s0/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s0/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+______ ERROR at setup of test_final_selection_rejects_substitution[role] _______
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380f45da00>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s1/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s1/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+______ ERROR at setup of test_final_selection_rejects_substitution[index] ______
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380fc4f950>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s2/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s2/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+______ ERROR at setup of test_final_selection_rejects_substitution[phase] ______
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380f45fc20>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s3/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s3/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_final_selection_rejects_substitution[assignment_missing] _
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380f45e900>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s4/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s4/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+______ ERROR at setup of test_final_selection_rejects_substitution[nonce] ______
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380f45f5c0>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s5/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s5/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_____ ERROR at setup of test_final_selection_rejects_substitution[review] ______
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380f45e660>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s6/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s6/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_____ ERROR at setup of test_final_selection_rejects_substitution[commit] ______
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77381004bb60>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s7/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s7/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+______ ERROR at setup of test_final_selection_rejects_substitution[model] ______
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380f4663f0>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s8/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s8/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+______ ERROR at setup of test_final_selection_rejects_substitution[rule] _______
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380f464830>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s9/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s9/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+___ ERROR at setup of test_final_selection_rejects_substitution[seed_order] ____
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380fc4f9e0>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s10/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s10/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+____ ERROR at setup of test_final_selection_rejects_substitution[terminal] _____
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380fe27620>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s11/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s11/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+____ ERROR at setup of test_final_selection_rejects_substitution[metadata] _____
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380fe501d0>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s12/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s12/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_final_selection_rejects_substitution[development_selector] _
+
+selection = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r...: 1073741824, 'checkpoint_bytes': 268435456, 'branch_record_bytes': 1048576, 'metadata_bytes': 67108864}}], reports=[])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77380fe509b0>
+
+    @pytest.fixture
+    def ready(selection,monkeypatch):
+        b=selection;recipe=copy.deepcopy(b.recipe);recipe['branch_updates']=256
+        recipe_pin=b.pin('final-recipe.json',recipe);recipe_freeze=b.ev
+        monkeypatch.setattr(f.training,'validate',lambda plan:copy.deepcopy(plan))
+        models={'baseline':b.ev};streams=[];b.plans=[];b.reports=[]
+        for i,seed in enumerate(recipe['confirmation_seeds']):
+            name='final-'+str(i);plan=dict(b.plan,phase='confirmation',training_seed=seed,recipe=recipe_pin,selection_freeze=recipe_freeze)
+>           b.plans.append(plan);checkpoint=b.pin(name+'/results/research-r6-training/checkpoints/u896.pt',{'fixture':seed})
+
+tools/test_r6_final_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_training_plan.py:30: in pin
+    path=tmp_path/name;path.write_text(json.dumps(value));return dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+/usr/lib/python3.12/pathlib.py:1049: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s13/final-0/results/research-r6-training/checkpoints/u896.pt')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-mint/pytest-122/test_final_selection_rejects_s13/final-0/results/research-r6-training/checkpoints/u896.pt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+=================================== FAILURES ===================================
+_ SourceConfigTests.test_transitive_local_imports_and_package_initializers_are_bound _
+
+self = <test_r6_source_config.SourceConfigTests testMethod=test_transitive_local_imports_and_package_initializers_are_bound>
+
+    def test_transitive_local_imports_and_package_initializers_are_bound(self):
+        sources=c.R6_PRODUCT_SOURCES|c.R6_WORKLOAD_SOURCES
+>       self.assertEqual(closure(sources)-sources,set())
+E       AssertionError: Items in the first set but not the second:
+E       'training_workloads/unified_h1/robustness_holdout.py'
+
+tools/test_r6_source_config.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED tools/test_r6_source_config.py::SourceConfigTests::test_transitive_local_imports_and_package_initializers_are_bound
+ERROR tools/test_r6_final_selection.py::test_confirmed_models_use_exact_terminal_and_common_final_stream
+ERROR tools/test_r6_final_selection.py::test_baseline_sufficient_three_streams_keep_original_model_method
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[seed]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[role]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[index]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[phase]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[assignment_missing]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[nonce]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[review]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[commit]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[model]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[rule]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[seed_order]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[terminal]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[metadata]
+ERROR tools/test_r6_final_selection.py::test_final_selection_rejects_substitution[development_selector]
+1 failed, 25 passed, 16 errors in 0.86s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-1a5b0255-f5c8-4d41-ab4a-7f89613ee39d/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-1a5b0255-f5c8-4d41-ab4a-7f89613ee39d/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-1a5b0255-f5c8-4d41-ab4a-7f89613ee39d/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-1a5b0255-f5c8-4d41-ab4a-7f89613ee39d
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-1a5b0255-f5c8-4d41-ab4a-7f89613ee39d'
+  warnings.warn(
