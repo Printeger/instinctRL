@@ -53,9 +53,10 @@ class SourceConfigTests(unittest.TestCase):
         self.assertEqual((product,workload),(c.PRODUCT_SOURCES,c.WORKLOAD_SOURCES))
         product,workload=c.required_source_sets(c.R6_CONFIG_SCHEMA)
         self.assertEqual(len(product-c.PRODUCT_SOURCES),26)
-        self.assertEqual(len(workload-c.WORKLOAD_SOURCES),22)
+        self.assertEqual(len(workload-c.WORKLOAD_SOURCES),23)
         self.assertTrue({'training_workloads/unified_h1/robustness_training_plan.py',
-                         'training_workloads/unified_h1/robustness_training_rng.py'} <= workload)
+                         'training_workloads/unified_h1/robustness_training_rng.py',
+                         'training_workloads/unified_h1/robustness_training_driver.py'} <= workload)
         for name in product|workload:self.assertTrue((ROOT/name).is_file(),name)
         with self.assertRaises(ValueError):c.required_source_sets('unknown')
 

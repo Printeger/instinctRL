@@ -30,6 +30,16 @@ class UnifiedH1Driver:
         self.step_kind = step_kind
         self.evidence_buffer: list[Mapping[str, Any]] = []
 
+    def prepare_step(self,plan):
+        self.environment.prepare_h1_step(global_policy_step=plan.global_policy_step,
+            command_b=plan.command_b,next_command_b=plan.next_command_b)
+
+    def next_observation_command(self,plan):
+        return plan.next_command_b
+
+    def command_evidence(self,plan):
+        return {}
+
     def step(self, action: torch.Tensor):
         policy = self.observation["policy"]
         latest_command = policy["state_vec"][:, 45:48]
@@ -41,8 +51,7 @@ class UnifiedH1Driver:
         self.counters.require_step_capacity(kind=self.step_kind, lanes=plan.command_b.shape[0], maximum=self.transition_limit)
         self.counters.require_reset_capacity(automatic=True, lanes=plan.command_b.shape[0],
             maximum=self.automatic_reset_limit)
-        self.environment.prepare_h1_step(global_policy_step=plan.global_policy_step,
-            command_b=plan.command_b, next_command_b=plan.next_command_b)
+        self.prepare_step(plan)
         self.counters.attempt_step()
         if self.journal is not None:
             self.journal.record_step_accounting(event="ENV_STEP_ATTEMPT",
@@ -65,21 +74,23 @@ class UnifiedH1Driver:
         if not isinstance(extras, Mapping):
             raise TypeError("environment extras must be a mapping")
         raw = deepcopy(extras)
+        next_command=self.next_observation_command(plan)
         scene = getattr(self.environment, "scene", None)
         origins = getattr(scene, "env_origins", None)
         raw["_h1_driver"] = {"global_policy_step": plan.global_policy_step,
             "pure_hover": self.clock.pure_hover,
             "center_reset_only": getattr(self.environment, "_h1_pure_hover_training", False),
-            "command_b": plan.command_b.detach().cpu(), "next_command_b": plan.next_command_b.detach().cpu(),
+            "command_b": plan.command_b.detach().cpu(), "next_command_b": next_command.detach().cpu(),
             "action": action.detach().cpu(), "reward": reward.detach().cpu(),
             "terminated": terminated.detach().cpu(), "truncated": truncated.detach().cpu(),
             "env_origins_w_m": (origins.detach().cpu() if isinstance(origins, torch.Tensor)
-                else {"status":"UNAVAILABLE", "reason":"ENV_ORIGINS_NOT_EXPOSED"})}
+                else {"status":"UNAVAILABLE", "reason":"ENV_ORIGINS_NOT_EXPOSED"}),
+            **self.command_evidence(plan)}
         if self.journal is not None:
             self.journal.record_step_evidence(raw, completed_policy_steps=self.counters.completed_policy_steps)
         reset_lanes = int((terminated | truncated).to(torch.int64).sum().item())
         self.counters.reserve_reset(automatic=True, lanes=reset_lanes, maximum=self.automatic_reset_limit)
-        if not torch.equal(next_observation["policy"]["state_vec"][:, 45:48], plan.next_command_b):
+        if not torch.equal(next_observation["policy"]["state_vec"][:, 45:48], next_command):
             raise ValueError("obs_(t+1) command does not equal schedule c_(t+1)")
         self.evidence_buffer.append(raw)
         self.observation = next_observation

@@ -1,6 +1,6 @@
 {
-  "status": "TRAINING_PLAN_RNG_CPU_PASS_TRAINING_ENTRY_AND_FINAL_WORKFLOW_PENDING",
-  "checked_commit": "00f43403",
+  "status": "TRAINING_WORLD_COMMAND_DRIVER_CPU_PASS_CURRICULUM_AND_ENTRY_PENDING",
+  "checked_commit": "54867564",
   "concrete_first_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
     "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
@@ -29,8 +29,8 @@
     "No production post-analysis decision exists, so updated STOP request does not reinterpret an existing production receipt"
   ],
   "next_implementation": {
-    "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs; persistent first/decision/profile/materialization/next cursor and actual detached CPU wait/STOP fixture; exact baseline-compatible source payload/review/frozen validation/new-context routing; exact training-plan budget/seed/checkpoint provenance and RNG branch/resume composition",
-    "next": "Wire reviewed training plan into actual curriculum/backend entry, persist RNG before rollout, stage-aware preparation/authority/analysis; final validation/holdout/delivery routing remains",
+    "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs; persistent first/decision/profile/materialization/next cursor and actual detached CPU wait/STOP fixture; exact baseline-compatible source payload/review/frozen validation/new-context routing; exact training-plan budget/seed/checkpoint provenance and RNG branch/resume composition; R6 world-command training driver with actual next-attitude conversion and exact clock provenance",
+    "next": "Recipe curriculum sampling and actual training reset/measurement/physics assembly; backend checkpoint/RNG/log/driver wiring; stage-aware issuance/analysis and final delivery",
     "deployment": "Controller composition and baseline-compatible source route CPU verified; independent combined review, remaining phase contracts and platform handoff precede production",
     "invariants": [
       "No Journal or Store authority mutation by source-preparation worker",
@@ -72,5 +72,9 @@
   "training_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PLAN.json",
     "sha256": "fb17be5f996ae3ba97f7baa2711704703a9973d267effe375b54f01a3c7e1a1f"
+  },
+  "training_driver": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_DRIVER.json",
+    "sha256": "e0618a97a01495a73024986bd545291c16ce95ac9d424c7e66c8f2a8e2a3ce92"
   }
 }

@@ -1,0 +1,70 @@
+{
+  "status": "CPU_WORLD_COMMAND_TRAINING_DRIVER_PASS_NOT_LIVE_INTEGRATED",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_driver.py",
+      "sha256": "89a00b8e8b2193b731290934ff0a23f6a946d2cf6506cb5531b75923b9af73b3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/driver.py",
+      "sha256": "9eafe508e5f26fc88a6d1e0f5dad666e96298b1b9a82bb598bc32c7df4ef3a59"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "f238e52c1d7bf82704f475cf4f23232dbd94c560c53cf144473af298883fb721"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_training_driver.py",
+      "sha256": "8370b7e43f199cd1621bb25990bd24c919975aa572b14a21fd3f5d8e6511241d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_config.py",
+      "sha256": "323fb287270a811cc3f1179f850b2bbf71bdfffa4a3d25cca1bb87ffc53afc2f"
+    }
+  ],
+  "tests": {
+    "driver_and_legacy_passed": 30,
+    "driver_log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_DRIVER_FINAL_TEST.txt",
+      "sha256": "63eeaa5697a727de65f0b05c823eaf1b8f6aa365ada8474e66033c313676d03e"
+    },
+    "source_snapshot_passed": 13,
+    "source_log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_DRIVER_SOURCE_TEST.txt",
+      "sha256": "034d44f4fed2baf52ecf4c7d88807670483ae00bc5386d63076a952b985f16d0"
+    },
+    "preserved_initial_failure": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_DRIVER_TEST.txt",
+      "sha256": "48a4a3f2ea8f9477366f0dd59c1cf2f3075d7db6c19d55bb8025c23c30ea14f0"
+    },
+    "repair": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_DRIVER_REPAIR_TEST.txt",
+      "sha256": "8f1c06e076ed24253e8fcaadcb6d07901264f4e7e892578dd0546bd28e1c70d9"
+    }
+  },
+  "coverage": [
+    "World command source converted to body using actual current observation attitude",
+    "Next world command staged before physics and verified against actual next attitude, including automatic reset",
+    "Audit preserves world request, prepared body value and actual delivered next body command",
+    "Existing 52-field observation layout unchanged; no new actor field",
+    "Finite recipe/branch/global clock bound directly from validated training plan; reset cannot rewind clock",
+    "Budget refusal precedes command staging/environment action; failed next-command verification retains consumed transitions",
+    "Legacy driver default hooks retain existing command behavior; actual CPU rollout/PPO/accounting/resource-boundary tests pass",
+    "Source manifest includes new module and transitive imports"
+  ],
+  "fixture_boundaries": [
+    "Tensor environment changes yaw/reset; actual Isaac physics and observation history are not run",
+    "World command source in tests is deterministic fixture, not a proposed scientific curriculum",
+    "Legacy CPU PPO regression uses synthetic observations; no actual u640 restore or scientific training"
+  ],
+  "remaining": [
+    "Actual recipe curriculum sampling/reset/measurement/force installation and exposure records",
+    "Training backend loads exact checkpoint, persists RNG evidence, installs driver/log factory and saves branch metadata",
+    "Stage-aware training dispatch/preparation/analysis plus final delivery workflow",
+    "Combined independent acceptance, privileged provisioning and platform handoff"
+  ],
+  "production_model_calls": 0,
+  "GPU_queries": 0,
+  "live_starts": 0,
+  "goal_complete": false
+}

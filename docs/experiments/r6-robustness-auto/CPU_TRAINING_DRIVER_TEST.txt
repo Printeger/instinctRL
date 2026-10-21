@@ -1,0 +1,20 @@
+
+==================================== ERRORS ====================================
+______________ ERROR collecting tools/test_r6_training_driver.py _______________
+tools/test_r6_training_driver.py:7: in <module>
+    from training_workloads.unified_h1.robustness_training_driver import R6WorldCommandClock,R6TrainingDriver
+training_workloads/unified_h1/robustness_training_driver.py:17: in <module>
+    @dataclass
+     ^^^^^^^^^
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/dataclasses.py:1232: in dataclass
+    return wrap(cls)
+           ^^^^^^^^^
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/dataclasses.py:1222: in wrap
+    return _process_class(cls, init, repr, eq, order, unsafe_hash,
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/dataclasses.py:988: in _process_class
+    raise TypeError('cannot inherit non-frozen dataclass from a '
+E   TypeError: cannot inherit non-frozen dataclass from a frozen one
+=========================== short test summary info ============================
+ERROR tools/test_r6_training_driver.py - TypeError: cannot inherit non-frozen...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.57s
