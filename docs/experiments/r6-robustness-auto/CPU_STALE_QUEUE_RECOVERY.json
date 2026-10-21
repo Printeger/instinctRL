@@ -1,0 +1,42 @@
+{
+  "schema_version": "r6-stale-queue-recovery-cpu/1",
+  "status": "CPU_PASS_NOT_DEPLOYED",
+  "pytest_cases_passed": 65,
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py",
+      "sha256": "671cb3f09b1324cef90752e92387d0bda129c07e6f82177a8a61c87b25adca76"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_wait.py",
+      "sha256": "4cf9c6cbcfe231fd68a90b10df618600230cdad946f6764edfa750f0b13967f3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "7a1b746b17e461c0ab1350503a7af45f61a4d94418b3bd68643fa1168e113b17"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_resource_queue.py",
+      "sha256": "337a7e7a87f267fc36d459971cd599f81fb0e7617927b9f2aa024dbfad8623fb"
+    }
+  ],
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_STALE_QUEUE_RECOVERY_TESTS_V2.txt",
+    "sha256": "a6552ce1395cbe559743090026d2b6af446284b4a5f8fe30c7699bc0bf4b233d"
+  },
+  "coverage": [
+    "Stale PASS preserves original evidence and collects a new complete window after bounded backoff",
+    "Fresh PASS replay performs no new query",
+    "Restart downtime remains charged",
+    "STOP prevents new window and queries"
+  ],
+  "limitations": [
+    "Synthetic CPU windows; no real GPU observation",
+    "Existing pytest temporary-directory cleanup warnings retained",
+    "Full controller and quota acceptance remain incomplete"
+  ],
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "capacity_pass": false
+}

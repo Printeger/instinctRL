@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：资源窗口恢复修复通过65项CPU回归：过期PASS不再被循环复用，保留原证据，
+按既有退避重新采集完整窗口，停机时间计账且STOP阻止新查询。见
+`docs/experiments/r6-robustness-auto/CPU_STALE_QUEUE_RECOVERY.json`。未改变资源阈值。
+当前CPU-QUOTA-02结果卷仍不存在，sudo非交互仍需密码；CPU-QUOTA-01已验证，不需重跑。
+完整controller尚未部署、R6 live启动为0、capacity=false；新增结果卷真实验证、独审、
+容量定稿与控制器交接仍未完成，不能将CPU修复视为科学目标完成。
+
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
 2026-10-21：结果卷CPU-QUOTA-02真实测试包已就绪：固定16MiB ext4结果卷，另留1MiB

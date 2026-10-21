@@ -173,7 +173,9 @@ def wait_for_observation(journal,spec,executable,*,free_disk_bytes,queue_review=
             if entry['request']['spec']!=spec or entry['request']['review']!=queue_review:
                 raise RecoveryError('RESOURCE_QUEUE_WAIT_BINDING')
             status=entry['queue_status']
-            if status=='OBSERVATION_PASS':return queue.finish(journal,key)
+            if status=='OBSERVATION_PASS':
+                if queue.observation_fresh(journal,key):return queue.finish(journal,key)
+                status='EXPIRED' # Control flow only; preserve the original PASS artifact.
             if status in {'INVALID_WINDOW','STOPPED'}:return queue.finish(journal,key)
             if status in {'BUSY','INTERRUPTED','EXPIRED'}:
                 while True:
@@ -191,4 +193,5 @@ def wait_for_observation(journal,spec,executable,*,free_disk_bytes,queue_review=
         else:
             key=queue.begin(journal,spec,ordinal=0,free_disk_bytes=min(free_disk_bytes,shutil.disk_usage(journal.directory).free),review=queue_review)
         result=collect_window(journal,key,executable,review=sampler_review)
+        if result['status']=='OBSERVATION_PASS' and not queue.observation_fresh(journal,key):continue
         if result['status'] not in {'BUSY','INTERRUPTED','EXPIRED'}:return result

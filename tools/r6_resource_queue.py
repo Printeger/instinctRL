@@ -56,6 +56,24 @@ def validate(journal,key,state=None):
     return entry
 
 
+def observation_fresh(journal,key):
+    """Validate the original complete PASS record, then check its current age.
+
+    A past PASS is never rewritten as a different scientific observation.
+    False permits only bounded re-observation, never submission.
+    """
+    entry=validate(journal,key)
+    record=json.loads(checked(entry['window_record']).read_text())
+    if (entry['queue_status']!=record['status'] or record['status']!='OBSERVATION_PASS'
+            or record['event_key']!=key or record['request_sha256']!=sha(entry['request'])
+            or record['window']['samples']!=entry['samples']):
+        raise RecoveryError('QUEUE_RECORD')
+    v2.validate_window(record['window'])
+    clock=now();last=record['window']['samples'][-1]['monotonic_ns']
+    return (record['finished_clock']['boot_id']==clock['boot_id']
+            and 0<=clock['monotonic_ns']-last<=POLICY['maximum_sample_age_seconds']*10**9)
+
+
 def begin(journal,spec_pin,*,ordinal,free_disk_bytes,purpose='development',review=None):
     journal.guard()
     if stop_paths(journal):raise RecoveryError('STOP_BEFORE_QUEUE')
@@ -89,12 +107,13 @@ def begin(journal,spec_pin,*,ordinal,free_disk_bytes,purpose='development',revie
         if e['kind']=='cpu' and e.get('dispatch_claim') and not e.get('receipt'):
             raise RecoveryError('QUEUE_CPU_WORKER_UNRESOLVED')
     if prior:
-        latest=max(prior,key=lambda pair:pair[1]['request']['ordinal'])[1]
-        if latest['queue_status'] not in {'BUSY','INTERRUPTED','EXPIRED'}:raise RecoveryError('QUEUE_PRIOR_REQUIRES_DECISION')
+        latest_key,latest=max(prior,key=lambda pair:pair[1]['request']['ordinal'])
+        stale_pass=latest['queue_status']=='OBSERVATION_PASS' and not observation_fresh(journal,latest_key)
+        if latest['queue_status'] not in {'BUSY','INTERRUPTED','EXPIRED'} and not stale_pass:
+            raise RecoveryError('QUEUE_PRIOR_REQUIRES_DECISION')
         clock=now();end=latest.get('finished_clock',latest['queue_clock'])
         if clock['boot_id']!=end['boot_id']:raise RecoveryError('QUEUE_BOOT_RECONCILIATION_REQUIRED')
         if clock['monotonic_ns']<end['monotonic_ns']+BACKOFF_SECONDS*10**9:raise RecoveryError('QUEUE_LOCAL_BACKOFF')
-        latest_key=max(prior,key=lambda pair:pair[1]['request']['ordinal'])[0]
         account_wait(journal,latest_key)
         state=journal.read()
     request=dict(spec=spec_pin,ordinal=ordinal,policy=POLICY,review=review,
@@ -121,7 +140,8 @@ def account_wait(journal,key):
     STOP. It is accounting only and is allowed after STOP; it queries nothing.
     """
     journal.require_writer();state=journal.read();entry=validate(journal,key,state)
-    if entry['queue_status'] not in {'BUSY','INTERRUPTED','EXPIRED','STOPPED'}:
+    stale_pass=entry['queue_status']=='OBSERVATION_PASS' and not observation_fresh(journal,key)
+    if entry['queue_status'] not in {'BUSY','INTERRUPTED','EXPIRED','STOPPED'} and not stale_pass:
         raise RecoveryError('QUEUE_NOT_WAITING')
     if entry.get('wait_closed'):
         return entry['wait_accounted_seconds']

@@ -26,15 +26,7 @@ def require(condition, reason):
 def queue_ready(journal, queue_key, spec_pin):
     state=journal.read();entry=queue.validate(journal,queue_key,state)
     require(entry['request']['spec']==spec_pin, 'QUEUE_SPEC_DRIFT')
-    record=json.loads(checked(entry['window_record']).read_text())
-    require(entry['queue_status']==record['status']=='OBSERVATION_PASS'
-        and record['event_key']==queue_key and record['request_sha256']==sha(entry['request'])
-        and record['window']['samples']==entry['samples'], 'QUEUE_RECORD')
-    queue.v2.validate_window(record['window'])
-    now=queue.now();last=record['window']['samples'][-1]['monotonic_ns']
-    require(record['finished_clock']['boot_id']==now['boot_id']
-        and 0<=now['monotonic_ns']-last<=queue.POLICY['maximum_sample_age_seconds']*10**9,
-        'QUEUE_STALE')
+    require(queue.observation_fresh(journal,queue_key),'QUEUE_STALE')
     return entry['window_record']
 
 

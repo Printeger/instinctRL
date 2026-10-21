@@ -165,3 +165,52 @@ class QueueTests(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+
+class StalePassedWindowTests(unittest.TestCase):
+    setUp=QueueTests.setUp
+    advance=QueueTests.advance
+    begin=QueueTests.begin
+    sample=QueueTests.sample
+    window=QueueTests.window
+    finish=QueueTests.finish
+    def test_stale_pass_collects_new_window_without_rewriting_old_evidence(self):
+        from tools import r6_resource_wait as wait
+        key=self.begin();self.window(key);first=self.finish(key)
+        old=self.j.read()['events'][key]['window_record']
+        original=Path(old['path']).read_bytes();self.advance(9)
+        sleeps=[];calls=[]
+        def sleep(seconds):sleeps.append(seconds);self.advance(seconds)
+        def collect(journal,next_key,executable,**kwargs):
+            calls.append(next_key)
+            for i in range(13):
+                if i:self.advance(5)
+                q.append_sample(journal,next_key,i,self.sample())
+            return q.finish(journal,next_key)
+        with self.j.writer(),patch.object(wait,'collect_window',side_effect=collect),patch.object(wait.time,'sleep',side_effect=sleep):
+            second=wait.wait_for_observation(self.j,file_pin(self.spec),{},free_disk_bytes=500*1024**3)
+        self.assertEqual(len(calls),1);self.assertNotEqual(second['event_key'],key)
+        self.assertEqual(sum(sleeps),51)
+        self.assertEqual(Path(old['path']).read_bytes(),original)
+        self.assertEqual(self.j.read()['events'][key]['queue_status'],'OBSERVATION_PASS')
+        self.assertEqual(totals(self.j.read()['budget'])['queue_seconds'],360)
+        with self.j.writer(),patch.object(wait,'collect_window',side_effect=AssertionError('fresh replay must not query')):
+            self.assertEqual(wait.wait_for_observation(self.j,file_pin(self.spec),{},free_disk_bytes=500*1024**3),second)
+        for name in ('live_starts','simulator_initializations','automatic_model_sessions'):
+            self.assertEqual(totals(self.j.read()['budget'])[name],0)
+
+    def test_old_pass_downtime_is_charged_and_fresh_pass_cannot_be_replaced(self):
+        key=self.begin();self.window(key);self.finish(key)
+        with self.assertRaisesRegex(RecoveryError,'PRIOR_REQUIRES_DECISION'):self.begin(1)
+        self.advance(240);self.begin(1)
+        self.assertEqual(totals(self.j.read()['budget'])['queue_seconds'],480)
+
+    def test_stop_during_stale_pass_recovery_spends_no_new_slot(self):
+        from tools import r6_resource_wait as wait
+        key=self.begin();self.window(key);self.finish(key);self.advance(9)
+        (self.j.directory/'STOP').touch()
+        with self.j.writer(),patch.object(wait,'collect_window',side_effect=AssertionError('STOP must not query')):
+            with self.assertRaisesRegex(RecoveryError,'STOP_DURING_RESOURCE_BACKOFF'):
+                wait.wait_for_observation(self.j,file_pin(self.spec),{},free_disk_bytes=500*1024**3)
+        self.assertEqual(len(self.j.read()['events']),1)
+        self.assertEqual(totals(self.j.read()['budget'])['queue_seconds'],180)
