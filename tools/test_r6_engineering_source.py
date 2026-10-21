@@ -42,15 +42,17 @@ def test_controller_automatically_repairs_but_does_not_self_approve_or_submit(ca
     b=case;next_job=Mock(side_effect=AssertionError('no reviewed repair yet'))
     monkeypatch.setattr(controller.next_entry,'continue_job',next_job)
     monkeypatch.setattr(controller.profile,'prepare_profile',Mock(side_effect=AssertionError('repair not reviewed')))
+    monkeypatch.setattr(controller.engineering_review,'prepare',Mock(side_effect=RuntimeError('review boundary')))
     with b.j.writer():
         state=b.j.read();state['events'][b.controller]['cursor']=dict(phase='FIRST_JOB',completed_jobs=[]);b.j.save(state)
     monkeypatch.setattr(controller.first,'start',Mock(return_value=dict(status='DECISION_PROPOSAL_RETURNED',event_key=b.key)))
-    with b.j.writer():first=controller.run(b.j,b.request,b.store,free_disk_bytes=FREE)
+    with b.j.writer(),pytest.raises(RuntimeError,match='review boundary'):
+        controller.run(b.j,b.request,b.store,free_disk_bytes=FREE)
     budget=b.j.read()['budget']
-    with b.j.writer():second=controller.run(b.j,b.request,b.store,free_disk_bytes=FREE)
-    assert first==second and b.j.read()['budget']==budget
-    assert first['status']=='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW'
-    assert b.j.read()['events'][b.controller]['cursor']['phase']=='REPAIR_AND_REVIEW'
+    with b.j.writer(),pytest.raises(RuntimeError,match='review boundary'):
+        controller.run(b.j,b.request,b.store,free_disk_bytes=FREE)
+    assert b.j.read()['budget']==budget
+    assert b.j.read()['events'][b.controller]['cursor']['phase']=='ENGINEERING_REPAIR_REVIEW'
     assert b.builder.with_suffix('.count').read_text()=='call\n'
     next_job.assert_not_called()
 

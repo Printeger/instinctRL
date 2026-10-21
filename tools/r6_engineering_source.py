@@ -21,12 +21,19 @@ def prepare(journal,controller_key,store,*,executable,free_disk_bytes):
         and controller['request']['store_root']==str(store.root.resolve())
         and cursor['phase']=='REPAIR_AND_REVIEW','CONTROLLER')
     require(not any(name in cursor for name in ('confirmation','final_batch','final_models','final_collection')),'FROZEN_PHASE_REPAIR_REQUIRES_SEPARATE_REVIEW')
-    binding=controller.get('engineering_source_input')
+    cursor_hash=sha(cursor)
+    attempts=controller.get('engineering_source_attempts',{})
+    binding=attempts.get(cursor_hash,{}).get('input')
+    previous=controller.get('engineering_source_input')
+    if binding is None and previous is not None:
+        if previous['parent_key']==cursor['parent_key'] or previous['job_key']==cursor['job_key']:
+            require(previous['cursor_sha256']==cursor_hash,'CURSOR_DRIFT');binding=previous
     if binding is None:
         result=inputs.prepare(journal,controller_key,store,free_disk_bytes=free_disk_bytes)
         binding=dict(cursor_sha256=sha(cursor),repair_input=result['repair_input'],
             parent_key=cursor['parent_key'],job_key=cursor['job_key'])
-        state=journal.read();state['events'][controller_key]['engineering_source_input']=binding;journal.save(state)
+        state=journal.read();owner=state['events'][controller_key];owner['engineering_source_input']=binding
+        owner.setdefault('engineering_source_attempts',{})[cursor_hash]={'input':binding};journal.save(state)
     require(binding['cursor_sha256']==sha(cursor) and binding['parent_key']==cursor['parent_key']
         and binding['job_key']==cursor['job_key'],'CURSOR_DRIFT')
     value=json.loads(checked(binding['repair_input']).read_text())
@@ -45,5 +52,7 @@ def prepare(journal,controller_key,store,*,executable,free_disk_bytes):
         dispatch_authorized=False,scientific_acceptance=False,goal_complete=False)
     path=journal.directory/'engineering-repairs'/value['event_key']/'source-result.json'
     data=canonical(result)+b'\n';require(len(data)<65536,'OUTPUT_CAP');persist_exact(path,data)
-    state=journal.read();state['events'][controller_key]['engineering_source_result']=file_pin(path);journal.save(state)
+    state=journal.read();owner=state['events'][controller_key];owner['engineering_source_result']=file_pin(path)
+    owner.setdefault('engineering_source_attempts',{}).setdefault(cursor_hash,{'input':binding})['result']=file_pin(path)
+    journal.save(state)
     return result

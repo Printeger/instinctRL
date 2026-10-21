@@ -255,6 +255,7 @@ c.first.start=wait
 # This detached-wait test isolates repair dispatch; real source-writer/Git
 # integration is exercised by test_r6_engineering_source.
 c.engineering_source.prepare=lambda j,k,s,**kw:dict(status='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW',goal_complete=False)
+c.engineering_review.prepare=lambda j,k,s,**kw:dict(status='ENGINEERING_REPAIR_REVIEW_REJECTED',goal_complete=False)
 from tools.r6_batch import model_handoff
 c.profile.model_handoff=lambda j,k:model_handoff(j,k,poll_seconds=.01)
 with j.writer():
@@ -288,7 +289,7 @@ print(json.dumps(result))
             assert not b.builder.with_suffix('.count').exists()
         else:
             assert proc.returncode==0,stderr
-            assert json.loads(stdout)['status']=='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW'
+            assert json.loads(stdout)['status']=='ENGINEERING_REPAIR_REVIEW_REJECTED'
             assert not b.builder.with_suffix('.count').exists()
         assert not owns(entry(b)['controller_process'])
         with Journal(b.j.directory).writer():pass
@@ -612,9 +613,11 @@ def test_actual_needs_repair_never_launches_profile_or_next_job(controller,monke
         value=c.repair_input.prepare(j,key,store,free_disk_bytes=kwargs['free_disk_bytes'])
         return dict(value,status='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW')
     monkeypatch.setattr(c.engineering_source,'prepare',prepared)
-    first=run(b);budget=b.j.read()['budget'];cursor=entry(b)['cursor']
-    assert first['status']=='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW'
-    assert cursor['phase']=='REPAIR_AND_REVIEW' and cursor['completed_jobs']==[b.key]
-    assert run(b)==first and b.j.read()['budget']==budget
+    monkeypatch.setattr(c.engineering_review,'prepare',Mock(side_effect=RuntimeError('review boundary')))
+    with pytest.raises(RuntimeError,match='review boundary'):run(b)
+    budget=b.j.read()['budget'];cursor=entry(b)['cursor']
+    assert cursor['phase']=='ENGINEERING_REPAIR_REVIEW' and cursor['completed_jobs']==[b.key]
+    with pytest.raises(RuntimeError,match='review boundary'):run(b)
+    assert b.j.read()['budget']==budget
     b.first.assert_called_once();b.source.assert_not_called();b.next.assert_not_called()
     assert not b.builder.with_suffix('.count').exists()

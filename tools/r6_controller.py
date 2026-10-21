@@ -42,6 +42,7 @@ from tools import r6_final_audit_packet as final_audit_packet, r6_final_independ
 from tools import r6_final_delivery as final_delivery, r6_publish_final_delivery as final_publication, r6_terminal_audit as terminal_audit
 from tools import r6_repair_input as repair_input
 from tools import r6_engineering_source as engineering_source
+from tools import r6_engineering_review as engineering_review
 from tools import r6_render_preparation as render_preparation, r6_render_review as render_review
 from tools import r6_render_materialization as render_materialization, r6_run_job as render_runner
 from tools.r6_decision_packet import persist_exact
@@ -50,7 +51,7 @@ from rlflow.store import canonical
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_AUDIT_REPAIR_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_AUDIT_REPAIR_REQUIRED','ENGINEERING_REPAIR_REJECTED'}
 
 
 def require(condition,reason):
@@ -137,6 +138,8 @@ def run(journal,request_pin,store,*,free_disk_bytes):
         cursor=journal.read()['events'][key]['cursor'];phase=cursor['phase']
         free=min(free_disk_bytes,shutil.disk_usage(journal.directory).free)
         try:
+            if phase in {'COMPATIBILITY','TRAINING_PREPARATION','CANDIDATE_PREPARATION','PROFILE','MATERIALIZE'} and cursor.get('engineering_review'):
+                engineering_review.accepted(journal,key,cursor['engineering_review'])
             if phase=='FINAL_DELIVERY_REQUIRED' and 'final_collection' in cursor:
                 outcome=delivery_evidence.prepare(journal,key,store,free_disk_bytes=free)
                 require(outcome['status']=='DELIVERY_EVIDENCE_PREPARED_NOT_ACCEPTED','DELIVERY_EVIDENCE_STATUS')
@@ -230,6 +233,8 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 save(journal,key,cursor);continue
             if phase in {'FINAL_TERMINAL_AUDIT_REQUIRED','COMPLETE'}:
                 return terminal_audit.finish(journal,key,store)
+            if phase=='ENGINEERING_REPAIR_REJECTED':
+                return dict(cursor['engineering_review'],controller_key=key)
             if phase=='REPAIR_AND_REVIEW':
                 if any(name in cursor for name in ('confirmation','final_batch','final_models','final_collection')):
                     outcome=repair_input.prepare(journal,key,store,free_disk_bytes=free)
@@ -239,9 +244,22 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 outcome=engineering_source.prepare(journal,key,store,
                     executable=initial['review_executable'],free_disk_bytes=free)
                 require(outcome['status']=='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW','ENGINEERING_SOURCE_STATUS')
-                # The writer cannot approve its own fix or advance the phase.
-                save(journal,key,cursor,status=outcome['status'])
-                return dict(outcome,controller_key=key)
+                cursor['phase']='ENGINEERING_REPAIR_REVIEW'
+                save(journal,key,cursor);continue
+            if phase=='ENGINEERING_REPAIR_REVIEW':
+                outcome=engineering_review.prepare(journal,key,store,
+                    executable=initial['review_executable'],free_disk_bytes=free)
+                require(outcome['status'] in {'ENGINEERING_REPAIR_REVIEW_ACCEPTED','ENGINEERING_REPAIR_REVIEW_REJECTED'},'ENGINEERING_REVIEW_STATUS')
+                cursor['engineering_review']=outcome
+                if outcome['status']=='ENGINEERING_REPAIR_REVIEW_REJECTED':
+                    cursor['phase']='ENGINEERING_REPAIR_REJECTED';save(journal,key,cursor,status=cursor['phase'])
+                    return dict(outcome,controller_key=key)
+                repaired=json.loads(checked(outcome['source']).read_text())
+                preparation=json.loads(checked(outcome['source_result']).read_text())
+                cursor.update(source_preparation=dict(preparation=preparation,snapshot=repaired['snapshot']),
+                    snapshot_receipt=outcome['snapshot'],phase='CANDIDATE_PREPARATION' if 'candidate_design' in preparation
+                    else 'TRAINING_PREPARATION' if 'training_design' in preparation else 'COMPATIBILITY')
+                save(journal,key,cursor);continue
             if phase in TERMINAL_BOUNDARIES:
                 save(journal,key,cursor,status=phase)
                 return dict(status=phase,event_key=key,goal_complete=False)
@@ -259,7 +277,7 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 journal.canonical_job(job_key)
                 require(job_key not in cursor['completed_jobs'],'REPEATED_JOB')
                 cursor['completed_jobs'].append(job_key)
-                for name in ('source_preparation','snapshot_receipt','materialization_inputs'):
+                for name in ('source_preparation','snapshot_receipt','materialization_inputs','engineering_review'):
                     cursor.pop(name,None)
                 cursor.update(phase='DECIDE',job_key=job_key)
             elif phase=='DECIDE':

@@ -1,0 +1,78 @@
+{
+  "status": "CPU_INDEPENDENT_ENGINEERING_REVIEW_AND_ACCEPTED_REENTRY_PASS_NOT_DEPLOYED",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_engineering_review.py",
+      "sha256": "99fb3501c44c18453583f55dab800efb5bb8c9b5e48c2233c7e8c42f78f7c487"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "4710eb5feb7bb346f846e5eacd35e1f8c53523d94355cae874143dfe328c4c2a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_engineering_source.py",
+      "sha256": "77bcfc9302629ffa3a77d37f43f1a8f104077dcb80e606e988e34fb02219bc3f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_source_preparation.py",
+      "sha256": "30de7a6e278ea9740efe74fc3f31b1a5469f40bc394a7ddf020d052f56f23cb2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_engineering_review.py",
+      "sha256": "338e587b6d21b9395a8761601b167b0ac6ecd37bb99d24aefa635fdbb9520a7e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_engineering_source.py",
+      "sha256": "64025f7e2ecab71d1d495ad89663fb1a7aa0fd78ef1da92bb871765d3b439b63"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "8f4a526e549409edadaa7c9c3eb583b40d3c71a164da5b1a22aaf618d682599a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/engineering-repair-review.schema.json",
+      "sha256": "99b7308ac736b233dca596c914e28d957beac571118a5ec6743c7e79f68ccb28"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ENGINEERING_REVIEW_INITIAL.log",
+      "sha256": "4e41f183f2055d63ab610e0127db07c8df5fd9d7606f820fd105aca2ea3597a2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ENGINEERING_REVIEW_FINAL.log",
+      "sha256": "299903a1f3bba350f74e1ef71a2195dbb865f94d1d2e782ee985418c8ffe7f6d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/ENGINEERING_REVIEW_ACCESS_RECHECK.json",
+      "sha256": "44f7418dd677d05d181f51a8a3885ab11d72e4b68ae8cff5322529291efeac5b"
+    }
+  ],
+  "checks": {
+    "initial_tests": 81,
+    "final_tests": 110,
+    "real_journal_guard": "PASS",
+    "production_model_calls_added": 0
+  },
+  "behavior": [
+    "One separately charged read-only repair review binds original failure, all findings, committed source/card/config and the frozen snapshot. Eight explicit checks must all pass; a copied finding list alone is not repair evidence.",
+    "The controller advances accepted repairs to existing compatibility/training/candidate review stages; fresh Store and exact prelive permission remain required.",
+    "MUST_FIX is retained without repeated calls or advancement. Resume checks original review/result/evidence bytes before subsequent input preparation; cached PASS alone is insufficient.",
+    "Recovery tests include prompt-write interruption, changed-schema event alias rejection, missing citations, false checks, STOP, changed originals, accepted reentry and rejection deduplication.",
+    "Repair snapshots use repair purpose; controller repair input/result history is indexed by original cursor rather than discarding earlier repair records."
+  ],
+  "boundaries": [
+    "Actual temporary Git and separate fake CLI writer/reviewer subprocesses; synthetic scientific inputs and Store, mocked native snapshot verification and live/compatibility boundary. No genuine independent model review or real experiment occurred.",
+    "The snapshot validator implements original receipt/request/reservation and verify_frozen checks, but the new integration tests substitute this native boundary. Production validation is still pending.",
+    "MUST_FIX rework after an accepted source proposal, controller-code repair/fresh-process supervision, offline reanalysis and frozen confirmation/holdout repair remain incomplete.",
+    "Local CLI sandbox still fails bwrap loopback and sudo still requires a password; recheck made no model calls or OS changes.",
+    "Existing root-owned CPU-QUOTA-01 pytest garbage was preserved."
+  ],
+  "remaining": [
+    "Rejected repair rework and remaining failure recovery",
+    "Controller-code repair/fresh-process supervision",
+    "Supported local sandbox and model-free platform handoff",
+    "Actual first baseline and full scientific goal"
+  ],
+  "goal_complete": false
+}

@@ -303,7 +303,8 @@ def prepare_source(journal,parent_key,store,*,executable,free_disk_bytes,enginee
     model_handoff(journal,key)
     result=record(journal,key,store)
     require(not stop_paths(journal),'STOP');journal.require_dispatch_budget()
-    frozen=snapshot.prepare(journal,checked(result['config']),result['source_commit'])
+    options={'purpose':'repair'} if engineering_pin is not None else {}
+    frozen=snapshot.prepare(journal,checked(result['config']),result['source_commit'],**options)
     return dict(preparation=result,snapshot=frozen,scientific_acceptance=False)
 
 

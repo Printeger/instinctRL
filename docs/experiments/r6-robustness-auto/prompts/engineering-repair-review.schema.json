@@ -1,0 +1,116 @@
+{
+  "type": "object",
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": [
+        "PASS_R6_ENGINEERING_REPAIR",
+        "MUST_FIX"
+      ]
+    },
+    "reviewer": {
+      "type": "string",
+      "enum": [
+        "r6-independent-engineering-repair"
+      ]
+    },
+    "packet_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 4096
+    },
+    "checks": {
+      "type": "object",
+      "properties": {
+        "original_failure_preserved": {
+          "type": "boolean"
+        },
+        "all_findings_resolved": {
+          "type": "boolean"
+        },
+        "engineering_only": {
+          "type": "boolean"
+        },
+        "actor_boundary_preserved": {
+          "type": "boolean"
+        },
+        "scoring_and_split_preserved": {
+          "type": "boolean"
+        },
+        "no_holdout_tuning": {
+          "type": "boolean"
+        },
+        "source_and_snapshot_bound": {
+          "type": "boolean"
+        },
+        "fresh_attempt_required": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "original_failure_preserved",
+        "all_findings_resolved",
+        "engineering_only",
+        "actor_boundary_preserved",
+        "scoring_and_split_preserved",
+        "no_holdout_tuning",
+        "source_and_snapshot_bound",
+        "fresh_attempt_required"
+      ],
+      "additionalProperties": false
+    },
+    "evidence_pins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 128
+    },
+    "changed_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "must_fix": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 64
+    },
+    "automatic_sessions_remaining": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "decision",
+    "reviewer",
+    "packet_sha256",
+    "summary",
+    "checks",
+    "evidence_pins",
+    "changed_files",
+    "must_fix",
+    "automatic_sessions_remaining"
+  ],
+  "additionalProperties": false
+}
