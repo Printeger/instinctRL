@@ -32,7 +32,11 @@ def run(b):
 
 
 def test_registered_review_crash_resumes_handoff_without_registering_again(case):
-    b=case;b.hand.side_effect=RuntimeError('worker still in flight')
+    b=case
+    def in_flight(*args,**kwargs):
+        s=b.j.read();s['events'][b.key]['dispatch_claim']={'fixture':'worker in flight'};b.j.save(s)
+        raise RuntimeError('worker still in flight')
+    b.hand.side_effect=in_flight
     with pytest.raises(RuntimeError):run(b)
     b.j=Journal(b.j.directory)
     # Fixture closure still points at same on-disk journal, as a resumed worker would.

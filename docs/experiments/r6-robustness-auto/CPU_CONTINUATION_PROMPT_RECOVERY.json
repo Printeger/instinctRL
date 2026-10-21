@@ -1,0 +1,43 @@
+{
+  "schema_version": "r6-prompt-recovery-repair/1",
+  "status": "CPU19_PASS_REVIEW_PENDING",
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/local-continuation-authority-review.json",
+    "sha256": "5075e629eacab3ede0192ab018b552380ab728f2dd7a8f121d66dbaef4ded708"
+  },
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_continue_job.py",
+      "sha256": "23528dd3d41a9027e162a2b760fa521a3e42ba01add0c4e288794c6636809911"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_continue_job.py",
+      "sha256": "ac6df77ec02dbb5b8ff1f12002faa68432011b3759dd9e864a9f190dcbaff153"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_continue_worker_integration.py",
+      "sha256": "d91fffc034965466726e512d5b4aee074ac073115d1806bd784e1a7347c84bc3"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-prompt-recovery-tests.txt",
+      "sha256": "28823508b0e2c7b50a8c3494cddaef6037aabca3779b91ca565f14b7c5cd8651"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-prompt-recovery-final.txt",
+      "sha256": "38473d66d0a5c2fd586e00211e2ed0b185efa128c44153297ce5269e340403cc"
+    }
+  ],
+  "coverage": [
+    "Undispatched review INTENT replays exact registration to reconstruct missing prompt",
+    "Same event and reservation; real local fake CLI launched only once after recovery",
+    "STOP refuses reconstruction before new effects",
+    "Corrupt existing prompt rejected rather than overwritten",
+    "Existing dispatch claims remain on original handoff recovery path"
+  ],
+  "limits": [
+    "No production approval or job; source/delegation/runtime boundaries remain declared fixtures",
+    "Original MUST_FIX retained; independent repair review pending"
+  ]
+}

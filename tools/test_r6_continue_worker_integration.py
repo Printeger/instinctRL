@@ -18,7 +18,7 @@ from tools.r6_recovery import Journal,file_pin,RecoveryError
 from tools.r6_job_handoff import no_model_workers
 
 
-@pytest.mark.parametrize('resume',[False,True])
+@pytest.mark.parametrize('resume',[False,True,'missing_prompt','missing_prompt_stop','corrupt_prompt'])
 @pytest.mark.parametrize('decision',['PASS_R6_NEXT_JOB','MUST_FIX'])
 def test_local_worker_receipt_exact_approval_and_replay(bound,monkeypatch,tmp_path,decision,resume):
     b=bound;j=b.journal
@@ -60,8 +60,21 @@ def test_local_worker_receipt_exact_approval_and_replay(bound,monkeypatch,tmp_pa
     if resume:
         with j.writer():
             key=r6_next_job.register_review(j,parent,plan_pin,b.store,executable=exe_pin,free_disk_bytes=500*1024**3)
-            model_handoff(j,key,poll_seconds=.05)
+            prompt_path=Path(j.read()['events'][key]['request']['prompt']['path'])
+            if resume in {'missing_prompt','missing_prompt_stop'}:
+                prompt_path.unlink()
+            elif resume=='corrupt_prompt':prompt_path.write_text('corrupt fixture prompt')
+            else:model_handoff(j,key,poll_seconds=.05)
         j=Journal(j.directory)  # New controller resumes the already consumed real receipt.
+    if resume in {'missing_prompt_stop','corrupt_prompt'}:
+        budget=j.read()['budget']
+        if resume=='missing_prompt_stop':(j.directory/'STOP').touch()
+        with j.writer(),pytest.raises(RecoveryError,match='STOP' if resume=='missing_prompt_stop' else 'PACKET_DRIFT'):
+            continuation.continue_job(j,**args)
+        assert j.read()['budget']==budget and not launch_log.exists()
+        assert len(b.store.replay()['approvals'])==approvals
+        assert (not prompt_path.exists()) if resume=='missing_prompt_stop' else prompt_path.read_text()=='corrupt fixture prompt'
+        return
     for iteration in range(2):
         with j.writer():
             if decision=='MUST_FIX':

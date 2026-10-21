@@ -36,6 +36,12 @@ def continue_job(journal,parent_key,plan_pin,master_pin,review_executable,store,
         key,review=reviews[0]
         if review['request']['executable']!=review_executable:
             raise RecoveryError('CONTINUE_REVIEW_EXECUTABLE_DRIFT')
+        if not review.get('dispatch_claim') and not review.get('receipt'):
+            # Registration commits intent before prompt bytes. Replay repairs
+            # that pre-dispatch crash window, preserving request and charge.
+            recovered=next_job.register_review(journal,parent_key,plan_pin,store,
+                executable=review_executable,free_disk_bytes=free_disk_bytes)
+            if recovered!=key:raise RecoveryError('CONTINUE_REVIEW_RECOVERY_DRIFT')
     else:
         key=next_job.register_review(journal,parent_key,plan_pin,store,
             executable=review_executable,free_disk_bytes=free_disk_bytes)

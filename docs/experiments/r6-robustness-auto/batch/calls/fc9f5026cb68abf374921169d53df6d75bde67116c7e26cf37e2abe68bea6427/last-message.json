@@ -1,0 +1,42 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "17 targeted CPU tests passed, but fault injection reproduced a continuation recovery defect before prompt persistence. No additional substantive defect found in the authority proposal generator. Production deployment, capacity, protocol and scientific acceptance remain outside this review.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_continue_job.py",
+      "sha256": "47ec5c9bb64237641b515f634caf0a98d08f47fedc6df068fe116598e0423cf9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_next_job.py",
+      "sha256": "1869994b48d93a064163904f8aa454957c72d24a3dc29d47e30ea9b61e3b439f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_batch.py",
+      "sha256": "a5188e81eb75b4196d5fc469bbe19d90aaae4abd46f0f3440e2d87946323163d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_prepare_authorization.py",
+      "sha256": "76808653da4e5acdf769d641799d16a715f8a7bd4be7d94f30b90f6a340684a8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_LOCAL_CONTINUATION_ENTRY.json",
+      "sha256": "5a9d3efe6be475aa6b0d641fd2f23e8f7efaef855ebde40fc099829a7ce555aa"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_LOCAL_WORKER_CONTINUATION.json",
+      "sha256": "ce228a83fc477c04cdd8910a87bfb2c7d7915a580a51d224dee7b328d7561b7a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_AUTH_PROPOSAL.json",
+      "sha256": "468d2dcd77a08301392d607ae03bf875996e2a2d747f6fc70fb65ee356d82e4c"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Repair pre-dispatch prompt recovery and add a crash-window regression test; obtain targeted re-review.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 116
+  },
+  "must_fix": [
+    "tools/r6_continue_job.py:35-42 skips register_review for every existing review event, including an incomplete INTENT. tools/r6_next_job.py:182-185 persists the event/reservation before writing its prompt. A crash or write failure between these operations leaves one undispatched event with no prompt; every continuation then calls model_handoff, whose validate_request raises FileNotFoundError. Reproduced with the real temporary Journal and registration path: two resumes failed identically, with one reservation and zero CLI launches. Recover this undispatched state by reconstructing and verifying the exact registered prompt before handoff, preserving the same event/reservation and existing STOP and dispatch-claim protections."
+  ]
+}

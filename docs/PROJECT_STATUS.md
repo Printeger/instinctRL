@@ -1,5 +1,11 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：第24次独审MUST_FIX复现未dispatch的review INTENT缺prompt时无法恢复。
+已修复为未claim/无receipt时重放准确登记并重建原prompt，已claim仍走原handoff。
+19项CPU检查通过，含真实假CLI恢复、STOP阻止重建、已有prompt漂移拒绝与不重复预留。
+见 `docs/experiments/r6-robustness-auto/CPU_CONTINUATION_PROMPT_RECOVERY.json`；原独审保留，
+修复待复审，不能视为部署接受。116次唤醒+24worker=140，余116次；无R6 live。
+
 2026-10-21：机器授权提案生成器复用准确只读snapshot内config/参数/compatibility/budget
 校验，不写authorization文件或Store。8项CPU检查通过，实际冻结解释器对不完整参数
 正确拒绝；成功路径测试明确替身，不宣称完整真实提案已生成。初轮fixture解释器symlink
