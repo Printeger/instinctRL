@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：当前外部阻塞为CPU-QUOTA-02结果卷未创建，sudo非交互仍需密码，
+已连续超过三轮。CPU修复/接线/布局计算已保全并推送；真实多文件/后代耗尽证明与
+准确可用容量不能用这些替身替代。记录为BLOCKED_EXTERNAL_ADMIN_RESULT_VOLUME，
+停止自动续推理，完整Goal未完成。既有管理员命令及输入哈希不变，见
+`docs/experiments/r6-robustness-auto/RESULT_VOLUME_ADMIN_BLOCKER.json`。
+无当前live作业及已登记模型worker遗留；controller未部署，capacity=false。管理员创建
+结果卷并恢复Goal后，从该注册事件验证接续，不重跑CPU01、不退款、不宣称已后台执行。
+
 2026-10-21：完成12次mkfs.ext4 -n只读布局计算，未创建镜像或挂载。默认inode表
 开销及第一组256/128MiB额外预留方案仍使开发池超出710213632字节；原结果保留。
 固定大小卷候选显式256KiB/inode、关闭resize_inode预留、保留32MiB journal，每卷

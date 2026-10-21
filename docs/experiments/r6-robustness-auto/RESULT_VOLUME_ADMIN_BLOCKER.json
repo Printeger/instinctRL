@@ -1,0 +1,51 @@
+{
+  "schema_version": "r6-admin-result-volume-blocker/1",
+  "status": "BLOCKED_EXTERNAL_ADMIN_RESULT_VOLUME",
+  "goal_complete": false,
+  "capacity_pass": false,
+  "controller_deployed": false,
+  "current_live_jobs": [],
+  "registration": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02_REGISTRATION.json",
+    "sha256": "6595581fdb11f90a59f2d9e298b55f2f54b54438ae3bae1f88fae8d5ee7a5b61"
+  },
+  "manifest_path": "/var/lib/instinctrl-r6-results/CPU-QUOTA-02/volume.json",
+  "manifest_present": false,
+  "sudo_noninteractive": {
+    "returncode": 1,
+    "stderr": "sudo: a password is required"
+  },
+  "same_blocker_observed_in_consecutive_turns_at_least": 3,
+  "progress_since_registration_commits": [
+    "cf8738b",
+    "1e988c2",
+    "134a369",
+    "29ea042",
+    "87397de"
+  ],
+  "no_outstanding_registered_model_workers": true,
+  "independent_review_sessions_completed": 13,
+  "independent_review_sessions_remaining": 19,
+  "ready_inputs_verified": true,
+  "required_external_action": [
+    "sudo",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_result_volume.py",
+    "CPU-QUOTA-02",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-CPU-RESULT-QUOTA-02/results",
+    "16777216",
+    "--apply"
+  ],
+  "next_actions_after_external_change": [
+    "Validate root-owned manifest/mount and frozen input identities",
+    "Run registered CPU02 one-shot multi-file/exec-descendant exhaustion proof; preserve original failures and full reservation",
+    "Verify fixed-layout capacity and file-count/growth headroom; preserve complete final coverage",
+    "Consolidate independent quota/control/capacity review, then exact production inputs and controller deployment"
+  ],
+  "why_no_further_automatic_work": "The next admissible verification requires the absent root-created result volume. CPU substitutes and dry-run layouts do not close the independent MUST_FIX; additional speculative provisioning or reviews would not replace that evidence.",
+  "remaining_scientific_scope": "Full R6 baseline, evidence-led improvements if needed, three genuine continuation seeds or BASELINE_SUFFICIENT branch, holdout, final independent review, models/reports/video remain uncompleted.",
+  "operational_gpu_queries": 0,
+  "operational_live_starts": 0
+}
