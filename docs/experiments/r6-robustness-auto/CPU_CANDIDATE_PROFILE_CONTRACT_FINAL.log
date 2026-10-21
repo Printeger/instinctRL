@@ -1,0 +1,69 @@
+.......................................F................................ [ 91%]
+.......                                                                  [100%]
+=================================== FAILURES ===================================
+_______ test_frozen_candidate_review_program_builds_real_source_payload ________
+
+compatibility = (namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', '...6610fe051797e19e5e1def4af91f7e977869367055'}, ...}, {'actor': {}, 'training': {}, 'execution': {}, 'runtime': {}, ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74d94bd6e190>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-96/test_frozen_candidate_review_p0')
+
+    def test_frozen_candidate_review_program_builds_real_source_payload(compatibility,monkeypatch,tmp_path):
+        import io,sys
+        from tools import r6_candidate_review_inputs as tool
+        from training_workloads.unified_h1 import config
+        b,r,new=compatibility;value=dict(method=r['method']);selection_pin=b.pin('candidate-selection.json',value)
+        model=dict(source_identity=r['origin_source_identity'],checkpoint=r['checkpoint'])
+        monkeypatch.setattr(c.selection,'validate',lambda v:dict(model=model))
+        cp=tmp_path/'snapshot/training_workloads/unified_h1/candidate_config.json';cp.parent.mkdir(parents=True)
+        cp.write_bytes(Path(r['execution_config']['path']).read_bytes())
+        cfg=dict(new,schema_version=config.R6_CANDIDATE_CONFIG_SCHEMA)
+        monkeypatch.setattr(config,'load_config',lambda:cfg)
+        request=dict(origin_config=r['origin_config'],selection=selection_pin)
+        monkeypatch.setattr(sys,'stdin',io.StringIO(json.dumps(request)));out=io.StringIO();monkeypatch.setattr(sys,'stdout',out)
+        monkeypatch.setattr(sys,'argv',['fixture',str(tmp_path/'snapshot')]);before=list(sys.path)
+>       try:exec(tool.PROGRAM,{})
+            ^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_candidate_contract.py:208: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<string>:11: in <module>
+    ???
+training_workloads/unified_h1/robustness_candidate_contract.py:110: in compatibility_payload
+    validate_compatibility_payload(payload,value,config)
+training_workloads/unified_h1/robustness_candidate_contract.py:67: in validate_compatibility_payload
+    selection.require(record['origin_config']['sha256']==origin['config_sha256']
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, reason = 'CONFIG_BINDING'
+
+    def require(ok,reason):
+>       if not ok:raise PermissionError('R6_EVALUATION_SELECTION_'+reason)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       PermissionError: R6_EVALUATION_SELECTION_CONFIG_BINDING
+
+training_workloads/unified_h1/robustness_evaluation_selection.py:16: PermissionError
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f6b869d4-a4e3-4f2e-86b9-ae5f34eceaaa/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f6b869d4-a4e3-4f2e-86b9-ae5f34eceaaa/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f6b869d4-a4e3-4f2e-86b9-ae5f34eceaaa/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f6b869d4-a4e3-4f2e-86b9-ae5f34eceaaa
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-f6b869d4-a4e3-4f2e-86b9-ae5f34eceaaa'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tools/test_r6_candidate_contract.py::test_frozen_candidate_review_program_builds_real_source_payload
+1 failed, 78 passed, 4 warnings in 0.77s

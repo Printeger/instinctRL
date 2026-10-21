@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 151,
-    "total_automatic_model_sessions_minimum": 181,
+    "platform_automatic_goal_wakes": 152,
+    "total_automatic_model_sessions_minimum": 182,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -333,6 +333,8 @@
     "candidate_control_status": "CPU_CANDIDATE_AUTH_SPEC_ISSUANCE_SUBMIT_STORAGE_PASS_PROFILE_ANALYSIS_PENDING",
     "candidate_control_evidence": "docs/experiments/r6-robustness-auto/CPU_CANDIDATE_CONTROL.json",
     "candidate_analysis_status": "CPU_CANDIDATE_REPLAY_CLOSED_JOB_BINDING_AND_WORKER_ROUTE_PASS_NOT_DEPLOYED",
-    "candidate_analysis_evidence": "docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ANALYSIS.json"
+    "candidate_analysis_evidence": "docs/experiments/r6-robustness-auto/CPU_CANDIDATE_ANALYSIS.json",
+    "candidate_profile_status": "CPU_CANDIDATE_DRAFT_PROFILE_AND_COMPATIBILITY_PAYLOAD_PASS_REVIEW_ROUTING_PENDING",
+    "candidate_profile_evidence": "docs/experiments/r6-robustness-auto/CPU_CANDIDATE_PROFILE.json"
   }
 }

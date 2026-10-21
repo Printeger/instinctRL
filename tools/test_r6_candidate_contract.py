@@ -139,3 +139,76 @@ def test_candidate_source_compatibility_rejects_changed_boundaries(compatibility
         old=c.base.pinned_json(r['origin_config'])
         for section in ('product','workload'):r['changed_'+section+'_sources']=source_changes(old[section]['source_sha256'],config[section]['source_sha256'])
     with pytest.raises(PermissionError):c.validate_compatibility_payload(r,value,new)
+
+
+def test_candidate_draft_checks_capacity_without_mount_or_card(stage,monkeypatch):
+    from training_workloads.unified_h1 import native_volume,result_volume,extension_inputs
+    p={k:v for k,v in stage.p.items() if k not in ('experiment_card','output_cap_bytes')}
+    p['extension_inputs']={'fixture':True}
+    monkeypatch.setattr(extension_inputs,'validate',lambda v:None)
+    monkeypatch.setattr(native_volume,'validate',lambda *a,**k:pytest.fail('draft mounted'))
+    monkeypatch.setattr(result_volume,'workload_write_cap',lambda *a,**k:pytest.fail('draft mounted'))
+    payload=64*1024**2+sum(sum(v.values())+16*1024**2 for v in p['r6']['output_quotas'].values())
+    assert c.validate_draft(c.MODE,p,payload)==p
+    for bad in [payload-4096,True,41*1024**3]:
+        with pytest.raises(PermissionError):c.validate_draft(c.MODE,p,bad)
+    with pytest.raises(PermissionError):c.validate_parameters(c.MODE,p)
+    p['r6']['seed']+=1
+    with pytest.raises(PermissionError,match='comparison'):c.validate_draft(c.MODE,p,payload)
+
+
+def test_candidate_compatibility_builder_pins_exact_selected_source(compatibility,monkeypatch):
+    b,r,new=compatibility;value=dict(method=r['method'])
+    model=dict(source_identity=r['origin_source_identity'],checkpoint=r['checkpoint'])
+    monkeypatch.setattr(c.selection,'validate',lambda v:dict(model=model))
+    payload=c.compatibility_payload(r['origin_config'],r['execution_config'],value,new)
+    assert payload['selection_sha256']==c.base.object_sha(value) and payload['checkpoint']==model['checkpoint']
+    assert 'independent_review' not in payload
+    assert c.validate_compatibility_payload(payload,value,new)==model['source_identity']
+    payload['changed_product_sources']={}
+    with pytest.raises(PermissionError):c.validate_compatibility_payload(payload,value,new)
+
+
+def test_frozen_candidate_draft_program_validates_exact_profile(stage,monkeypatch):
+    import io,sys
+    from tools import r6_candidate_profile as tool
+    from training_workloads.unified_h1 import config,extension_inputs
+    p={k:v for k,v in stage.p.items() if k not in ('experiment_card','output_cap_bytes')};p['extension_inputs']={'fixture':True}
+    payload=64*1024**2+sum(sum(v.values())+16*1024**2 for v in p['r6']['output_quotas'].values())
+    cfg=dict(schema_version=config.R6_CANDIDATE_CONFIG_SCHEMA,resolved_identity={'fixture':True})
+    monkeypatch.setattr(config,'load_config',lambda:cfg);monkeypatch.setattr(extension_inputs,'validate',lambda v:None)
+    compat=Mock();monkeypatch.setattr(c,'validate_compatibility',compat)
+    def execute():
+        monkeypatch.setattr(sys,'stdin',io.StringIO(json.dumps(dict(profile=p,payload_bytes=payload))))
+        out=io.StringIO();monkeypatch.setattr(sys,'stdout',out);monkeypatch.setattr(sys,'argv',['fixture',str(Path.cwd())])
+        before=list(sys.path)
+        try:exec(tool.PROGRAM,{})
+        finally:sys.path[:]=before
+        return json.loads(out.getvalue())
+    assert execute()==dict(source_identity=cfg['resolved_identity'],payload_bytes=payload)
+    compat.assert_called_once_with(p['checkpoint_compatibility'],p['evaluation_selection'],cfg)
+    cfg['schema_version']=config.R6_CONFIG_SCHEMA
+    with pytest.raises(PermissionError,match='config schema'):execute()
+
+
+def test_frozen_candidate_review_program_builds_real_source_payload(compatibility,monkeypatch,tmp_path):
+    import io,sys
+    from tools import r6_candidate_review_inputs as tool
+    from training_workloads.unified_h1 import config
+    b,r,new=compatibility;value=dict(method=r['method']);selection_pin=b.pin('candidate-selection.json',value)
+    model=dict(source_identity=r['origin_source_identity'],checkpoint=r['checkpoint'])
+    monkeypatch.setattr(c.selection,'validate',lambda v:dict(model=model))
+    cp=tmp_path/'snapshot/training_workloads/unified_h1/candidate_config.json';cp.parent.mkdir(parents=True)
+    cfg=dict(new,schema_version=config.R6_CANDIDATE_CONFIG_SCHEMA)
+    cp.write_text(json.dumps({k:v for k,v in cfg.items() if k!='resolved_identity'}))
+    from tools.r6_recovery import file_pin
+    cfg['resolved_identity']=dict(new['resolved_identity'],config_sha256=file_pin(cp)['sha256'])
+    monkeypatch.setattr(config,'load_config',lambda:cfg)
+    request=dict(origin_config=r['origin_config'],selection=selection_pin)
+    monkeypatch.setattr(sys,'stdin',io.StringIO(json.dumps(request)));out=io.StringIO();monkeypatch.setattr(sys,'stdout',out)
+    monkeypatch.setattr(sys,'argv',['fixture',str(tmp_path/'snapshot')]);before=list(sys.path)
+    try:exec(tool.PROGRAM,{})
+    finally:sys.path[:]=before
+    result=json.loads(out.getvalue());payload=result['payload']
+    assert result['source_identity']==cfg['resolved_identity'] and 'independent_review' not in payload
+    assert c.validate_compatibility_payload(payload,value,cfg)==model['source_identity']

@@ -90,3 +90,22 @@ def validate_compatibility_payload(record,value,config):
                 selection.require(not Path(relative).is_absolute() and '..' not in Path(relative).parts,'SOURCE_PATH')
                 validate_pin(dict(path=str(Path(source[section]['path'])/relative),sha256=digest))
     return dict(origin)
+
+
+def validate_draft(mode,value,payload_bytes):
+    selection.require(mode==MODE and isinstance(value,dict) and 'evaluation_selection' in value,'CANDIDATE_MODE')
+    selected=selection.validate(value['evaluation_selection'])
+    return base._validate_parameters(mode,value,selected=selected,materialized=False,payload_bytes=payload_bytes)
+
+
+def compatibility_payload(origin_config,execution_config,value,config):
+    from .robustness_training_contract import source_changes
+    selected=selection.validate(value)
+    old=base.pinned_json(origin_config);new=base.pinned_json(execution_config)
+    payload=dict(schema_version='r6-candidate-compatibility/1',selection_sha256=base.object_sha(value),
+        origin_source_identity=selected['model']['source_identity'],execution_source_identity=config['resolved_identity'],
+        origin_config=origin_config,execution_config=execution_config,checkpoint=selected['model']['checkpoint'],
+        method=value['method'],changed_product_sources=source_changes(old['product']['source_sha256'],new['product']['source_sha256']),
+        changed_workload_sources=source_changes(old['workload']['source_sha256'],new['workload']['source_sha256']))
+    validate_compatibility_payload(payload,value,config)
+    return payload

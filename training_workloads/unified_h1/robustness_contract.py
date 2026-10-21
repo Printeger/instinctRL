@@ -55,15 +55,20 @@ def validate_parameters(mode,value):
     return _validate_parameters(mode,value)
 
 
-def _validate_parameters(mode,value,selected=None):
+def _validate_parameters(mode,value,selected=None,*,materialized=True,payload_bytes=None):
     from .research_contract import validate_pin
     fields=FIELDS if selected is None else FIELDS|{'evaluation_selection'}
     expected_mode=MODE if selected is None else 'research-r6-candidate-evaluation'
-    if mode!=expected_mode or not isinstance(value,dict) or set(value) not in (fields,fields|{'native_volume','extension_inputs','result_volume'}):raise PermissionError('R6 baseline evaluation fields/mode')
+    allowed=(fields,fields|{'native_volume','extension_inputs','result_volume'})
+    if not materialized:
+        if selected is None:raise PermissionError('R6 draft requires candidate selection')
+        allowed=((fields-{'experiment_card','output_cap_bytes'})|{'extension_inputs'},)
+    if mode!=expected_mode or not isinstance(value,dict) or set(value) not in allowed:raise PermissionError('R6 baseline evaluation fields/mode')
     p=dict(value)
     if 'native_volume' in p:
         from .native_volume import validate
         validate(p['native_volume'])
+    if 'extension_inputs' in p:
         from .extension_inputs import validate as validate_extensions
         validate_extensions(p['extension_inputs'])
     if not isinstance(p['experiment_id'],str) or not re.fullmatch(r'R6-[A-Z0-9-]{1,90}',p['experiment_id']):raise PermissionError('R6 experiment identity')
@@ -75,7 +80,14 @@ def _validate_parameters(mode,value,selected=None):
     if p['group']!='R1' or type(p['training_seed'])is not int or p['training_seed']!=expected_seed or type(p['evaluation_seed'])is not int or p['evaluation_seed']!=20260909:
         raise PermissionError('R6 baseline/original-suite seed identity')
     if type(p['wall_seconds'])is not int or not 1<=p['wall_seconds']<=43200:raise PermissionError('R6 job wall bound')
-    if type(p['output_cap_bytes'])is not int or not 3*1024**3<p['output_cap_bytes']<=128*1024**3:raise PermissionError('R6 job output bound')
+    if materialized:
+        output_cap=p['output_cap_bytes']
+    else:
+        from .native_volume import MAXIMUM
+        from .result_volume import CONTROL_ALLOWANCE
+        if type(payload_bytes)is not int or payload_bytes<=0 or payload_bytes%4096:raise PermissionError('R6 draft payload bound')
+        output_cap=payload_bytes+96*1024**2+MAXIMUM+CONTROL_ALLOWANCE
+    if type(output_cap)is not int or not 3*1024**3<output_cap<=128*1024**3:raise PermissionError('R6 job output bound')
     master=pinned_json(p['master_authority'])
     if master.get('id')!='R6-ROBUSTNESS-AUTO-20261019' or master.get('status')!='REGISTERED_USER_DELEGATION':raise PermissionError('R6 master identity')
     for name,expected in [('user_authority',USER_SHA),('requirements',REQUIREMENTS_SHA)]:
@@ -99,7 +111,7 @@ def _validate_parameters(mode,value,selected=None):
     capacity=pinned_json(review['capacity_report'])
     if capacity.get('capacity_pass') is not True or capacity.get('protocol_sha256')!=r['protocol']['sha256']:
         raise PermissionError('R6 capacity is not accepted for this protocol')
-    if capacity['maximum_job_output_bytes']<p['output_cap_bytes'] or capacity['maximum_job_wall_seconds']<p['wall_seconds']:
+    if capacity['maximum_job_output_bytes']<output_cap or capacity['maximum_job_wall_seconds']<p['wall_seconds']:
         raise PermissionError('R6 job exceeds reviewed capacity')
     blocks=protocol['blocks'];indexed={b['id']:b for b in blocks}
     if len(indexed)!=16 or len(indexed)!=len(blocks):raise PermissionError('R6 duplicate protocol blocks')
@@ -115,11 +127,13 @@ def _validate_parameters(mode,value,selected=None):
         if set(quota)!={'range_bytes','audit_bytes'} or any(type(v)is not int or v<=0 or v>2*1024**3 for v in quota.values()):raise PermissionError('R6 quota schema/per-file ceiling')
         required+=sum(quota.values())+16*1024**2 # Complete motion JSON and block result.
     from .result_volume import workload_write_cap
-    if required>workload_write_cap(p,minimum_free_bytes=required):
+    available=workload_write_cap(p,minimum_free_bytes=required) if materialized else payload_bytes
+    if required>available:
         raise PermissionError('R6 components exceed job output cap')
-    card=pinned_json(p['experiment_card'])
-    if card.get('experiment_id')!=p['experiment_id'] or card.get('profiles',{}).get('R1')!={k:v for k,v in p.items() if k!='experiment_card'}:
-        raise PermissionError('R6 exact card/profile mismatch')
+    if materialized:
+        card=pinned_json(p['experiment_card'])
+        if card.get('experiment_id')!=p['experiment_id'] or card.get('profiles',{}).get('R1')!={k:v for k,v in p.items() if k!='experiment_card'}:
+            raise PermissionError('R6 exact card/profile mismatch')
     pinned_json(p['checkpoint_compatibility'])
     return p
 

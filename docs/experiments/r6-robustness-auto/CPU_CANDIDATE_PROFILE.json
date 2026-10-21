@@ -1,0 +1,98 @@
+{
+  "status": "CPU_CANDIDATE_DRAFT_PROFILE_AND_COMPATIBILITY_PAYLOAD_PASS_REVIEW_ROUTING_PENDING",
+  "input_commit": "c3156edc",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "59fad06cc2d95f78377238b7e4353457eec0b1daa2d1763c575a1ee72f6b09fd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_candidate_contract.py",
+      "sha256": "48985a6b73e466665eb58a5083bfa8a48a8fd2a4659a4f352b96cac14c27c13d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_candidate_profile.py",
+      "sha256": "e56e6a0a205c72fab8efe6139bb3e6a0d452e72e44d6b9076d9d49db8be32e0d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_candidate_review_inputs.py",
+      "sha256": "ec288dd1ce278adc0d6e261f4aab1948ad6bfc04fbdac04d4acd5e40fb3785a1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_profile_preparation.py",
+      "sha256": "34b159d3d9724c032355ddacba236b152edba503c0d4f04f63657a416dee1a79"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_candidate_profile.py",
+      "sha256": "6c181da79df54ec8f412d8d10745f38a7ed118a6e2911b448b3229a1da83f425"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_candidate_review_inputs.py",
+      "sha256": "0b78d97169e31c4a598db17cc48585729c5b799a249ece9e8c8503d50cde4c0b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_profile_preparation.py",
+      "sha256": "3a56a5932811632ad6954736fcc81d0d8e28235e82b0c6cdea5820e48781e577"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_candidate_contract.py",
+      "sha256": "b7c93faeb412524fb32c4ca22f146f853e3542f4d251474e16a342f65bfd19ef"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_PROFILE_CONTROL.log",
+      "sha256": "1979a8a71b7681f3261da6ce99adb12106d6e1d97823035cb7667f8fdf19b5eb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_PROFILE_CONTRACT.log",
+      "sha256": "24d09045ab9a8561aa01e2933026e0a1150676a1ee2f47a1e8fd703404301645"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_PROFILE_CONTRACT_FINAL.log",
+      "sha256": "2953e6b0f4c6b66e55f3f1498e0daed785cd70ba2405d539a2cd85ef75c96065"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_PROFILE_CONTROL_FINAL.log",
+      "sha256": "21681ea28a8f2341eee7254f5e30661b23c4e19d6a926be6b8c0e91658aada26"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_PROFILE_CONTRACT_CORRECTED.log",
+      "sha256": "46d3f70aec9fbaf312f0b47ed8521f4315735920de86e5498371bb173a0d6734"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_PROFILE_ROUTING.log",
+      "sha256": "88669bb3d1dd8d0d7171619fc1b657a15fe2be6a2024c8236c8140f5ada81e9b"
+    }
+  ],
+  "verification": {
+    "final_contract": 79,
+    "final_control": 40,
+    "controller_training_preparation_regression": 22
+  },
+  "corrections": [
+    "First negative compatibility test erased an already empty workload delta; corrected it to remove the actual nonempty product delta.",
+    "Frozen-program fixture added config schema only to loaded object; exact file/config-hash check correctly rejected it. Corrected fixture writes matching config bytes and identity."
+  ],
+  "guarantees": [
+    "Candidate draft validates reviewed selection, exact original seed/training seed, paired full protocol, resource policy/capacity and per-block quotas before volume reservation.",
+    "Draft computes complete native/result/control backing against reviewed capacity; no mounts, card or output directory required yet. Materialized formal checks remain mandatory.",
+    "Frozen candidate profile uses dedicated config schema and exact selected-model compatibility review before storage plans.",
+    "Compatibility payload builder validates exact origin/execution bytes, source deltas and selected checkpoint/method; output is NOT_ACCEPTED.",
+    "Profile event pins candidate validator; ambiguous training plus evaluation selection, validation failure, payload drift and STOP cannot allocate storage; replay stays idempotent."
+  ],
+  "boundaries": [
+    "Selection review and extension validation in stage fixtures are explicit substitutes; compatibility tests use real temporary source files.",
+    "Frozen interpreter transport tests substitute subprocess/config boundaries; PROGRAM code executed separately with declared config loader fixture.",
+    "Fake CLI, real temporary journal and storage planning; no real review model call or production issuance.",
+    "No GPU query, simulation, training, runtime changes or dependency installation."
+  ],
+  "remaining": [
+    "Candidate selection/compatibility review events and controller-owned new-context preparation route",
+    "Final freeze, confirmation/holdout and delivery contracts",
+    "Combined independent review and platform handoff before production"
+  ],
+  "goal_complete": false
+}

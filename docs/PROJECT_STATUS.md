@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：候选草稿/冻结profile校验/准确源码兼容审核payload及profile→存储计划路由接通。
+卷预留前核验已审selection、全部16块、随机流/原评分seed、容量和双卷/control总量；草稿不要求挂载。
+完整正式参数仍必须核验实际双卷/card；未审compatibility payload不授予执行。混合训练/候选阶段拒绝。
+79项契约、40项控制、22项controller/训练准备回归通过；两项错误fixture已纠正并保留原日志。
+证据CPU_CANDIDATE_PROFILE.json；selection/extension/config/子进程边界为明确替身，无生产发车。
+模型选择/兼容审核事件和新context准备仍待接线；最终freeze/holdout/交付、组合独审和平台交接未完成。
+152次自动唤醒+30worker=182，模型剩74；完整Goal未完成。
+
 2026-10-22：候选CPU重算/关闭作业原件绑定/独立worker程序路由接通。
 按准确selection的update/标签重用原评分器；模型、方法读回记录、配对protocol/seed与原件逐项绑定。
 73项tensor回归、99项控制检查通过；worker fixture的解释器依赖失败纠正后17项针对检查通过。

@@ -22,6 +22,9 @@ if settings.get('training'):
  profile.pop('r6');profile.pop('wall_seconds');profile.pop('protocol_review')
  profile['r6_training_plan']={'fixture':'training-plan'}
  profile['training_seed']=123
+if settings.get('candidate'):
+ profile['evaluation_selection']={'fixture':'reviewed-selection'}
+ profile['training_seed']=456
 if settings.get('managed'):profile['native_volume']={}
 if settings.get('immutable'):profile['checkpoint_compatibility']={}
 pin={'path':str(packet),'sha256':hashlib.sha256(packet.read_bytes()).hexdigest()}
@@ -182,3 +185,23 @@ def test_training_profile_validates_before_storage_and_replays(case,monkeypatch,
         first=run(b);budget=b.j.read()['budget'];assert run(b)==first
         assert b.j.read()['budget']==budget and b.builder.with_suffix('.count').read_text()=='call\n'
     assert seen and seen[0][1]['training_seed']==123
+
+
+@pytest.mark.parametrize('fault',[None,'capacity','frozen','stop','mixed'])
+def test_candidate_profile_validates_before_storage_and_replays(case,monkeypatch,fault):
+    b=case;b.builder.with_suffix('.settings').write_text(json.dumps(dict(candidate=True,training=fault=='mixed')))
+    seen=[]
+    def validate(snapshot,profile,payload):
+        seen.append((snapshot,profile,payload))
+        if fault=='frozen':raise RecoveryError('CANDIDATE_PROFILE_FROZEN_VALIDATION')
+        if fault=='stop':(b.j.directory/'STOP').touch()
+        return payload-4096 if fault=='capacity' else payload
+    monkeypatch.setattr(p.candidate_profile,'validate',validate)
+    if fault:
+        with pytest.raises(RecoveryError,match={'capacity':'CANDIDATE_PAYLOAD','frozen':'FROZEN_VALIDATION','stop':'STOP','mixed':'AMBIGUOUS_STAGE'}[fault]):run(b)
+        assert not any(e['identity']['role']==p.storage.ROLE for e in b.j.read()['events'].values())
+    else:
+        first=run(b);budget=b.j.read()['budget'];assert run(b)==first
+        assert b.j.read()['budget']==budget and b.builder.with_suffix('.count').read_text()=='call\n'
+    if fault=='mixed':assert not seen
+    else:assert seen and seen[0][1]['training_seed']==456

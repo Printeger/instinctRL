@@ -18,6 +18,7 @@ from tools.r6_postrun import stop_paths
 from tools import r6_storage_allocation as storage
 from tools import r6_materialize_job as materializer
 from tools import r6_training_profile as training_profile
+from tools import r6_candidate_profile as candidate_profile
 from tools.r6_prepare_authorization import verify_frozen
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -73,14 +74,14 @@ def packet(journal,parent_key,context_pin,store,*,free_disk_bytes):
             budget=dict(caps=state['budget']['caps'],charged=totals(state['budget']),
                 protected=state['budget']['protected_confirmation_delivery_repair']),
             store_sha256=sha(store.replay()),implementation=file_pin(__file__),
-            training_validator=file_pin(training_profile.__file__))
+            training_validator=file_pin(training_profile.__file__),candidate_validator=file_pin(candidate_profile.__file__))
         request=dict(packet=value)
         event=dict(goal_id=state['goal_id'],event_id=name,
             job_id=state['events'][parent_key]['identity']['job_id'],input_sha256=sha(request),role='profile-input')
         key,_=journal.intent(event,kind='cpu',request=request,
             resources={'output_actual_plus_unreleased_reservations_bytes':CAP},
             purpose=context['runner']['purpose'],free_disk_bytes=free_disk_bytes)
-    checked(value['implementation']);checked(value['training_validator'])
+    checked(value['implementation']);checked(value['training_validator']);checked(value['candidate_validator'])
     reservation(journal.read(),key,'cpu',{'output_actual_plus_unreleased_reservations_bytes':CAP},runner['purpose'])
     folder=journal.directory/'profile-preparation'/key
     text=('Prepare one exact R6 evaluation or training profile from the pinned scientific decision and source '
@@ -96,7 +97,11 @@ def packet(journal,parent_key,context_pin,store,*,free_disk_bytes):
         'recipe, capacity_review and training checkpoint_compatibility. Preserve the exact reviewed plan '
         'experiment_id; never rename a training plan to fit a different profile. The frozen training draft '
         'validator must accept before volume reservation. Never reuse baseline compatibility for '
-        'training. Preserve exact immutable master authority/baseline/extension pins. '
+        'training. For candidate evaluation include the independently reviewed evaluation_selection and '
+        'selection-specific checkpoint_compatibility, retain the frozen protocol_review and all 16 '
+        'blocks, and use the selected checkpoint training seed. Candidate draft validation in the '
+        'frozen dedicated candidate config must pass before storage reservation. Do not combine '
+        'evaluation_selection and r6_training_plan. Preserve exact immutable master authority/baseline/extension pins. '
         'Specify aligned result_payload_bytes and minimum_free_inodes from full raw/checkpoint '
         'requirements. No profile is permission. Include exact packet/context/parent pins in '
         'evidence_pins, changed_files=[], and remaining automatic sessions = packet budget cap '
@@ -132,7 +137,7 @@ def register(journal,parent_key,context_pin,store,*,executable,free_disk_bytes):
 def record(journal,key,packet_key,packet_pin,store,*,free_disk_bytes):
     guard(journal);state=journal.read();entry=state['events'][key]
     value=json.loads(checked(packet_pin).read_text());context=json.loads(checked(value['context']).read_text())
-    checked(value['implementation']);checked(value['training_validator'])
+    checked(value['implementation']);checked(value['training_validator']);checked(value['candidate_validator'])
     snapshot=json.loads(checked(context['snapshot_receipt']).read_text())
     verify_frozen(snapshot,json.loads(checked(snapshot['config']).read_text()))
     require(entry['identity']['event_id']=='PROFILE_MODEL:'+packet_key
@@ -173,8 +178,15 @@ def record(journal,key,packet_key,packet_pin,store,*,free_disk_bytes):
     require(isinstance(profile,dict) and not materializer.MANAGED.intersection(profile),'MANAGED_FIELDS')
     reference=json.loads(checked(context['baseline_profile']).read_text())
     training='r6_training_plan' in profile
+    candidate='evaluation_selection' in profile
+    require(not (training and candidate),'AMBIGUOUS_STAGE')
     immutable=('master_authority','baseline_bindings','extension_inputs','group','evaluation_seed')
-    if not training:
+    if candidate:
+        from training_workloads.unified_h1.robustness_contract import FIELDS
+        expected=(FIELDS-{'experiment_card','output_cap_bytes'})|{'extension_inputs','evaluation_selection'}
+        require(set(profile)==expected,'PROFILE_FIELDS')
+        immutable+=('protocol_review',)
+    elif not training:
         require(set(profile)==set(reference)-materializer.MANAGED,'PROFILE_FIELDS')
         immutable+=('checkpoint_compatibility','protocol_review','training_seed')
     for name in immutable:
@@ -187,7 +199,10 @@ def record(journal,key,packet_key,packet_pin,store,*,free_disk_bytes):
     require(not any(j.get('spec',{}).get('id')==experiment for j in store.replay()['jobs'].values()),'USED_EXPERIMENT')
     payload=result['result_payload_bytes'];inodes=result['minimum_free_inodes']
     require(type(payload)is int and payload>0 and payload%4096==0 and type(inodes)is int and inodes>0,'STORAGE_DIMENSIONS')
-    if training:
+    if candidate:
+        required=candidate_profile.validate(context['snapshot_receipt'],profile,payload)
+        require(payload==required,'CANDIDATE_PAYLOAD')
+    elif training:
         required=training_profile.validate(context['snapshot_receipt'],profile)
         require(payload==required,'TRAINING_PAYLOAD')
     else:
