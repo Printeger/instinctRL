@@ -1,0 +1,41 @@
+{
+  "schema_version": "r6-storage-allocation-cpu/1",
+  "status": "CPU_CORE_PASS_NOT_SUBMIT_INTEGRATED",
+  "pytest_cases_passed": 24,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_storage_allocation.py",
+    "sha256": "48c1169d7b9ff383d512df6f56c5e47b2fab3f0cb0412ef755b47c6597ec7cf5"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_storage_allocation.py",
+    "sha256": "514f89bd068860e34f819e8ab7bc4634bbe4ab5688d86cf21d9fdac4169c9691"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_STORAGE_ALLOCATION_TESTS.txt",
+    "sha256": "9629b898972212c5f7b9bba04a6119af16c1f679b2c47e1813fc029cca610ad8"
+  },
+  "coverage": [
+    "Full dual-volume plus control storage is reserved before any image exists",
+    "Repeated exact plan registration does not add another reservation",
+    "Volume pair, target and experiment aliases are rejected",
+    "Exact manifest plan/helper identities and mounted bindings precede immutable spec binding",
+    "Existing bound spec can be verified under STOP; new binding cannot replace it",
+    "Plan, event charge and ledger reservation drift rejected",
+    "No mount, Store permission, live start or refund occurs"
+  ],
+  "remaining_integration": [
+    "Registration must use the existing allocation as storage owner without a second full storage debit",
+    "Submission must reject missing, mismatched or reused prepaid storage",
+    "Inventory must observe total output against the same storage reservation, preserving overrun and failed evidence",
+    "Independent review of new accounting integration before production provisioning"
+  ],
+  "substitutes": [
+    "Temporary Journal and plans; kernel mount validators mocked for binding tests",
+    "Existing budget tests cover totals and protected limits; operational ledger unchanged"
+  ],
+  "capacity_pass": false,
+  "operational_storage_allocations_created": 0,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0
+}

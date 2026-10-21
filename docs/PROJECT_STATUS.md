@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：生产双卷预留/绑定核心候选完成，24项CPU测试通过；准确计划在卷创建
+前预留全额空间，重复登记不重复收费，卷/target/experiment复用拒绝，真实manifest计划
+与工具身份核验后只绑定一个准确spec。见
+`docs/experiments/r6-robustness-auto/CPU_STORAGE_ALLOCATION.json`。
+尚未接入job登记/submit/原件清单的统一收费所有者，故本轮未创建操作账本预留、生产卷
+或live作业。下一步完成该关联与过量/失败计账回归，再独审；capacity=false。
+
 2026-10-21：固定双卷R6评价候选的payload已接到合同与真实entry配额安装位置，
 消除旧3GiB重复扣减；仅准确双卷固定布局启用，其他模式保留旧规则。36项CPU测试
 通过，包括完整原分母配额、少1字节拒绝、无效native绑定拒绝和entry安装前拦截。见
