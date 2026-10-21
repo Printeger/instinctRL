@@ -1,0 +1,24 @@
+{
+  "spec_pin": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/spec.json",
+    "sha256": "20445dd09a901da4ab66dca822992a9d131008a4cc83aaafdc15586e838bd5a7"
+  },
+  "query_executable": {
+    "path": "/usr/bin/nvidia-smi",
+    "sha256": "22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be"
+  },
+  "decision_executable": {
+    "path": "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+    "sha256": "9a820c17865fa825d04db416818679a9d63bd72e50835c396f496e5684626c9c"
+  },
+  "queue_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-02/queue-accepted.json",
+    "sha256": "1a93abcde6109f93c795e241d9aa671c94aff06e595bee75fc51cf373bb0259d"
+  },
+  "sampler_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-02/sampler-accepted.json",
+    "sha256": "ea2f21fca0ca81984d4fa891a1cd33500f45341b78a9eeec2ff352135ab802cb"
+  },
+  "purpose": "development",
+  "sandbox": "read-only"
+}

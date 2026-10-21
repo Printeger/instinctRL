@@ -1,5 +1,11 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-21：独审30 PASS_R6_RESOURCE_BUNDLE，资源新鲜度MUST_FIX关闭；准确queue/sampler
+接受与receipt见 RESOURCE_ADMISSION_ACCEPTED_02.json。独审159项通过；7个旧mock签名问题
+已修复并单独14项全过。完整baseline-prelive-01/plan.json已实际校验，未发行/未提交。
+后台controller/下一计划生成与平台续推理交接、首次prelive仍待完成；Goal未完成。
+124次唤醒+30worker=154，余102；无R6 GPU作业。
+
 2026-10-21：资源独审29为MUST_FIX：实际submit重复校验后观察过期。拒绝原件和receipt已核验保留。
 已在真实Store预留及Popen前补边界检查/完整窗口刷新，保留提交历史与禁止盲重提；
 完整授权校验移至监督进程创建前，创建后仍检查动态授权，worker仍独立校验输入。

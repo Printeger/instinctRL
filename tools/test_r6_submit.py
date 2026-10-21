@@ -50,7 +50,7 @@ class SubmitTests(unittest.TestCase):
         for p in self.patches:self.addCleanup(p.stop)
         self.submit=self.mocks[-1]
 
-    def launch(self,store,spec):
+    def launch(self,store,spec,*,admission_guard):
         self.assertIn('submission_claim',self.j.read()['events'][self.key])
         job=dict(id=self.jid,spec=spec,approval_id='CPU-APPROVAL',status='RUNNING',identity=None)
         store.state['jobs'][self.jid]=job;return job
@@ -67,7 +67,7 @@ class SubmitTests(unittest.TestCase):
         self.assertEqual(self.j.read()['current_job'],self.jid)
 
     def test_crash_after_store_reservation_recovers_same_job(self):
-        def partial(store,spec):self.launch(store,spec);raise RuntimeError('CPU crash after Store')
+        def partial(store,spec,*,admission_guard):self.launch(store,spec,admission_guard=admission_guard);raise RuntimeError('CPU crash after Store')
         self.submit.side_effect=partial
         with self.assertRaisesRegex(RuntimeError,'CPU crash'):self.invoke()
         self.assertEqual(self.invoke()['job_id'],self.jid);self.assertEqual(self.submit.call_count,1)
@@ -133,8 +133,8 @@ class SubmitTests(unittest.TestCase):
         self.submit.assert_not_called()
 
     def test_native_failed_store_job_is_preserved_on_recovery(self):
-        def partial(store,spec):
-            self.launch(store,spec);store.state['jobs'][self.jid].update(status='FAILED',exit_code=-9)
+        def partial(store,spec,*,admission_guard):
+            self.launch(store,spec,admission_guard=admission_guard);store.state['jobs'][self.jid].update(status='FAILED',exit_code=-9)
             raise RuntimeError('CPU late failure')
         self.submit.side_effect=partial
         with self.assertRaises(RuntimeError):self.invoke()

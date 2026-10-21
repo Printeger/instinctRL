@@ -1,0 +1,158 @@
+{
+  "decision": "PASS_R6_RESOURCE_BUNDLE",
+  "summary": "Prior freshness MUST_FIX is closed: actual reservation and pre-Popen guards enforce fresh full windows, preserve recovery history/deadlines, and prohibit ambiguous retries. STOP, revocation, pin checks, Store-lock interaction, sampler cleanup/accounting, and unchanged AppLauncher admission reviewed. CPU run: 159 passed; seven non-blocking legacy mock-signature failures in test_r6_submit.py reject admission_guard. Four authorization tests passed separately. Actual frozen full-spec validation passed in 11.43 seconds; prior failure preserved. No production mutations, GPU queries, or scientific/deployment/dispatch acceptance.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-02/inputs.json",
+      "sha256": "c218a5e4accf4e4105222eb61fe1f55f516fce856a9a3e7f7115c0e6a6fb0c52"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py",
+      "sha256": "671cb3f09b1324cef90752e92387d0bda129c07e6f82177a8a61c87b25adca76"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "c70cf5648443ffde3dd3e4cb065f6bf2cee34a55211eadd75a77ef0dc1c4ec18"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_sampler.py",
+      "sha256": "0a769eaf427713795ba76982aac4b1fc6b60b30f224a18ddd6d3f12ebe7036c0"
+    },
+    {
+      "path": "/usr/bin/nvidia-smi",
+      "sha256": "22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_wait.py",
+      "sha256": "4cf9c6cbcfe231fd68a90b10df618600230cdad946f6764edfa750f0b13967f3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "ceef01d2ecdc85ea510b4a52ec4e19da215abc100ab4a9e888080c7b2161c4fa"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_register_job.py",
+      "sha256": "a47c2614efae34c4cd2762e1b80dc02c5ee6d8b32fdc6aa14000a085695a18b3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_run_job.py",
+      "sha256": "d65779f5a1449de75d33026a8198e5d545f147a4ce6d2ba40a64582a9b82e904"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_budget.py",
+      "sha256": "2fdee08edc08dcdb8411f56e36ffeaee930bf2dbfceba8149a07d7199f9e15b1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/experiments.py",
+      "sha256": "3af0d900a5490f2f1962475fbdf1010eb02a2ef8fba446e0adb196e330977257"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/store.py",
+      "sha256": "b57f1e3f7c71a4150cdd3346cb753197c1170a9ffd952bff6521be83c6fb2a0d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py",
+      "sha256": "697d69e45105143456f891b48db3fa8bf7805c91c9fb9a1ca455c97f2ee4a825"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_worker_processes.py",
+      "sha256": "7ce3a1276d8460445f442ef9e30ecbe3198de98e848d75198eaabe94c932cc10"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_prelaunch.py",
+      "sha256": "ddba5b8969d98c3f30b4c145ace23a8e01631ef23f3618d669952707116f809a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_boundaries.py",
+      "sha256": "fed3bf98302ed3140d7994a1d6a7bb976991de3f46dc995ecded118cd9c0e718"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit.py",
+      "sha256": "d184e24a94532fe9ebf06d16b7ea29b909bf6833da07d2a232a13a0d20529b8a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SUBMIT_BOUNDARIES.json",
+      "sha256": "1454e64ba7203c73c7b855dfeb7862114180733137ee81d155a90fcf65263467"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/exact-resource-admission-review.json",
+      "sha256": "8544f763192c88666be82b8fb2e4eecbea02242dccb7d697f99a1dbbe714cce5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_prepare_authorization.py",
+      "sha256": "58eed3f19f5534255b0596e5dcea7aeb04a2a68a08f6407619436cabbc2a43d9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_REAL_SPEC_ORDER_REPAIR.json",
+      "sha256": "c050cef22d6ce73e1f2474bf5b9ec0cc5aca15f2c0af16c05b6449a0e258fde6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/spec-validation.txt",
+      "sha256": "66c20094d0a6a78ccca4825848302be4e6998f4983d684abdf7388b89af375d1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/spec-repair-validation.txt",
+      "sha256": "4e1016784325c4e1e64ae3d9e553bad1a25eb506e6128b8343fd49f4e629fdd5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/spec.json",
+      "sha256": "20445dd09a901da4ab66dca822992a9d131008a4cc83aaafdc15586e838bd5a7"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Controller may extract the exact nested acceptances with separate receipt provenance. Update the seven stale submit-test mocks and rerun them separately. J-7a302eaf9d7714e7 remains validated but unapproved/unsubmitted; actual initial prelive review, deployment, and later-volume provisioning remain separate pending gates.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 102
+  },
+  "must_fix": [],
+  "queue_review": {
+    "policy": {
+      "schema_version": "r6-resource-queue/1",
+      "window_policy": {
+        "schema_version": "r5-w-resource-admission/2",
+        "sample_count": 13,
+        "minimum_span_seconds": 60,
+        "minimum_gap_seconds": 4,
+        "maximum_gap_seconds": 8,
+        "mean_utilization_max": 8,
+        "median_utilization_max": 5,
+        "peak_utilization_max": 20,
+        "elevated_utilization_threshold": 10,
+        "elevated_samples_max": 4,
+        "consecutive_elevated_max": 1,
+        "memory_used_max_mib": 1024,
+        "memory_free_min_mib": 10240,
+        "allowed_app": "gnome-remote-desktop-daemon",
+        "allowed_app_max_mib": 256
+      },
+      "reserved_seconds_per_window": 180,
+      "rejection_backoff_seconds": 60,
+      "maximum_sample_age_seconds": 8,
+      "observation_is_launch_permission": false,
+      "interrupted_window_reused": false,
+      "implicit_refund": false
+    },
+    "implementation": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py",
+      "sha256": "671cb3f09b1324cef90752e92387d0bda129c07e6f82177a8a61c87b25adca76"
+    },
+    "validator": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "c70cf5648443ffde3dd3e4cb065f6bf2cee34a55211eadd75a77ef0dc1c4ec18"
+    },
+    "decision": "PASS_R6_RESOURCE_QUEUE",
+    "must_fix": []
+  },
+  "sampler_review": {
+    "worker": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_sampler.py",
+      "sha256": "0a769eaf427713795ba76982aac4b1fc6b60b30f224a18ddd6d3f12ebe7036c0"
+    },
+    "decision": "PASS_R6_RESOURCE_SAMPLER",
+    "must_fix": []
+  },
+  "query_executable": {
+    "path": "/usr/bin/nvidia-smi",
+    "sha256": "22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be"
+  }
+}

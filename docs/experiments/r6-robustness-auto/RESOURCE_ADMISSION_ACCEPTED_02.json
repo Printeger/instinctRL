@@ -1,0 +1,32 @@
+{
+  "status": "EXACT_RESOURCE_BUNDLE_ACCEPTED_NOT_LIVE_PERMISSION",
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/exact-resource-admission-fix-review.json",
+    "sha256": "0472417f8100ef4f7bb41e8996b735b042990ee86b64c6d154f277a2a9d08a31"
+  },
+  "event_key": "d917e48f1787398f8b44faacba93340793bd035a58c452e82f1c8cb0a4544588",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/d917e48f1787398f8b44faacba93340793bd035a58c452e82f1c8cb0a4544588/receipt.json",
+    "sha256": "9c8515d28018bb069d4f301bb4222bd152904c7ec860592c57843cc1e509c81b"
+  },
+  "queue": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-02/queue-accepted.json",
+    "sha256": "1a93abcde6109f93c795e241d9aa671c94aff06e595bee75fc51cf373bb0259d"
+  },
+  "sampler": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-02/sampler-accepted.json",
+    "sha256": "ea2f21fca0ca81984d4fa891a1cd33500f45341b78a9eeec2ff352135ab802cb"
+  },
+  "implementation_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-02/inputs.json",
+    "sha256": "c218a5e4accf4e4105222eb61fe1f55f516fce856a9a3e7f7115c0e6a6fb0c52"
+  },
+  "query_executable": {
+    "path": "/usr/bin/nvidia-smi",
+    "sha256": "22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be"
+  },
+  "model_sessions": 154,
+  "remaining_model_sessions": 102,
+  "scientific_acceptance": false,
+  "controller_deployed": false
+}
