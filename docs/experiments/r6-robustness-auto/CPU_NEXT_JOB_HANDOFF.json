@@ -1,0 +1,52 @@
+{
+  "schema_version": "r6-next-job-cpu/1",
+  "status": "CPU18_PASS_REVIEW_AND_DEPLOYMENT_PENDING",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_next_job.py",
+      "sha256": "b41e2f86367f92db8c3275706b764fff132a92e73b4f641e48f966859902b045"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_next_job.py",
+      "sha256": "e2187f3636e7c18fae2c8e3d8d9e94cf0d5d0bd1b66cc82fc8398c3c4ba24bad"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_run_job.py",
+      "sha256": "d65779f5a1449de75d33026a8198e5d545f147a4ce6d2ba40a64582a9b82e904"
+    }
+  ],
+  "test_logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-next-job-initial.txt",
+      "sha256": "024e7018e6f0b176dff142eb0ad392b31fba03a50580d43af7ab3582dfd472da"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-next-job-recheck.txt",
+      "sha256": "d7fb5a3079f1704f70110cfd9c6a7692bc77ef4f09d061302589de0b55a1065b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-next-job-final.txt",
+      "sha256": "de61c3886b6c8a95affa58acabb435db78d9b2bacd272877cf43faed60ad6180"
+    }
+  ],
+  "results": [
+    "Initial: 5 pass, 2 fail because fixture job identities omitted role; failure retained",
+    "Corrected fixtures and cached child validation: 15 passed",
+    "Three additional negative checks: 18 passed"
+  ],
+  "coverage": [
+    "One durable parent-to-child edge, no duplicate reservation",
+    "Changed plan/review binding, missing Store authority, reservation drift rejected",
+    "Recovery after edge persistence and runner exception",
+    "STOP blocks new submission; existing claim reaches existing runner recovery",
+    "Completed result replays without invoking runner; wrong cached child rejected"
+  ],
+  "limits": [
+    "Parent evidence verification, model review verification, Store authorization and runner are explicit substitutes in next-job tests",
+    "No new real review, Store permission, GPU query, live job or controller deployment",
+    "Plan construction and autonomous issuance remain unimplemented; this consumes a pre-reviewed exact plan",
+    "Independent review required before use"
+  ],
+  "scientific_acceptance": false,
+  "capacity_pass": false
+}

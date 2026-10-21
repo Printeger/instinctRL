@@ -1,0 +1,141 @@
+"""Real journal edges; declared substitutes for parent verification/Store/runner."""
+import json
+from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import Mock
+
+import pytest
+
+from rlflow.store import sha
+from tools.r6_recovery import Journal,file_pin,RecoveryError
+from tools import r6_next_job as next_job
+
+
+@pytest.fixture
+def case(tmp_path,monkeypatch):
+    def write(name,value):
+        p=tmp_path/name;p.write_text(json.dumps(value));return file_pin(p)
+    j=Journal(tmp_path/'batch')
+    with j.writer():j.initialize(json.loads((Path(__file__).parent/'fixtures/r6_budget.json').read_text()))
+    proposal={'decision':{'decision':'PROPOSE_CANDIDATE'}}
+    parent_pin=write('decision.json',proposal);spec={'id':'CPU-NEXT'};spec_pin=write('spec.json',spec)
+    child='J-'+sha({'id':spec['id'],'spec':spec})[:16]
+    plan=dict(spec_pin=spec_pin,query_executable=spec_pin,decision_executable=spec_pin,
+              queue_review=None,sampler_review=None,purpose='development',sandbox='read-only')
+    plan_pin=write('plan.json',plan)
+    def event(role,request):
+        identity=dict(goal_id=j.read()['goal_id'],event_id=role,job_id='J-parent',input_sha256=sha(request),role=role)
+        with j.writer():return j.intent(identity,kind='model',request=request,resources={'automatic_model_sessions':1},
+            purpose='development',free_disk_bytes=500*1024**3)[0]
+    parent=event('post-analysis-decision',{'fixture':'parent'})
+    review=event('next-job-review',{'fixture':'review'})
+    output=dict(decision='PASS_R6_NEXT_JOB',must_fix=[],parent_decision_sha256=parent_pin['sha256'],plan_sha256=plan_pin['sha256'])
+    review_pin=write('review.json',output)
+    with j.writer():
+        s=j.read();s['events'][parent]['decision_record']=parent_pin
+        e=s['events'][review];e['status']='RECEIPT_RECORDED'
+        e['receipt']=write('receipt.json',dict(event_key=review,request_sha256=sha(e['request']),
+            process=e.get('process'),last_message=review_pin));j.save(s)
+    parent_check=Mock(return_value=proposal);worker_check=Mock(return_value=output)
+    monkeypatch.setattr(next_job,'record_decision',parent_check)
+    monkeypatch.setattr(next_job,'verified_decision',worker_check)
+    monkeypatch.setattr(next_job,'no_model_workers',Mock())
+    monkeypatch.setattr(next_job.experiments,'validate',Mock())
+    authorize=Mock();monkeypatch.setattr(next_job.experiments,'authorized',authorize)
+    store=SimpleNamespace(root=tmp_path,replay=lambda:{'jobs':{}})
+    runner=Mock(return_value={'status':'RESOURCE_OBSERVATION_REJECTED'})
+    monkeypatch.setattr(next_job,'run_job',runner)
+    return SimpleNamespace(j=j,parent=parent,review=review,review_pin=review_pin,plan_pin=plan_pin,
+        plan=plan,child=child,store=store,runner=runner,write=write,authorize=authorize,
+        parent_check=parent_check,worker_check=worker_check)
+
+
+def call(b,fn=next_job.advance,**overrides):
+    args=dict(parent_key=b.parent,plan_pin=b.plan_pin,review_key=b.review,review_pin=b.review_pin,
+              store=b.store,free_disk_bytes=500*1024**3);args.update(overrides)
+    with b.j.writer():return fn(b.j,**args)
+
+
+def test_registered_edge_replays_one_reservation_and_rechecks_before_start(case):
+    b=case;first=call(b);before=b.j.read()['budget'];second=call(b)
+    assert first==second and before==b.j.read()['budget'] and b.runner.call_count==2
+    assert b.parent_check.call_count==3  # register + both not-yet-submitted starts
+    assert first['scientific_acceptance'] is False
+
+
+def test_crash_after_edge_before_runner_recovers_same_plan(case):
+    b=case;b.runner.side_effect=RuntimeError('crash before run')
+    with pytest.raises(RuntimeError):call(b)
+    before=b.j.read()['budget'];b.j=Journal(b.j.directory)
+    b.runner.side_effect=None;call(b)
+    assert b.j.read()['budget']==before
+    changed=dict(b.plan,sandbox='danger-full-access')
+    with pytest.raises(RecoveryError,match='PARENT_ALREADY_BOUND'):call(b,plan_pin=b.write('changed.json',changed))
+
+
+def test_missing_store_permission_does_not_create_edge(case):
+    b=case;before=b.j.read();b.authorize.side_effect=ValueError('no exact authority')
+    with pytest.raises(ValueError,match='no exact authority'):call(b)
+    assert b.j.read()==before;b.runner.assert_not_called()
+
+
+def test_review_identity_tampering_rejected(case):
+    b=case
+    with b.j.writer():
+        s=b.j.read();s['events'][b.review]['identity']['role']='post-analysis-decision';b.j.save(s)
+    with pytest.raises(RecoveryError,match='REVIEW_IDENTITY'):call(b)
+    b.runner.assert_not_called()
+
+
+def test_new_start_rechecks_parent_after_edge_registration(case):
+    b=case;call(b,next_job.register);b.parent_check.side_effect=ValueError('parent drift')
+    with pytest.raises(ValueError,match='parent drift'):call(b)
+    b.runner.assert_not_called()
+
+
+def test_completed_edge_returns_without_second_runner(case):
+    b=case;call(b,next_job.register)
+    with b.j.writer():
+        s=b.j.read();s['events']['fixture-job']=dict(kind='job',identity={'job_id':b.child,'role':'evaluation'});b.j.save(s)
+    b.runner.return_value=dict(status='DECISION_PROPOSAL_RETURNED',event_key='fixture-job')
+    first=call(b);(b.j.directory/'STOP').touch();second=call(b)
+    assert first==second;b.runner.assert_called_once()
+
+
+def test_stop_blocks_unsubmitted_edge_but_claim_reaches_existing_recovery(case):
+    b=case;call(b,next_job.register);(b.j.directory/'STOP').touch()
+    with pytest.raises(RecoveryError,match='STOP'):call(b)
+    b.runner.assert_not_called()
+    with b.j.writer():
+        s=b.j.read();s['events']['fixture-job']=dict(kind='job',identity={'job_id':b.child,'role':'evaluation'},submission_claim={'fixture':True});b.j.save(s)
+    call(b);b.runner.assert_called_once()  # Existing runner owns exact STOP cleanup.
+
+
+def test_cached_completion_cannot_point_at_another_child(case):
+    b=case;key=call(b,next_job.register)
+    with b.j.writer():
+        s=b.j.read()
+        s['events']['wrong-job']=dict(kind='job',identity={'job_id':'J-other','role':'evaluation'})
+        s['events'][key]['next_job_result']=dict(status='DECISION_PROPOSAL_RETURNED',
+            handoff_event_key=key,child_job_event_key='wrong-job',scientific_acceptance=False)
+        b.j.save(s)
+    with pytest.raises(RecoveryError,match='CACHED_CHILD'):call(b)
+    b.runner.assert_not_called()
+
+
+def test_review_must_bind_exact_plan(case):
+    b=case
+    changed=dict(b.plan,sandbox='danger-full-access')
+    with pytest.raises(RecoveryError,match='REVIEW_BINDING'):
+        call(b,plan_pin=b.write('unreviewed.json',changed))
+    b.runner.assert_not_called()
+
+
+def test_replay_rejects_missing_reservation(case):
+    b=case;key=call(b,next_job.register)
+    with b.j.writer():
+        s=b.j.read();identity=s['events'][key]['identity']
+        s['budget']['reservations']=[r for r in s['budget']['reservations'] if r['identity']!=identity]
+        b.j.save(s)
+    with pytest.raises(RecoveryError,match='REPLAY_IDENTITY'):call(b)
+    b.runner.assert_not_called()

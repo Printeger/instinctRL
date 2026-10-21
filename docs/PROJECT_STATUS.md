@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：新增已独审且已有Store许可的准确计划接续组件，18项CPU检查通过；
+父决策/审核/计划绑定、重启复用同一预留、STOP与已有claim恢复、缓存子作业身份检查。
+首轮两项不完整fixture失败及修复结果保留，见
+`docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_HANDOFF.json`。
+测试中的parent/reviewer/Store/runner为明确替身；组件尚待独审与部署，自动构造计划/发行
+许可仍未完成。正式双卷manifest仍缺失，sudo -n要求密码；无R6 live。
+105次自动唤醒+19worker=124，256上限余132次；完整Goal未完成。
+
 2026-10-21：新增预付生产卷只读检查入口tools/r6_check_prepared_storage.py，12项CPU
 检查通过；检查计划/工具身份后调用原挂载验证器，要求完整payload可用空间，拒绝symlink/
 错误manifest。真实事件返回WAITING_FOR_ADMIN_PROVISION，两个manifest缺失；检查前后

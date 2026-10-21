@@ -1,0 +1,89 @@
+.....FF                                                                  [100%]
+=================================== FAILURES ===================================
+______________ test_completed_edge_returns_without_second_runner _______________
+
+case = namespace(j=<tools.r6_recovery.Journal object at 0x7315b6e9fd10>, parent='1533786a75e342a1df45f05c50f3e1d404f42880620f...horize=<Mock id='126537100288240'>, parent_check=<Mock id='126537100295104'>, worker_check=<Mock id='126537100292800'>)
+
+    def test_completed_edge_returns_without_second_runner(case):
+        b=case;call(b,next_job.register)
+        with b.j.writer():
+            s=b.j.read();s['events']['fixture-job']=dict(kind='job',identity={'job_id':b.child});b.j.save(s)
+        b.runner.return_value=dict(status='DECISION_PROPOSAL_RETURNED',event_key='fixture-job')
+>       first=call(b);(b.j.directory/'STOP').touch();second=call(b)
+
+tools/test_r6_next_job.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_next_job.py:56: in call
+    with b.j.writer():return fn(b.j,**args)
+tools/r6_next_job.py:96: in advance
+    key=register(journal,parent_key,plan_pin,review_key,review_pin,store,free_disk_bytes=free_disk_bytes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7315b6e9fd10>
+parent_key = '1533786a75e342a1df45f05c50f3e1d404f42880620f90ae7c5275f6021a0a52'
+plan_pin = {'path': '/tmp/pytest-of-mint/pytest-1185/test_completed_edge_returns_wi0/plan.json', 'sha256': '5fb5f0c4f0e9806f2dd34fd6f065ad0846645c838f1fc35dc02a1128563c2770'}
+review_key = '7805d3dc4a5994cc8b1f88ee9066848d9ce096f8419ffc09d1754e5bfa57552c'
+review_pin = {'path': '/tmp/pytest-of-mint/pytest-1185/test_completed_edge_returns_wi0/review.json', 'sha256': '0ccdb5f06ea4fdc2bc0fbe31b341e91e1ff819d4fe9b484d3d9b1864fec86430'}
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-1185/test_completed_edge_returns_wi0'), replay=<function case.<locals>.<lambda> at 0x7315b6d094e0>)
+
+    def register(journal,parent_key,plan_pin,review_key,review_pin,store,*,free_disk_bytes):
+        journal.require_writer()
+        request=dict(parent_key=parent_key,plan=plan_pin,review_key=review_key,review=review_pin)
+        state=journal.read()
+        prior=[(k,e) for k,e in state['events'].items()
+>              if e['identity']['role']==ROLE and e['request'].get('parent_key')==parent_key]
+E       KeyError: 'role'
+
+tools/r6_next_job.py:64: KeyError
+____ test_stop_blocks_unsubmitted_edge_but_claim_reaches_existing_recovery _____
+
+case = namespace(j=<tools.r6_recovery.Journal object at 0x7315b6e9ddf0>, parent='1533786a75e342a1df45f05c50f3e1d404f42880620f...horize=<Mock id='126537100287376'>, parent_check=<Mock id='126537100295056'>, worker_check=<Mock id='126537100293616'>)
+
+    def test_stop_blocks_unsubmitted_edge_but_claim_reaches_existing_recovery(case):
+        b=case;call(b,next_job.register);(b.j.directory/'STOP').touch()
+        with pytest.raises(RecoveryError,match='STOP'):call(b)
+        b.runner.assert_not_called()
+        with b.j.writer():
+            s=b.j.read();s['events']['fixture-job']=dict(kind='job',identity={'job_id':b.child},submission_claim={'fixture':True});b.j.save(s)
+>       call(b);b.runner.assert_called_once()  # Existing runner owns exact STOP cleanup.
+
+tools/test_r6_next_job.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_next_job.py:56: in call
+    with b.j.writer():return fn(b.j,**args)
+tools/r6_next_job.py:96: in advance
+    key=register(journal,parent_key,plan_pin,review_key,review_pin,store,free_disk_bytes=free_disk_bytes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7315b6e9ddf0>
+parent_key = '1533786a75e342a1df45f05c50f3e1d404f42880620f90ae7c5275f6021a0a52'
+plan_pin = {'path': '/tmp/pytest-of-mint/pytest-1185/test_stop_blocks_unsubmitted_e0/plan.json', 'sha256': '9f631428cfec8304b0bd50e892bcd0eb3136996829c2b5b0019927f9b19110a2'}
+review_key = '7805d3dc4a5994cc8b1f88ee9066848d9ce096f8419ffc09d1754e5bfa57552c'
+review_pin = {'path': '/tmp/pytest-of-mint/pytest-1185/test_stop_blocks_unsubmitted_e0/review.json', 'sha256': 'd355fe00dc4158a337626b57caa349edb889cab0768730c6365e75021b3facb8'}
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-1185/test_stop_blocks_unsubmitted_e0'), replay=<function case.<locals>.<lambda> at 0x7315b6d0a480>)
+
+    def register(journal,parent_key,plan_pin,review_key,review_pin,store,*,free_disk_bytes):
+        journal.require_writer()
+        request=dict(parent_key=parent_key,plan=plan_pin,review_key=review_key,review=review_pin)
+        state=journal.read()
+        prior=[(k,e) for k,e in state['events'].items()
+>              if e['identity']['role']==ROLE and e['request'].get('parent_key')==parent_key]
+E       KeyError: 'role'
+
+tools/r6_next_job.py:64: KeyError
+=========================== short test summary info ============================
+FAILED tools/test_r6_next_job.py::test_completed_edge_returns_without_second_runner
+FAILED tools/test_r6_next_job.py::test_stop_blocks_unsubmitted_edge_but_claim_reaches_existing_recovery
+2 failed, 5 passed in 0.27s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-2b2e266c-cf2c-421d-83a6-66098fe5117e/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-2b2e266c-cf2c-421d-83a6-66098fe5117e/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-2b2e266c-cf2c-421d-83a6-66098fe5117e/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-2b2e266c-cf2c-421d-83a6-66098fe5117e
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-2b2e266c-cf2c-421d-83a6-66098fe5117e'
+  warnings.warn(
