@@ -56,6 +56,16 @@ class ContractTests(unittest.TestCase):
         with self.assertRaisesRegex(PermissionError,'seed identity'):validate_parameters(MODE,self.p)
         self.p['evaluation_seed']=20260909;self.p['baseline_bindings']['sha256']='0'*64
         with self.assertRaisesRegex(PermissionError,'baseline bindings'):validate_parameters(MODE,self.p)
+
+    def test_native_volume_requires_exact_card_and_runtime_validation(self):
+        self.p['native_volume']={'path':'/fixture/volume.json','sha256':'1'*64}
+        with patch('training_workloads.unified_h1.native_volume.validate',return_value={'fixture':True}) as check:
+            with self.assertRaisesRegex(PermissionError,'card/profile mismatch'):validate_parameters(MODE,self.p)
+            self.card()
+            self.assertEqual(validate_parameters(MODE,self.p),self.p)
+            check.assert_called_with(self.p['native_volume'])
+        with patch('training_workloads.unified_h1.native_volume.validate',side_effect=ValueError('MOUNT_ABSENT')):
+            with self.assertRaisesRegex(ValueError,'MOUNT_ABSENT'):validate_parameters(MODE,self.p)
     def test_baseline_cannot_omit_failed_domain_or_duplicate_blocks(self):
         self.p['r6']['block_ids'].pop();self.card()
         with self.assertRaisesRegex(PermissionError,'all frozen blocks'):validate_parameters(MODE,self.p)

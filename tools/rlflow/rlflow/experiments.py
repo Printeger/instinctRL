@@ -269,9 +269,8 @@ def worker(request):
         if spec['backend']=='real':
             from .h1 import environment as h1_environment
             environment=h1_environment(spec)
-        dispatch_options={}
-        if spec['backend']=='real' and spec.get('h1',{}).get('mode')=='research-r6-evaluation':
-            dispatch_options['native_output_cap_bytes']=256*1024**2
+        from .h1 import native_dispatch_options
+        dispatch_options=native_dispatch_options(spec)
         code=module.dispatch_held(argv,cwd=Path(spec['cwd']),identity_path=d/'held-child.json',
                  coordination_root=store.root,completion_timeout_s=spec['resources']['wall_seconds'],
                  environment=environment,before_release=gate,**dispatch_options)

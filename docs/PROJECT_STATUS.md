@@ -2,6 +2,12 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：准确R6实验卡现可绑定native卷manifest，rlflow从快照校验后的授权取得该pin；
+dispatcher在fork前核验卷，将console/TMP/XDG/CUDA cache指向该卷。45项CPU路径/合同测试
+及35项rlflow回归通过，见 `docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_DISPATCH_TESTS.json`。
+首次缺Torch的环境选择失败保留；没有安装依赖。外部卷原件清单/计账与扩展缓存边界尚待接通，
+未降低原3GiB预留，capacity仍false；本轮无新增live/GPU/model调用。
+
 2026-10-21：用户已在平台将Goal恢复为active，继续执行。此前管理员测试卷阻塞已解决；
 已新增native卷实时身份核验与四类Kit路径接线，控制台卷外写入在资源gate前拒绝。
 CPU验证见 `docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_WIRING_TESTS.json`。

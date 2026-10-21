@@ -1,0 +1,78 @@
+{
+  "status": "CPU_AUTHORITY_DISPATCH_WIRING_PASS_PENDING_REVIEW",
+  "tests_passed": 45,
+  "rlflow_regression_passed": 35,
+  "subtests_passed": 4,
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "8f275c36c32d6d8f91a4deac81d2dfef9587b3ea24cb96d81c10e0a530d9ea5d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "8940568b505d1755f87319d7f8115759bfe2d864d5ac238737b7afebe6f9869f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py",
+      "sha256": "4cfa512d0cef05c008c703b9848f4d5515e34927f99cd919fc11d91ab840faa6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/experiments.py",
+      "sha256": "cdda96c8f4ba91920626a612b76b460a61e47fdb2953e6ea80b06da4dfcfa5e1"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_volume_dispatch.py",
+      "sha256": "299497984afd054901f526e41653c077dcd7058983fd240c35330d57915641f4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_contract.py",
+      "sha256": "70bab63a6ad92055494ad848ef2581e6b050ee0f8b918dd6481cd8a5853f7d40"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_volume_provision.py",
+      "sha256": "430f1ac5602a8d30056e87a4b704f6f474ce3d3d639b22fdbb674de60b4e63de"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_DISPATCH_TESTS.txt",
+      "sha256": "2fc8bde62069772d9ddcf7e84be669b35ceced08f2d8cb500529d48f392b219d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_DISPATCH_TESTS_V2.txt",
+      "sha256": "5ee9ee8c23ef2d24ffd330b05aa17646e8537bb1f496a170b0b69a8ab416c8aa"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_DISPATCH_TESTS_V3.txt",
+      "sha256": "48b20b27d0a5d19f6dd4d01e3744cd3de67a22797bf181d11d997946009fffab"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_RLFLOW_REGRESSION.txt",
+      "sha256": "3970b03cdf88d916a8b4ec886f61736085f653bd86be5de5fca979b01727b74b"
+    }
+  ],
+  "initial_failure": "Control Python lacked torch for one existing lifecycle test; existing tensor Python passed full suite, without installing dependencies.",
+  "warnings": "Pytest cleanup warnings concern old mode000 temporary provisioning fixtures. New fixture teardown restores only its own temporary directory permissions; production unmounted targets stay mode000. Historical temporary evidence was not deleted.",
+  "coverage": [
+    "Real CPU fork/exec console and environment routing into substituted volume root",
+    "Pipe overflow retains exact bounded prefix and failed receipt",
+    "Mount rejection occurs before fork; previous native directories preserved",
+    "Native volume optional parameter included in exact experimental card and validated",
+    "Store dispatcher obtains volume only from snapshot-validated authority, not extra spec fields"
+  ],
+  "substitutes": [
+    "Temporary directories substitute mount validation for dispatcher child tests; actual filesystem limit separately proved by CPU-QUOTA-01",
+    "No actual GPU, Kit startup or production volume"
+  ],
+  "limitations": [
+    "External native volume still needs inclusion in postrun inventory/accounting",
+    "Extension registry cache and other unenumerated writes are not covered by these path settings",
+    "No independent acceptance or reduced native reservation; original3GiB and capacity=false retained"
+  ],
+  "new_live_starts": 0,
+  "new_gpu_queries": 0,
+  "new_model_calls": 0,
+  "operating_ledger_modified": false
+}

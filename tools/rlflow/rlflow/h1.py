@@ -77,6 +77,16 @@ def validate(spec,root,*,fresh=True):
     return observed
 
 
+def native_dispatch_options(spec):
+    """Take native paths only from the exact snapshot-validated authority."""
+    if spec.get('backend')!='real' or spec.get('h1',{}).get('mode')!='research-r6-evaluation':
+        return {}
+    parameters=inspect_authority(spec)['authorization']['parameters']
+    result={'native_output_cap_bytes':256*1024**2}
+    if 'native_volume' in parameters:result['native_volume_pin']=parameters['native_volume']
+    return result
+
+
 def environment(spec):
     config=json.loads((Path(spec['h1']['workload_root'])/'training_workloads/unified_h1/candidate_config.json').read_text())
     return {'PATH':'/usr/bin:/bin','PYTHONDONTWRITEBYTECODE':'1','PYTHONNOUSERSITE':'1','CUDA_VISIBLE_DEVICES':'0',

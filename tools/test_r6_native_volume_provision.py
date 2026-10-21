@@ -31,7 +31,12 @@ def fake_admin(tmp_path,monkeypatch):
     monkeypatch.setattr(volume.shutil,'disk_usage',lambda p:SimpleNamespace(free=100*1024**3))
     commands=Mock(side_effect=RuntimeError('CPU stops before formatting/mounting'))
     monkeypatch.setattr(volume.subprocess,'run',commands)
-    return volume.plan('CPU-QUOTA-01'),commands
+    spec=volume.plan('CPU-QUOTA-01')
+    yield spec,commands
+    # The production unmounted target remains inaccessible. Restore permissions
+    # only on this temporary CPU substitute so pytest can clean its own fixture.
+    target=Path(spec['target'])
+    if target.is_dir():target.chmod(0o700)
 
 
 def test_existing_identity_is_never_formatted(fake_admin):

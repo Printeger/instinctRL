@@ -86,7 +86,8 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
                   completion_timeout_s: float = 5.0, environment: Mapping[str, str] | None = None,
                   child_before_identity: Callable[[], None] | None = None,
                   before_release: Callable[[], None] | None = None,
-                  native_output_cap_bytes: int | None = None) -> int:
+                  native_output_cap_bytes: int | None = None,
+                  native_volume_pin: Mapping[str,str] | None = None) -> int:
     if not argv or handshake_timeout_s <= 0 or completion_timeout_s <= 0:
         raise ValueError("argv and positive bounded timeouts are required")
     stop_paths = canonical_stop_paths(coordination_root)
@@ -101,6 +102,12 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
     cleanup_errors = []; native_digest = hashlib.sha256()
     native_capture = None
     native_path = identity_path.parent / "native-output.log"
+    volume_binding = None
+    if native_volume_pin is not None:
+        if native_output_cap_bytes is None:raise ValueError('native volume requires bounded capture')
+        from training_workloads.unified_h1.native_volume import validate
+        volume_binding=validate(dict(native_volume_pin))
+        native_path=Path(volume_binding['target'])/'native-output.log'
 
     def pipe(api):
         pair = api.pipe(); descriptors.extend((fd,api) for fd in pair); return pair
@@ -129,6 +136,17 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
             if (identity_path.parent/'native-output.json').exists():
                 raise DispatchError("native output receipt already exists")
             native_stream = native_path.open('xb',buffering=0)
+            if volume_binding is not None:
+                from training_workloads.unified_h1.native_volume import require_capture
+                require_capture(volume_binding,{'path':str(native_path)})
+                # These variables are set by this dispatcher after filtering,
+                # not inherited from an unverified caller environment.
+                for name,dirname in (('TMPDIR','tmp'),('XDG_CACHE_HOME','xdg_cache'),
+                                     ('CUDA_CACHE_PATH','cuda_cache')):
+                    directory=Path(volume_binding['target'])/dirname
+                    directory.mkdir(mode=0o700,exist_ok=False)
+                    env[name]=str(directory)
+                env['TMP']=env['TEMP']=env['TMPDIR']
             native_r,native_w = pipe(os); os.set_blocking(native_r,False)
             pipe_info = os.fstat(native_w)
             native_capture = dict(schema_version='r6-native-capture/1',
@@ -137,6 +155,7 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
                 boot_id=Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
                 pipe_device=pipe_info.st_dev,pipe_inode=pipe_info.st_ino,
                 cap_bytes=native_output_cap_bytes,path=str(native_path.resolve()))
+            if volume_binding is not None:native_capture['volume']=volume_binding
             # This key is deliberately not inherited by filtered_environment.
             # Only this dispatcher may describe the pipe it actually bounds.
             env['INSTINCTRL_R6_NATIVE_CAPTURE']=json.dumps(native_capture,sort_keys=True)
