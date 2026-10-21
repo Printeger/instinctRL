@@ -1,0 +1,202 @@
+FF.F...F................................................................ [ 90%]
+........                                                                 [100%]
+=================================== FAILURES ===================================
+_____ test_rejected_source_is_reworked_then_reviewed_before_compatibility ______
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d80b6255a60>
+
+    def test_rejected_source_is_reworked_then_reviewed_before_compatibility(case,monkeypatch):
+        b=case;b.builder.with_suffix('.settings').write_text('{"reject_once":true}')
+        compat=Mock(side_effect=RuntimeError('compatibility boundary'))
+        monkeypatch.setattr(controller.compatibility,'prepare',compat)
+        original=copy.deepcopy(b.j.read()['events'][b.key])
+        for _ in range(2):
+            with b.j.writer(),pytest.raises(RuntimeError,match='compatibility boundary'):
+>               controller.run(b.j,b.request,b.store,free_disk_bytes=FREE)
+
+tools/test_r6_engineering_rework.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_controller.py:238: in run
+    engineering_rework.prepare(journal,key,store,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7d80b6255820>
+controller_key = 'eb7b926dacaaad83ce2298821c06e2d10b9dcf1067c1d3d653290c18e019db64'
+store = namespace(root=PosixPath('/tmp/tmpxlnszoue'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7d80b62bcea0>)
+
+    def prepare(journal,controller_key,store,*,executable,free_disk_bytes):
+        profile.guard(journal)
+        state=journal.read();owner=state['events'][controller_key];cursor=owner['cursor']
+        require(owner['identity']['role']=='r6-controller'
+            and owner['request']['store_root']==str(store.root.resolve())
+            and cursor['phase']=='ENGINEERING_REPAIR_REJECTED','CONTROLLER')
+        require(not any(n in cursor for n in ('confirmation','final_batch','final_models','final_collection')),'FROZEN_PHASE')
+        outcome=cursor['engineering_review'];packet=review.rejected(journal,controller_key,outcome)
+        bound=review.read(packet['source']);old_key=bound['source_event_key'];old=state['events'][old_key]
+        require(owner['engineering_source_result']==packet['source']
+            and old['source_result']==packet['source_result'],'SOURCE_BINDING')
+        original=inputs.validate(journal,packet['repair_input'],cursor['parent_key'],store)
+        restored=original['description']['cursor']
+        require(restored['phase']=='REPAIR_AND_REVIEW' and restored['parent_key']==cursor['parent_key']
+            and restored['job_key']==cursor['job_key']
+            and dict(restored,phase='ENGINEERING_REPAIR_REJECTED',engineering_review=outcome)==cursor,'CURSOR')
+        rejection_pin=state['events'][outcome['event_key']]['review_result']
+        name='ENGINEERING_REWORK_INPUT:'+outcome['event_key']
+>       previous=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==name]
+E       KeyError: 'event_id'
+
+tools/r6_engineering_rework.py:36: KeyError
+____________ test_crash_after_registration_reuses_reserved_attempt _____________
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d80b627e210>
+
+    def test_crash_after_registration_reuses_reserved_attempt(case,monkeypatch):
+        b=case;rejected(b);register=rework.source.register
+        def crash(*args,**kwargs):
+            register(*args,**kwargs);raise RuntimeError('after reservation')
+        monkeypatch.setattr(rework.source,'register',crash)
+>       with pytest.raises(RuntimeError,match='after reservation'):prepare(b)
+
+tools/test_r6_engineering_rework.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_engineering_rework.py:24: in prepare
+    return rework.prepare(b.j,b.controller,b.store,executable=file_pin(b.builder),free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7d80b626ae70>
+controller_key = '60bdc0572b601618f1ae4aa771351b335706b8c02c87ef392d9e84d34f53270e'
+store = namespace(root=PosixPath('/tmp/tmp30suylmx'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7d80b62bcc20>)
+
+    def prepare(journal,controller_key,store,*,executable,free_disk_bytes):
+        profile.guard(journal)
+        state=journal.read();owner=state['events'][controller_key];cursor=owner['cursor']
+        require(owner['identity']['role']=='r6-controller'
+            and owner['request']['store_root']==str(store.root.resolve())
+            and cursor['phase']=='ENGINEERING_REPAIR_REJECTED','CONTROLLER')
+        require(not any(n in cursor for n in ('confirmation','final_batch','final_models','final_collection')),'FROZEN_PHASE')
+        outcome=cursor['engineering_review'];packet=review.rejected(journal,controller_key,outcome)
+        bound=review.read(packet['source']);old_key=bound['source_event_key'];old=state['events'][old_key]
+        require(owner['engineering_source_result']==packet['source']
+            and old['source_result']==packet['source_result'],'SOURCE_BINDING')
+        original=inputs.validate(journal,packet['repair_input'],cursor['parent_key'],store)
+        restored=original['description']['cursor']
+        require(restored['phase']=='REPAIR_AND_REVIEW' and restored['parent_key']==cursor['parent_key']
+            and restored['job_key']==cursor['job_key']
+            and dict(restored,phase='ENGINEERING_REPAIR_REJECTED',engineering_review=outcome)==cursor,'CURSOR')
+        rejection_pin=state['events'][outcome['event_key']]['review_result']
+        name='ENGINEERING_REWORK_INPUT:'+outcome['event_key']
+>       previous=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==name]
+E       KeyError: 'event_id'
+
+tools/r6_engineering_rework.py:36: KeyError
+___________ test_invalid_rework_never_reserves_source_worker[dirty] ____________
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+damage = 'dirty'
+
+    @pytest.mark.parametrize('damage',['stop','dirty','frozen','wrong_source','pass'])
+    def test_invalid_rework_never_reserves_source_worker(case,damage):
+        b=case;out=rejected(b)
+        if damage=='stop':(b.j.directory/'STOP').touch()
+        if damage=='dirty':(b.repo/'training_workloads/untracked.py').write_text('dirty')
+        if damage in ('frozen','wrong_source','pass'):
+            with b.j.writer():
+                state=b.j.read();owner=state['events'][b.controller]
+                if damage=='frozen':owner['cursor']['confirmation']={}
+                if damage=='wrong_source':owner['engineering_source_result']=b.report_pin
+                if damage=='pass':owner['cursor']['engineering_review']['status']='ENGINEERING_REPAIR_REVIEW_ACCEPTED'
+                b.j.save(state)
+        before=sum(e['kind']=='model' for e in b.j.read()['events'].values())
+>       with pytest.raises(RecoveryError):prepare(b)
+
+tools/test_r6_engineering_rework.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_engineering_rework.py:24: in prepare
+    return rework.prepare(b.j,b.controller,b.store,executable=file_pin(b.builder),free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7d80b62af380>
+controller_key = '1662f3a930d3811409fa8da82dd494719801c4cfc1408df560cfd7ad5c9eeff9'
+store = namespace(root=PosixPath('/tmp/tmp72qo5de5'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7d80b5cfa5c0>)
+
+    def prepare(journal,controller_key,store,*,executable,free_disk_bytes):
+        profile.guard(journal)
+        state=journal.read();owner=state['events'][controller_key];cursor=owner['cursor']
+        require(owner['identity']['role']=='r6-controller'
+            and owner['request']['store_root']==str(store.root.resolve())
+            and cursor['phase']=='ENGINEERING_REPAIR_REJECTED','CONTROLLER')
+        require(not any(n in cursor for n in ('confirmation','final_batch','final_models','final_collection')),'FROZEN_PHASE')
+        outcome=cursor['engineering_review'];packet=review.rejected(journal,controller_key,outcome)
+        bound=review.read(packet['source']);old_key=bound['source_event_key'];old=state['events'][old_key]
+        require(owner['engineering_source_result']==packet['source']
+            and old['source_result']==packet['source_result'],'SOURCE_BINDING')
+        original=inputs.validate(journal,packet['repair_input'],cursor['parent_key'],store)
+        restored=original['description']['cursor']
+        require(restored['phase']=='REPAIR_AND_REVIEW' and restored['parent_key']==cursor['parent_key']
+            and restored['job_key']==cursor['job_key']
+            and dict(restored,phase='ENGINEERING_REPAIR_REJECTED',engineering_review=outcome)==cursor,'CURSOR')
+        rejection_pin=state['events'][outcome['event_key']]['review_result']
+        name='ENGINEERING_REWORK_INPUT:'+outcome['event_key']
+>       previous=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==name]
+E       KeyError: 'event_id'
+
+tools/r6_engineering_rework.py:36: KeyError
+___ test_renamed_artifacts_without_implementation_change_fail_before_review ____
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_renamed_artifacts_without_implementation_change_fail_before_review(case):
+>       b=case;rejected(b);prepare(b)
+
+tools/test_r6_engineering_rework.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_engineering_rework.py:24: in prepare
+    return rework.prepare(b.j,b.controller,b.store,executable=file_pin(b.builder),free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7d80b6269130>
+controller_key = '45eb89800d065710a60a6800b3efe93dd8a78d2b67b4095263ccc83d30c6800b'
+store = namespace(root=PosixPath('/tmp/tmpn1or_j30'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7d80b5cfaf20>)
+
+    def prepare(journal,controller_key,store,*,executable,free_disk_bytes):
+        profile.guard(journal)
+        state=journal.read();owner=state['events'][controller_key];cursor=owner['cursor']
+        require(owner['identity']['role']=='r6-controller'
+            and owner['request']['store_root']==str(store.root.resolve())
+            and cursor['phase']=='ENGINEERING_REPAIR_REJECTED','CONTROLLER')
+        require(not any(n in cursor for n in ('confirmation','final_batch','final_models','final_collection')),'FROZEN_PHASE')
+        outcome=cursor['engineering_review'];packet=review.rejected(journal,controller_key,outcome)
+        bound=review.read(packet['source']);old_key=bound['source_event_key'];old=state['events'][old_key]
+        require(owner['engineering_source_result']==packet['source']
+            and old['source_result']==packet['source_result'],'SOURCE_BINDING')
+        original=inputs.validate(journal,packet['repair_input'],cursor['parent_key'],store)
+        restored=original['description']['cursor']
+        require(restored['phase']=='REPAIR_AND_REVIEW' and restored['parent_key']==cursor['parent_key']
+            and restored['job_key']==cursor['job_key']
+            and dict(restored,phase='ENGINEERING_REPAIR_REJECTED',engineering_review=outcome)==cursor,'CURSOR')
+        rejection_pin=state['events'][outcome['event_key']]['review_result']
+        name='ENGINEERING_REWORK_INPUT:'+outcome['event_key']
+>       previous=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==name]
+E       KeyError: 'event_id'
+
+tools/r6_engineering_rework.py:36: KeyError
+=========================== short test summary info ============================
+FAILED tools/test_r6_engineering_rework.py::test_rejected_source_is_reworked_then_reviewed_before_compatibility
+FAILED tools/test_r6_engineering_rework.py::test_crash_after_registration_reuses_reserved_attempt
+FAILED tools/test_r6_engineering_rework.py::test_invalid_rework_never_reserves_source_worker[dirty]
+FAILED tools/test_r6_engineering_rework.py::test_renamed_artifacts_without_implementation_change_fail_before_review
+4 failed, 76 passed in 52.58s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-2f44bdaa-82bc-4d0b-9025-e4192a363c31/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-2f44bdaa-82bc-4d0b-9025-e4192a363c31/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-2f44bdaa-82bc-4d0b-9025-e4192a363c31/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-2f44bdaa-82bc-4d0b-9025-e4192a363c31
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-2f44bdaa-82bc-4d0b-9025-e4192a363c31'
+  warnings.warn(
