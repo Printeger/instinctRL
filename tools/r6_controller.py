@@ -38,6 +38,7 @@ from tools import r6_final_sequence as final_sequence
 from tools import r6_delivery_evidence as delivery_evidence
 from tools import r6_video_extraction as video_extraction
 from tools import r6_video_validation as video_validation
+from tools import r6_final_audit_packet as final_audit_packet, r6_final_independent_review as final_audit
 from tools import r6_render_preparation as render_preparation, r6_render_review as render_review
 from tools import r6_render_materialization as render_materialization, r6_run_job as render_runner
 from tools.r6_decision_packet import persist_exact
@@ -46,7 +47,7 @@ from rlflow.store import canonical
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_VISUAL_AUDIT_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_AUDIT_REPAIR_REQUIRED','FINAL_PUBLICATION_REQUIRED'}
 
 
 def require(condition,reason):
@@ -192,6 +193,19 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 outcome=video_validation.handoff(journal,cursor['video_validation_key'],store)
                 require(outcome['status']=='VIDEOS_CPU_VALIDATED_REQUIRES_VISUAL_AUDIT','VIDEO_VALIDATION_STATUS')
                 cursor.update(phase='FINAL_VISUAL_AUDIT_REQUIRED',validated_videos=outcome)
+                save(journal,key,cursor);continue
+            if phase=='FINAL_VISUAL_AUDIT_REQUIRED':
+                outcome=final_audit_packet.prepare(journal,key,store,free_disk_bytes=free)
+                require(outcome['status']=='FINAL_AUDIT_EVIDENCE_READY_NOT_ACCEPTED','FINAL_AUDIT_PACKET_STATUS')
+                pin=journal.read()['events'][outcome['event_key']]['result']
+                require(json.loads(checked(pin).read_text())==outcome,'FINAL_AUDIT_PACKET_PIN')
+                cursor.update(phase='FINAL_INDEPENDENT_AUDIT',final_audit_packet=pin)
+                save(journal,key,cursor);continue
+            if phase=='FINAL_INDEPENDENT_AUDIT':
+                outcome=final_audit.prepare(journal,cursor['final_audit_packet'],store,
+                    executable=initial['review_executable'],free_disk_bytes=free)
+                require(outcome['status'] in ('FINAL_AUDIT_MUST_FIX_REQUIRED','FINAL_AUDIT_ACCEPTED_PENDING_PUBLICATION'),'FINAL_AUDIT_STATUS')
+                cursor.update(phase='FINAL_AUDIT_REPAIR_REQUIRED' if outcome['status']=='FINAL_AUDIT_MUST_FIX_REQUIRED' else 'FINAL_PUBLICATION_REQUIRED',final_independent_audit=outcome)
                 save(journal,key,cursor);continue
             if phase in TERMINAL_BOUNDARIES:
                 save(journal,key,cursor,status=phase)

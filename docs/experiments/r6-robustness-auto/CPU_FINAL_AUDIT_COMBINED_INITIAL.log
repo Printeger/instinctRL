@@ -1,0 +1,349 @@
+FFFFFFFFFFFF............................................................ [ 75%]
+........................                                                 [100%]
+=================================== FAILURES ===================================
+_ test_post_video_packet_preserves_failures_unknown_waits_and_replays[baseline] _
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x774314517e30>, controller='3fcbed5b578788f8ebebc9320bb5eccfedd533da...591925884438cefaa141d8fe94fefe506dcd51f7ca1ddb54ddd431ca'], write=<function delivery.<locals>.write at 0x774314593d80>)
+
+    def test_post_video_packet_preserves_failures_unknown_waits_and_replays(ready):
+>       b=ready;out=run(b);budget=b.j.read()['budget'];assert run(b)==out and b.j.read()['budget']==budget
+
+tools/test_r6_final_audit_packet.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x774314517e30>
+controller_key = '3fcbed5b578788f8ebebc9320bb5eccfedd533dab2e08836810f48e90fb6cc98'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_post_video_packet_preserv0/store'), replay=<function ready.<locals>.<lambda> at 0x774314593ec0>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+_ test_post_video_packet_preserves_failures_unknown_waits_and_replays[confirmation] _
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x7743143efce0>, controller='3cb7ba21ae593ff650d1fbff0e186ecd85946014...074d5824a9d1f5404c037cf9c4a1f02f7c3478ab0909e2de21aff2c8'], write=<function delivery.<locals>.write at 0x77431458d580>)
+
+    def test_post_video_packet_preserves_failures_unknown_waits_and_replays(ready):
+>       b=ready;out=run(b);budget=b.j.read()['budget'];assert run(b)==out and b.j.read()['budget']==budget
+
+tools/test_r6_final_audit_packet.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7743143efce0>
+controller_key = '3cb7ba21ae593ff650d1fbff0e186ecd85946014dcbe9dc3ce2afc727a93c8e6'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_post_video_packet_preserv1/store'), replay=<function ready.<locals>.<lambda> at 0x77431458c540>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+______________ test_packet_rejects_drift_and_stop[baseline-stop] _______________
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x77431413fa40>, controller='07933211352013d73c2585f717ad6557b6339ad0...40fba6740b7004fa53a57b6329e39ffb66d3a6ab95ebc55cafdd394d'], write=<function delivery.<locals>.write at 0x7743145937e0>)
+fault = 'stop'
+
+    @pytest.mark.parametrize('fault',['stop','video_source','video_receipt','artifact','store'])
+    def test_packet_rejects_drift_and_stop(ready,fault):
+>       b=ready;out=run(b);pin=b.j.read()['events'][out['event_key']]['result']
+
+tools/test_r6_final_audit_packet.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x77431413fa40>
+controller_key = '07933211352013d73c2585f717ad6557b6339ad0deb2b8e4a15f9697bca5817e'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_packet_rejects_drift_and_0/store'), replay=<function ready.<locals>.<lambda> at 0x77431517b060>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+__________ test_packet_rejects_drift_and_stop[baseline-video_source] ___________
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x77431413d610>, controller='8ca701a3d95d93489e483344dae82d8ee3e7e0b2...8010611630f5a8f2840a0aaf57d9ca2e37a79af230b3d023f7468115'], write=<function delivery.<locals>.write at 0x77431458e0c0>)
+fault = 'video_source'
+
+    @pytest.mark.parametrize('fault',['stop','video_source','video_receipt','artifact','store'])
+    def test_packet_rejects_drift_and_stop(ready,fault):
+>       b=ready;out=run(b);pin=b.j.read()['events'][out['event_key']]['result']
+
+tools/test_r6_final_audit_packet.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x77431413d610>
+controller_key = '8ca701a3d95d93489e483344dae82d8ee3e7e0b2ea1c2033239ea61e6d43a43c'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_packet_rejects_drift_and_1/store'), replay=<function ready.<locals>.<lambda> at 0x77431458e5c0>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+__________ test_packet_rejects_drift_and_stop[baseline-video_receipt] __________
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x774314276540>, controller='c1caf970b25365968da3d15d6829d13314c991db...f547b80ff07d37ba02d4e5e30850332a148347454123a6b38ffffb96'], write=<function delivery.<locals>.write at 0x77431458e980>)
+fault = 'video_receipt'
+
+    @pytest.mark.parametrize('fault',['stop','video_source','video_receipt','artifact','store'])
+    def test_packet_rejects_drift_and_stop(ready,fault):
+>       b=ready;out=run(b);pin=b.j.read()['events'][out['event_key']]['result']
+
+tools/test_r6_final_audit_packet.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x774314276540>
+controller_key = 'c1caf970b25365968da3d15d6829d13314c991dbb65ccf214b2aa98a6aa1e838'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_packet_rejects_drift_and_2/store'), replay=<function ready.<locals>.<lambda> at 0x77431458dda0>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+____________ test_packet_rejects_drift_and_stop[baseline-artifact] _____________
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x7743142771d0>, controller='4c66d2519cfa4ba2cc6b0776b3cb5011660b04e3...8d2b29160433b83f113220f0f0de07687ce9fafc1906b81b43dad61e'], write=<function delivery.<locals>.write at 0x77431458f380>)
+fault = 'artifact'
+
+    @pytest.mark.parametrize('fault',['stop','video_source','video_receipt','artifact','store'])
+    def test_packet_rejects_drift_and_stop(ready,fault):
+>       b=ready;out=run(b);pin=b.j.read()['events'][out['event_key']]['result']
+
+tools/test_r6_final_audit_packet.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7743142771d0>
+controller_key = '4c66d2519cfa4ba2cc6b0776b3cb5011660b04e3f5b29fe423afd3983dc9adf0'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_packet_rejects_drift_and_3/store'), replay=<function ready.<locals>.<lambda> at 0x77431458f060>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+______________ test_packet_rejects_drift_and_stop[baseline-store] ______________
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x7743141e8710>, controller='a83c958c817f3af6fdebddc496422553017f4d6b...0a97ee7a443a3e487974f473337314144179a94ed1aef8915f8a02cf'], write=<function delivery.<locals>.write at 0x77431458dee0>)
+fault = 'store'
+
+    @pytest.mark.parametrize('fault',['stop','video_source','video_receipt','artifact','store'])
+    def test_packet_rejects_drift_and_stop(ready,fault):
+>       b=ready;out=run(b);pin=b.j.read()['events'][out['event_key']]['result']
+
+tools/test_r6_final_audit_packet.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7743141e8710>
+controller_key = 'a83c958c817f3af6fdebddc496422553017f4d6b47e50af84bb8095c890af0a0'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_packet_rejects_drift_and_4/store'), replay=<function ready.<locals>.<lambda> at 0x77431458fa60>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+____________ test_packet_rejects_drift_and_stop[confirmation-stop] _____________
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x77431407c590>, controller='28b00ed2807c1f5ffacc0ca5c98d25b20ba93ab9...c1d7652cc00e48245b5187b34b4c8f35815204b59614ace0c364c297'], write=<function delivery.<locals>.write at 0x77431458f1a0>)
+fault = 'stop'
+
+    @pytest.mark.parametrize('fault',['stop','video_source','video_receipt','artifact','store'])
+    def test_packet_rejects_drift_and_stop(ready,fault):
+>       b=ready;out=run(b);pin=b.j.read()['events'][out['event_key']]['result']
+
+tools/test_r6_final_audit_packet.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x77431407c590>
+controller_key = '28b00ed2807c1f5ffacc0ca5c98d25b20ba93ab9e18555c6359f6070c4c7c150'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_packet_rejects_drift_and_5/store'), replay=<function ready.<locals>.<lambda> at 0x77431458fd80>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+________ test_packet_rejects_drift_and_stop[confirmation-video_source] _________
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x774314514560>, controller='19b928d06285b15b1c126bd29f01c0f9d2e03cd2...75f0bed7ea7baaba2278da5829ad90c43c3e942e00045514cbf10794'], write=<function delivery.<locals>.write at 0x774314592ac0>)
+fault = 'video_source'
+
+    @pytest.mark.parametrize('fault',['stop','video_source','video_receipt','artifact','store'])
+    def test_packet_rejects_drift_and_stop(ready,fault):
+>       b=ready;out=run(b);pin=b.j.read()['events'][out['event_key']]['result']
+
+tools/test_r6_final_audit_packet.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x774314514560>
+controller_key = '19b928d06285b15b1c126bd29f01c0f9d2e03cd2921a874de4f147aff111f34a'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_packet_rejects_drift_and_6/store'), replay=<function ready.<locals>.<lambda> at 0x7743156319e0>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+________ test_packet_rejects_drift_and_stop[confirmation-video_receipt] ________
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x77431407c7d0>, controller='bfc9dc12d46454684ce0069e46d1af563dfa06aa...7ea7981955158483d970baec9a14f5b51857def7c5e6f59b6ae4dc26'], write=<function delivery.<locals>.write at 0x77431458f600>)
+fault = 'video_receipt'
+
+    @pytest.mark.parametrize('fault',['stop','video_source','video_receipt','artifact','store'])
+    def test_packet_rejects_drift_and_stop(ready,fault):
+>       b=ready;out=run(b);pin=b.j.read()['events'][out['event_key']]['result']
+
+tools/test_r6_final_audit_packet.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x77431407c7d0>
+controller_key = 'bfc9dc12d46454684ce0069e46d1af563dfa06aafeaf6a7f710d02934b995b95'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_packet_rejects_drift_and_7/store'), replay=<function ready.<locals>.<lambda> at 0x77431458f060>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+__________ test_packet_rejects_drift_and_stop[confirmation-artifact] ___________
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x7743141eb620>, controller='b54f757f9c3af1da6dd73e04c245521c4062be78...d95a9eda0439e1a742280f7737e484f837475f492913e8aadeb7c451'], write=<function delivery.<locals>.write at 0x77431458dc60>)
+fault = 'artifact'
+
+    @pytest.mark.parametrize('fault',['stop','video_source','video_receipt','artifact','store'])
+    def test_packet_rejects_drift_and_stop(ready,fault):
+>       b=ready;out=run(b);pin=b.j.read()['events'][out['event_key']]['result']
+
+tools/test_r6_final_audit_packet.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7743141eb620>
+controller_key = 'b54f757f9c3af1da6dd73e04c245521c4062be7848617c97ecc584592fe2316d'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_packet_rejects_drift_and_8/store'), replay=<function ready.<locals>.<lambda> at 0x77431458eac0>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+____________ test_packet_rejects_drift_and_stop[confirmation-store] ____________
+
+ready = namespace(j=<tools.r6_recovery.Journal object at 0x77431444fe30>, controller='ece9692c2750060cc0b950c70068b8163aba04a2...ae8039c1053a5e3234d376681f26646ecc46615ec463ee0ceaa16a42'], write=<function delivery.<locals>.write at 0x77431458d9e0>)
+fault = 'store'
+
+    @pytest.mark.parametrize('fault',['stop','video_source','video_receipt','artifact','store'])
+    def test_packet_rejects_drift_and_stop(ready,fault):
+>       b=ready;out=run(b);pin=b.j.read()['events'][out['event_key']]['result']
+
+tools/test_r6_final_audit_packet.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_audit_packet.py:22: in run
+    with b.j.writer():return m.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x77431444fe30>
+controller_key = 'ece9692c2750060cc0b950c70068b8163aba04a25f2ff9354cd0521e9f4130f7'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-187/test_packet_rejects_drift_and_9/store'), replay=<function ready.<locals>.<lambda> at 0x77431458dbc0>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        description=describe(journal,controller_key,store);state=journal.read()
+        implementation=[file_pin(m.__file__) for m in (profile,delivery,collection,videos)]+[file_pin(__file__)]
+        name='FINAL_AUDIT_EVIDENCE:'+controller_key+':'+sha(description)
+>       prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
+E       KeyError: 'identity'
+
+tools/r6_final_audit_packet.py:82: KeyError
+=========================== short test summary info ============================
+FAILED tools/test_r6_final_audit_packet.py::test_post_video_packet_preserves_failures_unknown_waits_and_replays[baseline]
+FAILED tools/test_r6_final_audit_packet.py::test_post_video_packet_preserves_failures_unknown_waits_and_replays[confirmation]
+FAILED tools/test_r6_final_audit_packet.py::test_packet_rejects_drift_and_stop[baseline-stop]
+FAILED tools/test_r6_final_audit_packet.py::test_packet_rejects_drift_and_stop[baseline-video_source]
+FAILED tools/test_r6_final_audit_packet.py::test_packet_rejects_drift_and_stop[baseline-video_receipt]
+FAILED tools/test_r6_final_audit_packet.py::test_packet_rejects_drift_and_stop[baseline-artifact]
+FAILED tools/test_r6_final_audit_packet.py::test_packet_rejects_drift_and_stop[baseline-store]
+FAILED tools/test_r6_final_audit_packet.py::test_packet_rejects_drift_and_stop[confirmation-stop]
+FAILED tools/test_r6_final_audit_packet.py::test_packet_rejects_drift_and_stop[confirmation-video_source]
+FAILED tools/test_r6_final_audit_packet.py::test_packet_rejects_drift_and_stop[confirmation-video_receipt]
+FAILED tools/test_r6_final_audit_packet.py::test_packet_rejects_drift_and_stop[confirmation-artifact]
+FAILED tools/test_r6_final_audit_packet.py::test_packet_rejects_drift_and_stop[confirmation-store]
+12 failed, 84 passed in 43.33s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d3afddf8-c7dc-4338-b5fd-32810a155c98/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d3afddf8-c7dc-4338-b5fd-32810a155c98/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d3afddf8-c7dc-4338-b5fd-32810a155c98/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d3afddf8-c7dc-4338-b5fd-32810a155c98
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-d3afddf8-c7dc-4338-b5fd-32810a155c98'
+  warnings.warn(

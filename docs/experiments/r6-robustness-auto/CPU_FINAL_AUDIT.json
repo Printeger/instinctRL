@@ -1,0 +1,105 @@
+{
+  "status": "CPU_FINAL_SCIENTIFIC_REQUIREMENTS_VISUAL_REVIEW_PACKET_RECEIPTS_AND_CONTROLLER_ROUTE_PASS_PUBLICATION_REPAIR_PENDING",
+  "base_commit": "4e300df6",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_audit_packet.py",
+      "sha256": "3eaf2583e53fc66997fabe97e2a53216960cae8601513724b8abe3224eff4fb9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_independent_review.py",
+      "sha256": "abd7541f28314894d33be4e51cb8e9242874fce4cf8d118a2de6c31e077dcc6a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "87b67cc8c309e5013f628a449414410c60478c2e002c67c8ef44a468753ec4d2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/validate_r6_videos.py",
+      "sha256": "24b4843e37a1a3984065ebddd700112a2ad5a20ae1dbc0cc10a58983f40c54ce"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_video_validation.py",
+      "sha256": "f04394f9091cc74d013288fd1829b2d95edef1dec272aba4bb9917d2f1547567"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_audit_packet.py",
+      "sha256": "35716452ed19607bce0258bea52bc82117340e1124221d8fe6656f6a95b864da"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_independent_review.py",
+      "sha256": "3174d838bafdcc2ba32f49d8ded6ecbe5969700b78a69fd9e7b71b30e78498e9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "acd0d4f61d22c27acbe78e457b1fe3b57ccedfcfbbcf9d38e5e95a7fb7ddee2a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_video_validation.py",
+      "sha256": "f8e3e0eff34d479c159b2ba69d4317fd4747fd48aebce5acbdef2a698256314e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/final-independent.schema.json",
+      "sha256": "56e8716215b3f41b46eaef41765d5c512cf05013e78b86f07ba9134d5a5f2aab"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_AUDIT_INITIAL.log",
+      "sha256": "f1f2482dae4f61571dc4a131dc38318fa06abcedf83dce0b92241ca821d9e860"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_AUDIT_COMBINED_INITIAL.log",
+      "sha256": "98ce9eea45fac83b6034a0032371c1913e4496cac4eba7e4776f60062243e53d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_AUDIT_PACKET_FIXED.log",
+      "sha256": "01b2fe07bf7110cdc4293cffb6d3ee295b8cfa1bb7c560ab3fc520f3a1fbe3c5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_AUDIT_MEDIA.log",
+      "sha256": "d2f5b1921ed275065c1f3b54047a6ac268bdc19f7ba28e66fb97e0e30f426304"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_AUDIT_FINAL.log",
+      "sha256": "142556774097f083efb0aef4fa02b81edfe8231306db84a69031d3e6b1359b2e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_AUDIT_VISUAL.log",
+      "sha256": "7a77e525975542a75ee7521826ad286710b6563b17e832b345bbacbb7b66d481"
+    }
+  ],
+  "checks": {
+    "initial": 66,
+    "packet_fixed": 12,
+    "media": 20,
+    "final_combined": 100,
+    "visual_frame_selection": 2,
+    "real_journal_guard": "PASS"
+  },
+  "scope": [
+    "Post-video immutable audit packet rechecks exact final collection, original delivery receipt, closed render provenance and CPU video receipt.",
+    "29 explicit contract criteria cover science, actor boundary, accounting, zero-model waiting, lifecycle and deliverables; missing criteria/evidence cannot become PASS.",
+    "Independent receipt uses protected final_review allocation, exact schema and durable model handoff; MUST_FIX is preserved for repair without a second invocation.",
+    "Positive branch must match frozen gates; complete negative is separate from engineering/incomplete status; every native FAILED job needs explicit assessment.",
+    "Actual deterministic video-frame sheets show first/last/minimum-distance/first collision/height violation/reset, with control/state times; each sheet is bound to source MP4.",
+    "CPU video output reservation increased from4MiB to18MiB before any production use, covering bounded16MiB artifacts plus logs/input; total goal caps unchanged.",
+    "Controller routes to final publication or audit-repair boundaries, neither marks scientific completion."
+  ],
+  "boundaries": [
+    "All scientific outcomes and independent decisions in tests are explicit synthetic fixtures/fake CLI; no production independent review occurred.",
+    "20 real CPU video checks and an actual worker used synthetic MP4/AuditLog; no Isaac Sim render or baseline run.",
+    "Viewed synthetic contact sheet confirms frame0/199 and control/state labels; it is not a visual audit of real R6 behavior.",
+    "Platform inactivity remains unproven in current evidence; final acceptance refuses to treat missing wait proof as zero.",
+    "Initial combined12 failures came from test fixture missing event identity; corrected fixture and preserved failed log.",
+    "Historical root-owned pytest quota temporary directories unchanged; cleanup warnings retained."
+  ],
+  "remaining": [
+    "Deterministic final accounting/publication including final review receipt and required report names",
+    "Engineering and audit MUST_FIX repair re-entry",
+    "Combined production prelive review and no-model-cost platform handoff",
+    "Actual baseline, necessary scientific iterations/confirmation/holdout, real video and independent final review"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}

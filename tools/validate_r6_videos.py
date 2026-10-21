@@ -11,7 +11,7 @@ from tools.r6_decision_packet import persist_exact
 from tools.r6_video_trajectory import bounded_json
 from tools import r6_video_presentation as presentation
 
-CAP=2*1024**2
+CAP=16*1024**2
 
 
 def require(ok,reason):
@@ -52,6 +52,33 @@ def viewing_rows(extraction,verified):
         groups.append(dict(block_id=key[0],lane=key[1],evaluation_seed=key[2],videos=members,
             comparison='SAME_CONDITION_AND_RANDOM_REALIZATION' if len(members)>1 else 'SINGLE_REGISTERED_TRAJECTORY'))
     return rows,groups
+
+
+def visual_samples(video_pin, trajectory):
+    """Deterministic actual video frames for independent visual inspection."""
+    import cv2
+    import numpy as np
+    frames=presentation.frames(trajectory)
+    indexes={0,len(frames)-1,min(range(len(frames)),key=lambda i:frames[i]['recorded']['geometry_distance_m'])}
+    for flag in ('collision','height_violation','reset_after_state'):
+        match=next((i for i,f in enumerate(frames) if f['recorded'][flag]),None)
+        if match is not None:indexes.add(match)
+    selected=sorted(indexes);capture=cv2.VideoCapture(str(checked(video_pin)));tiles=[]
+    try:
+        for i in range(selected[-1]+1):
+            ok,frame=capture.read();require(ok,'VISUAL_FRAME_MISSING')
+            if i not in indexes:continue
+            tile=np.zeros((352,480,3),dtype=np.uint8)
+            tile[32:]=cv2.resize(frame,(480,320),interpolation=cv2.INTER_AREA)
+            label=f'frame {i}; control {i/10:.1f}s; state {(i+1)/10:.1f}s'
+            cv2.putText(tile,label,(6,21),cv2.FONT_HERSHEY_SIMPLEX,.45,(255,255,255),1,cv2.LINE_AA)
+            tiles.append(tile)
+    finally:capture.release()
+    if len(tiles)%2:tiles.append(np.zeros_like(tiles[0]))
+    sheet=np.concatenate([np.concatenate(tiles[i:i+2],axis=1) for i in range(0,len(tiles),2)],axis=0)
+    ok,data=cv2.imencode('.jpg',sheet,[cv2.IMWRITE_JPEG_QUALITY,80])
+    require(ok and len(data)<=1024**2,'VISUAL_IMAGE_CAP');checked(video_pin)
+    return data.tobytes(),selected
 
 
 def page(rows,groups,directory):
@@ -98,7 +125,8 @@ def prepare(input_pin,directory):
     require(not directory.is_symlink() and directory.resolve()==directory,'OUTPUT_ALIAS')
     for pin in q.values():
         if isinstance(pin,dict):require(not checked(pin).is_relative_to(directory),'OUTPUT_OVERLAP')
-    if directory.exists():require(set(p.name for p in directory.iterdir())<={'result.json','VIDEO_MANIFEST.json','watch.html','README.txt'},'UNCLAIMED_OUTPUT')
+    expected={'result.json','VIDEO_MANIFEST.json','watch.html','README.txt'}|{f'visual-{i:02d}.jpg' for i in range(14)}
+    if directory.exists():require(set(p.name for p in directory.iterdir())<=expected,'UNCLAIMED_OUTPUT')
     verified=presentation.verify(q['render_manifest'],q['extraction'],renderer_pin=q['renderer'])
     rows,groups=viewing_rows(q['extraction'],verified)
     selection=bounded_json(bounded_json(q['extraction'],256*1024)['selection'],256*1024)
@@ -106,10 +134,19 @@ def prepare(input_pin,directory):
         if not isinstance(data,bytes):data=canonical(data)+b'\n'
         size=sum(p.stat().st_size for p in directory.iterdir() if p.name!=name) if directory.exists() else 0
         require(size+len(data)<=CAP,'OUTPUT_CAP');persist_exact(directory/name,data);return file_pin(directory/name)
+    samples=[]
+    for row,clip in zip(rows,presentation.load(q['extraction'])):
+        data,indexes=visual_samples(row['video'],clip['decoded'])
+        samples.append(dict(index=row['index'],video=row['video'],frames=indexes,
+            image=save(f"visual-{row['index']:02d}.jpg",data)))
+    require(set(p.name for p in directory.iterdir())<=({'result.json','VIDEO_MANIFEST.json','watch.html','README.txt'}|
+        {f"visual-{r['index']:02d}.jpg" for r in rows}),'EXTRA_VISUAL_IMAGES')
     viewer=save('watch.html',page(rows,groups,directory))
     instructions=save('README.txt',('Open watch.html locally with original MP4 paths preserved. Shared frame controls align the same recorded state times; slow decoding pauses progression instead of skipping frames. Separate seeds are not paired realizations. All clips retain failures/resets. Visual pose-to-pixel audit and final scientific review remain required.\n').encode())
     manifest=save('VIDEO_MANIFEST.json',dict(schema_version='r6-video-delivery/1',status='CPU_VALIDATED_REQUIRES_VISUAL_AUDIT',
-        inputs=input_pin,validation=verified,videos=rows,groups=groups,unavailable_categories=selection.get('unavailable_categories',[]),
+        inputs=input_pin,validation=verified,videos=rows,groups=groups,visual_samples=samples,
+        visual_sampling='FIRST_LAST_MINIMUM_DISTANCE_FIRST_COLLISION_HEIGHT_VIOLATION_RESET; samples do not prove all-frame visual fidelity',
+        unavailable_categories=selection.get('unavailable_categories',[]),
         viewer=viewer,instructions=instructions,physics_reintegrated=False,scientific_acceptance=False))
     require(inputs(input_pin)==q,'INPUT_DRIFT')
     result=dict(status='VIDEOS_CPU_VALIDATED_REQUIRES_VISUAL_AUDIT',inputs=input_pin,manifest=manifest,viewer=viewer,

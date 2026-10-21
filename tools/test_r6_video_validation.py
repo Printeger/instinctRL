@@ -37,6 +37,10 @@ def test_cpu_full_decode_and_frozen_identity_and_viewing_manifest(rendered):
     assert m.prepare(pin,out)==result and result['total_frames']==200 and not result['scientific_acceptance']
     value=json.loads(m.checked(result['manifest']).read_text())
     assert value['videos'][0]['motion_pass']is False and value['unavailable_categories']
+    sample=value['visual_samples'][0]
+    assert sample['frames']==[0,199] and sample['video']==value['videos'][0]['video']
+    import cv2
+    assert cv2.imread(str(m.checked(sample['image']))).shape==(352,960,3)
     assert value['groups'][0]['comparison']=='SINGLE_REGISTERED_TRAJECTORY'
     page=m.checked(result['viewer']).read_text();assert 'Promise.all' in page and 'currentTime=t' in page and 'synthetic.mp4' in page
 
@@ -49,7 +53,7 @@ def test_actual_isolated_cpu_validation_program(rendered):
     assert json.loads(result.stdout)['total_frames']==200
 
 
-@pytest.mark.parametrize('fault',['inventory','renderer','scene','overlap','extra','modified_video'])
+@pytest.mark.parametrize('fault',['inventory','renderer','scene','overlap','extra','extra_visual','modified_video'])
 def test_rejects_unbound_or_changed_media(rendered,fault):
     pin,out,save=rendered;q=json.loads(m.checked(pin).read_text())
     if fault=='inventory':
@@ -58,6 +62,7 @@ def test_rejects_unbound_or_changed_media(rendered,fault):
     elif fault=='scene':m.checked(json.loads(m.checked(q['render_manifest']).read_text())['scene_sources'][0]).write_text('drift')
     elif fault=='overlap':out=Path(pin['path']).parent
     elif fault=='extra':out.mkdir();(out/'other').touch()
+    elif fault=='extra_visual':out.mkdir();(out/'visual-13.jpg').touch()
     else:
         v=json.loads(m.checked(q['render_manifest']).read_text());m.checked(v['videos'][0]['video']).write_bytes(b'corrupt')
     pin=save('inputs2.json',q)

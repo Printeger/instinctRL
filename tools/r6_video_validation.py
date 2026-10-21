@@ -26,7 +26,7 @@ from rlflow.store import canonical
 ROOT=Path(__file__).resolve().parents[1]
 PYTHON=Path('/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11')
 LOG_CAP=1024**2
-RESERVATION=4*1024**2
+RESERVATION=18*1024**2
 ROLE='cpu-video-validation'
 SOURCES=('tools/r6_video_validation.py','tools/validate_r6_videos.py','tools/r6_video_presentation.py',
  'tools/r6_video_trajectory.py','tools/r6_postrun.py')
@@ -178,7 +178,14 @@ def verified_receipt(journal,key):
     result=read(r['outputs']['result.json'])
     require(result['status']=='VIDEOS_CPU_VALIDATED_REQUIRES_VISUAL_AUDIT' and result['inputs']==file_pin(journal.directory/'video-validation-inputs'/key/'inputs.json')
         and result['scientific_acceptance']is False and result['dispatch_authorized']is False,'RESULT')
-    require(set(p.name for p in directory.iterdir())=={'result.json','VIDEO_MANIFEST.json','watch.html','README.txt'} and output_size(directory)<=extractor.CAP,'OUTPUT_CAP')
+    expected={'result.json','VIDEO_MANIFEST.json','watch.html','README.txt'}
+    if entry['request']['program']==file_pin(extractor.__file__):
+        manifest=read(result['manifest'])
+        require(len(manifest['visual_samples'])==result['video_count'],'VISUAL_COUNT')
+        for i,sample in enumerate(manifest['visual_samples']):
+            require(sample['index']==i and checked(sample['image'])==directory/f'visual-{i:02d}.jpg','VISUAL_PATH')
+            expected.add(f'visual-{i:02d}.jpg')
+    require(set(p.name for p in directory.iterdir())==expected and output_size(directory)<=extractor.CAP,'OUTPUT_CAP')
     for field,name in (('manifest','VIDEO_MANIFEST.json'),('viewer','watch.html'),('instructions','README.txt')):require(checked(result[field])==directory/name,'ARTIFACT_PATH')
     if entry['request']['program']==file_pin(extractor.__file__):
         require(result['validator']==file_pin(extractor.__file__) and result['presentation']==file_pin(extractor.presentation.__file__),'VALIDATOR')
