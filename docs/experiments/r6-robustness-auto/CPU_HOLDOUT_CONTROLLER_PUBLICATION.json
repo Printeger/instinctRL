@@ -1,0 +1,68 @@
+{
+  "status": "CPU_HOLDOUT_EXACT_GIT_COMMIT_SINGLE_RELEASE_AND_FINAL_BATCH_BINDING_PASS_FINAL_EVALUATION_PENDING",
+  "input_commit": "35cad5d3",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_holdout_publication.py",
+      "sha256": "8b4ae0b09524bbe3df6bd05399760990a79a18fa58e7ea62332154f041bf0052"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "e99e615d46374b62bcc4df34bec93cf2f2afd397c1fa7859c7a0c1ba6d3aa39e"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_holdout_publication.py",
+      "sha256": "98b8445956dba4059f92bcb14633196f4af4c995c35ac5edc901546000821c7a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "b3a5b5163dd6af35e0b3059078407bf843b26ec1ad24f4714ff37721dc9c099e"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_HOLDOUT_PUBLICATION_INITIAL.log",
+      "sha256": "68083646c05c1ed63f7835ed68d559d800a27e267da2cf2c4145897f5be5f7c6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_HOLDOUT_PUBLICATION_FINAL.log",
+      "sha256": "1d416e9f724851c1f6e07aa9b05745c693c67d67fdad6388794a59b3049ad94b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_HOLDOUT_PUBLICATION_RECOVERY.log",
+      "sha256": "9dc52e2031efa796052f064e886aa59192748e1c8894c9b1529d5f718d56f69a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_HOLDOUT_PUBLICATION_CONSUMER.log",
+      "sha256": "cf861173163404d963a0de11203f82de3598068b097939747634dfec679b9111"
+    }
+  ],
+  "verification": {
+    "initial": 54,
+    "combined": 66,
+    "controller_interruption": 1,
+    "final_consumer": 19
+  },
+  "initial_failures": [],
+  "guarantees": [
+    "Controller reserves bounded publication output, generates/reconnects the existing single-use holdout event, and commits only commitment.json on main before releasing entropy.",
+    "Git publication requires the exact pre-intent parent, event-specific commit subject and one-file diff. Recovery after a committed-but-unrecorded operation discovers and verifies that commit without another draw or commit. An unrelated prepublication HEAD change fails closed.",
+    "Unrelated staged/unstaged changes and the private nonce are excluded from the publication commit. STOP after commit prevents release; recovery reuses the original commit and nonce.",
+    "Final batch assignments use all3 distinct realizations for BASELINE_SUFFICIENT and index0 for baseline+all3 trained models. Exact published commitment, release record, nonce derivation, model/seed/index/protocol and source identities are checked by the consumer.",
+    "Controller persists HOLDOUT_PREPARATION across interruptions, does not repeat completed model review, and reaches FINAL_EVALUATION_PREPARATION_REQUIRED without claiming dispatch or scientific acceptance."
+  ],
+  "boundaries": [
+    "Real isolated temporary Git commits, Journal, nonce file and reveal lifecycle; final model provenance and review are the explicit existing holdout-fixture substitutions. No production entropy or commitment was created.",
+    "Publication here means exact local Git commit. No remote push occurs in the publication helper; normal repository push remains part of controller/delivery integration.",
+    "No final evaluation jobs exist yet; batch assignments are frozen input data, not evidence of actual changed environment samples or completed experiments."
+  ],
+  "remaining": [
+    "Final evaluation contracts and frozen execution mode, exact capacity/profiles/issuance, batch execution and analysis",
+    "Actual baseline/development and confirmation or baseline validation experiments",
+    "Confirmation/final-review repair re-entry, delivery/audits/videos, combined independent integration review and platform handoff"
+  ],
+  "goal_complete": false,
+  "historical_report_preservation": "A report-name collision in commit 84831321 was repaired additively: CPU_HOLDOUT_PUBLICATION.json restored byte-for-byte from 35cad5d3, new controller evidence stored separately here."
+}

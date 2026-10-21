@@ -4,7 +4,7 @@
 只提交commitment路径，核验准确父commit/提交标识/单文件diff；已提交未记账崩溃重接同commit，不重抽。
 其他暂存/未暂存修改及私有nonce不入提交；提交后STOP阻止揭晓。三基线随机流/四模型共同流固定。
 消费端核验commitment/release/nonce推导/model/seed/index/protocol；控制器恢复不重复完成的独审。
-54项初检、66项组合、1项控制器恢复、19项最终消费检查通过，无初轮失败。证据CPU_HOLDOUT_PUBLICATION.json。
+54项初检、66项组合、1项控制器恢复、19项最终消费检查通过，无初轮失败。证据CPU_HOLDOUT_CONTROLLER_PUBLICATION.json；历史同名报告已逐字节恢复。
 真实临时Git/熵/Journal，模型证据边界明确fixture；无生产熵、提交或发车，final评价/交付仍待实现。
 159次自动唤醒+30worker=189/256，模型剩67；完整Goal未完成。
 
