@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：第14次独审PASS_CPU_SCOPE，无MUST_FIX；确认实际CPU02多文件/后代
+ENOSPC证据、准确挂载/底层目录保护、双卷完整计账及实际可用空间准入关闭结果目录
+绕过缺口。见 `docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json`。
+receipt/schema/usage与两次空后代扫描核验通过，14次完成、剩余18次，最终4+修复4保护。
+生产布局容量、Kit/CUDA/共享内存兼容性、controller/协议和live准入不在该接受范围；
+capacity=false，3GiB生产预留未改，无R6 live。原管理员挂载阻塞已解除，Goal继续。
+
 2026-10-21：用户恢复Goal后核实CPU-QUOTA-02已由管理员创建，外部挂载阻塞解除。
 准确已登记脚本完成真实16MiB ext4测试：多文件共10MiB后ENOSPC，各非空文件2MiB；
 exec后代和新解释器1MiB追加均ENOSPC，所有原件哈希不变。17MiB全额预留保留，

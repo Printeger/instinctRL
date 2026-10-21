@@ -1,0 +1,76 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "No substantive defect found in the scoped aggregate-quota repair. Exact result-target, mount, root-owned backing and size validation precede fork; inherited Landlock/seccomp confinement and the inaccessible underlying host directory close the native/descendant bypass. Actual CPU02 evidence confirms 10MiB across five 2MiB files, a sixth empty file, and ENOSPC28 for both exec-descendant and fresh-interpreter appends. Mount/backing identity, registered helper hash and preserved original hashes checked. Inventory charges both full backing images plus metadata, hashes in-image originals without double charging, and retains failed-job reservations. Actual available-space admission covers frozen result quotas. Existing 65- and 48-test logs inspected; no tests rerun or files changed. Acceptance is CPU engineering only: capacity=false, production volumes absent, production 3GiB allowance unchanged, and Kit/CUDA/shared-memory compatibility untested. The layout dry run is not capacity evidence. No controller, final-protocol, prelive or scientific approval; FAILED and quota exhaustion are not scientific evidence.",
+  "evidence_pins": [
+    {
+      "path": "training_workloads/unified_h1/result_volume.py",
+      "sha256": "f2497142abc0445e58b18557398944b3209aebe4093e29f9b876648967c51a24"
+    },
+    {
+      "path": "training_workloads/unified_h1/native_volume.py",
+      "sha256": "e1d7093df23a941e58a0776a612a8822b79c6027912b5c11806c7459c2906349"
+    },
+    {
+      "path": "training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "f3316cabd967d3bf82272734f9dde6348fce927ae2fc5fc0df47a3bdb756f135"
+    },
+    {
+      "path": "training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "d390338f51ac3a726b47557951d2a860e158f3298c1b06f88a8a475e68902424"
+    },
+    {
+      "path": "training_workloads/unified_h1/write_boundary.py",
+      "sha256": "115ce3c7ed3cdcca80bc1c142275baee8bd9463b216b02548dcfa91e59756b36"
+    },
+    {
+      "path": "tools/rlflow/rlflow/h1.py",
+      "sha256": "697d69e45105143456f891b48db3fa8bf7805c91c9fb9a1ca455c97f2ee4a825"
+    },
+    {
+      "path": "tools/provision_r6_result_volume.py",
+      "sha256": "221b3db6f38690e01f46868f845ec36b5519030be43474815b3554ff3010c0cd"
+    },
+    {
+      "path": "tools/check_r6_result_volume.py",
+      "sha256": "b304829b32f72994c210e5d615ae33fd50c3b145bbce49faa0de06f1e112e619"
+    },
+    {
+      "path": "tools/r6_job_inventory.py",
+      "sha256": "65f13644593c71c5e3acec73149523d959b8375d2dfb5f05f352de6423c7e477"
+    },
+    {
+      "path": "/var/lib/instinctrl-r6-results/CPU-QUOTA-02/volume.json",
+      "sha256": "c3d6d42de558143e65a1e54c3e103ceba57a0126248cb49226733ac99abab021"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02/verification.json",
+      "sha256": "c1e28d6f0138099c0fb5d37b5b0fc8c09bd9aaff22ff3d5c44f7bf7f2bfeebbe"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02_RECEIPT.json",
+      "sha256": "248ce932c3e709635ea382fb8eb88fcafd720ae610997a745b5e9747a78eb711"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_RESULT_VOLUME_INTEGRATION.json",
+      "sha256": "0f3188aa0f6091ad9600beac917ca88f384ea5e9569a822a6e31b1a2498a5722"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_RESULT_PAYLOAD_ADMISSION.json",
+      "sha256": "4f0d11806e0c76d7ac2fef39d5f6e74a8bf3d6537b57ae1efd0b9cd4cf124552"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_RESULT_VOLUME_INTEGRATION_TESTS_V4.txt",
+      "sha256": "a8eba7abbc20f38510e3fc56bffc4fbcbb96f73c54ebbf3009644bb0d9a4cf0e"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_RESULT_PAYLOAD_ADMISSION_TESTS_V2.txt",
+      "sha256": "d121a4c439aee85b6c6351731ad6c451c96ba19ed7f88207321cd01f2ddef050"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Preserve CPU02 and its 17MiB reservation without reuse. Separately complete production volume provisioning, measured capacity and Kit/CUDA/shared-memory compatibility before exact prelive review. Protect four final and four repair sessions.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 18
+  },
+  "must_fix": []
+}
