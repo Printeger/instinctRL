@@ -87,7 +87,8 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
                   child_before_identity: Callable[[], None] | None = None,
                   before_release: Callable[[], None] | None = None,
                   native_output_cap_bytes: int | None = None,
-                  native_volume_pin: Mapping[str,str] | None = None) -> int:
+                  native_volume_pin: Mapping[str,str] | None = None,
+                  native_workload_output_root: str | None = None) -> int:
     if not argv or handshake_timeout_s <= 0 or completion_timeout_s <= 0:
         raise ValueError("argv and positive bounded timeouts are required")
     stop_paths = canonical_stop_paths(coordination_root)
@@ -103,11 +104,20 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
     native_capture = None
     native_path = identity_path.parent / "native-output.log"
     volume_binding = None
+    write_policy = None
     if native_volume_pin is not None:
         if native_output_cap_bytes is None:raise ValueError('native volume requires bounded capture')
         from training_workloads.unified_h1.native_volume import validate
         volume_binding=validate(dict(native_volume_pin))
         native_path=Path(volume_binding['target'])/'native-output.log'
+        from training_workloads.unified_h1.write_boundary import prepare, enforce
+        roots=[volume_binding['target']]
+        if native_workload_output_root is not None:roots.append(native_workload_output_root)
+        # These are character device endpoints, never writable host directories.
+        # Actual GPU admission/identity checks remain in the existing gate.
+        devices=[p for p in ('/dev/null','/dev/zero','/dev/nvidia0','/dev/nvidiactl',
+                 '/dev/nvidia-uvm','/dev/nvidia-uvm-tools') if Path(p).exists()]
+        write_policy=prepare(roots,devices)
 
     def pipe(api):
         pair = api.pipe(); descriptors.extend((fd,api) for fd in pair); return pair
@@ -174,7 +184,9 @@ def dispatch_held(argv: Sequence[str], *, cwd: Path, identity_path: Path,
                          "session_id":process_api.getsid(0),"parent_pid":process_api.getppid()}
                 process_api.write(identity_w,(json.dumps(child)+"\n").encode()); close(identity_w,process_api)
                 if process_api.read(release_r,1)!=b'1': process_api._exit(126)
-                close(release_r,process_api); process_api.chdir(cwd); process_api.execve(argv[0],list(argv),env)
+                close(release_r,process_api)
+                if write_policy is not None:enforce(write_policy)
+                process_api.chdir(cwd); process_api.execve(argv[0],list(argv),env)
             except BaseException: process_api._exit(126)
         close(identity_w,process_api); close(release_r,process_api)
         if native_w>=0: close(native_w,os)

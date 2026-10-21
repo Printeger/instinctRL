@@ -330,7 +330,8 @@ def start_after_coexistence_gate(
                 '/rtx/shaderDb/shaderCachePath','/rtx/shaderDb/driverShaderCachePath',
                 '/rtx-transient/resourcemanager/localTextureCachePath',
                 '/app/extensions/registryCacheFull','/exts/omni.kit.registry.nucleus/cachePath',
-                '/app/extensions/registryCache','/exts/omni.kit.pipapi/envPath'))
+                '/app/extensions/registryCache','/exts/omni.kit.pipapi/envPath',
+                '/structuredLog/logDirectory'))
         for path in paths:path.mkdir(mode=0o700,exist_ok=False)
         if native_volume_pin is not None:
             destination=Path(native_settings['/app/userConfigPath'])

@@ -67,9 +67,19 @@ def test_store_adapter_uses_validated_authority_not_untrusted_spec_path(monkeypa
     approved={'path':'/approved/volume.json','sha256':'1'*64}
     check=Mock(return_value={'authorization':{'parameters':{'native_volume':approved}}})
     monkeypatch.setattr(h1,'inspect_authority',check)
-    spec={'backend':'real','h1':{'mode':'research-r6-evaluation'},'native_volume':{'path':'/untrusted'}}
-    assert h1.native_dispatch_options(spec)==dict(native_output_cap_bytes=256*1024**2,native_volume_pin=approved)
+    spec={'backend':'real','h1':{'mode':'research-r6-evaluation','attempt':'/exact/attempt'},'native_volume':{'path':'/untrusted'}}
+    assert h1.native_dispatch_options(spec)==dict(native_output_cap_bytes=256*1024**2,native_volume_pin=approved,native_workload_output_root='/exact/attempt/results')
     check.assert_called_once_with(spec)
     check.side_effect=RuntimeError('CPU invalid authority')
     with pytest.raises(RuntimeError,match='invalid authority'):h1.native_dispatch_options(spec)
     assert h1.native_dispatch_options({'backend':'runner_cpu'})=={}
+
+
+def test_dispatch_child_cannot_write_control_or_outside_volume(setup):
+    target,control,run=setup
+    code="from pathlib import Path\n"
+    code+=f"p=Path({str(control/'escape')!r})\n"
+    code+="try:p.write_text('bad')\nexcept PermissionError:print('DENIED')\nelse:raise AssertionError('escaped')"
+    assert run(code)==0
+    assert (target/'native-output.log').read_text()=='DENIED\n'
+    assert not (control/'escape').exists()

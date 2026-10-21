@@ -83,7 +83,9 @@ def native_dispatch_options(spec):
         return {}
     parameters=inspect_authority(spec)['authorization']['parameters']
     result={'native_output_cap_bytes':256*1024**2}
-    if 'native_volume' in parameters:result['native_volume_pin']=parameters['native_volume']
+    if 'native_volume' in parameters:
+        result['native_volume_pin']=parameters['native_volume']
+        result['native_workload_output_root']=str(Path(spec['h1']['attempt'])/'results')
     return result
 
 

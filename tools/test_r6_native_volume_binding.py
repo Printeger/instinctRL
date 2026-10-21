@@ -98,7 +98,7 @@ def test_capture_outside_volume_rejected_before_gpu_gate(wired):
     '/crashreporter/dumpDir','/rtx/shaderDb/shaderCachePath',
     '/rtx/shaderDb/driverShaderCachePath','/rtx-transient/resourcemanager/localTextureCachePath',
     '/app/extensions/registryCacheFull','/exts/omni.kit.registry.nucleus/cachePath',
-    '/app/extensions/registryCache','/exts/omni.kit.pipapi/envPath'])
+    '/app/extensions/registryCache','/exts/omni.kit.pipapi/envPath','/structuredLog/logDirectory'])
 def test_exact_settings_reach_launcher_and_readback_rejects_drift(wired,monkeypatch,setting):
     wired.start()
     assert ' --ext-folder ' in wired.calls[0]['kit_args']
@@ -108,6 +108,21 @@ def test_exact_settings_reach_launcher_and_readback_rejects_drift(wired,monkeypa
     monkeypatch.setattr(resources,'_read_r6_native_settings',lambda keys:dict(requested))
     resources.verify_r6_native_paths(wired.output,{'fixture':True})
     monkeypatch.setattr(resources,'_read_r6_native_settings',lambda keys:{**requested,setting:'/tmp/unbounded'})
+    with pytest.raises(RuntimeError,match='settings differ'):
+        resources.verify_r6_native_paths(wired.output,{'fixture':True})
+
+
+@pytest.mark.parametrize('setting',[
+    '/telemetry/log/file','/telemetry/testLogFile','/telemetry/cloudLogEndpoint'])
+def test_telemetry_files_and_endpoint_are_inside_volume(wired,monkeypatch,setting):
+    from urllib.parse import urlparse
+    wired.start()
+    expected=resources._r6_native_settings(wired.output,{'fixture':True})
+    value=expected[setting]
+    path=Path(urlparse(value).path if setting.endswith('Endpoint') else value)
+    assert path.is_relative_to(wired.target) and path.parent.is_dir()
+    assert '--'+setting+'='+value in wired.calls[0]['kit_args'].split()
+    monkeypatch.setattr(resources,'_read_r6_native_settings',lambda keys:{**expected,setting:'/tmp/escape'})
     with pytest.raises(RuntimeError,match='settings differ'):
         resources.verify_r6_native_paths(wired.output,{'fixture':True})
 

@@ -2,6 +2,13 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：独审两项MUST_FIX已形成CPU修复候选：遥测全部已识别文件端点进入配额卷；
+dispatcher在exec前应用Landlock及seccomp，关闭继承的非标准描述符，限制输入内容/
+元数据修改与卷外写入，后代继承。真实内核反例与集成55测试+3子测试通过，见
+`docs/experiments/r6-robustness-auto/CPU_NATIVE_WRITE_BOUNDARY_REPAIR.json`。
+准确attempt/results作为有独立输出上限的测量结果目录另行允许；没有声称全部raw也限1.5GiB。
+修复仍待独审；Kit/CUDA/共享内存兼容性未实跑，capacity=false、生产3GiB预留不变。
+
 2026-10-21：第12次独审返回MUST_FIX：遥测独立日志路径未纳入配额；子进程仍能向
 卷外绝对路径写入，输入哈希检查不能代替只读写策略。见
 `docs/experiments/r6-robustness-auto/reviews/native-quota-integration-review.json`。

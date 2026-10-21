@@ -1,0 +1,70 @@
+{
+  "status": "CPU_REPAIR_CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+  "addresses_review": "reviews/native-quota-integration-review.json",
+  "source_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/write_boundary.py",
+      "sha256": "29916b4bc79b65abf6876b70cf1b1c85f78e7c20c76eb5eacb320400c528c30c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "4f1440d51eaa5e5bc2145a688709040a69f56424f79bd3c8b23f3835fe17df8e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/native_volume.py",
+      "sha256": "c835224996830f68279eb83c891e0f51f529ac3bf687a9fdef92f01bd5ea7b50"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/resources.py",
+      "sha256": "643ec3f3638e12f0005ca38714c9976fedb46a09f6a1b5667a95c01b578f2ad4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py",
+      "sha256": "d37acb273e863b706a0185534b97018143fe3fadb3ea450129a8f48723dce15b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_write_boundary.py",
+      "sha256": "af116e0b079ce64c9fed8a73dee4b63faa35972e5e9ad87462dba3791710c67a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_volume_dispatch.py",
+      "sha256": "880da140ed56d3591863a4dfe1b2ed567b6c0aacb462532b18fb42ce0e149e05"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_volume_binding.py",
+      "sha256": "3ba5d034c75a15f6a873e2995ce8a1f8854c852402aed41131001e98fe83d6b7"
+    }
+  ],
+  "test_log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_BOUNDARY_INTEGRATION_TESTS_V3.txt",
+    "sha256": "1736c782aa64fe024df0283521de6a565354f279d263a8e2dbb0379bb5f4a4d5"
+  },
+  "tests_passed": 55,
+  "subtests_passed": 3,
+  "actual_kernel_counterexamples": [
+    "outside absolute write",
+    "frozen input content write",
+    "truncate",
+    "chmod",
+    "setxattr",
+    "symlink escape",
+    "hardlink input",
+    "pre-opened descriptor",
+    "exec descendant"
+  ],
+  "implementation": [
+    "Landlock ABI>=3 before exec; read and execute unchanged; exact writable roots and character devices only",
+    "Close inherited nonstandard descriptors before restriction",
+    "Seccomp denies metadata mutations, process injection, namespace escape and io_uring",
+    "Structured telemetry, transmitter, diagnostic log and cloud file endpoint inside native volume"
+  ],
+  "limitations": [
+    "Result directory is separately permitted for bounded workload outputs; this is not a 1.5GiB limit on total measurement/raw output.",
+    "Actual Kit/CUDA startup and device/shared-memory compatibility untested.",
+    "Independent repair review and production volume provisioning still required."
+  ],
+  "capacity_pass": false,
+  "live_starts": 0,
+  "gpu_queries": 0,
+  "additional_model_sessions": 0
+}
