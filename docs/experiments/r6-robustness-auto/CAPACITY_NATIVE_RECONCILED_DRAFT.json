@@ -1,0 +1,247 @@
+{
+  "status": "RECONCILED_CONDITIONAL_DRAFT_PENDING_INDEPENDENT_REVIEW",
+  "capacity_pass": false,
+  "source_commit": "4d53528",
+  "final_components_bytes": {
+    "four_full_evaluations": 80329310208,
+    "three_training_jobs": 11274289152,
+    "snapshots": 2147483648,
+    "videos": 2147483648,
+    "controller_and_reviews": 1073741824,
+    "failed_cleanup_and_delivery_margin": 1073741824
+  },
+  "final_protection_bytes": 98784247808,
+  "development_limit_bytes": 38654705664,
+  "development_components_bytes": {
+    "initial_full_baseline": 20082327552,
+    "one_affected_block_plus_original_evaluation": 3489660928,
+    "one_256_update_training_job": 2684354560,
+    "historical_snapshot_reservation": 2147483648,
+    "new_baseline_snapshot": 2147483648,
+    "controller_and_reviews": 2147483648,
+    "failed_prelaunch_and_repair_margin": 2147483648,
+    "consumed_cpu_volume_and_jit_reservations": 1613824000,
+    "ten_volume_metadata_allowances": 655360
+  },
+  "development_total_bytes": 36460756992,
+  "development_headroom_bytes": 2193948672,
+  "final_time_protection_proposal_seconds": 27000,
+  "total_time_cap_seconds": 43200,
+  "native_bytes_per_job_proposal": 1610612736,
+  "production_native_bytes_per_job_unchanged": 3221225472,
+  "model_output_allowances": {
+    "total_controller_review_bytes": 3221225472,
+    "maximum_model_output_and_metadata_bytes": 2149580800
+  },
+  "reservation_snapshot": [
+    {
+      "key": "1fe62477ac41ab5009c0ea53a827362a3e515017238893381a33c8d7aa1b7462",
+      "identity": {
+        "event_id": "CPU-CONTROL-FIX-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "94f5e60821c0c9454cc10ad7f47452e48e7785c845d40e0b65e12618e2641c85",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "resources": {
+        "automatic_model_sessions": 1
+      },
+      "status": "RECEIPT_RECORDED"
+    },
+    {
+      "key": "47a62879ac080b882642e52de46308af24982962175a41da99cd4172571cea67",
+      "identity": {
+        "event_id": "CPU-SOURCE-NATIVE-FIX-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "3e6ed52234fa563e219a6c44878f8f6e37a56cbc859b03e866a9ddc560f74db9",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      },
+      "status": "RECEIPT_RECORDED"
+    },
+    {
+      "key": "655b94d7271bec2c5e1b6132bebcff0bbb620170f49122caf77595acfd35fe01",
+      "identity": {
+        "event_id": "CPU-PACKAGE-REVIEW-RECOVERY1",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "4d22e0399f11358585149b0aded280e679b8a0d270836d223ec1b2ff734b18e6",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "resources": {
+        "automatic_model_sessions": 1
+      },
+      "status": "RECEIPT_RECORDED"
+    },
+    {
+      "key": "7c46e3635b161dc2a19cb273865f769d54558ec5c734c461e6e2db2c5d8d7b57",
+      "identity": {
+        "event_id": "CPU-PIPELINE-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "d54289b6a3a7546b1e9686928c0a1891e89d90b1a09642553778be2e8f699a40",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      },
+      "status": "RECEIPT_RECORDED"
+    },
+    {
+      "key": "887b900723fa9007b3106427b6dc93cf73df663197b238c8ed611cf47084b11b",
+      "identity": {
+        "event_id": "CPU-CONTROL-COMPONENTS-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "ee9f95db0301d7ebd99baf954d717b546f9c7551d7a05e7bd97d699f807bba04",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "resources": {
+        "automatic_model_sessions": 1
+      },
+      "status": "RECEIPT_RECORDED"
+    },
+    {
+      "key": "ac61a3b5ae4463e18fef5b62e3db53b34cab97f8363be7d0d46f536f8885441d",
+      "identity": {
+        "event_id": "LEGACY-MODEL-RECONCILIATION-FIX-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "14b46b34448c8abf3852f0de95c054c3b3f86e68992ccbb028d404a3751d89c7",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      },
+      "status": "RECEIPT_RECORDED"
+    },
+    {
+      "key": "b2ab5703a89374f4f2c69afdec69c1d2ca441dfa111b3173cd94403edf0959d1",
+      "identity": {
+        "event_id": "NATIVE-VOLUME-CPU01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "5f8251f002ab475f951c0bfacdfa8accb0dc6d55337dbf289267ea6a33fe3094",
+        "job_id": "CPU-QUOTA-01",
+        "role": "native-volume-provision"
+      },
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 1610678272
+      },
+      "status": "CPU_NATIVE_VOLUME_VERIFIED_NOT_REUSABLE"
+    },
+    {
+      "key": "b63b99ca62ed9c5baecf43238e44e4f823da9df1d28c21879eee3ce57d964640",
+      "identity": {
+        "event_id": "CPU-SOURCE-NATIVE-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "c6464cb79be169e46f4ab45b8e015271f1d00431c4422b82c77ce2fd1354cb55",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      },
+      "status": "RECEIPT_RECORDED"
+    },
+    {
+      "key": "b6866fedb83bacf044c94b0f11974b046c33a77ecbad07ba031974ee824dc111",
+      "identity": {
+        "event_id": "CPU-PIPELINE-FIX-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "40bce972dc5b32729037d9462d4c5e9dbf9a4d8374a470957d2f6bc8de7175c6",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      },
+      "status": "RECEIPT_RECORDED"
+    },
+    {
+      "key": "badf0aab50e96ec4ec4a8c2aedc325d7f8e6dc8f09bacefcf79566456584ec75",
+      "identity": {
+        "event_id": "CPU-PACKAGE-REVIEW-001",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "ac5d4ee21bd62ea42de7ec110e9bca48899eae869fc2d9ee709a3ffcf06a8487",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "resources": {
+        "automatic_model_sessions": 1
+      },
+      "status": "RECEIPT_RECORDED"
+    },
+    {
+      "key": "c0e5df7ac159f20d6768d1826a25b82899489bf7bbf68ca09f748676bb07a23b",
+      "identity": {
+        "event_id": "CPU-JIT-NOEXEC-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "6bbf6a03ce33f9735bf18226423bd516703255f5632cf51cda1a20d1bba3a27d",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "cpu-native-jit"
+      },
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 3145728
+      },
+      "status": "CPU_PROBE_PASS"
+    },
+    {
+      "key": "ccc3c84352ee756df0fea28bd9a4ccbd0af6637fa3123415b165217346b6fbe8",
+      "identity": {
+        "event_id": "CPU-FIX-HANDOFF-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "33fa81920c57697318dbb6f79a3b05c3b9dc69b5404d4b1f68361f98f6be3604",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "resources": {
+        "automatic_model_sessions": 1
+      },
+      "status": "RECEIPT_RECORDED"
+    },
+    {
+      "key": "dac0f3d535ca1c68d0764a7bbc34b3bb2921590c46e1f86747785ca3a978395e",
+      "identity": {
+        "event_id": "SOURCE_SNAPSHOT:R6-baseline-source-candidate-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "b317250363086f46942f83ccbc820c57bb8b737c85c63d8876da4514f98d92e3",
+        "job_id": "CPU-SNAPSHOT:R6-baseline-source-candidate-01",
+        "role": "source-snapshot"
+      },
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 2147483648
+      },
+      "status": "CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY"
+    },
+    {
+      "key": "e0df9f2398efe8c5a416d95395c68516e41fb37eee5212e03d24db224aa44890",
+      "identity": {
+        "event_id": "LEGACY-MODEL-RECONCILIATION-REVIEW-01",
+        "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+        "input_sha256": "41bd4b582d30518fd70b79e13ec5c5c0bfd52b222a5c738e2d91d74bbde1a6fd",
+        "job_id": "CPU-NO-LIVE-JOB",
+        "role": "independent-review"
+      },
+      "resources": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      },
+      "status": "RECEIPT_RECORDED"
+    }
+  ],
+  "coverage_changed": false,
+  "ledger_changed": false,
+  "limits": [
+    "Requires complete native-write containment and independent review before lowering any native allowance.",
+    "Production volumes must be provisioned for exact jobs; CPU volume is full and not reusable.",
+    "No Kit/GPU execution or autonomous controller deployed."
+  ]
+}

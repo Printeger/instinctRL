@@ -1,0 +1,26 @@
+Perform one independent read-only CPU engineering review of the R6 native-quota integration. You are not the builder. Do not edit files, spawn agents, install dependencies, import Kit/CUDA, query GPUs, create volumes, submit jobs, or change the operational ledger. Return only the required structured review. This is automatic review session 12 of maximum32; remaining after this session20, including four final-review and four repair sessions protected. Do not ask user for stage approval.
+
+Repository /home/mint/rl_dev/instinctRL-dev main. Read docs/PROJECT_STATUS.md, coordination/ACTIVE_WORKFLOW.json, coordination/protocols/SINGLE_BRANCH_WORKFLOW.md and the active user contract docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md. Historical migration-only limits were superseded by the full goal launch; this review itself remains CPU/read-only.
+
+Scope: changes since29aaed0 concerning administrator-created 1.5GiB fixed ext4 native volumes; exact manifest/mount/backing validation; native console/TMP/XDG/CUDA/Warp redirection; Kit log/crash/shader/texture/registry/persistent-config/pip paths; offline extension inputs; external-volume inventory and nonduplicated billing. Assess whether the proposed reduction from3GiB native allowance to1.5GiB is defensible for all native writes, and identify the minimal concrete remaining changes before the first exact baseline job. Native settings requested/read back and CPU fixtures do not themselves prove full Kit operation. Do not invent live acceptance or demand already-finished scientific results for this engineering scope.
+
+Inspect implementation:
+ tools/provision_r6_native_volume.py, tools/check_r6_native_volume.py
+ training_workloads/unified_h1/native_volume.py, extension_inputs.py, local_dispatch.py, robustness_contract.py, backend.py
+ training_workloads/scale_003/resources.py
+ tools/rlflow/rlflow/h1.py, experiments.py
+ tools/r6_job_inventory.py
+Relevant tests: tools/test_r6_native_volume_{provision,binding,dispatch,inventory}.py, tools/test_r6_extension_inputs.py, tools/test_r6_contract.py, tools/test_r6_native_paths.py.
+
+All following artifacts are under docs/experiments/r6-robustness-auto/:
+ NATIVE_VOLUME_CPU01_VERIFICATION.json, NATIVE_VOLUME_CPU01_EXHAUSTION.json, NATIVE_VOLUME_CPU01_REOPEN.json
+ CPU_NATIVE_VOLUME_INVENTORY_TESTS.json, CPU_NATIVE_VOLUME_DISPATCH_TESTS.json
+ CPU_NATIVE_REGISTRY_TESTS.json, CPU_EXTENSION_INPUTS_VERIFICATION.json
+ CPU_JIT_NOEXEC_01/result.json, CPU_JIT_AND_REMAINING_PATHS.json
+ CPU_PERSISTENT_CONFIG_VERIFICATION.json, EXTENSION_INPUTS_CANDIDATE_02.json
+ CAPACITY_NATIVE_RECONCILED_DRAFT.json, NATIVE_STORAGE_REQUIREMENT_DRAFT.json, CAPACITY_COMPOSED_DRAFT_V5.json
+Prior evidence contains explicitly historical incompleteness; use current implementation and latest v2 manifest. Actual CPU-QUOTA-01 is full and excluded from production. Current provisioning helper changes lost+found to0555 on NEW volumes only; do not modify existing volume. No production volume exists. Current live native allowance remains3GiB and capacity=false. Last CPU tests48+3subtests pass; actual JIT probe uses noexec tmpfs, not ext4 and not CUDA. Extension input tree is12.5GB existing data and was actually hashed twice; do not rerun huge hashes unless needed. No runtime dependency installed or edited.
+
+Read-only targeted tests may use existing /home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python (jsonschema, noTorch) or /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 (Torch, nojsonschema) with PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' PYTHONPATH=.:tools/rlflow:isaaclab-training; avoid CPU volume mutations. Static source inspection is sufficient if existing test coverage is adequate.
+
+Report PASS_CPU_SCOPE only if implementation has no substantive defects within the claimed limited CPU scope; otherwise MUST_FIX. Explicitly distinguish correctness defects from unsatisfied live admission prerequisites. In must_fix list concrete actionable defects with file and relevant evidence, including any missing write-boundary enforcement that makes the proposed capacity reduction unsound. Summary must state whether aggregate native containment is proven and why. No arbitrary extra platform/framework requirements. evidence_pins should include actual reviewed implementation/artifact hashes. changed_files must be []; next_plan should be a concise minimal repair/admission sequence, not a new broad task; remaining_budget.automatic_sessions_remaining=20. Do not grant runtime permission or scientific acceptance.
