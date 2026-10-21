@@ -1,0 +1,41 @@
+{
+  "schema_version": "r6-next-stop-repair/1",
+  "status": "CPU34_PASS_REVIEW_PENDING",
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/next-job-integration-review.json",
+    "sha256": "4f57f43f34b5b72fbd53516b80d62a8e3d9eb13b372d8d8863b41729c57a0968"
+  },
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_next_job.py",
+      "sha256": "a55eb095969d461c43563e3d5760900842f334bbe7ae4eb7903e069ecdb2ffa4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_next_job.py",
+      "sha256": "01397dd3df74f95168555166e64add8624be8b127f72de354be6a0a9111e809f"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-next-stop-initial.txt",
+      "sha256": "b13f751d2de3b3487457c399d3018a87d0f86d85a2eebe77bfbff0ac379e62ce"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-next-stop-recheck.txt",
+      "sha256": "555e779233dfbde47e52d06af3d334398ed9481377985ee771913dd9fca1adf9"
+    }
+  ],
+  "results": [
+    "Initial30pass/4fail: before-start receipt correctly has no child/cleanup; test wrongly required cleanup",
+    "Corrected assertion:34passed"
+  ],
+  "coverage": [
+    "All four workspace STOP locations pinned in registered model request",
+    "Real worker with local fake executable, no model invocation: all four locations before launch and during execution",
+    "During execution owned fake process cleanup verified; before launch no child created"
+  ],
+  "limits": [
+    "No live dispatch, plan builder or controller deployment",
+    "Original MUST_FIX preserved; repair awaits independent review"
+  ]
+}

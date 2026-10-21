@@ -1,0 +1,50 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "Reviewed requested files matching dbddbb3; 26 targeted CPU tests passed. One substantive STOP propagation defect found. Prepared-storage composition remains read-only and does not accept missing manifests. No files edited or live operations performed.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_next_job.py",
+      "sha256": "8a8c67bb43adb850dc6820ddc370cfdbb333c22db07e1215b18d039496cb8067"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_next_job.py",
+      "sha256": "a4178e6c2728579ee10c5541c200aa0b0e4bb0c9c8c26165a63d9bfbcefb8850"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/next-job-review.schema.json",
+      "sha256": "1d724607edea0d0c187b6a2b0393c660220f747c1e7dec0f464c0fcaa988d91d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_model_worker.py",
+      "sha256": "188880d1da73a6142e343500db6bd23b49653b5f15ceb3df1def26c9577aa37f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_check_prepared_storage.py",
+      "sha256": "d5c0498dfd5b842369d4c1aa8a6995c710d94ee665e8b0dcf6229e4e40f4ff55"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_prepared_storage.py",
+      "sha256": "1e615fe9e6e5f0f3fe2178f5c3d2e3587f295ca23860a629e96f2b2ab89464a9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_HANDOFF.json",
+      "sha256": "c91432f8969dbbb044882e82f5276621e1c763511bf3532b3219ee788419902d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_REVIEW_INTERFACE.json",
+      "sha256": "42c81452ff1df733c268b8814b571992a2e1dc821188997aa7dfb4a452c5bd2b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PREPARED_STORAGE_CHECK.json",
+      "sha256": "c2b055749b1aee122a719d4ebb7ee5aef8b30c460e29c54f9fed19b8b7ad67c5"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Propagate all applicable STOP paths into review execution and add targeted regression coverage.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 129
+  },
+  "must_fix": [
+    "tools/r6_next_job.py:170-173 registers only batch/STOP and its parent/STOP. Registration checks workspace STOP paths via r6_postrun.stop_paths, but subsequent model_handoff and r6_model_worker.py:110,115,131 omit ROOT/STOP and ROOT/coordination/{STOP,commander/STOP,executor/STOP}; policy.STOP_PATHS points to the older external coordination directory. Consequently, a workspace STOP appearing after register_review returns does not prevent model launch or interrupt the running review. Read-only path-set inspection confirmed all four paths are absent. Include the full applicable STOP path set in the pinned request or shared execution checks, and verify STOP after registration and during execution without launching a real model."
+  ]
+}

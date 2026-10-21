@@ -187,3 +187,34 @@ def test_failed_review_allows_separately_charged_revised_plan(case):
     second=register_review(b)
     assert first!=second
     assert b.j.read()['events'][first]['request']['prompt']!=b.j.read()['events'][second]['request']['prompt']
+
+
+@pytest.mark.parametrize('relative',['STOP','coordination/STOP','coordination/commander/STOP','coordination/executor/STOP'])
+@pytest.mark.parametrize('phase',['before','during'])
+def test_registered_workspace_stop_reaches_real_worker(case,monkeypatch,relative,phase):
+    import sys
+    from tools import r6_decision, r6_model_worker
+    b=case;root=b.store.root
+    # Redirect workspace to the fixture; never create a production STOP.
+    monkeypatch.setattr(r6_decision,'ROOT',root)
+    monkeypatch.setattr(r6_model_worker,'ROOT',root)
+    target=root/relative;target.parent.mkdir(parents=True,exist_ok=True)
+    started=root/'started'
+    exe=root/'fake-reviewer'
+    exe.write_text('#!'+sys.executable+'\nfrom pathlib import Path\nimport time\n'
+        +'Path('+repr(str(started))+').touch()\n'
+        +'Path('+repr(str(target))+').touch()\ntime.sleep(10)\n')
+    exe.chmod(0o700)
+    with b.j.writer():
+        key=next_job.register_review(b.j,b.parent,b.plan_pin,b.store,
+            executable=file_pin(exe),free_disk_bytes=500*1024**3)
+    request=b.j.read()['events'][key]['request']
+    assert str(target) in request['stop_paths']
+    if phase=='before':target.touch()
+    r6_model_worker.run(b.j.directory,key)
+    receipt=json.loads((b.j.directory/'calls'/key/'receipt.json').read_text())
+    assert ('STOP_BEFORE_MODEL_START' if phase=='before' else 'STOP_DURING_MODEL') in receipt['error']
+    assert started.exists()==(phase=='during')
+    from tools.r6_worker_processes import cleanup_verified
+    if phase=='during':assert cleanup_verified(receipt['cleanup'])
+    else:assert receipt['child_identity'] is None and receipt['cleanup'] is None

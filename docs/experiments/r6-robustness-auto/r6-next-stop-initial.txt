@@ -1,0 +1,172 @@
+.............FFFF.................                                       [100%]
+=================================== FAILURES ===================================
+_______ test_registered_workspace_stop_reaches_real_worker[before-STOP] ________
+
+case = namespace(j=<tools.r6_recovery.Journal object at 0x7db0537bf4a0>, parent='1533786a75e342a1df45f05c50f3e1d404f42880620f...horize=<Mock id='138196268265216'>, parent_check=<Mock id='138196269477632'>, worker_check=<Mock id='138196268339600'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7db0537be450>
+relative = 'STOP', phase = 'before'
+
+    @pytest.mark.parametrize('relative',['STOP','coordination/STOP','coordination/commander/STOP','coordination/executor/STOP'])
+    @pytest.mark.parametrize('phase',['before','during'])
+    def test_registered_workspace_stop_reaches_real_worker(case,monkeypatch,relative,phase):
+        import sys
+        from tools import r6_decision, r6_model_worker
+        b=case;root=b.store.root
+        # Redirect workspace to the fixture; never create a production STOP.
+        monkeypatch.setattr(r6_decision,'ROOT',root)
+        monkeypatch.setattr(r6_model_worker,'ROOT',root)
+        target=root/relative;target.parent.mkdir(parents=True,exist_ok=True)
+        started=root/'started'
+        exe=root/'fake-reviewer'
+        exe.write_text('#!'+sys.executable+'\nfrom pathlib import Path\nimport time\n'
+            +'Path('+repr(str(started))+').touch()\n'
+            +'Path('+repr(str(target))+').touch()\ntime.sleep(10)\n')
+        exe.chmod(0o700)
+        with b.j.writer():
+            key=next_job.register_review(b.j,b.parent,b.plan_pin,b.store,
+                executable=file_pin(exe),free_disk_bytes=500*1024**3)
+        request=b.j.read()['events'][key]['request']
+        assert str(target) in request['stop_paths']
+        if phase=='before':target.touch()
+        r6_model_worker.run(b.j.directory,key)
+        receipt=json.loads((b.j.directory/'calls'/key/'receipt.json').read_text())
+        assert ('STOP_BEFORE_MODEL_START' if phase=='before' else 'STOP_DURING_MODEL') in receipt['error']
+        assert started.exists()==(phase=='during')
+        from tools.r6_worker_processes import cleanup_verified
+>       assert cleanup_verified(receipt['cleanup'])
+E       assert False
+E        +  where False = <function cleanup_verified at 0x7db05391f240>(None)
+
+tools/test_r6_next_job.py:219: AssertionError
+_ test_registered_workspace_stop_reaches_real_worker[before-coordination/STOP] _
+
+case = namespace(j=<tools.r6_recovery.Journal object at 0x7db0537f6930>, parent='1533786a75e342a1df45f05c50f3e1d404f42880620f...horize=<Mock id='138196268572288'>, parent_check=<Mock id='138196268579104'>, worker_check=<Mock id='138196268573296'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7db0537f56d0>
+relative = 'coordination/STOP', phase = 'before'
+
+    @pytest.mark.parametrize('relative',['STOP','coordination/STOP','coordination/commander/STOP','coordination/executor/STOP'])
+    @pytest.mark.parametrize('phase',['before','during'])
+    def test_registered_workspace_stop_reaches_real_worker(case,monkeypatch,relative,phase):
+        import sys
+        from tools import r6_decision, r6_model_worker
+        b=case;root=b.store.root
+        # Redirect workspace to the fixture; never create a production STOP.
+        monkeypatch.setattr(r6_decision,'ROOT',root)
+        monkeypatch.setattr(r6_model_worker,'ROOT',root)
+        target=root/relative;target.parent.mkdir(parents=True,exist_ok=True)
+        started=root/'started'
+        exe=root/'fake-reviewer'
+        exe.write_text('#!'+sys.executable+'\nfrom pathlib import Path\nimport time\n'
+            +'Path('+repr(str(started))+').touch()\n'
+            +'Path('+repr(str(target))+').touch()\ntime.sleep(10)\n')
+        exe.chmod(0o700)
+        with b.j.writer():
+            key=next_job.register_review(b.j,b.parent,b.plan_pin,b.store,
+                executable=file_pin(exe),free_disk_bytes=500*1024**3)
+        request=b.j.read()['events'][key]['request']
+        assert str(target) in request['stop_paths']
+        if phase=='before':target.touch()
+        r6_model_worker.run(b.j.directory,key)
+        receipt=json.loads((b.j.directory/'calls'/key/'receipt.json').read_text())
+        assert ('STOP_BEFORE_MODEL_START' if phase=='before' else 'STOP_DURING_MODEL') in receipt['error']
+        assert started.exists()==(phase=='during')
+        from tools.r6_worker_processes import cleanup_verified
+>       assert cleanup_verified(receipt['cleanup'])
+E       assert False
+E        +  where False = <function cleanup_verified at 0x7db05391f240>(None)
+
+tools/test_r6_next_job.py:219: AssertionError
+_ test_registered_workspace_stop_reaches_real_worker[before-coordination/commander/STOP] _
+
+case = namespace(j=<tools.r6_recovery.Journal object at 0x7db0537be4e0>, parent='1533786a75e342a1df45f05c50f3e1d404f42880620f...horize=<Mock id='138196268575504'>, parent_check=<Mock id='138196268218800'>, worker_check=<Mock id='138196274062224'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7db0537be960>
+relative = 'coordination/commander/STOP', phase = 'before'
+
+    @pytest.mark.parametrize('relative',['STOP','coordination/STOP','coordination/commander/STOP','coordination/executor/STOP'])
+    @pytest.mark.parametrize('phase',['before','during'])
+    def test_registered_workspace_stop_reaches_real_worker(case,monkeypatch,relative,phase):
+        import sys
+        from tools import r6_decision, r6_model_worker
+        b=case;root=b.store.root
+        # Redirect workspace to the fixture; never create a production STOP.
+        monkeypatch.setattr(r6_decision,'ROOT',root)
+        monkeypatch.setattr(r6_model_worker,'ROOT',root)
+        target=root/relative;target.parent.mkdir(parents=True,exist_ok=True)
+        started=root/'started'
+        exe=root/'fake-reviewer'
+        exe.write_text('#!'+sys.executable+'\nfrom pathlib import Path\nimport time\n'
+            +'Path('+repr(str(started))+').touch()\n'
+            +'Path('+repr(str(target))+').touch()\ntime.sleep(10)\n')
+        exe.chmod(0o700)
+        with b.j.writer():
+            key=next_job.register_review(b.j,b.parent,b.plan_pin,b.store,
+                executable=file_pin(exe),free_disk_bytes=500*1024**3)
+        request=b.j.read()['events'][key]['request']
+        assert str(target) in request['stop_paths']
+        if phase=='before':target.touch()
+        r6_model_worker.run(b.j.directory,key)
+        receipt=json.loads((b.j.directory/'calls'/key/'receipt.json').read_text())
+        assert ('STOP_BEFORE_MODEL_START' if phase=='before' else 'STOP_DURING_MODEL') in receipt['error']
+        assert started.exists()==(phase=='during')
+        from tools.r6_worker_processes import cleanup_verified
+>       assert cleanup_verified(receipt['cleanup'])
+E       assert False
+E        +  where False = <function cleanup_verified at 0x7db05391f240>(None)
+
+tools/test_r6_next_job.py:219: AssertionError
+_ test_registered_workspace_stop_reaches_real_worker[before-coordination/executor/STOP] _
+
+case = namespace(j=<tools.r6_recovery.Journal object at 0x7db053896270>, parent='1533786a75e342a1df45f05c50f3e1d404f42880620f...horize=<Mock id='138196269236192'>, parent_check=<Mock id='138196268344880'>, worker_check=<Mock id='138196269225440'>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7db0538962d0>
+relative = 'coordination/executor/STOP', phase = 'before'
+
+    @pytest.mark.parametrize('relative',['STOP','coordination/STOP','coordination/commander/STOP','coordination/executor/STOP'])
+    @pytest.mark.parametrize('phase',['before','during'])
+    def test_registered_workspace_stop_reaches_real_worker(case,monkeypatch,relative,phase):
+        import sys
+        from tools import r6_decision, r6_model_worker
+        b=case;root=b.store.root
+        # Redirect workspace to the fixture; never create a production STOP.
+        monkeypatch.setattr(r6_decision,'ROOT',root)
+        monkeypatch.setattr(r6_model_worker,'ROOT',root)
+        target=root/relative;target.parent.mkdir(parents=True,exist_ok=True)
+        started=root/'started'
+        exe=root/'fake-reviewer'
+        exe.write_text('#!'+sys.executable+'\nfrom pathlib import Path\nimport time\n'
+            +'Path('+repr(str(started))+').touch()\n'
+            +'Path('+repr(str(target))+').touch()\ntime.sleep(10)\n')
+        exe.chmod(0o700)
+        with b.j.writer():
+            key=next_job.register_review(b.j,b.parent,b.plan_pin,b.store,
+                executable=file_pin(exe),free_disk_bytes=500*1024**3)
+        request=b.j.read()['events'][key]['request']
+        assert str(target) in request['stop_paths']
+        if phase=='before':target.touch()
+        r6_model_worker.run(b.j.directory,key)
+        receipt=json.loads((b.j.directory/'calls'/key/'receipt.json').read_text())
+        assert ('STOP_BEFORE_MODEL_START' if phase=='before' else 'STOP_DURING_MODEL') in receipt['error']
+        assert started.exists()==(phase=='during')
+        from tools.r6_worker_processes import cleanup_verified
+>       assert cleanup_verified(receipt['cleanup'])
+E       assert False
+E        +  where False = <function cleanup_verified at 0x7db05391f240>(None)
+
+tools/test_r6_next_job.py:219: AssertionError
+=========================== short test summary info ============================
+FAILED tools/test_r6_next_job.py::test_registered_workspace_stop_reaches_real_worker[before-STOP]
+FAILED tools/test_r6_next_job.py::test_registered_workspace_stop_reaches_real_worker[before-coordination/STOP]
+FAILED tools/test_r6_next_job.py::test_registered_workspace_stop_reaches_real_worker[before-coordination/commander/STOP]
+FAILED tools/test_r6_next_job.py::test_registered_workspace_stop_reaches_real_worker[before-coordination/executor/STOP]
+4 failed, 30 passed in 4.22s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-8250db96-7316-4dc5-8e9b-f6134a3cb26b/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-8250db96-7316-4dc5-8e9b-f6134a3cb26b/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-8250db96-7316-4dc5-8e9b-f6134a3cb26b/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-8250db96-7316-4dc5-8e9b-f6134a3cb26b
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-8250db96-7316-4dc5-8e9b-f6134a3cb26b'
+  warnings.warn(

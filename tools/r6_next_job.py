@@ -170,7 +170,9 @@ def register_review(journal,parent_key,plan_pin,store,*,executable,free_disk_byt
     request=dict(prompt={'path':str(path.resolve()),'sha256':hashlib.sha256(prompt).hexdigest()},
         schema=file_pin(SCHEMA),executable=executable,cwd=str(ROOT),sandbox='read-only',
         timeout_seconds=3600,output_cap_bytes=MODEL_CAP,
-        stop_paths=[str((journal.directory/'STOP').resolve()),str((journal.directory.parent/'STOP').resolve())])
+        stop_paths=[str(p.resolve()) for p in (journal.directory/'STOP',journal.directory.parent/'STOP',
+            ROOT/'STOP',ROOT/'coordination/STOP',ROOT/'coordination/commander/STOP',
+            ROOT/'coordination/executor/STOP')])
     identity=dict(goal_id=state['goal_id'],event_id='NEXT_JOB_REVIEW:'+parent_key+':'+plan_pin['sha256'],
         job_id=state['events'][parent_key]['identity']['job_id'],input_sha256=sha(request),role='next-job-review')
     prior=[e for e in state['events'].values() if e['identity']['role']=='next-job-review'
