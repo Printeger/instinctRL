@@ -113,14 +113,16 @@ def verify_video(video_pin, expected_frames):
     return dict(frames=count, fps=10, resolution=[960, 640], all_frames_decoded=True)
 
 
-def verify(manifest_pin, extraction_pin):
+def verify(manifest_pin, extraction_pin, *, renderer_pin=None):
     manifest = bounded_json(manifest_pin, 1024*1024)
     require(manifest.get('schema_version') == 'r6-video-render/1'
             and manifest.get('status') == 'RENDERED_PENDING_CPU_VALIDATION'
             and manifest.get('extraction') == extraction_pin
             and manifest.get('physics_steps') == 0
             and manifest.get('policy_inference_steps') == 0, 'MANIFEST')
-    require(manifest['renderer'] == file_pin(Path(__file__).with_name('render_r6_isaac_video.py')), 'RENDERER')
+    expected_renderer = renderer_pin or file_pin(Path(__file__).with_name('render_r6_isaac_video.py'))
+    checked(expected_renderer)
+    require(manifest['renderer'] == expected_renderer, 'RENDERER')
     for pin in manifest['scene_sources']:
         checked(pin)
     require(len(manifest['scene_sources']) == 2, 'SCENE_SOURCES')

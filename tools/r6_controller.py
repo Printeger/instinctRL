@@ -37,6 +37,7 @@ from tools import r6_final_plans_review as final_plans_review
 from tools import r6_final_sequence as final_sequence
 from tools import r6_delivery_evidence as delivery_evidence
 from tools import r6_video_extraction as video_extraction
+from tools import r6_video_validation as video_validation
 from tools import r6_render_preparation as render_preparation, r6_render_review as render_review
 from tools import r6_render_materialization as render_materialization, r6_run_job as render_runner
 from tools.r6_decision_packet import persist_exact
@@ -45,7 +46,7 @@ from rlflow.store import canonical
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_VIDEO_VALIDATION_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_VISUAL_AUDIT_REQUIRED'}
 
 
 def require(condition,reason):
@@ -182,6 +183,15 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                     return dict(status=outcome['status'],event_key=key,goal_complete=False)
                 require(outcome['status']=='RENDER_JOB_CLOSED_REQUIRES_VIDEO_VALIDATION','RENDER_RUN_STATUS')
                 cursor.update(phase='FINAL_VIDEO_VALIDATION_REQUIRED',render_job=outcome)
+                save(journal,key,cursor);continue
+            if phase=='FINAL_VIDEO_VALIDATION_REQUIRED':
+                validation_key=video_validation.register(journal,key,store,free_disk_bytes=free)
+                cursor.update(phase='VIDEO_VALIDATION',video_validation_key=validation_key)
+                save(journal,key,cursor);continue
+            if phase=='VIDEO_VALIDATION':
+                outcome=video_validation.handoff(journal,cursor['video_validation_key'],store)
+                require(outcome['status']=='VIDEOS_CPU_VALIDATED_REQUIRES_VISUAL_AUDIT','VIDEO_VALIDATION_STATUS')
+                cursor.update(phase='FINAL_VISUAL_AUDIT_REQUIRED',validated_videos=outcome)
                 save(journal,key,cursor);continue
             if phase in TERMINAL_BOUNDARIES:
                 save(journal,key,cursor,status=phase)

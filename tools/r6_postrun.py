@@ -176,7 +176,9 @@ def cancel_bounded(journal,key,reason,proc=None,*,directory_kind="postrun",statu
     Unknown ownership remains ambiguous and cannot authorize another query.
     """
     state = journal.read(); entry = state['events'][key]
-    if directory_kind not in {'postrun','cpu-analysis'} or status_prefix not in {'POSTRUN','CPU_ANALYSIS'}:
+    allowed = {'postrun':'POSTRUN', 'cpu-analysis':'CPU_ANALYSIS',
+               'cpu-video':'CPU_VIDEO', 'cpu-video-validation':'CPU_VIDEO_VALIDATION'}
+    if directory_kind not in allowed or status_prefix != allowed[directory_kind]:
         raise RecoveryError('CANCEL_DIRECTORY_KIND')
     directory = journal.directory/directory_kind/key
     cancel = entry.get('controller_cancel')

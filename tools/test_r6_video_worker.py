@@ -111,3 +111,19 @@ print(json.dumps(dict(schema_version='r6-video-selection/1',status='VIDEO_SOURCE
     trajectory=json.loads(m.checked(data['trajectories'][0]['trajectory']).read_text())
     assert trajectory['frames'][-1]['reset_after_state'] and not trajectory['physics_reintegrated']
     assert handoff(b)==out
+
+
+def test_stop_cancels_actual_video_extraction_worker(worker):
+    from rlflow.jobs import owns
+    b=worker;register(b,'time.sleep(30)');claim(b)
+    b.proc=subprocess.Popen([sys.executable,'-B','-m','tools.r6_video_extraction',str(b.j.directory),b.key],cwd=m.ROOT,env=m.environment(),start_new_session=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+    deadline=time.time()+5
+    while not calls(b):
+        assert b.proc.poll()is None and time.time()<deadline;time.sleep(.01)
+    (b.j.directory/'STOP').touch()
+    with pytest.raises(RecoveryError):handoff(b)
+    b.proc.wait(timeout=5)
+    event=b.j.read()['events'][b.key]
+    assert event['controller_cancel']['status']=='NO_KNOWN_OWNED_SURVIVORS'
+    assert not any(owns(p) for p in event['controller_cancel']['known'])
+    assert calls(b)==['call']

@@ -1,0 +1,100 @@
+{
+  "status": "CPU_VIDEO_FULL_DECODE_ORIGINAL_BINDING_SHARED_FRAME_VIEWER_AND_CONTROLLER_RECOVERY_PASS_VISUAL_AUDIT_PENDING",
+  "base_commit": "9f1c7c77",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_video_presentation.py",
+      "sha256": "eae4804bcdd021cd1897f27df4aab9f934394d2e26734a28aa7c7639d666ded9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_postrun.py",
+      "sha256": "ac771483081d72e51c713232b92978d0052cd236f1e3ce94b26a2723d2ec07ef"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/validate_r6_videos.py",
+      "sha256": "ed7e5df1e0c0f3439d197d2c7969ec5b44c83b04b4ed19f42757313455f266b4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_video_validation.py",
+      "sha256": "b1aac8038a4d26fbc39e4914d0f99258a1717b450a0b2be27c6b7eab9d0442e6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "0cf8fe5cdf308535510889d2db572b9fa195efbf897f41ba8eef1ab061e9155f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_video_validation.py",
+      "sha256": "9071bf7575634ea6b9ef2f055039cd4b0284f2332f18f16fe9b659662e16a8e6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_video_validation_worker.py",
+      "sha256": "505e41bc0a6799cd56fa1d200d179ceeeb49504df1b442ca1bae0398ba0123ae"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_video_worker.py",
+      "sha256": "ffb65f5937f11d005ead263f5991d591c3c6da274ad4faee585120b6b4fea6c5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "bc8649b7505afe2cd42c774fd663a4fddfab6cdf72b29c9a1390c0cc499cf821"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_VALIDATION_INITIAL.log",
+      "sha256": "4bb3824e818daa418f12b59abb0b872fd240ba34e99b4ba116ca2e191f6b55ca"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_VALIDATION_DECODE.log",
+      "sha256": "7774d5e62d6530019c7802d77c921512ecb4f1fa3b7e3d69d7da76583e52f2ef"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_VALIDATION_WORKER_INITIAL.log",
+      "sha256": "2881fec365493eaacafa07baf8419632b4d83b58111d3ab8c5b0b9cf023644a4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_VALIDATION_WORKER_FINAL.log",
+      "sha256": "88348e4f8c2d865a68c0cadaf49f2c39fff698debc9f33a2b494472696b23ff4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_VALIDATION_BINDING.log",
+      "sha256": "ab9f9564859f95445c43d828fd726d900eb2fb42d9785d16ee0fca606e98d01b"
+    }
+  ],
+  "checks": {
+    "full_decode": 20,
+    "worker_initial": 58,
+    "worker_final": 90,
+    "binding_final": 16,
+    "viewer_script_syntax": "node --check PASS",
+    "real_journal_guard": "PASS"
+  },
+  "fixes": [
+    "Accept the exact frozen renderer pin from reviewed job authority instead of assuming the mutable checkout path.",
+    "Allow only matching cancellation directory/status pairs for CPU video extraction and validation; actual STOP cleanup tested.",
+    "Initial new synthetic fixture omitted selection schema; fixture corrected without weakening production validators."
+  ],
+  "scope": [
+    "Bind media to exact controller render job, materialized spec, closed-job inventory and both original postrun receipts.",
+    "Bounded CPU worker with registered reservation, exact interpreter/source pins, STOP/deadline/log limits, owner cleanup, durable receipt and no ambiguous retries.",
+    "Decode every MP4 frame, match full recorded telemetry and scene identities; preserve native failure evidence and absent outcome categories.",
+    "Emit VIDEO_MANIFEST.json, README.txt and watch.html referencing original media without copying or reencoding.",
+    "Shared frame controls group only same condition/lane/random realization; failures and reset state remain present.",
+    "Controller reconnects validation event and stops at explicit visual audit boundary, not scientific completion."
+  ],
+  "boundaries": [
+    "Synthetic AuditLog and MP4 fixtures are actual CPU-decoded media; no Isaac Sim/GPU render performed.",
+    "Job closure/inventory/provenance mocks in binding tests explicitly isolate new cursor checks; no production Store changes.",
+    "One actual tensor validator ran through registered local worker and cleanup; fake CPU programs cover failure/restart cases.",
+    "Viewer JavaScript syntax checked; interactive browser playback and pose-to-pixel visual audit remain unverified.",
+    "Historical root-owned pytest quota garbage preserved; cleanup warnings are retained."
+  ],
+  "remaining": [
+    "Independent visual audit and final scientific/requirements audit",
+    "Final accounting including final model receipts and engineering/MUST_FIX repair re-entry",
+    "Combined production prelive review and platform no-model-cost handoff",
+    "Actual baseline and all required scientific work"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}

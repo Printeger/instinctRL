@@ -1,0 +1,282 @@
+EEEEEEEE...........                                                      [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_cpu_full_decode_and_frozen_identity_and_viewing_manifest _
+
+trajectory = ([('initial', {'root_state_w': [[0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2..._id': 'reverse', 'env_origin_w_m': [0.0, 0.0, 0.0], ...}, ...], <function trajectory.<locals>.write at 0x7f126ec67740>)
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-181/test_cpu_full_decode_and_froze0')
+
+    @pytest.fixture
+    def rendered(trajectory,tmp_path):
+        def save(name,value):
+            p=tmp_path/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value));return file_pin(p)
+        _,_,write=trajectory;clip=write();dummy=save('dummy.json',{})
+        clip.update(assignment_index=0,checkpoint=dummy,source_spec=dummy,domain='target',motion_pass=False,selection_reasons=['representative_failure'])
+        clip['assignment']['model_role']='baseline'
+        selected=save('selected.json',dict(status='VIDEO_SOURCES_SELECTED_NOT_RENDERED',clips=[clip],fps=10,total_frames=200,physics_reintegrated=False,dispatch_authorized=False,unavailable_categories=[dict(reason='NO_SUCH_OUTCOME')]))
+>       prepare(selected,tmp_path/'extracted');extraction=file_pin(tmp_path/'extracted/result.json')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_video_validation.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+selection_pin = {'path': '/tmp/pytest-of-mint/pytest-181/test_cpu_full_decode_and_froze0/selected.json', 'sha256': '4b2b27ee1e62de7469e20e0d6da8e0afe014ef04873fce1d2d7b90605b263c3f'}
+output = PosixPath('/tmp/pytest-of-mint/pytest-181/test_cpu_full_decode_and_froze0/extracted')
+
+    def prepare(selection_pin,output):
+        selection=json.loads(checked(selection_pin).read_text());output=Path(output)
+        if (selection.get('schema_version')!='r6-video-selection/1' or selection.get('status')!='VIDEO_SOURCES_SELECTED_NOT_RENDERED'
+            or selection.get('fps')!=10 or selection.get('physics_reintegrated')is not False
+            or selection.get('dispatch_authorized')is not False or not 1<=len(selection.get('clips',[]))<=14):
+>           raise RecoveryError('VIDEO_EXTRACTION_SELECTION')
+E           tools.r6_recovery.RecoveryError: VIDEO_EXTRACTION_SELECTION
+
+tools/prepare_r6_video_trajectories.py:22: RecoveryError
+________ ERROR at setup of test_actual_isolated_cpu_validation_program _________
+
+trajectory = ([('initial', {'root_state_w': [[0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2..._id': 'reverse', 'env_origin_w_m': [0.0, 0.0, 0.0], ...}, ...], <function trajectory.<locals>.write at 0x7f126ec67560>)
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-181/test_actual_isolated_cpu_valid0')
+
+    @pytest.fixture
+    def rendered(trajectory,tmp_path):
+        def save(name,value):
+            p=tmp_path/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value));return file_pin(p)
+        _,_,write=trajectory;clip=write();dummy=save('dummy.json',{})
+        clip.update(assignment_index=0,checkpoint=dummy,source_spec=dummy,domain='target',motion_pass=False,selection_reasons=['representative_failure'])
+        clip['assignment']['model_role']='baseline'
+        selected=save('selected.json',dict(status='VIDEO_SOURCES_SELECTED_NOT_RENDERED',clips=[clip],fps=10,total_frames=200,physics_reintegrated=False,dispatch_authorized=False,unavailable_categories=[dict(reason='NO_SUCH_OUTCOME')]))
+>       prepare(selected,tmp_path/'extracted');extraction=file_pin(tmp_path/'extracted/result.json')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_video_validation.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+selection_pin = {'path': '/tmp/pytest-of-mint/pytest-181/test_actual_isolated_cpu_valid0/selected.json', 'sha256': 'db27464c59311fdf03f6b492e25f50d565e02facac68d15127a8c36c9f369fbd'}
+output = PosixPath('/tmp/pytest-of-mint/pytest-181/test_actual_isolated_cpu_valid0/extracted')
+
+    def prepare(selection_pin,output):
+        selection=json.loads(checked(selection_pin).read_text());output=Path(output)
+        if (selection.get('schema_version')!='r6-video-selection/1' or selection.get('status')!='VIDEO_SOURCES_SELECTED_NOT_RENDERED'
+            or selection.get('fps')!=10 or selection.get('physics_reintegrated')is not False
+            or selection.get('dispatch_authorized')is not False or not 1<=len(selection.get('clips',[]))<=14):
+>           raise RecoveryError('VIDEO_EXTRACTION_SELECTION')
+E           tools.r6_recovery.RecoveryError: VIDEO_EXTRACTION_SELECTION
+
+tools/prepare_r6_video_trajectories.py:22: RecoveryError
+______ ERROR at setup of test_rejects_unbound_or_changed_media[inventory] ______
+
+trajectory = ([('initial', {'root_state_w': [[0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2..._id': 'reverse', 'env_origin_w_m': [0.0, 0.0, 0.0], ...}, ...], <function trajectory.<locals>.write at 0x7f126ec32660>)
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change0')
+
+    @pytest.fixture
+    def rendered(trajectory,tmp_path):
+        def save(name,value):
+            p=tmp_path/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value));return file_pin(p)
+        _,_,write=trajectory;clip=write();dummy=save('dummy.json',{})
+        clip.update(assignment_index=0,checkpoint=dummy,source_spec=dummy,domain='target',motion_pass=False,selection_reasons=['representative_failure'])
+        clip['assignment']['model_role']='baseline'
+        selected=save('selected.json',dict(status='VIDEO_SOURCES_SELECTED_NOT_RENDERED',clips=[clip],fps=10,total_frames=200,physics_reintegrated=False,dispatch_authorized=False,unavailable_categories=[dict(reason='NO_SUCH_OUTCOME')]))
+>       prepare(selected,tmp_path/'extracted');extraction=file_pin(tmp_path/'extracted/result.json')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_video_validation.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+selection_pin = {'path': '/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change0/selected.json', 'sha256': '5ee24075094b858e254711224756421b3e66029047cb44a71283f1ce272be947'}
+output = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change0/extracted')
+
+    def prepare(selection_pin,output):
+        selection=json.loads(checked(selection_pin).read_text());output=Path(output)
+        if (selection.get('schema_version')!='r6-video-selection/1' or selection.get('status')!='VIDEO_SOURCES_SELECTED_NOT_RENDERED'
+            or selection.get('fps')!=10 or selection.get('physics_reintegrated')is not False
+            or selection.get('dispatch_authorized')is not False or not 1<=len(selection.get('clips',[]))<=14):
+>           raise RecoveryError('VIDEO_EXTRACTION_SELECTION')
+E           tools.r6_recovery.RecoveryError: VIDEO_EXTRACTION_SELECTION
+
+tools/prepare_r6_video_trajectories.py:22: RecoveryError
+______ ERROR at setup of test_rejects_unbound_or_changed_media[renderer] _______
+
+trajectory = ([('initial', {'root_state_w': [[0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2..._id': 'reverse', 'env_origin_w_m': [0.0, 0.0, 0.0], ...}, ...], <function trajectory.<locals>.write at 0x7f126eee5120>)
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change1')
+
+    @pytest.fixture
+    def rendered(trajectory,tmp_path):
+        def save(name,value):
+            p=tmp_path/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value));return file_pin(p)
+        _,_,write=trajectory;clip=write();dummy=save('dummy.json',{})
+        clip.update(assignment_index=0,checkpoint=dummy,source_spec=dummy,domain='target',motion_pass=False,selection_reasons=['representative_failure'])
+        clip['assignment']['model_role']='baseline'
+        selected=save('selected.json',dict(status='VIDEO_SOURCES_SELECTED_NOT_RENDERED',clips=[clip],fps=10,total_frames=200,physics_reintegrated=False,dispatch_authorized=False,unavailable_categories=[dict(reason='NO_SUCH_OUTCOME')]))
+>       prepare(selected,tmp_path/'extracted');extraction=file_pin(tmp_path/'extracted/result.json')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_video_validation.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+selection_pin = {'path': '/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change1/selected.json', 'sha256': '863271a35c7aaee9d5d246a43af3657fb0e21588d32979cc414dfb07bb842571'}
+output = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change1/extracted')
+
+    def prepare(selection_pin,output):
+        selection=json.loads(checked(selection_pin).read_text());output=Path(output)
+        if (selection.get('schema_version')!='r6-video-selection/1' or selection.get('status')!='VIDEO_SOURCES_SELECTED_NOT_RENDERED'
+            or selection.get('fps')!=10 or selection.get('physics_reintegrated')is not False
+            or selection.get('dispatch_authorized')is not False or not 1<=len(selection.get('clips',[]))<=14):
+>           raise RecoveryError('VIDEO_EXTRACTION_SELECTION')
+E           tools.r6_recovery.RecoveryError: VIDEO_EXTRACTION_SELECTION
+
+tools/prepare_r6_video_trajectories.py:22: RecoveryError
+________ ERROR at setup of test_rejects_unbound_or_changed_media[scene] ________
+
+trajectory = ([('initial', {'root_state_w': [[0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2..._id': 'reverse', 'env_origin_w_m': [0.0, 0.0, 0.0], ...}, ...], <function trajectory.<locals>.write at 0x7f126ec851c0>)
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change2')
+
+    @pytest.fixture
+    def rendered(trajectory,tmp_path):
+        def save(name,value):
+            p=tmp_path/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value));return file_pin(p)
+        _,_,write=trajectory;clip=write();dummy=save('dummy.json',{})
+        clip.update(assignment_index=0,checkpoint=dummy,source_spec=dummy,domain='target',motion_pass=False,selection_reasons=['representative_failure'])
+        clip['assignment']['model_role']='baseline'
+        selected=save('selected.json',dict(status='VIDEO_SOURCES_SELECTED_NOT_RENDERED',clips=[clip],fps=10,total_frames=200,physics_reintegrated=False,dispatch_authorized=False,unavailable_categories=[dict(reason='NO_SUCH_OUTCOME')]))
+>       prepare(selected,tmp_path/'extracted');extraction=file_pin(tmp_path/'extracted/result.json')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_video_validation.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+selection_pin = {'path': '/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change2/selected.json', 'sha256': 'bf504f9670359a75793f28658843af92e2eab0f2974b6c45c6ed08be6986bf61'}
+output = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change2/extracted')
+
+    def prepare(selection_pin,output):
+        selection=json.loads(checked(selection_pin).read_text());output=Path(output)
+        if (selection.get('schema_version')!='r6-video-selection/1' or selection.get('status')!='VIDEO_SOURCES_SELECTED_NOT_RENDERED'
+            or selection.get('fps')!=10 or selection.get('physics_reintegrated')is not False
+            or selection.get('dispatch_authorized')is not False or not 1<=len(selection.get('clips',[]))<=14):
+>           raise RecoveryError('VIDEO_EXTRACTION_SELECTION')
+E           tools.r6_recovery.RecoveryError: VIDEO_EXTRACTION_SELECTION
+
+tools/prepare_r6_video_trajectories.py:22: RecoveryError
+_______ ERROR at setup of test_rejects_unbound_or_changed_media[overlap] _______
+
+trajectory = ([('initial', {'root_state_w': [[0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2..._id': 'reverse', 'env_origin_w_m': [0.0, 0.0, 0.0], ...}, ...], <function trajectory.<locals>.write at 0x7f126ec858a0>)
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change3')
+
+    @pytest.fixture
+    def rendered(trajectory,tmp_path):
+        def save(name,value):
+            p=tmp_path/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value));return file_pin(p)
+        _,_,write=trajectory;clip=write();dummy=save('dummy.json',{})
+        clip.update(assignment_index=0,checkpoint=dummy,source_spec=dummy,domain='target',motion_pass=False,selection_reasons=['representative_failure'])
+        clip['assignment']['model_role']='baseline'
+        selected=save('selected.json',dict(status='VIDEO_SOURCES_SELECTED_NOT_RENDERED',clips=[clip],fps=10,total_frames=200,physics_reintegrated=False,dispatch_authorized=False,unavailable_categories=[dict(reason='NO_SUCH_OUTCOME')]))
+>       prepare(selected,tmp_path/'extracted');extraction=file_pin(tmp_path/'extracted/result.json')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_video_validation.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+selection_pin = {'path': '/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change3/selected.json', 'sha256': '65b9888b1c12a0e25bee673e7b40415c2c08890122795e7d6d795657d3a14607'}
+output = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change3/extracted')
+
+    def prepare(selection_pin,output):
+        selection=json.loads(checked(selection_pin).read_text());output=Path(output)
+        if (selection.get('schema_version')!='r6-video-selection/1' or selection.get('status')!='VIDEO_SOURCES_SELECTED_NOT_RENDERED'
+            or selection.get('fps')!=10 or selection.get('physics_reintegrated')is not False
+            or selection.get('dispatch_authorized')is not False or not 1<=len(selection.get('clips',[]))<=14):
+>           raise RecoveryError('VIDEO_EXTRACTION_SELECTION')
+E           tools.r6_recovery.RecoveryError: VIDEO_EXTRACTION_SELECTION
+
+tools/prepare_r6_video_trajectories.py:22: RecoveryError
+________ ERROR at setup of test_rejects_unbound_or_changed_media[extra] ________
+
+trajectory = ([('initial', {'root_state_w': [[0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2..._id': 'reverse', 'env_origin_w_m': [0.0, 0.0, 0.0], ...}, ...], <function trajectory.<locals>.write at 0x7f126ec86020>)
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change4')
+
+    @pytest.fixture
+    def rendered(trajectory,tmp_path):
+        def save(name,value):
+            p=tmp_path/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value));return file_pin(p)
+        _,_,write=trajectory;clip=write();dummy=save('dummy.json',{})
+        clip.update(assignment_index=0,checkpoint=dummy,source_spec=dummy,domain='target',motion_pass=False,selection_reasons=['representative_failure'])
+        clip['assignment']['model_role']='baseline'
+        selected=save('selected.json',dict(status='VIDEO_SOURCES_SELECTED_NOT_RENDERED',clips=[clip],fps=10,total_frames=200,physics_reintegrated=False,dispatch_authorized=False,unavailable_categories=[dict(reason='NO_SUCH_OUTCOME')]))
+>       prepare(selected,tmp_path/'extracted');extraction=file_pin(tmp_path/'extracted/result.json')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_video_validation.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+selection_pin = {'path': '/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change4/selected.json', 'sha256': '5f180742e9d6d7712d402eb761c1466054c14183fbf168833b5a0d0b0698e22f'}
+output = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change4/extracted')
+
+    def prepare(selection_pin,output):
+        selection=json.loads(checked(selection_pin).read_text());output=Path(output)
+        if (selection.get('schema_version')!='r6-video-selection/1' or selection.get('status')!='VIDEO_SOURCES_SELECTED_NOT_RENDERED'
+            or selection.get('fps')!=10 or selection.get('physics_reintegrated')is not False
+            or selection.get('dispatch_authorized')is not False or not 1<=len(selection.get('clips',[]))<=14):
+>           raise RecoveryError('VIDEO_EXTRACTION_SELECTION')
+E           tools.r6_recovery.RecoveryError: VIDEO_EXTRACTION_SELECTION
+
+tools/prepare_r6_video_trajectories.py:22: RecoveryError
+___ ERROR at setup of test_rejects_unbound_or_changed_media[modified_video] ____
+
+trajectory = ([('initial', {'root_state_w': [[0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2.0, 1.0, 0.0, 0.0, ...], [0.0, 0.0, 2..._id': 'reverse', 'env_origin_w_m': [0.0, 0.0, 0.0], ...}, ...], <function trajectory.<locals>.write at 0x7f126ec86660>)
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change5')
+
+    @pytest.fixture
+    def rendered(trajectory,tmp_path):
+        def save(name,value):
+            p=tmp_path/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value));return file_pin(p)
+        _,_,write=trajectory;clip=write();dummy=save('dummy.json',{})
+        clip.update(assignment_index=0,checkpoint=dummy,source_spec=dummy,domain='target',motion_pass=False,selection_reasons=['representative_failure'])
+        clip['assignment']['model_role']='baseline'
+        selected=save('selected.json',dict(status='VIDEO_SOURCES_SELECTED_NOT_RENDERED',clips=[clip],fps=10,total_frames=200,physics_reintegrated=False,dispatch_authorized=False,unavailable_categories=[dict(reason='NO_SUCH_OUTCOME')]))
+>       prepare(selected,tmp_path/'extracted');extraction=file_pin(tmp_path/'extracted/result.json')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/test_r6_video_validation.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+selection_pin = {'path': '/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change5/selected.json', 'sha256': '078294c5541307450caa7b3c4aa66f12c2a50e4b8fcb251eff5ca45b37a627c7'}
+output = PosixPath('/tmp/pytest-of-mint/pytest-181/test_rejects_unbound_or_change5/extracted')
+
+    def prepare(selection_pin,output):
+        selection=json.loads(checked(selection_pin).read_text());output=Path(output)
+        if (selection.get('schema_version')!='r6-video-selection/1' or selection.get('status')!='VIDEO_SOURCES_SELECTED_NOT_RENDERED'
+            or selection.get('fps')!=10 or selection.get('physics_reintegrated')is not False
+            or selection.get('dispatch_authorized')is not False or not 1<=len(selection.get('clips',[]))<=14):
+>           raise RecoveryError('VIDEO_EXTRACTION_SELECTION')
+E           tools.r6_recovery.RecoveryError: VIDEO_EXTRACTION_SELECTION
+
+tools/prepare_r6_video_trajectories.py:22: RecoveryError
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-59c3dd3a-ad31-4ea6-a5a2-d6a7e273b91d/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-59c3dd3a-ad31-4ea6-a5a2-d6a7e273b91d/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-59c3dd3a-ad31-4ea6-a5a2-d6a7e273b91d/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-59c3dd3a-ad31-4ea6-a5a2-d6a7e273b91d
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-59c3dd3a-ad31-4ea6-a5a2-d6a7e273b91d'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tools/test_r6_video_validation.py::test_cpu_full_decode_and_frozen_identity_and_viewing_manifest
+ERROR tools/test_r6_video_validation.py::test_actual_isolated_cpu_validation_program
+ERROR tools/test_r6_video_validation.py::test_rejects_unbound_or_changed_media[inventory]
+ERROR tools/test_r6_video_validation.py::test_rejects_unbound_or_changed_media[renderer]
+ERROR tools/test_r6_video_validation.py::test_rejects_unbound_or_changed_media[scene]
+ERROR tools/test_r6_video_validation.py::test_rejects_unbound_or_changed_media[overlap]
+ERROR tools/test_r6_video_validation.py::test_rejects_unbound_or_changed_media[extra]
+ERROR tools/test_r6_video_validation.py::test_rejects_unbound_or_changed_media[modified_video]
+11 passed, 4 warnings, 8 errors in 22.27s
