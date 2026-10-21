@@ -21,7 +21,7 @@ def run_gate(output_root,*,mode,attempt_id,authorization_sha256,resource_pins,st
     this gate also passes its remaining deadline and STOP guard into each query.
     The outer live watchdog remains responsible for a frozen/stalled process.
     """
-    if mode!='research-r6-evaluation':raise PermissionError('R6 prelaunch mode')
+    if mode not in ('research-r6-evaluation','research-r6-training'):raise PermissionError('R6 prelaunch mode')
     executable=Path(resource_pins['nvidia_smi_path'])
     if executable.is_symlink() or sha256_file(executable)!=resource_pins['nvidia_smi_sha256']:
         raise PermissionError('R6 prelaunch executable changed')
@@ -65,7 +65,10 @@ def run_gate(output_root,*,mode,attempt_id,authorization_sha256,resource_pins,st
 
 def selected(authorization,resource_pins):
     from functools import partial
-    from .robustness_contract import validate_parameters
+    if authorization['mode']=='research-r6-training':
+        from .robustness_training_contract import validate_parameters
+    else:
+        from .robustness_contract import validate_parameters
     p=validate_parameters(authorization['mode'],authorization['parameters'])
     base=Path(p['master_authority']['path']).parent
     root=base.parents[2]

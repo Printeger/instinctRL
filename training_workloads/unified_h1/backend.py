@@ -374,8 +374,11 @@ class UnifiedH1LiveBackend:
     def train_r6(self):
         """Prospective exact R6 entry; dispatch is separately registered."""
         from .robustness_training_method import restore_and_bind
-        plan=self.authorization['parameters']['r6_training_plan']
-        loaded=restore_and_bind(self,plan=plan,execution_identity=load_config()['resolved_identity'])
+        from .robustness_training_contract import validate_parameters,validate_compatibility
+        parameters=validate_parameters(self.authorization['mode'],self.authorization['parameters'])
+        plan=parameters['r6_training_plan'];config=load_config()
+        validate_compatibility(parameters['checkpoint_compatibility'],plan,config)
+        loaded=restore_and_bind(self,plan=plan,execution_identity=config['resolved_identity'])
         return self.run_loaded_r6_training(plan=plan,**loaded,
             expected_mass_kg=self.authorization['parameters']['r6_expected_mass_kg'])
 
@@ -880,7 +883,7 @@ def create_live_backend(*, authorization: Mapping[str, Any], attempt: Path,
         native_volume_pin=authorization.get('parameters',{}).get('native_volume'),
         extension_inputs_pin=authorization.get('parameters',{}).get('extension_inputs'))
     if resources is not None: resources.update(launcher=launcher, app=app)
-    if authorization['mode']=='research-r6-evaluation':
+    if authorization['mode'] in ('research-r6-evaluation','research-r6-training'):
         # Register the application first so a readback failure uses the existing
         # bounded lifecycle cleanup rather than losing the constructed resource.
         from training_workloads.scale_003.resources import verify_r6_native_paths

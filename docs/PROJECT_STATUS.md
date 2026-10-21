@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：R6训练阶段契约与正式入口接通：独立配置schema、准确card/plan预算、
+训练容量独审与源码/方法差异独审分别绑定；baseline许可不能代用。原actor/runtime/评分器边界保留。
+正式CLI/authorization/backend及native双卷、resource窗口/STOP路径支持训练模式；
+88项CPU组合+56子检查通过，控制解释器47项通过；首轮Torch测试误用控制解释器的失败保留并纠正。
+证据CPU_TRAINING_CONTRACT.json；卷/冻结配置边界使用明确替身，无生产审核或GPU。
+controller训练作业发行/登记/submit与分析仍未接线，未部署/完整Goal未完成，待组合独审。
+137次自动唤醒+30worker=167，剩89。
+
 2026-10-22：训练方法完整schema、准确checkpoint恢复→方法应用→运行读回已接入backend。
 保持原严格serializer；模型/Adam矩/计数不变，学习率变更与原/新PPO分别记录；
 奖励/ICS/辅助损失钩子漂移在执行前拒绝，加载失败恢复RNG且禁止复用该backend。

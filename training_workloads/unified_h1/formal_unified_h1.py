@@ -30,7 +30,7 @@ def main(argv=None) -> int:
     parser.add_argument("--handoff", type=Path)
     parser.add_argument("--authorization", type=Path)
     parser.add_argument("--attempt", type=Path)
-    parser.add_argument("--mode", choices=("research-r6-evaluation", "main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic", "research-training", "research-evaluation", "research-transition", "research-formal-training", "research-formal-evaluation"))
+    parser.add_argument("--mode", choices=("research-r6-training", "research-r6-evaluation", "main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic", "research-training", "research-evaluation", "research-transition", "research-formal-training", "research-formal-evaluation"))
     args = parser.parse_args(argv)
     if args.validate_only:
         print(validate_only()); return 0

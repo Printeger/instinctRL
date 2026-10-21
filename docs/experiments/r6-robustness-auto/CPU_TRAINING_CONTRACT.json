@@ -1,0 +1,86 @@
+{
+  "status": "CPU_TRAINING_CONTRACT_FORMAL_ENTRY_PASS_CONTROL_ISSUANCE_PENDING",
+  "input_commit": "2be152d1",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_contract.py",
+      "sha256": "5deb6ac59ccb59490c3aa1b3bad1662ef46503fec4df159e5f8c397e6e85905d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/authorization.py",
+      "sha256": "0c9763763afbf3004868fa6b0ceaef44b8e421795d537f24f5e5fa3ff98934dd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "c65735c9b61c74473167391d2f92f3f55bc08025c704a54cc014baccf05d6436"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "f479de5f5ce9e822924ba13c8cf263e772b670a9597ca611e1b7ba4430b1a488"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/formal_unified_h1.py",
+      "sha256": "0a4d48a00c163ca1830dd3138837d7d41c98aeb292a7e482d96808a17df1836d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/live_adapter.py",
+      "sha256": "3a38ad835c2a92c919e1ccb3bf8364542d27422b45b94f4e0b7588eef60cd60f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/research_contract.py",
+      "sha256": "e2a027975b71c9453a73cdc60b2d2b36b499b83dcabfa2de8f64a257094606f7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "27c9a71e48a0673fdda9e2b8236e407ded4f532d0d50843cbe49c78a8f66d249"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_prelaunch.py",
+      "sha256": "f00930df9e9cc4af274013dc6800acd47baf61ffd394c5daa12702fbdf1b9c99"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/resources.py",
+      "sha256": "d6e05683c6cbf609f5da444f38a23e708617db553475ae73c1e7a85962917d5e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/prepare_r6_snapshot.py",
+      "sha256": "6057fb782b4b2f4ec56a348c1ea328b0ea72ccec5da9dadf14f68beec042e3d5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py",
+      "sha256": "394f8c55d3bcd24dae512a3950993ce7534e0b573a96ae3cfb20143cd5358f75"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_CONTRACT_TESTS.log",
+      "sha256": "c5a70eccbb1b55abb18bac7a0fa8802bf3ed343bbd55768fbb2a7a3bda79d177"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_CONTRACT_LIFECYCLE_TESTS.log",
+      "sha256": "5a8a6efccc0f1e5f42958908055c239f80ab7b403545093a69b6fc3c57017212"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_CONTRACT_CONTROL_TESTS.log",
+      "sha256": "1efa9942c82714c90b125581a90727d0086f3e946fc299db9f43129d0d38cba2"
+    }
+  ],
+  "tensor_lifecycle_tests": 88,
+  "subtests": 56,
+  "control_tests": 47,
+  "initial_failure": "61 passed/1 failed: baseline lifecycle import needs torch; mistakenly included in control interpreter run. No dependency installed; rerun in existing tensor interpreter passed.",
+  "scope": [
+    "Exact training stage profile/card/master/u640 provenance and plan-derived budgets",
+    "Independent exact training capacity binds payload, aggregate native/result/control backing bytes and plan hash",
+    "Independent training source/method compatibility binds both configs, checkpoint, recipe, method and exact product/workload changes; actor/runtime/original metric drift rejected",
+    "Dedicated training config schema; historical baseline schema cannot authorize training; source snapshot helper recognizes both",
+    "Formal CLI/auth/lifecycle/backend route plus native paths, shared prelaunch resource/STOP guards and control native dispatch options support training mode"
+  ],
+  "limitations": [
+    "CPU stage tests substitute kernel mounts and frozen runtime/config at declared boundaries; no production training capacity review or compatibility receipt",
+    "No real training spec/Store permission, no actual native-volume training session or GPU activity",
+    "R6 controller still rejects training mode at its job registration/issuance/submission and analysis gates; those require stage-aware integration",
+    "Scientific baseline/diagnosis, possible training/confirmation, final tests and delivery incomplete; combined independent review pending"
+  ],
+  "goal_complete": false
+}

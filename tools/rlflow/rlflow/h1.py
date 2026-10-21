@@ -79,7 +79,7 @@ def validate(spec,root,*,fresh=True):
 
 def native_dispatch_options(spec):
     """Take native paths only from the exact snapshot-validated authority."""
-    if spec.get('backend')!='real' or spec.get('h1',{}).get('mode')!='research-r6-evaluation':
+    if spec.get('backend')!='real' or spec.get('h1',{}).get('mode') not in ('research-r6-evaluation','research-r6-training'):
         return {}
     parameters=inspect_authority(spec)['authorization']['parameters']
     result={'native_output_cap_bytes':256*1024**2}

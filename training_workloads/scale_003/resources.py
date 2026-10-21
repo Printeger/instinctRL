@@ -294,7 +294,7 @@ def start_after_coexistence_gate(
     """Make the resource gate a mandatory predecessor of AppLauncher creation."""
     extension_args=''
     if native_volume_pin is not None:
-        if mode!='research-r6-evaluation':raise ValueError('Native volume requires exact R6 mode')
+        if mode not in ('research-r6-evaluation','research-r6-training'):raise ValueError('Native volume requires exact R6 mode')
         if extension_inputs_pin is None:raise ValueError('R6 native volume requires frozen extension inputs')
         from training_workloads.unified_h1.extension_inputs import validate as validate_extensions
         extension_args=' --ext-folder '+validate_extensions(extension_inputs_pin)
@@ -321,7 +321,7 @@ def start_after_coexistence_gate(
             "/persistent/isaac/asset_root/cloud",
         )
     kit_asset_args = "".join(f" --{setting}={asset_root}" for setting in kit_asset_settings)
-    native_settings = _r6_native_settings(output_root,native_volume_pin) if mode=='research-r6-evaluation' else {}
+    native_settings = _r6_native_settings(output_root,native_volume_pin) if mode in ('research-r6-evaluation','research-r6-training') else {}
     if native_settings:
         capture=_r6_capture_binding()
         paths=[Path(native_settings['/crashreporter/dumpDir'])]

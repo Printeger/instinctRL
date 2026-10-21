@@ -53,7 +53,7 @@ class SourceConfigTests(unittest.TestCase):
         self.assertEqual((product,workload),(c.PRODUCT_SOURCES,c.WORKLOAD_SOURCES))
         product,workload=c.required_source_sets(c.R6_CONFIG_SCHEMA)
         self.assertEqual(len(product-c.PRODUCT_SOURCES),26)
-        self.assertEqual(len(workload-c.WORKLOAD_SOURCES),26)
+        self.assertEqual(len(workload-c.WORKLOAD_SOURCES),27)
         self.assertTrue({'training_workloads/unified_h1/robustness_training_plan.py',
                          'training_workloads/unified_h1/robustness_training_rng.py',
                          'training_workloads/unified_h1/robustness_training_driver.py'} <= workload)
@@ -107,6 +107,12 @@ class SourceConfigTests(unittest.TestCase):
             configpath.write_text(json.dumps(value));result=c.load_config(configpath)
             self.assertEqual(checked,[('product',c.R6_PRODUCT_SOURCES),('workload',c.R6_WORKLOAD_SOURCES)])
             self.assertIn('research-r6-evaluation',result['future_entry']['modes'])
+            value['schema_version']=c.R6_TRAINING_CONFIG_SCHEMA
+            value['future_entry']['modes'].append('research-r6-training');configpath.write_text(json.dumps(value))
+            self.assertIn('research-r6-training',c.load_config(configpath)['future_entry']['modes'])
+            value['schema_version']=c.R6_CONFIG_SCHEMA;configpath.write_text(json.dumps(value))
+            with self.assertRaisesRegex(ValueError,'mode set mismatch'):c.load_config(configpath)
+            value['future_entry']['modes'].remove('research-r6-training')
             value['future_entry']['modes'].remove('research-r6-evaluation');configpath.write_text(json.dumps(value))
             with self.assertRaisesRegex(ValueError,'mode set mismatch'):c.load_config(configpath)
             checked.clear();value['schema_version']='unified-h1-r2-config.v3';configpath.write_text(json.dumps(value))

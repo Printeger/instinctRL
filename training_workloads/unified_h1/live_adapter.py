@@ -238,6 +238,7 @@ def _dispatch(backend: Any, authorization: Mapping[str, Any]) -> None:
     elif mode == "r5-resume": execute_training_phase(backend, resume_checkpoint=Path(parameters["checkpoint"]), target_update=parameters["target_update"])
     elif mode == "evaluation": execute_evaluation_phase(backend, checkpoints=parameters["checkpoints"])
     elif mode == "control-diagnostic": backend.run_control_diagnostic(parameters)
+    elif mode == "research-r6-training": backend.train_r6()
     elif mode == "research-r6-evaluation":
         from .robustness_contract import evaluate_registered
         evaluate_registered(backend)
@@ -306,7 +307,7 @@ def run_main_sequence(*, authorization: Mapping[str, Any], attempt: Path,
         if research_mode:
             PILOT_OUTPUT_CAP_BYTES = authorization["parameters"]["output_cap_bytes"]
             PILOT_WORKLOAD_WRITE_CAP_BYTES = PILOT_OUTPUT_CAP_BYTES - 3 * 1024**3
-            if mode == "research-r6-evaluation" and "native_volume" in authorization["parameters"]:
+            if mode in ("research-r6-evaluation","research-r6-training") and "native_volume" in authorization["parameters"]:
                 from .result_volume import workload_write_cap
                 PILOT_WORKLOAD_WRITE_CAP_BYTES = workload_write_cap(
                     authorization["parameters"],expected_target=output.parent)

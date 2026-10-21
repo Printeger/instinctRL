@@ -1,0 +1,49 @@
+.........................................F....................           [100%]
+=================================== FAILURES ===================================
+____ ContractTests.test_lifecycle_dispatches_only_to_registered_r6_wrapper _____
+
+self = <test_r6_contract.ContractTests testMethod=test_lifecycle_dispatches_only_to_registered_r6_wrapper>
+
+    def test_lifecycle_dispatches_only_to_registered_r6_wrapper(self):
+        from training_workloads.unified_h1.live_adapter import _dispatch
+        backend=SimpleNamespace()
+        with patch('training_workloads.unified_h1.robustness_contract.evaluate_registered') as run:
+>           _dispatch(backend,{'mode':MODE,'parameters':{}})
+
+tools/test_r6_contract.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+training_workloads/unified_h1/live_adapter.py:233: in _dispatch
+    from .r3_sequence import execute_controlled_failure, execute_evaluation_phase, execute_r3_main, execute_training_phase
+training_workloads/unified_h1/r3_sequence.py:9: in <module>
+    from .evaluation import CASE_ORDER
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Raw-episode implementation of the frozen ``metric-h1-v1`` contract."""
+    
+    from __future__ import annotations
+    
+    from dataclasses import dataclass
+    import json
+    import math
+    from statistics import NormalDist
+    from typing import Iterable, Mapping, Sequence
+    
+>   import torch
+E   ModuleNotFoundError: No module named 'torch'
+
+training_workloads/unified_h1/evaluation.py:11: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tools/test_r6_contract.py::ContractTests::test_lifecycle_dispatches_only_to_registered_r6_wrapper
+1 failed, 61 passed in 1.00s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f5306a06-82fc-4faf-8920-6a316df2a6b9/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f5306a06-82fc-4faf-8920-6a316df2a6b9/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f5306a06-82fc-4faf-8920-6a316df2a6b9/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-f5306a06-82fc-4faf-8920-6a316df2a6b9
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-f5306a06-82fc-4faf-8920-6a316df2a6b9'
+  warnings.warn(
