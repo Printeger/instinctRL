@@ -1,0 +1,45 @@
+{
+  "schema_version": "r6-build-spec-cpu/1",
+  "status": "CPU4_PASS_REVIEW_PENDING",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_build_spec.py",
+      "sha256": "9199534374c25b81d86ef55b538b75366cf8fd013a5b0a102a129368a9ce927c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_build_spec.py",
+      "sha256": "db076c96a09409fc66d5cecc06746766ebff09d09419112da048ae5881c1c47f"
+    }
+  ],
+  "test_log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-build-spec-tests.txt",
+    "sha256": "71fd4fb3b1bd6a6812a668651ea4e7b748ee3fd3181f98354451270d635456df"
+  },
+  "scope": [
+    "Generate exact baseline evaluation specification from pinned frozen config/authority",
+    "Reuse real experiments.validate and H1 structural checks",
+    "Match wall/GPU allowance including10-second cleanup and exact evaluation transitions",
+    "Reject source/authority drift, consumed attempt and training budget",
+    "No Store mutation or implicit approval"
+  ],
+  "limits": [
+    "Runtime authority inspection is explicitly mocked in tests; no live authorization generated",
+    "Full production capacity, protocol freeze, compatibility review and exact authority still required",
+    "Scientific next-plan generation and controller deployment remain incomplete"
+  ],
+  "actual_storage": {
+    "schema_version": "r6-prepared-storage-check/1",
+    "event_key": "6fb2fb5a07a1c13e091bff09e881f9213605031b821e891abd2442ac7711744d",
+    "experiment_id": "R6-BASELINE-ROBUSTNESS-01",
+    "output_cap_bytes": 20250099712,
+    "manifests": {},
+    "missing": [
+      "/var/lib/instinctrl-r6-native/J-d737390980235144/volume.json",
+      "/var/lib/instinctrl-r6-results/J-d737390980235144/volume.json"
+    ],
+    "capacity_pass": false,
+    "dispatch_authorized": false,
+    "status": "WAITING_FOR_ADMIN_PROVISION"
+  },
+  "model_sessions": 129
+}

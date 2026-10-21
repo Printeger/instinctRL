@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：冻结config/authorization到准确baseline Store规格的生成入口完成，4项CPU
+检查通过，复用真实H1/experiment结构校验；解释器、源码、seed、argv和资源精确绑定。
+拒绝pin漂移、已消费attempt与训练额度；不写Store/不授予许可。runtime授权检查明确mock，
+待实际冻结输入与独审，见 `docs/experiments/r6-robustness-auto/CPU_BASELINE_SPEC_BUILDER.json`。
+正式双卷manifest仍缺失；协议/兼容性/完整容量与controller未完成，无R6 live。
+108次自动唤醒+21worker=129，余127次；Goal未完成。
+
 2026-10-21：第21次定向复审PASS_CPU_SCOPE，关闭第20次独审的STOP传播MUST_FIX。
 复审21项定向测试通过，核验八个真实worker+假程序的STOP receipt；本地组合34项通过。
 原审查保留，receipt/schema/source pins及审核worker退出清理已核验，见
