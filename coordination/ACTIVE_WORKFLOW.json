@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 122,
-    "total_automatic_model_sessions_minimum": 150,
+    "platform_automatic_goal_wakes": 123,
+    "total_automatic_model_sessions_minimum": 151,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -270,6 +270,8 @@
     "measured_capacity_proposal": "docs/experiments/r6-robustness-auto/CAPACITY_MEASURED_BASELINE_PROPOSAL.json",
     "accepted_protocol_capacity": "docs/experiments/r6-robustness-auto/PROTOCOL_CAPACITY_ACCEPTED_01.json",
     "initial_baseline_parameters": "PASS_ACTUAL_FROZEN_SNAPSHOT_VALIDATION_NOT_ISSUED",
-    "initial_baseline_parameters_evidence": "docs/experiments/r6-robustness-auto/CPU_INITIAL_BASELINE_PARAMETERS.json"
+    "initial_baseline_parameters_evidence": "docs/experiments/r6-robustness-auto/CPU_INITIAL_BASELINE_PARAMETERS.json",
+    "initial_baseline_spec": "PASS_REAL_VALIDATION_PENDING_EXACT_PRELIVE",
+    "initial_baseline_spec_evidence": "docs/experiments/r6-robustness-auto/CPU_BASELINE_REAL_SPEC_ORDER_REPAIR.json"
   }
 }

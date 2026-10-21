@@ -19,7 +19,7 @@ c=load_config();request=json.load(sys.stdin)
 p=validate_parameters(MODE,request['parameters'])
 validate_compatibility(p['checkpoint_compatibility'],baseline(p)['source_identity'],c)
 a=dict(schema_version='unified-h1-r3-authorization.v2',status='AUTHORIZED',
- order_id=p['experiment_id'],method_sha256=c['method']['proposal_sha256'],
+ order_id=p['experiment_id']+'-'+p['group']+'-'+MODE.upper(),method_sha256=c['method']['proposal_sha256'],
  **c['resolved_identity'],attempt=request['attempt'],mode=MODE,
  budgets=required_budget(MODE,p),parameters=p)
 print(json.dumps(a,sort_keys=True))

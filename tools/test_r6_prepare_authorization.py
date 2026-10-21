@@ -50,7 +50,7 @@ def test_frozen_program_assembles_exact_budget_with_declared_validator_stubs(mon
     import training_workloads.unified_h1.robustness_contract as contract
     identity=dict(config_sha256='1'*64,product_commit='2'*40,product_tree='3'*40,workload_commit='2'*40,workload_tree='3'*40)
     c=dict(method={'proposal_sha256':'4'*64},resolved_identity=identity)
-    p=dict(experiment_id='R6-FIXTURE',checkpoint_compatibility={'fixture':True})
+    p=dict(experiment_id='R6-FIXTURE',group='R1',checkpoint_compatibility={'fixture':True})
     budget={'nontraining_transitions':193600,'training_transitions':0}
     monkeypatch.setattr(config,'load_config',lambda:c)
     monkeypatch.setattr(contract,'validate_parameters',lambda mode,value:value)
@@ -63,5 +63,6 @@ def test_frozen_program_assembles_exact_budget_with_declared_validator_stubs(mon
     original=list(sys.path)
     try:exec(m.PROGRAM,{})
     finally:sys.path[:]=original
-    a=json.loads(out.getvalue());assert a['budgets']==budget and a['order_id']==p['experiment_id']
+    a=json.loads(out.getvalue());assert a['budgets']==budget
+    assert a['order_id']=='R6-FIXTURE-R1-RESEARCH-R6-EVALUATION'
     assert all(a[k]==v for k,v in identity.items());compat.assert_called_once()

@@ -1,0 +1,84 @@
+{
+  "id": "R6-BASELINE-ROBUSTNESS-01",
+  "stage_id": "R6-ROBUSTNESS-AUTO-20261019",
+  "backend": "real",
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "training_workloads.unified_h1.formal_unified_h1",
+    "--authorization",
+    "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/authorization.json",
+    "--attempt",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01",
+    "--mode",
+    "research-r6-evaluation"
+  ],
+  "cwd": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02",
+  "pins": {
+    "dispatcher": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "f3316cabd967d3bf82272734f9dde6348fce927ae2fc5fc0df47a3bdb756f135"
+    },
+    "executable": {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+    },
+    "product": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+      "sha256": "a3c06c94865c5211d1d438abb35629071eb6171e3a4ab57fe64cd23d04508e2a"
+    },
+    "workload": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/formal_unified_h1.py",
+      "sha256": "42191734125cd784bf2b7665a7177ba958fd4de9c26b44582aeb2923692b431b"
+    },
+    "runtime": {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+    },
+    "authorization": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/authorization.json",
+      "sha256": "dde24b69f63ffab74e7d3a7ebf652ec518113c18d40779a326b42a06b6edaba8"
+    }
+  },
+  "method": "unified-h1-formal-readiness-v1",
+  "evaluation": "metric-h1-v1",
+  "runtime": "/home/mint/rl_blackwell_test",
+  "seed": 20260909,
+  "resources": {
+    "starts": 1,
+    "wall_seconds": 3610,
+    "gpu_seconds": 3610,
+    "transitions": 193600
+  },
+  "conditions": [
+    {
+      "evidence_id": "R6-PROTOCOL-CAPACITY-FREEZE-01",
+      "sha256": "738aca2b423b739081fa9ada00db0de0a751040eb472e769907c4fa43fbe2ad1"
+    },
+    {
+      "evidence_id": "R6-EXECUTION-COMPATIBILITY-02",
+      "sha256": "1e8242a18370cf26d58c720c9b0d96b3a8eaf6f125b5a2b4972c7b320accd148"
+    },
+    {
+      "evidence_id": "R6-FIRST-BASELINE-ENTRY-01",
+      "sha256": "41d1394c3bef23f58010502e295cdb4e1f815ab4559e9c4a3d947e12f8c84794"
+    }
+  ],
+  "observations": [
+    "status",
+    "counters",
+    "process_identity",
+    "process_start"
+  ],
+  "h1": {
+    "workload_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02",
+    "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01",
+    "mode": "research-r6-evaluation",
+    "config_sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19",
+    "gpu_devices": [
+      "0"
+    ],
+    "gpu_accounting": "allocated_device_wall_seconds"
+  }
+}

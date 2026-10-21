@@ -1,0 +1,27 @@
+{
+  "config_pin": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+    "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+  },
+  "authorization_pin": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/authorization.json",
+    "sha256": "dde24b69f63ffab74e7d3a7ebf652ec518113c18d40779a326b42a06b6edaba8"
+  },
+  "attempt": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01",
+  "stage_id": "R6-ROBUSTNESS-AUTO-20261019",
+  "conditions": [
+    {
+      "evidence_id": "R6-PROTOCOL-CAPACITY-FREEZE-01",
+      "sha256": "738aca2b423b739081fa9ada00db0de0a751040eb472e769907c4fa43fbe2ad1"
+    },
+    {
+      "evidence_id": "R6-EXECUTION-COMPATIBILITY-02",
+      "sha256": "1e8242a18370cf26d58c720c9b0d96b3a8eaf6f125b5a2b4972c7b320accd148"
+    },
+    {
+      "evidence_id": "R6-FIRST-BASELINE-ENTRY-01",
+      "sha256": "41d1394c3bef23f58010502e295cdb4e1f815ab4559e9c4a3d947e12f8c84794"
+    }
+  ],
+  "store_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research"
+}

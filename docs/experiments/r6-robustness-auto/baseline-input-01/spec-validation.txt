@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_build_spec.py", line 46, in build
+    experiments.validate(spec,Path(store_root))
+  File "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/experiments.py", line 62, in validate
+    validate_h1(spec,root)
+  File "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py", line 62, in validate
+    observed=inspect_authority(spec);config=observed['config'];auth=observed['authorization']
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py", line 40, in inspect_authority
+    if result.returncode:raise Conflict('H1 authorization checker rejected: '+result.stderr[-3000:])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+rlflow.store.Conflict: H1 authorization checker rejected: Traceback (most recent call last):
+  File "<string>", line 7, in <module>
+  File "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/authorization.py", line 151, in load_r3_authorization
+    raise PermissionError("R3 order/attempt/mode binding mismatch")
+PermissionError: R3 order/attempt/mode binding mismatch
+

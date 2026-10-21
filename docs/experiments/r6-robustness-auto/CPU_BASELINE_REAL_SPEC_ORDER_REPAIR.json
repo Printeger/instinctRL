@@ -1,0 +1,48 @@
+{
+  "status": "PASS_REAL_FROZEN_AUTHORITY_AND_SPEC_VALIDATION_NOT_STORE_APPROVAL",
+  "failure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/spec-validation.txt",
+    "sha256": "66c20094d0a6a78ccca4825848302be4e6998f4983d684abdf7388b89af375d1"
+  },
+  "failed_flat_authorization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/authorization.json",
+    "sha256": "97f9743fe519da28ee3e08fa2541d6ca336ed4e178761a305fda198789a5d14c"
+  },
+  "cause": "Proposal generator used experiment_id alone as order_id; frozen research authorization loader requires experiment_id-group-MODE.upper(). Earlier parameter-only validation did not exercise this whole-authorization binding.",
+  "fix": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_prepare_authorization.py",
+    "sha256": "58eed3f19f5534255b0596e5dcea7aeb04a2a68a08f6407619436cabbc2a43d9"
+  },
+  "test": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_prepare_authorization.py",
+    "sha256": "444c9ea97121b873119636cce57dc1a6543cc58b1d60e462d0dfcf3b0458fd25"
+  },
+  "cpu_test_log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_AUTHORIZATION_ORDER_REPAIR_TEST.txt",
+    "sha256": "bf78c33f42db0e6d75cba5532586670ac4a837cd35ba87564985d8494b155328"
+  },
+  "actual_validation_log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/spec-repair-validation.txt",
+    "sha256": "4e1016784325c4e1e64ae3d9e553bad1a25eb506e6128b8343fd49f4e629fdd5"
+  },
+  "corrected_proposal": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/authorization-proposal.json",
+    "sha256": "6b552daddf330d53f58363858f590b2947561f4974eb7273ca7194a3a5eba0d5"
+  },
+  "corrected_authorization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/authorization.json",
+    "sha256": "dde24b69f63ffab74e7d3a7ebf652ec518113c18d40779a326b42a06b6edaba8"
+  },
+  "spec": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/spec.json",
+    "sha256": "20445dd09a901da4ab66dca822992a9d131008a4cc83aaafdc15586e838bd5a7"
+  },
+  "job_id": "J-7a302eaf9d7714e7",
+  "actual_validation_uses_mocks": false,
+  "prior_artifacts_preserved": true,
+  "source_snapshot_changed": false,
+  "frozen_runtime_changed": false,
+  "production_store_approved": false,
+  "job_submitted": false,
+  "independent_exact_prelive_review_pending": true
+}
