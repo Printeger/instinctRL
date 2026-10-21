@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：u640恢复后的显式RNG分叉核心完成，8项CPU检查通过；分别证明动作Beta
+采样、课程generator、Python/NumPy与真实PPO minibatch函数在三个seed下不同，同seed
+可复现，权重/Adam/计数不变。发现并处理permutation_seed独立于全局RNG的问题。
+见 `docs/experiments/r6-robustness-auto/CPU_TRAINING_RNG_BRANCH.json`。仅合成CPU恢复状态，
+未证明实际u640恢复/CUDA/环境曝光；仍需训练合同、配置/方法哈希绑定、记录持久化与dispatch
+接线。100次自动唤醒+18worker=118，余138次；capacity=false，无R6 live，Goal未完成。
+
 2026-10-21：训练压缩日志/首轮诊断共享池factory完成，校验payload与压缩/普通输出
 分配；构造失败关闭并保留原件。实际训练循环修复：配额满时补写失败记录不再覆盖
 原rollout/PPO错误，仍尝试独立记录并保留优化器计数。32项组件检查与3项隔离实际

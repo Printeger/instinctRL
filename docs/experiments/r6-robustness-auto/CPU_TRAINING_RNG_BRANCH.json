@@ -1,0 +1,45 @@
+{
+  "schema_version": "r6-training-rng-cpu/1",
+  "status": "CPU_CORE_PASS_NOT_TRAINING_ACCEPTANCE",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_rng.py",
+      "sha256": "3068b3cf5384c803412b2f999c7398240430251f286a79f6a2af25e507290eec"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_training_rng.py",
+      "sha256": "6b72f9c3023376a036495cab5c252295283341671ea8c2733dfe3eec4965f7e6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/training/ppo.py",
+      "sha256": "13290128ecbc79f9c429e064abbb2505bd6830c815ef21b3cec93fc0581e2431"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/training/checkpoint_h1.py",
+      "sha256": "94337128716045da864eac88598d23191ad3ee74d41fb38cacee4eb7315462d9"
+    }
+  ],
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-training-rng-per-stream-test.txt",
+    "sha256": "c164bd4e0deca7262dd343af2b447ce4aded60003b2b20b093946b23aeecd46e"
+  },
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow:isaaclab-training CUDA_VISIBLE_DEVICES='' OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 -B -m pytest -q tools/test_r6_training_rng.py",
+  "passed": 8,
+  "coverage": [
+    "Each of action Beta samples, CPU curriculum draws, Python, NumPy and actual product deterministic_minibatches differs across all three registered confirmation seeds",
+    "Same branch seed reproduces each sampled stream",
+    "Actor, critic, Adam tensors and update counter unchanged",
+    "Invalid seed/origin counters and repeated branch refused",
+    "Capture failure rolls back RNG/config; CPU path never queries or seeds CUDA"
+  ],
+  "fixture_limits": "Synthetic CPU actor/critic and Adam counter state, not actual checkpoint restore or environment trajectory; no PPO optimizer executed. Samples exercise real torch Beta and product minibatch implementation. CUDA path untested.",
+  "required_integration": [
+    "Verify actual u640 hash and restore before invoking",
+    "Persist returned before/after RNG tensor record before rollout",
+    "Bind branched permutation_seed to registered method/PPO checkpoint config and subsequent reload",
+    "Fresh physical reset and actual curriculum/noise exposure evidence",
+    "Exact R6 training contract, dispatch, capacity and independent acceptance"
+  ],
+  "capacity_pass": false,
+  "real_training": false
+}
