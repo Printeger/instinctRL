@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：新增单作业本地入口 tools/r6_run_job.py，在同一writer下组合资源等待、
+准确登记/提交/关闭和已有分析/决策交接。82项CPU回归通过；恢复使用原queue claim，
+不重新排队或提交，歧义claim拒绝重试。证据见
+`docs/experiments/r6-robustness-auto/CPU_LOCAL_JOB_ENTRY.json`。组合测试的查询和下游交接
+使用替身；非完整部署证明。生产authority重复哈希耗时与8秒窗口新鲜度仍须解决，
+CPU-QUOTA-02卷仍未创建；capacity=false，无新增GPU/live/model，完整目标未完成。
+
 2026-10-21：资源窗口恢复修复通过65项CPU回归：过期PASS不再被循环复用，保留原证据，
 按既有退避重新采集完整窗口，停机时间计账且STOP阻止新查询。见
 `docs/experiments/r6-robustness-auto/CPU_STALE_QUEUE_RECOVERY.json`。未改变资源阈值。

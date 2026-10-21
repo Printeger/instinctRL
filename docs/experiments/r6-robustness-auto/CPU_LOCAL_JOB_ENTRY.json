@@ -1,0 +1,50 @@
+{
+  "schema_version": "r6-local-job-entry-cpu/1",
+  "status": "CPU_PASS_PENDING_REVIEW_NOT_DEPLOYED",
+  "pytest_cases_passed": 82,
+  "new_test_cases": 8,
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_run_job.py",
+      "sha256": "f4886e6a4826d1f4a97f7d969e4c32459626a4328fa14e6b8b449a846a7c7e9e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_run_job.py",
+      "sha256": "11e2106e400bc527aaf0baf85e30dc21dc8569017ee7c324f7cd0d8a5fa3ebbe"
+    }
+  ],
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_LOCAL_JOB_ENTRY_TESTS_V2.txt",
+    "sha256": "f0375266436ecb1c3fe85973f71f96e7a69caa26ae5c52ffad98855a65de263b"
+  },
+  "initial_output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_LOCAL_JOB_ENTRY_TESTS.txt",
+    "sha256": "f321d1b21a67c37f27bb74d65d83b030f93c24edbae937f017e5d971df95a372"
+  },
+  "coverage": [
+    "Same writer spans observation, exact registration, Store submission, closure, and downstream handoff",
+    "Claim recovery uses original queue key and skips idle observation",
+    "Crash after close recovers without another submit",
+    "Ambiguous claim without Store job never requeues or resubmits",
+    "STOP, unaccepted capacity and revoked approval reject before resource queries",
+    "Expired unclaimed reservation keeps original deadline and does not requeue",
+    "Rejected observation creates no live reservation",
+    "Existing postrun and decision recovery suites pass"
+  ],
+  "substitutes": [
+    "New composition uses temporary Store and synthetic native FAILED terminal evidence",
+    "Resource observation and finish_and_decide are replaced in new entry tests",
+    "Existing decision tests execute CPU substitute workers, not Codex"
+  ],
+  "limitations": [
+    "Not a deployed service; no production plan has been issued",
+    "No full end-to-end real GPU/Kit or production model execution",
+    "Repeated real authority validation hashes the extension tree; latency versus eight-second queue freshness still requires resolution before deployment",
+    "Returned next step remains a proposal requiring exact reviewed authorization",
+    "Native/result quota, capacity acceptance, protocol freeze and full scientific stages remain incomplete"
+  ],
+  "operational_gpu_queries": 0,
+  "operational_live_starts": 0,
+  "operational_model_calls": 0,
+  "capacity_pass": false
+}

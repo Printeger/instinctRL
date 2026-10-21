@@ -201,6 +201,8 @@
     "pipeline_accepted_review": "docs/experiments/r6-robustness-auto/reviews/cpu-pipeline-fix-review.json",
     "native_quota_review": "docs/experiments/r6-robustness-auto/reviews/native-quota-integration-review.json",
     "native_quota_review_status": "MUST_FIX_KERNEL_AGGREGATE_RESULTS_QUOTA",
-    "native_quota_repair_review": "docs/experiments/r6-robustness-auto/reviews/native-quota-repair-review.json"
+    "native_quota_repair_review": "docs/experiments/r6-robustness-auto/reviews/native-quota-repair-review.json",
+    "local_job_entry_status": "CPU_PASS_PENDING_REVIEW_NOT_DEPLOYED",
+    "local_job_entry_evidence": "docs/experiments/r6-robustness-auto/CPU_LOCAL_JOB_ENTRY.json"
   }
 }
