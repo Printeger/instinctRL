@@ -1,0 +1,70 @@
+{
+  "schema_version": "r6-checkpoint-branch-cpu/1",
+  "status": "CPU_PASS_NEW_SERIALIZER_BRANCH_NOT_LIVE_ACCEPTANCE",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/training/checkpoint_h1.py",
+      "sha256": "45171db5ae2719fcd81b78d67ee06450cc73b737b74f3850797591e9eccc13b7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_checkpoint_branch.py",
+      "sha256": "54790f3fe41f88bd8d2910bbaebb76c78590100fbe231c640523ffe4d61c82c4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_rng.py",
+      "sha256": "3068b3cf5384c803412b2f999c7398240430251f286a79f6a2af25e507290eec"
+    }
+  ],
+  "baseline": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+    "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+  },
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-checkpoint-branch-tests.txt",
+      "sha256": "6c2ca06fd73e12a807fed9175d779f8e2a88d96ddab7a2e2282155c6cb0deb67"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-checkpoint-legacy-tests.txt",
+      "sha256": "961bdf6e9515cd36281b0a26c629c23b65e67da9b725a6c639cb65ebbe897582"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-checkpoint-final-tests.txt",
+      "sha256": "bc8fbfa08b781b3683f81ec527e695a0708eb1a2a624ab5fc69dc9ab250fefa1"
+    }
+  ],
+  "final_test_result": "33 passed, 1 deselected, 4 old pytest garbage cleanup warnings; 1.95s",
+  "final_command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tools/rlflow:isaaclab-training CUDA_VISIBLE_DEVICES='' OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 -B -m pytest -q tools/test_r6_checkpoint_branch.py tools/test_r6_training_rng.py tests/training_workloads/test_unified_h1.py -k 'not config_validate_only'",
+  "deselected": "Historical config_validate_only fixture has source-manifest mismatch previously recorded; not claimed passed",
+  "finding": "Old mixed curriculum only accepts training_seed20260908; branched seeds require explicit new R6 curriculum metadata rather than relabeling old schema",
+  "new_contract": {
+    "curriculum_version": "curriculum-h1-r6-v1",
+    "additional_fields": [
+      "recipe_sha256",
+      "origin_checkpoint_sha256",
+      "branch_seed"
+    ],
+    "bindings": [
+      "frozen u640 origin SHA",
+      "starting update at least640",
+      "new branch seed equals checkpoint training_seed and PPO permutation_seed",
+      "recipe SHA equals method_hashes.r6_recipe"
+    ]
+  },
+  "actual_input_evidence": [
+    "Exact original u640 hash checked before/after each test",
+    "Original CUDA RNG restore rejected on CPU as required",
+    "Temporary CPU derivative clears only CUDA RNG; weights/Adam match actual original payload",
+    "All three registered seeds branch and roundtrip true weights/Adam/counters plus complete CPU RNG",
+    "Invalid metadata save rejected before output creation; tampered load rejected before model/RNG mutation"
+  ],
+  "limitations": [
+    "Temporary derivatives are CPU_TEST_ONLY, not model deliverables or actual full CUDA restoration",
+    "Test recipe hash is synthetic; no scientific recipe registered or accepted",
+    "No simulator/physical rollout or training updates in new tests; old selected regression includes CPU PPO fixture only",
+    "Current R6 baseline product compatibility allowlist does not accept this new serializer delta; independent compatibility extension/new snapshot required before use",
+    "R6 training entry, curriculum, exact authority, write binding, capacity and real volumes still pending"
+  ],
+  "capacity_pass": false,
+  "goal_complete": false
+}

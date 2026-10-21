@@ -107,16 +107,36 @@ def _validate_clock_and_curriculum(*, update: int, transition: int, policy_step:
     if transition != 512 * update or policy_step != 16 * update:
         raise CheckpointError("checkpoint-h1 counters must equal 512*update and 16*update")
     research = isinstance(curriculum, dict) and curriculum.get("version") == "curriculum-h1-research-pure-hover-v1"
-    if (not research and training_seed != 20260908) or (research and (type(training_seed) is not int or not 0 <= training_seed < 2**31)):
+    r6 = isinstance(curriculum, dict) and curriculum.get("version") == "curriculum-h1-r6-v1"
+    if (not (research or r6) and training_seed != 20260908) or ((research or r6) and (type(training_seed) is not int or not 0 <= training_seed < 2**31)):
         raise CheckpointError("checkpoint-h1 training seed mismatch")
-    if not isinstance(curriculum, dict) or set(curriculum) != {"version", "completed_policy_steps"}:
+    fields = {"version", "completed_policy_steps"}
+    if r6: fields |= {"recipe_sha256", "origin_checkpoint_sha256", "branch_seed"}
+    if not isinstance(curriculum, dict) or set(curriculum) != fields:
         raise CheckpointError("checkpoint-h1 curriculum schema mismatch")
-    if curriculum["version"] not in {"curriculum-h1-v1", "curriculum-h1-research-pure-hover-v1"}:
+    if curriculum["version"] not in {"curriculum-h1-v1", "curriculum-h1-research-pure-hover-v1", "curriculum-h1-r6-v1"}:
         raise CheckpointError("checkpoint-h1 curriculum version mismatch")
+    if r6:
+        recipe = curriculum['recipe_sha256']
+        if (not isinstance(recipe,str) or len(recipe)!=64 or any(c not in '0123456789abcdef' for c in recipe)
+                or curriculum['origin_checkpoint_sha256']!='aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429'
+                or type(curriculum['branch_seed']) is not int or curriculum['branch_seed']!=training_seed
+                or training_seed==20260908 or update<640):
+            raise CheckpointError('checkpoint-h1 R6 branch provenance mismatch')
     completed = _validate_counter(curriculum["completed_policy_steps"], "completed_policy_steps")
     if completed != policy_step:
         raise CheckpointError("checkpoint-h1 curriculum clock mismatch")
     return dict(curriculum)
+
+
+def _validate_r6_binding(payload):
+    """New branch identity; leaves legacy checkpoint metadata rules unchanged."""
+    curriculum=payload['curriculum']
+    if curriculum['version']=='curriculum-h1-r6-v1':
+        if (payload['method_hashes'].get('r6_recipe')!=curriculum['recipe_sha256']
+                or type(payload['ppo_config'].get('permutation_seed')) is not int
+                or payload['ppo_config'].get('permutation_seed')!=curriculum['branch_seed']):
+            raise CheckpointError('checkpoint-h1 R6 recipe/permutation binding mismatch')
 
 
 def _validated_saved_optimizer(label: str, saved: object, optimizer: torch.optim.Optimizer,
@@ -221,6 +241,7 @@ def save_checkpoint_h1(
     }
     _validate_metadata(payload["method_hashes"], "method_hashes")
     _validate_metadata(payload["source_identity"], "source_identity")
+    _validate_r6_binding(payload)
     _finite_tree(payload, "checkpoint-h1")
     temporary: str | None = None
     try:
@@ -279,6 +300,7 @@ def load_checkpoint_h1(
         update=update, transition=transition, policy_step=policy_step,
         curriculum=payload["curriculum"], training_seed=seed,
     )
+    _validate_r6_binding(payload)
     if update == 0:
         for label in ("actor_optimizer", "critic_optimizer"):
             saved = payload[label]

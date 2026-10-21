@@ -1,5 +1,14 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：发现旧mixed课程checkpoint仅接受20260908；新增显式R6课程元数据分支，
+绑定共同u640、配方hash、training/branch/permutation seed，保留旧分支校验。
+33项CPU检查通过、1项历史config fixture未选；原u640哈希复核不变，原CUDA RNG加载
+在CPU被正确拒绝，临时CPU副本仅清除CUDA RNG。三个seed的实际权重/Adam及CPU RNG
+保存/重载通过。见 `docs/experiments/r6-robustness-auto/CPU_R6_CHECKPOINT_BRANCH.json`。
+不宣称真实CUDA恢复/训练；新serializer产品源码变更仍需独审、兼容性登记和新快照，
+现有baseline兼容白名单未放行此delta。训练合同/dispatch与容量仍待完成。
+101次自动唤醒+18worker=119，余137次；capacity=false，无R6 live，Goal未完成。
+
 2026-10-21：u640恢复后的显式RNG分叉核心完成，8项CPU检查通过；分别证明动作Beta
 采样、课程generator、Python/NumPy与真实PPO minibatch函数在三个seed下不同，同seed
 可复现，权重/Adam/计数不变。发现并处理permutation_seed独立于全局RNG的问题。
