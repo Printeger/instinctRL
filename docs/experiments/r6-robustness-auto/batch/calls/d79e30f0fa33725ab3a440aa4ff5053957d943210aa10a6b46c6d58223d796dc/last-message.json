@@ -1,0 +1,84 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "No substantive defect found in the scoped changes since result-quota-actual-review.json. Fixed-layout admission checks actual free bytes/inodes; postrun zero-minimum supports exhausted-volume inventory. Fixed evaluation payload avoids the legacy deduction while other modes retain it. Preallocation, unique spec binding, registration, submission and inventory preserve one full storage charge, reject missing or mismatched owners, and retain failures and overruns. Reviewed relevant test implementations and existing logs; no tests rerun or writes performed. This supports concrete production provisioning preparation only. CPU02 used the old layout; new production capacity, inode/growth headroom, throughput, Kit compatibility and full controller integration remain unproven. The 93GiB/35GiB split remains conditional, capacity=false, with no live or scientific acceptance.",
+  "evidence_pins": [
+    {
+      "path": "tools/provision_r6_fixed_result_volume.py",
+      "sha256": "54cf055a4c263d7496077e04ca7993a962ce60d4292f60109972ae66564c1efa"
+    },
+    {
+      "path": "training_workloads/unified_h1/result_volume.py",
+      "sha256": "d28cc9129522f96c805238e2cf2d6f97b190d07d0632f9e53935fc36f66eba2b"
+    },
+    {
+      "path": "training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "613b2b59cf0c8214acc3087a7dbf8a4ac59dd5e1655852998ab676d0d8a9cc69"
+    },
+    {
+      "path": "training_workloads/unified_h1/live_adapter.py",
+      "sha256": "79cd8ce3b37a87687889f35036c6e72968a6a1e664fc5e653e0976c6fcbcc600"
+    },
+    {
+      "path": "tools/r6_storage_allocation.py",
+      "sha256": "1ed69e2899430d9593a339a9ed51755d0222dd373e12c66dc00d33ee8bf79f5e"
+    },
+    {
+      "path": "tools/r6_register_job.py",
+      "sha256": "a47c2614efae34c4cd2762e1b80dc02c5ee6d8b32fdc6aa14000a085695a18b3"
+    },
+    {
+      "path": "tools/r6_submit.py",
+      "sha256": "66aa805582a468fa56d013d63fbf2772f79cf0f3ccfab3fcfd6f8374a146b744"
+    },
+    {
+      "path": "tools/r6_job_inventory.py",
+      "sha256": "b21f01bef482317ff619a32cb279bfb7457ceac8901563b91161413b2d7cb410"
+    },
+    {
+      "path": "tools/test_r6_fixed_result_volume.py",
+      "sha256": "9f92e7cd3386e61f27f43bc16aed93b6673b6b790801bf79d3fb36e16448e3db"
+    },
+    {
+      "path": "tools/test_r6_payload_wiring.py",
+      "sha256": "e878da386b0ba2efd9a4055efe1d06e758577fe9c02a48d65c96582d1fe01f51"
+    },
+    {
+      "path": "tools/test_r6_contract.py",
+      "sha256": "89caa2680ac7089a71740340428d8284de0a67cab7e7d88af546ecb34b41a0a5"
+    },
+    {
+      "path": "tools/test_r6_storage_allocation.py",
+      "sha256": "514f89bd068860e34f819e8ab7bc4634bbe4ab5688d86cf21d9fdac4169c9691"
+    },
+    {
+      "path": "tools/test_r6_storage_owner_integration.py",
+      "sha256": "0ba5884d929c0e6dd8fc91976cc5474e83f8ed9697c485e0c5f15bd4c7189a50"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_FIXED_RESULT_LAYOUT.json",
+      "sha256": "48fb19461845bddca3e404558293f5bbdd2abc5e4df2be6b70ddcca0c581a66b"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_FIXED_PAYLOAD_WIRING.json",
+      "sha256": "5b2117e3033d13c0116809412a33b4dccf9fda9fa1f6d6651744aa38ca37a479"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_STORAGE_ALLOCATION.json",
+      "sha256": "af921b8ae47b42df1c51584376fca6140e1f83d630d2f536fae566539bb74fba"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_STORAGE_OWNER_INTEGRATION.json",
+      "sha256": "680e063d7573c68ab9a7cd31aaa98010bcda4223a2ef5735a316920cf88d80ae"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/EXT4_FIXED_LAYOUT_CPU_CANDIDATE.json",
+      "sha256": "3476ba6c8de4c4dc56ae7b39f9900e67a74603480384218dd0e9e9edd4ce02ee"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Prepare exact production plans, helper/input pins, workload inode requirements and prepaid owner identities for review. Reserve full images plus control allowance before authorized provisioning; preserve failed allocations without refund or reuse. Require actual new-layout capacity evidence before capacity acceptance. Keep controller/queue review separate and protect four final plus four repair sessions.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 17
+  },
+  "must_fix": []
+}

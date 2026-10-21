@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：第15次合并独审PASS_CPU_SCOPE、无MUST_FIX；固定结果卷布局、payload接线、
+预付空间与register/submit/inventory统一计账获CPU范围接受。receipt/schema、源证据pins及
+worker清理已核验，15次完成、剩余17次，保护最终4+修复4。
+见 `docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json`。
+旧管理员阻塞已解除；当前缺口为生产卷实际容量、容量分配定稿、协议冻结和controller集成。
+下一步准备准确生产卷计划及预付身份；capacity=false，controller未部署，R6实际作业0，
+完整Goal继续且未完成。不得将此状态描述为后台训练或资源排队中。
+
 2026-10-21：预付双卷空间现已接入登记/submit/原件清单：allocation保留完整disk cap，
 准确job只新增其他资源；submit核对两笔身份，inventory将实际字节观察记回原空间预留，
 超额增加收费并保留失败，不退款。48项CPU组合回归通过（新增8项），见
