@@ -1,0 +1,40 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "No substantive defects found in delegated issuance, provenance checks, immutable approval/revocation, crash recovery, STOP, budget protection, or prepaid ownership. Preview preserves binding; job registration binds once. Baseline builder reuses H1 argv/resource/source validation. CPU tests: 43 passed; 8 worker-launch cases deliberately excluded. Evidence log hashes verified. Declared fixture boundaries remain; no capacity, live, or scientific acceptance.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_issue_next.py",
+      "sha256": "2bd4d22856a7a085dabdd34dd606cfb4a7965fcbbd4ef26a0a09b0d69110c72a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_next_job.py",
+      "sha256": "1869994b48d93a064163904f8aa454957c72d24a3dc29d47e30ea9b61e3b439f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_storage_allocation.py",
+      "sha256": "7f0a84fe3e03688c5da7a3bde7585f67c244e7470077aef740e16d02399e6ecb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_build_spec.py",
+      "sha256": "9199534374c25b81d86ef55b538b75366cf8fd013a5b0a102a129368a9ce927c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_ISSUANCE.json",
+      "sha256": "d47f3e885fce147c62489c9378a61e18290936b74af478b86b4ab92753c73e1c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ISSUANCE_STORAGE_INTEGRATION.json",
+      "sha256": "98776fddf7ae58aba346e2c3a8d94d2f31e9b6dd02f144de87bf456e69dc9b6b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_SPEC_BUILDER.json",
+      "sha256": "6251b9242e467fe9b07b7082494dd9fd9c974654141457dcd17acb91302fda07"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Continue remaining integration and deployment acceptance gates.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 121
+  },
+  "must_fix": []
+}

@@ -1,5 +1,11 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：第23次独审PASS_CPU_SCOPE，无MUST_FIX；接受准确next-job许可发行、
+只读预付卷preview与baseline规格生成器的本次CPU组合范围。receipt/schema/source pins
+与审核worker退出清理已核验，见 `docs/experiments/r6-robustness-auto/reviews/issuance-integration-review.json`。
+非生产许可/容量/部署接受；计划生成、初始baseline发车和完整controller仍待完成。
+112次自动唤醒+23worker=135，余121次；无R6 live，Goal未完成。
+
 2026-10-21：发现发行许可前预付卷尚未绑定却调用owner检查的循环依赖，新增只读
 preview检查；正式作业登记仍负责持久绑定。47项CPU检查通过，含真实Store批准→
 next-job登记→真实job登记/重放，预付disk不重复记账；审核/内核挂载等边界仍为替身。
