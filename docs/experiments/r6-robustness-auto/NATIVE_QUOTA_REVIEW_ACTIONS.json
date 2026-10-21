@@ -1,0 +1,25 @@
+{
+  "review": "reviews/native-quota-integration-review.json",
+  "decision": "MUST_FIX",
+  "completed_sessions": 12,
+  "remaining_sessions": 20,
+  "remaining_protected_final": 4,
+  "remaining_protected_repair": 4,
+  "write_boundary_candidate": {
+    "mechanism": "Landlock inherited process restriction",
+    "actual_cpu_query": {
+      "architecture": "x86_64",
+      "abi": 8,
+      "errno": 0
+    },
+    "requirement": "Restrict child before exec, inherited by descendants; native volume and exact bounded workload/control outputs only; inputs remain read-only",
+    "status": "AVAILABLE_NOT_IMPLEMENTED"
+  },
+  "next_actions": [
+    "Redirect structured telemetry, transmitter and file endpoint outputs",
+    "Implement and CPU-test inherited write policy, including absolute-path escape and frozen-input mutation denial",
+    "Independent repair review before capacity acceptance; production native allowance remains3GiB"
+  ],
+  "capacity_pass": false,
+  "controller_deployed": false
+}

@@ -1,0 +1,67 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "Aggregate native containment is not proven; reducing the allowance from 3GiB to 1.5GiB is not yet defensible. Existing evidence supports the fixed ext4 bound, manifest/mount/backing checks, selected path redirection, v2 input identity, persistent-config copying, and nonduplicated backing-image billing. However, telemetry has separate unredirected outputs, and the child retains write access outside the volume. These are engineering defects, distinct from pending production-volume provisioning, actual Kit dependency resolution, and CUDA/JIT compatibility. The noexec probe proves CPU LLVM behavior on tmpfs only. Reviewed source and existing test evidence; no tests or runtime operations executed. No runtime permission or scientific acceptance granted.",
+  "evidence_pins": [
+    {
+      "path": "tools/provision_r6_native_volume.py",
+      "sha256": "4a4489bf36fec2b6207a7d0fc96fc4c06013a1c226268f9d1270a899e527e5eb"
+    },
+    {
+      "path": "tools/check_r6_native_volume.py",
+      "sha256": "8835fc8c3805e5f8b9095676dcb444584571cc2faf56fafcef1b2bac1d0f0b47"
+    },
+    {
+      "path": "training_workloads/unified_h1/native_volume.py",
+      "sha256": "20f38ee5cb87ef780a70d08af583eb5368986962ac963008f13c7dbc63cf3ce7"
+    },
+    {
+      "path": "training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "7a7f0d764f0e8a3488f48e03852fddb9959ae311f375c76e9609373a2e311474"
+    },
+    {
+      "path": "training_workloads/unified_h1/extension_inputs.py",
+      "sha256": "fef972a7afe8cac192272627d65c8a9f4fb4c72cd9dca2b91c20d5111df7b6d1"
+    },
+    {
+      "path": "training_workloads/scale_003/resources.py",
+      "sha256": "10c8d1bf9bc6aea6521bbdd0a93bd49b23716286ef61d5fb78650222c6dace93"
+    },
+    {
+      "path": "tools/r6_job_inventory.py",
+      "sha256": "183d3382fd7d0aa8654778f12a2fa3fa959e88567dc1a829bf21187655dc7fcc"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_VERIFICATION.json",
+      "sha256": "c25dde818d863cb00bae9695cac6003d935828ad80084299ea6a80dd91db2d02"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/EXTENSION_INPUTS_CANDIDATE_02.json",
+      "sha256": "7d36890b12c5da14caf67905197bdad2298c080080e7049be6d714d5cce35dff"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_PERSISTENT_CONFIG_VERIFICATION.json",
+      "sha256": "6bbe4de6113f47327e3ece82c8f879b511f730f5ff77b8fb326b5f56912e99f8"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_JIT_NOEXEC_01/result.json",
+      "sha256": "5d80e452adfd5df1efc991c4e6e9a2dca2b13ad423af33f83317b4964aae19f1"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CAPACITY_NATIVE_RECONCILED_DRAFT.json",
+      "sha256": "852309aa36925eeb46e95e09ea63d32370eadf220c7d86610da35e44f2bc2ff0"
+    },
+    {
+      "path": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.telemetry-8994df2c5ad3f85e/docs/KitTelemetry.md",
+      "sha256": "4985ea30edf96220146c7469b9788c19b3e7ae1134791fa87292168f3b41e2a0"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Redirect telemetry outputs and enforce the child/descendant write boundary; add focused CPU escape-denial and output-routing tests, then independently review the repair. Keep 3GiB and capacity=false meanwhile. Before exact baseline admission, provision a fresh reserved volume, freeze source/v2 inputs and reconciled capacity, and bind exact Store authority. Authorized initialization must verify actual Kit resolution, native destinations and noexec compatibility with fail-closed cleanup. Do not extend the reduced allowance to training modes without equivalent enforcement.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 20
+  },
+  "must_fix": [
+    "Uncontained telemetry writers: training_workloads/unified_h1/native_volume.py:settings and training_workloads/scale_003/resources.py redirect /log/file but omit /structuredLog/logDirectory and /telemetry/log/file. The frozen headless experience enables omni.kit.telemetry. Its reviewed KitTelemetry.md:200–218 explicitly states that the transmitter does not inherit /log/file and defaults to a separate log directory; its cloud file endpoint can also target ${omni_logs}. Explicitly bind the applicable structured-log/transmitter/file-endpoint destinations inside the native volume, preserve evidence, and test their launcher wiring/readback. Current job/attempt/native inventory does not discover these external outputs.",
+    "Missing aggregate write-boundary enforcement: training_workloads/unified_h1/local_dispatch.py:136–182 sets environment variables and execs with ordinary user filesystem access; training_workloads/unified_h1/extension_inputs.py validates hashes but does not make inputs read-only. The actual extension tree is mint-owned mode0775 and Kit data directory mint-owned mode0755. Neither settings readback nor PYTHONDONTWRITEBYTECODE prevents native code or descendants from writing absolute paths outside the volume. Enforce a fail-closed write policy before execution, inherited by descendants, keeping runtime/assets/extensions read-only and permitting only the native volume plus explicitly bounded workload/control outputs. Add CPU counterexamples for outside-volume writes and input mutation. Until this exists, the ext4 limit and inventory's single-image billing cannot establish the proposed all-native 1.5GiB bound."
+  ]
+}

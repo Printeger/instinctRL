@@ -2,6 +2,13 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：第12次独审返回MUST_FIX：遥测独立日志路径未纳入配额；子进程仍能向
+卷外绝对路径写入，输入哈希检查不能代替只读写策略。见
+`docs/experiments/r6-robustness-auto/reviews/native-quota-integration-review.json`。
+当前内核实际CPU查询支持Landlock ABI8，可实现无管理员权限的进程继承写限制；尚未接线。
+容量已重新计入测试卷/JIT/元数据和模型输出，条件开发余量2193948672字节，但capacity=false，
+生产3GiB预留不变。12次审核receipt/清理通过，无本任务模型worker遗留；剩余20次。
+
 2026-10-21：native作业输入manifest升级为v2，绑定原Kit持久配置；启动前哈希核验，
 运行时逐字节复制到卷内0600独立文件，拒绝覆盖旧输出。registryCache/pip envPath也已
 接入卷内，关闭在线pip索引及自动升级；48测试和3子测试通过。真实114926字节配置和
