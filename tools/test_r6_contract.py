@@ -61,11 +61,16 @@ class ContractTests(unittest.TestCase):
         self.p['native_volume']={'path':'/fixture/volume.json','sha256':'1'*64}
         self.p['extension_inputs']={'path':'/fixture/extensions.json','sha256':'2'*64}
         self.p['result_volume']={'path':'/fixture/result.json','sha256':'3'*64}
-        with patch('training_workloads.unified_h1.native_volume.validate',return_value={'fixture':True}) as check, patch('training_workloads.unified_h1.extension_inputs.validate',return_value='/fixture/installed'), patch('training_workloads.unified_h1.result_volume.validate',return_value={'fixture':True}):
+        with patch('training_workloads.unified_h1.native_volume.validate',return_value={'fixture':True}) as check, patch('training_workloads.unified_h1.extension_inputs.validate',return_value='/fixture/installed'), patch('training_workloads.unified_h1.result_volume.validate',return_value={'fixture':True}) as result_check:
             with self.assertRaisesRegex(PermissionError,'card/profile mismatch'):validate_parameters(MODE,self.p)
             self.card()
             self.assertEqual(validate_parameters(MODE,self.p),self.p)
             check.assert_called_with(self.p['native_volume'])
+            payload=64*1024**2+sum(sum(q.values())+16*1024**2 for q in self.p['r6']['output_quotas'].values())
+            result_check.assert_called_with(self.p['result_volume'],output_cap_bytes=self.p['output_cap_bytes'],minimum_free_bytes=payload)
+            # A large nominal job cap cannot override insufficient mounted space.
+            result_check.side_effect=ValueError('RESULT_FREE_SPACE')
+            with self.assertRaisesRegex(ValueError,'RESULT_FREE_SPACE'):validate_parameters(MODE,self.p)
         with patch('training_workloads.unified_h1.native_volume.validate',side_effect=ValueError('MOUNT_ABSENT')):
             with self.assertRaisesRegex(ValueError,'MOUNT_ABSENT'):validate_parameters(MODE,self.p)
     def test_baseline_cannot_omit_failed_domain_or_duplicate_blocks(self):

@@ -1,0 +1,35 @@
+{
+  "schema_version": "r6-result-payload-admission-cpu/1",
+  "status": "CPU_PASS_PENDING_REVIEW",
+  "pytest_cases_passed": 48,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_contract.py",
+    "sha256": "d390338f51ac3a726b47557951d2a860e158f3298c1b06f88a8a475e68902424"
+  },
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_contract.py",
+    "sha256": "abbce71044c651bfa3777255118ed73f8e820e544083e5503893cf26321a0944"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESULT_PAYLOAD_ADMISSION_TESTS_V2.txt",
+    "sha256": "d121a4c439aee85b6c6351731ad6c451c96ba19ed7f88207321cd01f2ddef050"
+  },
+  "initial_failure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESULT_PAYLOAD_ADMISSION_TESTS.txt",
+    "sha256": "d09b2db36cdece2361c99bed24a2f9563efccc096877670367c73f59b72cf7ac"
+  },
+  "failure_resolution": "Control Python lacks Torch required by existing lifecycle test. Existing tensor Python ran all48 tests successfully; no dependency installed.",
+  "capacity_draft": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_DUAL_VOLUME_DRAFT.json",
+    "sha256": "9557d49ada3568a8ab88270d49cb7f6fc390dbd49249d586bd4341e8f812390a"
+  },
+  "limits": [
+    "Mounted quota available bytes, not backing image bytes, must cover all frozen result quotas.",
+    "Filesystem allocation overhead still requires exact-layout capacity measurement; no capacity acceptance.",
+    "Mocked contract volume validator verifies requested minimum and rejection propagation; existing native binding tests exercise actual CPU mount."
+  ],
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "capacity_pass": false
+}

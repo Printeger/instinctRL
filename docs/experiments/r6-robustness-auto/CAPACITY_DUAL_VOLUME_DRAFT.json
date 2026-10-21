@@ -1,0 +1,71 @@
+{
+  "schema_version": "r6-dual-volume-capacity-draft/1",
+  "status": "INCOMPLETE_FILESYSTEM_PAYLOAD_OVERHEAD_PENDING",
+  "capacity_pass": false,
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_NATIVE_RECONCILED_DRAFT.json",
+      "sha256": "852309aa36925eeb46e95e09ea63d32370eadf220c7d86610da35e44f2bc2ff0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_COMPOSED_DRAFT_V5.json",
+      "sha256": "56bb916565aea2c5d494b715172647d9dba27aa71d8719e800256838b1c141a8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02_REGISTRATION.json",
+      "sha256": "6595581fdb11f90a59f2d9e298b55f2f54b54438ae3bae1f88fae8d5ee7a5b61"
+    }
+  ],
+  "source_commit": "134a369",
+  "native_bytes_per_job_proposal": 1610612736,
+  "production_native_allowance_unchanged": 3221225472,
+  "result_volume_control_allowance_per_job": 67108864,
+  "final_components_bytes": {
+    "four_full_evaluations": 80329310208,
+    "three_training_jobs": 11274289152,
+    "snapshots": 2147483648,
+    "videos": 2147483648,
+    "controller_and_reviews": 1073741824,
+    "failed_cleanup_and_delivery_margin": 1073741824,
+    "seven_result_volume_control_allowances": 469762048
+  },
+  "final_total_before_filesystem_overhead_bytes": 98515812352,
+  "final_protection_bytes": 98784247808,
+  "final_unallocated_before_filesystem_overhead_bytes": 268435456,
+  "development_components_bytes": {
+    "initial_full_baseline": 20082327552,
+    "one_affected_block_plus_original_evaluation": 3489660928,
+    "one_256_update_training_job": 2684354560,
+    "historical_snapshot_reservation": 2147483648,
+    "new_baseline_snapshot": 2147483648,
+    "controller_and_reviews": 2147483648,
+    "failed_prelaunch_and_repair_margin": 2147483648,
+    "consumed_cpu_volume_and_jit_reservations": 1613824000,
+    "ten_volume_metadata_allowances": 655360,
+    "result_volume_cpu02_reservation": 17825792,
+    "ten_result_volume_metadata_allowances": 655360,
+    "three_result_volume_control_allowances": 201326592
+  },
+  "development_total_before_filesystem_overhead_bytes": 36680564736,
+  "development_limit_bytes": 38654705664,
+  "development_headroom_before_filesystem_overhead_bytes": 1974140928,
+  "existing_final_time_proposal_seconds": 27000,
+  "full_evaluation_result_payload_bytes": 18471714816,
+  "original_result_image_shortfall_before_ext4_bytes": 67108864,
+  "filesystem_capacity_rule": "Actual statvfs available bytes must cover original-suite64MiB plus every block range/audit quota and16MiB motion/metadata quota; image size alone is insufficient.",
+  "native_fixture_initial_usable_fraction_evidence": {
+    "path": "/var/lib/instinctrl-r6-native/CPU-QUOTA-01/volume.json",
+    "sha256": "3b95e509d6f66f78acd7fe1393b0ef866b4bf26cc0129308b421f1deadcd3910"
+  },
+  "filesystem_overhead_bytes": null,
+  "notes": [
+    "Ten production jobs: four final evaluations, three final training jobs, baseline, one affected-block evaluation, one development training job. Metadata allowances are additional to backing images.",
+    "The previous evaluation cap included64MiB original-suite payload; it did not include another64MiB external control allowance. Preserve both separately.",
+    "Training payload budgets also remain unchanged; control allowance added separately.",
+    "Final slack and development headroom are upper bounds until ext4 overhead is measured for exact layouts. The1.5GiB CPU volume ratio cannot be extrapolated as an exact production bound.",
+    "No reservation refunded; old snapshot, CPU01/JIT and pending CPU02 remain charged.",
+    "No lowering of production native allowance or change to final sample coverage; no live permission."
+  ],
+  "ledger_changed": false,
+  "coverage_changed": false
+}

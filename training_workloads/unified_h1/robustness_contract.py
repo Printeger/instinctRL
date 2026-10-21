@@ -54,8 +54,6 @@ def validate_parameters(mode,value):
         validate(p['native_volume'])
         from .extension_inputs import validate as validate_extensions
         validate_extensions(p['extension_inputs'])
-        from .result_volume import validate as validate_results
-        validate_results(p['result_volume'],output_cap_bytes=p['output_cap_bytes'])
     if not isinstance(p['experiment_id'],str) or not re.fullmatch(r'R6-[A-Z0-9-]{1,90}',p['experiment_id']):raise PermissionError('R6 experiment identity')
     if p['group']!='R1' or type(p['training_seed'])is not int or p['training_seed']!=20260908 or type(p['evaluation_seed'])is not int or p['evaluation_seed']!=20260909:
         raise PermissionError('R6 baseline/original-suite seed identity')
@@ -100,6 +98,12 @@ def validate_parameters(mode,value):
         if set(quota)!={'range_bytes','audit_bytes'} or any(type(v)is not int or v<=0 or v>2*1024**3 for v in quota.values()):raise PermissionError('R6 quota schema/per-file ceiling')
         required+=sum(quota.values())+16*1024**2 # Complete motion JSON and block result.
     if required>p['output_cap_bytes']:raise PermissionError('R6 components exceed job output cap')
+    if 'native_volume' in p:
+        from .result_volume import validate as validate_results
+        # Backing-image bytes include ext4 metadata; they are not all payload.
+        # Require the complete frozen result quotas in actual available space.
+        validate_results(p['result_volume'],output_cap_bytes=p['output_cap_bytes'],
+                         minimum_free_bytes=required-3*1024**3)
     card=pinned_json(p['experiment_card'])
     if card.get('experiment_id')!=p['experiment_id'] or card.get('profiles',{}).get('R1')!={k:v for k,v in p.items() if k!='experiment_card'}:
         raise PermissionError('R6 exact card/profile mismatch')
