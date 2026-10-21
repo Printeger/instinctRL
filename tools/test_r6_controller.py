@@ -19,7 +19,12 @@ def controller(case,monkeypatch):
     b.request=b.write('controller-request.json',dict(initial_request=b.initial,profile_context=b.context))
     b.first=Mock(return_value=dict(status='DECISION_PROPOSAL_RETURNED',event_key=b.key))
     monkeypatch.setattr(c.first,'start',b.first)
-    b.source=Mock(return_value=dict(preparation={'fixture':'source'},snapshot={'fixture':'snapshot'}))
+    snapshot=dict(event_key='fixture-snapshot',fixture='snapshot')
+    with b.j.writer():
+        state=b.j.read();state['events']['fixture-snapshot']=dict(kind='cpu',identity={'role':'source-snapshot'},receipt=b.write('source-receipt.json',snapshot));b.j.save(state)
+    b.source=Mock(return_value=dict(preparation={'fixture':'source'},snapshot=snapshot))
+    b.compat=Mock(return_value=dict(status='EXACT_COMPATIBILITY_ACCEPTED_CONTEXT_READY',context=b.context))
+    monkeypatch.setattr(c.compatibility,'prepare',b.compat)
     monkeypatch.setattr(c.source,'prepare_source',b.source)
     b.next=Mock();monkeypatch.setattr(c.next_entry,'continue_job',b.next)
     return b
@@ -91,21 +96,20 @@ def test_changed_implementation_blocks_resume(controller,monkeypatch):
     with pytest.raises(RecoveryError,match='INPUT_DRIFT'):run(b)
 
 
-def test_source_needed_has_one_worker_then_preserved_compatibility_boundary(controller):
+def test_source_needed_does_not_loop_when_changed_source_still_cannot_support_phase(controller):
     b=controller;b.builder.with_suffix('.settings').write_text('{"source":true}')
-    result=run(b)
-    assert result['status']=='SOURCE_COMPATIBILITY_REQUIRED'
-    assert run(b)==result
-    b.source.assert_called_once();b.next.assert_not_called()
+    for _ in range(2):
+        with pytest.raises(RecoveryError,match='SOURCE_CHANGE_DID_NOT_RESOLVE'):run(b)
+    b.source.assert_called_once();b.compat.assert_called_once();b.next.assert_not_called()
     assert b.builder.with_suffix('.count').read_text()=='call\n'
     assert not any(e['identity']['role']==c.profile.storage.ROLE for e in b.j.read()['events'].values())
 
 
-def test_candidate_goes_directly_to_source_without_extra_profile_worker(controller,monkeypatch):
+def test_candidate_source_and_compatibility_precede_one_profile_worker(controller,monkeypatch):
     b=controller;monkeypatch.setattr(c,'parent_for_job',lambda *a:(b.parent,{'decision':{'decision':'PROPOSE_CANDIDATE'}}))
-    assert run(b)['status']=='SOURCE_COMPATIBILITY_REQUIRED'
-    assert not b.builder.with_suffix('.count').exists()
-    b.source.assert_called_once()
+    assert run(b)['status']=='WAITING_FOR_ADMIN_PROVISION'
+    assert b.builder.with_suffix('.count').read_text()=='call\n'
+    b.source.assert_called_once();b.compat.assert_called_once()
 
 
 def test_final_request_is_incomplete_delivery_boundary_never_goal_complete(controller,monkeypatch):
@@ -132,7 +136,8 @@ def test_existing_first_phase_delegates_stop_cleanup_to_original_runner(controll
     assert not b.builder.with_suffix('.count').exists()
 
 
-def test_ready_materializer_routes_to_next_entry_then_next_job_decision(controller,monkeypatch):
+@pytest.mark.parametrize('candidate',[False,True])
+def test_ready_materializer_routes_to_next_entry_then_next_job_decision(controller,monkeypatch,candidate):
     b=controller
     monkeypatch.setattr(c.materializer,'materialize',Mock(return_value=dict(
         status='EXACT_INPUTS_MATERIALIZED_NOT_AUTHORIZED',artifacts={'plan':b.context})))
@@ -141,9 +146,10 @@ def test_ready_materializer_routes_to_next_entry_then_next_job_decision(controll
     monkeypatch.setattr(b.j,'canonical_job',lambda key,**kw:original_job(b.key if key=='second-job' else key,**kw))
     original_parent=c.parent_for_job
     monkeypatch.setattr(c,'parent_for_job',lambda j,key,s:
-        ('second-parent',{'decision':{'decision':'REQUEST_FINAL_REVIEW'}}) if key=='second-job' else original_parent(j,key,s))
+        ('second-parent',{'decision':{'decision':'REQUEST_FINAL_REVIEW'}}) if key=='second-job' else ((b.parent,{'decision':{'decision':'PROPOSE_CANDIDATE'}}) if candidate else original_parent(j,key,s)))
     assert run(b)['status']=='FINAL_DELIVERY_REQUIRED'
     assert entry(b)['cursor']['completed_jobs']==[b.key,'second-job']
+    assert 'source_preparation' not in entry(b)['cursor']
     b.next.assert_called_once()
     assert b.next.call_args.args[1:5]==(b.parent,b.context,b.context,file_pin(b.builder))
     run(b);b.first.assert_called_once();b.next.assert_called_once()

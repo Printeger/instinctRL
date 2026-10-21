@@ -1,8 +1,8 @@
 """Persist the R6 first-job/decision/preparation/next-job handoffs in one writer.
 
 This composes existing bounded runners; it is not a scheduler or an approval.
-Source compatibility and final delivery require their own accepted artifacts.
-Those currently unsupported boundaries persist an incomplete result and exit.
+Source compatibility uses its own exact review and frozen validation. Final
+delivery still persists an incomplete boundary pending its delivery workflow.
 """
 import argparse
 import json
@@ -22,11 +22,12 @@ from tools import r6_continue_job as next_entry
 from tools import r6_profile_preparation as profile
 from tools import r6_source_preparation as source
 from tools import r6_materialize_job as materializer
+from tools import r6_execution_compatibility as compatibility
 
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'SOURCE_COMPATIBILITY_REQUIRED','FINAL_DELIVERY_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED'}
 
 
 def require(condition,reason):
@@ -124,6 +125,8 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 journal.canonical_job(job_key)
                 require(job_key not in cursor['completed_jobs'],'REPEATED_JOB')
                 cursor['completed_jobs'].append(job_key)
+                for name in ('source_preparation','snapshot_receipt','materialization_inputs'):
+                    cursor.pop(name,None)
                 cursor.update(phase='DECIDE',job_key=job_key)
             elif phase=='DECIDE':
                 journal.guard();require(not stop_paths(journal),'STOP')
@@ -136,7 +139,9 @@ def run(journal,request_pin,store,*,free_disk_bytes):
             elif phase=='PROFILE':
                 outcome=profile.prepare_profile(journal,cursor['parent_key'],cursor['context'],store,
                     executable=initial['review_executable'],free_disk_bytes=free)
-                if outcome['status']=='SOURCE_PREPARATION_REQUIRED':cursor['phase']='SOURCE'
+                if outcome['status']=='SOURCE_PREPARATION_REQUIRED':
+                    require('source_preparation' not in cursor,'SOURCE_CHANGE_DID_NOT_RESOLVE')
+                    cursor['phase']='SOURCE'
                 else:
                     require(outcome['status']=='PROFILE_AND_STORAGE_PLANS_READY_NOT_PROVISIONED','PROFILE_STATUS')
                     cursor.update(phase='MATERIALIZE',materialization_inputs=outcome['inputs'])
@@ -145,7 +150,15 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 # compatibility to changed source or mutate this controller.
                 outcome=source.prepare_source(journal,cursor['parent_key'],store,
                     executable=initial['review_executable'],free_disk_bytes=free)
-                cursor.update(phase='SOURCE_COMPATIBILITY_REQUIRED',source_preparation=outcome)
+                snapshot=outcome['snapshot'];snapshot_event=journal.read()['events'][snapshot['event_key']]
+                snapshot_pin=snapshot_event['receipt']
+                require(json.loads(checked(snapshot_pin).read_text())==snapshot,'SNAPSHOT_RESULT')
+                cursor.update(phase='COMPATIBILITY',source_preparation=outcome,snapshot_receipt=snapshot_pin)
+            elif phase=='COMPATIBILITY':
+                outcome=compatibility.prepare(journal,cursor['parent_key'],cursor['snapshot_receipt'],
+                    cursor['context'],store,executable=initial['review_executable'],free_disk_bytes=free)
+                require(outcome['status']=='EXACT_COMPATIBILITY_ACCEPTED_CONTEXT_READY','COMPATIBILITY_STATUS')
+                cursor.update(phase='PROFILE',context=outcome['context'])
             elif phase=='MATERIALIZE':
                 outcome=materializer.materialize(journal,cursor['materialization_inputs'],store,free_disk_bytes=free)
                 if outcome['status']=='WAITING_FOR_ADMIN_PROVISION':

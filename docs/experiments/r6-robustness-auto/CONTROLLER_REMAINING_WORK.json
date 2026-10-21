@@ -1,6 +1,6 @@
 {
-  "status": "CONTROLLER_COMPOSITION_CPU_PASS_UNSUPPORTED_PHASES_AND_DEPLOYMENT_PENDING",
-  "checked_commit": "4cefc402",
+  "status": "SOURCE_COMPATIBILITY_CONNECTED_PHASE_CONTRACTS_AND_DEPLOYMENT_PENDING",
+  "checked_commit": "2b0df4ea",
   "concrete_first_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
     "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
@@ -29,9 +29,9 @@
     "No production post-analysis decision exists, so updated STOP request does not reinterpret an existing production receipt"
   ],
   "next_implementation": {
-    "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs; persistent first/decision/profile/materialization/next cursor and actual detached CPU wait/STOP fixture",
-    "next": "Implement source compatibility acceptance/context generation and training/final contracts, final delivery/review routes; future actual provisioning remains external",
-    "deployment": "Composition exists and detached CPU fixture passes; no production deployment until unsupported boundaries, combined review and platform handoff resolved",
+    "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs; persistent first/decision/profile/materialization/next cursor and actual detached CPU wait/STOP fixture; exact baseline-compatible source payload/review/frozen validation/new-context routing",
+    "next": "Training/method/final phase contracts and final delivery/review routing; actual future provisioning remains external",
+    "deployment": "Controller composition and baseline-compatible source route CPU verified; independent combined review, remaining phase contracts and platform handoff precede production",
     "invariants": [
       "No Journal or Store authority mutation by source-preparation worker",
       "No model or paid probe while waiting for a live job",
@@ -64,5 +64,9 @@
   "controller_composition": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_COMPOSITION.json",
     "sha256": "f7c108b863a25b8273a35e876272fa5cde1224e575eede3ad909f06882f1bb4c"
+  },
+  "source_compatibility": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_COMPATIBILITY.json",
+    "sha256": "a50d23eed4c435a0ecd4d3aaa01c832a183d6889f1fef082b7373b76b46ba52a"
   }
 }

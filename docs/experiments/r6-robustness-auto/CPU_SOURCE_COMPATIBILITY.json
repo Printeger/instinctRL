@@ -1,0 +1,70 @@
+{
+  "status": "CPU_AND_EXISTING_FROZEN_VALIDATION_PASS_PENDING_COMBINED_REVIEW",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_execution_compatibility.py",
+      "sha256": "a8909f1d7de6ef4cf8188e0aa5f00f4f33e0993e97ae38723fd78f51f7a0b35f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_execution_compatibility.py",
+      "sha256": "9421c7badf87cc1391107ff507480f80fc7ddc30e8c4b875b006fdd1711175f0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "4487ee225ac33ed7f6c748e9034e5183f9033db60f859e826950c46575ed2c88"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "2ac13406a99a113bd8c99540ef44759786d11fce243820b0066b0dc4efc0f143"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/source-compatibility.schema.json",
+      "sha256": "8dd63d9c3c8a826ef9d2a98a89c389d3e7cf0dbde69983c43f5d0807ee070753"
+    }
+  ],
+  "tests": {
+    "passed": 38,
+    "log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_COMPATIBILITY_FINAL_TEST.txt",
+      "sha256": "912c2c076fcadf28e203e385d8009985b7e970c75b357085ef4bb0337c862d20"
+    },
+    "earlier": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_COMPATIBILITY_TEST.txt",
+        "sha256": "c084cc10fe7c37b5e82a5bd60fd204f9a91ee2293280e6330d9f8f2b276374a1"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_COMPATIBILITY_COMBINED_TEST.txt",
+        "sha256": "05bf15764572b5ee2e4224bccef493edf6740243a25fda17524d51881594baa5"
+      }
+    ]
+  },
+  "actual": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_COMPATIBILITY_ACTUAL.json",
+    "sha256": "8fe370cd3634d04437dc27f845201fe6520e573675656d6cbfada4a281de9d42"
+  },
+  "coverage": [
+    "Exact origin/execution source-config payload; baseline actor/training/runtime/method/metric invariants preserved",
+    "Registered read-only review consumes one model event and remains replayable after missing prompt or returned receipt",
+    "MUST_FIX and failed frozen validation preserve originals without creating a usable new context",
+    "New accepted compatibility replaces old pin and removes old execution condition; no Store mutation or live authority",
+    "Controller source -> exact compatibility -> profile path, with per-job source marker reset and no endless source loop",
+    "Real existing accepted snapshot gives identical canonical payload and passes frozen interpreter validation without mocks"
+  ],
+  "fixture_boundaries": [
+    "Review uses real fake CLI; payload/frozen validator explicitly mocked in worker tests",
+    "Controller live runner/source preparation remain stubs in composition tests",
+    "Actual validation uses existing accepted baseline snapshot, not a newly reviewed candidate"
+  ],
+  "remaining": [
+    "Training/method/final execution contracts; baseline compatibility intentionally cannot authorize those changes",
+    "Final delivery and independent audit routing",
+    "Future privileged volume provisioning",
+    "Combined independent review, exact initial prelive and production handoff",
+    "Platform automatic continuation must be resolved before live"
+  ],
+  "production_model_calls": 0,
+  "GPU_queries": 0,
+  "live_starts": 0,
+  "goal_complete": false
+}
