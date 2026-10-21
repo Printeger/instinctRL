@@ -107,6 +107,29 @@ class RobustnessTests(unittest.TestCase):
             r['velocity_w_m_s']=[.1 if 200<=i<211 else 0,0,0]
         self.assertFalse(self.score(t)['motion_pass'])
 
+    def test_wall_startup_rest_does_not_hide_later_valid_stop(self):
+        t=fixture('W-near');position=4.7;previous=0.
+        for i,r in enumerate(t['rows']):
+            speed=.05 if i in (12,24) else (.1 if 13<=i<=23 else 0.)
+            position+=(previous+speed)*.05;previous=speed
+            r['sensor_position_w_m']=[position,0,2]
+            r['velocity_w_m_s']=[speed,0,0]
+        result=self.score(t)
+        self.assertTrue(result['motion_pass'],result)
+        self.assertEqual(result['metrics']['confirmation_index'],34)
+        self.assertIsNone(result['metrics']['trigger_index'])
+        self.assertAlmostEqual(result['metrics']['min_distance_m'],1.18)
+
+    def test_wall_motion_does_not_restart_clearance_deadline(self):
+        t=fixture('W-middle')
+        for i,r in enumerate(t['rows']):
+            r['sensor_position_w_m']=[5.,0,2]
+            r['velocity_w_m_s']=[.1 if 30<=i<=40 else 0,0,0]
+        result=self.score(t)
+        self.assertEqual(result['metrics']['trigger_index'],0)
+        self.assertIsNone(result['metrics']['confirmation_index'])
+        self.assertFalse(result['motion_pass'])
+
     def test_wall_sensor_geometry_not_reported_clearance(self):
         t=fixture('W-middle'); t['rows'][0]['sensor_position_w_m']=[5.21,0,2]
         t['rows'][0]['claimed_clearance_m']=2

@@ -163,12 +163,17 @@ def score_lane(block, lane, trace, *, run_id):
             passed = z_gate(positions, velocities, all_positions[0])
         elif task == 'wall_modes' and mode == 'toward':
             first = next((i for i, d in enumerate(geometry[1:]) if d<=1.1), None)
-            index = confirmation(speeds, first if first is not None else 0,
-                                 boundary='OBSERVATION' if first is not None else 'PRE_STEP',
-                                 limit=3 if first is not None else 20)
-            moving = index is not None and consecutive(
-                velocities, lambda v: dot(v, direction)>=block['speed_m_s']/2,
-                end=max(0, index-10)) is not None
+            movement_end = consecutive(velocities, lambda v: dot(v, direction)>=block['speed_m_s']/2)
+            start = first if first is not None else 0
+            # Startup rest is not a stopping confirmation. Search only after
+            # completed signed motion, without moving the original deadline.
+            index = None if movement_end is None else consecutive(
+                speeds, lambda v: v<=.08, max(start, movement_end+1))
+            if index is not None:
+                elapsed = (index-start if first is not None else index+1-start)*.1
+                if elapsed > (3 if first is not None else 20)+1e-12:
+                    index = None
+            moving = movement_end is not None and index is not None
             enough_hold = index is not None and len(rows)-index >= 101
             passed = moving and enough_hold and rms(speeds[index:])<=.08
             metrics.update(trigger_index=first, confirmation_index=index, movement_prerequisite=moving)

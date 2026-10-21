@@ -1,0 +1,94 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "One reproducible scoring defect: toward-wall startup rest can incorrectly preempt a later valid motion-and-stop sequence. No internally impossible target condition identified; low-speed prerequisites, ICS .15 clearance, denominators, sensor-origin geometry, shared impaired actor/ICS frames, reset handling, force composition and actual seed influence otherwise appear coherent within this scope. CPU staging/replay does not prove physical integration. No files changed or live authority issued.",
+  "evidence_pins": [
+    {
+      "path": "docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/SPLIT_MANIFEST.json",
+      "sha256": "7e743b68fb9f346a16cbb7eaabb9c0e9df2e875d44f40de26a0a6369b87ca208"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/PROTOCOL_READINESS.json",
+      "sha256": "34a232bcf34638bc70d8c839ae4647336991f1fec021b50ce5921271c029aa1b"
+    },
+    {
+      "path": "training_workloads/unified_h1/robustness.py",
+      "sha256": "37935ef61bbcb49c89c9293c4dead7fd418fd1663195e508a4948442eed50804"
+    },
+    {
+      "path": "training_workloads/unified_h1/robustness_scenarios.py",
+      "sha256": "630cbdf15d217644fae7bf0be8fb7db4be1f07abacd62ea9c9cb6e7ef34a22f3"
+    },
+    {
+      "path": "training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "3afb0e1707e22b9f723712e1e7168b2f20ea94008b0495df66c38ebc66cc409b"
+    },
+    {
+      "path": "training_workloads/unified_h1/robustness_audit.py",
+      "sha256": "e39d2bb4b8f95bb9d5787d3bed930b8a203777af2929f41896f9f8aa3b7d99e6"
+    },
+    {
+      "path": "training_workloads/unified_h1/robustness_measurement_replay.py",
+      "sha256": "2113d8f4f7d214e753bf6bf6e0d6cd9db1fe2fa71d8a54e6ce898af4dd8fc932"
+    },
+    {
+      "path": "training_workloads/unified_h1/robustness_physics_replay.py",
+      "sha256": "dee0eef068cbfa059cbd728d4fe769552d9a5788f17d80379e87dd6c7f4f6fbe"
+    },
+    {
+      "path": "isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "05fd977e751d4af3f78e13a1dee983c673fe4347988ee9a17449e497c20a488e"
+    },
+    {
+      "path": "isaaclab-training/instinctlab/observations/robustness_adapter.py",
+      "sha256": "3d41a275babc165c0dc75b3cba85ad45abe5d680bf79f50bae95ca57f56eb463"
+    },
+    {
+      "path": "isaaclab-training/instinctlab/observations/robustness_physics.py",
+      "sha256": "19b66208bd99e93853ffc2ce4246382dac6c2e36262ed11dd688b4c7ae429863"
+    },
+    {
+      "path": "isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+      "sha256": "a3c06c94865c5211d1d438abb35629071eb6171e3a4ab57fe64cd23d04508e2a"
+    },
+    {
+      "path": "isaaclab-training/instinctlab/envs/taslab_direct_env.py",
+      "sha256": "940ce1e2949c9b1291020804cb9aca57a1840470353f085a5b2c18be0c46a739"
+    },
+    {
+      "path": "tools/test_r6_robustness.py",
+      "sha256": "a30274cd019f04160ccbbecf7aadbe346c8678c14831f5586f641b31748e53d8"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_METRIC_MEASUREMENT_TESTS.json",
+      "sha256": "e943b2545dd325223cb4d8abe72dd951afc595f48aab4e29141fae54047af2ae"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_PHYSICS_ADAPTER_TESTS.json",
+      "sha256": "8e0f802bae818f621db793fc81c82572056be78ac08da6c229dd2b58a7dbe379"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_EVALUATION_TESTS.json",
+      "sha256": "24e9f604c750f119ed1ec767a8a4e96d6c56b70d2233a3fafd408c36ad11b640"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_TEMPORAL_ARCHIVE_TESTS.json",
+      "sha256": "e0b52008171a0c33e8f7adc0bf22c506b178c7a5a865e55355c08bb5eeff2dfe"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_OUTPUT_LAYOUT.json",
+      "sha256": "9b90083bdeb87602495d9481394105522f93815d9372b7c48b1cb23a57dfd03b"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Repair confirmation selection and add the focused regression below; independently review before protocol freeze. Retain separate real-integration, capacity and exact Store gates. No final acceptance follows from this preflight.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 145
+  },
+  "must_fix": [
+    "training_workloads/unified_h1/robustness.py:164\u2013173 selects the first low-speed window before checking its preceding signed-motion prerequisite, then never searches for a later eligible confirmation. Read-only CPU counterexample: W-near lane0, initial sensor=(4.7,0,2), zero initial velocity; post-step normal velocities are 0 for indices0\u201311, .05 at12, .1 at13\u201323, .05 at24, then0. Integrating with linear ramps gives minimum clearance1.18m, no trigger/height/collision/reset violation, 11 qualifying motion observations followed by valid stop confirmation at index34 (3.5s), and296 hold observations. Written proactive20s/101-observation rules are satisfied, but scorer chooses index10 and returns movement_prerequisite=false. Select the first confirmation whose entire low-speed window follows completed signed motion, while retaining the original start/clearance-trigger deadline and all hold/safety gates. Add this early-startup-rest positive regression alongside the existing late-motion negative test; do not restart or extend the deadline."
+  ]
+}

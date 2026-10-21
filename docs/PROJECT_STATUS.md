@@ -1,5 +1,14 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：Goal平台已active。第16次独审发现1项MUST_FIX：近墙评分先选起步
+静止窗口，导致后续合法运动/停止仍被误判未运动。现已改为完成11样本有符号运动
+之后再选择11样本停止确认，截止仍绑定原触发/初始时刻，不放宽阈值。
+24项CPU检查通过，覆盖起步静止后合法停止、晚运动失败与禁止重启触发截止。
+见 `CPU_WALL_CONFIRMATION_REPAIR.json`及reviews/protocol-science-preflight-review.json
+（均在docs/experiments/r6-robustness-auto/）。修复待独立复查，原MUST_FIX保留。
+95次平台唤醒+16次worker共111次，256总上限余145次；生产双卷仍不存在。
+协议未冻结、capacity=false，无R6 live，完整Goal未完成。
+
 2026-10-21：用户明确“大幅增加预算，批准全部需要”。新修订将自动模型会话总上限
 从32提高到256，历史worker和平台续推理均保留；补齐到94次自动唤醒后，
 已计109次，剩余147次。新授权/账本/MASTER_AUTHORITY_V2已落盘，原超额审计保留。
