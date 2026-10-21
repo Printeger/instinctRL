@@ -1,0 +1,64 @@
+{
+  "status": "CPU_SOURCE_PREPARATION_SIDE_EFFECT_RECONCILIATION_AND_REPLACEMENT_PASS_NOT_DEPLOYED",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_source_repair.py",
+      "sha256": "489be8e404578ae1da9278ca2618bf0f8a9cf8736f10dfd4638c0318c27767ce"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_source_preparation.py",
+      "sha256": "23e31e34dc8cd81bc093beae62f99d3ebd79576e0b46a1c58aceb083fc6cb74d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_repair.py",
+      "sha256": "a01f764d408399108f72dc27bc6fd8c0e40ab9e9aec06c5c43720698e31e959a"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_REPAIR_INITIAL.log",
+      "sha256": "18141c21327437e88f189550dbd5a1e0e42090c4c358a92aa5ba53dc3c11cd47"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_REPAIR_COMBINED.log",
+      "sha256": "91354f402da15cdd800c9b9c6f9243d2e135604828c071865e1a17f287a3ebdd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_REPAIR_FINAL.log",
+      "sha256": "e39fd6e037e417db634541bc620c6f1a71a489485ba8277257c1e50b95f3f854"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SOURCE_REPAIR_COMMITTED_INPUT.log",
+      "sha256": "c8195e475881a53aa3b3b955f23e19b19838d952648311a45cd875e464ca9720"
+    }
+  ],
+  "checks": {
+    "initial_tests": 31,
+    "combined_tests": 117,
+    "final_tests": 34,
+    "committed_reconciliation_input_test": 1,
+    "real_journal_guard": "PASS",
+    "production_source_events": 0,
+    "production_model_calls_added": 0
+  },
+  "behavior": [
+    "Explicit repair document binds parent, failed or PREPARATION_INCOMPLETE receipt, diagnosis, evidence and exact committed Git side effects.",
+    "Scope, file modes, bounded changed bytes and historical hashes are verified before a replacement; dirty/untracked source, unexpected HEAD changes and controller mutations are rejected.",
+    "Predecessor output bytes remain immutable, including rejection of symlink parent aliases; new artifacts and result use a fresh repair directory.",
+    "Same scientific parent retains its original candidate charge; repair uses a new model/output reservation without refund.",
+    "Actual temporary Git/fake CLI tests cover committed partial output, nonzero exit after commit, incomplete result, replay, prompt recovery, stale-parent fork, STOP, missing cleanup/receipt, banned side effects, preserved originals and a committed reconciliation document."
+  ],
+  "boundaries": [
+    "Fake CLI and temporary Git are real local subprocesses; scientific input/Store state and snapshot preflight/creation are explicit fixtures. No production model, snapshot, GPU or scientific acceptance.",
+    "The candidate-count test substitutes only the parent decision classification to exercise PROPOSE_CANDIDATE accounting; it is not an actual scientific candidate.",
+    "Source-ready semantic rejection, ambiguous missing source_input/receipt and controller-code repair still need separate reconciliation; this entry does not bypass them.",
+    "This is explicit replacement, not yet an automatic engineering repair supervisor.",
+    "Existing root-owned CPU-QUOTA-01 pytest temporary garbage was left untouched after cleanup warnings."
+  ],
+  "remaining": [
+    "Automatic engineering repair worker/supervisor and reviewed reentry",
+    "Supported local sandbox access and actual model-free platform handoff",
+    "Actual baseline and full scientific goal"
+  ],
+  "goal_complete": false
+}

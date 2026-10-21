@@ -44,7 +44,7 @@ def control_identity():
     return sha({str(p.relative_to(ROOT)):file_pin(p)['sha256'] for p in files})
 
 
-def register(journal,parent_key,store,*,executable,free_disk_bytes):
+def register(journal,parent_key,store,*,executable,free_disk_bytes,repair_pin=None):
     journal.require_writer();journal.guard()
     require(not stop_paths(journal),'STOP');no_model_workers(journal)
     parent=parent_decision(journal,parent_key,store)
@@ -54,18 +54,30 @@ def register(journal,parent_key,store,*,executable,free_disk_bytes):
     if state['goal_id']=='R6-CPU-TEST-FIXTURE':
         require(exe.is_relative_to(journal.directory.parent.resolve()),'FIXTURE_EXECUTABLE')
     else:require(executable==dict(path=str(CLI),sha256=CLI_SHA),'CLI')
+    from tools import r6_source_repair as repair
+    name='SOURCE_PREPARATION:'+parent_key
+    if repair_pin is not None:name+=':REPAIR:'+repair_pin['sha256']
     previous=[(k,e) for k,e in state['events'].items()
-              if e['identity']['role']==ROLE and e['identity']['event_id']=='SOURCE_PREPARATION:'+parent_key]
+              if e['identity']['role']==ROLE and e['identity']['event_id']==name]
     require(len(previous)<=1,'PARENT_ALIAS')
     if previous:
         key,entry=previous[0]
         require('source_input' in entry,'INPUT_MISSING_NO_RETRY')
+        require(repair.active(journal,parent_key)==key,'NOT_ACTIVE')
+        require(entry['source_input'].get('repair')==repair_pin,'REPAIR_PIN_DRIFT')
         require(entry['request']['executable']==executable,'EXECUTABLE_DRIFT')
         require(entry['source_input']['parent']==state['events'][parent_key]['decision_record'],'PARENT_DRIFT')
         # Intent includes recoverable prompt bytes before the first dispatch.
         if not entry.get('dispatch_claim') and not entry.get('receipt'):
+            if repair_pin is not None:repair.validate_start(journal,repair_pin,parent_key)
             persist_exact(Path(entry['request']['prompt']['path']),entry['source_input']['prompt'].encode())
         return key
+    if repair_pin is not None:
+        predecessor=repair.validate_start(journal,repair_pin,parent_key)
+        require(repair.active(journal,parent_key)==predecessor,'REPAIR_NOT_ACTIVE_TIP')
+    if state['goal_id']!='R6-CPU-TEST-FIXTURE':
+        from tools.r6_review_access import check
+        check(executable,state['events'][parent_key]['decision_record'])
     repo=repository(journal)
     base_commit=snapshot.git(repo,'rev-parse','HEAD').decode().strip()
     packet=dict(parent=state['events'][parent_key]['decision_record'],parent_key=parent_key,
@@ -80,6 +92,9 @@ def register(journal,parent_key,store,*,executable,free_disk_bytes):
         implementation=file_pin(__file__),snapshot_tool=file_pin(snapshot.__file__),
         control_identity=control_identity(),
         store_state_sha256=sha(store.replay()))
+    if repair_pin is not None:
+        packet['repair']=repair_pin
+        packet['output_directory']=str(Path(packet['output_directory'])/'repairs'/repair_pin['sha256'])
     prompt=('Prepare the concrete R6 source/config and experiment card for the pinned scientific '
         'decision, then exit. You are the sole source writer while the controller holds the Journal '
         'lock. Do not mutate Journal/Store, issue authority, create snapshots or volumes, query GPUs, '
@@ -114,18 +129,22 @@ def register(journal,parent_key,store,*,executable,free_disk_bytes):
         'result_payload_bytes. Use dedicated unified-h1-r6-candidate-config.v1. Commit comparison '
         'input with the same hypothesis; controller owns independent selection and compatibility '
         'reviews. Never fabricate reviewer pins. Future actual volume bindings and prelive reviews remain mandatory.\n'
+        +('Read the repair document and reconcile all predecessor writes and commits. '
+          'Preserve prior attempt outputs; only this fresh output_directory may receive new artifacts. '
+          'This is repair of the same scientific candidate, not permission for another candidate.\n' if repair_pin is not None else '')
         +json.dumps(packet,sort_keys=True)+'\n')
     require(len(prompt.encode())<=65536,'CONTEXT_CAP')
     target=journal.directory/'source-preparation'/parent_key/'prompt.txt'
+    if repair_pin is not None:target=target.parent/'repairs'/repair_pin['sha256']/'prompt.txt'
     request=dict(prompt=pin_bytes(target,prompt.encode()),schema=file_pin(SCHEMA),
         executable=executable,cwd=str(ROOT),sandbox='workspace-write',timeout_seconds=3600,
         output_cap_bytes=MODEL_CAP,stop_paths=model_stop_paths(journal))
-    event=dict(goal_id=state['goal_id'],event_id='SOURCE_PREPARATION:'+parent_key,
+    event=dict(goal_id=state['goal_id'],event_id=name,
         job_id=state['events'][parent_key]['identity']['job_id'],input_sha256=sha(request),role=ROLE)
     resources=dict(automatic_model_sessions=1,output_actual_plus_unreleased_reservations_bytes=MODEL_CAP+ARTIFACT_CAP+65536)
-    if parent['decision']['decision']=='PROPOSE_CANDIDATE':resources['major_scientific_candidates']=1
+    if parent['decision']['decision']=='PROPOSE_CANDIDATE' and repair_pin is None:resources['major_scientific_candidates']=1
     key,_=journal.intent(event,kind='model',request=request,resources=resources,
-        purpose='repair' if parent['decision']['decision']=='NEEDS_REPAIR' else 'development',
+        purpose='repair' if repair_pin is not None or parent['decision']['decision']=='NEEDS_REPAIR' else 'development',
         free_disk_bytes=free_disk_bytes)
     state=journal.read();state['events'][key]['source_input']=dict(packet,prompt=prompt,
         budget_sha256=sha(state['budget']))
@@ -146,6 +165,8 @@ def record(journal,key,store):
     no_model_workers(journal);state=journal.read();entry=state['events'][key];packet=entry['source_input']
     require(entry['kind']=='model' and entry['identity']['role']==ROLE
         and sha(entry['identity'])==key and entry['identity']['input_sha256']==sha(entry['request']), 'IDENTITY')
+    from tools.r6_source_repair import active
+    require(active(journal,packet['parent_key'])==key,'NOT_ACTIVE')
     require(entry['request']['schema']==file_pin(SCHEMA),'SCHEMA_DRIFT')
     checked(packet['implementation']);checked(packet['snapshot_tool'])
     checked(packet['master']);checked(packet['requirements'])
@@ -226,7 +247,7 @@ def record(journal,key,store):
         worker_receipt=entry['receipt'],scientific_acceptance=False)
     if training:artifact['training_design']=design['training_design']
     if candidate:artifact['candidate_design']=design['candidate_design']
-    path=journal.directory/'source-preparation'/packet['parent_key']/'result.json'
+    path=Path(entry['request']['prompt']['path']).parent/'result.json'
     persist_exact(path,canonical(artifact)+b'\n')
     state=journal.read();state['events'][key]['source_result']=file_pin(path);journal.save(state)
     return artifact
@@ -235,18 +256,20 @@ def record(journal,key,store):
 def prepare_source(journal,parent_key,store,*,executable,free_disk_bytes):
     """Reconnect an existing worker before any registration idle check."""
     journal.require_writer();state=journal.read()
-    entries=[(k,e) for k,e in state['events'].items() if e['identity']['role']==ROLE
-             and e['identity']['event_id']=='SOURCE_PREPARATION:'+parent_key]
-    require(len(entries)<=1,'PARENT_ALIAS')
+    from tools.r6_source_repair import active,validate_start
+    selected=active(journal,parent_key)
+    entries=[] if selected is None else [(selected,state['events'][selected])]
     if entries:
         key,entry=entries[0];require(entry['request']['executable']==executable,'EXECUTABLE_DRIFT')
         require('source_input' in entry,'INPUT_MISSING_NO_RETRY')
         if not entry.get('dispatch_claim') and not entry.get('receipt'):
-            register(journal,parent_key,store,executable=executable,free_disk_bytes=free_disk_bytes)
+            register(journal,parent_key,store,executable=executable,free_disk_bytes=free_disk_bytes,
+                repair_pin=entry['source_input'].get('repair'))
     else:key=register(journal,parent_key,store,executable=executable,free_disk_bytes=free_disk_bytes)
     entry=journal.read()['events'][key]
     if not entry.get('dispatch_claim') and not entry.get('receipt'):
         packet=entry['source_input']
+        if packet.get('repair'):validate_start(journal,packet['repair'],parent_key)
         require(sha(journal.read()['budget'])==packet['budget_sha256'],'BUDGET_MUTATED')
         require(sha(store.replay())==packet['store_state_sha256'],'STORE_MUTATED')
         require(control_identity()==packet['control_identity'],'CONTROL_DRIFT')
