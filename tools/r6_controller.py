@@ -36,13 +36,14 @@ from tools import r6_final_storage as final_storage
 from tools import r6_final_plans_review as final_plans_review
 from tools import r6_final_sequence as final_sequence
 from tools import r6_delivery_evidence as delivery_evidence
+from tools import r6_video_extraction as video_extraction
 from tools.r6_decision_packet import persist_exact
 from rlflow.store import canonical
 
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_MEDIA_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_RENDER_REQUIRED'}
 
 
 def require(condition,reason):
@@ -127,6 +128,17 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 outcome=delivery_evidence.prepare(journal,key,store,free_disk_bytes=free)
                 require(outcome['status']=='DELIVERY_EVIDENCE_PREPARED_NOT_ACCEPTED','DELIVERY_EVIDENCE_STATUS')
                 cursor.update(phase='FINAL_MEDIA_REQUIRED',delivery_evidence=outcome)
+                save(journal,key,cursor)
+                continue
+            if phase=='FINAL_MEDIA_REQUIRED':
+                video_key=video_extraction.register(journal,key,store,free_disk_bytes=free)
+                cursor.update(phase='VIDEO_EXTRACTION',video_extraction_key=video_key)
+                save(journal,key,cursor)
+                continue
+            if phase=='VIDEO_EXTRACTION':
+                outcome=video_extraction.handoff(journal,cursor['video_extraction_key'],store)
+                require(outcome['status']=='VIDEO_TRAJECTORIES_READY_NOT_RENDERED','VIDEO_EXTRACTION_STATUS')
+                cursor.update(phase='FINAL_RENDER_REQUIRED',video_trajectories=outcome)
                 save(journal,key,cursor)
                 continue
             if phase in TERMINAL_BOUNDARIES:

@@ -1,0 +1,66 @@
+{
+  "status": "CPU_PREPAID_VIDEO_EXTRACTION_WORKER_RECOVERY_AND_CONTROLLER_ROUTE_PASS_RENDERING_PENDING",
+  "base_commit": "016a2324c5730bbca0d9e585801d88e83f6aa73e",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_video_extraction.py",
+      "sha256": "e349dde5eb7e6bb73d3fced832b2f8a983ab5cfb60e1092f86ea6735ad959b50"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "de5fb53210636e9beba18a8cb3a9e6c9a371104c8efb75668c0155d57bd9953e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_video_worker.py",
+      "sha256": "81afddbd863a01d241bdc8d329bde3c318d6da12936fda97c47e936ceff1f08b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "4fe67114d8fa7f92e58cd4fe84b8f8d99a77ffcf5c553abc4b674ee068a5f379"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_WORKER_INITIAL.log",
+      "sha256": "5587e9a9f74c33cb6f2fbe0ee5f55a63524871226af59f4f7a657e66e5f06975"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_WORKER_COMBINED.log",
+      "sha256": "3105adcde3f970e3cf85084918b615d313407575c957d6f8ae1705459f279d9d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_WORKER_FINAL.log",
+      "sha256": "74230be914bfc1cb3d4402841091c74c66d4740439daf82497959fa7c98c4896"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_WORKER_REAL_GUARD.log",
+      "sha256": "8f0f5216640d18ec32fa12b5b7c457b5ac538606444a9b849c7df4711319abba"
+    }
+  ],
+  "checks": {
+    "initial_worker": 8,
+    "combined": 78,
+    "final_worker_including_actual_tensor_extractor": 9,
+    "real_journal_guard": "PASS"
+  },
+  "scope": [
+    "18 MiB confirmation_delivery reservation before bounded input/worker output; exact selection/program/interpreter/source bindings.",
+    "Persistent dispatch intent, owned process identity, logs/receipt, descendant cleanup, STOP/deadline and crash recovery reuse existing CPU analysis lifecycle.",
+    "Missing/partial receipts and failed extraction are retained without blind retries; raw drift and missing reservation reject.",
+    "Controller final evidence to registered CPU video extraction to explicit final render boundary, no per-clip model calls.",
+    "Actual tensor interpreter executes the real trajectory extractor through registered local worker and verifies full 200-frame synthetic recording."
+  ],
+  "boundaries": [
+    "Local detached process/Journal/cleanup and isolated tensor extraction are real, but trajectory records are synthetic AuditLog fixtures.",
+    "Remaining worker failure/STOP tests use an explicit CPU substitute; top-level science/execution remains fixture.",
+    "No production video extraction, renderer, GPU/Isaac Sim, MP4 or model call; not scientific acceptance."
+  ],
+  "remaining": [
+    "Exact render job resources/quotas/permission and Isaac Sim replay renderer",
+    "MP4/telemetry validation and viewing manifest",
+    "Final independent audit/accounting/requirements, repair re-entry",
+    "Combined prelive review and platform no-model-wait handoff"
+  ],
+  "goal_complete": false,
+  "scientific_acceptance": false
+}
