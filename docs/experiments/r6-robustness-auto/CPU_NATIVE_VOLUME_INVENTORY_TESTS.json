@@ -1,0 +1,59 @@
+{
+  "status": "CPU_NATIVE_INVENTORY_PASS_PENDING_REVIEW",
+  "pytest_cases_passed": 53,
+  "new_tests": 5,
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_inventory.py",
+      "sha256": "183d3382fd7d0aa8654778f12a2fa3fa959e88567dc1a829bf21187655dc7fcc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_native_volume.py",
+      "sha256": "4a4489bf36fec2b6207a7d0fc96fc4c06013a1c226268f9d1270a899e527e5eb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/native_volume.py",
+      "sha256": "1f5861e76b61d2a95839260ab9b66c95cf1e0b08eef592e8cdb90c4077e4b41f"
+    }
+  ],
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_volume_inventory.py",
+    "sha256": "e70fdc6ca4a3beca2649fd0d3c4d2b878a7f1d498028238148acd461ffa959ef"
+  },
+  "outputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_INVENTORY_TESTS.txt",
+      "sha256": "121c4a6c0cc5f9061f3d7d32672c969d31808e159c7173a78ca71ddc9b7bbbb0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_INVENTORY_TESTS_V2.txt",
+      "sha256": "1a3dee3ee21fd22acb8f63d4515710174cfd2fa12954e3aa75b3a73cebb52f98"
+    }
+  ],
+  "coverage": [
+    "Exact authorization owns native manifest/root; no caller-selected omitted roots",
+    "Native originals all hashed with existing race/special-file checks",
+    "Fixed backing plus provisioning metadata charged once; contained files not double-charged as separate disk storage",
+    "Missing mount, changed originals, symlinks and cross-device children rejected",
+    "Replay preserves later phase and original FAILED native status; reservations retained"
+  ],
+  "substitutes": [
+    "Temporary Store/terminal receipts and volume-validator substitutes; actual CPU filesystem bound tested separately"
+  ],
+  "provisioning_change": "Future new volumes make root-owned lost+found mode0555 for complete unprivileged inventory. Existing CPU-QUOTA-01 image and permissions unchanged; its original provisioning implementation is preserved in git29aaed0 and the frozen CPU check input3430863.",
+  "limitations": [
+    "Existing CPU test volume is not a production candidate and was not upgraded",
+    "Fresh production volume, source/authority freeze and independent acceptance pending",
+    "Extension registry cache and unenumerated native paths remain unresolved",
+    "No lower native allowance or scientific acceptance"
+  ],
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "def5f5c9c3c7b85ba51200c8eb9a5131086639af55c21f531067770d399bb21e"
+  },
+  "operating_ledger_modified": false,
+  "capacity_pass": false,
+  "new_gpu_queries": 0,
+  "new_live_starts": 0,
+  "new_model_calls": 0
+}

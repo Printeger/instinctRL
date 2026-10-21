@@ -41,6 +41,10 @@ def validate(pin, *, minimum_free_bytes=256*1024**2, allow_cpu_fixture=False):
     require(target.resolve()==target and target.is_mount(),'MOUNT_ABSENT')
     info=target.stat()
     require(info.st_uid==record['owner_uid']==os.getuid() and stat.S_IMODE(info.st_mode)==0o700,'OUTPUT_OWNER')
+    if not allow_cpu_fixture:
+        recovery=(target/'lost+found').lstat()
+        require(stat.S_ISDIR(recovery.st_mode) and recovery.st_uid==0
+                and stat.S_IMODE(recovery.st_mode)==0o555,'RECOVERY_DIRECTORY_INVENTORY_ACCESS')
     matches=[]
     for line in Path('/proc/self/mountinfo').read_text().splitlines():
         left,right=line.split(' - ',1);fields=left.split();fs=right.split()

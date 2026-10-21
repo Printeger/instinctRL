@@ -18,7 +18,7 @@ def signature(s):
     return (s.st_dev, s.st_ino, s.st_mode, s.st_size, s.st_mtime_ns, s.st_ctime_ns)
 
 
-def inventory(roots):
+def inventory(roots, *, same_device_roots=()):
     """Hash all regular files, checking directory/file stability and special files.
 
     Hard links count once per pathname conservatively. Missing roots are explicit,
@@ -41,6 +41,7 @@ def inventory(roots):
             missing.append(name)
             continue
         stack = [root]
+        device=root.stat().st_dev
         while stack:
             directory = stack.pop(); before = directory.lstat()
             if not stat.S_ISDIR(before.st_mode):
@@ -48,6 +49,8 @@ def inventory(roots):
             directories.append((directory, signature(before)))
             for path in sorted(directory.iterdir()):
                 info = path.lstat()
+                if name in same_device_roots and info.st_dev!=device:
+                    raise RecoveryError('INVENTORY_CROSS_DEVICE')
                 if stat.S_ISDIR(info.st_mode):
                     stack.append(path)
                 elif stat.S_ISREG(info.st_mode):
@@ -118,12 +121,39 @@ def record_inventory(journal, key, store):
     expected_parent = store.root.resolve()/'attempts'
     if attempt.parent != expected_parent or not attempt.name or attempt.is_symlink():
         raise RecoveryError('INVENTORY_EXACT_ATTEMPT_ROOT')
-    value = inventory({'job':store.root.resolve()/'jobs'/closure['job_id'], 'attempt':attempt})
+    roots={'job':store.root.resolve()/'jobs'/closure['job_id'], 'attempt':attempt}
+    native=None;binding=None
+    if spec.get('h1',{}).get('mode')=='research-r6-evaluation':
+        authorization=read(checked(spec['pins']['authorization']))
+        native_pin=authorization['parameters'].get('native_volume')
+        if native_pin is not None:
+            from training_workloads.unified_h1.native_volume import validate
+            binding=validate(native_pin,minimum_free_bytes=0)
+            roots['native']=Path(binding['target'])
+            manifest=checked(native_pin)
+            request=manifest.parent/'request.json'
+            if request.is_symlink() or not request.is_file() or request.stat().st_size>65536:
+                raise RecoveryError('INVENTORY_NATIVE_REQUEST')
+            native=dict(manifest=native_pin,provision_request=file_pin(request),
+                target=binding['target'],backing_bytes=binding['maximum_bytes'],
+                metadata_bytes=manifest.stat().st_size+request.stat().st_size)
+    value = inventory(roots,same_device_roots=('native',) if native else ())
+    if native is not None:
+        after=validate(native['manifest'],minimum_free_bytes=0)
+        if any(after[k]!=binding[k] for k in ('mount_id','device','target','maximum_bytes')):
+            raise RecoveryError('INVENTORY_NATIVE_MOUNT_CHANGED')
+        checked(native['provision_request'])
+        value['native_volume']=native
+        # Files inside the image are hashed originals, but charging both their
+        # logical bytes and the image would double-count the same storage.
+        value['total_charged_output_bytes']=(sum(row['bytes'] for row in value['files'] if row['category']!='native')
+            +native['backing_bytes']+native['metadata_bytes'])
     result = dict(schema_version='r6-job-inventory/1',event_key=key,job_id=closure['job_id'],
         closure=entry['closure'],spec=entry['request']['spec'],**value,
         output_inventory_complete=not value['missing_roots'],scientific_acceptance=False,
         native_status=closure['native_status'],native_exit_code=closure['native_exit_code'],
-        metadata_accounting='Original job/attempt bytes only; controller metadata uses separate reserved capacity')
+        metadata_accounting=('Native file contents inventoried; fixed backing image plus provisioning metadata charged once. Controller metadata separately reserved'
+            if native is not None else 'Original job/attempt bytes only; controller metadata uses separate reserved capacity'))
     data = canonical(result)+b'\n'
     if len(data) > MAX_MANIFEST_BYTES:
         raise RecoveryError('INVENTORY_MANIFEST_BOUND')
@@ -138,11 +168,12 @@ def record_inventory(journal, key, store):
     else:
         atomic(path,data)
     pin = file_pin(path)
+    charged_bytes=result.get('total_charged_output_bytes',result['total_original_bytes'])
     state['budget'] = observe(state['budget'],event_key=entry['identity'],
-        resources={DISK:result['total_original_bytes']},evidence=pin)
+        resources={DISK:charged_bytes},evidence=pin)
     entry['inventory'] = pin
     violations = list(closure['budget_violations'])
-    if result['total_original_bytes'] > entry['resources'].get(DISK, 0):
+    if charged_bytes > entry['resources'].get(DISK, 0):
         violations.append('RESERVATION_EXCEEDED_'+DISK)
     entry['inventory_violations'] = violations
     if state['budget'].get('observed_cap_excess') or violations:

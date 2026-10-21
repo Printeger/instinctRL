@@ -2,6 +2,12 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：外部native卷已纳入准确作业关闭后的原件清单和预算观察；镜像与内部文件
+不重复收费，原生失败/完整预留保留。53项CPU回归通过，见
+`docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_INVENTORY_TESTS.json`。
+新卷配置候选将root所有lost+found设为0555便于完整清单；旧CPU测试卷不改动。
+剩余扩展缓存边界、生产卷配置、输入冻结与独审仍待完成；本轮无新增GPU/live/model调用。
+
 2026-10-21：准确R6实验卡现可绑定native卷manifest，rlflow从快照校验后的授权取得该pin；
 dispatcher在fork前核验卷，将console/TMP/XDG/CUDA cache指向该卷。45项CPU路径/合同测试
 及35项rlflow回归通过，见 `docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_DISPATCH_TESTS.json`。

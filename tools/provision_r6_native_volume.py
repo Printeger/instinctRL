@@ -67,6 +67,13 @@ def apply(spec):
             subprocess.run(command,check=True,timeout=120,stdin=subprocess.DEVNULL)
         if not os.path.ismount(target):raise RuntimeError('EXPECTED_MOUNT_MISSING')
         if image.stat().st_size!=SIZE:raise RuntimeError('BACKING_SIZE_DRIFT')
+        # Inventory must be able to enumerate the whole volume, including ext4's
+        # system directory. Keep it root-owned and not writable by the workload.
+        recovery=target/'lost+found'
+        recovery_info=recovery.lstat()
+        if not stat.S_ISDIR(recovery_info.st_mode) or recovery_info.st_uid!=0:
+            raise RuntimeError('EXT4_RECOVERY_DIRECTORY_IDENTITY')
+        os.chmod(recovery,0o555)
         os.chown(target,spec['owner_uid'],spec['owner_gid']);os.chmod(target,0o700)
         info=os.statvfs(target)
         if info.f_blocks*info.f_frsize>SIZE:raise RuntimeError('FILESYSTEM_EXCEEDS_IMAGE')
