@@ -1,0 +1,44 @@
+{
+  "status": "PREPAID_READY_FOR_ADMIN_PROVISION_ONLY",
+  "event_key": "6fb2fb5a07a1c13e091bff09e881f9213605031b821e891abd2442ac7711744d",
+  "input_commit": "5a2df04",
+  "package": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/production-storage-baseline-01/PACKAGE.json",
+    "sha256": "1566e6fabfc38500c8d5e93d28207f8749e5e149aedfe8e3a9357426a34fd96d"
+  },
+  "total_reserved_bytes": 20250099712,
+  "current_total_disk_charge_bytes": 24700977152,
+  "commands": [
+    [
+      "sudo",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_native_volume.py",
+      "J-d737390980235144",
+      "--apply"
+    ],
+    [
+      "sudo",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_fixed_result_volume.py",
+      "J-d737390980235144",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results",
+      "18572378112",
+      "--minimum-free-bytes",
+      "18471714816",
+      "--minimum-free-inodes",
+      "4096",
+      "--apply"
+    ]
+  ],
+  "manifests": [
+    "/var/lib/instinctrl-r6-native/J-d737390980235144/volume.json",
+    "/var/lib/instinctrl-r6-results/J-d737390980235144/volume.json"
+  ],
+  "sudo_noninteractive": "PASSWORD_REQUIRED",
+  "capacity_pass": false,
+  "live_permission": false
+}

@@ -1,5 +1,15 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：首个完整基线生产双卷准确计划已提交，输入5a2df04，allocation
+J-d737390980235144，事件6fb2fb5a07a1c13e091bff09e881f9213605031b821e891abd2442ac7711744d。
+全额20,250,099,712字节已在操作账本预留，总disk charge24,700,977,152字节；未重复记作job。
+空results目标已准备，准确管理员命令见
+`docs/experiments/r6-robustness-auto/production-storage-baseline-01/ADMIN_COMMANDS.txt`，
+工具/计划pins与manifest预期路径见同目录REGISTRATION.json。sudo -n确认仍需密码。
+仅新生产卷创建需管理员执行，CPU01/CPU02不重跑、不复用；暂未创建生产卷。
+inode最低4096是保守配置要求，仍须完成完整输出枚举及真实可用空间验证。
+协议、容量接受和controller交接可继续独立准备；capacity=false，无live，Goal未完成。
+
 2026-10-21：第15次合并独审PASS_CPU_SCOPE、无MUST_FIX；固定结果卷布局、payload接线、
 预付空间与register/submit/inventory统一计账获CPU范围接受。receipt/schema、源证据pins及
 worker清理已核验，15次完成、剩余17次，保护最终4+修复4。

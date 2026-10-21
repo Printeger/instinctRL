@@ -1,0 +1,2 @@
+sudo /usr/bin/python3 -I -B /home/mint/rl_dev/instinctRL-dev/tools/provision_r6_native_volume.py J-d737390980235144 --apply
+sudo /usr/bin/python3 -I -B /home/mint/rl_dev/instinctRL-dev/tools/provision_r6_fixed_result_volume.py J-d737390980235144 /home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results 18572378112 --minimum-free-bytes 18471714816 --minimum-free-inodes 4096 --apply
