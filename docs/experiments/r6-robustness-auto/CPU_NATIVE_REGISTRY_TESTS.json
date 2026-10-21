@@ -1,0 +1,140 @@
+{
+  "schema_version": "r6-native-registry-cpu/1",
+  "status": "CPU_WIRING_PASS_NOT_LIVE_CAPACITY_ACCEPTANCE",
+  "input_commit": "28b23a0",
+  "sources": [
+    {
+      "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/apps/isaaclab.python.headless.kit",
+      "sha256": "0a0dee5fbbdcbf66f8124a07eced9a87c2f70e5df6ee892ec297444c1d1b01c2"
+    },
+    {
+      "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/app/app_launcher.py",
+      "sha256": "7ab2c742cfa64e2c4e2ea4601d9441e5e8c9bb8f556a121b0d10c337f9b6093e"
+    },
+    {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/extscore/omni.kit.registry.nucleus/omni/kit/registry/nucleus/cache.py",
+      "sha256": "07891cbc43c20d246b3e3b0f101c5a32052dd5f077a47fca67bb20c7953def3a"
+    },
+    {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/extscore/omni.kit.registry.nucleus/omni/kit/registry/nucleus/tests/test_registry_e2e.py",
+      "sha256": "fd4b42e5563947379295b5f1275a8550aecd3ab4faab21418e38bb66066cf406"
+    },
+    {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/extscore/omni.kit.registry.nucleus/config/extension.toml",
+      "sha256": "8098157f938f817f0897962f1a62e548e7b66d7f86a76eb25a6428bd6bf583b3"
+    }
+  ],
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/native_volume.py",
+      "sha256": "d417ecba8c2b582c863ef7c28fe4b9f05950c64829152c595038446d1882ec56"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/resources.py",
+      "sha256": "2cb28a3a712ead6ce91fdc1af3a999157e4f5516d9cc66ce271e18f2f522432d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_volume_binding.py",
+      "sha256": "c76261f8a750ff9e99a5b2e2e4f46d6d1e83e7bfb570f5d31dc5345c87234426"
+    }
+  ],
+  "test_log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_REGISTRY_TESTS.txt",
+    "sha256": "f8ec39eb5adbd54a84bd9b6d108c797797366a78eb816efc8ab5b3e9e807d13e"
+  },
+  "tests_passed": 21,
+  "local_direct_dependency_metadata": {
+    "omni.physx": [],
+    "omni.physx.tensors": [],
+    "omni.physx.fabric": [],
+    "omni.warp.core": [],
+    "usdrt.scenegraph": [],
+    "omni.kit.telemetry": [],
+    "omni.kit.loop": [
+      {
+        "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/exts/omni.kit.loop-isaac/config/extension.toml",
+        "sha256": "83608fb106147840dabd89db3f1a6c3922fceaf483ae865cc52fc74ff268bd07"
+      }
+    ],
+    "omni.kit.usd.mdl": [],
+    "omni.usd.metrics.assembler.ui": []
+  },
+  "missing_direct_dependency_metadata": [
+    "omni.physx",
+    "omni.physx.tensors",
+    "omni.physx.fabric",
+    "omni.warp.core",
+    "usdrt.scenegraph",
+    "omni.kit.telemetry",
+    "omni.kit.usd.mdl",
+    "omni.usd.metrics.assembler.ui"
+  ],
+  "findings": [
+    "GlobalExtCache creates directories and index/database even when cacheFiles is false.",
+    "registry cache and install outputs redirected to native volume; online registry disabled; automatic prune disabled.",
+    "Frozen installed extension search folders unchanged; no dependency or runtime files changed."
+  ],
+  "limitations": [
+    "Eight direct dependencies exist in the old global cache, not in declared experience folders. Explicit pinned read search path must be integrated before this candidate is launchable; disabling registry alone is not sufficient.",
+    "Direct metadata presence does not prove transitive resolver/version compatibility.",
+    "Launcher and Carb readback tested with substitutes; actual Kit was not started.",
+    "JIT/noexec compatibility and remaining native writes still require validation before total capacity acceptance.",
+    "CPU test volume remains full and is never production authority."
+  ],
+  "capacity_verified": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_sessions_added": 0,
+  "audit_note": "Includes both sibling and nested isaacsim folders explicitly listed in the frozen experience.",
+  "existing_global_cache_direct_dependencies": {
+    "omni.physx": [
+      {
+        "path": "/home/mint/.local/share/ov/data/exts/v2/omni.physx-107.3.26+107.3.3.lx64.r.cp311.u353/config/extension.toml",
+        "sha256": "6c9d9ed33d927e302334b7cae8ed0c81c4fba37bfbfac07053b72ccc16b7398f"
+      }
+    ],
+    "omni.physx.tensors": [
+      {
+        "path": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.tensors-107.3.26+107.3.3.lx64.r.cp311.u353/config/extension.toml",
+        "sha256": "383db52de372a9be520d7f2bdbfb3a6b163a07e59cd0f5133344106c5edaf4c9"
+      }
+    ],
+    "omni.physx.fabric": [
+      {
+        "path": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.fabric-107.3.26+107.3.3.lx64.r.cp311.u353/config/extension.toml",
+        "sha256": "2b521472f0d5a106d5e9051d0481bb8f41801fb6cdc337c5ab80ef2d57707b71"
+      }
+    ],
+    "omni.warp.core": [
+      {
+        "path": "/home/mint/.local/share/ov/data/exts/v2/omni.warp.core-1.8.2+lx64/config/extension.toml",
+        "sha256": "6d7b36efe970f1d57e02f819c13159dc35bc80016571a7d9cbaeed172b87f100"
+      }
+    ],
+    "usdrt.scenegraph": [
+      {
+        "path": "/home/mint/.local/share/ov/data/exts/v2/usdrt.scenegraph-d07fb477fd5bec7c/config/extension.toml",
+        "sha256": "390d65d1ddae86f3ff4646cb3f48dfb6928363ba9e832906cbefc63ceaad27d2"
+      }
+    ],
+    "omni.kit.telemetry": [
+      {
+        "path": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.telemetry-8994df2c5ad3f85e/config/extension.toml",
+        "sha256": "e2e0fdc988c2d88478fb613489da03e7dbc50491b65cefc295c227970e225c40"
+      }
+    ],
+    "omni.kit.usd.mdl": [
+      {
+        "path": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.usd.mdl-c5413828e5409d2b/config/extension.toml",
+        "sha256": "9c62374098b7a7719ca290fd4485f2b545515d64f05a775ad6be70a4fd56abfe"
+      }
+    ],
+    "omni.usd.metrics.assembler.ui": [
+      {
+        "path": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.metrics.assembler.ui-107.3.1+107.3.0.cp311.u353/config/extension.toml",
+        "sha256": "d15dc81a5cb344dcd847ff2a235cd9ef2d08a26bca294088a7f9bfb6aa24f19e"
+      }
+    ]
+  },
+  "missing_even_in_existing_global_cache": []
+}

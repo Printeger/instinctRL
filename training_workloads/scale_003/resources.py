@@ -321,7 +321,8 @@ def start_after_coexistence_gate(
         if native_volume_pin is not None:
             paths.extend(Path(native_settings[key]) for key in (
                 '/rtx/shaderDb/shaderCachePath','/rtx/shaderDb/driverShaderCachePath',
-                '/rtx-transient/resourcemanager/localTextureCachePath'))
+                '/rtx-transient/resourcemanager/localTextureCachePath',
+                '/app/extensions/registryCacheFull','/exts/omni.kit.registry.nucleus/cachePath'))
         for path in paths:path.mkdir(mode=0o700,exist_ok=False)
         atomic_json_replace(output_root,'native_path_request.json',{
             'schema_version':'r6-native-paths/1','status':'REQUESTED_NOT_VERIFIED',

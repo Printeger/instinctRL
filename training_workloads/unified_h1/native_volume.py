@@ -67,7 +67,14 @@ def settings(binding):
     return {'/crashreporter/dumpDir':str(root/'crash'),
             '/rtx/shaderDb/shaderCachePath':str(root/'shader'),
             '/rtx/shaderDb/driverShaderCachePath':str(root/'driver_shader'),
-            '/rtx-transient/resourcemanager/localTextureCachePath':str(root/'texture')}
+            '/rtx-transient/resourcemanager/localTextureCachePath':str(root/'texture'),
+            # Installed extension search folders remain supplied by the frozen
+            # experience. Never fetch missing dependencies into this output.
+            '/app/extensions/registryEnabled':False,
+            '/app/extensions/registryCacheFull':str(root/'extension_install'),
+            '/exts/omni.kit.registry.nucleus/cachePath':str(root/'extension_cache'),
+            '/exts/omni.kit.registry.nucleus/cachePrune/enabled':False,
+            '/exts/omni.kit.registry.nucleus/cachePrune/runOnStartup':False}
 
 
 def require_capture(binding,capture):

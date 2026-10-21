@@ -59,7 +59,8 @@ def test_capture_outside_volume_rejected_before_gpu_gate(wired):
 
 @pytest.mark.parametrize('setting',[
     '/crashreporter/dumpDir','/rtx/shaderDb/shaderCachePath',
-    '/rtx/shaderDb/driverShaderCachePath','/rtx-transient/resourcemanager/localTextureCachePath'])
+    '/rtx/shaderDb/driverShaderCachePath','/rtx-transient/resourcemanager/localTextureCachePath',
+    '/app/extensions/registryCacheFull','/exts/omni.kit.registry.nucleus/cachePath'])
 def test_exact_settings_reach_launcher_and_readback_rejects_drift(wired,monkeypatch,setting):
     wired.start()
     requested=resources._r6_native_settings(wired.output,{'fixture':True})
@@ -70,3 +71,18 @@ def test_exact_settings_reach_launcher_and_readback_rejects_drift(wired,monkeypa
     monkeypatch.setattr(resources,'_read_r6_native_settings',lambda keys:{**requested,setting:'/tmp/unbounded'})
     with pytest.raises(RuntimeError,match='settings differ'):
         resources.verify_r6_native_paths(wired.output,{'fixture':True})
+
+
+@pytest.mark.parametrize('setting',[
+    '/app/extensions/registryEnabled',
+    '/exts/omni.kit.registry.nucleus/cachePrune/enabled',
+    '/exts/omni.kit.registry.nucleus/cachePrune/runOnStartup'])
+def test_registry_policy_reaches_launcher_and_rejects_enable_or_type_drift(wired,monkeypatch,setting):
+    wired.start()
+    requested=resources._r6_native_settings(wired.output,{'fixture':True})
+    assert '--'+setting+'=false' in wired.calls[0]['kit_args'].split()
+    assert '/app/exts/folders' not in requested
+    for bad in (True,0,'false',None):
+        monkeypatch.setattr(resources,'_read_r6_native_settings',lambda keys:{**requested,setting:bad})
+        with pytest.raises(RuntimeError,match='settings differ'):
+            resources.verify_r6_native_paths(wired.output,{'fixture':True})

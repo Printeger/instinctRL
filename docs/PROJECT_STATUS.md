@@ -2,6 +2,12 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：扩展注册表新增候选接线：索引/安装缓存写入native卷，关闭在线获取及自动
+清理，21项CPU路径/设置回读检查通过。静态核对发现8项直接依赖仅存在旧global cache，
+不能仅关闭registry后发车；必须把这些已安装输入显式冻结为读取搜索路径。
+见 `docs/experiments/r6-robustness-auto/CPU_NATIVE_REGISTRY_TESTS.json`。
+尚待完成该输入绑定、JIT/noexec兼容性和剩余写入边界；capacity仍false，无GPU/live。
+
 2026-10-21：外部native卷已纳入准确作业关闭后的原件清单和预算观察；镜像与内部文件
 不重复收费，原生失败/完整预留保留。53项CPU回归通过，见
 `docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_INVENTORY_TESTS.json`。
