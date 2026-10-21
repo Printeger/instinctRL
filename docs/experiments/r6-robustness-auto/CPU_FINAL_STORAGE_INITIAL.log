@@ -1,0 +1,220 @@
+FFFF............FF                                                       [100%]
+=================================== FAILURES ===================================
+_____ test_exact_profile_is_prepaid_once_without_model_or_mount[baseline] ______
+
+prepared = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_exact_profile_is_prepaid_once_without_model_or_mount(prepared):
+>       b=prepared;before=b.store.replay();first=run(b);budget=b.j.read()['budget']
+
+tools/test_r6_final_storage.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_storage.py:32: in run
+    with b.j.writer():return s.prepare(b.j,b.pin,index,free_disk_bytes=500*1024**3,**kw)
+tools/r6_final_storage.py:89: in prepare
+    result_plan=storage.result_tool.plan(volume_id,target,payload+96*1024**2,payload,minimum_free_inodes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+volume_id = 'J-dd889189c62175ad'
+target = PosixPath('/tmp/tmpv4j8df1_/attempts/R6-FINAL-0/results')
+size = 234881024, minimum_free_bytes = 134217728, minimum_free_inodes = 4096
+
+    def plan(volume_id,target,size,minimum_free_bytes,minimum_free_inodes):
+        target=Path(target)
+        if not re.fullmatch(r'(?:J-[0-9a-f]{16}|CPU-QUOTA-[0-9]{2})',volume_id):raise ValueError('EXACT_RESULT_VOLUME_ID')
+        if (not target.is_absolute() or target.resolve()!=target or target.name!='results'
+            or target.parent.parent!=ATTEMPTS or not re.fullmatch(r'R6-[A-Za-z0-9_-]+',target.parent.name)):
+            raise ValueError('EXACT_R6_RESULT_TARGET')
+        if type(size)is not int or not 16*1024**2<=size<=128*1024**3 or size%4096:
+            raise ValueError('ALIGNED_RESULT_CAP_REQUIRED')
+        if (type(minimum_free_bytes)is not int or minimum_free_bytes<=0
+            or size-minimum_free_bytes!=96*1024**2 or size<128*1024**2):
+            raise ValueError('FIXED_RESULT_PAYLOAD_AND_96MIB_OVERHEAD_REQUIRED')
+        if type(minimum_free_inodes)is not int or not 1<=minimum_free_inodes<=size//262144:
+>           raise ValueError('FIXED_RESULT_INODE_REQUIREMENT')
+E           ValueError: FIXED_RESULT_INODE_REQUIREMENT
+
+tools/provision_r6_fixed_result_volume.py:37: ValueError
+___ test_exact_profile_is_prepaid_once_without_model_or_mount[confirmation] ____
+
+prepared = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_exact_profile_is_prepaid_once_without_model_or_mount(prepared):
+>       b=prepared;before=b.store.replay();first=run(b);budget=b.j.read()['budget']
+
+tools/test_r6_final_storage.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_storage.py:32: in run
+    with b.j.writer():return s.prepare(b.j,b.pin,index,free_disk_bytes=500*1024**3,**kw)
+tools/r6_final_storage.py:89: in prepare
+    result_plan=storage.result_tool.plan(volume_id,target,payload+96*1024**2,payload,minimum_free_inodes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+volume_id = 'J-33ce8a597a78b8bd'
+target = PosixPath('/tmp/tmpubkgrjrv/attempts/R6-FINAL-0/results')
+size = 234881024, minimum_free_bytes = 134217728, minimum_free_inodes = 4096
+
+    def plan(volume_id,target,size,minimum_free_bytes,minimum_free_inodes):
+        target=Path(target)
+        if not re.fullmatch(r'(?:J-[0-9a-f]{16}|CPU-QUOTA-[0-9]{2})',volume_id):raise ValueError('EXACT_RESULT_VOLUME_ID')
+        if (not target.is_absolute() or target.resolve()!=target or target.name!='results'
+            or target.parent.parent!=ATTEMPTS or not re.fullmatch(r'R6-[A-Za-z0-9_-]+',target.parent.name)):
+            raise ValueError('EXACT_R6_RESULT_TARGET')
+        if type(size)is not int or not 16*1024**2<=size<=128*1024**3 or size%4096:
+            raise ValueError('ALIGNED_RESULT_CAP_REQUIRED')
+        if (type(minimum_free_bytes)is not int or minimum_free_bytes<=0
+            or size-minimum_free_bytes!=96*1024**2 or size<128*1024**2):
+            raise ValueError('FIXED_RESULT_PAYLOAD_AND_96MIB_OVERHEAD_REQUIRED')
+        if type(minimum_free_inodes)is not int or not 1<=minimum_free_inodes<=size//262144:
+>           raise ValueError('FIXED_RESULT_INODE_REQUIREMENT')
+E           ValueError: FIXED_RESULT_INODE_REQUIREMENT
+
+tools/provision_r6_fixed_result_volume.py:37: ValueError
+_______ test_each_assignment_gets_distinct_storage_and_attempt[baseline] _______
+
+prepared = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_each_assignment_gets_distinct_storage_and_attempt(prepared):
+>       b=prepared;outputs=[run(b,i) for i in range(len(b.result['contexts']))]
+
+tools/test_r6_final_storage.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_storage.py:32: in run
+    with b.j.writer():return s.prepare(b.j,b.pin,index,free_disk_bytes=500*1024**3,**kw)
+tools/r6_final_storage.py:89: in prepare
+    result_plan=storage.result_tool.plan(volume_id,target,payload+96*1024**2,payload,minimum_free_inodes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+volume_id = 'J-77b29b1d1845d419'
+target = PosixPath('/tmp/tmpklf5xy3d/attempts/R6-FINAL-0/results')
+size = 234881024, minimum_free_bytes = 134217728, minimum_free_inodes = 4096
+
+    def plan(volume_id,target,size,minimum_free_bytes,minimum_free_inodes):
+        target=Path(target)
+        if not re.fullmatch(r'(?:J-[0-9a-f]{16}|CPU-QUOTA-[0-9]{2})',volume_id):raise ValueError('EXACT_RESULT_VOLUME_ID')
+        if (not target.is_absolute() or target.resolve()!=target or target.name!='results'
+            or target.parent.parent!=ATTEMPTS or not re.fullmatch(r'R6-[A-Za-z0-9_-]+',target.parent.name)):
+            raise ValueError('EXACT_R6_RESULT_TARGET')
+        if type(size)is not int or not 16*1024**2<=size<=128*1024**3 or size%4096:
+            raise ValueError('ALIGNED_RESULT_CAP_REQUIRED')
+        if (type(minimum_free_bytes)is not int or minimum_free_bytes<=0
+            or size-minimum_free_bytes!=96*1024**2 or size<128*1024**2):
+            raise ValueError('FIXED_RESULT_PAYLOAD_AND_96MIB_OVERHEAD_REQUIRED')
+        if type(minimum_free_inodes)is not int or not 1<=minimum_free_inodes<=size//262144:
+>           raise ValueError('FIXED_RESULT_INODE_REQUIREMENT')
+E           ValueError: FIXED_RESULT_INODE_REQUIREMENT
+
+tools/provision_r6_fixed_result_volume.py:37: ValueError
+_____ test_each_assignment_gets_distinct_storage_and_attempt[confirmation] _____
+
+prepared = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_each_assignment_gets_distinct_storage_and_attempt(prepared):
+>       b=prepared;outputs=[run(b,i) for i in range(len(b.result['contexts']))]
+
+tools/test_r6_final_storage.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_storage.py:32: in run
+    with b.j.writer():return s.prepare(b.j,b.pin,index,free_disk_bytes=500*1024**3,**kw)
+tools/r6_final_storage.py:89: in prepare
+    result_plan=storage.result_tool.plan(volume_id,target,payload+96*1024**2,payload,minimum_free_inodes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+volume_id = 'J-e8e91a39b1cf194b'
+target = PosixPath('/tmp/tmpi_4ebwvm/attempts/R6-FINAL-0/results')
+size = 234881024, minimum_free_bytes = 134217728, minimum_free_inodes = 4096
+
+    def plan(volume_id,target,size,minimum_free_bytes,minimum_free_inodes):
+        target=Path(target)
+        if not re.fullmatch(r'(?:J-[0-9a-f]{16}|CPU-QUOTA-[0-9]{2})',volume_id):raise ValueError('EXACT_RESULT_VOLUME_ID')
+        if (not target.is_absolute() or target.resolve()!=target or target.name!='results'
+            or target.parent.parent!=ATTEMPTS or not re.fullmatch(r'R6-[A-Za-z0-9_-]+',target.parent.name)):
+            raise ValueError('EXACT_R6_RESULT_TARGET')
+        if type(size)is not int or not 16*1024**2<=size<=128*1024**3 or size%4096:
+            raise ValueError('ALIGNED_RESULT_CAP_REQUIRED')
+        if (type(minimum_free_bytes)is not int or minimum_free_bytes<=0
+            or size-minimum_free_bytes!=96*1024**2 or size<128*1024**2):
+            raise ValueError('FIXED_RESULT_PAYLOAD_AND_96MIB_OVERHEAD_REQUIRED')
+        if type(minimum_free_inodes)is not int or not 1<=minimum_free_inodes<=size//262144:
+>           raise ValueError('FIXED_RESULT_INODE_REQUIREMENT')
+E           ValueError: FIXED_RESULT_INODE_REQUIREMENT
+
+tools/provision_r6_fixed_result_volume.py:37: ValueError
+________ test_same_assignment_cannot_change_inodes_on_replay[baseline] _________
+
+prepared = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_same_assignment_cannot_change_inodes_on_replay(prepared):
+>       b=prepared;run(b)
+
+tools/test_r6_final_storage.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_storage.py:32: in run
+    with b.j.writer():return s.prepare(b.j,b.pin,index,free_disk_bytes=500*1024**3,**kw)
+tools/r6_final_storage.py:89: in prepare
+    result_plan=storage.result_tool.plan(volume_id,target,payload+96*1024**2,payload,minimum_free_inodes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+volume_id = 'J-267ca4aca1a3b2ed'
+target = PosixPath('/tmp/tmpxpowayah/attempts/R6-FINAL-0/results')
+size = 234881024, minimum_free_bytes = 134217728, minimum_free_inodes = 4096
+
+    def plan(volume_id,target,size,minimum_free_bytes,minimum_free_inodes):
+        target=Path(target)
+        if not re.fullmatch(r'(?:J-[0-9a-f]{16}|CPU-QUOTA-[0-9]{2})',volume_id):raise ValueError('EXACT_RESULT_VOLUME_ID')
+        if (not target.is_absolute() or target.resolve()!=target or target.name!='results'
+            or target.parent.parent!=ATTEMPTS or not re.fullmatch(r'R6-[A-Za-z0-9_-]+',target.parent.name)):
+            raise ValueError('EXACT_R6_RESULT_TARGET')
+        if type(size)is not int or not 16*1024**2<=size<=128*1024**3 or size%4096:
+            raise ValueError('ALIGNED_RESULT_CAP_REQUIRED')
+        if (type(minimum_free_bytes)is not int or minimum_free_bytes<=0
+            or size-minimum_free_bytes!=96*1024**2 or size<128*1024**2):
+            raise ValueError('FIXED_RESULT_PAYLOAD_AND_96MIB_OVERHEAD_REQUIRED')
+        if type(minimum_free_inodes)is not int or not 1<=minimum_free_inodes<=size//262144:
+>           raise ValueError('FIXED_RESULT_INODE_REQUIREMENT')
+E           ValueError: FIXED_RESULT_INODE_REQUIREMENT
+
+tools/provision_r6_fixed_result_volume.py:37: ValueError
+______ test_same_assignment_cannot_change_inodes_on_replay[confirmation] _______
+
+prepared = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_same_assignment_cannot_change_inodes_on_replay(prepared):
+>       b=prepared;run(b)
+
+tools/test_r6_final_storage.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_storage.py:32: in run
+    with b.j.writer():return s.prepare(b.j,b.pin,index,free_disk_bytes=500*1024**3,**kw)
+tools/r6_final_storage.py:89: in prepare
+    result_plan=storage.result_tool.plan(volume_id,target,payload+96*1024**2,payload,minimum_free_inodes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+volume_id = 'J-b5092680f1f32124'
+target = PosixPath('/tmp/tmpg1_pcd5e/attempts/R6-FINAL-0/results')
+size = 234881024, minimum_free_bytes = 134217728, minimum_free_inodes = 4096
+
+    def plan(volume_id,target,size,minimum_free_bytes,minimum_free_inodes):
+        target=Path(target)
+        if not re.fullmatch(r'(?:J-[0-9a-f]{16}|CPU-QUOTA-[0-9]{2})',volume_id):raise ValueError('EXACT_RESULT_VOLUME_ID')
+        if (not target.is_absolute() or target.resolve()!=target or target.name!='results'
+            or target.parent.parent!=ATTEMPTS or not re.fullmatch(r'R6-[A-Za-z0-9_-]+',target.parent.name)):
+            raise ValueError('EXACT_R6_RESULT_TARGET')
+        if type(size)is not int or not 16*1024**2<=size<=128*1024**3 or size%4096:
+            raise ValueError('ALIGNED_RESULT_CAP_REQUIRED')
+        if (type(minimum_free_bytes)is not int or minimum_free_bytes<=0
+            or size-minimum_free_bytes!=96*1024**2 or size<128*1024**2):
+            raise ValueError('FIXED_RESULT_PAYLOAD_AND_96MIB_OVERHEAD_REQUIRED')
+        if type(minimum_free_inodes)is not int or not 1<=minimum_free_inodes<=size//262144:
+>           raise ValueError('FIXED_RESULT_INODE_REQUIREMENT')
+E           ValueError: FIXED_RESULT_INODE_REQUIREMENT
+
+tools/provision_r6_fixed_result_volume.py:37: ValueError
+=========================== short test summary info ============================
+FAILED tools/test_r6_final_storage.py::test_exact_profile_is_prepaid_once_without_model_or_mount[baseline]
+FAILED tools/test_r6_final_storage.py::test_exact_profile_is_prepaid_once_without_model_or_mount[confirmation]
+FAILED tools/test_r6_final_storage.py::test_each_assignment_gets_distinct_storage_and_attempt[baseline]
+FAILED tools/test_r6_final_storage.py::test_each_assignment_gets_distinct_storage_and_attempt[confirmation]
+FAILED tools/test_r6_final_storage.py::test_same_assignment_cannot_change_inodes_on_replay[baseline]
+FAILED tools/test_r6_final_storage.py::test_same_assignment_cannot_change_inodes_on_replay[confirmation]
+6 failed, 12 passed in 10.49s

@@ -121,6 +121,23 @@ def finish_and_decide(journal, key, store, query_executable, decision_executable
         scientific_acceptance=False)
 
 
+
+def finish_final(journal,key,store,query_executable,*,free_disk_bytes):
+    """Close final evidence without a per-model scientific decision or tuning."""
+    journal.require_writer();job=journal.canonical_job(key);spec=json.loads(checked(job['request']['spec']).read_text())
+    if spec.get('h1',{}).get('mode')!='research-r6-final-evaluation' or job['purpose']!='confirmation_delivery':
+        raise RecoveryError('FINALIZE_FINAL_STAGE_REQUIRED')
+    if any(e['kind']=='model' and e['identity'].get('job_id')==job['identity']['job_id']
+           and e['identity'].get('role')=='post-analysis-decision' for e in journal.read()['events'].values()):
+        raise RecoveryError('FINALIZE_FINAL_UNEXPECTED_MODEL_DECISION')
+    finalize(journal,key,store,query_executable,free_disk_bytes=free_disk_bytes)
+    analyze(journal,key,store,free_disk_bytes=free_disk_bytes)
+    job=journal.canonical_job(key)
+    return dict(inventory=json.loads(checked(job['inventory']).read_text()),
+        postrun=json.loads(checked(job['postrun']).read_text()),analysis=json.loads(checked(job['analysis']).read_text()),
+        scientific_acceptance=False)
+
+
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('directory',type=Path);parser.add_argument('event_key')

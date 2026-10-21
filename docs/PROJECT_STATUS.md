@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：最终固定 profile→预付双卷→整批物化输入及无逐模型决策的 final 收尾接通。
+核验准备事件/预算、独审原 receipt 与逐 assignment 兼容 payload；每项独立卷，profile 不改写。
+缺卷整批汇总，恢复不重计空间/不重调模型；final 作业关闭后 CPU 重算，留待整批汇总独审。
+36 项最终存储/runner 回归通过，前序56 项存储/物化检查通过；inode默认/测试预期与错误测试路径日志保留。
+证据 CPU_FINAL_STORAGE.json；原件审核本地 fake CLI、发布/冻结/物化/物理关闭替身明确，无挂载或生产发车。
+仍需 final 快照输入、准确整批计划独审/发行/顺序路由、修复重入、独审交付及平台交接。
+164+30=194/256，剩62；完整 Goal 未完成，实际基线尚未启动。
+
 2026-10-22：最终批次冻结源码兼容 payload、一次整批独审及确定性 profile/context 准备完成。
 原快照预检漏接 candidate/final schema 已修复，准确 commit/source/hash/只读约束保留。
 固定全部 assignment/model/seed/原评分条件；一次审核覆盖三或四份兼容 payload，receipt/STOP/恢复去重检查。

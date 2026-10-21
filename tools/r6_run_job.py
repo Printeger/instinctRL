@@ -16,7 +16,7 @@ from tools.r6_job_handoff import no_model_workers
 from tools.r6_postrun import stop_paths
 from tools.r6_resource_wait import wait_for_observation
 from tools.r6_register_job import register_and_close
-from tools.r6_finalize_job import finish_and_decide
+from tools.r6_finalize_job import finish_and_decide,finish_final
 
 
 def run(journal, spec_pin, store, query_executable, decision_executable, *,
@@ -24,6 +24,8 @@ def run(journal, spec_pin, store, query_executable, decision_executable, *,
         purpose='development', sandbox='read-only'):
     journal.require_writer()
     spec=json.loads(checked(spec_pin).read_text())
+    final=spec.get('h1',{}).get('mode')=='research-r6-final-evaluation'
+    if final and purpose!='confirmation_delivery':raise RecoveryError('RUN_JOB_FINAL_PURPOSE')
     jid='J-'+sha({'id':spec['id'],'spec':spec})[:16]
     entries=[e for e in journal.read()['events'].values()
              if e['kind']=='job' and e['identity']['job_id']==jid]
@@ -71,6 +73,11 @@ def run(journal, spec_pin, store, query_executable, decision_executable, *,
     closed=register_and_close(journal,spec_pin,store,queue_key=queue_key,
         free_disk_bytes=min(free_disk_bytes,shutil.disk_usage(journal.directory).free),
         purpose=purpose,refresh_observation=refresh_observation)
+    if final:
+        result=finish_final(journal,closed['event_key'],store,query_executable,
+            free_disk_bytes=min(free_disk_bytes,shutil.disk_usage(journal.directory).free))
+        return dict(status='FINAL_JOB_ANALYSIS_RETURNED',event_key=closed['event_key'],
+                    closure=closed['closure'],result=result,scientific_acceptance=False)
     result=finish_and_decide(journal,closed['event_key'],store,
         query_executable,decision_executable,
         free_disk_bytes=min(free_disk_bytes,shutil.disk_usage(journal.directory).free),

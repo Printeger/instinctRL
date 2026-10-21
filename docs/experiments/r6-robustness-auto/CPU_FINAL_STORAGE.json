@@ -1,0 +1,66 @@
+{
+  "status": "CPU_FINAL_PREPAID_STORAGE_BATCH_MATERIALIZATION_AND_MODEL_FREE_FINAL_JOB_FINISH_PASS_ROUTING_PENDING",
+  "input_commit": "6f3883eb70dbd28689997fc470c49f65208a0523",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_storage.py",
+      "sha256": "fb46ca19218b2273748c7789deb2e15913a540b9c4df754a1620b26d78f9f6bd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_finalize_job.py",
+      "sha256": "cfdb44f063d1ba183f30513c705f946ea530f63622f31f68eea9c5e8eb07c43b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_run_job.py",
+      "sha256": "8d8b575da5e0e27853b418a4976c0305592c5c5875a849a8f4bf97e93c8a09ee"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_storage.py",
+      "sha256": "313592d36f0d8e7516cbb1b558e385d63c38d3a5f91dcec6c81fce3a9d03af1c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_runner.py",
+      "sha256": "3656e559aac34878359955e9da67e43125b81c734f073d4c61070ecd8584b0b0"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_STORAGE_INITIAL.log",
+      "sha256": "f2ade92aa990b7f46634f0278740d8b4c204dd77f087f0ffb205d36499dcf98b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_STORAGE_CORRECTED.log",
+      "sha256": "4e7e65e6d53a397242de943583cd27d1f4e11c81f5e75b495623021eefd1ecb6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_STORAGE_RUNNER.log",
+      "sha256": "980fb25d96446ae7ee29b8ba89657b59f02d5c140a668c3e54bb47261112659e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_STORAGE_FINAL.log",
+      "sha256": "6f4054d09579bfe41a6f8b97104ceff0507ca8ca529ff52d5314a9e824c66dd3"
+    }
+  ],
+  "tests": {
+    "final_storage_runner_regression": 36,
+    "earlier_storage_materializer_pass": 56
+  },
+  "initial_failures": [
+    "4096 default inode requirement exceeded the valid small fixture volume; default changed to 512 and bounded against actual fixed-layout inode capacity before reservation.",
+    "Replay-drift test used an already invalid inode value; changed to a valid different value to test immutable replay binding.",
+    "Attempted nonexistent test_r6_finalize_job.py path; no tests ran for that invocation. Correct runner/registered-cycle tests executed successfully."
+  ],
+  "scope": [
+    "Revalidate registered final preparation, protected CPU/model reservations, original per-assignment review receipt and accepted compatibility payload before preparing storage.",
+    "Fixed profile pins and assignment identities are carried unchanged to separately charged native/result plans and materialization inputs; no model invocation or mounting.",
+    "All final assignments materialize or report all missing preapproved volumes; replays retain exact storage identities and do not charge twice.",
+    "Final job runner closes and runs CPU analysis without per-model decision handoff; wrong purpose and existing unexpected decision events rejected.",
+    "Original development runner behavior and real temporary storage ledger regression retained; native failures and scientific nonacceptance preserved."
+  ],
+  "limitations": [
+    "Storage tests use real Journal/plan generation and local fake reviewer receipts with explicit publication/frozen profile substitutes. Batch materializer and runner physical closure/analysis are explicit substitutes.",
+    "No real mount, production Store approval/submission, GPU query, simulation or training.",
+    "Still requires final snapshot/input generation, exact batch plan review/issuance, sequential controller routing, repair re-entry, independent final audit and delivery."
+  ],
+  "goal_complete": false
+}

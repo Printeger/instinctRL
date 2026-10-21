@@ -1,0 +1,90 @@
+................FF........................................               [100%]
+=================================== FAILURES ===================================
+________ test_same_assignment_cannot_change_inodes_on_replay[baseline] _________
+
+prepared = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_same_assignment_cannot_change_inodes_on_replay(prepared):
+        b=prepared;run(b)
+>       with pytest.raises(RecoveryError,match='INPUT_DRIFT'):run(b,minimum_free_inodes=8192)
+
+tools/test_r6_final_storage.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_storage.py:32: in run
+    with b.j.writer():return s.prepare(b.j,b.pin,index,free_disk_bytes=500*1024**3,**kw)
+tools/r6_final_storage.py:68: in prepare
+    require(type(minimum_free_inodes)is int and 1<=minimum_free_inodes<=(result['payload_bytes']+96*1024**2)//262144,'INODES')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, reason = 'INODES'
+
+    def require(value,reason):
+>       if not value:raise RecoveryError('FINAL_STORAGE_'+reason)
+E       tools.r6_recovery.RecoveryError: FINAL_STORAGE_INODES
+
+tools/r6_final_storage.py:20: RecoveryError
+
+During handling of the above exception, another exception occurred:
+
+prepared = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_same_assignment_cannot_change_inodes_on_replay(prepared):
+        b=prepared;run(b)
+>       with pytest.raises(RecoveryError,match='INPUT_DRIFT'):run(b,minimum_free_inodes=8192)
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'INPUT_DRIFT'
+E        Input: 'FINAL_STORAGE_INODES'
+
+tools/test_r6_final_storage.py:74: AssertionError
+______ test_same_assignment_cannot_change_inodes_on_replay[confirmation] _______
+
+prepared = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_same_assignment_cannot_change_inodes_on_replay(prepared):
+        b=prepared;run(b)
+>       with pytest.raises(RecoveryError,match='INPUT_DRIFT'):run(b,minimum_free_inodes=8192)
+
+tools/test_r6_final_storage.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_final_storage.py:32: in run
+    with b.j.writer():return s.prepare(b.j,b.pin,index,free_disk_bytes=500*1024**3,**kw)
+tools/r6_final_storage.py:68: in prepare
+    require(type(minimum_free_inodes)is int and 1<=minimum_free_inodes<=(result['payload_bytes']+96*1024**2)//262144,'INODES')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, reason = 'INODES'
+
+    def require(value,reason):
+>       if not value:raise RecoveryError('FINAL_STORAGE_'+reason)
+E       tools.r6_recovery.RecoveryError: FINAL_STORAGE_INODES
+
+tools/r6_final_storage.py:20: RecoveryError
+
+During handling of the above exception, another exception occurred:
+
+prepared = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_same_assignment_cannot_change_inodes_on_replay(prepared):
+        b=prepared;run(b)
+>       with pytest.raises(RecoveryError,match='INPUT_DRIFT'):run(b,minimum_free_inodes=8192)
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'INPUT_DRIFT'
+E        Input: 'FINAL_STORAGE_INODES'
+
+tools/test_r6_final_storage.py:74: AssertionError
+=========================== short test summary info ============================
+FAILED tools/test_r6_final_storage.py::test_same_assignment_cannot_change_inodes_on_replay[baseline]
+FAILED tools/test_r6_final_storage.py::test_same_assignment_cannot_change_inodes_on_replay[confirmation]
+2 failed, 56 passed in 13.51s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-128af283-96dd-415e-9622-024bc9fa5b50/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-128af283-96dd-415e-9622-024bc9fa5b50/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-128af283-96dd-415e-9622-024bc9fa5b50/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-128af283-96dd-415e-9622-024bc9fa5b50
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-128af283-96dd-415e-9622-024bc9fa5b50'
+  warnings.warn(
