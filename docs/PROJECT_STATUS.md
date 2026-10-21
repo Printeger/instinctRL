@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：最终保留集commit/reveal纯函数核心完成，7项CPU测试通过。
+协议与冻结记录hash绑定nonce；三种子作用于真实reset_spec/RangeDelivery函数，
+实际位置和噪声不同，同种子配对逐项一致。见
+`docs/experiments/r6-robustness-auto/CPU_HOLDOUT_STREAMS.json`。
+尚未接入controller的一次性持久化/冻结审查/揭晓顺序；纯函数不授予release权限。
+SPLIT_MANIFEST仅新增未冻结候选算法说明，未生成真实nonce或揭晓final样本。
+两生产manifest仍不存在；无GPU/live/model新增，完整Goal保持未完成。
+
 2026-10-21：真实16块入口与输出writer在CPU替身上完成160640 transitions，
 完整输出为65文件/17目录，未产生按step/chunk增长的文件；1项全批次测试通过，
 255.27秒。见 `docs/experiments/r6-robustness-auto/CPU_OUTPUT_LAYOUT.json`。

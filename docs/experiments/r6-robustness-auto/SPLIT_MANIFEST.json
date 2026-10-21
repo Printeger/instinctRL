@@ -17,7 +17,14 @@
     "seed_realization_generated": false,
     "protocol_distribution_public": true,
     "realization_release": "Controller generates secret nonce only after final recipe/checkpoint-selection rule frozen, commits hash before final execution; runner derives common condition streams for baseline and each final model; nonce/raw revealed only after all model checkpoints frozen.",
-    "holdout_use": "Single batch only; no subsequent tuning with this holdout. Actual scoring bug requires independent review and contamination record."
+    "holdout_use": "Single batch only; no subsequent tuning with this holdout. Actual scoring bug requires independent review and contamination record.",
+    "derivation_candidate": {
+      "version": "r6-final-realization/1",
+      "implementation": "training_workloads/unified_h1/robustness_holdout.py",
+      "status": "CPU_CORE_ONLY_NOT_FROZEN_OR_RELEASED",
+      "evidence": "CPU_HOLDOUT_STREAMS.json",
+      "pairing": "Use realization index0 for common baseline/three-model comparison. BASELINE_SUFFICIENT uses all three distinct realizations. Never derive realization index from model identity."
+    }
   },
   "baseline_sufficient": "Three different realized environment streams, full original+new target+stress suites for each; training zero.",
   "stream_domains": [

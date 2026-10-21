@@ -1,0 +1,41 @@
+{
+  "status": "CPU_CORE_PASS_CONTROLLER_INTEGRATION_PENDING",
+  "tests_passed": 7,
+  "source_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_holdout.py",
+      "sha256": "68ab46969db55ec4fbcda4120e2ac4f3e77cbb79fef239e4870ed54a6b86c811"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_holdout.py",
+      "sha256": "4af2daf59b53557800e2c6fa05ca51226a1508b031936b4eca8b8f3240f6369f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_scenarios.py",
+      "sha256": "630cbdf15d217644fae7bf0be8fb7db4be1f07abacd62ea9c9cb6e7ef34a22f3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "05fd977e751d4af3f78e13a1dee983c673fe4347988ee9a17449e497c20a488e"
+    }
+  ],
+  "log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_HOLDOUT_STREAMS_TEST.txt",
+    "sha256": "3d368ba43f0aad60365b9ab3dacfcdcd223774618d864a5e1377e1dd6be19bc8"
+  },
+  "proof": [
+    "Commitment binds 256-bit nonce, protocol hash and full freeze-record hash.",
+    "Tampered bindings/nonce/extra fields rejected.",
+    "Three distinct 31-bit seeds feed actual reset_spec and RangeDelivery functions.",
+    "Actual reset positions and delivered range arrays differ across realizations; paired samples reproduce exactly."
+  ],
+  "limitations": [
+    "Pure core does not validate freeze-record contents or independent acceptance.",
+    "Controller must generate entropy only after all required recipe/selection/model freezes, persist once, and gate reveal.",
+    "No real holdout nonce generated; no final sample revealed; tests use public fixture entropy.",
+    "No actual simulator or training/random action validation."
+  ],
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_sessions_added": 0
+}
