@@ -15,6 +15,7 @@ SCHEMA=ROOT/'docs/experiments/r6-robustness-auto/prompts/training-review.schema.
 ROLE='training-independent-review'
 CAP=256*1024
 DECISIONS={k:'PASS_R6_TRAINING_'+k.upper() for k in ('recipe','capacity','compatibility')}
+DECISIONS['freeze']='PASS_R6_RECIPE_FREEZE'
 
 
 def require(value,reason):
@@ -31,6 +32,7 @@ def prepare(journal,parent_key,snapshot_pin,input_pin,store,*,executable,free_di
         profile.guard(journal);parent=parent_decision(journal,parent_key,store)
         require(parent['decision']['decision']!='REQUEST_FINAL_REVIEW','FINAL_ROUTE')
         request=json.loads(checked(input_pin).read_text())
+        if request.get('kind')=='freeze':require(purpose=='confirmation_delivery','FREEZE_PURPOSE')
         prepared=inputs.prepare(snapshot_pin,request)
         require(prepared['status']=='REVIEW_PAYLOADS_PREPARED_NOT_ACCEPTED' and not prepared['dispatch_authorized'],'PAYLOAD_STATUS')
         profile.guard(journal);state=journal.read()
@@ -55,7 +57,9 @@ def prepare(journal,parent_key,snapshot_pin,input_pin,store,*,executable,free_di
         profile.guard(journal)
         persist_exact(folder/name,data);return file_pin(folder/name)
     payloads=packet['prepared']['payloads']
-    expected={'recipe'} if packet['prepared']['request']['kind']=='recipe' else {'capacity','compatibility'}
+    kind=packet['prepared']['request']['kind']
+    expected={kind} if kind in ('recipe','freeze') else {'capacity','compatibility'}
+    if kind=='freeze':require(purpose=='confirmation_delivery','FREEZE_PURPOSE')
     require(set(payloads)==expected,'PAYLOAD_KINDS')
     pins={k:pin_bytes(folder/(k+'-payload.json'),canonical(v)+b'\n') for k,v in payloads.items()}
     prompt=('Independently review the pinned R6 training inputs, read only, then exit. Do not modify files, '
@@ -66,7 +70,12 @@ def prepare(journal,parent_key,snapshot_pin,input_pin,store,*,executable,free_di
         'verify raw/checkpoint/reset/physics accounting, logged evidence volume, full final confirmation '
         'and delivery within remaining/protected budgets including failed and unreleased reservations. '
         'For compatibility: verify actual changed old/new bytes, u640/resume load and method bindings, '
-        'actor/runtime/original evaluator invariants. These are prospective reviews, not scientific success '
+        'actor/runtime/original evaluator invariants. For freeze: inspect the complete paired development '
+        'originals, native failures, method/controller attribution, original-task retention and frozen '
+        'protocol/split; decide whether this recipe warrants three common-u640 continuation streams. '
+        'Require the three preregistered seeds, fixed terminal-checkpoint rule, no holdout realization '
+        'exposure, full protected confirmation/evaluation/delivery/repair budget and no learning-success '
+        'claim from structural evidence alone. These are prospective reviews, not scientific success '
         'or live authority. Return exactly one reviews item per payload key, with kind, matching canonical '
         'payload_sha256, decision from decisions or MUST_FIX, reviewer=r6-independent-training-review, '
         'summary and must_fix. Top decision PASS_R6_TRAINING_REVIEW requires all items pass, no must_fix, '

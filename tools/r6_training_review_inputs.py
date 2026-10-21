@@ -17,6 +17,10 @@ if q['kind']=='recipe':
  r=validate_recipe(pinned_json(q['recipe']))
  if r['source_identity']!=c['resolved_identity']:raise PermissionError('recipe execution identity')
  payloads={'recipe':r}
+elif q['kind']=='freeze':
+ from training_workloads.unified_h1.robustness_confirmation import freeze_payload
+ if pinned_json(q['recipe'])['source_identity']!=c['resolved_identity']:raise PermissionError('freeze execution identity')
+ payloads={'freeze':freeze_payload(q['recipe'],q['recipe_review'],q['selection_evidence'])}
 else:
  p=pinned_json(q['plan']);config=Path(sys.argv[1])/'training_workloads/unified_h1/candidate_config.json'
  cp=dict(path=str(config),sha256=hashlib.sha256(config.read_bytes()).hexdigest())
@@ -26,9 +30,9 @@ print(json.dumps(dict(source_identity=c['resolved_identity'],payloads=payloads),
 
 
 def prepare(snapshot_pin,request):
-    if not isinstance(request,dict) or request.get('kind') not in ('recipe','stage'):
+    if not isinstance(request,dict) or request.get('kind') not in ('recipe','stage','freeze'):
         raise RecoveryError('TRAINING_REVIEW_KIND')
-    expected={'kind','recipe'} if request['kind']=='recipe' else {'kind','plan','origin_config'}
+    expected={'kind','recipe'} if request['kind']=='recipe' else {'kind','recipe','recipe_review','selection_evidence'} if request['kind']=='freeze' else {'kind','plan','origin_config'}
     if set(request)!=expected:raise RecoveryError('TRAINING_REVIEW_FIELDS')
     for name in expected-{'kind'}:checked(request[name])
     snapshot=json.loads(checked(snapshot_pin).read_text())
@@ -44,7 +48,7 @@ def prepare(snapshot_pin,request):
     if result.returncode:raise RecoveryError('TRAINING_REVIEW_FROZEN: '+result.stderr[-2000:])
     if len(result.stdout.encode())>65536:raise RecoveryError('TRAINING_REVIEW_OUTPUT_CAP')
     value=json.loads(result.stdout)
-    names={'recipe'} if request['kind']=='recipe' else {'capacity','compatibility'}
+    names={request['kind']} if request['kind'] in ('recipe','freeze') else {'capacity','compatibility'}
     if (set(value)!={'source_identity','payloads'} or value['source_identity']!=snapshot['source_identity']
             or not isinstance(value['payloads'],dict) or set(value['payloads'])!=names
             or any(not isinstance(p,dict) or 'independent_review' in p for p in value['payloads'].values())):

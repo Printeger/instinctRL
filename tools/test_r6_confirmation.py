@@ -102,3 +102,44 @@ def test_confirmation_plan_requires_full_selection_evidence_and_freeze_review(re
     bad=b.write('bad-review.json',dict(decision='MUST_FIX',must_fix=['fixture'],reviewer='fixture-independent'))
     plan['selection_freeze']=b.write('rejected.json',dict(freeze,independent_review=bad))
     with pytest.raises(PermissionError):training.validate(plan)
+
+
+@pytest.fixture
+def frozen(ready,monkeypatch):
+    b=ready;payload=c.freeze_payload(b.plan['recipe'],b.plan['recipe_review'],b.write('evidence.json',b.evidence))
+    review=b.write('freeze-review.json',dict(decision='PASS_R6_RECIPE_FREEZE',must_fix=[],reviewer='fixture-independent',payload_sha256=c.base.object_sha(payload)))
+    b.freeze=b.write('freeze.json',dict(payload,independent_review=review))
+    monkeypatch.setattr(c.base,'baseline',lambda p:dict(selected_model=b.plan['initialization']['checkpoint'],source_identity=b.identity,method_hashes={'baseline':'fixture'}))
+    b.arguments=dict(freeze_pin=b.freeze,recipe_review=b.plan['recipe_review'],baseline_bindings=b.ev,
+        experiment_ids=['R6-CONFIRM-A','R6-CONFIRM-B','R6-CONFIRM-C'],wall_seconds=2290,storage=b.plan['storage'])
+    return b
+
+
+def test_three_plans_use_full_frozen_recipe_and_separate_real_streams(frozen):
+    b=frozen;bundle=c.build_plans(**b.arguments)
+    assert [p['training_seed'] for p in bundle['plans']]==[21,22,23]
+    for plan in bundle['plans']:
+        assert plan['start_update']==640 and plan['target_update']==1664
+        assert plan['initialization']==b.plan['initialization']
+        assert plan['checkpoint_updates']==[896,1152,1664] and plan['selection_freeze']==b.freeze
+        assert training.validate(plan)==plan
+    assert bundle['training_job_reservations']['training_transitions']==3*1024*512
+    assert bundle['training_job_reservations']['training_checkpoint_writes']==9
+    assert bundle['training_job_reservations']['live_wall_seconds']==3*(2290+190)
+    assert bundle['total_workload_budgets']['optimizer_updates']==3*1024
+    assert not bundle['dispatch_authorized'] and not bundle['holdout_released']
+
+
+@pytest.mark.parametrize('fault',['ids','short_ids','seed','review','storage','wall'])
+def test_bundle_rejects_drift_or_insufficient_job_capacity(frozen,fault):
+    b=frozen;args=copy.deepcopy(b.arguments);c.build_plans(**args)
+    if fault=='ids':args['experiment_ids'][2]=args['experiment_ids'][0]
+    if fault=='short_ids':args['experiment_ids'].pop()
+    if fault in ('seed','review'):
+        freeze=json.loads(Path(b.freeze['path']).read_text())
+        if fault=='seed':freeze['confirmation_seeds'][0]=11
+        else:freeze['independent_review']=b.ev
+        args['freeze_pin']=b.write('wrong-freeze.json',freeze)
+    if fault=='storage':args['storage']['plain_bytes']=1
+    if fault=='wall':args['wall_seconds']=0
+    with pytest.raises((PermissionError,KeyError)):c.build_plans(**args)

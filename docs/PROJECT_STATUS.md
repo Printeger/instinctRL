@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：recipe freeze独审事件及冻结源码中的三确认计划生成器接通。
+三条计划固定共同u640起点、预登记seed顺序、完整配方终点和checkpoint节点，分别绑定wall/输出容量。
+汇总训练/物理/优化器/reset/checkpoint计数及三作业完整双卷、dispatcher/cleanup预留；不冒充最终交付预算。
+82项计划/审核、25项冻结入口、1项保护用途、40项训练/RNG回归通过，无初轮失败。
+证据CPU_CONFIRMATION_PLANS.json；源加载/基线/选择边界为fixture，本地fake CLI，无生产审核或发车。
+控制器三轨迹顺序执行/汇总、最终模型冻结/holdout/交付、组合独审及平台交接仍未完成。
+155次自动唤醒+30worker=185，模型剩71；完整Goal未完成。
+
 2026-10-22：确认训练的recipe freeze新增完整选择证据校验，不再接受任意存在的selection_evidence文件。
 绑定已审protocol/split、三条预登记训练随机流、终点checkpoint规则、同方法/同条件控制与训练候选评价。
 核对关闭作业/原件清单/两次postrun、16块重算、原五任务能力保持及全部输入；原生FAILED保留。

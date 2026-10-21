@@ -95,3 +95,48 @@ def validate_selection_evidence(pin,recipe_pin,recipe):
     require(control['comparison']==trained['comparison'] and control['baseline_bindings']==trained['baseline_bindings']
         and trained['training_plan']['recipe']==recipe_pin and trained['training_plan']['phase']=='development','PAIRED_DESIGN')
     return dict(evidence=value,scientific_acceptance=False,holdout_released=False)
+
+
+def freeze_payload(recipe_pin,recipe_review,selection_evidence):
+    """Exact input for the independent recipe freeze review; never acceptance."""
+    from . import robustness_training_plan as training
+    recipe=training.recipe(recipe_pin,recipe_review)
+    validate_selection_evidence(selection_evidence,recipe_pin,recipe)
+    return dict(schema_version='r6-recipe-freeze/1',recipe=recipe_pin,
+        confirmation_seeds=recipe['confirmation_seeds'],selection_evidence=selection_evidence)
+
+
+def build_plans(freeze_pin,recipe_review,baseline_bindings,experiment_ids,wall_seconds,storage):
+    """Three full common-origin plans, ordered by frozen seeds. No reservation."""
+    from . import robustness_training_plan as training
+    from .native_volume import MAXIMUM
+    from .result_volume import CONTROL_ALLOWANCE
+    freeze=base.pinned_json(freeze_pin)
+    expected=freeze_payload(freeze['recipe'],recipe_review,freeze['selection_evidence'])
+    require(set(freeze)==set(expected)|{'independent_review'} and all(freeze[k]==v for k,v in expected.items()),'EXACT_FREEZE')
+    base.accepted_review(freeze['independent_review'],'PASS_R6_RECIPE_FREEZE',payload_sha256=base.object_sha(expected))
+    recipe=training.recipe(freeze['recipe'],recipe_review)
+    baseline=base.baseline(dict(baseline_bindings=baseline_bindings))
+    require(isinstance(experiment_ids,list) and len(experiment_ids)==3 and len(set(experiment_ids))==3,'THREE_EXPERIMENTS')
+    initial=dict(kind='COMMON_U640_NEW_STREAM',checkpoint=baseline['selected_model'],
+        source_identity=baseline['source_identity'],method_hashes=baseline['method_hashes'])
+    plans=[];expansions=[]
+    for experiment,seed in zip(experiment_ids,freeze['confirmation_seeds']):
+        plan=dict(schema_version='r6-training-plan/1',experiment_id=experiment,phase='confirmation',
+            recipe=freeze['recipe'],recipe_review=recipe_review,selection_freeze=freeze_pin,training_seed=seed,
+            start_update=640,target_update=640+recipe['branch_updates'],
+            checkpoint_updates=[640+n for n in recipe['checkpoint_offsets']],initialization=dict(initial),
+            wall_seconds=wall_seconds,storage=dict(storage))
+        expanded=training.expanded_budget(plan,physics_decimation=20)
+        plans.append(plan);expansions.append(expanded)
+    totals={k:sum(e['budgets'][k] for e in expansions) for k in expansions[0]['budgets']}
+    aggregate=storage['payload_bytes']+96*1024**2+MAXIMUM+CONTROL_ALLOWANCE
+    charged=dict(live_starts=3,simulator_initializations=3,
+        training_transitions=totals['training_transitions'],training_checkpoint_writes=totals['checkpoint_writes'],
+        nontraining_transitions=0,live_wall_seconds=totals['wall_seconds']+3*190,
+        allocated_gpu_seconds=totals['wall_seconds']+3*190,
+        output_actual_plus_unreleased_reservations_bytes=3*aggregate)
+    return dict(schema_version='r6-three-confirmation-plans/1',freeze=freeze_pin,baseline_bindings=baseline_bindings,
+        plans=plans,expanded_budgets=expansions,total_workload_budgets=totals,training_job_reservations=charged,
+        scope='THREE_TRAINING_JOBS_ONLY_FINAL_EVALUATION_DELIVERY_AND_REPAIR_REQUIRE_SEPARATE_BUDGET',
+        scientific_acceptance=False,dispatch_authorized=False,holdout_released=False)

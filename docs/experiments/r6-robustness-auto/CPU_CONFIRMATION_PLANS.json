@@ -1,0 +1,88 @@
+{
+  "status": "CPU_RECIPE_FREEZE_REVIEW_AND_THREE_COMMON_ORIGIN_PLAN_BUILDER_PASS_CONTROLLER_SEQUENCE_PENDING",
+  "input_commit": "6ebe7168",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_confirmation.py",
+      "sha256": "fe2d0a996fa5a71cbfe923627c0ab3e4f83e17a8274c0e3fc281298193082147"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_plan.py",
+      "sha256": "4078569bec433c868779c27669f5da0de1e1c966eda0c8e6a1ca65df2adae902"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_confirmation_plans.py",
+      "sha256": "fb7198c048de4cd07956f8bb2cb8dd10c0d622fe534cc56398571a46acdee766"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_review.py",
+      "sha256": "65d43355abaaf7a04f161ae592e498d522fc288e85c63f6cdcfbf71a8c685aa0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_review_inputs.py",
+      "sha256": "7f52cc7b7a2d066eae0a974a637ca4300832df7742df27e517882fd3cd1bbf06"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/training-review.schema.json",
+      "sha256": "3e0ac8b43487d417a45648374d506f05673e03c9b56b78dfaeb615a12a7f83be"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_confirmation.py",
+      "sha256": "79c4f19a2594cabb6b787f13a91bb7282bf8c9c71f6205f17d32a317338fab52"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_confirmation_plans.py",
+      "sha256": "da39e80091741d29ab2fbaf6b13e4c96b970899e54209f1a05a5ebff80e3eea3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_training_review.py",
+      "sha256": "8ac77cebe2d024b20045de42ef85adae9556884be5abf5a7a1ad8c5779154fb3"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_PLANS_INITIAL.log",
+      "sha256": "149132bf45f474ee85dcd0a51311775c19cfd6bc062c3409727d2d5ad1a0db52"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_PLANS_TRANSPORT.log",
+      "sha256": "583a109b3def5c608905078b7bf8e9a95d3383f44eee3c85180cf681e0ec70e1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_PLANS_PURPOSE.log",
+      "sha256": "9598bdd84f55c360113aece9e312ce5ad7827ca4e51fe75a6d8bd73c0e883f03"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONFIRMATION_PLANS_TENSOR.log",
+      "sha256": "68d2db1387ab7e5a1a1e426df6493283b7ac575b51f898fa93acc640e2ee73a7"
+    }
+  ],
+  "verification": {
+    "plan_review": 82,
+    "frozen_transport": 25,
+    "protected_purpose": 1,
+    "tensor_regression": 40
+  },
+  "initial_failures": [],
+  "guarantees": [
+    "Independent recipe-freeze review reuses registered model event, exact payload/source recheck, receipts, STOP and deduplication; confirmation_delivery purpose is required before reservation.",
+    "Frozen-source builder validates accepted freeze and exact recipe source identity, constructs three distinct experiment IDs in preregistered seed order from shared frozen u640 and complete recipe endpoint.",
+    "Each plan contains exact checkpoint nodes, branch initialization and per-job storage/wall budget; expanded workload counts and aggregate three-job reservations include 10s dispatcher plus 180s cleanup allowance per job and all three output volumes.",
+    "Training-only resource aggregate explicitly excludes final evaluation/delivery/repair; it is neither capacity acceptance nor reservation.",
+    "Budget expansion reuses already validated plan arithmetic instead of repeating the complete evidence validation inside one expansion."
+  ],
+  "boundaries": [
+    "Synthetic paired raw-index/selection fixture and baseline identity substitution; no actual selected recipe or live confirmation trajectory.",
+    "Frozen PROGRAM code exercised with config loader fixture; transport subprocess boundary is explicit.",
+    "Local fake review CLI only; no production paid review, Store mutation, entropy generation, GPU/simulation/training or dependency/runtime change."
+  ],
+  "remaining": [
+    "Controller-owned confirmation preparation, three-stream dispatch cursor and closed-job collection",
+    "Exact final-model freeze and baseline-sufficient validation route",
+    "Holdout/final evaluation integration and delivery/audit/videos",
+    "Combined independent review and platform handoff before production"
+  ],
+  "goal_complete": false
+}

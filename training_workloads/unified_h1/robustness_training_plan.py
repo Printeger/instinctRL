@@ -114,7 +114,12 @@ def validate(plan):
 
 
 def required_budget(plan):
-    p=validate(plan);updates=p['target_update']-p['start_update'];transitions=updates*512
+    return budget_from_validated_plan(validate(plan))
+
+
+def budget_from_validated_plan(p):
+    """Budget arithmetic only; callers must validate the complete plan first."""
+    updates=p['target_update']-p['start_update'];transitions=updates*512
     curriculum=pinned_json(pinned_json(p['recipe'])['curriculum'])
     resets=len(robustness_curriculum.slices(curriculum,p['start_update'],p['target_update']))
     return dict(live_process_starts=1,simulator_initializations=1,initialization_ticks=10,
@@ -126,7 +131,7 @@ def required_budget(plan):
 def expanded_budget(plan,*,physics_decimation):
     p=validate(plan);integer(physics_decimation,20,20,'PHYSICS_DECIMATION')
     updates=p['target_update']-p['start_update']
-    return dict(budgets=required_budget(p),policy_steps=updates*16,
+    return dict(budgets=budget_from_validated_plan(p),policy_steps=updates*16,
         physics_steps=updates*16*physics_decimation,
         actor_optimizer_steps=updates*8,critic_optimizer_steps=updates*8,
         retained_checkpoint_updates=list(p['checkpoint_updates']),fresh_physical_reset=True,

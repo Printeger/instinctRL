@@ -26,16 +26,17 @@ print(json.dumps({'type':'item.completed','item':{'type':'agent_message','text':
 '''
 
 
-@pytest.fixture(params=['recipe','stage'])
+@pytest.fixture(params=['recipe','stage','freeze'])
 def ready(case,monkeypatch,request):
     b=case;b.kind=request.param
     b.reviewer=b.root/'fake_training_review';b.reviewer.write_text('#!'+sys.executable+'\n'+SCRIPT);b.reviewer.chmod(0o700)
     b.reviewer.with_suffix('.settings').write_text('{}')
     b.snapshot=json.loads(r.checked(b.context).read_text())['snapshot_receipt']
     q={'kind':b.kind,'recipe':b.context} if b.kind=='recipe' else {'kind':b.kind,'plan':b.context,'origin_config':b.context}
+    if b.kind=='freeze':q=dict(kind='freeze',recipe=b.context,recipe_review=b.context,selection_evidence=b.context)
     b.input=b.write('review-input.json',q)
     b.prepared=dict(status='REVIEW_PAYLOADS_PREPARED_NOT_ACCEPTED',snapshot=b.snapshot,request=q,
-        source_identity={},payloads={'recipe':{'fixture':True}} if b.kind=='recipe' else {'capacity':{'fixture':True},'compatibility':{'fixture':True}},dispatch_authorized=False)
+        source_identity={},payloads={b.kind:{'fixture':True}} if b.kind in ('recipe','freeze') else {'capacity':{'fixture':True},'compatibility':{'fixture':True}},dispatch_authorized=False)
     b.prepare=Mock(return_value=b.prepared);monkeypatch.setattr(r.inputs,'prepare',b.prepare)
     monkeypatch.setattr(r,'model_handoff',lambda j,k:model_handoff(j,k,poll_seconds=.01))
     return b
@@ -43,7 +44,8 @@ def ready(case,monkeypatch,request):
 
 def run(b):
     with b.j.writer():return r.prepare(b.j,b.parent,b.snapshot,b.input,b.store,
-        executable=file_pin(b.reviewer),free_disk_bytes=500*1024**3)
+        executable=file_pin(b.reviewer),free_disk_bytes=500*1024**3,
+        purpose='confirmation_delivery' if b.kind=='freeze' else 'development')
 
 
 def test_exact_component_receipts_and_one_model_call_replay(ready):
@@ -146,3 +148,12 @@ def test_changed_store_before_worker_is_rejected(ready,monkeypatch):
     monkeypatch.setattr(r,'model_handoff',handoff)
     with pytest.raises(RecoveryError):run(b)
     assert not b.reviewer.with_suffix('.count').exists()
+
+
+@pytest.mark.parametrize('ready',['freeze'],indirect=True)
+def test_freeze_review_requires_confirmation_purpose_before_reserving(ready):
+    b=ready;before=b.j.read()
+    with b.j.writer():
+        with pytest.raises(RecoveryError,match='FREEZE_PURPOSE'):
+            r.prepare(b.j,b.parent,b.snapshot,b.input,b.store,executable=file_pin(b.reviewer),free_disk_bytes=500*1024**3)
+    assert b.j.read()==before and not b.reviewer.with_suffix('.count').exists()

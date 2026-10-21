@@ -68,7 +68,8 @@
             "enum": [
               "recipe",
               "capacity",
-              "compatibility"
+              "compatibility",
+              "freeze"
             ]
           },
           "decision": {
@@ -77,7 +78,8 @@
               "PASS_R6_TRAINING_RECIPE",
               "PASS_R6_TRAINING_CAPACITY",
               "PASS_R6_TRAINING_COMPATIBILITY",
-              "MUST_FIX"
+              "MUST_FIX",
+              "PASS_R6_RECIPE_FREEZE"
             ]
           },
           "reviewer": {
