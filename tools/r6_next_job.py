@@ -160,8 +160,9 @@ def register_review(journal,parent_key,plan_pin,store,*,executable,free_disk_byt
     prompt=('Review this exact R6 next-job plan independently, read-only, then exit. '
         'Read the pinned parent decision, plan, spec and necessary original evidence. '
         'Check that the plan implements the parent decision, preserves frozen metrics, actor/runtime '
-        'boundaries, required comparisons and full confirmation budget. Check exact Store authority '
-        'and resource feasibility; missing evidence is MUST_FIX. Do not launch jobs, query GPUs, '
+        'boundaries, required comparisons and full confirmation budget. Check the intended exact Store '
+        'specification, accepted condition evidence and resource feasibility. Final exact Store approval '
+        'is issued after this review; its absence alone is not a defect. Missing supporting evidence is MUST_FIX. Do not launch jobs, query GPUs, '
         'change files, grant authority, or wait for training. PASS requires no must_fix. '
         'Return parent_decision_sha256, plan_sha256 and both pins in evidence_pins. '
         'changed_files must be empty. Store root: '+str(store.root)+'\n'+json.dumps(packet,sort_keys=True)+'\n').encode()

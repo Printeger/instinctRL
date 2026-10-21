@@ -1,0 +1,42 @@
+{
+  "schema_version": "r6-issue-next-cpu/1",
+  "status": "CPU29_PASS_INDEPENDENT_REVIEW_PENDING",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_issue_next.py",
+      "sha256": "30c8dfafd81a2fdf60204e3032ba5df92316241db90324d94ff0280fff2035d3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_next_job.py",
+      "sha256": "1869994b48d93a064163904f8aa454957c72d24a3dc29d47e30ea9b61e3b439f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_issue_next.py",
+      "sha256": "782f27d5c33ef6219a1f042d0add0b76cf56a69575c07f10f2ff570d54cd2132"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-issue-next-initial.txt",
+      "sha256": "86cb722d8b512b317ea256ebb2056248ee0ab873c1408bf477252438ca167be4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-issue-next-final.txt",
+      "sha256": "6a7116bc790643430f5f1ece52dbea7072499a8684bc72c8b7c23d8edbad702f"
+    }
+  ],
+  "coverage": [
+    "Real Store proposal/show/approve and duplicate transaction recovery",
+    "Crash after Store commit recovers exact original approval",
+    "Revoked approval, changed parent binding, STOP before and between mutations rejected",
+    "Current capacity, delegation and hypothetical full job reservation gates before new approval",
+    "Review prompt no longer circularly requires final Store approval before review"
+  ],
+  "limits": [
+    "Review, delegation, runtime-authority inspection and storage allocation are explicit test substitutes",
+    "No production Store approval issued; no job submitted",
+    "Initial baseline issuance and plan generation/controller deployment remain incomplete",
+    "Requires independent review before production use"
+  ],
+  "scientific_acceptance": false
+}

@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：已审下一作业到Store准确许可的接线完成，29项CPU检查通过。真实Store
+事务验证批准后崩溃恢复、同一parent不能改绑、撤销不重发、STOP与额度不足拒绝；
+review/delegation/runtime/storage为明确替身，无production许可或live新增。
+审核prompt纠正为先审核准确计划再发许可，避免要求尚未发行的许可形成循环依赖。
+见 `docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_ISSUANCE.json`；该组件待独审，
+初始baseline发行、计划生成与完整controller仍未完成。
+111次唤醒+22worker=133，余123次；完整Goal未完成。
+
 2026-10-21：第22次独审PASS_R6_EXECUTION_COMPATIBILITY，准确接受snapshot02/u640
 源码与config兼容payload。核验60原源码/108执行源码pins、16708只读inventory项及
 实际u640元数据；六处实际产品变化与新增依赖审核通过，原评价/actor边界保持。
