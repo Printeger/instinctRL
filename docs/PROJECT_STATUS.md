@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：R6 原轨迹呈现、Isaac Sim 回放实现与 CPU MP4/遥测核验新增；无 CLI 或生产渲染许可。
+完整保留控制/状态时刻、失败帧与 reset 后轨迹断点；逐帧解码检查排除 HUD 掩盖空白场景。
+11项初检、29项组合检查通过，真实 Journal guard 通过；证据 CPU_VIDEO_PRESENTATION.json。
+MP4与AuditLog均为明确合成CPU fixture；renderer仅语法/导入核验，尚无GPU渲染或真实视频。
+尚需渲染配额/许可/执行、视觉审计/同步对照、最终独审/修复/平台交接；实际基线仍未启动。
+完整Goal未完成；171次自动唤醒+30worker=201/256，剩55；无需用户重复批准任务内工作。
+
 2026-10-22：控制器预付视频提取任务、固定源码/解释器、进程身份/日志/receipt/清理及重启恢复接通。
 先预留18 MiB confirmation_delivery，沿用现有CPU进程流程；缺失/半写receipt或失败不盲重跑。
 交付证据→登记提取→原worker恢复→render待办，无逐片模型调用；真实Tensor子进程提取200帧合成AuditLog通过。

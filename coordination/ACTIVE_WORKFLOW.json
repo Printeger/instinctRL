@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 170,
-    "total_automatic_model_sessions_minimum": 200,
+    "platform_automatic_goal_wakes": 171,
+    "total_automatic_model_sessions_minimum": 201,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -375,6 +375,8 @@
     "video_decoding_status": "CPU_EXACT_RECORDED_VIDEO_TRAJECTORY_DECODING_AND_BOUNDED_WORKER_PASS_RENDERING_PENDING",
     "video_decoding_evidence": "docs/experiments/r6-robustness-auto/CPU_VIDEO_DECODING.json",
     "video_worker_status": "CPU_PREPAID_VIDEO_EXTRACTION_WORKER_RECOVERY_AND_CONTROLLER_ROUTE_PASS_RENDERING_PENDING",
-    "video_worker_evidence": "docs/experiments/r6-robustness-auto/CPU_VIDEO_WORKER.json"
+    "video_worker_evidence": "docs/experiments/r6-robustness-auto/CPU_VIDEO_WORKER.json",
+    "video_presentation_status": "CPU_VIDEO_PRESENTATION_AND_MP4_VALIDATION_PASS_ISAAC_RENDERER_NOT_GPU_VERIFIED",
+    "video_presentation_evidence": "docs/experiments/r6-robustness-auto/CPU_VIDEO_PRESENTATION.json"
   }
 }

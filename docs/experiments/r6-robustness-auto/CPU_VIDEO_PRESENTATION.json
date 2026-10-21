@@ -1,0 +1,57 @@
+{
+  "status": "CPU_VIDEO_PRESENTATION_AND_MP4_VALIDATION_PASS_ISAAC_RENDERER_NOT_GPU_VERIFIED",
+  "base_commit": "b9a8fb67bb5c63c8092335076bcc68b0961a84b1",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_video_presentation.py",
+      "sha256": "023c59822e569e4c3e3b62431656d3e052b13858eaf82c0d43c1bc4864a48a1f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/render_r6_isaac_video.py",
+      "sha256": "be01bde88cd1d4e0a304900b267480d072b73bce9d72542dcb067c13ec603d0c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_video_presentation.py",
+      "sha256": "994c12c416d976d80db230bcf713985556344c90ba290836a55d3833b2a2e3b6"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_PRESENTATION_INITIAL.log",
+      "sha256": "6319176a5ddf008bbca92fbce9d65f373cb880c17c151c19bcb275a164869205"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_PRESENTATION_COMBINED.log",
+      "sha256": "505216a9bb1dbd775fc76597dea313f23fbba94fb890e70e90385d785149885e"
+    }
+  ],
+  "checks": {
+    "initial": 11,
+    "combined": 29,
+    "real_journal_guard": "PASS",
+    "current_job": null,
+    "automatic_model_sessions": 201,
+    "remaining": 55,
+    "syntax_and_cpu_import": "PASS"
+  },
+  "scope": [
+    "Full recorded pose/control clocks, failure frames and post-reset trail discontinuity validated.",
+    "Isaac Sim replay implementation reuses R5 frozen scene/asset presentation with delta_time=0 and no policy inference; no CLI or dispatch authority.",
+    "Actual CPU MP4 decode checks frame count, FPS, resolution and nonblank scene excluding HUD; exact telemetry/source binding.",
+    "Validation explicitly does not prove pose-to-pixel fidelity or scientific acceptance."
+  ],
+  "boundaries": [
+    "MP4 pixels and AuditLog inputs are synthetic CPU fixtures, not R6 results.",
+    "Isaac Sim renderer has only syntax/import verification; no GPU, SimulationApp, production extraction, render or live job.",
+    "Pytest warnings concern pre-existing root-owned quota fixture cleanup; those files were left unchanged."
+  ],
+  "remaining": [
+    "Registered render resources, hard output quota, exact permission and bounded process cleanup",
+    "Visual audit and synchronized comparison/viewing manifest",
+    "Final independent scientific/requirements audit and resource/model accounting",
+    "Repair re-entry, combined prelive review and no-model-wait platform handoff",
+    "Actual baseline, necessary training or distinct-stream baseline validation, final holdout"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}
