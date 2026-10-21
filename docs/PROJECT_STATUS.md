@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：第17次独审PASS_CPU_SCOPE，关闭近墙确认选择缺陷；确认停止窗口
+严格在完成有符号运动之后，原触发/起始截止不重置，几何/高度/保持要求不变。
+receipt/schema、源证据pins、后代清理均核验，pending_protocol_fixes清空，原MUST_FIX保留。
+见 `docs/experiments/r6-robustness-auto/reviews/wall-confirmation-repair-review.json`。
+96次平台自动唤醒+17次worker共113次，余143次。协议尚未正式冻结，真实卷容量/
+完整方案与controller交接未验收；生产双卷仍待管理员创建，无R6 live，Goal未完成。
+
 2026-10-21：Goal平台已active。第16次独审发现1项MUST_FIX：近墙评分先选起步
 静止窗口，导致后续合法运动/停止仍被误判未运动。现已改为完成11样本有符号运动
 之后再选择11样本停止确认，截止仍绑定原触发/初始时刻，不放宽阈值。

@@ -1,0 +1,36 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "The targeted finding is closed. Confirmation follows 11 completed motion observations without overlap; original trigger and deadline clocks remain intact. All-time safety gates and the 101-observation hold remain. Independently passed 18 target tests and 8 in-memory boundary checks. Evidence pins match. No files changed. Protocol remains unfrozen, production volumes missing, capacity=false; this does not accept deployment, production throughput, physical integration or final science.",
+  "evidence_pins": [
+    {
+      "path": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
+      "sha256": "a43e7879faf77ba07e447e11b95349243eb30e0287af1932651153116b394abb"
+    },
+    {
+      "path": "training_workloads/unified_h1/robustness.py",
+      "sha256": "263aa23a624ff973202e2a94ce1d8346c211343ba23701687c2ca59a5a4402b4"
+    },
+    {
+      "path": "tools/test_r6_robustness.py",
+      "sha256": "c0256c7c8d15ea8112c5c743ea3e561939f103e8bf18357c63562b77b0493209"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_WALL_CONFIRMATION_REPAIR.json",
+      "sha256": "a03b402eaf182fb18fa6341152c5d805eb5990b2a7f9588e8614ed79d8168b70"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_WALL_CONFIRMATION_REPAIR_TEST.txt",
+      "sha256": "f76dd8c0d124530873de7bfce5826885cb1fcde06b9e5688c0c762bcee2db6dd"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+      "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Close this targeted finding; retain separate protocol-freeze, production-capacity and real-integration gates.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 143
+  },
+  "must_fix": []
+}
