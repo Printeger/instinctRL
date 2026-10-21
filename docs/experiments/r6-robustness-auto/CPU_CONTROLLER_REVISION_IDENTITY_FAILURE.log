@@ -1,0 +1,256 @@
+FFF.FFF.                                                                 [100%]
+=================================== FAILURES ===================================
+_____ test_review_adopts_source_without_changing_identity_cursor_or_store ______
+
+revision = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_review_adopts_source_without_changing_identity_cursor_or_store(revision):
+>       b=revision;store=b.store.replay();out=run(b);s=b.j.read();e=s['events'][b.controller]
+
+tools/test_r6_controller_revision.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller_revision.py:37: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.proposal,b.store,executable=file_pin(b.reviewer),free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7d33ae6eeba0>
+controller_key = '1643d561e1448693a9a714cc7a6716081b6640b7132b31aaff251336d4866e21'
+proposal_pin = {'path': '/tmp/tmp3uy_v9ri/revision.json', 'sha256': '3ca89c69ee2303faac45d4f5c60bf35cad8c8b12afb88d0f3357308c8b113202'}
+store = namespace(root=PosixPath('/tmp/tmp3uy_v9ri'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7d33ae67f7e0>)
+
+    def prepare(journal,controller_key,proposal_pin,store,*,executable,free_disk_bytes):
+        """Charge one independent review and atomically adopt only its exact revision."""
+        from tools import r6_controller as controller
+        profile.guard(journal);state=journal.read();e=state['events'][controller_key];proposal=read(proposal_pin)
+        require(set(proposal)=={'from_commit','to_commit','reason','evidence_pins'} and bool(proposal['reason']),'PROPOSAL')
+        for pin in proposal['evidence_pins']:checked(pin)
+        require(e['identity']['role']==controller.ROLE and e['request']['store_root']==str(store.root.resolve())
+            and sha(e['identity'])==controller_key and e['identity']['input_sha256']==sha(e['request']),'CONTROLLER')
+        require(e['cursor']['phase']!='COMPLETE' and not state.get('goal_complete'),'ALREADY_COMPLETE')
+        # A completed migration can be replayed, but a new source change needs a new proposal.
+        matching=[(k,x) for k,x in state['events'].items() if x['identity']['role']==ROLE
+                  and packet_of(x).get('proposal')==proposal_pin]
+        require(len(matching)<=1,'ALIAS')
+        cpu_name='CONTROLLER_REVISION_INPUT:'+controller_key+':'+proposal_pin['sha256']
+>       cpu_prior=[(k,x) for k,x in state['events'].items() if x['identity']['event_id']==cpu_name]
+E       KeyError: 'event_id'
+
+tools/r6_controller_revision.py:109: KeyError
+_________________ test_rejection_does_not_adopt_or_call_again __________________
+
+revision = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_rejection_does_not_adopt_or_call_again(revision):
+        b=revision;b.reviewer.with_suffix('.reject').touch()
+        for _ in range(2):
+>           with pytest.raises(RecoveryError,match='REJECTED'):run(b)
+
+tools/test_r6_controller_revision.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller_revision.py:37: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.proposal,b.store,executable=file_pin(b.reviewer),free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7d33ae6ee600>
+controller_key = '50760465b915d79f3e1c46bd46ac1fe62f1ff09b793b29240f7f0040d9e07d70'
+proposal_pin = {'path': '/tmp/tmpqr4z1epd/revision.json', 'sha256': '7ab9fffe98e2d895db05003acf98dd2147f7001bfb2cc8bbf1345d1cb7b87f1a'}
+store = namespace(root=PosixPath('/tmp/tmpqr4z1epd'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7d33ae67fd80>)
+
+    def prepare(journal,controller_key,proposal_pin,store,*,executable,free_disk_bytes):
+        """Charge one independent review and atomically adopt only its exact revision."""
+        from tools import r6_controller as controller
+        profile.guard(journal);state=journal.read();e=state['events'][controller_key];proposal=read(proposal_pin)
+        require(set(proposal)=={'from_commit','to_commit','reason','evidence_pins'} and bool(proposal['reason']),'PROPOSAL')
+        for pin in proposal['evidence_pins']:checked(pin)
+        require(e['identity']['role']==controller.ROLE and e['request']['store_root']==str(store.root.resolve())
+            and sha(e['identity'])==controller_key and e['identity']['input_sha256']==sha(e['request']),'CONTROLLER')
+        require(e['cursor']['phase']!='COMPLETE' and not state.get('goal_complete'),'ALREADY_COMPLETE')
+        # A completed migration can be replayed, but a new source change needs a new proposal.
+        matching=[(k,x) for k,x in state['events'].items() if x['identity']['role']==ROLE
+                  and packet_of(x).get('proposal')==proposal_pin]
+        require(len(matching)<=1,'ALIAS')
+        cpu_name='CONTROLLER_REVISION_INPUT:'+controller_key+':'+proposal_pin['sha256']
+>       cpu_prior=[(k,x) for k,x in state['events'].items() if x['identity']['event_id']==cpu_name]
+E       KeyError: 'event_id'
+
+tools/r6_controller_revision.py:109: KeyError
+________________ test_uncommitted_source_rejected_before_model _________________
+
+revision = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d33ae70eb10>
+
+    def test_uncommitted_source_rejected_before_model(revision,monkeypatch):
+        b=revision;monkeypatch.setattr(r,'committed_implementation',lambda commit:b.before)
+>       with pytest.raises(RecoveryError,match='UNCOMMITTED_SOURCE'):run(b)
+
+tools/test_r6_controller_revision.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller_revision.py:37: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.proposal,b.store,executable=file_pin(b.reviewer),free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7d33ae70c2f0>
+controller_key = 'd0776dce77779d461fd41b92939fe9af4326ba24f48778385b7aae11bdfb9f1a'
+proposal_pin = {'path': '/tmp/tmpyeck6olp/revision.json', 'sha256': 'b7110d70af94ed60c7417e4c7ff2e4c99e745ed15359d456742ab73d14141b79'}
+store = namespace(root=PosixPath('/tmp/tmpyeck6olp'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7d33ae67f240>)
+
+    def prepare(journal,controller_key,proposal_pin,store,*,executable,free_disk_bytes):
+        """Charge one independent review and atomically adopt only its exact revision."""
+        from tools import r6_controller as controller
+        profile.guard(journal);state=journal.read();e=state['events'][controller_key];proposal=read(proposal_pin)
+        require(set(proposal)=={'from_commit','to_commit','reason','evidence_pins'} and bool(proposal['reason']),'PROPOSAL')
+        for pin in proposal['evidence_pins']:checked(pin)
+        require(e['identity']['role']==controller.ROLE and e['request']['store_root']==str(store.root.resolve())
+            and sha(e['identity'])==controller_key and e['identity']['input_sha256']==sha(e['request']),'CONTROLLER')
+        require(e['cursor']['phase']!='COMPLETE' and not state.get('goal_complete'),'ALREADY_COMPLETE')
+        # A completed migration can be replayed, but a new source change needs a new proposal.
+        matching=[(k,x) for k,x in state['events'].items() if x['identity']['role']==ROLE
+                  and packet_of(x).get('proposal')==proposal_pin]
+        require(len(matching)<=1,'ALIAS')
+        cpu_name='CONTROLLER_REVISION_INPUT:'+controller_key+':'+proposal_pin['sha256']
+>       cpu_prior=[(k,x) for k,x in state['events'].items() if x['identity']['event_id']==cpu_name]
+E       KeyError: 'event_id'
+
+tools/r6_controller_revision.py:109: KeyError
+______ test_post_review_cursor_drift_preserves_original_revision_failure _______
+
+revision = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d33aea84fe0>
+
+    def test_post_review_cursor_drift_preserves_original_revision_failure(revision,monkeypatch):
+        b=revision;original=r.model_handoff
+        def mutate(j,k):
+            original(j,k);s=j.read();s['events'][b.controller]['cursor']['phase']='OTHER';j.save(s)
+        monkeypatch.setattr(r,'model_handoff',mutate)
+>       with pytest.raises(RecoveryError,match='POST_REVIEW_DRIFT'):run(b)
+
+tools/test_r6_controller_revision.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller_revision.py:37: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.proposal,b.store,executable=file_pin(b.reviewer),free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7d33ae735f40>
+controller_key = '41f69922be1c4c2390cd94222797cde2d94f53f7019b19d11a0540c992bbc96b'
+proposal_pin = {'path': '/tmp/tmp08wgx5me/revision.json', 'sha256': 'ba5cf3aff6d26b37c3b03b09eddec64803d242462e59fed49ab6ce670e32433c'}
+store = namespace(root=PosixPath('/tmp/tmp08wgx5me'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7d33ae67f600>)
+
+    def prepare(journal,controller_key,proposal_pin,store,*,executable,free_disk_bytes):
+        """Charge one independent review and atomically adopt only its exact revision."""
+        from tools import r6_controller as controller
+        profile.guard(journal);state=journal.read();e=state['events'][controller_key];proposal=read(proposal_pin)
+        require(set(proposal)=={'from_commit','to_commit','reason','evidence_pins'} and bool(proposal['reason']),'PROPOSAL')
+        for pin in proposal['evidence_pins']:checked(pin)
+        require(e['identity']['role']==controller.ROLE and e['request']['store_root']==str(store.root.resolve())
+            and sha(e['identity'])==controller_key and e['identity']['input_sha256']==sha(e['request']),'CONTROLLER')
+        require(e['cursor']['phase']!='COMPLETE' and not state.get('goal_complete'),'ALREADY_COMPLETE')
+        # A completed migration can be replayed, but a new source change needs a new proposal.
+        matching=[(k,x) for k,x in state['events'].items() if x['identity']['role']==ROLE
+                  and packet_of(x).get('proposal')==proposal_pin]
+        require(len(matching)<=1,'ALIAS')
+        cpu_name='CONTROLLER_REVISION_INPUT:'+controller_key+':'+proposal_pin['sha256']
+>       cpu_prior=[(k,x) for k,x in state['events'].items() if x['identity']['event_id']==cpu_name]
+E       KeyError: 'event_id'
+
+tools/r6_controller_revision.py:109: KeyError
+________ test_intent_to_packet_save_crash_recovers_exact_hashed_prompt _________
+
+revision = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d33af822ff0>
+
+    def test_intent_to_packet_save_crash_recovers_exact_hashed_prompt(revision,monkeypatch):
+        b=revision;original=b.j.intent;crashed=False
+        def crash(*args,**kwargs):
+            nonlocal crashed
+            result=original(*args,**kwargs)
+            if not crashed and kwargs['kind']=='model':
+                crashed=True;raise RuntimeError('fixture crash')
+            return result
+        monkeypatch.setattr(b.j,'intent',crash)
+>       with pytest.raises(RuntimeError):run(b)
+
+tools/test_r6_controller_revision.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller_revision.py:37: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.proposal,b.store,executable=file_pin(b.reviewer),free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7d33af8622a0>
+controller_key = '3c2119f870beba05569e1bc5af8c237bc3c760edf7164dec488748239bd4c2e9'
+proposal_pin = {'path': '/tmp/tmpu5ptm2hx/revision.json', 'sha256': '11d529bf8befee523b96f2fc9a794fabba56fbb752c286714fc9bcec7f9bd39b'}
+store = namespace(root=PosixPath('/tmp/tmpu5ptm2hx'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7d33af7b3f60>)
+
+    def prepare(journal,controller_key,proposal_pin,store,*,executable,free_disk_bytes):
+        """Charge one independent review and atomically adopt only its exact revision."""
+        from tools import r6_controller as controller
+        profile.guard(journal);state=journal.read();e=state['events'][controller_key];proposal=read(proposal_pin)
+        require(set(proposal)=={'from_commit','to_commit','reason','evidence_pins'} and bool(proposal['reason']),'PROPOSAL')
+        for pin in proposal['evidence_pins']:checked(pin)
+        require(e['identity']['role']==controller.ROLE and e['request']['store_root']==str(store.root.resolve())
+            and sha(e['identity'])==controller_key and e['identity']['input_sha256']==sha(e['request']),'CONTROLLER')
+        require(e['cursor']['phase']!='COMPLETE' and not state.get('goal_complete'),'ALREADY_COMPLETE')
+        # A completed migration can be replayed, but a new source change needs a new proposal.
+        matching=[(k,x) for k,x in state['events'].items() if x['identity']['role']==ROLE
+                  and packet_of(x).get('proposal')==proposal_pin]
+        require(len(matching)<=1,'ALIAS')
+        cpu_name='CONTROLLER_REVISION_INPUT:'+controller_key+':'+proposal_pin['sha256']
+>       cpu_prior=[(k,x) for k,x in state['events'].items() if x['identity']['event_id']==cpu_name]
+E       KeyError: 'event_id'
+
+tools/r6_controller_revision.py:109: KeyError
+_________________ test_tampered_packet_cannot_authorize_resume _________________
+
+revision = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_tampered_packet_cannot_authorize_resume(revision):
+>       b=revision;out=run(b)
+
+tools/test_r6_controller_revision.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller_revision.py:37: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.proposal,b.store,executable=file_pin(b.reviewer),free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7d33ae669ee0>
+controller_key = 'c7f0d9f9fcdd06b4f93dfee23b094e0cab2d579b855e83091fc59d5e0b2fc7da'
+proposal_pin = {'path': '/tmp/tmpkglefngm/revision.json', 'sha256': '5010cd6ed8ebfc7ed79ba674f8c9b9b4e136722610d4f1666cfaf9cfe7c2a2de'}
+store = namespace(root=PosixPath('/tmp/tmpkglefngm'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7d33af8400e0>)
+
+    def prepare(journal,controller_key,proposal_pin,store,*,executable,free_disk_bytes):
+        """Charge one independent review and atomically adopt only its exact revision."""
+        from tools import r6_controller as controller
+        profile.guard(journal);state=journal.read();e=state['events'][controller_key];proposal=read(proposal_pin)
+        require(set(proposal)=={'from_commit','to_commit','reason','evidence_pins'} and bool(proposal['reason']),'PROPOSAL')
+        for pin in proposal['evidence_pins']:checked(pin)
+        require(e['identity']['role']==controller.ROLE and e['request']['store_root']==str(store.root.resolve())
+            and sha(e['identity'])==controller_key and e['identity']['input_sha256']==sha(e['request']),'CONTROLLER')
+        require(e['cursor']['phase']!='COMPLETE' and not state.get('goal_complete'),'ALREADY_COMPLETE')
+        # A completed migration can be replayed, but a new source change needs a new proposal.
+        matching=[(k,x) for k,x in state['events'].items() if x['identity']['role']==ROLE
+                  and packet_of(x).get('proposal')==proposal_pin]
+        require(len(matching)<=1,'ALIAS')
+        cpu_name='CONTROLLER_REVISION_INPUT:'+controller_key+':'+proposal_pin['sha256']
+>       cpu_prior=[(k,x) for k,x in state['events'].items() if x['identity']['event_id']==cpu_name]
+E       KeyError: 'event_id'
+
+tools/r6_controller_revision.py:109: KeyError
+=========================== short test summary info ============================
+FAILED tools/test_r6_controller_revision.py::test_review_adopts_source_without_changing_identity_cursor_or_store
+FAILED tools/test_r6_controller_revision.py::test_rejection_does_not_adopt_or_call_again
+FAILED tools/test_r6_controller_revision.py::test_uncommitted_source_rejected_before_model
+FAILED tools/test_r6_controller_revision.py::test_post_review_cursor_drift_preserves_original_revision_failure
+FAILED tools/test_r6_controller_revision.py::test_intent_to_packet_save_crash_recovers_exact_hashed_prompt
+FAILED tools/test_r6_controller_revision.py::test_tampered_packet_cannot_authorize_resume
+6 failed, 2 passed in 2.30s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-27d6e273-4ba9-45a8-9aa7-638c1cf20aa3/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-27d6e273-4ba9-45a8-9aa7-638c1cf20aa3/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-27d6e273-4ba9-45a8-9aa7-638c1cf20aa3/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-27d6e273-4ba9-45a8-9aa7-638c1cf20aa3
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-27d6e273-4ba9-45a8-9aa7-638c1cf20aa3'
+  warnings.warn(

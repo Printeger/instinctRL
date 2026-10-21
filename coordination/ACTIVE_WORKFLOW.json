@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 178,
-    "total_automatic_model_sessions_minimum": 208,
+    "platform_automatic_goal_wakes": 179,
+    "total_automatic_model_sessions_minimum": 209,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -391,6 +391,8 @@
     "final_delivery_status": "CPU_POST_REVIEW_ACCOUNTING_IMMUTABLE_DELIVERY_EXACT_GIT_PUBLICATION_AND_CONTROLLER_RECOVERY_PASS_TERMINAL_AUDIT_PENDING",
     "final_delivery_evidence": "docs/experiments/r6-robustness-auto/CPU_FINAL_DELIVERY.json",
     "terminal_audit_status": "CPU_TERMINAL_EVIDENCE_PUBLICATION_AND_COMPLETION_REVALIDATION_PASS_PRODUCTION_SCIENCE_PENDING",
-    "terminal_audit_evidence": "docs/experiments/r6-robustness-auto/CPU_TERMINAL_AUDIT.json"
+    "terminal_audit_evidence": "docs/experiments/r6-robustness-auto/CPU_TERMINAL_AUDIT.json",
+    "controller_revision_status": "CPU_REVIEWED_CONTROLLER_IMPLEMENTATION_REVISION_PASS_PHASE_REPAIR_PENDING",
+    "controller_revision_evidence": "docs/experiments/r6-robustness-auto/CPU_CONTROLLER_REVISION.json"
   }
 }

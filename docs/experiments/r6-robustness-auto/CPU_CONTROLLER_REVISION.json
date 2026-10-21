@@ -1,0 +1,66 @@
+{
+  "status": "CPU_REVIEWED_CONTROLLER_IMPLEMENTATION_REVISION_PASS_PHASE_REPAIR_PENDING",
+  "base_commit": "84995657",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller_revision.py",
+      "sha256": "c48d1640b78320c665654fd1bbac177ba959314aa205de51cd35cf3f2e909967"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "e31c1c4d07d51fd4e9647388c003bf1ec6de07b9cda28fdd74304dba140f1184"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller_revision.py",
+      "sha256": "1e676a67e08839221936ce1cdaaf2da34992663bff9719fef3dfcc2abdedb2e5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/controller-revision.schema.json",
+      "sha256": "a9fa7ccf1258af24738c0d834598b4cfcef25cf2c2d564eb6552032c78c2cb2c"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_REVISION_INITIAL_FAILURE.log",
+      "sha256": "b9a23acb1a9670381eb4ab9906993dd8f5b48ead153e5711e9fbc79e55fe35d4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_REVISION_IDENTITY_FAILURE.log",
+      "sha256": "c1e9f5fda9157b8153e740012483c10350707e82d3da3ac35d606ff0e95323ad"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_REVISION_RECOVERY.log",
+      "sha256": "3214b528bb42c97a50fd41045735f33dfd0fef0e456eb751386f5f4fb4a22c64"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_REVISION_FINAL.log",
+      "sha256": "413ae644027a8bc56394793154ae8d09d0bf7a2dd0f9995144b993ad2d609f44"
+    }
+  ],
+  "checks": {
+    "recovery": 8,
+    "final_combined": 91,
+    "real_journal_guard": "PASS"
+  },
+  "scope": [
+    "Recompute old/new control and schema identities from immutable Git blobs; only committed main descendant target equal to loaded implementation can be proposed.",
+    "A charged CPU intent persists exact proposal, cursor, Store and source identities before prompt persistence and one registered read-only independent repair review.",
+    "Apply accepted revision as additive chain on original controller event; preserve hashed request, cursor, original permissions and all failures. Register validates full review chain before source drift exception.",
+    "Reject uncommitted inputs, STOP, MUST_FIX, stale predispatch budgets, cursor/Store/source drift and tampered packet.",
+    "Recovery before model launch or after review receipt uses same charged event and original receipt; no duplicate model or submit. CLI applies revision then exits; does not run a job."
+  ],
+  "boundaries": [
+    "Scientific/live jobs and independent reasoning are not exercised. Local fake CLI produces structured substitute verdicts through actual worker/receipt/cleanup flow.",
+    "Most commit/source identities are explicit test substitutes; separate temporary Git test verifies committed blob hashing ignores changed worktree.",
+    "First failures exposed missing prompt persistence; corrected to prepaid durable CPU packet. Second failures exposed assumption that every event identity has event_id; job entries now safely ignored by model-event searches. Original logs retained.",
+    "Historical root-owned pytest quota temporary paths retained."
+  ],
+  "remaining": [
+    "Phase-specific engineering and MUST_FIX repair/new-attempt routing without old-approval inheritance",
+    "Combined production prelive review",
+    "Platform model-free handoff and actual inactivity evidence",
+    "Actual baseline/necessary training/confirmation/holdout/Isaac videos/independent final audit"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}

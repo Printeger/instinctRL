@@ -1,0 +1,235 @@
+FF..FFF...............................................                   [100%]
+=================================== FAILURES ===================================
+_____ test_review_adopts_source_without_changing_identity_cursor_or_store ______
+
+revision = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_review_adopts_source_without_changing_identity_cursor_or_store(revision):
+>       b=revision;store=b.store.replay();out=run(b);s=b.j.read();e=s['events'][b.controller]
+
+tools/test_r6_controller_revision.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller_revision.py:37: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.proposal,b.store,executable=file_pin(b.reviewer),free_disk_bytes=FREE)
+tools/r6_controller_revision.py:137: in prepare
+    model_handoff(journal,key);profile.guard(journal);review_record(journal,key)
+tools/test_r6_controller_revision.py:32: in <lambda>
+    monkeypatch.setattr(r,'model_handoff',lambda j,k:model_handoff(j,k,poll_seconds=.01))
+tools/r6_batch.py:102: in model_handoff
+    validate_request(entry['request'])
+tools/r6_model_worker.py:73: in validate_request
+    prompt=checked(request['prompt']);schema=checked(request['schema']);exe=checked(request['executable'])
+tools/r6_recovery.py:31: in checked
+    if path.is_symlink() or file_pin(path) != pin:
+tools/r6_recovery.py:24: in file_pin
+    with path.open('rb') as stream:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/tmpf1au65qt/batch/controller-revisions/3c1ad8fc91c09972a66550e4c5cb6998bd1b69b45b999702b7efc0a515f2154d/prompt.txt')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpf1au65qt/batch/controller-revisions/3c1ad8fc91c09972a66550e4c5cb6998bd1b69b45b999702b7efc0a515f2154d/prompt.txt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_________________ test_rejection_does_not_adopt_or_call_again __________________
+
+revision = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_rejection_does_not_adopt_or_call_again(revision):
+        b=revision;b.reviewer.with_suffix('.reject').touch()
+        for _ in range(2):
+>           with pytest.raises(RecoveryError,match='REJECTED'):run(b)
+
+tools/test_r6_controller_revision.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller_revision.py:37: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.proposal,b.store,executable=file_pin(b.reviewer),free_disk_bytes=FREE)
+tools/r6_controller_revision.py:137: in prepare
+    model_handoff(journal,key);profile.guard(journal);review_record(journal,key)
+tools/test_r6_controller_revision.py:32: in <lambda>
+    monkeypatch.setattr(r,'model_handoff',lambda j,k:model_handoff(j,k,poll_seconds=.01))
+tools/r6_batch.py:102: in model_handoff
+    validate_request(entry['request'])
+tools/r6_model_worker.py:73: in validate_request
+    prompt=checked(request['prompt']);schema=checked(request['schema']);exe=checked(request['executable'])
+tools/r6_recovery.py:31: in checked
+    if path.is_symlink() or file_pin(path) != pin:
+tools/r6_recovery.py:24: in file_pin
+    with path.open('rb') as stream:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/tmp_ktos061/batch/controller-revisions/8d4cddec0b952e008aaeb49cd4621bd07740772c693d4b5e912ba5b8d1801e6e/prompt.txt')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp_ktos061/batch/controller-revisions/8d4cddec0b952e008aaeb49cd4621bd07740772c693d4b5e912ba5b8d1801e6e/prompt.txt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+______ test_post_review_cursor_drift_preserves_original_revision_failure _______
+
+revision = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x757398473e90>
+
+    def test_post_review_cursor_drift_preserves_original_revision_failure(revision,monkeypatch):
+        b=revision;original=r.model_handoff
+        def mutate(j,k):
+            original(j,k);s=j.read();s['events'][b.controller]['cursor']['phase']='OTHER';j.save(s)
+        monkeypatch.setattr(r,'model_handoff',mutate)
+>       with pytest.raises(RecoveryError,match='POST_REVIEW_DRIFT'):run(b)
+
+tools/test_r6_controller_revision.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller_revision.py:37: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.proposal,b.store,executable=file_pin(b.reviewer),free_disk_bytes=FREE)
+tools/r6_controller_revision.py:137: in prepare
+    model_handoff(journal,key);profile.guard(journal);review_record(journal,key)
+tools/test_r6_controller_revision.py:72: in mutate
+    original(j,k);s=j.read();s['events'][b.controller]['cursor']['phase']='OTHER';j.save(s)
+tools/test_r6_controller_revision.py:32: in <lambda>
+    monkeypatch.setattr(r,'model_handoff',lambda j,k:model_handoff(j,k,poll_seconds=.01))
+tools/r6_batch.py:102: in model_handoff
+    validate_request(entry['request'])
+tools/r6_model_worker.py:73: in validate_request
+    prompt=checked(request['prompt']);schema=checked(request['schema']);exe=checked(request['executable'])
+tools/r6_recovery.py:31: in checked
+    if path.is_symlink() or file_pin(path) != pin:
+tools/r6_recovery.py:24: in file_pin
+    with path.open('rb') as stream:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/tmpm69ruqs7/batch/controller-revisions/294c08055bfb25fe7936a962d164cf8ec45007141ede2133dc7258c2f6a8a1d7/prompt.txt')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpm69ruqs7/batch/controller-revisions/294c08055bfb25fe7936a962d164cf8ec45007141ede2133dc7258c2f6a8a1d7/prompt.txt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+________ test_intent_to_packet_save_crash_recovers_exact_hashed_prompt _________
+
+revision = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x757397df4f20>
+
+    def test_intent_to_packet_save_crash_recovers_exact_hashed_prompt(revision,monkeypatch):
+        b=revision;original=b.j.save;crashed=False
+        def crash(s):
+            nonlocal crashed
+            if not crashed and any('revision_packet' in e for e in s['events'].values()):
+                crashed=True;raise RuntimeError('fixture crash')
+            return original(s)
+        monkeypatch.setattr(b.j,'save',crash)
+        with pytest.raises(RuntimeError):run(b)
+>       budget=b.j.read()['budget'];out=run(b)
+
+tools/test_r6_controller_revision.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller_revision.py:37: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.proposal,b.store,executable=file_pin(b.reviewer),free_disk_bytes=FREE)
+tools/r6_controller_revision.py:92: in prepare
+    and packet_of(x).get('proposal')==proposal_pin]
+tools/r6_controller_revision.py:31: in packet_of
+    packet=json.loads(checked(entry['request']['prompt']).read_text().splitlines()[-1])
+tools/r6_recovery.py:31: in checked
+    if path.is_symlink() or file_pin(path) != pin:
+tools/r6_recovery.py:24: in file_pin
+    with path.open('rb') as stream:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/tmpznuqflj4/batch/controller-revisions/f9692497fc6fbd83b873d84c1c616c5d49f3d12465e882ef5aeb97a1c63da392/prompt.txt')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpznuqflj4/batch/controller-revisions/f9692497fc6fbd83b873d84c1c616c5d49f3d12465e882ef5aeb97a1c63da392/prompt.txt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_________________ test_tampered_packet_cannot_authorize_resume _________________
+
+revision = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_tampered_packet_cannot_authorize_resume(revision):
+>       b=revision;out=run(b)
+
+tools/test_r6_controller_revision.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller_revision.py:37: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.proposal,b.store,executable=file_pin(b.reviewer),free_disk_bytes=FREE)
+tools/r6_controller_revision.py:137: in prepare
+    model_handoff(journal,key);profile.guard(journal);review_record(journal,key)
+tools/test_r6_controller_revision.py:32: in <lambda>
+    monkeypatch.setattr(r,'model_handoff',lambda j,k:model_handoff(j,k,poll_seconds=.01))
+tools/r6_batch.py:102: in model_handoff
+    validate_request(entry['request'])
+tools/r6_model_worker.py:73: in validate_request
+    prompt=checked(request['prompt']);schema=checked(request['schema']);exe=checked(request['executable'])
+tools/r6_recovery.py:31: in checked
+    if path.is_symlink() or file_pin(path) != pin:
+tools/r6_recovery.py:24: in file_pin
+    with path.open('rb') as stream:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/tmpj85iqj4v/batch/controller-revisions/e6244c42547913fc295429368f4080df847375d78d5832cac7a50451d33736d7/prompt.txt')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpj85iqj4v/batch/controller-revisions/e6244c42547913fc295429368f4080df847375d78d5832cac7a50451d33736d7/prompt.txt'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tools/test_r6_controller_revision.py::test_review_adopts_source_without_changing_identity_cursor_or_store
+FAILED tools/test_r6_controller_revision.py::test_rejection_does_not_adopt_or_call_again
+FAILED tools/test_r6_controller_revision.py::test_post_review_cursor_drift_preserves_original_revision_failure
+FAILED tools/test_r6_controller_revision.py::test_intent_to_packet_save_crash_recovers_exact_hashed_prompt
+FAILED tools/test_r6_controller_revision.py::test_tampered_packet_cannot_authorize_resume
+5 failed, 49 passed in 24.62s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bab28f36-453f-43f5-8c74-722a8934d87a/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bab28f36-453f-43f5-8c74-722a8934d87a/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bab28f36-453f-43f5-8c74-722a8934d87a/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bab28f36-453f-43f5-8c74-722a8934d87a
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-bab28f36-453f-43f5-8c74-722a8934d87a'
+  warnings.warn(

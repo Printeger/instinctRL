@@ -76,7 +76,15 @@ def register(journal,request_pin,store,*,free_disk_bytes):
     require(len(previous)<=1,'ALIAS')
     if previous:
         key,entry=previous[0]
-        require(entry['identity']==event and sha(event)==key and entry['request']==request,'INPUT_DRIFT')
+        if entry.get('implementation_revisions'):
+            from tools.r6_controller_revision import effective
+            original=dict(request,implementation=entry['request']['implementation'])
+            require(entry['request']==original and sha(entry['identity'])==key
+                and entry['identity']['input_sha256']==sha(original)
+                and effective(journal,key)==request['implementation'],'INPUT_DRIFT')
+            event=entry['identity']
+        else:
+            require(entry['identity']==event and sha(event)==key and entry['request']==request,'INPUT_DRIFT')
     else:
         journal.guard();require(not stop_paths(journal),'STOP');no_model_workers(journal)
         require(state.get('current_job') is None,'ACTIVE_JOB')
