@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 168,
-    "total_automatic_model_sessions_minimum": 198,
+    "platform_automatic_goal_wakes": 169,
+    "total_automatic_model_sessions_minimum": 199,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -371,6 +371,8 @@
     "delivery_evidence_status": "CPU_DELIVERY_EVIDENCE_AND_LOCAL_WAIT_AUDIT_PASS_MEDIA_FINAL_AUDIT_PENDING",
     "delivery_evidence": "docs/experiments/r6-robustness-auto/CPU_DELIVERY_EVIDENCE.json",
     "video_selection_status": "REAL_LEGACY_GUARD_RESTORED_AUDITED_HANDOFF_AND_VIDEO_SELECTION_CPU_PASS_RENDERING_PENDING",
-    "video_selection_evidence": "docs/experiments/r6-robustness-auto/CPU_VIDEO_SELECTION.json"
+    "video_selection_evidence": "docs/experiments/r6-robustness-auto/CPU_VIDEO_SELECTION.json",
+    "video_decoding_status": "CPU_EXACT_RECORDED_VIDEO_TRAJECTORY_DECODING_AND_BOUNDED_WORKER_PASS_RENDERING_PENDING",
+    "video_decoding_evidence": "docs/experiments/r6-robustness-auto/CPU_VIDEO_DECODING.json"
   }
 }

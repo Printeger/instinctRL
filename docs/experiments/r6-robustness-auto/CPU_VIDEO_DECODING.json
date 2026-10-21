@@ -1,0 +1,72 @@
+{
+  "status": "CPU_EXACT_RECORDED_VIDEO_TRAJECTORY_DECODING_AND_BOUNDED_WORKER_PASS_RENDERING_PENDING",
+  "base_commit": "7df846e47898dc9e45bb1fc0a3139c76c6c51783",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_video_trajectory.py",
+      "sha256": "2c7e7a57f74fe23fa171f6bbb274af6f9eb2af317c6c3493ee7e8783eee03718"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/prepare_r6_video_trajectories.py",
+      "sha256": "ed1c73fdc303c1df5496019347b9bbec422e123bef73c9f92df3a1529801ff42"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_video_trajectory.py",
+      "sha256": "60aa9713f8d9cf0660c97c67f56c3503ae615628a8ae91cf111e927ac92a0256"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_video_extraction.py",
+      "sha256": "45957b43e93a7031ccfb6affe7a0e9a0aade3d16ea0834dc8c673f09e86b9804"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_DECODING_INITIAL.log",
+      "sha256": "da16f01a83d1cf5b5c12947e97598a5c3868380f39522aa34073ad11ae7f707a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_DECODING_FINAL.log",
+      "sha256": "fcfd66456fdb4a37f0ae37e738a5b160866afc533b865e0b4b31b7293b67d8cf"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_DECODING_CONTROL.log",
+      "sha256": "466035ce16fd7d16540392a15bd5d66c06ba60ef7e985e9a3bb28d937531ba87"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_FORCE_CODEC.log",
+      "sha256": "340d065b7f8c2bbab8965c955b2ea4805eee3abd17cedfd4a97795b17ade186e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_VIDEO_DECODING_REAL_GUARD.log",
+      "sha256": "b3ecbdf8f39010ba6de087fa208f3cef171c88975679533152e45ff6d5f07821"
+    }
+  ],
+  "checks": {
+    "initial_tensor": 10,
+    "final_tensor_and_isolated_worker": 18,
+    "selection_delivery_regression": 36,
+    "force_codec": 6,
+    "force_codec_subtests": 4,
+    "real_journal_guard": "PASS"
+  },
+  "scope": [
+    "Existing lossless audit envelope and force codec; preserve exact selected root pose/quaternion, sensor origin, world velocity and commands.",
+    "Complete 200/330-step trajectories, t command versus pre-reset t+1 state, explicit terminal reset and failure flags; no dynamics integration or smoothing.",
+    "Match audit identity/count/order to saved motion traces and result metadata, validate finite vectors/normalized quaternions and exact raw hashes.",
+    "Bounded 16 MiB CPU extraction worker; actual isolated process exercised, immutable replay, output/input separation and no symlink/unknown-output overwrite."
+  ],
+  "boundaries": [
+    "Synthetic recorded 32-lane poses encoded with real AuditLog; not actual simulator trajectories.",
+    "No Isaac Sim renderer, GPU query, MP4, Store permission or production extraction was run.",
+    "Controller output reservation/CPU worker lifecycle and media routing remain to be connected.",
+    "No scientific acceptance or real training wait proof."
+  ],
+  "remaining": [
+    "Controller-charged extraction worker and exact render job resources/quotas/permission",
+    "Isaac Sim replay renderer, decoded MP4/telemetry verification and viewing documentation",
+    "Final independent audit/accounting/requirements and repair re-entry",
+    "Combined prelive review and platform no-model-wait handoff"
+  ],
+  "goal_complete": false,
+  "scientific_acceptance": false
+}
