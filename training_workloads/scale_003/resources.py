@@ -247,14 +247,18 @@ def _r6_capture_binding() -> dict[str, Any]:
         raise RuntimeError('R6 bounded native capture required before AppLauncher') from error
 
 
-def _r6_native_settings(output_root: Path) -> dict[str, Any]:
+def _r6_native_settings(output_root: Path, native_volume_pin=None) -> dict[str, Any]:
     """Pinned Kit setting names; no runtime import or disabled crash evidence."""
     if (not output_root.is_absolute() or output_root.resolve()!=output_root
             or output_root.is_symlink() or any(c.isspace() for c in str(output_root))):
         raise ValueError("R6 native output requires an exact whitespace-free path")
-    return {"/log/file":"/proc/self/fd/1",
+    result={"/log/file":"/proc/self/fd/1",
             "/crashreporter/dumpDir":str(output_root/"native_crash"),
             "/crashreporter/preserveDump":True,"/crashreporter/skipOldDumpUpload":True}
+    if native_volume_pin is not None:
+        from training_workloads.unified_h1.native_volume import validate, settings
+        result.update(settings(validate(native_volume_pin,minimum_free_bytes=0)))
+    return result
 
 
 def _read_r6_native_settings(keys):
@@ -264,9 +268,12 @@ def _read_r6_native_settings(keys):
     return {key:settings.get(key) for key in keys}
 
 
-def verify_r6_native_paths(output_root: Path) -> None:
+def verify_r6_native_paths(output_root: Path, native_volume_pin=None) -> None:
     capture=_r6_capture_binding()
-    requested=_r6_native_settings(output_root)
+    requested=_r6_native_settings(output_root,native_volume_pin)
+    if native_volume_pin is not None:
+        from training_workloads.unified_h1.native_volume import validate, require_capture
+        require_capture(validate(native_volume_pin,minimum_free_bytes=0),capture)
     observed=_read_r6_native_settings(requested)
     matched=all(type(observed.get(k))is type(v) and observed.get(k)==v for k,v in requested.items())
     atomic_json_replace(output_root,'native_path_runtime.json',{
@@ -281,8 +288,13 @@ def start_after_coexistence_gate(
     launcher_factory: Callable[[Path], Any] | None = None,
     asset_root: Path | None = None,
     resource_pins: Mapping[str, Any] | None = None,
+    native_volume_pin: Mapping[str, str] | None = None,
 ) -> tuple[dict[str, Any], Any, Any]:
     """Make the resource gate a mandatory predecessor of AppLauncher creation."""
+    if native_volume_pin is not None:
+        if mode!='research-r6-evaluation':raise ValueError('Native volume requires exact R6 mode')
+        from training_workloads.unified_h1.native_volume import validate, require_capture
+        require_capture(validate(dict(native_volume_pin)),_r6_capture_binding())
     gate = gate_runner(
         output_root, mode=mode, attempt_id=attempt_id,
         authorization_sha256=authorization_sha256,
@@ -302,10 +314,15 @@ def start_after_coexistence_gate(
             "/persistent/isaac/asset_root/cloud",
         )
     kit_asset_args = "".join(f" --{setting}={asset_root}" for setting in kit_asset_settings)
-    native_settings = _r6_native_settings(output_root) if mode=='research-r6-evaluation' else {}
+    native_settings = _r6_native_settings(output_root,native_volume_pin) if mode=='research-r6-evaluation' else {}
     if native_settings:
         capture=_r6_capture_binding()
-        (output_root/'native_crash').mkdir(mode=0o700,exist_ok=False)
+        paths=[Path(native_settings['/crashreporter/dumpDir'])]
+        if native_volume_pin is not None:
+            paths.extend(Path(native_settings[key]) for key in (
+                '/rtx/shaderDb/shaderCachePath','/rtx/shaderDb/driverShaderCachePath',
+                '/rtx-transient/resourcemanager/localTextureCachePath'))
+        for path in paths:path.mkdir(mode=0o700,exist_ok=False)
         atomic_json_replace(output_root,'native_path_request.json',{
             'schema_version':'r6-native-paths/1','status':'REQUESTED_NOT_VERIFIED',
             'settings':native_settings,'attempt_id':attempt_id,'authorization_sha256':authorization_sha256,

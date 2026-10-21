@@ -2,6 +2,12 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：用户已在平台将Goal恢复为active，继续执行。此前管理员测试卷阻塞已解决；
+已新增native卷实时身份核验与四类Kit路径接线，控制台卷外写入在资源gate前拒绝。
+CPU验证见 `docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_WIRING_TESTS.json`。
+准确authority/schema、dispatcher输出、临时目录/扩展缓存和独审尚待接通；capacity=false，
+不把局部接线或测试通过视为可发车。后台controller未部署，完整科学目标不变。
+
 管理员已创建CPU-QUOTA-01固定1.5GiB ext4卷，实际多文件ENOSPC及独立新进程复核通过：
 23文件共1529872384字节，单文件不超过64MiB；1MiB追加写入被内核拒绝。
 root所有的镜像/父目录与mount/backing身份已核对；保留全部测试原件及1.5GiB+64KiB收费。

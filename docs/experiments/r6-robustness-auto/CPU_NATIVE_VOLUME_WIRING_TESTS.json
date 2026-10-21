@@ -1,0 +1,46 @@
+{
+  "status": "CPU_WIRING_PASS_NOT_FULL_NATIVE_CONTAINMENT",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/native_volume.py",
+      "sha256": "94af1c602e6a19d06e54a09a16bff5f8b66f5c49ea24a3bc7d0732cc2082aa68"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "4a50efdbc15e316ce45feeaebe9e8881806f677106189dcc21903172a4c0a1f6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/resources.py",
+      "sha256": "f117b554fef862343d422fb06f1e841ce87b31c7a8ba9d17b45b35e4266a6808"
+    }
+  ],
+  "tests": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_volume_binding.py",
+    "sha256": "56a6d49bfe394d04f08ba2814e16133b5ee826c640fa2b100240a17355ab3937"
+  },
+  "output": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_NATIVE_VOLUME_WIRING_TESTS.txt",
+    "sha256": "46964e1183d1a78aa0bb48d599c0dc711c479e4dc1ee5254c6ce9b9557f8e731"
+  },
+  "operating_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+    "sha256": "def5f5c9c3c7b85ba51200c8eb9a5131086639af55c21f531067770d399bb21e"
+  },
+  "scope": [
+    "Read-only actual CPU mount/loop/backing/ownership/hash validation",
+    "CPU fixture volume excluded from production admission; full test volume rejected for free-space requirement",
+    "Explicit AppLauncher substitutes exercise crash/shader/driver_shader/texture arguments and fail-closed readback",
+    "Console capture outside exact volume rejected before resource GPU gate"
+  ],
+  "limitations": [
+    "Native volume parameter must be bound by exact authority/schema and dispatcher before use",
+    "Temporary files and extension cache behavior remain outside this partial wiring",
+    "No full filesystem containment or independent integration acceptance",
+    "No production native volume or live job created"
+  ],
+  "capacity_pass": false,
+  "operating_ledger_modified": false,
+  "new_model_calls": 0,
+  "new_gpu_queries": 0,
+  "new_live_starts": 0
+}

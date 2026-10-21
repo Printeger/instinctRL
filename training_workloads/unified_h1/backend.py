@@ -850,13 +850,14 @@ def create_live_backend(*, authorization: Mapping[str, Any], attempt: Path,
     gate, launcher, app = start_after_coexistence_gate(gate_output, mode=str(authorization["mode"]),
         attempt_id=attempt.name, authorization_sha256=str(authorization["authorization_sha256"]),
         gate_runner=selected_gate, resource_pins=resource_pins,
-        asset_root=Path(config["execution"]["isaacsim_asset_root"]))
+        asset_root=Path(config["execution"]["isaacsim_asset_root"]),
+        native_volume_pin=authorization.get('parameters',{}).get('native_volume'))
     if resources is not None: resources.update(launcher=launcher, app=app)
     if authorization['mode']=='research-r6-evaluation':
         # Register the application first so a readback failure uses the existing
         # bounded lifecycle cleanup rather than losing the constructed resource.
         from training_workloads.scale_003.resources import verify_r6_native_paths
-        verify_r6_native_paths(gate_output)
+        verify_r6_native_paths(gate_output,authorization.get('parameters',{}).get('native_volume'))
     validate_graceful_shutdown_configuration(app, resource_pins=resource_pins)
     from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv, UnifiedH1DirectEnvCfg
     validate_live_environment(config)
