@@ -1,0 +1,53 @@
+F....................................................................... [ 68%]
+.................................                                        [100%]
+=================================== FAILURES ===================================
+______ test_closed_training_analysis_worker_recovery_and_decision_packet _______
+
+bound = namespace(plan={'schema_version': 'r6-training-plan/1', 'experiment_id': 'R6-TRAINING-CPU', 'phase': 'development', 'r..., key='CPU-EVENT', program=PosixPath('/tmp/pytest-of-mint/pytest-64/test_closed_training_analysis_0/fake_analyzer.py'))
+
+    def test_closed_training_analysis_worker_recovery_and_decision_packet(bound):
+        b=bound
+        with b.j.writer():
+            key=register_analysis(b.j,b.key,b.store,free_disk_bytes=500*1024**3,python=file_pin(sys.executable),program=file_pin(b.program),timeout_seconds=10)
+            _,argv=validate(b.j,key)
+            assert argv[-2:]==['--authorization-sha256',b.auth['sha256']]
+            result=handoff(b.j,key,b.store,poll_seconds=.01)
+            assert handoff(b.j,key,b.store,poll_seconds=.01)==result
+>           packet=prepare(b.j,b.key,b.store,free_disk_bytes=500*1024**3)
+
+tools/test_r6_training_analysis_binding.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7949fe5ff0e0>
+job_key = 'CPU-EVENT'
+store = namespace(root=PosixPath('/tmp/pytest-of-mint/pytest-64/test_closed_training_analysis_0/store'), replay=<function bound.<locals>.<lambda> at 0x7949fe640400>)
+
+    def prepare(journal,job_key,store,*,free_disk_bytes):
+        journal.guard();state=journal.read();job=journal.canonical_job(job_key,state=state)
+        if state.get('current_job') is not None or state.get('current_model_event') is not None:
+            raise RecoveryError('DECISION_PACKET_NOT_IDLE')
+        if any(e['kind']=='cpu' and e.get('dispatch_claim') and not e.get('receipt') for e in state['events'].values()):
+            raise RecoveryError('DECISION_PACKET_CPU_UNRESOLVED')
+        if not job.get('analysis'):raise RecoveryError('DECISION_PACKET_ANALYSIS_REQUIRED')
+        binding=json.loads(checked(job['analysis']).read_text())
+        if binding!=bind_analysis(job,job_key,binding['report'],store):raise RecoveryError('DECISION_PACKET_BINDING_DRIFT')
+        old=[(k,e) for k,e in state['events'].items() if e['identity']['job_id']==job['identity']['job_id']
+>           and e['identity']['role']=='decision-packet']
+E       KeyError: 'role'
+
+tools/r6_decision_packet.py:47: KeyError
+=========================== short test summary info ============================
+FAILED tools/test_r6_training_analysis_binding.py::test_closed_training_analysis_worker_recovery_and_decision_packet
+1 failed, 104 passed in 24.77s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-08c91800-5fd1-41ac-a89d-eacbb9add2a3/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-08c91800-5fd1-41ac-a89d-eacbb9add2a3/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-08c91800-5fd1-41ac-a89d-eacbb9add2a3/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-08c91800-5fd1-41ac-a89d-eacbb9add2a3
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-08c91800-5fd1-41ac-a89d-eacbb9add2a3'
+  warnings.warn(

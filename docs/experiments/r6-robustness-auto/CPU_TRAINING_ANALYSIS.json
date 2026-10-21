@@ -1,0 +1,76 @@
+{
+  "status": "CPU_TRAINING_STRUCTURAL_ANALYSIS_AND_CLOSED_JOB_ROUTE_PASS_NOT_DEPLOYED",
+  "input_commit": "3e0da12d",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_analysis.py",
+      "sha256": "c3d5f1b5c43b911e956591485e179a35529501392171bf9d8fca6785b89c75af"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/analyze_r6_training.py",
+      "sha256": "8b9c71ca238f44c03ab5d7a70d70e00e6c38c311c79b11c6f9aa60e35f797d4c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "02242201cf8727bb36257898e5ccce8faafffb8bdc3562d0bc25d55bda2f64c7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_cpu_analysis.py",
+      "sha256": "cc5fd90e26c9544a118fcc4c68df4350f57c3186e04cc9c0db24136c42295daf"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_finalize_job.py",
+      "sha256": "90efacc05db278ddd5a596d216e096a300648d2766d60ac85c0b604eb2a87bbc"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_ANALYSIS_INITIAL_TENSOR.log",
+      "sha256": "35512362b9ef1a41f257a09ce5ceb843ad5a30c5dc9a76f0fd3bf47d018b5d33"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_ANALYSIS_COMMAND_ERROR.log",
+      "sha256": "57929d07383c2e65e975204768ef9a6f259c2b1e9e18079aa2d6618c4a496b58"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_ANALYSIS_INTERPRETER_ERROR.log",
+      "sha256": "6cd4d40f42d75604e3438b0163619a75b1175d3f769b72bf19b6424daac9d992"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_ANALYSIS_CONTROL_INITIAL.log",
+      "sha256": "380e8ba73f6589557060794acbb5cabd8da6dfa596f9a486a98c3b67ba737ace"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_ANALYSIS_CONTROL_REPAIR.log",
+      "sha256": "693c2275beeb696006c821014c358d2d86c4a257dcde2fff92739c62c9679229"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_ANALYSIS_TENSOR.log",
+      "sha256": "dd734a222f0e9b0071565f40bf72992ded525a89a0daace2fc0a9c2196d09e78"
+    }
+  ],
+  "tensor_tests": 17,
+  "control_combined": {
+    "passed": 104,
+    "failed": 1
+  },
+  "control_after_fixture_repair": 6,
+  "initial_failures": [
+    "First combined command named nonexistent test_r6_decision_packet.py; no tests ran.",
+    "Tensor interpreter lacks jsonschema; split control and tensor checks without installation or runtime change.",
+    "One control fixture omitted canonical job role; corrected fixture; six new control checks passed."
+  ],
+  "scope": [
+    "Bounded compressed stream footer/hash and JSONL integrity, update/phase counts, episode aggregates, terminal counters, gate metadata and safe CPU checkpoint metadata/finite tensor checks.",
+    "Training/evaluation mode selects exact analyzer and CLI arguments through registration, finalizer and recovery.",
+    "Training analysis binds exact closed-job inventory, authorization and plan; missing/duplicate/modified inputs rejected, native failure preserved.",
+    "Real local fake analyzer worker receipt/recovery and subsequent decision packet; no model event created."
+  ],
+  "limitations": [
+    "Synthetic checkpoint actor/critic tensors and empty optimizer/RNG objects: metadata checks do not prove strict restore or RNG semantics.",
+    "Diagnostic tensor streams are byte-integrity checked, not deserialized or probability-recomputed; no physics replay or learning acceptance.",
+    "Control tests use synthetic report, Store and cleanup fixtures; tensor tests use actual compression/deserialization with baseline pin validation fixture.",
+    "No production GPU/simulation/training/controller deployment. Candidate/final evaluation contracts, semantic audits, combined review and platform handoff remain."
+  ],
+  "goal_complete": false
+}

@@ -30,7 +30,18 @@ SOURCES=('tools/analyze_r6_evaluation.py','tools/r6_cpu_analysis.py',
  'training_workloads/unified_h1/robustness_measurement_replay.py',
  'training_workloads/unified_h1/robustness_physics_replay.py',
  'training_workloads/unified_h1/robustness_audit.py','training_workloads/unified_h1/force_archive.py',
- 'training_workloads/unified_h1/range_archive.py','isaaclab-training/instinctlab/observations/robustness.py')
+ 'training_workloads/unified_h1/range_archive.py','isaaclab-training/instinctlab/observations/robustness.py',
+ 'tools/analyze_r6_training.py','tools/r6_training_analysis.py',
+ 'training_workloads/unified_h1/robustness_training_plan.py',
+ 'training_workloads/unified_h1/robustness_curriculum.py',
+ 'training_workloads/unified_h1/lossless_evidence.py',
+ 'isaaclab-training/instinctlab/training/checkpoint_h1.py')
+
+
+def program_for(mode):
+    if mode=='research-r6-training':return ROOT/'tools/analyze_r6_training.py'
+    if mode=='research-r6-evaluation':return ROOT/SOURCES[0]
+    raise RecoveryError('CPU_ANALYSIS_MODE')
 
 
 def environment():
@@ -61,19 +72,25 @@ def validate(journal,key):
     if request['sources']!=[file_pin(ROOT/p) for p in SOURCES]:raise RecoveryError('CPU_ANALYSIS_SOURCE_DRIFT')
     spec=json.loads(checked(request['spec']).read_text())
     if spec.get('backend')=='real':
-        if request['python']!=file_pin(PYTHON) or request['program']!=file_pin(ROOT/SOURCES[0]):
+        if request['python']!=file_pin(PYTHON) or request['program']!=file_pin(program_for(spec['h1']['mode'])):
             raise RecoveryError('CPU_ANALYSIS_EXECUTABLE')
     elif (spec.get('backend')!='runner_cpu' or state['goal_id']!='R6-CPU-TEST-FIXTURE'
             or not checked(request['program']).is_relative_to(journal.directory.parent.resolve())):
         raise RecoveryError('CPU_ANALYSIS_FIXTURE_BOUNDARY')
     auth=json.loads(checked(spec['pins']['authorization']).read_text())
-    if spec['h1']['mode']!='research-r6-evaluation' or auth['mode']!=spec['h1']['mode']:
+    mode=spec['h1']['mode']
+    if mode not in ('research-r6-evaluation','research-r6-training') or auth['mode']!=mode:
         raise RecoveryError('CPU_ANALYSIS_MODE')
-    params=auth['parameters']['r6'];checked(params['protocol'])
-    output=Path(spec['h1']['attempt'])/'results/research-r6-evaluation'
+    output=Path(spec['h1']['attempt'])/'results'/mode
     directory=journal.directory/'cpu-analysis'/key
     if output.resolve()!=output or any(output==p or output in p.parents or p in output.parents for p in (directory.resolve(),)):
         raise RecoveryError('CPU_ANALYSIS_OUTPUT_SEPARATION')
+    if mode=='research-r6-training':
+        auth_pin=spec['pins']['authorization']
+        argv=[str(checked(request['python'])),'-B',str(checked(request['program'])),str(output),auth_pin['path'],
+            str(directory.resolve()/'result'),'--authorization-sha256',auth_pin['sha256']]
+        return entry,argv
+    params=auth['parameters']['r6'];checked(params['protocol'])
     argv=[str(checked(request['python'])),'-B',str(checked(request['program'])),str(output),params['protocol']['path'],
         str(directory.resolve()/'result'),'--run-id',params['run_id'],'--seed',str(params['seed']),'--split',params['split']]
     return entry,argv
@@ -81,10 +98,10 @@ def validate(journal,key):
 
 def register_analysis(journal,job_key,store,*,free_disk_bytes,python=None,program=None,timeout_seconds=3600):
     journal.guard();state=journal.read();job=journal.canonical_job(job_key,state=state)
-    analysis_context(job,job_key,store)
+    context=analysis_context(job,job_key,store)
     request=dict(job_event_key=job_key,spec=job['request']['spec'],closure=job['closure'],inventory=job['inventory'],
         postrun=job['postrun'],python=file_pin(PYTHON) if python is None else python,
-        program=file_pin(ROOT/SOURCES[0]) if program is None else program,
+        program=file_pin(program_for(context['spec']['h1']['mode'])) if program is None else program,
         sources=[file_pin(ROOT/p) for p in SOURCES],timeout_seconds=timeout_seconds)
     for entry in state['events'].values():
         if (entry['kind']=='cpu' and entry['identity']['job_id']==job['identity']['job_id']

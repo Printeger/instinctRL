@@ -36,17 +36,25 @@ def analysis_context(entry, key, store):
         checked(receipt)
     attempt = Path(spec['h1']['attempt'])
     if (attempt.parent != store.root.resolve()/'attempts' or inventory['roots']['attempt'] != str(attempt)
-            or spec['h1']['mode'] != 'research-r6-evaluation'):
+            or spec['h1']['mode'] not in ('research-r6-evaluation','research-r6-training')):
         raise RecoveryError('ANALYSIS_EXACT_R6_ATTEMPT')
-    output = attempt/'results/research-r6-evaluation'
+    mode=spec['h1']['mode']
+    output = attempt/'results'/mode
     auth_pin = spec['pins']['authorization']; auth = read(auth_pin)
     argv = spec['argv']
-    for flag, value in [('--authorization', auth_pin['path']), ('--attempt',str(attempt)), ('--mode','research-r6-evaluation')]:
+    for flag, value in [('--authorization', auth_pin['path']), ('--attempt',str(attempt)), ('--mode',mode)]:
         if argv.count(flag) != 1 or argv.index(flag)+1 >= len(argv) or argv[argv.index(flag)+1] != value:
             raise RecoveryError('ANALYSIS_AUTHORIZATION_ARGV')
     if auth['mode'] != spec['h1']['mode']:
         raise RecoveryError('ANALYSIS_AUTHORIZATION_MODE')
-    parameters = auth['parameters']; request = parameters['r6']
+    parameters = auth['parameters']
+    if mode=='research-r6-training':
+        from training_workloads.unified_h1 import robustness_training_plan as training
+        plan=training.validate(parameters['r6_training_plan'])
+        if auth['budgets']!=training.required_budget(plan):raise RecoveryError('ANALYSIS_TRAINING_BUDGET')
+        return dict(spec=spec,job=job,closure=closure,inventory=inventory,output=output,
+            auth_pin=auth_pin,parameters=parameters,request=plan,protocol=None)
+    request = parameters['r6']
     protocol = read(request['protocol'])
     if (protocol.get('frozen') is not True or len(protocol['blocks']) != 16
             or len(set(request['block_ids'])) != 16 or len(request['block_ids']) != 16
@@ -58,6 +66,8 @@ def analysis_context(entry, key, store):
 
 def bind_analysis(entry, key, report_pin, store):
     context=analysis_context(entry,key,store)
+    if context['spec']['h1']['mode']=='research-r6-training':
+        return bind_training_analysis(entry,key,report_pin,context)
     spec=context['spec'];job=context['job'];closure=context['closure'];inventory=context['inventory']
     output=context['output'];auth_pin=context['auth_pin'];parameters=context['parameters']
     request=context['request'];protocol=context['protocol']
@@ -155,6 +165,57 @@ def bind_analysis(entry, key, report_pin, store):
         report=report_pin,model_binding=model_binding,issues=issues,
         native_status=closure['native_status'],native_exit_code=closure['native_exit_code'],
         scientific_acceptance=False,status='BOUND_REPLAY_REQUIRES_CHAIN_AUDIT_AND_INDEPENDENT_REVIEW')
+
+
+def bind_training_analysis(entry,key,report_pin,context):
+    """Bind structural training evidence only; semantic audits remain explicitly outstanding."""
+    if checked(report_pin).stat().st_size>16*1024**2:raise RecoveryError('ANALYSIS_REPORT_SIZE_BOUND')
+    report=read(report_pin);plan=context['request'];output=context['output'];inventory=context['inventory']
+    from training_workloads.unified_h1 import robustness_training_plan as training
+    from tools import r6_training_analysis as analyzer
+    if (report.get('schema_version')!='r6-training-analysis/1' or report.get('scientific_acceptance') is not False
+            or report.get('authorization')!=context['auth_pin'] or report.get('plan_sha256')!=training.object_sha(plan)):
+        raise RecoveryError('ANALYSIS_TRAINING_IDENTITY')
+    if report.get('analyzer')!=file_pin(analyzer.__file__) or report.get('codec')!=file_pin(analyzer.codec.__file__):
+        raise RecoveryError('ANALYSIS_IMPLEMENTATION_DRIFT')
+    summary=report['summary']
+    if (summary.get('schema_version')!='r6-training-summary/1'
+            or any(summary.get(k)!=plan[k] for k in ('experiment_id','phase','training_seed','start_update','target_update'))
+            or any(summary.get(k) is not False for k in ('scientific_acceptance','learning_gain_established',
+                'physical_replay_performed','strict_checkpoint_restore_performed','rng_state_semantics_verified','probability_gate_recomputed'))
+            or summary.get('issue_count')!=len(report['issues'])):
+        raise RecoveryError('ANALYSIS_TRAINING_SUMMARY')
+    indexed={r['path']:r for r in inventory['files']}
+    if len(indexed)!=len(inventory['files']):raise RecoveryError('ANALYSIS_DUPLICATE_INVENTORY_PATH')
+    seen=set()
+    for pin in report['inputs']:
+        path=Path(pin['path']);row=indexed.get(str(path))
+        if str(path) in seen:raise RecoveryError('ANALYSIS_DUPLICATE_INPUT')
+        seen.add(str(path))
+        if path!=Path(context['auth_pin']['path']) and output not in path.parents:
+            raise RecoveryError('ANALYSIS_OTHER_ATTEMPT_INPUT')
+        if row is None or any(pin.get(k)!=row[k] for k in ('sha256','bytes')) or checked(dict(path=str(path),sha256=pin['sha256'])).stat().st_size!=row['bytes']:
+            raise RecoveryError('ANALYSIS_INPUT_NOT_IN_EXACT_INVENTORY')
+    required={context['auth_pin']['path']}
+    for name in indexed:
+        path=Path(name)
+        if (output/'compressed_evidence' in path.parents and path.suffix=='.r6z') or (output/'checkpoints'==path.parent and path.suffix in ('.pt','.json')) or path in (output/'status.json',output/'pilot_diagnostic/first_update_gate.json'):
+            required.add(name)
+    if not required<=seen:raise RecoveryError('ANALYSIS_TRAINING_INPUT_MISSING')
+    for stream in report['streams']:
+        pin=stream.get('pin')
+        if pin and (pin['path'] not in seen or pin['sha256']!=indexed[pin['path']]['sha256']):
+            raise RecoveryError('ANALYSIS_TRAINING_STREAM_BINDING')
+    issues=['TRAINING_SEMANTIC_AUDIT_AND_EVALUATION_REQUIRED']
+    if report['issues']:issues.append('TRAINING_EVIDENCE_INCOMPLETE_OR_MISMATCHED')
+    if not inventory['output_inventory_complete']:issues.append('INVENTORY_INCOMPLETE')
+    closure=context['closure']
+    return dict(schema_version='r6-bound-training-analysis/1',job_id=context['job']['id'],event_key=key,
+        spec=entry['request']['spec'],authorization=context['auth_pin'],protocol=None,
+        training_plan_sha256=training.object_sha(plan),closure=entry['closure'],inventory=entry['inventory'],
+        postrun=entry['postrun'],report=report_pin,model_binding=None,issues=issues,
+        native_status=closure['native_status'],native_exit_code=closure['native_exit_code'],
+        scientific_acceptance=False,status='BOUND_STRUCTURAL_TRAINING_REQUIRES_SEMANTIC_AUDIT_AND_EVALUATION')
 
 
 def record_analysis(journal, key, report_pin, store):

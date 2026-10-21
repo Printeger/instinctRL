@@ -48,7 +48,7 @@ requires the frozen interpreter/analyzer for every real-mode job.
         if event['kind']=='cpu' and event['identity']['job_id']==job['identity']['job_id']
         and event['identity']['role']=='cpu-analysis']
     expected=dict(python=file_pin(cpu.PYTHON) if python is None else python,
-        program=file_pin(cpu.ROOT/cpu.SOURCES[0]) if program is None else program,
+        program=file_pin(cpu.program_for(json.loads(checked(job['request']['spec']).read_text())['h1']['mode'])) if program is None else program,
         timeout_seconds=timeout_seconds)
     if existing:
         if len(existing)!=1:raise RecoveryError('FINALIZE_ANALYSIS_ALIAS')
