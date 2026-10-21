@@ -1,0 +1,103 @@
+{
+  "schema_version": "r6-protocol-readiness/1",
+  "status": "NOT_FROZEN_NOT_LIVE_READY",
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+    "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0"
+  },
+  "split": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/SPLIT_MANIFEST.json",
+    "sha256": "5e7e74413b0d43909adb6e7c7c77d1af9f7a5d4cf17ae04f5102ae91cd2ec18e"
+  },
+  "checks": [
+    {
+      "name": "scoring",
+      "status": "CPU_IMPLEMENTED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_METRIC_MEASUREMENT_TESTS.json",
+          "sha256": "e943b2545dd325223cb4d8abe72dd951afc595f48aab4e29141fae54047af2ae"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_R6_MOTION_METADATA_CAPACITY.json",
+          "sha256": "2bf6e88ea24004de2ce15c607989f790cd022add1b382408f9773d01442473bb"
+        }
+      ],
+      "remaining": "Counterexamples and full denominators implemented; independent physical-feasibility acceptance remains required."
+    },
+    {
+      "name": "measurement_reset_force",
+      "status": "CPU_IMPLEMENTED_LIVE_UNVERIFIED",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PHYSICS_ADAPTER_TESTS.json",
+          "sha256": "8e0f802bae818f621db793fc81c82572056be78ac08da6c229dd2b58a7dbe379"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TEMPORAL_ARCHIVE_TESTS.json",
+          "sha256": "e0b52008171a0c33e8f7adc0bf22c506b178c7a5a865e55355c08bb5eeff2dfe"
+        }
+      ],
+      "remaining": "CPU streams/reset/force records exist; actual integration and Kit compatibility remain unverified."
+    },
+    {
+      "name": "storage",
+      "status": "CPU_ENGINEERING_ACCEPTED_PRODUCTION_MISSING",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
+          "sha256": "4c49f6b6b2eb9efe8e0a917c9a2611e9fec4df45b25764f1e7232e33c7b156dc"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
+          "sha256": "7e07946d6c600ed669be48373f81ee4e164218b8700f87140c7cc4d2ed75746c"
+        }
+      ],
+      "remaining": "Prepaid new volume pair; actual filesystem bytes/inodes and full time/disk allocation acceptance pending."
+    },
+    {
+      "name": "controller",
+      "status": "LOCAL_EXACT_JOB_ENTRY_CPU_ONLY",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_LOCAL_JOB_ENTRY.json",
+          "sha256": "5ec29644db98ad33884a92b403fe56daca81a2bca97089a4cbffdb94651366e8"
+        },
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_POSTVALIDATION_QUEUE.json",
+          "sha256": "128e96faaf79286de283013ee5195ff3c792297d90fc167793aaab696b5d3e7f"
+        }
+      ],
+      "remaining": "Bounded queue and exact job closure implemented; independently reviewed deployment and autonomous next-plan issuance remain required."
+    },
+    {
+      "name": "final_confirmation",
+      "status": "SCIENTIFIC_SCOPE_RETAINED_IMPLEMENTATION_INCOMPLETE",
+      "evidence": [
+        {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/SPLIT_MANIFEST.json",
+          "sha256": "5e7e74413b0d43909adb6e7c7c77d1af9f7a5d4cf17ae04f5102ae91cd2ec18e"
+        }
+      ],
+      "remaining": "Current robustness_contract restricts to baseline u640 and development split. Final frozen-model/common-realization evaluation and continuation-training authorization must be implemented before those phases; baseline entry alone cannot complete Goal."
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "613b2b59cf0c8214acc3087a7dbf8a4ac59dd5e1655852998ab676d0d8a9cc69"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "241b688c02f68dffa05258b4739dc33e9fc9599ccfa1323017b976045a293e0e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "3afb0e1707e22b9f723712e1e7168b2f20ea94008b0495df66c38ebc66cc409b"
+    }
+  ],
+  "protocol_changed": false,
+  "thresholds_changed": false,
+  "results_revealed": false,
+  "capacity_pass": false
+}

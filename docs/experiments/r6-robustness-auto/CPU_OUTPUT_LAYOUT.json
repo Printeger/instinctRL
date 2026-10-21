@@ -1,0 +1,379 @@
+{
+  "status": "PASS_CPU_OUTPUT_TOPOLOGY_ONLY",
+  "test": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_output_layout.py",
+    "sha256": "92fea5a08b3a7d13587a24c22725d589492f31b217e4f9953296947311a6d7ae"
+  },
+  "log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_OUTPUT_LAYOUT_TEST.txt",
+    "sha256": "254b5ca88d285167b65ff476aa35ec69494748bb21f4ef6858693a3dc8327e0e"
+  },
+  "source_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "241b688c02f68dffa05258b4739dc33e9fc9599ccfa1323017b976045a293e0e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "3afb0e1707e22b9f723712e1e7168b2f20ea94008b0495df66c38ebc66cc409b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_audit.py",
+      "sha256": "e39d2bb4b8f95bb9d5787d3bed930b8a203777af2929f41896f9f8aa3b7d99e6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/persistence.py",
+      "sha256": "245b1fd5f603ba912eb512904d8daf51b5233771cf3b1df46da25faf170e0ac7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_evaluation.py",
+      "sha256": "79d70ddf6e66394ab7c585b6b698ba38e4888f689a06f0385175691ad4dd97d2"
+    }
+  ],
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/TEST_PROTOCOL.json",
+    "sha256": "97632b922ebb435b2a7c614d61ed88d53309ce1df8d652aa17c1679b12ee7ca0"
+  },
+  "blocks": 16,
+  "nontraining_transitions_fixture": 160640,
+  "files": 65,
+  "directories": 17,
+  "entries_excluding_output_root": 82,
+  "manifest": [
+    {
+      "path": "r6/P-clean/audit.bin",
+      "bytes": 1754479,
+      "sha256": "ab48a86be26b4b8ea331fb2de7be14eff01c621b1affccaba60e9586c42ed5e4"
+    },
+    {
+      "path": "r6/P-clean/measurements.bin",
+      "bytes": 1351411,
+      "sha256": "e0dd80ce452678d83658c767ebef975a91e19112409f617761ba6aa0e6cf483d"
+    },
+    {
+      "path": "r6/P-clean/motion_traces.json",
+      "bytes": 2556400,
+      "sha256": "67a111c3bf95ce325819f5cb849060ebb97b7ae0717278f8a3f7dc15e528fc85"
+    },
+    {
+      "path": "r6/P-clean/result.json",
+      "bytes": 9536,
+      "sha256": "b2f548ac920a5b4726e9015525c4f70a213c1e8ed69e40e59cfb0b1abd5f8f7d"
+    },
+    {
+      "path": "r6/P-combined/audit.bin",
+      "bytes": 1766575,
+      "sha256": "71dc29ccf764fd644dd7f5ad724969912335f0c35e980e67cb95f0661a50224a"
+    },
+    {
+      "path": "r6/P-combined/measurements.bin",
+      "bytes": 1436804,
+      "sha256": "37c02c19513cd7f3366046ed5b051f338278b65d8dcca57954417d15bcfbf373"
+    },
+    {
+      "path": "r6/P-combined/motion_traces.json",
+      "bytes": 2555736,
+      "sha256": "80a7c5baebb18cae38747bef914acdf34e6f8e6edf90fc2bb56a0577ece8d2d7"
+    },
+    {
+      "path": "r6/P-combined/result.json",
+      "bytes": 9638,
+      "sha256": "442fb782d7b0f6a26f4e53f964747afda45350bc8769f875a81055b5ffbc010f"
+    },
+    {
+      "path": "r6/S-clean-high/audit.bin",
+      "bytes": 1828358,
+      "sha256": "b6b7ecb9413e449103970556b3bd015d9b704b334fafb6fec4d59d50115804f1"
+    },
+    {
+      "path": "r6/S-clean-high/measurements.bin",
+      "bytes": 1353066,
+      "sha256": "7cd4044474bb0e2e5e131c31d734c4685631433a192c0c056bad63ae44f064f7"
+    },
+    {
+      "path": "r6/S-clean-high/motion_traces.json",
+      "bytes": 2729248,
+      "sha256": "85e6fdc8e36a80c0bd71ad8f9afba66d30bbb1ce97e90d78e24c592b89718b68"
+    },
+    {
+      "path": "r6/S-clean-high/result.json",
+      "bytes": 13736,
+      "sha256": "e57484e3e1f0f4333bfb44db6f8b887724d2816386e96f29968714c17393e9fa"
+    },
+    {
+      "path": "r6/S-clean-low/audit.bin",
+      "bytes": 1820734,
+      "sha256": "dae2781093c5aa76ea4acbee6a07e3d58540ca28abb3308fa7f7b659f1517a83"
+    },
+    {
+      "path": "r6/S-clean-low/measurements.bin",
+      "bytes": 1352735,
+      "sha256": "60a4e4c2a04e44fe97dde0b926246e54ef5fbd4f83f6ba4be1300d9ab2c4f3d5"
+    },
+    {
+      "path": "r6/S-clean-low/motion_traces.json",
+      "bytes": 2733720,
+      "sha256": "e60250186dadceada2abc281984dc33c42e6a2fdaf663a9da0587f5f98c693b2"
+    },
+    {
+      "path": "r6/S-clean-low/result.json",
+      "bytes": 13702,
+      "sha256": "3a761f0b33ab7c4617044e5e6efe6f45ed6714aba0c6bb55de7c17490330668c"
+    },
+    {
+      "path": "r6/S-delay-drop/audit.bin",
+      "bytes": 1828736,
+      "sha256": "c1148e4d090170287b79891a7a855f287d5a812f022977c12a1373c6ffd26c0c"
+    },
+    {
+      "path": "r6/S-delay-drop/measurements.bin",
+      "bytes": 1368791,
+      "sha256": "012e86335473b67548a330c3eb0b21260371117cbf4fbbec55c6610dfb544037"
+    },
+    {
+      "path": "r6/S-delay-drop/motion_traces.json",
+      "bytes": 2716976,
+      "sha256": "0c6a2a43ab852a2766a009f5d45204fd67ba14e9d6882da9e1fa203dcbd28097"
+    },
+    {
+      "path": "r6/S-delay-drop/result.json",
+      "bytes": 11383,
+      "sha256": "e3f27a6c6e4c7365d495ea1dfe5b5cb31f59aded392029d012061619ae884af4"
+    },
+    {
+      "path": "r6/S-noise/audit.bin",
+      "bytes": 1805567,
+      "sha256": "25b9c8b2add6b8d8f6244ac6d2803a6fe7b2ee42ba7900dcac62e3f206ec2a6e"
+    },
+    {
+      "path": "r6/S-noise/measurements.bin",
+      "bytes": 1420185,
+      "sha256": "27cb992eb87420def89a87f3ad46f8e7377a764407432306d90474ee8166ee51"
+    },
+    {
+      "path": "r6/S-noise/motion_traces.json",
+      "bytes": 2707152,
+      "sha256": "087fc859caf5e0387a380f1b650b21608345e14a564a29c0605b0883a4ebdc42"
+    },
+    {
+      "path": "r6/S-noise/result.json",
+      "bytes": 12818,
+      "sha256": "4b805761e2fda95ebde9f3905252bf2448abf20f7b3538d43fb949f58e6de87a"
+    },
+    {
+      "path": "r6/W-combined/audit.bin",
+      "bytes": 1921406,
+      "sha256": "37f13e4e8ca2e540f54536d77b92662e47ddd187f1e7c426c07775c7ffe7e2d4"
+    },
+    {
+      "path": "r6/W-combined/measurements.bin",
+      "bytes": 1435856,
+      "sha256": "d2d429c36b825ab932a921c5a0cce24abcfda7f25f44c72b885297145cba37d2"
+    },
+    {
+      "path": "r6/W-combined/motion_traces.json",
+      "bytes": 2709396,
+      "sha256": "935bfe159e1ee20d20ccd04d9623df186bc53e90fc6af2c14095c6f5e5de75ba"
+    },
+    {
+      "path": "r6/W-combined/result.json",
+      "bytes": 12392,
+      "sha256": "86fca29efe27e98b2cecd2df4b44c27d9070abe01d9b4f99e4d486d705c66b1f"
+    },
+    {
+      "path": "r6/W-far/audit.bin",
+      "bytes": 1902251,
+      "sha256": "19d8f94312c7522552b67c217c5e7b01d93421a9ec0d4f8cd7634a290e3cb93c"
+    },
+    {
+      "path": "r6/W-far/measurements.bin",
+      "bytes": 1350749,
+      "sha256": "b8e5240e629b40ed4467703a6723ca22ad7d3402e16fe97f7b21d68b320a5642"
+    },
+    {
+      "path": "r6/W-far/motion_traces.json",
+      "bytes": 2709524,
+      "sha256": "8e4ed1423c38f306c633b14d4c62c52c0cf9a0c63676513d6c4f0cd2c575db9a"
+    },
+    {
+      "path": "r6/W-far/result.json",
+      "bytes": 12120,
+      "sha256": "825b2329497cdd82adebf9a5817b0aeaf22a2109c1ed99346eb8be86ec660e7e"
+    },
+    {
+      "path": "r6/W-middle/audit.bin",
+      "bytes": 1915214,
+      "sha256": "e4b9f38da84c9b5e3811ea03e8546ca01faa8c757db069b9dc604beafde22874"
+    },
+    {
+      "path": "r6/W-middle/measurements.bin",
+      "bytes": 1351742,
+      "sha256": "4a000fc95dffaaab02b7d7ea6224d93fede0feae13ec4aa8ddf2d6c7248d5dc5"
+    },
+    {
+      "path": "r6/W-middle/motion_traces.json",
+      "bytes": 2709546,
+      "sha256": "cef601cc7bbc7261c582d2a0f8691d52b06ba5163b570d492678091677c6b92c"
+    },
+    {
+      "path": "r6/W-middle/result.json",
+      "bytes": 12378,
+      "sha256": "ea33ac90103f1630f89995d4d4fdb02e49685ce264f9ff2c5992d344f159c41a"
+    },
+    {
+      "path": "r6/W-near/audit.bin",
+      "bytes": 1897495,
+      "sha256": "a40bc6dc3b8d863a4fb08693814b4fa6feae67825daf0b1753b2d95b55125b6b"
+    },
+    {
+      "path": "r6/W-near/measurements.bin",
+      "bytes": 1351080,
+      "sha256": "b32bc446d25ea08e126631888f3f4c75e21d3c19fdb0d72a73f0346e1bab2784"
+    },
+    {
+      "path": "r6/W-near/motion_traces.json",
+      "bytes": 2707442,
+      "sha256": "ea08db6da8a92c06edf1cd9d884cef77e994cc56b444de5d71f48b00575cbd33"
+    },
+    {
+      "path": "r6/W-near/result.json",
+      "bytes": 11883,
+      "sha256": "23bd608017a1bb70f985a353d02c57a09e024803d5c0e6b37ca6646e4d266820"
+    },
+    {
+      "path": "r6/X-clean/audit.bin",
+      "bytes": 1128888,
+      "sha256": "ed4bca49aa25a010a7ff699aed4cf4af6d9abf22fcc8aed9f124ef6f87d9f27e"
+    },
+    {
+      "path": "r6/X-clean/measurements.bin",
+      "bytes": 819381,
+      "sha256": "72c9fde3b36bedc9d210614a13719aac451c7999d6d9fdfa49c61427aeeace75"
+    },
+    {
+      "path": "r6/X-clean/motion_traces.json",
+      "bytes": 1791232,
+      "sha256": "306f39f9c836ecb89091b012d8fd0979d8149c5751690f37d5a96dc76f3f94be"
+    },
+    {
+      "path": "r6/X-clean/result.json",
+      "bytes": 12703,
+      "sha256": "93840ca2b477a30d8b9b82d8bd1881fbc41aca939090470224ce44a0403f4708"
+    },
+    {
+      "path": "r6/X-noise/audit.bin",
+      "bytes": 1127834,
+      "sha256": "5b0a8edcf7d3a7485dadb56b08469aadcee18fb9179da9ae07994230a8231b68"
+    },
+    {
+      "path": "r6/X-noise/measurements.bin",
+      "bytes": 860967,
+      "sha256": "2f12b579a47101d0b0f4738da137e215b0b43d5340eb06f7dfd22216b3279c64"
+    },
+    {
+      "path": "r6/X-noise/motion_traces.json",
+      "bytes": 1792856,
+      "sha256": "9b2b57e7f8cda99dc1629465355c21610c70761d191fa6a0f564f096bbce431c"
+    },
+    {
+      "path": "r6/X-noise/result.json",
+      "bytes": 12703,
+      "sha256": "4e60f3ca1a0278363c5c6fa9facc24279baf548f1ca93a5e3079d4a9c4cad305"
+    },
+    {
+      "path": "r6/stress-P-high/audit.bin",
+      "bytes": 1863972,
+      "sha256": "8e27dafa5521b815ef55ee4f53defa74c6ec39e045c9254f35ca9d7054fd245c"
+    },
+    {
+      "path": "r6/stress-P-high/measurements.bin",
+      "bytes": 1353397,
+      "sha256": "22ac9b8efdee7fa3f437d9f7539555d3bd6a97ed878fb3331618b39fc2ff6d59"
+    },
+    {
+      "path": "r6/stress-P-high/motion_traces.json",
+      "bytes": 2551860,
+      "sha256": "1c2d1feb519edcf768f7ee577b5370f788c9c0f839188568192a269aadea8adc"
+    },
+    {
+      "path": "r6/stress-P-high/result.json",
+      "bytes": 9423,
+      "sha256": "c78437e992571d93a8f8a34ea7f7d10548dec982be378a455b074ec8f2f512de"
+    },
+    {
+      "path": "r6/stress-S-combined/audit.bin",
+      "bytes": 1939041,
+      "sha256": "3fed4c5c82383a5e19aed2501e64aa6bf60b4bcf64566f728a8c1d26890123ba"
+    },
+    {
+      "path": "r6/stress-S-combined/measurements.bin",
+      "bytes": 1445987,
+      "sha256": "7ea5fb9487db9567bbf87cbc6816d8de2a9f5549e40b179f31bee86523ab61ed"
+    },
+    {
+      "path": "r6/stress-S-combined/motion_traces.json",
+      "bytes": 2714204,
+      "sha256": "e84d286102a6ba3fd52bb5a3bb564c4ccfed464b22b2a8efa6d23c050e21d663"
+    },
+    {
+      "path": "r6/stress-S-combined/result.json",
+      "bytes": 13941,
+      "sha256": "1319e6b9fa8c80bff085d331e539f379bba2d389cda2536865fbaf9b2346221a"
+    },
+    {
+      "path": "r6/stress-S-noise/audit.bin",
+      "bytes": 1920519,
+      "sha256": "1671e9d87f00577350f56cb0119502d4ea2292a5cd3376eb930373fd66f82d23"
+    },
+    {
+      "path": "r6/stress-S-noise/measurements.bin",
+      "bytes": 1428507,
+      "sha256": "cd47bc13b35941ae69a53b44799a41da636603fe828ae26494a921c5a078567c"
+    },
+    {
+      "path": "r6/stress-S-noise/motion_traces.json",
+      "bytes": 2708336,
+      "sha256": "ac86b50b02055bb4efd4d95de41ac0156e336aae77fca8aa4ece835a78fccfad"
+    },
+    {
+      "path": "r6/stress-S-noise/result.json",
+      "bytes": 12905,
+      "sha256": "41887133d8928444b1167f678688a434e6a634525a592cdcf6ca96773929c3c1"
+    },
+    {
+      "path": "r6/stress-W-high/audit.bin",
+      "bytes": 1944081,
+      "sha256": "b7dbcc37fb2b3ea0ff94d70405ccdcc82b8960a953ec48eec9f5d211d28bcf87"
+    },
+    {
+      "path": "r6/stress-W-high/measurements.bin",
+      "bytes": 1444573,
+      "sha256": "3661d477a553bc298b1364b5de6f36f1f8441ff5c1e9dba584f3d08ae2bf3cc7"
+    },
+    {
+      "path": "r6/stress-W-high/motion_traces.json",
+      "bytes": 2719038,
+      "sha256": "e55da71b350bd49c49404d6c0ee2f405de798ab4080904ee564f3634aab2a164"
+    },
+    {
+      "path": "r6/stress-W-high/result.json",
+      "bytes": 12387,
+      "sha256": "47e2bd4c0958a72460ce18768f1f2b89817398ebd9a018cde4f792bba1184e72"
+    },
+    {
+      "path": "r6_block_results.json",
+      "bytes": 193650,
+      "sha256": "7888a52836e8bf2084775c3e99adf9f90992410c42d0a39c3456b0f87fd9c434"
+    }
+  ],
+  "limitations": [
+    "CPU fixture uses two rays and idealized motion, no actual force integration; byte capacity and scientific outcomes are not tested.",
+    "Real backend evaluate_r6_blocks method extracted by AST to avoid importing Kit; real block writers/archives/scorer run.",
+    "Temporary fixture alone sets frozen=true. Real protocol remains unchanged and unfrozen.",
+    "Does not exercise original five-case suite, live initialization, resource guard, native telemetry or outer controller files.",
+    "Atomic writer uses one temporary file per sequential write; interrupted writes may preserve one extra inode. Full production inode acceptance still pending."
+  ],
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "additional_model_sessions": 0
+}
