@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：训练checkpoint审计新增actor/critic/Adam完整状态校验和CPU副本加载，逐参数核对
+coverage/order/超参数/矩shape/dtype/有限值/非负二阶矩/精确step，加载后逐tensor确认不漂移。
+CPU/Python/NumPy/curriculum RNG格式可解析；保留CUDA原件，不宣称CUDA语义验证或严格live恢复。
+41项tensor与44项控制检查通过；初轮2项旧课程fixture seed错误保留并修正，坏状态测试先验证好基线。
+真实冻结u640只读核验通过：actor16/critic10组Adam均5120步，无GPU探测或优化器执行。
+证据CPU_TRAINING_CHECKPOINT_AUDIT.json；RNG分叉语义、候选/最终评价、组合独审/交接仍待完成。
+146次自动唤醒+30worker=176，模型余80；完整Goal未完成，尚未生产发车。
+
 2026-10-22：首更概率gate离线重算接入训练分析：准确初始actor严格加载，512样本CPU前向，
 按原1e-6/1e-5容差逐项核对log-prob/alpha/beta，失败不放宽；原件与实现pin绑定关闭作业清单。
 CPU RNG成功/失败均恢复，禁止CUDA查询；28项tensor检查、59项控制组合与7项最终针对检查通过。

@@ -185,6 +185,8 @@ def bind_training_analysis(entry,key,report_pin,context):
                 'physical_replay_performed','strict_checkpoint_restore_performed','rng_state_semantics_verified'))
             or summary.get('issue_count')!=len(report['issues'])):
         raise RecoveryError('ANALYSIS_TRAINING_SUMMARY')
+    if report.get('checkpoint_auditor')!=file_pin(Path(__file__).with_name('r6_training_checkpoint_audit.py')):
+        raise RecoveryError('ANALYSIS_IMPLEMENTATION_DRIFT')
     probability=summary.get('probability_replay')
     if type(summary.get('probability_gate_recomputed'))is not bool or summary['probability_gate_recomputed']!=(probability is not None):
         raise RecoveryError('ANALYSIS_PROBABILITY_REPLAY_FLAG')

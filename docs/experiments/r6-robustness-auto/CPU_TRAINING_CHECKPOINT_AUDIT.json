@@ -1,0 +1,60 @@
+{
+  "status": "CPU_ACTOR_CRITIC_ADAM_LOAD_AND_RNG_FORMAT_AUDIT_PASS_NOT_LIVE",
+  "input_commit": "2e023c6d",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_checkpoint_audit.py",
+      "sha256": "0f0c9f68fa7efa4f3b28d1545bb2b567bdd90d6c1d4b87ecb966bd65da44f544"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_analysis.py",
+      "sha256": "7fe3f05a848a1a431a57159cea2cc602fb0fca2e23bc23703e10c035fabbf749"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_binding.py",
+      "sha256": "477b95ad0d667eb6112aea8b47ae3b219b0012a6a9ce14a7c0c9b6a705c8b3a1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_cpu_analysis.py",
+      "sha256": "dda56c2274e72275d11f3b418ced3b140d59e1e9d6d8dfed77b1c2b3a3a095ad"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_CHECKPOINT_AUDIT_TENSOR_INITIAL.log",
+      "sha256": "78dc92d7910287e5fe874b042e91dfa53ff652d78e5456c9e8731780268a12cc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_CHECKPOINT_AUDIT_TENSOR_FINAL.log",
+      "sha256": "6f94858626c0e3f24e49699b6b0032907c7db225f7723e03d4f2cf3f9e1b189d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_CHECKPOINT_AUDIT_CONTROL.log",
+      "sha256": "033a5567225df7ec6aea562324422c7bd2b51e0cbe5d531c5f2a32c689761f99"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_CHECKPOINT_AUDIT_ACTUAL.json",
+      "sha256": "5eb4ab29daba8da9f3e683f5fc3c59e3d7a8c26497749449882a36cc08d466b1"
+    }
+  ],
+  "tests": {
+    "tensor_final": 41,
+    "control": 44,
+    "initial_failures": 2
+  },
+  "initial_failure": "Synthetic legacy curriculum fixture used seed 11 instead of required 20260908. Corrected fixture; each corrupt-state test now first verifies its clean payload passes.",
+  "scope": [
+    "Reuse exact checkpoint schema/clock/curriculum and model key/shape/dtype/finite validators.",
+    "Reuse full Adam parameter coverage/order/hyperparameter/moment/step validation and add nonnegative second moment checks.",
+    "Load actor, critic and both Adam states into CPU copies; compare every loaded moment and step with saved tensors. No optimizer step.",
+    "Parse CPU/Python/NumPy/curriculum RNG with private generators; retain CUDA RNG bytes without driver access or restoration.",
+    "Actual frozen u640 hash verified; 16 actor and 10 critic Adam entries loaded exactly at step 5120, no CUDA calls.",
+    "Bounded training analyzer records state_audit; exact auditor implementation pinned in CPU worker and closed-job binder."
+  ],
+  "limitations": [
+    "This is not strict live checkpoint restoration: CUDA RNG semantic validity and actual RNG restoration are not claimed.",
+    "Synthetic tests contain real network/optimizer structures with constructed moments, not trained models. Actual audit separately uses real frozen u640.",
+    "No R6 production baseline, training, GPU, simulation or controller deployment. Branch RNG semantic audit, candidate/final evaluation and combined review/platform handoff remain."
+  ],
+  "goal_complete": false
+}

@@ -47,7 +47,9 @@ def checkpoint_metadata(path,plan,recipe,update):
         recipe_sha256=plan['recipe']['sha256'],origin_checkpoint_sha256=contract.BASELINE_SHA,
         branch_seed=plan['training_seed']),'CHECKPOINT_CURRICULUM')
     _finite_tree(value,'checkpoint audit')
-    return dict(update=update,metadata_verified=True,finite_tensor_tree=True,strict_restore_performed=False)
+    from tools.r6_training_checkpoint_audit import audit
+    state_audit=audit(value)
+    return dict(update=update,metadata_verified=True,finite_tensor_tree=True,strict_restore_performed=False,state_audit=state_audit)
 
 
 def analyze(output,authorization_pin):
@@ -185,6 +187,7 @@ def analyze(output,authorization_pin):
         rng_state_semantics_verified=False,probability_gate_recomputed=probability is not None,probability_replay=probability)
     report=dict(schema_version='r6-training-analysis/1',authorization=authorization_pin,plan_sha256=contract.object_sha(plan),
         analyzer=file_pin(__file__),codec=file_pin(codec.__file__),
+        checkpoint_auditor=file_pin(Path(__file__).with_name('r6_training_checkpoint_audit.py')),
         probability_replayer=file_pin(Path(__file__).with_name('r6_training_probability.py')),inputs=sorted(inputs.values(),key=lambda p:p['path']),
         streams=list(streams.values()),issues=issues,summary=summary,scientific_acceptance=False)
     return report,summary

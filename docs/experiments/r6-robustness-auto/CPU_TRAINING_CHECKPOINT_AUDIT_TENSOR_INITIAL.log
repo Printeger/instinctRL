@@ -1,0 +1,88 @@
+F...........F............................                                [100%]
+=================================== FAILURES ===================================
+___________ test_cpu_state_load_preserves_rng_and_never_probes_cuda ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7322f6c18810>
+
+    def test_cpu_state_load_preserves_rng_and_never_probes_cuda(monkeypatch):
+        value=payload();before=torch.get_rng_state().clone();py=random.getstate();np_before=np.random.get_state()
+        def forbidden(*args,**kwargs):raise AssertionError('CUDA forbidden')
+        for name in ('is_available','device_count','get_rng_state_all','set_rng_state_all'):monkeypatch.setattr(torch.cuda,name,forbidden)
+>       result=audit(value)
+               ^^^^^^^^^^^^
+
+tools/test_r6_training_checkpoint_audit.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_training_checkpoint_audit.py:24: in audit
+    _validate_clock_and_curriculum(update=update,transition=counters['transition'],policy_step=counters['global_policy_step'],curriculum=value['curriculum'],training_seed=seed)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+update = 642, transition = 328704, policy_step = 10272
+curriculum = {'version': 'curriculum-h1-v1', 'completed_policy_steps': 10272}
+training_seed = 11
+
+    def _validate_clock_and_curriculum(*, update: int, transition: int, policy_step: int,
+                                       curriculum: object, training_seed: int) -> dict[str, Any]:
+        if transition != 512 * update or policy_step != 16 * update:
+            raise CheckpointError("checkpoint-h1 counters must equal 512*update and 16*update")
+        research = isinstance(curriculum, dict) and curriculum.get("version") == "curriculum-h1-research-pure-hover-v1"
+        r6 = isinstance(curriculum, dict) and curriculum.get("version") == "curriculum-h1-r6-v1"
+        if (not (research or r6) and training_seed != 20260908) or ((research or r6) and (type(training_seed) is not int or not 0 <= training_seed < 2**31)):
+>           raise CheckpointError("checkpoint-h1 training seed mismatch")
+E           instinctlab.training.checkpoint.CheckpointError: checkpoint-h1 training seed mismatch
+
+isaaclab-training/instinctlab/training/checkpoint_h1.py:112: CheckpointError
+_____________ test_cuda_state_is_not_claimed_semantically_verified _____________
+
+    def test_cuda_state_is_not_claimed_semantically_verified():
+        value=payload();value['rng']['torch_cuda']=[torch.zeros(16,dtype=torch.uint8)]
+>       result=audit(value)
+               ^^^^^^^^^^^^
+
+tools/test_r6_training_checkpoint_audit.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_training_checkpoint_audit.py:24: in audit
+    _validate_clock_and_curriculum(update=update,transition=counters['transition'],policy_step=counters['global_policy_step'],curriculum=value['curriculum'],training_seed=seed)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+update = 642, transition = 328704, policy_step = 10272
+curriculum = {'version': 'curriculum-h1-v1', 'completed_policy_steps': 10272}
+training_seed = 11
+
+    def _validate_clock_and_curriculum(*, update: int, transition: int, policy_step: int,
+                                       curriculum: object, training_seed: int) -> dict[str, Any]:
+        if transition != 512 * update or policy_step != 16 * update:
+            raise CheckpointError("checkpoint-h1 counters must equal 512*update and 16*update")
+        research = isinstance(curriculum, dict) and curriculum.get("version") == "curriculum-h1-research-pure-hover-v1"
+        r6 = isinstance(curriculum, dict) and curriculum.get("version") == "curriculum-h1-r6-v1"
+        if (not (research or r6) and training_seed != 20260908) or ((research or r6) and (type(training_seed) is not int or not 0 <= training_seed < 2**31)):
+>           raise CheckpointError("checkpoint-h1 training seed mismatch")
+E           instinctlab.training.checkpoint.CheckpointError: checkpoint-h1 training seed mismatch
+
+isaaclab-training/instinctlab/training/checkpoint_h1.py:112: CheckpointError
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-a5e8b04d-5c38-418b-a836-41f20c80aab5/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-a5e8b04d-5c38-418b-a836-41f20c80aab5/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-a5e8b04d-5c38-418b-a836-41f20c80aab5/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-a5e8b04d-5c38-418b-a836-41f20c80aab5
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-a5e8b04d-5c38-418b-a836-41f20c80aab5'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tools/test_r6_training_checkpoint_audit.py::test_cpu_state_load_preserves_rng_and_never_probes_cuda
+FAILED tools/test_r6_training_checkpoint_audit.py::test_cuda_state_is_not_claimed_semantically_verified
+2 failed, 39 passed, 4 warnings in 4.26s

@@ -32,6 +32,7 @@ def bound(case,tmp_path,monkeypatch):
         **{k:False for k in ('scientific_acceptance','learning_gain_established','physical_replay_performed','strict_checkpoint_restore_performed','rng_state_semantics_verified','probability_gate_recomputed')})
     report=dict(schema_version='r6-training-analysis/1',authorization=b.auth,plan_sha256=a.contract.object_sha(b.plan),
         analyzer=file_pin(a.__file__),codec=file_pin(a.codec.__file__),
+        checkpoint_auditor=file_pin(Path(a.__file__).with_name('r6_training_checkpoint_audit.py')),
         probability_replayer=file_pin(Path(a.__file__).with_name('r6_training_probability.py')),scientific_acceptance=False,summary=summary,
         issues=[{'reason':'explicit synthetic incomplete fixture'}],streams=[],
         inputs=[dict(file_pin(p),bytes=Path(p).stat().st_size) for p in (b.auth['path'],b.output/'status.json')])

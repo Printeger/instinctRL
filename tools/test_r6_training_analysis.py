@@ -48,11 +48,11 @@ def evidence(case,tmp_path):
     plain('pilot_diagnostic/first_update_gate.json',dict(status='PASS',sample_count=512,minibatches=8,policy_rng_consumed=False,starting_update=640,first_absolute_update=641))
     b.checkpoint=b.output/'checkpoints/u642.pt';b.checkpoint.parent.mkdir()
     hashes=dict(b.plan['initialization']['method_hashes'],r6_recipe=b.plan['recipe']['sha256'],r6_method=b.recipe['method']['sha256'],curriculum='curriculum-h1-r6-v1')
-    b.value=dict(version=CHECKPOINT_H1_VERSION,schema=CHECKPOINT_H1_SCHEMA,network_config={},
-        ppo_config=dict(a.contract.pinned_json(b.recipe['method'])['ppo'],permutation_seed=11),method_hashes=hashes,
-        source_identity=b.recipe['source_identity'],actor={'fixture':torch.ones(1)},critic={'fixture':torch.ones(1)},
-        actor_optimizer={},critic_optimizer={},counters=dict(update=642,transition=642*512,global_policy_step=642*16,actor_optimizer=642*8,critic_optimizer=642*8),
-        curriculum=dict(version='curriculum-h1-r6-v1',completed_policy_steps=642*16,recipe_sha256=b.plan['recipe']['sha256'],origin_checkpoint_sha256=a.contract.BASELINE_SHA,branch_seed=11),training_seed=11,reset_number=1,rng={})
+    from tools.test_r6_training_checkpoint_audit import payload
+    from instinctlab.training.ppo import PPOConfig
+    b.value=payload(642,PPOConfig(**dict(a.contract.pinned_json(b.recipe['method'])['ppo'],permutation_seed=11)))
+    b.value.update(training_seed=11,method_hashes=hashes,source_identity=b.recipe['source_identity'],
+        curriculum=dict(version='curriculum-h1-r6-v1',completed_policy_steps=642*16,recipe_sha256=b.plan['recipe']['sha256'],origin_checkpoint_sha256=a.contract.BASELINE_SHA,branch_seed=11))
     def save_checkpoint():
         torch.save(b.value,b.checkpoint);plain('checkpoints/u642.json',dict(file_pin(b.checkpoint),bytes=b.checkpoint.stat().st_size))
     b.save_checkpoint=save_checkpoint;save_checkpoint()
@@ -87,7 +87,7 @@ def test_incomplete_or_corrupt_evidence_is_reported_without_scientific_pass(evid
     if fault=='gate':b.plain('pilot_diagnostic/first_update_gate.json',{'status':'FAILED'})
     if fault=='counter':b.plain('status.json',{'status':'PASS','counters':{}})
     if fault=='checkpoint_clock':b.value['counters']['actor_optimizer']-=1;b.save_checkpoint()
-    if fault=='checkpoint_nan':b.value['actor']['fixture'][0]=float('nan');b.save_checkpoint()
+    if fault=='checkpoint_nan':next(iter(b.value['actor'].values())).fill_(float('nan'));b.save_checkpoint()
     if fault=='sidecar':b.plain('checkpoints/u642.json',{})
     b.write_streams()
     path=b.output/'compressed_evidence'/('rng/initialization.pt.r6z')
