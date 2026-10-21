@@ -1,0 +1,191 @@
+{
+  "schema_version": "r6-ext4-fixed-layout-cpu/1",
+  "status": "DRY_RUN_FIXED_LAYOUT_CANDIDATE_NOT_ACCEPTED",
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_DUAL_VOLUME_DRAFT.json",
+      "sha256": "9557d49ada3568a8ab88270d49cb7f6fc390dbd49249d586bd4341e8f812390a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_LAYOUT_CPU_COMPARISON.json",
+      "sha256": "d2a236ab98b43c727d3066bed81c144701ac3450fa95acb156404204ed6d1e00"
+    },
+    {
+      "path": "/usr/sbin/mke2fs",
+      "sha256": "07cd24ce58a410cc9cee93c55ae5ac95986df016c5907dc7a49b55389bd41ed2"
+    },
+    {
+      "path": "/etc/mke2fs.conf",
+      "sha256": "def9e1d4dbf51f44c51303349338086cf23d60c3cc7e9e99442ee554eb9f5de6"
+    }
+  ],
+  "rows": [
+    {
+      "case": "full_evaluation",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "-b",
+        "4096",
+        "-I",
+        "256",
+        "-i",
+        "262144",
+        "-O",
+        "^resize_inode",
+        "-J",
+        "size=32",
+        "/dev/null",
+        "18137088K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_FIXED_LAYOUT_CPU/full_evaluation.txt",
+        "sha256": "b44e98b0e0af4ca57215ebe7f092fed1846723140be1599c53c329cea538cd46"
+      },
+      "payload_bytes": 18471714816,
+      "image_bytes": 18572378112,
+      "inodes": 71168,
+      "groups": 139,
+      "inode_table_bytes": 18219008,
+      "allocation_bitmap_bytes": 1138688,
+      "journal_requested_bytes": 33554432,
+      "padding_remaining_after_enumerated_components_bytes": 47751168
+    },
+    {
+      "case": "development_training",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "-b",
+        "4096",
+        "-I",
+        "256",
+        "-i",
+        "262144",
+        "-O",
+        "^resize_inode",
+        "-J",
+        "size=32",
+        "/dev/null",
+        "1146880K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_FIXED_LAYOUT_CPU/development_training.txt",
+        "sha256": "cae61ed1ff16f664609e40eaf86086742d98a57e7b16d9633351c1742040f393"
+      },
+      "payload_bytes": 1073741824,
+      "image_bytes": 1174405120,
+      "inodes": 4608,
+      "groups": 9,
+      "inode_table_bytes": 1179648,
+      "allocation_bitmap_bytes": 73728,
+      "journal_requested_bytes": 33554432,
+      "padding_remaining_after_enumerated_components_bytes": 65855488
+    },
+    {
+      "case": "confirmation_training",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "-b",
+        "4096",
+        "-I",
+        "256",
+        "-i",
+        "262144",
+        "-O",
+        "^resize_inode",
+        "-J",
+        "size=32",
+        "/dev/null",
+        "2195456K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_FIXED_LAYOUT_CPU/confirmation_training.txt",
+        "sha256": "ff583515eee15d4a01899e43ec63a747e90365b100bcecb8832e30a002765e70"
+      },
+      "payload_bytes": 2147483648,
+      "image_bytes": 2248146944,
+      "inodes": 8704,
+      "groups": 17,
+      "inode_table_bytes": 2228224,
+      "allocation_bitmap_bytes": 139264,
+      "journal_requested_bytes": 33554432,
+      "padding_remaining_after_enumerated_components_bytes": 64741376
+    },
+    {
+      "case": "affected_block_evaluation",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "-b",
+        "4096",
+        "-I",
+        "256",
+        "-i",
+        "262144",
+        "-O",
+        "^resize_inode",
+        "-J",
+        "size=32",
+        "/dev/null",
+        "1933312K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_FIXED_LAYOUT_CPU/affected_block_evaluation.txt",
+        "sha256": "611b39dda08a3b53737a3834b306fb777f65377ea70bfce06bac67b7ac6930e5"
+      },
+      "payload_bytes": 1879048192,
+      "image_bytes": 1979711488,
+      "inodes": 7680,
+      "groups": 15,
+      "inode_table_bytes": 1966080,
+      "allocation_bitmap_bytes": 122880,
+      "journal_requested_bytes": 33554432,
+      "padding_remaining_after_enumerated_components_bytes": 65019904
+    }
+  ],
+  "rationale": [
+    "Fixed-size result images are never grown or reused, so online-resize reservation is unnecessary.",
+    "Use256KiB per inode, retain256-byte inodes and4KiB blocks; actual output file-count budget must fit available inodes.",
+    "Explicit32MiB journal is retained; no disabling of journaling or checksums. Throughput is unmeasured.",
+    "Reserve96MiB per result image above unchanged payload quotas. Subtotal excludes superblocks/descriptors, directory and extent growth; actual mounted available-space checks remain mandatory."
+  ],
+  "conditional_allocation": {
+    "final_total_bytes": 99220455424,
+    "final_protection_bytes": 99857989632,
+    "development_limit_bytes": 37580963840,
+    "development_total_bytes": 36982554624,
+    "development_headroom_bytes": 598409216
+  },
+  "required_before_acceptance": [
+    "Actual filesystem free bytes after exact format, with adequate inode and growth headroom",
+    "CPU multi-file/descendant exhaustion on the actual quota mechanism",
+    "Update new production provisioning identity only after test inputs are frozen; pendingCPU02 helper unchanged",
+    "Independent quota/capacity/throughput review; exact production mount and input binding"
+  ],
+  "capacity_pass": false,
+  "production_helper_changed": false,
+  "ledger_changed": false,
+  "runtime_changed": false,
+  "coverage_changed": false,
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0
+}

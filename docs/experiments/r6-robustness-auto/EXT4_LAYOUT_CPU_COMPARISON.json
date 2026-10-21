@@ -1,0 +1,269 @@
+{
+  "schema_version": "r6-ext4-layout-cpu/1",
+  "status": "DRY_RUN_LAYOUT_COMPARISON_NOT_CAPACITY_ACCEPTANCE",
+  "inputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CAPACITY_DUAL_VOLUME_DRAFT.json",
+      "sha256": "9557d49ada3568a8ab88270d49cb7f6fc390dbd49249d586bd4341e8f812390a"
+    },
+    {
+      "path": "/usr/sbin/mke2fs",
+      "sha256": "07cd24ce58a410cc9cee93c55ae5ac95986df016c5907dc7a49b55389bd41ed2"
+    },
+    {
+      "path": "/etc/mke2fs.conf",
+      "sha256": "def9e1d4dbf51f44c51303349338086cf23d60c3cc7e9e99442ee554eb9f5de6"
+    },
+    {
+      "path": "/usr/share/man/man8/mke2fs.8.gz",
+      "sha256": "cc0619ad19cca580a54d0a8d6e56a063a920b2346eed77179187c7e7dd73fa01"
+    }
+  ],
+  "rows": [
+    {
+      "case": "full_evaluation",
+      "variant": "default",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "/dev/null",
+        "18300928K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_LAYOUT_CPU/full_evaluation-default.txt",
+        "sha256": "274f7643f0e9545c7f5e64fa7a46a403b60d9220075fe515738370f8d38ce541"
+      },
+      "image_bytes": 18740150272,
+      "block_bytes": 4096,
+      "inodes": 1144640,
+      "groups": 140,
+      "inodes_per_group": 8176,
+      "inode_table_bytes": 293027840,
+      "payload_bytes": 18471714816,
+      "non_inode_overhead_allowance_remaining_bytes": -24592384
+    },
+    {
+      "case": "full_evaluation",
+      "variant": "inode_ratio_256KiB",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "-i",
+        "262144",
+        "/dev/null",
+        "18300928K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_LAYOUT_CPU/full_evaluation-inode_ratio_256KiB.txt",
+        "sha256": "25f9bf4c3adf5a2e8946b9473f76523271e4c85aeb6caf86e6ea8dc4d45fba43"
+      },
+      "image_bytes": 18740150272,
+      "block_bytes": 4096,
+      "inodes": 71680,
+      "groups": 140,
+      "inodes_per_group": 512,
+      "inode_table_bytes": 18350080,
+      "payload_bytes": 18471714816,
+      "non_inode_overhead_allowance_remaining_bytes": 250085376
+    },
+    {
+      "case": "development_training",
+      "variant": "default",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "/dev/null",
+        "1179648K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_LAYOUT_CPU/development_training-default.txt",
+        "sha256": "b472a42751b10c6f4bd849bd9518022eaac1059170a8b67b64a13d80d1a6d189"
+      },
+      "image_bytes": 1207959552,
+      "block_bytes": 4096,
+      "inodes": 73728,
+      "groups": 9,
+      "inodes_per_group": 8192,
+      "inode_table_bytes": 18874368,
+      "payload_bytes": 1073741824,
+      "non_inode_overhead_allowance_remaining_bytes": 115343360
+    },
+    {
+      "case": "development_training",
+      "variant": "inode_ratio_256KiB",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "-i",
+        "262144",
+        "/dev/null",
+        "1179648K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_LAYOUT_CPU/development_training-inode_ratio_256KiB.txt",
+        "sha256": "1ab8f1844f32142212a08256bfa511e98fc3fcc5fc882748c596d86e9c40996a"
+      },
+      "image_bytes": 1207959552,
+      "block_bytes": 4096,
+      "inodes": 4608,
+      "groups": 9,
+      "inodes_per_group": 512,
+      "inode_table_bytes": 1179648,
+      "payload_bytes": 1073741824,
+      "non_inode_overhead_allowance_remaining_bytes": 133038080
+    },
+    {
+      "case": "confirmation_training",
+      "variant": "default",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "/dev/null",
+        "2228224K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_LAYOUT_CPU/confirmation_training-default.txt",
+        "sha256": "32dbc4aed37e1a9bdaaeb31a8c2fdeddf0dbcee25a98ac048c34414cb15d74fe"
+      },
+      "image_bytes": 2281701376,
+      "block_bytes": 4096,
+      "inodes": 139264,
+      "groups": 17,
+      "inodes_per_group": 8192,
+      "inode_table_bytes": 35651584,
+      "payload_bytes": 2147483648,
+      "non_inode_overhead_allowance_remaining_bytes": 98566144
+    },
+    {
+      "case": "confirmation_training",
+      "variant": "inode_ratio_256KiB",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "-i",
+        "262144",
+        "/dev/null",
+        "2228224K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_LAYOUT_CPU/confirmation_training-inode_ratio_256KiB.txt",
+        "sha256": "81ed5ae7bfd979dc560496b31ad5cf8a3dc1fa73371e4ce8d537b861d35b294e"
+      },
+      "image_bytes": 2281701376,
+      "block_bytes": 4096,
+      "inodes": 8704,
+      "groups": 17,
+      "inodes_per_group": 512,
+      "inode_table_bytes": 2228224,
+      "payload_bytes": 2147483648,
+      "non_inode_overhead_allowance_remaining_bytes": 131989504
+    },
+    {
+      "case": "affected_block_evaluation",
+      "variant": "default",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "/dev/null",
+        "1966080K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_LAYOUT_CPU/affected_block_evaluation-default.txt",
+        "sha256": "164a16271d83aeec9516420a3fec1091704cc6f1a087c6fb7379695f7176b20a"
+      },
+      "image_bytes": 2013265920,
+      "block_bytes": 4096,
+      "inodes": 122880,
+      "groups": 15,
+      "inodes_per_group": 8192,
+      "inode_table_bytes": 31457280,
+      "payload_bytes": 1879048192,
+      "non_inode_overhead_allowance_remaining_bytes": 102760448
+    },
+    {
+      "case": "affected_block_evaluation",
+      "variant": "inode_ratio_256KiB",
+      "command": [
+        "/usr/sbin/mkfs.ext4",
+        "-n",
+        "-v",
+        "-F",
+        "-m",
+        "0",
+        "-i",
+        "262144",
+        "/dev/null",
+        "1966080K"
+      ],
+      "output": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXT4_LAYOUT_CPU/affected_block_evaluation-inode_ratio_256KiB.txt",
+        "sha256": "bc0eed94747d4d75db91ae9b6e892bb6be364bca5ab7850ce064726062099055"
+      },
+      "image_bytes": 2013265920,
+      "block_bytes": 4096,
+      "inodes": 7680,
+      "groups": 15,
+      "inodes_per_group": 512,
+      "inode_table_bytes": 1966080,
+      "payload_bytes": 1879048192,
+      "non_inode_overhead_allowance_remaining_bytes": 132251648
+    }
+  ],
+  "full_evaluation_inode_table_saving_bytes": 274677760,
+  "four_final_default_inode_table_bytes": 1172111360,
+  "four_final_default_inode_table_exceeds_unallocated_bytes": 903675904,
+  "candidate_job_padding_bytes": {
+    "four_final_evaluations": 1073741824,
+    "three_final_training": 402653184,
+    "development_baseline": 268435456,
+    "development_subset": 134217728,
+    "development_training": 134217728
+  },
+  "limitations": [
+    "Dry-run does not create an image, journal or mount, and does not prove actual free bytes.",
+    "Inode table uses256-byte inode size from pinned mke2fs.conf; default features retained.",
+    "Candidate reserves256MiB for full-evaluation filesystem overhead and128MiB for other jobs; requires actual free-space validation and inode-count audit, not accepted overhead bounds.",
+    "Pending CPU-QUOTA-02 helper and registration unchanged; no new filesystem provisioned.",
+    "Frozen output quotas, final coverage, native1.5GiB proposal and128GiB total cap unchanged."
+  ],
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "model_calls": 0,
+  "capacity_pass": false,
+  "conditional_allocation": {
+    "final_total_bytes": 99992207360,
+    "final_protection_bytes": 100931731456,
+    "development_limit_bytes": 36507222016,
+    "development_total_bytes": 37217435648,
+    "development_headroom_bytes": -710213632,
+    "condition": "Only if exact filesystem layouts fit the proposed padding; no capacity acceptance"
+  }
+}

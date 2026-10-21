@@ -1,0 +1,19 @@
+fs_types for mke2fs.conf resolution: 'ext4'
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+Stride=0 blocks, Stripe width=0 blocks
+7680 inodes, 491520 blocks
+0 blocks (0.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=503316480
+15 block groups
+32768 blocks per group, 32768 fragments per group
+512 inodes per group
+Filesystem UUID: 2c587d52-4a16-4b51-bbb9-896001946fb6
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+mke2fs 1.47.0 (5-Feb-2023)
+warning: Unable to get device geometry for /dev/null
