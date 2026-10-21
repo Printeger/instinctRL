@@ -1,0 +1,83 @@
+{
+  "status": "CPU_FINAL_BATCH_SELECTION_AND_STRICT_BASELINE_OR_CONFIRMED_RESTORE_PASS_STAGE_ENTRY_PENDING",
+  "input_commit": "2d564923f12866fc553611faaf592aecc26beefd",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_final_selection.py",
+      "sha256": "4012ec1b38abe767266fb54480c996055233c1486cef800977480f7a00526d0a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_final_restore.py",
+      "sha256": "cd6757ab866e179cb56d3f3560c4fb086445dd9df19351b545a080905d962c96"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation_selection.py",
+      "sha256": "2321d36e29e2e9851fbfdb09c6086fa935e03277e8c05de4f7c25c844a5467d9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "3a2e1b6d4ecba5328bd43407c7bcc0b5e243a850c1a35c7c8f534060f0ce903f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_selection.py",
+      "sha256": "6cca15bd9335fad873469b45bf1ce12df61bf321bb74007bf73ffcf10d4f7545"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_restore.py",
+      "sha256": "bdd23b9a97dd5abeb28a9fbd2f1631a0bf1e93773f19c7638900140f5e61ee0f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_config.py",
+      "sha256": "5745f9e95d94109bfd84ac9737c3c74e7a5672b67a707c203813b8e6d2e62aca"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_SELECTION_INITIAL.log",
+      "sha256": "94650f7c2fda6c1b1e5d7012d51a006bd0b9d3f3b29506cdedde045baa4155d9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_SELECTION_CORRECTED.log",
+      "sha256": "bf61bff64cc2a8601fc8768d9810f4924f48d3b70cdb735e7d2c5a7725400da9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_SELECTION_RESTORE.log",
+      "sha256": "b78ad23851416c107d2e41a06a4e55319529e3fa8138ceb9b4d4336ff55c1ab6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_SELECTION_RESTORE_FINAL.log",
+      "sha256": "98606a11e7256da66ffa0b8dc0df075e85640a2ab2a483420018353f30048d97"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_SELECTION_REGRESSION.log",
+      "sha256": "35e6db8091cf8b06b3eb7e097730b0ae9601f4a583b1f342959e519c3e4c10ca"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_SELECTION_REGRESSION_TENSOR.log",
+      "sha256": "67eb668dab65b5e58ae637f8d10cb5c7c2932831c36735f1e8903bcbeb93d9b7"
+    }
+  ],
+  "tests": {
+    "control_corrected": 42,
+    "restore_final": 11,
+    "regression_control_pass": 91,
+    "regression_tensor_corrected": 3
+  },
+  "initial_failures": [
+    "Missing fixture checkpoint directories and omitted holdout dependency in frozen source manifest corrected; original log retained.",
+    "Three existing candidate wrapper tests require Torch, unavailable in control interpreter; all three passed in existing tensor interpreter. No dependency changes."
+  ],
+  "scope": [
+    "Exact final batch assignments and commitment/reveal bind frozen model, full protocol and actual final random stream.",
+    "Baseline-only uses three distinct streams; confirmation uses baseline plus three terminal models under common final stream.",
+    "Shared development evidence checks remain strict; final checkpoint must be registered confirmation terminal with complete closed-job and tensor/RNG evidence.",
+    "Actual CPU serializer preserves weights, Adam and counters, verifies seed and method readback; original baseline retains ICS .15 and original environment settings."
+  ],
+  "limitations": [
+    "Synthetic evidence chains with explicit baseline/training validator fixtures; restore fixture isolates selection, uses actual CPU checkpoint derivative.",
+    "Journal receipt and Git-publication provenance remain controller issuance obligations; runtime validates pinned static evidence.",
+    "Final mode not yet registered; formal contract, wrapper, issuance, analysis and delivery remain required.",
+    "No production baseline, training, simulation, holdout entropy or scientific acceptance."
+  ],
+  "goal_complete": false
+}

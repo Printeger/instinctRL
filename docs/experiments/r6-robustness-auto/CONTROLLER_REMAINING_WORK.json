@@ -1,6 +1,6 @@
 {
-  "status": "CPU_HOLDOUT_EXACT_GIT_COMMIT_SINGLE_RELEASE_AND_FINAL_BATCH_BINDING_PASS_FINAL_EVALUATION_PENDING",
-  "checked_commit": "35cad5d3",
+  "status": "CPU_FINAL_BATCH_SELECTION_AND_STRICT_BASELINE_OR_CONFIRMED_RESTORE_PASS_STAGE_ENTRY_PENDING",
+  "checked_commit": "2d564923f12866fc553611faaf592aecc26beefd",
   "concrete_first_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
     "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
@@ -188,5 +188,9 @@
   "holdout_publication": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_HOLDOUT_CONTROLLER_PUBLICATION.json",
     "sha256": "7d0f5d0a8d66d0381bfdb77ab1753a298c62a403c45a8db324c918d66d0724d8"
+  },
+  "final_selection": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_SELECTION.json",
+    "sha256": "e18961f006814e6aebdfeb23e3ade4bf6bfa2a4e672ea25369505169773aa280"
   }
 }

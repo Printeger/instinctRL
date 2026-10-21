@@ -80,6 +80,7 @@ R6_WORKLOAD_SOURCES = WORKLOAD_SOURCES | {
         "robustness_measurement_replay", "robustness_physics_replay",
         "robustness_training_storage", "robustness_training_rng", "robustness_training_plan",
         "robustness_confirmation", "robustness_evaluation_selection", "robustness_candidate_restore", "robustness_candidate_contract",
+        "robustness_final_selection", "robustness_final_restore", "robustness_holdout",
         "robustness_training_driver", "robustness_curriculum", "robustness_training_execution", "robustness_training_method", "robustness_training_contract", "lossless_evidence",
         "native_volume", "extension_inputs", "write_boundary", "result_volume",
     )

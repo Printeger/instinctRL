@@ -52,45 +52,7 @@ def _validate(value,*,reviewed):
         plan=training.validate(value['training_plan']);recipe=base.pinned_json(plan['recipe'])
         require(plan['phase']=='development' and recipe['candidate_id']==comparison['candidate_id']
             and value['method']==recipe['method'],'TRAINED_METHOD')
-        binding=base.pinned_json(value['training_analysis'])
-        require(binding['schema_version']=='r6-bound-training-analysis/1' and binding['scientific_acceptance'] is False
-            and binding['training_plan_sha256']==base.object_sha(plan),'TRAINING_ANALYSIS')
-        for name in ('spec','authorization','closure','inventory','postrun','report'):validate_pin(binding[name])
-        auth=base.pinned_json(binding['authorization']);report=base.pinned_json(binding['report']);spec=base.pinned_json(binding['spec'])
-        require(spec['pins']['authorization']==binding['authorization'] and spec['h1']['mode']=='research-r6-training'
-            and spec['h1']['attempt']==auth['attempt'],'TRAINING_SPEC')
-        require(auth['mode']=='research-r6-training' and auth['parameters']['r6_training_plan']==plan
-            and auth['budgets']==training.required_budget(plan),'TRAINING_AUTHORIZATION')
-        require(report['schema_version']=='r6-training-analysis/1' and report['authorization']==binding['authorization']
-            and report['plan_sha256']==base.object_sha(plan) and report['scientific_acceptance'] is False
-            and report['issues']==[],'TRAINING_REPORT')
-        summary=report['summary'];require(summary['issue_count']==0 and summary['probability_gate_recomputed'] is True
-            and summary['rng_initialization_audit']['status']=='PASS','TRAINING_AUDITS')
-        matched=[row for row in summary['checkpoints'] if row.get('pin')==value['checkpoint']]
-        require(len(matched)==1,'EXACT_CHECKPOINT_NODE');row=matched[0];update=row['update']
-        require(type(update)is int and update in plan['checkpoint_updates'] and row['metadata_verified'] is True
-            and row['state_audit']['actor_critic_state_loaded'] is True and row['state_audit']['adam_state_loaded'] is True,'CHECKPOINT_AUDIT')
-        require(Path(value['checkpoint']['path'])==Path(auth['attempt'])/'results/research-r6-training/checkpoints'/f'u{update}.pt','CHECKPOINT_ATTEMPT')
-        inventory=base.pinned_json(binding['inventory']);closure=base.pinned_json(binding['closure']);postrun=base.pinned_json(binding['postrun'])
-        require(all(v['job_id']==binding['job_id'] for v in (inventory,closure,postrun))
-            and inventory['spec']==binding['spec'] and inventory['closure']==binding['closure']
-            and postrun['closure']==binding['closure'] and postrun['inventory']==binding['inventory']
-            and postrun['postrun_complete'] is True and inventory['output_inventory_complete'] is True,'CLOSED_JOB_CHAIN')
-        require(closure['spec_sha256']==base.object_sha(spec),'CLOSURE_SPEC')
-        indexed={r['path']:r for r in inventory['files']};seen=set()
-        require(len(indexed)==len(inventory['files']),'DUPLICATE_INVENTORY')
-        for item in report['inputs']:
-            pin={k:item[k] for k in ('path','sha256')};path=validate_pin(pin)
-            require(pin['path'] not in seen and path.stat().st_size==item['bytes'],'REPORT_INPUT_IDENTITY');seen.add(pin['path'])
-            if pin!=plan['initialization']['checkpoint']:
-                require(pin['path'] in indexed and all(item[k]==indexed[pin['path']][k] for k in ('sha256','bytes')),'REPORT_INPUT_INVENTORY')
-        require({value['checkpoint']['path'],binding['authorization']['path'],plan['initialization']['checkpoint']['path']}<=seen,'REPORT_INPUT_MISSING')
-        require(binding['native_status']==closure['native_status'] and binding['native_exit_code']==closure['native_exit_code'],'NATIVE_STATUS')
-        originals=[r for r in inventory['files'] if {k:r[k] for k in ('path','sha256')}==value['checkpoint']]
-        require(len(originals)==1 and originals[0]['bytes']==validate_pin(value['checkpoint']).stat().st_size,'CHECKPOINT_INVENTORY')
-        model=dict(checkpoint=value['checkpoint'],update=update,training_seed=plan['training_seed'],source_identity=recipe['source_identity'],
-            method_hashes=dict(plan['initialization']['method_hashes'],r6_recipe=plan['recipe']['sha256'],r6_method=recipe['method']['sha256'],curriculum='curriculum-h1-r6-v1'),
-            ppo_config=dict(method['ppo'],permutation_seed=plan['training_seed']))
+        model=_training_model(plan,value['training_analysis'],value['checkpoint'],method)
     # Review explicitly adjudicates the pinned training evidence/native status,
     # comparison design and the selected node; no analysis alone grants selection.
     if reviewed:
@@ -98,6 +60,50 @@ def _validate(value,*,reviewed):
             payload_sha256=base.object_sha({k:v for k,v in value.items() if k!='independent_review'}))
     return dict(selection=value,model=model,method=method,comparison=comparison,
         scientific_acceptance=False,dispatch_authorized=False)
+
+
+def _training_model(plan,analysis_pin,checkpoint,method):
+    """Closed checkpoint evidence for a validated development or confirmation plan."""
+    recipe=base.pinned_json(plan['recipe'])
+    binding=base.pinned_json(analysis_pin)
+    require(binding['schema_version']=='r6-bound-training-analysis/1' and binding['scientific_acceptance'] is False
+        and binding['training_plan_sha256']==base.object_sha(plan),'TRAINING_ANALYSIS')
+    for name in ('spec','authorization','closure','inventory','postrun','report'):validate_pin(binding[name])
+    auth=base.pinned_json(binding['authorization']);report=base.pinned_json(binding['report']);spec=base.pinned_json(binding['spec'])
+    require(spec['pins']['authorization']==binding['authorization'] and spec['h1']['mode']=='research-r6-training'
+        and spec['h1']['attempt']==auth['attempt'],'TRAINING_SPEC')
+    require(auth['mode']=='research-r6-training' and auth['parameters']['r6_training_plan']==plan
+        and auth['budgets']==training.required_budget(plan),'TRAINING_AUTHORIZATION')
+    require(report['schema_version']=='r6-training-analysis/1' and report['authorization']==binding['authorization']
+        and report['plan_sha256']==base.object_sha(plan) and report['scientific_acceptance'] is False
+        and report['issues']==[],'TRAINING_REPORT')
+    summary=report['summary'];require(summary['issue_count']==0 and summary['probability_gate_recomputed'] is True
+        and summary['rng_initialization_audit']['status']=='PASS','TRAINING_AUDITS')
+    matched=[row for row in summary['checkpoints'] if row.get('pin')==checkpoint]
+    require(len(matched)==1,'EXACT_CHECKPOINT_NODE');row=matched[0];update=row['update']
+    require(type(update)is int and update in plan['checkpoint_updates'] and row['metadata_verified'] is True
+        and row['state_audit']['actor_critic_state_loaded'] is True and row['state_audit']['adam_state_loaded'] is True,'CHECKPOINT_AUDIT')
+    require(Path(checkpoint['path'])==Path(auth['attempt'])/'results/research-r6-training/checkpoints'/f'u{update}.pt','CHECKPOINT_ATTEMPT')
+    inventory=base.pinned_json(binding['inventory']);closure=base.pinned_json(binding['closure']);postrun=base.pinned_json(binding['postrun'])
+    require(all(v['job_id']==binding['job_id'] for v in (inventory,closure,postrun))
+        and inventory['spec']==binding['spec'] and inventory['closure']==binding['closure']
+        and postrun['closure']==binding['closure'] and postrun['inventory']==binding['inventory']
+        and postrun['postrun_complete'] is True and inventory['output_inventory_complete'] is True,'CLOSED_JOB_CHAIN')
+    require(closure['spec_sha256']==base.object_sha(spec),'CLOSURE_SPEC')
+    indexed={r['path']:r for r in inventory['files']};seen=set()
+    require(len(indexed)==len(inventory['files']),'DUPLICATE_INVENTORY')
+    for item in report['inputs']:
+        pin={k:item[k] for k in ('path','sha256')};path=validate_pin(pin)
+        require(pin['path'] not in seen and path.stat().st_size==item['bytes'],'REPORT_INPUT_IDENTITY');seen.add(pin['path'])
+        if pin!=plan['initialization']['checkpoint']:
+            require(pin['path'] in indexed and all(item[k]==indexed[pin['path']][k] for k in ('sha256','bytes')),'REPORT_INPUT_INVENTORY')
+    require({checkpoint['path'],binding['authorization']['path'],plan['initialization']['checkpoint']['path']}<=seen,'REPORT_INPUT_MISSING')
+    require(binding['native_status']==closure['native_status'] and binding['native_exit_code']==closure['native_exit_code'],'NATIVE_STATUS')
+    originals=[r for r in inventory['files'] if {k:r[k] for k in ('path','sha256')}==checkpoint]
+    require(len(originals)==1 and originals[0]['bytes']==validate_pin(checkpoint).stat().st_size,'CHECKPOINT_INVENTORY')
+    return dict(checkpoint=checkpoint,update=update,training_seed=plan['training_seed'],source_identity=recipe['source_identity'],
+        method_hashes=dict(plan['initialization']['method_hashes'],r6_recipe=plan['recipe']['sha256'],r6_method=recipe['method']['sha256'],curriculum='curriculum-h1-r6-v1'),
+        ppo_config=dict(method['ppo'],permutation_seed=plan['training_seed']))
 
 
 def verify_loaded(selection,metadata):
