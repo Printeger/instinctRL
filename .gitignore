@@ -119,3 +119,6 @@ checkpoints/
 raw_logs/
 *.pt
 *.pth
+
+# R6 holdout entropy stays private until the final release artifact.
+/docs/experiments/r6-robustness-auto/batch/holdout-private-*.json

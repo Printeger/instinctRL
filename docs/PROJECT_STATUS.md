@@ -1,5 +1,12 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：保留集一次性journal候选完成，6项CPU测试通过，覆盖重启复用、
+STOP、冻结漂移、篡改和半写secret拒绝重新抽样。64KiB先预留，entropy claim先落盘，
+私有0600文件保存nonce；公开状态只存commitment/pin，gitignore防止常规暂存私有文件。
+见 `docs/experiments/r6-robustness-auto/CPU_HOLDOUT_JOURNAL.json`。
+仍需独审、阶段controller接线、独审receipt与Git承诺发布核验；不能把此组件称部署完成。
+没有生成真实holdout或新增模型/GPU/live；完整Goal继续。
+
 2026-10-21：最终保留集commit/reveal纯函数核心完成，7项CPU测试通过。
 协议与冻结记录hash绑定nonce；三种子作用于真实reset_spec/RangeDelivery函数，
 实际位置和噪声不同，同种子配对逐项一致。见
