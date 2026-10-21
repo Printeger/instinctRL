@@ -346,3 +346,14 @@ def test_confirmation_repair_decision_cannot_launch_next_seed(controller,monkeyp
         with pytest.raises(RecoveryError,match='CONFIRMATION_REQUIRES_REPAIR'):run(b)
     assert entry(b)['cursor']['phase']=='DECIDE' and entry(b)['cursor']['confirmation']['results']==[]
     b.next.assert_called_once();collect.assert_not_called()
+
+
+def test_baseline_validation_routes_to_freeze_review_without_training_preparation(controller,monkeypatch):
+    b=controller;monkeypatch.setattr(c,'parent_for_job',lambda *a:(b.parent,{'decision':{'decision':'PROPOSE_BASELINE_VALIDATION'}}))
+    freeze=Mock(return_value=dict(status='FINAL_MODELS_BOUND_REVIEW_REQUIRED',freeze=b.context))
+    review=Mock(return_value=dict(status='FINAL_MODEL_FREEZE_REVIEWED_NOT_RELEASED',freeze=b.context,review=b.context))
+    monkeypatch.setattr(c.final_models,'prepare',freeze);monkeypatch.setattr(c.final_freeze_review,'prepare',review)
+    result=run(b);assert result['status']=='HOLDOUT_PREPARATION_REQUIRED' and not result['goal_complete']
+    assert entry(b)['cursor']['baseline_validation']==dict(parent_key=b.parent,job_key=b.key,context=b.context)
+    assert run(b)==result;freeze.assert_called_once();review.assert_called_once()
+    b.source.assert_not_called();b.next.assert_not_called();assert not b.builder.with_suffix('.count').exists()

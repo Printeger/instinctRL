@@ -10,6 +10,7 @@ from tools.r6_recovery import checked,file_pin,RecoveryError
 from tools.r6_decision_packet import persist_exact
 from tools import r6_profile_preparation as profile
 from tools import r6_confirmation_preparation as confirmation
+from tools import r6_baseline_validation as baseline_validation
 from tools.r6_prepare_authorization import verify_frozen
 from training_workloads.unified_h1 import robustness_contract as base
 from training_workloads.unified_h1 import robustness_training_plan as training
@@ -27,6 +28,8 @@ def describe(journal,controller_key,store):
     require(controller['identity']['role']=='r6-controller'
         and controller['request']['store_root']==str(store.root.resolve()),'CONTROLLER_STORE')
     profile.reservation(state,controller_key,'cpu',{'output_actual_plus_unreleased_reservations_bytes':256*1024},'development')
+    if 'baseline_validation' in controller['cursor']:
+        return baseline_validation.describe(journal,controller_key,store)
     sequence=controller['cursor']['confirmation'];prepared=sequence['preparation']
     require(prepared['status']=='THREE_CONFIRMATION_CONTEXTS_READY_NOT_RESERVED'
         and prepared['contexts']==sequence['contexts'] and len(sequence['results'])==3,'THREE_COMPLETED_STREAMS')
@@ -85,7 +88,7 @@ def describe(journal,controller_key,store):
 
 
 def validate(journal,freeze,store=None):
-    require(freeze.get('schema_version')=='r6-final-freeze/2' and freeze.get('branch')=='THREE_CONTINUATIONS',
+    require(freeze.get('schema_version')=='r6-final-freeze/2' and freeze.get('branch') in {'THREE_CONTINUATIONS','BASELINE_SUFFICIENT'},
         'SUPPORTED_EVIDENCE_SCHEMA')
     evidence=freeze['evidence']
     if store is None:
@@ -100,7 +103,7 @@ def validate(journal,freeze,store=None):
 def prepare(journal,controller_key,store,*,free_disk_bytes):
     profile.guard(journal);payload=describe(journal,controller_key,store)
     request=dict(controller_key=controller_key,payload=payload,implementation=file_pin(__file__),
-        collector=file_pin(confirmation.__file__))
+        collector=file_pin(confirmation.__file__),baseline_validator=file_pin(baseline_validation.__file__))
     state=journal.read();event=dict(goal_id=state['goal_id'],event_id='FINAL_MODELS:'+controller_key,
         job_id='FINAL-BATCH',input_sha256=sha(request),role=ROLE)
     prior=[e for e in state['events'].values() if e['identity'].get('event_id')==event['event_id']]

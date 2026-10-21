@@ -1,0 +1,69 @@
+{
+  "status": "CPU_BASELINE_SUFFICIENT_DEVELOPMENT_GATES_ZERO_TRAINING_FREEZE_AND_REVIEW_ROUTE_PASS_FINAL_STREAMS_PENDING",
+  "input_commit": "85d91ccc",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_baseline_validation.py",
+      "sha256": "c667aa5e7067ea0ec747563aa37ee383515659817ee088c4ee75056d281fe746"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_models.py",
+      "sha256": "7ae6153e5fb6be1d81634719d94595f0bdaf72c0bf5178ce8118400f574855ef"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_freeze_review.py",
+      "sha256": "23987f73b9f3711bdbb037c0f8e14d3f102de7f3178e25d92257f1cd1a01610a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "2bdd3a0c165da934bdc25558f59891f9ae43bd788395d848b2aebcf49eb7aaf6"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_baseline_validation.py",
+      "sha256": "029d475894042f29b4d7a1ccc6db13d294250b92f9b7986419c73335fa82a54c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "6b46f1396de27fc66e76d0f48b5c6d2cc59227033180567a15daffbf121a21cb"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_VALIDATION_INITIAL.log",
+      "sha256": "1b7fa45c00962ff5f7a3007042cd7a84839b88501ddc48954e8b4500ced58796"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_VALIDATION_BOUNDARIES.log",
+      "sha256": "1b0054037fc09473843c4547b7b176986dad8fbdae569d93dfeb795ad8bb26fa"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_VALIDATION_SCORING.log",
+      "sha256": "2ee3b707db6e348339642cda308683bd28f5578282c87dc6e655421dd8491197"
+    }
+  ],
+  "verification": {
+    "control_routing_review": 64,
+    "closed_analysis_holdout_boundaries": 34,
+    "scoring_original_replay_and_streams": 41
+  },
+  "initial_failures": [],
+  "guarantees": [
+    "PROPOSE_BASELINE_VALIDATION binds the exact closed unchanged-baseline development job and decision, zero charged training, frozen protocol/review/split and actual development seed.",
+    "All 16 blocks retain exact 32 lanes and direction/wall-mode groups. Every target lane must pass; stress negatives remain admissible only with complete replay and denominators. Original suite and all32 wall motion must pass.",
+    "Checkpoint/source/method/ICS .15/actor boundary and actual evaluated snapshot are bound. Final-freeze v2 selects only unchanged u640 and fixes all three distinct final environment realization indices, full original plus registered suites each, and zero training.",
+    "Controller goes directly to final identity preparation and registered independent freeze review without training/source preparation. Holdout model validation now recognizes this branch; no final success or entropy release is implied."
+  ],
+  "boundaries": [
+    "New baseline routing tests use complete synthetic score fixtures; exact parent decision, native analysis binding, frozen config and baseline record are explicitly substituted. Real Journal, pins, budget, local fake CLI and registered review receipt are exercised.",
+    "Existing real CPU score/replay/random-stream tests pass separately; no actual complete baseline result exists. No production reviewer, entropy generation, simulation, GPU job or dependency changes.",
+    "Three different final environment streams remain required future execution; branch name in a prospective freeze is not a completed BASELINE_SUFFICIENT outcome."
+  ],
+  "remaining": [
+    "Holdout commitment publication/release and final evaluation contracts/controller for both branches",
+    "Actual three-stream baseline validation or paired baseline/three-trained-model final evaluation",
+    "Confirmation/final-review MUST_FIX repair re-entry, full delivery/audits/videos, combined independent review and platform handoff"
+  ],
+  "goal_complete": false
+}

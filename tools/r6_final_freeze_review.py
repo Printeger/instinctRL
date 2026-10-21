@@ -32,17 +32,18 @@ def prepare(journal,freeze_pin,store,*,executable,free_disk_bytes):
         if state['goal_id']=='R6-CPU-TEST-FIXTURE':require(exe.is_relative_to(journal.directory.parent.resolve()),'FIXTURE_EXE')
         else:require(executable==dict(path=str(CLI),sha256=CLI_SHA),'CLI')
         packet=dict(freeze=freeze_pin,executable=executable,implementation=file_pin(__file__),validator=file_pin(models.__file__),
+            baseline_validator=file_pin(models.baseline_validation.__file__),
             store_sha256=sha(store.replay()),budget=totals(state['budget']),caps=state['budget']['caps'],
             protected=state['budget']['protected_confirmation_delivery_repair'])
         event=dict(goal_id=state['goal_id'],event_id=name,job_id='FINAL-BATCH',input_sha256=sha(dict(packet=packet)),role='final-freeze-input')
         key,_=journal.intent(event,kind='cpu',request=dict(packet=packet),
             resources={'output_actual_plus_unreleased_reservations_bytes':CAP},purpose='confirmation_delivery',free_disk_bytes=free_disk_bytes)
-    for field in ('freeze','executable','implementation','validator'):checked(packet[field])
+    for field in ('freeze','executable','implementation','validator','baseline_validator'):checked(packet[field])
     profile.reservation(journal.read(),key,'cpu',{'output_actual_plus_unreleased_reservations_bytes':CAP},'confirmation_delivery')
     folder=journal.directory/'final-freeze-review'/key
     prompt=('Independently review the final R6 model freeze, read-only, then exit. Do not change files, '
         'Journal/Store, run GPU/simulation/training, generate or reveal entropy, submit jobs or spawn agents. '
-        'Read the exact freeze and original evidence. Verify all three actual common-u640 confirmation '
+        'Read the exact freeze and original evidence. For THREE_CONTINUATIONS verify all three actual common-u640 confirmation '
         'trajectories, preregistered distinct RNG streams and their real execution, full frozen recipe and '
         'terminal checkpoint rule, loaded actor/critic/Adam and first-rollout probability gates, source/method '
         'identity and complete raw inventories/cleanup. Adjudicate native failures explicitly; structural '
@@ -50,7 +51,11 @@ def prepare(journal,freeze_pin,store,*,executable,free_disk_bytes):
         'were used to choose models. Audit physics and measurement/time provenance, original actor boundary, '
         'control-versus-learning attribution and all pending semantic audit requirements. Require full '
         'remaining final paired evaluation/delivery/repair capacity under every ledger cap, counting failed '
-        'and unreleased reservations. PASS_R6_FINAL_FREEZE approves model identities for prospective final '
+        'and unreleased reservations. For BASELINE_SUFFICIENT instead verify the unchanged u640/method/ICS .15, '
+        'zero training, complete original and all frozen target development gates, preserved stress failures, '
+        'and a fixed plan to use all three distinct final environment realizations with full suites each. '
+        'Do not require training in that branch or claim its three final validations have already happened. '
+        'PASS_R6_FINAL_FREEZE approves model identities for prospective final '
         'evaluation only, never target-domain success or live dispatch. Return MUST_FIX with concrete '
         'findings if any evidence or capacity is incomplete. changed_files=[]; evidence_pins must include '
         'the freeze and all originals you relied on. reviewer=r6-independent-final-freeze. '

@@ -1,5 +1,14 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：BASELINE_SUFFICIENT前瞻冻结/独审路由接通，不要求无必要训练。
+准确基线开发作业、protocol/split/seed、16块32 lanes及方向/墙mode、全部原能力和目标域门槛校验。
+完整压力域负结果保留；原u640/source/method/ICS .15及实际快照绑定，已计训练必须为0。
+冻结规则要求三个不同最终环境随机流各跑完整原套件及注册域；仍不是最终BASELINE_SUFFICIENT结论。
+64项控制/审核、34项原件/holdout边界、41项评分/原套件重算/随机流回归通过，无初轮失败。
+证据CPU_BASELINE_VALIDATION.json；新完整得分为合成fixture，无实际基线、生产审核或发车。
+holdout发布/揭晓与final评价、真实三流验证、修复重入、交付及平台交接仍待完成。
+158次自动唤醒+30worker=188/256，模型剩68；完整Goal未完成。
+
 2026-10-22：三确认轨迹终点模型的v2冻结清单、注册独审及保留集入口原件核验接通。
 从真实controller/Store/准备事件/三关闭作业推导固定终点，核验共同u640源码/方法、seed、checkpoint清单。
 原生FAILED保留；独审为final_review预算事件，准确receipt可被holdout核验，MUST_FIX不释放。

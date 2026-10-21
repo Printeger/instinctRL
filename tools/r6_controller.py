@@ -150,6 +150,9 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                     if len(sequence['results'])==3:cursor['phase']='FINAL_MODEL_PREPARATION'
                     else:cursor.update(phase='PROFILE',context=sequence['contexts'][index+1])
                 elif decision=='PROPOSE_CONFIRMATION':cursor['phase']='CONFIRMATION_INPUTS'
+                elif decision=='PROPOSE_BASELINE_VALIDATION':
+                    cursor.update(phase='FINAL_MODEL_PREPARATION',baseline_validation=dict(
+                        parent_key=parent,job_key=cursor['job_key'],context=cursor['context']))
                 elif decision=='REQUEST_FINAL_REVIEW':cursor['phase']='FINAL_DELIVERY_REQUIRED'
                 elif decision=='PROPOSE_CANDIDATE':cursor['phase']='SOURCE'
                 else:cursor['phase']='PROFILE'
