@@ -23,7 +23,7 @@ def cycle(bound, monkeypatch):
         event['resources']=resources
         next(r for r in state['budget']['reservations'] if r['identity']==event['identity'])['resources']=resources
         b.journal.save(state)
-    def finish(store,spec):
+    def finish(store,spec,*,admission_guard):
         with pytest.raises(BlockingIOError):
             with Journal(b.journal.directory).writer():pass
         assert b.journal.read()['events'][b.key].get('submission_claim')

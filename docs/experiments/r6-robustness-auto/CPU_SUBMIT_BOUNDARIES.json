@@ -1,0 +1,43 @@
+{
+  "status": "CPU_PASS_PENDING_INDEPENDENT_REVIEW",
+  "prior_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/exact-resource-admission-review.json",
+    "sha256": "8544f763192c88666be82b8fb2e4eecbea02242dccb7d697f99a1dbbe714cce5"
+  },
+  "changes": [
+    "Post-validation admission guards inside actual Store reservation and immediately before supervisor Popen",
+    "Bounded existing full-window refresh, immutable history, original deadline/STOP/budget checks, no ambiguous retry",
+    "Full final input validation before supervisor spawn; mutable authority rechecked after spawn; worker input validation unchanged"
+  ],
+  "tests": {
+    "passed": 95,
+    "log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SUBMIT_BOUNDARIES_FINAL_TEST.txt",
+      "sha256": "9798bfd5a6e4cbc92a8eb8986626386a97d369352cb222ac874158cf32bb550f"
+    },
+    "real_submit_and_store": true,
+    "synthetic_resource_clocks": true,
+    "process_boundary_stubbed_in_regression": true,
+    "legacy_actual_CPU_dispatcher_test": true
+  },
+  "initial_test_result": "First focused run: 53 passed, 5 fixture-signature failures. Updated fixture signatures; 93 passed before final authorization ordering change, 95 passed after.",
+  "limits": [
+    "No production GPU query or job submitted",
+    "No independent acceptance yet",
+    "Controller deployment and initial prelive remain pending"
+  ],
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "ceef01d2ecdc85ea510b4a52ec4e19da215abc100ab4a9e888080c7b2161c4fa"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/experiments.py",
+      "sha256": "3af0d900a5490f2f1962475fbdf1010eb02a2ef8fba446e0adb196e330977257"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_boundaries.py",
+      "sha256": "fed3bf98302ed3140d7994a1d6a7bb976991de3f46dc995ecded118cd9c0e718"
+    }
+  ]
+}

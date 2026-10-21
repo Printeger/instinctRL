@@ -143,7 +143,7 @@
   },
   "r6_robustness_execution": {
     "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
-    "status": "EXACT_BASELINE_SPEC_CONDITIONS_READY_PRELIVE_DEPLOYMENT_PENDING",
+    "status": "RESOURCE_ADMISSION_FIX_CPU_PASS_PENDING_REVIEW",
     "authority": "docs/experiments/r6-robustness-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md",
     "budget": "docs/experiments/r6-robustness-auto/goal_budget.json",
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
@@ -273,6 +273,8 @@
     "initial_baseline_parameters_evidence": "docs/experiments/r6-robustness-auto/CPU_INITIAL_BASELINE_PARAMETERS.json",
     "initial_baseline_spec": "PASS_REAL_VALIDATION_PENDING_EXACT_PRELIVE",
     "initial_baseline_spec_evidence": "docs/experiments/r6-robustness-auto/CPU_BASELINE_REAL_SPEC_ORDER_REPAIR.json",
-    "initial_baseline_spec_readiness": "docs/experiments/r6-robustness-auto/baseline-input-02/readiness.json"
+    "initial_baseline_spec_readiness": "docs/experiments/r6-robustness-auto/baseline-input-02/readiness.json",
+    "resource_admission_review": "docs/experiments/r6-robustness-auto/reviews/exact-resource-admission-review.json",
+    "resource_admission_fix": "docs/experiments/r6-robustness-auto/CPU_SUBMIT_BOUNDARIES.json"
   }
 }

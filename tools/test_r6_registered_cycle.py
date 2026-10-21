@@ -16,10 +16,10 @@ def unregistered(cycle):
                                        if r['identity']!=entry['identity']]
         b.journal.save(state)
     finish=b.submit.side_effect
-    def terminal(store,spec):
+    def terminal(store,spec,*,admission_guard):
         b.key=next(k for k,e in b.journal.read()['events'].items()
                    if e['kind']=='job' and e['identity']['job_id']==b.jid)
-        return finish(store,spec)
+        return finish(store,spec,admission_guard=admission_guard)
     b.submit.side_effect=terminal
     return b
 

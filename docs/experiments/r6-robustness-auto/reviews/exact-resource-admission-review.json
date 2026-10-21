@@ -1,0 +1,166 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "Confirmed a queue-to-submit freshness defect. Sampler review passes. CPU tests passed after correcting a unittest collection error by running the pytest tests separately. Actual frozen full-spec validation passed in 11.53 seconds; the order_id repair is verified and the previous failure remains preserved. No edits, real GPU queries, live jobs, agents, or production mutations occurred. No scientific, deployment, or dispatch acceptance.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-01/inputs.json",
+      "sha256": "a347d050200fd42885f3221ae15af67a9143c44881b4452074dc5013657f67e7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py",
+      "sha256": "671cb3f09b1324cef90752e92387d0bda129c07e6f82177a8a61c87b25adca76"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "c70cf5648443ffde3dd3e4cb065f6bf2cee34a55211eadd75a77ef0dc1c4ec18"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_sampler.py",
+      "sha256": "0a769eaf427713795ba76982aac4b1fc6b60b30f224a18ddd6d3f12ebe7036c0"
+    },
+    {
+      "path": "/usr/bin/nvidia-smi",
+      "sha256": "22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_wait.py",
+      "sha256": "4cf9c6cbcfe231fd68a90b10df618600230cdad946f6764edfa750f0b13967f3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "66aa805582a468fa56d013d63fbf2772f79cf0f3ccfab3fcfd6f8374a146b744"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_register_job.py",
+      "sha256": "a47c2614efae34c4cd2762e1b80dc02c5ee6d8b32fdc6aa14000a085695a18b3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_run_job.py",
+      "sha256": "d65779f5a1449de75d33026a8198e5d545f147a4ce6d2ba40a64582a9b82e904"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_budget.py",
+      "sha256": "2fdee08edc08dcdb8411f56e36ffeaee930bf2dbfceba8149a07d7199f9e15b1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/experiments.py",
+      "sha256": "cdda96c8f4ba91920626a612b76b460a61e47fdb2953e6ea80b06da4dfcfa5e1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py",
+      "sha256": "697d69e45105143456f891b48db3fa8bf7805c91c9fb9a1ca455c97f2ee4a825"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_worker_processes.py",
+      "sha256": "7ce3a1276d8460445f442ef9e30ecbe3198de98e848d75198eaabe94c932cc10"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_prelaunch.py",
+      "sha256": "ddba5b8969d98c3f30b4c145ace23a8e01631ef23f3618d669952707116f809a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "40fdf62802fa86131ef1d4eed1871f63ff364046850aeabe00936a0a487c036d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_refresh.py",
+      "sha256": "ad2e5b5b8b72a81126c146b54a8b2b52fef953e56e8548931e97d958d12c8541"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_store.py",
+      "sha256": "4394aa9940219b89deb3b044fc25312dd4824f7fbd76aefd28c9286e373e95a5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_QUEUE_TESTS.json",
+      "sha256": "0eb78ce0114850527f569198c690099348b82f1acb89a62797291e2d152c17e5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_SAMPLER_TESTS.json",
+      "sha256": "f3769ecc4c114c1323147a49c2fe674627a0e002449a418424adc13ac914a406"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_POSTVALIDATION_QUEUE.json",
+      "sha256": "128e96faaf79286de283013ee5195ff3c792297d90fc167793aaab696b5d3e7f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_prepare_authorization.py",
+      "sha256": "58eed3f19f5534255b0596e5dcea7aeb04a2a68a08f6407619436cabbc2a43d9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_REAL_SPEC_ORDER_REPAIR.json",
+      "sha256": "c050cef22d6ce73e1f2474bf5b9ec0cc5aca15f2c0af16c05b6449a0e258fde6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/spec-validation.txt",
+      "sha256": "66c20094d0a6a78ccca4825848302be4e6998f4983d684abdf7388b89af375d1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/spec-repair-validation.txt",
+      "sha256": "4e1016784325c4e1e64ae3d9e553bad1a25eb506e6128b8343fd49f4e629fdd5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/spec.json",
+      "sha256": "20445dd09a901da4ab66dca822992a9d131008a4cc83aaafdc15586e838bd5a7"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Repair freshness enforcement across the actual submit validation/reservation boundary without changing thresholds, weakening authorization, or retrying ambiguous claims. Add a regression using the real submit function and temporary Store, then obtain exact re-review. Baseline J-7a302eaf9d7714e7 remains unapproved/unsubmitted; initial prelive review, deployment, and later-volume provisioning remain separate gates.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 103
+  },
+  "must_fix": [
+    "Queue freshness is checked before experiments.submit(), but that function repeats expensive validate() and authorized() calls before Store reservation, then performs further real H1 validation before launching. No queue-age check follows these validations. Reproduced with tools.test_r6_submit_store.bound in a temporary directory: retain real submit/Store, advance the synthetic queue clock by nine seconds inside validate() only after submission_claim exists, and stop releases.freeze before any launch. Result: Store START_INTENT, observation_fresh=false, age_seconds=9.0, process_launch_calls=0. Actual exact baseline validation independently took 11.53 seconds. Enforce freshness at the actual post-validation submission boundary and cover this path without mocking submit. The unchanged AppLauncher gate does not repair this queue admission defect."
+  ],
+  "queue_review": {
+    "policy": {
+      "schema_version": "r6-resource-queue/1",
+      "window_policy": {
+        "schema_version": "r5-w-resource-admission/2",
+        "sample_count": 13,
+        "minimum_span_seconds": 60,
+        "minimum_gap_seconds": 4,
+        "maximum_gap_seconds": 8,
+        "mean_utilization_max": 8,
+        "median_utilization_max": 5,
+        "peak_utilization_max": 20,
+        "elevated_utilization_threshold": 10,
+        "elevated_samples_max": 4,
+        "consecutive_elevated_max": 1,
+        "memory_used_max_mib": 1024,
+        "memory_free_min_mib": 10240,
+        "allowed_app": "gnome-remote-desktop-daemon",
+        "allowed_app_max_mib": 256
+      },
+      "reserved_seconds_per_window": 180,
+      "rejection_backoff_seconds": 60,
+      "maximum_sample_age_seconds": 8,
+      "observation_is_launch_permission": false,
+      "interrupted_window_reused": false,
+      "implicit_refund": false
+    },
+    "implementation": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py",
+      "sha256": "671cb3f09b1324cef90752e92387d0bda129c07e6f82177a8a61c87b25adca76"
+    },
+    "validator": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "c70cf5648443ffde3dd3e4cb065f6bf2cee34a55211eadd75a77ef0dc1c4ec18"
+    },
+    "decision": "MUST_FIX",
+    "must_fix": [
+      "tools/r6_submit.py:107 enters tools/rlflow/rlflow/experiments.py:114-130, which repeats validation after the last queue freshness check. Temporary CPU reproduction using the real submit function reached START_INTENT with a nine-second-old observation; execution was stopped before release/process creation. Actual frozen baseline validation took 11.53 seconds. Preserve the eight-second limit and authorization checks while enforcing freshness after expensive validation at the actual submission boundary. Existing refresh tests mock submit and miss this path."
+    ]
+  },
+  "sampler_review": {
+    "worker": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_sampler.py",
+      "sha256": "0a769eaf427713795ba76982aac4b1fc6b60b30f224a18ddd6d3f12ebe7036c0"
+    },
+    "decision": "PASS_R6_RESOURCE_SAMPLER",
+    "must_fix": []
+  },
+  "query_executable": {
+    "path": "/usr/bin/nvidia-smi",
+    "sha256": "22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be"
+  }
+}

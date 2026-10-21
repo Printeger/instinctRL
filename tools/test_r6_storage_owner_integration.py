@@ -23,7 +23,7 @@ def ready(case,monkeypatch,tmp_path):
     monkeypatch.setattr(experiments,'validate',Mock())
     monkeypatch.setattr(experiments,'authorized',Mock(return_value={'approval_id':'CPU-FIXTURE'}))
     monkeypatch.setattr('tools.r6_submit.queue_ready',Mock(return_value=b.n))
-    def submit(store,value):
+    def submit(store,value,*,admission_guard):
         jid='J-'+sha({'id':value['id'],'spec':value})[:16]
         store.transact('CPU_FIXTURE','submit',lambda s:s['jobs'].update({jid:dict(id=jid,spec=value,approval_id='CPU-FIXTURE',status='FAILED')}))
     b.submit=Mock(side_effect=submit);monkeypatch.setattr(experiments,'submit',b.submit)

@@ -80,14 +80,20 @@ def propose(store,spec):
 
 
 def authorized(s,spec,root):
-    package=s.get('packages',{}).get(spec['stage_id'])
-    autonomous=package and package['status']=='ACTIVE' and not package['paused'] and any(t in s.get('autonomous_tasks',[]) for t in package['tasks'])
-    if (s['paused'] and not autonomous) or stopped(root):raise Conflict('paused or STOP')
-    if s.get('stages',{}).get(spec['stage_id'],{}).get('status')=='REVOKED':raise Conflict('underlying stage revoked')
+    approval=_authorized_state(s,spec,root)
     check_pins(spec)
     if spec['backend']=='real':
         from .h1 import validate as validate_h1
         validate_h1(spec,root)
+    return approval
+
+
+def _authorized_state(s,spec,root):
+    """Check mutable authority; input validation remains in authorized/worker."""
+    package=s.get('packages',{}).get(spec['stage_id'])
+    autonomous=package and package['status']=='ACTIVE' and not package['paused'] and any(t in s.get('autonomous_tasks',[]) for t in package['tasks'])
+    if (s['paused'] and not autonomous) or stopped(root):raise Conflict('paused or STOP')
+    if s.get('stages',{}).get(spec['stage_id'],{}).get('status')=='REVOKED':raise Conflict('underlying stage revoked')
     matches=[]
     for a in s['approvals'].values():
         p=s['proposals'][a['proposal_id']];c=p['content']
@@ -105,7 +111,13 @@ def authorized(s,spec,root):
     return matches[0]
 
 
-def submit(store,spec):
+def submit(store,spec,*,admission_guard=None):
+    """Reserve and launch, optionally checking admission after costly validation.
+
+    The guard must not transact on Store: the reservation callback holds its
+    writer lock. It may refresh bounded external observations. Authorization
+    checks remain mandatory and recovery never calls the guard or relaunches.
+    """
     jid='J-'+sha({'id':spec['id'],'spec':spec})[:16]
     existing=store.replay()['jobs'].get(jid)
     if existing:
@@ -118,6 +130,9 @@ def submit(store,spec):
         if any(j.get('spec',{}).get('backend') in {'real','runner_cpu'} and j['status'] in {'START_INTENT','RUNNING','RECONCILE'} for j in s['jobs'].values()):
             raise Conflict('another runner job owns the execution slot')
         if any(j.get('approval_id')==approval['approval_id'] for j in s['jobs'].values()):raise Conflict('experiment approval already consumed')
+        if admission_guard is not None:
+            admission_guard('reserve')
+            if stopped(store.root):raise Conflict('STOP after admission refresh')
         s['jobs'][jid]={'id':jid,'stage':spec['stage_id'],'spec':spec,'approval_id':approval['approval_id'],
                         'status':'START_INTENT','reserved_resources':spec['resources'],'used_resources':{},'identity':None}
         launched.append(True)
@@ -130,12 +145,23 @@ def submit(store,spec):
         atomic(d/'h1-authority.json',canonical(validate_h1(spec,store.root)))
     from .releases import freeze
     frozen=freeze(store.root/'session_releases')
+    if admission_guard is not None:
+        # Full validation must precede the bounded admission refresh and Popen.
+        # Running it after Popen can exceed the worker's 10-second release wait.
+        # The worker independently validates inputs before releasing a workload.
+        authorized(store.replay(),spec,store.root)
     with (d/'supervisor.log').open('ab') as log:
+        if admission_guard is not None:
+            admission_guard('launch')
+            if stopped(store.root):raise Conflict('STOP after admission refresh')
         proc=subprocess.Popen([sys.executable,'-m','rlflow.experiments','_worker',str(d/'request.json')],cwd=frozen,stdin=subprocess.DEVNULL,stdout=log,stderr=log,start_new_session=True)
     ident=identity(proc.pid)
     store.transact('EXPERIMENT_IDENTITY',jid+':identity',lambda s:s['jobs'][jid].update(identity=ident,status='RUNNING'),object_id=jid)
     try:
-        authorized(store.replay(),spec,store.root)
+        if admission_guard is None:
+            authorized(store.replay(),spec,store.root)
+        else:
+            _authorized_state(store.replay(),spec,store.root)
         atomic(d/'supervisor-release.json',canonical({'job_id':jid,'identity':ident,'control_release':frozen.name}))
     except Conflict:
         atomic(d/'cancel',b'authorization changed before supervisor release')

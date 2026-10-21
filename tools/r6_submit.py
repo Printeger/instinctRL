@@ -104,7 +104,29 @@ def submit_once(journal, key, store, *, queue_key, refresh_observation=None):
         state=journal.read();state['events'][key]['submission_claim']=claim
         state['status']='EXACT_JOB_SUBMISSION_CLAIMED';journal.save(state)
         journal.guard();require(not stop_paths(journal), 'STOP')
-        experiments.submit(store,spec)
+        def admission_guard(boundary):
+            nonlocal queue_key, window
+            journal.guard();require(not stop_paths(journal), 'STOP')
+            require(0<deadline-time.time()<=spec['resources']['wall_seconds'], 'DEADLINE')
+            try:
+                window=queue_ready(journal,queue_key,request['spec'])
+            except RecoveryError as error:
+                if str(error)!='SUBMIT_QUEUE_STALE' or refresh_observation is None:raise
+                queue_key=refresh_observation()
+                window=queue_ready(journal,queue_key,request['spec'])
+            journal.require_dispatch_budget();require(not stop_paths(journal), 'STOP')
+            require(0<deadline-time.time()<=spec['resources']['wall_seconds'], 'DEADLINE')
+            # Preserve the initial claim and every boundary observation. The
+            # latest binding is the sole recovery key, never a retry permit.
+            claim.setdefault('admission_history',[]).append(dict(boundary=boundary,
+                previous_queue_key=claim['queue_key'],previous_queue_window=claim['queue_window'],
+                queue_key=queue_key,queue_window=window))
+            claim.update(queue_key=queue_key,queue_window=window)
+            current=journal.read();current['events'][key]['submission_claim']=claim
+            journal.save(current)
+            # Journal persistence itself must not hide an expired observation.
+            queue_ready(journal,queue_key,request['spec'])
+        experiments.submit(store,spec,admission_guard=admission_guard)
         job=store.replay()['jobs'].get(jid)
     else:
         require(claim['store_root']==root and claim['job_id']==jid
