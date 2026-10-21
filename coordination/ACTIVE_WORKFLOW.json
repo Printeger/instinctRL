@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 158,
-    "total_automatic_model_sessions_minimum": 188,
+    "platform_automatic_goal_wakes": 159,
+    "total_automatic_model_sessions_minimum": 189,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -349,6 +349,8 @@
     "final_models_status": "CPU_THREE_TERMINAL_MODEL_FREEZE_REGISTERED_REVIEW_AND_HOLDOUT_PROVENANCE_PASS_FINAL_EVALUATION_PENDING",
     "final_models_evidence": "docs/experiments/r6-robustness-auto/CPU_FINAL_MODELS.json",
     "baseline_validation_status": "CPU_BASELINE_SUFFICIENT_DEVELOPMENT_GATES_ZERO_TRAINING_FREEZE_AND_REVIEW_ROUTE_PASS_FINAL_STREAMS_PENDING",
-    "baseline_validation_evidence": "docs/experiments/r6-robustness-auto/CPU_BASELINE_VALIDATION.json"
+    "baseline_validation_evidence": "docs/experiments/r6-robustness-auto/CPU_BASELINE_VALIDATION.json",
+    "holdout_publication_status": "CPU_HOLDOUT_EXACT_GIT_COMMIT_SINGLE_RELEASE_AND_FINAL_BATCH_BINDING_PASS_FINAL_EVALUATION_PENDING",
+    "holdout_publication_evidence": "docs/experiments/r6-robustness-auto/CPU_HOLDOUT_PUBLICATION.json"
   }
 }

@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：holdout单次承诺→准确本地Git提交→揭晓→最终批次输入的控制器入口接通。
+只提交commitment路径，核验准确父commit/提交标识/单文件diff；已提交未记账崩溃重接同commit，不重抽。
+其他暂存/未暂存修改及私有nonce不入提交；提交后STOP阻止揭晓。三基线随机流/四模型共同流固定。
+消费端核验commitment/release/nonce推导/model/seed/index/protocol；控制器恢复不重复完成的独审。
+54项初检、66项组合、1项控制器恢复、19项最终消费检查通过，无初轮失败。证据CPU_HOLDOUT_PUBLICATION.json。
+真实临时Git/熵/Journal，模型证据边界明确fixture；无生产熵、提交或发车，final评价/交付仍待实现。
+159次自动唤醒+30worker=189/256，模型剩67；完整Goal未完成。
+
 2026-10-22：BASELINE_SUFFICIENT前瞻冻结/独审路由接通，不要求无必要训练。
 准确基线开发作业、protocol/split/seed、16块32 lanes及方向/墙mode、全部原能力和目标域门槛校验。
 完整压力域负结果保留；原u640/source/method/ICS .15及实际快照绑定，已计训练必须为0。

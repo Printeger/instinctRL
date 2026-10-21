@@ -1,6 +1,6 @@
 {
-  "status": "CPU_BASELINE_SUFFICIENT_DEVELOPMENT_GATES_ZERO_TRAINING_FREEZE_AND_REVIEW_ROUTE_PASS_FINAL_STREAMS_PENDING",
-  "checked_commit": "85d91ccc",
+  "status": "CPU_HOLDOUT_EXACT_GIT_COMMIT_SINGLE_RELEASE_AND_FINAL_BATCH_BINDING_PASS_FINAL_EVALUATION_PENDING",
+  "checked_commit": "35cad5d3",
   "concrete_first_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
     "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
@@ -30,7 +30,7 @@
   ],
   "next_implementation": {
     "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs; persistent first/decision/profile/materialization/next cursor and actual detached CPU wait/STOP fixture; exact baseline-compatible source payload/review/frozen validation/new-context routing; exact training-plan budget/seed/checkpoint provenance and RNG branch/resume composition; R6 world-command training driver with actual next-attitude conversion and exact clock provenance; registered phase curriculum and actual CPU condition/reset sampling with audit separation and phase reset budgeting; training phase reset/measurement/physics adapter composition including resumed phase pulse offset and audited noise stream fork; loaded-trainer phase execution with shared first-update diagnostic, bounded logs/RNG, original/robust driver switching and exact checkpoint callback; strict checkpoint restore, explicit complete method schema, actual runtime/optimizer readback and pre-execution drift guard; exact training profile/capacity/source compatibility contracts and dedicated config/formal entry/native/resource lifecycle route",
-    "next": "Holdout publication/release and final evaluation contracts/controller for both branches; actual three distinct baseline streams or paired baseline/three-model evaluation, delivery, confirmation/final-review MUST_FIX repair re-entry. Prospective BASELINE_SUFFICIENT provenance and review route CPU verified. Combined independent review and platform handoff precede production.",
+    "next": "Final evaluation contracts/frozen execution mode, exact capacity/profiles/issuance, batch execution and analysis; confirmation/final-review repair re-entry and delivery. Single-use holdout local Git commitment/release and controller handoff CPU verified. Actual experiments, combined independent review and platform handoff remain required.",
     "deployment": "Controller composition and baseline-compatible source route CPU verified; independent combined review, remaining phase contracts and platform handoff precede production",
     "invariants": [
       "No Journal or Store authority mutation by source-preparation worker",
@@ -184,5 +184,9 @@
   "baseline_validation": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_VALIDATION.json",
     "sha256": "3762720ac967fb5488f0d5d8877160c3b33ecc23ecb051c161e547c47d48fb0c"
+  },
+  "holdout_publication": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_HOLDOUT_PUBLICATION.json",
+    "sha256": "5f2138f1add3bdd198b85334e88bc8962e0e1f0fa8c0880fcb6f39ebf8d3da04"
   }
 }

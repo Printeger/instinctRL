@@ -29,11 +29,12 @@ from tools import r6_confirmation_inputs as confirmation_inputs
 from tools import r6_confirmation_preparation as confirmation
 from tools import r6_final_models as final_models
 from tools import r6_final_freeze_review as final_freeze_review
+from tools import r6_holdout_publication as holdout_publication
 
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','HOLDOUT_PREPARATION_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_EVALUATION_PREPARATION_REQUIRED'}
 
 
 def require(condition,reason):
@@ -169,7 +170,12 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 outcome=final_freeze_review.prepare(journal,cursor['final_models']['freeze'],store,
                     executable=initial['review_executable'],free_disk_bytes=free)
                 require(outcome['status']=='FINAL_MODEL_FREEZE_REVIEWED_NOT_RELEASED','FINAL_FREEZE_REVIEW_STATUS')
-                cursor.update(phase='HOLDOUT_PREPARATION_REQUIRED',final_freeze=outcome)
+                cursor.update(phase='HOLDOUT_PREPARATION',final_freeze=outcome)
+            elif phase=='HOLDOUT_PREPARATION':
+                request={name:cursor['final_freeze'][name] for name in ('freeze','review')}
+                outcome=holdout_publication.prepare(journal,request,free_disk_bytes=free)
+                require(outcome['status']=='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY','HOLDOUT_STATUS')
+                cursor.update(phase='FINAL_EVALUATION_PREPARATION_REQUIRED',final_batch=outcome)
             elif phase=='CONFIRMATION_PREPARATION':
                 outcome=confirmation.prepare(journal,cursor['parent_key'],cursor['confirmation_inputs'],store,
                     executable=initial['review_executable'],free_disk_bytes=free)

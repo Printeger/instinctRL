@@ -302,6 +302,8 @@ def test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect
     monkeypatch.setattr(c.final_models,'prepare',final_models)
     final_review=Mock(return_value=dict(status='FINAL_MODEL_FREEZE_REVIEWED_NOT_RELEASED',freeze=b.context,review=b.context))
     monkeypatch.setattr(c.final_freeze_review,'prepare',final_review)
+    holdout=Mock(return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context))
+    monkeypatch.setattr(c.holdout_publication,'prepare',holdout)
     original_save=c.save;failed=[]
     def save(j,key,cursor,**kw):
         if crash and len(cursor.get('confirmation',{}).get('results',[]))==1 and not failed:
@@ -311,7 +313,7 @@ def test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect
     if crash:
         with pytest.raises(RuntimeError,match='collection cursor crash'):run(b)
         assert entry(b)['cursor']['phase']=='DECIDE'
-    result=run(b);assert result['status']=='HOLDOUT_PREPARATION_REQUIRED' and result['goal_complete']is False
+    result=run(b);assert result['status']=='FINAL_EVALUATION_PREPARATION_REQUIRED' and result['goal_complete']is False
     assert [call.args[2] for call in profile.call_args_list]==contexts
     assert [call.args[1] for call in b.next.call_args_list]==[b.parent,'confirm-0-parent','confirm-1-parent']
     assert [r['job_event_key'] for r in entry(b)['cursor']['confirmation']['results']]==['confirm-0','confirm-1','confirm-2']
@@ -319,6 +321,7 @@ def test_three_confirmation_jobs_in_order_recover_collection_and_do_not_reselect
     inputs.assert_called_once();preparation.assert_called_once();b.source.assert_not_called()
     final_models.assert_called_once()
     final_review.assert_called_once()
+    holdout.assert_called_once()
 
 
 def test_confirmation_input_interruption_keeps_exact_phase(controller,monkeypatch):
@@ -353,7 +356,25 @@ def test_baseline_validation_routes_to_freeze_review_without_training_preparatio
     freeze=Mock(return_value=dict(status='FINAL_MODELS_BOUND_REVIEW_REQUIRED',freeze=b.context))
     review=Mock(return_value=dict(status='FINAL_MODEL_FREEZE_REVIEWED_NOT_RELEASED',freeze=b.context,review=b.context))
     monkeypatch.setattr(c.final_models,'prepare',freeze);monkeypatch.setattr(c.final_freeze_review,'prepare',review)
-    result=run(b);assert result['status']=='HOLDOUT_PREPARATION_REQUIRED' and not result['goal_complete']
+    holdout=Mock(return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context))
+    monkeypatch.setattr(c.holdout_publication,'prepare',holdout)
+    result=run(b);assert result['status']=='FINAL_EVALUATION_PREPARATION_REQUIRED' and not result['goal_complete']
     assert entry(b)['cursor']['baseline_validation']==dict(parent_key=b.parent,job_key=b.key,context=b.context)
     assert run(b)==result;freeze.assert_called_once();review.assert_called_once()
+    holdout.assert_called_once()
     b.source.assert_not_called();b.next.assert_not_called();assert not b.builder.with_suffix('.count').exists()
+
+
+def test_holdout_publication_interruption_does_not_repeat_final_review(controller,monkeypatch):
+    b=controller;monkeypatch.setattr(c,'parent_for_job',lambda *a:(b.parent,{'decision':{'decision':'PROPOSE_BASELINE_VALIDATION'}}))
+    freeze=Mock(return_value=dict(status='FINAL_MODELS_BOUND_REVIEW_REQUIRED',freeze=b.context))
+    review=Mock(return_value=dict(status='FINAL_MODEL_FREEZE_REVIEWED_NOT_RELEASED',freeze=b.context,review=b.context))
+    monkeypatch.setattr(c.final_models,'prepare',freeze);monkeypatch.setattr(c.final_freeze_review,'prepare',review)
+    publication=Mock(side_effect=RuntimeError('publication interrupted'))
+    monkeypatch.setattr(c.holdout_publication,'prepare',publication)
+    for _ in range(2):
+        with pytest.raises(RuntimeError,match='publication interrupted'):run(b)
+    assert entry(b)['cursor']['phase']=='HOLDOUT_PREPARATION'
+    publication.side_effect=None;publication.return_value=dict(status='HOLDOUT_RELEASED_FINAL_BATCH_INPUTS_READY',batch=b.context)
+    assert run(b)['status']=='FINAL_EVALUATION_PREPARATION_REQUIRED'
+    freeze.assert_called_once();review.assert_called_once();b.next.assert_not_called()
