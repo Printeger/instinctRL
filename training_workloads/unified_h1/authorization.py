@@ -9,12 +9,12 @@ from typing import Any
 from .budget import required_mode_budget
 from .config import CONFIG_PATH, METHOD_SHA256, load_config, sha256_file
 
-MODES = ("research-r6-candidate-evaluation", "research-r6-training", "research-r6-evaluation", "main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic", "research-training", "research-evaluation", "research-transition", "research-formal-training", "research-formal-evaluation")
+MODES = ("research-r6-final-evaluation","research-r6-candidate-evaluation", "research-r6-training", "research-r6-evaluation", "main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic", "research-training", "research-evaluation", "research-transition", "research-formal-training", "research-formal-evaluation")
 BUDGET_FIELDS = {"live_process_starts", "simulator_initializations", "training_transitions",
                  "nontraining_transitions", "optimizer_updates", "checkpoint_writes",
                  "initialization_ticks", "explicit_resets", "automatic_resets", "wall_seconds"}
 
-MODE_ORDERS = {"research-r6-candidate-evaluation": None,"research-r6-training": None,"research-r6-evaluation": None,"research-formal-training": None, "research-formal-evaluation": None,"research-training": None, "research-evaluation": None, "research-transition": None,"main": "UNIFIED-H1-R3", "controlled-failure": "UNIFIED-H1-R3",
+MODE_ORDERS = {"research-r6-final-evaluation": None,"research-r6-candidate-evaluation": None,"research-r6-training": None,"research-r6-evaluation": None,"research-formal-training": None, "research-formal-evaluation": None,"research-training": None, "research-evaluation": None, "research-transition": None,"main": "UNIFIED-H1-R3", "controlled-failure": "UNIFIED-H1-R3",
                "r4-training": "UNIFIED-H1-R4", "evaluation": None,
                "r5-resume": "UNIFIED-H1-R5", "control-diagnostic": None,
                "pilot-training": None, "pilot-evaluation": None,
@@ -90,6 +90,10 @@ def _parameters(mode: str, value: object) -> dict[str, Any]:
 
 def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any]:
     config = load_config()
+    if mode == "research-r6-final-evaluation":
+        from .config import R6_FINAL_CONFIG_SCHEMA
+        if config["schema_version"]!=R6_FINAL_CONFIG_SCHEMA or mode not in config["future_entry"]["modes"]:
+            raise PermissionError("R6 final requires dedicated execution config")
     if mode == "research-r6-candidate-evaluation":
         from .config import R6_CANDIDATE_CONFIG_SCHEMA
         if config["schema_version"]!=R6_CANDIDATE_CONFIG_SCHEMA or mode not in config["future_entry"]["modes"]:
@@ -99,8 +103,8 @@ def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any
         if config["schema_version"]!=R6_TRAINING_CONFIG_SCHEMA or mode not in config["future_entry"]["modes"]:
             raise PermissionError("R6 training requires complete dedicated execution config")
     if mode == "research-r6-evaluation":
-        from .config import R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA,R6_CANDIDATE_CONFIG_SCHEMA
-        if config["schema_version"] not in (R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA,R6_CANDIDATE_CONFIG_SCHEMA) or mode not in config["future_entry"]["modes"]:
+        from .config import R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA,R6_CANDIDATE_CONFIG_SCHEMA,R6_FINAL_CONFIG_SCHEMA
+        if config["schema_version"] not in (R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA,R6_CANDIDATE_CONFIG_SCHEMA,R6_FINAL_CONFIG_SCHEMA) or mode not in config["future_entry"]["modes"]:
             raise PermissionError("R6 requires complete R6 execution config")
     if mode not in MODES or not path.is_absolute() or not path.is_file() or path.is_symlink():
         raise PermissionError("R3 authorization must be an explicit regular file and known mode")
@@ -133,7 +137,10 @@ def load_r3_authorization(path: Path, attempt: Path, mode: str) -> dict[str, Any
         if Path(candidate["repository"]).resolve()!=Path(config["workload"]["path"]).resolve() or candidate["commit"]!=identity["workload_commit"]:
             raise PermissionError("enhanced B0 handoff candidate differs from current workload")
     origin = parameters.get("checkpoint_source_identity")
-    if mode == "research-r6-candidate-evaluation":
+    if mode == "research-r6-final-evaluation":
+        from .robustness_final_contract import validate_compatibility
+        validate_compatibility(parameters["checkpoint_compatibility"],parameters["final_selection"],config)
+    elif mode == "research-r6-candidate-evaluation":
         from .robustness_candidate_contract import validate_compatibility
         validate_compatibility(parameters["checkpoint_compatibility"],parameters["evaluation_selection"],config)
     elif mode == "research-r6-training":

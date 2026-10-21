@@ -571,7 +571,7 @@ class UnifiedH1LiveBackend:
         """Separate exact-authorized R6 entry; never inherits an R5 receipt."""
         import json
         from .robustness_evaluation import evaluate_block
-        if self.authorization['mode'] not in ('research-r6-evaluation','research-r6-candidate-evaluation'):
+        if self.authorization['mode'] not in ('research-r6-evaluation','research-r6-final-evaluation','research-r6-candidate-evaluation'):
             raise PermissionError('R6 blocks require a new exact evaluation authorization')
         parameters=self.authorization['parameters']['r6']
         protocol_path=Path(parameters['protocol']['path'])
@@ -883,7 +883,7 @@ def create_live_backend(*, authorization: Mapping[str, Any], attempt: Path,
         native_volume_pin=authorization.get('parameters',{}).get('native_volume'),
         extension_inputs_pin=authorization.get('parameters',{}).get('extension_inputs'))
     if resources is not None: resources.update(launcher=launcher, app=app)
-    if authorization['mode'] in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation'):
+    if authorization['mode'] in ('research-r6-evaluation','research-r6-training','research-r6-final-evaluation','research-r6-candidate-evaluation'):
         # Register the application first so a readback failure uses the existing
         # bounded lifecycle cleanup rather than losing the constructed resource.
         from training_workloads.scale_003.resources import verify_r6_native_paths

@@ -66,6 +66,7 @@ WORKLOAD_SOURCES = {
 
 R6_CONFIG_SCHEMA = "unified-h1-r6-config.v1"
 R6_TRAINING_CONFIG_SCHEMA = "unified-h1-r6-training-config.v1"
+R6_FINAL_CONFIG_SCHEMA = "unified-h1-r6-final-config.v1"
 R6_CANDIDATE_CONFIG_SCHEMA = "unified-h1-r6-candidate-config.v1"
 R6_PRODUCT_SOURCES = PRODUCT_SOURCES | {
     "isaaclab-training/instinctlab/observations/robustness.py",
@@ -80,7 +81,7 @@ R6_WORKLOAD_SOURCES = WORKLOAD_SOURCES | {
         "robustness_measurement_replay", "robustness_physics_replay",
         "robustness_training_storage", "robustness_training_rng", "robustness_training_plan",
         "robustness_confirmation", "robustness_evaluation_selection", "robustness_candidate_restore", "robustness_candidate_contract",
-        "robustness_final_selection", "robustness_final_restore", "robustness_holdout",
+        "robustness_final_contract", "robustness_final_selection", "robustness_final_restore", "robustness_holdout",
         "robustness_training_driver", "robustness_curriculum", "robustness_training_execution", "robustness_training_method", "robustness_training_contract", "lossless_evidence",
         "native_volume", "extension_inputs", "write_boundary", "result_volume",
     )
@@ -121,7 +122,7 @@ R6_WORKLOAD_SOURCES |= {
 
 
 def required_source_sets(schema: str) -> tuple[set[str], set[str]]:
-    if schema in (R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA,R6_CANDIDATE_CONFIG_SCHEMA):
+    if schema in (R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA,R6_CANDIDATE_CONFIG_SCHEMA,R6_FINAL_CONFIG_SCHEMA):
         return R6_PRODUCT_SOURCES, R6_WORKLOAD_SOURCES
     if schema == "unified-h1-r2-config.v3":
         return PRODUCT_SOURCES, WORKLOAD_SOURCES
@@ -198,7 +199,7 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
     if path.is_symlink() or not path.is_file(): raise ValueError("config must be a regular resolved file")
     value = json.loads(path.read_text(encoding="utf-8"))
     expected = {"schema_version", "status", "method", "product", "workload", "runtime", "execution", "actor", "training", "versions", "future_entry"}
-    if not isinstance(value, dict) or set(value) != expected or value["schema_version"] not in ("unified-h1-r2-config.v3", R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA,R6_CANDIDATE_CONFIG_SCHEMA):
+    if not isinstance(value, dict) or set(value) != expected or value["schema_version"] not in ("unified-h1-r2-config.v3", R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA,R6_CANDIDATE_CONFIG_SCHEMA,R6_FINAL_CONFIG_SCHEMA):
         raise ValueError("unified-h1 config schema mismatch")
     if value["status"] != "R2_CPU_CANDIDATE_NOT_AUTHORIZED_FOR_LIVE_EXECUTION": raise ValueError("configuration overclaims live authorization")
     method = value["method"]
@@ -246,11 +247,12 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
         raise ValueError("future entry identity mismatch")
     expected_modes = ["main", "controlled-failure", "r4-training", "evaluation", "r5-resume", "control-diagnostic", "pilot-training", "pilot-evaluation", "enhanced-b0-diagnostic"]
     if method["version"] == "unified-h1-formal-readiness-v1": expected_modes += ["research-training", "research-evaluation", "research-transition", "research-formal-training", "research-formal-evaluation"]
-    if value["schema_version"] in (R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA,R6_CANDIDATE_CONFIG_SCHEMA):
+    if value["schema_version"] in (R6_CONFIG_SCHEMA,R6_TRAINING_CONFIG_SCHEMA,R6_CANDIDATE_CONFIG_SCHEMA,R6_FINAL_CONFIG_SCHEMA):
         if method["version"] != "unified-h1-formal-readiness-v1":
             raise ValueError("R6 config requires frozen research method")
         expected_modes += ["research-r6-evaluation"]
         if value["schema_version"]==R6_TRAINING_CONFIG_SCHEMA:expected_modes += ["research-r6-training"]
+        if value["schema_version"]==R6_FINAL_CONFIG_SCHEMA:expected_modes += ["research-r6-final-evaluation"]
         if value["schema_version"]==R6_CANDIDATE_CONFIG_SCHEMA:expected_modes += ["research-r6-candidate-evaluation"]
     if entry["modes"] != expected_modes:
         raise ValueError("future mode set mismatch")

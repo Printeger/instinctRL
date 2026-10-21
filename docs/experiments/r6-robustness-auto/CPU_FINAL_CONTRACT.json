@@ -1,0 +1,104 @@
+{
+  "status": "CPU_FINAL_STAGE_FORMAL_ENTRY_COMPATIBILITY_AND_FULL_EVALUATION_PASS_CONTROLLER_ROUTE_PENDING",
+  "input_commit": "c7f6e851bd81e9cec42251a9ad82a91b69eca3bc",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py",
+      "sha256": "a72999a05ba443ada1b2bddf9164ad224517fa2dbb2b02e09cae30a318907937"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_config.py",
+      "sha256": "68891ce512def7329090cf1d0243d1391496b6ca9677b93aa54a1ff5ceb817b0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/resources.py",
+      "sha256": "66fb3caea08fdec46441aeeffdb85cc8234c2d4c5cd9f766d6a3365259e20b2f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/authorization.py",
+      "sha256": "882c8641fe1079b98378b079e417ccbb3571baf4fcc2509e40f1634805cac270"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "00c52012319a7da7240638563149c405432f1c63e4fae21bc94cd282faf6b1d4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "380573929007ce05d118010df48272b7a4cd514af0414a75d1db8e5d97d63ac5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/formal_unified_h1.py",
+      "sha256": "fefa46e7e2c54990477c5941e1796f972e1aa9956b9b4ea536be461ba1f02863"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/live_adapter.py",
+      "sha256": "d89e6080a31341b2ef45446e0e3f5b10eeb63c45db6a89ccf7dfd0e02a871ee8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/research_contract.py",
+      "sha256": "ba0465cb7bea663907f26abdd6ecad25923ad97d3b88c36c17757c2bc77acb5c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "a7dabebc50e7b06d5a159c96b2481ddd42538f75102d39cbc4251177d877faa3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_candidate_contract.py",
+      "sha256": "cc0ba6122c0e2a51ce306730ad8ec7355baa68f453d4f44d9b4a66dde0f5570b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "dcc521e9d0e7651eacee34d1aa014f341c67336e6f2f9fd87a05925356e711d8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_prelaunch.py",
+      "sha256": "df8190b1a02dcb529acfebc2011134ed5739eb320867e6a4aeceebacdd8d2373"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_final_contract.py",
+      "sha256": "8fa4127908fdd772ea5f91341fc58ea75c56a49ba6927ed5f78caa77795dc4a0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_contract.py",
+      "sha256": "ebfb238f4f878cf8425d19a20ee3ebed3bbb56104e40cc5be571f7905c4760e7"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_CONTRACT_CONTROL.log",
+      "sha256": "bf055886005aa393a48da5d88da463134962c52d2de0e89f2838f805dd0f9494"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_CONTRACT_TENSOR.log",
+      "sha256": "f41b04b7b9098d03ba10ca26c2e69ef9c9eb4521221e4c3e797051905fa3e4da"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_CONTRACT_REGRESSION.log",
+      "sha256": "ec24a9d6f88628d161cbf58462c4ec06943a9807311e0cd019a88d978a9e2049"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_CONTRACT_FINAL.log",
+      "sha256": "38eea342a673add06c41bf50d66b93464d35a1399ddb6cc2fd7741b8207d180d"
+    }
+  ],
+  "tests": {
+    "initial_control": 36,
+    "final_control": 45,
+    "tensor_wrapper": 3,
+    "candidate_and_resource_regression": 59
+  },
+  "initial_failures": [],
+  "scope": [
+    "Dedicated final config/mode and exact authorization bind final selection and final split; candidate/development and baseline modes remain isolated.",
+    "Full frozen 193600 nontraining transitions and 21 explicit resets per model; zero training, optimizer updates and checkpoint writes.",
+    "Exact source compatibility requires final-specific independent review; preserves actor/runtime/original metric and source delta checks shared with candidate mode.",
+    "Wrapper records actual selected update, method binding, final assignment and original seed; all five original tasks and 32-lane wall-motion evidence precede all registered blocks.",
+    "Formal CLI, dispatch, backend, fresh resource gate, native paths and rlflow dual-volume bindings recognize final mode."
+  ],
+  "limitations": [
+    "Selection/config/simulator boundaries are explicit CPU fixtures; actual selector and restore evidence are separately recorded in CPU_FINAL_SELECTION.json.",
+    "Controller final profile/issuance/analysis/delivery routes still pending; no exact production authorization or job issued.",
+    "No production baseline measurement, GPU query, simulation, training or scientific acceptance."
+  ],
+  "goal_complete": false
+}

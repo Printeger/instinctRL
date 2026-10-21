@@ -55,10 +55,11 @@ def validate_parameters(mode,value):
     return _validate_parameters(mode,value)
 
 
-def _validate_parameters(mode,value,selected=None,*,materialized=True,payload_bytes=None):
+def _validate_parameters(mode,value,selected=None,*,materialized=True,payload_bytes=None,final=False):
     from .research_contract import validate_pin
-    fields=FIELDS if selected is None else FIELDS|{'evaluation_selection'}
-    expected_mode=MODE if selected is None else 'research-r6-candidate-evaluation'
+    if final and selected is None:raise PermissionError('R6 final selection required')
+    fields=FIELDS if selected is None else FIELDS|({'final_selection'} if final else {'evaluation_selection'})
+    expected_mode='research-r6-final-evaluation' if final else MODE if selected is None else 'research-r6-candidate-evaluation'
     allowed=(fields,fields|{'native_volume','extension_inputs','result_volume'})
     if not materialized:
         if selected is None:raise PermissionError('R6 draft requires candidate selection')
@@ -96,7 +97,7 @@ def _validate_parameters(mode,value,selected=None,*,materialized=True,payload_by
     baseline(p)
     r=p['r6']
     if not isinstance(r,dict) or set(r)!=R6_FIELDS:raise PermissionError('R6 block request fields')
-    if type(r['seed'])is not int or not 0<=r['seed']<2**31 or r['split']!='development':
+    if type(r['seed'])is not int or not 0<=r['seed']<2**31 or r['split']!=('final' if final else 'development'):
         raise PermissionError('R6 actual random stream')
     if not isinstance(r['run_id'],str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,100}',r['run_id']):raise PermissionError('R6 run identity')
     if type(r['expected_mass_kg'])not in (int,float) or not math.isfinite(r['expected_mass_kg']):

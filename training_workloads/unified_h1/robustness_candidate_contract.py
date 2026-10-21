@@ -51,18 +51,23 @@ def validate_compatibility(pin,value,config):
 
 
 def validate_compatibility_payload(record,value,config):
+    return _validate_compatibility_payload(record,value,config,selection.validate(value),
+        schema='r6-candidate-compatibility/1',method=value['method'])
+
+
+def _validate_compatibility_payload(record,value,config,selected,*,schema,method):
     from pathlib import Path
     from .research_contract import validate_pin
     from .checkpoint_compatibility import validate_source_identity
     from .robustness_training_contract import source_changes
-    selected=selection.validate(value);model=selected['model']
+    model=selected['model']
     origin=validate_source_identity(model['source_identity']);execution=validate_source_identity(config['resolved_identity'])
     fields={'schema_version','selection_sha256','origin_source_identity','execution_source_identity','origin_config','execution_config',
         'checkpoint','method','changed_product_sources','changed_workload_sources'}
-    selection.require(set(record)==fields and record['schema_version']=='r6-candidate-compatibility/1','COMPATIBILITY_FIELDS')
+    selection.require(set(record)==fields and record['schema_version']==schema,'COMPATIBILITY_FIELDS')
     selection.require(record['selection_sha256']==base.object_sha(value) and record['origin_source_identity']==origin
         and record['execution_source_identity']==execution and record['checkpoint']==model['checkpoint']
-        and record['method']==value['method'],'COMPATIBILITY_BINDING')
+        and record['method']==method,'COMPATIBILITY_BINDING')
     old=base.pinned_json(record['origin_config']);new=base.pinned_json(record['execution_config'])
     selection.require(record['origin_config']['sha256']==origin['config_sha256']
         and record['execution_config']['sha256']==execution['config_sha256']
