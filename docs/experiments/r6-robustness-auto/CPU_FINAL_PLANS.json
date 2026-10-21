@@ -1,0 +1,76 @@
+{
+  "status": "CPU_FINAL_BATCH_PLANS_REVIEW_ISSUANCE_SEQUENCE_PASS_TOP_LEVEL_INPUTS_PENDING",
+  "base_commit": "d54b9b8c85106b3a0a18c69e0db24d5db9957522",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_plans.py",
+      "sha256": "2016ab3083c8c8f0ec57a19ef930789fa4b7268fb6a8b74846aff61380bbcd8c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_plans_review.py",
+      "sha256": "f4b46bb0dee0cfd2df2a89bdd7295d1b8e557b57bbbbf76cf6d7339bc3519a32"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_issue_final.py",
+      "sha256": "ac5e8bcf03e44c91ee64b5d51b931be358da31085c6e3ba4f00861893370f886"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_sequence.py",
+      "sha256": "8e48bf4bd11fbc62de0eb2fa6d2b153ff49b68f6d888ade777a16f15e7eeac99"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_plans.py",
+      "sha256": "ac20c82fa17b044008527a1355aa3936f5ed214f1049f6aedb128b3b74524b27"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_plans_review.py",
+      "sha256": "8a56aafb252073b94aabd876bec153923ca67dee1bdf6d8a73d9487ffd7ccf83"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_sequence.py",
+      "sha256": "925aafbd377bc6df856f1b6d93f88ce90af789eb7f1765bafba886b945439aad"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/final-plans-review.schema.json",
+      "sha256": "35a620e0884c2ba702e6776faf1de810e3c510117ff4f332d16227c5b2139c6c"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_PLANS_INITIAL.log",
+      "sha256": "15c247a1c5d1b83277c181009b720e85a9487bfab1c144445110095d2aa16408"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_PLANS_COMBINED.log",
+      "sha256": "d723267fc71ed06baca6fb01cac2907296ce6c9bc7b572cf6dc007e6bb76dc7f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_SEQUENCE.log",
+      "sha256": "068b66ec26e3a107c708ae0cfca8e6589a98bd5ae24b5b3110c31eadb6d576cd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_FINAL_PLANS_FINAL.log",
+      "sha256": "f2759c584d56f3692c9ec6a066eb327998f307c58fc505e3e49032d05f4453ff"
+    }
+  ],
+  "checks": {
+    "initial": 22,
+    "combined": 60,
+    "sequence": 6,
+    "final_regression": 40
+  },
+  "boundaries": [
+    "Real temporary Journal, storage reservations and fake local CLI original receipts; no paid production reviewer invoked.",
+    "Frozen specification inspection/publication and physical execution are explicit CPU substitutes.",
+    "Final issuer delegates to existing exact Store transaction; tests substitute the transaction, with existing final-control regression run separately.",
+    "Sequence tests cover fixed full order, replay without repeated jobs, interrupted prefix and STOP.",
+    "No production Store authorization, GPU query, simulation, training, volume mounting or holdout release."
+  ],
+  "remaining": [
+    "Final snapshot/input generation and top-level controller wiring",
+    "Repair re-entry, independent delivery audit and video/report generation",
+    "Combined production integration review and platform no-model-wait handoff"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}
