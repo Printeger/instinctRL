@@ -72,6 +72,11 @@ def settings(binding):
             # experience. Never fetch missing dependencies into this output.
             '/app/extensions/registryEnabled':False,
             '/app/extensions/registryCacheFull':str(root/'extension_install'),
+            '/app/extensions/registryCache':str(root/'extension_local'),
+            '/app/userConfigPath':str(root/'user.config.json'),
+            '/exts/omni.kit.pipapi/envPath':str(root/'pip_env'),
+            '/exts/omni.kit.pipapi/allowOnlineIndex':False,
+            '/exts/omni.kit.pipapi/tryUpgradePipOnFirstUse':False,
             '/exts/omni.kit.registry.nucleus/cachePath':str(root/'extension_cache'),
             '/exts/omni.kit.registry.nucleus/cachePrune/enabled':False,
             '/exts/omni.kit.registry.nucleus/cachePrune/runOnStartup':False}

@@ -9,8 +9,10 @@ def bind(tmp_path):
     root=tmp_path/'installed';root.mkdir()
     (root/'module.py').write_text('value=1\n')
     (root/'alias.py').symlink_to('module.py')
+    config=tmp_path/'user.config.json';config.write_text('{"persistent":{"sentinel":42}}')
+    config_pin=dict(path=str(config),sha256=hashlib.sha256(config.read_bytes()).hexdigest())
     p=tmp_path/'manifest.json'
-    p.write_text(json.dumps(dict(schema_version='r6-extension-inputs/1',tree=inputs.tree_identity(root))))
+    p.write_text(json.dumps(dict(schema_version='r6-extension-inputs/2',tree=inputs.tree_identity(root),user_config=config_pin)))
     return root,dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest())
 
 

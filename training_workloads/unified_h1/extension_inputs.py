@@ -44,11 +44,28 @@ def tree_identity(root):
     return dict(root=str(root),sha256=digest.hexdigest(),files=count,bytes=total)
 
 
-def validate(pin):
+def manifest(pin):
     from .research_contract import validate_pin
     record=json.loads(validate_pin(pin).read_text())
-    if set(record)!={'schema_version','tree'} or record['schema_version']!='r6-extension-inputs/1':
+    if set(record)!={'schema_version','tree','user_config'} or record['schema_version']!='r6-extension-inputs/2':
         raise ValueError('R6 extension input manifest')
+    return record
+
+
+def user_config_bytes(pin):
+    record=manifest(pin);config=record['user_config']
+    from .research_contract import validate_pin
+    path=validate_pin(config)
+    if path.stat().st_size>1024**2:raise ValueError('R6 persistent configuration size')
+    data=path.read_bytes()
+    if hashlib.sha256(data).hexdigest()!=config['sha256']:raise ValueError('R6 persistent configuration drift')
+    if not isinstance(json.loads(data),dict):raise ValueError('R6 persistent configuration object')
+    return data
+
+
+def validate(pin):
+    record=manifest(pin)
+    user_config_bytes(pin)
     if tree_identity(record['tree']['root'])!=record['tree']:
         raise ValueError('R6 extension input content mismatch')
     return record['tree']['root']

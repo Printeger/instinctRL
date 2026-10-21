@@ -298,6 +298,8 @@ def start_after_coexistence_gate(
         if extension_inputs_pin is None:raise ValueError('R6 native volume requires frozen extension inputs')
         from training_workloads.unified_h1.extension_inputs import validate as validate_extensions
         extension_args=' --ext-folder '+validate_extensions(extension_inputs_pin)
+        from training_workloads.unified_h1.extension_inputs import user_config_bytes
+        persistent_config=user_config_bytes(extension_inputs_pin)
         from training_workloads.unified_h1.native_volume import validate, require_capture
         require_capture(validate(dict(native_volume_pin)),_r6_capture_binding())
     gate = gate_runner(
@@ -327,12 +329,19 @@ def start_after_coexistence_gate(
             paths.extend(Path(native_settings[key]) for key in (
                 '/rtx/shaderDb/shaderCachePath','/rtx/shaderDb/driverShaderCachePath',
                 '/rtx-transient/resourcemanager/localTextureCachePath',
-                '/app/extensions/registryCacheFull','/exts/omni.kit.registry.nucleus/cachePath'))
+                '/app/extensions/registryCacheFull','/exts/omni.kit.registry.nucleus/cachePath',
+                '/app/extensions/registryCache','/exts/omni.kit.pipapi/envPath'))
         for path in paths:path.mkdir(mode=0o700,exist_ok=False)
+        if native_volume_pin is not None:
+            destination=Path(native_settings['/app/userConfigPath'])
+            fd=os.open(destination,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
+            with os.fdopen(fd,'wb') as stream:
+                stream.write(persistent_config);stream.flush();os.fsync(stream.fileno())
         atomic_json_replace(output_root,'native_path_request.json',{
             'schema_version':'r6-native-paths/1','status':'REQUESTED_NOT_VERIFIED',
             'settings':native_settings,'attempt_id':attempt_id,'authorization_sha256':authorization_sha256,
             'native_capture':capture,
+            'extension_inputs':extension_inputs_pin,
             'total_native_capacity_verified':False})
     native_args=''.join(f" --{key}={str(value).lower() if type(value)is bool else value}" for key,value in native_settings.items() if key!='/log/file')
     if launcher_factory is None:
