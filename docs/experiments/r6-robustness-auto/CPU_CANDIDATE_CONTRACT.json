@@ -1,0 +1,97 @@
+{
+  "status": "CPU_CANDIDATE_STAGE_FORMAL_ENTRY_AND_EVALUATION_WRAPPER_PASS_CONTROL_ROUTE_PENDING",
+  "input_commit": "f4d280fd",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_candidate_contract.py",
+      "sha256": "f156d83c72c86f8040123d245a5a39886c656ac5535d38ba53bc91366bcf22bb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "d2dc22f2742cb869f80798012a249b9427b94796dceb9a2b4d9e9a1e6fc18b83"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_candidate_restore.py",
+      "sha256": "1623ef4b33ab3f10b5aa5d147d184c8373f9bf00778c9247296efa4873636a9e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "4fa26110b2ac40144b8872b373082f416d141728eaa1a56bbcb8282997e5f0ae"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/authorization.py",
+      "sha256": "a7ffeb1d3a450a176c88d7c8f8956509bd7b36064599026ed10c6c30fc96b0e4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/research_contract.py",
+      "sha256": "579f7078e28e34bd2fde29bc48e68a42193ac126190998bf9ff6cc61df0d6aef"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/formal_unified_h1.py",
+      "sha256": "3d2e11c477486f1be2f7a5fac4abfe59e6e8a69bf986298e7bc0dc6918371b01"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/live_adapter.py",
+      "sha256": "abb83d4a4b14e2dcb92fbcdaf6f9bdf52a88175e4431b546fd0ceab21b25c505"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "97a52db98fe74f804e4449d15165d9361650693f1241868cacd048ef6394cc57"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_prelaunch.py",
+      "sha256": "4d14d6b1146a4b183b21286d83f8568ef048185d5f499882165bc3a521f0e191"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "fe81e7ae47d0af3fa2f8ba3878008acbe87a3dc58018f9f52a7d0213ad1c3e47"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/scale_003/resources.py",
+      "sha256": "07e1681bcb467e40325dc984c5664c55478f678e77d898cbd4453054fe97bb38"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/h1.py",
+      "sha256": "52c2238432b99eb5cc03b17364a5625b397519834a86e846b0ed030b6d2e9f1c"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_CONTRACT_INITIAL_CONTROL.log",
+      "sha256": "c1eb40d13fce407580360f30d053f9e6a8dd2d82a0effa2cc538bc72ad1e04ba"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_CONTRACT_COMBINED.log",
+      "sha256": "81a34259e478999877e042987719e3c437781b4bfbca3bd831946447f9df14dd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_CONTRACT_TENSOR.log",
+      "sha256": "a6076fd4c2d96249b58b976d743ee8294c66791cd7f9f4cb151d4310a0ba0996"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_CONTRACT_TARGETED.log",
+      "sha256": "5fc25572dac6cdc5f8e80faa31275b1dedeb0157a97e1da87680726d587821b6"
+    }
+  ],
+  "tests": {
+    "combined": 76,
+    "subtests": 56,
+    "tensor_regression": 33,
+    "targeted_final": 36
+  },
+  "initial_failure": "Initial control interpreter run: 72 passed/4 failed because Torch-dependent evaluation/dispatch tests used no-Torch venv. Corrected interpreter; no installation/runtime changes.",
+  "scope": [
+    "Separate candidate evaluation mode and dedicated config schema; exact reviewed selection, paired protocol/seed and card bindings; original evaluation seed unchanged.",
+    "Shared baseline denominator/quota/capacity validation and budget arithmetic. Full 16 frozen blocks plus original five tasks: 193600 nontraining transitions/21 explicit resets; no training/optimizer/checkpoint writes.",
+    "Candidate-specific source compatibility payload/review binds selection/model/method and exact source deltas; actor/runtime/base method/original scorer preserved.",
+    "Registered formal CLI/authorization/research dispatch, actual workload wrapper, native-volume readback, fresh resource gate and exact H1 evaluation seed/resource route.",
+    "Shared original-suite execution preserves all cases/32 lanes/wall prerequisites; candidate binding records selected checkpoint/update/method/comparison and does not claim scientific acceptance.",
+    "Tests verify rejected baseline authorization, drifted comparison/seed/quota, source boundaries, formal schema/budget binding, exact case traversal and native guards."
+  ],
+  "limitations": [
+    "New candidate tests substitute reviewed selection, frozen config loader and simulator/restore/scoring boundaries explicitly; strict real CPU derivative restore remains covered by preceding tests.",
+    "No production candidate config/independent review/Store permission or GPU/simulation/controller deployment.",
+    "Control-plane profile/materialization/issuance/analysis routing still requires candidate mode support; final freeze/release/evaluation/delivery and combined review/platform handoff remain."
+  ],
+  "goal_complete": false
+}

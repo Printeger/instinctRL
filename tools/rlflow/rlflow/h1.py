@@ -66,7 +66,7 @@ def validate(spec,root,*,fresh=True):
     expected_seed = (config['training']['evaluation_seed'] if h['mode'] in {'evaluation', 'pilot-evaluation', 'control-diagnostic', 'enhanced-b0-diagnostic'}
                      else config['training']['seed'])
     if h["mode"].startswith("research-"):
-        evaluation_modes = {'research-r6-evaluation', 'research-evaluation', 'research-transition', 'research-formal-evaluation'}
+        evaluation_modes = {'research-r6-candidate-evaluation', 'research-r6-evaluation', 'research-evaluation', 'research-transition', 'research-formal-evaluation'}
         expected_seed = auth["parameters"]["evaluation_seed" if h["mode"] in evaluation_modes else "training_seed"]
     if spec['seed']!=expected_seed or spec['method']!=config['method']['version'] or spec['evaluation']!=config['versions']['metric'] or spec['runtime']!=config['execution']['frozen_runtime_root']:
         raise Conflict('H1 seed/method/evaluation/runtime mismatch')
@@ -79,7 +79,7 @@ def validate(spec,root,*,fresh=True):
 
 def native_dispatch_options(spec):
     """Take native paths only from the exact snapshot-validated authority."""
-    if spec.get('backend')!='real' or spec.get('h1',{}).get('mode') not in ('research-r6-evaluation','research-r6-training'):
+    if spec.get('backend')!='real' or spec.get('h1',{}).get('mode') not in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation'):
         return {}
     parameters=inspect_authority(spec)['authorization']['parameters']
     result={'native_output_cap_bytes':256*1024**2}

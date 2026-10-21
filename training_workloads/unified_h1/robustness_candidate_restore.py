@@ -1,6 +1,6 @@
-"""Strict selected-policy restore for the prospective candidate evaluation entry.
+"""Strict selected-policy restore for the candidate evaluation entry.
 
-The candidate mode is not registered until its full stage contract is connected.
+The formal authorization separately validates stage budget and source compatibility.
 """
 
 def restore(backend,selection):

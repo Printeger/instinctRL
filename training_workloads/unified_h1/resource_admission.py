@@ -100,7 +100,7 @@ def run_gate(output_root, *, mode, attempt_id, authorization_sha256, resource_pi
 
 
 def select_gate(authorization, resource_pins, legacy_gate):
-    if authorization.get('mode') in ('research-r6-evaluation','research-r6-training'):
+    if authorization.get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation'):
         from .robustness_prelaunch import selected
         return selected(authorization,resource_pins)
     p = authorization.get('parameters',{})

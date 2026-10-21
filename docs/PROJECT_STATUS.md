@@ -1,5 +1,14 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：候选评价阶段契约/独立config schema/正式CLI与authorization/backend入口接通。
+准确selection与配对protocol/seed/card绑定，复用冻结全分母和容量检查；193600非训练transitions/21显式reset，
+训练/optimizer/checkpoint写入为0。候选源码兼容独审绑定所选模型/方法，保留actor/runtime/原评分器边界。
+原五任务与32-lane墙运动前提共用执行路径，模型标签按实际update；fresh资源窗口/native双卷/H1路径支持新mode。
+76项组合+56子检查、33项tensor回归、36项最终针对检查通过；首轮4项无Torch解释器失败保留并纠正。
+证据CPU_CANDIDATE_CONTRACT.json；selection/冻结config/simulator边界为明确替身，无生产发车。
+控制器候选profile/物化/发行/分析仍待接线，最终freeze/holdout/交付及组合独审/交接未完成。
+149次自动唤醒+30worker=179，模型余77；完整Goal未完成。
+
 2026-10-22：候选开发评价的已审模型选择与严格加载核心完成：u640控制对照/训练候选绑定同一
 method/protocol/stream；训练模型必须来自准确关闭作业与计划节点，原件/审计/选择独审逐项绑定。
 严格serializer恢复模型/Adam/RNG并读回方法，旧baseline授权拒绝，失败恢复RNG且不暴露trainer。

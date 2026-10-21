@@ -1,7 +1,7 @@
 """New R6 baseline-evaluation registration; no inherited R5 live permission.
 
-This first entry measures the fixed u640. Candidate training/evaluation requires
-its own reviewed extension; the overall R6 goal is not reduced to this phase.
+This entry measures fixed u640. The separate candidate contract reuses frozen
+denominator checks with its own reviewed selection and source compatibility.
 """
 from pathlib import Path
 import hashlib
@@ -52,8 +52,14 @@ def baseline(p):
 
 
 def validate_parameters(mode,value):
+    return _validate_parameters(mode,value)
+
+
+def _validate_parameters(mode,value,selected=None):
     from .research_contract import validate_pin
-    if mode!=MODE or not isinstance(value,dict) or set(value) not in (FIELDS,FIELDS|{'native_volume','extension_inputs','result_volume'}):raise PermissionError('R6 baseline evaluation fields/mode')
+    fields=FIELDS if selected is None else FIELDS|{'evaluation_selection'}
+    expected_mode=MODE if selected is None else 'research-r6-candidate-evaluation'
+    if mode!=expected_mode or not isinstance(value,dict) or set(value) not in (fields,fields|{'native_volume','extension_inputs','result_volume'}):raise PermissionError('R6 baseline evaluation fields/mode')
     p=dict(value)
     if 'native_volume' in p:
         from .native_volume import validate
@@ -61,7 +67,12 @@ def validate_parameters(mode,value):
         from .extension_inputs import validate as validate_extensions
         validate_extensions(p['extension_inputs'])
     if not isinstance(p['experiment_id'],str) or not re.fullmatch(r'R6-[A-Z0-9-]{1,90}',p['experiment_id']):raise PermissionError('R6 experiment identity')
-    if p['group']!='R1' or type(p['training_seed'])is not int or p['training_seed']!=20260908 or type(p['evaluation_seed'])is not int or p['evaluation_seed']!=20260909:
+    expected_seed=20260908 if selected is None else selected['model']['training_seed']
+    if selected is not None:
+        comparison=selected['comparison']
+        if p['baseline_bindings']!=selected['selection']['baseline_bindings'] or any(p['r6'].get(k)!=comparison[k] for k in ('protocol','block_ids','seed','split')):
+            raise PermissionError('R6 candidate comparison request drift')
+    if p['group']!='R1' or type(p['training_seed'])is not int or p['training_seed']!=expected_seed or type(p['evaluation_seed'])is not int or p['evaluation_seed']!=20260909:
         raise PermissionError('R6 baseline/original-suite seed identity')
     if type(p['wall_seconds'])is not int or not 1<=p['wall_seconds']<=43200:raise PermissionError('R6 job wall bound')
     if type(p['output_cap_bytes'])is not int or not 3*1024**3<p['output_cap_bytes']<=128*1024**3:raise PermissionError('R6 job output bound')
@@ -114,7 +125,11 @@ def validate_parameters(mode,value):
 
 
 def required_budget(mode,p):
-    p=validate_parameters(mode,p);r=p['r6'];protocol=pinned_json(r['protocol'])
+    return budget_from_parameters(validate_parameters(mode,p))
+
+
+def budget_from_parameters(p):
+    r=p['r6'];protocol=pinned_json(r['protocol'])
     indexed={b['id']:b for b in protocol['blocks']}
     transitions=32960+32*sum(indexed[k]['steps'] for k in r['block_ids'])
     return dict(live_process_starts=1,simulator_initializations=1,initialization_ticks=10,
@@ -179,16 +194,24 @@ def evaluate_registered(backend):
         checkpoint_source_identity=b['source_identity'],method_hashes=b['method_hashes'],ics_clearance_margin_m=.15,
         physical_history_continuity_claimed=False,actor_input_extension=False))
     backend.trainer.actor.eval();backend.trainer.critic.eval();backend._evaluation_rows.clear()
-    label='r6_baseline_u640_original'
-    for case in CASES:
-        backend.resource_check('before_r6_original_case',640)
-        backend._evaluate_case(case,direct_b0=False,evaluation_label=label)
-    original=evaluate_checkpoint([t for case in CASES for t in backend._evaluation_rows[case]],update=640)
-    atomic_json_replace(backend.output,'r6_original_suite.json',original)
-    rows=[json.loads(line) for line in (backend.output/'evaluation_raw'/label/'W.jsonl').read_text().splitlines()][1:]
-    motion=[wall_motion_prerequisite([r['root_state_w'][lane][7+(lane>=16)] for r in rows]) for lane in range(32)]
-    atomic_json_replace(backend.output,'r6_original_wall_motion.json',dict(per_lane=motion,all32=all(motion)))
+    original=evaluate_original_suite(backend,update=640,label='r6_baseline_u640_original')
     new=backend.evaluate_r6_blocks()
     atomic_json_replace(backend.output,'r6_evaluation_complete.json',dict(original=original,new_blocks=new,
         baseline=b['selected_model'],original_seed=20260909,new_seed=p['r6']['seed'],
         scientific_acceptance=False,evidence_status='REQUIRES_INDEPENDENT_RAW_REPLAY'))
+
+
+def evaluate_original_suite(backend,*,update,label):
+    """Unchanged original five-task scoring, all 32 lanes and wall prerequisites."""
+    from .evaluation import CASES,evaluate_checkpoint,wall_motion_prerequisite
+    from training_workloads.scale_003.persistence import atomic_json_replace
+    backend._evaluation_rows.clear()
+    for case in CASES:
+        backend.resource_check('before_r6_original_case',update)
+        backend._evaluate_case(case,direct_b0=False,evaluation_label=label)
+    original=evaluate_checkpoint([t for case in CASES for t in backend._evaluation_rows[case]],update=update)
+    atomic_json_replace(backend.output,'r6_original_suite.json',original)
+    rows=[json.loads(line) for line in (backend.output/'evaluation_raw'/label/'W.jsonl').read_text().splitlines()][1:]
+    motion=[wall_motion_prerequisite([r['root_state_w'][lane][7+(lane>=16)] for r in rows]) for lane in range(32)]
+    atomic_json_replace(backend.output,'r6_original_wall_motion.json',dict(per_lane=motion,all32=all(motion)))
+    return original

@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 148,
-    "total_automatic_model_sessions_minimum": 178,
+    "platform_automatic_goal_wakes": 149,
+    "total_automatic_model_sessions_minimum": 179,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -327,6 +327,8 @@
     "training_rng_audit_status": "CPU_INITIAL_RNG_SEED_AND_RESUME_RECORD_AUDIT_PASS_NOT_LIVE",
     "training_rng_audit_evidence": "docs/experiments/r6-robustness-auto/CPU_TRAINING_RNG_AUDIT.json",
     "candidate_selection_status": "CPU_REVIEWED_DEVELOPMENT_SELECTION_AND_STRICT_RESTORE_CORE_PASS_STAGE_ENTRY_PENDING",
-    "candidate_selection_evidence": "docs/experiments/r6-robustness-auto/CPU_CANDIDATE_SELECTION.json"
+    "candidate_selection_evidence": "docs/experiments/r6-robustness-auto/CPU_CANDIDATE_SELECTION.json",
+    "candidate_contract_status": "CPU_CANDIDATE_STAGE_FORMAL_ENTRY_AND_EVALUATION_WRAPPER_PASS_CONTROL_ROUTE_PENDING",
+    "candidate_contract_evidence": "docs/experiments/r6-robustness-auto/CPU_CANDIDATE_CONTRACT.json"
   }
 }

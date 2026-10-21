@@ -1,6 +1,6 @@
 {
   "status": "TRAINING_STRUCTURAL_ANALYSIS_ROUTE_CPU_PASS_NOT_DEPLOYED",
-  "checked_commit": "14b5f62f",
+  "checked_commit": "f4d280fd",
   "concrete_first_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
     "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
@@ -30,7 +30,7 @@
   ],
   "next_implementation": {
     "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs; persistent first/decision/profile/materialization/next cursor and actual detached CPU wait/STOP fixture; exact baseline-compatible source payload/review/frozen validation/new-context routing; exact training-plan budget/seed/checkpoint provenance and RNG branch/resume composition; R6 world-command training driver with actual next-attitude conversion and exact clock provenance; registered phase curriculum and actual CPU condition/reset sampling with audit separation and phase reset budgeting; training phase reset/measurement/physics adapter composition including resumed phase pulse offset and audited noise stream fork; loaded-trainer phase execution with shared first-update diagnostic, bounded logs/RNG, original/robust driver switching and exact checkpoint callback; strict checkpoint restore, explicit complete method schema, actual runtime/optimizer readback and pre-execution drift guard; exact training profile/capacity/source compatibility contracts and dedicated config/formal entry/native/resource lifecycle route",
-    "next": "Candidate evaluation stage contract, dedicated config/authorization/backend execution and controller routing; final freeze/release/evaluation/delivery. Reviewed development paired selection and strict selected-policy restore core are CPU verified. Combined integration review and platform handoff precede production.",
+    "next": "Candidate control-plane profile/materialization/issuance/analysis routes; final freeze/release/evaluation/delivery. Candidate formal mode, dedicated config, exact stage/source contract and original+new evaluation wrapper CPU verified. Combined integration review and platform handoff precede production.",
     "deployment": "Controller composition and baseline-compatible source route CPU verified; independent combined review, remaining phase contracts and platform handoff precede production",
     "invariants": [
       "No Journal or Store authority mutation by source-preparation worker",
@@ -140,5 +140,9 @@
   "candidate_selection": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_SELECTION.json",
     "sha256": "79a149a188e4b340b6537ed4c5219de2b957ed63bbcfe87b019a6a8b1301d667"
+  },
+  "candidate_contract": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_CONTRACT.json",
+    "sha256": "ce06d408a6a812f5e347235e7cf0f5749feff46d68f8f4a775348941059372b6"
   }
 }
