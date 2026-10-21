@@ -44,9 +44,9 @@ requires the frozen interpreter/analyzer for every real-mode job.
     from tools import r6_cpu_analysis as cpu
     journal.require_writer()
     state=journal.read();job=journal.canonical_job(key,state=state)
-    existing=[event_key for event_key,event in state['events'].items()
-        if event['kind']=='cpu' and event['identity']['job_id']==job['identity']['job_id']
-        and event['identity']['role']=='cpu-analysis']
+    from tools.r6_analysis_repair import active
+    selected=active(journal,key)
+    existing=[] if selected is None else [selected]
     expected=dict(python=file_pin(cpu.PYTHON) if python is None else python,
         program=file_pin(cpu.program_for(json.loads(checked(job['request']['spec']).read_text())['h1']['mode'])) if program is None else program,
         timeout_seconds=timeout_seconds)

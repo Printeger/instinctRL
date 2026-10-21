@@ -23,7 +23,7 @@ ROOT=Path(__file__).resolve().parents[1]
 PYTHON=Path('/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11')
 LOG_CAP=1024**2
 RESERVATION=20*1024**2
-SOURCES=('tools/analyze_r6_evaluation.py','tools/r6_cpu_analysis.py',
+SOURCES=('tools/analyze_r6_evaluation.py','tools/r6_cpu_analysis.py','tools/r6_analysis_repair.py',
  'tools/analyze_r6_final.py','tools/r6_final_analysis.py',
  'training_workloads/unified_h1/robustness_final_selection.py','training_workloads/unified_h1/robustness_holdout.py',
  'tools/analyze_r6_candidate.py','tools/r6_candidate_analysis.py',
@@ -62,16 +62,19 @@ def environment():
 
 def validate(journal,key):
     state=journal.read();entry=state['events'][key];request=entry['request']
+    fields={'job_event_key','spec','closure','inventory','postrun','python','program','sources','timeout_seconds'}
+    if 'repair' in request:fields.add('repair')
     if (entry['kind']!='cpu' or sha(entry['identity'])!=key or entry['identity']['input_sha256']!=sha(request)
-            or set(request)!={'job_event_key','spec','closure','inventory','postrun','python','program','sources','timeout_seconds'}):
+            or set(request)!=fields):
         raise RecoveryError('CPU_ANALYSIS_REQUEST_IDENTITY')
     job=journal.canonical_job(request['job_event_key'],state=state)
     expected=dict(goal_id=state['goal_id'],event_id='CPU_ANALYSIS:'+request['job_event_key'],
         job_id=job['identity']['job_id'],input_sha256=sha(request),role='cpu-analysis')
+    if 'repair' in request:expected['event_id']+=':REPAIR:'+request['repair']['sha256']
     if entry['identity']!=expected:raise RecoveryError('CPU_ANALYSIS_CANONICAL_EVENT')
-    matches=[e for e in state['events'].values() if e['kind']=='cpu' and e['identity']['job_id']==expected['job_id']
-        and e['identity']['role']=='cpu-analysis']
-    if len(matches)!=1:raise RecoveryError('CPU_ANALYSIS_ALIAS')
+    from tools.r6_analysis_repair import active
+    if active(journal,request['job_event_key'])!=key:raise RecoveryError('CPU_ANALYSIS_NOT_ACTIVE')
+    if 'repair' in request and entry['purpose']!='repair':raise RecoveryError('CPU_ANALYSIS_REPAIR_PURPOSE')
     if (request['spec']!=job['request']['spec'] or any(request[n]!=job.get(n) for n in ('closure','inventory','postrun'))):
         raise RecoveryError('CPU_ANALYSIS_JOB_BINDING')
     for n in ('spec','closure','inventory','postrun','python','program'):checked(request[n])
@@ -79,6 +82,8 @@ def validate(journal,key):
         raise RecoveryError('CPU_ANALYSIS_TIMEOUT_BOUND')
     if entry['resources']!={'output_actual_plus_unreleased_reservations_bytes':RESERVATION}:
         raise RecoveryError('CPU_ANALYSIS_RESERVATION')
+    from tools.r6_profile_preparation import reservation
+    reservation(state,key,'cpu',entry['resources'],entry['purpose'])
     if request['sources']!=[file_pin(ROOT/p) for p in SOURCES]:raise RecoveryError('CPU_ANALYSIS_SOURCE_DRIFT')
     spec=json.loads(checked(request['spec']).read_text())
     if spec.get('backend')=='real':

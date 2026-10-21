@@ -1,0 +1,64 @@
+{
+  "status": "CPU_ANALYSIS_FAILED_WORKER_REPLACEMENT_PASS_NOT_DEPLOYED",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_repair.py",
+      "sha256": "680fcadf6b941227871b5d895385df1b071b58f089d19cdca54aa64518a6e7d0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_cpu_analysis.py",
+      "sha256": "7e320c7c2176da58fb6c3f36651577952e904cd13d97600feaf2b5d3924a9f47"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_finalize_job.py",
+      "sha256": "c6d3d46bad1a1001b44001c8a33a5a0157826678e962c77291cbbdf32be29cc9"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_analysis_repair.py",
+      "sha256": "01c82dce64da2bb0b49b5730619c7e87fb6475c0a84ba27e1c1ea1f71dd8c570"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ANALYSIS_REPAIR_INITIAL.log",
+      "sha256": "d0fe3aa5d62d5cf5d7c90ce6f76218720ab573517ec169d92454202f353f4fee"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ANALYSIS_REPAIR_COMBINED.log",
+      "sha256": "0a0a08c7dba268144d55bf8d1b513ba398583aa28b4130c0c84e4440a58d1464"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ANALYSIS_REPAIR_FINAL.log",
+      "sha256": "a896d83442ba4f4d3efccc99c5038c15a0492347619c82b9e78f9bbd349ea629"
+    }
+  ],
+  "checks": {
+    "initial_tests": 43,
+    "combined_tests": 102,
+    "final_tests": 48,
+    "real_journal_guard": "PASS",
+    "actual_production_cpu_analysis_events": 0,
+    "production_model_calls_added": 0
+  },
+  "behavior": [
+    "Explicit repair document binds the original failed receipt, reason, evidence and exact closed job.",
+    "New analysis input must differ; original records and reservations remain charged, and a unique linked active attempt prevents forks or stale execution.",
+    "Require verified cleanup, dead exact worker/child identities, immutable raw bindings and reservation before dispatch.",
+    "Already bound analysis or downstream model activity blocks replacement. STOP and remaining budget are checked before registration.",
+    "Real CPU subprocess fixtures cover failure, two consecutive repaired failures, restart without duplicate execution, unchanged input rejection, missing cleanup/receipt/exit status, live child, missing reservation, budget exhaustion and STOP."
+  ],
+  "boundaries": [
+    "Scientific reports and Store state are fixtures; no actual baseline/GPU/training or new scientific acceptance.",
+    "This is an explicit CPU worker-failure replacement entry, not automatic repair dispatch. Ambiguous ownership, missing receipts and successful but semantically rejected analyses still require distinct reconciliation.",
+    "Controller implementation revisions, changed scoring semantics and holdout handling retain their separate acceptance requirements.",
+    "Existing root-owned CPU-QUOTA-01 pytest temporary directories could not be removed; unrelated contents preserved."
+  ],
+  "remaining": [
+    "Automatic engineering repair worker/supervisor and exact reentry",
+    "Failed decision/source-preparation event replacement",
+    "Administrator restoration of supported local read-only sandbox",
+    "Platform model-free handoff and actual inactivity evidence",
+    "Actual baseline and complete scientific goal"
+  ],
+  "goal_complete": false
+}
