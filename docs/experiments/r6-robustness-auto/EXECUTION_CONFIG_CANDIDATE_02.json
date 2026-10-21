@@ -261,11 +261,12 @@
       "training_workloads/unified_h1/budget.py": "e861364f9facf45020d02efca6bc5421fc84607c88fc4f01e4f965f69f76d5f8",
       "training_workloads/unified_h1/checkpoint_compatibility.py": "670ec6ff9dc4841f7e9d088422fecec22dc23bb7295fa4bbb094fdf03369bb80",
       "training_workloads/unified_h1/checkpoint_recalculation.py": "d23c77092a71fb69359bcef6bf50f3ff9ca01b34b61748e889c1b49e249fe626",
-      "training_workloads/unified_h1/config.py": "991b0de2aac32256ef6186c83bd93b2391f6eccc5b9317796a4238050fa85b5f",
+      "training_workloads/unified_h1/config.py": "40fdf62802fa86131ef1d4eed1871f63ff364046850aeabe00936a0a487c036d",
       "training_workloads/unified_h1/control_diagnostic.py": "0825540779cf217d5a60b79a4e8d62b6e6724129aaba76a42dfec91aad098a61",
       "training_workloads/unified_h1/driver.py": "7dfd5fa922d93dbb199600d77ae50c4827fc5255fd08e6e645bb6149867c7a35",
       "training_workloads/unified_h1/evaluation.py": "a6caedb36a5ddb408a9a9b8c6e073808b480252f6cc3ec12d201b69ab5e5583c",
       "training_workloads/unified_h1/evidence_boundary.py": "3ee5a6c285eae6a0344807d74f67009c2cc9a7b0aea02a2119f606f894917b24",
+      "training_workloads/unified_h1/extension_inputs.py": "fef972a7afe8cac192272627d65c8a9f4fb4c72cd9dca2b91c20d5111df7b6d1",
       "training_workloads/unified_h1/force_archive.py": "2ada654e0f9f1f95799b12379c631f8fcac2a8666f53c185893fa521fe79309c",
       "training_workloads/unified_h1/formal_segment.py": "7decffc1eb7fc54261abd2fe7234926a889d19fed1bd0137c2b87c2667fe1770",
       "training_workloads/unified_h1/formal_unified_h1.py": "42191734125cd784bf2b7665a7177ba958fd4de9c26b44582aeb2923692b431b",
@@ -274,6 +275,7 @@
       "training_workloads/unified_h1/logging.py": "69575a7de0d7e054c769d7968bf6a4e56d72a3d0640a0ccb2d4cd77c935385d9",
       "training_workloads/unified_h1/lossless_evidence.py": "82684c9bdf7be9bf19e910f12f016092ffff41d022e7b0a537d7f965ca8779d4",
       "training_workloads/unified_h1/mean_prior.py": "a7e8d3589f739636a337ca258d61f9e541bd576b98826019a012e8b5feab896c",
+      "training_workloads/unified_h1/native_volume.py": "e1d7093df23a941e58a0776a612a8822b79c6027912b5c11806c7459c2906349",
       "training_workloads/unified_h1/pilot_contract.py": "4e00ebde975491f5be10d2d19e13984be437f10547fe33b16bf28f48b4d2fc66",
       "training_workloads/unified_h1/pilot_diagnostic.py": "98f71905167598fc85886f9ace5f307908e65a8282c5a05c736b6282c5bc10ff",
       "training_workloads/unified_h1/preflight.py": "d4add8a45bde7959e0771ddb8bfbd8db2bd434871ae3c1137a880faf46dda5cd",
@@ -281,6 +283,7 @@
       "training_workloads/unified_h1/range_archive.py": "e117de39cfa4ee0a057bff50893509fcf5dc31cbfa676331e158cd5e4c4b93ef",
       "training_workloads/unified_h1/research_contract.py": "84d3a1c82c5195b36afdca42f5ca63dd58b6b50765934b4bee6f7c0950dd54be",
       "training_workloads/unified_h1/resource_admission.py": "c70cf5648443ffde3dd3e4cb065f6bf2cee34a55211eadd75a77ef0dc1c4ec18",
+      "training_workloads/unified_h1/result_volume.py": "d28cc9129522f96c805238e2cf2d6f97b190d07d0632f9e53935fc36f66eba2b",
       "training_workloads/unified_h1/robustness.py": "263aa23a624ff973202e2a94ce1d8346c211343ba23701687c2ca59a5a4402b4",
       "training_workloads/unified_h1/robustness_analysis.py": "1507f7f2ab57faed5f8ebc9f931709875de546fab2da1972ae2546851be92ae8",
       "training_workloads/unified_h1/robustness_audit.py": "e39d2bb4b8f95bb9d5787d3bed930b8a203777af2929f41896f9f8aa3b7d99e6",
@@ -294,7 +297,8 @@
       "training_workloads/unified_h1/schedule.py": "726044a33a4bd188e7b289bf8e9c0dabdbfe99b70fb38d90a6d89c37594c1565",
       "training_workloads/unified_h1/transition_diagnostic.py": "7347ffa01d64b58b7342ea663d126313d4b5ae02d7b45a88b2e0ab6be8ae6eda",
       "training_workloads/unified_h1/w_closure.py": "5e30b39ee175781360a865b1f2f41925023bb6e321f1474e65e0b678fce4346d",
-      "training_workloads/unified_h1/w_independent.py": "a4a6ef91fb9d30cb8f450511c4b46ca143a6a2adfca46fa8d8cab3733535988a"
+      "training_workloads/unified_h1/w_independent.py": "a4a6ef91fb9d30cb8f450511c4b46ca143a6a2adfca46fa8d8cab3733535988a",
+      "training_workloads/unified_h1/write_boundary.py": "115ce3c7ed3cdcca80bc1c142275baee8bd9463b216b02548dcfa91e59756b36"
     }
   }
 }
