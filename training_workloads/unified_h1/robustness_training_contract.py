@@ -21,8 +21,20 @@ def require(condition,reason):
     if not condition:raise PermissionError('R6_TRAINING_STAGE_'+reason)
 
 
+MANAGED={'experiment_card','native_volume','result_volume','output_cap_bytes'}
+
+
 def validate_parameters(mode,value):
-    require(mode==MODE and isinstance(value,dict) and set(value)==FIELDS,'FIELDS')
+    return _validate(mode,value,materialized=True)
+
+
+def validate_draft(mode,value):
+    return _validate(mode,value,materialized=False)
+
+
+def _validate(mode,value,*,materialized):
+    require(mode==MODE and isinstance(value,dict)
+        and set(value)==(FIELDS if materialized else FIELDS-MANAGED),'FIELDS')
     p=dict(value);plan=validate_plan(p['r6_training_plan'])
     require(p['experiment_id']==plan['experiment_id'] and p['group']=='R1','IDENTITY')
     require(type(p['training_seed'])is int and p['training_seed']==plan['training_seed']
@@ -42,20 +54,23 @@ def validate_parameters(mode,value):
     from .result_volume import CONTROL_ALLOWANCE,workload_write_cap
     from .extension_inputs import validate as validate_extensions
     payload=plan['storage']['payload_bytes']
-    require(type(p['output_cap_bytes'])is int
-        and p['output_cap_bytes']==payload+96*1024**2+MAXIMUM+CONTROL_ALLOWANCE,'AGGREGATE_OUTPUT')
+    aggregate=payload+96*1024**2+MAXIMUM+CONTROL_ALLOWANCE
+    if materialized:
+        require(type(p['output_cap_bytes'])is int and p['output_cap_bytes']==aggregate,'AGGREGATE_OUTPUT')
     capacity=pinned_json(p['capacity_review'])
     require(set(capacity)=={'schema_version','plan_sha256','payload_bytes','job_output_cap_bytes','budgets','independent_review'}
         and capacity['schema_version']=='r6-training-capacity/1'
         and capacity['plan_sha256']==object_sha(plan) and capacity['payload_bytes']==payload
-        and capacity['job_output_cap_bytes']==p['output_cap_bytes'] and capacity['budgets']==plan_budget(plan),'CAPACITY')
+        and capacity['job_output_cap_bytes']==aggregate and capacity['budgets']==plan_budget(plan),'CAPACITY')
     accepted_review(capacity['independent_review'],'PASS_R6_TRAINING_CAPACITY',
         payload_sha256=object_sha({k:v for k,v in capacity.items() if k!='independent_review'}))
-    validate_native(p['native_volume']);validate_extensions(p['extension_inputs'])
-    require(workload_write_cap(p,minimum_free_bytes=payload)==payload,'PAYLOAD_VOLUME')
-    card=pinned_json(p['experiment_card'])
-    require(card.get('experiment_id')==p['experiment_id']
-        and card.get('profiles',{}).get('R1')=={k:v for k,v in p.items() if k!='experiment_card'},'CARD')
+    validate_extensions(p['extension_inputs'])
+    if materialized:
+        validate_native(p['native_volume'])
+        require(workload_write_cap(p,minimum_free_bytes=payload)==payload,'PAYLOAD_VOLUME')
+        card=pinned_json(p['experiment_card'])
+        require(card.get('experiment_id')==p['experiment_id']
+            and card.get('profiles',{}).get('R1')=={k:v for k,v in p.items() if k!='experiment_card'},'CARD')
     pinned_json(p['checkpoint_compatibility'])
     return p
 

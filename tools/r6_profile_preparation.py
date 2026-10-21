@@ -17,6 +17,7 @@ from tools.r6_job_handoff import no_model_workers
 from tools.r6_postrun import stop_paths
 from tools import r6_storage_allocation as storage
 from tools import r6_materialize_job as materializer
+from tools import r6_training_profile as training_profile
 from tools.r6_prepare_authorization import verify_frozen
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -71,17 +72,18 @@ def packet(journal,parent_key,context_pin,store,*,free_disk_bytes):
         value=dict(parent=parent_pin,parent_key=parent_key,context=context_pin,
             budget=dict(caps=state['budget']['caps'],charged=totals(state['budget']),
                 protected=state['budget']['protected_confirmation_delivery_repair']),
-            store_sha256=sha(store.replay()),implementation=file_pin(__file__))
+            store_sha256=sha(store.replay()),implementation=file_pin(__file__),
+            training_validator=file_pin(training_profile.__file__))
         request=dict(packet=value)
         event=dict(goal_id=state['goal_id'],event_id=name,
             job_id=state['events'][parent_key]['identity']['job_id'],input_sha256=sha(request),role='profile-input')
         key,_=journal.intent(event,kind='cpu',request=request,
             resources={'output_actual_plus_unreleased_reservations_bytes':CAP},
             purpose=context['runner']['purpose'],free_disk_bytes=free_disk_bytes)
-    checked(value['implementation'])
+    checked(value['implementation']);checked(value['training_validator'])
     reservation(journal.read(),key,'cpu',{'output_actual_plus_unreleased_reservations_bytes':CAP},runner['purpose'])
     folder=journal.directory/'profile-preparation'/key
-    text=('Prepare one exact R6 evaluation profile from the pinned scientific decision and source '
+    text=('Prepare one exact R6 evaluation or training profile from the pinned scientific decision and source '
         'context, READ ONLY, then exit. Do not edit files, run GPUs/simulation, create volumes or '
         'snapshots, mutate Journal/Store, issue approval, spawn agents, or submit jobs. Read the '
         'parent original evidence, frozen source contract and baseline_profile. Preserve actor '
@@ -90,7 +92,10 @@ def packet(journal,parent_key,context_pin,store,*,free_disk_bytes):
         'with concrete must_fix. Never substitute baseline evaluation for required training/final '
         'confirmation. profile_json must encode a full profile draft except experiment_card, '
         'native_volume, result_volume and output_cap_bytes, which controller alone supplies. Use '
-        'a new experiment ID. Preserve exact immutable authority/protocol/compatibility pins. '
+        'a new experiment ID. For training, include the exact r6_training_plan, separately reviewed '
+        'recipe, capacity_review and training checkpoint_compatibility; the frozen training draft '
+        'validator must accept before volume reservation. Never reuse baseline compatibility for '
+        'training. Preserve exact immutable master authority/baseline/extension pins. '
         'Specify aligned result_payload_bytes and minimum_free_inodes from full raw/checkpoint '
         'requirements. No profile is permission. Include exact packet/context/parent pins in '
         'evidence_pins, changed_files=[], and remaining automatic sessions = packet budget cap '
@@ -126,7 +131,7 @@ def register(journal,parent_key,context_pin,store,*,executable,free_disk_bytes):
 def record(journal,key,packet_key,packet_pin,store,*,free_disk_bytes):
     guard(journal);state=journal.read();entry=state['events'][key]
     value=json.loads(checked(packet_pin).read_text());context=json.loads(checked(value['context']).read_text())
-    checked(value['implementation'])
+    checked(value['implementation']);checked(value['training_validator'])
     snapshot=json.loads(checked(context['snapshot_receipt']).read_text())
     verify_frozen(snapshot,json.loads(checked(snapshot['config']).read_text()))
     require(entry['identity']['event_id']=='PROFILE_MODEL:'+packet_key
@@ -166,25 +171,34 @@ def record(journal,key,packet_key,packet_pin,store,*,free_disk_bytes):
     profile=json.loads(result['profile_json'])
     require(isinstance(profile,dict) and not materializer.MANAGED.intersection(profile),'MANAGED_FIELDS')
     reference=json.loads(checked(context['baseline_profile']).read_text())
-    require(set(profile)==set(reference)-materializer.MANAGED,'PROFILE_FIELDS')
-    for name in ('master_authority','baseline_bindings','checkpoint_compatibility','protocol_review',
-                 'extension_inputs','group','training_seed','evaluation_seed'):
+    training='r6_training_plan' in profile
+    immutable=('master_authority','baseline_bindings','extension_inputs','group','evaluation_seed')
+    if not training:
+        require(set(profile)==set(reference)-materializer.MANAGED,'PROFILE_FIELDS')
+        immutable+=('checkpoint_compatibility','protocol_review','training_seed')
+    for name in immutable:
         require(profile.get(name)==reference.get(name),'IMMUTABLE_PROFILE_BINDING')
-    require(isinstance(profile.get('r6'),dict) and isinstance(reference.get('r6'),dict)
-        and profile['r6'].get('protocol')==reference['r6'].get('protocol'),'PROTOCOL_BINDING')
+    if not training:
+        require(isinstance(profile.get('r6'),dict) and isinstance(reference.get('r6'),dict)
+            and profile['r6'].get('protocol')==reference['r6'].get('protocol'),'PROTOCOL_BINDING')
     experiment=profile.get('experiment_id');require(isinstance(experiment,str)
         and re.fullmatch('R6-[A-Z0-9-]{1,90}',experiment),'EXPERIMENT_ID')
     require(not any(j.get('spec',{}).get('id')==experiment for j in store.replay()['jobs'].values()),'USED_EXPERIMENT')
     payload=result['result_payload_bytes'];inodes=result['minimum_free_inodes']
     require(type(payload)is int and payload>0 and payload%4096==0 and type(inodes)is int and inodes>0,'STORAGE_DIMENSIONS')
-    quotas=profile['r6'].get('output_quotas',{})
-    require(isinstance(quotas,dict) and quotas and set(quotas)==set(profile['r6'].get('block_ids',[])), 'OUTPUT_QUOTAS')
-    required=64*1024**2
-    for quota in quotas.values():
-        require(isinstance(quota,dict) and set(quota)=={'range_bytes','audit_bytes'}
-            and all(type(v)is int and 0<v<=2*1024**3 for v in quota.values()),'OUTPUT_QUOTAS')
-        required+=sum(quota.values())+16*1024**2
-    require(payload>=required,'PAYLOAD_UNDERSIZED')
+    if training:
+        required=training_profile.validate(context['snapshot_receipt'],profile)
+        require(payload==required,'TRAINING_PAYLOAD')
+    else:
+        quotas=profile['r6'].get('output_quotas',{})
+        require(isinstance(quotas,dict) and quotas and set(quotas)==set(profile['r6'].get('block_ids',[])), 'OUTPUT_QUOTAS')
+        required=64*1024**2
+        for quota in quotas.values():
+            require(isinstance(quota,dict) and set(quota)=={'range_bytes','audit_bytes'}
+                and all(type(v)is int and 0<v<=2*1024**3 for v in quota.values()),'OUTPUT_QUOTAS')
+            required+=sum(quota.values())+16*1024**2
+        require(payload>=required,'PAYLOAD_UNDERSIZED')
+    guard(journal)
     volume_id='J-'+sha(dict(goal=state['goal_id'],parent=value['parent'],profile=profile,payload=payload,inodes=inodes))[:16]
     native=storage.native_tool.plan(volume_id)
     target=storage.result_tool.ATTEMPTS/experiment/'results'

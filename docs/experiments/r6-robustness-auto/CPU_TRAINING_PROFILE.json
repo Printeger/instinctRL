@@ -1,0 +1,49 @@
+{
+  "status": "CPU_TRAINING_PROFILE_DRAFT_AND_STORAGE_ROUTE_PASS_NOT_DEPLOYED",
+  "input_commit": "c34c6205",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_profile.py",
+      "sha256": "08af490e58558ab7946f27210190d0b361e2fa6b1bb6561038c855828994a75c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_profile_preparation.py",
+      "sha256": "0e82668e7024a9f23ecdae412b8a5b5cf6da5cf617391e2b1dd0fecc4a3748d6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_contract.py",
+      "sha256": "acc43b3c838d80803df0b089c69f38f9a1552ca5cd2101ac0ee27673581bad27"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PROFILE_TESTS.log",
+      "sha256": "2d0082d0bc6223e58794f24f6bc9b5345330ca536dee4fe88468d12c559a7584"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PROFILE_REGRESSION.log",
+      "sha256": "d84e2cfdde08eb8f2ec1e6723c3915c5161de9e4cf00e6e401439c94b0a5992d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PROFILE_TENSOR.log",
+      "sha256": "e2319c07d38b57d62e297b756c09158f77c51ba74ff89ec3f1cca2574d99eed8"
+    }
+  ],
+  "control_tests": 94,
+  "tensor_contract_tests": 22,
+  "initial_test_failures": [],
+  "scope": [
+    "Training draft uses same plan/recipe/capacity/master/origin contract as full authorization without requiring unprovisioned volumes or card",
+    "Exact frozen isolated CPU validator checks dedicated training config and training source/method compatibility before storage reservation",
+    "Profile route supports declared training seed/plan instead of baseline field set and evaluation quota arithmetic; exact master/baseline/extension bindings remain immutable",
+    "Training payload must equal independently reviewed plan; STOP during frozen validation prevents subsequent writes/allocation; model receipt and storage replay remain idempotent",
+    "Full materialized contract still verifies actual volumes, output capacity and experiment card"
+  ],
+  "limitations": [
+    "Worker/storage route uses local fake CLI and explicit frozen-validator substitute; process transport tests substitute subprocess result",
+    "Direct frozen-program test exercises real draft contract with declared baseline/extension and compatibility/config fixtures; no actual frozen training snapshot, volume or production review",
+    "Training recipe/capacity/source-compatibility review preparation and training CPU analysis remain to integrate; combined independent review and platform handoff pending",
+    "No GPU/simulation/training/production issuance; full scientific goal and delivery incomplete"
+  ],
+  "goal_complete": false
+}

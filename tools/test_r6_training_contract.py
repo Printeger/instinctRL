@@ -165,3 +165,32 @@ def test_control_native_options_preserve_dual_volume_for_training(stage,monkeypa
     assert options['native_volume_pin']==p['native_volume']
     assert options['result_volume_pin']==p['result_volume']
     assert options['job_output_cap_bytes']==p['output_cap_bytes']
+
+
+def test_draft_requires_reviews_without_touching_unprovisioned_volumes(stage,monkeypatch):
+    b,p=stage
+    def forbidden(*a,**k):raise AssertionError('draft must not inspect absent volumes')
+    monkeypatch.setattr('training_workloads.unified_h1.native_volume.validate',forbidden)
+    monkeypatch.setattr('training_workloads.unified_h1.result_volume.workload_write_cap',forbidden)
+    draft={k:v for k,v in p.items() if k not in c.MANAGED}
+    assert c.validate_draft(c.MODE,draft)==draft
+    draft['r6_training_plan']['wall_seconds']+=1
+    with pytest.raises(PermissionError,match='CAPACITY'):c.validate_draft(c.MODE,draft)
+
+
+def test_training_profile_frozen_program_uses_actual_draft_contract(stage,monkeypatch):
+    import io,json,sys
+    from tools.r6_training_profile import PROGRAM
+    from training_workloads.unified_h1 import config
+    b,p=stage;draft={k:v for k,v in p.items() if k not in c.MANAGED}
+    cfg=dict(schema_version=config.R6_TRAINING_CONFIG_SCHEMA,resolved_identity=b.recipe['source_identity'])
+    monkeypatch.setattr(config,'load_config',lambda:cfg)
+    seen=[];monkeypatch.setattr(c,'validate_compatibility',lambda *a:seen.append(a))
+    monkeypatch.setattr(sys,'stdin',io.StringIO(json.dumps(draft)));out=io.StringIO()
+    monkeypatch.setattr(sys,'stdout',out);monkeypatch.setattr(sys,'argv',['fixture',str(ROOT)])
+    original=list(sys.path)
+    try:exec(PROGRAM,{})
+    finally:sys.path[:]=original
+    result=json.loads(out.getvalue());assert result['source_identity']==b.recipe['source_identity']
+    assert result['payload_bytes']==b.plan['storage']['payload_bytes']
+    assert seen==[(draft['checkpoint_compatibility'],draft['r6_training_plan'],cfg)]
