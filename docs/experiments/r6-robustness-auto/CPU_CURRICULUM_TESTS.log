@@ -1,0 +1,47 @@
+.F............................................                           [100%]
+=================================== FAILURES ===================================
+______________ test_world_commands_and_repeated_pulse_boundaries _______________
+
+    def test_world_commands_and_repeated_pulse_boundaries():
+        a,_=sampler()
+        world=a.world_command(a.start)
+        assert world.shape==(32,3) and torch.all(world[:,2]==0)
+        assert torch.all(torch.linalg.vector_norm(world,dim=1)<=.200001)
+        for tick in (999,1040,3839):assert torch.count_nonzero(a.acceleration_world(tick))==0
+        for tick in (1000,1039,3840+1000):
+            force=a.acceleration_world(tick)
+            for lane,label in enumerate(a.assignments):
+>               assert torch.linalg.vector_norm(force[lane]).item()==(.5 if label=='pulse' else 0)
+E               AssertionError: assert 0.4999999701976776 == 0.5
+E                +  where 0.4999999701976776 = <built-in method item of Tensor object at 0x72a1787252b0>()
+E                +    where <built-in method item of Tensor object at 0x72a1787252b0> = tensor(0.5000).item
+E                +      where tensor(0.5000) = <built-in function linalg_vector_norm>(tensor([0.3536, 0.3536, 0.0000]))
+E                +        where <built-in function linalg_vector_norm> = <module 'torch.linalg' from '/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/torch/linalg/__init__.py'>.vector_norm
+E                +          where <module 'torch.linalg' from '/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/torch/linalg/__init__.py'> = torch.linalg
+
+tools/test_r6_curriculum.py:40: AssertionError
+=============================== warnings summary ===============================
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d679bc96-711c-406d-869a-f6f210b250c1/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+  <class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d679bc96-711c-406d-869a-f6f210b250c1/test_failed_creation_preserves0/volumes
+  <class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d679bc96-711c-406d-869a-f6f210b250c1/test_failed_creation_preserves0
+  <class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+    warnings.warn(
+
+../../miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95
+  /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-d679bc96-711c-406d-869a-f6f210b250c1
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-d679bc96-711c-406d-869a-f6f210b250c1'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tools/test_r6_curriculum.py::test_world_commands_and_repeated_pulse_boundaries
+1 failed, 45 passed, 4 warnings in 1.05s
