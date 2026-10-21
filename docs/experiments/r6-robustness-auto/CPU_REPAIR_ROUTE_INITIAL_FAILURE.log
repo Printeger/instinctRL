@@ -1,0 +1,235 @@
+FF.................F...............................F                     [100%]
+=================================== FAILURES ===================================
+______ test_input_preserves_actual_failed_job_and_review_and_charges_once ______
+
+repair = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_input_preserves_actual_failed_job_and_review_and_charges_once(repair):
+>       b=repair;store=b.store.replay();out=run(b);budget=b.j.read()['budget'];value=json.loads(r.checked(out['repair_input']).read_text())
+
+tools/test_r6_repair_input.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_repair_input.py:21: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x721f65867440>
+controller_key = 'd580819f294640f267440cbcbc2fd2311df2bcb7b9af4e1208d3ea22e663c7da'
+store = namespace(root=PosixPath('/tmp/tmp4zv3xnnz'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x721f655cd120>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        profile.guard(journal);state=journal.read();controller=state['events'][controller_key];cursor=controller['cursor']
+        require(controller['identity']['role']=='r6-controller'
+            and controller['request']['store_root']==str(store.root.resolve())
+            and cursor['phase']=='REPAIR_AND_REVIEW','CONTROLLER')
+        parent=cursor['parent_key'];decision=decision_record(journal,parent,store)
+        require(decision['decision']['decision']=='NEEDS_REPAIR' and bool(decision['decision']['must_fix']),'DECISION')
+        event=state['events'][parent];job=journal.canonical_job(cursor['job_key'],state=state)
+        require(event['decision_input']['job_event_key']==cursor['job_key']
+            and event['identity']['job_id']==job['identity']['job_id'],'PARENT_JOB')
+        require(job.get('closure') and job.get('postrun') and job.get('analysis'),'CLOSED_JOB_EVIDENCE')
+        evidence={name:job[name] for name in ('closure','inventory','postrun','analysis') if job.get(name)}
+        for pin in evidence.values():checked(pin)
+        receipt=event['receipt'];checked(receipt)
+        related=[]
+        for key,e in sorted(state['events'].items()):
+            if e['identity'].get('job_id')!=job['identity']['job_id']:continue
+>           row=dict(event_key=key,kind=e['kind'],identity=e['identity'],status=e['status'],
+                receipt=e.get('receipt'),submission_claim=e.get('submission_claim'),dispatch_claim=e.get('dispatch_claim'))
+E           KeyError: 'status'
+
+tools/r6_repair_input.py:38: KeyError
+_______________ test_before_output_crash_recovers_reserved_input _______________
+
+repair = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x721f65846240>
+
+    def test_before_output_crash_recovers_reserved_input(repair,monkeypatch):
+        b=repair;original=r.persist_exact
+        monkeypatch.setattr(r,'persist_exact',lambda *a:(_ for _ in ()).throw(RuntimeError('fixture crash')))
+>       with pytest.raises(RuntimeError):run(b)
+
+tools/test_r6_repair_input.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_repair_input.py:21: in run
+    with b.j.writer():return r.prepare(b.j,b.controller,b.store,free_disk_bytes=FREE)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x721f6583b710>
+controller_key = 'f56f1bf437fe03ed42b44a1e97a183b939662f12d83d2ac04ec0a9beb2eb0aea'
+store = namespace(root=PosixPath('/tmp/tmphmbl72yg'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x721f655ced40>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        profile.guard(journal);state=journal.read();controller=state['events'][controller_key];cursor=controller['cursor']
+        require(controller['identity']['role']=='r6-controller'
+            and controller['request']['store_root']==str(store.root.resolve())
+            and cursor['phase']=='REPAIR_AND_REVIEW','CONTROLLER')
+        parent=cursor['parent_key'];decision=decision_record(journal,parent,store)
+        require(decision['decision']['decision']=='NEEDS_REPAIR' and bool(decision['decision']['must_fix']),'DECISION')
+        event=state['events'][parent];job=journal.canonical_job(cursor['job_key'],state=state)
+        require(event['decision_input']['job_event_key']==cursor['job_key']
+            and event['identity']['job_id']==job['identity']['job_id'],'PARENT_JOB')
+        require(job.get('closure') and job.get('postrun') and job.get('analysis'),'CLOSED_JOB_EVIDENCE')
+        evidence={name:job[name] for name in ('closure','inventory','postrun','analysis') if job.get(name)}
+        for pin in evidence.values():checked(pin)
+        receipt=event['receipt'];checked(receipt)
+        related=[]
+        for key,e in sorted(state['events'].items()):
+            if e['identity'].get('job_id')!=job['identity']['job_id']:continue
+>           row=dict(event_key=key,kind=e['kind'],identity=e['identity'],status=e['status'],
+                receipt=e.get('receipt'),submission_claim=e.get('submission_claim'),dispatch_claim=e.get('dispatch_claim'))
+E           KeyError: 'status'
+
+tools/r6_repair_input.py:38: KeyError
+___ test_detached_process_wait_has_no_new_models_and_enforces_writer[False] ____
+
+controller = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+tmp_path = PosixPath('/tmp/pytest-of-mint/pytest-207/test_detached_process_wait_has0')
+stop = False
+
+    @pytest.mark.parametrize('stop',[False,True])
+    def test_detached_process_wait_has_no_new_models_and_enforces_writer(controller,tmp_path,stop):
+        """Actual detached controller process; only live wait/frozen verifier substituted."""
+        import os
+        import subprocess
+        import sys
+        import time
+        from pathlib import Path
+        from rlflow.jobs import owns
+        from tools.r6_job_handoff import no_model_workers
+        b=controller
+        fixture=b.write('detached-fixture.json',dict(request=b.request,store_state=b.store.replay(),
+            batch=str(b.j.directory),root=str(b.root),job_key=b.key))
+        ready=b.root/'wait-ready';release=b.root/'wait-release'
+        script=r'''
+    import json,sys,time
+    from pathlib import Path
+    from types import SimpleNamespace
+    from tools import r6_controller as c
+    from tools.r6_recovery import Journal,RecoveryError
+    v=json.loads(Path(sys.argv[1]).read_text());root=Path(v['root']);j=Journal(Path(v['batch']))
+    c.profile.verify_frozen=lambda *a:None
+    from tools import r6_analysis_binding
+    # Inherit the parent fixture's missing native cleanup receipt substitute.
+    r6_analysis_binding.cleanup_evidence=lambda *a:({},dict(status='FAILED',exit_code=-9))
+    c.profile.storage.native_tool.BASE=root/'native-volumes'
+    c.profile.storage.result_tool.BASE=root/'result-volumes'
+    c.profile.storage.result_tool.ATTEMPTS=root/'attempts'
+    def wait(*a,**kw):
+     (root/'wait-ready').touch()
+     deadline=time.monotonic()+10
+     while not (root/'wait-release').exists():
+      if (j.directory/'STOP').exists():raise RecoveryError('CPU owned wait STOP')
+      if time.monotonic()>deadline:raise RuntimeError('CPU bounded fixture timeout')
+      time.sleep(.02)
+     return dict(status='DECISION_PROPOSAL_RETURNED',event_key=v['job_key'])
+    c.first.start=wait
+    # The real NEEDS_REPAIR fixture now terminates in its repair input, not a profile.
+    from tools.r6_batch import model_handoff
+    c.profile.model_handoff=lambda j,k:model_handoff(j,k,poll_seconds=.01)
+    with j.writer():
+     result=c.run(j,v['request'],SimpleNamespace(root=root,replay=lambda:v['store_state']),free_disk_bytes=500*1024**3)
+    print(json.dumps(result))
+    '''
+        before_models=len([e for e in b.j.read()['events'].values() if e['kind']=='model'])
+        proc=subprocess.Popen([sys.executable,'-B','-c',script,fixture['path']],cwd=c.ROOT,
+            env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',CUDA_VISIBLE_DEVICES='',
+                     PYTHONPATH='.:tools/rlflow:isaaclab-training'),start_new_session=True,
+            stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+        try:
+            deadline=time.monotonic()+8
+            while not ready.exists():
+                assert proc.poll() is None
+                assert time.monotonic()<deadline
+                time.sleep(.02)
+            assert os.getsid(proc.pid)==proc.pid
+            assert owns(entry(b)['controller_process'])
+            no_model_workers(b.j)
+            assert len([e for e in b.j.read()['events'].values() if e['kind']=='model'])==before_models
+            assert not b.builder.with_suffix('.count').exists()
+            with pytest.raises(BlockingIOError):
+                with Journal(b.j.directory).writer():pass
+            if stop:(b.j.directory/'STOP').touch()
+            else:release.touch()
+            stdout,stderr=proc.communicate(timeout=20)
+            if stop:
+                assert proc.returncode!=0 and 'CPU owned wait STOP' in stderr
+                assert entry(b)['status']=='INCOMPLETE_EXCEPTION'
+                assert not b.builder.with_suffix('.count').exists()
+            else:
+>               assert proc.returncode==0,stderr
+E               AssertionError: Traceback (most recent call last):
+E                   File "<string>", line 28, in <module>
+E                   File "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py", line 235, in run
+E                     outcome=repair_input.prepare(journal,key,store,free_disk_bytes=free)
+E                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   File "/home/mint/rl_dev/instinctRL-dev/tools/r6_repair_input.py", line 38, in prepare
+E                     row=dict(event_key=key,kind=e['kind'],identity=e['identity'],status=e['status'],
+E                                                                                         ~^^^^^^^^^^
+E                 KeyError: 'status'
+E                 
+E               assert 1 == 0
+E                +  where 1 = <Popen: returncode: 1 args: ['/home/mint/rl_dev/instinctRL_orchestrator/.ven...>.returncode
+
+tools/test_r6_controller.py:288: AssertionError
+_________ test_actual_needs_repair_never_launches_profile_or_next_job __________
+
+controller = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x721f651cc4d0>
+
+    def test_actual_needs_repair_never_launches_profile_or_next_job(controller,monkeypatch):
+        b=controller;monkeypatch.setattr(c,'parent_for_job',b.real_parent_for_job)
+>       first=run(b);budget=b.j.read()['budget'];cursor=entry(b)['cursor']
+
+tools/test_r6_controller.py:609: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_controller.py:87: in run
+    with b.j.writer():return c.run(b.j,b.request,b.store,free_disk_bytes=500*1024**3)
+tools/r6_controller.py:235: in run
+    outcome=repair_input.prepare(journal,key,store,free_disk_bytes=free)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x721f657fd4f0>
+controller_key = '1f31fb709d15fc6e9c45609c552427ee98f4a8f8eb86f58fed8d9d12d8ef02f2'
+store = namespace(root=PosixPath('/tmp/tmp3rfss_b8'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x721f651dc720>)
+
+    def prepare(journal,controller_key,store,*,free_disk_bytes):
+        profile.guard(journal);state=journal.read();controller=state['events'][controller_key];cursor=controller['cursor']
+        require(controller['identity']['role']=='r6-controller'
+            and controller['request']['store_root']==str(store.root.resolve())
+            and cursor['phase']=='REPAIR_AND_REVIEW','CONTROLLER')
+        parent=cursor['parent_key'];decision=decision_record(journal,parent,store)
+        require(decision['decision']['decision']=='NEEDS_REPAIR' and bool(decision['decision']['must_fix']),'DECISION')
+        event=state['events'][parent];job=journal.canonical_job(cursor['job_key'],state=state)
+        require(event['decision_input']['job_event_key']==cursor['job_key']
+            and event['identity']['job_id']==job['identity']['job_id'],'PARENT_JOB')
+        require(job.get('closure') and job.get('postrun') and job.get('analysis'),'CLOSED_JOB_EVIDENCE')
+        evidence={name:job[name] for name in ('closure','inventory','postrun','analysis') if job.get(name)}
+        for pin in evidence.values():checked(pin)
+        receipt=event['receipt'];checked(receipt)
+        related=[]
+        for key,e in sorted(state['events'].items()):
+            if e['identity'].get('job_id')!=job['identity']['job_id'] or e['identity'].get('role')==ROLE:continue
+>           row=dict(event_key=key,kind=e['kind'],identity=e['identity'],status=e['status'],
+                receipt=e.get('receipt'),submission_claim=e.get('submission_claim'),dispatch_claim=e.get('dispatch_claim'))
+E           KeyError: 'status'
+
+tools/r6_repair_input.py:38: KeyError
+=========================== short test summary info ============================
+FAILED tools/test_r6_repair_input.py::test_input_preserves_actual_failed_job_and_review_and_charges_once
+FAILED tools/test_r6_repair_input.py::test_before_output_crash_recovers_reserved_input
+FAILED tools/test_r6_controller.py::test_detached_process_wait_has_no_new_models_and_enforces_writer[False]
+FAILED tools/test_r6_controller.py::test_actual_needs_repair_never_launches_profile_or_next_job
+4 failed, 48 passed in 23.99s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bff39a04-a585-4dea-b9ec-b255db48f12c/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bff39a04-a585-4dea-b9ec-b255db48f12c/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bff39a04-a585-4dea-b9ec-b255db48f12c/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-bff39a04-a585-4dea-b9ec-b255db48f12c
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-bff39a04-a585-4dea-b9ec-b255db48f12c'
+  warnings.warn(

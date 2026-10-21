@@ -15,6 +15,10 @@ from tools.r6_recovery import Journal,RecoveryError,file_pin
 @pytest.fixture
 def controller(case,monkeypatch):
     b=case
+    # Profile/materializer tests exercise the candidate path. The underlying
+    # analysis fixture deliberately needs repair; it must not route to PROFILE.
+    b.real_parent_for_job=c.parent_for_job
+    monkeypatch.setattr(c,'parent_for_job',lambda *a:(b.parent,{'decision':{'decision':'PROPOSE_CANDIDATE'}}))
     b.initial=b.write('initial.json',dict(plan_pin=b.context,master_pin=b.context,review_executable=file_pin(b.builder)))
     b.request=b.write('controller-request.json',dict(initial_request=b.initial,profile_context=b.context))
     b.first=Mock(return_value=dict(status='DECISION_PROPOSAL_RETURNED',event_key=b.key))
@@ -95,7 +99,7 @@ def test_actual_profile_and_materializer_wait_reuses_worker_and_budget(controlle
     b.j=Journal(b.j.directory)
     assert run(b)==result and b.j.read()['budget']==budget and b.store.replay()==before
     assert b.builder.with_suffix('.count').read_text()=='call\n'
-    b.first.assert_called_once();b.next.assert_not_called();b.source.assert_not_called()
+    b.first.assert_called_once();b.next.assert_not_called();b.source.assert_called_once()
 
 
 def test_crash_after_profile_receipt_before_cursor_advance_reuses_event(controller,monkeypatch):
@@ -248,7 +252,7 @@ def wait(*a,**kw):
   time.sleep(.02)
  return dict(status='DECISION_PROPOSAL_RETURNED',event_key=v['job_key'])
 c.first.start=wait
-# Real profile process, with a short test-only poll; production remains 15 s.
+# The real NEEDS_REPAIR fixture now terminates in its repair input, not a profile.
 from tools.r6_batch import model_handoff
 c.profile.model_handoff=lambda j,k:model_handoff(j,k,poll_seconds=.01)
 with j.writer():
@@ -282,8 +286,8 @@ print(json.dumps(result))
             assert not b.builder.with_suffix('.count').exists()
         else:
             assert proc.returncode==0,stderr
-            assert json.loads(stdout)['status']=='WAITING_FOR_ADMIN_PROVISION'
-            assert b.builder.with_suffix('.count').read_text()=='call\n'
+            assert json.loads(stdout)['status']=='ENGINEERING_REPAIR_INPUT_READY'
+            assert not b.builder.with_suffix('.count').exists()
         assert not owns(entry(b)['controller_process'])
         with Journal(b.j.directory).writer():pass
     finally:
@@ -394,9 +398,11 @@ def test_confirmation_repair_decision_cannot_launch_next_seed(controller,monkeyp
     original=b.j.canonical_job;monkeypatch.setattr(b.j,'canonical_job',lambda key,**kw:original(b.key,**kw))
     b.next.return_value=dict(status='DECISION_PROPOSAL_RETURNED',child_job_event_key='failed-confirmation')
     collect=Mock();monkeypatch.setattr(c.confirmation,'collect',collect)
+    repair=Mock(return_value=dict(status='ENGINEERING_REPAIR_INPUT_READY',goal_complete=False))
+    monkeypatch.setattr(c.repair_input,'prepare',repair)
     for _ in range(2):
-        with pytest.raises(RecoveryError,match='CONFIRMATION_REQUIRES_REPAIR'):run(b)
-    assert entry(b)['cursor']['phase']=='DECIDE' and entry(b)['cursor']['confirmation']['results']==[]
+        assert run(b)['status']=='ENGINEERING_REPAIR_INPUT_READY'
+    assert entry(b)['cursor']['phase']=='REPAIR_AND_REVIEW' and entry(b)['cursor']['confirmation']['results']==[]
     b.next.assert_called_once();collect.assert_not_called()
 
 
@@ -596,3 +602,13 @@ def test_failed_completion_revalidation_preserves_original_receipt_but_not_curre
     state=b.j.read();assert state['goal_complete']is False and state['status']=='COMPLETION_REVALIDATION_FAILED'
     assert state['completion']=={'fixture':'original accepted receipt'}
     assert state['completion_revalidation_error']['type']=='RuntimeError'
+
+
+def test_actual_needs_repair_never_launches_profile_or_next_job(controller,monkeypatch):
+    b=controller;monkeypatch.setattr(c,'parent_for_job',b.real_parent_for_job)
+    first=run(b);budget=b.j.read()['budget'];cursor=entry(b)['cursor']
+    assert first['status']=='ENGINEERING_REPAIR_INPUT_READY'
+    assert cursor['phase']=='REPAIR_AND_REVIEW' and cursor['completed_jobs']==[b.key]
+    assert run(b)==first and b.j.read()['budget']==budget
+    b.first.assert_called_once();b.source.assert_not_called();b.next.assert_not_called()
+    assert not b.builder.with_suffix('.count').exists()

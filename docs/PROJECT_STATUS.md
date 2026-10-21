@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：真实首次计划CPU校验通过（J-f9edc8f6f35dde13，Store未变），完成一次执行链独审。
+独审返回MUST_FIX；本地bwrap loopback权限失败后改读准确远端Git，36项证据哈希均本地核对一致。
+发现并修正NEEDS_REPAIR误入普通profile路径；现在进入专用修复输入，保留失败原件/父决策/游标，不发下一作业。
+52项路由、80项组合检查及真实Journal guard通过；证据 CPU_REPAIR_ROUTE.json。
+修复worker、失败事件替换/新attempt、只读审核访问及平台无模型等待交接仍未完成；未生产发车。
+确认/holdout专用修复按真实事件推进，不要求全部在首次基线前实现；完整科学目标仍未完成。
+180次自动唤醒+31 worker=211/256，剩45；本次独审原receipt和MUST_FIX全部保留。
+
 2026-10-22：控制器源码修复后的独审换版入口接通；原identity/request/cursor和历史许可均保留。
 先预付并持久化准确Git提交/游标/Store输入，审核receipt通过后新增版本链；不自动重试或回退阶段。
 91项最终组合检查通过，真实Journal guard通过；证据 CPU_CONTROLLER_REVISION.json。

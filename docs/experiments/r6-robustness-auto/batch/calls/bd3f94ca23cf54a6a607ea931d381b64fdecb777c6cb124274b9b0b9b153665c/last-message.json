@@ -1,0 +1,161 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "Read-only audit of de0ea52a completed using exact-commit GitHub originals because local commands failed during sandbox initialization. No tests executed or files changed. Request/plan/spec hashes match and derive J-f9edc8f6f35dde13. Successful first-job closure reaches a validated decision; failure recovery does not complete the autonomous loop. Controller revision preserves the original request, cursor and receipts, but cannot repair incompatible phase events. Shortest route: repair baseline failure/review re-entry, establish concrete detached handoff evidence, then perform exact prelive review and baseline deployment. Confirmation/holdout repairs can be event-triggered later. No scientific acceptance or live authority is granted.",
+  "evidence_pins": [
+    {
+      "path": "git:de0ea52a:tools/r6_controller.py",
+      "sha256": "e31c1c4d07d51fd4e9647388c003bf1ec6de07b9cda28fdd74304dba140f1184"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_controller_revision.py",
+      "sha256": "c48d1640b78320c665654fd1bbac177ba959314aa205de51cd35cf3f2e909967"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_start_baseline.py",
+      "sha256": "2df746e146db0b7901f34a860f29d7e48df03d717bc227b56d2f5209c00079db"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_finalize_job.py",
+      "sha256": "cfdb44f063d1ba183f30513c705f946ea530f63622f31f68eea9c5e8eb07c43b"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_source_preparation.py",
+      "sha256": "7276dabf45a81399f46ee4d948f6d106c0eb6eadfeaedf206ebb3ce1c8e8d635"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_run_job.py",
+      "sha256": "aaecf7640803b95ae5ea86bc50cc8ee843ba5b262988d3afd87b5b145202324a"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_profile_preparation.py",
+      "sha256": "bb16de4d307f4d8e6e54ea01f609ef7cfaed2074d9075f01d7d8f6fbecfed7e0"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_batch.py",
+      "sha256": "a5188e81eb75b4196d5fc469bbe19d90aaae4abd46f0f3440e2d87946323163d"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_cpu_analysis.py",
+      "sha256": "746963dc10b142bd0a53517ab74fd9af57323a43cb32c69d915ef75fb8d44fe4"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_initial_baseline.py",
+      "sha256": "2acbe9b26b3d47f12e30472f0a22b7c1f197bd0de414b82cc019225618f96cd3"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_decision.py",
+      "sha256": "66005a2c76e5c5070c57ad280f7df883ae29ca1dc80f7e2f00839b00bccfc57f"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_next_job.py",
+      "sha256": "1869994b48d93a064163904f8aa454957c72d24a3dc29d47e30ea9b61e3b439f"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_continue_job.py",
+      "sha256": "23528dd3d41a9027e162a2b760fa521a3e42ba01add0c4e288794c6636809911"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_recovery.py",
+      "sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_analysis_binding.py",
+      "sha256": "8246662c65c697d07a8e567541d96404b29ed5a73d180f4bd53c0e3e9dc971ac"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_decision_packet.py",
+      "sha256": "95bf082db63b97f73e75d11c9ce794db463471fdfe966999b8a95c1a99b81659"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_job_handoff.py",
+      "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_wait_audit.py",
+      "sha256": "d3094972577162cde80291d4d105604bbda715f26bbf2b26af9340eabf832dff"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_audited_job_handoff.py",
+      "sha256": "c8019dcfd3aadac91906930941f161172d74f52873f8775678dfad0b7c43bfc3"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_register_job.py",
+      "sha256": "49385ec1007b875580a625cc81f45dffa2a5e99ace1b431fd9f94927563608cd"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_holdout_publication.py",
+      "sha256": "8b4ae0b09524bbe3df6bd05399760990a79a18fa58e7ea62332154f041bf0052"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_final_sequence.py",
+      "sha256": "8e48bf4bd11fbc62de0eb2fa6d2b153ff49b68f6d888ade777a16f15e7eeac99"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_delivery_evidence.py",
+      "sha256": "023e01f2928d709d8df0e3a8fbed4e9a13d0a6fb73a46467cfb355d65bb95098"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_final_audit_packet.py",
+      "sha256": "3eaf2583e53fc66997fabe97e2a53216960cae8601513724b8abe3224eff4fb9"
+    },
+    {
+      "path": "git:de0ea52a:tools/r6_final_independent_review.py",
+      "sha256": "abd7541f28314894d33be4e51cb8e9242874fce4cf8d118a2de6c31e077dcc6a"
+    },
+    {
+      "path": "git:de0ea52a:tools/test_r6_controller_revision.py",
+      "sha256": "1e676a67e08839221936ce1cdaaf2da34992663bff9719fef3dfcc2abdedb2e5"
+    },
+    {
+      "path": "git:de0ea52a:tools/test_r6_controller.py",
+      "sha256": "fde4dd4c744a817f604850486f80b60923acdf7b9b93ff69aea95b27cbac2cd8"
+    },
+    {
+      "path": "git:de0ea52a:tools/test_r6_source_preparation.py",
+      "sha256": "a8f408c5a0662cb8363af32dc6af68a1fbd93cef61a15c5d2f2f60a09d4e99b0"
+    },
+    {
+      "path": "git:de0ea52a:docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md",
+      "sha256": "200fb9daa96606ae3a58516219121d2ae243de51a8b1e02d10077a4b15e2f12b"
+    },
+    {
+      "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/CPU_CONTROLLER_REVISION.json",
+      "sha256": "623def4e79c0ec587385e1f973b5b3d3466b47ef6c3c0bb5651c59515fedd5cd"
+    },
+    {
+      "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/CPU_TERMINAL_AUDIT.json",
+      "sha256": "94dd001fc2e62e745edab2ae152e33a61ac59d9c5be1ead91edc0a9a553b9a16"
+    },
+    {
+      "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/controller-candidate-01/request.json",
+      "sha256": "4a21a73cb775b37ae1699f6b1fefc6d68ad1ec2c0e266f6f2de8e3c5e90cf9e5"
+    },
+    {
+      "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/baseline-prelive-02/request.json",
+      "sha256": "3d2cd7feac62f6f0e21d996a2affa31c160e586a257740cd056dfc3a607a3857"
+    },
+    {
+      "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+      "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
+    },
+    {
+      "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/spec.json",
+      "sha256": "7191dd7ef7e022a4ce8956be6c1296f13fd7bd7563d9e5e8f337ad3e5dfba3a8"
+    },
+    {
+      "path": "conversation:last-user-message:utf8:no-trailing-newline",
+      "sha256": "ff32862af1122e37b52f4876dbe7a998cca42c61992a803be7a78efc58c8e483"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Before baseline, implement only the explicit repair transition and charged replacement-event mechanism needed for initial review, closed-job analysis and decision failures; verify restart dedup, cleanup, unchanged failed receipts and fresh authorization with bounded CPU fixtures. Commit and independently review the concrete control changes. Capture detached controller identity/lock/logs and platform handoff evidence from deployment onward, disclose any actual platform restriction, and end the launching model session. Then use the existing exact baseline review/issuance path with the provisioned volumes. After baseline, trigger scientific development and phase-specific repairs only from actual evidence; retain protected resources for confirmation or baseline-sufficient validation, holdout, videos and final audit. No additional user approval is needed for ordinary authorized repairs.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 45
+  },
+  "must_fix": [
+    "P1 — Before first baseline: NEEDS_REPAIR has no engineering-repair route. tools/r6_controller.py:253-274 sends it to PROFILE, although tools/r6_decision.py:100-105 explicitly returns REPAIR_AND_REVIEW. PROFILE only produces a profile or requests source preparation; tools/r6_source_preparation.py:90-92,152,172-174 forbids control-tool changes. Thus an analyzer/controller defect cannot be repaired by this execution chain, and unresolved evidence can proceed toward another profile without an explicit repair disposition. Add a bounded repair phase keyed to the failed job/decision, distinguishing offline evidence repair from a necessary new live attempt. Require repaired evidence and fresh exact review before dispatch; retain the original decision and native failure.",
+    "P1 — Before first baseline: failed/rejected events are preserved but permanently selected again. tools/r6_start_baseline.py:37-54 reuses the same initial review; tools/r6_initial_baseline.py:117-120 rejects MUST_FIX without a replacement route. tools/r6_finalize_job.py:47-61,77-102 selects exactly one analysis/decision per job; tools/r6_cpu_analysis.py:72-82,116-119,184-190 rejects additional analysis events or changed sources and rethrows failed receipts. tools/r6_batch.py:29-34,92-93 rethrows recorded model failure; source preparation similarly binds one event per parent and rejects PREPARATION_INCOMPLETE at tools/r6_source_preparation.py:57-59,163. Controller exceptions preserve the same phase and exit at tools/r6_controller.py:382-392. Add explicitly linked, newly charged repair attempts after verified cleanup and side-effect reconciliation, with an active-attempt selector and immutable predecessors; never reset a claim or reinterpret missing receipts as permission to retry. The revision chain at tools/r6_controller_revision.py:74-82,159-169 correctly preserves cursor/request/receipts, but does not supersede these phase bindings. Preserve its fail-closed behavior and add phase-specific transitions rather than disabling pin checks.",
+    "P1 — Before deployment, establish the concrete no-model-wait handoff and evidence source; downstream audit ingestion also needs repair. tools/r6_delivery_evidence.py:55-71 unconditionally reports platform_inactivity_proven=false and pure_wait_model_calls=UNKNOWN. tools/r6_final_audit_packet.py:93-107 copies that result into the final packet, and tools/r6_final_independent_review.py:145-147,160-163 consequently makes final PASS unreachable even if genuine external inactivity evidence later exists. Local wait records cover registered workers only; they cannot prove platform inactivity. Add a validated, pinned external handoff/wake-history evidence input covering actual wait windows, retaining UNKNOWN when unavailable. Capture it from the first deployment, verify detached identity/lock/logs with bounded checks, and exit the launch session. Final formatting can follow later; evidence capture cannot be reconstructed by declaring unknown intervals zero. No platform activity or inactivity was proven in this audit.",
+    "P2 — Downstream, event-triggered before the affected phase resumes: confirmation/final repair remains a terminal boundary. tools/r6_controller.py:258-267 raises on a confirmation NEEDS_REPAIR; :213-235 parks final MUST_FIX permanently. tools/r6_final_sequence.py:24-29,43-64 binds one immutable batch, while tools/r6_holdout_publication.py:82-94 accepts only the original freeze/review. These guards prevent unsafe reuse but provide no authorized repair continuation. Add narrowly scoped replacement attempts/reviews when such failures occur, preserving completed seed results, failed receipts and budgets. Changed confirmation inputs must receive fresh acceptance. After holdout exposure, independently classify implementation/scoring defects, retain and mark contaminated data as development, and use a new unseen holdout only if the preregistered protocol and remaining budget permit; otherwise deliver an explicitly limited/incomplete result. Do not reopen tuning under the old holdout or inherit its approval. This work need not delay the first baseline once the basic repair handoff above exists."
+  ]
+}

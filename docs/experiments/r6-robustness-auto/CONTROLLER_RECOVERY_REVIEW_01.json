@@ -1,0 +1,353 @@
+{
+  "all_pins_match": true,
+  "event_key": "bd3f94ca23cf54a6a607ea931d381b64fdecb777c6cb124274b9b0b9b153665c",
+  "first_plan_cpu_validation": {
+    "actual_validator": true,
+    "job_id": "J-f9edc8f6f35dde13",
+    "store_unchanged": true
+  },
+  "goal_complete": false,
+  "live_authority": false,
+  "local_readonly_sandbox_unavailable": true,
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/bd3f94ca23cf54a6a607ea931d381b64fdecb777c6cb124274b9b0b9b153665c/receipt.json",
+    "sha256": "3f71f7c30baab956f8783ec680c596aaafb21ae36d4bef3e0ee177cd1e3a413e"
+  },
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/controller-recovery-integration-review.json",
+    "sha256": "eab07f5a053503aa686a3e3879a327f44ab11265fca0587ff2d04a4a107de751"
+  },
+  "source_pin_checks": [
+    {
+      "actual_sha256": "e31c1c4d07d51fd4e9647388c003bf1ec6de07b9cda28fdd74304dba140f1184",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_controller.py",
+        "sha256": "e31c1c4d07d51fd4e9647388c003bf1ec6de07b9cda28fdd74304dba140f1184"
+      }
+    },
+    {
+      "actual_sha256": "c48d1640b78320c665654fd1bbac177ba959314aa205de51cd35cf3f2e909967",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_controller_revision.py",
+        "sha256": "c48d1640b78320c665654fd1bbac177ba959314aa205de51cd35cf3f2e909967"
+      }
+    },
+    {
+      "actual_sha256": "2df746e146db0b7901f34a860f29d7e48df03d717bc227b56d2f5209c00079db",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_start_baseline.py",
+        "sha256": "2df746e146db0b7901f34a860f29d7e48df03d717bc227b56d2f5209c00079db"
+      }
+    },
+    {
+      "actual_sha256": "cfdb44f063d1ba183f30513c705f946ea530f63622f31f68eea9c5e8eb07c43b",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_finalize_job.py",
+        "sha256": "cfdb44f063d1ba183f30513c705f946ea530f63622f31f68eea9c5e8eb07c43b"
+      }
+    },
+    {
+      "actual_sha256": "7276dabf45a81399f46ee4d948f6d106c0eb6eadfeaedf206ebb3ce1c8e8d635",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_source_preparation.py",
+        "sha256": "7276dabf45a81399f46ee4d948f6d106c0eb6eadfeaedf206ebb3ce1c8e8d635"
+      }
+    },
+    {
+      "actual_sha256": "aaecf7640803b95ae5ea86bc50cc8ee843ba5b262988d3afd87b5b145202324a",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_run_job.py",
+        "sha256": "aaecf7640803b95ae5ea86bc50cc8ee843ba5b262988d3afd87b5b145202324a"
+      }
+    },
+    {
+      "actual_sha256": "bb16de4d307f4d8e6e54ea01f609ef7cfaed2074d9075f01d7d8f6fbecfed7e0",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_profile_preparation.py",
+        "sha256": "bb16de4d307f4d8e6e54ea01f609ef7cfaed2074d9075f01d7d8f6fbecfed7e0"
+      }
+    },
+    {
+      "actual_sha256": "a5188e81eb75b4196d5fc469bbe19d90aaae4abd46f0f3440e2d87946323163d",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_batch.py",
+        "sha256": "a5188e81eb75b4196d5fc469bbe19d90aaae4abd46f0f3440e2d87946323163d"
+      }
+    },
+    {
+      "actual_sha256": "746963dc10b142bd0a53517ab74fd9af57323a43cb32c69d915ef75fb8d44fe4",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_cpu_analysis.py",
+        "sha256": "746963dc10b142bd0a53517ab74fd9af57323a43cb32c69d915ef75fb8d44fe4"
+      }
+    },
+    {
+      "actual_sha256": "2acbe9b26b3d47f12e30472f0a22b7c1f197bd0de414b82cc019225618f96cd3",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_initial_baseline.py",
+        "sha256": "2acbe9b26b3d47f12e30472f0a22b7c1f197bd0de414b82cc019225618f96cd3"
+      }
+    },
+    {
+      "actual_sha256": "66005a2c76e5c5070c57ad280f7df883ae29ca1dc80f7e2f00839b00bccfc57f",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_decision.py",
+        "sha256": "66005a2c76e5c5070c57ad280f7df883ae29ca1dc80f7e2f00839b00bccfc57f"
+      }
+    },
+    {
+      "actual_sha256": "1869994b48d93a064163904f8aa454957c72d24a3dc29d47e30ea9b61e3b439f",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_next_job.py",
+        "sha256": "1869994b48d93a064163904f8aa454957c72d24a3dc29d47e30ea9b61e3b439f"
+      }
+    },
+    {
+      "actual_sha256": "23528dd3d41a9027e162a2b760fa521a3e42ba01add0c4e288794c6636809911",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_continue_job.py",
+        "sha256": "23528dd3d41a9027e162a2b760fa521a3e42ba01add0c4e288794c6636809911"
+      }
+    },
+    {
+      "actual_sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_recovery.py",
+        "sha256": "4deadc0d5f860ff06054826398074a9c139d24fa28c60ccb34ca0791aa06bc55"
+      }
+    },
+    {
+      "actual_sha256": "8246662c65c697d07a8e567541d96404b29ed5a73d180f4bd53c0e3e9dc971ac",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_analysis_binding.py",
+        "sha256": "8246662c65c697d07a8e567541d96404b29ed5a73d180f4bd53c0e3e9dc971ac"
+      }
+    },
+    {
+      "actual_sha256": "95bf082db63b97f73e75d11c9ce794db463471fdfe966999b8a95c1a99b81659",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_decision_packet.py",
+        "sha256": "95bf082db63b97f73e75d11c9ce794db463471fdfe966999b8a95c1a99b81659"
+      }
+    },
+    {
+      "actual_sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_job_handoff.py",
+        "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+      }
+    },
+    {
+      "actual_sha256": "d3094972577162cde80291d4d105604bbda715f26bbf2b26af9340eabf832dff",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_wait_audit.py",
+        "sha256": "d3094972577162cde80291d4d105604bbda715f26bbf2b26af9340eabf832dff"
+      }
+    },
+    {
+      "actual_sha256": "c8019dcfd3aadac91906930941f161172d74f52873f8775678dfad0b7c43bfc3",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_audited_job_handoff.py",
+        "sha256": "c8019dcfd3aadac91906930941f161172d74f52873f8775678dfad0b7c43bfc3"
+      }
+    },
+    {
+      "actual_sha256": "49385ec1007b875580a625cc81f45dffa2a5e99ace1b431fd9f94927563608cd",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_register_job.py",
+        "sha256": "49385ec1007b875580a625cc81f45dffa2a5e99ace1b431fd9f94927563608cd"
+      }
+    },
+    {
+      "actual_sha256": "8b4ae0b09524bbe3df6bd05399760990a79a18fa58e7ea62332154f041bf0052",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_holdout_publication.py",
+        "sha256": "8b4ae0b09524bbe3df6bd05399760990a79a18fa58e7ea62332154f041bf0052"
+      }
+    },
+    {
+      "actual_sha256": "8e48bf4bd11fbc62de0eb2fa6d2b153ff49b68f6d888ade777a16f15e7eeac99",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_final_sequence.py",
+        "sha256": "8e48bf4bd11fbc62de0eb2fa6d2b153ff49b68f6d888ade777a16f15e7eeac99"
+      }
+    },
+    {
+      "actual_sha256": "023e01f2928d709d8df0e3a8fbed4e9a13d0a6fb73a46467cfb355d65bb95098",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_delivery_evidence.py",
+        "sha256": "023e01f2928d709d8df0e3a8fbed4e9a13d0a6fb73a46467cfb355d65bb95098"
+      }
+    },
+    {
+      "actual_sha256": "3eaf2583e53fc66997fabe97e2a53216960cae8601513724b8abe3224eff4fb9",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_final_audit_packet.py",
+        "sha256": "3eaf2583e53fc66997fabe97e2a53216960cae8601513724b8abe3224eff4fb9"
+      }
+    },
+    {
+      "actual_sha256": "abd7541f28314894d33be4e51cb8e9242874fce4cf8d118a2de6c31e077dcc6a",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/r6_final_independent_review.py",
+        "sha256": "abd7541f28314894d33be4e51cb8e9242874fce4cf8d118a2de6c31e077dcc6a"
+      }
+    },
+    {
+      "actual_sha256": "1e676a67e08839221936ce1cdaaf2da34992663bff9719fef3dfcc2abdedb2e5",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/test_r6_controller_revision.py",
+        "sha256": "1e676a67e08839221936ce1cdaaf2da34992663bff9719fef3dfcc2abdedb2e5"
+      }
+    },
+    {
+      "actual_sha256": "fde4dd4c744a817f604850486f80b60923acdf7b9b93ff69aea95b27cbac2cd8",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/test_r6_controller.py",
+        "sha256": "fde4dd4c744a817f604850486f80b60923acdf7b9b93ff69aea95b27cbac2cd8"
+      }
+    },
+    {
+      "actual_sha256": "a8f408c5a0662cb8363af32dc6af68a1fbd93cef61a15c5d2f2f60a09d4e99b0",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:tools/test_r6_source_preparation.py",
+        "sha256": "a8f408c5a0662cb8363af32dc6af68a1fbd93cef61a15c5d2f2f60a09d4e99b0"
+      }
+    },
+    {
+      "actual_sha256": "200fb9daa96606ae3a58516219121d2ae243de51a8b1e02d10077a4b15e2f12b",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md",
+        "sha256": "200fb9daa96606ae3a58516219121d2ae243de51a8b1e02d10077a4b15e2f12b"
+      }
+    },
+    {
+      "actual_sha256": "623def4e79c0ec587385e1f973b5b3d3466b47ef6c3c0bb5651c59515fedd5cd",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/CPU_CONTROLLER_REVISION.json",
+        "sha256": "623def4e79c0ec587385e1f973b5b3d3466b47ef6c3c0bb5651c59515fedd5cd"
+      }
+    },
+    {
+      "actual_sha256": "94dd001fc2e62e745edab2ae152e33a61ac59d9c5be1ead91edc0a9a553b9a16",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/CPU_TERMINAL_AUDIT.json",
+        "sha256": "94dd001fc2e62e745edab2ae152e33a61ac59d9c5be1ead91edc0a9a553b9a16"
+      }
+    },
+    {
+      "actual_sha256": "4a21a73cb775b37ae1699f6b1fefc6d68ad1ec2c0e266f6f2de8e3c5e90cf9e5",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/controller-candidate-01/request.json",
+        "sha256": "4a21a73cb775b37ae1699f6b1fefc6d68ad1ec2c0e266f6f2de8e3c5e90cf9e5"
+      }
+    },
+    {
+      "actual_sha256": "3d2cd7feac62f6f0e21d996a2affa31c160e586a257740cd056dfc3a607a3857",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/baseline-prelive-02/request.json",
+        "sha256": "3d2cd7feac62f6f0e21d996a2affa31c160e586a257740cd056dfc3a607a3857"
+      }
+    },
+    {
+      "actual_sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+        "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
+      }
+    },
+    {
+      "actual_sha256": "7191dd7ef7e022a4ce8956be6c1296f13fd7bd7563d9e5e8f337ad3e5dfba3a8",
+      "match": true,
+      "reported": {
+        "path": "git:de0ea52a:docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/spec.json",
+        "sha256": "7191dd7ef7e022a4ce8956be6c1296f13fd7bd7563d9e5e8f337ad3e5dfba3a8"
+      }
+    },
+    {
+      "actual_sha256": "ff32862af1122e37b52f4876dbe7a998cca42c61992a803be7a78efc58c8e483",
+      "match": true,
+      "reported": {
+        "path": "conversation:last-user-message:utf8:no-trailing-newline",
+        "sha256": "ff32862af1122e37b52f4876dbe7a998cca42c61992a803be7a78efc58c8e483"
+      }
+    }
+  ],
+  "status": "INDEPENDENT_REMOTE_SOURCE_DIAGNOSIS_MUST_FIX_NOT_PRELIVE_ACCEPTANCE",
+  "tests_executed_by_reviewer": false,
+  "local_sandbox_failure_evidence": {
+    "source_prefix": {
+      "path": "/home/mint/.codex/sessions/2026/10/22/rollout-2026-10-22T06-27-57-01a16094-0792-7d82-9868-5970ac4bdd16.jsonl",
+      "bytes": 1278834,
+      "sha256": "8c36ef7737ba873729f58a06f178160a715c6bb6193bc7eaf4b19fdf823b83bf"
+    },
+    "records": [
+      {
+        "timestamp": "2026-10-21T22:28:04.561Z",
+        "call_id": "call_0deac0ab1b844b7eb027a6eb1963e3af",
+        "output": [
+          {
+            "type": "input_text",
+            "text": "Script completed\nWall time 0.0 seconds\nOutput:\n"
+          },
+          {
+            "type": "input_text",
+            "text": "{\"chunk_id\":\"fa8c74\",\"wall_time_seconds\":0,\"exit_code\":1,\"original_token_count\":16,\"output\":\"bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted\\n\"}"
+          }
+        ]
+      },
+      {
+        "timestamp": "2026-10-21T22:28:14.189Z",
+        "call_id": "call_ad17058f88814ee388335f31b06c4db8",
+        "output": [
+          {
+            "type": "input_text",
+            "text": "Script completed\nWall time 0.0 seconds\nOutput:\n"
+          },
+          {
+            "type": "input_text",
+            "text": "[{\"name\":\"exec_command\",\"description\":\"Runs a command in a PTY, returning output or a session ID for ongoing interaction.\\n\\nexec tool declar\"},{\"name\":\"mcp__codex_apps__chatgpt_space_execute_artifact_code\",\"description\":\"Read, search, create, and edit pages and spaces in ChatGPT Space, within your current account.\\n\\nEdit\"},{\"name\":\"mcp__codex_apps__chatgpt_space_get_artifact_execution_status\",\"description\":\"Read, search, create, and edit pages and spaces in ChatGPT Space, within your current account.\\n\\nChec\"},{\"name\":\"mcp__codex_apps__chatgpt_space_read_page\",\"description\":\"Read, search, create, and edit pages and spaces in ChatGPT Space, within your current account.\\n\\nRead\"},{\"name\":\"mcp__codex_apps__chatgpt_space_read_page_changes\",\"description\":\"Read, search, create, and edit pages and spaces in ChatGPT Space, within your current account.\\n\\nRead\"},{\"name\":\"mcp__codex_apps__chatgpt_space_read_page_reference\",\"description\":\"Read, search, create, and edit pages and spaces in ChatGPT Space, within your current account.\\n\\nRead\"},{\"name\":\"mcp__codex_apps__chatgpt_space_read_page_transcript\",\"description\":\"Read, search, create, and edit pages and spaces in ChatGPT Space, within your current account.\\n\\nRead\"},{\"name\":\"mcp__codex_apps__codex_document_control_execute_document_command\",\"description\":\"Use Codex Document Control to find connected document sessions, inspect the tools supported by a sel\"},{\"name\":\"mcp__codex_apps__github_create_file\",\"description\":\"Access repositories, issues, and pull requests. Required for some features such as Codex\\n\\nCreate a n\"},{\"name\":\"mcp__codex_apps__github_delete_file\",\"description\":\"Access repositories, issues, and pull requests. Required for some features such as Codex\\n\\nDelete a f\"},{\"name\":\"mcp__codex_apps__github_fetch_file\",\"description\":\"Access repositories, issues, and pull requests. Required for some features such as Codex\\n\\nFetch file\"},{\"name\":\"mcp__codex_apps__github_fetch_pr_file_patch\",\"description\":\"Access repositories, issues, and pull requests. Required for some features such as Codex\\n\\nFetch the \"},{\"name\":\"mcp__codex_apps__github_get_profile\",\"description\":\"Access repositories, issues, and pull requests. Required for some features such as Codex\\n\\nRetrieve t\"},{\"name\":\"mcp__codex_apps__github_list_pr_changed_filenames\",\"description\":\"Access repositories, issues, and pull requests. Required for some features such as Codex\\n\\nList chang\"},{\"name\":\"mcp__codex_apps__github_list_pull_request_review_threads\",\"description\":\"Access repositories, issues, and pull requests. Required for some features such as Codex\\n\\nList inlin\"},{\"name\":\"mcp__codex_apps__github_mark_pull_request_ready_for_review\",\"description\":\"Access repositories, issues, and pull requests. Required for some features such as Codex\\n\\nMark a dra\"},{\"name\":\"mcp__codex_apps__github_resolve_review_thread\",\"description\":\"Access repositories, issues, and pull requests. Required for some features such as Codex\\n\\nResolve an\"},{\"name\":\"mcp__codex_apps__github_unresolve_review_thread\",\"description\":\"Access repositories, issues, and pull requests. Required for some features such as Codex\\n\\nMark an in\"},{\"name\":\"mcp__codex_apps__github_update_file\",\"description\":\"Access repositories, issues, and pull requests. Required for some features such as Codex\\n\\nReplace a \"},{\"name\":\"mcp__codex_apps__sites_read_database_overview\",\"description\":\"Use Sites to build or modify websites, including landing pages, portfolios, dashboards, portals, tra\"},{\"name\":\"mcp__codex_apps__sites_read_database_table_rows\",\"description\":\"Use Sites to build or modify websites, including landing pages, portfolios, dashboards, portals, tra\"},{\"name\":\"read_mcp_resource\",\"description\":\"Read a specific resource from an MCP server given the server name and resource URI.\\n\\nexec tool decla\"}]"
+          },
+          {
+            "type": "input_text",
+            "text": "{\"chunk_id\":\"3835b2\",\"wall_time_seconds\":0,\"exit_code\":1,\"original_token_count\":16,\"output\":\"bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted\\n\"}"
+          }
+        ]
+      }
+    ]
+  }
+}

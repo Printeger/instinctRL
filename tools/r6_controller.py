@@ -40,6 +40,7 @@ from tools import r6_video_extraction as video_extraction
 from tools import r6_video_validation as video_validation
 from tools import r6_final_audit_packet as final_audit_packet, r6_final_independent_review as final_audit
 from tools import r6_final_delivery as final_delivery, r6_publish_final_delivery as final_publication, r6_terminal_audit as terminal_audit
+from tools import r6_repair_input as repair_input
 from tools import r6_render_preparation as render_preparation, r6_render_review as render_review
 from tools import r6_render_materialization as render_materialization, r6_run_job as render_runner
 from tools.r6_decision_packet import persist_exact
@@ -230,6 +231,13 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 save(journal,key,cursor);continue
             if phase in {'FINAL_TERMINAL_AUDIT_REQUIRED','COMPLETE'}:
                 return terminal_audit.finish(journal,key,store)
+            if phase=='REPAIR_AND_REVIEW':
+                outcome=repair_input.prepare(journal,key,store,free_disk_bytes=free)
+                require(outcome['status']=='ENGINEERING_REPAIR_INPUT_READY','REPAIR_INPUT_STATUS')
+                # Keep the exact cursor/parent/job. A repair worker and fresh
+                # reviewed attempt must explicitly resolve this disposition.
+                save(journal,key,cursor,status='ENGINEERING_REPAIR_REQUIRED')
+                return dict(outcome,controller_key=key)
             if phase in TERMINAL_BOUNDARIES:
                 save(journal,key,cursor,status=phase)
                 return dict(status=phase,event_key=key,goal_complete=False)
@@ -255,7 +263,8 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 parent,result=parent_for_job(journal,cursor['job_key'],store)
                 decision=result['decision']['decision']
                 cursor['parent_key']=parent
-                if 'confirmation' in cursor:
+                if decision=='NEEDS_REPAIR':cursor['phase']='REPAIR_AND_REVIEW'
+                elif 'confirmation' in cursor:
                     sequence=cursor['confirmation'];index=len(sequence['results'])
                     require(index<3 and decision in {'PROPOSE_CONFIRMATION','REQUEST_FINAL_REVIEW'},
                         'CONFIRMATION_REQUIRES_REPAIR')
@@ -271,7 +280,7 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                         parent_key=parent,job_key=cursor['job_key'],context=cursor['context']))
                 elif decision=='REQUEST_FINAL_REVIEW':cursor['phase']='FINAL_DELIVERY_REQUIRED'
                 elif decision=='PROPOSE_CANDIDATE':cursor['phase']='SOURCE'
-                else:cursor['phase']='PROFILE'
+                else:raise RecoveryError('CONTROLLER_UNSUPPORTED_DECISION')
             elif phase=='CONFIRMATION_INPUTS':
                 outcome=confirmation_inputs.prepare(journal,cursor['parent_key'],cursor['context'],store,
                     executable=initial['review_executable'],free_disk_bytes=free)

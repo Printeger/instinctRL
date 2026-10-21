@@ -1,0 +1,67 @@
+{
+  "status": "CPU_EXPLICIT_NEEDS_REPAIR_ROUTE_AND_IMMUTABLE_INPUT_PASS_REPLACEMENT_EXECUTION_PENDING",
+  "base_commit": "de0ea52a",
+  "independent_diagnosis": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CONTROLLER_RECOVERY_REVIEW_01.json",
+    "sha256": "670a93769e0dee00961c6da9f8fb34631aa29686ec214b70ac2d87300a9c2e59"
+  },
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "ba5501ed5bd8086490d2343babca984c0c18f4403df0371b7f7bfe6e567e534c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_repair_input.py",
+      "sha256": "6a77a6552e6f136638cb0433c1c1b38b910e8f5815ebd57b41bf6051a38e4292"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "68bb10faecbfe4d9d43fe748f3cc47cadba7b87a29c4e892a8366d5813d15976"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_repair_input.py",
+      "sha256": "86554465dd3825fa53d1629fe4e506582256a3d3ba64fd8160a70e57dc5eaf2e"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_REPAIR_ROUTE_INITIAL_FAILURE.log",
+      "sha256": "182be5871c1e98805249f7136ab189695691e7b712de2aebd9e87b8b23750290"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_REPAIR_ROUTE_FIXED.log",
+      "sha256": "b60c2dbb314b78e8bb918fc1cf47d6fcd3e585af5340f2b2a5ba668b6e77911b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_REPAIR_ROUTE_FINAL.log",
+      "sha256": "f69fbabf1e1f34d8f9a72c594a587a3c0feec32a9b66a0c996a583cc146aa9a4"
+    }
+  ],
+  "checks": {
+    "route_fixed": 52,
+    "combined": 80,
+    "real_journal_guard": "PASS"
+  },
+  "scope": [
+    "Validated NEEDS_REPAIR decisions now enter REPAIR_AND_REVIEW, never ordinary profile or the next confirmation seed. Unknown decision kinds are rejected.",
+    "Prepaid bounded immutable repair input binds exact parent decision/receipt, failed job closure/inventory/postrun/analysis, original cursor and related event identities/claims/receipts.",
+    "No model, new live attempt, Store permission or refund is created by the repair input. Restart and pre-output crash reuse one charged event and identical input.",
+    "Controller tests now explicitly use the candidate branch for profile/materializer tests. A real recorded NEEDS_REPAIR fixture proves no profile worker or subsequent job is launched.",
+    "Detached CPU controller test preserves sole-writer/no-model waiting evidence and exits into repair input after the real fixture decision."
+  ],
+  "boundaries": [
+    "Underlying job/scientific data and CLI decision are CPU fixtures, not real baseline evidence.",
+    "Initial four failures were missing status fields in historical CPU fixtures; diagnostic input now explicitly records UNKNOWN instead of inventing success. Original failure log retained.",
+    "Independent engineering reviewer inspected exact remote Git originals after local bwrap loopback setup failed; all36 reported hashes verified locally. Its MUST_FIX is diagnosis only, not prelive acceptance.",
+    "Real first_plan CPU validation passed for J-f9edc8f6f35dde13 with unchanged Store. No R6 controller/job exists in production."
+  ],
+  "remaining": [
+    "Bounded engineering repair worker, explicit failed CPU/model event replacements and reviewed fresh attempts",
+    "Resolve local reviewer sandbox setup failure before local-original audits",
+    "Verified detached service and platform inactivity evidence capture/ingestion",
+    "Exact prelive review/issuance and real baseline",
+    "Evidence-triggered development, confirmation/holdout repairs and complete scientific/video/final delivery"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}
