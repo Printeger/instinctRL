@@ -1,0 +1,15 @@
+{
+  "status": "CPU_MATERIALIZER_VALIDATION_CANDIDATE_NOT_SUBMITTED",
+  "purpose": "Validate actual no-mock materialization using the existing unconsumed baseline source and prepaid volume pair. Existing baseline inputs and plan remain preserved; this is a new candidate identity, not an inherited exact review.",
+  "original_parameters": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-01/parameters.json",
+    "sha256": "0b8709b1701d503c423c2a356c07e79fa5df0af156da5856d657eca46b5f0486"
+  },
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-materialization-01/inputs.json",
+    "sha256": "b4dddcf74f70ca27f994354c9681060e40141f024e275c1088d2f835f1b5edea"
+  },
+  "scientific_profile_unchanged": true,
+  "approval_issued": false,
+  "job_submitted": false
+}

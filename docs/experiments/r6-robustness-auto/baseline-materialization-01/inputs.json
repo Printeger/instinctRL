@@ -1,0 +1,46 @@
+{
+  "snapshot_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/snapshots/4cd9a0dfd5957c2b6521621fe928ef48bc640374b63018e86796c4f1cb96a246/receipt.json",
+    "sha256": "58503cbccf3f28fdf8151f83b320aa3841658758fceefec143f258a31f6bf51b"
+  },
+  "profile_draft": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-materialization-01/profile-draft.json",
+    "sha256": "3deee0e4de5cf54aad26814878c684097064a22842a2e8a007e0cff0064ea585"
+  },
+  "storage_key": "6fb2fb5a07a1c13e091bff09e881f9213605031b821e891abd2442ac7711744d",
+  "stage_id": "R6-ROBUSTNESS-AUTO-20261019",
+  "conditions": [
+    {
+      "evidence_id": "R6-PROTOCOL-CAPACITY-FREEZE-01",
+      "sha256": "738aca2b423b739081fa9ada00db0de0a751040eb472e769907c4fa43fbe2ad1"
+    },
+    {
+      "evidence_id": "R6-EXECUTION-COMPATIBILITY-02",
+      "sha256": "1e8242a18370cf26d58c720c9b0d96b3a8eaf6f125b5a2b4972c7b320accd148"
+    },
+    {
+      "evidence_id": "R6-FIRST-BASELINE-ENTRY-01",
+      "sha256": "41d1394c3bef23f58010502e295cdb4e1f815ab4559e9c4a3d947e12f8c84794"
+    }
+  ],
+  "runner": {
+    "query_executable": {
+      "path": "/usr/bin/nvidia-smi",
+      "sha256": "22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be"
+    },
+    "decision_executable": {
+      "path": "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+      "sha256": "9a820c17865fa825d04db416818679a9d63bd72e50835c396f496e5684626c9c"
+    },
+    "queue_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-02/queue-accepted.json",
+      "sha256": "1a93abcde6109f93c795e241d9aa671c94aff06e595bee75fc51cf373bb0259d"
+    },
+    "sampler_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-02/sampler-accepted.json",
+      "sha256": "ea2f21fca0ca81984d4fa891a1cd33500f45341b78a9eeec2ff352135ab802cb"
+    },
+    "purpose": "development",
+    "sandbox": "read-only"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "experiment_id": "R6-BASELINE-ROBUSTNESS-01",
+  "group": "R1",
+  "training_seed": 20260908,
+  "evaluation_seed": 20260909,
+  "wall_seconds": 3600,
+  "master_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/MASTER_AUTHORITY_V2.json",
+    "sha256": "465c4e79bf64bad04a3dd4878eee307319966c58119e17506b1cfc9cbccf2f2c"
+  },
+  "baseline_bindings": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_BINDINGS.json",
+    "sha256": "6ebe90717fa2571816ba3392841f3690c2c3fe37225c3728f935bb80d3102623"
+  },
+  "checkpoint_compatibility": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_COMPATIBILITY_ACCEPTED_02.json",
+    "sha256": "1e8242a18370cf26d58c720c9b0d96b3a8eaf6f125b5a2b4972c7b320accd148"
+  },
+  "extension_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXTENSION_INPUTS_CANDIDATE_02.json",
+    "sha256": "7d36890b12c5da14caf67905197bdad2298c080080e7049be6d714d5cce35dff"
+  },
+  "r6": {
+    "protocol": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/protocol.json",
+      "sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822"
+    },
+    "block_ids": [
+      "S-clean-low",
+      "S-clean-high",
+      "S-noise",
+      "S-delay-drop",
+      "X-clean",
+      "X-noise",
+      "P-clean",
+      "P-combined",
+      "W-near",
+      "W-middle",
+      "W-far",
+      "W-combined",
+      "stress-S-noise",
+      "stress-S-combined",
+      "stress-P-high",
+      "stress-W-high"
+    ],
+    "run_id": "R6-BASELINE-ROBUSTNESS-01",
+    "seed": 2026101901,
+    "split": "development",
+    "expected_mass_kg": 1.181517923,
+    "output_quotas": {
+      "S-clean-low": {
+        "range_bytes": 855638016,
+        "audit_bytes": 83886080
+      },
+      "S-clean-high": {
+        "range_bytes": 855638016,
+        "audit_bytes": 83886080
+      },
+      "S-noise": {
+        "range_bytes": 1409286144,
+        "audit_bytes": 83886080
+      },
+      "S-delay-drop": {
+        "range_bytes": 855638016,
+        "audit_bytes": 83886080
+      },
+      "X-clean": {
+        "range_bytes": 520093696,
+        "audit_bytes": 67108864
+      },
+      "X-noise": {
+        "range_bytes": 855638016,
+        "audit_bytes": 67108864
+      },
+      "P-clean": {
+        "range_bytes": 855638016,
+        "audit_bytes": 83886080
+      },
+      "P-combined": {
+        "range_bytes": 1409286144,
+        "audit_bytes": 83886080
+      },
+      "W-near": {
+        "range_bytes": 855638016,
+        "audit_bytes": 83886080
+      },
+      "W-middle": {
+        "range_bytes": 855638016,
+        "audit_bytes": 83886080
+      },
+      "W-far": {
+        "range_bytes": 855638016,
+        "audit_bytes": 83886080
+      },
+      "W-combined": {
+        "range_bytes": 1409286144,
+        "audit_bytes": 83886080
+      },
+      "stress-S-noise": {
+        "range_bytes": 1459617792,
+        "audit_bytes": 83886080
+      },
+      "stress-S-combined": {
+        "range_bytes": 1459617792,
+        "audit_bytes": 83886080
+      },
+      "stress-P-high": {
+        "range_bytes": 855638016,
+        "audit_bytes": 83886080
+      },
+      "stress-W-high": {
+        "range_bytes": 1459617792,
+        "audit_bytes": 83886080
+      }
+    }
+  },
+  "protocol_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/protocol-capacity-freeze-01-review.json",
+    "sha256": "a4f2c630ac5a151dc05460c1214b8e5432392f84031e4d6e1b944903ea355698"
+  }
+}
