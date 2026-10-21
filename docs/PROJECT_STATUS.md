@@ -2,6 +2,13 @@
 
 2026-10-20：完整目标未完成，R6完整controller尚未部署，没有R6 live作业。
 
+2026-10-21：限制下真实Torch CPU计算、/proc/self/fd/1日志和准确结果目录写入通过；
+补齐Linux7.0新属性syscall拒绝，57测试+3子测试通过。第13次复审确认遥测修复，仍有
+一项MUST_FIX：结果目录例外只受合作式Python计账，原生/后代直接多文件写入可绕过。
+见 `docs/experiments/r6-robustness-auto/reviews/native-quota-repair-review.json`。
+下一步给整个结果目录另设内核总量配额，镜像完整计入既有作业输出预算；不靠增加包装器
+或缩小目录掩盖缺口。13次receipt及清理完成，剩余19次；capacity=false，尚无live。
+
 2026-10-21：独审两项MUST_FIX已形成CPU修复候选：遥测全部已识别文件端点进入配额卷；
 dispatcher在exec前应用Landlock及seccomp，关闭继承的非标准描述符，限制输入内容/
 元数据修改与卷外写入，后代继承。真实内核反例与集成55测试+3子测试通过，见

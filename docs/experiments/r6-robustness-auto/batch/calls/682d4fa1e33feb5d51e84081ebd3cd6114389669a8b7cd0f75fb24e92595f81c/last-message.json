@@ -1,0 +1,62 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "Telemetry routing addresses the original finding. The inherited Landlock/seccomp boundary substantially addresses outside-path writes and input mutation, but the results-directory exception remains unbounded for native writes. Therefore the engineering repair is not yet closed for exact prelive admission. Reviewed sources match b998f8c despite later documentation/state commits. Inspected existing evidence reporting 57 passed and 3 subtests; no tests rerun or state modified. No total-capacity, live, or scientific acceptance; capacity=false, 3GiB allowance, production-volume provisioning and Kit/CUDA/shared-memory validation prerequisites remain.",
+  "evidence_pins": [
+    {
+      "path": "training_workloads/unified_h1/write_boundary.py",
+      "sha256": "115ce3c7ed3cdcca80bc1c142275baee8bd9463b216b02548dcfa91e59756b36"
+    },
+    {
+      "path": "training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "4f1440d51eaa5e5bc2145a688709040a69f56424f79bd3c8b23f3835fe17df8e"
+    },
+    {
+      "path": "training_workloads/unified_h1/native_volume.py",
+      "sha256": "c835224996830f68279eb83c891e0f51f529ac3bf687a9fdef92f01bd5ea7b50"
+    },
+    {
+      "path": "training_workloads/scale_003/resources.py",
+      "sha256": "643ec3f3638e12f0005ca38714c9976fedb46a09f6a1b5667a95c01b578f2ad4"
+    },
+    {
+      "path": "tools/rlflow/rlflow/h1.py",
+      "sha256": "d37acb273e863b706a0185534b97018143fe3fadb3ea450129a8f48723dce15b"
+    },
+    {
+      "path": "training_workloads/unified_h1/live_adapter.py",
+      "sha256": "ebfd1bec9fdcb4586acb02a5ebc982dd98c56f2cbaaa9742afe069a0a6e70957"
+    },
+    {
+      "path": "training_workloads/scale_003/persistence.py",
+      "sha256": "245b1fd5f603ba912eb512904d8daf51b5233771cf3b1df46da25faf170e0ac7"
+    },
+    {
+      "path": "tools/test_r6_write_boundary.py",
+      "sha256": "a22770d0ed9021c49a504ad6bc0e81771bc3df6dc23acf007bbd2ac711922587"
+    },
+    {
+      "path": "tools/test_r6_native_volume_dispatch.py",
+      "sha256": "347b9dcf2125a28db72602df2ed38a01be1c9b6ddd096cbefa575afcde1a86dd"
+    },
+    {
+      "path": "tools/test_r6_native_volume_binding.py",
+      "sha256": "3ba5d034c75a15f6a873e2995ce8a1f8854c852402aed41131001e98fe83d6b7"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_BOUNDARY_COMPATIBILITY_TESTS_V2.txt",
+      "sha256": "240d01898f8a42ad08dfdf89a351b0d9acac913eff4bd3382079460e76b0b48b"
+    },
+    {
+      "path": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.telemetry-8994df2c5ad3f85e/docs/KitTelemetry.md",
+      "sha256": "4985ea30edf96220146c7469b9788c19b3e7ae1134791fa87292168f3b41e2a0"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Close the results-output bypass with an enforceable aggregate bound or a bounded writer broker, then add a small-limit CPU regression exercising direct multi-file writes and descendant exec. Independently review that repair before exact admission; retain all existing live-validation prerequisites and protected final/repair sessions.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 19
+  },
+  "must_fix": [
+    "Unbounded results exception: tools/rlflow/rlflow/h1.py:88 passes attempt/results; local_dispatch.py:114–120 and write_boundary.py:35 grant recursive file creation/write access there. live_adapter.py:311 installs only a cooperative quota under results/research-r6-evaluation, and persistence.py:reserve_output_bytes/guard_stream charge only participating writers. A native library or exec descendant can directly open/write results/native-extra-N files—or files inside the mode directory—without any quota charge. Repeating files below the 2GiB RLIMIT_FSIZE ceiling can exceed both the workload reservation and native allowance on the host filesystem; the native ext4 bound is irrelevant to these writes. The existing result-directory test confirms write access but tests no aggregate limit. Minimally, require and validate a separately reserved kernel aggregate quota for the entire writable result exception, or remove direct result access and broker approved writes through a bounded external writer. Narrowing the directory alone or adding more cooperative wrappers does not close this path. Test cumulative denial across multiple files and descendants while preserving legitimate measurement output."
+  ]
+}
