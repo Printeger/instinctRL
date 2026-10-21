@@ -1,5 +1,14 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
+2026-10-21：当前操作账本与完整双卷方案完成可重复的只读对账，3项CPU检查通过。
+已预留baseline20,250,099,712字节替代未来同项额度而非叠加；现有总disk charge
+24,700,977,152字节。完整开发投影36,982,554,624字节，候选35GiB开发池余
+598,409,216字节；最终投影99,220,455,424字节，候选保护93GiB。
+见 `docs/experiments/r6-robustness-auto/CAPACITY_CURRENT_RECONCILIATION.json`。
+既有账本保护仍80GiB，未擅自把候选分配视为独审接受；capacity=false。
+超额测试证明实际占用增加会消耗余量，不退款/不漏记。实际卷容量、训练双卷接线、
+时间分配与协议独审仍待完成，无GPU/live/model新增，完整Goal未完成。
+
 2026-10-21：保留集prepare/release新增已登记独审来源核验；准确final-freeze-review
 事件、预算、receipt和输出hash均需绑定，调用既有模型退出/schema/清理验证器。
 16项CPU回归通过（新增7项来源检查），见
