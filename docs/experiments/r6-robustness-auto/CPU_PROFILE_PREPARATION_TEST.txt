@@ -1,0 +1,279 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+__________ test_real_worker_creates_plans_and_one_prepaid_allocation ___________
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_real_worker_creates_plans_and_one_prepaid_allocation(case):
+>       b=case;before=b.store.replay();first=run(b);budget=b.j.read()['budget']
+
+tools/test_r6_profile_preparation.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_profile_preparation.py:62: in run
+    with b.j.writer():return p.prepare_profile(b.j,b.parent,b.context,b.store,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7f7230528ad0>
+parent_key = '999ad94b11b267e3845c4821ef01965992c3d19a458c2b8f5395c021afc0940a'
+context_pin = {'path': '/tmp/tmpzq40_y9x/context.json', 'sha256': '1d1f9eb2eb24d1b344f134e11ae1fb1ec1695e3110e737f9b0b4e83a464ee786'}
+store = namespace(root=PosixPath('/tmp/tmpzq40_y9x'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7f723036fec0>)
+
+    def prepare_profile(journal,parent_key,context_pin,store,*,executable,free_disk_bytes):
+        journal.require_writer();state=journal.read()
+>       packets=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==
+                 'PROFILE_INPUT:'+parent_key+':'+context_pin['sha256']]
+E       KeyError: 'event_id'
+
+tools/r6_profile_preparation.py:172: KeyError
+______ test_unsupported_phase_routes_to_source_without_allocating_storage ______
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_unsupported_phase_routes_to_source_without_allocating_storage(case):
+        b=case;b.builder.with_suffix('.settings').write_text('{"source":true}')
+>       first=run(b);assert first['status']=='SOURCE_PREPARATION_REQUIRED'
+
+tools/test_r6_profile_preparation.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_profile_preparation.py:62: in run
+    with b.j.writer():return p.prepare_profile(b.j,b.parent,b.context,b.store,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7f723053c0b0>
+parent_key = '263ea19da203bd028dfd9ba78be211949f0ad33481a28deeeced088c314de7ee'
+context_pin = {'path': '/tmp/tmp2ve6flfl/context.json', 'sha256': '0782aa67122b04b79c1ed86d3f586f90ae5d9b8a2cbf87ef0243bad9d49c8633'}
+store = namespace(root=PosixPath('/tmp/tmp2ve6flfl'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7f72304d0720>)
+
+    def prepare_profile(journal,parent_key,context_pin,store,*,executable,free_disk_bytes):
+        journal.require_writer();state=journal.read()
+>       packets=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==
+                 'PROFILE_INPUT:'+parent_key+':'+context_pin['sha256']]
+E       KeyError: 'event_id'
+
+tools/r6_profile_preparation.py:172: KeyError
+________ test_bad_profile_never_reserves_volume[managed-MANAGED_FIELDS] ________
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+setting = 'managed', reason = 'MANAGED_FIELDS'
+
+    @pytest.mark.parametrize('setting,reason',[('managed','MANAGED_FIELDS'),('immutable','IMMUTABLE_PROFILE_BINDING'),('small','PAYLOAD_UNDERSIZED')])
+    def test_bad_profile_never_reserves_volume(case,setting,reason):
+        b=case;b.builder.with_suffix('.settings').write_text(json.dumps({setting:True}))
+>       with pytest.raises(RecoveryError,match=reason):run(b)
+
+tools/test_r6_profile_preparation.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_profile_preparation.py:62: in run
+    with b.j.writer():return p.prepare_profile(b.j,b.parent,b.context,b.store,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7f723053ec90>
+parent_key = '95f3d4e7ae7e0f331aaf288c81096687d0f074a1f749ad746a970c97a9b0c560'
+context_pin = {'path': '/tmp/tmps1ehf_8n/context.json', 'sha256': 'd4b6b4e7f437c38addc24cf628e870a55781420df8d3fe2213df889f23e347dd'}
+store = namespace(root=PosixPath('/tmp/tmps1ehf_8n'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7f72303b5c60>)
+
+    def prepare_profile(journal,parent_key,context_pin,store,*,executable,free_disk_bytes):
+        journal.require_writer();state=journal.read()
+>       packets=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==
+                 'PROFILE_INPUT:'+parent_key+':'+context_pin['sha256']]
+E       KeyError: 'event_id'
+
+tools/r6_profile_preparation.py:172: KeyError
+_ test_bad_profile_never_reserves_volume[immutable-IMMUTABLE_PROFILE_BINDING] __
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+setting = 'immutable', reason = 'IMMUTABLE_PROFILE_BINDING'
+
+    @pytest.mark.parametrize('setting,reason',[('managed','MANAGED_FIELDS'),('immutable','IMMUTABLE_PROFILE_BINDING'),('small','PAYLOAD_UNDERSIZED')])
+    def test_bad_profile_never_reserves_volume(case,setting,reason):
+        b=case;b.builder.with_suffix('.settings').write_text(json.dumps({setting:True}))
+>       with pytest.raises(RecoveryError,match=reason):run(b)
+
+tools/test_r6_profile_preparation.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_profile_preparation.py:62: in run
+    with b.j.writer():return p.prepare_profile(b.j,b.parent,b.context,b.store,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7f723053d400>
+parent_key = 'f7ffa15b883a315014f509dc8cd8c6916e7d48551806922170a885688048c7d3'
+context_pin = {'path': '/tmp/tmpb66t2j3_/context.json', 'sha256': '2936fa7a98c35629408c3dd564be752006dd50d758aadfa8d05787af99453ad9'}
+store = namespace(root=PosixPath('/tmp/tmpb66t2j3_'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7f72303b6ca0>)
+
+    def prepare_profile(journal,parent_key,context_pin,store,*,executable,free_disk_bytes):
+        journal.require_writer();state=journal.read()
+>       packets=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==
+                 'PROFILE_INPUT:'+parent_key+':'+context_pin['sha256']]
+E       KeyError: 'event_id'
+
+tools/r6_profile_preparation.py:172: KeyError
+_______ test_bad_profile_never_reserves_volume[small-PAYLOAD_UNDERSIZED] _______
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+setting = 'small', reason = 'PAYLOAD_UNDERSIZED'
+
+    @pytest.mark.parametrize('setting,reason',[('managed','MANAGED_FIELDS'),('immutable','IMMUTABLE_PROFILE_BINDING'),('small','PAYLOAD_UNDERSIZED')])
+    def test_bad_profile_never_reserves_volume(case,setting,reason):
+        b=case;b.builder.with_suffix('.settings').write_text(json.dumps({setting:True}))
+>       with pytest.raises(RecoveryError,match=reason):run(b)
+
+tools/test_r6_profile_preparation.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_profile_preparation.py:62: in run
+    with b.j.writer():return p.prepare_profile(b.j,b.parent,b.context,b.store,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7f723054db50>
+parent_key = '993e1176dd25619c474442054a7e1d2281dfff878163445d2ca6cfe84cb7f6a1'
+context_pin = {'path': '/tmp/tmp5legx0ww/context.json', 'sha256': 'd86ae422b29a47892811fc1af01a814cb1da99e92fb325acf9c2041d5bab0315'}
+store = namespace(root=PosixPath('/tmp/tmp5legx0ww'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7f72303b7240>)
+
+    def prepare_profile(journal,parent_key,context_pin,store,*,executable,free_disk_bytes):
+        journal.require_writer();state=journal.read()
+>       packets=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==
+                 'PROFILE_INPUT:'+parent_key+':'+context_pin['sha256']]
+E       KeyError: 'event_id'
+
+tools/r6_profile_preparation.py:172: KeyError
+__________ test_missing_prompt_replays_exact_packet_and_model_intent ___________
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_missing_prompt_replays_exact_packet_and_model_intent(case):
+>       b=case;key,_,_=register(b);budget=b.j.read()['budget']
+
+tools/test_r6_profile_preparation.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_profile_preparation.py:67: in register
+    with b.j.writer():return p.register(b.j,b.parent,b.context,b.store,
+tools/r6_profile_preparation.py:93: in register
+    packet_key,packet_pin,prompt_pin=packet(journal,parent_key,context_pin,store,free_disk_bytes=free_disk_bytes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7f72303792b0>
+parent_key = 'a5739fc95299ae23a4047b97a4399b7fe27af8d52c1e4aa36e735cc1c8150eb0'
+context_pin = {'path': '/tmp/tmpfufldyqb/context.json', 'sha256': '7f3e380067bdfc9b455cba0945c4fb811924e413d70d8f4859f53e74af437bd9'}
+store = namespace(root=PosixPath('/tmp/tmpfufldyqb'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7f72303b42c0>)
+
+    def packet(journal,parent_key,context_pin,store,*,free_disk_bytes):
+        guard(journal);parent=parent_decision(journal,parent_key,store)
+        require(parent['decision']['decision']!='REQUEST_FINAL_REVIEW','FINAL_ROUTE')
+        context=json.loads(checked(context_pin).read_text());require(set(context)==CONTEXT,'CONTEXT')
+        receipt=json.loads(checked(context['snapshot_receipt']).read_text())
+        require(receipt.get('status')=='CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY','SNAPSHOT')
+        verify_frozen(receipt,json.loads(checked(receipt['config']).read_text()))
+        checked(context['baseline_profile'])
+        state=journal.read();parent_pin=state['events'][parent_key]['decision_record']
+        name='PROFILE_INPUT:'+parent_key+':'+context_pin['sha256']
+>       previous=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==name]
+E       KeyError: 'event_id'
+
+tools/r6_profile_preparation.py:48: KeyError
+___________ test_preexisting_packet_crash_does_not_create_duplicate ____________
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f72303785f0>
+
+    def test_preexisting_packet_crash_does_not_create_duplicate(case,monkeypatch):
+        b=case;original=p.persist_exact
+        monkeypatch.setattr(p,'persist_exact',Mock(side_effect=RuntimeError('CPU packet crash')))
+>       with pytest.raises(RuntimeError,match='packet crash'):register(b)
+
+tools/test_r6_profile_preparation.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_profile_preparation.py:67: in register
+    with b.j.writer():return p.register(b.j,b.parent,b.context,b.store,
+tools/r6_profile_preparation.py:93: in register
+    packet_key,packet_pin,prompt_pin=packet(journal,parent_key,context_pin,store,free_disk_bytes=free_disk_bytes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7f723053c050>
+parent_key = '8351d491b868f5b2c619e6e304710e03abee660fd400c52603d512e2139ba6dc'
+context_pin = {'path': '/tmp/tmpw3b5f150/context.json', 'sha256': '288fa506cbf661b14f54a577ad1f56a913950af5fc39bccfa885c553602295a1'}
+store = namespace(root=PosixPath('/tmp/tmpw3b5f150'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7f72302b8fe0>)
+
+    def packet(journal,parent_key,context_pin,store,*,free_disk_bytes):
+        guard(journal);parent=parent_decision(journal,parent_key,store)
+        require(parent['decision']['decision']!='REQUEST_FINAL_REVIEW','FINAL_ROUTE')
+        context=json.loads(checked(context_pin).read_text());require(set(context)==CONTEXT,'CONTEXT')
+        receipt=json.loads(checked(context['snapshot_receipt']).read_text())
+        require(receipt.get('status')=='CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY','SNAPSHOT')
+        verify_frozen(receipt,json.loads(checked(receipt['config']).read_text()))
+        checked(context['baseline_profile'])
+        state=journal.read();parent_pin=state['events'][parent_key]['decision_record']
+        name='PROFILE_INPUT:'+parent_key+':'+context_pin['sha256']
+>       previous=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==name]
+E       KeyError: 'event_id'
+
+tools/r6_profile_preparation.py:48: KeyError
+_________________ test_budget_drift_before_worker_is_rejected __________________
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_budget_drift_before_worker_is_rejected(case):
+>       b=case;register(b)
+
+tools/test_r6_profile_preparation.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_profile_preparation.py:67: in register
+    with b.j.writer():return p.register(b.j,b.parent,b.context,b.store,
+tools/r6_profile_preparation.py:93: in register
+    packet_key,packet_pin,prompt_pin=packet(journal,parent_key,context_pin,store,free_disk_bytes=free_disk_bytes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7f723054fdd0>
+parent_key = 'b3f6fa2116f9137b321e56e7b3c16449d53973383c2c71ea7612e64bd9134d8c'
+context_pin = {'path': '/tmp/tmpxrhtuip7/context.json', 'sha256': 'fa7f06e1f8d2a1cdb57973968ee3149d28828b51529fc29faeaf9b69fcfa73ed'}
+store = namespace(root=PosixPath('/tmp/tmpxrhtuip7'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7f72303b5f80>)
+
+    def packet(journal,parent_key,context_pin,store,*,free_disk_bytes):
+        guard(journal);parent=parent_decision(journal,parent_key,store)
+        require(parent['decision']['decision']!='REQUEST_FINAL_REVIEW','FINAL_ROUTE')
+        context=json.loads(checked(context_pin).read_text());require(set(context)==CONTEXT,'CONTEXT')
+        receipt=json.loads(checked(context['snapshot_receipt']).read_text())
+        require(receipt.get('status')=='CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY','SNAPSHOT')
+        verify_frozen(receipt,json.loads(checked(receipt['config']).read_text()))
+        checked(context['baseline_profile'])
+        state=journal.read();parent_pin=state['events'][parent_key]['decision_record']
+        name='PROFILE_INPUT:'+parent_key+':'+context_pin['sha256']
+>       previous=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==name]
+E       KeyError: 'event_id'
+
+tools/r6_profile_preparation.py:48: KeyError
+___________________ test_stop_before_new_event_has_no_effect ___________________
+
+case = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_stop_before_new_event_has_no_effect(case):
+        b=case;(b.j.directory/'STOP').touch();before=b.j.read()
+>       with pytest.raises(RecoveryError,match='STOP'):run(b)
+
+tools/test_r6_profile_preparation.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/test_r6_profile_preparation.py:62: in run
+    with b.j.writer():return p.prepare_profile(b.j,b.parent,b.context,b.store,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+journal = <tools.r6_recovery.Journal object at 0x7f723054f620>
+parent_key = 'f363a29954c21e48664430a7940240b1a355e7696cc9a7d26c0670d147ee321b'
+context_pin = {'path': '/tmp/tmpyuiqfe3_/context.json', 'sha256': '7fa37c53fcbf7ded74e5c519aca36e12bf40a9f2fa2ed28c36340f1c5e91cbde'}
+store = namespace(root=PosixPath('/tmp/tmpyuiqfe3_'), replay=<function CPUAnalysisTests.setUp.<locals>.<lambda> at 0x7f72303b63e0>)
+
+    def prepare_profile(journal,parent_key,context_pin,store,*,executable,free_disk_bytes):
+        journal.require_writer();state=journal.read()
+>       packets=[(k,e) for k,e in state['events'].items() if e['identity']['event_id']==
+                 'PROFILE_INPUT:'+parent_key+':'+context_pin['sha256']]
+E       KeyError: 'event_id'
+
+tools/r6_profile_preparation.py:172: KeyError
+=========================== short test summary info ============================
+FAILED tools/test_r6_profile_preparation.py::test_real_worker_creates_plans_and_one_prepaid_allocation
+FAILED tools/test_r6_profile_preparation.py::test_unsupported_phase_routes_to_source_without_allocating_storage
+FAILED tools/test_r6_profile_preparation.py::test_bad_profile_never_reserves_volume[managed-MANAGED_FIELDS]
+FAILED tools/test_r6_profile_preparation.py::test_bad_profile_never_reserves_volume[immutable-IMMUTABLE_PROFILE_BINDING]
+FAILED tools/test_r6_profile_preparation.py::test_bad_profile_never_reserves_volume[small-PAYLOAD_UNDERSIZED]
+FAILED tools/test_r6_profile_preparation.py::test_missing_prompt_replays_exact_packet_and_model_intent
+FAILED tools/test_r6_profile_preparation.py::test_preexisting_packet_crash_does_not_create_duplicate
+FAILED tools/test_r6_profile_preparation.py::test_budget_drift_before_worker_is_rejected
+FAILED tools/test_r6_profile_preparation.py::test_stop_before_new_event_has_no_effect
+9 failed in 2.48s

@@ -1,0 +1,62 @@
+{
+  "status": "CPU_PASS_PENDING_COMBINED_REVIEW_NOT_DEPLOYED",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_profile_preparation.py",
+      "sha256": "c7ab6a019c1bd164c977bc8b58aedb978a12267d544a881c3860873946c3257e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_profile_preparation.py",
+      "sha256": "ca8dba58f7a3201d93aa6ef9d730c45f2c66100bd48950b1413ed51d4bb2ff3d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/profile-preparation.schema.json",
+      "sha256": "5ae20a83b4d857ac2c64649cc0c198677d7548eeac244ddb08bc78af09b0f8ba"
+    }
+  ],
+  "tests": {
+    "combined_passed": 47,
+    "final_targeted_passed": 13,
+    "combined": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PROFILE_PREPARATION_COMBINED_TEST.txt",
+      "sha256": "858880109342b883dab7667fd2e3ba2c67b094eed80e5f235e4ae46342f3b92f"
+    },
+    "final": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PROFILE_PREPARATION_FINAL_TEST.txt",
+      "sha256": "49cc519de72f3e1eea5d1a450c74a89866da34430183c673e9b7c66a774bf652"
+    },
+    "preserved_initial_failure": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PROFILE_PREPARATION_TEST.txt",
+      "sha256": "b975a02e973282d972848af535f69b07b4997159f8a59c0d0f8101ab84bff89b"
+    },
+    "initial_repair": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PROFILE_PREPARATION_REPAIR_TEST.txt",
+      "sha256": "8a4d922e5c07876f327116339c7ceb440de39de3816abd7476d29ed482bfc23b"
+    }
+  },
+  "coverage": [
+    "Actual fake CLI process and receipt; no paid model calls",
+    "Replay, missing prompt and pre-packet-persistence crash reuse one event and model call",
+    "Controller creates native/result plans and prepaid allocation; never mounts, approves or submits",
+    "Missing reservations, immutable field drift, undersized payload, stale budget and STOP reject",
+    "Unsupported source routes to source preparation without volume allocation",
+    "Scientific candidate cannot bypass charged source/design preparation",
+    "Exact finished-job decision resolution"
+  ],
+  "fixture_boundaries": [
+    "Frozen source verifier mocked",
+    "Temporary storage roots and Store replay fixture",
+    "Native/result plan generators and allocation Journal are real"
+  ],
+  "remaining": [
+    "Combine preparation and existing first/next entry in detached controller",
+    "Independent combined review and exact initial prelive",
+    "Future privileged provisioning capability",
+    "Training/final execution contracts and scientific work",
+    "Resolve platform automatic continuation before live handoff"
+  ],
+  "production_model_calls": 0,
+  "GPU_queries": 0,
+  "live_starts": 0,
+  "goal_complete": false
+}

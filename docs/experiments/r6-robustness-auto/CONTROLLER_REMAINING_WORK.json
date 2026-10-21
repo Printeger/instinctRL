@@ -1,5 +1,5 @@
 {
-  "status": "SOURCE_AND_EVALUATION_MATERIALIZER_CPU_READY_FULL_PIPELINE_INCOMPLETE",
+  "status": "PROFILE_SOURCE_MATERIALIZATION_CPU_READY_FULL_PIPELINE_INCOMPLETE",
   "checked_commit": "8696113ffe0eebe07c5fda8af17ba8c789ce5d31",
   "concrete_first_plan": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
@@ -29,8 +29,8 @@
     "No production post-analysis decision exists, so updated STOP request does not reinterpret an existing production receipt"
   ],
   "next_implementation": {
-    "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan",
-    "next": "Generate concrete profile drafts/storage plans from decisions after source/compatibility readiness; controller reserves/provisions volumes, then invokes existing materializer; extend training/final contracts before their use",
+    "completed_cpu": "Source-change preparation plus controller-owned frozen snapshot; evaluation profile materialization from actual prepaid volume evidence to exact auth/spec/runner plan; read-only profile decision to concrete storage plans, prepaid allocation and materializer inputs",
+    "next": "Compose event routing and preparation/materialization with first/next entries; future actual provisioning and new source compatibility required; extend training/final contracts before use",
     "deployment": "Compose first/next entry and preparation/materialization under one detached local controller; independently validate full handoff before any production invocation",
     "invariants": [
       "No Journal or Store authority mutation by source-preparation worker",
@@ -56,5 +56,9 @@
   "job_materialization": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_MATERIALIZE_JOB.json",
     "sha256": "cfd699ab598e827d644bb4b3d7030b0c03f8389b96d73ee61d8de84a7906b534"
+  },
+  "profile_preparation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PROFILE_PREPARATION.json",
+    "sha256": "c2a100d49ae9dadcecfced2318d017c42e931dae328b0294c2e76a19b88fdc95"
   }
 }
