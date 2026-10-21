@@ -4,10 +4,12 @@ Adds a durable edge to the existing exact-job runner, not a new scheduler.
 Does not issue Store authority or turn a scientific proposal into approval.
 """
 import json
+import hashlib
+from pathlib import Path
 
 from rlflow import experiments
 from rlflow.store import sha
-from tools.r6_recovery import checked,RecoveryError
+from tools.r6_recovery import checked,file_pin,RecoveryError
 from tools.r6_batch import verified_decision
 from tools.r6_decision import record as record_decision
 from tools.r6_job_handoff import no_model_workers
@@ -17,6 +19,7 @@ from tools.r6_run_job import run as run_job
 
 ROLE='next-job-handoff'
 CAP=65536
+SCHEMA=Path(__file__).resolve().parents[1]/'docs/experiments/r6-robustness-auto/prompts/next-job-review.schema.json'
 FIELDS={'spec_pin','query_executable','decision_executable','queue_review','sampler_review','purpose','sandbox'}
 
 
@@ -36,6 +39,8 @@ def reviewed_plan(journal,parent_key,plan_pin,review_key,review_pin,store):
         and identity['job_id']==state['events'][parent_key]['identity']['job_id']
         and identity['goal_id']==state['goal_id'] and identity['input_sha256']==sha(review['request'])
         and sha(identity)==review_key,'REVIEW_IDENTITY')
+    require(review['request'].get('schema')==file_pin(SCHEMA)
+        and review['request'].get('sandbox')=='read-only','REVIEW_CONTRACT')
     receipt=json.loads(checked(review['receipt']).read_text())
     require(review['status']=='RECEIPT_RECORDED' and receipt['event_key']==review_key
         and receipt['request_sha256']==sha(review['request']) and receipt['process']==review.get('process')
@@ -49,6 +54,9 @@ def reviewed_plan(journal,parent_key,plan_pin,review_key,review_pin,store):
         and result.get('decision')=='PASS_R6_NEXT_JOB' and result.get('must_fix')==[]
         and result.get('parent_decision_sha256')==decision_pin['sha256']
         and result.get('plan_sha256')==plan_pin['sha256'],'REVIEW_BINDING')
+    require(result.get('changed_files')==[] and decision_pin in result.get('evidence_pins',[])
+        and plan_pin in result.get('evidence_pins',[]),'REVIEW_EVIDENCE')
+    for pin in result['evidence_pins']:checked(pin)
     spec=json.loads(checked(plan['spec_pin']).read_text())
     child='J-'+sha({'id':spec['id'],'spec':spec})[:16]
     require(child!=state['events'][parent_key]['identity']['job_id'],'SELF_JOB')
@@ -123,3 +131,53 @@ def advance(journal,parent_key,plan_pin,review_key,review_pin,store,*,free_disk_
         require(job['identity']['job_id']==entry['identity']['job_id'],'RUNNER_CHILD')
         state=journal.read();state['events'][key]['next_job_result']=result;journal.save(state)
     return result
+
+
+def register_review(journal,parent_key,plan_pin,store,*,executable,free_disk_bytes):
+    """Register one bounded read-only review; existing model_handoff executes it.
+
+    No Store permission is issued here. The plan and parent remain exact pins.
+    Registration is durable before writing the prompt and never launches a model.
+    """
+    from tools.r6_decision import CLI,CLI_SHA,MODEL_CAP,ROOT
+    from tools.r6_decision_packet import persist_exact
+    from tools.r6_model_worker import validate_request
+    journal.require_writer();journal.guard()
+    require(not stop_paths(journal),'STOP');no_model_workers(journal)
+    state=journal.read();require(state.get('current_job') is None,'PARENT_NOT_CLOSED')
+    record_decision(journal,parent_key,store)
+    state=journal.read();parent=state['events'][parent_key]['decision_record']
+    plan=json.loads(checked(plan_pin).read_text())
+    require(set(plan)==FIELDS and plan['purpose'] in {'development','repair','confirmation_delivery'}
+        and plan['sandbox'] in {'read-only','danger-full-access'},'PLAN_FIELDS')
+    spec=json.loads(checked(plan['spec_pin']).read_text())
+    experiments.validate(spec,store.root)
+    checked(executable)
+    if state['goal_id']=='R6-CPU-TEST-FIXTURE':
+        require(checked(executable).is_relative_to(journal.directory.parent.resolve()),'FIXTURE_EXECUTABLE')
+    else:require(executable=={'path':str(CLI),'sha256':CLI_SHA},'PINNED_CLI')
+    packet=dict(parent=parent,plan=plan_pin,spec=plan['spec_pin'])
+    prompt=('Review this exact R6 next-job plan independently, read-only, then exit. '
+        'Read the pinned parent decision, plan, spec and necessary original evidence. '
+        'Check that the plan implements the parent decision, preserves frozen metrics, actor/runtime '
+        'boundaries, required comparisons and full confirmation budget. Check exact Store authority '
+        'and resource feasibility; missing evidence is MUST_FIX. Do not launch jobs, query GPUs, '
+        'change files, grant authority, or wait for training. PASS requires no must_fix. '
+        'Return parent_decision_sha256, plan_sha256 and both pins in evidence_pins. '
+        'changed_files must be empty. Store root: '+str(store.root)+'\n'+json.dumps(packet,sort_keys=True)+'\n').encode()
+    require(len(prompt)<=CAP,'REVIEW_CONTEXT_CAP')
+    path=journal.directory/'next-job-reviews'/parent_key/plan_pin['sha256']/'prompt.txt'
+    request=dict(prompt={'path':str(path.resolve()),'sha256':hashlib.sha256(prompt).hexdigest()},
+        schema=file_pin(SCHEMA),executable=executable,cwd=str(ROOT),sandbox='read-only',
+        timeout_seconds=3600,output_cap_bytes=MODEL_CAP,
+        stop_paths=[str((journal.directory/'STOP').resolve()),str((journal.directory.parent/'STOP').resolve())])
+    identity=dict(goal_id=state['goal_id'],event_id='NEXT_JOB_REVIEW:'+parent_key+':'+plan_pin['sha256'],
+        job_id=state['events'][parent_key]['identity']['job_id'],input_sha256=sha(request),role='next-job-review')
+    prior=[e for e in state['events'].values() if e['identity']['role']=='next-job-review'
+        and e['identity']['event_id']==identity['event_id']]
+    require(all(e['request']==request for e in prior),'REVIEW_ALREADY_BOUND')
+    key,_=journal.intent(identity,kind='model',request=request,
+        resources={'automatic_model_sessions':1,'output_actual_plus_unreleased_reservations_bytes':MODEL_CAP+CAP},
+        purpose=plan['purpose'],free_disk_bytes=free_disk_bytes)
+    persist_exact(path,prompt);validate_request(request)
+    return key

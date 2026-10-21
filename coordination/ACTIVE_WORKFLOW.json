@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 105,
-    "total_automatic_model_sessions_minimum": 124,
+    "platform_automatic_goal_wakes": 106,
+    "total_automatic_model_sessions_minimum": 125,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -231,6 +231,8 @@
     "prepared_storage_check": "CPU12_PASS_WAITING_FOR_ADMIN_PROVISION",
     "prepared_storage_check_evidence": "docs/experiments/r6-robustness-auto/CPU_PREPARED_STORAGE_CHECK.json",
     "next_job_handoff_status": "CPU18_PASS_REVIEW_AND_DEPLOYMENT_PENDING",
-    "next_job_handoff_evidence": "docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_HANDOFF.json"
+    "next_job_handoff_evidence": "docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_HANDOFF.json",
+    "next_job_review_interface": "CPU21_PASS_INDEPENDENT_REVIEW_PENDING",
+    "next_job_review_evidence": "docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_REVIEW_INTERFACE.json"
   }
 }

@@ -28,8 +28,8 @@ def case(tmp_path,monkeypatch):
         with j.writer():return j.intent(identity,kind='model',request=request,resources={'automatic_model_sessions':1},
             purpose='development',free_disk_bytes=500*1024**3)[0]
     parent=event('post-analysis-decision',{'fixture':'parent'})
-    review=event('next-job-review',{'fixture':'review'})
-    output=dict(decision='PASS_R6_NEXT_JOB',must_fix=[],parent_decision_sha256=parent_pin['sha256'],plan_sha256=plan_pin['sha256'])
+    review=event('next-job-review',{'fixture':'review','schema':file_pin(next_job.SCHEMA),'sandbox':'read-only'})
+    output=dict(decision='PASS_R6_NEXT_JOB',summary='CPU fixture',must_fix=[],changed_files=[],evidence_pins=[parent_pin,plan_pin],parent_decision_sha256=parent_pin['sha256'],plan_sha256=plan_pin['sha256'])
     review_pin=write('review.json',output)
     with j.writer():
         s=j.read();s['events'][parent]['decision_record']=parent_pin
@@ -139,3 +139,51 @@ def test_replay_rejects_missing_reservation(case):
         b.j.save(s)
     with pytest.raises(RecoveryError,match='REPLAY_IDENTITY'):call(b)
     b.runner.assert_not_called()
+
+
+def register_review(b):
+    exe=b.write('fixture-executable.json',{})
+    with b.j.writer():
+        return next_job.register_review(b.j,b.parent,b.plan_pin,b.store,
+            executable=exe,free_disk_bytes=500*1024**3)
+
+
+def test_review_registration_replays_one_session_and_recovers_missing_prompt(case):
+    b=case;key=register_review(b);before=b.j.read()['budget']
+    prompt=Path(b.j.read()['events'][key]['request']['prompt']['path']);original=prompt.read_bytes()
+    prompt.unlink()  # Crash after intent, before prompt persistence.
+    assert register_review(b)==key and prompt.read_bytes()==original
+    assert b.j.read()['budget']==before
+    assert b.j.read()['events'][key]['request']['sandbox']=='read-only'
+
+
+def test_real_receipt_and_schema_validator_accept_exact_review(case,monkeypatch):
+    from tools.r6_batch import verified_decision
+    b=case;key=register_review(b)
+    with b.j.writer():
+        s=b.j.read();e=s['events'][key]
+        receipt=dict(event_key=key,request_sha256=sha(e['request']),process=None,
+            last_message=b.review_pin,exit_code=0,error=None,schema_valid=True,
+            events=b.write('events.json',{}),stderr=b.write('stderr.json',{}),
+            cleanup=dict(status='VERIFIED_NO_OWNED_DESCENDANTS',stable_empty_scans=2,
+                signalled_process_count=0,observed_identities=[]))
+        e.update(receipt=b.write('full-receipt.json',receipt),status='RECEIPT_RECORDED');b.j.save(s)
+    monkeypatch.setattr(next_job,'verified_decision',verified_decision)
+    assert call(b,review_key=key)['status']=='RESOURCE_OBSERVATION_REJECTED'
+    # Alter only output bytes and update both pins: real schema still rejects.
+    bad=json.loads(Path(b.review_pin['path']).read_text());bad['changed_files']=['unauthorized.py']
+    badpin=b.write('bad-review.json',bad)
+    with b.j.writer():
+        s=b.j.read();receipt['last_message']=badpin
+        s['events'][key]['receipt']=b.write('bad-receipt.json',receipt);b.j.save(s)
+    import jsonschema
+    with pytest.raises(jsonschema.ValidationError):
+        next_job.reviewed_plan(b.j,b.parent,b.plan_pin,key,badpin,b.store)
+
+
+def test_failed_review_allows_separately_charged_revised_plan(case):
+    b=case;first=register_review(b)
+    b.plan_pin=b.write('revised-plan.json',dict(b.plan,sandbox='danger-full-access'))
+    second=register_review(b)
+    assert first!=second
+    assert b.j.read()['events'][first]['request']['prompt']!=b.j.read()['events'][second]['request']['prompt']

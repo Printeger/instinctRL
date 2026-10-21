@@ -1,6 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（控制组件独审通过，集成未完成）
 
-2026-10-21：新增已独审且已有Store许可的准确计划接续组件，18项CPU检查通过；
+2026-10-21：接续审核专用schema/登记入口完成，21项CPU检查通过；审核请求只读且绑定
+parent/plan/spec，intent预留先于prompt落盘；重启不重复计费，修订计划单独计费。
+新增测试使用真实verified_decision/schema校验合成receipt并拒绝changed_files；parent/Store
+仍为替身，无真实worker新增。见 `docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_REVIEW_INTERFACE.json`。
+独审、自动计划生成/许可与controller部署仍未完成；不授予live或科学接受。
+106次自动唤醒+19worker=125，余131次；Goal未完成。
+
+2026-10-21：新增用于消费已独审且已有Store许可之准确计划的接续组件，18项CPU检查通过；
 父决策/审核/计划绑定、重启复用同一预留、STOP与已有claim恢复、缓存子作业身份检查。
 首轮两项不完整fixture失败及修复结果保留，见
 `docs/experiments/r6-robustness-auto/CPU_NEXT_JOB_HANDOFF.json`。

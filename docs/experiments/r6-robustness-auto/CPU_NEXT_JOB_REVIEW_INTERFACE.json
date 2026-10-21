@@ -1,0 +1,43 @@
+{
+  "schema_version": "r6-next-review-cpu/1",
+  "status": "CPU21_PASS_INDEPENDENT_REVIEW_PENDING",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_next_job.py",
+      "sha256": "8a8c67bb43adb850dc6820ddc370cfdbb333c22db07e1215b18d039496cb8067"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_next_job.py",
+      "sha256": "a4178e6c2728579ee10c5541c200aa0b0e4bb0c9c8c26165a63d9bfbcefb8850"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/next-job-review.schema.json",
+      "sha256": "1d724607edea0d0c187b6a2b0393c660220f747c1e7dec0f464c0fcaa988d91d"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-next-review-initial.txt",
+      "sha256": "82822df7f84560447a219a70942d718ab7014a50d0cae7d68b97e41749cef013"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-next-review-final.txt",
+      "sha256": "154ea210202045d00ea8d0262d49f48576f4b786f99b835d4cd4340bf6d57163"
+    }
+  ],
+  "coverage": [
+    "Dedicated strict output schema and pinned read-only worker request",
+    "Durable pre-reservation, prompt-write crash recovery, replay without another reservation",
+    "Revised plan has distinct prompt/event and new charged session",
+    "Real verified_decision validates synthetic receipt and schema; rejects changed_files",
+    "Original next-job and exact runner CPU regression"
+  ],
+  "limits": [
+    "No real model worker launched; synthetic cleanup receipt claims no observed processes",
+    "Parent verification and Store remain declared substitutes in new tests",
+    "No plan builder, Store issuance or deployed controller yet",
+    "No R6 live or scientific acceptance"
+  ],
+  "automatic_wakes": 106,
+  "total_model_sessions": 125
+}
