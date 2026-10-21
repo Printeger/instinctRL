@@ -1,0 +1,84 @@
+{
+  "status": "CPU_TERMINAL_EVIDENCE_PUBLICATION_AND_COMPLETION_REVALIDATION_PASS_PRODUCTION_SCIENCE_PENDING",
+  "base_commit": "7e4f70bb",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_terminal_audit.py",
+      "sha256": "a310f284d95e4845ab49a308f2ac24389f911b5624592bac19c5b92dc3eb0583"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_final_delivery.py",
+      "sha256": "f961945d5e064847fefe397e10d436af12bc15d29e68ab3edc4d31221c00a49e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "b5aed2d9d44d2ed16a512ebf575da72da8d141dcac5647ab5ed9d3ac79c96862"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_terminal_audit.py",
+      "sha256": "b93279fc116711b9017946fd83342caa8a4f57290351b4909b6a498fdf283e93"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_final_delivery.py",
+      "sha256": "52e0f7b87c4e0b5ed85b3e4c064c2c2423c755a32b257c0d7d4f6f70fa1abadc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "fde4dd4c744a817f604850486f80b60923acdf7b9b93ff69aea95b27cbac2cd8"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TERMINAL_AUDIT_INITIAL.log",
+      "sha256": "b8935a63ada40f69fadae812b4b89f75697d3abdec202c130c456773560bf15c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TERMINAL_AUDIT_FIXTURE_FAILURE.log",
+      "sha256": "ae3d9ef07259f83791283d22615669f7855d9945eb5075a10eda26805a9acfbd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TERMINAL_AUDIT_FIXED.log",
+      "sha256": "999942b8fdf3f7e7361d251b2d01239f6780a64799e81af17171e0971c1c0907"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TERMINAL_AUDIT_COMBINED.log",
+      "sha256": "07be32c0be48346628fb8b9d8dad278690fcf892e401132db2262fb223940919"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TERMINAL_AUDIT_BOUNDED.log",
+      "sha256": "9bff53bb88014e0f961a92cc447c26a8857264f20584fab3f8daafd08cb86454"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TERMINAL_AUDIT_REVALIDATION.log",
+      "sha256": "147ebacf55cd0eb50083a0f7308d71a3dbd06fbc9bb3010f50525a28e0b3e055"
+    }
+  ],
+  "checks": {
+    "initial": 61,
+    "corrected_terminal": 17,
+    "combined": 109,
+    "bounded": 17,
+    "final_revalidation": 63,
+    "real_journal_guard": "PASS"
+  },
+  "scope": [
+    "Require accepted independent review, exact published artifact bytes, unchanged ledger and model audit, complete original inventories and no known owned survivors before completion.",
+    "Publish immutable conditional terminal audit in exact additive commit/tag; verify remote then repeat evidence audit before canonical completion.",
+    "Resume exact commit after push failure; preserve unrelated staged changes. Revalidation failure revokes current completion flag but preserves historical receipt.",
+    "Keep historical model reconciliation unchanged. Bound terminal record using receipt digest and original Journal references; include metadata and Git storage allowance."
+  ],
+  "boundaries": [
+    "Temporary Git repositories and remotes are real; scientific acceptance, platform inactivity and native inventories are explicit test substitutes.",
+    "Actual baseline, training, final science, independent final review and Isaac videos remain unrun.",
+    "First terminal audit fixture added an unlisted job and failed; corrected fixture uses original job. Original failure log preserved.",
+    "Historical root-owned pytest quota cleanup warnings retained."
+  ],
+  "remaining": [
+    "Engineering/MUST_FIX repair re-entry",
+    "Combined production prelive review",
+    "Verified platform no-model-cost handoff",
+    "Actual baseline and required science/confirmation/holdout/video/final independent review"
+  ],
+  "scientific_acceptance": false,
+  "goal_complete": false
+}

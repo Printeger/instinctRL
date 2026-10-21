@@ -3,7 +3,7 @@ import json,subprocess
 from pathlib import Path
 from unittest.mock import Mock
 import pytest
-from tools import r6_final_delivery as m, r6_publish_final_delivery as publication
+from tools import r6_final_delivery as m, r6_publish_final_delivery as publication, r6_terminal_audit as terminal
 from tools.test_r6_profile_preparation import case
 from tools.r6_recovery import file_pin,RecoveryError
 
@@ -16,7 +16,7 @@ def ready(case,tmp_path,monkeypatch):
     def git(*args):return subprocess.check_output(['git','-C',str(repo),*args],stderr=subprocess.PIPE).decode().strip()
     subprocess.run(['git','init','--bare','-q',str(remote)],check=True)
     git('init','-q','-b','main');git('config','user.name','CPU fixture');git('config','user.email','cpu@example.invalid');git('remote','add','origin',str(remote))
-    for module in (m,m.profile,m.evidence,m.packet,m.review,publication):
+    for module in (m,m.profile,m.evidence,m.packet,m.review,publication,terminal):
         p=repo/'tools'/Path(module.__file__).name;p.parent.mkdir(exist_ok=True);p.write_bytes(Path(module.__file__).read_bytes());monkeypatch.setattr(module,'__file__',str(p))
     historic=repo/'docs/experiments/r6-robustness-auto/MODEL_USAGE_AUDIT.json';historic.parent.mkdir(parents=True);historic.write_text('historical bytes retained\n')
     git('add','.');git('commit','-qm','fixture reviewed implementation')

@@ -75,6 +75,7 @@ def controller(case,monkeypatch):
         return value
     b.delivery_prepare=Mock(side_effect=delivery_prepare);monkeypatch.setattr(c.final_delivery,'prepare',b.delivery_prepare)
     b.publication=Mock(return_value=dict(status='FINAL_DELIVERY_PUBLISHED_PENDING_TERMINAL_AUDIT'));monkeypatch.setattr(c.final_publication,'publish',b.publication)
+    b.terminal_audit=Mock(return_value=dict(status='FINAL_TERMINAL_AUDIT_REQUIRED',goal_complete=False));monkeypatch.setattr(c.terminal_audit,'finish',b.terminal_audit)
     return b
 
 
@@ -573,3 +574,25 @@ def test_final_publication_restart_does_not_repeat_independent_review(controller
     out=run(b);assert out['status']=='FINAL_TERMINAL_AUDIT_REQUIRED' and not out['goal_complete']
     b.final_audit.assert_not_called();assert run(b)==out
     assert b.publication.call_count==(2 if phase=='FINAL_COMMIT_PUSH' else 1)
+
+
+def test_terminal_result_is_returned_without_a_new_model_or_job(controller):
+    b=controller
+    with b.j.writer():
+        key,_=c.register(b.j,b.request,b.store,free_disk_bytes=500*1024**3)
+        state=b.j.read();state['events'][key]['cursor'].update(phase='FINAL_TERMINAL_AUDIT_REQUIRED');b.j.save(state)
+    b.terminal_audit.return_value=dict(status='BASELINE_SUFFICIENT',goal_complete=True)
+    assert run(b)==dict(status='BASELINE_SUFFICIENT',goal_complete=True)
+    b.terminal_audit.assert_called_once();b.final_audit.assert_not_called();b.first.assert_not_called();b.next.assert_not_called()
+
+
+def test_failed_completion_revalidation_preserves_original_receipt_but_not_current_success(controller):
+    b=controller
+    with b.j.writer():
+        key,_=c.register(b.j,b.request,b.store,free_disk_bytes=500*1024**3)
+        state=b.j.read();state['events'][key]['cursor'].update(phase='COMPLETE');state.update(goal_complete=True,completion={'fixture':'original accepted receipt'});b.j.save(state)
+    b.terminal_audit.side_effect=RuntimeError('completion evidence changed')
+    with pytest.raises(RuntimeError,match='evidence changed'):run(b)
+    state=b.j.read();assert state['goal_complete']is False and state['status']=='COMPLETION_REVALIDATION_FAILED'
+    assert state['completion']=={'fixture':'original accepted receipt'}
+    assert state['completion_revalidation_error']['type']=='RuntimeError'

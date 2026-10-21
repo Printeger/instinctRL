@@ -1,8 +1,8 @@
 """Persist the R6 first-job/decision/preparation/next-job handoffs in one writer.
 
 This composes existing bounded runners; it is not a scheduler or an approval.
-Source compatibility uses its own exact review and frozen validation. Final
-delivery still persists an incomplete boundary pending its delivery workflow.
+Source compatibility uses its own exact review and frozen validation. Completion
+requires independent acceptance, exact publication and the final evidence audit.
 """
 import argparse
 import json
@@ -39,7 +39,7 @@ from tools import r6_delivery_evidence as delivery_evidence
 from tools import r6_video_extraction as video_extraction
 from tools import r6_video_validation as video_validation
 from tools import r6_final_audit_packet as final_audit_packet, r6_final_independent_review as final_audit
-from tools import r6_final_delivery as final_delivery, r6_publish_final_delivery as final_publication
+from tools import r6_final_delivery as final_delivery, r6_publish_final_delivery as final_publication, r6_terminal_audit as terminal_audit
 from tools import r6_render_preparation as render_preparation, r6_render_review as render_review
 from tools import r6_render_materialization as render_materialization, r6_run_job as render_runner
 from tools.r6_decision_packet import persist_exact
@@ -48,7 +48,7 @@ from rlflow.store import canonical
 ROLE='r6-controller'
 CAP=256*1024
 ROOT=Path(__file__).resolve().parents[1]
-TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_AUDIT_REPAIR_REQUIRED','FINAL_TERMINAL_AUDIT_REQUIRED'}
+TERMINAL_BOUNDARIES={'FINAL_DELIVERY_REQUIRED','FINAL_AUDIT_REPAIR_REQUIRED'}
 
 
 def require(condition,reason):
@@ -220,6 +220,8 @@ def run(journal,request_pin,store,*,free_disk_bytes):
                 require(outcome['status']=='FINAL_DELIVERY_PUBLISHED_PENDING_TERMINAL_AUDIT','FINAL_PUBLICATION_STATUS')
                 cursor.update(phase='FINAL_TERMINAL_AUDIT_REQUIRED',final_publication=outcome)
                 save(journal,key,cursor);continue
+            if phase in {'FINAL_TERMINAL_AUDIT_REQUIRED','COMPLETE'}:
+                return terminal_audit.finish(journal,key,store)
             if phase in TERMINAL_BOUNDARIES:
                 save(journal,key,cursor,status=phase)
                 return dict(status=phase,event_key=key,goal_complete=False)
@@ -373,6 +375,12 @@ def run(journal,request_pin,store,*,free_disk_bytes):
             # Preserve this exact phase; do not create a fresh worker/attempt.
             original=journal.read()['events'][key]['cursor']
             save(journal,key,original,status='INCOMPLETE_EXCEPTION',error=error)
+            if phase=='COMPLETE':
+                state=journal.read()
+                state.update(goal_complete=False,status='COMPLETION_REVALIDATION_FAILED',
+                    completion_revalidation_error=dict(type=type(error).__name__,message=str(error)[:4096]))
+                # Retain the original completion receipt as historical evidence.
+                journal.save(state)
             raise
 
 

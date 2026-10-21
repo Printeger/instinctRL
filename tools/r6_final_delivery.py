@@ -28,7 +28,7 @@ def require(ok,reason):
 def read(pin):return json.loads(checked(pin).read_text())
 
 
-def git(*args):return snapshot.git(ROOT,*args).decode().strip()
+def git(*args):return snapshot.git(ROOT,'-c','gc.auto=0',*args).decode().strip()
 
 
 def describe(journal,controller_key,store):
@@ -84,9 +84,9 @@ def baseline_markdown(rows):
 
 
 def prepare(journal,controller_key,store,*,free_disk_bytes):
-    from tools import r6_publish_final_delivery as publication
+    from tools import r6_publish_final_delivery as publication, r6_terminal_audit as terminal
     d=describe(journal,controller_key,store);state=journal.read();name='FINAL_DELIVERY:'+d['review_receipt']['sha256']
-    implementation=[file_pin(m.__file__) for m in (profile,evidence,packet,review,publication)]+[file_pin(__file__)]
+    implementation=[file_pin(m.__file__) for m in (profile,evidence,packet,review,publication,terminal)]+[file_pin(__file__)]
     prior=[(k,e) for k,e in state['events'].items() if e['identity'].get('event_id')==name]
     require(len(prior)<=1,'ALIAS')
     if prior:
@@ -113,7 +113,9 @@ def prepare(journal,controller_key,store,*,free_disk_bytes):
         profile.guard(journal);path=folder/name;data=value.encode() if isinstance(value,str) else canonical(value)+b'\n'
         require(path.resolve()==path and not path.is_symlink(),'ARTIFACT_ALIAS')
         size=sum(p.stat().st_size for p in folder.rglob('*') if p.is_file() and p!=path) if folder.exists() else 0
-        require(size+len(data)+len(canonical(request))+65536<=CAP,'OUTPUT_CAP')
+        # Cover working-tree bytes and conservative Git object/pack duplication,
+        # plus publication and completion metadata, inside the same reservation.
+        require(3*(size+len(data)+256*1024)+len(canonical(request))<=CAP,'OUTPUT_CAP')
         persist_exact(path,data);return file_pin(path)
     budget=reserve(request['budget'],event_key=journal.read()['events'][key]['identity'],resources={'output_actual_plus_unreleased_reservations_bytes':CAP},purpose='final_review',free_disk_bytes=free_disk_bytes)
     require(journal.read()['budget']==budget,'BUDGET_CHANGED_AFTER_ACCOUNTING')

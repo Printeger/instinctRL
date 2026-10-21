@@ -1,0 +1,42 @@
+.........F.......                                                        [100%]
+=================================== FAILURES ===================================
+___ test_full_terminal_audit_links_published_bytes_accounting_and_originals ____
+
+auditable = <tools.test_r6_decision.DecisionTests testMethod=test_fake_model_event_records_proposal_once_without_dispatch>
+
+    def test_full_terminal_audit_links_published_bytes_accounting_and_originals(auditable):
+        b=auditable
+>       with b.j.writer():out=m.audit(b.j,'controller-fixture',b.store)
+
+tools/test_r6_terminal_audit.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/r6_terminal_audit.py:93: in audit
+    require(actual_jobs and {j['event_key'] for j in manifests['jobs']}==actual_jobs,'ALL_JOBS')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, reason = 'ALL_JOBS'
+
+    def require(ok,reason):
+>       if not ok:raise RecoveryError('TERMINAL_AUDIT_'+reason)
+E       tools.r6_recovery.RecoveryError: TERMINAL_AUDIT_ALL_JOBS
+
+tools/r6_terminal_audit.py:22: RecoveryError
+---------------------------- Captured stderr setup -----------------------------
+To /tmp/pytest-of-mint/pytest-198/test_full_terminal_audit_links0/remote.git
+ * [new branch]      main -> main
+ * [new tag]         r6-final-delivery-b1774b799d2d39d2 -> r6-final-delivery-b1774b799d2d39d2
+=========================== short test summary info ============================
+FAILED tools/test_r6_terminal_audit.py::test_full_terminal_audit_links_published_bytes_accounting_and_originals
+1 failed, 16 passed in 7.84s
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-1ee42e57-89fb-4ed4-aff3-cbd8e6928a80/test_failed_creation_preserves0/volumes/CPU-QUOTA-01
+<class 'OSError'>: [Errno 39] Directory not empty: 'CPU-QUOTA-01'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-1ee42e57-89fb-4ed4-aff3-cbd8e6928a80/test_failed_creation_preserves0/volumes
+<class 'OSError'>: [Errno 39] Directory not empty: 'volumes'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-1ee42e57-89fb-4ed4-aff3-cbd8e6928a80/test_failed_creation_preserves0
+<class 'OSError'>: [Errno 39] Directory not empty: 'test_failed_creation_preserves0'
+  warnings.warn(
+/home/mint/rl_dev/instinctRL_orchestrator/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:96: PytestWarning: (rm_rf) error removing /tmp/pytest-of-mint/garbage-1ee42e57-89fb-4ed4-aff3-cbd8e6928a80
+<class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-mint/garbage-1ee42e57-89fb-4ed4-aff3-cbd8e6928a80'
+  warnings.warn(
