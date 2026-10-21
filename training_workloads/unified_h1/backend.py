@@ -371,6 +371,14 @@ class UnifiedH1LiveBackend:
             "authorization_sha256":self.authorization["authorization_sha256"],
             "method_hashes":self._checkpoint_method_hashes(load_config())})
 
+    def train_r6(self):
+        """Prospective exact R6 entry; dispatch is separately registered."""
+        from .robustness_training_method import restore_and_bind
+        plan=self.authorization['parameters']['r6_training_plan']
+        loaded=restore_and_bind(self,plan=plan,execution_identity=load_config()['resolved_identity'])
+        return self.run_loaded_r6_training(plan=plan,**loaded,
+            expected_mass_kg=self.authorization['parameters']['r6_expected_mass_kg'])
+
     def run_loaded_r6_training(self, *, plan, metadata, source_identity, method_hashes, expected_mass_kg):
         """Execute only after exact checkpoint restore and method application.
 

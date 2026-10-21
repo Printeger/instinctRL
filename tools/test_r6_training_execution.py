@@ -3,7 +3,7 @@ from types import SimpleNamespace
 from pathlib import Path
 import pytest
 import torch
-from tools.test_r6_training_plan import case,update_recipe,curriculum_fixture,metadata
+from tools.test_r6_training_plan import case,update_recipe,curriculum_fixture,metadata,method_fixture
 from tools.test_r6_training_rng import restored,preserve_global_rng
 from training_workloads.unified_h1 import robustness_training_execution as ex
 from training_workloads.unified_h1.budget import ExecutionCounters
@@ -15,7 +15,7 @@ def setup(case,monkeypatch,tmp_path):
     curriculum=curriculum_fixture();curriculum['phases'][0]['end_offset']=1;curriculum['phases'][1]['end_offset']=2
     case.recipe.update(branch_updates=2,checkpoint_offsets=[2],curriculum=case.pin('short.json',curriculum));update_recipe(case)
     case.plan.update(target_update=642,checkpoint_updates=[642])
-    t,g,_=restored();m=metadata();m['reset_number']=19
+    t,g,_=restored();t._r6_bound_method_sha256=ex.contract.object_sha(method_fixture());m=metadata();m['reset_number']=19
     events=[]
     env=SimpleNamespace(device='cpu',_actions=torch.zeros(32,1),_h1_pure_hover_training=False,
         _robot=SimpleNamespace(data=SimpleNamespace(root_state_w=torch.cat((torch.zeros(32,3),torch.tensor([[1.,0,0,0]]*32),torch.zeros(32,6)),1))))
@@ -41,6 +41,14 @@ def setup(case,monkeypatch,tmp_path):
         events.append(('reset',env._h1_global_policy_step))
         return {'policy':{'state_vec':torch.zeros(32,52)}},{}
     backend._preserving_reset=reset
+    from tools.test_r6_training_method import Env as MethodEnv
+    from training_workloads.unified_h1.robustness_training_method import apply_method
+    method_env=MethodEnv()
+    for name in ('set_h1_research_profile','set_h1_residual_neutrality_weight','set_h1_ics_clearance_margin'):
+        setattr(env,name,getattr(method_env,name))
+    backend._r6_method_binding=apply_method(t,method_env,method_fixture(),resume=False,training_seed=11)
+    for name in ('_h1_pure_hover_training','_h1_anchor_weight','_h1_residual_neutrality_weight','_h1_ics_clearance_margin_m','_control_pipelines'):
+        setattr(env,name,getattr(method_env,name))
     loops=[]
     class Loop:
         def __init__(self,driver,trainer,journal,writer,**kw):

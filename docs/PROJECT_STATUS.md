@@ -1,5 +1,13 @@
 # 当前 Goal：R6 鲁棒性与课程学习闭环（协议/容量已冻结，首次发车准备中）
 
+2026-10-22：训练方法完整schema、准确checkpoint恢复→方法应用→运行读回已接入backend。
+保持原严格serializer；模型/Adam矩/计数不变，学习率变更与原/新PPO分别记录；
+奖励/ICS/辅助损失钩子漂移在执行前拒绝，加载失败恢复RNG且禁止复用该backend。
+65项tensor检查、28项控制解释器/源码/计划检查通过，无初轮失败。
+原u640含1条CUDA RNG，CPU严格恢复正确拒绝；成功恢复测试为明确CPU副本及合成u641计数，非训练成果。
+证据CPU_TRAINING_METHOD.json；源码/方法兼容性与阶段发行/dispatch仍待完成，待组合独审。
+136次自动唤醒+30worker=166，剩90；无GPU/仿真，完整Goal未完成。
+
 2026-10-22：新增已恢复trainer的R6阶段执行入口：准确plan/budget、RNG先落盘、
 原任务/鲁棒性driver切换、阶段完整reset与截尾日志、共享首更诊断及准确checkpoint节点。
 修正随机课程自动reset后仍沿用旧lane规则的日志标签；实际压缩episode行验证通过。

@@ -1,0 +1,63 @@
+{
+  "status": "CPU_STRICT_RESTORE_METHOD_BINDING_PASS_DISPATCH_PENDING",
+  "input_commit": "57183348",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_method.py",
+      "sha256": "a3f403234d838173059e9348504117f94a115f4feefd48b8841695ca8d940d41"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_plan.py",
+      "sha256": "0934d6d3f9061fb87a0e718ab4fa281081185663a3cb9e90e37e2e8de00a4145"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_execution.py",
+      "sha256": "7fbc56dba11c2a7ed07de3737813beaceb0a3c9077d04db39d38a198c1e08f91"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "acc3a060a300b277ad016a1f3740cbba7f2e4fb4bfe8a360dc9695f8860d5e31"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "b69c145c2e68b67dcc531d0ea17b5b8731886e4cc91497ed29690ee72cde237d"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_METHOD_TESTS.log",
+      "sha256": "95d13b15825a7d51817250b36739ce8e8e483bac0ab25eff56f66028237fe462"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_METHOD_RUNTIME_TESTS.log",
+      "sha256": "c873e0a3b154ec28a3809284f60167a8fbbc757c966a745ffa2dc1e97781a3c2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_METHOD_SOURCE_TESTS.log",
+      "sha256": "3c92e9ae147fa1b37896acfe0b0bc10d553a5d493c0e8cb65f4f4cdf0c051b69"
+    }
+  ],
+  "final_tensor_tests": 65,
+  "control_source_plan_tests": 28,
+  "scope": [
+    "Complete explicit method schema: original PPO family, reward/anchor/mean-prior/ICS settings; per-branch permutation seed remains in training plan",
+    "Construct exact saved network/PPO then strict original loader validates and restores tensors, Adam counters and RNG before method application",
+    "Model/Adam moments/counters fingerprint invariant across method application; optimizer LR and environment/pipeline readback retained",
+    "Runtime drift checks before execution include PPO values, optimizer LR, environment weights, ICS pipeline margins and actual auxiliary hook identity",
+    "Load failure restores global and curriculum RNG, exposes no trainer and prohibits reuse of failed backend",
+    "Full exact method binding is included in shared bounded execution evidence before reset/rollout"
+  ],
+  "actual_original_checkpoint": {
+    "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+    "cuda_rng_streams": 1,
+    "cpu_strict_restore": "EXPECTED_REJECTION_NO_RNG_MUTATION",
+    "source_bytes_unchanged": true
+  },
+  "limitations": [
+    "Positive resume test uses actual u640 tensors in temporary CPU-only derivative, then synthetic u641 counters; not a trained model or live receipt",
+    "Environment setters/readback tested with CPU fixture; no Isaac session, actual optimizer update or production recipe selection",
+    "Exact source/method compatibility and stage issuance/dispatch remain pending; CLI cannot yet launch this mode",
+    "No new paid worker or GPU query; independent combined review pending"
+  ],
+  "goal_complete": false
+}

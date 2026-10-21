@@ -29,6 +29,8 @@ def run_loaded(backend,*,plan,metadata,source_identity,method_hashes,expected_ma
         raise RuntimeError('R6_EXECUTION_ALREADY_INITIALIZED')
     if getattr(env,'_h1_pure_hover_training',True):raise ValueError('R6_EXECUTION_ORIGINAL_REPLAY_REQUIRED')
     actual=asdict(backend.trainer.config);method=pinned_json(recipe['method'])
+    from .robustness_training_method import verify_applied
+    verify_applied(backend.trainer,env,method)
     if any(actual.get(k)!=v for k,v in method['ppo'].items() if k!='permutation_seed'):
         raise ValueError('R6_EXECUTION_PPO_METHOD_NOT_APPLIED')
     if 'permutation_seed' in method['ppo'] and method['ppo']['permutation_seed']!=p['training_seed']:
@@ -46,7 +48,7 @@ def run_loaded(backend,*,plan,metadata,source_identity,method_hashes,expected_ma
     try:torch.save(record,stream);stream.close()
     except BaseException:stream.abort();raise
     journal.append('plan.jsonl',dict(plan=p,source_identity=source_identity,method_hashes=method_hashes,
-        physical_continuity=False,metadata=metadata))
+        physical_continuity=False,metadata=metadata,method_binding=backend._r6_method_binding))
     curriculum=pinned_json(recipe['curriculum'])
     phases=slices(curriculum,p['start_update'],p['target_update'])
     backend._checkpoint_reset_offset=metadata['reset_number']

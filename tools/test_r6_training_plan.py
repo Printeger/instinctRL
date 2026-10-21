@@ -7,6 +7,14 @@ import pytest
 from training_workloads.unified_h1 import robustness_training_plan as p
 
 
+def method_fixture():
+    return dict(schema_version='r6-training-method/1',residual_neutrality_weight=.05,
+        anchor_weight=4.,mean_prior_weight=10.,ics_clearance_margin_m=.15,
+        ppo=dict(gamma=.99,gae_lambda=.95,clip_ratio=.2,value_loss_coefficient=.5,entropy_coefficient=.01,
+            actor_learning_rate=.0003,critic_learning_rate=.0003,maximum_gradient_norm=.5,
+            advantage_epsilon=1e-8,minibatch_size=64,epoch_count=1))
+
+
 def curriculum_fixture():
     return dict(schema_version='r6-training-curriculum/1',conditions={
         'wall':dict(id='wall',task='wall_modes',speed_m_s=.2,sensor_to_wall_distance_m=1.5,pulse_acceleration_m_s2=0),
@@ -25,7 +33,7 @@ def case(tmp_path,monkeypatch):
     ev=pin('diagnosis.json',{'fixture':True})
     r=dict(schema_version='r6-training-recipe/1',candidate_id='R6-CANDIDATE-CPU',baseline_sha256=p.BASELINE_SHA,
         diagnosis=[ev],hypothesis='CPU fixture curriculum',comparison='same u640 control',source_identity=identity,
-        curriculum=pin('curriculum.json',curriculum_fixture()),method=pin('method.json',{'ppo':{'minibatch_size':64,'epoch_count':1}}),
+        curriculum=pin('curriculum.json',curriculum_fixture()),method=pin('method.json',method_fixture()),
         branch_updates=1024,development_seeds=[11],confirmation_seeds=[21,22,23],checkpoint_offsets=[256,512,1024])
     rp=pin('recipe.json',r);review=pin('review.json',dict(decision='PASS_R6_TRAINING_RECIPE',must_fix=[],reviewer='fixture-independent',payload_sha256=p.object_sha(r)))
     initial=dict(kind='COMMON_U640_NEW_STREAM',checkpoint=dict(path=ev['path'],sha256=p.BASELINE_SHA),

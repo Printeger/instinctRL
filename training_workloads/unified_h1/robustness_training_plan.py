@@ -48,7 +48,8 @@ def recipe(pin,review_pin):
     validate_source_identity(r['source_identity'])
     for name in ('curriculum','method'):
         require(isinstance(pinned_json(r[name]),dict),'RECIPE_INPUT')
-    method=pinned_json(r['method']);ppo=method.get('ppo',{})
+    from .robustness_training_method import validate as validate_method
+    method=validate_method(pinned_json(r['method']));ppo=method['ppo']
     require(isinstance(ppo,dict),'PPO')
     batch=integer(ppo.get('minibatch_size'),1,512,'MINIBATCH')
     epochs=integer(ppo.get('epoch_count'),1,8,'EPOCHS')
