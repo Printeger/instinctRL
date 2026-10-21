@@ -1,0 +1,46 @@
+{
+  "schema_version": "r6-accepted-compatibility/1",
+  "status": "PASS_EXACT_SOURCE_CONFIG_COMPATIBILITY",
+  "accepted_record": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_COMPATIBILITY_ACCEPTED_02.json",
+    "sha256": "1e8242a18370cf26d58c720c9b0d96b3a8eaf6f125b5a2b4972c7b320accd148"
+  },
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/execution-compatibility-02-review.json",
+    "sha256": "5fa8c541e93aa08eaace6bde3c95b1cc310ad62fbe216f63b646b325ae8352e3"
+  },
+  "registration": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXECUTION_COMPATIBILITY_REVIEW_REGISTRATION.json",
+    "sha256": "45fd5800edd5385ede71f58258897bb3dd4a633da5dd10fd61a2cc2c4ca70e1d"
+  },
+  "validation_log": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/r6-compatibility02-actual.txt",
+    "sha256": "4d0a940a65681968bd89955b209756760d354bcba2f5a917957a60a7facbd638"
+  },
+  "actual_validation": {
+    "status": "ACTUAL_FROZEN_VALIDATOR_PASS",
+    "origin": {
+      "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+      "product_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+      "product_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924",
+      "workload_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+      "workload_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924"
+    },
+    "execution": {
+      "product_commit": "7f9e2cad8257aa1c1db1fcc28f720f4468546380",
+      "product_tree": "50dfa40d1b9227bc5c5825812e9bc5fb28609b02",
+      "workload_commit": "7f9e2cad8257aa1c1db1fcc28f720f4468546380",
+      "workload_tree": "50dfa40d1b9227bc5c5825812e9bc5fb28609b02",
+      "config_sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+    },
+    "gpu_queries": 0,
+    "live_starts": 0
+  },
+  "receipt_and_schema_verified": true,
+  "review_evidence_pins_verified": true,
+  "no_owned_review_workers": true,
+  "limits": [
+    "Source/config acceptance only; not production capacity, protocol freeze, Store authority or controller deployment",
+    "No actual CUDA RNG restore, physics result, training or scientific acceptance"
+  ]
+}

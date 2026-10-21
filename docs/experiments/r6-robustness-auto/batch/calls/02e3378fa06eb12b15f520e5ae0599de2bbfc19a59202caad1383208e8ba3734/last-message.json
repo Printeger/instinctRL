@@ -1,0 +1,106 @@
+{
+  "decision": "PASS_R6_EXECUTION_COMPATIBILITY",
+  "summary": "No concrete compatibility or actor-boundary defect found in this exact payload. Verified canonical payload hash, both commit/tree identities, source tag, all 60 original and 108 execution source pins, u640 hash/metadata, and all 16,708 read-only snapshot inventory entries. The 23 newly manifested pre-existing product dependencies match original bytes. Reviewed all six actual product changes and relevant workload changes: legacy u640 validation remains compatible; original evaluator, case execution, reset and checkpoint-loading methods remain unchanged; actor/training/execution/versions and method hashes agree. R6 measurement/physics hooks are opt-in, preserve actor/ICS measurement sharing, and keep privileged state in existing control/evaluation boundaries. Output containment adds no baseline method change. Frozen configuration passes with its pinned interpreter; the control interpreter correctly fails identity validation. Existing reviews and test logs were context, not inherited acceptance. In-memory CPU checks confirmed old/new legacy validation agrees on actual u640 metadata; no CUDA restoration was attempted. This accepts source/config compatibility only, not training authorization, production mount/capacity, protocol freeze, live dispatch, actual CUDA/physics success or Goal completion.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_COMPATIBILITY_PAYLOAD_02.json",
+      "sha256": "e991471ceb6ad92c810535c14edd6337994cc27c5ad6d01eff3d61a47a081696"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_BINDINGS.json",
+      "sha256": "6ebe90717fa2571816ba3392841f3690c2c3fe37225c3728f935bb80d3102623"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SNAPSHOT02_VERIFICATION.json",
+      "sha256": "890d447464ee9f5652be01e236e7244ae24f5f893852bf2543a0b99c47237997"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/snapshots/4cd9a0dfd5957c2b6521621fe928ef48bc640374b63018e86796c4f1cb96a246/receipt.json",
+      "sha256": "58503cbccf3f28fdf8151f83b320aa3841658758fceefec143f258a31f6bf51b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/snapshots/4cd9a0dfd5957c2b6521621fe928ef48bc640374b63018e86796c4f1cb96a246/execution-inventory.json",
+      "sha256": "45e637c5ead0f754d1517e97c2a8e3bf2f26341cc3d290a3797ced5b9faf053d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SERIALIZER_COMPATIBILITY.json",
+      "sha256": "6e940b33aab21dfea44da605cf0473784f15edea14d06dc94316ebaf83ccdfbb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/candidate_config.json",
+      "sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+      "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/isaaclab-training/instinctlab/envs/taslab_direct_env.py",
+      "sha256": "940ce1e2949c9b1291020804cb9aca57a1840470353f085a5b2c18be0c46a739"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+      "sha256": "a3c06c94865c5211d1d438abb35629071eb6171e3a4ab57fe64cd23d04508e2a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "05fd977e751d4af3f78e13a1dee983c673fe4347988ee9a17449e497c20a488e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/isaaclab-training/instinctlab/observations/robustness_adapter.py",
+      "sha256": "3d41a275babc165c0dc75b3cba85ad45abe5d680bf79f50bae95ca57f56eb463"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/isaaclab-training/instinctlab/observations/robustness_physics.py",
+      "sha256": "19b66208bd99e93853ffc2ce4246382dac6c2e36262ed11dd688b4c7ae429863"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/isaaclab-training/instinctlab/training/checkpoint_h1.py",
+      "sha256": "45171db5ae2719fcd81b78d67ee06450cc73b737b74f3850797591e9eccc13b7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "eaba8026a70d58deac0530b9261b5500b8e1e6b0d759eb478aac0129f32ed5fe"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/backend.py",
+      "sha256": "e20ae3ded49e23630da5196170b043f89d780a66b91889a0a0f5b08474ba9029"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/evaluation.py",
+      "sha256": "a6caedb36a5ddb408a9a9b8c6e073808b480252f6cc3ec12d201b69ab5e5583c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "3afb0e1707e22b9f723712e1e7168b2f20ea94008b0495df66c38ebc66cc409b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "f3316cabd967d3bf82272734f9dde6348fce927ae2fc5fc0df47a3bdb756f135"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/scale_003/resources.py",
+      "sha256": "643ec3f3638e12f0005ca38714c9976fedb46a09f6a1b5667a95c01b578f2ad4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/cpu-source-native-fix-review.json",
+      "sha256": "1961b34359a5468aea04b415d9fefd3326bf307b81e6c650d06afdfb23c917a5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/training-core-integration-review.json",
+      "sha256": "da2ab2b8a665d54a522c06df099db9d69a725d05d208de504df0b4674715384c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
+      "sha256": "4c49f6b6b2eb9efe8e0a917c9a2611e9fec4df45b25764f1e7232e33c7b156dc"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Return for exact-payload recording; retain all separate protocol, capacity and execution gates.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 124
+  },
+  "must_fix": [],
+  "reviewer": "r6-independent-execution-compatibility-02",
+  "payload_sha256": "fd7c8bb61aced25723231d749399a3db1edb04cb7e0443783a81793e5510077c"
+}

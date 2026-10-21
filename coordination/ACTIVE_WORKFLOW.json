@@ -149,7 +149,7 @@
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
     "controller_deployed": false,
     "current_live_jobs": [],
-    "automatic_model_sessions_started": 21,
+    "automatic_model_sessions_started": 22,
     "exact_job_permission_required": true,
     "goal_complete": false,
     "baseline_cpu_audit": "docs/experiments/r6-robustness-auto/BASELINE_CPU_AUDIT.json",
@@ -158,7 +158,7 @@
     "metric_measurement_cpu_tests": "docs/experiments/r6-robustness-auto/CPU_METRIC_MEASUREMENT_TESTS.json",
     "archive_scenario_cpu_tests": "docs/experiments/r6-robustness-auto/CPU_ARCHIVE_SCENARIO_TESTS.json",
     "capacity_allocation_status": "DRAFT_FINAL_PROTECTION80GIB_24000SECONDS_PENDING_REVIEW",
-    "automatic_model_sessions_completed": 21,
+    "automatic_model_sessions_completed": 22,
     "cpu_review_findings": 0,
     "cpu_fix_tests": 67,
     "cpu_fix_evidence": "docs/experiments/r6-robustness-auto/CPU_REVIEW_FIX_TESTS.json",
@@ -209,8 +209,8 @@
     "result_quota_accepted_review": "docs/experiments/r6-robustness-auto/reviews/result-quota-actual-review.json",
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
-    "platform_automatic_goal_wakes": 109,
-    "total_automatic_model_sessions_minimum": 130,
+    "platform_automatic_goal_wakes": 110,
+    "total_automatic_model_sessions_minimum": 132,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 256,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -241,6 +241,8 @@
     "baseline_spec_builder_evidence": "docs/experiments/r6-robustness-auto/CPU_BASELINE_SPEC_BUILDER.json",
     "current_baseline_snapshot": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02",
     "current_baseline_snapshot_evidence": "docs/experiments/r6-robustness-auto/CPU_SNAPSHOT02_VERIFICATION.json",
-    "current_baseline_snapshot_status": "ACTUAL_READ_ONLY_SNAPSHOT_CONFIG_PASS_COMPATIBILITY_REVIEW_PENDING"
+    "current_baseline_snapshot_status": "PASS_EXACT_SOURCE_CONFIG_COMPATIBILITY",
+    "execution_compatibility_record": "docs/experiments/r6-robustness-auto/BASELINE_COMPATIBILITY_ACCEPTED_02.json",
+    "execution_compatibility_evidence": "docs/experiments/r6-robustness-auto/CPU_EXECUTION_COMPATIBILITY_ACCEPTED_02.json"
   }
 }

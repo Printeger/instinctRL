@@ -1,0 +1,147 @@
+{
+  "changed_product_sources": {
+    "isaaclab-training/instinctlab/__init__.py": {
+      "execution": "e0157b78e1817320767b467ddb321ffcc6a2e279628ef3937f55b7d2041afeaf",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/assets/__init__.py": {
+      "execution": "b55c2e6248ce7d2819e6deefb6f4ca9bddd0cd3c01a638d67c73fc30abd6f569",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/assets/taslab_uav/__init__.py": {
+      "execution": "c1380196aedd72eb9ae5dff617c57e1fc9c6077aa697e7f637ed15b6829ac085",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/assets/taslab_uav/config.py": {
+      "execution": "9ac7c02dcc9ce12cf67cbf57d6fff8841624705db7b1f0bae82cbc906244ba2f",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/control/__init__.py": {
+      "execution": "2aa8eb54b8dee60ca8476c6765b79b335dcc9a81b37f671a15693aca4754be1d",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/control/command_adapter.py": {
+      "execution": "a79ea8d88fb0391762a9efcebbfa783d5287ee1393d3b6e2757812032c32991d",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/control/rotor_actuation.py": {
+      "execution": "00db4efbf359bb8f6cd33c2adcf5c7c48e8819cab75521e3f2fe7666b1511b03",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/envs/taslab_direct_env.py": {
+      "execution": "940ce1e2949c9b1291020804cb9aca57a1840470353f085a5b2c18be0c46a739",
+      "origin": "35be09e97c24424e4cb5bb046d16302a4c49901825bf2eb61278a650e6cce639"
+    },
+    "isaaclab-training/instinctlab/envs/unified_h1_direct_env.py": {
+      "execution": "a3c06c94865c5211d1d438abb35629071eb6171e3a4ab57fe64cd23d04508e2a",
+      "origin": "6eb8728000ef1232019ba5bafe285b40e8c24a662e286bda35dc33cc2e385173"
+    },
+    "isaaclab-training/instinctlab/evaluation/__init__.py": {
+      "execution": "c837a7fc57d3edefcd82e3cbc340387816280a15ba07f5a16f057b1aa486c2c4",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/evaluation/audit.py": {
+      "execution": "03a6acb86c1aed86385b7ff3d265940791656ee8e38de07f242ac3128b35fd0e",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/evaluation/baseline_controller_execution.py": {
+      "execution": "72d104850f8c8fede59998f14661b5b7ea7cd2c113ec11218fe232337732ab52",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/evaluation/baseline_execution.py": {
+      "execution": "db7b73ee7e9c4b39689814530363bafb6a1ef48c2513a0208c0ff29c7073c108",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/evaluation/baseline_run.py": {
+      "execution": "5210566e987b737657d30ba44075a4dc835e379eae438726449dbc76002ab847",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/evaluation/baselines.py": {
+      "execution": "725d6d1bf57a5c168d96deaa7cb7179382caa64b101ad0fd79172626dc8272b2",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/evaluation/matrix.py": {
+      "execution": "ee2f1665ca4018c612ec478f6b7aa90352cd2636e3ab826de3937332256db91e",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/evaluation/metrics.py": {
+      "execution": "a37cf88a04d55ac4e32fee93f5504a6ff446f8804694a310013fb704438a3960",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/evaluation/observability.py": {
+      "execution": "cffc5e57b92ca51ffe721972db3084e18bc968a486c670aaca11f5960484afb7",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/evaluation/runtime.py": {
+      "execution": "7abaa594a63b0a90d9a0bb5b1ec66a9f71d3c91aa464f2890001a2040384cde3",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/evaluation/scenarios.py": {
+      "execution": "7f9fd0cde79f95dbdf2d94d001987f83f59107b2629f151b0425a3d42c653bda",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/observations/__init__.py": {
+      "execution": "3c45dcc9215b1b56ec1fbd91b7e202832a8c0090cb93f736e5e3b7b7cc0e1bf1",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/observations/audit.py": {
+      "execution": "9d96f31852ba06b373c4c42513b6742cde6f385cd27b085e8c48ca33a58af929",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/observations/robustness.py": {
+      "execution": "05fd977e751d4af3f78e13a1dee983c673fe4347988ee9a17449e497c20a488e",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/observations/robustness_adapter.py": {
+      "execution": "3d41a275babc165c0dc75b3cba85ad45abe5d680bf79f50bae95ca57f56eb463",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/observations/robustness_physics.py": {
+      "execution": "19b66208bd99e93853ffc2ce4246382dac6c2e36262ed11dd688b4c7ae429863",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/sensors/__init__.py": {
+      "execution": "5c73daa07cd651e99d8867d25840bec587e3a0951dd6063e5e3b6d7fe8cb32ae",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/task/critic.py": {
+      "execution": "f438cafe94a4f109da433a900aea0469b44591b0e95362dffc334678444f6341",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/task/rewards.py": {
+      "execution": "a9b6bae7b8bdf46feb06a23782ceb7faea0e86b999648b2d0bccfec69f308ccc",
+      "origin": null
+    },
+    "isaaclab-training/instinctlab/training/checkpoint_h1.py": {
+      "execution": "45171db5ae2719fcd81b78d67ee06450cc73b737b74f3850797591e9eccc13b7",
+      "origin": "94337128716045da864eac88598d23191ad3ee74d41fb38cacee4eb7315462d9"
+    }
+  },
+  "execution_config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+    "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+  },
+  "execution_source_identity": {
+    "config_sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19",
+    "product_commit": "7f9e2cad8257aa1c1db1fcc28f720f4468546380",
+    "product_tree": "50dfa40d1b9227bc5c5825812e9bc5fb28609b02",
+    "workload_commit": "7f9e2cad8257aa1c1db1fcc28f720f4468546380",
+    "workload_tree": "50dfa40d1b9227bc5c5825812e9bc5fb28609b02"
+  },
+  "independent_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/execution-compatibility-02-review.json",
+    "sha256": "5fa8c541e93aa08eaace6bde3c95b1cc310ad62fbe216f63b646b325ae8352e3"
+  },
+  "origin_config": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R5-w-e1-20261019/training_workloads/unified_h1/candidate_config.json",
+    "sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb"
+  },
+  "origin_source_identity": {
+    "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+    "product_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "product_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924",
+    "workload_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+    "workload_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924"
+  },
+  "schema_version": "r6-baseline-compatibility/1"
+}
