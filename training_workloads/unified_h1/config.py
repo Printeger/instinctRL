@@ -76,7 +76,7 @@ R6_WORKLOAD_SOURCES = WORKLOAD_SOURCES | {
         "robustness_contract", "robustness_prelaunch", "robustness_audit",
         "range_archive", "force_archive", "robustness_analysis",
         "robustness_measurement_replay", "robustness_physics_replay",
-        "robustness_training_storage", "lossless_evidence",
+        "robustness_training_storage", "robustness_training_rng", "robustness_training_plan", "lossless_evidence",
         "native_volume", "extension_inputs", "write_boundary", "result_volume",
     )
 }

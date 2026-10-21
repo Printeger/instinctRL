@@ -62,3 +62,39 @@ def branch_from_u640(trainer, curriculum_generator, *, seed, origin_sha256, meta
         origin_rng=original_rng,branch_rng=branched_rng,
         physical_continuity=False,strict_rng_continuation=False,
         semantics='COMMON_U640_NEW_CONTINUATION_STREAM; FRESH_PHYSICAL_RESET_REQUIRED')
+
+
+def prepare_plan_rng(trainer,curriculum_generator,*,plan,metadata):
+    """Bind one restored trainer to a validated plan before any rollout.
+
+    The caller must durably save the returned tensor record before proceeding.
+    Resuming an R6 trajectory preserves every restored RNG; only a common-u640
+    start creates a new stream. Neither path executes an optimizer or reset.
+    """
+    from . import robustness_training_plan as contract
+    from .checkpoint_compatibility import pinned_json
+    from instinctlab.training.checkpoint_h1 import _rng_payload
+    from instinctlab.training.ppo import PPOConfig
+    binding=contract.verify_loaded(plan,metadata)
+    if getattr(trainer,'_r6_plan_rng_prepared',False):raise ValueError('R6_PLAN_RNG_ALREADY_PREPARED')
+    if not isinstance(trainer.config,PPOConfig) or str(curriculum_generator.device)!='cpu':
+        raise ValueError('R6_PLAN_CONFIGURATION')
+    recipe=pinned_json(plan['recipe']);method=pinned_json(recipe['method'])
+    if (trainer.update_counter!=plan['start_update']
+            or optimizer_steps(trainer.actor_optimizer)!=plan['start_update']*8
+            or optimizer_steps(trainer.critic_optimizer)!=plan['start_update']*8):
+        raise ValueError('R6_PLAN_ACTUAL_COUNTERS')
+    if any(getattr(trainer.config,k)!=method['ppo'][k] for k in ('minibatch_size','epoch_count')):
+        raise ValueError('R6_PLAN_PPO_CLOCK')
+    if binding['branch_new_rng']:
+        record=branch_from_u640(trainer,curriculum_generator,seed=plan['training_seed'],
+            origin_sha256=plan['initialization']['checkpoint']['sha256'],metadata=metadata)
+    else:
+        if trainer.config.permutation_seed!=plan['training_seed']:
+            raise ValueError('R6_PLAN_RESUME_PERMUTATION')
+        record=dict(schema_version='r6-training-rng-resume/1',training_seed=plan['training_seed'],
+            starting_update=plan['start_update'],restored_rng=_rng_payload(curriculum_generator,trainer),
+            strict_rng_continuation=True,physical_continuity=False)
+    trainer._r6_plan_rng_prepared=True
+    return dict(plan_sha256=contract.object_sha(plan),recipe=plan['recipe'],binding=binding,rng=record,
+                evidence_must_be_persisted_before_rollout=True)

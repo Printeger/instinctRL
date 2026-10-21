@@ -1,0 +1,86 @@
+{
+  "status": "CPU_PLAN_AND_RNG_COMPOSITION_PASS_NOT_TRAINING_DISPATCH",
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_plan.py",
+      "sha256": "77f8868d95153fd3f514e73318a70e877e057df2408be3c66bbe39011824d8e3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_training_rng.py",
+      "sha256": "e206a82073139e222bc4419227c728cc97768704142a0747af52c467bb0bab35"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/config.py",
+      "sha256": "e268b09b4fff989a947ea0977b401a7fdd38ca2b18498d2d3d77ae228803f2e8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_training_plan.py",
+      "sha256": "12c754ae3f9d1ccd54afdbd4902160ef5c664174ed911c77138c58c8f3a2afc1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_training_plan_rng.py",
+      "sha256": "44bd6358ce1514a05856d2d03a091f3955c5bdbef1b18d20cbdc58274a4921c0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_config.py",
+      "sha256": "717877c422170342ec2665efaea9322aacd571160ee9c98ff11059c8c288807a"
+    }
+  ],
+  "tests": {
+    "tensor_combined_passed": 28,
+    "tensor_log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PLAN_FINAL_TEST.txt",
+      "sha256": "e0a5441e120373ab371ff21ecb6648a70627782ad158e7e98f73418de8f21cc0"
+    },
+    "source_snapshot_passed": 13,
+    "source_log": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PLAN_SOURCE_FINAL_TEST.txt",
+      "sha256": "7689adda663427991212831d92a603f8312a5b1a33b065e5f9b7b8e3b00dd9ef"
+    },
+    "preserved_source_fixture_failure": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PLAN_SOURCE_TEST.txt",
+      "sha256": "dbbf0f72d3b7830903f582a649a872b15c6d30a884e5243e3b60e69cab6a8aee"
+    },
+    "earlier": [
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PLAN_TEST.txt",
+        "sha256": "7da1ef96014b9a7f9e5528caa0939beea15a728a931d18df30c8c8aa9dd3ba37"
+      },
+      {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PLAN_RNG_TEST.txt",
+        "sha256": "0c220902562da56ca7e3282345ea1ad4821645b112ca122e50253ed3cf615a98"
+      }
+    ]
+  },
+  "actual_baseline_recheck": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_TRAINING_PLAN_BASELINE_RECHECK.json",
+    "sha256": "d0de20724f2a70f4aacdb2633b1d04783cd4c8a800b3a571c63bd6dfa386a8e2"
+  },
+  "coverage": [
+    "Reviewed recipe/diagnosis/method/curriculum pins; development and three distinct confirmation seeds",
+    "Confirmation requires independently reviewed selection freeze binding the same recipe and seeds",
+    "32x16 rollout and existing eight-Adam-step checkpoint clock; exact checkpoints, transition/reset/wall budget, physics expansion",
+    "Plain checkpoint/RNG/metadata allowance plus compressed allowance fits declared payload",
+    "Common u640 creates one stream; R6 resume validates loaded recipe/seed/counters and preserves RNG instead of reseeding",
+    "Actual synthetic CPU trainer/Adam/RNG composition checks mismatch before mutation and no optimizer or environment action",
+    "New module dependencies included in source manifest; missing/hash-modified imports rejected",
+    "Existing real baseline spec still validates in 11.436 seconds without mocks after manifest addition"
+  ],
+  "fixture_boundaries": [
+    "Initial checkpoint pin substituted with synthetic file in plan tests",
+    "Synthetic CPU actor/critic and Adam counters; no actual u640 tensor restore, CUDA or PPO update",
+    "Recipe reviews are fixtures, not production scientific approvals"
+  ],
+  "remaining": [
+    "Training dispatch authorization and backend curriculum/action/log/checkpoint wiring",
+    "Persist RNG record before rollout and enforce actual result/native quota at training entry",
+    "Stage-aware profile/materializer/controller/analysis support",
+    "Recipe generation and independent acceptance after baseline diagnosis",
+    "Final holdout/validation/delivery workflow and combined independent review",
+    "Future privileged provisioning and platform no-model-wait handoff"
+  ],
+  "production_model_calls": 0,
+  "GPU_queries": 0,
+  "live_starts": 0,
+  "goal_complete": false
+}
