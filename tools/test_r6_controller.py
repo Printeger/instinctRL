@@ -252,7 +252,9 @@ def wait(*a,**kw):
   time.sleep(.02)
  return dict(status='DECISION_PROPOSAL_RETURNED',event_key=v['job_key'])
 c.first.start=wait
-# The real NEEDS_REPAIR fixture now terminates in its repair input, not a profile.
+# This detached-wait test isolates repair dispatch; real source-writer/Git
+# integration is exercised by test_r6_engineering_source.
+c.engineering_source.prepare=lambda j,k,s,**kw:dict(status='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW',goal_complete=False)
 from tools.r6_batch import model_handoff
 c.profile.model_handoff=lambda j,k:model_handoff(j,k,poll_seconds=.01)
 with j.writer():
@@ -286,7 +288,7 @@ print(json.dumps(result))
             assert not b.builder.with_suffix('.count').exists()
         else:
             assert proc.returncode==0,stderr
-            assert json.loads(stdout)['status']=='ENGINEERING_REPAIR_INPUT_READY'
+            assert json.loads(stdout)['status']=='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW'
             assert not b.builder.with_suffix('.count').exists()
         assert not owns(entry(b)['controller_process'])
         with Journal(b.j.directory).writer():pass
@@ -606,8 +608,12 @@ def test_failed_completion_revalidation_preserves_original_receipt_but_not_curre
 
 def test_actual_needs_repair_never_launches_profile_or_next_job(controller,monkeypatch):
     b=controller;monkeypatch.setattr(c,'parent_for_job',b.real_parent_for_job)
+    def prepared(j,key,store,**kwargs):
+        value=c.repair_input.prepare(j,key,store,free_disk_bytes=kwargs['free_disk_bytes'])
+        return dict(value,status='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW')
+    monkeypatch.setattr(c.engineering_source,'prepare',prepared)
     first=run(b);budget=b.j.read()['budget'];cursor=entry(b)['cursor']
-    assert first['status']=='ENGINEERING_REPAIR_INPUT_READY'
+    assert first['status']=='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW'
     assert cursor['phase']=='REPAIR_AND_REVIEW' and cursor['completed_jobs']==[b.key]
     assert run(b)==first and b.j.read()['budget']==budget
     b.first.assert_called_once();b.source.assert_not_called();b.next.assert_not_called()

@@ -407,6 +407,8 @@
     "failed_decision_replacement_status": "CPU_FAILED_DECISION_REPLACEMENT_AND_ACTIVE_PARENT_ROUTING_PASS_NOT_DEPLOYED",
     "failed_decision_replacement_evidence": "docs/experiments/r6-robustness-auto/CPU_DECISION_REPAIR.json",
     "source_replacement_status": "CPU_SOURCE_PREPARATION_SIDE_EFFECT_RECONCILIATION_AND_REPLACEMENT_PASS_NOT_DEPLOYED",
-    "source_replacement_evidence": "docs/experiments/r6-robustness-auto/CPU_SOURCE_REPAIR.json"
+    "source_replacement_evidence": "docs/experiments/r6-robustness-auto/CPU_SOURCE_REPAIR.json",
+    "automatic_workload_repair_status": "CPU_AUTOMATIC_WORKLOAD_SOURCE_REPAIR_PASS_INDEPENDENT_REPAIR_REVIEW_PENDING",
+    "automatic_workload_repair_evidence": "docs/experiments/r6-robustness-auto/CPU_ENGINEERING_SOURCE.json"
   }
 }

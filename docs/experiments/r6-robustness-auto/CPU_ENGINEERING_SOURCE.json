@@ -1,0 +1,71 @@
+{
+  "status": "CPU_AUTOMATIC_WORKLOAD_SOURCE_REPAIR_PASS_INDEPENDENT_REPAIR_REVIEW_PENDING",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_engineering_source.py",
+      "sha256": "162c3b29ddb13a7719b199be4faa69efe66be2b4841e4b818c1419cba4258c72"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_repair_input.py",
+      "sha256": "116ed4c8b3802b0aabbbbef9fb6c1892acc0069153878f5aa4dce6f8aba5c216"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_source_preparation.py",
+      "sha256": "0d82429b9c55f46a5bad2283a3c772ae80f6089d0ae6e376c5565ad0dc484ba2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "5afb748a6fbdb8bfb5c11a90e81827519825037b486ff1277d651add52334c38"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_engineering_source.py",
+      "sha256": "1343dacfb6710a92d6f60b74e85a0675abf9944e5167174f95a7738db1336692"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_source_preparation.py",
+      "sha256": "7b1d4174d7565f78b690450a756a4f2a97f33fdd0395093b77f33672d9e09c55"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller.py",
+      "sha256": "190385d9e015b0387652588adade7acff7ba85fce58b1bad1578ac224a24e4cf"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ENGINEERING_SOURCE_INITIAL.log",
+      "sha256": "3d4026850e391dee6428609a5106f156109f655aa786097298297f817a23aaae"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_ENGINEERING_SOURCE_COMBINED.log",
+      "sha256": "9ba429a7ae981377328da7c38e9c582431b28e90b825c3233fa922a52e0c6fbf"
+    }
+  ],
+  "checks": {
+    "initial_tests": 47,
+    "combined_tests": 95,
+    "real_journal_guard": "PASS",
+    "production_engineering_source_events": 0,
+    "production_model_calls_added": 0
+  },
+  "behavior": [
+    "Development NEEDS_REPAIR now invokes the existing bounded source writer with a pinned repair input and returns an independently reviewable repair candidate.",
+    "The input binds closed job/spec/analysis/receipt and original findings; the design card must cite that exact input, address every finding and use a different experiment ID.",
+    "Preserve the original job/decision/cursor, Store state and budget charges. Fresh repair input binding is persisted before worker handoff, and repeated controller entry reuses the same source event.",
+    "Missing findings, missing engineering binding, PREPARATION_INCOMPLETE, STOP, cursor drift or frozen confirmation/final context cannot advance to a new live job.",
+    "Source worker cannot modify control tools, scientific methods, actor inputs, metrics or splits as an engineering repair; controller changes/offline-only needs explicitly remain incomplete."
+  ],
+  "boundaries": [
+    "Actual temporary Git and fake CLI writer, synthetic scientific input/Store and mocked snapshot validation/creation. The controller integration uses a mocked first live runner; no GPU or actual experiment occurred.",
+    "The source result is a proposal, not proof that findings are fixed. A dedicated independent repair review and subsequent reviewed reentry are still required.",
+    "The detached CPU wait test stubs repair dispatch; real source writer/controller integration is tested separately.",
+    "Controller implementation repair/restart, automatic failed-event reconciliation and frozen confirmation/holdout repairs are not solved by this workload writer.",
+    "Existing root-owned CPU-QUOTA-01 pytest garbage is preserved after cleanup warnings."
+  ],
+  "remaining": [
+    "Independent engineering repair review and accepted reentry",
+    "Controller-code repair and fresh-process supervision; remaining failure cases",
+    "Supported local sandbox access and actual model-free platform handoff",
+    "Actual baseline and full scientific goal"
+  ],
+  "goal_complete": false
+}

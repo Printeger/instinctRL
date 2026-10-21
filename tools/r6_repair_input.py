@@ -68,3 +68,25 @@ def prepare(journal,controller_key,store,*,free_disk_bytes):
     profile.guard(journal);persist_exact(path,data);pin=file_pin(path)
     state=journal.read();state['events'][key]['repair_input']=pin;journal.save(state)
     return dict(status=result['status'],event_key=key,repair_input=pin,dispatch_authorized=False,goal_complete=False)
+
+
+def validate(journal,pin,parent_key,store):
+    """Recheck immutable repair evidence after a worker has added new events."""
+    value=json.loads(checked(pin).read_text());require(value['status']=='ENGINEERING_REPAIR_INPUT_READY','STATUS')
+    state=journal.read();key=value['event_key'];event=state['events'][key];desc=value['description']
+    profile.reservation(state,key,'cpu',{'output_actual_plus_unreleased_reservations_bytes':CAP},'repair')
+    require(event['identity']['role']==ROLE and event.get('repair_input')==pin
+        and event['request']['description']==desc and desc['parent_key']==parent_key
+        and desc['store_root']==str(store.root.resolve()) and desc['store_sha256']==sha(store.replay()),'BINDING')
+    checked(desc['implementation'])
+    decision=decision_record(journal,parent_key,store)
+    require(decision==desc['decision'] and decision['decision']['decision']=='NEEDS_REPAIR'
+        and state['events'][parent_key]['receipt']==desc['decision_receipt'],'PARENT')
+    job=journal.canonical_job(desc['job_key'],state=state)
+    require(job['request']['spec']==desc['job_spec'] and state['events'][parent_key]['decision_input']['job_event_key']==desc['job_key'],'JOB')
+    checked(desc['job_spec']);checked(desc['decision_receipt'])
+    for name,evidence in desc['closed_job_evidence'].items():
+        require(job.get(name)==evidence,'EVIDENCE_DRIFT');checked(evidence)
+    for related in desc['related_events']:
+        if related['receipt']:checked(related['receipt'])
+    return value

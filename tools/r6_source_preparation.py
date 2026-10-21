@@ -44,12 +44,15 @@ def control_identity():
     return sha({str(p.relative_to(ROOT)):file_pin(p)['sha256'] for p in files})
 
 
-def register(journal,parent_key,store,*,executable,free_disk_bytes,repair_pin=None):
+def register(journal,parent_key,store,*,executable,free_disk_bytes,repair_pin=None,engineering_pin=None):
     journal.require_writer();journal.guard()
     require(not stop_paths(journal),'STOP');no_model_workers(journal)
     parent=parent_decision(journal,parent_key,store)
     require(parent['decision']['decision']!='REQUEST_FINAL_REVIEW','FINAL_REVIEW_ROUTE')
     state=journal.read();require(state.get('current_job') is None,'ACTIVE_JOB')
+    if engineering_pin is not None:
+        from tools.r6_repair_input import validate
+        validate(journal,engineering_pin,parent_key,store)
     exe=checked(executable)
     if state['goal_id']=='R6-CPU-TEST-FIXTURE':
         require(exe.is_relative_to(journal.directory.parent.resolve()),'FIXTURE_EXECUTABLE')
@@ -65,6 +68,7 @@ def register(journal,parent_key,store,*,executable,free_disk_bytes,repair_pin=No
         require('source_input' in entry,'INPUT_MISSING_NO_RETRY')
         require(repair.active(journal,parent_key)==key,'NOT_ACTIVE')
         require(entry['source_input'].get('repair')==repair_pin,'REPAIR_PIN_DRIFT')
+        require(entry['source_input'].get('engineering_repair')==engineering_pin,'ENGINEERING_INPUT_DRIFT')
         require(entry['request']['executable']==executable,'EXECUTABLE_DRIFT')
         require(entry['source_input']['parent']==state['events'][parent_key]['decision_record'],'PARENT_DRIFT')
         # Intent includes recoverable prompt bytes before the first dispatch.
@@ -95,6 +99,7 @@ def register(journal,parent_key,store,*,executable,free_disk_bytes,repair_pin=No
     if repair_pin is not None:
         packet['repair']=repair_pin
         packet['output_directory']=str(Path(packet['output_directory'])/'repairs'/repair_pin['sha256'])
+    if engineering_pin is not None:packet['engineering_repair']=engineering_pin
     prompt=('Prepare the concrete R6 source/config and experiment card for the pinned scientific '
         'decision, then exit. You are the sole source writer while the controller holds the Journal '
         'lock. Do not mutate Journal/Store, issue authority, create snapshots or volumes, query GPUs, '
@@ -132,6 +137,14 @@ def register(journal,parent_key,store,*,executable,free_disk_bytes,repair_pin=No
         +('Read the repair document and reconcile all predecessor writes and commits. '
           'Preserve prior attempt outputs; only this fresh output_directory may receive new artifacts. '
           'This is repair of the same scientific candidate, not permission for another candidate.\n' if repair_pin is not None else '')
+        +('This is an engineering repair. Read engineering_repair and every original finding. '
+          'Do not change scientific method, actor inputs, scoring or splits to hide a failure. '
+          'Add engineering_repair to the design card, exactly {input: the pinned engineering_repair, '
+          'disposition: NEW_REVIEWED_LIVE_ATTEMPT, findings_addressed: all original must_fix strings}. '
+          'Use a new experiment ID. SOURCE_READY only proposes a fresh reviewed attempt; it never '
+          'authorizes dispatch. If repair only needs offline reanalysis, needs controller changes, '
+          'has an external blocker, or cannot address every finding, return PREPARATION_INCOMPLETE '
+          'with explicit evidence and reason. Do not force a live attempt or alter control tools.\n' if engineering_pin is not None else '')
         +json.dumps(packet,sort_keys=True)+'\n')
     require(len(prompt.encode())<=65536,'CONTEXT_CAP')
     target=journal.directory/'source-preparation'/parent_key/'prompt.txt'
@@ -205,9 +218,18 @@ def record(journal,key,store):
     training=isinstance(design,dict) and design.get('schema_version')=='r6-source-design-card/2'
     candidate=isinstance(design,dict) and design.get('schema_version')=='r6-source-design-card/3'
     fields={'schema_version','parent_decision_sha256','experiment_id','hypothesis','comparison','source_scope','planned_resources'}
+    if packet.get('engineering_repair'):fields.add('engineering_repair')
     require(isinstance(design,dict) and set(design)==(fields|{'training_design'} if training else fields|{'candidate_design'} if candidate else fields)
         and design['schema_version'] in ('r6-source-design-card/1','r6-source-design-card/2','r6-source-design-card/3')
         and design['parent_decision_sha256']==packet['parent']['sha256'],'DESIGN_CARD')
+    if packet.get('engineering_repair'):
+        from tools.r6_repair_input import validate
+        repair=validate(journal,packet['engineering_repair'],packet['parent_key'],store)
+        findings=repair['description']['decision']['decision']['must_fix']
+        require(design['engineering_repair']==dict(input=packet['engineering_repair'],
+            disposition='NEW_REVIEWED_LIVE_ATTEMPT',findings_addressed=findings),'ENGINEERING_FINDINGS')
+        old_spec=json.loads(checked(repair['description']['job_spec']).read_text())
+        require(design['experiment_id']!=old_spec['id'],'ENGINEERING_NEW_EXPERIMENT')
     if training:
         from training_workloads.unified_h1.robustness_training_plan import FIELDS,RECIPE_FIELDS
         path=committed(design['training_design'],commit,repo)
@@ -245,6 +267,7 @@ def record(journal,key,store):
     artifact=dict(status='SOURCE_INPUTS_READY_NOT_LIVE_AUTHORITY',parent=packet['parent'],
         source_commit=commit,config=result['config'],card=result['card'],review_required=True,
         worker_receipt=entry['receipt'],scientific_acceptance=False)
+    if packet.get('engineering_repair'):artifact['engineering_repair']=packet['engineering_repair']
     if training:artifact['training_design']=design['training_design']
     if candidate:artifact['candidate_design']=design['candidate_design']
     path=Path(entry['request']['prompt']['path']).parent/'result.json'
@@ -253,7 +276,7 @@ def record(journal,key,store):
     return artifact
 
 
-def prepare_source(journal,parent_key,store,*,executable,free_disk_bytes):
+def prepare_source(journal,parent_key,store,*,executable,free_disk_bytes,engineering_pin=None):
     """Reconnect an existing worker before any registration idle check."""
     journal.require_writer();state=journal.read()
     from tools.r6_source_repair import active,validate_start
@@ -262,13 +285,17 @@ def prepare_source(journal,parent_key,store,*,executable,free_disk_bytes):
     if entries:
         key,entry=entries[0];require(entry['request']['executable']==executable,'EXECUTABLE_DRIFT')
         require('source_input' in entry,'INPUT_MISSING_NO_RETRY')
+        require(entry['source_input'].get('engineering_repair')==engineering_pin,'ENGINEERING_INPUT_DRIFT')
         if not entry.get('dispatch_claim') and not entry.get('receipt'):
             register(journal,parent_key,store,executable=executable,free_disk_bytes=free_disk_bytes,
-                repair_pin=entry['source_input'].get('repair'))
-    else:key=register(journal,parent_key,store,executable=executable,free_disk_bytes=free_disk_bytes)
+                repair_pin=entry['source_input'].get('repair'),engineering_pin=engineering_pin)
+    else:key=register(journal,parent_key,store,executable=executable,free_disk_bytes=free_disk_bytes,engineering_pin=engineering_pin)
     entry=journal.read()['events'][key]
     if not entry.get('dispatch_claim') and not entry.get('receipt'):
         packet=entry['source_input']
+        if engineering_pin is not None:
+            from tools.r6_repair_input import validate
+            validate(journal,engineering_pin,parent_key,store)
         if packet.get('repair'):validate_start(journal,packet['repair'],parent_key)
         require(sha(journal.read()['budget'])==packet['budget_sha256'],'BUDGET_MUTATED')
         require(sha(store.replay())==packet['store_state_sha256'],'STORE_MUTATED')

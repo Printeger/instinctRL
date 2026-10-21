@@ -41,6 +41,7 @@ from tools import r6_video_validation as video_validation
 from tools import r6_final_audit_packet as final_audit_packet, r6_final_independent_review as final_audit
 from tools import r6_final_delivery as final_delivery, r6_publish_final_delivery as final_publication, r6_terminal_audit as terminal_audit
 from tools import r6_repair_input as repair_input
+from tools import r6_engineering_source as engineering_source
 from tools import r6_render_preparation as render_preparation, r6_render_review as render_review
 from tools import r6_render_materialization as render_materialization, r6_run_job as render_runner
 from tools.r6_decision_packet import persist_exact
@@ -230,11 +231,16 @@ def run(journal,request_pin,store,*,free_disk_bytes):
             if phase in {'FINAL_TERMINAL_AUDIT_REQUIRED','COMPLETE'}:
                 return terminal_audit.finish(journal,key,store)
             if phase=='REPAIR_AND_REVIEW':
-                outcome=repair_input.prepare(journal,key,store,free_disk_bytes=free)
-                require(outcome['status']=='ENGINEERING_REPAIR_INPUT_READY','REPAIR_INPUT_STATUS')
-                # Keep the exact cursor/parent/job. A repair worker and fresh
-                # reviewed attempt must explicitly resolve this disposition.
-                save(journal,key,cursor,status='ENGINEERING_REPAIR_REQUIRED')
+                if any(name in cursor for name in ('confirmation','final_batch','final_models','final_collection')):
+                    outcome=repair_input.prepare(journal,key,store,free_disk_bytes=free)
+                    require(outcome['status']=='ENGINEERING_REPAIR_INPUT_READY','REPAIR_INPUT_STATUS')
+                    save(journal,key,cursor,status='ENGINEERING_REPAIR_REQUIRED')
+                    return dict(outcome,controller_key=key)
+                outcome=engineering_source.prepare(journal,key,store,
+                    executable=initial['review_executable'],free_disk_bytes=free)
+                require(outcome['status']=='ENGINEERING_SOURCE_READY_REQUIRES_INDEPENDENT_REVIEW','ENGINEERING_SOURCE_STATUS')
+                # The writer cannot approve its own fix or advance the phase.
+                save(journal,key,cursor,status=outcome['status'])
                 return dict(outcome,controller_key=key)
             if phase in TERMINAL_BOUNDARIES:
                 save(journal,key,cursor,status=phase)

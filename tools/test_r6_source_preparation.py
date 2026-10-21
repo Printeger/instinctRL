@@ -29,6 +29,11 @@ config.write_text(json.dumps(settings.get('config',{})))
 design={'schema_version':'r6-source-design-card/1','parent_decision_sha256':p['parent']['sha256'],
  'experiment_id':'CPU-PREPARATION','hypothesis':'CPU evidence repair','comparison':'Original failed fixture',
  'source_scope':'CPU fixture only','planned_resources':{'live_starts':0}}
+if p.get('engineering_repair') and not settings.get('omit_engineering'):
+ repair=json.loads(Path(p['engineering_repair']['path']).read_text())
+ findings=repair['description']['decision']['decision']['must_fix']
+ design['engineering_repair']={'input':p['engineering_repair'],'disposition':'NEW_REVIEWED_LIVE_ATTEMPT',
+  'findings_addressed':[] if settings.get('omit_findings') else findings}
 if settings.get('bad_card'):design['planned_resources']={'training_transitions':10**12}
 if settings.get('training'):
  config.write_text(json.dumps({'schema_version':'unified-h1-r6-training-config.v1'}))
