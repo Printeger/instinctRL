@@ -9,13 +9,18 @@ from pathlib import Path
 import subprocess
 from tools.r6_recovery import checked,RecoveryError
 from tools.prepare_r6_snapshot import verify_frozen
+from tools.r6_job_resources import MODES
 
 PROGRAM='''import json,sys
 from pathlib import Path
 sys.path.insert(0,sys.argv[1])
 from training_workloads.unified_h1.config import load_config
 c=load_config();request=json.load(sys.stdin)
-if 'r6_training_plan' in request['parameters']:
+if 'evaluation_selection' in request['parameters']:
+ from training_workloads.unified_h1.robustness_candidate_contract import MODE,validate_parameters,required_budget,validate_compatibility
+ p=validate_parameters(MODE,request['parameters'])
+ validate_compatibility(p['checkpoint_compatibility'],p['evaluation_selection'],c)
+elif 'r6_training_plan' in request['parameters']:
  from training_workloads.unified_h1.robustness_training_contract import MODE,validate_parameters,required_budget,validate_compatibility
  p=validate_parameters(MODE,request['parameters'])
  validate_compatibility(p['checkpoint_compatibility'],p['r6_training_plan'],c)
@@ -38,12 +43,14 @@ def prepare(snapshot_receipt,parameters_pin,attempt):
     config=json.loads(checked(receipt['config']).read_text())
     verify_frozen(receipt,config)
     params=json.loads(checked(parameters_pin).read_text())
-    mode='research-r6-training' if 'r6_training_plan' in params else 'research-r6-evaluation'
+    if 'evaluation_selection' in params and 'r6_training_plan' in params:
+        raise RecoveryError('PREPARE_AUTH_AMBIGUOUS_STAGE')
+    mode=MODES[2] if 'evaluation_selection' in params else MODES[1] if 'r6_training_plan' in params else MODES[0]
     attempt=Path(attempt)
     if (not attempt.is_absolute() or attempt.resolve()!=attempt or attempt.is_symlink()
             or not attempt.is_dir() or not (attempt/'results').is_dir()):
         raise RecoveryError('PREPARE_AUTH_ATTEMPT_REQUIRED')
-    if any((attempt/'results'/m).exists() for m in ('research-r6-evaluation','research-r6-training')) or list((attempt/'results').glob('*/process_start.json')):
+    if any((attempt/'results'/m).exists() for m in MODES) or list((attempt/'results').glob('*/process_start.json')):
         raise RecoveryError('PREPARE_AUTH_ATTEMPT_CONSUMED')
     executable=checked(dict(path=config['execution']['python_path'],sha256=config['execution']['python_sha256']))
     stdin=json.dumps(dict(parameters=params,attempt=str(attempt)),sort_keys=True)

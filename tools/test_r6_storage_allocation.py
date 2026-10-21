@@ -9,8 +9,8 @@ from tools.r6_recovery import Journal,file_pin,RecoveryError
 from tools.r6_budget import totals
 
 
-@pytest.fixture
-def case(tmp_path,monkeypatch):
+@pytest.fixture(params=['research-r6-evaluation','research-r6-candidate-evaluation'])
+def case(tmp_path,monkeypatch,request):
     monkeypatch.setattr(allocation.native_tool,'BASE',tmp_path/'native')
     monkeypatch.setattr(allocation.result_tool,'BASE',tmp_path/'results')
     monkeypatch.setattr(allocation.result_tool,'ATTEMPTS',tmp_path/'attempts')
@@ -22,7 +22,7 @@ def case(tmp_path,monkeypatch):
     n=write('native-plan.json',native);r=write('result-plan.json',result)
     j=Journal(tmp_path/'batch')
     with j.writer():j.initialize(json.loads((Path(__file__).parent/'fixtures/r6_budget.json').read_text()))
-    return SimpleNamespace(j=j,n=n,r=r,native=native,result=result,write=write,target=target)
+    return SimpleNamespace(mode=request.param,j=j,n=n,r=r,native=native,result=result,write=write,target=target)
 
 
 def register(b):
@@ -36,8 +36,9 @@ def spec(b,monkeypatch):
         path.write_text(json.dumps(dict(plan,status='MOUNT_CREATED_NOT_ACCEPTED',implementation_sha256=file_pin(tool.__file__)['sha256'])))
         pins[field]=file_pin(path)
     cap=b.native['maximum_backing_bytes']+b.result['maximum_backing_bytes']+allocation.CONTROL_ALLOWANCE
-    auth=b.write('authorization.json',dict(parameters=dict(pins,experiment_id='R6-FIXTURE',output_cap_bytes=cap)))
-    value=dict(id='R6-FIXTURE',backend='real',h1=dict(mode='research-r6-evaluation',attempt=str(b.target.parent)),pins=dict(authorization=auth))
+    auth=b.write('authorization.json',dict(mode=b.mode,parameters=dict(pins,experiment_id='R6-FIXTURE',output_cap_bytes=cap),
+        budgets=dict(nontraining_transitions=512,training_transitions=0,optimizer_updates=0,checkpoint_writes=0)))
+    value=dict(id='R6-FIXTURE',backend='real',h1=dict(mode=b.mode,attempt=str(b.target.parent)),pins=dict(authorization=auth))
     monkeypatch.setattr('training_workloads.unified_h1.native_volume.validate',Mock())
     monkeypatch.setattr('training_workloads.unified_h1.result_volume.validate',Mock())
     return value,b.write('spec.json',value)

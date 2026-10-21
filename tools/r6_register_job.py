@@ -76,7 +76,7 @@ def register(journal, spec_pin, store, *, free_disk_bytes, purpose='development'
     resources=dict(live_starts=1,live_wall_seconds=spec['resources']['wall_seconds']+180,
                    allocated_gpu_seconds=spec['resources']['wall_seconds']+180)
     if spec['backend']=='real':
-        require(spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training'),'R6_MODE_REQUIRED')
+        require(spec.get('h1',{}).get('mode') in ('research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation'),'R6_MODE_REQUIRED')
         auth=json.loads(checked(spec['pins']['authorization']).read_text())
         from tools.r6_job_resources import resources as job_resources
         resources=job_resources(spec,auth,prepaid=storage is not None)

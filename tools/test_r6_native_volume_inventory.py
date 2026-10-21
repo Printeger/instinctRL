@@ -9,8 +9,13 @@ from tools.r6_recovery import file_pin,RecoveryError
 from training_workloads.unified_h1 import native_volume
 
 
+@pytest.fixture(params=['research-r6-evaluation','research-r6-candidate-evaluation'])
+def inventory_mode(request):
+    return request.param
+
+
 @pytest.fixture
-def native_job(monkeypatch,request):
+def native_job(monkeypatch,request,inventory_mode):
     b=fixtures.InventoryTests();b.setUp()
     try:
         metadata=b.base/'native';metadata.mkdir()
@@ -32,7 +37,7 @@ def native_job(monkeypatch,request):
             monkeypatch.setattr(result_volume,'validate',lambda *a,**kw:dict(target=str(b.result_target),
                 mount_id='RESULT',device='CPU',maximum_bytes=64*1024**2))
         authority.write_text(json.dumps(dict(parameters=parameters)))
-        b.spec['h1']['mode']='research-r6-evaluation'
+        b.spec['h1']['mode']=inventory_mode
         b.spec['pins']={'authorization':file_pin(authority)}
         specpath=Path(b.request['spec']['path']);specpath.write_text(json.dumps(b.spec))
         b.request['spec']=file_pin(specpath)

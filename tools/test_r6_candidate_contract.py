@@ -27,6 +27,11 @@ def test_stage_uses_all_frozen_denominators_and_no_training_budget(stage):
     budget=research_contract.required_budget(c.MODE,p)
     assert budget['nontraining_transitions']==193600 and budget['explicit_resets']==21
     assert budget['training_transitions']==budget['optimizer_updates']==budget['checkpoint_writes']==0
+    from tools.r6_job_resources import resources
+    charge=resources(dict(backend='real',h1=dict(mode=c.MODE),
+        resources=dict(wall_seconds=budget['wall_seconds'],transitions=193600)),
+        dict(mode=c.MODE,parameters=p,budgets=budget))
+    assert charge['nontraining_transitions']==193600 and 'training_transitions' not in charge
     with pytest.raises(PermissionError):c.base.validate_parameters(c.base.MODE,p)
 
 

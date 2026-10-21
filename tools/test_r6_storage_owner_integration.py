@@ -10,7 +10,7 @@ from tools.r6_submit import submit_once
 from tools.r6_budget import totals
 from tools.r6_recovery import file_pin,RecoveryError
 from tools.test_r6_storage_allocation import case,spec,register
-from tools.test_r6_native_volume_inventory import native_job
+from tools.test_r6_native_volume_inventory import native_job, inventory_mode
 
 
 @pytest.fixture

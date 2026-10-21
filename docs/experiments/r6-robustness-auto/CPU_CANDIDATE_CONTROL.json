@@ -1,0 +1,107 @@
+{
+  "status": "CPU_CANDIDATE_AUTH_SPEC_ISSUANCE_SUBMIT_STORAGE_PASS_PROFILE_ANALYSIS_PENDING",
+  "input_commit": "20c6ffb0",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_build_spec.py",
+      "sha256": "96651a9e88a1c5464a6055fb60701755651c5eb2f40e869f15351c0953a02064"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_issue_next.py",
+      "sha256": "614cbae6be799056940c274bd3b1a06cb4efc395c968a8c2bbdf34241183912c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_inventory.py",
+      "sha256": "b498ab6fedd23e7441e655e7bd178afbf7dc811d87f64dc008d82289c30a2b56"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_job_resources.py",
+      "sha256": "f636a19865404407468e927bf2f840de5d96b82cfc3877ded3df5e071488811d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_prepare_authorization.py",
+      "sha256": "640eb92a9d1148ca6a254837896da1c49157a282d0f28a87a84f03894856d74f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_register_job.py",
+      "sha256": "fa175606ea802751123b0e8819b9ac01b028e2f249981c3b7d97a19c621a90c4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_storage_allocation.py",
+      "sha256": "c0ddb7ec1bcff1f48ba0222bc076163372ea6ff03bc62e0b467012f568a5395d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "ca1a91be5c63083b65fd03ec7e576665f6f85403bf67ac79cb9ec29b29e63204"
+    }
+  ],
+  "tests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_candidate_contract.py",
+      "sha256": "cac99190206e7d5dea2e54f2aaffa3aee635466b6b19509788583f8aa4425e99"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_job_resources.py",
+      "sha256": "17082a52a5c48aa6811eb9a38005b048c8d2f58f376023d3125ef4894553296f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_native_volume_inventory.py",
+      "sha256": "3e5be3c58c86a77719ccc3b5d7bb5362ce00e2a1f1b01f394412ab525033b231"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_prepare_authorization.py",
+      "sha256": "95dc71143d3e4fffefade3996c102bffaa273e524add1674b0a00528e556906c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_storage_allocation.py",
+      "sha256": "677ad1acd673b433dc91db74b6d0284300e677974f24756260424562ba9c9f05"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_storage_owner_integration.py",
+      "sha256": "3a65e5b26f658670e4f3b030d8aa5fed2386cb82651eea90677c19ef2cd3c762"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_real_contract.py",
+      "sha256": "1dc6e04c69fdbd78f3fd7d5705ee18d67c7f582f4bedeeccefa76868caa39f88"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_CONTROL_INITIAL.log",
+      "sha256": "899ca6fb28c97091b78793e86c0f21f8db34da5a7ee9a798776060a3b1d297db"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_CONTROL_FINAL.log",
+      "sha256": "a6d9c55e97f070784529bfad5a5cbc687595b15f10950c5e4792c57f0e8e3b57"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_CONTROL_CONTRACT.log",
+      "sha256": "b8e670f332745f4245f5c5447fb605eb3c987139ae9d5756bb5de6b074e41eea"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CANDIDATE_CONTROL_STORAGE.log",
+      "sha256": "2dcb6b7b11f01b69395413acc4b7c716b2efa1119315e65f3c2f184e2e11890f"
+    }
+  ],
+  "verification": {
+    "initial_control": 185,
+    "final_control": 221,
+    "stage": 36,
+    "storage": 46
+  },
+  "correction": "Initial fixture and guard used optimizer_steps; source-contract inspection corrected both to optimizer_updates and added a real stage-budget to resources cross-contract assertion. Initial pass alone did not establish compatibility.",
+  "boundaries": [
+    "Real temporary Store, H1 spec, ledger, issuance, registration and submit guards; frozen authority, resource samples, mounts and Popen are explicit substitutes.",
+    "Candidate resource accounting forbids training, optimizer updates and checkpoint writes; original baseline-only first-job guard preserved.",
+    "Double-volume binding, prepaid ownership, closed-job inventory and failed native status exercised for candidate mode.",
+    "No production Store issuance/submission, GPU query, simulation, training or controller deployment.",
+    "Historical pytest root-owned temporary-directory cleanup warnings retained."
+  ],
+  "remaining": [
+    "Candidate profile preparation and compatibility-review payload route",
+    "Candidate CPU analysis and closed-job binding",
+    "Final freeze/confirmation/holdout/delivery contracts",
+    "Combined independent review and platform handoff before live"
+  ],
+  "goal_complete": false
+}

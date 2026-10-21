@@ -25,7 +25,7 @@ MINIMUM = dict(live_starts=1, simulator_initializations=1,
     nontraining_transitions=512, output_actual_plus_unreleased_reservations_bytes=1024**3)
 
 
-@pytest.fixture(params=['research-r6-evaluation','research-r6-training'])
+@pytest.fixture(params=['research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation'])
 def bound(tmp_path, monkeypatch, request):
     return make_bound(tmp_path, monkeypatch, request.param)
 
@@ -61,6 +61,9 @@ def make_bound(tmp_path, monkeypatch, mode):
         auth['mode'] = mode
         auth['parameters']['training_seed'] = 17
         auth['budgets'].update(training_transitions=512, nontraining_transitions=0, checkpoint_writes=2)
+    if mode == 'research-r6-candidate-evaluation':
+        auth['mode'] = mode
+        auth['budgets'].update(optimizer_updates=0, checkpoint_writes=0)
     auth_pin = write(tmp_path/'fixture-auth.json', auth)
     observed = dict(config=config, authorization=auth)
     monkeypatch.setattr(h1, 'inspect_authority', lambda spec:copy.deepcopy(observed))

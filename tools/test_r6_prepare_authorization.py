@@ -8,7 +8,7 @@ import pytest
 from tools import r6_prepare_authorization as m
 from tools.r6_recovery import file_pin,RecoveryError
 
-@pytest.fixture(params=['research-r6-evaluation','research-r6-training'])
+@pytest.fixture(params=['research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation'])
 def case(tmp_path,monkeypatch,request):
     mode=request.param
     def pin(name,obj):
@@ -18,6 +18,7 @@ def case(tmp_path,monkeypatch,request):
     receipt=pin('receipt.json',dict(status='CPU_VERIFIED_READ_ONLY_NOT_LIVE_AUTHORITY',config=config,snapshot=str(tmp_path),source_identity=identity))
     params={'experiment_id':'R6-FIXTURE'}
     if mode=='research-r6-training':params['r6_training_plan']={'fixture':True}
+    if mode=='research-r6-candidate-evaluation':params['evaluation_selection']={'fixture':True}
     parameters=pin('parameters.json',params)
     attempt=tmp_path/'attempt';(attempt/'results').mkdir(parents=True)
     checker=Mock();monkeypatch.setattr(m,'verify_frozen',checker)
@@ -48,10 +49,13 @@ def test_subprocess_identity_drift_rejected(case):
     with pytest.raises(RecoveryError,match='IDENTITY_DRIFT'):m.prepare(**case.args)
 
 
-@pytest.mark.parametrize('training',[False,True])
-def test_frozen_program_assembles_exact_budget_with_declared_validator_stubs(monkeypatch,training):
+@pytest.mark.parametrize('stage',['baseline','training','candidate'])
+def test_frozen_program_assembles_exact_budget_with_declared_validator_stubs(monkeypatch,stage):
+    training=stage=='training'
     import training_workloads.unified_h1.config as config
-    if training:
+    if stage=='candidate':
+        import training_workloads.unified_h1.robustness_candidate_contract as contract
+    elif training:
         import training_workloads.unified_h1.robustness_training_contract as contract
     else:
         import training_workloads.unified_h1.robustness_contract as contract
@@ -59,11 +63,12 @@ def test_frozen_program_assembles_exact_budget_with_declared_validator_stubs(mon
     c=dict(method={'proposal_sha256':'4'*64},resolved_identity=identity)
     p=dict(experiment_id='R6-FIXTURE',group='R1',checkpoint_compatibility={'fixture':True})
     if training:p['r6_training_plan']={'fixture':'exact-plan'}
+    if stage=='candidate':p['evaluation_selection']={'fixture':'exact-selection'}
     budget={'nontraining_transitions':0 if training else 193600,'training_transitions':512 if training else 0}
     monkeypatch.setattr(config,'load_config',lambda:c)
     monkeypatch.setattr(contract,'validate_parameters',lambda mode,value:value)
     monkeypatch.setattr(contract,'required_budget',lambda mode,value:budget)
-    if not training:monkeypatch.setattr(contract,'baseline',lambda value:{'source_identity':{'origin':True}})
+    if stage=='baseline':monkeypatch.setattr(contract,'baseline',lambda value:{'source_identity':{'origin':True}})
     compat=Mock();monkeypatch.setattr(contract,'validate_compatibility',compat)
     monkeypatch.setattr(sys,'argv',['fixture',str(__import__('pathlib').Path.cwd())])
     monkeypatch.setattr(sys,'stdin',io.StringIO(json.dumps({'parameters':p,'attempt':'/fixture'})))
@@ -73,10 +78,10 @@ def test_frozen_program_assembles_exact_budget_with_declared_validator_stubs(mon
     finally:sys.path[:]=original
     a=json.loads(out.getvalue());assert a['budgets']==budget
     assert a['order_id']=='R6-FIXTURE-R1-'+contract.MODE.upper()
-    assert compat.call_args.args[1]==(p['r6_training_plan'] if training else {'origin':True})
+    assert compat.call_args.args[1]==(p['evaluation_selection'] if stage=='candidate' else p['r6_training_plan'] if training else {'origin':True})
     assert all(a[k]==v for k,v in identity.items());compat.assert_called_once()
 
-@pytest.mark.parametrize('consumed_mode',['research-r6-evaluation','research-r6-training'])
+@pytest.mark.parametrize('consumed_mode',['research-r6-evaluation','research-r6-training','research-r6-candidate-evaluation'])
 def test_either_consumed_mode_prevents_authority_reuse(case,consumed_mode):
     from pathlib import Path
     (Path(case.args['attempt'])/'results'/consumed_mode).mkdir()
@@ -88,3 +93,12 @@ def test_returned_mode_cannot_switch_stage(case):
     bad=dict(case.auth,mode='research-r6-evaluation' if case.auth['mode']=='research-r6-training' else 'research-r6-training')
     case.run.return_value.stdout=json.dumps(bad)
     with pytest.raises(RecoveryError,match='IDENTITY_DRIFT'):m.prepare(**case.args)
+
+
+def test_mixed_training_and_selection_rejected_before_process(case):
+    from pathlib import Path
+    path=Path(case.args['parameters_pin']['path'])
+    path.write_text(json.dumps(dict(r6_training_plan={},evaluation_selection={})))
+    case.args['parameters_pin']=file_pin(path)
+    with pytest.raises(RecoveryError,match='AMBIGUOUS_STAGE'):m.prepare(**case.args)
+    case.run.assert_not_called()

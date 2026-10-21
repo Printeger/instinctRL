@@ -25,7 +25,7 @@ def build(config_pin,authorization_pin,attempt,stage_id,conditions,store_root):
             or not attempt.is_absolute() or attempt.resolve()!=attempt or attempt.is_symlink()):
         raise RecoveryError('SPEC_EXACT_PATHS')
     parameters=authority['parameters'];budget=authority['budgets']
-    if mode==MODES[0] and budget['training_transitions']!=0:raise RecoveryError('SPEC_BASELINE_NO_TRAINING')
+    if mode!=MODES[1] and budget['training_transitions']!=0:raise RecoveryError('SPEC_BASELINE_NO_TRAINING')
     executable=file_pin(config['execution']['python_path'])
     if executable['sha256']!=config['execution']['python_sha256']:
         raise RecoveryError('SPEC_INTERPRETER_DRIFT')
