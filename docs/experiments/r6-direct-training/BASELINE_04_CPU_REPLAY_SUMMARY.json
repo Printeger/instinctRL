@@ -1,0 +1,1563 @@
+{
+  "schema_version": "r6-motion-replay-summary/1",
+  "blocks": [
+    {
+      "block_id": "S-clean-low",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "S-clean-high",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "S-noise",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "S-delay-drop",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "X-clean",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "X-noise",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "P-clean",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "P-combined",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "W-near",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "x_wall:toward": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:away": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:parallel": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:zero": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:toward": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:away": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:parallel": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:zero": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "W-middle",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "x_wall:toward": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:away": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:parallel": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:zero": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:toward": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:away": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:parallel": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:zero": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "W-far",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "x_wall:toward": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:away": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:parallel": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:zero": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:toward": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:away": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:parallel": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:zero": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "W-combined",
+      "domain": "target",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "x_wall:toward": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:away": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:parallel": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:zero": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:toward": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:away": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:parallel": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:zero": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "stress-S-noise",
+      "domain": "stress",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "stress-S-combined",
+      "domain": "stress",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "stress-P-high",
+      "domain": "stress",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "d0": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d1": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d2": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d3": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d4": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d5": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d6": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "d7": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    },
+    {
+      "block_id": "stress-W-high",
+      "domain": "stress",
+      "total": 32,
+      "replay_complete": true,
+      "saved_result_equal": true,
+      "error": null,
+      "successes": 32,
+      "subgroups": {
+        "x_wall:toward": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:away": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:parallel": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "x_wall:zero": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:toward": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:away": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:parallel": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "y_wall:zero": {
+          "successes": 4,
+          "total": 4,
+          "wilson_95": [
+            0.5101091635454027,
+            1.0
+          ]
+        }
+      },
+      "failed_lanes": [],
+      "measurement_replay": true,
+      "measurement_error": null,
+      "staging_reconstructed": true,
+      "physics_error": null
+    }
+  ],
+  "original": {
+    "replay_complete": true,
+    "error": null,
+    "saved_result_equal": true,
+    "saved_wall_equal": true,
+    "cases": {
+      "Z": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "T": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "S": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "X": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "d0": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d1": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d2": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d3": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d4": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d5": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d6": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          },
+          "d7": {
+            "successes": 4,
+            "total": 4,
+            "pass": true
+          }
+        }
+      },
+      "W": {
+        "successes": 32,
+        "total": 32,
+        "pass": true,
+        "wilson_95": [
+          0.8928208017449296,
+          1.0
+        ],
+        "subgroups": {
+          "x_wall": {
+            "successes": 16,
+            "total": 16,
+            "pass": true
+          },
+          "y_wall": {
+            "successes": 16,
+            "total": 16,
+            "pass": true
+          }
+        }
+      }
+    },
+    "all_gates_pass": true,
+    "wall_motion": {
+      "per_lane": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "all32": true
+    }
+  },
+  "scientific_acceptance": false,
+  "pending": [
+    "EXACT_JOB_INVENTORY_AND_MODEL_BINDING",
+    "INDEPENDENT_MEASUREMENT_CHAIN_ACCEPTANCE",
+    "RESET_FORCE_AND_RANDOM_STREAM_AUDIT",
+    "INDEPENDENT_SCIENTIFIC_REVIEW"
+  ]
+}

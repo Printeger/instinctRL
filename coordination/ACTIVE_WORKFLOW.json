@@ -95,6 +95,7 @@
     "authority": "docs/experiments/r6-direct-training/USER_AUTHORITY.txt",
     "budget": "docs/experiments/r6-direct-training/RESOURCE_LEDGER.json",
     "collection_summary": "docs/experiments/r6-direct-training/BASELINE_04_COLLECTION_SUMMARY.json",
+    "cpu_replay": "docs/experiments/r6-direct-training/BASELINE_04_CPU_REPLAY_SUMMARY.json",
     "current_live_jobs": [],
     "evaluation_repair": "docs/experiments/r6-direct-training/EVALUATION_STARTUP_REPAIR_REVIEW.json",
     "execution_mode": "local-direct",
@@ -107,7 +108,7 @@
     "next_action": "Start frozen baseline04 after normal push; scientific goal remains incomplete.",
     "next_inputs": "docs/experiments/r6-direct-training/BASELINE_RUN_INPUTS_04.json",
     "requirements": "docs/goals/InstinctRL_R6_Standalone_Training_Requirements.md",
-    "status": "BASELINE_04_COLLECTION_COMPLETE_CPU_REPLAY_RUNNING",
+    "status": "BASELINE_04_CPU_REPLAY_PASS_TRAINING_NOT_STARTED",
     "training_transitions": 0
   },
   "r6_robustness_execution": {
