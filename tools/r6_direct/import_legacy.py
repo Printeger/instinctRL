@@ -8,7 +8,7 @@ from pathlib import Path
 
 from tools.r6_budget import charged, totals
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path('/home/mint/rl_dev/instinctRL-dev')
 OLD = ROOT / 'docs/experiments/r6-robustness-auto'
 NEW = ROOT / 'docs/experiments/r6-direct-training'
 
