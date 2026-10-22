@@ -1,0 +1,63 @@
+{
+  "status": "CPU_REVIEWED_FRESH_PROCESS_CONTROLLER_RESUME_PASS_NOT_DEPLOYED",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller_resume.py",
+      "sha256": "8d5ed31442787648ee278d6277faa16367c08344efbfe4e091586c804b070876"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller_revision.py",
+      "sha256": "ba055535096c455c1011bf7f22cdd240c540fad3cefe109b500b294739012da2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_controller_resume.py",
+      "sha256": "200b8bd8d660be60597ae137e4169f94b3e252ca52111f32069ac1f4241e702f"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_RESUME_INITIAL.log",
+      "sha256": "2d75647872741e83a989afd6591f29274d321544e94cd7e281e5478214a51da6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_RESUME_FINAL.log",
+      "sha256": "30d784594b90e4b685f2d1f07454a0d40ccae0af8b2e516f99e402169c85b66c"
+    }
+  ],
+  "checks": {
+    "initial_tests": 23,
+    "final_tests": 117,
+    "real_journal_guard": "PASS",
+    "production_model_calls_added": 0,
+    "production_controllers": 0,
+    "production_resume_events": 0
+  },
+  "behavior": [
+    "An accepted latest control revision is consumed by one new resume event, bound to original controller identity/request/cursor, Store and committed implementation.",
+    "Fresh-process guard rejects a live or same-process controller, changed state/code/commit, unaccepted revision and STOP before recording a claim.",
+    "Reservation without a claim can recover. A returned result replays without controller execution. A claim without result remains explicit and is never blindly repeated; errors and original cursor are preserved.",
+    "The revision CLI releases its writer lock and launches a new Python interpreter automatically after acceptance. --review-only is available for explicit review-only use.",
+    "Production control-revision reviews now check local read-only access before reserving a model call."
+  ],
+  "boundaries": [
+    "Independent review is a separate fake CLI with real receipt/cleanup validation. Committed-control/runtime identity and scientific controller work in resume tests are explicit fixtures.",
+    "One actual child Python process loads the resume entry and calls real controller registration under the writer lock; its identity differs from the original exited CPU process. No real live job or model decision is run.",
+    "CLI launch tests substitute subprocess.run to assert exact argv and successful competing writer acquisition before launch; the separate child test exercises actual interpreter startup.",
+    "This is accepted-revision reentry, not a general supervisor or automatic code-repair writer. Unknown in-flight controller effects require existing exact-job recovery or a separate explicit repair transition.",
+    "Original r6_job_handoff remains unchanged; root-owned pytest garbage is preserved."
+  ],
+  "remaining": [
+    "Automatic controller-code repair and remaining failure dispatch/recovery.",
+    "Administrator bwrap/AppArmor repair; sudo continues to require a password.",
+    "Actual detached-controller deployment with platform Goal auto-continuation stopped and verified zero-model wait.",
+    "Actual first baseline and complete original scientific/model/video/audit delivery goal."
+  ],
+  "budget": {
+    "automatic_wakes": 190,
+    "worker_sessions": 31,
+    "charged": 221,
+    "cap": 512,
+    "remaining": 291
+  },
+  "goal_complete": false
+}

@@ -128,7 +128,10 @@ def prepare(journal,controller_key,proposal_pin,store,*,executable,free_disk_byt
         require(snapshot.git(ROOT,'merge-base',proposal['from_commit'],proposal['to_commit']).decode().strip()==proposal['from_commit'],'HISTORY')
         exe=checked(executable)
         if state['goal_id']=='R6-CPU-TEST-FIXTURE':require(exe.is_relative_to(journal.directory.parent.resolve()),'FIXTURE_EXE')
-        else:require(executable==dict(path=str(CLI),sha256=CLI_SHA),'CLI')
+        else:
+            require(executable==dict(path=str(CLI),sha256=CLI_SHA),'CLI')
+            from tools.r6_review_access import check
+            check(executable,proposal_pin)
         packet=dict(controller_key=controller_key,proposal=proposal_pin,before=before,after=after,
             cursor=e['cursor'],cursor_sha256=sha(e['cursor']),journal_path=str(journal.path.resolve()),
             store_root=str(store.root.resolve()),store_sha256=sha(store.replay()),
@@ -171,20 +174,28 @@ def prepare(journal,controller_key,proposal_pin,store,*,executable,free_disk_byt
 
 
 def main():
-    import argparse,shutil
+    import argparse,shutil,subprocess,sys
     from rlflow.store import Store
     from tools.r6_recovery import Journal
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('directory',type=Path);parser.add_argument('controller_key')
     parser.add_argument('proposal',type=Path);parser.add_argument('--proposal-sha256',required=True)
     parser.add_argument('--store',required=True,type=Path)
+    parser.add_argument('--review-only',action='store_true',help='Record acceptance without starting the reviewed resume process')
     args=parser.parse_args();root=args.store.resolve(strict=True)
     require((root/'runtime/research.db').is_file(),'STORE_REQUIRED')
     journal=Journal(args.directory.resolve())
     with journal.writer():
         result=prepare(journal,args.controller_key,dict(path=str(args.proposal.resolve()),sha256=args.proposal_sha256),
             Store(root),executable=dict(path=str(CLI),sha256=CLI_SHA),free_disk_bytes=shutil.disk_usage(journal.directory).free)
-    print(json.dumps(result,sort_keys=True))
+    print(json.dumps(result,sort_keys=True),flush=True)
+    if not args.review_only:
+        # The review process has released the sole writer lock. The child
+        # imports reviewed code afresh and consumes one durable resume claim.
+        completed=subprocess.run([sys.executable,'-B','-m','tools.r6_controller_resume',
+            str(journal.directory),args.controller_key,result['event_key'],'--store',str(root)],
+            cwd=ROOT,check=False)
+        raise SystemExit(completed.returncode)
 
 
 if __name__=='__main__':main()
