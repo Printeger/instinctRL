@@ -41,3 +41,10 @@ CPU模块清单位于实际attempt目录；最终NO_RLFLOW审计还需真实运�
 运行状态在 `runs/R6-DIRECT-BASELINE-02/`。
 新IPC命名空间不修改host共享内存；源runtime不变。六项定向CPU测试和namespace内无GPU预检通过。
 整个未使用中间快照也保留计账，不删除、不继承执行身份。
+
+## CUDA 初始化诊断
+
+第二 attempt 已清理；CUDA error 304，不是科学结果。准确输入为 `diagnostics/cuda-01/plan.json`，只读单文件源码复用精确 `baseline-02-ipc-final` helper 快照。
+使用系统 Python 启动该源码，`--plan` 指向准确输入；`--check` 仅做 CPU 预检。PYTHONPATH 仅含该快照和其 isaaclab-training。
+后台 tmux 名称为 `instinctrl-r6-cuda-diagnostic-01`；状态及 receipt 在 `runs/R6-DIRECT-CUDA-DIAGNOSTIC-01/`，系统调用日志和 CUDA 结果在输入的 native_dir。
+保留相同 STOP、单写锁、写保护、私有 IPC、全额失败预留；诊断仅一次 cuInit，原资源窗口后最多30秒子进程，预留240秒。

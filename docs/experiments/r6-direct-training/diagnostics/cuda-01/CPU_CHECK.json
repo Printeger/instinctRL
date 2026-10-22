@@ -1,0 +1,16 @@
+{
+  "checks": [
+    "six supervisor/private-IPC CPU tests",
+    "exact diagnostic and helper source hashes",
+    "prior receipt CLOSED and all owned identities absent",
+    "writer lock and STOP",
+    "native kernel quota volume",
+    "protected budget reservation dry-run"
+  ],
+  "gpu_probe": false,
+  "input": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-01/plan.json",
+    "sha256": "65e9e3a81de0b9093254fc4ba14a6316f956a0e73b30e1d14e97815b34a3f013"
+  },
+  "status": "PASS"
+}

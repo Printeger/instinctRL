@@ -1,3 +1,12 @@
+# R6 直接入口：第二次 CUDA 初始化失败已清理，有限诊断输入已冻结
+
+2026-10-22：第二次资源准入通过，私有 IPC 已解决共享信号量问题；cuInit/cudaGetDeviceCount 报 OS error 304。
+准确所属进程均已退出；两个失败 attempt 的全部预算预留和日志保留，policy transitions=0，不记作科学阴性。
+准备一次 cuInit-only 系统调用诊断，不启动模拟器或优化器，不改动冻结 runtime。
+输入 diagnostics/cuda-01/plan.json；六项进程/IPC CPU 检查和准确输入预检通过。
+新模型续推理计10次，含上一轮无进展状态复述；历史239次，总计249/512。
+完整基线、实际 PPO、评价与最终验证仍未完成。
+
 # R6 直接基线：首次初始化失败已清理，私有IPC修复已冻结，第二attempt待启动
 
 2026-10-22：R6-DIRECT-BASELINE-01真实准入13样本通过（median2%、mean2.615%、peak5%）；Isaac初始化遭共享信号量EACCES，原生-6，policy transitions=0。
