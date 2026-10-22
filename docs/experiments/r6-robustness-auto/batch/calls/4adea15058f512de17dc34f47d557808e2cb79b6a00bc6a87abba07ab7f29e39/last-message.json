@@ -1,0 +1,188 @@
+{
+  "decision": "PASS_CPU_SCOPE",
+  "summary": "No remaining before-baseline defect found in the reviewed engineering scope at 678f6601. All 27 inspected Python sources match that commit and parse successfully. Four independent, in-memory coverage checks passed; fixture suites, production controller and handoff gate were not executed. FIRST_JOB now records an exact receipt-bound failure disposition, preserves originals and charges, invokes existing replacement registrars, and returns through normal FIRST_JOB/finalizer entry. Registration replay is idempotent; missing receipts, STOP, unresolved ownership, aliases, stale budgets and downstream consumption fail closed. Timeout-only recovery requires evidence of an actual timeout. REPAIR_CODE_REQUIRED remains a concrete pending repair, not an implemented code writer. Wait coverage is persisted before submission effects and bound to the claim/closure; disjoint observations and restart gaps cannot become zero-call proof. Paired live observations can establish inactivity only with complete coverage, matching pinned daemon/socket/process, unchanged paused Goal usage, the same completed root turn and matching native trace. Missing evidence, identity changes and late activity cannot promote UNKNOWN to zero. Main-entry wiring holds the writer lock through bounded ordinary-Python handoff waiting, preserves FIRST_JOB, and rejects STOP, expiry and permanent errors without model/Goal mutations. The saved actual RPC observation correctly rejects the active Goal; the initial raw-JSONL transport failure is not a platform blocker. Transport/read-method design is consistent with https://learn.chatgpt.com/docs/app-server. Production controllers/jobs remain zero. This is engineering review only: deployment, actual platform handoff, production zero-model waiting and all scientific acceptance remain unproven.",
+  "evidence_pins": [
+    {
+      "path": "docs/experiments/r6-robustness-auto/prompts/baseline-platform-handoff-review-03.txt",
+      "sha256": "87065fadc1e811ecf7d298d06745b4aaf72d6b1021bd01b881b6f4b061e549f2"
+    },
+    {
+      "path": "docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md",
+      "sha256": "200fb9daa96606ae3a58516219121d2ae243de51a8b1e02d10077a4b15e2f12b"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/USER_AUTHORITY.txt",
+      "sha256": "b45cbca50cf944ea2b2abe2b6fd57998224784f5de2e2545cc7ae69fc8a2d706"
+    },
+    {
+      "path": "docs/PROJECT_STATUS.md",
+      "sha256": "d227744e72ea62afa07158def1f58624c340b840abfdbdf7806fd0c9d46e3710"
+    },
+    {
+      "path": "coordination/ACTIVE_WORKFLOW.json",
+      "sha256": "000edcc6e201f8425a6b34b18c4ea5caa34b83c0109a194d4a8ec0e61ecf1dc4"
+    },
+    {
+      "path": "coordination/protocols/SINGLE_BRANCH_WORKFLOW.md",
+      "sha256": "b90bc6e5f4cf8fd5c5ade50f7d0e5874a218835e23c018c0ee47c83632a33285"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/reviews/controller-recovery-followup-02.json",
+      "sha256": "07962b159d25ebbd675b7c0fb9bf52727e59132cdd89747cd701dd702995ee8f"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_RECOVERY_FOLLOWUP_FIXES.json",
+      "sha256": "d9ee9bc5c2526ca750afa7570e58012bdde6d72cb61f8d5cda970d81e62f2622"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_BASELINE_FAILURE_HANDOFF.json",
+      "sha256": "56ccd264065126f8988d9082493f1c993a86af6e0a561c3d8b78c0fcca0873a5"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_PLATFORM_RPC_HANDOFF.json",
+      "sha256": "ad63134552f5b984cdae9c3d4eff4da3559d4ee6a2ce759a3872801c8777d5fb"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/PLATFORM_RPC_ACTUAL_20261022.json",
+      "sha256": "60331f1679e8f6759e0fd6c10d116b34d72fdf8285f8d9158e7e409dc52bd208"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/PLATFORM_READONLY_RPC_20261022.json",
+      "sha256": "455b1e3f6fc7e464f927ccba56aab3db585f6e0bd3690c3eaa49fed79e4a43bd"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/prompts/baseline-failure.schema.json",
+      "sha256": "c68f4685a64f5edef6c93e7ccf5e5e1b02168f6fb008b09bb4d1ff32df1046a1"
+    },
+    {
+      "path": "tools/r6_baseline_failure.py",
+      "sha256": "bc3625feac5def4aaf37721af389819e474d631f1b48e33c7295bdc7f52168bc"
+    },
+    {
+      "path": "tools/r6_controller.py",
+      "sha256": "190a01c4697fdd28a5052a3e7eb2d0791d95772b05e826e5f7444f2856fff374"
+    },
+    {
+      "path": "tools/r6_analysis_repair.py",
+      "sha256": "9c53191b4eb4993175af98dbaf16537ec699ffa7351d91424105bd900b45febb"
+    },
+    {
+      "path": "tools/r6_finalize_job.py",
+      "sha256": "6cd880b594f1608c515a8d08ed2f8f2a633093f4b4efa1b869b2602db1f074fc"
+    },
+    {
+      "path": "tools/r6_initial_baseline.py",
+      "sha256": "91805c3a4fc5431b54bb1b95d960faaefc1eed7453a536b8239ba13b66e770c1"
+    },
+    {
+      "path": "tools/r6_decision_repair.py",
+      "sha256": "42f6c21d89dcd0d331ddbf271b1f9098943aea6dedb0928a1ceeea5e429b0a18"
+    },
+    {
+      "path": "tools/r6_platform_rpc.py",
+      "sha256": "611ee6bf44796558029d44e313cfddca79774a86b4885757d60b22f3a254f0b2"
+    },
+    {
+      "path": "tools/r6_platform_wait.py",
+      "sha256": "d2ff7c17b9b21d15ca4b4afff1ee012f30eb9a18959c24f75de5b32f9a23fd79"
+    },
+    {
+      "path": "tools/r6_platform_handoff_gate.py",
+      "sha256": "6004394a93f7d4cdd76d15d91bcf2d3dbfeca1d3d831615800fb9d4e1cdeeaaf"
+    },
+    {
+      "path": "tools/r6_submit.py",
+      "sha256": "0ef15e4a7859e668b8eca55c00c96c8ca598fb11072b7acfde3c9650f9a1c329"
+    },
+    {
+      "path": "tools/r6_audited_job_handoff.py",
+      "sha256": "e0832b8a70322fc6a505052e4e419c83b9ce9122f433b7a883bdb766d9802aea"
+    },
+    {
+      "path": "tools/r6_wait_audit.py",
+      "sha256": "d3094972577162cde80291d4d105604bbda715f26bbf2b26af9340eabf832dff"
+    },
+    {
+      "path": "tools/r6_delivery_evidence.py",
+      "sha256": "dbfc6d6136dbbdb76323736d30baf97f0b43a181089343770f073d12aaab739f"
+    },
+    {
+      "path": "tools/r6_start_baseline.py",
+      "sha256": "57a1891d9e3d31fac60c76f8290112df2a393d75c1c588a82d081843dfdcd821"
+    },
+    {
+      "path": "tools/r6_run_job.py",
+      "sha256": "3e4c7076d7dc861635d94976cae38e14baa0ba1905e0bf263765b7e142bd3bb2"
+    },
+    {
+      "path": "tools/r6_job_handoff.py",
+      "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+    },
+    {
+      "path": "tools/r6_batch.py",
+      "sha256": "a5188e81eb75b4196d5fc469bbe19d90aaae4abd46f0f3440e2d87946323163d"
+    },
+    {
+      "path": "tools/r6_worker_processes.py",
+      "sha256": "7ce3a1276d8460445f442ef9e30ecbe3198de98e848d75198eaabe94c932cc10"
+    },
+    {
+      "path": "tools/r6_profile_preparation.py",
+      "sha256": "ae780f29b6885a7f99453c12a7c869d51ebda9ec34d47fa6ae67facf0a7f25ac"
+    },
+    {
+      "path": "tools/test_r6_baseline_failure.py",
+      "sha256": "4fa4b13f6d30c9f31d4f83a0d77fc4c68379862091826e4b89048dacf33ced4f"
+    },
+    {
+      "path": "tools/test_r6_platform_rpc.py",
+      "sha256": "c2af60d1e9a46cd147d79b91508748dc75e54bdaa3f8be9917a334d85189ae90"
+    },
+    {
+      "path": "tools/test_r6_platform_handoff_gate.py",
+      "sha256": "76fd13d9fa30537548c38d7c93ade530db1a944a9216c9e76470dfaac3ed3403"
+    },
+    {
+      "path": "tools/test_r6_platform_wait.py",
+      "sha256": "7cedf367b7016a4981fbbb8ce0ac2877a0a560f15ee4354900a027bdae0b8389"
+    },
+    {
+      "path": "tools/test_r6_submit_store.py",
+      "sha256": "4aea66f85ef70b216aff5757b851dcb90eeef9913d612ff8f138ef1673ef692e"
+    },
+    {
+      "path": "tools/test_r6_analysis_repair.py",
+      "sha256": "99d2617259248ac7bc7f4f03c0ec31d57c9923eebaebfe865cb409db62288521"
+    },
+    {
+      "path": "tools/test_r6_initial_review_repair.py",
+      "sha256": "3dd8602fafa5147fea93e91f019fcfbddd2a7c080edab6d5ffd17ec5e7ba6836"
+    },
+    {
+      "path": "tools/test_r6_decision_repair.py",
+      "sha256": "97d3b77744be3ed9b8d6fe9572c8c42f1699384c65292ecb5c41b23f117e2248"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/controller-candidate-01/request.json",
+      "sha256": "4a21a73cb775b37ae1699f6b1fefc6d68ad1ec2c0e266f6f2de8e3c5e90cf9e5"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/baseline-prelive-02/request.json",
+      "sha256": "3d2cd7feac62f6f0e21d996a2affa31c160e586a257740cd056dfc3a607a3857"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+      "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/spec.json",
+      "sha256": "7191dd7ef7e022a4ce8956be6c1296f13fd7bd7563d9e5e8f337ad3e5dfba3a8"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Task-local MUST_FIX: none identified in this bounded scope. Deployment prerequisites: arrange the explicit user/system transition out of automatic continuation; deploy one detached controller using controller-candidate-01/request.json -> baseline-prelive-02/request.json, with the bounded handoff gate; verify exact process/boot/start identity, writer lock, durable logs, STOP and normal recovery entry. Revalidate the pinned daemon binding if it changes. Complete the exact initial prelive review, issuance and fresh resource admission before J-f9edc8f6f35dde13 dispatch. Preserve actual wait evidence through closure and CPU analysis. Then follow baseline evidence into concrete repair, baseline-sufficient validation or candidate development. Implement control/offline/frozen-phase repair only when an actual event requires it, before that phase resumes. Preserve original actor/runtime/scoring/holdout constraints, three-stream confirmation or the truthful zero-training alternative, genuine videos, complete resource/model audits and final independent scientific acceptance. Goal remains active and unchanged by this review; no generic reauthorization request is needed.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 285
+  },
+  "must_fix": []
+}

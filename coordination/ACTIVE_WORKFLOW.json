@@ -143,13 +143,13 @@
   },
   "r6_robustness_execution": {
     "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
-    "status": "CPU_PLATFORM_RPC_HANDOFF_READY_INDEPENDENT_REVIEW_PENDING",
+    "status": "INDEPENDENT_CPU_REVIEW_PASS_DETACHED_DEPLOYMENT_PENDING",
     "authority": "docs/experiments/r6-robustness-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md",
     "budget": "docs/experiments/r6-robustness-auto/goal_budget.json",
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
     "controller_deployed": false,
     "current_live_jobs": [],
-    "automatic_model_sessions_started": 32,
+    "automatic_model_sessions_started": 33,
     "exact_job_permission_required": true,
     "goal_complete": false,
     "baseline_cpu_audit": "docs/experiments/r6-robustness-auto/BASELINE_CPU_AUDIT.json",
@@ -158,7 +158,7 @@
     "metric_measurement_cpu_tests": "docs/experiments/r6-robustness-auto/CPU_METRIC_MEASUREMENT_TESTS.json",
     "archive_scenario_cpu_tests": "docs/experiments/r6-robustness-auto/CPU_ARCHIVE_SCENARIO_TESTS.json",
     "capacity_allocation_status": "ACCEPTED_FINAL93GIB_30000SECONDS_TOTAL_CAPS_UNCHANGED",
-    "automatic_model_sessions_completed": 32,
+    "automatic_model_sessions_completed": 33,
     "cpu_review_findings": 0,
     "cpu_fix_tests": 67,
     "cpu_fix_evidence": "docs/experiments/r6-robustness-auto/CPU_REVIEW_FIX_TESTS.json",
@@ -210,7 +210,7 @@
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
     "platform_automatic_goal_wakes": 194,
-    "total_automatic_model_sessions_minimum": 226,
+    "total_automatic_model_sessions_minimum": 227,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 512,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -426,6 +426,9 @@
     "controller_recovery_followup_review": "docs/experiments/r6-robustness-auto/CONTROLLER_RECOVERY_FOLLOWUP_02.json",
     "baseline_failure_handoff_evidence": "docs/experiments/r6-robustness-auto/CPU_BASELINE_FAILURE_HANDOFF.json",
     "platform_readonly_rpc_evidence": "docs/experiments/r6-robustness-auto/PLATFORM_READONLY_RPC_20261022.json",
-    "platform_rpc_handoff_evidence": "docs/experiments/r6-robustness-auto/CPU_PLATFORM_RPC_HANDOFF.json"
+    "platform_rpc_handoff_evidence": "docs/experiments/r6-robustness-auto/CPU_PLATFORM_RPC_HANDOFF.json",
+    "baseline_platform_handoff_review": "docs/experiments/r6-robustness-auto/BASELINE_PLATFORM_HANDOFF_REVIEW_03.json",
+    "model_sessions_charged": 227,
+    "model_sessions_remaining": 285
   }
 }

@@ -1,3 +1,10 @@
+# 当前 Goal：R6 鲁棒性闭环（首轮工程独审通过，后台交接待部署，未完成）
+
+2026-10-22：真实独审 PASS_CPU_SCOPE，44 个原件 pin 核验，receipt/清理/schema通过，无剩余首轮工程 MUST_FIX。
+审核证据 BASELINE_PLATFORM_HANDOFF_REVIEW_03.json；不代表 prelive、生产零调用等待或科学验收。
+194 次自动唤醒 + 33 次真实 worker = 227/512，剩 285；生产 controller/job 仍为 0。
+下一步部署唯一 detached controller，核验身份/写锁/日志/STOP，再完成平台关闭自动续推理交接。完整科学目标未完成。
+
 # 当前 Goal：R6 鲁棒性与课程学习闭环（平台RPC与有界交接CPU通过，独审待验，未完成）
 
 2026-10-22：已接入现有 app-server 的只读 Goal/thread/latest-turn 查询，固定 socket 真实路径、UID、准确 daemon 进程与源码身份。
