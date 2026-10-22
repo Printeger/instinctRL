@@ -22,7 +22,12 @@ def child(plan):
     if Path('/dev/shm').stat().st_ino!=(native/'ipc').stat().st_ino:raise RuntimeError('PRIVATE_IPC_REQUIRED')
     from training_workloads.unified_h1.write_boundary import prepare,enforce
     devices=[p for p in ('/dev/null','/dev/zero','/dev/nvidia0','/dev/nvidiactl','/dev/nvidia-uvm','/dev/nvidia-uvm-tools') if Path(p).exists()]
-    enforce(prepare([str(native),'/dev/shm'],devices))
+    policy=prepare([str(native),'/dev/shm'],devices)
+    # CUDA names freshly created threads through task/<tid>/comm. Bind only
+    # this process's task subtree: no global /proc write or disk permission.
+    if plan.get('self_task_metadata') is True:
+        policy['entries'].append((f'/proc/{os.getpid()}/task',2|(1<<14)))
+    enforce(policy)
     library=ctypes.CDLL('libcuda.so.1');result=library.cuInit(0)
     name=ctypes.c_char_p();library.cuGetErrorName(result,ctypes.byref(name))
     atomic(native/'cuda_result.json',dict(cuInit=result,error_name=None if name.value is None else name.value.decode(),

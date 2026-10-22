@@ -1,0 +1,17 @@
+{
+  "cleanup": "VERIFIED_NO_OWNED_PROCESSES",
+  "cpu_check": "Actual own new thread comm write passed; protected sibling file and /proc/self/oom_score_adj opens denied",
+  "failure": "openat /proc/self/task/2629345/comm O_WRONLY|O_CREAT|O_TRUNC -> EACCES immediately before cuInit returns 304",
+  "next_change": "Allow FILE_WRITE and TRUNCATE only beneath current process task subtree; keep all disk protection and seccomp",
+  "policy_transitions": 0,
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CUDA-DIAGNOSTIC-01/receipt.json",
+    "sha256": "e89655fc75b20a5ece82e20f068b19911c3cda8fc200f9638c5f4f00943ad07a"
+  },
+  "simulator_initializations": 0,
+  "status": "CUDA_ERROR_304_REPRODUCED",
+  "trace": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-01/evidence/syscalls.log",
+    "sha256": "9f78abf73ed898634fc3aea102ab2b3b9ddca38fa96e2a98ffb2e3e3a69e49fe"
+  }
+}
