@@ -1,9 +1,4 @@
 {
-  "schema_version": "r6-direct-ledger/1",
-  "legacy_import": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/LEGACY_BUDGET_IMPORT.json",
-    "sha256": "b599c771b2080b6ac03cd47c908b2e2280af3a811ab11eb0ecfae293c0c847f0"
-  },
   "caps": {
     "allocated_gpu_seconds": 43200,
     "automatic_model_sessions": 512,
@@ -30,6 +25,42 @@
     "training_checkpoint_writes": 0,
     "training_transitions": 0
   },
+  "legacy_import": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/LEGACY_BUDGET_IMPORT.json",
+    "sha256": "b599c771b2080b6ac03cd47c908b2e2280af3a811ab11eb0ecfae293c0c847f0"
+  },
+  "new_reservations": [
+    {
+      "id": "DIRECT-PREPARATION-METADATA-01",
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 1048576
+      },
+      "scope": "New direct-run preparation manifests, audit and ledger files; no snapshot/live output included.",
+      "status": "UNRELEASED"
+    },
+    {
+      "id": "DIRECT-SNAPSHOT-BASELINE-01",
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 2147483648
+      },
+      "status": "UNRELEASED"
+    }
+  ],
+  "new_used": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 2,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
   "protected_confirmation_delivery_repair": {
     "allocated_gpu_seconds": 30000,
     "automatic_model_sessions": 8,
@@ -45,29 +76,6 @@
     "final_review": 4,
     "repair": 4
   },
-  "new_used": {
-    "allocated_gpu_seconds": 0,
-    "automatic_model_sessions": 2,
-    "live_starts": 0,
-    "live_wall_seconds": 0,
-    "major_scientific_candidates": 0,
-    "nontraining_transitions": 0,
-    "output_actual_plus_unreleased_reservations_bytes": 0,
-    "queue_seconds": 0,
-    "simulator_initializations": 0,
-    "training_checkpoint_writes": 0,
-    "training_transitions": 0
-  },
-  "new_reservations": [
-    {
-      "id": "DIRECT-PREPARATION-METADATA-01",
-      "purpose": "development",
-      "resources": {
-        "output_actual_plus_unreleased_reservations_bytes": 1048576
-      },
-      "status": "UNRELEASED",
-      "scope": "New direct-run preparation manifests, audit and ledger files; no snapshot/live output included."
-    }
-  ],
+  "schema_version": "r6-direct-ledger/1",
   "status": "PREPARING_NO_LIVE_RUN"
 }

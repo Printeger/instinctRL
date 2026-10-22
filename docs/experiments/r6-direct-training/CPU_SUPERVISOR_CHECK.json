@@ -1,0 +1,32 @@
+{
+  "status": "PASS_CPU_PREFLIGHT_AND_SUPERVISOR",
+  "real_gpu_probes": 0,
+  "real_simulator_initializations": 0,
+  "supervisor_tests": 5,
+  "command": "/usr/bin/python3 -m unittest tools.r6_direct.test_run -q",
+  "preflight_result": "PASS_CPU_DIRECT_PREFLIGHT_NO_GPU",
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_RUN_INPUTS_01.json",
+    "sha256": "dbe2be33754393dbe050ae8c01a9855db5141fca3e734c446a95494d0106de1b"
+  },
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_SOURCE_01.json",
+    "sha256": "0c04346b1f19b1a19a28e25e89db50f26e1248e0cafefe56cc2abe6c91eb07ca"
+  },
+  "snapshot_bytes": 662880801,
+  "prior_cpu_failures_preserved": [
+    {
+      "failure": "Conda base Python lacks pidfd_open",
+      "fix": "Supervisor uses system Python and rejects unsupported interpreter before spawning; leaked CPU fixture checked by exact argv and terminated."
+    },
+    {
+      "failure": "Duplicate low-level supervise call could replace receipt",
+      "fix": "Evidence existence rejected before entering effect/cleanup block."
+    },
+    {
+      "failure": "Fast-exiting initial child omitted from observed descendants list",
+      "fix": "Record exact initial child identity before release."
+    }
+  ],
+  "scope": "No live run yet; CPU checks do not prove scientific performance."
+}

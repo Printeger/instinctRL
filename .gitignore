@@ -122,3 +122,6 @@ raw_logs/
 
 # R6 holdout entropy stays private until the final release artifact.
 /docs/experiments/r6-robustness-auto/batch/holdout-private-*.json
+
+# Exact detached R6 execution snapshots are recorded by hash, never nested repos.
+/docs/experiments/r6-direct-training/snapshots/
