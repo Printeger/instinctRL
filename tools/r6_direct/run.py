@@ -188,7 +188,7 @@ def main():
         ledger['status']='RUNNING';atomic(ledger_path,ledger)
         for key in ('attempt_dir','native_dir'):Path(plan[key]).mkdir(exist_ok=False)
         ipc=Path(plan['native_dir'])/'ipc';ipc.mkdir(exist_ok=False)
-        argv=[wrapper,'--die-with-parent','--bind','/','/',
+        argv=[wrapper,'--die-with-parent','--bind','/','/','--dev-bind','/dev','/dev',
               '--bind',str(ipc),'/dev/shm','--',*argv]
         atomic(directory/'RUN_INPUTS.json',dict(plan=plan,input=input_pin,argv=argv,environment=env,execution_mode='local-direct'))
         atomic(directory/'launch.json',dict(parent=process_identity(os.getpid()),input=input_pin))

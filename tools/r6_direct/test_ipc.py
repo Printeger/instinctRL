@@ -18,6 +18,7 @@ import ctypes,os,sys,errno
 from pathlib import Path
 from training_workloads.unified_h1.write_boundary import prepare,enforce
 native=Path(sys.argv[1]);protected=Path(sys.argv[2])
+with open('/dev/null','wb') as stream:stream.write(b'CPU device check')
 assert Path('/dev/shm').stat().st_ino==(native/'ipc').stat().st_ino
 enforce(prepare([str(native),'/dev/shm'],['/dev/null','/dev/zero']))
 lib=ctypes.CDLL(None,use_errno=True);lib.sem_open.restype=ctypes.c_void_p
@@ -33,7 +34,7 @@ else:raise AssertionError('outside write allowed')
 print('PASS_PRIVATE_IPC_AND_READ_ONLY_OUTSIDE')
 '''
             env=dict(os.environ,PYTHONPATH=str(ROOT),PYTHONDONTWRITEBYTECODE='1')
-            result=subprocess.run(['/usr/bin/bwrap','--die-with-parent','--bind','/','/',
+            result=subprocess.run(['/usr/bin/bwrap','--die-with-parent','--bind','/','/','--dev-bind','/dev','/dev',
                 '--bind',str(ipc),'/dev/shm','--',
                 '/usr/bin/python3','-B','-c',script,str(native),str(protected)],env=env,capture_output=True,text=True,timeout=10)
             self.assertEqual(result.returncode,0,result.stderr)
