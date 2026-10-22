@@ -32,3 +32,12 @@ STOP不会自动清除；不使用宽泛pkill。超时、STOP、日志限额导�
 真实结果位置见RUN_INPUTS.plan.attempt_dir，文件在其 `results/research-r6-evaluation/` 下。
 该目录保存完整原五任务、16开发blocks的raw/测量/物理审计和原评分。
 CPU模块清单位于实际attempt目录；最终NO_RLFLOW审计还需真实运行结束后的模块及进程记录。
+
+## 初始化失败后的准确第二attempt
+
+01准入通过后因共享信号量权限原生-6退出，未产生policy transitions，准确清理已验证。
+修复源码 `23d7f5fa`，快照 `snapshots/baseline-02-ipc-final`，输入 `BASELINE_RUN_INPUTS_02.json`；
+命令同上但使用该快照和02输入，tmux名称 `instinctrl-r6-direct-baseline-02`。
+运行状态在 `runs/R6-DIRECT-BASELINE-02/`。
+新IPC命名空间不修改host共享内存；源runtime不变。六项定向CPU测试和namespace内无GPU预检通过。
+整个未使用中间快照也保留计账，不删除、不继承执行身份。

@@ -3,6 +3,8 @@
   "cleanup": "NO_OWNED_PROCESSES_REMAIN",
   "cpu_tests": 6,
   "diagnosis": "Production write boundary denied Carbonite sem_open on /dev/shm; no simulator transitions observed.",
+  "namespace_cpu_preflight": "PASS_CPU_DIRECT_PREFLIGHT_NO_GPU",
+  "namespace_details": "Private /dev/shm is backed by the existing native quota. Device bind preserves character-device access; Landlock permits only new attempt/native roots plus private shm and frozen required devices. Default host volume checks remain unchanged; mapped-owner checks require exact one-UID mapping after supervisor host preflight.",
   "native_exit_code": -6,
   "observed_policy_transitions": 0,
   "receipt": {
@@ -10,10 +12,15 @@
     "sha256": "491c91c4f44ee09e8d3276c589c0aa03b387fa5dcbee463eb70435528a92f0ad"
   },
   "repair": "Per-run private /dev/shm bind backed by existing kernel-bounded native output volume. Retain read-only host and existing Landlock/seccomp.",
+  "repair_source_commit": "23d7f5fa",
   "resource_gate": "PASS",
   "status": "FAILED_NATIVE_INITIALIZATION_NOT_SCIENTIFIC_NEGATIVE",
   "stderr": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-01/stderr.log",
     "sha256": "9b8a86fa84a81a6caad1633bb274abfed5ec264b7fe3b103d9e616f17ec342dd"
-  }
+  },
+  "unused_candidates_preserved": [
+    "snapshots/baseline-02",
+    "snapshots/baseline-02-ipc"
+  ]
 }

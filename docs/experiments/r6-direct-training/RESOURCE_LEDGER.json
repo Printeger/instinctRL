@@ -69,6 +69,30 @@
         "training_transitions": 0
       },
       "status": "UNRELEASED"
+    },
+    {
+      "id": "DIRECT-SNAPSHOT-BASELINE-02",
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 1073741824
+      },
+      "status": "UNRELEASED"
+    },
+    {
+      "id": "DIRECT-SNAPSHOT-BASELINE-02-IPC",
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 1073741824
+      },
+      "status": "UNRELEASED"
+    },
+    {
+      "id": "DIRECT-SNAPSHOT-BASELINE-02-IPC-FINAL",
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 805306368
+      },
+      "status": "UNRELEASED"
     }
   ],
   "new_used": {

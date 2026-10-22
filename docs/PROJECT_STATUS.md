@@ -1,3 +1,12 @@
+# R6 直接基线：首次初始化失败已清理，私有IPC修复已冻结，第二attempt待启动
+
+2026-10-22：R6-DIRECT-BASELINE-01真实准入13样本通过（median2%、mean2.615%、peak5%）；Isaac初始化遭共享信号量EACCES，原生-6，policy transitions=0。
+准确父/子进程及后代已退出；失败receipt、stderr、完整预算预留保留，不记作科学阴性。
+修复为每run私有/dev/shm，物理上位于既有内核限额native卷；宿主原件由Landlock和原seccomp保护。
+6项进程/IPC定向CPU测试与namespace内实际无GPU预检通过；源码23d7f5fa，新inputs为BASELINE_RUN_INPUTS_02.json。
+旧账本不变；本地模型累计续推理5次，含准入期间平台触发的两次只读核对，未冒称整个平台零调用。
+全部未使用候选快照及预留也保留。真实基线科学数据、首段PPO、评价和完整P2/P3仍未完成。
+
 # R6 本地直接训练：基线科学核心已解耦，28项CPU回归通过，尚未发车
 
 2026-10-22：本地契约完整保留16个开发block、五任务和193600非训练transitions；backend本地模式的旧authorization为None。
