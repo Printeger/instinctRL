@@ -58,6 +58,16 @@
     "training_checkpoint_writes": 0,
     "training_transitions": 0
   },
-  "new_reservations": [],
+  "new_reservations": [
+    {
+      "id": "DIRECT-PREPARATION-METADATA-01",
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 1048576
+      },
+      "status": "UNRELEASED",
+      "scope": "New direct-run preparation manifests, audit and ledger files; no snapshot/live output included."
+    }
+  ],
   "status": "PREPARING_NO_LIVE_RUN"
 }
