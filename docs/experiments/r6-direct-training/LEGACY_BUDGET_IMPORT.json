@@ -1,0 +1,1450 @@
+{
+  "schema_version": "r6-direct-legacy-import/1",
+  "policy": "used + sum(max(reservation, each observation)); no refunds",
+  "caps": {
+    "allocated_gpu_seconds": 43200,
+    "automatic_model_sessions": 512,
+    "live_starts": 64,
+    "live_wall_seconds": 43200,
+    "major_scientific_candidates": 3,
+    "nontraining_transitions": 2000000,
+    "output_actual_plus_unreleased_reservations_bytes": 137438953472,
+    "queue_seconds": 21600,
+    "simulator_initializations": 64,
+    "training_checkpoint_writes": 96,
+    "training_transitions": 3000000
+  },
+  "used": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 196,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "reservation_mapping": [
+    {
+      "source_pointer": "/budget/reservations/0",
+      "event_key": "[\"CPU-PACKAGE-REVIEW-001\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ac5d4ee21bd62ea42de7ec110e9bca48899eae869fc2d9ee709a3ffcf06a8487\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-PACKAGE-REVIEW-001\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ac5d4ee21bd62ea42de7ec110e9bca48899eae869fc2d9ee709a3ffcf06a8487\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-PACKAGE-REVIEW-001",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "ac5d4ee21bd62ea42de7ec110e9bca48899eae869fc2d9ee709a3ffcf06a8487",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/1",
+      "event_key": "[\"CPU-PACKAGE-REVIEW-RECOVERY1\",\"R6-ROBUSTNESS-AUTO-20261019\",\"4d22e0399f11358585149b0aded280e679b8a0d270836d223ec1b2ff734b18e6\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-PACKAGE-REVIEW-RECOVERY1\",\"R6-ROBUSTNESS-AUTO-20261019\",\"4d22e0399f11358585149b0aded280e679b8a0d270836d223ec1b2ff734b18e6\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-PACKAGE-REVIEW-RECOVERY1",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "4d22e0399f11358585149b0aded280e679b8a0d270836d223ec1b2ff734b18e6",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/2",
+      "event_key": "[\"CPU-FIX-HANDOFF-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"33fa81920c57697318dbb6f79a3b05c3b9dc69b5404d4b1f68361f98f6be3604\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-FIX-HANDOFF-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"33fa81920c57697318dbb6f79a3b05c3b9dc69b5404d4b1f68361f98f6be3604\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-FIX-HANDOFF-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "33fa81920c57697318dbb6f79a3b05c3b9dc69b5404d4b1f68361f98f6be3604",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/3",
+      "event_key": "[\"CPU-CONTROL-COMPONENTS-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ee9f95db0301d7ebd99baf954d717b546f9c7551d7a05e7bd97d699f807bba04\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-CONTROL-COMPONENTS-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ee9f95db0301d7ebd99baf954d717b546f9c7551d7a05e7bd97d699f807bba04\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-CONTROL-COMPONENTS-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "ee9f95db0301d7ebd99baf954d717b546f9c7551d7a05e7bd97d699f807bba04",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/4",
+      "event_key": "[\"CPU-CONTROL-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"94f5e60821c0c9454cc10ad7f47452e48e7785c845d40e0b65e12618e2641c85\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-CONTROL-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"94f5e60821c0c9454cc10ad7f47452e48e7785c845d40e0b65e12618e2641c85\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-CONTROL-FIX-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "94f5e60821c0c9454cc10ad7f47452e48e7785c845d40e0b65e12618e2641c85",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/5",
+      "event_key": "[\"SOURCE_SNAPSHOT:R6-baseline-source-candidate-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"b317250363086f46942f83ccbc820c57bb8b737c85c63d8876da4514f98d92e3\",\"CPU-SNAPSHOT:R6-baseline-source-candidate-01\",\"source-snapshot\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"SOURCE_SNAPSHOT:R6-baseline-source-candidate-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"b317250363086f46942f83ccbc820c57bb8b737c85c63d8876da4514f98d92e3\",\"CPU-SNAPSHOT:R6-baseline-source-candidate-01\",\"source-snapshot\"]",
+        "identity": {
+          "event_id": "SOURCE_SNAPSHOT:R6-baseline-source-candidate-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "b317250363086f46942f83ccbc820c57bb8b737c85c63d8876da4514f98d92e3",
+          "job_id": "CPU-SNAPSHOT:R6-baseline-source-candidate-01",
+          "role": "source-snapshot"
+        },
+        "observations": [
+          {
+            "evidence": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/snapshots/dac0f3d535ca1c68d0764a7bbc34b3bb2921590c46e1f86747785ca3a978395e/receipt.json",
+              "sha256": "3ae074fed7e56feaf684bdd467149adc1fad96b1d4dd70d6c4b6a83168dbf5a0"
+            },
+            "resources": {
+              "output_actual_plus_unreleased_reservations_bytes": 990058113
+            }
+          }
+        ],
+        "purpose": "development",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 2147483648
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 2147483648
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/6",
+      "event_key": "[\"CPU-SOURCE-NATIVE-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"c6464cb79be169e46f4ab45b8e015271f1d00431c4422b82c77ce2fd1354cb55\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-SOURCE-NATIVE-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"c6464cb79be169e46f4ab45b8e015271f1d00431c4422b82c77ce2fd1354cb55\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-SOURCE-NATIVE-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "c6464cb79be169e46f4ab45b8e015271f1d00431c4422b82c77ce2fd1354cb55",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/7",
+      "event_key": "[\"CPU-SOURCE-NATIVE-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"3e6ed52234fa563e219a6c44878f8f6e37a56cbc859b03e866a9ddc560f74db9\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"CPU-SOURCE-NATIVE-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"3e6ed52234fa563e219a6c44878f8f6e37a56cbc859b03e866a9ddc560f74db9\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-SOURCE-NATIVE-FIX-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "3e6ed52234fa563e219a6c44878f8f6e37a56cbc859b03e866a9ddc560f74db9",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "repair",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/8",
+      "event_key": "[\"LEGACY-MODEL-RECONCILIATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"41bd4b582d30518fd70b79e13ec5c5c0bfd52b222a5c738e2d91d74bbde1a6fd\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"LEGACY-MODEL-RECONCILIATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"41bd4b582d30518fd70b79e13ec5c5c0bfd52b222a5c738e2d91d74bbde1a6fd\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "LEGACY-MODEL-RECONCILIATION-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "41bd4b582d30518fd70b79e13ec5c5c0bfd52b222a5c738e2d91d74bbde1a6fd",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/9",
+      "event_key": "[\"LEGACY-MODEL-RECONCILIATION-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"14b46b34448c8abf3852f0de95c054c3b3f86e68992ccbb028d404a3751d89c7\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"LEGACY-MODEL-RECONCILIATION-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"14b46b34448c8abf3852f0de95c054c3b3f86e68992ccbb028d404a3751d89c7\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "LEGACY-MODEL-RECONCILIATION-FIX-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "14b46b34448c8abf3852f0de95c054c3b3f86e68992ccbb028d404a3751d89c7",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/10",
+      "event_key": "[\"CPU-PIPELINE-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"d54289b6a3a7546b1e9686928c0a1891e89d90b1a09642553778be2e8f699a40\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-PIPELINE-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"d54289b6a3a7546b1e9686928c0a1891e89d90b1a09642553778be2e8f699a40\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-PIPELINE-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "d54289b6a3a7546b1e9686928c0a1891e89d90b1a09642553778be2e8f699a40",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/11",
+      "event_key": "[\"CPU-PIPELINE-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"40bce972dc5b32729037d9462d4c5e9dbf9a4d8374a470957d2f6bc8de7175c6\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"CPU-PIPELINE-FIX-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"40bce972dc5b32729037d9462d4c5e9dbf9a4d8374a470957d2f6bc8de7175c6\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-PIPELINE-FIX-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "40bce972dc5b32729037d9462d4c5e9dbf9a4d8374a470957d2f6bc8de7175c6",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "repair",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/12",
+      "event_key": "[\"NATIVE-VOLUME-CPU01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"5f8251f002ab475f951c0bfacdfa8accb0dc6d55337dbf289267ea6a33fe3094\",\"CPU-QUOTA-01\",\"native-volume-provision\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"NATIVE-VOLUME-CPU01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"5f8251f002ab475f951c0bfacdfa8accb0dc6d55337dbf289267ea6a33fe3094\",\"CPU-QUOTA-01\",\"native-volume-provision\"]",
+        "identity": {
+          "event_id": "NATIVE-VOLUME-CPU01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "5f8251f002ab475f951c0bfacdfa8accb0dc6d55337dbf289267ea6a33fe3094",
+          "job_id": "CPU-QUOTA-01",
+          "role": "native-volume-provision"
+        },
+        "observations": [
+          {
+            "evidence": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/NATIVE_VOLUME_CPU01_VERIFICATION.json",
+              "sha256": "c25dde818d863cb00bae9695cac6003d935828ad80084299ea6a80dd91db2d02"
+            },
+            "resources": {
+              "output_actual_plus_unreleased_reservations_bytes": 1610678272
+            }
+          }
+        ],
+        "purpose": "development",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 1610678272
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 1610678272
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/13",
+      "event_key": "[\"CPU-JIT-NOEXEC-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"6bbf6a03ce33f9735bf18226423bd516703255f5632cf51cda1a20d1bba3a27d\",\"CPU-NO-LIVE-JOB\",\"cpu-native-jit\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-JIT-NOEXEC-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"6bbf6a03ce33f9735bf18226423bd516703255f5632cf51cda1a20d1bba3a27d\",\"CPU-NO-LIVE-JOB\",\"cpu-native-jit\"]",
+        "identity": {
+          "event_id": "CPU-JIT-NOEXEC-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "6bbf6a03ce33f9735bf18226423bd516703255f5632cf51cda1a20d1bba3a27d",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "cpu-native-jit"
+        },
+        "purpose": "development",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 3145728
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 3145728
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/14",
+      "event_key": "[\"CPU-NATIVE-QUOTA-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"fe9f11c678cfae19dd6a801efc86cbdad9e068500b394343363bc4c321191186\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-NATIVE-QUOTA-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"fe9f11c678cfae19dd6a801efc86cbdad9e068500b394343363bc4c321191186\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-NATIVE-QUOTA-INTEGRATION-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "fe9f11c678cfae19dd6a801efc86cbdad9e068500b394343363bc4c321191186",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/15",
+      "event_key": "[\"CPU-NATIVE-QUOTA-REPAIR-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"53e7743cb2b66dbbc68413a0fbab039293bcef267351d64d9769687d6f873c4c\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-NATIVE-QUOTA-REPAIR-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"53e7743cb2b66dbbc68413a0fbab039293bcef267351d64d9769687d6f873c4c\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-NATIVE-QUOTA-REPAIR-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "53e7743cb2b66dbbc68413a0fbab039293bcef267351d64d9769687d6f873c4c",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/16",
+      "event_key": "[\"RESULT-VOLUME-CPU02\",\"R6-ROBUSTNESS-AUTO-20261019\",\"7e20986df2ac8f1cd77f88f3a93696f75f05d81d248f0b7fce5ef1676d3aa6ee\",\"CPU-QUOTA-02\",\"result-volume-provision\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"RESULT-VOLUME-CPU02\",\"R6-ROBUSTNESS-AUTO-20261019\",\"7e20986df2ac8f1cd77f88f3a93696f75f05d81d248f0b7fce5ef1676d3aa6ee\",\"CPU-QUOTA-02\",\"result-volume-provision\"]",
+        "identity": {
+          "event_id": "RESULT-VOLUME-CPU02",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "7e20986df2ac8f1cd77f88f3a93696f75f05d81d248f0b7fce5ef1676d3aa6ee",
+          "job_id": "CPU-QUOTA-02",
+          "role": "result-volume-provision"
+        },
+        "observations": [
+          {
+            "evidence": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/RESULT_VOLUME_CPU02_RECEIPT.json",
+              "sha256": "248ce932c3e709635ea382fb8eb88fcafd720ae610997a745b5e9747a78eb711"
+            },
+            "resources": {
+              "output_actual_plus_unreleased_reservations_bytes": 17825792
+            }
+          }
+        ],
+        "purpose": "development",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 17825792
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 17825792
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/17",
+      "event_key": "[\"CPU-RESULT-QUOTA-ACTUAL-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"a0919d615ef1e55ede8451c6a75ccf56cea192634a0ea19d9875de26aa08a643\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-RESULT-QUOTA-ACTUAL-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"a0919d615ef1e55ede8451c6a75ccf56cea192634a0ea19d9875de26aa08a643\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-RESULT-QUOTA-ACTUAL-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "a0919d615ef1e55ede8451c6a75ccf56cea192634a0ea19d9875de26aa08a643",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/18",
+      "event_key": "[\"CPU-FIXED-STORAGE-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"8f8c17cc3122d680adeceeca71d66ada9d962c4516481766a202203f35e4de07\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CPU-FIXED-STORAGE-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"8f8c17cc3122d680adeceeca71d66ada9d962c4516481766a202203f35e4de07\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "CPU-FIXED-STORAGE-INTEGRATION-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "8f8c17cc3122d680adeceeca71d66ada9d962c4516481766a202203f35e4de07",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/19",
+      "event_key": "[\"STORAGE:J-d737390980235144\",\"R6-ROBUSTNESS-AUTO-20261019\",\"2f5f8f4a8cdf6d96711b93a8a25071cb83ca1fd3c1b52c4ab9a96accf25da520\",\"STORAGE:J-d737390980235144\",\"job-storage-allocation\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"STORAGE:J-d737390980235144\",\"R6-ROBUSTNESS-AUTO-20261019\",\"2f5f8f4a8cdf6d96711b93a8a25071cb83ca1fd3c1b52c4ab9a96accf25da520\",\"STORAGE:J-d737390980235144\",\"job-storage-allocation\"]",
+        "identity": {
+          "event_id": "STORAGE:J-d737390980235144",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "2f5f8f4a8cdf6d96711b93a8a25071cb83ca1fd3c1b52c4ab9a96accf25da520",
+          "job_id": "STORAGE:J-d737390980235144",
+          "role": "job-storage-allocation"
+        },
+        "purpose": "development",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 20250099712
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 20250099712
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/20",
+      "event_key": "[\"PROTOCOL-SCIENCE-PREFLIGHT-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"6fd228b5aa57f35bfe9ef2b3781c86e2e2579075f0ea9f704c501de78dba0e19\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"PROTOCOL-SCIENCE-PREFLIGHT-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"6fd228b5aa57f35bfe9ef2b3781c86e2e2579075f0ea9f704c501de78dba0e19\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "PROTOCOL-SCIENCE-PREFLIGHT-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "6fd228b5aa57f35bfe9ef2b3781c86e2e2579075f0ea9f704c501de78dba0e19",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/21",
+      "event_key": "[\"WALL-CONFIRMATION-REPAIR-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"a857267929295dc3d3b7da988a527395561a90bc2b981091bc349f5acddb76e9\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"WALL-CONFIRMATION-REPAIR-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"a857267929295dc3d3b7da988a527395561a90bc2b981091bc349f5acddb76e9\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "WALL-CONFIRMATION-REPAIR-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "a857267929295dc3d3b7da988a527395561a90bc2b981091bc349f5acddb76e9",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/22",
+      "event_key": "[\"LOCAL-ENTRY-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"010b8e2355fec0777b06ddf13721a20fc5a1f7ad3f1c6c561eed22496b40e754\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"LOCAL-ENTRY-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"010b8e2355fec0777b06ddf13721a20fc5a1f7ad3f1c6c561eed22496b40e754\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "LOCAL-ENTRY-INTEGRATION-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "010b8e2355fec0777b06ddf13721a20fc5a1f7ad3f1c6c561eed22496b40e754",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/23",
+      "event_key": "[\"TRAINING-CORE-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"5de7a3b674d3091eb54b13e9bdea17f9598d493c0e96c069eaa9eb81100e55e5\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"TRAINING-CORE-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"5de7a3b674d3091eb54b13e9bdea17f9598d493c0e96c069eaa9eb81100e55e5\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "TRAINING-CORE-INTEGRATION-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "5de7a3b674d3091eb54b13e9bdea17f9598d493c0e96c069eaa9eb81100e55e5",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/24",
+      "event_key": "[\"NEXT-JOB-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"47be3f7a87789c35d37f8a393037f83450e27087f5da313816b77fbe92995574\",\"CPU-NEXT-JOB-INTEGRATION\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"NEXT-JOB-INTEGRATION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"47be3f7a87789c35d37f8a393037f83450e27087f5da313816b77fbe92995574\",\"CPU-NEXT-JOB-INTEGRATION\",\"independent-review\"]",
+        "identity": {
+          "event_id": "NEXT-JOB-INTEGRATION-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "47be3f7a87789c35d37f8a393037f83450e27087f5da313816b77fbe92995574",
+          "job_id": "CPU-NEXT-JOB-INTEGRATION",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/25",
+      "event_key": "[\"NEXT-JOB-STOP-REPAIR-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"7b1366dc6585ac37a3fbc8fcc70427c43da3592c4fc6a71dfa518855e812f571\",\"CPU-NEXT-JOB-STOP-REPAIR\",\"independent-review\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"NEXT-JOB-STOP-REPAIR-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"7b1366dc6585ac37a3fbc8fcc70427c43da3592c4fc6a71dfa518855e812f571\",\"CPU-NEXT-JOB-STOP-REPAIR\",\"independent-review\"]",
+        "identity": {
+          "event_id": "NEXT-JOB-STOP-REPAIR-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "7b1366dc6585ac37a3fbc8fcc70427c43da3592c4fc6a71dfa518855e812f571",
+          "job_id": "CPU-NEXT-JOB-STOP-REPAIR",
+          "role": "independent-review"
+        },
+        "purpose": "repair",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/26",
+      "event_key": "[\"SOURCE_SNAPSHOT:R6-baseline-source-candidate-02\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ba8b575288849a15f7048cd29257825a3b63492d919374d27faa7bce1c698567\",\"CPU-SNAPSHOT:R6-baseline-source-candidate-02\",\"source-snapshot\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"SOURCE_SNAPSHOT:R6-baseline-source-candidate-02\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ba8b575288849a15f7048cd29257825a3b63492d919374d27faa7bce1c698567\",\"CPU-SNAPSHOT:R6-baseline-source-candidate-02\",\"source-snapshot\"]",
+        "identity": {
+          "event_id": "SOURCE_SNAPSHOT:R6-baseline-source-candidate-02",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "ba8b575288849a15f7048cd29257825a3b63492d919374d27faa7bce1c698567",
+          "job_id": "CPU-SNAPSHOT:R6-baseline-source-candidate-02",
+          "role": "source-snapshot"
+        },
+        "observations": [
+          {
+            "evidence": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/snapshots/4cd9a0dfd5957c2b6521621fe928ef48bc640374b63018e86796c4f1cb96a246/receipt.json",
+              "sha256": "58503cbccf3f28fdf8151f83b320aa3841658758fceefec143f258a31f6bf51b"
+            },
+            "resources": {
+              "output_actual_plus_unreleased_reservations_bytes": 1007680538
+            }
+          }
+        ],
+        "purpose": "development",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 2147483648
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 2147483648
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/27",
+      "event_key": "[\"EXECUTION-COMPATIBILITY-02\",\"R6-ROBUSTNESS-AUTO-20261019\",\"afed492b6ebb49352c2a65cd78f92eacfac2fc6c1cf993e7c8da9c1066c30260\",\"CPU-SNAPSHOT02-COMPATIBILITY\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"EXECUTION-COMPATIBILITY-02\",\"R6-ROBUSTNESS-AUTO-20261019\",\"afed492b6ebb49352c2a65cd78f92eacfac2fc6c1cf993e7c8da9c1066c30260\",\"CPU-SNAPSHOT02-COMPATIBILITY\",\"independent-review\"]",
+        "identity": {
+          "event_id": "EXECUTION-COMPATIBILITY-02",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "afed492b6ebb49352c2a65cd78f92eacfac2fc6c1cf993e7c8da9c1066c30260",
+          "job_id": "CPU-SNAPSHOT02-COMPATIBILITY",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/28",
+      "event_key": "[\"ISSUANCE-INTEGRATION-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ea3faaaccf812bb70f9dfedc3cafde1d20b6ebdd0652389ca60b766d833b5ff9\",\"CPU-ISSUANCE-INTEGRATION\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"ISSUANCE-INTEGRATION-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ea3faaaccf812bb70f9dfedc3cafde1d20b6ebdd0652389ca60b766d833b5ff9\",\"CPU-ISSUANCE-INTEGRATION\",\"independent-review\"]",
+        "identity": {
+          "event_id": "ISSUANCE-INTEGRATION-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "ea3faaaccf812bb70f9dfedc3cafde1d20b6ebdd0652389ca60b766d833b5ff9",
+          "job_id": "CPU-ISSUANCE-INTEGRATION",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/29",
+      "event_key": "[\"LOCAL-CONTINUATION-AUTHORITY-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ef8c10560af5107082726d8a9a7278ac1983de1eb482160e21e0e7a973d584a1\",\"CPU-LOCAL-CONTINUATION-AUTHORITY\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"LOCAL-CONTINUATION-AUTHORITY-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"ef8c10560af5107082726d8a9a7278ac1983de1eb482160e21e0e7a973d584a1\",\"CPU-LOCAL-CONTINUATION-AUTHORITY\",\"independent-review\"]",
+        "identity": {
+          "event_id": "LOCAL-CONTINUATION-AUTHORITY-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "ef8c10560af5107082726d8a9a7278ac1983de1eb482160e21e0e7a973d584a1",
+          "job_id": "CPU-LOCAL-CONTINUATION-AUTHORITY",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/30",
+      "event_key": "[\"PROMPT-RECOVERY-REPAIR-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"fb14e414625f79e7a5010f47499f356f21bbf455eff25decd706138aaa3e5901\",\"CPU-PROMPT-RECOVERY-REPAIR\",\"independent-review\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"PROMPT-RECOVERY-REPAIR-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"fb14e414625f79e7a5010f47499f356f21bbf455eff25decd706138aaa3e5901\",\"CPU-PROMPT-RECOVERY-REPAIR\",\"independent-review\"]",
+        "identity": {
+          "event_id": "PROMPT-RECOVERY-REPAIR-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "fb14e414625f79e7a5010f47499f356f21bbf455eff25decd706138aaa3e5901",
+          "job_id": "CPU-PROMPT-RECOVERY-REPAIR",
+          "role": "independent-review"
+        },
+        "purpose": "repair",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/31",
+      "event_key": "[\"INITIAL-BASELINE-ISSUANCE-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"de7a716cbc5ea0b158c3f4e4cc6126ace6f779d4a96944c2283f0554a96ca07b\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"INITIAL-BASELINE-ISSUANCE-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"de7a716cbc5ea0b158c3f4e4cc6126ace6f779d4a96944c2283f0554a96ca07b\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "INITIAL-BASELINE-ISSUANCE-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "de7a716cbc5ea0b158c3f4e4cc6126ace6f779d4a96944c2283f0554a96ca07b",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/32",
+      "event_key": "[\"FIRST-BASELINE-ENTRY-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"854a3e5844ea0dddae661eb15813de92df600904b336bb557ce8b82eb1b450a1\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"FIRST-BASELINE-ENTRY-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"854a3e5844ea0dddae661eb15813de92df600904b336bb557ce8b82eb1b450a1\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "FIRST-BASELINE-ENTRY-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "854a3e5844ea0dddae661eb15813de92df600904b336bb557ce8b82eb1b450a1",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/33",
+      "event_key": "[\"PROTOCOL-CAPACITY-FREEZE-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"264c4e528915ca98f59d4f0746150581c8e5c951671e2413c49f4caf6dd7598d\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"PROTOCOL-CAPACITY-FREEZE-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"264c4e528915ca98f59d4f0746150581c8e5c951671e2413c49f4caf6dd7598d\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "PROTOCOL-CAPACITY-FREEZE-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "264c4e528915ca98f59d4f0746150581c8e5c951671e2413c49f4caf6dd7598d",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/34",
+      "event_key": "[\"INITIAL_BASELINE_CONDITION_IMPORT_01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"6b03d50b865f7eea2266dbf82ec2cd53a5afefd73494d63c909e9ef244ca1d18\",\"CPU-NO-LIVE-JOB\",\"accepted-evidence-import\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"INITIAL_BASELINE_CONDITION_IMPORT_01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"6b03d50b865f7eea2266dbf82ec2cd53a5afefd73494d63c909e9ef244ca1d18\",\"CPU-NO-LIVE-JOB\",\"accepted-evidence-import\"]",
+        "identity": {
+          "event_id": "INITIAL_BASELINE_CONDITION_IMPORT_01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "6b03d50b865f7eea2266dbf82ec2cd53a5afefd73494d63c909e9ef244ca1d18",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "accepted-evidence-import"
+        },
+        "purpose": "development",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 65536
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 65536
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/35",
+      "event_key": "[\"EXACT-RESOURCE-ADMISSION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"6f937006f4a4d51c20812c35fc0f9d0db66f12102f96f300eaac7016c5593afb\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"EXACT-RESOURCE-ADMISSION-REVIEW-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"6f937006f4a4d51c20812c35fc0f9d0db66f12102f96f300eaac7016c5593afb\",\"CPU-NO-LIVE-JOB\",\"independent-review\"]",
+        "identity": {
+          "event_id": "EXACT-RESOURCE-ADMISSION-REVIEW-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "6f937006f4a4d51c20812c35fc0f9d0db66f12102f96f300eaac7016c5593afb",
+          "job_id": "CPU-NO-LIVE-JOB",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/36",
+      "event_key": "[\"EXACT_RESOURCE_ADMISSION_FIX_REVIEW_02\",\"R6-ROBUSTNESS-AUTO-20261019\",\"0b17c95d96728a0bc40288a67fb26e267b85e3f52f9148bd230b2ae826e231d2\",\"NO_LIVE_JOB\",\"exact-resource-admission-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"EXACT_RESOURCE_ADMISSION_FIX_REVIEW_02\",\"R6-ROBUSTNESS-AUTO-20261019\",\"0b17c95d96728a0bc40288a67fb26e267b85e3f52f9148bd230b2ae826e231d2\",\"NO_LIVE_JOB\",\"exact-resource-admission-review\"]",
+        "identity": {
+          "event_id": "EXACT_RESOURCE_ADMISSION_FIX_REVIEW_02",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "0b17c95d96728a0bc40288a67fb26e267b85e3f52f9148bd230b2ae826e231d2",
+          "job_id": "NO_LIVE_JOB",
+          "role": "exact-resource-admission-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/37",
+      "event_key": "[\"MATERIALIZE:R6-BASELINE-ROBUSTNESS-01:27deaa32cd3167395f381058c86ca1f674b26870d867030f8097f2197e4c66d5\",\"R6-ROBUSTNESS-AUTO-20261019\",\"27deaa32cd3167395f381058c86ca1f674b26870d867030f8097f2197e4c66d5\",\"MATERIALIZE:R6-BASELINE-ROBUSTNESS-01\",\"job-input-materialization\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"MATERIALIZE:R6-BASELINE-ROBUSTNESS-01:27deaa32cd3167395f381058c86ca1f674b26870d867030f8097f2197e4c66d5\",\"R6-ROBUSTNESS-AUTO-20261019\",\"27deaa32cd3167395f381058c86ca1f674b26870d867030f8097f2197e4c66d5\",\"MATERIALIZE:R6-BASELINE-ROBUSTNESS-01\",\"job-input-materialization\"]",
+        "identity": {
+          "event_id": "MATERIALIZE:R6-BASELINE-ROBUSTNESS-01:27deaa32cd3167395f381058c86ca1f674b26870d867030f8097f2197e4c66d5",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "27deaa32cd3167395f381058c86ca1f674b26870d867030f8097f2197e4c66d5",
+          "job_id": "MATERIALIZE:R6-BASELINE-ROBUSTNESS-01",
+          "role": "job-input-materialization"
+        },
+        "purpose": "development",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 262144
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 262144
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/38",
+      "event_key": "[\"R6-CONTROLLER-RECOVERY-INTEGRATION-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"b0a587ede4ae5dbf4c4d6f9c0655107e4bad03adf96a6055174b3451cb0e05c0\",\"CPU-CONTROLLER-RECOVERY-INTEGRATION\",\"independent-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"R6-CONTROLLER-RECOVERY-INTEGRATION-01\",\"R6-ROBUSTNESS-AUTO-20261019\",\"b0a587ede4ae5dbf4c4d6f9c0655107e4bad03adf96a6055174b3451cb0e05c0\",\"CPU-CONTROLLER-RECOVERY-INTEGRATION\",\"independent-review\"]",
+        "identity": {
+          "event_id": "R6-CONTROLLER-RECOVERY-INTEGRATION-01",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "b0a587ede4ae5dbf4c4d6f9c0655107e4bad03adf96a6055174b3451cb0e05c0",
+          "job_id": "CPU-CONTROLLER-RECOVERY-INTEGRATION",
+          "role": "independent-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/39",
+      "event_key": "[\"R6-CONTROLLER-RECOVERY-FOLLOWUP-02\",\"R6-ROBUSTNESS-AUTO-20261019\",\"b6b8f6f7b0c9ed6e70d3f8592fb2090d8970cf32dfb380aba3d2de8bb7dd9f11\",\"CPU-CONTROLLER-RECOVERY-FOLLOWUP\",\"independent-review\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"R6-CONTROLLER-RECOVERY-FOLLOWUP-02\",\"R6-ROBUSTNESS-AUTO-20261019\",\"b6b8f6f7b0c9ed6e70d3f8592fb2090d8970cf32dfb380aba3d2de8bb7dd9f11\",\"CPU-CONTROLLER-RECOVERY-FOLLOWUP\",\"independent-review\"]",
+        "identity": {
+          "event_id": "R6-CONTROLLER-RECOVERY-FOLLOWUP-02",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "b6b8f6f7b0c9ed6e70d3f8592fb2090d8970cf32dfb380aba3d2de8bb7dd9f11",
+          "job_id": "CPU-CONTROLLER-RECOVERY-FOLLOWUP",
+          "role": "independent-review"
+        },
+        "purpose": "repair",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/40",
+      "event_key": "[\"R6-BASELINE-PLATFORM-HANDOFF-REVIEW-03\",\"R6-ROBUSTNESS-AUTO-20261019\",\"edf77c7864af9bd44c9109f2d0ef211f290ed59d13a4469f104eb55dbc9f0dfe\",\"CPU-BASELINE-PLATFORM-HANDOFF\",\"independent-review\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"R6-BASELINE-PLATFORM-HANDOFF-REVIEW-03\",\"R6-ROBUSTNESS-AUTO-20261019\",\"edf77c7864af9bd44c9109f2d0ef211f290ed59d13a4469f104eb55dbc9f0dfe\",\"CPU-BASELINE-PLATFORM-HANDOFF\",\"independent-review\"]",
+        "identity": {
+          "event_id": "R6-BASELINE-PLATFORM-HANDOFF-REVIEW-03",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "edf77c7864af9bd44c9109f2d0ef211f290ed59d13a4469f104eb55dbc9f0dfe",
+          "job_id": "CPU-BASELINE-PLATFORM-HANDOFF",
+          "role": "independent-review"
+        },
+        "purpose": "repair",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/41",
+      "event_key": "[\"R6_CONTROLLER\",\"R6-ROBUSTNESS-AUTO-20261019\",\"62f572447a80633566de19eaa9dd100fe5b92513657be83fd94a1a574217b43a\",\"R6_CONTROLLER\",\"r6-controller\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"R6_CONTROLLER\",\"R6-ROBUSTNESS-AUTO-20261019\",\"62f572447a80633566de19eaa9dd100fe5b92513657be83fd94a1a574217b43a\",\"R6_CONTROLLER\",\"r6-controller\"]",
+        "identity": {
+          "event_id": "R6_CONTROLLER",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "62f572447a80633566de19eaa9dd100fe5b92513657be83fd94a1a574217b43a",
+          "job_id": "R6_CONTROLLER",
+          "role": "r6-controller"
+        },
+        "purpose": "development",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 262144
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 262144
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/42",
+      "event_key": "[\"INITIAL_BASELINE_REVIEW:04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892\",\"R6-ROBUSTNESS-AUTO-20261019\",\"bac688525d87f8624bd5f488a9afdec524e835bc19a544e8b1eaf780ce770037\",\"J-f9edc8f6f35dde13\",\"initial-baseline-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"INITIAL_BASELINE_REVIEW:04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892\",\"R6-ROBUSTNESS-AUTO-20261019\",\"bac688525d87f8624bd5f488a9afdec524e835bc19a544e8b1eaf780ce770037\",\"J-f9edc8f6f35dde13\",\"initial-baseline-review\"]",
+        "identity": {
+          "event_id": "INITIAL_BASELINE_REVIEW:04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "bac688525d87f8624bd5f488a9afdec524e835bc19a544e8b1eaf780ce770037",
+          "job_id": "J-f9edc8f6f35dde13",
+          "role": "initial-baseline-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/43",
+      "event_key": "[\"BASELINE_FAILURE:171c4969bf3e567d9a426284753a5df7705f8289f5344ccbb10076bd8b57655a:bc357563d3625a08e78f296e2f492779f376ce338e9f1a742a1f35cf89aebaf4\",\"R6-ROBUSTNESS-AUTO-20261019\",\"96f4570b89d79c52f0187b66c82c3c0334bbe238ff85531264af3ba481a68090\",\"J-f9edc8f6f35dde13\",\"baseline-failure-input\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"BASELINE_FAILURE:171c4969bf3e567d9a426284753a5df7705f8289f5344ccbb10076bd8b57655a:bc357563d3625a08e78f296e2f492779f376ce338e9f1a742a1f35cf89aebaf4\",\"R6-ROBUSTNESS-AUTO-20261019\",\"96f4570b89d79c52f0187b66c82c3c0334bbe238ff85531264af3ba481a68090\",\"J-f9edc8f6f35dde13\",\"baseline-failure-input\"]",
+        "identity": {
+          "event_id": "BASELINE_FAILURE:171c4969bf3e567d9a426284753a5df7705f8289f5344ccbb10076bd8b57655a:bc357563d3625a08e78f296e2f492779f376ce338e9f1a742a1f35cf89aebaf4",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "96f4570b89d79c52f0187b66c82c3c0334bbe238ff85531264af3ba481a68090",
+          "job_id": "J-f9edc8f6f35dde13",
+          "role": "baseline-failure-input"
+        },
+        "purpose": "repair",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 262144
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 262144
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/44",
+      "event_key": "[\"BASELINE_FAILURE_MODEL:b57920e81ad596938c1e556b955330fba9af61591ea1a91feee2afccb2e5e1a2\",\"R6-ROBUSTNESS-AUTO-20261019\",\"a901d7a36077377b56ea5c2cd45ecfd159dffe40b1bc8a75b8b4747faec54965\",\"J-f9edc8f6f35dde13\",\"baseline-failure-disposition\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"BASELINE_FAILURE_MODEL:b57920e81ad596938c1e556b955330fba9af61591ea1a91feee2afccb2e5e1a2\",\"R6-ROBUSTNESS-AUTO-20261019\",\"a901d7a36077377b56ea5c2cd45ecfd159dffe40b1bc8a75b8b4747faec54965\",\"J-f9edc8f6f35dde13\",\"baseline-failure-disposition\"]",
+        "identity": {
+          "event_id": "BASELINE_FAILURE_MODEL:b57920e81ad596938c1e556b955330fba9af61591ea1a91feee2afccb2e5e1a2",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "a901d7a36077377b56ea5c2cd45ecfd159dffe40b1bc8a75b8b4747faec54965",
+          "job_id": "J-f9edc8f6f35dde13",
+          "role": "baseline-failure-disposition"
+        },
+        "purpose": "repair",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/45",
+      "event_key": "[\"EXACT_RESOURCE_ADMISSION_CURRENT_REVIEW_03\",\"R6-ROBUSTNESS-AUTO-20261019\",\"f0e4af85fb9d336850cafd9ccc55559f8a65120bd7d1abfea1206dd31e84af9a\",\"NO_LIVE_JOB\",\"exact-resource-admission-review\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"EXACT_RESOURCE_ADMISSION_CURRENT_REVIEW_03\",\"R6-ROBUSTNESS-AUTO-20261019\",\"f0e4af85fb9d336850cafd9ccc55559f8a65120bd7d1abfea1206dd31e84af9a\",\"NO_LIVE_JOB\",\"exact-resource-admission-review\"]",
+        "identity": {
+          "event_id": "EXACT_RESOURCE_ADMISSION_CURRENT_REVIEW_03",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "f0e4af85fb9d336850cafd9ccc55559f8a65120bd7d1abfea1206dd31e84af9a",
+          "job_id": "NO_LIVE_JOB",
+          "role": "exact-resource-admission-review"
+        },
+        "purpose": "repair",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/46",
+      "event_key": "[\"CONTROLLER_REVISION_INPUT:c62b1dec82a1236964ce4d839ee30c077d81d83242d800d667ef1a3d04da7aac:0c435d78afa3207833a386d513b33ae79dc4b1ef131f45dab0e69b53d97db2de\",\"R6-ROBUSTNESS-AUTO-20261019\",\"a0042f997f156fc0ce5eaec6529c9a8c3631259b9e4ee6971ca35ee30ec75e2c\",\"R6_CONTROLLER\",\"controller-revision-input\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"CONTROLLER_REVISION_INPUT:c62b1dec82a1236964ce4d839ee30c077d81d83242d800d667ef1a3d04da7aac:0c435d78afa3207833a386d513b33ae79dc4b1ef131f45dab0e69b53d97db2de\",\"R6-ROBUSTNESS-AUTO-20261019\",\"a0042f997f156fc0ce5eaec6529c9a8c3631259b9e4ee6971ca35ee30ec75e2c\",\"R6_CONTROLLER\",\"controller-revision-input\"]",
+        "identity": {
+          "event_id": "CONTROLLER_REVISION_INPUT:c62b1dec82a1236964ce4d839ee30c077d81d83242d800d667ef1a3d04da7aac:0c435d78afa3207833a386d513b33ae79dc4b1ef131f45dab0e69b53d97db2de",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "a0042f997f156fc0ce5eaec6529c9a8c3631259b9e4ee6971ca35ee30ec75e2c",
+          "job_id": "R6_CONTROLLER",
+          "role": "controller-revision-input"
+        },
+        "purpose": "repair",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 262144
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 262144
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/47",
+      "event_key": "[\"CONTROLLER_REVISION:0b23e504ee36d50be783e7da94238728397b0edd51d8789b47d67bccb50aed65\",\"R6-ROBUSTNESS-AUTO-20261019\",\"cc23affa1298bdf6ee5cb3919638e7005ff4da716b4e3cc5242bf9499b4ee158\",\"R6_CONTROLLER\",\"controller-revision-review\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"CONTROLLER_REVISION:0b23e504ee36d50be783e7da94238728397b0edd51d8789b47d67bccb50aed65\",\"R6-ROBUSTNESS-AUTO-20261019\",\"cc23affa1298bdf6ee5cb3919638e7005ff4da716b4e3cc5242bf9499b4ee158\",\"R6_CONTROLLER\",\"controller-revision-review\"]",
+        "identity": {
+          "event_id": "CONTROLLER_REVISION:0b23e504ee36d50be783e7da94238728397b0edd51d8789b47d67bccb50aed65",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "cc23affa1298bdf6ee5cb3919638e7005ff4da716b4e3cc5242bf9499b4ee158",
+          "job_id": "R6_CONTROLLER",
+          "role": "controller-revision-review"
+        },
+        "purpose": "repair",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/48",
+      "event_key": "[\"CONTROLLER_REVISION_INPUT:c62b1dec82a1236964ce4d839ee30c077d81d83242d800d667ef1a3d04da7aac:31221ea19b8b337bd4e4133058f4e1c167d60595c3260640d104b02b94d93473\",\"R6-ROBUSTNESS-AUTO-20261019\",\"db5a50835e36ea3dd6b3d04ebf0fb34a1d6970df4b30dc2c02b6040d8a0b5b99\",\"R6_CONTROLLER\",\"controller-revision-input\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"CONTROLLER_REVISION_INPUT:c62b1dec82a1236964ce4d839ee30c077d81d83242d800d667ef1a3d04da7aac:31221ea19b8b337bd4e4133058f4e1c167d60595c3260640d104b02b94d93473\",\"R6-ROBUSTNESS-AUTO-20261019\",\"db5a50835e36ea3dd6b3d04ebf0fb34a1d6970df4b30dc2c02b6040d8a0b5b99\",\"R6_CONTROLLER\",\"controller-revision-input\"]",
+        "identity": {
+          "event_id": "CONTROLLER_REVISION_INPUT:c62b1dec82a1236964ce4d839ee30c077d81d83242d800d667ef1a3d04da7aac:31221ea19b8b337bd4e4133058f4e1c167d60595c3260640d104b02b94d93473",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "db5a50835e36ea3dd6b3d04ebf0fb34a1d6970df4b30dc2c02b6040d8a0b5b99",
+          "job_id": "R6_CONTROLLER",
+          "role": "controller-revision-input"
+        },
+        "purpose": "repair",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 262144
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 262144
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/49",
+      "event_key": "[\"CONTROLLER_REVISION:5c70ff405ea1548982077c37999f21f72ad18c454692aff78ea0cb481c714e35\",\"R6-ROBUSTNESS-AUTO-20261019\",\"f1ddc6ff5ac9d04616579b42446105be819a05a2ec3237d7d8a216c25bdb6165\",\"R6_CONTROLLER\",\"controller-revision-review\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"CONTROLLER_REVISION:5c70ff405ea1548982077c37999f21f72ad18c454692aff78ea0cb481c714e35\",\"R6-ROBUSTNESS-AUTO-20261019\",\"f1ddc6ff5ac9d04616579b42446105be819a05a2ec3237d7d8a216c25bdb6165\",\"R6_CONTROLLER\",\"controller-revision-review\"]",
+        "identity": {
+          "event_id": "CONTROLLER_REVISION:5c70ff405ea1548982077c37999f21f72ad18c454692aff78ea0cb481c714e35",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "f1ddc6ff5ac9d04616579b42446105be819a05a2ec3237d7d8a216c25bdb6165",
+          "job_id": "R6_CONTROLLER",
+          "role": "controller-revision-review"
+        },
+        "purpose": "repair",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/50",
+      "event_key": "[\"CONTINUATION_WAKE:01a16283-0653-7ec3-ae89-9e73f6e7e132\",\"R6-ROBUSTNESS-AUTO-20261019\",\"692ff3e19733adec7136a781e36dd07d9e2b0d7e039c3e3360666005ce2bcd8e\",\"NO_LIVE_JOB\",\"platform-automatic-wake\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CONTINUATION_WAKE:01a16283-0653-7ec3-ae89-9e73f6e7e132\",\"R6-ROBUSTNESS-AUTO-20261019\",\"692ff3e19733adec7136a781e36dd07d9e2b0d7e039c3e3360666005ce2bcd8e\",\"NO_LIVE_JOB\",\"platform-automatic-wake\"]",
+        "identity": {
+          "event_id": "CONTINUATION_WAKE:01a16283-0653-7ec3-ae89-9e73f6e7e132",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "692ff3e19733adec7136a781e36dd07d9e2b0d7e039c3e3360666005ce2bcd8e",
+          "job_id": "NO_LIVE_JOB",
+          "role": "platform-automatic-wake"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/51",
+      "event_key": "[\"INITIAL_BASELINE_REVIEW:beca798dc8962254791dffc842ec64282c8e879cee375b985a6768b3cd60c2e4\",\"R6-ROBUSTNESS-AUTO-20261019\",\"63697773d485755e22958f02899441e4df2329bbf5c92154b60058a86d71417a\",\"J-f9edc8f6f35dde13\",\"initial-baseline-review\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"INITIAL_BASELINE_REVIEW:beca798dc8962254791dffc842ec64282c8e879cee375b985a6768b3cd60c2e4\",\"R6-ROBUSTNESS-AUTO-20261019\",\"63697773d485755e22958f02899441e4df2329bbf5c92154b60058a86d71417a\",\"J-f9edc8f6f35dde13\",\"initial-baseline-review\"]",
+        "identity": {
+          "event_id": "INITIAL_BASELINE_REVIEW:beca798dc8962254791dffc842ec64282c8e879cee375b985a6768b3cd60c2e4",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "63697773d485755e22958f02899441e4df2329bbf5c92154b60058a86d71417a",
+          "job_id": "J-f9edc8f6f35dde13",
+          "role": "initial-baseline-review"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/52",
+      "event_key": "[\"CONTROLLER_REVISION_INPUT:c62b1dec82a1236964ce4d839ee30c077d81d83242d800d667ef1a3d04da7aac:cc0c946c7930f4baeb0473d48030a352c43487c1f4d5421475cb7c6032188967\",\"R6-ROBUSTNESS-AUTO-20261019\",\"a70f3db88b58d824611680c7020e0fac6e21de89b781c9b87a73705693c8062b\",\"R6_CONTROLLER\",\"controller-revision-input\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"CONTROLLER_REVISION_INPUT:c62b1dec82a1236964ce4d839ee30c077d81d83242d800d667ef1a3d04da7aac:cc0c946c7930f4baeb0473d48030a352c43487c1f4d5421475cb7c6032188967\",\"R6-ROBUSTNESS-AUTO-20261019\",\"a70f3db88b58d824611680c7020e0fac6e21de89b781c9b87a73705693c8062b\",\"R6_CONTROLLER\",\"controller-revision-input\"]",
+        "identity": {
+          "event_id": "CONTROLLER_REVISION_INPUT:c62b1dec82a1236964ce4d839ee30c077d81d83242d800d667ef1a3d04da7aac:cc0c946c7930f4baeb0473d48030a352c43487c1f4d5421475cb7c6032188967",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "a70f3db88b58d824611680c7020e0fac6e21de89b781c9b87a73705693c8062b",
+          "job_id": "R6_CONTROLLER",
+          "role": "controller-revision-input"
+        },
+        "purpose": "repair",
+        "resources": {
+          "output_actual_plus_unreleased_reservations_bytes": 262144
+        }
+      },
+      "charged": {
+        "output_actual_plus_unreleased_reservations_bytes": 262144
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/53",
+      "event_key": "[\"CONTROLLER_REVISION:ff440c71118de1f8abca91460d855f1d4a90d76bd04d3696214338b052641415\",\"R6-ROBUSTNESS-AUTO-20261019\",\"56468aa62f9c1303c4b10c3850de418f7fd533a3e5b0244a238afd1741c219b7\",\"R6_CONTROLLER\",\"controller-revision-review\"]",
+      "purpose": "repair",
+      "original": {
+        "event_key": "[\"CONTROLLER_REVISION:ff440c71118de1f8abca91460d855f1d4a90d76bd04d3696214338b052641415\",\"R6-ROBUSTNESS-AUTO-20261019\",\"56468aa62f9c1303c4b10c3850de418f7fd533a3e5b0244a238afd1741c219b7\",\"R6_CONTROLLER\",\"controller-revision-review\"]",
+        "identity": {
+          "event_id": "CONTROLLER_REVISION:ff440c71118de1f8abca91460d855f1d4a90d76bd04d3696214338b052641415",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "56468aa62f9c1303c4b10c3850de418f7fd533a3e5b0244a238afd1741c219b7",
+          "job_id": "R6_CONTROLLER",
+          "role": "controller-revision-review"
+        },
+        "purpose": "repair",
+        "resources": {
+          "automatic_model_sessions": 1,
+          "output_actual_plus_unreleased_reservations_bytes": 67174400
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1,
+        "output_actual_plus_unreleased_reservations_bytes": 67174400
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/54",
+      "event_key": "[\"CONTINUATION_WAKE:01a1628e-dc5a-7951-8080-0eb48525b06e\",\"R6-ROBUSTNESS-AUTO-20261019\",\"d343d26a70fe9ce9d4b1826ea1af2da2df086a3a6bcf815f422a51d51ae3c99e\",\"NO_LIVE_JOB\",\"platform-automatic-wake\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CONTINUATION_WAKE:01a1628e-dc5a-7951-8080-0eb48525b06e\",\"R6-ROBUSTNESS-AUTO-20261019\",\"d343d26a70fe9ce9d4b1826ea1af2da2df086a3a6bcf815f422a51d51ae3c99e\",\"NO_LIVE_JOB\",\"platform-automatic-wake\"]",
+        "identity": {
+          "event_id": "CONTINUATION_WAKE:01a1628e-dc5a-7951-8080-0eb48525b06e",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "d343d26a70fe9ce9d4b1826ea1af2da2df086a3a6bcf815f422a51d51ae3c99e",
+          "job_id": "NO_LIVE_JOB",
+          "role": "platform-automatic-wake"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1
+      }
+    },
+    {
+      "source_pointer": "/budget/reservations/55",
+      "event_key": "[\"CONTINUATION_WAKE:01a16290-2a03-70f0-9663-068e95a75a38\",\"R6-ROBUSTNESS-AUTO-20261019\",\"6050e97a482f97eb058dd73d5ea60e43ea9dccb9df3672bb2c9454e2a036ce8c\",\"NO_LIVE_JOB\",\"platform-automatic-wake\"]",
+      "purpose": "development",
+      "original": {
+        "event_key": "[\"CONTINUATION_WAKE:01a16290-2a03-70f0-9663-068e95a75a38\",\"R6-ROBUSTNESS-AUTO-20261019\",\"6050e97a482f97eb058dd73d5ea60e43ea9dccb9df3672bb2c9454e2a036ce8c\",\"NO_LIVE_JOB\",\"platform-automatic-wake\"]",
+        "identity": {
+          "event_id": "CONTINUATION_WAKE:01a16290-2a03-70f0-9663-068e95a75a38",
+          "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+          "input_sha256": "6050e97a482f97eb058dd73d5ea60e43ea9dccb9df3672bb2c9454e2a036ce8c",
+          "job_id": "NO_LIVE_JOB",
+          "role": "platform-automatic-wake"
+        },
+        "purpose": "development",
+        "resources": {
+          "automatic_model_sessions": 1
+        }
+      },
+      "charged": {
+        "automatic_model_sessions": 1
+      }
+    }
+  ],
+  "historical_charged": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 239,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 28529459200,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "protected_confirmation_delivery_repair": {
+    "allocated_gpu_seconds": 30000,
+    "automatic_model_sessions": 8,
+    "live_starts": 16,
+    "live_wall_seconds": 30000,
+    "nontraining_transitions": 800000,
+    "output_actual_plus_unreleased_reservations_bytes": 99857989632,
+    "simulator_initializations": 16,
+    "training_checkpoint_writes": 24,
+    "training_transitions": 1572864
+  },
+  "protected_model_sessions": {
+    "final_review": 4,
+    "repair": 4
+  },
+  "remaining_before_new_work": {
+    "allocated_gpu_seconds": 43200,
+    "automatic_model_sessions": 273,
+    "live_starts": 64,
+    "live_wall_seconds": 43200,
+    "major_scientific_candidates": 3,
+    "nontraining_transitions": 2000000,
+    "output_actual_plus_unreleased_reservations_bytes": 108909494272,
+    "queue_seconds": 21600,
+    "simulator_initializations": 64,
+    "training_checkpoint_writes": 96,
+    "training_transitions": 3000000
+  },
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+      "sha256": "83d9863efddc9dafa8f2f83cc2a2b97550e701e2b8654a4c2f9afe85fec48d18"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BUDGET_INCREASE_USER_AUTHORITY_20261022.json",
+      "sha256": "481bb57c4800589c3f763b59f49e14ce60d1bedcf974e4a2580dd3f8771aeb0f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/goals/InstinctRL_R6_Standalone_Training_Requirements.md",
+      "sha256": "007ac61feaf6ce76725168d381766c356b98af0a7900cba340ee5c048fad579f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/USER_AUTHORITY.txt",
+      "sha256": "8efabce1736d73e3e56d056246cf63e76d9b972207f765e905885b8571986a1c"
+    }
+  ],
+  "legacy_process_check": {
+    "recorded": {
+      "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+      "pgid": 2614901,
+      "pid": 2614902,
+      "starttime": "260244588"
+    },
+    "observed": null,
+    "current_job": null,
+    "current_model_event": null,
+    "writer_lock_acquired": true,
+    "stops": []
+  }
+}

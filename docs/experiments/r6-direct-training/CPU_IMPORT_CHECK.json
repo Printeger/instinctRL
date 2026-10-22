@@ -1,0 +1,21 @@
+{
+  "status": "PASS_CPU_IMPORT_ONLY",
+  "tests": 2,
+  "command": "python -m unittest tools.r6_direct.test_import_legacy -v",
+  "no_live_run": true,
+  "legacy_reserved_items": 56,
+  "historical_charged": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 239,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 28529459200,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "baseline_sha256_verified": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+}

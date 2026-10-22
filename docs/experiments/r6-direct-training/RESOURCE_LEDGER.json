@@ -1,0 +1,63 @@
+{
+  "schema_version": "r6-direct-ledger/1",
+  "legacy_import": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/LEGACY_BUDGET_IMPORT.json",
+    "sha256": "b599c771b2080b6ac03cd47c908b2e2280af3a811ab11eb0ecfae293c0c847f0"
+  },
+  "caps": {
+    "allocated_gpu_seconds": 43200,
+    "automatic_model_sessions": 512,
+    "live_starts": 64,
+    "live_wall_seconds": 43200,
+    "major_scientific_candidates": 3,
+    "nontraining_transitions": 2000000,
+    "output_actual_plus_unreleased_reservations_bytes": 137438953472,
+    "queue_seconds": 21600,
+    "simulator_initializations": 64,
+    "training_checkpoint_writes": 96,
+    "training_transitions": 3000000
+  },
+  "historical_charged": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 239,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 28529459200,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "protected_confirmation_delivery_repair": {
+    "allocated_gpu_seconds": 30000,
+    "automatic_model_sessions": 8,
+    "live_starts": 16,
+    "live_wall_seconds": 30000,
+    "nontraining_transitions": 800000,
+    "output_actual_plus_unreleased_reservations_bytes": 99857989632,
+    "simulator_initializations": 16,
+    "training_checkpoint_writes": 24,
+    "training_transitions": 1572864
+  },
+  "protected_model_sessions": {
+    "final_review": 4,
+    "repair": 4
+  },
+  "new_used": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "new_reservations": [],
+  "status": "PREPARING_NO_LIVE_RUN"
+}

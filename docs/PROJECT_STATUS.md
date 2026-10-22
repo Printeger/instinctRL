@@ -1,3 +1,11 @@
+# R6 本地直接训练：已接收新授权并导入旧预算，真实基线/训练尚未开始
+
+2026-10-22：按 `docs/experiments/r6-direct-training/USER_AUTHORITY.txt` 和 Standalone Training 契约执行，不使用 rlflow 运行链。
+旧state只读导入56项预留；历史模型239/512、输出及未释放预留28,529,459,200 bytes，确认/交付保护额度原样保留。
+旧controller准确PID不存在、无在途job/model、writer flock可获取且无STOP；冻结u640实测SHA正确。
+预算导入定向CPU检查2项通过；最小直接live入口、真实基线、首段PPO与评价仍待完成。
+旧网络/聊天会话/逐作业模型审核不再是新入口的发车条件；完整科学目标保持未完成。
+
 # R6 接续：外部模型路由连续三轮失败，待恢复；真实基线与训练未开始
 
 2026-10-22：本地 chatgpt.com HTTPS 第三次复查仍 SSL_ERROR_SYSCALL；模型审核原件为 workspace routing discovery failed。
