@@ -1,0 +1,41 @@
+{
+  "baseline_sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+  "branch_updates": 256,
+  "candidate_id": "R6-CANDIDATE-DIRECT-MAINTENANCE-01",
+  "checkpoint_offsets": [
+    128,
+    256
+  ],
+  "comparison": "Compare absolute u768 (+128) against common u640 on all original tasks and all 16 frozen development blocks. Stop unconditional continuation if any gate regresses; u896 (+256) is a registered possible node, not permission to skip evaluation. Delay/drop remain in evaluation; this first graded curriculum has delay/drop zero because startup coverage is not learning-eligible.",
+  "confirmation_seeds": [
+    2026102202,
+    2026102203,
+    2026102204
+  ],
+  "curriculum": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_CURRICULUM_01.json",
+    "sha256": "3d5e356447ab50fa576aa6534497c643829ad8c4ff60857323919086e621759d"
+  },
+  "development_seeds": [
+    2026102201
+  ],
+  "diagnosis": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_04_CPU_REPLAY_SUMMARY.json",
+      "sha256": "9acf785388a2f658f45462c8b78dcd4a2dbc8f65fd5cc5a1c0044dc3a4f45287"
+    }
+  ],
+  "hypothesis": "Baseline04 saved scores and CPU replay pass all original and development conditions; test capability maintenance after 128 updates with original replay plus mild noise and bounded pulse/wall/stop/reverse exposure, keeping saved optimizer and reward/control settings. No improvement is presumed.",
+  "method": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_METHOD_01.json",
+    "sha256": "655457c69bd6e58640651cb60d5d871b2c3bd9f9b247e95dd7854b3cd92a125c"
+  },
+  "schema_version": "r6-training-recipe/1",
+  "source_identity": {
+    "config_sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19",
+    "product_commit": "a032dd7c4440abec540960074408830ea846d9ed",
+    "product_tree": "9a7eb0ba4c0398a77b8fc8cb212546df4d40dc68",
+    "workload_commit": "a032dd7c4440abec540960074408830ea846d9ed",
+    "workload_tree": "9a7eb0ba4c0398a77b8fc8cb212546df4d40dc68"
+  }
+}

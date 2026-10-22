@@ -1,0 +1,93 @@
+{
+  "budgets": {
+    "automatic_resets": 65536,
+    "checkpoint_writes": 1,
+    "explicit_resets": 2,
+    "initialization_ticks": 10,
+    "live_process_starts": 1,
+    "nontraining_transitions": 0,
+    "optimizer_updates": 128,
+    "simulator_initializations": 1,
+    "training_transitions": 65536,
+    "wall_seconds": 3600
+  },
+  "execution_mode": "local-direct",
+  "mode": "research-r6-training",
+  "operation": "train",
+  "parameters": {
+    "baseline_bindings": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_BINDINGS.json",
+      "sha256": "6ebe90717fa2571816ba3392841f3690c2c3fe37225c3728f935bb80d3102623"
+    },
+    "evaluation_seed": 20260909,
+    "experiment_id": "R6-DIRECT-TRAIN-01",
+    "group": "R1",
+    "output_cap_bytes": 20250099712,
+    "r6_expected_mass_kg": 1.181517923,
+    "r6_training_plan": {
+      "checkpoint_updates": [
+        768
+      ],
+      "experiment_id": "R6-DIRECT-TRAIN-01",
+      "initialization": {
+        "checkpoint": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+          "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+        },
+        "kind": "COMMON_U640_NEW_STREAM",
+        "method_hashes": {
+          "checkpoint": "checkpoint-h1-v2",
+          "critic": "critic-h1-v2",
+          "curriculum": "curriculum-h1-v1",
+          "ics_clearance_margin_m": "0.15",
+          "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+          "logging": "learning-log-h1-v1",
+          "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+          "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+          "metric": "metric-h1-v1",
+          "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+          "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+          "reset_distribution": "mixed-nearwall",
+          "reward": "reward-h1-zero-neutrality-v1",
+          "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5"
+        },
+        "source_identity": {
+          "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+          "product_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+          "product_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924",
+          "workload_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+          "workload_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924"
+        }
+      },
+      "phase": "development",
+      "recipe": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_RECIPE_01.json",
+        "sha256": "8b48bb0e6b070c05349fdc35b9153bbadc35483bd81c47ca7fb929338f0802f5"
+      },
+      "schema_version": "r6-local-training-plan/1",
+      "selection_freeze": null,
+      "start_update": 640,
+      "storage": {
+        "branch_record_bytes": 16777216,
+        "checkpoint_bytes": 16777216,
+        "compressed_bytes": 6442450944,
+        "maximum_raw_file_bytes": 17179869184,
+        "metadata_bytes": 67108864,
+        "payload_bytes": 8589934592,
+        "plain_bytes": 2147483648
+      },
+      "target_update": 768,
+      "training_seed": 2026102201,
+      "wall_seconds": 3600
+    },
+    "source_identity": {
+      "config_sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19",
+      "product_commit": "a032dd7c4440abec540960074408830ea846d9ed",
+      "product_tree": "9a7eb0ba4c0398a77b8fc8cb212546df4d40dc68",
+      "workload_commit": "a032dd7c4440abec540960074408830ea846d9ed",
+      "workload_tree": "9a7eb0ba4c0398a77b8fc8cb212546df4d40dc68"
+    },
+    "training_seed": 2026102201
+  },
+  "schema_version": "r6-local-runtime-contract/1"
+}

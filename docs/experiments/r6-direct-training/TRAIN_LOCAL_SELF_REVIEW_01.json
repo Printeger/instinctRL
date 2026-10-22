@@ -1,0 +1,24 @@
+{
+  "actual_training": false,
+  "contract": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_CONTRACT_01.json",
+    "sha256": "89f41617fa44793356602e51bb8cc8d970490ab7f436a0bab68ddd34fe695c33"
+  },
+  "decision": "Proceed to exact CPU preflight for first +128 node using existing method, then bounded live training.",
+  "limitations": [
+    "Full baseline independent scientific acceptance remains pending.",
+    "This graded first curriculum omits delay/drop learning exposure; full delay/drop evaluation remains required.",
+    "No automatic +256 continuation before evaluation and analysis.",
+    "Final confirmation and holdout are not yet executed."
+  ],
+  "method_matches_saved_ppo": true,
+  "reward_control_parameters_source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r5-w-closure-auto/experiments/R5-W-L1-NEARWALL-RECOVERY1/launch_inputs.proposed.json",
+    "sha256": "0e7e9bf94a2a771fdb50b397178857662c8ba4038decdc6bb3ccf0e5717a719f"
+  },
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_SOURCE_01.json",
+    "sha256": "a491c8bcc8feef69320fe7947facc72a24badb872ac9f5c6e34fe0bb3e465a6c"
+  },
+  "status": "LOCAL_SELF_REVIEW_NOT_INDEPENDENT"
+}

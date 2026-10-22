@@ -1,0 +1,24 @@
+{
+  "status": "PASS_CPU_DIRECT_TRAINING_PREFLIGHT_NO_GPU",
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_RUN_INPUTS_01.json",
+    "sha256": "c6faf12c848365e26dcef9119367b95a8dff5c11136316ad1fd6beabed6d2d05"
+  },
+  "source_commit": "a032dd7c",
+  "snapshot_bytes": 666033513,
+  "snapshot_reserved_bytes": 805306368,
+  "physical_result_free_bytes": 12980662272,
+  "protected_budget_check": "PASS",
+  "resources_to_reserve_on_launch": {
+    "live_starts": 1,
+    "simulator_initializations": 1,
+    "nontraining_transitions": 0,
+    "training_transitions": 65536,
+    "allocated_gpu_seconds": 3790,
+    "live_wall_seconds": 3790,
+    "queue_seconds": 180,
+    "training_checkpoint_writes": 1,
+    "major_scientific_candidates": 1
+  },
+  "gpu_or_simulator_started": false
+}

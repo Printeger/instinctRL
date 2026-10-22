@@ -1,0 +1,81 @@
+{
+  "conditions": {
+    "pulse": {
+      "id": "pulse",
+      "pulse_acceleration_m_s2": 0.5,
+      "sensor_to_wall_distance_m": null,
+      "speed_m_s": 0.2,
+      "task": "pulse_hold"
+    },
+    "reverse": {
+      "id": "reverse",
+      "pulse_acceleration_m_s2": 0,
+      "sensor_to_wall_distance_m": null,
+      "speed_m_s": 0.2,
+      "task": "reverse"
+    },
+    "stop": {
+      "id": "stop",
+      "pulse_acceleration_m_s2": 0,
+      "sensor_to_wall_distance_m": null,
+      "speed_m_s": 0.2,
+      "task": "stop"
+    },
+    "wall": {
+      "id": "wall",
+      "pulse_acceleration_m_s2": 0,
+      "sensor_to_wall_distance_m": 1.5,
+      "speed_m_s": 0.2,
+      "task": "wall_modes"
+    }
+  },
+  "phases": [
+    {
+      "cycle_steps": 0,
+      "delay_cycles": 0,
+      "drop_every_steps": 0,
+      "end_offset": 64,
+      "kind": "original",
+      "lane_counts_per_half": {},
+      "noise_std_m": 0
+    },
+    {
+      "cycle_steps": 192,
+      "delay_cycles": 0,
+      "drop_every_steps": 0,
+      "end_offset": 128,
+      "kind": "robust",
+      "lane_counts_per_half": {
+        "pulse": 4,
+        "reverse": 4,
+        "stop": 4,
+        "wall": 4
+      },
+      "noise_std_m": 0.01
+    },
+    {
+      "cycle_steps": 0,
+      "delay_cycles": 0,
+      "drop_every_steps": 0,
+      "end_offset": 192,
+      "kind": "original",
+      "lane_counts_per_half": {},
+      "noise_std_m": 0
+    },
+    {
+      "cycle_steps": 192,
+      "delay_cycles": 0,
+      "drop_every_steps": 0,
+      "end_offset": 256,
+      "kind": "robust",
+      "lane_counts_per_half": {
+        "pulse": 4,
+        "reverse": 4,
+        "stop": 4,
+        "wall": 4
+      },
+      "noise_std_m": 0.01
+    }
+  ],
+  "schema_version": "r6-training-curriculum/1"
+}

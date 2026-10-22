@@ -292,6 +292,14 @@
         }
       },
       "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED"
+    },
+    {
+      "id": "DIRECT-SNAPSHOT-TRAIN-01",
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 805306368
+      },
+      "status": "UNRELEASED"
     }
   ],
   "new_used": {
