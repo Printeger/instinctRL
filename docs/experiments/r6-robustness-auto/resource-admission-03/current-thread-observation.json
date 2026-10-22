@@ -1,0 +1,95 @@
+{
+  "observed_at": 1792654225.7885683,
+  "peer": {
+    "process": {
+      "pid": 1969832,
+      "pgid": 1969832,
+      "starttime": "204933637",
+      "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa"
+    },
+    "uid": 1000,
+    "gid": 1000,
+    "executable": {
+      "path": "/home/mint/.codex/packages/app-server-daemon/releases/0.163.0-x86_64-unknown-linux-musl/bin/codex",
+      "sha256": "399ff69c431c066e40de318fba45c2b07f45a76b19939d247ee4828fc70c4215"
+    },
+    "socket_inode": 15992129,
+    "socket_device": 66306
+  },
+  "responses": [
+    {
+      "id": 2,
+      "result": {
+        "goal": {
+          "threadId": "01a16275-c109-7302-84bf-4b916ea448e6",
+          "objective": "pasted text file: /home/mint/.codex/attachments/7d738239-2883-4e11-9aab-785b93ffd910/pasted-text-1.txt. Read this file before continuing.",
+          "status": "active",
+          "tokenBudget": null,
+          "tokensUsed": 154181,
+          "timeUsedSeconds": 958,
+          "createdAt": 1792653267,
+          "updatedAt": 1792654225
+        }
+      }
+    },
+    {
+      "id": 3,
+      "result": {
+        "thread": {
+          "id": "01a16275-c109-7302-84bf-4b916ea448e6",
+          "environments": [
+            {
+              "environmentId": "local",
+              "cwd": "/home/mint/rl_dev/instinctRL-dev",
+              "runtimeWorkspaceRoots": [
+                "/home/mint/rl_dev/instinctRL-dev"
+              ]
+            }
+          ],
+          "extra": null,
+          "sessionId": "01a16275-c109-7302-84bf-4b916ea448e6",
+          "forkedFromId": null,
+          "parentThreadId": null,
+          "preview": "pasted text file: /home/mint/.codex/attachments/7d738239-2883-4e11-9aab-785b93ffd910/pasted-text-1.txt. Read this file before continuing.",
+          "ephemeral": false,
+          "section": null,
+          "sectionEnteredAt": null,
+          "projectId": null,
+          "historyMode": "paginated",
+          "modelProvider": "openai",
+          "model": "gpt-6-astra",
+          "reasoningEffort": "medium",
+          "createdAt": 1792653246,
+          "updatedAt": 1792654220,
+          "recencyAt": 1792654116,
+          "status": {
+            "type": "active",
+            "activeFlags": []
+          },
+          "path": "/home/mint/.codex/sessions/2026/10/22/rollout-2026-10-22T15-14-06-01a16275-c109-7302-84bf-4b916ea448e6.jsonl",
+          "cwd": "/home/mint/rl_dev/instinctRL-dev",
+          "cliVersion": "0.163.0",
+          "originator": "codex-tui",
+          "source": "vscode",
+          "canAcceptDirectInput": true,
+          "threadSource": "user",
+          "agentNickname": null,
+          "agentRole": null,
+          "gitInfo": {
+            "sha": "b9b86614da5a275256a2f476e3b2eaf415c19dec",
+            "branch": "main",
+            "originUrl": "git@github.com:Printeger/instinctRL.git"
+          },
+          "name": null,
+          "daybreakEnabled": null,
+          "turns": []
+        },
+        "readState": {
+          "firstUnread": null,
+          "revision": "initial:01a16275-c109-7302-84bf-4b916ea448e6"
+        }
+      }
+    }
+  ],
+  "scope": "READ_ONLY_CURRENT_CONTINUATION_NOT_HANDOFF_ACCEPTANCE"
+}

@@ -1,0 +1,11 @@
+{
+  "status": "REVIEW_RUNNING_NOT_BASELINE_OR_TRAINING",
+  "review_key": "326347acbde8d059e5e3663524601b79e9d75e029c8e70199e88ff570be97105",
+  "review_controller_session": 94636,
+  "next_action": "Consume exact live revision review, then register exact baseline-prelive-03 plan review using r6_initial_baseline.register_review; only accepted prelive permits r6_baseline_input_repair.adopt_reviewed_inputs. No controller restart before adoption. Verify current thread handoff before live dispatch.",
+  "new_plan_sha256": "beca798dc8962254791dffc842ec64282c8e879cee375b985a6768b3cd60c2e4",
+  "original_failure_module_sha256": "bc3625feac5def4aaf37721af389819e474d631f1b48e33c7295bdc7f52168bc",
+  "mandatory_training": true,
+  "actual_baseline_raw": false,
+  "actual_training": false
+}

@@ -1,3 +1,12 @@
+# R6 接续：修复独审通过，准确首次基线预审运行中（未发车）
+
+2026-10-22：controller revision 326347ac... 独审 PASS 并已登记；旧故障模块保持原始 bc3625fe...，旧失败游标可重读。
+新计划 baseline-prelive-03/plan.json 已通过实际 Store CPU 验证；首次基线预审 4b3bb036... 正在运行。
+本次会话 01a16275-c109-7302-84bf-4b916ea448e6 实测仍 active，旧会话 READY 不覆盖本会话。
+准确启动包装 baseline-prelive-03/launch.py 仅以既有只读 RPC 等待本会话 paused/idle/completed（最多600秒），之后进入原控制器与全部原保护；--check 实测拒绝当前 active 状态。
+待新计划预审 PASS 才能调用 r6_baseline_input_repair.adopt_reviewed_inputs 恢复 FIRST_JOB；包装不得在采用前发车。
+完整等待期间当前会话调用数尚 UNKNOWN，不能沿用旧会话的零调用结论。实际基线和训练计数仍0，Goal未完成。
+
 # R6 接续：当前资源独审通过，准确基线计划与修复续接待预审（尚无真实基线/训练）
 
 2026-10-22：按 CONTINUATION_USER_AUTHORITY_20261022.txt 接续原目标和全部账本，必须完成实际训练；不能以 BASELINE_SUFFICIENT 跳过。
