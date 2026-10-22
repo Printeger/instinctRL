@@ -16,7 +16,7 @@
   "new_training_authorized": true,
   "diagnostic_goal_envelope_authorized": false,
   "diagnostic_goal_requirements": "../docs/goals/R5_DIAGNOSTIC_CLOSURE_REQUIREMENTS.md",
-  "live_permission_note": "New explicit 20261019 W Goal delegated envelope registered. Every new job still requires exact independent prelive/Store issuance and committed inputs; old formal-first-segment restrictions remain historical.",
+  "live_permission_note": "R6 local-direct user authority 2026-10-22 supersedes legacy Store/prelive-model/thread-RPC launch requirements for this task only. Scientific, asset, resource, STOP and exact frozen-input safeguards remain mandatory.",
   "diagnostic_goal_status": "READY_FOR_PAIRED_PILOT_WITH_FIRST_ROLLOUT_GATE",
   "paired_pilot_task_requested": true,
   "paired_pilot_user_authority": "../docs/experiments/r5-paired-pilot-20261013/user_task_authority.json",
@@ -431,5 +431,17 @@
     "model_sessions_charged": 229,
     "model_sessions_remaining": 283,
     "handoff_restart_evidence": "docs/experiments/r6-robustness-auto/controller-candidate-01/rearm-02.json"
+  },
+  "r6_direct_training_execution": {
+    "execution_mode": "local-direct",
+    "status": "PREPARING_NO_LIVE_RUN",
+    "authority": "docs/experiments/r6-direct-training/USER_AUTHORITY.txt",
+    "requirements": "docs/goals/InstinctRL_R6_Standalone_Training_Requirements.md",
+    "legacy_import": "docs/experiments/r6-direct-training/LEGACY_BUDGET_IMPORT.json",
+    "budget": "docs/experiments/r6-direct-training/RESOURCE_LEDGER.json",
+    "legacy_run_chain_read_only": true,
+    "current_live_jobs": [],
+    "goal_complete": false,
+    "next_action": "Implement direct baseline/train/evaluate execution with shared scientific cores; freeze and run baseline before bounded PPO."
   }
 }
