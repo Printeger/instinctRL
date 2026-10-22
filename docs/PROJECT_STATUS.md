@@ -1,3 +1,12 @@
+# R6 接续：当前会话绑定已修，独审受本地模型路由故障阻断（未发车）
+
+2026-10-22：首次基线预审核实 u640、ICS .15、16块、协议/快照/容量；唯一 MUST_FIX 为生产检查仍绑定旧会话。
+已通过追加 continuation-binding 修正实际 preflight/RPC/等待审计来源，保留旧会话计账与证据；96项CPU检查通过，真实新会话 active 被正确拒绝。
+本次控制换版独审 15047dc0... 未进入审查，因 workspace routing discovery failed 非零退出；receipt 清理 VERIFIED_NO_OWNED_DESCENDANTS，未重试/未退款。
+无模型 HTTPS 复查 chatgpt.com 返回 SSL_ERROR_SYSCALL，详见 baseline-prelive-03/route-failure-01.json。不是沙箱或输出卷旧阻塞。
+待本地路由恢复后，绑定失败 receipt 登记独审替换，再复审准确基线计划、采用新输入恢复 FIRST_JOB。当前没有 live 作业或可等待训练进程。
+实际基线 raw 与训练均未完成，完整 Goal 保持未完成。
+
 # R6 接续：修复独审通过，准确首次基线预审运行中（未发车）
 
 2026-10-22：controller revision 326347ac... 独审 PASS 并已登记；旧故障模块保持原始 bc3625fe...，旧失败游标可重读。

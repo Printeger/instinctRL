@@ -1,0 +1,53 @@
+{
+  "status": "LOCAL_MODEL_ROUTE_UNAVAILABLE_REVIEW_NOT_COMPLETED",
+  "event_key": "15047dc0b46bf249743e37353004683d92ed47801a3804d1ed00380362c6dc3c",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/15047dc0b46bf249743e37353004683d92ed47801a3804d1ed00380362c6dc3c/receipt.json",
+    "sha256": "2bcba5a6a424777960a20636487d5f25ff2b71245c69a0bd193c52a63dd1d204"
+  },
+  "failure": "RuntimeError('MODEL_NONZERO_EXIT')",
+  "cleanup": {
+    "observed_identities": [],
+    "signalled_process_count": 0,
+    "stable_empty_scans": 2,
+    "status": "VERIFIED_NO_OWNED_DESCENDANTS"
+  },
+  "worker_live": false,
+  "charged": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 237,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 28529459200,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "remaining": {
+    "allocated_gpu_seconds": 43200,
+    "automatic_model_sessions": 275,
+    "live_starts": 64,
+    "live_wall_seconds": 43200,
+    "major_scientific_candidates": 3,
+    "nontraining_transitions": 2000000,
+    "output_actual_plus_unreleased_reservations_bytes": 108909494272,
+    "queue_seconds": 21600,
+    "simulator_initializations": 64,
+    "training_checkpoint_writes": 96,
+    "training_transitions": 3000000
+  },
+  "nonmodel_network_probe": {
+    "url": "https://chatgpt.com/backend-api/ps/mcp",
+    "exit_code": 35,
+    "error": "OpenSSL SSL_connect: SSL_ERROR_SYSCALL"
+  },
+  "no_duplicate_model_attempt": true,
+  "no_live_launch": true,
+  "continuation_binding": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/continuation-binding.json",
+    "sha256": "7b3b9ff62022bce83f2bfe52528588157716292e7e0671330898fa658d0ae815"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "plan": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/plan.json",
+    "sha256": "beca798dc8962254791dffc842ec64282c8e879cee375b985a6768b3cd60c2e4"
+  },
+  "predecessor": "4b3bb0367fe3804132e1003670b2d2f31184221b9591609d2dc09ddb5e116e8b",
+  "predecessor_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/4b3bb0367fe3804132e1003670b2d2f31184221b9591609d2dc09ddb5e116e8b/receipt.json",
+    "sha256": "7bf6c9cf21e00c31e93a321043eb1b7c938ee8436069b3f005f71cf19290509f"
+  },
+  "reason": "The sole prelive MUST_FIX was actual production thread binding. Production binding now selects the exact current continuation and pinned native trace; RPC uses its exact objective; preflight demonstrably rejects active current thread. Old accounting/READY/receipts remain untouched. Independently review this narrow correction plus the full exact plan. launch.py only waits 600 seconds for externally paused/idle/completed and then invokes existing controller; actual Store/resource guards remain mandatory. No dispatch while this Goal is active and no claim of already-completed handoff.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/continuation-binding.json",
+      "sha256": "7b3b9ff62022bce83f2bfe52528588157716292e7e0671330898fa658d0ae815"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/continuation-binding-cpu.json",
+      "sha256": "1c36137151c072358c8731cf103c98c8e578e6d4dbafd6a9f419a2490267003b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/launch.py",
+      "sha256": "6f12990f6edb2554c69197f657b68e2f72700e0c16cac4358c15172364890c90"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/current-thread-check.json",
+      "sha256": "158d145bb2408592b1eb74ab8e797491fac757eadd580c0968f2dfecea9ef661"
+    }
+  ]
+}

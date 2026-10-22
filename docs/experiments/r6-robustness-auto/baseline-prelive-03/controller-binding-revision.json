@@ -1,0 +1,23 @@
+{
+  "from_commit": "ee8e692b5acade5da52eff6f9e5445bd2ab13782",
+  "to_commit": "df8c7ed824509d851b735e95cbdaeb104cc00b33",
+  "reason": "Fix sole exact prelive MUST_FIX: current continuation identity must replace old thread in production preflight/RPC/wait capture. Preserve original accounting and all failure/READY records. Validate narrow binding and old cursor readability; no retry/reset or live permission. Current active-thread preflight correctly rejects. Bounded launcher waits externally paused/idle/completed; no tool here pauses a Goal.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/continuation-binding.json",
+      "sha256": "7b3b9ff62022bce83f2bfe52528588157716292e7e0671330898fa658d0ae815"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/continuation-binding-cpu.json",
+      "sha256": "1c36137151c072358c8731cf103c98c8e578e6d4dbafd6a9f419a2490267003b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/launch.py",
+      "sha256": "6f12990f6edb2554c69197f657b68e2f72700e0c16cac4358c15172364890c90"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/4b3bb0367fe3804132e1003670b2d2f31184221b9591609d2dc09ddb5e116e8b/last-message.json",
+      "sha256": "66bd315c1f5ba6ed84e80196187633c5327c31c3ae9865d82c18d3ca3561f8c8"
+    }
+  ]
+}
