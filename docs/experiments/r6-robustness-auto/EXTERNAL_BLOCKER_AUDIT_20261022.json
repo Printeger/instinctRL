@@ -1,0 +1,71 @@
+{
+  "status": "VERIFIED_EXTERNAL_BLOCKER_GOAL_INCOMPLETE",
+  "previous_turn_classification": "PROGRESS_REVIEWED_CONTROLLER_RESUME_IMPLEMENTED",
+  "repeated_blocker": "LOCAL_READONLY_SANDBOX_UNAVAILABLE_AND_ADMIN_CREDENTIAL_REQUIRED",
+  "consecutive_goal_turns_observed_at_least": 4,
+  "current_checks": {
+    "exact_plan": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+      "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
+    },
+    "local_read_preflight_error": "REVIEW_LOCAL_READ_UNAVAILABLE_NO_MODEL_STARTED: bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted",
+    "preflight_state_unchanged": true,
+    "sudo": {
+      "argv": [
+        "sudo",
+        "-n",
+        "/usr/bin/true"
+      ],
+      "exit_code": 1,
+      "stderr": "sudo: a password is required\n"
+    },
+    "production_controllers": 0,
+    "production_jobs": 0,
+    "current_job": null,
+    "current_model_event": null
+  },
+  "earlier_evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/ACCESS_RECHECK_20261022_BUDGET_512.json",
+      "sha256": "23a283a1e8032b96ca4e4e11221ccbcd29a2e8405b9ce7ad6e58ddc47df74b06"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/PLATFORM_ROOT_ACTIVITY_FINAL_20261022.json",
+      "sha256": "0d9189b95b6ef0f522b4174e11bb30e330715114df959674f84d05ed417bb381"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PLATFORM_WAIT.json",
+      "sha256": "a28d5debadb8269ce451534049be4db944eb8e0ccc048190b93477f8f8f18361"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_CONTROLLER_RESUME.json",
+      "sha256": "17f6b0b65c1e6cbd993470b1aa3384fc8ce7ee337764575afd5582517803346d"
+    }
+  ],
+  "next_required_action": "Administrator restores supported bwrap/AppArmor access; re-run exact read-only plan preflight, then complete remaining repair/review and verified detached handoff before first baseline.",
+  "impasse_reason": "The next empirical integration/review step cannot read local originals in the required sandbox. No production process is active to observe. Further generic recovery scaffolding does not validate or replace that external execution dependency; no actual controller failure is available for task-specific live diagnosis.",
+  "unresolved_engineering": [
+    "Automatic control-code repair and remaining exception dispatch/recovery are not accepted as complete.",
+    "Actual deployment and zero-model platform handoff remain unverified."
+  ],
+  "incomplete_science": [
+    "New u640 baseline measurement",
+    "Evidence-based training or baseline-sufficient determination",
+    "Three actual random-stream confirmations",
+    "Final holdout comparison",
+    "Real Isaac videos",
+    "Independent final audit and delivery"
+  ],
+  "budget": {
+    "automatic_wakes": 191,
+    "charged": 222,
+    "cap": 512,
+    "remaining": 290,
+    "no_refund": true
+  },
+  "model_calls_added": 0,
+  "gpu_calls_added": 0,
+  "goal_complete": false,
+  "scientific_negative": false,
+  "stop_file_created": false
+}

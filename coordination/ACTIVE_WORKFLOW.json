@@ -143,7 +143,7 @@
   },
   "r6_robustness_execution": {
     "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
-    "status": "FIRST_PLAN_CPU_VALIDATED_ENGINEERING_REPAIR_AND_PLATFORM_HANDOFF_PENDING",
+    "status": "BLOCKED_EXTERNAL_LOCAL_SANDBOX_AND_PLATFORM_HANDOFF",
     "authority": "docs/experiments/r6-robustness-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md",
     "budget": "docs/experiments/r6-robustness-auto/goal_budget.json",
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
@@ -210,7 +210,7 @@
     "fixed_storage_accepted_review": "docs/experiments/r6-robustness-auto/reviews/fixed-storage-integration-review.json",
     "production_storage_registration": "docs/experiments/r6-robustness-auto/production-storage-baseline-01/REGISTRATION.json",
     "platform_automatic_goal_wakes": 181,
-    "total_automatic_model_sessions_minimum": 221,
+    "total_automatic_model_sessions_minimum": 222,
     "model_budget_audit": "docs/experiments/r6-robustness-auto/MODEL_USAGE_PLATFORM_RESUMPTION.json",
     "model_session_cap": 512,
     "protocol_science_review": "docs/experiments/r6-robustness-auto/reviews/protocol-science-preflight-review.json",
@@ -420,6 +420,7 @@
     "platform_wait_capture_evidence": "docs/experiments/r6-robustness-auto/CPU_PLATFORM_WAIT.json",
     "platform_handoff_verified": false,
     "controller_reviewed_resume_status": "CPU_REVIEWED_FRESH_PROCESS_CONTROLLER_RESUME_PASS_NOT_DEPLOYED",
-    "controller_reviewed_resume_evidence": "docs/experiments/r6-robustness-auto/CPU_CONTROLLER_RESUME.json"
+    "controller_reviewed_resume_evidence": "docs/experiments/r6-robustness-auto/CPU_CONTROLLER_RESUME.json",
+    "external_blocker_audit": "docs/experiments/r6-robustness-auto/EXTERNAL_BLOCKER_AUDIT_20261022.json"
   }
 }
