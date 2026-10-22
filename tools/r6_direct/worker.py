@@ -36,7 +36,20 @@ def preflight(plan):
     from training_workloads.unified_h1.native_volume import validate as native_validate
     from training_workloads.unified_h1.result_volume import validate as result_validate
     native=native_validate(plan['native_volume'],host_root_uid=namespace_host_root_uid())
-    result=result_validate(plan['result_volume'],output_cap_bytes=contract['parameters']['output_cap_bytes'],host_root_uid=namespace_host_root_uid())
+    result=result_validate(plan['result_volume'],output_cap_bytes=contract['parameters']['output_cap_bytes'],
+        minimum_free_bytes=0 if 'result_payload_cap_bytes' in plan else 256*1024**2,
+        host_root_uid=namespace_host_root_uid())
+    if 'result_payload_cap_bytes' in plan:
+        # Reuse a nonempty prepaid volume without claiming its original empty
+        # capacity. Kernel volume checks above remain, and each new attempt gets
+        # a smaller enforced write budget backed by currently free capacity.
+        cap=plan['result_payload_cap_bytes']
+        if type(cap) is not int or not 256*1024**2<=cap<=result['payload_cap_bytes']:
+            raise ValueError('DIRECT_RESULT_PAYLOAD_CAP')
+        stats=os.statvfs(result['target'])
+        if result['free_bytes']<cap+64*1024**2 or stats.f_favail<4096:
+            raise ValueError('DIRECT_RESULT_REMAINING_CAPACITY')
+        result=dict(result,payload_cap_bytes=cap)
     if Path(plan['native_dir'])!=Path(native['target'])/plan['run_id']:
         raise ValueError('DIRECT_NATIVE_DESTINATION')
     if Path(plan['attempt_dir'])!=Path(result['target'])/plan['run_id']:

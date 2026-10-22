@@ -9,9 +9,13 @@ from tools.r6_direct.import_legacy import pin
 
 ROOT=Path(__file__).resolve().parents[2]
 # Pre-existing R6 training integration. The added paths are conditioned on a
-# curriculum, absent from baseline evaluation. All other product files match
-# the previously verified baseline checkout exactly.
+# curriculum, absent from baseline evaluation. Additional exact deltas below
+# implement the independently reviewed evaluation-only delayed-start handling
+# and PPO rejection guard (EVALUATION_STARTUP_REPAIR_REVIEW.json).
 PRODUCT_DELTAS = {
+    'isaaclab-training/instinctlab/envs/unified_h1_direct_env.py': ('a3c06c94865c5211d1d438abb35629071eb6171e3a4ab57fe64cd23d04508e2a', '997376697fc30d650cc69c126892272bf4ebe9a494be948edc03a367c8b3a3da'),
+    'isaaclab-training/instinctlab/observations/robustness_adapter.py': ('3d41a275babc165c0dc75b3cba85ad45abe5d680bf79f50bae95ca57f56eb463', 'ae24396f8abc37d96edddcce5a97b9e9e2676231368d85ef2dea84d76160060b'),
+    'isaaclab-training/instinctlab/training/rollout_h1.py': ('99368e65552960680e2fbf860fdf726ec51ab3671c420719cdec90b6992cdabc', 'e59034c1c63b76a54a9c779418b61c26f0a4c597cb247da33cf8aab9d58c74d6'),
     'isaaclab-training/instinctlab/observations/robustness_physics.py': (
         '19b66208bd99e93853ffc2ce4246382dac6c2e36262ed11dd688b4c7ae429863',
         '33741b457a879086e6261e3a887b58bcc7f63e799b108751d41ae49bff0fee4c'),

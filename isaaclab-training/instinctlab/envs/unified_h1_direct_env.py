@@ -544,7 +544,10 @@ class UnifiedH1DirectEnv(R6PhysicsMixin, R6MeasurementMixin, TaslabDirectEnv):
         if self._task is None or self._control is None or self._h1_next_command_b is None:
             raise RuntimeError("H1 task/control/next-command state is unavailable")
         masks = self._task.termination.masks
-        reward = compute_reward_h1(
+        from instinctlab.task.evaluation_reward import compute_evaluation_reward
+        measurement_block=getattr(self, '_r6_measurements', None)
+        context=None if measurement_block is None else measurement_block.get('reward_context')
+        reward = compute_evaluation_reward(lambda: compute_reward_h1(
             lidar_grid=self._policy["lidar_grid"], command_b=self._command_b,
             v_gov_b=self._control.v_gov_b, v_final_b=self._control.v_final_b,
             v_corr_b=self._control.v_corr_b, residual_neutrality_weight=self._h1_residual_neutrality_weight,
@@ -556,15 +559,20 @@ class UnifiedH1DirectEnv(R6PhysicsMixin, R6MeasurementMixin, TaslabDirectEnv):
             anchor_usable_fraction=self._control.anchor_metrics["usable_fraction"],
             ics_beta=self._control.ics_metrics["beta"], exact_clearance_m=self._task.exact_clearance_m,
             collision=masks["collision"], below_height=masks["below_height"], above_height=masks["above_height"],
-        )
+        ), context=context)
         self._reward = reward
         timeout_critic = build_critic_h1_state(
             root_state_w=self._task.root_state_w, env_origin_w=self.scene.env_origins,
             actual_velocity_b=self._task.actual_velocity_b, exact_clearance_m=self._task.exact_clearance_m,
             collision=self._task.collision, command_b=self._h1_next_command_b,
         ).privileged
-        self.extras["reward_components"] = {key: value.detach().clone() for key, value in reward.components.items()}
-        self.extras["reward_diagnostics"] = {key: value.detach().clone() for key, value in reward.diagnostics.items()}
+        self.extras["reward_valid"] = reward is not None
+        self.extras["reward_components"] = {} if reward is None else {key: value.detach().clone() for key, value in reward.components.items()}
+        self.extras["reward_diagnostics"] = (
+            dict(reward_valid=False,learning_eligible=False,
+                 reason='AUDITED_DELAY_STARTUP_UNAVAILABLE',context=dict(context),
+                 transport='zero tensor required by env.step; evaluator ignores it; not a valid reward')
+            if reward is None else {key: value.detach().clone() for key, value in reward.diagnostics.items()})
         self.extras["pre_reset"] = {
             "reset_mask": self.reset_buf.detach().clone(), "episode_length": self.episode_length_buf.detach().clone(),
             "root_state_w": self._robot.data.root_state_w.detach().clone(), "critic_h1": timeout_critic.detach().clone(),
@@ -587,7 +595,9 @@ class UnifiedH1DirectEnv(R6PhysicsMixin, R6MeasurementMixin, TaslabDirectEnv):
         self._command_b.copy_(self._h1_next_command_b)
         self._h1_global_policy_step += 1
         self._h1_next_command_b = None
-        return reward.total[:, 0].clone()
+        # All snapshots and command advancement above run for both paths.
+        # This zero is only an ignored env.step transport value, never a reward.
+        return torch.zeros_like(self._command_b[:, 0]) if reward is None else reward.total[:, 0].clone()
 
     def _get_observations(self):
         legacy = super()._get_observations()

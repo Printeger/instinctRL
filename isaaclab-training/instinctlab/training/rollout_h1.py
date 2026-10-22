@@ -25,6 +25,8 @@ def _observation(value: Mapping[str, Any], config: RolloutConfig) -> tuple[dict[
 
 
 def collect_h1_transition(environment: Any, trainer: PPOTrainer, observation: Mapping[str, Any], config: RolloutConfig):
+    if (getattr(environment, '_r6_measurements', None) or {}).get('nontraining_baseline'):
+        raise ValueError('evaluation-only reward mode cannot enter PPO collection')
     if not isinstance(trainer, PPOTrainer) or not isinstance(trainer.critic, PrivilegedCriticH1):
         raise TypeError("H1 rollout requires a PrivilegedCriticH1 trainer")
     policy, critic = _observation(observation, config); device = critic.device
@@ -38,6 +40,12 @@ def collect_h1_transition(environment: Any, trainer: PPOTrainer, observation: Ma
     if not isinstance(returned, tuple) or len(returned) != 5:
         raise ValueError("environment step must return the Gymnasium five-tuple")
     next_observation, reward, terminated, truncated, extras = returned
+    if isinstance(extras, Mapping):
+        diagnostics = extras.get('reward_diagnostics', {})
+        if extras.get('reward_valid') is False or (
+            isinstance(diagnostics, Mapping) and diagnostics.get('learning_eligible') is False
+        ):
+            raise ValueError('unavailable evaluation reward cannot enter PPO collection')
     if not torch.equal(action, staged):
         raise RuntimeError("environment mutated action")
     next_policy, next_critic = _observation(next_observation, config)

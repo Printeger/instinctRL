@@ -95,15 +95,16 @@
     "authority": "docs/experiments/r6-direct-training/USER_AUTHORITY.txt",
     "budget": "docs/experiments/r6-direct-training/RESOURCE_LEDGER.json",
     "current_live_jobs": [],
+    "evaluation_repair": "docs/experiments/r6-direct-training/EVALUATION_STARTUP_REPAIR_REVIEW.json",
     "execution_mode": "local-direct",
     "goal_complete": false,
     "latest_diagnostic": "docs/experiments/r6-direct-training/diagnostics/cuda-02/ANALYSIS.json",
-    "latest_failure": "docs/experiments/r6-direct-training/BASELINE_02_FAILURE.json",
+    "latest_failure": "docs/experiments/r6-direct-training/BASELINE_03_FAILURE_ANALYSIS.json",
     "legacy_import": "docs/experiments/r6-direct-training/LEGACY_BUDGET_IMPORT.json",
     "legacy_run_chain_read_only": true,
-    "next_action": "Start frozen baseline 03 after normal push; use unchanged scientific contract.",
+    "next_action": "Freeze repaired baseline04 source and verify remaining prepaid storage before live.",
     "requirements": "docs/goals/InstinctRL_R6_Standalone_Training_Requirements.md",
-    "status": "BASELINE_03_CPU_READY_NOT_STARTED"
+    "status": "BASELINE_03_PARTIAL_FAILED_REPAIR_CPU_PASS"
   },
   "r6_robustness_execution": {
     "accepted_cpu_control_review": "docs/experiments/r6-robustness-auto/reviews/cpu-control-fix-review.json",

@@ -217,6 +217,22 @@ def test_unified_environment_source_retains_a0004_ray_evidence_and_explicit_next
     assert "prepare_h1_step" in source and "_h1_next_command_b" in source
 
 
+@pytest.mark.parametrize('extras', [
+    {'reward_valid': False},
+    {'reward_diagnostics': {'learning_eligible': False}},
+])
+def test_h1_rollout_rejects_unavailable_reward_before_buffer(extras):
+    trainer = _trainer()
+    observation = {'policy': {'lidar_grid': torch.zeros(1, 12, 59, 360),
+                              'state_vec': torch.zeros(1, 52)},
+                   'critic': torch.zeros(1, 21)}
+    class Environment:
+        def step(self, action):
+            return observation, torch.zeros(1), torch.tensor([False]), torch.tensor([False]), extras
+    with pytest.raises(ValueError, match='unavailable evaluation reward'):
+        collect_h1_transition(Environment(), trainer, observation, RolloutConfig(1, 1))
+
+
 def test_initial_command_jump_synchronizes_control_policy_without_advancing_history():
     source_path = Path(__file__).parents[1] / "instinctlab/envs/unified_h1_direct_env.py"
     tree = ast.parse(source_path.read_text())

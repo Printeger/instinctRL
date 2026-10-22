@@ -60,15 +60,32 @@
         "sha256": "491c91c4f44ee09e8d3276c589c0aa03b387fa5dcbee463eb70435528a92f0ad"
       },
       "resources": {
-        "allocated_gpu_seconds": 3790,
+        "allocated_gpu_seconds": 73,
         "live_starts": 1,
-        "live_wall_seconds": 3790,
+        "live_wall_seconds": 73,
         "nontraining_transitions": 193600,
         "queue_seconds": 180,
         "simulator_initializations": 1,
         "training_transitions": 0
       },
-      "status": "UNRELEASED"
+      "settlement": {
+        "charged_seconds": 73,
+        "original_resources": {
+          "allocated_gpu_seconds": 3790,
+          "live_starts": 1,
+          "live_wall_seconds": 3790,
+          "nontraining_transitions": 193600,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-01/receipt.json",
+          "sha256": "491c91c4f44ee09e8d3276c589c0aa03b387fa5dcbee463eb70435528a92f0ad"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED"
     },
     {
       "id": "DIRECT-SNAPSHOT-BASELINE-02",
@@ -107,15 +124,32 @@
         "sha256": "851eba38f982678fe0495e535f4ec32e4cfbd5d694e4390001f769878425dd57"
       },
       "resources": {
-        "allocated_gpu_seconds": 3790,
+        "allocated_gpu_seconds": 139,
         "live_starts": 1,
-        "live_wall_seconds": 3790,
+        "live_wall_seconds": 139,
         "nontraining_transitions": 193600,
         "queue_seconds": 180,
         "simulator_initializations": 1,
         "training_transitions": 0
       },
-      "status": "UNRELEASED"
+      "settlement": {
+        "charged_seconds": 139,
+        "original_resources": {
+          "allocated_gpu_seconds": 3790,
+          "live_starts": 1,
+          "live_wall_seconds": 3790,
+          "nontraining_transitions": 193600,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-02/receipt.json",
+          "sha256": "851eba38f982678fe0495e535f4ec32e4cfbd5d694e4390001f769878425dd57"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED"
     },
     {
       "id": "R6-DIRECT-CUDA-DIAGNOSTIC-01",
@@ -162,11 +196,59 @@
         "output_actual_plus_unreleased_reservations_bytes": 805306368
       },
       "status": "UNRELEASED"
+    },
+    {
+      "id": "R6-DIRECT-BASELINE-03",
+      "legacy_storage_event": "[\"STORAGE:J-d737390980235144\",\"R6-ROBUSTNESS-AUTO-20261019\",\"2f5f8f4a8cdf6d96711b93a8a25071cb83ca1fd3c1b52c4ab9a96accf25da520\",\"STORAGE:J-d737390980235144\",\"job-storage-allocation\"]",
+      "legacy_storage_new_binding": {
+        "attempt_dir": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-03",
+        "native_dir": "/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-BASELINE-03"
+      },
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-03/receipt.json",
+        "sha256": "576c37d05a5fb3eb12574a8a23b28aef51b9a649781960abbc7586b627fd2802"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 708,
+        "live_starts": 1,
+        "live_wall_seconds": 708,
+        "nontraining_transitions": 193600,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_transitions": 0
+      },
+      "settlement": {
+        "charged_seconds": 708,
+        "original_resources": {
+          "allocated_gpu_seconds": 3790,
+          "live_starts": 1,
+          "live_wall_seconds": 3790,
+          "nontraining_transitions": 193600,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-03/receipt.json",
+          "sha256": "576c37d05a5fb3eb12574a8a23b28aef51b9a649781960abbc7586b627fd2802"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED"
+    },
+    {
+      "id": "DIRECT-PREPARATION-METADATA-02",
+      "purpose": "development",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 8388608
+      },
+      "status": "UNRELEASED"
     }
   ],
   "new_used": {
     "allocated_gpu_seconds": 0,
-    "automatic_model_sessions": 19,
+    "automatic_model_sessions": 70,
     "live_starts": 0,
     "live_wall_seconds": 0,
     "major_scientific_candidates": 0,

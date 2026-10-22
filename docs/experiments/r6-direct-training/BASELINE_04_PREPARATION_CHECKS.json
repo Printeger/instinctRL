@@ -1,0 +1,19 @@
+{
+  "preliminary_runner_check": "4 expected pidfd-unavailable errors when invoked with science Python; supervisor must use /usr/bin/python3; rerun pending",
+  "result_storage": {
+    "existing_free_bytes": 17629364224,
+    "new_payload_cap_bytes": 17179869184,
+    "physical_volume_pin": {
+      "path": "/var/lib/instinctrl-r6-results/J-d737390980235144/volume.json",
+      "sha256": "082966da51638ecd3734bff4e8a7b85bb08700da1de3b7d580b35b4bc3f5572b"
+    },
+    "policy": "Original kernel cap and historical quota remain. Smaller new-attempt write cap, plus 64MiB free capacity and 4096 free inodes required; no old files removed. Per-block quotas and scientific protocol unchanged."
+  },
+  "science_tests": 26,
+  "settlement_tests": 2,
+  "status": "CPU_REPAIR_PASS_PENDING_FROZEN_PREFLIGHT",
+  "supervisor_recheck": {
+    "command": "/usr/bin/python3 -m unittest tools.r6_direct.test_run tools.r6_direct.test_ipc tools.r6_direct.test_settle",
+    "passed": 8
+  }
+}

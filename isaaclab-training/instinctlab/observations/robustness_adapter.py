@@ -11,7 +11,9 @@ from .robustness import RangeDelivery
 
 class R6MeasurementMixin:
     def configure_r6_measurements(self, *, seed, stream_id, sigma_m, delay_cycles,
-                                  drop_steps, frame_limit, audit_sink):
+                                  drop_steps, frame_limit, audit_sink, evaluation_contract=None):
+        from instinctlab.task.evaluation_reward import validate_evaluation_contract
+        nontraining_baseline=validate_evaluation_contract(evaluation_contract)
         if getattr(self,'_r6_measurements',None) is not None:
             raise RuntimeError('finish the existing R6 measurement block first')
         if getattr(self,'_h1_evaluation_case',None) is not None:
@@ -26,7 +28,8 @@ class R6MeasurementMixin:
         chain=RangeDelivery(lanes=self.num_envs,rays=RAY_COUNT,seed=seed,stream_id=stream_id,
             sigma_m=sigma_m,delay_cycles=delay_cycles,device=self._actions.device,dtype=self._actions.dtype)
         self._r6_measurements=dict(chain=chain,drop_steps=frozenset(drop_steps),frame_limit=frame_limit,
-            sequence=0,sink=audit_sink,reset_lanes=set(),failed=False)
+            sequence=0,sink=audit_sink,reset_lanes=set(),failed=False,
+            nontraining_baseline=nontraining_baseline,reward_context=None)
 
     def finish_r6_measurements(self):
         block=getattr(self,'_r6_measurements',None)
@@ -57,7 +60,17 @@ class R6MeasurementMixin:
             audit=block['chain'].deliver(ranges_m,validity,policy_time,drop)
             # Sink cannot modify the measurement passed into actor/ICS history.
             frame=tuple(audit[k].clone() for k in ('delivered_ranges','delivered_validity','acquisition_time'))
+            context=dict(
+                nontraining_baseline=block['nontraining_baseline'],
+                first_delayed_observation=block['sequence']==0 and block['chain'].delay==1,
+                all_lanes_reset=block['reset_lanes']==set(range(self.num_envs)),
+                unavailable_all_lanes=bool((~audit['frame_available']).all()),
+                delivered_all_invalid=bool((~audit['delivered_validity']).all()),
+                producer_coverage_sufficient=bool((audit['clean_validity'].float().mean(1)>=.1).all()),
+                not_dropped=bool((~audit['drop']).all()),audit_written=True,
+                input_measurement_sequence=block['sequence'])
             block['sink'](block['sequence'],audit)
+            block['reward_context']=context
         except BaseException:
             block['failed']=True
             raise

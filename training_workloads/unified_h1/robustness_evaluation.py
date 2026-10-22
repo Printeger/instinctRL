@@ -49,7 +49,9 @@ def evaluate_block(backend,block,*,run_id,seed,split,expected_mass_kg,range_quot
             force_sink=lambda row:record('force',row),expected_mass_kg=expected_mass_kg)
         env.configure_r6_measurements(seed=seed,stream_id=split+'/'+block['id'],sigma_m=block['noise_std_m'],
             delay_cycles=block['delay_cycles'],drop_steps=block.get('drop_policy_steps',[]),
-            frame_limit=block['steps']+1,audit_sink=measurement)
+            frame_limit=block['steps']+1,audit_sink=measurement,
+            evaluation_contract=(backend.runtime_contract if getattr(backend,'execution_mode',None)=='local-direct'
+                                 else None))
         reference=env._command_b
         env.set_h1_initial_command(torch.zeros_like(reference),0)
         env.stage_r6_world_command(world_command(block,0,reference))

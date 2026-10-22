@@ -1,0 +1,57 @@
+{
+  "files": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+      "sha256": "997376697fc30d650cc69c126892272bf4ebe9a494be948edc03a367c8b3a3da"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/observations/robustness_adapter.py",
+      "sha256": "ae24396f8abc37d96edddcce5a97b9e9e2676231368d85ef2dea84d76160060b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/training/rollout_h1.py",
+      "sha256": "e59034c1c63b76a54a9c779418b61c26f0a4c597cb247da33cf8aab9d58c74d6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/task/evaluation_reward.py",
+      "sha256": "f34134514b063625b62f0fb4833e7f60c141c3128eca3d9095038e49dc6f342b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "228ca7c530709148e0bebb17c8aef9ac747cf7325cea29ce00cf27b27069acc7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_direct/test_evaluation_reward.py",
+      "sha256": "5573d432a394b0de7549f91fd563673da1725e0f6c416b7c45db9a6e3c8858bc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/tests/test_unified_h1_contract.py",
+      "sha256": "f2acaddbbf098cfbb5a34c52a1eea07c553d7cf4723d58434e0818a4ecb8d857"
+    }
+  ],
+  "independent_findings": [
+    "Initial delayed unavailable observation is intentional protocol behavior; evaluation does not consume reward.",
+    "Constrained local-direct baseline exception acceptable only for audited initial unavailable frame; all received low coverage remains strict.",
+    "MUST_FIX: learning receiver must reject explicit invalid reward before transition buffer.",
+    "Recommend real AuditLog serialization roundtrip."
+  ],
+  "limitations": [
+    "No training delayed-start reward solution supplied.",
+    "No simulator validation of this revision yet.",
+    "Not final scientific acceptance."
+  ],
+  "resolution": "PPO rejects evaluation-mode environments before stepping, and reward_valid=False or diagnostics.learning_eligible=False after step; historical absent flags remain compatible. Real CPU tests and audit roundtrip pass.",
+  "reviewer": "/root/coverage_review",
+  "status": "CONDITIONAL_INDEPENDENT_REVIEW_CPU_FINDING_RESOLVED_NOT_LIVE_ACCEPTANCE",
+  "tests": [
+    {
+      "command": "PYTHONPATH=isaaclab-training:. /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 -m unittest tools.r6_direct.test_evaluation_reward tools.test_r6_measurement_adapter",
+      "passed": 11
+    },
+    {
+      "command": "PYTHONPATH=isaaclab-training:. /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 -m pytest -q isaaclab-training/tests/test_unified_h1_contract.py",
+      "passed": 15,
+      "warnings": "4 unrelated preexisting pytest temporary quota fixture cleanup warnings; originals preserved"
+    }
+  ]
+}

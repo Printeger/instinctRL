@@ -1,0 +1,90 @@
+{
+  "audit_counts": {
+    "force": 20,
+    "identity": 1,
+    "initial": 1,
+    "reset": 32,
+    "step_attempt": 1,
+    "step_complete": 0
+  },
+  "budget": "All new reservations and historical charges retained; no settlement performed",
+  "cleanup": "VERIFIED_NO_OWNED_PROCESSES",
+  "completed_blocks": {
+    "S-clean-high": {
+      "independent_replay": "PENDING",
+      "motion_pass": true,
+      "successes": 32,
+      "total": 32
+    },
+    "S-clean-low": {
+      "independent_replay": "PENDING",
+      "motion_pass": true,
+      "successes": 32,
+      "total": 32
+    },
+    "S-noise": {
+      "independent_replay": "PENDING",
+      "motion_pass": true,
+      "successes": 32,
+      "total": 32
+    }
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 2021,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 2020,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 9,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 64640,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 64640,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "error": "MeasurementCoverageUnavailable('MEASUREMENT_COVERAGE_UNAVAILABLE: reliable fraction below 0.1')",
+  "failed_block": "S-delay-drop",
+  "failure_policy_step": 0,
+  "measurement_evidence": {
+    "clean_valid_fraction_max": 0.5880414312617702,
+    "clean_valid_fraction_min": 0.5481167608286253,
+    "delivered_validity_all_false": true,
+    "drop": false,
+    "frame_available": false,
+    "frames": 1
+  },
+  "next_action": "Independent evaluation/reward integration review; preserve scientific contract and all raw evidence",
+  "original_suite": {
+    "all_gates_pass": true,
+    "failures": {
+      "S": 0,
+      "T": 0,
+      "W": 0,
+      "X": 0,
+      "Z": 0
+    },
+    "source": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-03/results/research-r6-evaluation/r6_original_suite.json",
+      "sha256": "3e02de2ac3a60defe7d02aa6d828062b03a4c443731ed0e095652f7f03091787"
+    }
+  },
+  "protocol_semantics": "Unavailable delayed initial frame is explicitly required; do not warmup, synthesize freshness or lower reward threshold",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-03/receipt.json",
+    "sha256": "576c37d05a5fb3eb12574a8a23b28aef51b9a649781960abbc7586b627fd2802"
+  },
+  "status": "PARTIAL_BASELINE_FAILED_NOT_SCIENTIFIC_NEGATIVE",
+  "worker_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-03/state.json",
+    "sha256": "3ce3ce1dbdd602048d33708ef8c64fdbd6da606f6232bb715636a235980b5d97"
+  }
+}
