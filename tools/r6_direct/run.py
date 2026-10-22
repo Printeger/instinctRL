@@ -148,6 +148,8 @@ def main():
     if subprocess.check_output(['git','-C',str(snapshot),'rev-parse','HEAD'],text=True).strip()!=source['source_commit']:raise ValueError('DIRECT_SNAPSHOT')
     contract=json.loads(Path(plan['contract']['path']).read_text())
     executable=source['execution']['python_path']
+    from tools.r6_direct.source import checked
+    wrapper=str(checked(plan['ipc_wrapper']))
     argv=[executable,'-B','-m','tools.r6_direct.worker','--inputs',str(args.inputs.resolve())]
     env={k:v for k,v in os.environ.items() if k in ('HOME','PATH','LANG','LC_ALL','TZ','DISPLAY')}
     env.update(PYTHONPATH=str(snapshot)+':'+str(snapshot/'isaaclab-training'),PYTHONDONTWRITEBYTECODE='1',PYTHONNOUSERSITE='1',CUDA_VISIBLE_DEVICES='0',
@@ -163,7 +165,16 @@ def main():
         # The existing unused bounded physical volumes stay fully charged in
         # the import. Binding a new subdirectory does not release any bytes.
         storage=[r for r in imported['reservation_mapping'] if r['original']['identity']['event_id']=='STORAGE:J-d737390980235144']
-        if len(storage)!=1 or any(r.get('legacy_storage_event')==storage[0]['event_key'] for r in ledger['new_reservations']):raise RuntimeError('DIRECT_STORAGE_ALREADY_BOUND')
+        if len(storage)!=1:raise RuntimeError('DIRECT_STORAGE_IMPORT')
+        prior=[r for r in ledger['new_reservations'] if r.get('legacy_storage_event')==storage[0]['event_key']]
+        if prior:
+            predecessor=plan.get('predecessor_receipt')
+            if not predecessor or prior[-1].get('receipt')!=predecessor:raise RuntimeError('DIRECT_STORAGE_PREDECESSOR')
+            for row in prior:
+                receipt=json.loads(checked(row['receipt']).read_text())
+                if receipt['status']!='CLOSED' or receipt['remaining']:raise RuntimeError('DIRECT_PRIOR_CLEANUP')
+                for owner in [receipt['parent'],*receipt['owned_processes']]:
+                    if process_identity(owner['pid'])==owner:raise RuntimeError('DIRECT_PRIOR_STILL_LIVE')
         if contract['parameters']['output_cap_bytes']!=storage[0]['charged']['output_actual_plus_unreleased_reservations_bytes']:raise ValueError('DIRECT_STORAGE_CAP')
         subprocess.run(argv+['--check'],cwd=snapshot,env=env,check=True,timeout=180)
         for key in ('attempt_dir','native_dir'):
@@ -175,6 +186,12 @@ def main():
         ledger['new_reservations'][-1]['legacy_storage_event']=storage[0]['event_key']
         ledger['new_reservations'][-1]['legacy_storage_new_binding']={k:plan[k] for k in ('attempt_dir','native_dir')}
         ledger['status']='RUNNING';atomic(ledger_path,ledger)
+        for key in ('attempt_dir','native_dir'):Path(plan[key]).mkdir(exist_ok=False)
+        ipc=Path(plan['native_dir'])/'ipc';ipc.mkdir(exist_ok=False)
+        argv=[wrapper,'--die-with-parent','--ro-bind','/','/',
+              '--bind',plan['attempt_dir'],plan['attempt_dir'],
+              '--bind',plan['native_dir'],plan['native_dir'],
+              '--bind',str(ipc),'/dev/shm','--',*argv]
         atomic(directory/'RUN_INPUTS.json',dict(plan=plan,input=input_pin,argv=argv,environment=env,execution_mode='local-direct'))
         atomic(directory/'launch.json',dict(parent=process_identity(os.getpid()),input=input_pin))
         result=supervise(argv,cwd=snapshot,env=env,directory=directory,deadline_seconds=3780,

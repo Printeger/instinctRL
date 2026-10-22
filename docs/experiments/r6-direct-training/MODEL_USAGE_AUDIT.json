@@ -1,26 +1,44 @@
 {
-  "schema_version": "r6-direct-model-usage/1",
+  "automatic_continuations": [
+    {
+      "charge": 1,
+      "ordinal": 1,
+      "reason": "Implement direct baseline scientific contract and shared backend integration",
+      "usage": "UNKNOWN"
+    },
+    {
+      "charge": 1,
+      "ordinal": 2,
+      "reason": "Implement and validate direct baseline worker/supervisor and freeze first live inputs",
+      "usage": "UNKNOWN"
+    },
+    {
+      "charge": 1,
+      "ordinal": 3,
+      "reason": "Platform continuation: verified live baseline resource-wait process; ended turn",
+      "usage": "UNKNOWN"
+    },
+    {
+      "charge": 1,
+      "ordinal": 4,
+      "reason": "Platform continuation: verified 12/13 resource samples; ended turn",
+      "usage": "UNKNOWN"
+    },
+    {
+      "charge": 1,
+      "ordinal": 5,
+      "reason": "Diagnose native semaphore failure and repair private IPC mapping",
+      "usage": "UNKNOWN"
+    }
+  ],
   "historical_sessions_charged": 239,
   "initial_user_session": {
     "automatic_limit_charge": 0,
     "usage": "UNKNOWN"
   },
-  "automatic_continuations": [
-    {
-      "ordinal": 1,
-      "reason": "Implement direct baseline scientific contract and shared backend integration",
-      "charge": 1,
-      "usage": "UNKNOWN"
-    },
-    {
-      "ordinal": 2,
-      "reason": "Implement and validate direct baseline worker/supervisor and freeze first live inputs",
-      "charge": 1,
-      "usage": "UNKNOWN"
-    }
-  ],
-  "task_model_workers": [],
+  "note": "No training has started; this is not evidence of a zero-call production waiting window.",
   "platform_external_activity": "UNKNOWN",
-  "training_wait_windows": [],
-  "note": "No training has started; this is not evidence of a zero-call production waiting window."
+  "schema_version": "r6-direct-model-usage/1",
+  "task_model_workers": [],
+  "training_wait_windows": []
 }

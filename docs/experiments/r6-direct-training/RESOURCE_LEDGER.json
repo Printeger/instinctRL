@@ -46,11 +46,34 @@
         "output_actual_plus_unreleased_reservations_bytes": 2147483648
       },
       "status": "UNRELEASED"
+    },
+    {
+      "id": "R6-DIRECT-BASELINE-01",
+      "legacy_storage_event": "[\"STORAGE:J-d737390980235144\",\"R6-ROBUSTNESS-AUTO-20261019\",\"2f5f8f4a8cdf6d96711b93a8a25071cb83ca1fd3c1b52c4ab9a96accf25da520\",\"STORAGE:J-d737390980235144\",\"job-storage-allocation\"]",
+      "legacy_storage_new_binding": {
+        "attempt_dir": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-01",
+        "native_dir": "/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-BASELINE-01"
+      },
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-01/receipt.json",
+        "sha256": "491c91c4f44ee09e8d3276c589c0aa03b387fa5dcbee463eb70435528a92f0ad"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 3790,
+        "live_starts": 1,
+        "live_wall_seconds": 3790,
+        "nontraining_transitions": 193600,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_transitions": 0
+      },
+      "status": "UNRELEASED"
     }
   ],
   "new_used": {
     "allocated_gpu_seconds": 0,
-    "automatic_model_sessions": 2,
+    "automatic_model_sessions": 5,
     "live_starts": 0,
     "live_wall_seconds": 0,
     "major_scientific_candidates": 0,
@@ -77,5 +100,5 @@
     "repair": 4
   },
   "schema_version": "r6-direct-ledger/1",
-  "status": "PREPARING_NO_LIVE_RUN"
+  "status": "WAITING_FOR_ANALYSIS"
 }

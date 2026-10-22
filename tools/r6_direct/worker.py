@@ -43,19 +43,31 @@ def run(plan, input_pin):
     # occurs only after the parent has recorded this child's start identity.
     claim=json.loads((Path(plan['output_root'])/'launch.json').read_text())
     parent=process_identity(os.getppid())
-    if claim['parent']!=parent or claim['input']!=input_pin:raise RuntimeError('DIRECT_PARENT_IDENTITY')
+    # Bubblewrap keeps a small monitor between supervisor and worker. Verify
+    # the live supervisor and its exact ancestor relationship, not a PID alone.
+    expected=claim['parent'];ancestor=os.getppid();chain=[]
+    while ancestor>1 and len(chain)<4:
+        observed=process_identity(ancestor)
+        if observed is None:break
+        chain.append(observed)
+        if observed==expected:break
+        ancestor=int(Path(f'/proc/{ancestor}/stat').read_text().rsplit(')',1)[1].split()[1])
+    if expected not in chain or claim['input']!=input_pin:raise RuntimeError('DIRECT_PARENT_IDENTITY')
     if sys.stdin.buffer.read(1)!=b'1':raise RuntimeError('DIRECT_UNRELEASED_CHILD')
     source,contract,native,result=preflight(plan)
     attempt=Path(plan['attempt_dir']); native_root=Path(plan['native_dir'])
     output=attempt/'results'/contract['mode']; gate=attempt/'prelaunch'
     output.mkdir(parents=True,exist_ok=False); gate.mkdir(exist_ok=False)
-    native_root.mkdir(exist_ok=False)
+    if not native_root.is_dir() or set(p.name for p in native_root.iterdir())!={'ipc'}:
+        raise RuntimeError('DIRECT_NATIVE_PRECREATION')
+    if Path('/dev/shm').stat().st_ino!=(native_root/'ipc').stat().st_ino or Path('/dev/shm').stat().st_dev!=(native_root/'ipc').stat().st_dev:
+        raise RuntimeError('DIRECT_PRIVATE_IPC_MOUNT')
     for name in ('tmp','xdg_cache','cuda_cache','warp_cache'):(native_root/name).mkdir()
     for name,folder in (('TMPDIR','tmp'),('TMP','tmp'),('TEMP','tmp'),('XDG_CACHE_HOME','xdg_cache'),('CUDA_CACHE_PATH','cuda_cache'),('WARP_CACHE_PATH','warp_cache')):
         os.environ[name]=str(native_root/folder)
     from training_workloads.unified_h1.write_boundary import prepare,enforce
     devices=[p for p in ('/dev/null','/dev/zero','/dev/nvidia0','/dev/nvidiactl','/dev/nvidia-uvm','/dev/nvidia-uvm-tools') if Path(p).exists()]
-    policy=prepare([str(attempt),str(native_root)],devices)
+    policy=prepare([str(attempt),str(native_root),'/dev/shm'],devices)
     atomic(attempt/'write_boundary.json',policy)
     enforce(policy)
     # Existing kernel-bounded volumes contain all native and scientific writes.
