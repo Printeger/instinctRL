@@ -1,0 +1,36 @@
+{
+  "attempt_dir": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-03",
+  "contract": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_CONTRACT_03.json",
+    "sha256": "920dd9e6f8f3b61a2d463bfd9e4102ae3a980e0fff544279c192e66c1b46760f"
+  },
+  "extension_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXTENSION_INPUTS_CANDIDATE_02.json",
+    "sha256": "7d36890b12c5da14caf67905197bdad2298c080080e7049be6d714d5cce35dff"
+  },
+  "ipc_wrapper": {
+    "path": "/usr/bin/bwrap",
+    "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+  },
+  "native_dir": "/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-BASELINE-03",
+  "native_volume": {
+    "path": "/var/lib/instinctrl-r6-native/J-d737390980235144/volume.json",
+    "sha256": "8e997a12d7fd72c55fc2ee4c4fba72655d8cf4a71581e836e93b63933c1a978b"
+  },
+  "output_root": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-03",
+  "predecessor_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-02/receipt.json",
+    "sha256": "851eba38f982678fe0495e535f4ec32e4cfbd5d694e4390001f769878425dd57"
+  },
+  "result_volume": {
+    "path": "/var/lib/instinctrl-r6-results/J-d737390980235144/volume.json",
+    "sha256": "082966da51638ecd3734bff4e8a7b85bb08700da1de3b7d580b35b4bc3f5572b"
+  },
+  "run_id": "R6-DIRECT-BASELINE-03",
+  "schema_version": "r6-direct-run-inputs/1",
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-03",
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_SOURCE_05.json",
+    "sha256": "1ec62bb4b3cfe26b6bf33ae2db71fc0abf0375f9f50239d89595df4d45545d7c"
+  }
+}

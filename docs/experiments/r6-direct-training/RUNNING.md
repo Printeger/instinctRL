@@ -48,3 +48,11 @@ CPU模块清单位于实际attempt目录；最终NO_RLFLOW审计还需真实运�
 使用系统 Python 启动该源码，`--plan` 指向准确输入；`--check` 仅做 CPU 预检。PYTHONPATH 仅含该快照和其 isaaclab-training。
 后台 tmux 名称为 `instinctrl-r6-cuda-diagnostic-01`；状态及 receipt 在 `runs/R6-DIRECT-CUDA-DIAGNOSTIC-01/`，系统调用日志和 CUDA 结果在输入的 native_dir。
 保留相同 STOP、单写锁、写保护、私有 IPC、全额失败预留；诊断仅一次 cuInit，原资源窗口后最多30秒子进程，预留240秒。
+
+## 第三次完整基线
+
+有界诊断02返回 CUDA_SUCCESS，进程已清理。直接 worker 仅增加当前进程 task 子树的写入/截断权限以允许 CUDA 命名线程，磁盘原件与冻结 runtime 仍受保护。
+运行快照 `snapshots/baseline-03`（a1dd492c），输入 `BASELINE_RUN_INPUTS_03.json`，tmux `instinctrl-r6-direct-baseline-03`。
+启动方式仍为在准确快照下执行 `/usr/bin/python3 -B -m tools.r6_direct.run --inputs` 加该输入绝对路径。
+状态、日志和 receipt 在 `runs/R6-DIRECT-BASELINE-03/`；完整科学输出位于输入的 attempt_dir。
+此前失败和 CPU 草稿拒绝均保存；同一 run 不重复启动。

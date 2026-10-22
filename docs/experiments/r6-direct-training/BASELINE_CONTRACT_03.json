@@ -1,0 +1,124 @@
+{
+  "budgets": {
+    "automatic_resets": 193600,
+    "checkpoint_writes": 0,
+    "explicit_resets": 21,
+    "initialization_ticks": 10,
+    "live_process_starts": 1,
+    "nontraining_transitions": 193600,
+    "optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "training_transitions": 0,
+    "wall_seconds": 3600
+  },
+  "execution_mode": "local-direct",
+  "mode": "research-r6-evaluation",
+  "operation": "baseline",
+  "parameters": {
+    "baseline_bindings": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_BINDINGS.json",
+      "sha256": "6ebe90717fa2571816ba3392841f3690c2c3fe37225c3728f935bb80d3102623"
+    },
+    "evaluation_seed": 20260909,
+    "experiment_id": "R6-DIRECT-BASELINE-03",
+    "group": "R1",
+    "output_cap_bytes": 20250099712,
+    "r6": {
+      "block_ids": [
+        "S-clean-low",
+        "S-clean-high",
+        "S-noise",
+        "S-delay-drop",
+        "X-clean",
+        "X-noise",
+        "P-clean",
+        "P-combined",
+        "W-near",
+        "W-middle",
+        "W-far",
+        "W-combined",
+        "stress-S-noise",
+        "stress-S-combined",
+        "stress-P-high",
+        "stress-W-high"
+      ],
+      "expected_mass_kg": 1.181517923,
+      "output_quotas": {
+        "P-clean": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "P-combined": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1409286144
+        },
+        "S-clean-high": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "S-clean-low": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "S-delay-drop": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "S-noise": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1409286144
+        },
+        "W-combined": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1409286144
+        },
+        "W-far": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "W-middle": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "W-near": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "X-clean": {
+          "audit_bytes": 67108864,
+          "range_bytes": 520093696
+        },
+        "X-noise": {
+          "audit_bytes": 67108864,
+          "range_bytes": 855638016
+        },
+        "stress-P-high": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "stress-S-combined": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1459617792
+        },
+        "stress-S-noise": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1459617792
+        },
+        "stress-W-high": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1459617792
+        }
+      },
+      "protocol": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/protocol.json",
+        "sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822"
+      },
+      "run_id": "R6-DIRECT-BASELINE-03",
+      "seed": 2026101901,
+      "split": "development"
+    },
+    "training_seed": 20260908,
+    "wall_seconds": 3600
+  },
+  "schema_version": "r6-local-runtime-contract/1"
+}

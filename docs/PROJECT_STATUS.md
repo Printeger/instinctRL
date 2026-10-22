@@ -1,3 +1,12 @@
+# R6 直接基线：CUDA 定位修复已实测通过，第三 attempt 已完成 CPU 预检
+
+2026-10-22：有界 cuInit 对照定位自身 task/comm 写权限；仅加入当前进程 task 元数据写入后 CUDA_SUCCESS、退出0，准确所属进程已清理。
+旧磁盘原件和冻结 runtime 写保护、设备 chmod 拒绝均保留；不是仿真或训练验收。
+修复源码 a1dd492c，detached 快照 snapshots/baseline-03（663,788,605 bytes）；BASELINE_RUN_INPUTS_03.json 准确 CPU 预检通过。
+草稿 run ID 不一致已在 CPU 阶段被拒绝、修正并保存证据；未因此发车。
+完整原五任务/16开发 blocks、193600 transitions 和原评分不变；全部失败与未使用预留保留。
+模型续推理19次加历史239次，共258/512；四次平台触发等待也计账。完整基线、PPO及后续科学验证仍未完成。
+
 # R6 直接入口：第二次 CUDA 初始化失败已清理，有限诊断输入已冻结
 
 2026-10-22：第二次资源准入通过，私有 IPC 已解决共享信号量问题；cuInit/cudaGetDeviceCount 报 OS error 304。
