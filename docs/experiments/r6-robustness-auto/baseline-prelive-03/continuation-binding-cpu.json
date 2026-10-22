@@ -1,0 +1,24 @@
+{
+  "status": "PASS_CPU_CURRENT_THREAD_REJECTION_NOT_LIVE_READY",
+  "passed": 96,
+  "seconds": 12.41,
+  "actual_preflight": "PLATFORM_WAIT_ROOT_TURN_ACTIVE_NO_DISPATCH",
+  "binding": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/continuation-binding.json",
+    "sha256": "7b3b9ff62022bce83f2bfe52528588157716292e7e0671330898fa658d0ae815"
+  },
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_wait.py",
+      "sha256": "613fe27256536a9c556989be839a1fe76ab8fe0990e3f6b2ceb4f9ad2b7f17f6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_rpc.py",
+      "sha256": "3fe3296b43c680a1e9fe045955f86b25f629f5d998e04d0da0545bc5d8270560"
+    }
+  ],
+  "old_wake_accounting_preserved": true,
+  "old_receipts_preserved": true,
+  "gpu_queries": 0,
+  "live_starts": 0
+}

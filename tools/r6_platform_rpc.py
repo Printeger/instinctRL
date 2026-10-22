@@ -43,7 +43,10 @@ def settings(state):
         config=state['platform_rpc_fixture']
         return dict(socket=config['socket'],executable=config['executable'],process=config['process'],objective=config['objective'],source=source)
     require(SOCKET_ALIAS.lstat().st_uid==os.getuid() and SOCKET_ALIAS.resolve()==SOCKET,'SOCKET_ALIAS_DRIFT')
-    return dict(socket=str(SOCKET),executable=EXECUTABLE,process=DAEMON_PROCESS,objective=OBJECTIVE,source=source)
+    from tools.r6_platform_wait import CONTINUATION_ID
+    objective=('pasted text file: /home/mint/.codex/attachments/7d738239-2883-4e11-9aab-785b93ffd910/pasted-text-1.txt. Read this file before continuing.'
+        if source['session_id']==CONTINUATION_ID else OBJECTIVE)
+    return dict(socket=str(SOCKET),executable=EXECUTABLE,process=DAEMON_PROCESS,objective=objective,source=source)
 
 
 class Reader:

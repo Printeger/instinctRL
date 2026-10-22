@@ -16,6 +16,8 @@ from tools.r6_decision_packet import persist_exact
 ROOT=Path(__file__).resolve().parents[1]
 SESSION_ID='01a154cf-f2bb-79e3-8019-d6c78e8e0fc8'
 SESSION=Path('/home/mint/.codex/sessions/2026/10/19/rollout-2026-10-19T23-37-56-01a154cf-f2bb-79e3-8019-d6c78e8e0fc8.jsonl')
+CONTINUATION_ID='01a16275-c109-7302-84bf-4b916ea448e6'
+CONTINUATION=Path('/home/mint/.codex/sessions/2026/10/22/rollout-2026-10-22T15-14-06-01a16275-c109-7302-84bf-4b916ea448e6.jsonl')
 MAX_PREFIX=128*1024**2
 CAP=256*1024
 
@@ -36,6 +38,13 @@ def binding(state):
         value=state.get('platform_session_fixture');require(isinstance(value,dict),'FIXTURE_REQUIRED')
         return value
     require(state.get('goal_id')=='R6-ROBUSTNESS-AUTO-20261019','GOAL')
+    if state.get('platform_continuation_binding'):
+        record=json.loads(checked(state['platform_continuation_binding']).read_text())
+        require(record['previous_session_id']==SESSION_ID and record['session_id']==CONTINUATION_ID
+            and record['repository']==str(ROOT) and record['anchor']['path']==str(CONTINUATION),
+            'CONTINUATION_IDENTITY')
+        checked(record['authority']);prefix_bytes(record['anchor'])
+        return {k:record[k] for k in ('session_id','repository','anchor')}
     prefix=state.get('platform_automatic_wake_accounting',{}).get('source_prefix')
     require(isinstance(prefix,dict) and prefix.get('path')==str(SESSION),'SOURCE_REQUIRED')
     return dict(session_id=SESSION_ID,repository=str(ROOT),anchor=prefix)

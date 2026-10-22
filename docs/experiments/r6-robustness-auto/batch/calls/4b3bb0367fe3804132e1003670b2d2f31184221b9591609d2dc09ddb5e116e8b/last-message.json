@@ -1,0 +1,39 @@
+{
+  "decision": "MUST_FIX",
+  "plan_sha256": "beca798dc8962254791dffc842ec64282c8e879cee375b985a6768b3cd60c2e4",
+  "summary": "Verified plan/spec hashes, u640 identity, ICS 0.15, original evaluator, all 16 blocks, protocol acceptance, Store conditions, snapshot inventory and current capacity arithmetic. Controller handoff remains incorrectly bound to the prior thread. Final Store approval is appropriately pending. No files changed or GPU queries performed.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/plan.json",
+      "sha256": "beca798dc8962254791dffc842ec64282c8e879cee375b985a6768b3cd60c2e4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/spec.json",
+      "sha256": "7191dd7ef7e022a4ce8956be6c1296f13fd7bd7563d9e5e8f337ad3e5dfba3a8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_wait.py",
+      "sha256": "d2ff7c17b9b21d15ca4b4afff1ee012f30eb9a18959c24f75de5b32f9a23fd79"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_rpc.py",
+      "sha256": "611ee6bf44796558029d44e313cfddca79774a86b4885757d60b22f3a254f0b2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CONTINUATION_20261022.json",
+      "sha256": "e29962f95227a44821aaf36f8d8b9e353e9fad2c09ce5f05b6bbac093078be74"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-03/current-thread-observation.json",
+      "sha256": "c978b6f0a4b50b0656133860ec55bc2470d0359dc0f8c0f1481cdf69f94bc79a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/PROTOCOL_CAPACITY_ACCEPTED_01.json",
+      "sha256": "738aca2b423b739081fa9ada00db0de0a751040eb472e769907c4fa43fbe2ad1"
+    }
+  ],
+  "changed_files": [],
+  "must_fix": [
+    "Bind the production handoff checks to the current continuation before accepting readiness. tools/r6_platform_wait.py hard-codes prior thread 01a154cf-f2bb-79e3-8019-d6c78e8e0fc8 and its log; r6_platform_rpc.py also hard-codes its objective. Current evidence identifies continuation thread 01a16275-c109-7302-84bf-4b916ea448e6 as active, while the recorded READY observation covers only the prior thread. Consequently, existing checks can accept the old paused/idle thread without checking the current continuation. Supply an exact reviewed binding and current-thread handoff evidence, preserving prior records; a narrow correction suffices."
+  ]
+}
