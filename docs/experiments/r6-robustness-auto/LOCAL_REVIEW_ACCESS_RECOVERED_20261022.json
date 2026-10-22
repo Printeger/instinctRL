@@ -1,0 +1,42 @@
+{
+  "status": "ACTUAL_LOCAL_READONLY_SANDBOX_RECOVERED",
+  "cli": {
+    "path": "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+    "sha256": "9a820c17865fa825d04db416818679a9d63bd72e50835c396f496e5684626c9c"
+  },
+  "exact_baseline_read": {
+    "status": "LOCAL_READONLY_SOURCE_READ_VERIFIED",
+    "source": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+      "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
+    },
+    "model_calls": 0
+  },
+  "write_isolation": {
+    "argv": [
+      "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+      "sandbox",
+      "-P",
+      ":read-only",
+      "--",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-c",
+      "import sys,errno\nfrom pathlib import Path\np=Path(sys.argv[1])\nassert p.read_bytes()\ntry:\n f=p.open(\"ab\");f.write(b\"UNEXPECTED_WRITE\");f.close()\nexcept OSError as e:\n assert e.errno in (errno.EACCES,errno.EPERM,errno.EROFS),e\n print(\"READ_OK_WRITE_DENIED\",e.errno)\nelse:\n raise SystemExit(\"WRITE_NOT_BLOCKED\")\n",
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/SANDBOX_READONLY_CANARY_20261022.txt"
+    ],
+    "exit_code": 0,
+    "stdout": "READ_OK_WRITE_DENIED 30\n",
+    "stderr": "",
+    "canary": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/SANDBOX_READONLY_CANARY_20261022.txt",
+      "sha256": "c418f1b14726b138b11d79f29a5b8c23d67ab12a42cf32722a705c34b409182e"
+    },
+    "original_preserved": true
+  },
+  "sudo_password_still_required": true,
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "goal_complete": false
+}
