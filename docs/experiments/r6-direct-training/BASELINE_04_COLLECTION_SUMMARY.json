@@ -1,0 +1,251 @@
+{
+  "run_id": "R6-DIRECT-BASELINE-04",
+  "status": "COMPLETE_COLLECTION_CLEANUP_TIMEOUT_REPLAY_PENDING",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-04/receipt.json",
+    "sha256": "13d10a7aa7414e9809f314595c4ba517f92644906ae73045c1ddc4cbda996dfb"
+  },
+  "science_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/state.json",
+    "sha256": "263cb472cfa771109da6d552f204114b4066dcfe42f2365ed964d120e9876842"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 6050,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 6050,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 21,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 193600,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 193600,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "all_owned_processes_gone": true,
+  "original_tasks": [
+    {
+      "case": "S",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6_baseline_u640_original_policy_S.json",
+        "sha256": "4fc0bd30b52c6b74c0b129ba3c134e1dc9651e1ec902fac7dbc1bce523cd3658"
+      },
+      "episodes": 32,
+      "success": 32
+    },
+    {
+      "case": "T",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6_baseline_u640_original_policy_T.json",
+        "sha256": "87a8c3453be33ccf01fdd1c43dd470ef33f58d2b7f67653314580cfe1a7f5934"
+      },
+      "episodes": 32,
+      "success": 32
+    },
+    {
+      "case": "W",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6_baseline_u640_original_policy_W.json",
+        "sha256": "acd826b2fa0fbf52f4bd83f256ce807c73f5c84630ed63908a7dd469c46e40fe"
+      },
+      "episodes": 32,
+      "success": 32
+    },
+    {
+      "case": "X",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6_baseline_u640_original_policy_X.json",
+        "sha256": "139d5a133599dad7f514742f5adb363054908159f4c3885c6e13aca815ad9460"
+      },
+      "episodes": 32,
+      "success": 32
+    },
+    {
+      "case": "Z",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6_baseline_u640_original_policy_Z.json",
+        "sha256": "59af8ecb44ae0ecb9d972807803a971efac744c4d34a82ce9eb9389ddcc5f20c"
+      },
+      "episodes": 32,
+      "success": 32
+    }
+  ],
+  "development_blocks": [
+    {
+      "block_id": "P-clean",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/P-clean/result.json",
+        "sha256": "75e07219a8ac07c72293c8c7394367b1b89309de3edd1e0a492474a7c2f2fa0b"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "P-combined",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/P-combined/result.json",
+        "sha256": "a65310ad7ef23e84dec6b08949f847c33e790646d848941573f3de53e6119333"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "S-clean-high",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/S-clean-high/result.json",
+        "sha256": "91a243ed08d2ce2824b4d54644aa0a4ffcdf3038b7e35a17e58dda6358db9a84"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "S-clean-low",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/S-clean-low/result.json",
+        "sha256": "68db2162ad0695339b7dc6303c885d8b4782544a53a11a451a2da6a891a93a3e"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "S-delay-drop",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/S-delay-drop/result.json",
+        "sha256": "6f17d5cd27042611958cd6740ef071c072d92e4ece6f54ef88eb36f8e72c22c0"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "S-noise",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/S-noise/result.json",
+        "sha256": "045e4dcecb389ffcb370ec0a7c1f78d1bf09f204bc0b5bb8294eb9fc192d8409"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "W-combined",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/W-combined/result.json",
+        "sha256": "7ff0e8812afa0cc2dec48c88695e965415a80c01c7bf7c31e86c7771b30fa587"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "W-far",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/W-far/result.json",
+        "sha256": "1fe27b5d8ca18bfaeb509e179814b4fe629d8fcfe70a7c9a6a633401cd11a494"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "W-middle",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/W-middle/result.json",
+        "sha256": "a9c1a3cf4cb4cf92be9978097235b92ce62ec41570c91be08805c21712840329"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "W-near",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/W-near/result.json",
+        "sha256": "87277abdacef2812767a56526a1ffc7cdd1d9fe899d3e219c6412888700ac494"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "X-clean",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/X-clean/result.json",
+        "sha256": "09d21f07e79b2a5196e9744367cab07088a4abe6453f76e7a765459894fbeb5e"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "X-noise",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/X-noise/result.json",
+        "sha256": "cfc123a6b50b82cda4e463c4d09daa80eed63e8c2d23285d82e839647dd172c8"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "stress-P-high",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/stress-P-high/result.json",
+        "sha256": "c43383eefd15ecd7dfb3fda31a93cff0f8f0608800214bb91b609234e92a2279"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "stress-S-combined",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/stress-S-combined/result.json",
+        "sha256": "d454a1474df947d136c8b011ef60a78e1e7b1a05698f4bea791b21b2fb489f21"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "stress-S-noise",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/stress-S-noise/result.json",
+        "sha256": "bf8ecceb84c9f64e670c43c998c6041323d4d5158430d89c47ac94eb774c1bb0"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    },
+    {
+      "block_id": "stress-W-high",
+      "result": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/results/research-r6-evaluation/r6/stress-W-high/result.json",
+        "sha256": "522b7d053c85814d48ab347b997403d28b5f1373e95b6e9a0e34e012fa3cc5e0"
+      },
+      "lane_count": 32,
+      "motion_pass": 32,
+      "scientific_acceptance": false
+    }
+  ],
+  "scientific_acceptance": false,
+  "pending": [
+    "Independent input-chain replay and raw completeness validation",
+    "Model session accounting including platform continuations",
+    "Bounded actual PPO training and evaluation",
+    "Full three-stream confirmation, holdout, review and delivery"
+  ]
+}
