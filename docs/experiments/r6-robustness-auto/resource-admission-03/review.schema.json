@@ -1,0 +1,325 @@
+{
+  "type": "object",
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": [
+        "PASS_R6_RESOURCE_BUNDLE",
+        "MUST_FIX"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "evidence_pins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "changed_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_plan": {
+      "type": "string"
+    },
+    "remaining_budget": {
+      "type": "object",
+      "properties": {
+        "automatic_sessions_remaining": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "automatic_sessions_remaining"
+      ],
+      "additionalProperties": false
+    },
+    "must_fix": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "queue_review": {
+      "type": "object",
+      "properties": {
+        "policy": {
+          "type": "object",
+          "properties": {
+            "schema_version": {
+              "type": "string",
+              "const": "r6-resource-queue/1"
+            },
+            "window_policy": {
+              "type": "object",
+              "properties": {
+                "schema_version": {
+                  "type": "string",
+                  "const": "r5-w-resource-admission/2"
+                },
+                "sample_count": {
+                  "type": "integer",
+                  "const": 13
+                },
+                "minimum_span_seconds": {
+                  "type": "integer",
+                  "const": 60
+                },
+                "minimum_gap_seconds": {
+                  "type": "integer",
+                  "const": 4
+                },
+                "maximum_gap_seconds": {
+                  "type": "integer",
+                  "const": 8
+                },
+                "mean_utilization_max": {
+                  "type": "integer",
+                  "const": 8
+                },
+                "median_utilization_max": {
+                  "type": "integer",
+                  "const": 5
+                },
+                "peak_utilization_max": {
+                  "type": "integer",
+                  "const": 20
+                },
+                "elevated_utilization_threshold": {
+                  "type": "integer",
+                  "const": 10
+                },
+                "elevated_samples_max": {
+                  "type": "integer",
+                  "const": 4
+                },
+                "consecutive_elevated_max": {
+                  "type": "integer",
+                  "const": 1
+                },
+                "memory_used_max_mib": {
+                  "type": "integer",
+                  "const": 1024
+                },
+                "memory_free_min_mib": {
+                  "type": "integer",
+                  "const": 10240
+                },
+                "allowed_app": {
+                  "type": "string",
+                  "const": "gnome-remote-desktop-daemon"
+                },
+                "allowed_app_max_mib": {
+                  "type": "integer",
+                  "const": 256
+                }
+              },
+              "required": [
+                "schema_version",
+                "sample_count",
+                "minimum_span_seconds",
+                "minimum_gap_seconds",
+                "maximum_gap_seconds",
+                "mean_utilization_max",
+                "median_utilization_max",
+                "peak_utilization_max",
+                "elevated_utilization_threshold",
+                "elevated_samples_max",
+                "consecutive_elevated_max",
+                "memory_used_max_mib",
+                "memory_free_min_mib",
+                "allowed_app",
+                "allowed_app_max_mib"
+              ],
+              "additionalProperties": false
+            },
+            "reserved_seconds_per_window": {
+              "type": "integer",
+              "const": 180
+            },
+            "rejection_backoff_seconds": {
+              "type": "integer",
+              "const": 60
+            },
+            "maximum_sample_age_seconds": {
+              "type": "integer",
+              "const": 8
+            },
+            "observation_is_launch_permission": {
+              "type": "boolean",
+              "const": false
+            },
+            "interrupted_window_reused": {
+              "type": "boolean",
+              "const": false
+            },
+            "implicit_refund": {
+              "type": "boolean",
+              "const": false
+            }
+          },
+          "required": [
+            "schema_version",
+            "window_policy",
+            "reserved_seconds_per_window",
+            "rejection_backoff_seconds",
+            "maximum_sample_age_seconds",
+            "observation_is_launch_permission",
+            "interrupted_window_reused",
+            "implicit_refund"
+          ],
+          "additionalProperties": false
+        },
+        "implementation": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "const": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py"
+            },
+            "sha256": {
+              "type": "string",
+              "const": "671cb3f09b1324cef90752e92387d0bda129c07e6f82177a8a61c87b25adca76"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "validator": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "const": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py"
+            },
+            "sha256": {
+              "type": "string",
+              "const": "a7dabebc50e7b06d5a159c96b2481ddd42538f75102d39cbc4251177d877faa3"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "PASS_R6_RESOURCE_QUEUE",
+            "MUST_FIX"
+          ]
+        },
+        "must_fix": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "policy",
+        "implementation",
+        "validator",
+        "decision",
+        "must_fix"
+      ],
+      "additionalProperties": false
+    },
+    "sampler_review": {
+      "type": "object",
+      "properties": {
+        "worker": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "const": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_sampler.py"
+            },
+            "sha256": {
+              "type": "string",
+              "const": "0a769eaf427713795ba76982aac4b1fc6b60b30f224a18ddd6d3f12ebe7036c0"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "PASS_R6_RESOURCE_SAMPLER",
+            "MUST_FIX"
+          ]
+        },
+        "must_fix": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "worker",
+        "decision",
+        "must_fix"
+      ],
+      "additionalProperties": false
+    },
+    "query_executable": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "const": "/usr/bin/nvidia-smi"
+        },
+        "sha256": {
+          "type": "string",
+          "const": "22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "decision",
+    "summary",
+    "evidence_pins",
+    "changed_files",
+    "next_plan",
+    "remaining_budget",
+    "must_fix",
+    "queue_review",
+    "sampler_review",
+    "query_executable"
+  ],
+  "additionalProperties": false
+}

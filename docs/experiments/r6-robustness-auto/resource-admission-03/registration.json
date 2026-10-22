@@ -1,0 +1,42 @@
+{
+  "event_key": "610a058b2590e804f32a4466eeca4242b2e1a099cedb841e2255dd92c4fa5630",
+  "request": {
+    "cwd": "/home/mint/rl_dev/instinctRL-dev",
+    "executable": {
+      "path": "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+      "sha256": "9a820c17865fa825d04db416818679a9d63bd72e50835c396f496e5684626c9c"
+    },
+    "output_cap_bytes": 67108864,
+    "prompt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-03/prompt.txt",
+      "sha256": "8aa4c855ba357eeb61c59628a8c39f960476e60650262802145bb4ba416c1486"
+    },
+    "sandbox": "read-only",
+    "schema": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-03/review.schema.json",
+      "sha256": "87ee884e90be6e2208448d136553f925579e22d4bf3673bd6bec104a3316658f"
+    },
+    "stop_paths": [
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/commander/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/executor/STOP"
+    ],
+    "timeout_seconds": 3600
+  },
+  "charged": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 232,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 28259975168,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  }
+}

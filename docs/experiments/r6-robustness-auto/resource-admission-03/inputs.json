@@ -1,0 +1,119 @@
+{
+  "status": "CURRENT_EXACT_RESOURCE_REVIEW_INPUT_NOT_ACCEPTANCE",
+  "queue": {
+    "policy": {
+      "schema_version": "r6-resource-queue/1",
+      "window_policy": {
+        "schema_version": "r5-w-resource-admission/2",
+        "sample_count": 13,
+        "minimum_span_seconds": 60,
+        "minimum_gap_seconds": 4,
+        "maximum_gap_seconds": 8,
+        "mean_utilization_max": 8,
+        "median_utilization_max": 5,
+        "peak_utilization_max": 20,
+        "elevated_utilization_threshold": 10,
+        "elevated_samples_max": 4,
+        "consecutive_elevated_max": 1,
+        "memory_used_max_mib": 1024,
+        "memory_free_min_mib": 10240,
+        "allowed_app": "gnome-remote-desktop-daemon",
+        "allowed_app_max_mib": 256
+      },
+      "reserved_seconds_per_window": 180,
+      "rejection_backoff_seconds": 60,
+      "maximum_sample_age_seconds": 8,
+      "observation_is_launch_permission": false,
+      "interrupted_window_reused": false,
+      "implicit_refund": false
+    },
+    "implementation": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py",
+      "sha256": "671cb3f09b1324cef90752e92387d0bda129c07e6f82177a8a61c87b25adca76"
+    },
+    "validator": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "a7dabebc50e7b06d5a159c96b2481ddd42538f75102d39cbc4251177d877faa3"
+    }
+  },
+  "sampler": {
+    "worker": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_sampler.py",
+      "sha256": "0a769eaf427713795ba76982aac4b1fc6b60b30f224a18ddd6d3f12ebe7036c0"
+    }
+  },
+  "query_executable": {
+    "path": "/usr/bin/nvidia-smi",
+    "sha256": "22964713c1701fb62b4dd10b26b0dd25d174e100af5bda20c65e0b0fcc32b3be"
+  },
+  "baseline_spec": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-input-02/spec.json",
+    "sha256": "20445dd09a901da4ab66dca822992a9d131008a4cc83aaafdc15586e838bd5a7"
+  },
+  "sources": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_wait.py",
+      "sha256": "4cf9c6cbcfe231fd68a90b10df618600230cdad946f6764edfa750f0b13967f3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "0ef15e4a7859e668b8eca55c00c96c8ca598fb11072b7acfde3c9650f9a1c329"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_register_job.py",
+      "sha256": "49385ec1007b875580a625cc81f45dffa2a5e99ace1b431fd9f94927563608cd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_run_job.py",
+      "sha256": "3e4c7076d7dc861635d94976cae38e14baa0ba1905e0bf263765b7e142bd3bb2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_budget.py",
+      "sha256": "2fdee08edc08dcdb8411f56e36ffeaee930bf2dbfceba8149a07d7199f9e15b1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/rlflow/rlflow/experiments.py",
+      "sha256": "3af0d900a5490f2f1962475fbdf1010eb02a2ef8fba446e0adb196e330977257"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_boundaries.py",
+      "sha256": "fed3bf98302ed3140d7994a1d6a7bb976991de3f46dc995ecded118cd9c0e718"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_QUEUE_TESTS.json",
+      "sha256": "0eb78ce0114850527f569198c690099348b82f1acb89a62797291e2d152c17e5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RESOURCE_SAMPLER_TESTS.json",
+      "sha256": "f3769ecc4c114c1323147a49c2fe674627a0e002449a418424adc13ac914a406"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_POSTVALIDATION_QUEUE.json",
+      "sha256": "128e96faaf79286de283013ee5195ff3c792297d90fc167793aaab696b5d3e7f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_REAL_SPEC_ORDER_REPAIR.json",
+      "sha256": "c050cef22d6ce73e1f2474bf5b9ec0cc5aca15f2c0af16c05b6449a0e258fde6"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_SUBMIT_BOUNDARIES.json",
+      "sha256": "1454e64ba7203c73c7b855dfeb7862114180733137ee81d155a90fcf65263467"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/exact-resource-admission-review.json",
+      "sha256": "8544f763192c88666be82b8fb2e4eecbea02242dccb7d697f99a1dbbe714cce5"
+    }
+  ],
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "prior_acceptance": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/RESOURCE_ADMISSION_ACCEPTED_02.json",
+    "sha256": "20fecf89abd78bd55018597583935bd2819b7e717f890afa1e3d4a941656ae64"
+  },
+  "validator_diff": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-03/validator.diff",
+    "sha256": "24b515b6329a66d46eb6938343fb13c8f5bf70dcdf977932db7d4d2fc6f63c97"
+  }
+}
