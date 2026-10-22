@@ -1,0 +1,14 @@
+{
+  "checks": [
+    "real new thread comm write permitted",
+    "protected sibling file open-for-write denied; original bytes unchanged",
+    "own /proc/self/oom_score_adj open-for-write denied",
+    "per-attempt file write permitted"
+  ],
+  "gpu_probe": false,
+  "input": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/plan.json",
+    "sha256": "808e4f779627d0e251b5045d0efb3834251b55f53bc769b19dc491f760038244"
+  },
+  "status": "PASS"
+}
