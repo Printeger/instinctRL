@@ -1,0 +1,1245 @@
+2629887 execve("/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11", ["/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11", "-B", "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source/cuda_diagnostic.py", "--plan", "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/plan.json", "--child"], 0x7ffd5a4194d8 /* 11 vars */) = 0
+2629887 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a7a5ad000
+2629887 readlinkat(AT_FDCWD, "/proc/self/exe", "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11", 4096) = 62
+2629887 access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/glibc-hwcaps/x86-64-v4/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 newfstatat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/glibc-hwcaps/x86-64-v4/", 0x7ffee1651a40, 0) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/glibc-hwcaps/x86-64-v3/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 newfstatat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/glibc-hwcaps/x86-64-v3/", 0x7ffee1651a40, 0) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/glibc-hwcaps/x86-64-v2/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 newfstatat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/glibc-hwcaps/x86-64-v2/", 0x7ffee1651a40, 0) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/libpthread.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 newfstatat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/", {st_mode=S_IFDIR|0775, st_size=12288, ...}, 0) = 0
+2629887 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 148955, PROT_READ, MAP_PRIVATE, 3, 0) = 0x723a7a588000
+2629887 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 16400, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a7a583000
+2629887 mmap(0x723a7a584000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x723a7a584000
+2629887 mmap(0x723a7a585000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a7a585000
+2629887 mmap(0x723a7a586000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a7a586000
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 16400, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a7a57e000
+2629887 mmap(0x723a7a57f000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x723a7a57f000
+2629887 mmap(0x723a7a580000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a7a580000
+2629887 mmap(0x723a7a581000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a7a581000
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/libutil.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libutil.so.1", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 16400, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a7a579000
+2629887 mmap(0x723a7a57a000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x723a7a57a000
+2629887 mmap(0x723a7a57b000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a7a57b000
+2629887 mmap(0x723a7a57c000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a7a57c000
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/libm.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 950296, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a7a490000
+2629887 mmap(0x723a7a4a0000, 520192, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10000) = 0x723a7a4a0000
+2629887 mmap(0x723a7a51f000, 360448, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x8f000) = 0x723a7a51f000
+2629887 mmap(0x723a7a577000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe7000) = 0x723a7a577000
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 2170256, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a7a200000
+2629887 mmap(0x723a7a228000, 1605632, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x28000) = 0x723a7a228000
+2629887 mmap(0x723a7a3b0000, 323584, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1b0000) = 0x723a7a3b0000
+2629887 mmap(0x723a7a3ff000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1fe000) = 0x723a7a3ff000
+2629887 mmap(0x723a7a405000, 52624, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x723a7a405000
+2629887 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a7a48e000
+2629887 mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a7a48b000
+2629887 mprotect(0x723a7a3ff000, 16384, PROT_READ) = 0
+2629887 mprotect(0x723a7a577000, 4096, PROT_READ) = 0
+2629887 mprotect(0x723a7a57c000, 4096, PROT_READ) = 0
+2629887 mprotect(0x723a7a581000, 4096, PROT_READ) = 0
+2629887 mprotect(0x723a7a586000, 4096, PROT_READ) = 0
+2629887 mprotect(0x5e22819e7000, 192512, PROT_READ) = 0
+2629887 mprotect(0x723a7a5ed000, 8192, PROT_READ) = 0
+2629887 openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 9223520, PROT_READ, MAP_PRIVATE, 3, 0) = 0x723a79800000
+2629887 openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 27028, PROT_READ, MAP_SHARED, 3, 0) = 0x723a7a5a6000
+2629887 mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a7a100000
+2629887 mmap(NULL, 266240, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a7a44a000
+2629887 mmap(NULL, 135168, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a7a429000
+2629887 mmap(NULL, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a7a5a2000
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/pyvenv.cfg", O_RDONLY) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/pyvenv.cfg", O_RDONLY) = -1 ENOENT (No such file or directory)
+2629887 readlink("/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11", 0x7ffee164cf90, 4096) = -1 EINVAL (Invalid argument)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11._pth", O_RDONLY) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11._pth", O_RDONLY) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/pybuilddir.txt", O_RDONLY) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/bin/Modules/Setup.local", 0x7ffee1651f60) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/bin/lib/python311.zip", 0x7ffee1651cf0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python311.zip", 0x7ffee1651cf0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/lib/python311.zip", 0x7ffee1651cf0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/lib/python311.zip", 0x7ffee1651cf0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/lib/python311.zip", 0x7ffee1651cf0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/lib/python311.zip", 0x7ffee1651cf0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/bin/lib/python3.11/os.py", 0x7ffee1651b10) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/bin/lib/python3.11/os.pyc", 0x7ffee1651b10) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/os.py", {st_mode=S_IFREG|0664, st_size=39530, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/bin/lib/python3.11/lib-dynload", 0x7ffee1651cf8) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/etc/localtime", O_RDONLY|O_CLOEXEC) = 3
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python311.zip", 0x7ffee16517a0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python311.zip", 0x7ffee1651ad0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee1651ad0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/__init__.abi3.so", 0x7ffee1651ad0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/__init__.so", 0x7ffee1651ad0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/__init__.py", {st_mode=S_IFREG|0664, st_size=5884, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/__init__.py", {st_mode=S_IFREG|0664, st_size=5884, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16517d0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/aliases.py", {st_mode=S_IFREG|0664, st_size=15677, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/aliases.py", {st_mode=S_IFREG|0664, st_size=15677, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/__pycache__/aliases.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1650c10) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/utf_8.py", {st_mode=S_IFREG|0664, st_size=1005, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/utf_8.py", {st_mode=S_IFREG|0664, st_size=1005, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/encodings/__pycache__/utf_8.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16517b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 ioctl(0, TCGETS, 0x7ffee1651ef0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 ioctl(0, TCGETS, 0x7ffee16521d0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 ioctl(1, TCGETS, 0x7ffee1651ef0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 ioctl(1, TCGETS, 0x7ffee16521d0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 ioctl(2, TCGETS, 0x7ffee1651ef0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 ioctl(2, TCGETS, 0x7ffee16521d0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a79700000
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/bin/pyvenv.cfg", 0x7ffee1651810) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/pyvenv.cfg", 0x7ffee1651810) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 lstat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/__editable__.isaaclab-0.54.2.pth", {st_mode=S_IFREG|0664, st_size=89, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/__editable__.isaaclab-0.54.2.pth", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651570) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/__editable___isaaclab_0_54_2_finder.py", {st_mode=S_IFREG|0664, st_size=3422, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/__editable___isaaclab_0_54_2_finder.py", {st_mode=S_IFREG|0664, st_size=3422, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/__pycache__/__editable___isaaclab_0_54_2_finder.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee1650d60) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__future__.py", {st_mode=S_IFREG|0664, st_size=5218, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__future__.py", {st_mode=S_IFREG|0664, st_size=5218, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/__future__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee1650610) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee16504a0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib/__init__.abi3.so", 0x7ffee16504a0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib/__init__.so", 0x7ffee16504a0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib/__init__.py", {st_mode=S_IFREG|0664, st_size=6089, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib/__init__.py", {st_mode=S_IFREG|0664, st_size=6089, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee16501a0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/warnings.py", {st_mode=S_IFREG|0664, st_size=21110, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/warnings.py", {st_mode=S_IFREG|0664, st_size=21110, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/warnings.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164fa50) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib/_abc.py", {st_mode=S_IFREG|0664, st_size=1852, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib/_abc.py", {st_mode=S_IFREG|0664, st_size=1852, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/importlib/__pycache__/_abc.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164ff60) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/contextlib.py", {st_mode=S_IFREG|0664, st_size=27414, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/contextlib.py", {st_mode=S_IFREG|0664, st_size=27414, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/contextlib.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164ff60) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee164fab0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections/__init__.abi3.so", 0x7ffee164fab0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections/__init__.so", 0x7ffee164fab0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections/__init__.py", {st_mode=S_IFREG|0664, st_size=52018, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections/__init__.py", {st_mode=S_IFREG|0664, st_size=52018, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164f810) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/keyword.py", {st_mode=S_IFREG|0664, st_size=1061, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/keyword.py", {st_mode=S_IFREG|0664, st_size=1061, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/keyword.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164f0c0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/operator.py", {st_mode=S_IFREG|0664, st_size=10965, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/operator.py", {st_mode=S_IFREG|0664, st_size=10965, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/operator.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164f0c0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/reprlib.py", {st_mode=S_IFREG|0664, st_size=5437, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/reprlib.py", {st_mode=S_IFREG|0664, st_size=5437, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/reprlib.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164f0c0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/functools.py", {st_mode=S_IFREG|0664, st_size=38413, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/functools.py", {st_mode=S_IFREG|0664, st_size=38413, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/functools.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164f810) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/types.py", {st_mode=S_IFREG|0664, st_size=10067, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/types.py", {st_mode=S_IFREG|0664, st_size=10067, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/types.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164f0c0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/threading.py", {st_mode=S_IFREG|0664, st_size=58231, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/threading.py", {st_mode=S_IFREG|0664, st_size=58231, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/threading.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164ff60) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/_weakrefset.py", {st_mode=S_IFREG|0664, st_size=5893, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/_weakrefset.py", {st_mode=S_IFREG|0664, st_size=5893, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/_weakrefset.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164f810) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", {st_mode=S_IFREG|0664, st_size=48566, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/pathlib.py", {st_mode=S_IFREG|0664, st_size=48566, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/pathlib.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee1650670) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/fnmatch.py", {st_mode=S_IFREG|0664, st_size=5999, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/fnmatch.py", {st_mode=S_IFREG|0664, st_size=5999, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/fnmatch.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164ff20) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee164fa70) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/__init__.abi3.so", 0x7ffee164fa70) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/__init__.so", 0x7ffee164fa70) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/__init__.py", {st_mode=S_IFREG|0664, st_size=15889, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/__init__.py", {st_mode=S_IFREG|0664, st_size=15889, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164f7d0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/enum.py", {st_mode=S_IFREG|0664, st_size=79583, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/enum.py", {st_mode=S_IFREG|0664, st_size=79583, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/enum.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164f080) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a79600000
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/_compiler.py", {st_mode=S_IFREG|0664, st_size=26089, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/_compiler.py", {st_mode=S_IFREG|0664, st_size=26089, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/__pycache__/_compiler.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164ec10) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/_parser.py", {st_mode=S_IFREG|0664, st_size=42420, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/_parser.py", {st_mode=S_IFREG|0664, st_size=42420, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/__pycache__/_parser.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164e050) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/_constants.py", {st_mode=S_IFREG|0664, st_size=5930, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/_constants.py", {st_mode=S_IFREG|0664, st_size=5930, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/__pycache__/_constants.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164d900) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/_casefix.py", {st_mode=S_IFREG|0664, st_size=5446, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/_casefix.py", {st_mode=S_IFREG|0664, st_size=5446, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/re/__pycache__/_casefix.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164e4c0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/copyreg.py", {st_mode=S_IFREG|0664, st_size=7677, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/copyreg.py", {st_mode=S_IFREG|0664, st_size=7677, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/copyreg.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164f080) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee164fd50) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib/__init__.abi3.so", 0x7ffee164fd50) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib/__init__.so", 0x7ffee164fd50) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib/__init__.py", {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib/__init__.py", {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164fab0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib/parse.py", {st_mode=S_IFREG|0664, st_size=44836, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib/parse.py", {st_mode=S_IFREG|0664, st_size=44836, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/urllib/__pycache__/parse.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164ff20) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ipaddress.py", {st_mode=S_IFREG|0664, st_size=81414, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ipaddress.py", {st_mode=S_IFREG|0664, st_size=81414, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/ipaddress.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee164f7d0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 lstat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/__editable__.omni_drones-0.2.1.pth", {st_mode=S_IFREG|0664, st_size=93, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/__editable__.omni_drones-0.2.1.pth", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651570) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/__editable___omni_drones_0_2_1_finder.py", {st_mode=S_IFREG|0664, st_size=3416, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/__editable___omni_drones_0_2_1_finder.py", {st_mode=S_IFREG|0664, st_size=3416, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/__pycache__/__editable___omni_drones_0_2_1_finder.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee1650dc0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 lstat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.pth", {st_mode=S_IFREG|0664, st_size=17, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.pth", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651570) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel_pth.py", {st_mode=S_IFREG|0664, st_size=638, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel_pth.py", {st_mode=S_IFREG|0664, st_size=638, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/__pycache__/cmeel_pth.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee1650dc0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/cmeel.prefix/lib/python3.11/site-packages", 0x7ffee1650ce0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training/cmeel.prefix/lib/python3.11/site-packages", 0x7ffee1650ce0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python311.zip/cmeel.prefix/lib/python3.11/site-packages", 0x7ffee1650ce0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/cmeel.prefix/lib/python3.11/site-packages", 0x7ffee1650ce0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/cmeel.prefix/lib/python3.11/site-packages", 0x7ffee1650ce0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.prefix/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.prefix/lib/python3.11/site-packages/cmeel.prefix/lib/python3.11/site-packages", 0x7ffee1650ce0) = -1 ENOENT (No such file or directory)
+2629887 lstat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/distutils-precedence.pth", {st_mode=S_IFREG|0664, st_size=151, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/distutils-precedence.pth", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651570) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_distutils_hack/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee1651000) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_distutils_hack/__init__.abi3.so", 0x7ffee1651000) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_distutils_hack/__init__.so", 0x7ffee1651000) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_distutils_hack/__init__.py", {st_mode=S_IFREG|0664, st_size=6755, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_distutils_hack/__init__.py", {st_mode=S_IFREG|0664, st_size=6755, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/_distutils_hack/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 4
+2629887 ioctl(4, TCGETS, 0x7ffee1650d60) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.prefix/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.prefix/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.prefix/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.prefix/lib/python3.11/site-packages", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source/cuda_diagnostic.py", {st_mode=S_IFREG|0444, st_size=6408, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source/cuda_diagnostic.py", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651f30) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source/cuda_diagnostic.py", {st_mode=S_IFREG|0444, st_size=6408, ...}) = 0
+2629887 readlink("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source/cuda_diagnostic.py", 0x7ffee1641690, 4096) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home", 0x7ffee1641230, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint", 0x7ffee1641230, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/rl_dev", 0x7ffee1641230, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/rl_dev/instinctRL-dev", 0x7ffee1641230, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/rl_dev/instinctRL-dev/docs", 0x7ffee1641230, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/rl_dev/instinctRL-dev/docs/experiments", 0x7ffee1641230, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training", 0x7ffee1641230, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics", 0x7ffee1641230, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02", 0x7ffee1641230, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", 0x7ffee1641230, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source/cuda_diagnostic.py", 0x7ffee1641230, 1023) = -1 EINVAL (Invalid argument)
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source/cuda_diagnostic.py", O_RDONLY) = 3
+2629887 ioctl(3, FIOCLEX)               = 0
+2629887 ioctl(3, TCGETS, 0x7ffee1652630) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/argparse.py", {st_mode=S_IFREG|0664, st_size=100283, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/argparse.py", {st_mode=S_IFREG|0664, st_size=100283, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/argparse.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651b00) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 mmap(NULL, 208896, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a7a0cd000
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/gettext.py", {st_mode=S_IFREG|0664, st_size=21320, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/gettext.py", {st_mode=S_IFREG|0664, st_size=21320, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/gettext.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16513b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee1651da0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes/__init__.abi3.so", 0x7ffee1651da0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes/__init__.so", 0x7ffee1651da0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes/__init__.py", {st_mode=S_IFREG|0664, st_size=17844, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes/__init__.py", {st_mode=S_IFREG|0664, st_size=17844, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651b00) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_ctypes.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=614424, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_ctypes.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 128288, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a795e0000
+2629887 mmap(0x723a795e7000, 57344, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x7000) = 0x723a795e7000
+2629887 mmap(0x723a795f5000, 24576, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x15000) = 0x723a795f5000
+2629887 mmap(0x723a795fb000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1a000) = 0x723a795fb000
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../glibc-hwcaps/x86-64-v4/libffi.so.8", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 newfstatat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../glibc-hwcaps/x86-64-v4/", 0x7ffee1650260, 0) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../glibc-hwcaps/x86-64-v3/libffi.so.8", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 newfstatat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../glibc-hwcaps/x86-64-v3/", 0x7ffee1650260, 0) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../glibc-hwcaps/x86-64-v2/libffi.so.8", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 newfstatat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../glibc-hwcaps/x86-64-v2/", 0x7ffee1650260, 0) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../libffi.so.8", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 67008, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a7a591000
+2629887 mmap(0x723a7a594000, 40960, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x723a7a594000
+2629887 mmap(0x723a7a59e000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xd000) = 0x723a7a59e000
+2629887 mmap(0x723a7a5a0000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe000) = 0x723a7a5a0000
+2629887 mprotect(0x723a7a5a0000, 4096, PROT_READ) = 0
+2629887 mprotect(0x723a795fb000, 4096, PROT_READ) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/struct.py", {st_mode=S_IFREG|0664, st_size=257, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/struct.py", {st_mode=S_IFREG|0664, st_size=257, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/struct.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16513b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_struct.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=212184, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_struct.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 60456, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a7a41a000
+2629887 mmap(0x723a7a41e000, 20480, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x723a7a41e000
+2629887 mmap(0x723a7a423000, 16384, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x9000) = 0x723a7a423000
+2629887 mmap(0x723a7a427000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xc000) = 0x723a7a427000
+2629887 mprotect(0x723a7a427000, 4096, PROT_READ) = 0
+2629887 mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a794e0000
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes/_endian.py", {st_mode=S_IFREG|0664, st_size=2536, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes/_endian.py", {st_mode=S_IFREG|0664, st_size=2536, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/ctypes/__pycache__/_endian.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16513b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/fcntl.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=60408, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/fcntl.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 29008, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a7a589000
+2629887 mmap(0x723a7a58b000, 8192, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a7a58b000
+2629887 mmap(0x723a7a58d000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x723a7a58d000
+2629887 mmap(0x723a7a58f000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x5000) = 0x723a7a58f000
+2629887 mprotect(0x723a7a58f000, 4096, PROT_READ) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee1651da0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/__init__.abi3.so", 0x7ffee1651da0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/__init__.so", 0x7ffee1651da0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/__init__.py", {st_mode=S_IFREG|0664, st_size=14020, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/__init__.py", {st_mode=S_IFREG|0664, st_size=14020, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651b00) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/decoder.py", {st_mode=S_IFREG|0664, st_size=12473, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/decoder.py", {st_mode=S_IFREG|0664, st_size=12473, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/__pycache__/decoder.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16513b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/scanner.py", {st_mode=S_IFREG|0664, st_size=2425, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/scanner.py", {st_mode=S_IFREG|0664, st_size=2425, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/__pycache__/scanner.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16507f0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_json.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=238656, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_json.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 50824, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a794d3000
+2629887 mmap(0x723a794d6000, 24576, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x723a794d6000
+2629887 mmap(0x723a794dc000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x9000) = 0x723a794dc000
+2629887 mmap(0x723a794de000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xa000) = 0x723a794de000
+2629887 mprotect(0x723a794de000, 4096, PROT_READ) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/encoder.py", {st_mode=S_IFREG|0664, st_size=16070, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/encoder.py", {st_mode=S_IFREG|0664, st_size=16070, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/json/__pycache__/encoder.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16513b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/resource.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=54424, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/resource.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 21192, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a7a414000
+2629887 mmap(0x723a7a416000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a7a416000
+2629887 mmap(0x723a7a417000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x723a7a417000
+2629887 mmap(0x723a7a418000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x723a7a418000
+2629887 mprotect(0x723a7a418000, 4096, PROT_READ) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/signal.py", {st_mode=S_IFREG|0664, st_size=2495, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/signal.py", {st_mode=S_IFREG|0664, st_size=2495, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/signal.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651b00) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py", {st_mode=S_IFREG|0664, st_size=88725, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/subprocess.py", {st_mode=S_IFREG|0664, st_size=88725, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/subprocess.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651b00) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/locale.py", {st_mode=S_IFREG|0664, st_size=79095, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/locale.py", {st_mode=S_IFREG|0664, st_size=79095, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/locale.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16513b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.prefix/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_posixsubprocess.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=83304, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_posixsubprocess.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 24816, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a794cc000
+2629887 mmap(0x723a794ce000, 8192, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a794ce000
+2629887 mmap(0x723a794d0000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x723a794d0000
+2629887 mmap(0x723a794d1000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x723a794d1000
+2629887 mprotect(0x723a794d1000, 4096, PROT_READ) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/select.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=117352, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/select.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 38296, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a794c2000
+2629887 mmap(0x723a794c5000, 12288, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x723a794c5000
+2629887 mmap(0x723a794c8000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6000) = 0x723a794c8000
+2629887 mmap(0x723a794ca000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x8000) = 0x723a794ca000
+2629887 mprotect(0x723a794ca000, 4096, PROT_READ) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/selectors.py", {st_mode=S_IFREG|0664, st_size=19671, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/selectors.py", {st_mode=S_IFREG|0664, st_size=19671, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/selectors.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16513b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections/abc.py", {st_mode=S_IFREG|0664, st_size=119, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections/abc.py", {st_mode=S_IFREG|0664, st_size=119, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/collections/__pycache__/abc.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1650c60) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/math.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=290168, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/math.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 75912, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a794af000
+2629887 mmap(0x723a794b3000, 32768, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x723a794b3000
+2629887 mmap(0x723a794bb000, 20480, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xc000) = 0x723a794bb000
+2629887 mmap(0x723a794c0000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10000) = 0x723a794c0000
+2629887 mprotect(0x723a794c0000, 4096, PROT_READ) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/hashlib.py", {st_mode=S_IFREG|0664, st_size=11765, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/hashlib.py", {st_mode=S_IFREG|0664, st_size=11765, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/hashlib.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651b00) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_hashlib.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=205696, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_hashlib.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 60744, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a794a0000
+2629887 mmap(0x723a794a4000, 20480, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x723a794a4000
+2629887 mmap(0x723a794a9000, 16384, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x9000) = 0x723a794a9000
+2629887 mmap(0x723a794ad000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xc000) = 0x723a794ad000
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../libcrypto.so.3", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 6266280, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a78e00000
+2629887 mmap(0x723a78eed000, 3489792, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xed000) = 0x723a78eed000
+2629887 mmap(0x723a79241000, 1257472, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x441000) = 0x723a79241000
+2629887 mmap(0x723a79374000, 536576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x573000) = 0x723a79374000
+2629887 mmap(0x723a793f7000, 11688, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x723a793f7000
+2629887 mprotect(0x723a79374000, 524288, PROT_READ) = 0
+2629887 mprotect(0x723a794ad000, 4096, PROT_READ) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/ssl/openssl.cnf", O_RDONLY) = 3
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_blake2.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=227536, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_blake2.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 50432, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a79493000
+2629887 mmap(0x723a79495000, 28672, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a79495000
+2629887 mmap(0x723a7949c000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x9000) = 0x723a7949c000
+2629887 mmap(0x723a7949e000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xa000) = 0x723a7949e000
+2629887 mprotect(0x723a7949e000, 4096, PROT_READ) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee16514c0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/__init__.abi3.so", 0x7ffee16514c0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/__init__.so", 0x7ffee16514c0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/__init__.py", 0x7ffee16514c0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/__init__.pyc", 0x7ffee16514c0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.prefix/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee1651930) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/__init__.abi3.so", 0x7ffee1651930) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/__init__.so", 0x7ffee1651930) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/__init__.py", {st_mode=S_IFREG|0664, st_size=75, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/__init__.py", {st_mode=S_IFREG|0664, st_size=75, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/__init__.py", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651690) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/import_legacy.py", {st_mode=S_IFREG|0664, st_size=4691, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/import_legacy.py", {st_mode=S_IFREG|0664, st_size=4691, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/__pycache__/import_legacy.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/import_legacy.py", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651b00) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_budget.py", {st_mode=S_IFREG|0664, st_size=6892, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_budget.py", {st_mode=S_IFREG|0664, st_size=6892, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/__pycache__/r6_budget.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_budget.py", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16513b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/copy.py", {st_mode=S_IFREG|0664, st_size=8681, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/copy.py", {st_mode=S_IFREG|0664, st_size=8681, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/copy.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1650c60) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/weakref.py", {st_mode=S_IFREG|0664, st_size=21513, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/weakref.py", {st_mode=S_IFREG|0664, st_size=21513, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/weakref.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1650510) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.prefix/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/io.py", {st_mode=S_IFREG|0664, st_size=526, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/io.py", {st_mode=S_IFREG|0664, st_size=526, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/__pycache__/io.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/io.py", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651b00) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/source.py", {st_mode=S_IFREG|0664, st_size=5169, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/source.py", {st_mode=S_IFREG|0664, st_size=5169, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/__pycache__/source.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/source.py", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651b00) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 lstat("/home", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+2629887 lstat("/home/mint", {st_mode=S_IFDIR|0750, st_size=4096, ...}) = 0
+2629887 lstat("/home/mint/rl_dev", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 lstat("/home/mint/rl_dev/instinctRL-dev", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 lstat("/home/mint/rl_dev/instinctRL-dev/docs", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 lstat("/home/mint/rl_dev/instinctRL-dev/docs/experiments", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 lstat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 lstat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 lstat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 lstat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 lstat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 lstat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/source.py", {st_mode=S_IFREG|0664, st_size=5169, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/source.py", {st_mode=S_IFREG|0664, st_size=5169, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/run.py", {st_mode=S_IFREG|0664, st_size=12649, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/run.py", {st_mode=S_IFREG|0664, st_size=12649, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/__pycache__/run.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/tools/r6_direct/run.py", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651b00) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en_US.UTF-8/LC_MESSAGES/messages.mo", 0x7ffee1651ea0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en_US/LC_MESSAGES/messages.mo", 0x7ffee1651ea0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en.UTF-8/LC_MESSAGES/messages.mo", 0x7ffee1651ea0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en/LC_MESSAGES/messages.mo", 0x7ffee1651ea0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en_US.UTF-8/LC_MESSAGES/messages.mo", 0x7ffee1651ea0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en_US/LC_MESSAGES/messages.mo", 0x7ffee1651ea0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en.UTF-8/LC_MESSAGES/messages.mo", 0x7ffee1651ea0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en/LC_MESSAGES/messages.mo", 0x7ffee1651f00) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en_US.UTF-8/LC_MESSAGES/messages.mo", 0x7ffee1651f00) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en_US/LC_MESSAGES/messages.mo", 0x7ffee1651f00) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en.UTF-8/LC_MESSAGES/messages.mo", 0x7ffee1651f00) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/share/locale/en/LC_MESSAGES/messages.mo", 0x7ffee1651f00) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/shutil.py", {st_mode=S_IFREG|0664, st_size=56517, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/shutil.py", {st_mode=S_IFREG|0664, st_size=56517, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/shutil.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651560) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/zlib.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=144960, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/zlib.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 46856, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a79487000
+2629887 mmap(0x723a7948a000, 16384, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x723a7948a000
+2629887 mmap(0x723a7948e000, 12288, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x7000) = 0x723a7948e000
+2629887 mmap(0x723a79491000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x9000) = 0x723a79491000
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../libz.so.1", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 106512, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a7946c000
+2629887 mmap(0x723a7946f000, 65536, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x723a7946f000
+2629887 mmap(0x723a7947f000, 24576, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x13000) = 0x723a7947f000
+2629887 mmap(0x723a79485000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19000) = 0x723a79485000
+2629887 mprotect(0x723a79485000, 4096, PROT_READ) = 0
+2629887 mprotect(0x723a79491000, 4096, PROT_READ) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/bz2.py", {st_mode=S_IFREG|0664, st_size=11847, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/bz2.py", {st_mode=S_IFREG|0664, st_size=11847, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/bz2.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1650e10) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/_compression.py", {st_mode=S_IFREG|0664, st_size=5681, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/_compression.py", {st_mode=S_IFREG|0664, st_size=5681, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/_compression.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16506c0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_bz2.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=95720, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_bz2.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 29576, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a79464000
+2629887 mmap(0x723a79466000, 8192, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a79466000
+2629887 mmap(0x723a79468000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x723a79468000
+2629887 mmap(0x723a7946a000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x5000) = 0x723a7946a000
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../libbz2.so.1.0", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 80976, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a79450000
+2629887 mmap(0x723a79452000, 57344, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a79452000
+2629887 mmap(0x723a79460000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10000) = 0x723a79460000
+2629887 mmap(0x723a79462000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x11000) = 0x723a79462000
+2629887 mprotect(0x723a79462000, 4096, PROT_READ) = 0
+2629887 mprotect(0x723a7946a000, 4096, PROT_READ) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lzma.py", {st_mode=S_IFREG|0664, st_size=13277, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lzma.py", {st_mode=S_IFREG|0664, st_size=13277, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/lzma.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1650e10) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_lzma.cpython-311-x86_64-linux-gnu.so", {st_mode=S_IFREG|0775, st_size=166400, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/_lzma.cpython-311-x86_64-linux-gnu.so", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 46440, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a79444000
+2629887 mmap(0x723a79447000, 16384, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x723a79447000
+2629887 mmap(0x723a7944b000, 12288, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x7000) = 0x723a7944b000
+2629887 mmap(0x723a7944e000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x9000) = 0x723a7944e000
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../liblzma.so.5", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 196824, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a79413000
+2629887 mmap(0x723a79418000, 122880, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x5000) = 0x723a79418000
+2629887 mmap(0x723a79436000, 49152, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x23000) = 0x723a79436000
+2629887 mmap(0x723a79442000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2f000) = 0x723a79442000
+2629887 mprotect(0x723a79442000, 4096, PROT_READ) = 0
+2629887 mprotect(0x723a7944e000, 4096, PROT_READ) = 0
+2629887 ioctl(1, TIOCGWINSZ, 0x7ffee1651d20) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 ioctl(1, TIOCGWINSZ, 0x7ffee1651ff0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 ioctl(1, TIOCGWINSZ, 0x7ffee1651ff0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 ioctl(1, TIOCGWINSZ, 0x7ffee1651ff0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/plan.json", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16520b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/dev/shm", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02/ipc", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee16514c0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/__init__.abi3.so", 0x7ffee16514c0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/__init__.so", 0x7ffee16514c0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/__init__.py", 0x7ffee16514c0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/__init__.pyc", 0x7ffee16514c0) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=20480, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/cmeel.prefix/lib/python3.11/site-packages", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1/__init__.cpython-311-x86_64-linux-gnu.so", 0x7ffee1651930) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1/__init__.abi3.so", 0x7ffee1651930) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1/__init__.so", 0x7ffee1651930) = -1 ENOENT (No such file or directory)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1/__init__.py", {st_mode=S_IFREG|0664, st_size=135, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1/__init__.py", {st_mode=S_IFREG|0664, st_size=135, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1/__pycache__/__init__.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1/__init__.py", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651690) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1/write_boundary.py", {st_mode=S_IFREG|0664, st_size=4902, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1/write_boundary.py", {st_mode=S_IFREG|0664, st_size=4902, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1/__pycache__/write_boundary.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/training_workloads/unified_h1/write_boundary.py", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee1651b00) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source", {st_mode=S_IFDIR|0555, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final/isaaclab-training", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11", {st_mode=S_IFDIR|0775, st_size=12288, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/platform.py", {st_mode=S_IFREG|0775, st_size=42438, ...}) = 0
+2629887 stat("/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/platform.py", {st_mode=S_IFREG|0775, st_size=42438, ...}) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/__pycache__/platform.cpython-311.pyc", O_RDONLY|O_CLOEXEC) = 3
+2629887 ioctl(3, TCGETS, 0x7ffee16513b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a78d00000
+2629887 stat("/dev/null", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x3), ...}) = 0
+2629887 stat("/dev/zero", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x5), ...}) = 0
+2629887 stat("/dev/nvidia0", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0), ...}) = 0
+2629887 stat("/dev/nvidiactl", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0xff), ...}) = 0
+2629887 stat("/dev/nvidia-uvm", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1fb, 0), ...}) = 0
+2629887 stat("/dev/nvidia-uvm-tools", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1fb, 0x1), ...}) = 0
+2629887 lstat("/var", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+2629887 lstat("/var/lib", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+2629887 lstat("/var/lib/instinctrl-r6-native", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+2629887 lstat("/var/lib/instinctrl-r6-native/J-d737390980235144", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+2629887 lstat("/var/lib/instinctrl-r6-native/J-d737390980235144/output", {st_mode=S_IFDIR|0700, st_size=4096, ...}) = 0
+2629887 lstat("/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 lstat("/dev", {st_mode=S_IFDIR|0755, st_size=5000, ...}) = 0
+2629887 lstat("/dev/shm", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/dev/shm", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 stat("/dev/shm", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
+2629887 lstat("/dev", {st_mode=S_IFDIR|0755, st_size=5000, ...}) = 0
+2629887 lstat("/dev/null", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x3), ...}) = 0
+2629887 stat("/dev/null", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x3), ...}) = 0
+2629887 stat("/dev/null", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x3), ...}) = 0
+2629887 lstat("/dev", {st_mode=S_IFDIR|0755, st_size=5000, ...}) = 0
+2629887 lstat("/dev/zero", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x5), ...}) = 0
+2629887 stat("/dev/zero", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x5), ...}) = 0
+2629887 stat("/dev/zero", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x5), ...}) = 0
+2629887 lstat("/dev", {st_mode=S_IFDIR|0755, st_size=5000, ...}) = 0
+2629887 lstat("/dev/nvidia0", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0), ...}) = 0
+2629887 stat("/dev/nvidia0", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0), ...}) = 0
+2629887 stat("/dev/nvidia0", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0), ...}) = 0
+2629887 lstat("/dev", {st_mode=S_IFDIR|0755, st_size=5000, ...}) = 0
+2629887 lstat("/dev/nvidiactl", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0xff), ...}) = 0
+2629887 stat("/dev/nvidiactl", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0xff), ...}) = 0
+2629887 stat("/dev/nvidiactl", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0xff), ...}) = 0
+2629887 lstat("/dev", {st_mode=S_IFDIR|0755, st_size=5000, ...}) = 0
+2629887 lstat("/dev/nvidia-uvm", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1fb, 0), ...}) = 0
+2629887 stat("/dev/nvidia-uvm", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1fb, 0), ...}) = 0
+2629887 stat("/dev/nvidia-uvm", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1fb, 0), ...}) = 0
+2629887 lstat("/dev", {st_mode=S_IFDIR|0755, st_size=5000, ...}) = 0
+2629887 lstat("/dev/nvidia-uvm-tools", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1fb, 0x1), ...}) = 0
+2629887 stat("/dev/nvidia-uvm-tools", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1fb, 0x1), ...}) = 0
+2629887 stat("/dev/nvidia-uvm-tools", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1fb, 0x1), ...}) = 0
+2629887 openat(AT_FDCWD, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+2629887 openat(AT_FDCWD, "/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02", O_RDONLY|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4
+2629887 openat(AT_FDCWD, "/dev/shm", O_RDONLY|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4
+2629887 openat(AT_FDCWD, "/dev/null", O_RDONLY|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4
+2629887 openat(AT_FDCWD, "/dev/zero", O_RDONLY|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4
+2629887 openat(AT_FDCWD, "/dev/nvidia0", O_RDONLY|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4
+2629887 openat(AT_FDCWD, "/dev/nvidiactl", O_RDONLY|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4
+2629887 openat(AT_FDCWD, "/dev/nvidia-uvm", O_RDONLY|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4
+2629887 openat(AT_FDCWD, "/dev/nvidia-uvm-tools", O_RDONLY|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4
+2629887 openat(AT_FDCWD, "/proc/2629887/task", O_RDONLY|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4
+2629887 prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../libseccomp.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/libseccomp.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 148955, PROT_READ, MAP_PRIVATE, 3, 0) = 0x723a78cdb000
+2629887 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libseccomp.so.2", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 127296, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a78cbb000
+2629887 mmap(0x723a78cbd000, 57344, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a78cbd000
+2629887 mmap(0x723a78ccb000, 57344, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10000) = 0x723a78ccb000
+2629887 mmap(0x723a78cd9000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1d000) = 0x723a78cd9000
+2629887 mprotect(0x723a78cd9000, 4096, PROT_READ) = 0
+2629887 prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) = 0
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/lib-dynload/../../libcuda.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/libcuda.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 148955, PROT_READ, MAP_PRIVATE, 3, 0) = 0x723a78cdb000
+2629887 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libcuda.so.1", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 96776512, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a73000000
+2629887 mprotect(0x723a73166000, 93519872, PROT_NONE) = 0
+2629887 mmap(0x723a73166000, 16269312, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x166000) = 0x723a73166000
+2629887 mmap(0x723a740ea000, 77246464, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10ea000) = 0x723a740ea000
+2629887 mmap(0x723a78a96000, 1302528, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x5a95000) = 0x723a78a96000
+2629887 mmap(0x723a78bd4000, 487744, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x723a78bd4000
+2629887 openat(AT_FDCWD, "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/../lib/librt.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/librt.so.1", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 16400, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x723a7940e000
+2629887 mmap(0x723a7940f000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x723a7940f000
+2629887 mmap(0x723a79410000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a79410000
+2629887 mmap(0x723a79411000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x723a79411000
+2629887 mprotect(0x723a79411000, 4096, PROT_READ) = 0
+2629887 mprotect(0x723a78a96000, 1265664, PROT_READ) = 0
+2629887 openat(AT_FDCWD, "/sys/devices/system/cpu/online", O_RDONLY|O_CLOEXEC) = 3
+2629887 openat(AT_FDCWD, "/sys/devices/system/cpu/online", O_RDONLY|O_CLOEXEC) = 3
+2629887 openat(AT_FDCWD, "/proc/sys/vm/mmap_min_addr", O_RDONLY) = 3
+2629887 openat(AT_FDCWD, "/proc/cpuinfo", O_RDONLY) = 3
+2629887 openat(AT_FDCWD, "/proc/self/maps", O_RDONLY) = 3
+2629887 openat(AT_FDCWD, "/sys/devices/system/cpu/online", O_RDONLY|O_CLOEXEC) = 3
+2629887 mmap(NULL, 8392704, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x723a727ff000
+2629887 mprotect(0x723a72800000, 8388608, PROT_READ|PROT_WRITE) = 0
+2629888 mmap(NULL, 134217728, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+2629887 openat(AT_FDCWD, "/proc/self/task/2629888/comm", O_WRONLY|O_CREAT|O_TRUNC, 0666 <unfinished ...>
+2629888 <... mmap resumed>)             = 0x723a6a600000
+2629887 <... openat resumed>)           = 8
+2629888 mprotect(0x723a6c000000, 135168, PROT_READ|PROT_WRITE) = 0
+2629887 openat(AT_FDCWD, "/dev/shm/cuda_injection_path_shm", O_RDWR|O_NOFOLLOW|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/.nv/nvidia-application-profile-globals-rc", O_RDONLY) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/.nv/nvidia-application-profiles-rc", O_RDONLY) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/home/mint/.nv/nvidia-application-profiles-rc.d", O_RDONLY) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/etc/nvidia/nvidia-application-profiles-rc", O_RDONLY) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/etc/nvidia/nvidia-application-profiles-rc.d/", O_RDONLY) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/usr/share/nvidia/nvidia-application-profiles-580.173.02-rc", O_RDONLY) = 8
+2629887 openat(AT_FDCWD, "/usr/share/nvidia/nvidia-application-profiles-rc", O_RDONLY) = -1 ENOENT (No such file or directory)
+2629887 readlink("/proc/2629887/exe", "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11", 4095) = 62
+2629887 openat(AT_FDCWD, "/proc/self/cmdline", O_RDONLY) = 8
+2629887 readlink("/proc", 0x7ffee1650ef0, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/proc/self", "2629887", 1023) = 7
+2629887 readlink("/proc/2629887", 0x7ffee1650ef0, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/proc/2629887/exe", "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11", 1023) = 62
+2629887 readlink("/home", 0x7ffee1650ef0, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint", 0x7ffee1650ef0, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/miniconda3", 0x7ffee1650ef0, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/miniconda3/envs", 0x7ffee1650ef0, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/miniconda3/envs/navrl_blackwell_test", 0x7ffee1650ef0, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/miniconda3/envs/navrl_blackwell_test/bin", 0x7ffee1650ef0, 1023) = -1 EINVAL (Invalid argument)
+2629887 readlink("/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11", 0x7ffee1650ef0, 1023) = -1 EINVAL (Invalid argument)
+2629887 access("/sys/module/nvidia/initstate", R_OK) = 0
+2629887 openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = 8
+2629887 stat("/dev/nvidiactl", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0xff), ...}) = 0
+2629887 chmod("/dev/nvidiactl", 0666)   = -1 EPERM (Operation not permitted)
+2629887 stat("/usr/bin/nvidia-modprobe", 0x7ffee16511e0) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = 8
+2629887 stat("/dev/nvidiactl", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0xff), ...}) = 0
+2629887 openat(AT_FDCWD, "/dev/nvidiactl", O_RDWR) = 8
+2629887 openat(AT_FDCWD, "/sys/devices/system/memory/block_size_bytes", O_RDONLY) = 9
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0xd6, 0x8), 0x7ffee1651520) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0xc8, 0x900), 0x723a78c27aa0) = 0
+2629887 stat("/proc/driver/nvidia/gpus/0000:01:00.0/numa_status", 0x7ffee1651490) = -1 ENOENT (No such file or directory)
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee1651670) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee1650580) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x29, 0x10), 0x7ffee1651660) = 0
+2629887 access("/sys/module/nvidia/initstate", R_OK) = 0
+2629887 openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = 8
+2629887 stat("/dev/nvidiactl", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0xff), ...}) = 0
+2629887 chmod("/dev/nvidiactl", 0666)   = -1 EPERM (Operation not permitted)
+2629887 stat("/usr/bin/nvidia-modprobe", 0x7ffee16517a0) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = 8
+2629887 stat("/dev/nvidiactl", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0xff), ...}) = 0
+2629887 openat(AT_FDCWD, "/dev/nvidiactl", O_RDWR) = 8
+2629887 openat(AT_FDCWD, "/sys/devices/system/memory/block_size_bytes", O_RDONLY) = 9
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0xd6, 0x8), 0x7ffee1651ae0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0xc8, 0x900), 0x723a78c27aa0) = 0
+2629887 stat("/proc/driver/nvidia/gpus/0000:01:00.0/numa_status", 0x7ffee1651a50) = -1 ENOENT (No such file or directory)
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee1651c30) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee1650b00) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee1650b00) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee1651c30) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee1650b10) = 0
+2629887 openat(AT_FDCWD, "/sys/devices/system/cpu/online", O_RDONLY|O_CLOEXEC) = 9
+2629887 openat(AT_FDCWD, "/proc/self/status", O_RDONLY) = 9
+2629887 openat(AT_FDCWD, "/sys/devices/system/node", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 9
+2629887 openat(AT_FDCWD, "/sys/devices/system/node/node0/cpumap", O_RDONLY) = 10
+2629887 access("/sys/module/nvidia_uvm/initstate", R_OK) = 0
+2629887 openat(AT_FDCWD, "/proc/devices", O_RDONLY) = 9
+2629887 stat("/dev/nvidia-uvm", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1fb, 0), ...}) = 0
+2629887 chmod("/dev/nvidia-uvm", 0666)  = -1 EPERM (Operation not permitted)
+2629887 stat("/usr/bin/nvidia-modprobe", 0x7ffee1651c40) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/dev/nvidia-uvm", O_RDWR|O_CLOEXEC) = 9
+2629887 openat(AT_FDCWD, "/dev/nvidia-uvm", O_RDWR|O_CLOEXEC) = 10
+2629887 ioctl(9, _IOC(_IOC_NONE, 0, 0x1, 0x3000), 0x7ffee1651d20) = 0
+2629887 ioctl(10, _IOC(_IOC_NONE, 0, 0x4b, 0), 0x7ffee1651d20) = 0
+2629887 ioctl(9, _IOC(_IOC_NONE, 0, 0x27, 0), 0x7ffee1651d20) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ed10) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e5c0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ecd0) = 0
+2629887 openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = 11
+2629887 stat("/dev/nvidia0", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0), ...}) = 0
+2629887 chmod("/dev/nvidia0", 0666)     = -1 EPERM (Operation not permitted)
+2629887 stat("/usr/bin/nvidia-modprobe", 0x7ffee164ea40) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = 11
+2629887 stat("/dev/nvidia0", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0), ...}) = 0
+2629887 openat(AT_FDCWD, "/dev/nvidia0", O_RDWR|O_CLOEXEC) = 11
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ee90) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e280) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ee80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x29, 0x10), 0x7ffee164ff20) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ed10) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ed10) = 0
+2629887 openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = 12
+2629887 stat("/dev/nvidia0", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0), ...}) = 0
+2629887 chmod("/dev/nvidia0", 0666)     = -1 EPERM (Operation not permitted)
+2629887 stat("/usr/bin/nvidia-modprobe", 0x7ffee164fc40) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = 12
+2629887 stat("/dev/nvidia0", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0), ...}) = 0
+2629887 openat(AT_FDCWD, "/dev/nvidia0", O_RDWR|O_CLOEXEC) = 12
+2629887 ioctl(12, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0xc9, 0x4), 0x7ffee164fe90) = 0
+2629887 ioctl(12, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0xd7, 0x230), 0x7ffee164fc10) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ed30) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee164ff60) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ee90) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eb60) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ee90) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ee10) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ed10) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ed10) = 0
+2629887 openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = 13
+2629887 stat("/dev/nvidia0", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0), ...}) = 0
+2629887 chmod("/dev/nvidia0", 0666)     = -1 EPERM (Operation not permitted)
+2629887 stat("/usr/bin/nvidia-modprobe", 0x7ffee164fc40) = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = 13
+2629887 stat("/dev/nvidia0", {st_mode=S_IFCHR|0666, st_rdev=makedev(0xc3, 0), ...}) = 0
+2629887 openat(AT_FDCWD, "/dev/nvidia0", O_RDWR|O_CLOEXEC) = 13
+2629887 ioctl(13, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0xc9, 0x4), 0x7ffee164fe90) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee164ffa0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee164ffb0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ea90) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ea40) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ed90) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e400) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164dbf0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164dff0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ea80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ec80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e960) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e960) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e960) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e960) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e960) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e6c0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e880) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eb20) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ec80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ec80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ec40) = 0
+2629887 openat(AT_FDCWD, "/dev/nvidia0", O_RDWR|O_CLOEXEC) = 14
+2629887 ioctl(14, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0xc9, 0x4), 0x7ffee164fd40) = 0
+2629887 ioctl(14, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0xce, 0x10), 0x7ffee164fd30) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e990) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eb80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eb80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eb80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eb80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eb80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eb80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eb70) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eaf0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eb80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164b3a0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164d060) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ecb0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164e8b0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee164fd20) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eaf0) = 0
+2629887 openat(AT_FDCWD, "/dev/nvidia0", O_RDWR|O_CLOEXEC) = 15
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x4e, 0x38), 0x7ffee164fcb0) = 0
+2629887 mmap(NULL, 65536, PROT_WRITE, MAP_SHARED, 15, 0) = 0x723a793fe000
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee164fd20) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eaf0) = 0
+2629887 openat(AT_FDCWD, "/dev/nvidia0", O_RDWR|O_CLOEXEC) = 15
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x4e, 0x38), 0x7ffee164fcb0) = 0
+2629887 mmap(NULL, 65536, PROT_WRITE, MAP_SHARED, 15, 0) = 0x723a78cf0000
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x5e, 0x28), 0x7ffee164fc80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee164fdb0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eb40) = 0
+2629887 openat(AT_FDCWD, "/dev/nvidiactl", O_RDWR|O_CLOEXEC) = 15
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x4e, 0x38), 0x7ffee164fd00) = 0
+2629887 mmap(NULL, 4096, PROT_READ, MAP_SHARED, 15, 0) = 0x723a7a588000
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ec50) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee164fd60) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee164fd60) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ec80) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ebe0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ebe0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ece0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164eba0) = 0
+2629887 openat(AT_FDCWD, "/sys/bus/pci/devices/0000:01:00.0/numa_node", O_RDONLY) = 15
+2629887 mmap(NULL, 8657043456, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723868000000
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ffe0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164ffe0) = 0
+2629887 mmap(NULL, 2699264, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a7256c000
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164efb0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164efb0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164f8c0) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffee164c490) = 0
+2629887 mmap(NULL, 790528, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a724ab000
+2629887 mkdir("/var", 0700)             = -1 EEXIST (File exists)
+2629887 mkdir("/var/lib", 0700)         = -1 EEXIST (File exists)
+2629887 mkdir("/var/lib/instinctrl-r6-native", 0700) = -1 EEXIST (File exists)
+2629887 mkdir("/var/lib/instinctrl-r6-native/J-d737390980235144", 0700) = -1 EEXIST (File exists)
+2629887 mkdir("/var/lib/instinctrl-r6-native/J-d737390980235144/output", 0700) = -1 EEXIST (File exists)
+2629887 mkdir("/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02", 0700) = -1 EEXIST (File exists)
+2629887 mkdir("/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02/cache", 0700) = -1 EEXIST (File exists)
+2629887 ioctl(9, _IOC(_IOC_NONE, 0, 0x25, 0), 0x7ffee16518a0) = 0
+2629887 ioctl(9, _IOC(_IOC_NONE, 0, 0x46, 0), 0x7ffee1651910) = 0
+2629887 ioctl(9, _IOC(_IOC_NONE, 0, 0x17, 0), 0x7ffee1651d60) = 0
+2629887 ioctl(8, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2b, 0x30), 0x7ffee1651ac0) = 0
+2629887 mmap(0x200000000, 4297064448, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x200000000
+2629887 mmap(NULL, 19009536, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x723a7128a000
+2629887 stat("/proc/2629887/ns/pid", {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+2629887 stat("/proc/2629887/ns/pid", {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+2629887 unlink("")                      = -1 ENOENT (No such file or directory)
+2629887 openat(AT_FDCWD, "/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02/.cuda_result.json.2629887.tmp", O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, 0666) = 16
+2629887 ioctl(16, TCGETS, 0x7ffee16520b0) = -1 ENOTTY (Inappropriate ioctl for device)
+2629887 rename("/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02/.cuda_result.json.2629887.tmp", "/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02/cuda_result.json") = 0
+2629887 openat(AT_FDCWD, "/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02", O_RDONLY|O_CLOEXEC|O_DIRECTORY) = 16

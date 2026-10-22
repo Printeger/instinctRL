@@ -1,0 +1,20 @@
+{
+  "cleanup": "VERIFIED_NO_OWNED_PROCESSES",
+  "next_action": "Apply exact process-local task metadata allowance to direct worker; new baseline attempt",
+  "policy_transitions": 0,
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CUDA-DIAGNOSTIC-02/receipt.json",
+    "sha256": "526ceabc97d04e704dcb64df3c0b556d4b374c1b4f489eb710b253cd8e05f39c"
+  },
+  "result": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/evidence/cuda_result.json",
+    "sha256": "7866e76f69f73ce674e5ece1292925fbd57ac13a83e467f1c113d515345d6f2a"
+  },
+  "simulator_initializations": 0,
+  "status": "CUDA_SUCCESS_NOT_SIMULATION_VALIDATION",
+  "trace": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/evidence/syscalls.log",
+    "sha256": "5e24e49d17362caf5c09855ea933e937c864c7880d0284f58d51037b37904ef0"
+  },
+  "unchanged_protections": "Disk originals and runtime remain read-only; device chmod still denied"
+}

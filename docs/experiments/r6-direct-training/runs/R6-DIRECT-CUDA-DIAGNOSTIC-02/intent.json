@@ -1,0 +1,51 @@
+{
+  "parent": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pid": 2629654,
+    "starttime": "261067160"
+  },
+  "plan": {
+    "bounds": {
+      "child_seconds": 30,
+      "gpu_and_wall_reservation_seconds": 240,
+      "queue_seconds": 180,
+      "syscall_log_bytes": 67108864
+    },
+    "bwrap": {
+      "path": "/usr/bin/bwrap",
+      "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+    },
+    "helper_source": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_SOURCE_04.json",
+      "sha256": "b68e1740ddc5d40d401447b262151bd42bee275d3b129e6426a451b76baaeac0"
+    },
+    "native_dir": "/var/lib/instinctrl-r6-native/J-d737390980235144/output/R6-DIRECT-CUDA-DIAGNOSTIC-02",
+    "native_volume": {
+      "path": "/var/lib/instinctrl-r6-native/J-d737390980235144/volume.json",
+      "sha256": "8e997a12d7fd72c55fc2ee4c4fba72655d8cf4a71581e836e93b63933c1a978b"
+    },
+    "output_root": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CUDA-DIAGNOSTIC-02",
+    "predecessor_receipt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CUDA-DIAGNOSTIC-01/receipt.json",
+      "sha256": "e89655fc75b20a5ece82e20f068b19911c3cda8fc200f9638c5f4f00943ad07a"
+    },
+    "python": {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+    },
+    "run_id": "R6-DIRECT-CUDA-DIAGNOSTIC-02",
+    "schema_version": "r6-direct-cuda-diagnostic/1",
+    "scope": "One cuInit with process-local task metadata writes; existing disk Landlock and seccomp unchanged; no simulator or optimizer",
+    "script": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/diagnostics/cuda-02/source/cuda_diagnostic.py",
+      "sha256": "7957c445b6b956cafe697482ed96df01ab34dffdf1f613be9afdd7d2cbf35004"
+    },
+    "self_task_metadata": true,
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-02-ipc-final",
+    "source_commit": "63d22cc720da6ab82c1629a9da37b420ba5d16a4",
+    "strace": {
+      "path": "/usr/bin/strace",
+      "sha256": "28f957c227012de0b18d1bd7fff2d396cb693ea60ed8013be68de071e84b5001"
+    }
+  }
+}

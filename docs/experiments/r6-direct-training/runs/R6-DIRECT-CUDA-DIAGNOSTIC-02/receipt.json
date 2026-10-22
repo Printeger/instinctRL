@@ -1,0 +1,38 @@
+{
+  "child": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pid": 2629883,
+    "starttime": "261073230"
+  },
+  "error": null,
+  "exit_code": 0,
+  "log_bytes": {
+    "stderr": 0,
+    "stdout": 25
+  },
+  "owned_processes": [
+    {
+      "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+      "pid": 2629883,
+      "starttime": "261073230"
+    },
+    {
+      "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+      "pid": 2629884,
+      "starttime": "261073230"
+    },
+    {
+      "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+      "pid": 2629887,
+      "starttime": "261073230"
+    }
+  ],
+  "parent": {
+    "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+    "pid": 2629654,
+    "starttime": "261067160"
+  },
+  "remaining": [],
+  "status": "CLOSED",
+  "wall_seconds": 0.10804701782763004
+}

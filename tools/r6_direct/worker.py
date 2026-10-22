@@ -80,6 +80,9 @@ def run(plan, input_pin):
     from training_workloads.unified_h1.write_boundary import prepare,enforce
     devices=[p for p in ('/dev/null','/dev/zero','/dev/nvidia0','/dev/nvidiactl','/dev/nvidia-uvm','/dev/nvidia-uvm-tools') if Path(p).exists()]
     policy=prepare([str(attempt),str(native_root),'/dev/shm'],devices)
+    # Validated by CUDA-DIAGNOSTIC-02: CUDA names new threads through comm.
+    # Only this process's task metadata receives write/truncate permission.
+    policy['entries'].append((f'/proc/{os.getpid()}/task',2|(1<<14)))
     atomic(attempt/'write_boundary.json',policy)
     enforce(policy)
     # Existing kernel-bounded volumes contain all native and scientific writes.
