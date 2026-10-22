@@ -1,3 +1,8 @@
+# R6 直接基线：第四次准确输入已冻结，待后台启动
+
+2026-10-22：源码d10ce5b0、detached snapshots/baseline-04；BASELINE_RUN_INPUTS_04.json无GPU预检通过。16GiB实际写入容量通过，17GiB不足空间反例正确拒绝。
+独审条件项已用PPO接收端拒绝和CPU回归关闭。完整基线、实际PPO与最终验证仍未完成。
+
 # R6 直接基线：第三次部分结果已保留，延迟初帧评价修复通过 CPU 检查
 
 2026-10-22：baseline03 完成原五任务全部32/32和三个开发条件，64640完成transitions；在 S-delay-drop 首步的奖励覆盖硬门失败。完整基线未完成，不是科学阴性。

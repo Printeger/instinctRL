@@ -1,0 +1,6 @@
+{
+  "status": "PASS_CPU_REJECTS_INSUFFICIENT_SPACE",
+  "requested_payload_bytes": 18253611008,
+  "exit_code": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-04/tools/r6_direct/worker.py\", line 184, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-04/tools/r6_direct/worker.py\", line 180, in main\n    preflight(plan);print('PASS_CPU_DIRECT_PREFLIGHT_NO_GPU');return\n    ^^^^^^^^^^^^^^^\n  File \"/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/baseline-04/tools/r6_direct/worker.py\", line 51, in preflight\n    raise ValueError('DIRECT_RESULT_REMAINING_CAPACITY')\nValueError: DIRECT_RESULT_REMAINING_CAPACITY\n"
+}

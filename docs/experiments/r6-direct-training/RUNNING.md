@@ -56,3 +56,12 @@ CPU模块清单位于实际attempt目录；最终NO_RLFLOW审计还需真实运�
 启动方式仍为在准确快照下执行 `/usr/bin/python3 -B -m tools.r6_direct.run --inputs` 加该输入绝对路径。
 状态、日志和 receipt 在 `runs/R6-DIRECT-BASELINE-03/`；完整科学输出位于输入的 attempt_dir。
 此前失败和 CPU 草稿拒绝均保存；同一 run 不重复启动。
+
+## 第四次基线（延迟初帧评价修复）
+
+第三次结果不完整，原件保留。新源码 `d10ce5b0`，detached 快照 `snapshots/baseline-04`，准确输入 `BASELINE_RUN_INPUTS_04.json`；tag `r6-direct-baseline-04-inputs`。
+仅非训练评价中已审计的延迟初帧允许显式 reward unavailable，PPO 接收端拒绝该占位值；actor 测量、评分与五任务/16块不变。
+使用原 prepaid 结果卷的新目录，新的16GiB聚合写入上限由当前剩余容量支持；旧数据、旧配额和全部历史计账保留。
+从准确快照启动 `/usr/bin/python3 -B -m tools.r6_direct.run --inputs /home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_RUN_INPUTS_04.json`。
+后台 tmux `instinctrl-r6-direct-baseline-04`；状态和 receipt 位于 `runs/R6-DIRECT-BASELINE-04/`。查看 `state.json` 和输入 attempt_dir 下的 `state.json`；STOP 路径沿本文前述规则，停止文件不得自动清除。
+时间结算仅针对已准确清理的新基线，按完整 supervisor 含准入/清理 wall 向上取整；原预留记录保存，未知其他量不释放。
