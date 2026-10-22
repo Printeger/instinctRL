@@ -11,8 +11,8 @@ ROOT=Path(__file__).resolve().parents[2]
 class PrivateIPCTests(unittest.TestCase):
     def test_named_semaphore_and_shared_memory_stay_in_bounded_native_root(self):
         with tempfile.TemporaryDirectory() as tmp:
-            base=Path(tmp);native=base/'native';native.mkdir();ipc=native/'ipc';ipc.mkdir()
-            protected=base/'protected';protected.write_text('unchanged')
+            base=Path(tmp);volume=base/'volume';volume.mkdir();native=volume/'run';native.mkdir();ipc=native/'ipc';ipc.mkdir()
+            protected=volume/'protected';protected.write_text('unchanged')
             script='''
 import ctypes,os,sys,errno
 from pathlib import Path
@@ -34,7 +34,7 @@ print('PASS_PRIVATE_IPC_AND_READ_ONLY_OUTSIDE')
 '''
             env=dict(os.environ,PYTHONPATH=str(ROOT),PYTHONDONTWRITEBYTECODE='1')
             result=subprocess.run(['/usr/bin/bwrap','--die-with-parent','--ro-bind','/','/',
-                '--bind',str(native),str(native),'--bind',str(ipc),'/dev/shm','--',
+                '--bind',str(volume),str(volume),'--bind',str(ipc),'/dev/shm','--',
                 '/usr/bin/python3','-B','-c',script,str(native),str(protected)],env=env,capture_output=True,text=True,timeout=10)
             self.assertEqual(result.returncode,0,result.stderr)
             self.assertIn('PASS_PRIVATE_IPC',result.stdout)
