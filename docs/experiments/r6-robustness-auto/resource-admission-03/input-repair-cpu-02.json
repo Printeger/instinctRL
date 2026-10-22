@@ -1,0 +1,15 @@
+{
+  "status": "PASS_CPU_ONLY_NOT_DEPLOYED",
+  "passed": 77,
+  "seconds": 37.49,
+  "tests": [
+    "tools/test_r6_baseline_input_repair.py",
+    "tools/test_r6_baseline_failure.py",
+    "tools/test_r6_controller.py"
+  ],
+  "actual_failure_packet_pin_verified": true,
+  "old_module_sha256": "bc3625feac5def4aaf37721af389819e474d631f1b48e33c7295bdc7f52168bc",
+  "new_plan_actual_store_validation": "PASS J-f9edc8f6f35dde13",
+  "closure": "Moved new adoption logic out of frozen failure module; original cursor can read original pin and return recorded disposition without another model call. Explicit adoption is separately gated by exact initial prelive PASS.",
+  "live_starts": 0
+}

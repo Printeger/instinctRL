@@ -45,6 +45,7 @@ from tools import r6_engineering_source as engineering_source
 from tools import r6_engineering_review as engineering_review
 from tools import r6_engineering_rework as engineering_rework
 from tools import r6_baseline_failure as baseline_failure
+from tools import r6_baseline_input_repair as baseline_input_repair
 from tools import r6_render_preparation as render_preparation, r6_render_review as render_review
 from tools import r6_render_materialization as render_materialization, r6_run_job as render_runner
 from tools.r6_decision_packet import persist_exact
@@ -107,7 +108,7 @@ def register(journal,request_pin,store,*,free_disk_bytes):
     if 'cursor' not in entry:
         entry['cursor']=dict(phase='FIRST_JOB',context=args['profile_context'],completed_jobs=[])
     entry['controller_process']=identity(os.getpid());journal.save(state)
-    initial=baseline_failure.effective_initial(journal,key,initial)
+    initial=baseline_input_repair.effective_initial(journal,key,initial)
     return key,initial
 
 

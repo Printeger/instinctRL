@@ -4,7 +4,7 @@ from unittest.mock import Mock
 import pytest
 from tools.test_r6_baseline_failure import case,enter,FREE
 from tools.test_r6_initial_review_repair import ready,bound
-from tools import r6_baseline_failure as m
+from tools import r6_baseline_input_repair as m
 from tools.r6_recovery import RecoveryError
 
 @pytest.fixture
@@ -64,3 +64,13 @@ def test_rejects_unsafe_rebinding_without_state_mutation(repair_case,damage):
     before=b.journal.read()
     with pytest.raises((RecoveryError,KeyError,ValueError)):adopt(b)
     assert b.journal.read()==before
+
+def test_actual_preserved_failure_packet_still_reads_original_implementation():
+    # Production read-only evidence: the real failed cursor must not PIN_DRIFT.
+    import json
+    from pathlib import Path
+    from tools.r6_recovery import checked
+    root=Path(__file__).resolve().parents[1]
+    packet=root/'docs/experiments/r6-robustness-auto/batch/baseline-failure/b57920e81ad596938c1e556b955330fba9af61591ea1a91feee2afccb2e5e1a2/packet.json'
+    value=json.loads(packet.read_text())
+    assert checked(value['implementation'])==root/'tools/r6_baseline_failure.py'

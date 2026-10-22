@@ -1,3 +1,13 @@
+# R6 接续：当前资源独审通过，准确基线计划与修复续接待预审（尚无真实基线/训练）
+
+2026-10-22：按 CONTINUATION_USER_AUTHORITY_20261022.txt 接续原目标和全部账本，必须完成实际训练；不能以 BASELINE_SUFFICIENT 跳过。
+已复核 u640 SHA256 和实时进程，旧控制器终态为 REPAIR_CODE_REQUIRED；不是运行中作业。
+当前 validator 与旧审核仅 select_gate 入口集合有差异，数值阈值不变；真实独审 PASS_R6_RESOURCE_BUNDLE，全部 26 原件 pin 核验。
+证据 RESOURCE_ADMISSION_ACCEPTED_03.json；87 项定向 CPU 检查通过，新准确计划 baseline-prelive-03/plan.json 不改 spec。
+已实现首次审核失败后接入新资源审核计划的局部修复，77 项 CPU 检查通过；独立 controller revision 审核运行中，尚未采用新计划/发行许可/发车。
+资源审核后模型会话 232/512，修复审核再预留 1；全部旧失败、预留及费用保留，最终确认预算不变。
+下一步为修复独审、准确初始基线预审和 FIRST_JOB 续接，取得真实 raw、分条件结果与清理记录。科学目标未完成。
+
 # R6 当前状态：按用户指令恢复后台执行，尚未运行基线或训练
 
 2026-10-22：首次控制器因交接超时退出，未发车。用户已明确暂停聊天自动推理并要求后台继续。

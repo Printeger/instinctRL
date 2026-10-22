@@ -1,0 +1,23 @@
+{
+  "from_commit": "b9b86614da5a275256a2f476e3b2eaf415c19dec",
+  "to_commit": "04ef8b8ec556666803099c803b1a8c04fa5cdba3",
+  "reason": "Resolve observed REPAIR_CODE_REQUIRED after first-review stale resource pin failure. New explicit adoption requires a fresh exact initial-baseline PASS, limits change to queue/sampler review pins, preserves original controller request/identity/failure cursor/receipts/budget and restores FIRST_JOB. No live launch in review. Inspect this additive recovery, not future exception framework. Current resource implementation independently accepted. New user authority requires actual training even if baseline sufficient. New plan adoption occurs only after separate prelive review.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/RESOURCE_ADMISSION_ACCEPTED_03.json",
+      "sha256": "9c7eb8db2301afe6dafe30eb6f5087de1f741d291062a5cf9feee909fbc6a8fc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-03/input-repair-cpu.json",
+      "sha256": "59db39eebfe8c4f1ebd8edc194b1035230482cd50870510c9b21081f6b3c1dcf"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/repair-provenance.json",
+      "sha256": "5aec28e6851c7fb09ab4bb63c1328c2ea3a62d5277fe7be0fffeaa486dbc9c4b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CONTINUATION_USER_AUTHORITY_20261022.txt",
+      "sha256": "cf4d75c3fad4f91c8647eb1bcdd6648b2d16ad41fc018870614aa4244d5e2650"
+    }
+  ]
+}

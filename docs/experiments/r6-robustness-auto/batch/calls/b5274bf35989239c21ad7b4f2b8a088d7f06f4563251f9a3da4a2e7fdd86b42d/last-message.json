@@ -1,0 +1,31 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "Commit implementation hashes and proposal evidence pins match. The unchanged BASELINE_FAILURE_HANDOFF cursor cannot resume: its frozen implementation pin conflicts with the revised source. Existing ownership, STOP, actor and runtime protections are not weakened by the code diff.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-03/controller-revision.json",
+      "sha256": "0c435d78afa3207833a386d513b33ae79dc4b1ef131f45dab0e69b53d97db2de"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/baseline-failure/b57920e81ad596938c1e556b955330fba9af61591ea1a91feee2afccb2e5e1a2/packet.json",
+      "sha256": "9d772add7cbd211a60018a1833e39a8d8ac36bf35bc2470100a2890806811fdd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_baseline_failure.py",
+      "sha256": "6fc7bf7e53bf2d7fe3439f08eb782c962025ecb1c1b88b6e8977d92879cb5768"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-03/input-repair-cpu.json",
+      "sha256": "59db39eebfe8c4f1ebd8edc194b1035230482cd50870510c9b21081f6b3c1dcf"
+    }
+  ],
+  "changed_files": [],
+  "must_fix": [
+    "P1: tools/r6_controller.py:144 routes the preserved cursor into baseline_failure.prepare(), which calls checked(packet['implementation']). The original failure packet pins r6_baseline_failure.py at bc3625feac5def4aaf37721af389819e474d631f1b48e33c7295bdc7f52168bc, but to_commit contains 6fc7bf7e53bf2d7fe3439f08eb782c962025ecb1c1b88b6e8977d92879cb5768. Resume therefore raises PIN_DRIFT. The new adopt_reviewed_inputs() function is not invoked by this cursor, and no baseline_input_repair is recorded. Provide a separately reviewed repair transition preserving original requests, receipts and charges, requiring fresh exact prelive approval; do not overwrite the old pin or treat controller revision approval as phase-reset authority. Verify the actual preserved-cursor resume path with a targeted CPU regression."
+  ],
+  "remaining_budget": {
+    "automatic_sessions_remaining": 279
+  },
+  "reviewer": "r6-independent-controller-revision",
+  "packet_sha256": "0b23e504ee36d50be783e7da94238728397b0edd51d8789b47d67bccb50aed65"
+}
