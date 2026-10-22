@@ -57,10 +57,52 @@ def baseline_runtime_contract(parameters):
                 budgets=budget_from_parameters(p))
 
 
+def training_runtime_contract(parameters):
+    from . import robustness_training_plan as training
+    from .checkpoint_compatibility import validate_source_identity
+    fields={'experiment_id','group','training_seed','evaluation_seed','baseline_bindings',
+            'r6_training_plan','r6_expected_mass_kg','output_cap_bytes','source_identity'}
+    require(isinstance(parameters,dict) and set(parameters)==fields,'TRAINING_FIELDS')
+    p=copy.deepcopy(parameters)
+    plan=training.validate(p['r6_training_plan'])
+    require(plan['schema_version']=='r6-local-training-plan/1','LOCAL_PLAN_REQUIRED')
+    require(p['experiment_id']==plan['experiment_id'] and p['group']=='R1','TRAINING_IDENTITY')
+    require(type(p['training_seed']) is int and p['training_seed']==plan['training_seed']
+            and type(p['evaluation_seed']) is int and p['evaluation_seed']==20260909,'TRAINING_SEEDS')
+    baseline(p)
+    require(type(p['r6_expected_mass_kg']) in (int,float)
+            and abs(p['r6_expected_mass_kg']-1.181517923)<1e-8,'MASS')
+    require(type(p['output_cap_bytes']) is int
+            and plan['storage']['payload_bytes']<=p['output_cap_bytes']<=20250099712,'OUTPUT_CAP')
+    validate_source_identity(p['source_identity'])
+    require(p['source_identity']==pinned_json(plan['recipe'])['source_identity'],'TRAINING_SOURCE')
+    return dict(schema_version='r6-local-runtime-contract/1',execution_mode='local-direct',
+                operation='train',mode='research-r6-training',parameters=p,
+                budgets=training.required_budget(plan))
+
+
+def training_inputs(backend, plan):
+    """Select an explicit runtime contract without converting it to approval."""
+    if getattr(backend,'execution_mode',None)=='local-direct':
+        inputs=validate_runtime_contract(backend.runtime_contract)
+        require(getattr(backend,'authorization',None) is None,'NO_LEGACY_AUTHORIZATION')
+        require(plan['schema_version']=='r6-local-training-plan/1','LOCAL_PLAN_REQUIRED')
+    else:
+        inputs=backend.authorization
+        require(plan['schema_version']=='r6-training-plan/1','LEGACY_PLAN_REQUIRED')
+    from .robustness_training_plan import required_budget
+    if not (inputs['mode']=='research-r6-training'
+            and inputs['parameters'].get('r6_training_plan')==plan
+            and inputs['budgets']==required_budget(plan)):
+        raise PermissionError('R6_EXECUTION_EXACT_PLAN_BUDGET')
+    return inputs
+
+
 def validate_runtime_contract(value):
     require(isinstance(value,dict) and set(value)=={'schema_version','execution_mode','operation','mode','parameters','budgets'},'CONTRACT_FIELDS')
     require(value['schema_version']=='r6-local-runtime-contract/1' and value['execution_mode']=='local-direct','MODE')
-    require(value['operation']=='baseline','OPERATION_NOT_IMPLEMENTED')
-    expected=baseline_runtime_contract(value['parameters'])
+    require(value['operation'] in ('baseline','train'),'OPERATION_NOT_IMPLEMENTED')
+    build=baseline_runtime_contract if value['operation']=='baseline' else training_runtime_contract
+    expected=build(value['parameters'])
     require(value==expected,'EXACT_CONTRACT_BUDGET')
     return expected

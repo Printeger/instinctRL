@@ -17,6 +17,23 @@ from tools.r6_direct.io import atomic
 LOG_CAP=64*1024**2
 
 
+def run_resources(contract):
+    from training_workloads.unified_h1.direct_contract import validate_runtime_contract
+    contract=validate_runtime_contract(contract)
+    budget=contract['budgets']
+    resources=dict(live_starts=1,simulator_initializations=1,
+        nontraining_transitions=budget['nontraining_transitions'],
+        training_transitions=budget['training_transitions'],
+        allocated_gpu_seconds=budget['wall_seconds']+190,
+        live_wall_seconds=budget['wall_seconds']+190,queue_seconds=180)
+    if contract['operation']=='train':
+        resources['training_checkpoint_writes']=budget['checkpoint_writes']
+        # Conservatively charge each new development stream as a candidate.
+        if contract['parameters']['r6_training_plan']['initialization']['kind']=='COMMON_U640_NEW_STREAM':
+            resources['major_scientific_candidates']=1
+    return resources
+
+
 def reserve(ledger, run_id, resources):
     if any(r['id']==run_id for r in ledger['new_reservations']):raise ValueError('DIRECT_DUPLICATE_RESERVATION')
     totals={k:ledger['historical_charged'][k]+ledger['new_used'][k] for k in ledger['caps']}
@@ -180,8 +197,7 @@ def main():
         for key in ('attempt_dir','native_dir'):
             if Path(plan[key]).exists():raise FileExistsError(plan[key])
         directory.mkdir(parents=True,exist_ok=False)
-        resources=dict(live_starts=1,simulator_initializations=1,nontraining_transitions=contract['budgets']['nontraining_transitions'],
-            training_transitions=0,allocated_gpu_seconds=3790,live_wall_seconds=3790,queue_seconds=180)
+        resources=run_resources(contract)
         reserve(ledger,run_id,resources)
         ledger['new_reservations'][-1]['legacy_storage_event']=storage[0]['event_key']
         ledger['new_reservations'][-1]['legacy_storage_new_binding']={k:plan[k] for k in ('attempt_dir','native_dir')}
@@ -192,7 +208,7 @@ def main():
               '--bind',str(ipc),'/dev/shm','--',*argv]
         atomic(directory/'RUN_INPUTS.json',dict(plan=plan,input=input_pin,argv=argv,environment=env,execution_mode='local-direct'))
         atomic(directory/'launch.json',dict(parent=process_identity(os.getpid()),input=input_pin))
-        result=supervise(argv,cwd=snapshot,env=env,directory=directory,deadline_seconds=3780,
+        result=supervise(argv,cwd=snapshot,env=env,directory=directory,deadline_seconds=contract['budgets']['wall_seconds']+180,
             stop=lambda:bool(stop_paths()) or (directory/'STOP').exists(),
             before_release=lambda:None,workload_state=Path(plan['attempt_dir'])/'state.json')
         ledger['status']='WAITING_FOR_ANALYSIS';ledger['new_reservations'][-1]['receipt']=pin(directory/'receipt.json')

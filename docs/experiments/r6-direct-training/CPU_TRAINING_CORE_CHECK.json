@@ -1,0 +1,33 @@
+{
+  "status": "CPU_PASS_NOT_LIVE",
+  "training_started": false,
+  "science_tests": {
+    "passed": 66,
+    "subtests": 6,
+    "deselected": 2,
+    "reason_deselected": "Legacy controller/profile integration requires rlflow; excluded from the direct no-rlflow test process."
+  },
+  "supervisor_tests": {
+    "interpreter": "/usr/bin/python3",
+    "passed": 6
+  },
+  "initial_mixed_test_run": {
+    "passed": 24,
+    "failed": 6,
+    "reasons": [
+      "Four supervisor tests deliberately reject science Python without pidfd_send_signal; rerun with system Python passed.",
+      "Two legacy controller/profile tests require rlflow; excluded rather than adding rlflow to the direct chain."
+    ]
+  },
+  "dependency_check": {
+    "status": "PASS",
+    "loaded_modules": 1135,
+    "rlflow_loaded": false
+  },
+  "limitations": [
+    "No actual PPO yet.",
+    "CPU orchestration tests substitute physics, optimizer loop and serializer; not evidence of training.",
+    "Exact production recipe, snapshot and preflight remain to be frozen.",
+    "Local confirmation plan intentionally unsupported pending actual selection freeze."
+  ]
+}

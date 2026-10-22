@@ -72,10 +72,18 @@ def validate_recipe(r):
 
 
 def validate(plan):
-    require(isinstance(plan,dict) and set(plan)==FIELDS and plan['schema_version']=='r6-training-plan/1','FIELDS')
+    require(isinstance(plan,dict),'FIELDS')
+    local=plan.get('schema_version')=='r6-local-training-plan/1'
+    require(set(plan)==(FIELDS-{'recipe_review'} if local else FIELDS)
+        and plan['schema_version'] in ('r6-training-plan/1','r6-local-training-plan/1'),'FIELDS')
     require(isinstance(plan['experiment_id'],str) and re.fullmatch(r'R6-[A-Z0-9-]{1,90}',plan['experiment_id']),'EXPERIMENT')
     require(plan['phase'] in ('development','confirmation'),'PHASE')
-    r=recipe(plan['recipe'],plan['recipe_review'])
+    # Local development uses the shared scientific checks without inventing a
+    # legacy approval. Confirmation requires a separately implemented freeze.
+    if local:
+        require(plan['phase']=='development','LOCAL_CONFIRMATION_NOT_IMPLEMENTED')
+        r=validate_recipe(pinned_json(plan['recipe']))
+    else:r=recipe(plan['recipe'],plan['recipe_review'])
     seed=integer(plan['training_seed'],0,2**31-1,'TRAINING_SEED')
     require(seed in r[plan['phase']+'_seeds'],'UNREGISTERED_SEED')
     start=integer(plan['start_update'],640,640+r['branch_updates']-1,'START')

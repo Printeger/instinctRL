@@ -387,10 +387,17 @@ class UnifiedH1LiveBackend:
         """Prospective exact R6 entry; dispatch is separately registered."""
         from .robustness_training_method import restore_and_bind
         from .robustness_training_contract import validate_parameters,validate_compatibility
-        parameters=validate_parameters(self.runtime_contract['mode'],self.runtime_contract['parameters'])
-        plan=parameters['r6_training_plan'];config=load_config()
-        validate_compatibility(parameters['checkpoint_compatibility'],plan,config)
-        loaded=restore_and_bind(self,plan=plan,execution_identity=config['resolved_identity'])
+        if getattr(self,'execution_mode',None)=='local-direct':
+            from .direct_contract import validate_runtime_contract
+            parameters=validate_runtime_contract(self.runtime_contract)['parameters']
+            plan=parameters['r6_training_plan']
+            identity=parameters['source_identity']
+        else:
+            parameters=validate_parameters(self.runtime_contract['mode'],self.runtime_contract['parameters'])
+            plan=parameters['r6_training_plan'];config=load_config()
+            validate_compatibility(parameters['checkpoint_compatibility'],plan,config)
+            identity=config['resolved_identity']
+        loaded=restore_and_bind(self,plan=plan,execution_identity=identity)
         return self.run_loaded_r6_training(plan=plan,**loaded,
             expected_mass_kg=self.runtime_contract['parameters']['r6_expected_mass_kg'])
 

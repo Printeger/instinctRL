@@ -32,6 +32,10 @@ def preflight(plan):
     from training_workloads.unified_h1.direct_contract import validate_runtime_contract
     source=validate(json.loads(checked(plan['source']).read_text()))
     contract=validate_runtime_contract(json.loads(checked(plan['contract']).read_text()))
+    if contract['operation']=='train':
+        from tools.r6_direct.source import training_identity
+        if contract['parameters']['source_identity']!=training_identity(source):
+            raise ValueError('DIRECT_TRAINING_SOURCE_IDENTITY')
     if plan['run_id']!=contract['parameters']['experiment_id']:raise ValueError('DIRECT_RUN_ID')
     from training_workloads.unified_h1.native_volume import validate as native_validate
     from training_workloads.unified_h1.result_volume import validate as result_validate
@@ -50,6 +54,8 @@ def preflight(plan):
         if result['free_bytes']<cap+64*1024**2 or stats.f_favail<4096:
             raise ValueError('DIRECT_RESULT_REMAINING_CAPACITY')
         result=dict(result,payload_cap_bytes=cap)
+    if contract['operation']=='train' and contract['parameters']['r6_training_plan']['storage']['payload_bytes']>result['payload_cap_bytes']:
+        raise ValueError('DIRECT_TRAINING_PAYLOAD_CAPACITY')
     if Path(plan['native_dir'])!=Path(native['target'])/plan['run_id']:
         raise ValueError('DIRECT_NATIVE_DESTINATION')
     if Path(plan['attempt_dir'])!=Path(result['target'])/plan['run_id']:
@@ -155,8 +161,16 @@ def run(plan, input_pin):
             counter_source=env.h1_initialization_tick_source,fresh_physical_reset=True)
         from training_workloads.unified_h1.robustness_contract import baseline,evaluate_baseline
         backend.initial_preflight()
-        atomic(attempt/'state.json',{'status':'EVALUATING','identity':process_identity(os.getpid()),'counters':counters.snapshot()})
-        evaluate_baseline(backend,parameters=contract['parameters'],bindings=baseline(contract['parameters']))
+        operation=contract['operation']
+        atomic(attempt/'state.json',{'status':'TRAINING' if operation=='train' else 'EVALUATING',
+            'identity':process_identity(os.getpid()),'counters':counters.snapshot()})
+        if operation=='train':
+            backend.train_r6()
+            for counter,budget in (('training_transitions','training_transitions'),
+                    ('real_optimizer_updates','optimizer_updates'),('real_checkpoint_writes','checkpoint_writes')):
+                if getattr(counters,counter)!=contract['budgets'][budget]:raise RuntimeError('DIRECT_FINAL_COUNT:'+counter)
+        else:
+            evaluate_baseline(backend,parameters=contract['parameters'],bindings=baseline(contract['parameters']))
         if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
         backend.preserve('PASS_PENDING_CLOSE')
     except BaseException as exc:

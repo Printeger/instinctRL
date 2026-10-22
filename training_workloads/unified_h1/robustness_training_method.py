@@ -99,9 +99,8 @@ def restore_and_bind(backend,*,plan,execution_identity):
     from . import robustness_training_plan as contract
     from .research_contract import validate_pin
     p=contract.validate(plan);recipe=pinned_json(p['recipe']);method=validate(pinned_json(recipe['method']))
-    require(backend.authorization['mode']=='research-r6-training'
-        and backend.authorization['parameters'].get('r6_training_plan')==p
-        and backend.authorization['budgets']==contract.required_budget(p),'EXACT_AUTHORIZATION')
+    from .direct_contract import training_inputs
+    training_inputs(backend,p)
     require(execution_identity==recipe['source_identity'],'EXECUTION_IDENTITY')
     require(not getattr(backend,'_r6_load_failed',False) and backend.trainer is None and backend.driver is None and backend.loop is None and backend.journal is None,'FRESH_BACKEND')
     initial=p['initialization'];path=validate_pin(initial['checkpoint'])

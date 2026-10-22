@@ -35,7 +35,9 @@ def validate_draft(mode,value):
 def _validate(mode,value,*,materialized):
     require(mode==MODE and isinstance(value,dict)
         and set(value)==(FIELDS if materialized else FIELDS-MANAGED),'FIELDS')
-    p=dict(value);plan=validate_plan(p['r6_training_plan'])
+    p=dict(value)
+    require(p['r6_training_plan'].get('schema_version')=='r6-training-plan/1','LEGACY_PLAN_REQUIRED')
+    plan=validate_plan(p['r6_training_plan'])
     require(p['experiment_id']==plan['experiment_id'] and p['group']=='R1','IDENTITY')
     require(type(p['training_seed'])is int and p['training_seed']==plan['training_seed']
         and type(p['evaluation_seed'])is int and p['evaluation_seed']==20260909,'SEED')

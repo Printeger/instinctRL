@@ -19,10 +19,8 @@ from .schedule import ScheduleClock,command_at,reset_local_positions
 
 def run_loaded(backend,*,plan,metadata,source_identity,method_hashes,expected_mass_kg):
     p=contract.validate(plan);recipe=pinned_json(p['recipe']);env=backend.environment
-    if (backend.authorization['mode']!='research-r6-training'
-            or backend.authorization['parameters'].get('r6_training_plan')!=p
-            or backend.authorization['budgets']!=contract.required_budget(p)):
-        raise PermissionError('R6_EXECUTION_EXACT_PLAN_BUDGET')
+    from .direct_contract import training_inputs
+    inputs=training_inputs(backend,p)
     if source_identity!=recipe['source_identity'] or method_hashes.get('r6_recipe')!=p['recipe']['sha256']:
         raise PermissionError('R6_EXECUTION_SOURCE_METHOD')
     if backend.journal is not None or backend.driver is not None or backend.loop is not None:
@@ -121,12 +119,12 @@ def run_loaded(backend,*,plan,metadata,source_identity,method_hashes,expected_ma
             driver_type=R6TrainingDriver
         backend.driver=driver_type(env,observation,clock=clock,counters=backend.counters,journal=journal,
             before_step=lambda n:backend.resource_check('before_r6_training_step',n),
-            transition_limit=backend.authorization['budgets']['training_transitions'],
-            automatic_reset_limit=backend.authorization['budgets']['automatic_resets'])
+            transition_limit=inputs['budgets']['training_transitions'],
+            automatic_reset_limit=inputs['budgets']['automatic_resets'])
         backend.loop=UnifiedH1TrainingLoop(backend.driver,backend.trainer,journal,checkpoint,
             before_rollout=lambda n:backend.resource_check('before_r6_rollout',n),
             before_optimizer=lambda n:backend.resource_check('before_r6_optimizer',n),
-            update_limit=backend.authorization['budgets']['optimizer_updates'],diagnostic=diagnostic,
+            update_limit=inputs['budgets']['optimizer_updates'],diagnostic=diagnostic,
             optimizer_step_origin=(p['start_update']*8,p['start_update']*8))
         while backend.trainer.update_counter<phase['target_update']:
             n=backend.trainer.update_counter+1

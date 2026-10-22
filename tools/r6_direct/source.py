@@ -33,6 +33,13 @@ def checked(value):
     return path
 
 
+def training_identity(source):
+    """Current detached sources, retaining the pinned scientific configuration."""
+    return dict(config_sha256=source['scientific_config']['sha256'],
+                product_commit=source['source_commit'],product_tree=source['source_tree'],
+                workload_commit=source['source_commit'],workload_tree=source['source_tree'])
+
+
 def manifest():
     """Call only after committing implementation. Does not create a snapshot."""
     folders=('training_workloads','isaaclab-training/instinctlab','tools/r6_direct',
