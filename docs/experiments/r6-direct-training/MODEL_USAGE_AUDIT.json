@@ -29,6 +29,24 @@
       "ordinal": 5,
       "reason": "Diagnose native semaphore failure and repair private IPC mapping",
       "usage": "UNKNOWN"
+    },
+    {
+      "charge": 1,
+      "ordinal": 6,
+      "reason": "Platform continuation: verified second resource window live",
+      "usage": "UNKNOWN"
+    },
+    {
+      "charge": 1,
+      "ordinal": 7,
+      "reason": "Platform continuation: verified second worker live",
+      "usage": "UNKNOWN"
+    },
+    {
+      "charge": 1,
+      "ordinal": 8,
+      "reason": "Diagnose second CUDA initialization failure; register bounded cuInit syscall trace",
+      "usage": "UNKNOWN"
     }
   ],
   "historical_sessions_charged": 239,

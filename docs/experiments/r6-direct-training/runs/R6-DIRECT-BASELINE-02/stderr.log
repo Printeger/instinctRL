@@ -1,0 +1,34 @@
+2026-10-22T09:41:38Z [136ms] [Error] [omni.datastore] Failed to acquire exclusive lock to data store (256>=256)
+2026-10-22T09:41:38Z [136ms] [Error] [omni.datastore] Failed to create local file data store at '/home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/cache/DerivedDataCache'
+2026-10-22T09:41:38Z [346ms] [Error] [carb.cudainterop.plugin] CUDA error 304: cudaErrorOperatingSystem - OS call failed or operation not supported on this OS)
+2026-10-22T09:41:38Z [346ms] [Error] [carb.cudainterop.plugin] Failed to query CUDA device count.
+2026-10-22T09:41:38Z [346ms] [Error] [carb.cudainterop.plugin] CUDA error 304: cudaErrorOperatingSystem - OS call failed or operation not supported on this OS)
+2026-10-22T09:41:38Z [346ms] [Error] [carb.cudainterop.plugin] Failed to query CUDA device count.
+2026-10-22T09:41:38Z [346ms] [Error] [gpu.foundation.plugin] No device could be created. Some known system issues:
+- The driver is not installed properly and requires a clean re-install.
+- Your GPUs do not support RayTracing: DXR or Vulkan ray_tracing, or hardware is excluded due to performance.
+- The driver cannot enumerate any GPU: driver, display, TCC mode or a docker issue. For Vulkan, test it with Vulkaninfo tool from Vulkan SDK, instead of nvidia-smi.
+- For Ubuntu, it requires server-xorg-core 1.20.7+ and a display to work without --no-window.
+- For Linux dockers, the setup is not complete. Install the latest driver, xServer and NVIDIA container runtime.
+
+2026-10-22T09:41:38Z [445ms] [Error] [carb.cudainterop.plugin] CUDA error 304: cudaErrorOperatingSystem - OS call failed or operation not supported on this OS)
+2026-10-22T09:41:38Z [445ms] [Error] [carb.cudainterop.plugin] Failed to query CUDA device count.
+2026-10-22T09:41:38Z [451ms] [Error] [gpu.foundation.plugin] No device could be created. Some known system issues:
+- The driver is not installed properly and requires a clean re-install.
+- Your GPUs do not support RayTracing: DXR or Vulkan ray_tracing, or hardware is excluded due to performance.
+- The driver cannot enumerate any GPU: driver, display, TCC mode or a docker issue. For Vulkan, test it with Vulkaninfo tool from Vulkan SDK, instead of nvidia-smi.
+- For Ubuntu, it requires server-xorg-core 1.20.7+ and a display to work without --no-window.
+- For Linux dockers, the setup is not complete. Install the latest driver, xServer and NVIDIA container runtime.
+
+2026-10-22T09:41:38Z [467ms] [Error] [omni.gpu_foundation_factory.plugin] Failed to create any GPU devices, including an attempt with compatibility mode.
+Warning: --icon-name is deprecated and will be removed in a future version of zenity; Treating as --icon.
+
+(zenity:2628266): Gtk-WARNING **: 17:41:38.896: Failed to open display
+2026-10-22T09:41:39Z [792ms] [Error] [omni.kit.renderer.plugin] GPU Foundation is not initialized!
+2026-10-22T09:41:39Z [905ms] [Error] [omni.physx.tensors.plugin] CUDA error: OS call failed or operation not supported on this OS: ../../../extensions/runtime/source/omni.physx.tensors/plugins/gpu/CudaCommon.h: 111
+2026-10-22T09:41:39Z [905ms] [Error] [omni.physx.tensors.plugin] Failed to create primary CUDA context
+2026-10-22T09:41:40Z [1,943ms] [Error] [omni.graph.core._impl.extension] OGN node registration completed with errors: Failed to get the generator extension version
+Warp CUDA error 304: OS call failed or operation not supported on this OS (in function init_cuda_driver, /builds/omniverse/warp/warp/native/cuda_util.cpp:266)
+Warp CUDA error 3: initialization error (in function cuda_device_get_count, /builds/omniverse/warp/warp/native/warp.cu:1769)
+2026-10-22T09:41:40Z [2,350ms] [Error] [omni.gpucompute-cuda.plugin] CUDA error in createContext: OS call failed or operation not supported on this OS: ../../../source/plugins/omni.gpucompute-cuda/GpuCompute-Cuda.cpp: 179 (device -699850848)
+2026-10-22T09:41:40Z [2,350ms] [Error] [omni.physx.plugin] CUDA libs are present, but no suitable CUDA GPU was found!

@@ -1,0 +1,16 @@
+{
+  "budget": "Full failed attempt reservation retained",
+  "cleanup": "VERIFIED_NO_OWNED_PROCESSES",
+  "cuInit_error": 304,
+  "next_action": "One cuInit-only syscall trace with same namespace/write boundary; no simulator or optimizer",
+  "policy_transitions": 0,
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-02/receipt.json",
+    "sha256": "851eba38f982678fe0495e535f4ec32e4cfbd5d694e4390001f769878425dd57"
+  },
+  "status": "FAILED_CUDA_INITIALIZATION_NOT_SCIENTIFIC_NEGATIVE",
+  "stderr": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-02/stderr.log",
+    "sha256": "21d914a82c441fc008b698de06813194c658fa691a8e8242e72c3d9f8cc552cb"
+  }
+}
