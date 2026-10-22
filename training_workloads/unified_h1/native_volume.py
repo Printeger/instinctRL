@@ -18,13 +18,18 @@ def require(condition, reason):
     if not condition:raise ValueError('R6_NATIVE_VOLUME_'+reason)
 
 
-def validate(pin, *, minimum_free_bytes=256*1024**2, allow_cpu_fixture=False):
+def validate(pin, *, minimum_free_bytes=256*1024**2, allow_cpu_fixture=False, host_root_uid=0):
     return validate_volume(pin,base=BASE,maximum=MAXIMUM,image_name='native.ext4',
-                           minimum_free_bytes=minimum_free_bytes,allow_cpu_fixture=allow_cpu_fixture)
+                           minimum_free_bytes=minimum_free_bytes,allow_cpu_fixture=allow_cpu_fixture,host_root_uid=host_root_uid)
 
 
 def validate_volume(pin, *, base, maximum, image_name, expected_target=None,
-                    minimum_free_bytes=256*1024**2, allow_cpu_fixture=False):
+                    minimum_free_bytes=256*1024**2, allow_cpu_fixture=False, host_root_uid=0):
+    if host_root_uid != 0:
+        mapping=[tuple(map(int,row.split())) for row in Path('/proc/self/uid_map').read_text().splitlines()]
+        require(mapping==[(1000,1000,1)] and os.getuid()==1000
+                and type(host_root_uid)is int
+                and host_root_uid==int(Path('/proc/sys/kernel/overflowuid').read_text()),'HOST_ROOT_UID_MAPPING')
     require(type(minimum_free_bytes)is int and 0<=minimum_free_bytes<=maximum,'FREE_REQUIREMENT')
     require(isinstance(pin,dict) and set(pin)=={'path','sha256'},'PIN')
     manifest=Path(pin['path'])
@@ -40,17 +45,17 @@ def validate_volume(pin, *, base, maximum, image_name, expected_target=None,
             and record['target']==str(target) and record['maximum_backing_bytes']==maximum,'IDENTITY')
     for parent in (base.parent,base,manifest.parent):
         info=parent.lstat()
-        require(stat.S_ISDIR(info.st_mode) and info.st_uid==0 and not info.st_mode & 0o022,'PARENT_OWNERSHIP')
+        require(stat.S_ISDIR(info.st_mode) and info.st_uid==host_root_uid and not info.st_mode & 0o022,'PARENT_OWNERSHIP')
     for path in (manifest,image):
         info=path.lstat()
-        require(stat.S_ISREG(info.st_mode) and info.st_uid==0 and not info.st_mode & 0o022,'FILE_OWNERSHIP')
+        require(stat.S_ISREG(info.st_mode) and info.st_uid==host_root_uid and not info.st_mode & 0o022,'FILE_OWNERSHIP')
     require(image.stat().st_size==maximum,'BACKING_SIZE')
     require(target.resolve()==target and target.is_mount(),'MOUNT_ABSENT')
     info=target.stat()
     require(info.st_uid==record['owner_uid']==os.getuid() and stat.S_IMODE(info.st_mode)==0o700,'OUTPUT_OWNER')
     if not allow_cpu_fixture:
         recovery=(target/'lost+found').lstat()
-        require(stat.S_ISDIR(recovery.st_mode) and recovery.st_uid==0
+        require(stat.S_ISDIR(recovery.st_mode) and recovery.st_uid==host_root_uid
                 and stat.S_IMODE(recovery.st_mode)==0o555,'RECOVERY_DIRECTORY_INVENTORY_ACCESS')
     matches=[]
     for line in Path('/proc/self/mountinfo').read_text().splitlines():

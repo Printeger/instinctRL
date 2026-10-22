@@ -11,7 +11,7 @@ CONTROL_ALLOWANCE=64*1024**2
 
 
 def validate(pin, *, output_cap_bytes, expected_target=None, minimum_free_bytes=256*1024**2,
-             allow_cpu_fixture=False):
+             allow_cpu_fixture=False, host_root_uid=0):
     require(type(output_cap_bytes)is int and MAXIMUM+CONTROL_ALLOWANCE<output_cap_bytes<=128*1024**3,'RESULT_JOB_CAP')
     record=json.loads(validate_pin(pin).read_text())
     target=Path(record['target']);size=record['maximum_backing_bytes']
@@ -21,7 +21,7 @@ def validate(pin, *, output_cap_bytes, expected_target=None, minimum_free_bytes=
     require(type(size)is int and 16*1024**2<=size==output_cap_bytes-MAXIMUM-CONTROL_ALLOWANCE
             and size%4096==0,'RESULT_AGGREGATE_CAP')
     binding=validate_volume(pin,base=BASE,maximum=size,image_name='results.ext4',
-        expected_target=target,minimum_free_bytes=minimum_free_bytes,allow_cpu_fixture=allow_cpu_fixture)
+        expected_target=target,minimum_free_bytes=minimum_free_bytes,allow_cpu_fixture=allow_cpu_fixture,host_root_uid=host_root_uid)
     if 'layout' in record:
         require(record['layout']=='fixed-results-v1' and record['status']=='MOUNT_CREATED_NOT_ACCEPTED',
                 'RESULT_LAYOUT_STATUS')

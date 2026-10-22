@@ -16,6 +16,18 @@ from tools.r6_direct.source import checked, validate, audit_modules
 from tools.r6_direct.import_legacy import process_identity, stop_paths, pin
 
 
+def namespace_host_root_uid():
+    """Map host root only for the launcher's exact one-UID user namespace.
+
+    The supervisor has already validated these root-owned volumes outside the
+    namespace before spawning bwrap. Legacy callers retain uid=0 checks.
+    """
+    mapping=[tuple(map(int,row.split())) for row in Path('/proc/self/uid_map').read_text().splitlines()]
+    if mapping==[(0,0,4294967295)]:return 0
+    if mapping!=[(1000,1000,1)] or os.getuid()!=1000:raise RuntimeError('DIRECT_UNEXPECTED_USER_NAMESPACE')
+    return int(Path('/proc/sys/kernel/overflowuid').read_text())
+
+
 def preflight(plan):
     from training_workloads.unified_h1.direct_contract import validate_runtime_contract
     source=validate(json.loads(checked(plan['source']).read_text()))
@@ -23,8 +35,8 @@ def preflight(plan):
     if plan['run_id']!=contract['parameters']['experiment_id']:raise ValueError('DIRECT_RUN_ID')
     from training_workloads.unified_h1.native_volume import validate as native_validate
     from training_workloads.unified_h1.result_volume import validate as result_validate
-    native=native_validate(plan['native_volume'])
-    result=result_validate(plan['result_volume'],output_cap_bytes=contract['parameters']['output_cap_bytes'])
+    native=native_validate(plan['native_volume'],host_root_uid=namespace_host_root_uid())
+    result=result_validate(plan['result_volume'],output_cap_bytes=contract['parameters']['output_cap_bytes'],host_root_uid=namespace_host_root_uid())
     if Path(plan['native_dir'])!=Path(native['target'])/plan['run_id']:
         raise ValueError('DIRECT_NATIVE_DESTINATION')
     if Path(plan['attempt_dir'])!=Path(result['target'])/plan['run_id']:
