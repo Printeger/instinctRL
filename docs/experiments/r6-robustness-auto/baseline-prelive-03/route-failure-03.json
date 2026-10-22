@@ -1,0 +1,39 @@
+{
+  "status": "EXTERNAL_BLOCKER_THRESHOLD_VERIFIED",
+  "observed_at": 1792655027.4147568,
+  "prior": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/route-failure-02.json",
+    "sha256": "3338ebe870a4b0c29f4d80bb8a5918ca4b5e1a81f75ce0e23fc79df642a77082"
+  },
+  "goal_turn": "01a16290-2a03-70f0-9663-068e95a75a38",
+  "consecutive_blocked_observations": 3,
+  "network": {
+    "url": "https://chatgpt.com/backend-api/ps/mcp",
+    "exit_code": 35,
+    "http_code": "000",
+    "error": "SSL_ERROR_SYSCALL"
+  },
+  "worker_terminal": true,
+  "controller_terminal": true,
+  "cleanup_verified": true,
+  "current_job": null,
+  "current_model": null,
+  "job_events": 0,
+  "additional_cli_model_calls": 0,
+  "charged": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 239,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 28529459200,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "remaining_model_sessions": 273,
+  "resume_condition": "Restore local Codex routing to chatgpt.com, verify access without launching a duplicate event, then register a receipt-bound replacement review. Complete exact prelive review and current-thread handoff before any launch.",
+  "unfinished_scope": "First real baseline, actual PPO training, three-stream confirmation, final holdout, videos and scientific delivery all remain required."
+}

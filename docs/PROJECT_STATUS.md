@@ -1,3 +1,11 @@
+# R6 接续：外部模型路由连续三轮失败，待恢复；真实基线与训练未开始
+
+2026-10-22：本地 chatgpt.com HTTPS 第三次复查仍 SSL_ERROR_SYSCALL；模型审核原件为 workspace routing discovery failed。
+准确 worker、child、controller 均已退出，清理已验证；current_job/current_model 均空，无可等待训练作业。
+route-failure-01/02/03.json 记录连续阻塞；本轮未新增 CLI 调用或 GPU 作业，全部账本保留。平台 Goal 将标记 blocked，非完成。
+恢复本机 Codex 网络路由后，先核验连接，依据原失败 receipt 登记独审替换；完成新会话绑定审核、准确基线预审及交接后发车。
+已接受资源审核与输入续接修复、当前会话绑定代码和 CPU 证据均保留。首次真实基线、实际训练、三流确认、holdout、视频与科学交付全范围未完成。
+
 # R6 接续：当前会话绑定已修，独审受本地模型路由故障阻断（未发车）
 
 2026-10-22：首次基线预审核实 u640、ICS .15、16块、协议/快照/容量；唯一 MUST_FIX 为生产检查仍绑定旧会话。
