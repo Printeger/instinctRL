@@ -191,3 +191,19 @@ def test_cli_obeys_writer_lock_before_store_side_effects(bound):
             main(cli_args(bound))
     assert not bound.store.replay()['jobs']
     bound.popen.assert_not_called()
+
+
+def test_wait_boundary_persisted_before_submit_and_retained_after_crash(bound,monkeypatch):
+    b=bound;observed=[]
+    def crash(*args,**kwargs):
+        entry=b.journal.read()['events'][b.key]
+        start=entry['submission_claim']['wait_coverage_start']
+        assert entry['local_wait_audit']['segments'][0]['started_at']==start
+        observed.append(start)
+        raise RuntimeError('crash before Store side effect')
+    monkeypatch.setattr(experiments,'submit',crash)
+    with pytest.raises(RuntimeError,match='crash before Store'):invoke(b)
+    before=b.journal.read()['events'][b.key]
+    with pytest.raises(RecoveryError,match='AMBIGUOUS_NO_RETRY'):invoke(b)
+    assert b.journal.read()['events'][b.key]==before
+    assert len(observed)==1

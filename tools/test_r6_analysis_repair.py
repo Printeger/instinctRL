@@ -52,6 +52,18 @@ class AnalysisRepairTests(unittest.TestCase):
         self.assertEqual(budget['reservations'][-1]['purpose'],'repair')
         with self.assertRaisesRegex(RecoveryError,'ALREADY_USED'):self.replace(pin)
 
+    def test_changed_timeout_replacement_resumes_through_default_finalizer(self):
+        self.fail();pin=self.proposal('Increase bounded timeout after failed CPU analysis')
+        with self.j.writer():
+            self.cpu_key=repair.register(self.j,self.key,self.store,pin,free_disk_bytes=500*1024**3,
+                python=file_pin(sys.executable),program=file_pin(self.program),timeout_seconds=20)
+        # This failure fixture remains deliberately failing. Reentry must reach
+        # its worker using the replacement timeout, not reject the default 3600.
+        with self.assertRaisesRegex(RecoveryError,'FAILED_PRESERVED'):
+            self.finalize_analysis(timeout=None)
+        self.assertEqual(self.count(),2)
+        self.assertEqual(self.j.read()['events'][self.cpu_key]['request']['timeout_seconds'],20)
+
     def test_unchanged_input_cannot_blind_retry(self):
         self.fail();pin=self.proposal();before=self.j.read()
         with self.assertRaisesRegex(RecoveryError,'UNCHANGED_INPUT'):self.replace(pin)

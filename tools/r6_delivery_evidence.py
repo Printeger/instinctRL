@@ -66,7 +66,9 @@ def model_audit(state):
                 platform_evidence=external,
                 observed_local_wait_seconds=sum(s['last_checked_at']-s['started_at'] for s in audit['segments']) if audit else 'UNKNOWN'))
     platform_proven=bool(waits) and all(w['platform_inactivity_proven'] for w in waits)
-    covered=bool(waits) and all(w['registered_local_wait_verified'] and w['platform_evidence'] for w in waits)
+    covered=bool(waits) and all(w['registered_local_wait_verified'] and w['platform_evidence']
+        and w['platform_evidence'].get('job_wait_coverage_complete')
+        and w['platform_evidence'].get('trace_completeness_proven') for w in waits)
     overlaps={t for w in waits if w['platform_evidence'] for t in w['platform_evidence']['overlapping_root_turns']}
     return dict(schema_version='r6-model-usage-audit/1',calls=calls,registered_model_event_count=len(calls),
         automatic_sessions_charged=admissible(state['budget'])['automatic_model_sessions'],

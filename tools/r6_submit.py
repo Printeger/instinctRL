@@ -103,9 +103,14 @@ def submit_once(journal, key, store, *, queue_key, refresh_observation=None):
         require(0<deadline-time.time()<=spec['resources']['wall_seconds'], 'DEADLINE')
         from tools.r6_platform_wait import preflight
         preflight(journal)
+        # Persist the observation boundary before any Store/subprocess effects.
+        # Recovery must retain this boundary, never start a shorter fresh wait.
+        from tools.r6_wait_audit import record
+        record(journal,key)
+        wait_start=journal.canonical_job(key)['local_wait_audit']['segments'][0]['started_at']
         claim=dict(store_root=root,job_id=jid,spec_sha256=sha(spec),queue_key=queue_key,
             queue_window=window,approval_id=approval['approval_id'],controller=identity(os.getpid()),
-            implementation=file_pin(Path(__file__)))
+            implementation=file_pin(Path(__file__)),wait_coverage_start=wait_start)
         state=journal.read();state['events'][key]['submission_claim']=claim
         state['status']='EXACT_JOB_SUBMISSION_CLAIMED';journal.save(state)
         journal.guard();require(not stop_paths(journal), 'STOP')

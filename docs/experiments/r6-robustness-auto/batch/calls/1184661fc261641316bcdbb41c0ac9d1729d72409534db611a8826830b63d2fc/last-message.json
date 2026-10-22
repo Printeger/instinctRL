@@ -1,0 +1,158 @@
+{
+  "decision": "MUST_FIX",
+  "summary": "Read-only local review completed against control commit 0bb19618; inspected tools match that commit. The original request/plan pins verify and derive J-f9edc8f6f35dde13. Journal contains zero production controllers/jobs. Original P1 status: (1) partially resolved: development NEEDS_REPAIR now invokes workload-source repair, independent review, rejected-repair rework and accepted reentry; offline/control-code repair remains unsupported. (2) partially resolved: initial-review, failed-analysis, failed-decision and source-preparation replacements preserve predecessors and charges, and consumers select active attempts; automatic exception dispatch remains absent. (3) partially resolved: platform evidence now reaches delivery, final and terminal audits, removing the unconditional UNKNOWN barrier, but complete wait coverage and actual deployment/handoff remain unproven. Accepted revision reentry releases the writer lock and starts a fresh interpreter, checking reviewed code, commit, controller identity, cursor, Store, old-process death and reservation. Its one-shot claim correctly refuses blind replay. Subsequent existing-job recovery must use the ordinary controller entry: register preserves the revised identity/cursor, run_job reuses the submission claim, and submit never resubmits it. The revision-resume entry is deliberately not that recovery route: its idle guard rejects active jobs and its consumed claim cannot be retried. These are static conclusions, not production recovery acceptance. No repository/Journal/Store edits, GPU queries, simulation, training, approvals or agents were used. One in-memory coverage counterexample was evaluated; fixture reports were inspected, not rerun. CPU results, this review and future controller deployment do not constitute scientific completion.",
+  "evidence_pins": [
+    {
+      "path": "docs/experiments/r6-robustness-auto/prompts/controller-recovery-followup-02.txt",
+      "sha256": "809cb2e8082f05fcf41e967bcb6e909ca90cd9e9ab30f67a8c02f2a6d6fc3de8"
+    },
+    {
+      "path": "docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md",
+      "sha256": "200fb9daa96606ae3a58516219121d2ae243de51a8b1e02d10077a4b15e2f12b"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/USER_AUTHORITY.txt",
+      "sha256": "b45cbca50cf944ea2b2abe2b6fd57998224784f5de2e2545cc7ae69fc8a2d706"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/reviews/controller-recovery-integration-review.json",
+      "sha256": "eab07f5a053503aa686a3e3879a327f44ab11265fca0587ff2d04a4a107de751"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/LOCAL_REVIEW_ACCESS_RECOVERED_20261022.json",
+      "sha256": "9fc4ff7af2b1ee3208e5a4b2d3a0685346a5b2eccca7fad98ae33956d4bdb85d"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/controller-candidate-01/request.json",
+      "sha256": "4a21a73cb775b37ae1699f6b1fefc6d68ad1ec2c0e266f6f2de8e3c5e90cf9e5"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/baseline-prelive-02/request.json",
+      "sha256": "3d2cd7feac62f6f0e21d996a2affa31c160e586a257740cd056dfc3a607a3857"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+      "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/spec.json",
+      "sha256": "7191dd7ef7e022a4ce8956be6c1296f13fd7bd7563d9e5e8f337ad3e5dfba3a8"
+    },
+    {
+      "path": "tools/r6_controller.py",
+      "sha256": "53da9658c10b64fd863cdf4c2efbe8020b6f3443e986fc80a27fa8a097b046c0"
+    },
+    {
+      "path": "tools/r6_controller_revision.py",
+      "sha256": "ba055535096c455c1011bf7f22cdd240c540fad3cefe109b500b294739012da2"
+    },
+    {
+      "path": "tools/r6_controller_resume.py",
+      "sha256": "8d5ed31442787648ee278d6277faa16367c08344efbfe4e091586c804b070876"
+    },
+    {
+      "path": "tools/r6_engineering_rework.py",
+      "sha256": "0ac86c83362eb258deaaa08fcc579cf22d7d7520c6d85d1812d3317cc52cc9c0"
+    },
+    {
+      "path": "tools/r6_engineering_source.py",
+      "sha256": "e7e83eb01fa37ffee45687d066b68c6f3bd1364d10e1902e383a3486703af2d6"
+    },
+    {
+      "path": "tools/r6_engineering_review.py",
+      "sha256": "168e3cc959e7be87bcba23fb33fb70ee31e010c692bc5eba78602911140bf450"
+    },
+    {
+      "path": "tools/r6_source_repair.py",
+      "sha256": "cb379d8c8156e40358a383a3fb4637b42dabae5092e6cd1d760a2f859582eeb6"
+    },
+    {
+      "path": "tools/r6_source_preparation.py",
+      "sha256": "bfef88109ad3b2303158b370b7e5ee84c7ccacf554a42b51d4c6496d7b143d52"
+    },
+    {
+      "path": "tools/r6_platform_wait.py",
+      "sha256": "ef9b8254b2b439c884ebf2052ee12a14c0dcb3d7edeae02beac1853c71218a0d"
+    },
+    {
+      "path": "tools/r6_audited_job_handoff.py",
+      "sha256": "e0832b8a70322fc6a505052e4e419c83b9ce9122f433b7a883bdb766d9802aea"
+    },
+    {
+      "path": "tools/r6_submit.py",
+      "sha256": "1cce225475f49220c444bee4ac04f78c759bc05b66361e4d04bb48ea5c45f02c"
+    },
+    {
+      "path": "tools/r6_run_job.py",
+      "sha256": "3e4c7076d7dc861635d94976cae38e14baa0ba1905e0bf263765b7e142bd3bb2"
+    },
+    {
+      "path": "tools/r6_start_baseline.py",
+      "sha256": "57a1891d9e3d31fac60c76f8290112df2a393d75c1c588a82d081843dfdcd821"
+    },
+    {
+      "path": "tools/r6_initial_baseline.py",
+      "sha256": "91805c3a4fc5431b54bb1b95d960faaefc1eed7453a536b8239ba13b66e770c1"
+    },
+    {
+      "path": "tools/r6_finalize_job.py",
+      "sha256": "7967e52e12544d6af5887d7b241252b070fc9511784a20611cc4f17aa9d18eb4"
+    },
+    {
+      "path": "tools/r6_analysis_repair.py",
+      "sha256": "680fcadf6b941227871b5d895385df1b071b58f089d19cdca54aa64518a6e7d0"
+    },
+    {
+      "path": "tools/r6_decision_repair.py",
+      "sha256": "42f6c21d89dcd0d331ddbf271b1f9098943aea6dedb0928a1ceeea5e429b0a18"
+    },
+    {
+      "path": "tools/r6_wait_audit.py",
+      "sha256": "d3094972577162cde80291d4d105604bbda715f26bbf2b26af9340eabf832dff"
+    },
+    {
+      "path": "tools/r6_job_handoff.py",
+      "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+    },
+    {
+      "path": "tools/r6_delivery_evidence.py",
+      "sha256": "8d1b21eea576536402b5d6d9a7e20f976f52927dc6c8575e14b1b59a5d368638"
+    },
+    {
+      "path": "tools/r6_final_audit_packet.py",
+      "sha256": "3eaf2583e53fc66997fabe97e2a53216960cae8601513724b8abe3224eff4fb9"
+    },
+    {
+      "path": "tools/r6_final_independent_review.py",
+      "sha256": "abd7541f28314894d33be4e51cb8e9242874fce4cf8d118a2de6c31e077dcc6a"
+    },
+    {
+      "path": "tools/r6_terminal_audit.py",
+      "sha256": "a310f284d95e4845ab49a308f2ac24389f911b5624592bac19c5b92dc3eb0583"
+    },
+    {
+      "path": "tools/r6_profile_preparation.py",
+      "sha256": "ae780f29b6885a7f99453c12a7c869d51ebda9ec34d47fa6ae67facf0a7f25ac"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_CONTROLLER_RESUME.json",
+      "sha256": "17f6b0b65c1e6cbd993470b1aa3384fc8ce7ee337764575afd5582517803346d"
+    },
+    {
+      "path": "docs/experiments/r6-robustness-auto/CPU_PLATFORM_WAIT.json",
+      "sha256": "a28d5debadb8269ce451534049be4db944eb8e0ccc048190b93477f8f8f18361"
+    }
+  ],
+  "changed_files": [],
+  "next_plan": "Implement and independently review only the baseline exception handoff and complete wait-coverage corrections below; preserve all previous failures and charges. Verify revision-start versus ordinary existing-job recovery with bounded CPU cases, without building a generic scheduler. Resolve the actual platform auto-continuation handoff, deploy one detached controller under the existing lock with durable logs and an explicit normal-recovery entry, verify ownership/STOP/event-trigger behavior, then end the launching model turn. A bounded local gate must await genuine handoff before dispatch; do not clear the active-turn guard. Execute the existing exact initial review, issuance, fresh resource admission and first baseline using provisioned volumes. Local read-only sandbox access is recovered; sudo is only a prerequisite when future privileged provisioning is actually needed. After real baseline closure and analysis, follow evidence into workload repair, baseline-sufficient validation or candidate development; implement control/offline/confirmation/final repair transitions only when their events require them. Preserve three-stream confirmation or the truthful zero-training alternative, unseen holdout rules, genuine videos, resource/model audits and final independent acceptance. No repeated generic permission request is needed for already authorized task work.",
+  "remaining_budget": {
+    "automatic_sessions_remaining": 288
+  },
+  "must_fix": [
+    "P1 — Before autonomous baseline deployment: connect baseline failures to a bounded repair handoff. tools/r6_controller.py:269-278 invokes FIRST_JOB, but :416-426 only saves INCOMPLETE_EXCEPTION and raises. tools/r6_start_baseline.py:37-53, tools/r6_finalize_job.py:47-61,77-103 and tools/r6_source_preparation.py:296-321 consume existing active attempts; they do not create a repaired successor when the selected attempt fails. The replacement primitives are real, but their existence does not complete autonomous recovery. Add a durable event keyed to the exact failed phase/receipt and a bounded authorized repair disposition that invokes the existing replacement registration after cleanup and evidence reconciliation. STOP, ambiguous ownership and missing receipts must remain fail-closed. This needs only the initial-review/closed-baseline-analysis/decision boundary, not every future failure route or a generic scheduling framework.",
+    "P1 — Before first baseline evidence capture: distinguish observed waiter segments from complete job-wait coverage. tools/r6_submit.py:175-191 submits before tools/r6_audited_job_handoff.py:33 starts its audit; tools/r6_wait_audit.py:21-38 starts at the current observation time. A crash after submission but before that first record can therefore restart with a fresh, apparently complete audit and omit earlier live waiting. tools/r6_platform_wait.py:116-134 checks supplied segments but never compares their union with authoritative job start/closure boundaries or validates coverage between segments; tools/r6_delivery_evidence.py:63-76 can promote them to a zero-call result. An in-memory counterexample with windows [100,110] and [190,200] and a root turn [120,180] returns platform_inactivity_proven=true; this demonstrates the validator limitation, not a production occurrence. Persist the required coverage start before submission effects, bind it to exact job/process lifecycle evidence, and require complete interval coverage or explicitly retain UNKNOWN. Also bind trace completeness to a supported capture/flush or writer-health boundary: reading a stale, newline-complete log at a later wall-clock time is not by itself proof of coverage through that time. Preserve existing prefix, ownership, late-append and restart-gap rejection checks.",
+    "P1 — Deployment/platform prerequisite: establish a real detached handoff before new dispatch. tools/r6_platform_wait.py:103-113 intentionally rejects an open root turn; tools/r6_run_job.py:56-57 and tools/r6_submit.py:104-105,124 invoke it. These checks observe platform activity and cannot disable automatic Goal continuation. tools/r6_controller_revision.py:192-198 starts a fresh child but does not establish detached service ownership or a platform handoff. Arrange the supported platform transition away from automatic inference, start the single local controller through existing tmux/service facilities, record PID/starttime/boot identity, lock, logs and recovery command, and perform bounded handoff checks before ending the launch turn. Have a bounded local gate handle the handoff transition rather than losing the controller to the expected open-turn exception. Do not bypass preflight or claim zero-model production waiting while automatic continuation remains active. Recovered sandbox access and already provisioned first-baseline volumes are not current administrator blockers.",
+    "P2 — Downstream, when an analysis replacement is needed: honor its validated timeout during ordinary controller reentry. tools/r6_analysis_repair.py:75-107 permits a changed timeout as a legitimate repaired input, but tools/r6_finalize_job.py:38,50-58 compares the active replacement against the caller's default timeout_seconds=3600; finish_and_decide at :115 supplies no override. A valid replacement with a different timeout therefore fails FINALIZE_ANALYSIS_BINDING instead of resuming. Select the validated active request's bounded execution settings, or propagate its exact repaired settings through the controller. Test registration followed by the normal finalizer/controller entry, not only direct helper handoff. This does not block a fresh baseline using the default analysis settings.",
+    "P2 — Downstream, event-triggered before the affected phase resumes: offline/control-code and frozen-phase repair remain unfinished. tools/r6_source_preparation.py:150-154 explicitly requires PREPARATION_INCOMPLETE for offline-only or controller changes, and :204 rejects that result; tools/r6_source_repair.py:23-24 restricts writable scope. The accepted-revision mechanism at tools/r6_controller_revision.py:99-173 and tools/r6_controller_resume.py:22-82 reviews/resumes an already supplied repair, but does not produce one. tools/r6_controller.py:241-246 parks frozen-phase repair and :220-221,266-268 parks final MUST_FIX. Preserve those protections and add only the concrete repair writer/disposition required by actual evidence, followed by exact review and fresh-process reentry where needed. For a crash after a resume claim, use ordinary exact-job recovery under the same writer lock; never clear or replay that claim. Confirmation and post-holdout repair need separate accepted inputs and contamination handling, not inherited approval. These phase-specific implementations can be deferred beyond the first baseline once the bounded failure handoff exists."
+  ]
+}

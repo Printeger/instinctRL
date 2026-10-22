@@ -113,7 +113,7 @@ def preflight(journal):
     require(time.time()-observed['last_boundary']>=2,'HANDOFF_NOT_SETTLED')
 
 
-def assess(audit,observed,captured_at):
+def assess(audit,observed,captured_at,coverage=None):
     require(audit.get('schema_version')=='r6-local-wait-audit/1'
         and audit.get('scope')=='REGISTERED_LOCAL_MODEL_WORKERS_ONLY'
         and audit.get('complete') is True and audit.get('segments')
@@ -130,8 +130,42 @@ def assess(audit,observed,captured_at):
             if t['started_at']<=end and (t['finished_at'] is None or t['finished_at']>=start):overlaps.add(t['turn_id'])
         windows.append(dict(started_at=start,finished_at=end))
     require(not observed['external_agents_seen'],'EXTERNAL_AGENT_COVERAGE_REQUIRED')
+    # A collection of valid segments is not proof that the entire job was
+    # observed. In particular, submission-before-observation and restart gaps
+    # cannot disappear merely because the final waiter exited cleanly.
+    covered=False
+    if coverage is not None:
+        start=coverage['started_at'];end=coverage['finished_at']
+        require(number(start) and number(end) and start<end<=captured_at,'COVERAGE_INTERVAL')
+        for t in observed['turns']:
+            if t['started_at']<=end and (t['finished_at'] is None or t['finished_at']>=start):overlaps.add(t['turn_id'])
+        cursor=start
+        for window in windows:
+            if window['started_at']>cursor:break
+            cursor=max(cursor,window['finished_at'])
+        else:covered=windows[0]['started_at']<=start and cursor>=end
+    # The native JSONL reader has no supported flush/health acknowledgement.
+    # Even a newline-complete idle log may be stale. Keep this UNKNOWN until
+    # a verified platform capture boundary exists; wall-clock age is no proof.
+    trace_complete=False
     return dict(windows=windows,overlapping_root_turns=sorted(overlaps),
-        platform_inactivity_proven=not overlaps,scope='PINNED_ROOT_SESSION_AND_REGISTERED_LOCAL_WORKERS')
+        job_wait_coverage_complete=covered,trace_completeness_proven=trace_complete,
+        trace_completeness_reason='SUPPORTED_PLATFORM_FLUSH_OR_HEALTH_BOUNDARY_MISSING',
+        platform_inactivity_proven=covered and trace_complete and not overlaps,
+        scope='PINNED_ROOT_SESSION_AND_REGISTERED_LOCAL_WORKERS')
+
+
+def coverage_for(job):
+    claim=job.get('submission_claim',{});audit=job.get('local_wait_audit',{})
+    if 'wait_coverage_start' not in claim or not job.get('closure') or not audit.get('complete'):
+        return None
+    closure=json.loads(checked(job['closure']).read_text())
+    require(closure.get('event_key')==sha(job['identity'])
+        and claim.get('job_id')==job['identity']['job_id']
+        and closure.get('job_id')==job['identity']['job_id']
+        and closure.get('request_sha256')==sha(job['request']),'CLOSURE_IDENTITY')
+    return dict(started_at=claim['wait_coverage_start'],finished_at=audit['segments'][-1]['finished_at'],
+        submission_claim_sha256=sha(claim),closure=job['closure'])
 
 
 def capture(journal,key):
@@ -155,9 +189,10 @@ def capture(journal,key):
         require(request['wait_audit']==job['local_wait_audit'],'WAIT_DRIFT')
     else:
         source,pin,observed=snapshot(state);now=time.time()
-        result=assess(job['local_wait_audit'],observed,now)
+        coverage=coverage_for(job)
+        result=assess(job['local_wait_audit'],observed,now,coverage)
         request=dict(job_key=key,job_id=job['identity']['job_id'],source=source,prefix=pin,
-            captured_at=now,wait_audit=job['local_wait_audit'],result=result,implementation=file_pin(__file__))
+            captured_at=now,wait_audit=job['local_wait_audit'],coverage=coverage,result=result,implementation=file_pin(__file__))
         require(len(canonical(request))<CAP//2,'CAP')
         event=dict(goal_id=state['goal_id'],event_id=name,job_id=job['identity']['job_id'],
             input_sha256=sha(request),role='platform-wait-capture')
@@ -193,10 +228,11 @@ def verify(state,key):
         and hashlib.sha256(data[:anchor['bytes']]).hexdigest()==anchor['sha256'],'ANCHOR_DRIFT')
     checked(record['implementation'])
     require(number(record['captured_at']) and record['captured_at']<=time.time(),'CAPTURE_TIME')
-    result=assess(record['wait_audit'],scan(data,record['source']),record['captured_at'])
+    require(record.get('coverage')==coverage_for(job),'COVERAGE_DRIFT')
+    result=assess(record['wait_audit'],scan(data,record['source']),record['captured_at'],record.get('coverage'))
     require(result==record['result'],'RESULT_DRIFT')
     # A later append carrying delayed/backdated activity must invalidate an
     # earlier zero-call claim; an immutable prefix is not a license to hide it.
     _,_,current=snapshot(state)
-    require(assess(record['wait_audit'],current,record['captured_at'])==result,'LATE_ACTIVITY_DRIFT')
+    require(assess(record['wait_audit'],current,record['captured_at'],record.get('coverage'))==result,'LATE_ACTIVITY_DRIFT')
     return dict(result,evidence=pin)

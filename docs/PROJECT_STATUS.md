@@ -1,4 +1,12 @@
-# 当前 Goal：R6 鲁棒性与课程学习闭环（沙箱已恢复，复审准备中，未完成）
+# 当前 Goal：R6 鲁棒性与课程学习闭环（独审待修项处理中，基线未启动，未完成）
+
+2026-10-22：真实本地独审返回 MUST_FIX，35 个原件 pin 核验通过；原件及 receipt 保存在 CONTROLLER_RECOVERY_FOLLOWUP_02.json。
+已修复提交前等待边界持久化、覆盖缺口误报零调用及分析替换超时在普通入口重入的问题。
+224 项组合检查、57 项补充绑定/提交检查和真实 Journal guard 通过；证据 CPU_RECOVERY_FOLLOWUP_FIXES.json。
+目前没有受支持的平台日志刷新/健康确认，平台纯等待调用数保持 UNKNOWN；不能沿用旧 CPU 夹具的零调用结论。
+首轮异常修复交接、真实 detached controller 与关闭 Goal 自动续推理的交接仍未完成；生产 controller/job 均为0。
+首轮卷已提供且沙箱已恢复，不再把它们记作当前阻塞。模型预算224/512（192次自动唤醒+32次worker），剩288。
+baseline、后续科学分支、三流确认/holdout、真实视频及最终独审均未完成；Goal 保持 active。
 
 2026-10-22：用户恢复Goal后，真实只读sandbox已恢复；准确基线plan读取及仓库写入拒绝测试均通过。
 证据LOCAL_REVIEW_ACCESS_RECOVERED_20261022.json；sudo仍需密码，但不再阻断当前只读审核。

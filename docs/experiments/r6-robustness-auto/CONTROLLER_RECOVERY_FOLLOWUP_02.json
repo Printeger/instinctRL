@@ -1,0 +1,262 @@
+{
+  "status": "INDEPENDENT_LOCAL_REVIEW_MUST_FIX_NOT_PRELIVE_ACCEPTANCE",
+  "event_key": "1184661fc261641316bcdbb41c0ac9d1729d72409534db611a8826830b63d2fc",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/1184661fc261641316bcdbb41c0ac9d1729d72409534db611a8826830b63d2fc/receipt.json",
+    "sha256": "daf5021f1711379bbcf7e50b98a7489be978890f6493856208048371266952c2"
+  },
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/controller-recovery-followup-02.json",
+    "sha256": "07962b159d25ebbd675b7c0fb9bf52727e59132cdd89747cd701dd702995ee8f"
+  },
+  "source_pin_checks": [
+    {
+      "reported": {
+        "path": "docs/experiments/r6-robustness-auto/prompts/controller-recovery-followup-02.txt",
+        "sha256": "809cb2e8082f05fcf41e967bcb6e909ca90cd9e9ab30f67a8c02f2a6d6fc3de8"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "docs/goals/InstinctRL_R6_Robustness_Autonomous_Goal_Requirements.md",
+        "sha256": "200fb9daa96606ae3a58516219121d2ae243de51a8b1e02d10077a4b15e2f12b"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "docs/experiments/r6-robustness-auto/USER_AUTHORITY.txt",
+        "sha256": "b45cbca50cf944ea2b2abe2b6fd57998224784f5de2e2545cc7ae69fc8a2d706"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "docs/experiments/r6-robustness-auto/reviews/controller-recovery-integration-review.json",
+        "sha256": "eab07f5a053503aa686a3e3879a327f44ab11265fca0587ff2d04a4a107de751"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "docs/experiments/r6-robustness-auto/LOCAL_REVIEW_ACCESS_RECOVERED_20261022.json",
+        "sha256": "9fc4ff7af2b1ee3208e5a4b2d3a0685346a5b2eccca7fad98ae33956d4bdb85d"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "docs/experiments/r6-robustness-auto/controller-candidate-01/request.json",
+        "sha256": "4a21a73cb775b37ae1699f6b1fefc6d68ad1ec2c0e266f6f2de8e3c5e90cf9e5"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "docs/experiments/r6-robustness-auto/baseline-prelive-02/request.json",
+        "sha256": "3d2cd7feac62f6f0e21d996a2affa31c160e586a257740cd056dfc3a607a3857"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+        "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/spec.json",
+        "sha256": "7191dd7ef7e022a4ce8956be6c1296f13fd7bd7563d9e5e8f337ad3e5dfba3a8"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_controller.py",
+        "sha256": "53da9658c10b64fd863cdf4c2efbe8020b6f3443e986fc80a27fa8a097b046c0"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_controller_revision.py",
+        "sha256": "ba055535096c455c1011bf7f22cdd240c540fad3cefe109b500b294739012da2"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_controller_resume.py",
+        "sha256": "8d5ed31442787648ee278d6277faa16367c08344efbfe4e091586c804b070876"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_engineering_rework.py",
+        "sha256": "0ac86c83362eb258deaaa08fcc579cf22d7d7520c6d85d1812d3317cc52cc9c0"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_engineering_source.py",
+        "sha256": "e7e83eb01fa37ffee45687d066b68c6f3bd1364d10e1902e383a3486703af2d6"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_engineering_review.py",
+        "sha256": "168e3cc959e7be87bcba23fb33fb70ee31e010c692bc5eba78602911140bf450"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_source_repair.py",
+        "sha256": "cb379d8c8156e40358a383a3fb4637b42dabae5092e6cd1d760a2f859582eeb6"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_source_preparation.py",
+        "sha256": "bfef88109ad3b2303158b370b7e5ee84c7ccacf554a42b51d4c6496d7b143d52"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_platform_wait.py",
+        "sha256": "ef9b8254b2b439c884ebf2052ee12a14c0dcb3d7edeae02beac1853c71218a0d"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_audited_job_handoff.py",
+        "sha256": "e0832b8a70322fc6a505052e4e419c83b9ce9122f433b7a883bdb766d9802aea"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_submit.py",
+        "sha256": "1cce225475f49220c444bee4ac04f78c759bc05b66361e4d04bb48ea5c45f02c"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_run_job.py",
+        "sha256": "3e4c7076d7dc861635d94976cae38e14baa0ba1905e0bf263765b7e142bd3bb2"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_start_baseline.py",
+        "sha256": "57a1891d9e3d31fac60c76f8290112df2a393d75c1c588a82d081843dfdcd821"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_initial_baseline.py",
+        "sha256": "91805c3a4fc5431b54bb1b95d960faaefc1eed7453a536b8239ba13b66e770c1"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_finalize_job.py",
+        "sha256": "7967e52e12544d6af5887d7b241252b070fc9511784a20611cc4f17aa9d18eb4"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_analysis_repair.py",
+        "sha256": "680fcadf6b941227871b5d895385df1b071b58f089d19cdca54aa64518a6e7d0"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_decision_repair.py",
+        "sha256": "42f6c21d89dcd0d331ddbf271b1f9098943aea6dedb0928a1ceeea5e429b0a18"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_wait_audit.py",
+        "sha256": "d3094972577162cde80291d4d105604bbda715f26bbf2b26af9340eabf832dff"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_job_handoff.py",
+        "sha256": "df430bbed7e22b265a358631515864e9491e5039c0c154d20370223465cb9d1a"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_delivery_evidence.py",
+        "sha256": "8d1b21eea576536402b5d6d9a7e20f976f52927dc6c8575e14b1b59a5d368638"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_final_audit_packet.py",
+        "sha256": "3eaf2583e53fc66997fabe97e2a53216960cae8601513724b8abe3224eff4fb9"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_final_independent_review.py",
+        "sha256": "abd7541f28314894d33be4e51cb8e9242874fce4cf8d118a2de6c31e077dcc6a"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_terminal_audit.py",
+        "sha256": "a310f284d95e4845ab49a308f2ac24389f911b5624592bac19c5b92dc3eb0583"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "tools/r6_profile_preparation.py",
+        "sha256": "ae780f29b6885a7f99453c12a7c869d51ebda9ec34d47fa6ae67facf0a7f25ac"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "docs/experiments/r6-robustness-auto/CPU_CONTROLLER_RESUME.json",
+        "sha256": "17f6b0b65c1e6cbd993470b1aa3384fc8ce7ee337764575afd5582517803346d"
+      },
+      "match": true
+    },
+    {
+      "reported": {
+        "path": "docs/experiments/r6-robustness-auto/CPU_PLATFORM_WAIT.json",
+        "sha256": "a28d5debadb8269ce451534049be4db944eb8e0ccc048190b93477f8f8f18361"
+      },
+      "match": true
+    }
+  ],
+  "production_controller_count": 0,
+  "production_job_count": 0,
+  "scientific_acceptance": false
+}

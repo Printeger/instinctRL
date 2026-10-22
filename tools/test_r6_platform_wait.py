@@ -41,26 +41,26 @@ def capture(b):
     return delivery_module.model_audit(b.j.read())
 
 
-def test_full_native_trace_and_local_waits_reach_delivery_audit(traced):
+def test_idle_native_trace_without_flush_boundary_stays_unknown(traced):
     b=traced;out=capture(b);budget=b.j.read()['budget']
-    assert out['platform_inactivity_proven'] and out['pure_wait_model_calls']==0
+    assert not out['platform_inactivity_proven'] and out['pure_wait_model_calls']=='UNKNOWN'
     assert capture(b)==out and b.j.read()['budget']==budget
     result=run(b)
-    assert 'PLATFORM_ZERO_MODEL_WAIT_AUDIT' not in result['pending_requirements']
+    assert 'PLATFORM_ZERO_MODEL_WAIT_AUDIT' in result['pending_requirements']
     saved=delivery_module.read(result['artifacts']['MODEL_USAGE_AUDIT.json'])
-    assert saved['platform_inactivity_proven'] and saved['pure_wait_model_calls']==0
+    assert not saved['platform_inactivity_proven'] and saved['pure_wait_model_calls']=='UNKNOWN'
 
 
 def test_new_root_activity_during_wait_is_preserved_not_zero(traced):
     b=traced;b.rows.extend([event('task_started',35,'wake'),event('task_complete',45,'wake')]);b.trace.write_bytes(lines(b.rows))
     out=capture(b)
-    assert not out['platform_inactivity_proven'] and out['pure_wait_model_calls']==1
+    assert not out['platform_inactivity_proven'] and out['pure_wait_model_calls']=='UNKNOWN'
     assert all(w['platform_evidence']['overlapping_root_turns']==['wake'] for w in out['waits'])
 
 
 def test_root_turn_started_before_wait_is_not_missed(traced):
     b=traced;b.rows.append(event('task_started',25,'open'));b.trace.write_bytes(lines(b.rows))
-    assert capture(b)['pure_wait_model_calls']==1
+    assert capture(b)['pure_wait_model_calls']=='UNKNOWN'
     with b.j.writer(),pytest.raises(RecoveryError,match='ROOT_TURN_ACTIVE'):platform.preflight(b.j)
 
 
@@ -109,7 +109,7 @@ def test_crash_after_capture_intent_recovers_without_extra_charge(traced,monkeyp
     with b.j.writer(),pytest.raises(RuntimeError,match='capture write crash'):platform.capture(b.j,b.keys[0])
     budget=b.j.read()['budget'];monkeypatch.setattr(platform,'persist_exact',persist)
     with b.j.writer():out=platform.capture(b.j,b.keys[0])
-    assert out['platform_inactivity_proven'] and b.j.read()['budget']==budget
+    assert not out['platform_inactivity_proven'] and b.j.read()['budget']==budget
 
 
 def test_production_cannot_use_arbitrary_idle_session(traced):
@@ -141,3 +141,42 @@ def test_active_platform_rejects_before_submission_claim_and_store_write(bound):
             submit_once(b.journal,b.key,b.store,queue_key=b.queue_key)
         assert b.journal.read()==before and b.store.replay()==store
     b.popen.assert_not_called()
+
+
+def test_disjoint_segments_cannot_hide_inference_in_gap(traced):
+    b=traced;a=b.j.read()['events'][b.keys[0]]['local_wait_audit']
+    template=a['segments'][0]
+    a['segments']=[dict(template,started_at=100,last_checked_at=110,finished_at=110),
+                   dict(template,started_at=190,last_checked_at=200,finished_at=200)]
+    b.rows.extend([event('task_started',120,'gap'),event('task_complete',180,'gap')])
+    observed=platform.scan(lines(b.rows),platform.binding(b.j.read()))
+    result=platform.assess(a,observed,210,dict(started_at=100,finished_at=200))
+    assert not result['job_wait_coverage_complete']
+    assert not result['platform_inactivity_proven']
+    assert result['overlapping_root_turns']==['gap']
+
+
+def test_first_observation_after_submit_is_not_complete_coverage(traced):
+    a=traced.j.read()['events'][traced.keys[0]]['local_wait_audit']
+    observed=platform.scan(lines(traced.rows),platform.binding(traced.j.read()))
+    result=platform.assess(a,observed,50,dict(started_at=25,finished_at=40))
+    assert not result['job_wait_coverage_complete']
+    result=platform.assess(a,observed,50,dict(started_at=30,finished_at=40))
+    assert result['job_wait_coverage_complete']
+    assert not result['trace_completeness_proven']
+    assert not result['platform_inactivity_proven']
+
+
+def test_capture_binds_pre_submit_boundary_and_exact_closure(traced):
+    from rlflow.store import sha
+    b=traced;key=b.keys[0]
+    with b.j.writer():
+        s=b.j.read();job=s['events'][key]
+        job['submission_claim']=dict(job_id=job['identity']['job_id'],wait_coverage_start=30)
+        job['closure']=b.write('bound-closure.json',dict(event_key=key,job_id=job['identity']['job_id'],
+            request_sha256=sha(job['request'])))
+        b.j.save(s);result=platform.capture(b.j,key)
+        assert result['job_wait_coverage_complete']
+        assert not result['platform_inactivity_proven']
+        s=b.j.read();s['events'][key]['submission_claim']['wait_coverage_start']=25;b.j.save(s)
+        with pytest.raises(RecoveryError,match='COVERAGE_DRIFT'):platform.verify(b.j.read(),key)

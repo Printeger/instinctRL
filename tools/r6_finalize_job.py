@@ -35,7 +35,7 @@ def finalize(journal, key, store, executable, *, free_disk_bytes):
     return dict(inventory=inventory,postrun=postrun,scientific_acceptance=False)
 
 
-def analyze(journal, key, store, *, free_disk_bytes, python=None, program=None, timeout_seconds=3600):
+def analyze(journal, key, store, *, free_disk_bytes, python=None, program=None, timeout_seconds=None):
     """Register once or reconnect the same bounded CPU analysis event.
 
 Overrides exist for isolated CPU fixtures; the existing analysis validator
@@ -49,10 +49,13 @@ requires the frozen interpreter/analyzer for every real-mode job.
     existing=[] if selected is None else [selected]
     expected=dict(python=file_pin(cpu.PYTHON) if python is None else python,
         program=file_pin(cpu.program_for(json.loads(checked(job['request']['spec']).read_text())['h1']['mode'])) if program is None else program,
-        timeout_seconds=timeout_seconds)
+        timeout_seconds=3600 if timeout_seconds is None else timeout_seconds)
     if existing:
         if len(existing)!=1:raise RecoveryError('FINALIZE_ANALYSIS_ALIAS')
         event_key=existing[0];entry,_=cpu.validate(journal,event_key)
+        # Ordinary controller reentry adopts the already validated bounded
+        # timeout. An explicit caller override must still match exactly.
+        if timeout_seconds is None:expected['timeout_seconds']=entry['request']['timeout_seconds']
         if (entry['request']['job_event_key']!=key
                 or any(entry['request'][name]!=value for name,value in expected.items())):
             raise RecoveryError('FINALIZE_ANALYSIS_BINDING')

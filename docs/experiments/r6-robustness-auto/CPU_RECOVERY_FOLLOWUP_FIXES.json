@@ -1,0 +1,75 @@
+{
+  "status": "CPU_WAIT_COVERAGE_FALSE_ZERO_FIX_AND_ANALYSIS_TIMEOUT_REENTRY_PASS_NOT_DEPLOYED",
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CONTROLLER_RECOVERY_FOLLOWUP_02.json",
+    "sha256": "1289bcbef6cd9a60d0bbbbde6389eab3dbbc05022a9725d4af4b30dad1c63150"
+  },
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "3ba1bc6c5b1bd3e534e49aae23fb8e685c967c71072e9bdf80f128135469d47a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_wait.py",
+      "sha256": "d7fc5b65212377df96b4ad4ba7496e55a7f7793d46cd2129d5ec5e9307e32154"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_delivery_evidence.py",
+      "sha256": "dbfc6d6136dbbdb76323736d30baf97f0b43a181089343770f073d12aaab739f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_finalize_job.py",
+      "sha256": "6cd880b594f1608c515a8d08ed2f8f2a633093f4b4efa1b869b2602db1f074fc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_platform_wait.py",
+      "sha256": "7cedf367b7016a4981fbbb8ce0ac2877a0a560f15ee4354900a027bdae0b8389"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_submit_store.py",
+      "sha256": "4aea66f85ef70b216aff5757b851dcb90eeef9913d612ff8f138ef1673ef692e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_analysis_repair.py",
+      "sha256": "99d2617259248ac7bc7f4f03c0ec31d57c9923eebaebfe865cb409db62288521"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RECOVERY_FOLLOWUP_FIXES.log",
+      "sha256": "0d92defaf2a0a1981d708548eee06bdbe634c6a67f796f95abe788d36b33c0c1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_RECOVERY_FOLLOWUP_BINDING.log",
+      "sha256": "4e443f7d8f47899bf2c78f44507ca068ff812e0716788e4378ddeca193d2d5ab"
+    }
+  ],
+  "checks": {
+    "combined_tests": 224,
+    "additional_binding_suite_tests": 57,
+    "real_journal_guard": "PASS",
+    "production_jobs": 0,
+    "production_controllers": 0
+  },
+  "behavior": [
+    "Persist required wait start before submission side effects; exact submission claim survives crashes and does not authorize resubmission.",
+    "Bind captured coverage to exact claim and closure; disjoint segments or late first observation cannot prove complete wait coverage. Root activity in uncovered gaps remains visible.",
+    "No supported native trace flush/health acknowledgement is currently integrated. Even a newline-complete idle log remains UNKNOWN, not zero model calls.",
+    "Ordinary finalizer reentry selects validated active analysis timeout; explicit conflicting overrides still fail."
+  ],
+  "limitations": [
+    "CPU subprocess/Store fixtures, not production lifecycle acceptance or scientific evidence.",
+    "Platform handoff/trace completeness remains unresolved; this correction removes false proof, it does not establish zero-model waiting.",
+    "Baseline exception repair handoff still needs implementation and exact review.",
+    "Offline/control/frozen-phase repair remains event-triggered downstream work.",
+    "Existing root-owned pytest temporary garbage left unchanged."
+  ],
+  "budget": {
+    "automatic_wakes": 192,
+    "worker_sessions": 32,
+    "charged": 224,
+    "cap": 512,
+    "remaining": 288
+  },
+  "goal_complete": false
+}
