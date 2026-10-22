@@ -1,0 +1,37 @@
+{
+  "status": "EXTERNAL_ROUTE_FAILURE_RECONFIRMED",
+  "observed_at": 1792654959.1182206,
+  "prior": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/baseline-prelive-03/route-failure-01.json",
+    "sha256": "9ef109a506360258d943a7499bd4c78c6e8f2342afdb1d1c5dc7ceaed623ce29"
+  },
+  "goal_turn": "01a1628e-dc5a-7951-8080-0eb48525b06e",
+  "consecutive_blocked_observations": 2,
+  "network": {
+    "url": "https://chatgpt.com/backend-api/ps/mcp",
+    "exit_code": 35,
+    "http_code": "000",
+    "error": "SSL_ERROR_SYSCALL",
+    "proxy_environment": "UNSET"
+  },
+  "worker_terminal": true,
+  "cleanup_verified": true,
+  "current_job": null,
+  "current_model": null,
+  "job_events": 0,
+  "additional_cli_model_calls": 0,
+  "charged": {
+    "allocated_gpu_seconds": 0,
+    "automatic_model_sessions": 238,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 28529459200,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "remaining_model_sessions": 274
+}
