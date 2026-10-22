@@ -80,8 +80,10 @@ def register(journal, job_key, store, repair_pin, *, free_disk_bytes,
     from tools.r6_recovery import file_pin
     guard(journal);state=journal.read();job=journal.canonical_job(job_key,state=state)
     context=analysis_context(job,job_key,store)
+    from tools.r6_baseline_failure import pre_analysis_model
     require(not job.get('analysis') and not any(e['kind']=='model' and
-        e['identity'].get('job_id')==job['identity']['job_id'] for e in state['events'].values()),'ALREADY_USED')
+        e['identity'].get('job_id')==job['identity']['job_id']
+        and not pre_analysis_model(journal,k,job_key) for k,e in state['events'].items()),'ALREADY_USED')
     parent,old=predecessor(journal,repair_pin,job_key)
     request=dict(job_event_key=job_key,spec=job['request']['spec'],closure=job['closure'],inventory=job['inventory'],
         postrun=job['postrun'],python=file_pin(cpu.PYTHON) if python is None else python,

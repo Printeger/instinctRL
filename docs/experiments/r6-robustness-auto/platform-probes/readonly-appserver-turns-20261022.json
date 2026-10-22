@@ -1,0 +1,126 @@
+{
+  "started_at": 1792639685.078599,
+  "finished_at": 1792639685.080219,
+  "thread_id": "01a154cf-f2bb-79e3-8019-d6c78e8e0fc8",
+  "methods": [
+    "initialize",
+    "initialized",
+    "thread/goal/get",
+    "thread/read",
+    "thread/turns/list"
+  ],
+  "peer_credentials": {
+    "pid": 1969832,
+    "uid": 1000,
+    "gid": 1000
+  },
+  "responses": [
+    {
+      "id": 1,
+      "result": {
+        "userAgent": "codex-tui/0.163.0 (Ubuntu 24.4.0; x86_64) xterm-256color (r6_readonly_handoff_audit; 1.0)",
+        "codexHome": "/home/mint/.codex",
+        "platformFamily": "unix",
+        "platformOs": "linux"
+      }
+    },
+    {
+      "id": 2,
+      "result": {
+        "goal": {
+          "threadId": "01a154cf-f2bb-79e3-8019-d6c78e8e0fc8",
+          "objective": "pasted text file: /home/mint/.codex/attachments/4daf07e8-ea6c-4823-9e41-4dfa9630515a/pasted-text-1.txt. Read this file before continuing.",
+          "status": "active",
+          "tokenBudget": null,
+          "tokensUsed": 10481798,
+          "timeUsedSeconds": 69918,
+          "createdAt": 1792424333,
+          "updatedAt": 1792639665
+        }
+      }
+    },
+    {
+      "id": 3,
+      "result": {
+        "thread": {
+          "id": "01a154cf-f2bb-79e3-8019-d6c78e8e0fc8",
+          "environments": [
+            {
+              "environmentId": "local",
+              "cwd": "/home/mint/rl_dev/instinctRL-dev",
+              "runtimeWorkspaceRoots": [
+                "/home/mint/rl_dev/instinctRL-dev"
+              ]
+            }
+          ],
+          "extra": null,
+          "sessionId": "01a154cf-f2bb-79e3-8019-d6c78e8e0fc8",
+          "forkedFromId": null,
+          "parentThreadId": null,
+          "preview": "pasted text file: /home/mint/.codex/attachments/4daf07e8-ea6c-4823-9e41-4dfa9630515a/pasted-text-1.txt. Read this file before continuing.",
+          "ephemeral": false,
+          "section": null,
+          "sectionEnteredAt": null,
+          "projectId": null,
+          "historyMode": "paginated",
+          "modelProvider": "openai",
+          "model": "gpt-6-astra",
+          "reasoningEffort": "medium",
+          "createdAt": 1792424276,
+          "updatedAt": 1792639685,
+          "recencyAt": 1792638836,
+          "status": {
+            "type": "active",
+            "activeFlags": []
+          },
+          "path": "/home/mint/.codex/sessions/2026/10/19/rollout-2026-10-19T23-37-56-01a154cf-f2bb-79e3-8019-d6c78e8e0fc8.jsonl",
+          "cwd": "/home/mint/rl_dev/instinctRL-dev",
+          "cliVersion": "0.163.0",
+          "originator": "codex-tui",
+          "source": "vscode",
+          "canAcceptDirectInput": true,
+          "threadSource": "user",
+          "agentNickname": null,
+          "agentRole": null,
+          "gitInfo": {
+            "sha": "171ed9387f4fcec094bf91dad52b24c63d18bbd2",
+            "branch": "main",
+            "originUrl": "git@github.com:Printeger/instinctRL.git"
+          },
+          "name": "\u652f\u6301\u6bcf\u4f5c\u4e1a1.5 GiB\u8f93\u51fa\u914d\u989d",
+          "daybreakEnabled": null,
+          "turns": []
+        },
+        "readState": {
+          "firstUnread": {
+            "type": "turn",
+            "turnId": "01a15600-9c4b-7310-a792-3f8b2bd143dc"
+          },
+          "revision": "0df6af44-b21c-4843-8adf-e59963db5bf3"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "result": {
+        "data": [
+          {
+            "id": "01a16199-dec7-71b1-8b5c-45ce31b5fd7c",
+            "rootTurnId": "01a16199-dec7-71b1-8b5c-45ce31b5fd7c",
+            "items": [],
+            "itemsView": "notLoaded",
+            "status": "inProgress",
+            "error": null,
+            "startedAt": 1792638836,
+            "completedAt": null,
+            "durationMs": null
+          }
+        ],
+        "nextCursor": "{\"requestedThreadId\":\"01a154cf-f2bb-79e3-8019-d6c78e8e0fc8\",\"rolloutOrdinal\":25946,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+        "backwardsCursor": "{\"requestedThreadId\":\"01a154cf-f2bb-79e3-8019-d6c78e8e0fc8\",\"rolloutOrdinal\":25946,\"includeAnchor\":true,\"scope\":{\"kind\":\"turns\"}}"
+      }
+    }
+  ],
+  "model_call": false,
+  "goal_mutation": false
+}

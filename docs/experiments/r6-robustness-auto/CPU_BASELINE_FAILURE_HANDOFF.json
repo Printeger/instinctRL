@@ -1,0 +1,66 @@
+{
+  "status": "CPU_FIRST_BASELINE_FAILURE_DISPOSITION_AND_REPLACEMENT_REENTRY_PASS_NOT_DEPLOYED",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_baseline_failure.py",
+      "sha256": "bc3625feac5def4aaf37721af389819e474d631f1b48e33c7295bdc7f52168bc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "6088ecd0fb43534cea8e52dc44063c86e449544374c0dedcb41591ac8e61e079"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_analysis_repair.py",
+      "sha256": "9c53191b4eb4993175af98dbaf16537ec699ffa7351d91424105bd900b45febb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_baseline_failure.py",
+      "sha256": "4fa4b13f6d30c9f31d4f83a0d77fc4c68379862091826e4b89048dacf33ced4f"
+    }
+  ],
+  "schema": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/baseline-failure.schema.json",
+    "sha256": "c68f4685a64f5edef6c93e7ccf5e5e1b02168f6fb008b09bb4d1ff32df1046a1"
+  },
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_FAILURE_HANDOFF.log",
+      "sha256": "49c7849c308166fd93cc54df9b3f2d14d12c3b0bf8c63510b698d810bca93a43"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_BASELINE_FAILURE_HANDOFF_BINDING.log",
+      "sha256": "51fb57d62559b7b2a788eeb362a82460b3a6674c74f38ca2e31f712f13386a4e"
+    }
+  ],
+  "checks": {
+    "combined_tests": 174,
+    "final_boundary_tests": 20,
+    "real_journal_guard": "PASS",
+    "production_disposition_calls": 0,
+    "production_controllers": 0,
+    "production_jobs": 0
+  },
+  "behavior": [
+    "FIRST_JOB exceptions with exact failed cleaned receipts create one durable packet tied to original cursor, failed phase/receipt, Store and initial request. Missing receipts/unknown effects/STOP cannot authorize retries.",
+    "One read-only disposition model is charged and deduplicated per failure packet. It can request an existing independent initial-review replacement, a bounded CPU timeout replacement, or a post-analysis decision replacement.",
+    "Analysis timeout must increase within 3600 seconds and the original receipt must prove timeout; unrelated nonzero failures cannot be repaired by changing timeouts.",
+    "Original attempts and charges remain. Crash after replacement registration reuses the exact intent and restores FIRST_JOB without repeating the model or submitting a job.",
+    "Validated preflight reviews and pre-analysis repair dispositions are distinguished from downstream consumption when checking analysis replacement eligibility.",
+    "REPAIR_CODE_REQUIRED/EXTERNAL_BLOCKER preserve actionable findings and return without extra calls; this module is not a code writer."
+  ],
+  "boundaries": [
+    "Real local fake CLI and CPU child processes; prior initial-review receipt/production runtime/science use explicit fixtures.",
+    "Initial Store fixture prevents live Popen; only exact CPU model-worker subprocess commands are allowed by the scoped test adapter.",
+    "Controller first-run routing tests substitute the live runner; no deployment, GPU probe, baseline, training or scientific acceptance.",
+    "Concrete code repair, offline/control/frozen-phase repair and failed disposition recovery remain separate event-triggered work.",
+    "Independent review of the new baseline boundary and real platform handoff remain pending."
+  ],
+  "budget": {
+    "automatic_wakes": 193,
+    "worker_sessions": 32,
+    "charged": 225,
+    "cap": 512,
+    "remaining": 287
+  },
+  "goal_complete": false
+}

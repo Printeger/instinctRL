@@ -1,0 +1,28 @@
+{
+  "status": "ACTUAL_READ_ONLY_ROOT_GOAL_THREAD_AND_TURN_QUERY_PASS_NOT_HANDOFF",
+  "source_url": "https://learn.chatgpt.com/docs/app-server",
+  "raw_response": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/platform-probes/readonly-appserver-turns-20261022.json",
+    "sha256": "93ef7c01c1b83dff1080be0997f8788c015f7b32c66fd58a4934592ddcc90987"
+  },
+  "probe_source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/platform-probes/readonly-appserver-turns-20261022.py",
+    "sha256": "5bb6fa2d5742948b9dcde4391a009b331651f0d541a046f24702f5dfe87c71f2"
+  },
+  "incorrect_transport_probe": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/platform-probes/incorrect-raw-proxy-probe-20261022.json",
+    "sha256": "80ae8de29cb372f208785c038a440f682bd8dd949aaad67054c53f0d2ffeacf8"
+  },
+  "scope": [
+    "Existing app-server 0.163.0 over its local Unix WebSocket; standard HTTP Upgrade handshake; no dependency installation or daemon changes.",
+    "Only initialize/initialized and thread/goal/get, thread/read, thread/turns/list were sent. No thread start/resume, goal mutation or model invocation.",
+    "Root identity, cwd, original session path, active Goal/active thread and inProgress latest root turn matched the executing task.",
+    "Raw JSONL sent via proxy initially timed out because the Unix socket expects WebSocket Upgrade. That probe is a client transport error, not an external server blocker."
+  ],
+  "remaining": [
+    "Implement guarded read-only controller observation with exact socket owner/process identity, request/response bounds and stable turn anchors.",
+    "Prove full job-wait coverage and correct missing/late/active/changed-turn handling.",
+    "Actual detached handoff requires platform auto-continuation stopped; current Goal remains active."
+  ],
+  "goal_complete": false
+}

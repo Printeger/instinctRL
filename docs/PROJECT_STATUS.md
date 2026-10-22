@@ -1,4 +1,13 @@
-# 当前 Goal：R6 鲁棒性与课程学习闭环（独审待修项处理中，基线未启动，未完成）
+# 当前 Goal：R6 鲁棒性与课程学习闭环（首轮异常交接CPU通过，平台交接待验，未完成）
+
+2026-10-22：FIRST_JOB 的初始审核/已关闭作业分析/决策失败已接入一次、只读、准确 receipt 绑定的修复判断。
+有证据的替换调用既有登记器并恢复原 FIRST_JOB；原始失败与额度保留，缺 receipt/清理/STOP/未知副作用仍拒绝重试。
+仅原 receipt 证明超时时允许增加分析超时；需要代码修复时保留具体待办，本入口不冒充代码 writer。
+174 项组合、20 项最终边界检查和真实 Journal guard 通过；证据 CPU_BASELINE_FAILURE_HANDOFF.json，独审/生产部署尚待完成。
+通过现有 app-server Unix WebSocket 实际只读读取当前 Goal/thread/latest-turn：三者均证明根线程仍在推理中。
+证据 PLATFORM_READONLY_RPC_20261022.json；可继续接入权威状态观测，但没有关闭自动续推理或证明生产零模型等待。
+本轮未新增真实模型 worker/GPU/作业，193次自动唤醒+32 worker=225/512，剩287；生产controller/job均为0。
+完整科学目标未完成；下一步为平台权威状态/turn边界接入、独审和准确后台交接，再运行首次baseline。
 
 2026-10-22：真实本地独审返回 MUST_FIX，35 个原件 pin 核验通过；原件及 receipt 保存在 CONTROLLER_RECOVERY_FOLLOWUP_02.json。
 已修复提交前等待边界持久化、覆盖缺口误报零调用及分析替换超时在普通入口重入的问题。

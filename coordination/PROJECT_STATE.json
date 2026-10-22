@@ -751,15 +751,17 @@
     "phase": "R5_W_ALL_ORIGINAL_GATES_PASS"
   },
   "r6_robustness_execution": {
-    "status": "FOLLOWUP_MUST_FIX_PARTIAL_CPU_REPAIRS_BASELINE_NOT_STARTED",
+    "status": "CPU_BASELINE_FAILURE_HANDOFF_READY_REVIEW_AND_PLATFORM_HANDOFF_PENDING",
     "workflow_index": "coordination/ACTIVE_WORKFLOW.json#r6_robustness_execution",
     "ledger": "docs/experiments/r6-robustness-auto/batch/state.json",
-    "latest_cpu_evidence": "docs/experiments/r6-robustness-auto/CPU_RECOVERY_FOLLOWUP_FIXES.json",
+    "latest_cpu_evidence": "docs/experiments/r6-robustness-auto/CPU_BASELINE_FAILURE_HANDOFF.json",
     "model_session_cap": 512,
-    "model_sessions_charged": 224,
+    "model_sessions_charged": 225,
     "goal_complete": false,
     "platform_handoff_verified": false,
     "external_blocker_audit": "docs/experiments/r6-robustness-auto/EXTERNAL_BLOCKER_AUDIT_20261022.json",
-    "controller_recovery_followup_review": "docs/experiments/r6-robustness-auto/CONTROLLER_RECOVERY_FOLLOWUP_02.json"
+    "controller_recovery_followup_review": "docs/experiments/r6-robustness-auto/CONTROLLER_RECOVERY_FOLLOWUP_02.json",
+    "baseline_failure_handoff_evidence": "docs/experiments/r6-robustness-auto/CPU_BASELINE_FAILURE_HANDOFF.json",
+    "platform_readonly_rpc_evidence": "docs/experiments/r6-robustness-auto/PLATFORM_READONLY_RPC_20261022.json"
   }
 }

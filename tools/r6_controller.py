@@ -44,6 +44,7 @@ from tools import r6_repair_input as repair_input
 from tools import r6_engineering_source as engineering_source
 from tools import r6_engineering_review as engineering_review
 from tools import r6_engineering_rework as engineering_rework
+from tools import r6_baseline_failure as baseline_failure
 from tools import r6_render_preparation as render_preparation, r6_render_review as render_review
 from tools import r6_render_materialization as render_materialization, r6_run_job as render_runner
 from tools.r6_decision_packet import persist_exact
@@ -139,6 +140,11 @@ def run(journal,request_pin,store,*,free_disk_bytes):
         cursor=journal.read()['events'][key]['cursor'];phase=cursor['phase']
         free=min(free_disk_bytes,shutil.disk_usage(journal.directory).free)
         try:
+            if phase=='BASELINE_FAILURE_HANDOFF':
+                outcome=baseline_failure.prepare(journal,key,store,free_disk_bytes=free)
+                if outcome['status']=='BASELINE_REPLACEMENT_REGISTERED':continue
+                save(journal,key,cursor,status=outcome['status'])
+                return dict(outcome,controller_key=key)
             if phase in {'COMPATIBILITY','TRAINING_PREPARATION','CANDIDATE_PREPARATION','PROFILE','MATERIALIZE'} and cursor.get('engineering_review'):
                 engineering_review.accepted(journal,key,cursor['engineering_review'])
             if phase=='FINAL_DELIVERY_REQUIRED' and 'final_collection' in cursor:
@@ -414,9 +420,16 @@ def run(journal,request_pin,store,*,free_disk_bytes):
             else:raise RecoveryError('CONTROLLER_UNKNOWN_PHASE')
             save(journal,key,cursor)
         except Exception as error:
-            # Preserve this exact phase; do not create a fresh worker/attempt.
+            # Preserve the exception before any bounded, receipt-bound repair
+            # handoff. Unknown effects never imply permission to retry a job.
             original=journal.read()['events'][key]['cursor']
             save(journal,key,original,status='INCOMPLETE_EXCEPTION',error=error)
+            if phase=='FIRST_JOB':
+                input_key=baseline_failure.capture(journal,key,initial,store,free_disk_bytes=free)
+                if input_key is not None:
+                    original.update(phase='BASELINE_FAILURE_HANDOFF',baseline_failure_input=input_key)
+                    save(journal,key,original,status='BASELINE_FAILURE_HANDOFF',error=error)
+                    continue
             if phase=='COMPLETE':
                 state=journal.read()
                 state.update(goal_complete=False,status='COMPLETION_REVALIDATION_FAILED',

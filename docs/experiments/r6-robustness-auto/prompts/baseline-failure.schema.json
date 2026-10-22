@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": [
+        "REPLACE_FAILED_ATTEMPT",
+        "REPAIR_CODE_REQUIRED",
+        "EXTERNAL_BLOCKER"
+      ]
+    },
+    "packet_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 4096
+    },
+    "evidence_pins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 2,
+      "maxItems": 32
+    },
+    "changed_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 0
+    },
+    "must_fix": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      },
+      "maxItems": 32
+    },
+    "remaining_budget": {
+      "type": "object",
+      "properties": {
+        "automatic_sessions_remaining": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "automatic_sessions_remaining"
+      ],
+      "additionalProperties": false
+    },
+    "timeout_seconds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3600
+    },
+    "next_plan": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    }
+  },
+  "required": [
+    "decision",
+    "packet_sha256",
+    "summary",
+    "evidence_pins",
+    "changed_files",
+    "must_fix",
+    "remaining_budget",
+    "timeout_seconds",
+    "next_plan"
+  ],
+  "additionalProperties": false
+}
