@@ -143,7 +143,7 @@
   },
   "r6_robustness_execution": {
     "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
-    "status": "INDEPENDENT_CPU_REVIEW_PASS_DETACHED_DEPLOYMENT_PENDING",
+    "status": "AUTHORIZED_BACKGROUND_HANDOFF_RESTART",
     "authority": "docs/experiments/r6-robustness-auto/GOAL_SCOPE_AND_MASTER_AUTHORITY.md",
     "budget": "docs/experiments/r6-robustness-auto/goal_budget.json",
     "preflight": "docs/experiments/r6-robustness-auto/STARTUP_PREFLIGHT.json",
@@ -428,7 +428,8 @@
     "platform_readonly_rpc_evidence": "docs/experiments/r6-robustness-auto/PLATFORM_READONLY_RPC_20261022.json",
     "platform_rpc_handoff_evidence": "docs/experiments/r6-robustness-auto/CPU_PLATFORM_RPC_HANDOFF.json",
     "baseline_platform_handoff_review": "docs/experiments/r6-robustness-auto/BASELINE_PLATFORM_HANDOFF_REVIEW_03.json",
-    "model_sessions_charged": 227,
-    "model_sessions_remaining": 285
+    "model_sessions_charged": 229,
+    "model_sessions_remaining": 283,
+    "handoff_restart_evidence": "docs/experiments/r6-robustness-auto/controller-candidate-01/rearm-02.json"
   }
 }

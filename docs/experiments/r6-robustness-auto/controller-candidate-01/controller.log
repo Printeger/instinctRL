@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py", line 462, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py", line 457, in main
+    wait(journal,key,timeout_seconds=args.wait_platform_handoff)
+  File "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_handoff_gate.py", line 42, in wait
+    journal.save(state);raise RecoveryError('PLATFORM_HANDOFF_TIMED_OUT')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools.r6_recovery.RecoveryError: PLATFORM_HANDOFF_TIMED_OUT
