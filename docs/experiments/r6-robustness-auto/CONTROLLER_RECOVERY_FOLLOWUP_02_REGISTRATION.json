@@ -1,0 +1,38 @@
+{
+  "event_key": "1184661fc261641316bcdbb41c0ac9d1729d72409534db611a8826830b63d2fc",
+  "identity": {
+    "goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+    "event_id": "R6-CONTROLLER-RECOVERY-FOLLOWUP-02",
+    "job_id": "CPU-CONTROLLER-RECOVERY-FOLLOWUP",
+    "input_sha256": "b6b8f6f7b0c9ed6e70d3f8592fb2090d8970cf32dfb380aba3d2de8bb7dd9f11",
+    "role": "independent-review"
+  },
+  "request": {
+    "cwd": "/home/mint/rl_dev/instinctRL-dev",
+    "executable": {
+      "path": "/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+      "sha256": "9a820c17865fa825d04db416818679a9d63bd72e50835c396f496e5684626c9c"
+    },
+    "output_cap_bytes": 67108864,
+    "prompt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/controller-recovery-followup-02.txt",
+      "sha256": "809cb2e8082f05fcf41e967bcb6e909ca90cd9e9ab30f67a8c02f2a6d6fc3de8"
+    },
+    "sandbox": "read-only",
+    "schema": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/prompts/cpu-review.schema.json",
+      "sha256": "88a36ded28626acf67be2c6b6b78746cae66ff6d746ebd5d08122ec353c9d78d"
+    },
+    "stop_paths": [
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/commander/STOP",
+      "/home/mint/rl_dev/instinctRL-dev/coordination/executor/STOP"
+    ],
+    "timeout_seconds": 3600
+  },
+  "remaining_sessions": 288,
+  "goal_complete": false
+}
