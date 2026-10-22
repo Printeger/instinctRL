@@ -47,6 +47,18 @@
       "ordinal": 8,
       "reason": "Diagnose second CUDA initialization failure; register bounded cuInit syscall trace",
       "usage": "UNKNOWN"
+    },
+    {
+      "charge": 1,
+      "ordinal": 9,
+      "reason": "Platform continuation: read-only status restatement; no progress",
+      "usage": "UNKNOWN"
+    },
+    {
+      "charge": 1,
+      "ordinal": 10,
+      "reason": "Resume direct goal: validate and freeze bounded CUDA syscall diagnostic",
+      "usage": "UNKNOWN"
     }
   ],
   "historical_sessions_charged": 239,
