@@ -1,0 +1,26 @@
+{
+  "status": "CPU_SHARED_BASELINE_CORE_PASS_NOT_LIVE_READY",
+  "execution_mode": "local-direct",
+  "independent_review": false,
+  "checks": {
+    "tests_passed": 28,
+    "command": "PYTHONPATH=.:isaaclab-training PYTHONDONTWRITEBYTECODE=1 /home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11 -m unittest tools.r6_direct.test_contract tools.r6_direct.test_backend tools.test_r6_contract tools.test_r6_evaluation -q",
+    "legacy_authorization_on_local_backend": null,
+    "baseline_nontraining_transitions": 193600,
+    "baseline_blocks": 16,
+    "original_suite_preserved": true,
+    "actor_or_scoring_changed": false
+  },
+  "product_delta": {
+    "path": "isaaclab-training/instinctlab/observations/robustness_physics.py",
+    "origin": "19b66208bd99e93853ffc2ce4246382dac6c2e36262ed11dd688b4c7ae429863",
+    "current": "33741b457a879086e6261e3a887b58bcc7f63e799b108751d41ae49bff0fee4c",
+    "disposition": "Pre-existing training curriculum integration; added branches require curriculum in state, absent in baseline. Ordinary measurement exception is re-raised unchanged. Other product source hashes match verified baseline checkout. Must still verify live baseline behavior."
+  },
+  "remaining": [
+    "Direct process supervisor and bounded native logs/cleanup",
+    "Exact source snapshot, complete run input freeze and budget reservation",
+    "Actual fresh resource admission and real baseline",
+    "PPO and post-training evaluation; full P2/P3 remains required"
+  ]
+}

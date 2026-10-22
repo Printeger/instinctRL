@@ -1,3 +1,12 @@
+# R6 本地直接训练：基线科学核心已解耦，28项CPU回归通过，尚未发车
+
+2026-10-22：本地契约完整保留16个开发block、五任务和193600非训练transitions；backend本地模式的旧authorization为None。
+原评价逻辑共享复用，原契约/评价器与本地契约28项CPU检查通过；证据 `r6-direct-training/CPU_BASELINE_CORE_CHECK.json`。
+已核对当前产品相对旧基线快照仅存在既有robustness_physics训练课程扩展，差异准确哈希绑定；actor/评分未改。
+本轮自动续推理计1次，新账本模型合计240/512；旧账本和56项预留未修改。
+原预留基线native/results卷仍为空，尚未写入；使用时须新身份绑定且保留原容量计账。
+仍待直接进程监督/输入快照冻结/真实基线、PPO、评价和完整P2/P3；不将CPU通过记为训练完成。
+
 # R6 本地直接训练：已接收新授权并导入旧预算，真实基线/训练尚未开始
 
 2026-10-22：按 `docs/experiments/r6-direct-training/USER_AUTHORITY.txt` 和 Standalone Training 契约执行，不使用 rlflow 运行链。

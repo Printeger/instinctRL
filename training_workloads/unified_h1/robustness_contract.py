@@ -197,6 +197,13 @@ def evaluate_registered(backend):
     from .evaluation import CASES,evaluate_checkpoint,wall_motion_prerequisite
     from training_workloads.scale_003.persistence import atomic_json_replace
     p=validate_parameters(backend.authorization['mode'],backend.research);b=baseline(p)
+    return evaluate_baseline(backend, parameters=p, bindings=b)
+
+
+def evaluate_baseline(backend, *, parameters, bindings):
+    """Shared scientific evaluation, called only after the caller validates its contract."""
+    from training_workloads.scale_003.persistence import atomic_json_replace
+    p=parameters; b=bindings
     env=backend.environment
     env.set_h1_residual_neutrality_weight(.05)
     env.set_h1_research_profile(pure_hover=False,anchor_weight=4.)

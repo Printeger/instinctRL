@@ -31,7 +31,7 @@ def evaluate_block(backend,block,*,run_id,seed,split,expected_mass_kg,range_quot
     if not isinstance(block['id'],str) or not block['id'] or any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_' for c in block['id']):
         raise ValueError('R6 block identifier')
     if backend.trainer is None:raise ValueError('load authorized checkpoint before R6 evaluation')
-    env=backend.environment;budgets=backend.authorization['budgets'];counters=backend.counters
+    env=backend.environment;budgets=(backend.runtime_contract if hasattr(backend,'runtime_contract') else backend.authorization)['budgets'];counters=backend.counters
     folder=Path(backend.output)/'r6'/block['id'];folder.mkdir(parents=True,exist_ok=False)
     counts={'force':0,'reset':0}
     def record(kind,row):

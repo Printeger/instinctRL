@@ -53,12 +53,24 @@ def _state_fingerprint(value: Any) -> str:
 class UnifiedH1LiveBackend:
     """The authorized Isaac session behind the backend-independent sequence."""
 
-    def __init__(self, *, authorization: Mapping[str, Any], attempt: Path, app: Any,
+    def __init__(self, *, authorization: Mapping[str, Any] | None = None, run_contract: Mapping[str, Any] | None = None,
+                 attempt: Path, app: Any,
                  environment: Any, resource_guard: RuntimeResourceGuard,
                  counters: ExecutionCounters | None = None,
                  process_started_monotonic: float | None = None) -> None:
+        if (authorization is None) == (run_contract is None):
+            raise ValueError("exactly one legacy authorization or local run contract is required")
+        if run_contract is not None:
+            from .direct_contract import validate_runtime_contract
+            inputs = validate_runtime_contract(run_contract)
+        else:
+            inputs = authorization
+        self.runtime_contract = inputs
+        self.authorization = authorization  # None in local-direct mode; never a forged legacy approval.
+        self.execution_mode = "local-direct" if run_contract is not None else "legacy"
+        authorization = inputs
         self.research = authorization["parameters"] if authorization["mode"].startswith("research-") else None
-        self.authorization = authorization; self.attempt = attempt; self.app = app
+        self.attempt = attempt; self.app = app
         self.environment = environment; self.resource_guard = resource_guard
         self.output = attempt / "results" / str(authorization["mode"])
         if not self.output.is_dir(): raise ValueError("lifecycle must prepare the mode output before resource construction")
@@ -77,7 +89,7 @@ class UnifiedH1LiveBackend:
         }
 
     def resource_check(self, stage: str, ordinal: int) -> None:
-        if time.monotonic() - self._started > self.authorization["budgets"]["wall_seconds"]:
+        if time.monotonic() - self._started > self.runtime_contract["budgets"]["wall_seconds"]:
             raise TimeoutError("authorized wall-time budget exhausted")
         self.resource_guard.check(stage=stage, ordinal=ordinal)
 
@@ -107,7 +119,7 @@ class UnifiedH1LiveBackend:
     def _preserving_reset(self, *, seed: int) -> tuple[Any, Mapping[str, Any]]:
         cpu = torch.get_rng_state().clone(); py = random.getstate(); numpy = np.random.get_state()
         cuda = torch.cuda.get_rng_state_all() if torch.device(self.environment.device).type == "cuda" else []
-        self.counters.reserve_reset(automatic=False, maximum=self.authorization["budgets"]["explicit_resets"])
+        self.counters.reserve_reset(automatic=False, maximum=self.runtime_contract["budgets"]["explicit_resets"])
         try:
             return self.environment.reset(seed=seed)
         finally:
@@ -136,9 +148,9 @@ class UnifiedH1LiveBackend:
         for step in range(CASES[case].steps):
             self.resource_check("before_evaluation_step", step)
             self.counters.require_step_capacity(kind="nontraining", lanes=32,
-                maximum=self.authorization["budgets"]["nontraining_transitions"])
+                maximum=self.runtime_contract["budgets"]["nontraining_transitions"])
             self.counters.require_reset_capacity(automatic=True, lanes=32,
-                maximum=self.authorization["budgets"]["automatic_resets"])
+                maximum=self.runtime_contract["budgets"]["automatic_resets"])
             current = commands[step]; following = commands[min(step + 1, len(commands) - 1)]
             if direct_b0:
                 self.environment.prepare_b0_step(command_b=current, next_command_b=following)
@@ -161,7 +173,7 @@ class UnifiedH1LiveBackend:
                 raise ValueError("product q and ICS beta must have the approved [32,1] shape")
             reset_mask = (terminated | truncated).detach().cpu()
             self.counters.reserve_reset(automatic=True, lanes=int(reset_mask.sum()),
-                maximum=self.authorization["budgets"]["automatic_resets"])
+                maximum=self.runtime_contract["budgets"]["automatic_resets"])
             raw_log.append(raw_relative, {"schema_version":"metric-h1-v1.raw-trace.v1", "kind":"STEP",
                 "case":case, "step":step, "command_b":current, "actual_velocity_b":pre["task"]["actual_velocity_b"],
                 "sensor_positions_w_m":source["ray_starts_w"][:,0], "episode_ids":episode_ids,
@@ -219,11 +231,11 @@ class UnifiedH1LiveBackend:
         if research: self._apply_research_profile()
         if pilot_group in {"C0", "C1"}:
             self.environment.set_h1_residual_neutrality_weight(pilot_residual_weight(pilot_group))
-            if self.environment._h1_residual_neutrality_weight != self.authorization["parameters"]["residual_neutrality_weight"]:
+            if self.environment._h1_residual_neutrality_weight != self.runtime_contract["parameters"]["residual_neutrality_weight"]:
                 raise RuntimeError("actual reward coefficient differs from authorization")
             atomic_json_replace(self.output, "pilot_reward_binding.json", {
                 "group": pilot_group, "actual_residual_neutrality_weight": self.environment._h1_residual_neutrality_weight,
-                "authorization_sha256": self.authorization["authorization_sha256"],
+                "authorization_sha256": self.runtime_contract["authorization_sha256"],
                 "method_hashes": pilot_method_hashes(load_config(), pilot_group)})
         ppo = PPOConfig(minibatch_size=64, epoch_count=1, actor_learning_rate=actor_lr, critic_learning_rate=3.0e-4)
         self.trainer = PPOTrainer(HistoryActor(network).to(self.environment.device), PrivilegedCriticH1(network).to(self.environment.device), ppo)
@@ -235,7 +247,7 @@ class UnifiedH1LiveBackend:
                 'actual_weight': research['mean_prior_weight'],
                 'hook_installed': self.trainer.actor_auxiliary is not None,
                 'actor_only': True, 'runtime_action_replacement': False,
-                'authorization_sha256': self.authorization['authorization_sha256']})
+                'authorization_sha256': self.runtime_contract['authorization_sha256']})
         self.environment.set_h1_evaluation_case(None)
         initial = command_at(0, device=self.environment.device)
         self.environment.set_h1_initial_command(initial, 0)
@@ -244,13 +256,13 @@ class UnifiedH1LiveBackend:
         journal = LearningLog(self.output / "learning_log"); self.journal = journal
         self.driver = UnifiedH1Driver(self.environment, self.observation, clock=ScheduleClock(0, pure_hover=bool(research)), counters=self.counters, journal=journal,
             before_step=lambda ordinal: self.resource_check("before_training_step", ordinal),
-            transition_limit=self.authorization["budgets"]["training_transitions"],
-            automatic_reset_limit=self.authorization["budgets"]["automatic_resets"])
+            transition_limit=self.runtime_contract["budgets"]["training_transitions"],
+            automatic_reset_limit=self.runtime_contract["budgets"]["automatic_resets"])
         diagnostic = FirstUpdateDiagnostic(self.output / "pilot_diagnostic", enabled=pilot_group is not None or bool(research))
         self.loop = UnifiedH1TrainingLoop(self.driver, self.trainer, journal, self._write_checkpoint,
             before_rollout=lambda ordinal: self.resource_check("before_training_rollout", ordinal),
             before_optimizer=lambda ordinal: self.resource_check("before_optimizer_update", ordinal),
-            update_limit=self.authorization["budgets"]["optimizer_updates"], diagnostic=diagnostic)
+            update_limit=self.runtime_contract["budgets"]["optimizer_updates"], diagnostic=diagnostic)
         if pilot_group is not None or research:
             actual = {"actor":[float(group["lr"]) for group in self.trainer.actor_optimizer.param_groups],
                       "critic":[float(group["lr"]) for group in self.trainer.critic_optimizer.param_groups]}
@@ -260,7 +272,7 @@ class UnifiedH1LiveBackend:
     def _write_checkpoint(self, label: str, trainer: Any, driver: UnifiedH1Driver) -> None:
         from instinctlab.training.checkpoint_h1 import save_checkpoint_h1
         self.resource_check("before_checkpoint_write", self.counters.real_checkpoint_writes + 1)
-        self.counters.reserve_checkpoint(self.authorization["budgets"]["checkpoint_writes"])
+        self.counters.reserve_checkpoint(self.runtime_contract["budgets"]["checkpoint_writes"])
         config = load_config(); target = (self.output / "checkpoints" / f"{label}.pt").resolve(); target.parent.mkdir(parents=True, exist_ok=True)
         save_checkpoint_h1(target, trainer, method_hashes=self._checkpoint_method_hashes(config),
             write_guard=__import__("training_workloads.scale_003.persistence", fromlist=["guard_stream"]).guard_stream,
@@ -344,16 +356,16 @@ class UnifiedH1LiveBackend:
 
 
     def _checkpoint_method_hashes(self, config):
-        if self.authorization["mode"] == "research-r6-evaluation":
+        if self.runtime_contract["mode"] == "research-r6-evaluation":
             from .robustness_contract import baseline
             return baseline(self.research)["method_hashes"]
-        if self.authorization['mode'] in {'research-formal-training', 'research-formal-evaluation'}:
+        if self.runtime_contract['mode'] in {'research-formal-training', 'research-formal-evaluation'}:
             from .formal_segment import method_hashes
             return method_hashes(config, self.research)
         if getattr(self, "research", None):
             from .research_contract import method_hashes
             return method_hashes(config, self.research)
-        return pilot_method_hashes(config, self.authorization["parameters"].get("group"))
+        return pilot_method_hashes(config, self.runtime_contract["parameters"].get("group"))
 
     def _apply_research_profile(self):
         p = self.research
@@ -366,21 +378,21 @@ class UnifiedH1LiveBackend:
             "actual_anchor_weight":self.environment._h1_anchor_weight,
             "pure_hover":p["command_profile"] == "pure-hover",
             "center_reset_only":self.environment._h1_pure_hover_training,
-            "initialization":("COLD_START" if self.authorization["mode"] == "research-training" else
-                "FULL_TRAINER_RESTORE_FRESH_SIM_RESET" if self.authorization["mode"] == "research-formal-training" else "EVALUATION_FRESH_RESET"),
-            "authorization_sha256":self.authorization["authorization_sha256"],
+            "initialization":("COLD_START" if self.runtime_contract["mode"] == "research-training" else
+                "FULL_TRAINER_RESTORE_FRESH_SIM_RESET" if self.runtime_contract["mode"] == "research-formal-training" else "EVALUATION_FRESH_RESET"),
+            "authorization_sha256":self.runtime_contract["authorization_sha256"],
             "method_hashes":self._checkpoint_method_hashes(load_config())})
 
     def train_r6(self):
         """Prospective exact R6 entry; dispatch is separately registered."""
         from .robustness_training_method import restore_and_bind
         from .robustness_training_contract import validate_parameters,validate_compatibility
-        parameters=validate_parameters(self.authorization['mode'],self.authorization['parameters'])
+        parameters=validate_parameters(self.runtime_contract['mode'],self.runtime_contract['parameters'])
         plan=parameters['r6_training_plan'];config=load_config()
         validate_compatibility(parameters['checkpoint_compatibility'],plan,config)
         loaded=restore_and_bind(self,plan=plan,execution_identity=config['resolved_identity'])
         return self.run_loaded_r6_training(plan=plan,**loaded,
-            expected_mass_kg=self.authorization['parameters']['r6_expected_mass_kg'])
+            expected_mass_kg=self.runtime_contract['parameters']['r6_expected_mass_kg'])
 
     def run_loaded_r6_training(self, *, plan, metadata, source_identity, method_hashes, expected_mass_kg):
         """Execute only after exact checkpoint restore and method application.
@@ -422,7 +434,7 @@ class UnifiedH1LiveBackend:
         from .transition_diagnostic import execute_finite_transition
         from .pilot_diagnostic import (FLOAT32_ATOL, FLOAT32_RTOL, _digest, _state,
                                       _rng_snapshot, _rng_equal, _restore_rng)
-        if self.authorization['mode'] != 'research-transition':
+        if self.runtime_contract['mode'] != 'research-transition':
             raise PermissionError('transition backend requires exact mode')
         p = self.research
         self._apply_research_profile()
@@ -519,7 +531,7 @@ class UnifiedH1LiveBackend:
             self.environment.set_h1_residual_neutrality_weight(pilot_residual_weight(group))
             atomic_json_replace(self.output, "pilot_reward_binding.json", {
                 "group": group, "actual_residual_neutrality_weight": self.environment._h1_residual_neutrality_weight,
-                "authorization_sha256": self.authorization["authorization_sha256"],
+                "authorization_sha256": self.runtime_contract["authorization_sha256"],
                 "method_hashes": pilot_method_hashes(load_config(), group)})
         for row in checkpoints:
             path=Path(str(row["path"])); update=int(row["update"])
@@ -548,12 +560,12 @@ class UnifiedH1LiveBackend:
         self.driver = UnifiedH1Driver(self.environment, observation,
             clock=ScheduleClock(metadata["counters"]["global_policy_step"]), counters=self.counters, journal=journal,
             before_step=lambda ordinal: self.resource_check("before_training_step", ordinal),
-            transition_limit=self.authorization["budgets"]["training_transitions"],
-            automatic_reset_limit=self.authorization["budgets"]["automatic_resets"])
+            transition_limit=self.runtime_contract["budgets"]["training_transitions"],
+            automatic_reset_limit=self.runtime_contract["budgets"]["automatic_resets"])
         self.loop = UnifiedH1TrainingLoop(self.driver, trainer, journal, self._write_checkpoint,
             before_rollout=lambda ordinal: self.resource_check("before_training_rollout", ordinal),
             before_optimizer=lambda ordinal: self.resource_check("before_optimizer_update", ordinal),
-            update_limit=self.authorization["budgets"]["optimizer_updates"])
+            update_limit=self.runtime_contract["budgets"]["optimizer_updates"])
         return metadata
 
     def evaluate_policy_checkpoint(self, checkpoint: Path, *, update: int) -> Mapping[str, Any]:
@@ -570,10 +582,11 @@ class UnifiedH1LiveBackend:
     def evaluate_r6_blocks(self) -> list[Mapping[str, Any]]:
         """Separate exact-authorized R6 entry; never inherits an R5 receipt."""
         import json
+        inputs = self.runtime_contract if hasattr(self, 'runtime_contract') else self.authorization
         from .robustness_evaluation import evaluate_block
-        if self.authorization['mode'] not in ('research-r6-evaluation','research-r6-final-evaluation','research-r6-candidate-evaluation'):
+        if inputs['mode'] not in ('research-r6-evaluation','research-r6-final-evaluation','research-r6-candidate-evaluation'):
             raise PermissionError('R6 blocks require a new exact evaluation authorization')
-        parameters=self.authorization['parameters']['r6']
+        parameters=inputs['parameters']['r6']
         protocol_path=Path(parameters['protocol']['path'])
         if not protocol_path.is_absolute() or protocol_path.is_symlink() or sha256_file(protocol_path)!=parameters['protocol']['sha256']:
             raise PermissionError('R6 protocol pin drift')
@@ -584,7 +597,7 @@ class UnifiedH1LiveBackend:
         if not selected or len(set(selected))!=len(selected) or any(key not in blocks for key in selected):
             raise ValueError('R6 exact block selection')
         required=32*sum(blocks[key]['steps'] for key in selected)
-        if self.counters.nontraining_transitions+required>self.authorization['budgets']['nontraining_transitions']:
+        if self.counters.nontraining_transitions+required>inputs['budgets']['nontraining_transitions']:
             raise ValueError('R6 complete block batch exceeds exact transition budget')
         results=[]
         for key in selected:
@@ -601,11 +614,17 @@ class UnifiedH1LiveBackend:
         from instinctlab.training import HistoryActor, NetworkConfig, PPOConfig, PPOTrainer
         from instinctlab.training.checkpoint_h1 import load_checkpoint_h1
         from instinctlab.training.networks_h1 import PrivilegedCriticH1
-        config = load_config(); network = NetworkConfig()
+        if self.execution_mode == 'local-direct':
+            if expected_method_hashes is None or source_identity is None:
+                raise ValueError('local evaluation requires explicit frozen checkpoint provenance')
+            config = None
+        else:
+            config = load_config()
+        network = NetworkConfig()
         trainer = PPOTrainer(HistoryActor(network).to(self.environment.device), PrivilegedCriticH1(network).to(self.environment.device), PPOConfig(minibatch_size=64, epoch_count=1, actor_learning_rate=actor_learning_rate, critic_learning_rate=3.0e-4))
         metadata = load_checkpoint_h1(checkpoint.resolve(), trainer,
             expected_method_hashes=self._checkpoint_method_hashes(config) if expected_method_hashes is None else expected_method_hashes,
-            expected_source_identity=(self.authorization["parameters"].get("checkpoint_source_identity", config["resolved_identity"])
+            expected_source_identity=(self.runtime_contract["parameters"].get("checkpoint_source_identity", config["resolved_identity"])
                                       if source_identity is None else source_identity),
             curriculum_generator=self.curriculum_generator if restore_curriculum_generator else torch.Generator(device="cpu"))
         self.trainer = trainer
@@ -641,8 +660,8 @@ class UnifiedH1LiveBackend:
             atomic_json_replace(self.output, "enhanced_b0_manifest.json", {
                 "schema_version":"instinctrl-enhanced-b0-raw-manifest/2",
                 "experiment_id":"UNIFIED-H1-R5-READINESS-B0-PLANT-R2-20261012",
-                "authorization_sha256":self.authorization["authorization_sha256"],
-                "source_identity":{key:self.authorization[key] for key in
+                "authorization_sha256":self.runtime_contract["authorization_sha256"],
+                "source_identity":{key:self.runtime_contract[key] for key in
                     ("product_commit","product_tree","workload_commit","workload_tree","config_sha256")},
                 "status":status,"phase":phase,"hook_receipt":receipt,
                 "coverage":coverage,"observation":observation,
@@ -681,7 +700,7 @@ class UnifiedH1LiveBackend:
             preserve_raw_manifest("PREPARED")
             formal_environment = FormalEnhancedB0EnvironmentAdapter(self.environment)
             observer = ReadOnlyObserver(write, formal_environment.read_only_diagnostic_state_fingerprints)
-            accounting = EnhancedB0ExecutionAccounting(self.counters, self.authorization["budgets"], self.resource_check)
+            accounting = EnhancedB0ExecutionAccounting(self.counters, self.runtime_contract["budgets"], self.resource_check)
             formal_environment.configure_execution_accounting(accounting)
             receipt = attach_supported_post_physics(formal_environment, observer)
             phase = "COLLECTION"
@@ -762,9 +781,9 @@ class UnifiedH1LiveBackend:
             for step in range(CASES[case].steps):
                 self.resource_check("before_control_diagnostic_step", step)
                 self.counters.require_step_capacity(kind="nontraining", lanes=32,
-                    maximum=self.authorization["budgets"]["nontraining_transitions"])
+                    maximum=self.runtime_contract["budgets"]["nontraining_transitions"])
                 self.counters.require_reset_capacity(automatic=True, lanes=32,
-                    maximum=self.authorization["budgets"]["automatic_resets"])
+                    maximum=self.runtime_contract["budgets"]["automatic_resets"])
                 current = commands[step]; following = commands[min(step + 1, len(commands) - 1)]
                 self.environment.prepare_h1_step(global_policy_step=step, command_b=current,
                                                  next_command_b=following)
@@ -784,7 +803,7 @@ class UnifiedH1LiveBackend:
                 self.counters.complete_step(32, kind="nontraining")
                 reset_mask = terminated | truncated
                 self.counters.reserve_reset(automatic=True, lanes=int(reset_mask.sum()),
-                    maximum=self.authorization["budgets"]["automatic_resets"])
+                    maximum=self.runtime_contract["budgets"]["automatic_resets"])
                 if passthrough:
                     pre=extras['pre_reset'];source=extras['evaluation_ray_source']
                     metric_log.append(metric_relative,{"schema_version":"metric-h1-v1.raw-trace.v1","kind":"STEP",
@@ -829,8 +848,8 @@ class UnifiedH1LiveBackend:
         journal = self.journal or LearningLog(self.output / "learning_log")
         driver = UnifiedH1Driver(self.environment, observation, clock=ScheduleClock(1024), counters=self.counters,
             journal=journal, before_step=lambda ordinal: self.resource_check("before_reload_step", ordinal),
-            transition_limit=self.authorization["budgets"]["nontraining_transitions"],
-            automatic_reset_limit=self.authorization["budgets"]["automatic_resets"], step_kind="nontraining")
+            transition_limit=self.runtime_contract["budgets"]["nontraining_transitions"],
+            automatic_reset_limit=self.runtime_contract["budgets"]["automatic_resets"], step_kind="nontraining")
         collect_h1_rollout(driver, self.trainer, observation, RolloutConfig(16, 32))
 
     def preserve(self, status: str, outcome: LifecycleOutcome | None = None) -> None:
