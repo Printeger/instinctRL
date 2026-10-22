@@ -107,6 +107,7 @@ def register(journal,request_pin,store,*,free_disk_bytes):
     if 'cursor' not in entry:
         entry['cursor']=dict(phase='FIRST_JOB',context=args['profile_context'],completed_jobs=[])
     entry['controller_process']=identity(os.getpid());journal.save(state)
+    initial=baseline_failure.effective_initial(journal,key,initial)
     return key,initial
 
 

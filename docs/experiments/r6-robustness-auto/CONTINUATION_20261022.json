@@ -1,0 +1,24 @@
+{
+  "authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CONTINUATION_USER_AUTHORITY_20261022.txt",
+    "sha256": "cf4d75c3fad4f91c8647eb1bcdd6648b2d16ad41fc018870614aa4244d5e2650"
+  },
+  "source_attachment": "/home/mint/.codex/attachments/7d738239-2883-4e11-9aab-785b93ffd910/pasted-text-1.txt",
+  "existing_goal_id": "R6-ROBUSTNESS-AUTO-20261019",
+  "new_budget": false,
+  "mandatory_actual_training": true,
+  "baseline_sufficient_cannot_skip_all_training": true,
+  "prior_controller_status": "REPAIR_CODE_REQUIRED",
+  "prior_controller_key": "c62b1dec82a1236964ce4d839ee30c077d81d83242d800d667ef1a3d04da7aac",
+  "baseline_or_training_started": false,
+  "current_resource_review_key": "610a058b2590e804f32a4466eeca4242b2e1a099cedb841e2255dd92c4fa5630",
+  "remaining_work": [
+    "Accept current exact resource implementation only after independent PASS",
+    "New exact initial baseline plan and independent prelive review",
+    "Evidence-bound failed controller input/cursor recovery",
+    "First baseline raw and condition analysis with cleanup",
+    "Actual curriculum training and comparison",
+    "Three real random-stream confirmation, final holdout, video and delivery per existing protocol"
+  ],
+  "platform_handoff_scope": "Existing recorded READY evidence refers to prior thread 01a154cf-f2bb-79e3-8019-d6c78e8e0fc8; current continuation session coverage remains to be verified before claiming zero model waiting."
+}

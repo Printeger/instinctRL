@@ -1,0 +1,13 @@
+{
+  "status": "PASS_CPU_ONLY_NOT_DEPLOYED",
+  "passed": 77,
+  "seconds": 37.81,
+  "tests": [
+    "tools/test_r6_baseline_input_repair.py",
+    "tools/test_r6_baseline_failure.py",
+    "tools/test_r6_controller.py"
+  ],
+  "boundary": "Fake prior reviewer/science; tested scope, protected inputs, rejected review, STOP/live ownership, original preservation and exact FIRST_JOB restoration",
+  "new_plan": "baseline-prelive-03/plan.json",
+  "live_starts": 0
+}

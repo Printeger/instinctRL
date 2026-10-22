@@ -1,0 +1,43 @@
+{
+  "decision": "MUST_FIX",
+  "plan_sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892",
+  "summary": "Verified plan/spec, u640 identity and ICS .15, original suite plus all16 blocks, frozen acceptance, reserves, production volume capacity/ownership, snapshot and extension integrity, boundaries, Store conditions, and recorded STOP/recovery/handoff controls. Found a blocking queue-validator review mismatch. Missing final Store approval is expected. No files changed, GPU queries, jobs launched, or authority granted.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+      "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/spec.json",
+      "sha256": "7191dd7ef7e022a4ce8956be6c1296f13fd7bd7563d9e5e8f337ad3e5dfba3a8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-02/queue-accepted.json",
+      "sha256": "1a93abcde6109f93c795e241d9aa671c94aff06e595bee75fc51cf373bb0259d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py",
+      "sha256": "671cb3f09b1324cef90752e92387d0bda129c07e6f82177a8a61c87b25adca76"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "a7dabebc50e7b06d5a159c96b2481ddd42538f75102d39cbc4251177d877faa3"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/PROTOCOL_CAPACITY_ACCEPTED_01.json",
+      "sha256": "738aca2b423b739081fa9ada00db0de0a751040eb472e769907c4fa43fbe2ad1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_COMPATIBILITY_ACCEPTED_02.json",
+      "sha256": "1e8242a18370cf26d58c720c9b0d96b3a8eaf6f125b5a2b4972c7b320accd148"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/state.json",
+      "sha256": "ca7cbda604a744b8297a4f849b3a2659c5a1d0e56a6c2b23dea2f3af19c46eac"
+    }
+  ],
+  "changed_files": [],
+  "must_fix": [
+    "P1: The exact plan's queue_review pins resource_admission.py SHA256 c70cf5648443ffde3dd3e4cb065f6bf2cee34a55211eadd75a77ef0dc1c4ec18, while the controller imports the current file with SHA256 a7dabebc50e7b06d5a159c96b2481ddd42538f75102d39cbc4251177d877faa3. tools/r6_resource_queue.py:88-92 requires equality and will raise QUEUE_REVIEW_REQUIRED before resource sampling. Obtain independent acceptance bound to the actual controller validator, preserve the previous review, and materialize/review the updated exact plan before issuance; do not bypass the pin check."
+  ]
+}

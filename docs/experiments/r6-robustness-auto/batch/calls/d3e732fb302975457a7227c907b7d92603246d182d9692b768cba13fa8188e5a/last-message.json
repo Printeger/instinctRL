@@ -1,0 +1,53 @@
+{
+  "decision": "REPAIR_CODE_REQUIRED",
+  "packet_sha256": "9d772add7cbd211a60018a1833e39a8d8ac36bf35bc2470100a2890806811fdd",
+  "summary": "The initial review completed successfully as a call but returned MUST_FIX: the plan's accepted queue review pins an obsolete validator hash. Current source confirms QUEUE_REVIEW_REQUIRED before sampling. Receipt shows exit 0, valid schema, verified cleanup, and 202.71 seconds elapsed against 3600 seconds; timeout did not cause this failure. No corrected input or fresh acceptance exists in the inspected evidence.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/baseline-failure/b57920e81ad596938c1e556b955330fba9af61591ea1a91feee2afccb2e5e1a2/packet.json",
+      "sha256": "9d772add7cbd211a60018a1833e39a8d8ac36bf35bc2470100a2890806811fdd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/171c4969bf3e567d9a426284753a5df7705f8289f5344ccbb10076bd8b57655a/receipt.json",
+      "sha256": "bc357563d3625a08e78f296e2f492779f376ce338e9f1a742a1f35cf89aebaf4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/171c4969bf3e567d9a426284753a5df7705f8289f5344ccbb10076bd8b57655a/request.json",
+      "sha256": "bae6477499087462991ad7fe17f959c8f118b1f1378733cb98e302738763d0ce"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/171c4969bf3e567d9a426284753a5df7705f8289f5344ccbb10076bd8b57655a/last-message.json",
+      "sha256": "033b38712bfb6b2bb083b02ff5c3693f388db80f3fea68e8ffe105b43fa25322"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/calls/171c4969bf3e567d9a426284753a5df7705f8289f5344ccbb10076bd8b57655a/events.jsonl",
+      "sha256": "fc2b7b4909c89b589f843deab27eb612c8eaccfe386f0236f2ee3dc1978954dd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/batch/materialized/8ad21881e685d5e64ecc92f92f91d1879dafff5016c70203c7ea351fd67d32c6/plan.json",
+      "sha256": "04722418906d0b495c1ef8d9b4271a5583bd499e54d79ab580b0cf12a29c6892"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/resource-admission-02/queue-accepted.json",
+      "sha256": "1a93abcde6109f93c795e241d9aa671c94aff06e595bee75fc51cf373bb0259d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_resource_queue.py",
+      "sha256": "671cb3f09b1324cef90752e92387d0bda129c07e6f82177a8a61c87b25adca76"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "a7dabebc50e7b06d5a159c96b2481ddd42538f75102d39cbc4251177d877faa3"
+    }
+  ],
+  "changed_files": [],
+  "must_fix": [
+    "Repair the queue acceptance/input binding: queue-accepted.json pins validator c70cf5648443ffde3dd3e4cb065f6bf2cee34a55211eadd75a77ef0dc1c4ec18, but the actual validator is a7dabebc50e7b06d5a159c96b2481ddd42538f75102d39cbc4251177d877faa3. Obtain independent acceptance of the actual validator and queue implementation; do not merely substitute hashes or bypass tools/r6_resource_queue.py:88-92.",
+    "Preserve the previous acceptance, failed request/receipt, all prior attempts and charges. Materialize a new exact plan bound to the fresh acceptance and obtain an independent initial-baseline review before issuance. This diagnosis grants no approval."
+  ],
+  "remaining_budget": {
+    "automatic_sessions_remaining": 281
+  },
+  "timeout_seconds": 0,
+  "next_plan": "Exit at the unresolved initial_review boundary. Hand off the acceptance and plan-binding repair to an authorized repair workflow; validate it with CPU-only checks and fresh independent review. No replacement, retry, issuance, or job submission in this session."
+}

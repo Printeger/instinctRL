@@ -1,0 +1,17 @@
+{
+  "status": "PASS_CPU_ONLY",
+  "tests": [
+    "tools/test_r6_resource_queue.py",
+    "tools/test_r6_resource_sampler.py",
+    "tools/test_r6_resource_wait.py",
+    "tools/test_r6_submit_refresh.py",
+    "tests/training_workloads/test_resource_admission.py"
+  ],
+  "passed": 87,
+  "elapsed_seconds": 135.65,
+  "exit_code": 0,
+  "validator_sha256": "a7dabebc50e7b06d5a159c96b2481ddd42538f75102d39cbc4251177d877faa3",
+  "gpu_queries": 0,
+  "live_starts": 0,
+  "warning": "pytest cleanup warning for preexisting garbage-f56fa30c fixture directories; no test failures"
+}
