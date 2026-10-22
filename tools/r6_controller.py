@@ -444,12 +444,18 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('directory',type=Path);parser.add_argument('request',type=Path)
     parser.add_argument('--request-sha256',required=True);parser.add_argument('--store',required=True,type=Path)
+    parser.add_argument('--wait-platform-handoff',type=int,default=0,metavar='SECONDS',
+        help='First deployment only: bounded local wait (1..600 seconds) for externally paused/idle root Goal; never changes Goal state.')
     args=parser.parse_args();root=args.store.resolve(strict=True)
     require((root/'runtime/research.db').is_file(),'STORE_REQUIRED')
     journal=Journal(args.directory.resolve())
     with journal.writer():
-        result=run(journal,dict(path=str(args.request.resolve()),sha256=args.request_sha256),
-                   Store(root),free_disk_bytes=shutil.disk_usage(journal.directory).free)
+        request=dict(path=str(args.request.resolve()),sha256=args.request_sha256);store=Store(root)
+        if args.wait_platform_handoff:
+            from tools.r6_platform_handoff_gate import wait
+            key,_=register(journal,request,store,free_disk_bytes=shutil.disk_usage(journal.directory).free)
+            wait(journal,key,timeout_seconds=args.wait_platform_handoff)
+        result=run(journal,request,store,free_disk_bytes=shutil.disk_usage(journal.directory).free)
     print(json.dumps(result,sort_keys=True))
 
 

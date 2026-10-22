@@ -102,7 +102,7 @@ def submit_once(journal, key, store, *, queue_key, refresh_observation=None):
         journal.require_dispatch_budget();require(not stop_paths(journal), 'STOP')
         require(0<deadline-time.time()<=spec['resources']['wall_seconds'], 'DEADLINE')
         from tools.r6_platform_wait import preflight
-        preflight(journal)
+        platform_start=preflight(journal)
         # Persist the observation boundary before any Store/subprocess effects.
         # Recovery must retain this boundary, never start a shorter fresh wait.
         from tools.r6_wait_audit import record
@@ -111,6 +111,7 @@ def submit_once(journal, key, store, *, queue_key, refresh_observation=None):
         claim=dict(store_root=root,job_id=jid,spec_sha256=sha(spec),queue_key=queue_key,
             queue_window=window,approval_id=approval['approval_id'],controller=identity(os.getpid()),
             implementation=file_pin(Path(__file__)),wait_coverage_start=wait_start)
+        if platform_start is not None:claim['platform_wait_start']=platform_start
         state=journal.read();state['events'][key]['submission_claim']=claim
         state['status']='EXACT_JOB_SUBMISSION_CLAIMED';journal.save(state)
         journal.guard();require(not stop_paths(journal), 'STOP')

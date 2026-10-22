@@ -1,0 +1,81 @@
+{
+  "status": "CPU_PINNED_LIVE_PLATFORM_RPC_WAIT_AUDIT_AND_BOUNDED_STARTUP_GATE_PASS_NOT_DEPLOYED",
+  "implementation": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_rpc.py",
+      "sha256": "611ee6bf44796558029d44e313cfddca79774a86b4885757d60b22f3a254f0b2"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_wait.py",
+      "sha256": "d2ff7c17b9b21d15ca4b4afff1ee012f30eb9a18959c24f75de5b32f9a23fd79"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_submit.py",
+      "sha256": "0ef15e4a7859e668b8eca55c00c96c8ca598fb11072b7acfde3c9650f9a1c329"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_handoff_gate.py",
+      "sha256": "6004394a93f7d4cdd76d15d91bcf2d3dbfeca1d3d831615800fb9d4e1cdeeaaf"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_controller.py",
+      "sha256": "190a01c4697fdd28a5052a3e7eb2d0791d95772b05e826e5f7444f2856fff374"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_platform_rpc.py",
+      "sha256": "c2af60d1e9a46cd147d79b91508748dc75e54bdaa3f8be9917a334d85189ae90"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/test_r6_platform_handoff_gate.py",
+      "sha256": "76fd13d9fa30537548c38d7c93ade530db1a944a9216c9e76470dfaac3ed3403"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PLATFORM_RPC_HANDOFF_COMBINED.log",
+      "sha256": "7fb991a433c3ad6349fd132069a6d5b3b7233aacebc6de8476f7a93f214f768f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/CPU_PLATFORM_RPC_HANDOFF_FINAL.log",
+      "sha256": "e2197eca5b08fbf27c34541c8f72cf7e4aaf66b38e8f39c594876142737ea465"
+    }
+  ],
+  "actual_read_only_probe": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/PLATFORM_RPC_ACTUAL_20261022.json",
+    "sha256": "60331f1679e8f6759e0fd6c10d116b34d72fdf8285f8d9158e7e409dc52bd208"
+  },
+  "checks": {
+    "combined_tests": 266,
+    "final_identity_boundary_tests": 99,
+    "real_journal_guard": "PASS",
+    "actual_root_idle_check": "REJECTED_ACTIVE_GOAL_AS_REQUIRED",
+    "production_jobs": 0,
+    "production_controllers": 0,
+    "new_paid_model_calls": 0
+  },
+  "behavior": [
+    "Read only the existing app-server through standard Unix WebSocket Upgrade. Pin canonical socket target, UID, exact daemon boot/PID/start identity and executable hash. No goal/thread mutations or model starts are possible through this reader.",
+    "Bound requests/responses, frames, bytes and total elapsed time; absent/invalid ownership, source, identity, protocol or evidence fail closed.",
+    "Pre-dispatch snapshots require both goal reads paused, an idle root, and one completed latest turn. Persist the start observation in the pre-effect submission claim.",
+    "After closure, same exact daemon, unchanged completed root turn and unchanged Goal usage must bracket full local wait coverage and match the original native trace. Missing or changed evidence remains UNKNOWN; late native activity still invalidates zero-call claims.",
+    "Existing controller CLI now accepts --wait-platform-handoff SECONDS (1..600), holding the writer lock and waiting in ordinary Python. STOP, permanent RPC errors and timeout fail closed; expired attempts cannot reset their deadline.",
+    "The gate never pauses the platform Goal. Actual root is still active, so this is not a deployment or production wait proof."
+  ],
+  "boundaries": [
+    "Transport tests use a real local Unix socket peer in the CPU test process. Goal/turn states and scientific job lifecycles/timestamps are explicit fixtures.",
+    "Actual production probe reads the current existing daemon/root identity and correctly rejects idle; it does not start a controller, issue permissions or query GPU.",
+    "Daemon ownership binding is intentionally exact; restart/update requires new reviewed binding rather than silently accepting another process.",
+    "The daemon publishes a symlink; its observed canonical target is pinned. The first strict alias-path probe was rejected and corrected by pinning the existing canonical target, not by relaxing ownership checks.",
+    "Independent review, real detached service ownership and external transition out of automatic Goal continuation are still pending.",
+    "Original r6_job_handoff remains unchanged. Existing root-owned pytest temporary garbage remains untouched."
+  ],
+  "source_url": "https://learn.chatgpt.com/docs/app-server",
+  "budget": {
+    "automatic_wakes": 194,
+    "worker_sessions": 32,
+    "charged": 226,
+    "cap": 512,
+    "remaining": 286
+  },
+  "goal_complete": false
+}

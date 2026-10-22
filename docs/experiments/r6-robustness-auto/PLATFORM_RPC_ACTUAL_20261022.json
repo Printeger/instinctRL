@@ -1,0 +1,164 @@
+{
+  "record": {
+    "schema_version": "r6-platform-rpc/1",
+    "started_at": 1792640975.45251,
+    "finished_at": 1792640975.702399,
+    "elapsed_ns": 249888109,
+    "peer": {
+      "process": {
+        "pid": 1969832,
+        "pgid": 1969832,
+        "starttime": "204933637",
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa"
+      },
+      "uid": 1000,
+      "gid": 1000,
+      "executable": {
+        "path": "/home/mint/.codex/packages/app-server-daemon/releases/0.163.0-x86_64-unknown-linux-musl/bin/codex",
+        "sha256": "399ff69c431c066e40de318fba45c2b07f45a76b19939d247ee4828fc70c4215"
+      },
+      "socket_inode": 15992129,
+      "socket_device": 66306
+    },
+    "source": {
+      "session_id": "01a154cf-f2bb-79e3-8019-d6c78e8e0fc8",
+      "repository": "/home/mint/rl_dev/instinctRL-dev",
+      "anchor": {
+        "bytes": 81878922,
+        "path": "/home/mint/.codex/sessions/2026/10/19/rollout-2026-10-19T23-37-56-01a154cf-f2bb-79e3-8019-d6c78e8e0fc8.jsonl",
+        "sha256": "5660441902f71e362574a782d5d65010d4ae40745e373dd3cb18f01f8c5f4e2c"
+      }
+    },
+    "socket": "/tmp/codex-daemon-1000/def9984b377d65c3648803af84f7ea666b746830c2b1a15fe192557140e51afb",
+    "responses": [
+      {
+        "id": 1,
+        "result": {
+          "userAgent": "codex-tui/0.163.0 (Ubuntu 24.4.0; x86_64) xterm-256color (r6_platform_wait_reader; 1)",
+          "codexHome": "/home/mint/.codex",
+          "platformFamily": "unix",
+          "platformOs": "linux"
+        }
+      },
+      {
+        "id": 2,
+        "result": {
+          "goal": {
+            "threadId": "01a154cf-f2bb-79e3-8019-d6c78e8e0fc8",
+            "objective": "pasted text file: /home/mint/.codex/attachments/4daf07e8-ea6c-4823-9e41-4dfa9630515a/pasted-text-1.txt. Read this file before continuing.",
+            "status": "active",
+            "tokenBudget": null,
+            "tokensUsed": 10574466,
+            "timeUsedSeconds": 71213,
+            "createdAt": 1792424333,
+            "updatedAt": 1792640959
+          }
+        }
+      },
+      {
+        "id": 3,
+        "result": {
+          "thread": {
+            "id": "01a154cf-f2bb-79e3-8019-d6c78e8e0fc8",
+            "environments": [
+              {
+                "environmentId": "local",
+                "cwd": "/home/mint/rl_dev/instinctRL-dev",
+                "runtimeWorkspaceRoots": [
+                  "/home/mint/rl_dev/instinctRL-dev"
+                ]
+              }
+            ],
+            "extra": null,
+            "sessionId": "01a154cf-f2bb-79e3-8019-d6c78e8e0fc8",
+            "forkedFromId": null,
+            "parentThreadId": null,
+            "preview": "pasted text file: /home/mint/.codex/attachments/4daf07e8-ea6c-4823-9e41-4dfa9630515a/pasted-text-1.txt. Read this file before continuing.",
+            "ephemeral": false,
+            "section": null,
+            "sectionEnteredAt": null,
+            "projectId": null,
+            "historyMode": "paginated",
+            "modelProvider": "openai",
+            "model": "gpt-6-astra",
+            "reasoningEffort": "medium",
+            "createdAt": 1792424276,
+            "updatedAt": 1792640959,
+            "recencyAt": 1792639834,
+            "status": {
+              "type": "active",
+              "activeFlags": []
+            },
+            "path": "/home/mint/.codex/sessions/2026/10/19/rollout-2026-10-19T23-37-56-01a154cf-f2bb-79e3-8019-d6c78e8e0fc8.jsonl",
+            "cwd": "/home/mint/rl_dev/instinctRL-dev",
+            "cliVersion": "0.163.0",
+            "originator": "codex-tui",
+            "source": "vscode",
+            "canAcceptDirectInput": true,
+            "threadSource": "user",
+            "agentNickname": null,
+            "agentRole": null,
+            "gitInfo": {
+              "sha": "171ed9387f4fcec094bf91dad52b24c63d18bbd2",
+              "branch": "main",
+              "originUrl": "git@github.com:Printeger/instinctRL.git"
+            },
+            "name": "\u652f\u6301\u6bcf\u4f5c\u4e1a1.5 GiB\u8f93\u51fa\u914d\u989d",
+            "daybreakEnabled": null,
+            "turns": []
+          },
+          "readState": {
+            "firstUnread": {
+              "type": "turn",
+              "turnId": "01a15600-9c4b-7310-a792-3f8b2bd143dc"
+            },
+            "revision": "0df6af44-b21c-4843-8adf-e59963db5bf3"
+          }
+        }
+      },
+      {
+        "id": 4,
+        "result": {
+          "data": [
+            {
+              "id": "01a161a9-1ac6-7d82-b7fb-28dc906bcfe6",
+              "rootTurnId": "01a161a9-1ac6-7d82-b7fb-28dc906bcfe6",
+              "items": [],
+              "itemsView": "notLoaded",
+              "status": "inProgress",
+              "error": null,
+              "startedAt": 1792639834,
+              "completedAt": null,
+              "durationMs": null
+            }
+          ],
+          "nextCursor": "{\"requestedThreadId\":\"01a154cf-f2bb-79e3-8019-d6c78e8e0fc8\",\"rolloutOrdinal\":26240,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+          "backwardsCursor": "{\"requestedThreadId\":\"01a154cf-f2bb-79e3-8019-d6c78e8e0fc8\",\"rolloutOrdinal\":26240,\"includeAnchor\":true,\"scope\":{\"kind\":\"turns\"}}"
+        }
+      },
+      {
+        "id": 5,
+        "result": {
+          "goal": {
+            "threadId": "01a154cf-f2bb-79e3-8019-d6c78e8e0fc8",
+            "objective": "pasted text file: /home/mint/.codex/attachments/4daf07e8-ea6c-4823-9e41-4dfa9630515a/pasted-text-1.txt. Read this file before continuing.",
+            "status": "active",
+            "tokenBudget": null,
+            "tokensUsed": 10574466,
+            "timeUsedSeconds": 71213,
+            "createdAt": 1792424333,
+            "updatedAt": 1792640959
+          }
+        }
+      }
+    ],
+    "implementation": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_platform_rpc.py",
+      "sha256": "611ee6bf44796558029d44e313cfddca79774a86b4885757d60b22f3a254f0b2"
+    }
+  },
+  "idle_rejection": "PLATFORM_RPC_GOAL_AUTO_CONTINUATION_NOT_STOPPED",
+  "journal_unchanged": true,
+  "model_call": false,
+  "goal_mutation": false
+}

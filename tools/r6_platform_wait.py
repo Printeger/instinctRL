@@ -111,9 +111,13 @@ def preflight(journal):
     # immediately queues its next automatic continuation. This is a gate, not
     # a model polling loop; the local controller can retry after real handoff.
     require(time.time()-observed['last_boundary']>=2,'HANDOFF_NOT_SETTLED')
+    from tools import r6_platform_rpc as rpc
+    if rpc.enabled(state):
+        record=rpc.observe(state);rpc.idle(state,record)
+        return record
 
 
-def assess(audit,observed,captured_at,coverage=None):
+def assess(audit,observed,captured_at,coverage=None,*,rpc_proven=False):
     require(audit.get('schema_version')=='r6-local-wait-audit/1'
         and audit.get('scope')=='REGISTERED_LOCAL_MODEL_WORKERS_ONLY'
         and audit.get('complete') is True and audit.get('segments')
@@ -144,13 +148,14 @@ def assess(audit,observed,captured_at,coverage=None):
             if window['started_at']>cursor:break
             cursor=max(cursor,window['finished_at'])
         else:covered=windows[0]['started_at']<=start and cursor>=end
-    # The native JSONL reader has no supported flush/health acknowledgement.
-    # Even a newline-complete idle log may be stale. Keep this UNKNOWN until
-    # a verified platform capture boundary exists; wall-clock age is no proof.
-    trace_complete=False
+    # Log age cannot establish freshness. Two live reads from the same pinned
+    # server must bracket the complete interval with an unchanged completed
+    # root turn and a paused Goal. Missing RPC evidence remains UNKNOWN.
+    trace_complete=rpc_proven
     return dict(windows=windows,overlapping_root_turns=sorted(overlaps),
         job_wait_coverage_complete=covered,trace_completeness_proven=trace_complete,
-        trace_completeness_reason='SUPPORTED_PLATFORM_FLUSH_OR_HEALTH_BOUNDARY_MISSING',
+        trace_completeness_reason='LIVE_APP_SERVER_UNCHANGED_COMPLETED_TURN' if rpc_proven
+            else 'SUPPORTED_PLATFORM_FLUSH_OR_HEALTH_BOUNDARY_MISSING',
         platform_inactivity_proven=covered and trace_complete and not overlaps,
         scope='PINNED_ROOT_SESSION_AND_REGISTERED_LOCAL_WORKERS')
 
@@ -188,11 +193,19 @@ def capture(journal,key):
         capture_key,entry=previous[0];request=entry['request']
         require(request['wait_audit']==job['local_wait_audit'],'WAIT_DRIFT')
     else:
-        source,pin,observed=snapshot(state);now=time.time()
         coverage=coverage_for(job)
-        result=assess(job['local_wait_audit'],observed,now,coverage)
+        from tools import r6_platform_rpc as rpc
+        rpc_start=job.get('submission_claim',{}).get('platform_wait_start');rpc_end=None;rpc_error=None
+        if rpc_start and rpc.enabled(state):
+            try:rpc_end=rpc.observe(state)
+            except RecoveryError as error:rpc_error=str(error)
+        source,pin,observed=snapshot(state);now=time.time()
+        proven=rpc.pair_proves_inactivity(state,rpc_start,rpc_end,coverage,observed)
+        result=assess(job['local_wait_audit'],observed,now,coverage,rpc_proven=proven)
         request=dict(job_key=key,job_id=job['identity']['job_id'],source=source,prefix=pin,
-            captured_at=now,wait_audit=job['local_wait_audit'],coverage=coverage,result=result,implementation=file_pin(__file__))
+            captured_at=now,wait_audit=job['local_wait_audit'],coverage=coverage,
+            platform_rpc_start=rpc_start,platform_rpc_end=rpc_end,platform_rpc_error=rpc_error,
+            result=result,implementation=file_pin(__file__))
         require(len(canonical(request))<CAP//2,'CAP')
         event=dict(goal_id=state['goal_id'],event_id=name,job_id=job['identity']['job_id'],
             input_sha256=sha(request),role='platform-wait-capture')
@@ -229,10 +242,15 @@ def verify(state,key):
     checked(record['implementation'])
     require(number(record['captured_at']) and record['captured_at']<=time.time(),'CAPTURE_TIME')
     require(record.get('coverage')==coverage_for(job),'COVERAGE_DRIFT')
-    result=assess(record['wait_audit'],scan(data,record['source']),record['captured_at'],record.get('coverage'))
+    from tools import r6_platform_rpc as rpc
+    require(record.get('platform_rpc_start')==job.get('submission_claim',{}).get('platform_wait_start'),'RPC_START_DRIFT')
+    observed=scan(data,record['source'])
+    proven=rpc.pair_proves_inactivity(state,record.get('platform_rpc_start'),record.get('platform_rpc_end'),record.get('coverage'),observed)
+    result=assess(record['wait_audit'],observed,record['captured_at'],record.get('coverage'),rpc_proven=proven)
     require(result==record['result'],'RESULT_DRIFT')
     # A later append carrying delayed/backdated activity must invalidate an
     # earlier zero-call claim; an immutable prefix is not a license to hide it.
     _,_,current=snapshot(state)
-    require(assess(record['wait_audit'],current,record['captured_at'],record.get('coverage'))==result,'LATE_ACTIVITY_DRIFT')
+    current_proof=rpc.pair_proves_inactivity(state,record.get('platform_rpc_start'),record.get('platform_rpc_end'),record.get('coverage'),current)
+    require(assess(record['wait_audit'],current,record['captured_at'],record.get('coverage'),rpc_proven=current_proof)==result,'LATE_ACTIVITY_DRIFT')
     return dict(result,evidence=pin)

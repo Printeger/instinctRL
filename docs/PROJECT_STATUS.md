@@ -1,4 +1,11 @@
-# 当前 Goal：R6 鲁棒性与课程学习闭环（首轮异常交接CPU通过，平台交接待验，未完成）
+# 当前 Goal：R6 鲁棒性与课程学习闭环（平台RPC与有界交接CPU通过，独审待验，未完成）
+
+2026-10-22：已接入现有 app-server 的只读 Goal/thread/latest-turn 查询，固定 socket 真实路径、UID、准确 daemon 进程与源码身份。
+提交前记录 paused/idle/已完成 turn；等待后要求同 daemon、同完成 turn、同 Goal 用量覆盖整个等待区间，并与原生 trace 交叉核对。
+缺失/漂移/迟到活动仍不能宣称零调用。新增 --wait-platform-handoff 1..600 秒普通 Python 启动等待，保留 writer/STOP/期限，绝不修改 Goal。
+266 项组合、99 项最终边界检查及真实 Journal guard 通过；真实 RPC 正确拒绝当前 active 根线程，证据 CPU_PLATFORM_RPC_HANDOFF.json。
+待完成针对首轮异常与平台边界的一次真实独审、detached controller 部署及关闭自动续推理的实际交接；生产controller/job仍为0。
+194次自动唤醒+32 worker=226/512，剩286；未新增真实模型审核/GPU。完整baseline/训练或基线充分/确认/holdout/视频/最终独审均未完成。
 
 2026-10-22：FIRST_JOB 的初始审核/已关闭作业分析/决策失败已接入一次、只读、准确 receipt 绑定的修复判断。
 有证据的替换调用既有登记器并恢复原 FIRST_JOB；原始失败与额度保留，缺 receipt/清理/STOP/未知副作用仍拒绝重试。
