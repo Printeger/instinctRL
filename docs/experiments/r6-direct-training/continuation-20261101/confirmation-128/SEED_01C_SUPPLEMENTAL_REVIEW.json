@@ -1,0 +1,20 @@
+{
+  "decision": "Final seed01C supplemental training analysis binding usable.",
+  "findings": [
+    "Binding reference pins and CUDA06 envelope verified; report and summary consistent.",
+    "Only three probability handling summary fields changed relative to original CPU analysis.",
+    "Issues empty,30/30 streams unchanged; old inputs unchanged and not removed."
+  ],
+  "limitations": [
+    "Original CPU index20 mismatch and training cleanup timeout/-15 retained.",
+    "All other scientific limitations retained; not cross-stream confirmation, learning gain or final acceptance.",
+    "Reviewer did not repeat complete raw replay or access holdout."
+  ],
+  "reviewer": "/root/baseline_scientific_review",
+  "sha256": {
+    "binding": "f8a29a8317c57d73fdca4173fc7697519f3f0c653b362c1eec8619d9b9a18305",
+    "report": "fab07ccccd281a8156b8e9064474956a426c1aa6c4c6167d659cf94ede5b7bd8",
+    "summary": "9ccd75c627a129e5ad813e6dd70a5f2977f0c0496fa1b37c8d22f49627d66cce"
+  },
+  "status": "PASS_SCOPED"
+}
