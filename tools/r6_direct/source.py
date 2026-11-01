@@ -43,7 +43,12 @@ def training_identity(source):
 def manifest():
     """Call only after committing implementation. Does not create a snapshot."""
     folders=('training_workloads','isaaclab-training/instinctlab','tools/r6_direct',
-             'evaluation_workloads/eval_002','tools/r6_budget.py')
+             'evaluation_workloads/eval_002','tools/r6_budget.py','tools/r6_evidence.py',
+             'tools/r6_training_analysis.py','tools/r6_training_checkpoint_audit.py',
+             'tools/r6_training_rng_audit.py','tools/r6_training_probability.py',
+             'tools/r6_candidate_analysis.py','tools/r6_final_analysis.py','tools/r6_final_collection.py',
+             'tools/r6_video_selection.py','tools/r6_video_trajectory.py','tools/r6_video_presentation.py',
+             'tools/prepare_r6_video_trajectories.py','tools/render_r6_isaac_video.py')
     files=git('ls-files',*folders).splitlines()
     files=[name for name in files if Path(name).suffix in ('.py','.json','.yaml','.yml','.usd','.usda','.urdf')]
     sources={name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in files}
@@ -98,7 +103,9 @@ def audit_modules():
     forbidden_paths=[p for p in sys.path if '/tools/rlflow' in str(p)]
     if forbidden or forbidden_paths:raise RuntimeError('DIRECT_FORBIDDEN_DEPENDENCY')
     for name,module in tuple(sys.modules.items()):
-        if name.startswith(('training_workloads.','instinctlab.','tools.r6_direct.')):
+        if name.startswith(('training_workloads.','instinctlab.','tools.r6_direct.')) or name in (
+                'tools.r6_evidence','tools.r6_budget','tools.r6_training_analysis','tools.r6_training_checkpoint_audit',
+                'tools.r6_training_rng_audit','tools.r6_training_probability','tools.r6_candidate_analysis','tools.r6_final_analysis'):
             filename=getattr(module,'__file__',None)
             if filename and not Path(filename).resolve().is_relative_to(ROOT):
                 raise RuntimeError('DIRECT_MODULE_ORIGIN:'+name)

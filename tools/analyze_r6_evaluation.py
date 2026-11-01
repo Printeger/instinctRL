@@ -1,7 +1,7 @@
 """CPU-only replay into a new directory, preserving all runtime originals."""
 import argparse
 from pathlib import Path
-from rlflow.store import atomic
+from tools.r6_evidence import atomic_bytes as atomic
 from training_workloads.unified_h1.robustness_analysis import analyze, encoded
 
 

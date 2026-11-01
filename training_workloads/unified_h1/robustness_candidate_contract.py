@@ -11,6 +11,7 @@ MODE='research-r6-candidate-evaluation'
 
 def validate_parameters(mode,value):
     selection.require(mode==MODE and isinstance(value,dict) and 'evaluation_selection' in value,'CANDIDATE_MODE')
+    selection.require(value['evaluation_selection'].get('schema_version')=='r6-evaluation-selection/1','LEGACY_SELECTION_REQUIRED')
     selected=selection.validate(value['evaluation_selection'])
     return base._validate_parameters(mode,value,selected=selected)
 
@@ -22,8 +23,8 @@ def required_budget(mode,value):
 def evaluate_registered(backend):
     from training_workloads.scale_003.persistence import atomic_json_replace
     from .robustness_candidate_restore import restore
-    p=validate_parameters(backend.authorization['mode'],backend.research)
-    selection.require(backend.authorization['parameters']==p and backend.authorization['budgets']==required_budget(MODE,p),'EXACT_STAGE_BUDGET')
+    from .direct_contract import evaluation_inputs
+    p=evaluation_inputs(backend,final=False)['parameters']
     result=restore(backend,p['evaluation_selection']);selected=result['selection'];model=selected['model'];method=selected['method']
     label=f"r6_candidate_u{model['update']}_original"
     atomic_json_replace(backend.output,'r6_model_binding.json',dict(checkpoint=model['checkpoint'],metadata=result['metadata'],
@@ -99,6 +100,7 @@ def _validate_compatibility_payload(record,value,config,selected,*,schema,method
 
 def validate_draft(mode,value,payload_bytes):
     selection.require(mode==MODE and isinstance(value,dict) and 'evaluation_selection' in value,'CANDIDATE_MODE')
+    selection.require(value['evaluation_selection'].get('schema_version')=='r6-evaluation-selection/1','LEGACY_SELECTION_REQUIRED')
     selected=selection.validate(value['evaluation_selection'])
     return base._validate_parameters(mode,value,selected=selected,materialized=False,payload_bytes=payload_bytes)
 

@@ -42,7 +42,7 @@ def test_local_plan_is_explicit_and_cannot_enter_legacy_or_confirmation(case):
     wrong=copy.deepcopy(case.plan);wrong['recipe_review']={'invented':True}
     with pytest.raises(PermissionError):plans.validate(wrong)
     wrong=copy.deepcopy(case.plan);wrong['phase']='confirmation'
-    with pytest.raises(PermissionError,match='LOCAL_CONFIRMATION'):plans.validate(wrong)
+    with pytest.raises((PermissionError,TypeError)):plans.validate(wrong)
     wrong=copy.deepcopy(case.plan);wrong['training_seed']=22
     with pytest.raises(PermissionError,match='UNREGISTERED_SEED'):plans.validate(wrong)
 

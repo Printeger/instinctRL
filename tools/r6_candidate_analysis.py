@@ -1,6 +1,6 @@
 """CPU candidate replay with exact selection; no model execution or acceptance."""
 from pathlib import Path
-from tools.r6_recovery import checked, file_pin, RecoveryError
+from tools.r6_evidence import checked, file_pin, RecoveryError
 from training_workloads.unified_h1 import robustness_analysis as replay
 from training_workloads.unified_h1 import robustness_evaluation_selection as selection
 from training_workloads.unified_h1 import robustness_contract as base
@@ -57,8 +57,14 @@ def validate_method_binding(binding,selected):
         raise RecoveryError('CANDIDATE_ANALYSIS_METHOD_BINDING')
 
 
-def analyze(output,auth_pin):
-    output=Path(output);inputs=replay.Inputs();auth=inputs.read(checked(auth_pin),65536)
+def analyze(output,auth_pin, *, direct=False):
+    output=Path(output);inputs=replay.Inputs();ctx=None
+    if direct:
+        from tools.r6_direct.evidence import analysis_context
+        ctx=analysis_context(output,auth_pin)
+        auth=dict(ctx['contract'],attempt=ctx['plan']['attempt_dir'])
+    else:
+        auth=inputs.read(checked(auth_pin),65536)
     selected=context(auth,output);ident=identity(selected);request=auth['parameters']['r6']
     report,summary=replay.analyze(output,checked(request['protocol']),run_id=request['run_id'],
         seed=request['seed'],split=request['split'],original_update=ident['update'],original_label=ident['original_label'])
@@ -75,4 +81,7 @@ def analyze(output,auth_pin):
     summary.update(candidate=ident,candidate_binding_issues=issues,learning_gain_established=False,
         runtime_method_execution_verified=False)
     if len(replay.encoded(summary))>replay.MAX_SUMMARY_BYTES:raise ValueError('SUMMARY_SIZE_BOUND')
+    if direct:
+        from tools.r6_direct.evidence import add_inputs
+        add_inputs(report, auth_pin, ctx)
     return report,summary

@@ -125,3 +125,6 @@ raw_logs/
 
 # Exact detached R6 execution snapshots are recorded by hash, never nested repos.
 /docs/experiments/r6-direct-training/snapshots/
+
+# Local-direct runtime ownership (not source or experiment evidence).
+/docs/experiments/r6-direct-training/writer.lock

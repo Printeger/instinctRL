@@ -5,7 +5,7 @@ import math
 import pickle
 import zlib
 from pathlib import Path
-from tools.r6_recovery import checked,file_pin
+from tools.r6_evidence import checked,file_pin
 from training_workloads.unified_h1 import robustness_training_plan as contract
 from training_workloads.unified_h1 import lossless_evidence as codec
 from training_workloads.unified_h1.robustness_curriculum import slices
@@ -52,9 +52,15 @@ def checkpoint_metadata(path,plan,recipe,update):
     return dict(update=update,metadata_verified=True,finite_tensor_tree=True,strict_restore_performed=False,state_audit=state_audit)
 
 
-def analyze(output,authorization_pin):
+def analyze(output,authorization_pin, *, direct=False):
     output=Path(output).absolute();require(output.resolve()==output and not output.is_symlink(),'OUTPUT_ALIAS')
-    auth=finite_json(checked(authorization_pin).read_bytes())
+    ctx = None
+    if direct:
+        from tools.r6_direct.evidence import analysis_context
+        ctx = analysis_context(output, authorization_pin)
+        auth = dict(ctx['contract'], attempt=ctx['plan']['attempt_dir'])
+    else:
+        auth=finite_json(checked(authorization_pin).read_bytes())
     require(auth.get('mode')=='research-r6-training','TRAINING_MODE')
     plan=contract.validate(auth['parameters']['r6_training_plan']);recipe=contract.pinned_json(plan['recipe'])
     require(auth['budgets']==contract.required_budget(plan),'EXACT_BUDGET')
@@ -145,7 +151,7 @@ def analyze(output,authorization_pin):
         actor_optimizer_steps=expected_updates*8,critic_optimizer_steps=expected_updates*8,
         real_checkpoint_writes=len(plan['checkpoint_updates']),explicit_resets=len(phases))
     if status:
-        if status.get('status')!='PASS':issue('status.json','WORKLOAD_NOT_PASS')
+        if status.get('status') not in (('PASS', 'PASS_PENDING_CLOSE') if direct else ('PASS',)):issue('status.json','WORKLOAD_NOT_PASS')
         counters=status.get('counters',{})
         if any(type(counters.get(k))is not int or counters[k]!=v for k,v in expected.items()):issue('status.json','TERMINAL_COUNTERS')
     gate=plain('pilot_diagnostic/first_update_gate.json')
@@ -201,4 +207,7 @@ def analyze(output,authorization_pin):
         checkpoint_auditor=file_pin(Path(__file__).with_name('r6_training_checkpoint_audit.py')),
         probability_replayer=file_pin(Path(__file__).with_name('r6_training_probability.py')),inputs=sorted(inputs.values(),key=lambda p:p['path']),
         streams=list(streams.values()),issues=issues,summary=summary,scientific_acceptance=False)
+    if direct:
+        from tools.r6_direct.evidence import add_inputs
+        add_inputs(report, authorization_pin, ctx)
     return report,summary

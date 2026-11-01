@@ -19,11 +19,12 @@ def require(ok, reason):
     if not ok: raise ValueError('R6_DIRECT_' + reason)
 
 
-def validate_baseline(parameters):
+def validate_baseline(parameters, *, selected=None, final=False):
     require(isinstance(parameters,dict) and set(parameters)==PARAMETERS,'BASELINE_FIELDS')
     p=copy.deepcopy(parameters)
     require(isinstance(p['experiment_id'],str) and re.fullmatch(r'R6-DIRECT-[A-Z0-9-]{1,80}',p['experiment_id']), 'IDENTITY')
-    require(p['group']=='R1' and type(p['training_seed']) is int and p['training_seed']==20260908
+    expected_seed=20260908 if selected is None else selected['model']['training_seed']
+    require(p['group']=='R1' and type(p['training_seed']) is int and p['training_seed']==expected_seed
             and type(p['evaluation_seed']) is int and p['evaluation_seed']==20260909,'ORIGINAL_SEEDS')
     require(type(p['wall_seconds']) is int and 1<=p['wall_seconds']<=3600,'WALL')
     require(type(p['output_cap_bytes']) is int and 0<p['output_cap_bytes']<=20250099712,'OUTPUT_CAP')
@@ -33,7 +34,13 @@ def validate_baseline(parameters):
     protocol=pinned_json(r['protocol'])
     require(protocol['frozen'] is True and protocol['resource_admission']==POLICY,'PROTOCOL_RESOURCE_POLICY')
     require(protocol['old_suite']['seed']==20260909 and protocol['old_suite']['transitions']==32960,'OLD_SUITE')
-    require(r['split']=='development' and type(r['seed']) is int and r['seed']==2026101901,'DEVELOPMENT_STREAM')
+    if selected is None:
+        require(r['split']=='development' and type(r['seed']) is int and r['seed']==2026101901,'DEVELOPMENT_STREAM')
+    else:
+        require(p['baseline_bindings']==selected['selection']['baseline_bindings']
+            and r['split']==('final' if final else 'development')
+            and type(r['seed']) is int and 0<=r['seed']<2**31
+            and all(r[k]==selected['comparison'][k] for k in ('protocol','seed','split','block_ids')),'EXACT_COMPARISON')
     require(r['run_id']==p['experiment_id'],'RUN_ID')
     require(type(r['expected_mass_kg']) in (int,float) and abs(r['expected_mass_kg']-1.181517923)<1e-8,'MASS')
     blocks=protocol['blocks']; ids=[b['id'] for b in blocks]
@@ -98,11 +105,60 @@ def training_inputs(backend, plan):
     return inputs
 
 
+def evaluation_runtime_contract(parameters, *, final=False):
+    from . import robustness_final_selection, robustness_evaluation_selection
+    field='final_selection' if final else 'evaluation_selection'
+    require(isinstance(parameters,dict) and set(parameters)==PARAMETERS|{field},'EVALUATION_FIELDS')
+    value=parameters[field]
+    require(value['schema_version']==('r6-local-final-selection/1' if final else 'r6-local-evaluation-selection/1'),
+            'LOCAL_SELECTION_REQUIRED')
+    module=robustness_final_selection if final else robustness_evaluation_selection
+    selected=module.validate(value)
+    p=validate_baseline({k:v for k,v in parameters.items() if k!=field},selected=selected,final=final)
+    p[field]=copy.deepcopy(value)
+    return dict(schema_version='r6-local-runtime-contract/1',execution_mode='local-direct',
+                operation='final' if final else 'evaluate',
+                mode='research-r6-final-evaluation' if final else 'research-r6-candidate-evaluation',
+                parameters=p,budgets=budget_from_parameters(p))
+
+
+def evaluation_inputs(backend, *, final=False):
+    if getattr(backend,'execution_mode',None)=='local-direct':
+        require(backend.authorization is None,'NO_LEGACY_AUTHORIZATION')
+        contract=validate_runtime_contract(backend.runtime_contract)
+        require(contract['operation']==('final' if final else 'evaluate'),'EVALUATION_OPERATION')
+        return contract
+    from . import robustness_final_contract, robustness_candidate_contract
+    module=robustness_final_contract if final else robustness_candidate_contract
+    auth=backend.authorization
+    p=module.validate_parameters(auth['mode'],backend.research)
+    require(auth['parameters']==p and auth['budgets']==module.required_budget(module.MODE,p),'EXACT_STAGE_BUDGET')
+    return auth
+
+
+def render_runtime_contract(parameters):
+    from tools.r6_video_presentation import load
+    fields={'experiment_id','extraction','wall_seconds','output_cap_bytes'}
+    require(isinstance(parameters,dict) and set(parameters)==fields,'RENDER_FIELDS')
+    p=copy.deepcopy(parameters)
+    require(isinstance(p['experiment_id'],str) and re.fullmatch(r'R6-DIRECT-[A-Z0-9-]{1,80}',p['experiment_id']),'IDENTITY')
+    require(type(p['wall_seconds']) is int and 1<=p['wall_seconds']<=3600,'WALL')
+    require(type(p['output_cap_bytes']) is int and 1024**3<=p['output_cap_bytes']<=20250099712,'OUTPUT_CAP')
+    load(p['extraction'])  # CPU rechecks every extracted trajectory and original pin.
+    budgets=dict(live_process_starts=1,simulator_initializations=1,wall_seconds=p['wall_seconds'],
+                 **{k:0 for k in ('training_transitions','nontraining_transitions','optimizer_updates',
+                                  'checkpoint_writes','initialization_ticks','explicit_resets','automatic_resets')})
+    return dict(schema_version='r6-local-runtime-contract/1',execution_mode='local-direct',
+                operation='render',mode='research-r6-video-replay',parameters=p,budgets=budgets)
+
+
 def validate_runtime_contract(value):
     require(isinstance(value,dict) and set(value)=={'schema_version','execution_mode','operation','mode','parameters','budgets'},'CONTRACT_FIELDS')
     require(value['schema_version']=='r6-local-runtime-contract/1' and value['execution_mode']=='local-direct','MODE')
-    require(value['operation'] in ('baseline','train'),'OPERATION_NOT_IMPLEMENTED')
-    build=baseline_runtime_contract if value['operation']=='baseline' else training_runtime_contract
-    expected=build(value['parameters'])
+    builders={'baseline':baseline_runtime_contract,'train':training_runtime_contract,
+              'evaluate':evaluation_runtime_contract,'final':lambda p:evaluation_runtime_contract(p,final=True),
+              'render':render_runtime_contract}
+    require(value['operation'] in builders,'OPERATION_NOT_IMPLEMENTED')
+    expected=builders[value['operation']](value['parameters'])
     require(value==expected,'EXACT_CONTRACT_BUDGET')
     return expected

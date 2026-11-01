@@ -3,9 +3,11 @@ from __future__ import annotations
 import argparse, ast, json, os, subprocess, sys, time
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
-CONTROL = '/home/mint/rl_dev/instinctRL_orchestrator/.venv/bin/python'
+CONTROL = '/usr/bin/python3'
 PRODUCT = '/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11'
 def interpreter(path):
+    if path.parent == ROOT/'tools/r6_direct':
+        return CONTROL if path.name in ('test_run.py','test_ipc.py','test_lifecycle.py','test_import_legacy.py','test_settle.py') else PRODUCT
     tree = ast.parse(path.read_text())
     uses_torch = any(isinstance(n, (ast.Import, ast.ImportFrom)) and
         (getattr(n, 'module', '') == 'torch' or any(a.name == 'torch' for a in getattr(n, 'names', [])))
@@ -13,15 +15,16 @@ def interpreter(path):
     return PRODUCT if uses_torch or path.name in ('test_r4_evaluation_start.py', 'test_paired_pilot_unittest.py') else CONTROL
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,required=True);parser.add_argument('modules',nargs='*');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,required=True);parser.add_argument('--legacy-rlflow',action='store_true',help='opt in to archived scheduler regression tests');parser.add_argument('modules',nargs='*');args=parser.parse_args()
     output=args.output.resolve();output.mkdir(parents=True,exist_ok=False)
-    modules=[ROOT/p for p in args.modules] if args.modules else sorted((ROOT/'tests/training_workloads').glob('test_*.py'))
+    modules=[ROOT/p for p in args.modules] if args.modules else sorted((ROOT/('tests/training_workloads' if args.legacy_rlflow else 'tools/r6_direct')).glob('test_*.py'))
     results=[]
-    env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTEST_DISABLE_PLUGIN_AUTOLOAD='1',CUDA_VISIBLE_DEVICES='',PYTHONPATH=f'{ROOT}:{ROOT}/isaaclab-training:{ROOT}/tools/rlflow:{ROOT}/tools/rlflow/tests')
+    env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTEST_DISABLE_PLUGIN_AUTOLOAD='1',CUDA_VISIBLE_DEVICES='',PYTHONPATH=f'{ROOT}:{ROOT}/isaaclab-training')
+    if args.legacy_rlflow:env['PYTHONPATH']+=f':{ROOT}/tools/rlflow:{ROOT}/tools/rlflow/tests'
     for path in modules:
         if not path.resolve().is_relative_to(ROOT) or not path.is_file():raise ValueError('test path escapes repository')
         relative=str(path.relative_to(ROOT));name=path.stem
-        argv=[interpreter(path),'-m','pytest','-q',relative,'--junitxml='+str(output/(name+'.xml'))]
+        argv=[interpreter(path),'-m','pytest','-q','-p','no:cacheprovider',relative,'--junitxml='+str(output/(name+'.xml'))]
         start=time.monotonic()
         with (output/(name+'.stdout')).open('w') as stdout,(output/(name+'.stderr')).open('w') as stderr:
             try:completed=subprocess.run(argv,cwd=ROOT,env=env,stdout=stdout,stderr=stderr,timeout=600);exit_code=completed.returncode

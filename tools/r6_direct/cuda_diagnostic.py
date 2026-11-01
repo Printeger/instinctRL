@@ -37,6 +37,8 @@ def child(plan):
 
 
 def main():
+    from tools.r6_direct.dependencies import install
+    install()
     parser=argparse.ArgumentParser();parser.add_argument('--plan',type=Path,required=True);parser.add_argument('--child',action='store_true');parser.add_argument('--check',action='store_true');args=parser.parse_args()
     plan=json.loads(args.plan.read_text())
     if args.child:child(plan);return
@@ -52,14 +54,13 @@ def main():
     if receipt['status']!='CLOSED' or receipt['remaining']:raise RuntimeError('PRIOR_CLEANUP')
     for identity in [receipt['parent'],*receipt['owned_processes']]:
         if process_identity(identity['pid'])==identity:raise RuntimeError('PRIOR_PROCESS_ALIVE')
-    with (OLD/'batch/writer.lock').open('r') as lock:
-        fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    from tools.r6_direct.lifecycle import writer,imported_budget
+    with writer():
         if stop_paths():raise RuntimeError('STOP')
-        imported=json.loads((NEW/'LEGACY_BUDGET_IMPORT.json').read_text())
-        if pin(OLD/'batch/state.json')!=imported['sources'][0]:raise RuntimeError('LEGACY_LEDGER_DRIFT')
         directory=Path(plan['output_root']);native=Path(plan['native_dir'])
         if directory.exists() or native.exists():raise FileExistsError('DIAGNOSTIC_ALREADY_STARTED')
         ledger_path=NEW/'RESOURCE_LEDGER.json';ledger=json.loads(ledger_path.read_text())
+        imported_budget(ledger)
         reserve(ledger,plan['run_id'],dict(allocated_gpu_seconds=240,live_wall_seconds=240,live_starts=1,queue_seconds=180))
         ledger['new_reservations'][-1]['output_within_existing_native_volume']=plan['native_volume']
         from training_workloads.unified_h1.native_volume import validate

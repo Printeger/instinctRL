@@ -16,6 +16,9 @@ def evaluation_evidence(pin,protocol_pin):
     """
     from . import robustness_evaluation_selection as selection
     bound=base.pinned_json(pin)
+    if bound.get('schema_version')=='r6-direct-bound-analysis/1':
+        from .direct_selection import evaluation_evidence as direct_evidence
+        return direct_evidence(pin,protocol_pin)
     require(bound['schema_version']=='r6-bound-motion-analysis/1' and bound['scientific_acceptance']is False
         and bound['issues']==[] and bound['protocol']==protocol_pin,'BOUND_EVALUATION')
     objects={k:base.pinned_json(bound[k]) for k in ('spec','authorization','closure','inventory','postrun','report','model_binding')}
@@ -97,25 +100,25 @@ def validate_selection_evidence(pin,recipe_pin,recipe):
     return dict(evidence=value,scientific_acceptance=False,holdout_released=False)
 
 
-def freeze_payload(recipe_pin,recipe_review,selection_evidence):
+def freeze_payload(recipe_pin,recipe_review,selection_evidence, *, local=False):
     """Exact input for the independent recipe freeze review; never acceptance."""
     from . import robustness_training_plan as training
-    recipe=training.recipe(recipe_pin,recipe_review)
+    recipe=training.validate_recipe(base.pinned_json(recipe_pin)) if local else training.recipe(recipe_pin,recipe_review)
     validate_selection_evidence(selection_evidence,recipe_pin,recipe)
     return dict(schema_version='r6-recipe-freeze/1',recipe=recipe_pin,
         confirmation_seeds=recipe['confirmation_seeds'],selection_evidence=selection_evidence)
 
 
-def build_plans(freeze_pin,recipe_review,baseline_bindings,experiment_ids,wall_seconds,storage):
+def build_plans(freeze_pin,recipe_review,baseline_bindings,experiment_ids,wall_seconds,storage, *, local=False):
     """Three full common-origin plans, ordered by frozen seeds. No reservation."""
     from . import robustness_training_plan as training
     from .native_volume import MAXIMUM
     from .result_volume import CONTROL_ALLOWANCE
     freeze=base.pinned_json(freeze_pin)
-    expected=freeze_payload(freeze['recipe'],recipe_review,freeze['selection_evidence'])
+    expected=freeze_payload(freeze['recipe'],recipe_review,freeze['selection_evidence'],local=local)
     require(set(freeze)==set(expected)|{'independent_review'} and all(freeze[k]==v for k,v in expected.items()),'EXACT_FREEZE')
     base.accepted_review(freeze['independent_review'],'PASS_R6_RECIPE_FREEZE',payload_sha256=base.object_sha(expected))
-    recipe=training.recipe(freeze['recipe'],recipe_review)
+    recipe=training.validate_recipe(base.pinned_json(freeze['recipe'])) if local else training.recipe(freeze['recipe'],recipe_review)
     baseline=base.baseline(dict(baseline_bindings=baseline_bindings))
     require(isinstance(experiment_ids,list) and len(experiment_ids)==3 and len(set(experiment_ids))==3,'THREE_EXPERIMENTS')
     initial=dict(kind='COMMON_U640_NEW_STREAM',checkpoint=baseline['selected_model'],
@@ -127,6 +130,9 @@ def build_plans(freeze_pin,recipe_review,baseline_bindings,experiment_ids,wall_s
             start_update=640,target_update=640+recipe['branch_updates'],
             checkpoint_updates=[640+n for n in recipe['checkpoint_offsets']],initialization=dict(initial),
             wall_seconds=wall_seconds,storage=dict(storage))
+        if local:
+            plan['schema_version']='r6-local-training-plan/1'
+            plan.pop('recipe_review')
         expanded=training.expanded_budget(plan,physics_decimation=20)
         plans.append(plan);expansions.append(expanded)
     totals={k:sum(e['budgets'][k] for e in expansions) for k in expansions[0]['budgets']}

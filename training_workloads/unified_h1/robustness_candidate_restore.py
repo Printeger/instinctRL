@@ -15,8 +15,9 @@ def restore(backend,selection):
     from .robustness_evaluation_selection import validate,verify_loaded,require
     from .robustness_training_method import apply_method
     selected=validate(selection);model=selected['model']
-    require(backend.authorization['mode']=='research-r6-candidate-evaluation'
-        and backend.authorization['parameters'].get('evaluation_selection')==selection,'EXACT_AUTHORIZATION')
+    from .direct_contract import evaluation_inputs
+    inputs=evaluation_inputs(backend,final=False) if getattr(backend,'execution_mode',None)=='local-direct' else backend.authorization
+    require(inputs['mode']=='research-r6-candidate-evaluation' and inputs['parameters'].get('evaluation_selection')==selection,'EXACT_AUTHORIZATION')
     require(not getattr(backend,'_r6_load_failed',False) and backend.trainer is None and backend.driver is None
         and backend.loop is None and backend.journal is None,'FRESH_BACKEND')
     path=validate_pin(model['checkpoint']);payload=torch.load(path,map_location='cpu',weights_only=True)

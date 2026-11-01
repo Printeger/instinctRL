@@ -15,22 +15,7 @@ from rlflow.store import atomic, canonical, sha
 from tools.r6_budget import reserve, admissible
 
 
-class RecoveryError(RuntimeError):
-    pass
-
-
-def file_pin(path):
-    path = Path(path).resolve()
-    with path.open('rb') as stream:
-        digest = hashlib.file_digest(stream, 'sha256').hexdigest()
-    return {'path': str(path), 'sha256': digest}
-
-
-def checked(pin):
-    path = Path(pin['path'])
-    if path.is_symlink() or file_pin(path) != pin:
-        raise RecoveryError('PIN_DRIFT')
-    return path
+from tools.r6_evidence import RecoveryError, file_pin, checked
 
 
 class Journal:

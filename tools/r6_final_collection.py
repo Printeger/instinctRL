@@ -4,14 +4,23 @@ No selection, dispatch or scientific acceptance. Complete negative results are
 retained for independent review rather than treated as infrastructure failures.
 """
 import json
-from tools.r6_recovery import checked,file_pin,RecoveryError
-from tools.r6_analysis_binding import bind_analysis
-from tools.r6_holdout_publication import validate_batch
+from tools.r6_evidence import checked,file_pin,RecoveryError
 from training_workloads.unified_h1.robustness import lane_role
 
 
 def require(value,reason):
     if not value:raise RecoveryError('FINAL_COLLECTION_'+reason)
+
+
+def bind_analysis(*args, **kwargs):
+    """Historical adapter, imported only by the explicitly selected old collector."""
+    from tools.r6_analysis_binding import bind_analysis as legacy
+    return legacy(*args, **kwargs)
+
+
+def validate_batch(*args, **kwargs):
+    from tools.r6_holdout_publication import validate_batch as legacy
+    return legacy(*args, **kwargs)
 
 
 def gates(report,protocol):

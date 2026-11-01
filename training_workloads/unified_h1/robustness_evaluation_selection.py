@@ -17,7 +17,7 @@ def require(ok,reason):
 
 
 def validate(value):
-    return _validate(value,reviewed=True)
+    return _validate(value,reviewed=value.get('schema_version') != 'r6-local-evaluation-selection/1')
 
 
 def validate_draft(value):
@@ -25,7 +25,9 @@ def validate_draft(value):
 
 
 def _validate(value,*,reviewed):
-    require(isinstance(value,dict) and set(value)==(FIELDS if reviewed else FIELDS-{'independent_review'}) and value['schema_version']=='r6-evaluation-selection/1','FIELDS')
+    local = isinstance(value,dict) and value.get('schema_version') == 'r6-local-evaluation-selection/1'
+    require(isinstance(value,dict) and set(value)==(FIELDS if reviewed else FIELDS-{'independent_review'})
+        and value['schema_version'] in ('r6-evaluation-selection/1','r6-local-evaluation-selection/1'),'FIELDS')
     require(value['phase']=='development' and value['role'] in ('baseline_control','trained_candidate'),'DEVELOPMENT_ROLE')
     baseline=base.baseline(value);validate_pin(value['checkpoint'])
     method=validate_method(base.pinned_json(value['method']))
@@ -50,6 +52,7 @@ def _validate(value,*,reviewed):
             source_identity=baseline['source_identity'],method_hashes=baseline['method_hashes'],ppo_config=None)
     else:
         plan=training.validate(value['training_plan']);recipe=base.pinned_json(plan['recipe'])
+        require((plan['schema_version']=='r6-local-training-plan/1') == local,'PLAN_EXECUTION_MODE')
         require(plan['phase']=='development' and recipe['candidate_id']==comparison['candidate_id']
             and value['method']==recipe['method'],'TRAINED_METHOD')
         model=_training_model(plan,value['training_analysis'],value['checkpoint'],method)
@@ -64,6 +67,9 @@ def _validate(value,*,reviewed):
 
 def _training_model(plan,analysis_pin,checkpoint,method):
     """Closed checkpoint evidence for a validated development or confirmation plan."""
+    if plan['schema_version']=='r6-local-training-plan/1':
+        from .direct_selection import training_model
+        return training_model(plan,analysis_pin,checkpoint,method)
     recipe=base.pinned_json(plan['recipe'])
     binding=base.pinned_json(analysis_pin)
     require(binding['schema_version']=='r6-bound-training-analysis/1' and binding['scientific_acceptance'] is False

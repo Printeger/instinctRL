@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 import torch
 from tools import r6_training_analysis as a
-from tools.r6_recovery import file_pin
+from tools.r6_evidence import file_pin
 from tools.test_r6_training_plan import case,update_recipe,curriculum_fixture
 from training_workloads.unified_h1.lossless_evidence import EvidencePool
 from instinctlab.training.checkpoint_h1 import CHECKPOINT_H1_SCHEMA,CHECKPOINT_H1_VERSION

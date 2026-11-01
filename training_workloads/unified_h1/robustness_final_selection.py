@@ -21,11 +21,13 @@ def require(value,reason):
 
 
 def validate(value):
-    require(isinstance(value,dict) and set(value)==FIELDS and value['schema_version']=='r6-final-selection/1','FIELDS')
+    local=isinstance(value,dict) and value.get('schema_version')=='r6-local-final-selection/1'
+    require(isinstance(value,dict) and set(value)==FIELDS and value['schema_version'] in ('r6-final-selection/1','r6-local-final-selection/1'),'FIELDS')
     batch=base.pinned_json(value['batch'])
-    require(set(batch)=={'schema_version','freeze','freeze_review','holdout_event_key','publication','publication_commit',
+    fields={'schema_version','freeze','freeze_review','holdout_event_key','publication','publication_commit',
         'realization','assignments','protocol','scientific_acceptance','dispatch_authorized'}
-        and batch['schema_version']=='r6-final-batch-inputs/1'
+    require(set(batch)==(fields-{'holdout_event_key'} if local else fields)
+        and batch['schema_version']==('r6-local-final-batch-inputs/1' if local else 'r6-final-batch-inputs/1')
         and batch['scientific_acceptance']is False and batch['dispatch_authorized']is False,'BATCH')
     require(isinstance(batch['publication_commit'],str) and re.fullmatch('[a-f0-9]{40}',batch['publication_commit']),
         'PUBLICATION_COMMIT')
@@ -33,10 +35,14 @@ def validate(value):
     require(set(freeze)=={'schema_version','branch','protocol','recipe','selection_rule','models','evidence'}
         and freeze['schema_version']=='r6-final-freeze/2' and batch['protocol']==freeze['protocol'],'FREEZE')
     base.accepted_review(batch['freeze_review'],'PASS_R6_FINAL_FREEZE',freeze_sha256=batch['freeze']['sha256'])
+    if local:
+        from .direct_selection import verify_publication
+        verify_publication(batch['publication_commit'],batch['freeze'],batch['freeze_review'],batch['publication'])
     public=base.pinned_json(batch['publication']);realization=base.pinned_json(batch['realization'])
     require(public['freeze_sha256']==batch['freeze']['sha256'] and public['protocol_sha256']==freeze['protocol']['sha256']
         and realization==reveal(public,realization['nonce']),'REVEALED_COMMITMENT')
     baseline_only=freeze['branch']=='BASELINE_SUFFICIENT'
+    require(not (local and baseline_only),'LOCAL_REQUIRES_ACTUAL_TRAINING')
     if baseline_only:
         require(set(freeze['models'])=={'baseline'} and freeze['selection_rule']==dict(kind='unchanged_baseline',update=640,
             training_transitions=0,final_realization_indices=[0,1,2],all_original_and_registered_blocks_each_stream=True,
@@ -64,8 +70,15 @@ def validate(value):
     else:
         ordinal=int(assignment['model_role'][-1])-1
         streams=freeze['evidence']['streams'];require(len(streams)==3,'THREE_STREAMS')
-        stream=streams[ordinal];context=base.pinned_json(stream['context'])
-        profile=base.pinned_json(context['baseline_profile']);plan=training.validate(profile['r6_training_plan'])
+        stream=streams[ordinal]
+        if local:
+            plan=training.validate(stream['plan'])
+            profile=dict(baseline_bindings=stream['baseline_bindings'])
+            require(plan['schema_version']=='r6-local-training-plan/1','LOCAL_PLAN_REQUIRED')
+            require(len({r['plan']['experiment_id'] for r in streams})==3,'DISTINCT_RUNS')
+        else:
+            context=base.pinned_json(stream['context'])
+            profile=base.pinned_json(context['baseline_profile']);plan=training.validate(profile['r6_training_plan'])
         recipe=base.pinned_json(plan['recipe']);method_pin=recipe['method'];method=validate_method(base.pinned_json(method_pin))
         require(plan['phase']=='confirmation' and plan['recipe']==freeze['recipe']
             and plan['selection_freeze']==freeze['evidence']['recipe_freeze']

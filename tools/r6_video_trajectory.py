@@ -5,7 +5,7 @@ command t and pre-reset state t+1 remain separate, including terminal resets.
 """
 import json
 import math
-from tools.r6_recovery import checked, file_pin, RecoveryError
+from tools.r6_evidence import checked, file_pin, RecoveryError
 
 
 def require(value,reason):

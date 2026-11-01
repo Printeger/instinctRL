@@ -2,7 +2,7 @@
 import argparse
 import json
 from pathlib import Path
-from rlflow.store import atomic
+from tools.r6_evidence import atomic_bytes as atomic
 from tools.r6_final_analysis import analyze
 
 

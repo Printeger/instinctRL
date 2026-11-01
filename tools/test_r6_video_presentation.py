@@ -9,7 +9,7 @@ from tools.test_r6_video_trajectory import trajectory
 from tools import r6_video_presentation as m
 from tools import r6_video_trajectory as decoder
 from tools.prepare_r6_video_trajectories import prepare
-from tools.r6_recovery import file_pin, RecoveryError
+from tools.r6_evidence import file_pin, RecoveryError
 
 
 def test_recorded_failure_and_reset_break(trajectory):

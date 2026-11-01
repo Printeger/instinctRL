@@ -14,7 +14,7 @@ from training_workloads.unified_h1 import robustness_candidate_contract as c
 @pytest.fixture
 def stage(monkeypatch,request):
     b=ContractTests();b.setUp();request.addfinalizer(b.tearDown)
-    b.p['training_seed']=11;b.p['evaluation_selection']={'fixture':'independently selected'}
+    b.p['training_seed']=11;b.p['evaluation_selection']={'schema_version':'r6-evaluation-selection/1','fixture':'independently selected'}
     b.selected=dict(selection=dict(b.p['evaluation_selection'],baseline_bindings=b.p['baseline_bindings']),
         comparison={k:b.p['r6'][k] for k in ('protocol','block_ids','seed','split')},model=dict(training_seed=11))
     monkeypatch.setattr(c.selection,'validate',lambda value:b.selected)

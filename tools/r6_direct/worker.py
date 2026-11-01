@@ -106,7 +106,7 @@ def run(plan, input_pin):
     enforce(policy)
     # Existing kernel-bounded volumes contain all native and scientific writes.
     from training_workloads.scale_003.persistence import install_output_write_quota
-    install_output_write_quota(attempt,result['payload_cap_bytes'])
+    install_output_write_quota(attempt,min(result['payload_cap_bytes'],1024**3) if contract['operation']=='render' else result['payload_cap_bytes'])
     from training_workloads.unified_h1.robustness_prelaunch import run_gate
     from training_workloads.unified_h1.config import resource_binding_pins
     pins=resource_binding_pins()
@@ -138,41 +138,49 @@ def run(plan, input_pin):
     atomic(attempt/'state.json',{'status':'INITIALIZING','identity':process_identity(os.getpid()),'counters':counters.snapshot()})
     try:
         from isaaclab.app import AppLauncher
-        launcher=AppLauncher(headless=True,enable_cameras=False,fast_shutdown=False,kit_args=kit);app=launcher.app
+        launcher=AppLauncher(headless=True,enable_cameras=contract['operation']=='render',fast_shutdown=False,kit_args=kit);app=launcher.app
         from training_workloads.scale_003.resources import validate_graceful_shutdown_configuration,RuntimeResourceGuard
         validate_graceful_shutdown_configuration(app,resource_pins=pins)
         import carb.settings
         actual=carb.settings.get_settings()
         for key,value in settings_map.items():
             if actual.get(key)!=value:raise RuntimeError('DIRECT_NATIVE_SETTING:'+key)
-        from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv,UnifiedH1DirectEnvCfg
-        env=UnifiedH1DirectEnv(UnifiedH1DirectEnvCfg())
-        ticks=env.h1_initialization_physics_ticks
-        counters.record_initialization_ticks(ticks,contract['budgets']['initialization_ticks'])
-        from training_workloads.unified_h1.backend import UnifiedH1LiveBackend
         class Guard(RuntimeResourceGuard):
             def check(self,**kw):
                 if stop_paths() or (Path(plan['output_root'])/'STOP').exists():raise RuntimeError('STOP')
                 if shutil.disk_usage('/home/mint/rl_dev/instinctRL-dev').free<30*1024**3:raise RuntimeError('DIRECT_DISK_FLOOR')
                 return super().check(**kw)
-        backend=UnifiedH1LiveBackend(run_contract=contract,attempt=attempt,app=app,environment=env,
-            resource_guard=Guard(gate),counters=counters,process_started_monotonic=started)
-        backend.initialization_measurement=dict(status='OBSERVED',observed_physics_ticks=ticks,
-            counter_source=env.h1_initialization_tick_source,fresh_physical_reset=True)
-        from training_workloads.unified_h1.robustness_contract import baseline,evaluate_baseline
-        backend.initial_preflight()
-        operation=contract['operation']
-        atomic(attempt/'state.json',{'status':'TRAINING' if operation=='train' else 'EVALUATING',
-            'identity':process_identity(os.getpid()),'counters':counters.snapshot()})
-        if operation=='train':
-            backend.train_r6()
-            for counter,budget in (('training_transitions','training_transitions'),
-                    ('real_optimizer_updates','optimizer_updates'),('real_checkpoint_writes','checkpoint_writes')):
-                if getattr(counters,counter)!=contract['budgets'][budget]:raise RuntimeError('DIRECT_FINAL_COUNT:'+counter)
+        if contract['operation']=='render':
+            from tools.r6_direct.render import run as render
+            render(plan,contract,source,output,app,counters,Guard(gate))
         else:
-            evaluate_baseline(backend,parameters=contract['parameters'],bindings=baseline(contract['parameters']))
-        if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
-        backend.preserve('PASS_PENDING_CLOSE')
+            from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv,UnifiedH1DirectEnvCfg
+            env=UnifiedH1DirectEnv(UnifiedH1DirectEnvCfg())
+            ticks=env.h1_initialization_physics_ticks
+            counters.record_initialization_ticks(ticks,contract['budgets']['initialization_ticks'])
+            from training_workloads.unified_h1.backend import UnifiedH1LiveBackend
+            backend=UnifiedH1LiveBackend(run_contract=contract,attempt=attempt,app=app,environment=env,
+                resource_guard=Guard(gate),counters=counters,process_started_monotonic=started)
+            backend.initialization_measurement=dict(status='OBSERVED',observed_physics_ticks=ticks,
+                counter_source=env.h1_initialization_tick_source,fresh_physical_reset=True)
+            from training_workloads.unified_h1.robustness_contract import baseline,evaluate_baseline
+            backend.initial_preflight()
+            operation=contract['operation']
+            atomic(attempt/'state.json',{'status':'TRAINING' if operation=='train' else 'EVALUATING',
+                'identity':process_identity(os.getpid()),'counters':counters.snapshot()})
+            if operation=='train':
+                backend.train_r6()
+                for counter,budget in (('training_transitions','training_transitions'),
+                        ('real_optimizer_updates','optimizer_updates'),('real_checkpoint_writes','checkpoint_writes')):
+                    if getattr(counters,counter)!=contract['budgets'][budget]:raise RuntimeError('DIRECT_FINAL_COUNT:'+counter)
+            elif operation=='baseline':
+                evaluate_baseline(backend,parameters=contract['parameters'],bindings=baseline(contract['parameters']))
+            else:
+                from training_workloads.unified_h1 import robustness_candidate_contract,robustness_final_contract
+                evaluator=robustness_final_contract if operation=='final' else robustness_candidate_contract
+                evaluator.evaluate_registered(backend)
+            if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
+            backend.preserve('PASS_PENDING_CLOSE')
     except BaseException as exc:
         error=repr(exc)
         if backend is not None:backend.preserve('FAIL_PENDING_CLOSE')
@@ -188,6 +196,8 @@ def run(plan, input_pin):
 
 
 def main():
+    from tools.r6_direct.dependencies import install
+    install()
     parser=argparse.ArgumentParser();parser.add_argument('--inputs',type=Path,required=True);parser.add_argument('--check',action='store_true')
     args=parser.parse_args(); input_pin=pin(args.inputs); plan=json.loads(args.inputs.read_text())
     if args.check:

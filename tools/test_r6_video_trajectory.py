@@ -3,7 +3,7 @@ import copy,json
 import pytest
 from training_workloads.unified_h1.robustness_audit import AuditLog
 from tools import r6_video_trajectory as m
-from tools.r6_recovery import file_pin,RecoveryError
+from tools.r6_evidence import file_pin,RecoveryError
 
 @pytest.fixture
 def trajectory(tmp_path):

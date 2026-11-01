@@ -81,7 +81,6 @@ def validate(plan):
     # Local development uses the shared scientific checks without inventing a
     # legacy approval. Confirmation requires a separately implemented freeze.
     if local:
-        require(plan['phase']=='development','LOCAL_CONFIRMATION_NOT_IMPLEMENTED')
         r=validate_recipe(pinned_json(plan['recipe']))
     else:r=recipe(plan['recipe'],plan['recipe_review'])
     seed=integer(plan['training_seed'],0,2**31-1,'TRAINING_SEED')

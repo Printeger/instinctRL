@@ -29,12 +29,13 @@ def run_resources(contract):
     if contract['operation']=='train':
         resources['training_checkpoint_writes']=budget['checkpoint_writes']
         # Conservatively charge each new development stream as a candidate.
-        if contract['parameters']['r6_training_plan']['initialization']['kind']=='COMMON_U640_NEW_STREAM':
+        if contract['parameters']['r6_training_plan']['phase']=='development' and contract['parameters']['r6_training_plan']['initialization']['kind']=='COMMON_U640_NEW_STREAM':
             resources['major_scientific_candidates']=1
     return resources
 
 
-def reserve(ledger, run_id, resources):
+def reserve(ledger, run_id, resources, *, purpose='development'):
+    if purpose not in ('development','confirmation_delivery'):raise ValueError('DIRECT_RESERVATION_PURPOSE')
     if any(r['id']==run_id for r in ledger['new_reservations']):raise ValueError('DIRECT_DUPLICATE_RESERVATION')
     totals={k:ledger['historical_charged'][k]+ledger['new_used'][k] for k in ledger['caps']}
     for row in ledger['new_reservations']:
@@ -43,9 +44,9 @@ def reserve(ledger, run_id, resources):
         if k not in totals or type(v) not in (int,float) or v<0:raise ValueError('DIRECT_RESOURCE_AMOUNT')
         totals[k]+=v
     for k,total in totals.items():
-        if total>ledger['caps'][k]-ledger['protected_confirmation_delivery_repair'].get(k,0):
+        if total>ledger['caps'][k]-(ledger['protected_confirmation_delivery_repair'].get(k,0) if purpose=='development' else 0):
             raise ValueError('DIRECT_PROTECTED_BUDGET:'+k)
-    ledger['new_reservations'].append(dict(id=run_id,purpose='development',resources=resources,status='UNRELEASED'))
+    ledger['new_reservations'].append(dict(id=run_id,purpose=purpose,resources=resources,status='UNRELEASED'))
     return ledger
 
 
@@ -152,6 +153,8 @@ def supervise(argv, *, cwd, env, directory, deadline_seconds, stop, before_relea
 
 
 def main():
+    from tools.r6_direct.dependencies import install
+    install()
     parser=argparse.ArgumentParser();parser.add_argument('--inputs',type=Path,required=True);args=parser.parse_args()
     def interrupted(signum, frame):raise KeyboardInterrupt('DIRECT_SIGNAL:'+str(signum))
     for sig in (signal.SIGTERM,signal.SIGHUP,signal.SIGINT):signal.signal(sig,interrupted)
@@ -171,14 +174,10 @@ def main():
     env={k:v for k,v in os.environ.items() if k in ('HOME','PATH','LANG','LC_ALL','TZ','DISPLAY')}
     env.update(PYTHONPATH=str(snapshot)+':'+str(snapshot/'isaaclab-training'),PYTHONDONTWRITEBYTECODE='1',PYTHONNOUSERSITE='1',CUDA_VISIBLE_DEVICES='0',
                ISAACSIM_ASSET_ROOT=source['execution']['isaacsim_asset_root'],OMNI_KIT_ACCEPT_EULA='YES')
-    with (OLD/'batch/writer.lock').open('r') as lock:
-        fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-        legacy=json.loads((OLD/'batch/state.json').read_text());old=legacy.get('controller_identity')
-        if legacy['current_job'] or legacy['current_model_event']:raise RuntimeError('DIRECT_OLD_JOB_ACTIVE')
-        if old and (actual:=process_identity(old['pid'])) and all(old[k]==v for k,v in actual.items()):raise RuntimeError('DIRECT_OLD_CONTROLLER_ACTIVE')
-        imported=json.loads((NEW/'LEGACY_BUDGET_IMPORT.json').read_text())
-        if pin(OLD/'batch/state.json')!=imported['sources'][0]:raise RuntimeError('DIRECT_LEGACY_LEDGER_DRIFT')
+    from tools.r6_direct.lifecycle import writer,imported_budget
+    with writer():
         ledger_path=NEW/'RESOURCE_LEDGER.json';ledger=json.loads(ledger_path.read_text())
+        imported=imported_budget(ledger)
         # The existing unused bounded physical volumes stay fully charged in
         # the import. Binding a new subdirectory does not release any bytes.
         storage=[r for r in imported['reservation_mapping'] if r['original']['identity']['event_id']=='STORAGE:J-d737390980235144']
@@ -198,7 +197,12 @@ def main():
             if Path(plan[key]).exists():raise FileExistsError(plan[key])
         directory.mkdir(parents=True,exist_ok=False)
         resources=run_resources(contract)
-        reserve(ledger,run_id,resources)
+        purpose='confirmation_delivery' if contract['operation'] in ('final','render') or (contract['operation']=='train' and contract['parameters']['r6_training_plan']['phase']=='confirmation') else 'development'
+        final_selection=contract['parameters'].get('final_selection')
+        if final_selection is not None and any(r.get('final_assignment')==final_selection for r in ledger['new_reservations']):
+            raise ValueError('DIRECT_FINAL_ASSIGNMENT_ALREADY_STARTED')
+        reserve(ledger,run_id,resources,purpose=purpose)
+        if final_selection is not None:ledger['new_reservations'][-1]['final_assignment']=final_selection
         ledger['new_reservations'][-1]['legacy_storage_event']=storage[0]['event_key']
         ledger['new_reservations'][-1]['legacy_storage_new_binding']={k:plan[k] for k in ('attempt_dir','native_dir')}
         ledger['status']='RUNNING';atomic(ledger_path,ledger)

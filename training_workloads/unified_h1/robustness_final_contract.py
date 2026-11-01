@@ -8,12 +8,14 @@ MODE=selection.MODE
 
 def validate_parameters(mode,value):
     selection.require(mode==MODE and isinstance(value,dict) and 'final_selection' in value,'FINAL_MODE')
+    selection.require(value['final_selection'].get('schema_version')=='r6-final-selection/1','LEGACY_SELECTION_REQUIRED')
     selected=selection.validate(value['final_selection'])
     return base._validate_parameters(mode,value,selected=selected,final=True)
 
 
 def validate_draft(mode,value,payload_bytes):
     selection.require(mode==MODE and isinstance(value,dict) and 'final_selection' in value,'FINAL_MODE')
+    selection.require(value['final_selection'].get('schema_version')=='r6-final-selection/1','LEGACY_SELECTION_REQUIRED')
     selected=selection.validate(value['final_selection'])
     return base._validate_parameters(mode,value,selected=selected,final=True,materialized=False,payload_bytes=payload_bytes)
 
@@ -51,8 +53,8 @@ def compatibility_payload(origin_config,execution_config,value,config):
 def evaluate_registered(backend):
     from training_workloads.scale_003.persistence import atomic_json_replace
     from .robustness_final_restore import restore
-    p=validate_parameters(backend.authorization['mode'],backend.research)
-    selection.require(backend.authorization['parameters']==p and backend.authorization['budgets']==required_budget(MODE,p),'EXACT_STAGE_BUDGET')
+    from .direct_contract import evaluation_inputs
+    p=evaluation_inputs(backend,final=True)['parameters']
     loaded=restore(backend,p['final_selection']);selected=loaded['selection'];model=selected['model']
     label=f"r6_final_u{model['update']}_original"
     binding=dict(checkpoint=model['checkpoint'],metadata=loaded['metadata'],checkpoint_source_identity=model['source_identity'],
