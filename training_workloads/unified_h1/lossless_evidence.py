@@ -22,7 +22,9 @@ MAX_CHUNKS=131072
 class EvidencePool:
     def __init__(self,root,*,run_id,maximum_bytes,maximum_raw_file_bytes):
         if not isinstance(run_id,str) or not run_id or len(run_id)>100:raise ValueError('EVIDENCE_RUN_ID')
-        if any(type(v) is not int or v<=0 for v in (maximum_bytes,maximum_raw_file_bytes)) or maximum_raw_file_bytes>16*1024**3:
+        # The exact run declares its raw allowance. A fixed 16 GiB ceiling
+        # aborted TRAIN-01 despite available compressed storage.
+        if any(type(v) is not int or v<=0 for v in (maximum_bytes,maximum_raw_file_bytes)):
             raise ValueError('EVIDENCE_QUOTA')
         self.root=Path(root).absolute()
         if self.root.resolve()!=self.root:raise ValueError('EVIDENCE_PATH_ALIAS')
@@ -157,7 +159,7 @@ class ChunkWriter:
 class ChunkReader(io.RawIOBase):
     def __init__(self,path,*,run_id,logical_name,maximum_raw_bytes):
         super().__init__()
-        if type(maximum_raw_bytes) is not int or not 0<maximum_raw_bytes<=16*1024**3:raise ValueError('EVIDENCE_READ_BOUND')
+        if type(maximum_raw_bytes) is not int or maximum_raw_bytes<=0:raise ValueError('EVIDENCE_READ_BOUND')
         self.stream=Path(path).open('rb');self.entries=[];self.starts=[];self.size=0;self.position=0;self.cache=None
         try:
             if self.stream.read(len(MAGIC))!=MAGIC:raise ValueError('EVIDENCE_MAGIC')

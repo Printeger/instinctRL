@@ -48,6 +48,21 @@ class LosslessTests(unittest.TestCase):
         writer.abort()
         with self.assertRaises(ValueError):pool.open('another')
 
+    def test_large_declared_raw_allowance_roundtrip_and_boundary(self):
+        allowance=64*1024**3
+        pool=self.pool(raw_maximum=allowance);writer=pool.open('large-allowance')
+        data=b'exact evidence bytes'
+        writer.write(data);writer.close()
+        with self.reader('large-allowance',limit=allowance) as reader:
+            self.assertEqual(reader.read(),data)
+        # Exercise arithmetic across the former 16 GiB boundary without
+        # allocating tens of GiB in a unit test. This stream is aborted.
+        boundary=pool.open('boundary');boundary.raw_bytes=16*1024**3
+        boundary.write(b'x');self.assertEqual(boundary.raw_bytes,16*1024**3+1)
+        boundary.raw_bytes=allowance
+        with self.assertRaisesRegex(ValueError,'RAW_QUOTA'):boundary.write(b'x')
+        boundary.abort()
+
     def test_output_quota_before_data_write(self):
         pool=self.pool(maximum=100);writer=pool.open('blob');before=pool.used
         writer.write(bytes(range(256)))

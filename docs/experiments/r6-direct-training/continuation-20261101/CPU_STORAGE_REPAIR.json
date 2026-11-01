@@ -1,0 +1,17 @@
+{
+  "status": "PASS_CPU_SCOPE_NOT_LIVE",
+  "tests_passed": 48,
+  "modules": [
+    "tools/test_r6_lossless_evidence.py",
+    "tools/test_r6_training_storage_lifecycle.py",
+    "tools/test_r6_training_plan.py"
+  ],
+  "change": "Remove hard-coded 16 GiB raw ceiling in writer and reader; honor exact per-run positive declared limits. Retain chunk structure, digest, footer, incomplete-stream rejection and physical output checks.",
+  "validation_limit": "Boundary arithmetic tested without allocating 16 GiB; no live training or actual >16 GiB roundtrip yet.",
+  "evidence": "TRAIN_01_STREAM_SIZES.json",
+  "next_required": [
+    "Diagnose first-rollout CPU probability mismatch without changing acceptance tolerances",
+    "Size and bind new writable storage separately from read-only original evidence",
+    "Prepare fresh inputs and snapshot with resource policy; never restart TRAIN-01"
+  ]
+}

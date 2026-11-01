@@ -1,0 +1,201 @@
+{
+  "scope": "Header size inventory only; does not certify hashes or complete payloads",
+  "streams": [
+    {
+      "name": "phases/1-11264-12288/learning_log/measurement.jsonl.r6z",
+      "raw_bytes_from_headers": 17170984613,
+      "chunks": 16632,
+      "footer_present": false,
+      "compressed_bytes": 4831123824
+    },
+    {
+      "name": "pilot_diagnostic/update_641_full_input.pt.r6z",
+      "raw_bytes_from_headers": 522177865,
+      "chunks": 498,
+      "footer_present": true,
+      "compressed_bytes": 87635540
+    },
+    {
+      "name": "pilot_diagnostic/update_642_full_input.pt.r6z",
+      "raw_bytes_from_headers": 522177865,
+      "chunks": 498,
+      "footer_present": true,
+      "compressed_bytes": 97295570
+    },
+    {
+      "name": "phases/1-11264-12288/learning_log/force.jsonl.r6z",
+      "raw_bytes_from_headers": 501120995,
+      "chunks": 13860,
+      "footer_present": false,
+      "compressed_bytes": 123967924
+    },
+    {
+      "name": "phases/1-11264-12288/learning_log/measurement_windows.jsonl.r6z",
+      "raw_bytes_from_headers": 299826460,
+      "chunks": 288,
+      "footer_present": false,
+      "compressed_bytes": 56880329
+    },
+    {
+      "name": "phases/0-10240-11264/learning_log/measurement_windows.jsonl.r6z",
+      "raw_bytes_from_headers": 295545285,
+      "chunks": 288,
+      "footer_present": true,
+      "compressed_bytes": 57435094
+    },
+    {
+      "name": "phases/0-10240-11264/learning_log/partial_rollout_steps.jsonl.r6z",
+      "raw_bytes_from_headers": 76314791,
+      "chunks": 1024,
+      "footer_present": true,
+      "compressed_bytes": 19521768
+    },
+    {
+      "name": "phases/0-10240-11264/learning_log/compact_rollouts.jsonl.r6z",
+      "raw_bytes_from_headers": 73178392,
+      "chunks": 1024,
+      "footer_present": true,
+      "compressed_bytes": 19552080
+    },
+    {
+      "name": "phases/1-11264-12288/learning_log/partial_rollout_steps.jsonl.r6z",
+      "raw_bytes_from_headers": 54132660,
+      "chunks": 692,
+      "footer_present": false,
+      "compressed_bytes": 14218984
+    },
+    {
+      "name": "phases/1-11264-12288/learning_log/compact_rollouts.jsonl.r6z",
+      "raw_bytes_from_headers": 49485906,
+      "chunks": 688,
+      "footer_present": false,
+      "compressed_bytes": 13609950
+    },
+    {
+      "name": "pilot_diagnostic/first_update_probe.pt.r6z",
+      "raw_bytes_from_headers": 12289599,
+      "chunks": 12,
+      "footer_present": true,
+      "compressed_bytes": 9872290
+    },
+    {
+      "name": "phases/1-11264-12288/learning_log/command_blocks.jsonl.r6z",
+      "raw_bytes_from_headers": 6414782,
+      "chunks": 9310,
+      "footer_present": false,
+      "compressed_bytes": 4569958
+    },
+    {
+      "name": "phases/1-11264-12288/learning_log/curriculum.jsonl.r6z",
+      "raw_bytes_from_headers": 498920,
+      "chunks": 33,
+      "footer_present": false,
+      "compressed_bytes": 159621
+    },
+    {
+      "name": "phases/0-10240-11264/learning_log/rollouts.jsonl.r6z",
+      "raw_bytes_from_headers": 420098,
+      "chunks": 64,
+      "footer_present": true,
+      "compressed_bytes": 96728
+    },
+    {
+      "name": "phases/0-10240-11264/learning_log/accounting.jsonl.r6z",
+      "raw_bytes_from_headers": 313432,
+      "chunks": 2112,
+      "footer_present": true,
+      "compressed_bytes": 342546
+    },
+    {
+      "name": "phases/1-11264-12288/learning_log/rollouts.jsonl.r6z",
+      "raw_bytes_from_headers": 283410,
+      "chunks": 43,
+      "footer_present": false,
+      "compressed_bytes": 66810
+    },
+    {
+      "name": "phases/0-10240-11264/learning_log/minibatches.jsonl.r6z",
+      "raw_bytes_from_headers": 243736,
+      "chunks": 512,
+      "footer_present": true,
+      "compressed_bytes": 174650
+    },
+    {
+      "name": "phases/1-11264-12288/learning_log/accounting.jsonl.r6z",
+      "raw_bytes_from_headers": 215675,
+      "chunks": 1429,
+      "footer_present": false,
+      "compressed_bytes": 233253
+    },
+    {
+      "name": "phases/0-10240-11264/learning_log/command_blocks.jsonl.r6z",
+      "raw_bytes_from_headers": 193226,
+      "chunks": 288,
+      "footer_present": true,
+      "compressed_bytes": 135722
+    },
+    {
+      "name": "phases/0-10240-11264/learning_log/updates.jsonl.r6z",
+      "raw_bytes_from_headers": 174814,
+      "chunks": 64,
+      "footer_present": true,
+      "compressed_bytes": 52006
+    },
+    {
+      "name": "phases/1-11264-12288/learning_log/minibatches.jsonl.r6z",
+      "raw_bytes_from_headers": 163703,
+      "chunks": 344,
+      "footer_present": false,
+      "compressed_bytes": 116982
+    },
+    {
+      "name": "phases/1-11264-12288/learning_log/updates.jsonl.r6z",
+      "raw_bytes_from_headers": 117743,
+      "chunks": 43,
+      "footer_present": false,
+      "compressed_bytes": 35611
+    },
+    {
+      "name": "phases/0-10240-11264/learning_log/episodes.jsonl.r6z",
+      "raw_bytes_from_headers": 51131,
+      "chunks": 64,
+      "footer_present": true,
+      "compressed_bytes": 32620
+    },
+    {
+      "name": "rng/initialization.pt.r6z",
+      "raw_bytes_from_headers": 39445,
+      "chunks": 1,
+      "footer_present": true,
+      "compressed_bytes": 23960
+    },
+    {
+      "name": "phases/1-11264-12288/learning_log/reset.jsonl.r6z",
+      "raw_bytes_from_headers": 37847,
+      "chunks": 32,
+      "footer_present": false,
+      "compressed_bytes": 17678
+    },
+    {
+      "name": "phases/1-11264-12288/setup/curriculum.jsonl.r6z",
+      "raw_bytes_from_headers": 28622,
+      "chunks": 1,
+      "footer_present": true,
+      "compressed_bytes": 9699
+    },
+    {
+      "name": "learning_log/plan.jsonl.r6z",
+      "raw_bytes_from_headers": 4951,
+      "chunks": 1,
+      "footer_present": true,
+      "compressed_bytes": 2096
+    },
+    {
+      "name": "phases/0-10240-11264/learning_log/phase_complete.jsonl.r6z",
+      "raw_bytes_from_headers": 697,
+      "chunks": 1,
+      "footer_present": true,
+      "compressed_bytes": 502
+    }
+  ]
+}
