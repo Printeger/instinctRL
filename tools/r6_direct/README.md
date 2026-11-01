@@ -89,8 +89,10 @@ pytest 默认收集范围也改为直接链；其他科学模块可显式指定�
 新卷仍核验前驱回执及所属进程退出，不能继承旧卷的科学验收身份。
 缺省字段保留历史卷运行兼容性；worker 继续检查真实挂载、配额与剩余容量。
 
-训练后 CPU 分析可显式传入 `--probability-diagnostic ABSOLUTE_DIAGNOSTIC_PLAN.json`。
+训练后 CPU 分析可显式传入 `--probability-diagnostic ABSOLUTE_SEALED_EVIDENCE.json`。
 仅接受该训练 contract 和 retained-input 精确匹配、正常关闭且所属进程退出的 CUDA 回放，
 并核验已知回放实现、原容差与全部样本结果。分析仍保留 `cpu_probability_replay_error`；
 补充回放不清除其他 stream、checkpoint、计数或 RNG 问题。旧报告不覆盖，必须使用新 destination。
 此选项只读核验已完成诊断，不启动 GPU 作业，也不允许拿 TRAIN-01 的结果覆盖 TRAIN-02。
+
+CUDA补充必须使用 `r6-probability-sealed-evidence/1` envelope pin，固定原件哈希；裸plan不再接受。完整冻结源码必须属于明确登记的已知版本，未知版本须独立核查后登记。

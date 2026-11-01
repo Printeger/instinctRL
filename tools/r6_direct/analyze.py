@@ -41,7 +41,7 @@ def main():
     parser.add_argument('--inputs', type=Path, required=True)
     parser.add_argument('--destination', type=Path, required=True)
     parser.add_argument('--probability-diagnostic',type=Path,
-                        help='Exact closed CUDA diagnostic plan for this training input')
+                        help='Sealed evidence envelope for the exact closed CUDA diagnostic')
     args = parser.parse_args()
     install()
     if stop_paths():
