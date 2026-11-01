@@ -1,0 +1,82 @@
+{
+  "argv": [
+    "/usr/bin/bwrap",
+    "--die-with-parent",
+    "--bind",
+    "/",
+    "/",
+    "--dev-bind",
+    "/dev",
+    "/dev",
+    "--bind",
+    "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-CONFIRM-128-SEED-01B/ipc",
+    "/dev/shm",
+    "--",
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "tools.r6_direct.worker",
+    "--inputs",
+    "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01b-inputs.json"
+  ],
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "0",
+    "DISPLAY": ":0",
+    "HOME": "/home/mint",
+    "ISAACSIM_ASSET_ROOT": "/home/mint/rl_dev/instinctRL-dev/runtime_assets/Assets/Isaac/5.1",
+    "LANG": "en_US.UTF-8",
+    "LC_ALL": "en_US.UTF-8",
+    "OMNI_KIT_ACCEPT_EULA": "YES",
+    "PATH": "/home/mint/.codex/packages/app-server-daemon/releases/0.166.0-x86_64-unknown-linux-musl/codex-path:/home/mint/.codex/tmp/arg0-linux/codex-arg02rYbrr:/home/mint/.codex/packages/app-server-daemon/releases/0.166.0-x86_64-unknown-linux-musl/codex-path:/home/mint/.codex/tmp/arg0-linux/codex-arg0hpRb20:/home/mint/.codex/packages/app-server-daemon/releases/0.165.0-x86_64-unknown-linux-musl/codex-path:/home/mint/.codex/tmp/arg0-linux/codex-arg0Frqnzp:/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/codex-path:/home/mint/miniconda3/bin:/home/mint/miniconda3/condabin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONPATH": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/confirmation-128-02:/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/confirmation-128-02/isaaclab-training"
+  },
+  "execution_mode": "local-direct",
+  "input": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01b-inputs.json",
+    "sha256": "98ffa9384460cdace5724a33246347cd24c5e878f742a27224e31f8f2440fbcd"
+  },
+  "plan": {
+    "attempt_dir": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01B",
+    "contract": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01b-contract.json",
+      "sha256": "64dc5758a26377b79582507d896e8984f21279ed630613bda282a77008e46437"
+    },
+    "extension_inputs": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXTENSION_INPUTS_CANDIDATE_02.json",
+      "sha256": "7d36890b12c5da14caf67905197bdad2298c080080e7049be6d714d5cce35dff"
+    },
+    "ipc_wrapper": {
+      "path": "/usr/bin/bwrap",
+      "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+    },
+    "native_dir": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-CONFIRM-128-SEED-01B",
+    "native_volume": {
+      "path": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/volume.json",
+      "sha256": "918a796e9539526f7a95f39105c6752d6c4aaea972766e27c89f9eaf3df60a48"
+    },
+    "output_root": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01B",
+    "predecessor_receipt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U768-01/receipt.json",
+      "sha256": "f98d57f031abb16421b1f7b7bfb26bea02424010199766dfc7f48777ba4ea4c5"
+    },
+    "resource_policy": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
+      "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
+    },
+    "result_payload_cap_bytes": 25769803776,
+    "result_volume": {
+      "path": "/var/lib/instinctrl-r6-results/J-324fe806adf2c0f0/volume.json",
+      "sha256": "7f7d359907d5e59365cda9574cfc4583cf349b51411b0f0ec6bda526718afc23"
+    },
+    "run_id": "R6-DIRECT-CONFIRM-128-SEED-01B",
+    "schema_version": "r6-direct-run-inputs/1",
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/confirmation-128-02",
+    "source": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-02.json",
+      "sha256": "10943d1820164fb4ea6266cd725122a81343ab2903990bfb53f44b4c980f4ea2"
+    },
+    "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
+  }
+}

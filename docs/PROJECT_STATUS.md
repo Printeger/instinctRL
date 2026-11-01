@@ -1,3 +1,13 @@
+# R6 确认首流SEED-01B已进入监督器RUNNING
+
+2026-11-02：准确输入和tag已推送（bebaab05），启动CPU预检再次通过。
+监督器2774927/starttime30039593与子进程2776598/starttime30046492准确身份均存活。
+已越过旧系统Python重复科学校验失败点；当前只确认RUNNING，尚不据此认定训练更新完成。
+run目录docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01B；
+作业由普通Python监督器管理，禁止重复启动。原SEED-01启动前失败证据保留。
+RustDesk保持连接，holdout未揭晓；首流验收、其余两流和最终交付仍待完成。
+下方保留历史状态。
+
 # R6 SEED-01B 准确输入与CPU预检通过
 
 2026-11-02：监督器解释器修复独审通过，真实输入的科学预检及系统计账通过。
