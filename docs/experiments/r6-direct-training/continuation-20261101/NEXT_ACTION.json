@@ -39,5 +39,10 @@
   "status": "RUNNING",
   "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
   "supervisor_started": true,
-  "training_started": false
+  "training_progress": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_03_TRAINING_PROGRESS.json",
+    "sha256": "72ca2f6c94e7e9da960483b7378014c94e67aa9affc58d413cca55db2485c4f8"
+  },
+  "training_started": true,
+  "workload_status": "TRAINING"
 }

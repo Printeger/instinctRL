@@ -1,0 +1,44 @@
+{
+  "run_id": "R6-DIRECT-TRAIN-02",
+  "report": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis-cuda/report.json",
+    "sha256": "d7575a0dfd41f01e2db680815e23dccceb4501d8c2c756fb3d0be0bf9eca89c5"
+  },
+  "sources": [
+    {
+      "bytes": 52017,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-TRAIN-02/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/updates.jsonl.r6z",
+      "sha256": "8639a7d3cc1fa29e89516f22b6813e6f2be1ac8e12c46a2467caa8b4382441a1"
+    },
+    {
+      "bytes": 53043,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-TRAIN-02/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/updates.jsonl.r6z",
+      "sha256": "0e74542ddc2b38a5aa248f3cc673ab19c46185666b65c7ab0e61472d1cea3fab"
+    }
+  ],
+  "exporter": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/export_training_curves.py",
+    "sha256": "546c2674541efe2597c1dd3d625df7b30374fce5b84c4b22218c281494db1518"
+  },
+  "rows": 128,
+  "update_range": [
+    641,
+    768
+  ],
+  "outputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/train-02-curves/updates.csv",
+      "sha256": "2885a45486d19d96773c5b1aa5e91f269a4405561108d5a681de49e45e1e768a"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/train-02-curves/training_curves.png",
+      "sha256": "4178d4940681401c7321f5a290933a7195e8c3784d11076161ba4b364fbf45d4"
+    }
+  ],
+  "limitations": [
+    "Return target is a PPO rollout target, not episodic reward or evaluation success.",
+    "Dashed boundary separates the two registered curriculum phases.",
+    "No smoothing, no learning-gain inference, no replacement of scientific audit.",
+    "Report issues and native cleanup failure remain unchanged."
+  ]
+}
