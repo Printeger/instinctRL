@@ -1,0 +1,22 @@
+{
+  "execution_risk": "Full confirmation contract validation traverses expensive freeze evidence; diagnostic child deadline is hardcoded to 30 seconds. Measure CPU validation and apply explicit bounded engineering adaptation without dropping validation.",
+  "findings": [
+    "All 230 snapshot source hashes matched.",
+    "CUDA diagnostic, probability_replay, recompute, networks, checkpoint, original probability gate, codec and direct_contract hashes unchanged from trusted train-02b.",
+    "12 differences are previously reviewed engineering, evaluation, analysis and confirmation validation changes.",
+    "Original tolerances, batch size 512, seeded-reset backend and zero sampling/training semantics unchanged."
+  ],
+  "limitations": [
+    "No CUDA replay performed by reviewer.",
+    "Not scientific training acceptance.",
+    "CPU probability mismatch at index 20 remains.",
+    "Holdout not accessed."
+  ],
+  "reviewer": "/root/baseline_scientific_review",
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-02.json",
+    "sha256": "10943d1820164fb4ea6266cd725122a81343ab2903990bfb53f44b4c980f4ea2"
+  },
+  "status": "PASS_SCOPED",
+  "verified_source_files": 230
+}
