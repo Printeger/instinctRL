@@ -1,0 +1,194 @@
+{
+  "checkpoints": [
+    {
+      "finite_tensor_tree": true,
+      "metadata_verified": true,
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-TRAIN-02/results/research-r6-training/checkpoints/u768.pt",
+        "sha256": "8f6bb79650218332159e24d552f17ea88498d015fde293cc5733e2f8df1b3bf6"
+      },
+      "state_audit": {
+        "actor_critic_state_loaded": true,
+        "adam_parameter_counts": {
+          "actor": 16,
+          "critic": 10
+        },
+        "adam_state_loaded": true,
+        "adam_step": 6144,
+        "cpu_rng_payload_parseable": true,
+        "cuda_rng_semantics_verified": false,
+        "cuda_rng_state_count": 1,
+        "optimizer_step_executed": false,
+        "rng_restored": false,
+        "strict_checkpoint_restore_performed": false
+      },
+      "strict_restore_performed": false,
+      "update": 768
+    }
+  ],
+  "complete_stream_count": 30,
+  "cpu_probability_replay_error": "probability gate mismatch at frozen index 31",
+  "expected_counters": {
+    "actor_optimizer_steps": 1024,
+    "completed_policy_steps": 2048,
+    "completed_updates": 128,
+    "critic_optimizer_steps": 1024,
+    "explicit_resets": 2,
+    "nontraining_transitions": 0,
+    "real_checkpoint_writes": 1,
+    "real_environment_transitions": 65536,
+    "real_optimizer_updates": 128,
+    "training_transitions": 65536
+  },
+  "experiment_id": "R6-DIRECT-TRAIN-02",
+  "issue_count": 1,
+  "learning_gain_established": false,
+  "observed_counters": {
+    "actor_optimizer_steps": 1024,
+    "attempted_policy_steps": 2048,
+    "attempted_updates": 128,
+    "automatic_resets": 64,
+    "completed_policy_steps": 2048,
+    "completed_updates": 128,
+    "critic_optimizer_steps": 1024,
+    "explicit_resets": 2,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 0,
+    "real_checkpoint_writes": 1,
+    "real_environment_transitions": 65536,
+    "real_optimizer_updates": 128,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 65536
+  },
+  "phase": "development",
+  "phases": [
+    {
+      "completed_record": true,
+      "episodes": {
+        "center:1": {
+          "count": 24,
+          "return_sum": -4356.820358276367,
+          "right_censored": 0,
+          "steps": 24000
+        },
+        "center:RUN_END": {
+          "count": 24,
+          "return_sum": -103.38955879211426,
+          "right_censored": 24,
+          "steps": 576
+        },
+        "near_x_wall:1": {
+          "count": 4,
+          "return_sum": -654.6045074462891,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_x_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -14.909330606460571,
+          "right_censored": 4,
+          "steps": 96
+        },
+        "near_y_wall:1": {
+          "count": 4,
+          "return_sum": -695.8253021240234,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_y_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -15.78436017036438,
+          "right_censored": 4,
+          "steps": 96
+        }
+      },
+      "phase": {
+        "index": 0,
+        "kind": "original",
+        "phase_end_update": 704,
+        "phase_start_update": 640,
+        "start_update": 640,
+        "target_update": 704
+      }
+    },
+    {
+      "completed_record": true,
+      "episodes": {
+        "center:1": {
+          "count": 24,
+          "return_sum": -5020.098739624023,
+          "right_censored": 0,
+          "steps": 24000
+        },
+        "center:RUN_END": {
+          "count": 24,
+          "return_sum": -103.52258110046387,
+          "right_censored": 24,
+          "steps": 576
+        },
+        "near_x_wall:1": {
+          "count": 4,
+          "return_sum": -766.7511444091797,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_x_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -16.052038192749023,
+          "right_censored": 4,
+          "steps": 96
+        },
+        "near_y_wall:1": {
+          "count": 4,
+          "return_sum": -886.8671722412109,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_y_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -15.486545085906982,
+          "right_censored": 4,
+          "steps": 96
+        }
+      },
+      "phase": {
+        "index": 1,
+        "kind": "robust",
+        "phase_end_update": 768,
+        "phase_start_update": 704,
+        "start_update": 704,
+        "target_update": 768
+      }
+    }
+  ],
+  "physical_replay_performed": false,
+  "probability_gate_recomputed": false,
+  "probability_replay": null,
+  "rng_initialization_audit": {
+    "actual_rollout_rng_use_verified": false,
+    "cpu_seed_derivation_verified": true,
+    "cuda_rng_state_count": 1,
+    "cuda_seed_derivation_verified": false,
+    "kind": "COMMON_U640_NEW_STREAM",
+    "origin_rng_equal": true,
+    "persistence_order_verified": false,
+    "physical_continuity": false,
+    "resume_rng_equal": false,
+    "starting_update": 640,
+    "status": "PASS",
+    "training_seed": 2026102201
+  },
+  "rng_state_semantics_verified": false,
+  "schema_version": "r6-training-summary/1",
+  "scientific_acceptance": false,
+  "start_update": 640,
+  "stream_count": 30,
+  "strict_checkpoint_restore_performed": false,
+  "target_update": 768,
+  "training_seed": 2026102201
+}
