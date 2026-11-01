@@ -1,0 +1,227 @@
+{
+  "schema_version": "r6-post-training-comparison/1",
+  "registration": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_02_PAIRED_COMPARISON.json",
+    "sha256": "f7c3986ba5974675a66ef1520eb5d7a8a012eeb19cef76ceca2959738889d03f"
+  },
+  "baseline_binding": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-03-analysis-fixed/binding.json",
+    "sha256": "74e92e65f29337353af1980eef1888ba25878d14cbc388f10c09b41464e8934f"
+  },
+  "candidate_binding": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u768-01-analysis/binding.json",
+    "sha256": "f27edfe7820bc959676ef56934bb03ed593d92833f6af56eeea6323dbb899d02"
+  },
+  "baseline_summary": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-03-analysis-fixed/summary.json",
+    "sha256": "726dfc71f11910cceeb829085f0d50315d25c62f6736493acc9c8eabdab69141"
+  },
+  "candidate_summary": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u768-01-analysis/summary.json",
+    "sha256": "106e75d73cfbc289031941facdb455746747dc846991565f13b532ad5583a6d4"
+  },
+  "rows": [
+    {
+      "suite": "original",
+      "condition": "S",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "original",
+      "condition": "T",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "original",
+      "condition": "W",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "original",
+      "condition": "X",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "original",
+      "condition": "Z",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "S-clean-low",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "S-clean-high",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "S-noise",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "S-delay-drop",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "X-clean",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "X-noise",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "P-clean",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "P-combined",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "W-near",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "W-middle",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "W-far",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "W-combined",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "stress-S-noise",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "stress-S-combined",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "stress-P-high",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    },
+    {
+      "suite": "development",
+      "condition": "stress-W-high",
+      "total": 32,
+      "baseline_successes": 32,
+      "candidate_successes": 32,
+      "success_count_difference": 0,
+      "success_rate_difference": 0.0
+    }
+  ],
+  "observed_regression": false,
+  "learning_gain_established": false,
+  "conclusion": "All original five and sixteen development conditions are 32/32 for both models. No observed regression; ceiling performance does not establish learning gain or equivalence beyond this evaluation.",
+  "proposed_next_action": "End development at the evaluated +128 update node; independently review the evidence and exact recipe lineage before freezing three-stream confirmation. No evidence currently justifies the optional +256 node.",
+  "independent_review_status": "PENDING",
+  "limitations": [
+    "EXACT_JOB_INVENTORY_AND_MODEL_BINDING",
+    "INDEPENDENT_MEASUREMENT_CHAIN_ACCEPTANCE",
+    "RESET_FORCE_AND_RANDOM_STREAM_AUDIT",
+    "INDEPENDENT_SCIENTIFIC_REVIEW"
+  ],
+  "native_cleanup_errors_preserved": true,
+  "holdout_used": false
+}
