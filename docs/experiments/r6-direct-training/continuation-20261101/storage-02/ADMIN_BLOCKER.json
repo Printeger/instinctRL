@@ -1,0 +1,18 @@
+{
+  "observed_at": "2026-11-01T09:48:39.457190+00:00",
+  "status": "BLOCKED_ADMIN_STORAGE",
+  "consecutive_goal_turns": 3,
+  "native_mount": false,
+  "result_mount": false,
+  "sudo_noninteractive": "password required",
+  "script_hash_checks": "executed successfully without privileged commands",
+  "script_syntax": "PASS",
+  "ready_to_launch": false,
+  "required_external_action": "Run CREATE_STORAGE.sh in local terminal with sudo, then send output and resume goal.",
+  "remaining": [
+    "Exact diagnostic volume manifest pins and CPU preflight",
+    "Same-device probability replay",
+    "New finite training attempt and paired evaluation",
+    "Three-stream confirmation, holdout, independent audit and model/video delivery"
+  ]
+}
