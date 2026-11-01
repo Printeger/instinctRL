@@ -1,0 +1,22 @@
+{
+  "status": "WAITING_FOR_EXACT_CLOSED_RUN",
+  "run_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+  "watcher": {
+    "pid": 3193769,
+    "starttime": "31916388",
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce"
+  },
+  "session_id": 22670,
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-inputs.json",
+    "sha256": "d1b2831297ab6631e58920baab2c98952b80817b590cc53ff598934b01c92937"
+  },
+  "destination": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-analysis",
+  "behavior": [
+    "Ordinary Python waits in five-second intervals; no model calls.",
+    "Requires CLOSED receipt, empty remaining list and all exact recorded owners gone.",
+    "Checks STOP and original input hash, rejects existing destination.",
+    "Runs existing CPU-only tools.r6_direct.analyze with CUDA_VISIBLE_DEVICES empty via exec; never launches training."
+  ],
+  "analysis_complete": false
+}
