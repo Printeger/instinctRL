@@ -1,0 +1,95 @@
+{
+  "analysis_destination": "docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-analysis",
+  "charged_seconds": 4075,
+  "checkpoint": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/checkpoints/u768.pt",
+    "sha256": "6a616a2582190acdf037bf454b5ae3d921120da3ef85916dff5763de9137e07a"
+  },
+  "limitations": [
+    "Reported counters and checkpoint existence are not complete scientific acceptance.",
+    "Original cleanup timeout and exit -15 retained; all recorded process identities absent.",
+    "Other resource reservations retained."
+  ],
+  "process_checks": [
+    {
+      "current": null,
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3139273,
+        "starttime": "31518280"
+      }
+    },
+    {
+      "current": null,
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3141083,
+        "starttime": "31525665"
+      }
+    },
+    {
+      "current": null,
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3141084,
+        "starttime": "31525665"
+      }
+    },
+    {
+      "current": null,
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3145855,
+        "starttime": "31543800"
+      }
+    },
+    {
+      "current": null,
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3145916,
+        "starttime": "31543898"
+      }
+    },
+    {
+      "current": null,
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3145917,
+        "starttime": "31543899"
+      }
+    }
+  ],
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-03/receipt.json",
+    "sha256": "f47ceef8a62aea58b7613b8cc2a60abd897df1cbc9bdb9af5ba68c973cdd6631"
+  },
+  "reported_counters": {
+    "actor_optimizer_steps": 1024,
+    "attempted_policy_steps": 2048,
+    "attempted_updates": 128,
+    "automatic_resets": 64,
+    "completed_policy_steps": 2048,
+    "completed_updates": 128,
+    "critic_optimizer_steps": 1024,
+    "explicit_resets": 2,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 0,
+    "real_checkpoint_writes": 1,
+    "real_environment_transitions": 65536,
+    "real_optimizer_updates": 128,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 65536
+  },
+  "run_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+  "status": "CLOSED_CLEANUP_TIMEOUT_SCIENTIFIC_ANALYSIS_PENDING",
+  "workload_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/state.json",
+    "sha256": "1696d57e9e48e852a922821f114fcbdaba9fbe1eacea54cde5672de28d3ec193"
+  }
+}

@@ -1,4 +1,8 @@
 {
+  "closure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_03_CLOSURE.json",
+    "sha256": "3f5f2852c9aacc0d1741e40df157b4106af5cb7d499a7e3bce5da6827392b6d3"
+  },
   "contract": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-contract-03.json",
     "sha256": "d5adb7e936293db442e9c44877e3a13b4de12e49d4daa579e9065e5e047f0ff4"
@@ -36,7 +40,7 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-02.json",
     "sha256": "10943d1820164fb4ea6266cd725122a81343ab2903990bfb53f44b4c980f4ea2"
   },
-  "status": "RUNNING",
+  "status": "CLOSED_ANALYSIS_PENDING",
   "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
   "supervisor_started": true,
   "training_progress": {
@@ -44,5 +48,5 @@
     "sha256": "72ca2f6c94e7e9da960483b7378014c94e67aa9affc58d413cca55db2485c4f8"
   },
   "training_started": true,
-  "workload_status": "TRAINING"
+  "workload_status": "PASS_PENDING_CLOSE"
 }
