@@ -1,0 +1,23 @@
+{
+  "status": "HISTORICAL_PENDING_SETTLED_ONCE_CURRENT_USAGE_UNKNOWN",
+  "before": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_LEDGER_BEFORE_RECONCILIATION.json",
+    "sha256": "d79c02d723a6b4f82e67aa261f8c55e21d51c2a1ff50becf68bf74a6ce3b1cb0"
+  },
+  "after": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/RESOURCE_LEDGER.json",
+    "sha256": "1de425b99dd0ff34a9832d00761118d91eec3ed98d7482996d9011c7951b9edc"
+  },
+  "pending_source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/MODEL_USAGE_PENDING_TRAIN_01.json",
+    "sha256": "df938a3f13a4a0634fe793ed7d4e5e6c752f01b022ac9bbafc9c313321151dda"
+  },
+  "pending_charge": 10,
+  "historical_model_total": 506,
+  "train_01_lifetime_seconds_charged": 2572,
+  "actual_training_transitions": null,
+  "other_reservations": "PRESERVED",
+  "current_platform_usage": "UNKNOWN",
+  "raw_access": "BLOCKED: unmounted root-only image; sudo requires password",
+  "new_live_runs": 0
+}

@@ -1,3 +1,18 @@
+# R6 接续：新资源授权已接线，旧账已结算，原件访问阻塞
+
+2026-11-01：新准确输入可绑定 RESOURCE_POLICY_USER_AMENDMENT.json 的 pin，
+取消项目累计 cap 与保护额度比较；历史输入不改写，单次科学终点、STOP 与物理可用性保留。
+18 项资源/监督/锁/确认 CPU 检查通过。TRAIN-01 所属记录进程均不存在；
+其完整生命周期按回执向上取整结算 2572 秒，其他预留保留。
+旧待记 10 次调用已按源 hash 与条目键一次性入账，历史模型累计506；当前平台总用量 UNKNOWN。
+结算前账本原件及对照见 continuation-20261101/RESOURCE_RECONCILIATION.json。
+
+结果镜像仍 root:root 0600、原路径未挂载，sudo -n 仍需密码；连续三轮确认此阻塞。
+须管理员按 docs/goals/InstinctRL_R6_Continuation_Plan.md 的只读挂载步骤恢复访问。
+实际 update、checkpoint/Adam/RNG/raw 完整性尚未验证，不能发行下一科学作业。
+后续配对评价、按证据迭代、三流确认、保留集、独审和模型录像交付均未完成。
+本轮没有重启 TRAIN-01、启动训练或 GPU 探测。下方保留历史状态。
+
 # R6 接续方案已交付；实际启动仍有前置缺口
 
 2026-11-01：新增 `docs/goals/InstinctRL_R6_Continuation_Plan.md`、

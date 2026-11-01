@@ -1,0 +1,59 @@
+{
+  "charges": [
+    {
+      "charge": 1,
+      "goal_tokens_at_entry": 1448088,
+      "reason": "Platform continuation: exact live identity verification"
+    },
+    {
+      "charge": 1,
+      "goal_tokens_at_entry": 1450688,
+      "reason": "Platform continuation: inspect candidate evaluation dependency chain and preserve pending model charges"
+    },
+    {
+      "charge": 1,
+      "goal_tokens_at_entry": 1460658,
+      "reason": "Platform continuation: verify exact training state; no retry or model worker"
+    },
+    {
+      "charge": 1,
+      "goal_tokens_at_entry": 1463579,
+      "reason": "Platform continuation: exact process check; preserve automatic session charge"
+    },
+    {
+      "charge": 1,
+      "goal_tokens_at_entry": 1466360,
+      "reason": "Platform continuation: exact process check while local supervisor runs"
+    },
+    {
+      "charge": 1,
+      "goal_tokens_at_entry": 1468669,
+      "reason": "Platform continuation: exact live identity verification"
+    },
+    {
+      "charge": 1,
+      "goal_tokens_at_entry": 1471049,
+      "reason": "Platform continuation: inspect first training evidence and exact identities"
+    },
+    {
+      "charge": 1,
+      "goal_tokens_at_entry": 1476207,
+      "reason": "Platform continuation: preserve ordinary-model budget boundary and live handoff"
+    },
+    {
+      "charge": 1,
+      "goal_tokens_at_entry": 1479189,
+      "protected_budget_infringement": true,
+      "reason": "Platform automatic continuation after ordinary budget exhausted; accounting only, no training poll"
+    },
+    {
+      "charge": 1,
+      "goal_tokens_at_entry": 1481628,
+      "protected_budget_infringement": true,
+      "reason": "Platform automatic continuation: third consecutive budget blocker audit and goal handoff"
+    }
+  ],
+  "not_yet_in_ledger": true,
+  "reason": "Supervisor owns ledger while live; append these charges exactly once after closure, without overwriting its reservation state.",
+  "schema_version": "r6-direct-model-pending/1"
+}
