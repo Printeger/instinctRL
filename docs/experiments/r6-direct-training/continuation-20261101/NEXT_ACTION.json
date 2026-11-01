@@ -43,8 +43,12 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
     "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
   },
-  "status": "RUNNING",
+  "status": "CLOSED_ANALYSIS_RUNNING_NEXT_INPUT_PREFLIGHT",
   "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
   "supervisor_started": true,
-  "workload_status": "EVALUATING"
+  "workload_status": "PASS_PENDING_CLOSE",
+  "closure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/BASELINE_CLOSURE.json",
+    "sha256": "e34657bd613bc4fc93e9c84c4349e4b4c8ac9ac6dc3b679f5dd7c578cabf9ca7"
+  }
 }
