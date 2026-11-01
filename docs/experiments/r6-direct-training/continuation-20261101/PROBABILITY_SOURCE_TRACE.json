@@ -1,0 +1,29 @@
+{
+  "source_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/driver.py",
+      "sha256": "9eafe508e5f26fc88a6d1e0f5dad666e96298b1b9a82bb598bc32c7df4ef3a59"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "700df3daa005cabcc4df929132a9dfa43c2c6663067c53cabc503459a8504fed"
+    },
+    {
+      "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/envs/direct_rl_env.py",
+      "sha256": "3a7573303d83ec8c816d11ca6e8c8997c92f6765ae5d2e0d2a369e65d2cec3c0"
+    },
+    {
+      "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/utils/seed.py",
+      "sha256": "ee5fc5e55e8c82c93e6766d35f0fe3825d20bc81a1829f7f83a5354a8c422061"
+    }
+  ],
+  "retained_input_order": "bind distributions -> retain rollout -> before_update gate -> trainer.update",
+  "seeded_reset_path": "backend._preserving_reset -> environment.reset(seed) -> DirectRLEnv.seed -> configure_seed(default torch_deterministic=False)",
+  "source_implied_settings": {
+    "cudnn.benchmark": true,
+    "cudnn.deterministic": false
+  },
+  "limitation": "Original runtime flags were not separately persisted; source trace is not proof of exact original kernel selection. No changed tolerance or passed replay claimed.",
+  "next_diagnostic": "Persist current backend flags and per-field errors; compare source-implied seeded-reset settings without random draws or simulator initialization.",
+  "cpu_tests_passed": 13
+}

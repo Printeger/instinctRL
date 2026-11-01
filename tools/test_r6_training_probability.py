@@ -43,6 +43,18 @@ def test_unregistered_device_rejected(sample):
         recompute(*sample,device='cuda:1')
 
 
+def test_failed_gate_emits_metrics_without_waiving_failure(sample):
+    origin,data,plan=sample
+    data['old_log_probabilities'][511,0]+=.1
+    observations=[];before=torch.get_rng_state().clone()
+    with pytest.raises(RuntimeError,match='probability gate mismatch'):
+        recompute(origin,data,plan,diagnostic=observations.append)
+    assert len(observations)==1
+    assert observations[0]['metrics']['log_probability']['first_failed_indices']==[511]
+    assert observations[0]['stored_concentrations_logp']['failed_count']==1
+    assert torch.equal(before,torch.get_rng_state())
+
+
 @pytest.mark.parametrize('fault',['alpha','logp','actions','update','source','clock','weights','privileged','nonfinite','dtype'])
 def test_mismatches_fail_without_rng_mutation(sample,fault):
     origin,data,plan=sample

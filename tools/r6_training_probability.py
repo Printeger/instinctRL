@@ -4,7 +4,7 @@ CPU is the offline default; explicit CUDA replay belongs in a supervised job.
 This does not restore Adam, reproduce GPU sampling, or establish learning gain.
 """
 
-def recompute(origin,data,plan,*,device='cpu'):
+def recompute(origin,data,plan,*,device='cpu',diagnostic=None):
     import torch
     from instinctlab.training.networks import HistoryActor,NetworkConfig,validate_policy
     from instinctlab.training.checkpoint import _validate_model_state
@@ -48,6 +48,21 @@ def recompute(origin,data,plan,*,device='cpu'):
                 alpha.append(output.alpha.cpu());beta.append(output.beta.cpu())
                 logp.append(actor.log_probability_from_output(output,data['actions'][start:start+batch_size].to(device)).cpu())
         values=[torch.cat(v) for v in (logp,alpha,beta)]
+        if diagnostic is not None:
+            metrics={}
+            for label,key,actual in zip(('log_probability','alpha','beta'),('old_log_probabilities','old_alpha','old_beta'),values):
+                delta=(data[key]-actual).abs();bad=delta>1e-6+1e-5*actual.abs()
+                indices=bad.flatten().nonzero().flatten()[:8].tolist()
+                metrics[label]=dict(maximum_absolute_error=float(delta.max()),failed_count=int(bad.sum()),first_failed_indices=indices)
+            # Separate Beta arithmetic from the actor forward calculation.
+            action=data['actions'].to(device).clamp(config.action_log_epsilon,1-config.action_log_epsilon)
+            saved_logp=torch.distributions.Beta(data['old_alpha'].to(device),data['old_beta'].to(device)).log_prob(action).sum(-1,keepdim=True).cpu()
+            delta=(data['old_log_probabilities']-saved_logp).abs()
+            diagnostic(dict(metrics=metrics,stored_concentrations_logp=dict(maximum_absolute_error=float(delta.max()),
+                failed_count=int((delta>1e-6+1e-5*saved_logp.abs()).sum())),forward_batch_size=batch_size,
+                backend=dict(cudnn_benchmark=torch.backends.cudnn.benchmark,cudnn_deterministic=torch.backends.cudnn.deterministic,
+                    cudnn_allow_tf32=torch.backends.cudnn.allow_tf32,matmul_allow_tf32=torch.backends.cuda.matmul.allow_tf32),
+                replay_device=device,atol=1e-6,rtol=1e-5))
         probability_distribution_gate(data['old_log_probabilities'].flatten().tolist(),values[0].flatten().tolist(),
             data['old_alpha'].flatten().tolist(),values[1].flatten().tolist(),
             data['old_beta'].flatten().tolist(),values[2].flatten().tolist(),atol=1e-6,rtol=1e-5)

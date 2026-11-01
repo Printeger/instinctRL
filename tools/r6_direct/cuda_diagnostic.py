@@ -48,7 +48,9 @@ def child(plan):
     enforce(policy)
     if 'probability_replay' in plan:
         from tools.r6_direct.probability_replay import replay
-        atomic(native/'probability_result.json',replay(plan['probability_replay']))
+        result=replay(plan['probability_replay'])
+        atomic(native/'probability_result.json',result)
+        if result['result']['status']!='PASS':raise RuntimeError('PROBABILITY_REPLAY_FAILED_SEE_RESULT')
         return
     library=ctypes.CDLL('libcuda.so.1');result=library.cuInit(0)
     name=ctypes.c_char_p();library.cuGetErrorName(result,ctypes.byref(name))

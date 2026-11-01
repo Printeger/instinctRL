@@ -16,7 +16,11 @@ def replay(request):
     with ChunkReader(checked(request['retained']),run_id=plan['experiment_id'],logical_name=name,
                      maximum_raw_bytes=plan['storage']['maximum_raw_file_bytes']) as reader:
         data=torch.load(reader,map_location='cpu',weights_only=True)
-    result=recompute(origin,data,plan,device='cuda:0')
-    return dict(result=result,inputs=request,torch_version=torch.__version__,
+    observations=[]
+    try:
+        result=recompute(origin,data,plan,device='cuda:0',diagnostic=observations.append)
+    except (ValueError,RuntimeError) as error:
+        result=dict(status='FAIL',error=repr(error))
+    return dict(result=result,observations=observations,inputs=request,torch_version=torch.__version__,
                 device_name=torch.cuda.get_device_name(0),training_transitions=0,optimizer_updates=0,
                 scientific_acceptance=False)
