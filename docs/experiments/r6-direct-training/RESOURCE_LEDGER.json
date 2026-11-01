@@ -811,6 +811,52 @@
         "native_dir": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-CONFIRM-128-SEED-01B"
       },
       "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
+    },
+    {
+      "id": "R6-DIRECT-CONFIRM-128-SEED-01C",
+      "purpose": "confirmation_delivery",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01C/receipt.json",
+        "sha256": "f99aa29c9360222a96f91a2a63ec0efd4b8c1a9698bffbc9d84e5a77b635d3d0"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
+        "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 4065,
+        "live_starts": 1,
+        "live_wall_seconds": 4065,
+        "nontraining_transitions": 0,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_checkpoint_writes": 1,
+        "training_transitions": 65536
+      },
+      "settlement": {
+        "charged_seconds": 4065,
+        "original_resources": {
+          "allocated_gpu_seconds": 7390,
+          "live_starts": 1,
+          "live_wall_seconds": 7390,
+          "nontraining_transitions": 0,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_checkpoint_writes": 1,
+          "training_transitions": 65536
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01C/receipt.json",
+          "sha256": "f99aa29c9360222a96f91a2a63ec0efd4b8c1a9698bffbc9d84e5a77b635d3d0"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01C",
+        "native_dir": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-CONFIRM-128-SEED-01C"
+      },
+      "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
     }
   ],
   "new_used": {
