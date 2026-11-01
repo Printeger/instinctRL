@@ -1,0 +1,18 @@
+{
+  "findings": [
+    "Strict positive integer bounds validated in parent and child.",
+    "Supervisor uses child_seconds; reservation uses declared total covering child + 180 second admission + 30 second cleanup.",
+    "Legacy 30/240 and proposed 180/390 supported; fixed queue and 64MiB log retained.",
+    "Full scientific validation, 512 batch, tolerances, backend and zero sampling unchanged."
+  ],
+  "implementation_sha256": "a9cb377938126e1e23c8e69cd6ef9fba77b55dbd3b2c67119bb283ad185d378b",
+  "independent_cpu_checks": 10,
+  "limitations": [
+    "180 seconds includes contract validation and CUDA replay; completion within the deadline is not guaranteed.",
+    "Diagnostic --check does not execute child scientific replay.",
+    "New frozen implementation and exact plan/source registration required."
+  ],
+  "reviewer": "/root/baseline_scientific_review",
+  "root_cpu_tests": "11 passed in 0.29s",
+  "status": "PASS_SCOPED"
+}

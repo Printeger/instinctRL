@@ -17,6 +17,20 @@ from tools.r6_direct.source import checked
 from tools.r6_direct.run import reserve,supervise
 
 
+def validated_bounds(plan):
+    bounds=plan['bounds']
+    keys=('child_seconds','gpu_and_wall_reservation_seconds','queue_seconds','syscall_log_bytes')
+    if any(type(bounds.get(k)) is not int or bounds[k]<=0 for k in keys):
+        raise ValueError('DIAGNOSTIC_FINITE_INTEGER_BOUNDS')
+    # Admission and syscall storage retain their existing enforced limits.
+    if bounds['queue_seconds']!=180 or bounds['syscall_log_bytes']!=64*1024**2:
+        raise ValueError('DIAGNOSTIC_FIXED_QUEUE_OR_LOG_BOUND')
+    # Include admission and the supervisor's bounded termination/reaping time.
+    if bounds['gpu_and_wall_reservation_seconds']<bounds['child_seconds']+bounds['queue_seconds']+30:
+        raise ValueError('DIAGNOSTIC_TIME_RESERVATION')
+    return bounds
+
+
 def prelaunch(directory, gate, plan, plan_pin, run_gate):
     """Close a failed admission attempt even when no CUDA child was created."""
     from training_workloads.unified_h1.config import resource_binding_pins
@@ -65,6 +79,7 @@ def main():
     install()
     parser=argparse.ArgumentParser();parser.add_argument('--plan',type=Path,required=True);parser.add_argument('--child',action='store_true');parser.add_argument('--check',action='store_true');args=parser.parse_args()
     plan=json.loads(args.plan.read_text())
+    bounds=validated_bounds(plan)
     if args.child:child(plan);return
     if pin(__file__)!=plan['script']:raise RuntimeError('DIAGNOSTIC_SOURCE_DRIFT')
     for key in ('strace','bwrap','python','predecessor_receipt'):checked(plan[key])
@@ -85,7 +100,8 @@ def main():
         if directory.exists() or native.exists():raise FileExistsError('DIAGNOSTIC_ALREADY_STARTED')
         ledger_path=NEW/'RESOURCE_LEDGER.json';ledger=json.loads(ledger_path.read_text())
         imported_budget(ledger)
-        reserve(ledger,plan['run_id'],dict(allocated_gpu_seconds=240,live_wall_seconds=240,live_starts=1,queue_seconds=180),resource_policy=plan.get('resource_policy'))
+        seconds=bounds['gpu_and_wall_reservation_seconds']
+        reserve(ledger,plan['run_id'],dict(allocated_gpu_seconds=seconds,live_wall_seconds=seconds,live_starts=1,queue_seconds=bounds['queue_seconds']),resource_policy=plan.get('resource_policy'))
         ledger['new_reservations'][-1]['output_within_existing_native_volume']=plan['native_volume']
         from training_workloads.unified_h1.native_volume import validate
         binding=validate(plan['native_volume'])
@@ -113,8 +129,8 @@ def main():
             '-e','trace=%file,ioctl,prctl,mmap,mprotect','-o',str(native/'syscalls.log'),
             plan['python']['path'],'-B',plan['script']['path'],'--plan',str(args.plan.resolve()),'--child']
         atomic(directory/'RUN_INPUTS.json',dict(plan=plan,argv=argv,environment=env))
-        resource.setrlimit(resource.RLIMIT_FSIZE,(64*1024**2,64*1024**2))
-        result=supervise(argv,cwd=plan['snapshot'],env=env,directory=directory,deadline_seconds=30,
+        resource.setrlimit(resource.RLIMIT_FSIZE,(bounds['syscall_log_bytes'],bounds['syscall_log_bytes']))
+        result=supervise(argv,cwd=plan['snapshot'],env=env,directory=directory,deadline_seconds=bounds['child_seconds'],
             stop=lambda:bool(stop_paths()) or (directory/'STOP').exists())
         ledger['new_reservations'][-1]['receipt']=pin(directory/'receipt.json');ledger['status']='WAITING_FOR_ANALYSIS';atomic(ledger_path,ledger)
         sys.exit(0 if result['exit_code']==0 and not result['error'] else 1)
