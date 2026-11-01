@@ -1,0 +1,98 @@
+{
+  "batch": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-batch.json",
+    "sha256": "368704cb022af1927d49af4d7d537c1edc82b6ce21f7f116456222dd191a3dda"
+  },
+  "builder_exit_code": 0,
+  "contracts": [
+    {
+      "assignment_index": 1,
+      "budgets": {
+        "automatic_resets": 193600,
+        "checkpoint_writes": 0,
+        "explicit_resets": 21,
+        "initialization_ticks": 10,
+        "live_process_starts": 1,
+        "nontraining_transitions": 193600,
+        "optimizer_updates": 0,
+        "simulator_initializations": 1,
+        "training_transitions": 0,
+        "wall_seconds": 3600
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-contract.json",
+        "sha256": "d4e3f68b26907a5af3c094ed8121878dbf066b4226ab62bd20baa12e056d69f2"
+      },
+      "final_seed": 1812183990,
+      "request": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-contract-request.json",
+        "sha256": "223a66904252b67774d6bfe0d96b1d46c7abaaa60ba8f9df6f524856de2ca15c"
+      },
+      "run_id": "R6-DIRECT-FINAL-SEED-01",
+      "training_seed": 2026102202
+    },
+    {
+      "assignment_index": 2,
+      "budgets": {
+        "automatic_resets": 193600,
+        "checkpoint_writes": 0,
+        "explicit_resets": 21,
+        "initialization_ticks": 10,
+        "live_process_starts": 1,
+        "nontraining_transitions": 193600,
+        "optimizer_updates": 0,
+        "simulator_initializations": 1,
+        "training_transitions": 0,
+        "wall_seconds": 3600
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-contract.json",
+        "sha256": "2070fa28ceab22f48a2006be31444ab89e661daa4a199d4864b477a35685e549"
+      },
+      "final_seed": 1812183990,
+      "request": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-contract-request.json",
+        "sha256": "23ab031fc2dde7bb20471ca0d4f48cd08af5e340f5e550637f8af459d16d877e"
+      },
+      "run_id": "R6-DIRECT-FINAL-SEED-02",
+      "training_seed": 2026102203
+    },
+    {
+      "assignment_index": 3,
+      "budgets": {
+        "automatic_resets": 193600,
+        "checkpoint_writes": 0,
+        "explicit_resets": 21,
+        "initialization_ticks": 10,
+        "live_process_starts": 1,
+        "nontraining_transitions": 193600,
+        "optimizer_updates": 0,
+        "simulator_initializations": 1,
+        "training_transitions": 0,
+        "wall_seconds": 3600
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-contract.json",
+        "sha256": "402a15277acdaf065dc87c6e98a6d95c110c9ac8c424518dcbb030bae125ba11"
+      },
+      "final_seed": 1812183990,
+      "request": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-contract-request.json",
+        "sha256": "917ca4c71942f746deb2e90d59cbe407eaa1d40c4dfc98c82502a62852136e37"
+      },
+      "run_id": "R6-DIRECT-FINAL-SEED-03",
+      "training_seed": 2026102204
+    }
+  ],
+  "gpu_started": false,
+  "limitations": [
+    "Worker preflight and closed predecessor pins still required per evaluation",
+    "CPU preparation is not final evaluation acceptance"
+  ],
+  "run_inputs_prepared": false,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
+    "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
+  },
+  "status": "PASS_CPU_CONTRACT_PREPARATION"
+}
