@@ -1,0 +1,42 @@
+{
+  "contracts": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01-contract.json",
+      "sha256": "7b2f42c40416cbb4abf914e8bea5b0c111d58758de8076110337e512157d4a6c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-contract.json",
+      "sha256": "1c350dfb9e21bc85189f39eb147d36676d1a5599c2ad1b7288da2b4b8996a82f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-contract.json",
+      "sha256": "d0aaa7da55d6d05550ac87e1783e54900a3f35a3547e47e24d311c1b4fbbb398"
+    }
+  ],
+  "freeze": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/freeze.json",
+    "sha256": "78492061175b41b4bc94b58211ad6411fab4c6e3f4bed5142b0e7f8ce0af1c60"
+  },
+  "holdout_revealed": false,
+  "mounted": {
+    "native": false,
+    "result": false
+  },
+  "plans": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/plans.json",
+    "sha256": "659acde51f8aff6e431cb484640e530634cfa4aa1086455f583a540f6ed83d6f"
+  },
+  "remaining": [
+    "Administrator create new volumes",
+    "Verify actual volume identity/mount/options/capacity and hashes",
+    "Create exact run inputs with predecessor closure; worker CPU preflight",
+    "Commit tag push exact inputs; launch frozen confirmation streams"
+  ],
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-01.json",
+    "sha256": "1b9387283bf02a355b3637fe7a3e43b9498368d5b14c9582238761c383c6c5c9"
+  },
+  "status": "CPU_CONTRACTS_COMPLETE_STORAGE_NOT_MOUNTED",
+  "training_started": false,
+  "worker_preflight": "NOT_YET_RUN_REQUIRES_ACTUAL_VOLUME_MANIFESTS"
+}

@@ -1,3 +1,14 @@
+# R6 三流确认契约CPU检查完成；等待管理员创建新卷
+
+2026-11-01：冻结配方独审PASS，三份seed-01/02/03-contract.json已生成并核对。
+各流共同u640→u768、128 updates/65536 transitions；总196608 transitions为计划值，尚未训练。
+confirmation-128/CONTRACTS_CPU_CHECK.json记录准确pins；最终worker预检还需真实卷清单。
+J-324fe806adf2c0f0 native/results两挂载均缺失，sudo非交互要求密码。
+需用户执行storage-confirmation-01/CREATE_STORAGE.sh创建新96GiB结果及1.5GiB日志卷。
+NEXT_ACTION已标WAITING_ADMIN_STORAGE，START_NEXT_RUN不再指向已完成旧评价。
+RustDesk保持连接，未揭晓holdout。三流训练、最终评价、独审和模型录像交付未完成。
+下方保留历史状态。
+
 # R6 128更新确认配方冻结已获独立审核通过
 
 2026-11-01：confirmation-128/freeze-review.json 为 PASS_R6_RECIPE_FREEZE。

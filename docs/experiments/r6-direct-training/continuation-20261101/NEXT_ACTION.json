@@ -1,29 +1,26 @@
 {
-  "independent_review": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_02_SUPPLEMENTAL_INDEPENDENT_REVIEW.json",
-    "sha256": "0b0086e476dba8a179b0141165475088b692e940ad51c3fdaf57aea95e4270bd"
+  "administrator_script": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/storage-confirmation-01/CREATE_STORAGE.sh",
+  "contract": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01-contract.json",
+    "sha256": "7b2f42c40416cbb4abf914e8bea5b0c111d58758de8076110337e512157d4a6c"
   },
-  "inputs": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/u768-inputs.json",
-    "sha256": "be4aa9b06ff2c8966aa3518e12d7c15b38e6c62e1aea5d72efa1012e865ad3f7"
+  "freeze": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/freeze.json",
+    "sha256": "78492061175b41b4bc94b58211ad6411fab4c6e3f4bed5142b0e7f8ce0af1c60"
   },
-  "nontraining_transitions": 193600,
-  "operation": "evaluate",
-  "preflight": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/U768_PREFLIGHT.json",
-    "sha256": "4f83d263d81fa03d00e4a1e168bf41bf74f9d13f60f86af0d24072aaa18ff9d8"
+  "must_not_rerun_previous": true,
+  "next_run_id": "R6-DIRECT-CONFIRM-128-SEED-01",
+  "operation": "train",
+  "previous_completed_run": "R6-DIRECT-PAIR-U768-01",
+  "ready_to_launch": false,
+  "reason": "sudo requires password; new native/results volumes are not mounted. Exact run inputs require real volume manifest hashes.",
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-01.json",
+    "sha256": "1b9387283bf02a355b3637fe7a3e43b9498368d5b14c9582238761c383c6c5c9"
   },
-  "repair_review": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/EVALUATION_CONTRACT_REPAIR_REVIEW.json",
-    "sha256": "128f5186362389be115f7021e6ea56bd0d24ecc861972f594d5b14d3fa2036e5"
-  },
-  "run_id": "R6-DIRECT-PAIR-U768-01",
-  "scientific_acceptance": false,
-  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/paired-02",
-  "source_commit": "a09f899e46ae5bfee2bf30ce4cb19b918d64360d",
-  "status": "READY_TO_LAUNCH",
-  "training_analysis": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis-cuda/binding.json",
-    "sha256": "681e72ec90b8fdf85c10cc01bea89cd3518c9932fc24916ba8b575cab32a66f1"
+  "status": "WAITING_ADMIN_STORAGE",
+  "storage_plan": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/storage-confirmation-01/PLAN.json",
+    "sha256": "9a112a6224c537c04ac284f611186d545572a5b229ab0993597c149a80ce6e9e"
   }
 }
