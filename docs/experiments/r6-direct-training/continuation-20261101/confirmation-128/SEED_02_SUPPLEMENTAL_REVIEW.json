@@ -1,0 +1,22 @@
+{
+  "status": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "Final seed02 supplemental training analysis binding usable as evidence for subsequent final-freeze review.",
+  "sha256": {
+    "report": "10c098c11e9310a365ef90db0a96c85c753da9f8b0e92a51f73f12516f2f9691",
+    "summary": "1e4b31ec4add9696a54256921dffec55c69f4a0de635cf79cdd9886c1b9c3c61",
+    "binding": "3d778cdc4a38f941d702c8e7aa884b64d14b6f623074d5a031672be578e5fd0b"
+  },
+  "findings": [
+    "All binding reference pins verified; report and summary consistent.",
+    "Only issue_count, probability_replay and probability_gate_recomputed changed relative to original CPU summary.",
+    "Original inputs unchanged and not deleted; all stream records identical,30/30 complete,128updates65536transitions1checkpoint,issues empty.",
+    "Bound to exact previously reviewed CUDA07 envelope."
+  ],
+  "limitations": [
+    "Original CPU index17 mismatch and native -15/DIRECT_CLEANUP_TIMEOUT retained.",
+    "Reviewer did not repeat full raw replay.",
+    "Does not establish GPU sampling reproduction, full RNG semantics, physical integration, learning gain or final acceptance.",
+    "No files written, GPU launched or holdout read by reviewer."
+  ]
+}
