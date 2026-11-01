@@ -143,3 +143,27 @@ def test_closed_candidate_cannot_switch_model_or_inputs(closed,fault):
     if fault=='other_input':r['inputs'].append(replay.pin(closed.write('unrelated.json',{})['path']))
     with pytest.raises((RecoveryError,ValueError)):closed.bind()
 
+
+
+def test_baseline_permutation_seed_is_bound_to_checkpoint(case):
+    import torch
+    selected=case.selected;selected['selection']['role']='baseline_control'
+    saved=dict(selected['method']['ppo'],permutation_seed=1701)
+    path=case.root/'baseline.pt';torch.save({'ppo_config':saved},path)
+    selected['model']['checkpoint']=file_pin(path)
+    actual=case.binding['actual_method_binding']
+    actual.update(before_ppo=copy.deepcopy(saved),actual_ppo=copy.deepcopy(saved),strict_resume=False)
+    m.validate_method_binding(case.binding,selected)
+    actual['actual_ppo']['permutation_seed']=selected['model']['training_seed']
+    with pytest.raises(RecoveryError,match='METHOD_BINDING'):
+        m.validate_method_binding(case.binding,selected)
+    actual['actual_ppo']=copy.deepcopy(saved)
+    actual['before_ppo']['permutation_seed']+=1
+    with pytest.raises(RecoveryError,match='CHECKPOINT_PPO_BINDING'):
+        m.validate_method_binding(case.binding,selected)
+
+
+def test_trained_candidate_permutation_seed_remains_strict(case):
+    case.binding['actual_method_binding']['actual_ppo']['permutation_seed']=1701
+    with pytest.raises(RecoveryError,match='METHOD_BINDING'):
+        m.validate_method_binding(case.binding,case.selected)

@@ -43,7 +43,18 @@ def validate_binding(binding,selected):
 def validate_method_binding(binding,selected):
     model=selected['model'];method=selected['method']
     actual=binding['actual_method_binding'];env=actual['actual_environment']
-    expected_ppo=dict(method['ppo'],permutation_seed=model['training_seed'])
+    permutation_seed=model['training_seed']
+    if selected['selection']['role']=='baseline_control':
+        # apply_method(resume=False) preserves the frozen checkpoint's PPO
+        # permutation seed. Its training metadata seed is a separate field.
+        import torch
+        checkpoint=checked(model['checkpoint'])
+        saved_ppo=torch.load(checkpoint,map_location='cpu',weights_only=True)['ppo_config']
+        checked(model['checkpoint'])
+        if actual.get('before_ppo')!=saved_ppo:
+            raise RecoveryError('CANDIDATE_ANALYSIS_CHECKPOINT_PPO_BINDING')
+        permutation_seed=saved_ppo['permutation_seed']
+    expected_ppo=dict(method['ppo'],permutation_seed=permutation_seed)
     if (actual['schema_version']!='r6-actual-method-binding/1' or actual['method_sha256']!=base.object_sha(method)
             or actual['actual_ppo']!=expected_ppo or actual['mean_prior_weight']!=method['mean_prior_weight']
             or actual['unchanged_weights_adam_moments_and_counters']is not True
