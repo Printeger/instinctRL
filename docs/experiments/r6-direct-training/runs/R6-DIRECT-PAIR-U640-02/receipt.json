@@ -1,0 +1,48 @@
+{
+  "child": {
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+    "pid": 2631094,
+    "starttime": "28809183"
+  },
+  "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+  "exit_code": -15,
+  "log_bytes": {
+    "stderr": 485,
+    "stdout": 374575
+  },
+  "owned_processes": [
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 2631094,
+      "starttime": "28809183"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 2631095,
+      "starttime": "28809183"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 2632955,
+      "starttime": "28816473"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 2633000,
+      "starttime": "28816530"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 2633001,
+      "starttime": "28816531"
+    }
+  ],
+  "parent": {
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+    "pid": 2630931,
+    "starttime": "28808587"
+  },
+  "remaining": [],
+  "status": "CLOSED",
+  "wall_seconds": 347.35080849099904
+}

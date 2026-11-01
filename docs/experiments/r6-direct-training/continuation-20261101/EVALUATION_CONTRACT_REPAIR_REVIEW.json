@@ -1,0 +1,29 @@
+{
+  "status": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "files": {
+    "implementation": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/task/evaluation_reward.py",
+      "sha256": "e4c68c680d046e05cc21f01dc098cb199b4b347993c94d4c3fbe147b6382c53a"
+    },
+    "tests": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_direct/test_evaluation_reward.py",
+      "sha256": "0d0da0ae838db6b55b08b5693b4c91283d3ea51a1cfd398c423dc9206d2a0f7b"
+    }
+  },
+  "findings": [
+    "Actual run_block passes runtime contract; baseline-only check incorrectly rejects candidate evaluation",
+    "Exact baseline/evaluate/final mode matching and strict integer-zero learning budgets",
+    "Normal reward computation and all eight unavailable-startup conditions unchanged",
+    "Nontraining flag and PPO collection rejection retained",
+    "Actor inputs, measurement delivery, scoring thresholds, training reward and optimizer logic unchanged"
+  ],
+  "independent_tests": "5 readonly CPU tests passed; reviewer did not repeat temporary-file audit test",
+  "root_tests": "13 CPU tests passed: tools.r6_direct.test_evaluation_reward and tools.test_r6_measurement_adapter",
+  "limitations": [
+    "No new GPU execution validated",
+    "Previous failed run is not a completed development evaluation",
+    "Retain32960 nontraining transitions andcleanup timeout/-15"
+  ],
+  "next": "Freeze new source and new attempt before live retry"
+}

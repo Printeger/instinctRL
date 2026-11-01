@@ -5,11 +5,16 @@ from .rewards_h1 import MeasurementCoverageUnavailable
 def validate_evaluation_contract(contract):
     if contract is None:
         return False
+    modes = {'baseline': 'research-r6-evaluation',
+             'evaluate': 'research-r6-candidate-evaluation',
+             'final': 'research-r6-final-evaluation'}
+    budgets = contract.get('budgets', {})
     if (contract.get('execution_mode') != 'local-direct'
-            or contract.get('operation') != 'baseline'
-            or contract.get('mode') != 'research-r6-evaluation'
-            or contract.get('budgets', {}).get('training_transitions') != 0):
-        raise ValueError('unavailable reward requires explicit nontraining baseline contract')
+            or contract.get('operation') not in modes
+            or contract.get('mode') != modes[contract['operation']]
+            or any(type(budgets.get(key)) is not int or budgets[key] != 0
+                   for key in ('training_transitions', 'optimizer_updates', 'checkpoint_writes'))):
+        raise ValueError('unavailable reward requires explicit nontraining evaluation contract')
     return True
 
 

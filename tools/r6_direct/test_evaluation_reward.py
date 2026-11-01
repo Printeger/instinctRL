@@ -9,9 +9,33 @@ from tools.test_r6_measurement_adapter import Env
 from instinctlab.task.evaluation_reward import compute_evaluation_reward
 from instinctlab.task.rewards_h1 import compute_command_risk, MeasurementCoverageUnavailable
 
-CONTRACT=dict(execution_mode='local-direct',operation='baseline',mode='research-r6-evaluation',budgets={'training_transitions':0})
+CONTRACT=dict(execution_mode='local-direct',operation='baseline',mode='research-r6-evaluation',
+              budgets=dict(training_transitions=0,optimizer_updates=0,checkpoint_writes=0))
 
 class EvaluationRewardTests(unittest.TestCase):
+    def test_candidate_and_final_delayed_start_remain_nonlearning(self):
+        from instinctlab.training.rollout_h1 import collect_h1_transition
+        for operation, mode in (('evaluate','research-r6-candidate-evaluation'),
+                                ('final','research-r6-final-evaluation')):
+            with self.subTest(operation=operation):
+                e=Env();e.install(evaluation_contract=dict(CONTRACT,operation=operation,mode=mode))
+                e.reset();o=e._get_observations()
+                self.assertIsNone(self.risk(e,o))
+                self.assertIsNotNone(self.risk(e,e.step(3.)))
+                with self.assertRaisesRegex(ValueError,'evaluation-only'):
+                    collect_h1_transition(e,None,None,None)
+
+    def test_mixed_mode_or_learning_budgets_cannot_enable_exception(self):
+        contracts=[dict(CONTRACT,operation='evaluate'),dict(CONTRACT,execution_mode='legacy')]
+        for key in CONTRACT['budgets']:
+            for value in (1,False,0.0,None):
+                contracts.append(dict(CONTRACT,budgets=dict(CONTRACT['budgets'],**{key:value})))
+        for contract in contracts:
+            with self.subTest(contract=contract):
+                e=Env()
+                with self.assertRaises(ValueError):e.install(evaluation_contract=contract)
+                self.assertIsNone(getattr(e,'_r6_measurements',None))
+
     def risk(self,e,o):
         return compute_evaluation_reward(lambda:compute_command_risk(o['policy']['lidar_grid'],torch.zeros(2,3)),context=e._r6_measurements['reward_context'])
 
