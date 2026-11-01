@@ -1,3 +1,12 @@
+# R6 首条确认流SEED-01B已进入TRAINING
+
+2026-11-02：资源准入PASS，RustDesk仍保持运行；准确worker2776599/starttime30046493存活。
+实际workload state为TRAINING，当前初始快照完成更新计数0，不能据状态声明128更新完成。
+普通Python监督器仍运行，尚无关闭receipt，禁止重复启动。
+第二、第三流基于freeze-02的contract-02也已CPU生成校验通过，尚未发车。
+holdout未揭晓；首流完整核验、其余两流、最终四模型评价及模型录像交付仍待完成。
+下方保留历史状态。
+
 # R6 确认首流SEED-01B已进入监督器RUNNING
 
 2026-11-02：准确输入和tag已推送（bebaab05），启动CPU预检再次通过。
