@@ -1,0 +1,2466 @@
+{
+  "analyzer": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_analysis.py",
+    "sha256": "6ab0eed48492786e48b02fb64d9fb5aec4f7e9df4d2f5a3efe687d7b0c252856"
+  },
+  "checkpoint_auditor": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_checkpoint_audit.py",
+    "sha256": "0f0c9f68fa7efa4f3b28d1545bb2b567bdd90d6c1d4b87ecb966bd65da44f544"
+  },
+  "codec": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/lossless_evidence.py",
+    "sha256": "2fe1801bfab6534b7f46cd2114aab8846e0f5206eea36c90bfcc779b06b1eae2"
+  },
+  "inputs": [
+    {
+      "bytes": 31336,
+      "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/envs/direct_rl_env.py",
+      "sha256": "3a7573303d83ec8c816d11ca6e8c8997c92f6765ae5d2e0d2a369e65d2cec3c0"
+    },
+    {
+      "bytes": 1429,
+      "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/utils/seed.py",
+      "sha256": "ee5fc5e55e8c82c93e6766d35f0fe3825d20bc81a1829f7f83a5354a8c422061"
+    },
+    {
+      "bytes": 1510761,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+      "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+    },
+    {
+      "bytes": 160267,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/CPU_MODULES.json",
+      "sha256": "c606c9ef8561d56d7b920b00a9443965ab448d47fa29cf023ec2f0337a1bbaf3"
+    },
+    {
+      "bytes": 281,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/checkpoints/u768.json",
+      "sha256": "ff18287af0940066c9023e59b956c94dd9dda8217c7d28af0a5b1a3062cb6dbd"
+    },
+    {
+      "bytes": 1511209,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/checkpoints/u768.pt",
+      "sha256": "6a616a2582190acdf037bf454b5ae3d921120da3ef85916dff5763de9137e07a"
+    },
+    {
+      "bytes": 2181,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/learning_log/plan.jsonl.r6z",
+      "sha256": "c74df6d8a33a7cb98d81b5fc3dfffb025da1cc47f2a28ff8dfd404fdc3ef2b26"
+    },
+    {
+      "bytes": 342557,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/accounting.jsonl.r6z",
+      "sha256": "0de62bc53908f41ae24bc314b74b794cec0f343904efbe522197ca8d8bcd4bf4"
+    },
+    {
+      "bytes": 135825,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/command_blocks.jsonl.r6z",
+      "sha256": "d446d0f9ee8201f464f1488bb0dbe8e4fa28d406f83acda2e46fbb10a69a1f75"
+    },
+    {
+      "bytes": 19569860,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/compact_rollouts.jsonl.r6z",
+      "sha256": "2b7f0a795d17600d6008221f8f69c5f43c5e08952395266db5418bad88735ea2"
+    },
+    {
+      "bytes": 32644,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/episodes.jsonl.r6z",
+      "sha256": "2486fc6ed8b21e59f2afcce6fadbefd79d50d676565b8dfaae4a31e14d6044b6"
+    },
+    {
+      "bytes": 57437844,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/measurement_windows.jsonl.r6z",
+      "sha256": "05344829e6e84acd48500d33f3f88502ed62d84779e81388394910d1f2a5e4e9"
+    },
+    {
+      "bytes": 174453,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/minibatches.jsonl.r6z",
+      "sha256": "26465d407d892275bb7fea87ae4f74291a10940a73eca856718b37210a7fe9a6"
+    },
+    {
+      "bytes": 19540428,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/partial_rollout_steps.jsonl.r6z",
+      "sha256": "639aba973c1197f93f4d3bb5ed80f0f7d013bb76588eddf600a47187699c815b"
+    },
+    {
+      "bytes": 513,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/phase_complete.jsonl.r6z",
+      "sha256": "f36014d304ef8c04167139aa80a537d7d2ba5dbd8193d33c9f17c6662e57aa53"
+    },
+    {
+      "bytes": 96914,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/rollouts.jsonl.r6z",
+      "sha256": "e3e38c59b8269d3ca4f2e610bfbbd5f54a181ebd25dad4f99016bad22561d45a"
+    },
+    {
+      "bytes": 52041,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/updates.jsonl.r6z",
+      "sha256": "014f5681318c9fc454dd8fe3d66b0e35405af9c1021f50f1100681826c5d3ee9"
+    },
+    {
+      "bytes": 344818,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/accounting.jsonl.r6z",
+      "sha256": "563e0c635872c3b5be7cd8a7e4f6be5a9907b32c7a8cdb39e9b50178308dbe33"
+    },
+    {
+      "bytes": 5940499,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/command_blocks.jsonl.r6z",
+      "sha256": "5a0356f41eeca823adcaab8d255f67a427a5d13e047cbd20cb0455a9fe59836d"
+    },
+    {
+      "bytes": 20246768,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/compact_rollouts.jsonl.r6z",
+      "sha256": "9bc05fc7a5169882a2e15ad88062668ba99d725d8962b1916180a2e4f1bd2426"
+    },
+    {
+      "bytes": 318928,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/curriculum.jsonl.r6z",
+      "sha256": "f3c311516a5608386e4214f704d8a5bcbefdff626dd9cd5ef1d0831f3693ae51"
+    },
+    {
+      "bytes": 32455,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/episodes.jsonl.r6z",
+      "sha256": "4f53e7ade266b726a269cf961e5894bdeff149392ceb0d3eff7937023c728d4c"
+    },
+    {
+      "bytes": 183869878,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/force.jsonl.r6z",
+      "sha256": "18c8a65ba6bdc60831e5b426f5641846b9c329abd72d05d2e9cfae28460664cd"
+    },
+    {
+      "bytes": 7101328982,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/measurement.jsonl.r6z",
+      "sha256": "0c3fe1680383ff345521c21c10e171a712a34c61f240644c5a7f57d40d2e9d0c"
+    },
+    {
+      "bytes": 57448266,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/measurement_windows.jsonl.r6z",
+      "sha256": "4ed07eb4c2e38f81fd16b0caea4655998560e1899a61f0e85a0792c413c54299"
+    },
+    {
+      "bytes": 174803,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/minibatches.jsonl.r6z",
+      "sha256": "791e85f4c69c9e68d6ed954680a2c8a7c4d2a54153f9b724bfb207b1cc6ecb50"
+    },
+    {
+      "bytes": 20845051,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/partial_rollout_steps.jsonl.r6z",
+      "sha256": "9901eb92461177cd9d55b3f5e6e5cafd6f906ca6f209c22c78af8c02fd049bf1"
+    },
+    {
+      "bytes": 516,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/phase_complete.jsonl.r6z",
+      "sha256": "7726854ad3c9834acbe27e353e3f9b1ec49c616ae2bd46029e82e1b46cd6810b"
+    },
+    {
+      "bytes": 35359,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/reset.jsonl.r6z",
+      "sha256": "510a2dd92fe0e1c7cc4acd52d7d4ac0d4b0435190328cb5ec052a9c6a11ed113"
+    },
+    {
+      "bytes": 110787,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/rollouts.jsonl.r6z",
+      "sha256": "7788e91b7ed813837b70c530ad78312f7b4a1ed3f2fe8742285ba2291ebec654"
+    },
+    {
+      "bytes": 54586,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/updates.jsonl.r6z",
+      "sha256": "aea3b49af2ae019fc7737b70d6acb3dfd3196e763b8b35e3b006509847671175"
+    },
+    {
+      "bytes": 9675,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/setup/curriculum.jsonl.r6z",
+      "sha256": "68dd477dc987c8e97a72963a002245bd3ee83d80605ab6e2508cd6813d8f7338"
+    },
+    {
+      "bytes": 9840750,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/pilot_diagnostic/first_update_probe.pt.r6z",
+      "sha256": "5c1bf3c642f7d01ac321f461cb7db19cc1c5459b6c63c52bd1488600827263f8"
+    },
+    {
+      "bytes": 87568870,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_641_full_input.pt.r6z",
+      "sha256": "ed2c51604868ef2c24bcf6518c82902f17587f70e29936e8c55184eb25280625"
+    },
+    {
+      "bytes": 97312176,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_642_full_input.pt.r6z",
+      "sha256": "2c71232c982d6f91243a0d2b0a7a14b1594c2abda27f5181cafc8fbf12b77c84"
+    },
+    {
+      "bytes": 23991,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/rng/initialization.pt.r6z",
+      "sha256": "ebde02014f12fe461accfbee987f0ae4fdba216d653150282dd6ea7e1a00008f"
+    },
+    {
+      "bytes": 229,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/pilot_diagnostic/first_update_gate.json",
+      "sha256": "729295fd7f62671558a1a11d94b72baecd2b519edd740395cb6c8b7eecfd690c"
+    },
+    {
+      "bytes": 855,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/status.json",
+      "sha256": "a19168007e19b7926b796d7396aa4c2739255a7b5a3afc895a8c544ecbfeb3b6"
+    },
+    {
+      "bytes": 880,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/state.json",
+      "sha256": "1696d57e9e48e852a922821f114fcbdaba9fbe1eacea54cde5672de28d3ec193"
+    },
+    {
+      "bytes": 1534,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/PROBABILITY_SOURCE_TRACE.json",
+      "sha256": "45a2cf48f5ec56c7917ad08de5dde863648adc5630ff2b0befed3151ccd8ad9b"
+    },
+    {
+      "bytes": 3502,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-contract-03.json",
+      "sha256": "d5adb7e936293db442e9c44877e3a13b4de12e49d4daa579e9065e5e047f0ff4"
+    },
+    {
+      "bytes": 2409,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-inputs.json",
+      "sha256": "d1b2831297ab6631e58920baab2c98952b80817b590cc53ff598934b01c92937"
+    },
+    {
+      "bytes": 30816,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-04/source.json",
+      "sha256": "412ce757777d6ec9e4d09b897eac61af0a06fef220f126b737e9e541a19d6c6e"
+    },
+    {
+      "bytes": 31164,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-06/source.json",
+      "sha256": "e1e5de0a7b193631c63a1de8ae117bc98df3bcddb517b57e4199eb5ee6b62734"
+    },
+    {
+      "bytes": 1787,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-08/SEALED_EVIDENCE.json",
+      "sha256": "dd85c8eb392c09cd447403f80ca304e170f386903de9e13ead32d59857847c76"
+    },
+    {
+      "bytes": 3344,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-08/plan.json",
+      "sha256": "d75c07580611dfad252a77104d291d4066e839508237d188b42dfafbed7cd9aa"
+    },
+    {
+      "bytes": 30816,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/source.json",
+      "sha256": "cd4025bffd1747fc45aca27136c0d74983d87012647c8564af6ee6b79d93e070"
+    },
+    {
+      "bytes": 4689,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-03/RUN_INPUTS.json",
+      "sha256": "2e945ddd8832516310cc1d6a4d98d54410f86a44726f59ecc8a99955c6b05c3e"
+    },
+    {
+      "bytes": 367,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-03/launch.json",
+      "sha256": "704765b32c96bccb6f295efa0d1eb502fb2d206bfa438603e172e5bb808b9505"
+    },
+    {
+      "bytes": 1097,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-03/receipt.json",
+      "sha256": "f47ceef8a62aea58b7613b8cc2a60abd897df1cbc9bdb9af5ba68c973cdd6631"
+    },
+    {
+      "bytes": 5722,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/RUN_INPUTS.json",
+      "sha256": "4b106697bb49d6d607e8fcdab1413a10476ff8b1db68f59b3c164e68d68995db"
+    },
+    {
+      "bytes": 3604,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/intent.json",
+      "sha256": "12b0f9cbce0adf962ece3f532b99f7bf8fdf4d6593a17f794acef592e1ad076a"
+    },
+    {
+      "bytes": 807,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/receipt.json",
+      "sha256": "983b90ceb1d3f52dae324221f5b406f08468d2369229b387dc7872c36f146e83"
+    },
+    {
+      "bytes": 53,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/evaluation_workloads/eval_002/__init__.py",
+      "sha256": "e27f34d051c12f0d59b23874529eae2774977f50cc04ca8b1571bc92a9f8ec56"
+    },
+    {
+      "bytes": 4842,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/evaluation_workloads/eval_002/attempt_binding.py",
+      "sha256": "4b032dbd2f2605d93b35fe9dca852aa4b4d8cd0cff2b611085c3d8687624bcf4"
+    },
+    {
+      "bytes": 4206,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/evaluation_workloads/eval_002/checkpoint_audit.py",
+      "sha256": "c3f128faa424e82c69f27ad68977ceabe81da00ec2c0d0703fb195daadacb5f6"
+    },
+    {
+      "bytes": 2971,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/evaluation_workloads/eval_002/constants.py",
+      "sha256": "03a6a70bf43d16a0c5c8e0bcefee8cf94a4771679ae21a75d53cd39560d4982f"
+    },
+    {
+      "bytes": 23594,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/evaluation_workloads/eval_002/diagnostic_evaluator.py",
+      "sha256": "56c74d9d07b007923e8c172e2201fff4261cded877c4edc903e53df865f1a03a"
+    },
+    {
+      "bytes": 5934,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/evaluation_workloads/eval_002/gpu_gate.py",
+      "sha256": "29fd12bec882ac0b2b0ac8a81142f0102927b63da6aa351328d02fbfe4ed581a"
+    },
+    {
+      "bytes": 3731,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/evaluation_workloads/eval_002/io_utils.py",
+      "sha256": "45ef56ce17ad583c301eceff0e47f0921d7aeb0eaa1eb6a441001da5a46945b5"
+    },
+    {
+      "bytes": 1383,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/evaluation_workloads/eval_002/runtime_support.py",
+      "sha256": "18c377261c1b3032a2f97c55ae12e9faba83d5277ff4560223880874eac19eac"
+    },
+    {
+      "bytes": 8909,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/evaluation_workloads/eval_002/scene.py",
+      "sha256": "d68b1d2b938ee368cf3cc7a0b394fe63d3aa205102fc831c8f2d715b050f7761"
+    },
+    {
+      "bytes": 34407,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/evaluation_workloads/eval_002/semantic_validator.py",
+      "sha256": "37677a4d7f8de656d1fbd5a6d5181357dddc09e836c77c6af30b6d09ba4d93b9"
+    },
+    {
+      "bytes": 6749,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/evaluation_workloads/eval_002/summary.py",
+      "sha256": "e189d5d0d16e5262a4dba9c661279a048cb5b31901d36f8a7a8a9c5d284c60c5"
+    },
+    {
+      "bytes": 71,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/__init__.py",
+      "sha256": "e0157b78e1817320767b467ddb321ffcc6a2e279628ef3937f55b7d2041afeaf"
+    },
+    {
+      "bytes": 60,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/assets/__init__.py",
+      "sha256": "b55c2e6248ce7d2819e6deefb6f4ca9bddd0cd3c01a638d67c73fc30abd6f569"
+    },
+    {
+      "bytes": 1603,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/assets/taslab_uav/PROVENANCE.json",
+      "sha256": "71a212c48274622b0d6cfca0859cd885ddc2c62ce837144d58dc3c60298a6688"
+    },
+    {
+      "bytes": 125,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/assets/taslab_uav/__init__.py",
+      "sha256": "c1380196aedd72eb9ae5dff617c57e1fc9c6077aa697e7f637ed15b6829ac085"
+    },
+    {
+      "bytes": 1782,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/assets/taslab_uav/articulation.py",
+      "sha256": "080eb6a30c76a63395effe2da38f0ffab22642b494651d0e195f74e14473598d"
+    },
+    {
+      "bytes": 3457,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/assets/taslab_uav/config.py",
+      "sha256": "9ac7c02dcc9ce12cf67cbf57d6fff8841624705db7b1f0bae82cbc906244ba2f"
+    },
+    {
+      "bytes": 1202,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/assets/taslab_uav/lee_controller_taslab_uav.yaml",
+      "sha256": "e5e0496666f3f245d604a949eedc5060370d71b95de0d2337d39617bacd1f8e6"
+    },
+    {
+      "bytes": 9563347,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/assets/taslab_uav/taslab_uav.usd",
+      "sha256": "3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99"
+    },
+    {
+      "bytes": 3457,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/assets/taslab_uav/taslab_uav.yaml",
+      "sha256": "91b7319fd844303eb8e18f946434f3369988c8789e6ba0172b67bfd89177e3e4"
+    },
+    {
+      "bytes": 1160,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/control/__init__.py",
+      "sha256": "2aa8eb54b8dee60ca8476c6765b79b335dcc9a81b37f671a15693aca4754be1d"
+    },
+    {
+      "bytes": 9497,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/control/anchor.py",
+      "sha256": "2d73af1c2f58fee40e616826771b9e97b07758556f6ce5ab66b398bbcaea4c8d"
+    },
+    {
+      "bytes": 4895,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/control/baseline_b0.py",
+      "sha256": "5fa2b8d746eb231a1bb12f331fe1a76e8f988005e9a315e1dbf622e0bf1ed3d1"
+    },
+    {
+      "bytes": 2082,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/control/command_adapter.py",
+      "sha256": "a79ea8d88fb0391762a9efcebbfa783d5287ee1393d3b6e2757812032c32991d"
+    },
+    {
+      "bytes": 4748,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/control/governor.py",
+      "sha256": "cd5cf6c73578bc69dc5f696ac6d294d9d4c8db0baaf12265e6715646554b7197"
+    },
+    {
+      "bytes": 11351,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/control/ics.py",
+      "sha256": "87dba0e3f4d2e252b74fb8b89954b0673e07fe07748cf8b3a36dea6f7c03b6ac"
+    },
+    {
+      "bytes": 9928,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/control/lee_velocity_controller.py",
+      "sha256": "3818c21ff2550b7c10ad15a1e1d167ba8f20486b882a3944fff956692b915f95"
+    },
+    {
+      "bytes": 5785,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/control/pipeline.py",
+      "sha256": "dd1e81f51f76422d7dfc6673dbf59c3c082b7fd9ceb12ff84a56272c745d1d2b"
+    },
+    {
+      "bytes": 6443,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/control/rotor_actuation.py",
+      "sha256": "00db4efbf359bb8f6cd33c2adcf5c7c48e8819cab75521e3f2fe7666b1511b03"
+    },
+    {
+      "bytes": 8114,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/control/runtime_adapter.py",
+      "sha256": "dfb10aa31275e39b871f050397b8c941216c17b73c0dd6926521fe5434227e0f"
+    },
+    {
+      "bytes": 316,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/envs/__init__.py",
+      "sha256": "35fe24c13b1fea52f4eff09b29187dc642cf175bd054f2b86538879952843ef3"
+    },
+    {
+      "bytes": 25032,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/envs/taslab_direct_env.py",
+      "sha256": "940ce1e2949c9b1291020804cb9aca57a1840470353f085a5b2c18be0c46a739"
+    },
+    {
+      "bytes": 46087,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/envs/unified_h1_direct_env.py",
+      "sha256": "997376697fc30d650cc69c126892272bf4ebe9a494be948edc03a367c8b3a3da"
+    },
+    {
+      "bytes": 4368,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/__init__.py",
+      "sha256": "c837a7fc57d3edefcd82e3cbc340387816280a15ba07f5a16f057b1aa486c2c4"
+    },
+    {
+      "bytes": 8406,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/audit.py",
+      "sha256": "03a6acb86c1aed86385b7ff3d265940791656ee8e38de07f242ac3128b35fd0e"
+    },
+    {
+      "bytes": 4523,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/baseline_controller_execution.py",
+      "sha256": "72d104850f8c8fede59998f14661b5b7ea7cd2c113ec11218fe232337732ab52"
+    },
+    {
+      "bytes": 14342,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/baseline_environment.py",
+      "sha256": "b1ecdaa8b7d01ff0f9dd49891c2266908cea5a2540e8a91c33b9626464ded584"
+    },
+    {
+      "bytes": 4913,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/baseline_execution.py",
+      "sha256": "db7b73ee7e9c4b39689814530363bafb6a1ef48c2513a0208c0ff29c7073c108"
+    },
+    {
+      "bytes": 15124,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/baseline_run.py",
+      "sha256": "5210566e987b737657d30ba44075a4dc835e379eae438726449dbc76002ab847"
+    },
+    {
+      "bytes": 46510,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/baseline_runtime.py",
+      "sha256": "c3f1e6f73f48bdcbf995c6f8178d5b93be2d6107af00d81b0ceac69c4a358e66"
+    },
+    {
+      "bytes": 32247,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/baselines.py",
+      "sha256": "725d6d1bf57a5c168d96deaa7cb7179382caa64b101ad0fd79172626dc8272b2"
+    },
+    {
+      "bytes": 19899,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/matrix.py",
+      "sha256": "ee2f1665ca4018c612ec478f6b7aa90352cd2636e3ab826de3937332256db91e"
+    },
+    {
+      "bytes": 15612,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/metrics.py",
+      "sha256": "a37cf88a04d55ac4e32fee93f5504a6ff446f8804694a310013fb704438a3960"
+    },
+    {
+      "bytes": 8078,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/observability.py",
+      "sha256": "cffc5e57b92ca51ffe721972db3084e18bc968a486c670aaca11f5960484afb7"
+    },
+    {
+      "bytes": 22929,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/raycaster_observability.py",
+      "sha256": "3d4433d33940baa4e413606cded6851440ec2c66fc10a4386930bd1a43312aa4"
+    },
+    {
+      "bytes": 42521,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/runtime.py",
+      "sha256": "7abaa594a63b0a90d9a0bb5b1ec66a9f71d3c91aa464f2890001a2040384cde3"
+    },
+    {
+      "bytes": 44401,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/scenario_cluttered_indoor.py",
+      "sha256": "aa3e97282593839117ab353cdcf6e44d903feafdd039eaae91e145a118f5d42e"
+    },
+    {
+      "bytes": 41336,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/scenario_corner.py",
+      "sha256": "0bda06f61c40a02d3cb77aa89e4035648005f4c56f49ce78948a03cf76bf3c16"
+    },
+    {
+      "bytes": 42108,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/scenario_corridor_tunnel.py",
+      "sha256": "6c785b69a5c92e3031a242519364541c99a60efdd83c4332f1813a0c475ae1db"
+    },
+    {
+      "bytes": 40156,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/scenario_flat_wall.py",
+      "sha256": "605106440555e167865eb0ee79158a3f901924013a24286785678986ae717564"
+    },
+    {
+      "bytes": 46774,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/scenario_gap_doorway.py",
+      "sha256": "844c781fd944f069b2b9d2b40a30525fbc2e9b93dd902581d7dfaa2809bb4b38"
+    },
+    {
+      "bytes": 33897,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/scenario_open_field.py",
+      "sha256": "1ae99e70eecfd6dee5797302f6730bbf56b70ed3fd5b26510b1730ed654bb348"
+    },
+    {
+      "bytes": 43695,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/scenario_unsafe_command_toward_wall.py",
+      "sha256": "727ebc918d47fad90f61b382c13175abc09f884c218542aef0879729b156ffad"
+    },
+    {
+      "bytes": 27348,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/evaluation/scenarios.py",
+      "sha256": "7f9fd0cde79f95dbdf2d94d001987f83f59107b2629f151b0425a3d42c653bda"
+    },
+    {
+      "bytes": 584,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/observations/__init__.py",
+      "sha256": "3c45dcc9215b1b56ec1fbd91b7e202832a8c0090cb93f736e5e3b7b7cc0e1bf1"
+    },
+    {
+      "bytes": 12974,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/observations/actor.py",
+      "sha256": "dfc339233e146e585493bfcc1893b5ee87c46c827963e36d6f9ec79e4b81ce44"
+    },
+    {
+      "bytes": 6203,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/observations/audit.py",
+      "sha256": "9d96f31852ba06b373c4c42513b6742cde6f385cd27b085e8c48ca33a58af929"
+    },
+    {
+      "bytes": 6156,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/observations/robustness.py",
+      "sha256": "05fd977e751d4af3f78e13a1dee983c673fe4347988ee9a17449e497c20a488e"
+    },
+    {
+      "bytes": 4800,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/observations/robustness_adapter.py",
+      "sha256": "ae24396f8abc37d96edddcce5a97b9e9e2676231368d85ef2dea84d76160060b"
+    },
+    {
+      "bytes": 17364,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/observations/robustness_physics.py",
+      "sha256": "33741b457a879086e6261e3a887b58bcc7f63e799b108751d41ae49bff0fee4c"
+    },
+    {
+      "bytes": 1643,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/qualification/__init__.py",
+      "sha256": "4108f08b32d3eb68e8d222a9ba0f3f4cf88f2c34bdbc3d068b9faa2affabf566"
+    },
+    {
+      "bytes": 24695,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/qualification/release_candidate.py",
+      "sha256": "90e9b3817e9aa40979f53a18ca27923d9e2c39453d545497678aa207e2e1f110"
+    },
+    {
+      "bytes": 366,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/sensors/__init__.py",
+      "sha256": "5c73daa07cd651e99d8867d25840bec587e3a0951dd6063e5e3b6d7fe8cb32ae"
+    },
+    {
+      "bytes": 7193,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/sensors/mid360.py",
+      "sha256": "a37a1c423d8818194f23023ba969f55025dc867d2280579633a699807a5aea44"
+    },
+    {
+      "bytes": 929,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/task/__init__.py",
+      "sha256": "5ca71c76eede74601a11dc1b73acc7e5e0b33664896e52df8746599d364ec3f6"
+    },
+    {
+      "bytes": 3607,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/task/critic.py",
+      "sha256": "f438cafe94a4f109da433a900aea0469b44591b0e95362dffc334678444f6341"
+    },
+    {
+      "bytes": 3914,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/task/critic_h1.py",
+      "sha256": "ea00315e8ca67ba8cdb1c3a22bf11a466b06d98bdd46b2bc55d437c6758cbddf"
+    },
+    {
+      "bytes": 1634,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/task/evaluation_reward.py",
+      "sha256": "e4c68c680d046e05cc21f01dc098cb199b4b347993c94d4c3fbe147b6382c53a"
+    },
+    {
+      "bytes": 11921,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/task/rewards.py",
+      "sha256": "a9b6bae7b8bdf46feb06a23782ceb7faea0e86b999648b2d0bccfec69f308ccc"
+    },
+    {
+      "bytes": 9856,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/task/rewards_h1.py",
+      "sha256": "ff69134ae79afbda8627811a060341de350f5d4829166a01bdb423dc71c07027"
+    },
+    {
+      "bytes": 1703,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/task/scene_h1.py",
+      "sha256": "e94dd2e9614e8dae380f298650edc5cc91fcaacc7ca9ed80b678581bba087d59"
+    },
+    {
+      "bytes": 4378,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/task/termination.py",
+      "sha256": "90be9cf7d68d54f520866737a1aef3c449f5b3b52bfe62a9666d405756b59d89"
+    },
+    {
+      "bytes": 1346,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/training/__init__.py",
+      "sha256": "43ed3f2b45c7678d09c05275e73ee669161ccae0caab9d09f35039f8560e1d24"
+    },
+    {
+      "bytes": 10157,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/training/checkpoint.py",
+      "sha256": "d04f77d3e443ed8466db5dc6f0c05d633fd012b799eedf4d6047d4e395e9b37b"
+    },
+    {
+      "bytes": 20315,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/training/checkpoint_h1.py",
+      "sha256": "45171db5ae2719fcd81b78d67ee06450cc73b737b74f3850797591e9eccc13b7"
+    },
+    {
+      "bytes": 13066,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/training/networks.py",
+      "sha256": "a0790d5f80c8a9f2f06d05fc80bcdcfe8fd3e1a5c71a482443f1b3f5769dc129"
+    },
+    {
+      "bytes": 1979,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/training/networks_h1.py",
+      "sha256": "e2039982cdd8249116ef8910c2ba0d28646d0ad17e35a5fe4b09afc3b8b0a0db"
+    },
+    {
+      "bytes": 22653,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/training/ppo.py",
+      "sha256": "13290128ecbc79f9c429e064abbb2505bd6830c815ef21b3cec93fc0581e2431"
+    },
+    {
+      "bytes": 14808,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/training/rollout.py",
+      "sha256": "a1d04a84a6099a711cab1d8cb8b6a550addf292dde4682ea82d3a9a0d32ab58d"
+    },
+    {
+      "bytes": 7165,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training/instinctlab/training/rollout_h1.py",
+      "sha256": "e59034c1c63b76a54a9c779418b61c26f0a4c597cb247da33cf8aab9d58c74d6"
+    },
+    {
+      "bytes": 3184,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/prepare_r6_video_trajectories.py",
+      "sha256": "5c50aa4eb2f5d95baa99e6a704435aa7480bfe77154e6cea40e791024743015d"
+    },
+    {
+      "bytes": 6892,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_budget.py",
+      "sha256": "2fdee08edc08dcdb8411f56e36ffeaee930bf2dbfceba8149a07d7199f9e15b1"
+    },
+    {
+      "bytes": 5685,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_candidate_analysis.py",
+      "sha256": "2399ffb7ae988f4cc2ab9583ea21219f1c21ac599ec354a524b2e667702d168b"
+    },
+    {
+      "bytes": 75,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/__init__.py",
+      "sha256": "da56f7bac5c4016efa165cd918ca3d0be73608b9c5a3eeb77cc2f7f4cdb88bc0"
+    },
+    {
+      "bytes": 847,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/admission.py",
+      "sha256": "2f9f0879d05d166620a93da3b6e8f174e06a06991a1cad8064b81621f89b5d4a"
+    },
+    {
+      "bytes": 3565,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/analyze.py",
+      "sha256": "c8909b198328186cf09a88e3f08de2c6920b8d4c11c7a462795ebebd65d625d6"
+    },
+    {
+      "bytes": 4648,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/collect.py",
+      "sha256": "2e537aac5da9344e6d02bc3867b5258c791fdeaf6b3df6bf8133c5d528e49316"
+    },
+    {
+      "bytes": 8506,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/cuda_diagnostic.py",
+      "sha256": "a9cb377938126e1e23c8e69cd6ef9fba77b55dbd3b2c67119bb283ad185d378b"
+    },
+    {
+      "bytes": 749,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/dependencies.py",
+      "sha256": "ff52205247b162e7330338cca061e042d4e3f6fc7345c0f61713e6caa3f6521c"
+    },
+    {
+      "bytes": 4604,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/evidence.py",
+      "sha256": "791af92d00e9268567ecfe340c0d7d0e4c49649241c6c6228b438867cb99401b"
+    },
+    {
+      "bytes": 4691,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/import_legacy.py",
+      "sha256": "b3da703c7253c34ff7bbe8c4ec3a4166c5d96d66e1c9498a1fda00e633111364"
+    },
+    {
+      "bytes": 526,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/io.py",
+      "sha256": "2b0f77eb3a1d678d37fdaa0212dee9ca2e3e29b44ff36ea7e61129fbd230bd8a"
+    },
+    {
+      "bytes": 1674,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/lifecycle.py",
+      "sha256": "cd49537944e84f61b7405381861a5622f8201602cfb73fb2d25d24fd4015e902"
+    },
+    {
+      "bytes": 5997,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/prepare.py",
+      "sha256": "c846f5280a9bb4d65ebaceb66e55d7bf3d198e504cc827bac08050bd1c0b0f3a"
+    },
+    {
+      "bytes": 4770,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/probability_evidence.py",
+      "sha256": "f6e5ba5381186af4b072205cf23c319456f51827f10db9a749ed49fd3df0f85f"
+    },
+    {
+      "bytes": 2302,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/probability_replay.py",
+      "sha256": "5df1bc432d4b058de782c391605f24a6f4be0459cdb8a6ede55e52e8124795c3"
+    },
+    {
+      "bytes": 1205,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/render.py",
+      "sha256": "6208ee88d1d587728b13d1c9252eed1f99034d542565276a2a1a4b75324272cd"
+    },
+    {
+      "bytes": 716,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/resource_policy.py",
+      "sha256": "a773033d87c68593c4f2c7ad63fe9ab46df4a51b31e57cede05f8e745c219625"
+    },
+    {
+      "bytes": 15415,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/run.py",
+      "sha256": "bbe253b66c502b1e261983c101fc1b686e90ba35e80ac9db871b9f31de3ccd50"
+    },
+    {
+      "bytes": 2063,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/settle.py",
+      "sha256": "674fa48b06603f5c7ac34084dd5567718bfd1dd3fc057b9ab14585bb5ed94aa4"
+    },
+    {
+      "bytes": 7006,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/source.py",
+      "sha256": "f990c164a3a984d634bfa43a6efce3933365c1472eec4e4ce88e7a5461298bef"
+    },
+    {
+      "bytes": 1457,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/storage.py",
+      "sha256": "4f73782b81ac0dc375d3e0752ca7412624f83737cb99b9893247dfe928476613"
+    },
+    {
+      "bytes": 1463,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_admission.py",
+      "sha256": "5555644b03c43dd066d9d2cf77d50f68006cd42ed2906418ce77461af8a1caef"
+    },
+    {
+      "bytes": 1474,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_backend.py",
+      "sha256": "71e4d9b0636b3138e15e7925e2da7db0f04bd274ff734c31387332376af45efd"
+    },
+    {
+      "bytes": 4899,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_confirmation.py",
+      "sha256": "f2b713455c946c35a7e5dee7b40626a74e9fd6cf8a713ed6633fa3120b5c2fa3"
+    },
+    {
+      "bytes": 8643,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_continuation.py",
+      "sha256": "1cf07fdc2508cd8ad3446119f0c77aa8ecb83b4c546c9c00799995b227afdbdc"
+    },
+    {
+      "bytes": 1960,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_contract.py",
+      "sha256": "cb413fec0eb71c5b1650e2c35097491580e3f823045150933656cc0755f869df"
+    },
+    {
+      "bytes": 2108,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_diagnostic_prelaunch.py",
+      "sha256": "2dc5f7d3a7f0eeada2f7fed6ca301bc6d633c70c180e53673286d7d87c163738"
+    },
+    {
+      "bytes": 6884,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_evaluation_reward.py",
+      "sha256": "0d0da0ae838db6b55b08b5693b4c91283d3ea51a1cfd398c423dc9206d2a0f7b"
+    },
+    {
+      "bytes": 3494,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_final.py",
+      "sha256": "106d0cccce8b6be16fd5e28527ebb0c14f2116378b3534bc83e27d4343146f3e"
+    },
+    {
+      "bytes": 1377,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_import_legacy.py",
+      "sha256": "78e9225719b379b954f45117dea3c9f87575800b0dc53f0df4ec02e133235eee"
+    },
+    {
+      "bytes": 2368,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_ipc.py",
+      "sha256": "b49127999726dc83536f95b262299c7c87ffca5945d18291a5f911f5c34c27b9"
+    },
+    {
+      "bytes": 1759,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_lifecycle.py",
+      "sha256": "b20735ee8e26e076f35ce6bc878cb4eea6897ddac1419261cbaf6465cef5a166"
+    },
+    {
+      "bytes": 2090,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_probability_evidence.py",
+      "sha256": "c235b19a5542d7877bffb05ea07a32cdf2d50a14e9b9751a9738a404ed851a4b"
+    },
+    {
+      "bytes": 5748,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_recipe_prefix.py",
+      "sha256": "723ca1189b26398f72288599d2a9e5feb084877d5335fd3adf7dd47feddcf890"
+    },
+    {
+      "bytes": 2272,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_render.py",
+      "sha256": "d4238bb956042221f6bc10d0db8b6add70c54ffee4e37ba7b98b320f50290c99"
+    },
+    {
+      "bytes": 1506,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_resource_policy.py",
+      "sha256": "5e88b956f82bb5e0aa3c512fa5965c30e37bb0bbcdbe8d4af769d84383289864"
+    },
+    {
+      "bytes": 4602,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_run.py",
+      "sha256": "2eac5ec1844d0bd5c966e4036567eec0dfb9aceabda66f69049129c504852493"
+    },
+    {
+      "bytes": 2622,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_settle.py",
+      "sha256": "05d2459092ccf87a9dfe1063a98b62ded245fc0b4e6fc4a5a6548eb0d4a337f8"
+    },
+    {
+      "bytes": 2088,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_storage.py",
+      "sha256": "bd056264c88ec564dcb198da293ddd8c2f57e68da737c0e2ff1f45db83d8ada3"
+    },
+    {
+      "bytes": 3866,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/test_training.py",
+      "sha256": "4e42b2d5a783f726080ea465b99d015d19eddf4eaabc233f11c39d7828935ed6"
+    },
+    {
+      "bytes": 14088,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/worker.py",
+      "sha256": "f25faa438d90f896d2e66c7f8312de9dba1170a49fd1db743767d45ede7409aa"
+    },
+    {
+      "bytes": 1751,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_evidence.py",
+      "sha256": "1a78abbb0cfc1ac7e117539e40941efbb58b44500ed5193b85fc41613051ab51"
+    },
+    {
+      "bytes": 4750,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_final_analysis.py",
+      "sha256": "fdb7276e36dc440f09b700ea35df681e8203354c3c1e813cbcb1438fef06bb46"
+    },
+    {
+      "bytes": 5863,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_final_collection.py",
+      "sha256": "b3d11c6ac37cc25b6e774c3a563581cb17c6abe0cd6a085ee220418164186aa9"
+    },
+    {
+      "bytes": 15956,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_training_analysis.py",
+      "sha256": "6ab0eed48492786e48b02fb64d9fb5aec4f7e9df4d2f5a3efe687d7b0c252856"
+    },
+    {
+      "bytes": 3802,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_training_checkpoint_audit.py",
+      "sha256": "0f0c9f68fa7efa4f3b28d1545bb2b567bdd90d6c1d4b87ecb966bd65da44f544"
+    },
+    {
+      "bytes": 5881,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_training_probability.py",
+      "sha256": "07790dcb290ed38cae547f6f6d2e9664b951fb5aebf76b9f476c1a52598f637a"
+    },
+    {
+      "bytes": 4251,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_training_rng_audit.py",
+      "sha256": "6840a065bb8cd5c1727e69f34076f392526c06998a4c2d116cf042710f69c7f7"
+    },
+    {
+      "bytes": 7597,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_video_presentation.py",
+      "sha256": "4e13b1589ea589c779b06d26507c4ffb2b7003171d93a63abfd12f922920526e"
+    },
+    {
+      "bytes": 5784,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_video_selection.py",
+      "sha256": "fa83a4905dd9dda629d38b9706a5fc5744ccce5201a6e766a317f892d7e6371f"
+    },
+    {
+      "bytes": 6279,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_video_trajectory.py",
+      "sha256": "609b1d1766ea7b9a668b19da638864ff62c3cf0c1a39f40844daa96f47fc439c"
+    },
+    {
+      "bytes": 9684,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/render_r6_isaac_video.py",
+      "sha256": "51d052a16869962f482871d3a46de2d0c43601d0e8867ee3a4cac5a08ec2b7dd"
+    },
+    {
+      "bytes": 261,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/__init__.py",
+      "sha256": "a2462d4e28aeec2e2eff269adc874aeb2a8d66d7a2f32e7d9eed3c2239460c50"
+    },
+    {
+      "bytes": 5344,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/audit.py",
+      "sha256": "72fcf17d418eb1c23094a2024ea5ffade2fc9bf0a242ddb192ca90193f6290db"
+    },
+    {
+      "bytes": 5986,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/authorization.py",
+      "sha256": "d598e3294157a0391fe0474a2543bb2d0953f33f6b2eaa47f75b02dde7efc969"
+    },
+    {
+      "bytes": 8653,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/candidate_config.json",
+      "sha256": "1012fffd41b88a6a278cba42d499c51aea8201498f1460026de7a9a9cdfaa65e"
+    },
+    {
+      "bytes": 8140,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/config.py",
+      "sha256": "0473d0f2b906f78f901014269dba41ce339018cf19d6c03054e70fcd952c2d21"
+    },
+    {
+      "bytes": 21507,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/evaluation.py",
+      "sha256": "ea851a9e7d7ca783a863bc7da59a16fc43f4d7502b38a7d7b5eb02d58cd5b2f5"
+    },
+    {
+      "bytes": 374,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/evaluation_station.json",
+      "sha256": "6e81f90db732d9d65e9ff4de0aece3f9f716d88adb4d2177458514478af75bdd"
+    },
+    {
+      "bytes": 375,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/evaluation_tracking.json",
+      "sha256": "9b7f2a945dd27fff6c99a9b886d3d7d2533a3de188d664668cc0c8a274c53a13"
+    },
+    {
+      "bytes": 2507,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/formal_evaluation.py",
+      "sha256": "6fce3b4c4a71744c5f1ab629a5a23667451bdea051c40325fd4d0fb31b2df999"
+    },
+    {
+      "bytes": 1869,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/formal_scale_training.py",
+      "sha256": "b5b0e9fa4ed5af65ef83b791554e5b6e02683108e94134ef46762eb4bbd1fc0b"
+    },
+    {
+      "bytes": 364,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/formal_station_evaluation.py",
+      "sha256": "3817778ab454e3055208d998fdedb276cd7b7285e153f4c96a2870f3602431ca"
+    },
+    {
+      "bytes": 366,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/formal_tracking_evaluation.py",
+      "sha256": "986ddcd876201cc01d86257c955ef06abd5579093d88fa246de3a8ae3eb2f8d8"
+    },
+    {
+      "bytes": 9663,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/geometry.py",
+      "sha256": "35adecd7906d9d6e2b1c168a05b17632cd86dc97b0435c024a6820872d7efd32"
+    },
+    {
+      "bytes": 5468,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/handoff.py",
+      "sha256": "45050437180896e61fc43bbb6402e0ee9b65b0ca5c9d1edce6d4349838de998d"
+    },
+    {
+      "bytes": 5262,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/lifecycle.py",
+      "sha256": "0ea28f1b6fea550dd7630054871ae302887b44d05b7b36abc3b23a49636a1978"
+    },
+    {
+      "bytes": 14590,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/live_evaluation.py",
+      "sha256": "c09d48e2f7f4345f073c22e0e62ea299f88d3bea23e2a06ea04dd1fab88abd91"
+    },
+    {
+      "bytes": 15216,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/live_scene.py",
+      "sha256": "e221dd205d100492b9a47b91c362c42c8fba5668e5ee963b78f6b5b8d52885f0"
+    },
+    {
+      "bytes": 13628,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/live_training.py",
+      "sha256": "fb83c64532e5a1c6dda33b698664deb6fc1d6f2ad236bc3208e997ce09f956dd"
+    },
+    {
+      "bytes": 8327,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/manifest.py",
+      "sha256": "d58afdae217ea31390d8f9ba0ad5208c27aacbbfd360b12a0b550d96be8d3114"
+    },
+    {
+      "bytes": 4716,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/numeric_diagnostics.py",
+      "sha256": "74b82d3cf327acbd90f11a5fa22201d3f2198435ff51ca69f690c259861cba0e"
+    },
+    {
+      "bytes": 6417,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/persistence.py",
+      "sha256": "245b1fd5f603ba912eb512904d8daf51b5233771cf3b1df46da25faf170e0ac7"
+    },
+    {
+      "bytes": 21722,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/resources.py",
+      "sha256": "f00212678e8bddf1bae2414571b2094ac8f702d6ee67219a63bf07796008cf61"
+    },
+    {
+      "bytes": 2746,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/runtime_support.py",
+      "sha256": "7b77bfa29cf9fad55141dd1da783890fc376e511d3417717bf7b703d59f4c7bd"
+    },
+    {
+      "bytes": 3834,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/schedule.py",
+      "sha256": "91b3ae69d09a2ca13cf09bb2dacaf9efdffb37576744a83b948b5c5fbc74c487"
+    },
+    {
+      "bytes": 14572,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/semantic.py",
+      "sha256": "4ea5e5d23c982185101dae9429b5f17dc107f5eacb28acfb500d2c3e6b944af7"
+    },
+    {
+      "bytes": 14883,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/scale_003/training.py",
+      "sha256": "cfd4096e96cb7d7ed6fa8197aa176ad45576fb6af296753b34be5946451896f8"
+    },
+    {
+      "bytes": 135,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/__init__.py",
+      "sha256": "bff20b35d35477d6aafde01e55ff7de70df148b0925f91d93e22812006dc83ec"
+    },
+    {
+      "bytes": 4955,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/asset_closure.py",
+      "sha256": "99971d2daf7162874e29c42a3a1a3e54df13f5b4dcb5a06380bc10002be063e6"
+    },
+    {
+      "bytes": 14709,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/authorization.py",
+      "sha256": "882c8641fe1079b98378b079e417ccbb3571baf4fcc2509e40f1634805cac270"
+    },
+    {
+      "bytes": 10751,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/b0_causal_analyzer.py",
+      "sha256": "9172255d8f15ec93b055d4e094ddc56a4358993619e94602d9cb4519982f9f59"
+    },
+    {
+      "bytes": 22302,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/b0_enhanced.py",
+      "sha256": "ded9db1f6fce21cd5a3b6cb1ea228ac11da2c97130e1d1a0d073e16465302079"
+    },
+    {
+      "bytes": 7787,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/b0_handoff.py",
+      "sha256": "a04bb8cdc64f1bebd24ef0fabaa0bc3a30f853cd69c033d5f480d4f0c463f2aa"
+    },
+    {
+      "bytes": 7184,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/b0_observer.py",
+      "sha256": "14b6410ccc778bfabbf842a9d9511a4382af444c79f389ed5d3b380390c2f625"
+    },
+    {
+      "bytes": 66971,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/backend.py",
+      "sha256": "700df3daa005cabcc4df929132a9dfa43c2c6663067c53cabc503459a8504fed"
+    },
+    {
+      "bytes": 28196,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/budget.py",
+      "sha256": "e861364f9facf45020d02efca6bc5421fc84607c88fc4f01e4f965f69f76d5f8"
+    },
+    {
+      "bytes": 11559,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/candidate_config.json",
+      "sha256": "f27a8d8d2c6cba48b54498356910627fc4aed0e32621527f452d771c777a1429"
+    },
+    {
+      "bytes": 5796,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/checkpoint_compatibility.py",
+      "sha256": "670ec6ff9dc4841f7e9d088422fecec22dc23bb7295fa4bbb094fdf03369bb80"
+    },
+    {
+      "bytes": 3723,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/checkpoint_recalculation.py",
+      "sha256": "d23c77092a71fb69359bcef6bf50f3ff9ca01b34b61748e889c1b49e249fe626"
+    },
+    {
+      "bytes": 21336,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/config.py",
+      "sha256": "380573929007ce05d118010df48272b7a4cd514af0414a75d1db8e5d97d63ac5"
+    },
+    {
+      "bytes": 23166,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/control_diagnostic.py",
+      "sha256": "0825540779cf217d5a60b79a4e8d62b6e6724129aaba76a42dfec91aad098a61"
+    },
+    {
+      "bytes": 10062,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/direct_contract.py",
+      "sha256": "b15817041aca9989e1fddaf42de68bb80e9b0fe651886b7e1f593dfb6a7b14e2"
+    },
+    {
+      "bytes": 6865,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/direct_selection.py",
+      "sha256": "487068ba89da8be09a87ee981c66614fa3520558822e51d6054044d661212533"
+    },
+    {
+      "bytes": 12741,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/driver.py",
+      "sha256": "9eafe508e5f26fc88a6d1e0f5dad666e96298b1b9a82bb598bc32c7df4ef3a59"
+    },
+    {
+      "bytes": 39919,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/evaluation.py",
+      "sha256": "a6caedb36a5ddb408a9a9b8c6e073808b480252f6cc3ec12d201b69ab5e5583c"
+    },
+    {
+      "bytes": 7812,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/evidence_boundary.py",
+      "sha256": "3ee5a6c285eae6a0344807d74f67009c2cc9a7b0aea02a2119f606f894917b24"
+    },
+    {
+      "bytes": 3357,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/extension_inputs.py",
+      "sha256": "fef972a7afe8cac192272627d65c8a9f4fb4c72cd9dca2b91c20d5111df7b6d1"
+    },
+    {
+      "bytes": 10980,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/failure_evidence.py",
+      "sha256": "ad31660d5fcc330e2b89163d3e644af0693db47f621899e2550eb4b9c41c25f0"
+    },
+    {
+      "bytes": 3161,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/force_archive.py",
+      "sha256": "2ada654e0f9f1f95799b12379c631f8fcac2a8666f53c185893fa521fe79309c"
+    },
+    {
+      "bytes": 14499,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/formal_segment.py",
+      "sha256": "7decffc1eb7fc54261abd2fe7234926a889d19fed1bd0137c2b87c2667fe1770"
+    },
+    {
+      "bytes": 3463,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/formal_unified_h1.py",
+      "sha256": "fefa46e7e2c54990477c5941e1796f972e1aa9956b9b4ea536be461ba1f02863"
+    },
+    {
+      "bytes": 24080,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/live_adapter.py",
+      "sha256": "d89e6080a31341b2ef45446e0e3f5b10eeb63c45db6a89ccf7dfd0e02a871ee8"
+    },
+    {
+      "bytes": 16246,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/local_dispatch.py",
+      "sha256": "f3316cabd967d3bf82272734f9dde6348fce927ae2fc5fc0df47a3bdb756f135"
+    },
+    {
+      "bytes": 33926,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/logging.py",
+      "sha256": "ab723bcc7b5f263bdbe391b4ac6b6f64a3eca55a7ba17967b8d48f838caf06e5"
+    },
+    {
+      "bytes": 10226,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/lossless_evidence.py",
+      "sha256": "2fe1801bfab6534b7f46cd2114aab8846e0f5206eea36c90bfcc779b06b1eae2"
+    },
+    {
+      "bytes": 1283,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/mean_prior.py",
+      "sha256": "a7e8d3589f739636a337ca258d61f9e541bd576b98826019a012e8b5feab896c"
+    },
+    {
+      "bytes": 5985,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/native_volume.py",
+      "sha256": "45290b8ca24cc73552a5377ab741445579f6216423b248f5e11553fcabf1b61e"
+    },
+    {
+      "bytes": 16627,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/offline_supervision.py",
+      "sha256": "05d46ff520e817b426da22dca5ecf815f65632ce57dd03f2ecd384177cb9a63d"
+    },
+    {
+      "bytes": 3839,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/pilot_contract.py",
+      "sha256": "4e00ebde975491f5be10d2d19e13984be437f10547fe33b16bf28f48b4d2fc66"
+    },
+    {
+      "bytes": 17608,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/pilot_diagnostic.py",
+      "sha256": "98f71905167598fc85886f9ace5f307908e65a8282c5a05c736b6282c5bc10ff"
+    },
+    {
+      "bytes": 487,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/pilot_p0.json",
+      "sha256": "e100aa55ba22f2e001e6c126a0574b69a13ac039cfd5da6892b7308f8a3d418f"
+    },
+    {
+      "bytes": 487,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/pilot_plr.json",
+      "sha256": "9fdd44ffbbbc7ecc926e073ab656439d7bdd8ea9cd1f8028728c77c48073307f"
+    },
+    {
+      "bytes": 9740,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/preflight.py",
+      "sha256": "d4add8a45bde7959e0771ddb8bfbd8db2bd434871ae3c1137a880faf46dda5cd"
+    },
+    {
+      "bytes": 5601,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/r3_sequence.py",
+      "sha256": "d612632bdf016fcaff4f9bd90a7cbf8b1a29fb951dd93c3f923fbf859efc8233"
+    },
+    {
+      "bytes": 10918,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/range_archive.py",
+      "sha256": "e117de39cfa4ee0a057bff50893509fcf5dc31cbfa676331e158cd5e4c4b93ef"
+    },
+    {
+      "bytes": 9885,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/research_contract.py",
+      "sha256": "ba0465cb7bea663907f26abdd6ecad25923ad97d3b88c36c17757c2bc77acb5c"
+    },
+    {
+      "bytes": 7328,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/resource_admission.py",
+      "sha256": "6b5fc3481c26fef0da92366ef657a14a305b76f4645d154255a5d9ba3ed79d34"
+    },
+    {
+      "bytes": 3101,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/result_volume.py",
+      "sha256": "4082b85973e5f721316810a507e6d47ce176a5b730f977849383b1d9fdbc6e55"
+    },
+    {
+      "bytes": 11428,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness.py",
+      "sha256": "263aa23a624ff973202e2a94ce1d8346c211343ba23701687c2ca59a5a4402b4"
+    },
+    {
+      "bytes": 12176,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_analysis.py",
+      "sha256": "e4424ff034d8053afe3a529317faf389ed6b101ad7036b6f6682a8c1ca2212f1"
+    },
+    {
+      "bytes": 3946,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_audit.py",
+      "sha256": "e39d2bb4b8f95bb9d5787d3bed930b8a203777af2929f41896f9f8aa3b7d99e6"
+    },
+    {
+      "bytes": 7961,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_candidate_contract.py",
+      "sha256": "c0c9bdadcf11d6764f46a30d41ebea85730f5394b0c145e2250cc64e9bec4993"
+    },
+    {
+      "bytes": 3162,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_candidate_restore.py",
+      "sha256": "66e476cd06683c6ea7b7fb16cbc527adb84c1ccdcb2f591707c426d4c34ad6bb"
+    },
+    {
+      "bytes": 17776,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_confirmation.py",
+      "sha256": "47667bdc551734c71cbdaf9576590b99b9095f2072b505e3d9d6b26ff12a046f"
+    },
+    {
+      "bytes": 16175,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_contract.py",
+      "sha256": "5790e03df46ebca67c6d12d432e99d01df9eeece52b3befa83b3878d63c52c26"
+    },
+    {
+      "bytes": 8697,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_curriculum.py",
+      "sha256": "87f2af1287c9c4a2e45de35697c14a0bf70084723d852f22014d5657cb1ae1fe"
+    },
+    {
+      "bytes": 8447,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_evaluation.py",
+      "sha256": "228ca7c530709148e0bebb17c8aef9ac747cf7325cea29ce00cf27b27069acc7"
+    },
+    {
+      "bytes": 9380,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_evaluation_selection.py",
+      "sha256": "e48785246f687b43871bb90fdf59c00e638703ecf6acecba56ca0f6d2969eb56"
+    },
+    {
+      "bytes": 4568,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_final_contract.py",
+      "sha256": "c0aafe7e2da81dc6d92c9ba9eb485032272f35e1be77232bc898437f01541f13"
+    },
+    {
+      "bytes": 4142,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_final_restore.py",
+      "sha256": "4be5982f60b9c73875be75789a2feb162b9343105729eb3313eb2250fb7f384b"
+    },
+    {
+      "bytes": 7155,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_final_selection.py",
+      "sha256": "1c845c128e827045dad463cbf37f0eb4daaf85cb2e51c2663d783d8acf80d96d"
+    },
+    {
+      "bytes": 2412,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_holdout.py",
+      "sha256": "68ab46969db55ec4fbcda4120e2ac4f3e77cbb79fef239e4870ed54a6b86c811"
+    },
+    {
+      "bytes": 5680,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_measurement_replay.py",
+      "sha256": "2113d8f4f7d214e753bf6bf6e0d6cd9db1fe2fa71d8a54e6ce898af4dd8fc932"
+    },
+    {
+      "bytes": 7291,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_physics_replay.py",
+      "sha256": "dee0eef068cbfa059cbd728d4fe769552d9a5788f17d80379e87dd6c7f4f6fbe"
+    },
+    {
+      "bytes": 5111,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_prelaunch.py",
+      "sha256": "b948dbfe286409fd5c9a56c157f5d6f5810f52eedd8184959e0a0ed9c7c67740"
+    },
+    {
+      "bytes": 3390,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_scenarios.py",
+      "sha256": "630cbdf15d217644fae7bf0be8fb7db4be1f07abacd62ea9c9cb6e7ef34a22f3"
+    },
+    {
+      "bytes": 9998,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_training_contract.py",
+      "sha256": "1a8260a9f5675ccf1d8ce48f91dc26c1a32f9d1d55d8f1f161aa0e3319e776ee"
+    },
+    {
+      "bytes": 5816,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_training_driver.py",
+      "sha256": "89a00b8e8b2193b731290934ff0a23f6a946d2cf6506cb5531b75923b9af73b3"
+    },
+    {
+      "bytes": 9259,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_training_execution.py",
+      "sha256": "675f96c7c5cff4cc5ab1c456d7b35b7eac84ef3ab636a432afd6a23004107731"
+    },
+    {
+      "bytes": 8808,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_training_method.py",
+      "sha256": "1425af390d93fc2ca39d0dc2543b099a0c9f314db68ad8690e47d68e9ce46f16"
+    },
+    {
+      "bytes": 9799,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_training_plan.py",
+      "sha256": "a9f73384757a4c2095a2b1e5e4513af16cf306ebe76963b0fc9954133eb81830"
+    },
+    {
+      "bytes": 5759,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_training_rng.py",
+      "sha256": "e206a82073139e222bc4419227c728cc97768704142a0747af52c467bb0bab35"
+    },
+    {
+      "bytes": 5460,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/robustness_training_storage.py",
+      "sha256": "79f77cf45cc285ff22720ea5ba6ea986b3fd05f751c1422726ea5ab081a37501"
+    },
+    {
+      "bytes": 5363,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/schedule.py",
+      "sha256": "726044a33a4bd188e7b289bf8e9c0dabdbfe99b70fb38d90a6d89c37594c1565"
+    },
+    {
+      "bytes": 9351,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/transition_diagnostic.py",
+      "sha256": "7347ffa01d64b58b7342ea663d126313d4b5ae02d7b45a88b2e0ab6be8ae6eda"
+    },
+    {
+      "bytes": 17353,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/w_closure.py",
+      "sha256": "5e30b39ee175781360a865b1f2f41925023bb6e321f1474e65e0b678fce4346d"
+    },
+    {
+      "bytes": 7437,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/w_independent.py",
+      "sha256": "a4a6ef91fb9d30cb8f450511c4b46ca143a6a2adfca46fa8d8cab3733535988a"
+    },
+    {
+      "bytes": 4902,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/training_workloads/unified_h1/write_boundary.py",
+      "sha256": "115ce3c7ed3cdcca80bc1c142275baee8bd9463b216b02548dcfa91e59756b36"
+    },
+    {
+      "bytes": 66971,
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/backend.py",
+      "sha256": "700df3daa005cabcc4df929132a9dfa43c2c6663067c53cabc503459a8504fed"
+    },
+    {
+      "bytes": 12741,
+      "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/driver.py",
+      "sha256": "9eafe508e5f26fc88a6d1e0f5dad666e96298b1b9a82bb598bc32c7df4ef3a59"
+    },
+    {
+      "bytes": 2235,
+      "path": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/probability_result.json",
+      "sha256": "af931838916fd4643602f1c54b1311aab7e2b44f789f239f63402ca9b6dc047f"
+    }
+  ],
+  "issues": [],
+  "plan_sha256": "5f6dbc0fff23cb1b4103f4cd555d21acbb51c30c0104dc1714d0d9e47eb624e3",
+  "probability_replayer": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_probability.py",
+    "sha256": "07790dcb290ed38cae547f6f6d2e9664b951fb5aebf76b9f476c1a52598f637a"
+  },
+  "rng_auditor": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_rng_audit.py",
+    "sha256": "6840a065bb8cd5c1727e69f34076f392526c06998a4c2d116cf042710f69c7f7"
+  },
+  "run_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-inputs.json",
+    "sha256": "d1b2831297ab6631e58920baab2c98952b80817b590cc53ff598934b01c92937"
+  },
+  "schema_version": "r6-training-analysis/1",
+  "scientific_acceptance": false,
+  "streams": [
+    {
+      "complete": true,
+      "logical_name": "learning_log/plan.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/learning_log/plan.jsonl.r6z",
+        "sha256": "c74df6d8a33a7cb98d81b5fc3dfffb025da1cc47f2a28ff8dfd404fdc3ef2b26"
+      },
+      "raw_bytes": 5210,
+      "raw_sha256": "ce8b9462056c767693af8c392f7974839fa04bf6964bc37dd39e9a1e78804ac7",
+      "record": {
+        "metadata": {
+          "counters": {
+            "actor_optimizer": 5120,
+            "critic_optimizer": 5120,
+            "global_policy_step": 10240,
+            "transition": 327680,
+            "update": 640
+          },
+          "curriculum": {
+            "completed_policy_steps": 10240,
+            "version": "curriculum-h1-v1"
+          },
+          "reset_number": 323,
+          "training_seed": 20260908
+        },
+        "method_binding": {
+          "actor_adam_sha256": "020b95cdc4d523c3d9b7142c0dc7003255bfa2f436df1de01efe778266fc85fa",
+          "actual_environment": {
+            "actor_optimizer_lrs": [
+              0.0001
+            ],
+            "anchor_weight": 4.0,
+            "critic_optimizer_lrs": [
+              0.0003
+            ],
+            "ics_clearance_margin_m": 0.15,
+            "pipeline_margins": [
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15
+            ],
+            "pure_hover": false,
+            "residual_neutrality_weight": 0.05
+          },
+          "actual_ppo": {
+            "actor_learning_rate": 0.0001,
+            "advantage_epsilon": 1e-08,
+            "clip_ratio": 0.2,
+            "critic_learning_rate": 0.0003,
+            "entropy_coefficient": 0.01,
+            "epoch_count": 1,
+            "gae_lambda": 0.95,
+            "gamma": 0.99,
+            "maximum_gradient_norm": 0.5,
+            "minibatch_size": 64,
+            "permutation_seed": 1701,
+            "value_loss_coefficient": 0.5
+          },
+          "before_ppo": {
+            "actor_learning_rate": 0.0001,
+            "advantage_epsilon": 1e-08,
+            "clip_ratio": 0.2,
+            "critic_learning_rate": 0.0003,
+            "entropy_coefficient": 0.01,
+            "epoch_count": 1,
+            "gae_lambda": 0.95,
+            "gamma": 0.99,
+            "maximum_gradient_norm": 0.5,
+            "minibatch_size": 64,
+            "permutation_seed": 1701,
+            "value_loss_coefficient": 0.5
+          },
+          "mean_prior_weight": 10.0,
+          "method_sha256": "b7a1fd6b3bc53a70cc5d4bffe4f0bb538da062ca01a601f1b9ee446f384d47b9",
+          "schema_version": "r6-actual-method-binding/1",
+          "strict_resume": false,
+          "unchanged_weights_adam_moments_and_counters": true
+        },
+        "method_hashes": {
+          "checkpoint": "checkpoint-h1-v2",
+          "critic": "critic-h1-v2",
+          "curriculum": "curriculum-h1-r6-v1",
+          "ics_clearance_margin_m": "0.15",
+          "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+          "logging": "learning-log-h1-v1",
+          "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+          "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+          "metric": "metric-h1-v1",
+          "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+          "r6_method": "655457c69bd6e58640651cb60d5d871b2c3bd9f9b247e95dd7854b3cd92a125c",
+          "r6_recipe": "132342e2c7f5ba1aeba1cff8c33462f3681efc9e62562afa07efea20f6ab1c0d",
+          "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+          "reset_distribution": "mixed-nearwall",
+          "reward": "reward-h1-zero-neutrality-v1",
+          "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5"
+        },
+        "physical_continuity": false,
+        "plan": {
+          "checkpoint_updates": [
+            768
+          ],
+          "experiment_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+          "initialization": {
+            "checkpoint": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+              "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+            },
+            "kind": "COMMON_U640_NEW_STREAM",
+            "method_hashes": {
+              "checkpoint": "checkpoint-h1-v2",
+              "critic": "critic-h1-v2",
+              "curriculum": "curriculum-h1-v1",
+              "ics_clearance_margin_m": "0.15",
+              "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+              "logging": "learning-log-h1-v1",
+              "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+              "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+              "metric": "metric-h1-v1",
+              "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+              "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+              "reset_distribution": "mixed-nearwall",
+              "reward": "reward-h1-zero-neutrality-v1",
+              "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5"
+            },
+            "source_identity": {
+              "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+              "product_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+              "product_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924",
+              "workload_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+              "workload_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924"
+            }
+          },
+          "phase": "confirmation",
+          "recipe": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/recipe-source-02.json",
+            "sha256": "132342e2c7f5ba1aeba1cff8c33462f3681efc9e62562afa07efea20f6ab1c0d"
+          },
+          "schema_version": "r6-local-training-plan/1",
+          "selection_freeze": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/freeze-02.json",
+            "sha256": "7b38afd36979a84cd6cf63404771646a87fb52b830b560ac63cc12c807bc5ec7"
+          },
+          "start_update": 640,
+          "storage": {
+            "branch_record_bytes": 16777216,
+            "checkpoint_bytes": 16777216,
+            "compressed_bytes": 23622320128,
+            "maximum_raw_file_bytes": 68719476736,
+            "metadata_bytes": 67108864,
+            "payload_bytes": 25769803776,
+            "plain_bytes": 2147483648
+          },
+          "target_update": 768,
+          "training_seed": 2026102204,
+          "wall_seconds": 7200
+        },
+        "source_identity": {
+          "config_sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19",
+          "product_commit": "067349c103d6b344a18188b1b724e37e03fd5958",
+          "product_tree": "cd6e86b500bee9390c06597475c75a354f15b8b3",
+          "workload_commit": "067349c103d6b344a18188b1b724e37e03fd5958",
+          "workload_tree": "cd6e86b500bee9390c06597475c75a354f15b8b3"
+        }
+      },
+      "rows": 1
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/accounting.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/accounting.jsonl.r6z",
+        "sha256": "0de62bc53908f41ae24bc314b74b794cec0f343904efbe522197ca8d8bcd4bf4"
+      },
+      "raw_bytes": 313432,
+      "raw_sha256": "4cb1f50ba0e1e8a08bd44cc3c9a0da32e38a3b76b3dbdd35bc8a132b03fa2a39",
+      "rows": 2112
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/command_blocks.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/command_blocks.jsonl.r6z",
+        "sha256": "d446d0f9ee8201f464f1488bb0dbe8e4fa28d406f83acda2e46fbb10a69a1f75"
+      },
+      "raw_bytes": 193197,
+      "raw_sha256": "3e67b52b0a508ec3f33d577e5b10ce11050bbc8cd48160f70d401e4ed1560f44",
+      "rows": 288
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/compact_rollouts.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/compact_rollouts.jsonl.r6z",
+        "sha256": "2b7f0a795d17600d6008221f8f69c5f43c5e08952395266db5418bad88735ea2"
+      },
+      "raw_bytes": 73201027,
+      "raw_sha256": "bbb8bb70f6f80a32486206a0f7d3da4787f1532bbb673913534772f92b8338d6",
+      "rows": 1024
+    },
+    {
+      "complete": true,
+      "episodes": {
+        "center:1": {
+          "count": 24,
+          "return_sum": -4409.732620239258,
+          "right_censored": 0,
+          "steps": 24000
+        },
+        "center:RUN_END": {
+          "count": 24,
+          "return_sum": -100.25915312767029,
+          "right_censored": 24,
+          "steps": 576
+        },
+        "near_x_wall:1": {
+          "count": 4,
+          "return_sum": -647.7585144042969,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_x_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -15.563117027282715,
+          "right_censored": 4,
+          "steps": 96
+        },
+        "near_y_wall:1": {
+          "count": 4,
+          "return_sum": -707.9929046630859,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_y_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -15.616305589675903,
+          "right_censored": 4,
+          "steps": 96
+        }
+      },
+      "logical_name": "phases/0-10240-11264/learning_log/episodes.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/episodes.jsonl.r6z",
+        "sha256": "2486fc6ed8b21e59f2afcce6fadbefd79d50d676565b8dfaae4a31e14d6044b6"
+      },
+      "raw_bytes": 51124,
+      "raw_sha256": "bef555d2862ece32ff92af96caaffc21f4601d6d9dad8e04bf798ff435b45890",
+      "rows": 64
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/measurement_windows.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/measurement_windows.jsonl.r6z",
+        "sha256": "05344829e6e84acd48500d33f3f88502ed62d84779e81388394910d1f2a5e4e9"
+      },
+      "raw_bytes": 295511382,
+      "raw_sha256": "52d6dd6e6b46364f4698e10dcce0bdd8a5eca208f2a9c80fff0dd9baf6d63695",
+      "rows": 16
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/minibatches.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/minibatches.jsonl.r6z",
+        "sha256": "26465d407d892275bb7fea87ae4f74291a10940a73eca856718b37210a7fe9a6"
+      },
+      "raw_bytes": 243781,
+      "raw_sha256": "c6cdfab2b297b61d3a025f0ea8354f6ad171c9b2332f160b1ea9581bc0eb2117",
+      "rows": 512
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/partial_rollout_steps.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/partial_rollout_steps.jsonl.r6z",
+        "sha256": "639aba973c1197f93f4d3bb5ed80f0f7d013bb76588eddf600a47187699c815b"
+      },
+      "raw_bytes": 76335149,
+      "raw_sha256": "4b867a8a03a9ef9e9f6a990cd465a5f8bd13698c743f3218e6a0ff14d9e32ba1",
+      "rows": 1024
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/phase_complete.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/phase_complete.jsonl.r6z",
+        "sha256": "f36014d304ef8c04167139aa80a537d7d2ba5dbd8193d33c9f17c6662e57aa53"
+      },
+      "raw_bytes": 697,
+      "raw_sha256": "4eb69274ec199c62f416ec14a7531c6d23f9029b614aca4acc36ba4f74b4022e",
+      "record": {
+        "counters": {
+          "actor_optimizer_steps": 512,
+          "attempted_policy_steps": 1024,
+          "attempted_updates": 64,
+          "automatic_resets": 32,
+          "completed_policy_steps": 1024,
+          "completed_updates": 64,
+          "critic_optimizer_steps": 512,
+          "explicit_resets": 1,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 0,
+          "real_environment_transitions": 32768,
+          "real_optimizer_updates": 64,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 32768
+        },
+        "phase": {
+          "index": 0,
+          "kind": "original",
+          "phase_end_update": 704,
+          "phase_start_update": 640,
+          "start_update": 640,
+          "target_update": 704
+        }
+      },
+      "rows": 1
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/rollouts.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/rollouts.jsonl.r6z",
+        "sha256": "e3e38c59b8269d3ca4f2e610bfbbd5f54a181ebd25dad4f99016bad22561d45a"
+      },
+      "raw_bytes": 420245,
+      "raw_sha256": "6313884e0918b42c4d7eff5a7641da94dfdb7fd99126ffe92096fb99d13e6c9b",
+      "rows": 64
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/updates.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/updates.jsonl.r6z",
+        "sha256": "014f5681318c9fc454dd8fe3d66b0e35405af9c1021f50f1100681826c5d3ee9"
+      },
+      "raw_bytes": 174827,
+      "raw_sha256": "b9f1fb55fa040b10093cd59a68c0777dbbe2b1f11cec252fbb86bc9425f807b3",
+      "rows": 64,
+      "updates": [
+        641,
+        642,
+        643,
+        644,
+        645,
+        646,
+        647,
+        648,
+        649,
+        650,
+        651,
+        652,
+        653,
+        654,
+        655,
+        656,
+        657,
+        658,
+        659,
+        660,
+        661,
+        662,
+        663,
+        664,
+        665,
+        666,
+        667,
+        668,
+        669,
+        670,
+        671,
+        672,
+        673,
+        674,
+        675,
+        676,
+        677,
+        678,
+        679,
+        680,
+        681,
+        682,
+        683,
+        684,
+        685,
+        686,
+        687,
+        688,
+        689,
+        690,
+        691,
+        692,
+        693,
+        694,
+        695,
+        696,
+        697,
+        698,
+        699,
+        700,
+        701,
+        702,
+        703,
+        704
+      ]
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/accounting.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/accounting.jsonl.r6z",
+        "sha256": "563e0c635872c3b5be7cd8a7e4f6be5a9907b32c7a8cdb39e9b50178308dbe33"
+      },
+      "raw_bytes": 318777,
+      "raw_sha256": "b205ebf2d62c1a0616411d85c3b7c03c2a3fc3c243725f8626762059a7ba7cec",
+      "rows": 2112
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/command_blocks.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/command_blocks.jsonl.r6z",
+        "sha256": "5a0356f41eeca823adcaab8d255f67a427a5d13e047cbd20cb0455a9fe59836d"
+      },
+      "raw_bytes": 8339682,
+      "raw_sha256": "1e0e63eae1b32d0f42a976f7b3c21309bad5d1a5ed0d54ccd1e7ae5b486fe9a0",
+      "rows": 12100
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/compact_rollouts.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/compact_rollouts.jsonl.r6z",
+        "sha256": "9bc05fc7a5169882a2e15ad88062668ba99d725d8962b1916180a2e4f1bd2426"
+      },
+      "raw_bytes": 73461261,
+      "raw_sha256": "48b8b30c19fb596a15002bdc29c2c2b2e6d3492603e8019e4ca4cc57a1adfa84",
+      "rows": 1024
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/curriculum.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/curriculum.jsonl.r6z",
+        "sha256": "f3c311516a5608386e4214f704d8a5bcbefdff626dd9cd5ef1d0831f3693ae51"
+      },
+      "raw_bytes": 983927,
+      "raw_sha256": "a40b83c19e3897ed48ae73b8e0e8f5f063de7e8deb6c449ed2a79e64a39982bf",
+      "rows": 66
+    },
+    {
+      "complete": true,
+      "episodes": {
+        "center:1": {
+          "count": 24,
+          "return_sum": -5422.568374633789,
+          "right_censored": 0,
+          "steps": 24000
+        },
+        "center:RUN_END": {
+          "count": 24,
+          "return_sum": -104.37218642234802,
+          "right_censored": 24,
+          "steps": 576
+        },
+        "near_x_wall:1": {
+          "count": 4,
+          "return_sum": -880.4449615478516,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_x_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -15.31246829032898,
+          "right_censored": 4,
+          "steps": 96
+        },
+        "near_y_wall:1": {
+          "count": 4,
+          "return_sum": -720.87109375,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_y_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -17.552359342575073,
+          "right_censored": 4,
+          "steps": 96
+        }
+      },
+      "logical_name": "phases/1-11264-12288/learning_log/episodes.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/episodes.jsonl.r6z",
+        "sha256": "4f53e7ade266b726a269cf961e5894bdeff149392ceb0d3eff7937023c728d4c"
+      },
+      "raw_bytes": 50964,
+      "raw_sha256": "300fdc88dd13e257610932c787a3927a8a59da46fc1917016f4aea84611ebd30",
+      "rows": 64
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/force.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/force.jsonl.r6z",
+        "sha256": "18c8a65ba6bdc60831e5b426f5641846b9c329abd72d05d2e9cfae28460664cd"
+      },
+      "raw_bytes": 740683740,
+      "raw_sha256": "87b14ec22888aadde6f3c2e0551a40a650398d04eb2fe8a661e4a00be7053bc7",
+      "rows": 20480
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/measurement.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/measurement.jsonl.r6z",
+        "sha256": "0c3fe1680383ff345521c21c10e171a712a34c61f240644c5a7f57d40d2e9d0c"
+      },
+      "raw_bytes": 25327811318,
+      "raw_sha256": "e29d2e9808507154b2ff34c3ee9b4f7ec1f76e74f9936e752bc2a1f1076706b4",
+      "rows": 1025
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/measurement_windows.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/measurement_windows.jsonl.r6z",
+        "sha256": "4ed07eb4c2e38f81fd16b0caea4655998560e1899a61f0e85a0792c413c54299"
+      },
+      "raw_bytes": 294223147,
+      "raw_sha256": "2db6363b2a4f69c31c7fef84058017051f276a9fcfbb7ef3b41b70634534a04f",
+      "rows": 16
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/minibatches.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/minibatches.jsonl.r6z",
+        "sha256": "791e85f4c69c9e68d6ed954680a2c8a7c4d2a54153f9b724bfb207b1cc6ecb50"
+      },
+      "raw_bytes": 243499,
+      "raw_sha256": "6b080752bd9cb1fbde2bb1e71b4058c9a35faeb7dc29cffd856c14e06da5473c",
+      "rows": 512
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/partial_rollout_steps.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/partial_rollout_steps.jsonl.r6z",
+        "sha256": "9901eb92461177cd9d55b3f5e6e5cafd6f906ca6f209c22c78af8c02fd049bf1"
+      },
+      "raw_bytes": 79799244,
+      "raw_sha256": "fb1dd0afa470130f7b5171651de87c7eb8f86dd26a83133fe396bccd9427f6e2",
+      "rows": 1024
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/phase_complete.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/phase_complete.jsonl.r6z",
+        "sha256": "7726854ad3c9834acbe27e353e3f9b1ec49c616ae2bd46029e82e1b46cd6810b"
+      },
+      "raw_bytes": 700,
+      "raw_sha256": "1284e3e7d6dced02fb0db73d5765263ebfb6832ed859a44af83d6030b862c1bb",
+      "record": {
+        "counters": {
+          "actor_optimizer_steps": 1024,
+          "attempted_policy_steps": 2048,
+          "attempted_updates": 128,
+          "automatic_resets": 64,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 65536
+        },
+        "phase": {
+          "index": 1,
+          "kind": "robust",
+          "phase_end_update": 768,
+          "phase_start_update": 704,
+          "start_update": 704,
+          "target_update": 768
+        }
+      },
+      "rows": 1
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/reset.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/reset.jsonl.r6z",
+        "sha256": "510a2dd92fe0e1c7cc4acd52d7d4ac0d4b0435190328cb5ec052a9c6a11ed113"
+      },
+      "raw_bytes": 75844,
+      "raw_sha256": "04e4c34750a83d24f884af43f7fd5d65fe25b068f3622d77b9ec1290365b16b7",
+      "rows": 64
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/rollouts.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/rollouts.jsonl.r6z",
+        "sha256": "7788e91b7ed813837b70c530ad78312f7b4a1ed3f2fe8742285ba2291ebec654"
+      },
+      "raw_bytes": 453222,
+      "raw_sha256": "461e35b2c0b4d67222200cbe27541de6368ef48586e3798884fdb1ba8749fd35",
+      "rows": 64
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/learning_log/updates.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/updates.jsonl.r6z",
+        "sha256": "aea3b49af2ae019fc7737b70d6acb3dfd3196e763b8b35e3b006509847671175"
+      },
+      "raw_bytes": 181722,
+      "raw_sha256": "f4f05c3a754f6206cf2c26b968dc016b367615d884b01ffcbdbf23487e75a8c6",
+      "rows": 64,
+      "updates": [
+        705,
+        706,
+        707,
+        708,
+        709,
+        710,
+        711,
+        712,
+        713,
+        714,
+        715,
+        716,
+        717,
+        718,
+        719,
+        720,
+        721,
+        722,
+        723,
+        724,
+        725,
+        726,
+        727,
+        728,
+        729,
+        730,
+        731,
+        732,
+        733,
+        734,
+        735,
+        736,
+        737,
+        738,
+        739,
+        740,
+        741,
+        742,
+        743,
+        744,
+        745,
+        746,
+        747,
+        748,
+        749,
+        750,
+        751,
+        752,
+        753,
+        754,
+        755,
+        756,
+        757,
+        758,
+        759,
+        760,
+        761,
+        762,
+        763,
+        764,
+        765,
+        766,
+        767,
+        768
+      ]
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/setup/curriculum.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/1-11264-12288/setup/curriculum.jsonl.r6z",
+        "sha256": "68dd477dc987c8e97a72963a002245bd3ee83d80605ab6e2508cd6813d8f7338"
+      },
+      "raw_bytes": 28555,
+      "raw_sha256": "fb079d67c91f382ac55d96b5d89729b2c77c926a820fb2e190c078896811ac2b",
+      "rows": 1
+    },
+    {
+      "complete": true,
+      "logical_name": "pilot_diagnostic/first_update_probe.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/pilot_diagnostic/first_update_probe.pt.r6z",
+        "sha256": "5c1bf3c642f7d01ac321f461cb7db19cc1c5459b6c63c52bd1488600827263f8"
+      },
+      "raw_bytes": 12289599,
+      "raw_sha256": "b617353b148921d73b87637e33578b7a208472fa1a6676088dc219bc0c026da0",
+      "rows": 0
+    },
+    {
+      "complete": true,
+      "logical_name": "pilot_diagnostic/update_641_full_input.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_641_full_input.pt.r6z",
+        "sha256": "ed2c51604868ef2c24bcf6518c82902f17587f70e29936e8c55184eb25280625"
+      },
+      "raw_bytes": 522177865,
+      "raw_sha256": "859dcd369096e8005c66c82366f5ac971585993c18b418c876877eefb06b876c",
+      "rows": 0
+    },
+    {
+      "complete": true,
+      "logical_name": "pilot_diagnostic/update_642_full_input.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_642_full_input.pt.r6z",
+        "sha256": "2c71232c982d6f91243a0d2b0a7a14b1594c2abda27f5181cafc8fbf12b77c84"
+      },
+      "raw_bytes": 522177865,
+      "raw_sha256": "cb6c1ee04c4b2144915472e48753de4586df614e6e6414b335e724e469796f8e",
+      "rows": 0
+    },
+    {
+      "complete": true,
+      "logical_name": "rng/initialization.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/rng/initialization.pt.r6z",
+        "sha256": "ebde02014f12fe461accfbee987f0ae4fdba216d653150282dd6ea7e1a00008f"
+      },
+      "raw_bytes": 39445,
+      "raw_sha256": "09b396fbc136d35e55398be04bf42818b0b7e1f4e91568203a336c940cdc6526",
+      "rows": 0
+    }
+  ],
+  "summary": {
+    "checkpoints": [
+      {
+        "finite_tensor_tree": true,
+        "metadata_verified": true,
+        "pin": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/checkpoints/u768.pt",
+          "sha256": "6a616a2582190acdf037bf454b5ae3d921120da3ef85916dff5763de9137e07a"
+        },
+        "state_audit": {
+          "actor_critic_state_loaded": true,
+          "adam_parameter_counts": {
+            "actor": 16,
+            "critic": 10
+          },
+          "adam_state_loaded": true,
+          "adam_step": 6144,
+          "cpu_rng_payload_parseable": true,
+          "cuda_rng_semantics_verified": false,
+          "cuda_rng_state_count": 1,
+          "optimizer_step_executed": false,
+          "rng_restored": false,
+          "strict_checkpoint_restore_performed": false
+        },
+        "strict_restore_performed": false,
+        "update": 768
+      }
+    ],
+    "complete_stream_count": 30,
+    "cpu_probability_replay_error": "probability gate mismatch at frozen index 29",
+    "expected_counters": {
+      "actor_optimizer_steps": 1024,
+      "completed_policy_steps": 2048,
+      "completed_updates": 128,
+      "critic_optimizer_steps": 1024,
+      "explicit_resets": 2,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 1,
+      "real_environment_transitions": 65536,
+      "real_optimizer_updates": 128,
+      "training_transitions": 65536
+    },
+    "experiment_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+    "issue_count": 0,
+    "learning_gain_established": false,
+    "observed_counters": {
+      "actor_optimizer_steps": 1024,
+      "attempted_policy_steps": 2048,
+      "attempted_updates": 128,
+      "automatic_resets": 64,
+      "completed_policy_steps": 2048,
+      "completed_updates": 128,
+      "critic_optimizer_steps": 1024,
+      "explicit_resets": 2,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 1,
+      "real_environment_transitions": 65536,
+      "real_optimizer_updates": 128,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 65536
+    },
+    "phase": "confirmation",
+    "phases": [
+      {
+        "completed_record": true,
+        "episodes": {
+          "center:1": {
+            "count": 24,
+            "return_sum": -4409.732620239258,
+            "right_censored": 0,
+            "steps": 24000
+          },
+          "center:RUN_END": {
+            "count": 24,
+            "return_sum": -100.25915312767029,
+            "right_censored": 24,
+            "steps": 576
+          },
+          "near_x_wall:1": {
+            "count": 4,
+            "return_sum": -647.7585144042969,
+            "right_censored": 0,
+            "steps": 4000
+          },
+          "near_x_wall:RUN_END": {
+            "count": 4,
+            "return_sum": -15.563117027282715,
+            "right_censored": 4,
+            "steps": 96
+          },
+          "near_y_wall:1": {
+            "count": 4,
+            "return_sum": -707.9929046630859,
+            "right_censored": 0,
+            "steps": 4000
+          },
+          "near_y_wall:RUN_END": {
+            "count": 4,
+            "return_sum": -15.616305589675903,
+            "right_censored": 4,
+            "steps": 96
+          }
+        },
+        "phase": {
+          "index": 0,
+          "kind": "original",
+          "phase_end_update": 704,
+          "phase_start_update": 640,
+          "start_update": 640,
+          "target_update": 704
+        }
+      },
+      {
+        "completed_record": true,
+        "episodes": {
+          "center:1": {
+            "count": 24,
+            "return_sum": -5422.568374633789,
+            "right_censored": 0,
+            "steps": 24000
+          },
+          "center:RUN_END": {
+            "count": 24,
+            "return_sum": -104.37218642234802,
+            "right_censored": 24,
+            "steps": 576
+          },
+          "near_x_wall:1": {
+            "count": 4,
+            "return_sum": -880.4449615478516,
+            "right_censored": 0,
+            "steps": 4000
+          },
+          "near_x_wall:RUN_END": {
+            "count": 4,
+            "return_sum": -15.31246829032898,
+            "right_censored": 4,
+            "steps": 96
+          },
+          "near_y_wall:1": {
+            "count": 4,
+            "return_sum": -720.87109375,
+            "right_censored": 0,
+            "steps": 4000
+          },
+          "near_y_wall:RUN_END": {
+            "count": 4,
+            "return_sum": -17.552359342575073,
+            "right_censored": 4,
+            "steps": 96
+          }
+        },
+        "phase": {
+          "index": 1,
+          "kind": "robust",
+          "phase_end_update": 768,
+          "phase_start_update": 704,
+          "start_update": 704,
+          "target_update": 768
+        }
+      }
+    ],
+    "physical_replay_performed": false,
+    "probability_gate_recomputed": true,
+    "probability_replay": {
+      "cpu_actor_forward": false,
+      "cpu_rng_preserved": true,
+      "diagnostic": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-08/SEALED_EVIDENCE.json",
+        "sha256": "dd85c8eb392c09cd447403f80ca304e170f386903de9e13ead32d59857847c76"
+      },
+      "float32_atol": 1e-06,
+      "float32_rtol": 1e-05,
+      "forward_batch_size": 512,
+      "gpu_sampling_reproduced": false,
+      "maximum_absolute_errors": {
+        "alpha": 0.0,
+        "beta": 0.0,
+        "log_probability": 0.0
+      },
+      "optimizer_restored": false,
+      "replay_device": "cuda:0",
+      "sample_count": 512,
+      "starting_update": 640,
+      "status": "PASS",
+      "verification": "closed exact-input CUDA diagnostic"
+    },
+    "rng_initialization_audit": {
+      "actual_rollout_rng_use_verified": false,
+      "cpu_seed_derivation_verified": true,
+      "cuda_rng_state_count": 1,
+      "cuda_seed_derivation_verified": false,
+      "kind": "COMMON_U640_NEW_STREAM",
+      "origin_rng_equal": true,
+      "persistence_order_verified": false,
+      "physical_continuity": false,
+      "resume_rng_equal": false,
+      "starting_update": 640,
+      "status": "PASS",
+      "training_seed": 2026102204
+    },
+    "rng_state_semantics_verified": false,
+    "schema_version": "r6-training-summary/1",
+    "scientific_acceptance": false,
+    "start_update": 640,
+    "stream_count": 30,
+    "strict_checkpoint_restore_performed": false,
+    "target_update": 768,
+    "training_seed": 2026102204
+  }
+}
