@@ -1,0 +1,37 @@
+{
+  "clarification": "SEED_01B_CLOSURE.checkpoint_files enumerates all .pt files: its two initial_preflight artifacts are evidence tensors, not training checkpoints.",
+  "closure_sha256": "3c89dde8b7411d6d99f52f1e8941dd70c46f2749353376209e80f5085fceaefa",
+  "failed_attempt": "R6-DIRECT-CONFIRM-128-SEED-01B",
+  "independent_findings": [
+    "Receipt CLOSED/-15/DIRECT_WALL_TIMEOUT; 3783.349 seconds rounded to 3784",
+    "Workload FAIL_PENDING_CLOSE: authorized wall-time budget exhausted",
+    "122 completed and 123 attempted updates; 1967 policy steps; 62944 transitions",
+    "All seven owned process identities absent; training checkpoint directory empty"
+  ],
+  "limitations": [
+    "7200 seconds does not guarantee success",
+    "Full CPU analysis still running",
+    "No change to training endpoint authorized"
+  ],
+  "new_wall_seconds": 7200,
+  "old_wall_seconds": 3600,
+  "replacement_attempt": "R6-DIRECT-CONFIRM-128-SEED-01C",
+  "requirements": [
+    "Preserve failed attempt and all consumption separately; do not count it as confirmation success",
+    "Replacement starts again from u640 using same seed 2026102202; no recovery checkpoint exists",
+    "Pin new wall and derived budgets in new plan/contract/inputs before launch",
+    "Preserve full CPU failure analysis and additional issues when available",
+    "No holdout reveal; no gain or final acceptance claim"
+  ],
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "Engineering wall-time revision principle only; exact new contracts not yet reviewed",
+  "source_commit": "067349c103d6b344a18188b1b724e37e03fd5958",
+  "status": "PASS_SCOPED",
+  "unchanged": [
+    "freeze-02",
+    "recipe",
+    "common u640 initialization",
+    "128 updates to u768",
+    "seeds 2026102202/2026102203/2026102204"
+  ]
+}
