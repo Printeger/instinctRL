@@ -1,0 +1,57 @@
+{
+  "status": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "Independent readonly TRAIN-02 review; paired development evaluation readiness, not learning gain or overall R6 acceptance",
+  "inputs": {
+    "training_inputs": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/inputs.json",
+      "sha256": "51a51147036bef23944a601b467e141755fb91b7202221fbd8293efbdf37ad7e"
+    },
+    "cpu_report": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis/report.json",
+      "sha256": "1e203021c01e874262bc36d6fd2d7c2a92c914c66cbb85545798791ed47d68e8"
+    },
+    "cpu_summary": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis/summary.json",
+      "sha256": "18d1ba59df63cd135cb237bf731868c6caa3543bcbbbd1e980b07a3af82fe7fe"
+    },
+    "cpu_binding": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis/binding.json",
+      "sha256": "0df541a81e1fcf74ae9c8aa748c4d0beed13a91fcc639b15e7441f82f5a7b9c3"
+    },
+    "receipt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-TRAIN-02/receipt.json",
+      "sha256": "01cfbbe60201e55549dc10f19277ba00e3944e86bf39e3ab2083d6852f2facbe"
+    },
+    "probability": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-05/SEALED_EVIDENCE.json",
+      "sha256": "878ef0f37e37c4975156cac27f0e682347a9d10b8e01589728fbdea83913fa31"
+    },
+    "comparison": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_02_PAIRED_COMPARISON.json",
+      "sha256": "f7c3986ba5974675a66ef1520eb5d7a8a012eeb19cef76ceca2959738889d03f"
+    }
+  },
+  "independent_checks": [
+    "CPU report-summary consistency, binding pins and 12 noncompressed report inputs",
+    "Physical u768 hash; independent CPU actor/critic and Adam loading: 16/10 parameter states, Adam step6144, finite tensors",
+    "Independent initialization RNG evidence audit: common u640 new stream, seed2026102201, origin identity and CPU seed derivation",
+    "Actual CUDA05 sealed verifier: 244 pins, 512 samples, alpha/beta/logp error zero and original tolerances",
+    "Cleanup timeout/-15 preserved; all seven exact process identities absent",
+    "Paired method/protocol match; original five tasks, 16 development conditions, seed2026101901 and 32 lanes"
+  ],
+  "reported_full_analysis": [
+    "30/30 streams complete",
+    "128 updates,65536 transitions,1024 actor and critic optimizer steps,one u768 checkpoint",
+    "640-704 original and704-768 robust curriculum phases",
+    "Only original CPU probability mismatch at index31"
+  ],
+  "limitations": [
+    "Did not repeat the 7.67GB complete stream analysis; completeness and phase counts rely on completed CPU report",
+    "Did not read or claim completion of train-02-analysis-cuda; require completed supplemental report and verify other issues are not masked before recording readiness",
+    "No optimizer step, GPU restore or sampling reproduction; CUDA RNG semantics, actual rollout RNG use, persistence order and physical continuity unproved",
+    "Complete force/measurement records are not proof of full physical integration",
+    "Keep original CPU mismatch and cleanup exception; no learning improvement inferred"
+  ],
+  "scientific_acceptance": false
+}
