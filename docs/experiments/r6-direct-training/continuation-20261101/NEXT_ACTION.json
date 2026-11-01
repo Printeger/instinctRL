@@ -1,14 +1,10 @@
 {
-  "status": "CLOSED_DIAGNOSTIC_FAILED_DO_NOT_RESTART",
+  "status": "READY_TO_LAUNCH",
   "inputs": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-03/plan.json",
-    "sha256": "2e681c4a909d38ee0667906c3b73b84934ea27cd7a8bce2bac32371531f4a000"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-04/plan.json",
+    "sha256": "bba2289d1c2fab729854b1a57624eca6caee2e434c880d44e47d219f3b723a10"
   },
-  "source_commit": "1339bd1c1f1baa34c53ad6fa02f3ccef6ed2ffbd",
-  "reason": "Match original full batch512 gate geometry",
-  "scientific_acceptance": false,
-  "result": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-03/RESULT.json",
-    "sha256": "0eab0454ddead943e398a3148cd6fdf9e9cf26b84afc15bc36485598d719bdb0"
-  }
+  "source_commit": "cd4636c0a1459375327bc0d810919774d06c1e35",
+  "reason": "Source-derived seeded reset backend flags; no tolerance change",
+  "scientific_acceptance": false
 }
