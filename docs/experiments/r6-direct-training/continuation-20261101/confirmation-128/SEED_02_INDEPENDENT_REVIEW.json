@@ -1,0 +1,59 @@
+{
+  "checkpoint": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-02/results/research-r6-training/checkpoints/u768.pt",
+    "sha256": "f7632803deaa9f3cabc3cfee3158e3836cee1f64ee1b735b5c9351707dab20f7"
+  },
+  "decision": "PASS_SCOPED",
+  "evidence_base": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128",
+  "evidence_sha256": {
+    "SEED_02_CLOSURE.json": "8c4e79358d227b6613a6bdc47380c289f01f7da4bf83f49ce60b2946236f34f0",
+    "seed-02-analysis/binding.json": "1d3965fa79e4fde73419a7cbb819cfc2e33501f0a3bb86fb51089dc5fb5164cf",
+    "seed-02-analysis/report.json": "38d5b7a076eeba200ef6aa438fa1e41816c8939cff24e2b06591889ba41b0c50",
+    "seed-02-analysis/summary.json": "b59156d3293932d2f44fe2a24532a23a3cfd5c11d0971aa7f59a8c740979758c",
+    "seed-02-contract-03.json": "e2b531d4d7be8b8f83a12f5c60caf5f100bb636c32bae2add6745007489e1d51",
+    "seed-02-inputs.json": "706171478579feb03abc5a505cab78a55f0e7511d9ad90da2519bdb79beb88ff"
+  },
+  "files_modified": false,
+  "findings": {
+    "actor_critic_adam_load_pass": true,
+    "actor_optimizer_steps": 1024,
+    "adam_parameter_counts": {
+      "actor": 16,
+      "critic": 10
+    },
+    "binding_reference_pins_verified": true,
+    "both_curriculum_phases_completed": true,
+    "checkpoint_adam_step": 6144,
+    "checkpoint_independently_loaded_on_cpu": true,
+    "checkpoint_seed_verified": true,
+    "checkpoint_writes": 1,
+    "complete_streams": 30,
+    "completed_updates": 128,
+    "critic_optimizer_steps": 1024,
+    "initialization": "COMMON_U640_NEW_STREAM",
+    "recipe_and_freeze_pins_verified": true,
+    "report_summary_equal": true,
+    "start_update": 640,
+    "target_update": 768,
+    "total_streams": 30,
+    "training_seed": 2026102203,
+    "training_transitions": 65536
+  },
+  "gpu_started": false,
+  "holdout_read": false,
+  "limitations": [
+    "Cleanup timeout and exit -15 retained",
+    "CPU RNG derivation does not prove CUDA RNG semantics, actual rollout RNG use or persistence order",
+    "No optimizer step, full GPU restore or physical integration validation",
+    "Full compressed replay not independently repeated; stream completeness relies on CPU report",
+    "No learning gain, three-stream or final acceptance claim"
+  ],
+  "reviewer": "/root/baseline_scientific_review",
+  "run_id": "R6-DIRECT-CONFIRM-128-SEED-02",
+  "scientific_acceptance": false,
+  "scope": "Training counters, evidence bindings and independent CPU model/Adam load; probability replay unresolved",
+  "unresolved": [
+    "CPU probability mismatch at frozen index 17",
+    "Exact CUDA07 not yet reviewed; other streams cannot substitute"
+  ]
+}
