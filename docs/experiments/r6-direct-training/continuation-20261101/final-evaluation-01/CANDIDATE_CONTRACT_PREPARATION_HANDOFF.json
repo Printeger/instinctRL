@@ -1,0 +1,29 @@
+{
+  "behavior": "Sequential existing CPU contract builder; exact frozen batch, no outcome-based changes; no launch",
+  "gpu_started": false,
+  "identity": {
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+    "pid": 3216090,
+    "starttime": "32166356"
+  },
+  "requests": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-contract-request.json",
+      "sha256": "223a66904252b67774d6bfe0d96b1d46c7abaaa60ba8f9df6f524856de2ca15c"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-contract-request.json",
+      "sha256": "23ab031fc2dde7bb20471ca0d4f48cd08af5e340f5e550637f8af459d16d877e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-contract-request.json",
+      "sha256": "917ca4c71942f746deb2e90d59cbe407eaa1d40c4dfc98c82502a62852136e37"
+    }
+  ],
+  "session_id": 61324,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
+    "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
+  },
+  "status": "CPU_CONTRACT_PREPARATION_RUNNING"
+}

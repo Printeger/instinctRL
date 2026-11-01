@@ -1,3 +1,14 @@
+# R6 最终模型已冻结发布，保留集揭晓；基线最终评价已启动
+
+2026-11-02：四模型准确freeze独审PASS_R6_FINAL_FREEZE，freeze/review/commitment
+在74f4dcbe及tag推送并核对远端后首次揭晓。四模型固定index0共同seed1812183990，禁止调参。
+发布字节与commit/reveal分配独审PASS_SCOPED，见final-evaluation-01/。
+R6-DIRECT-FINAL-BASELINE-01准确输入CPU预检、commit/tag/push完成，
+监督器3215911/start32164204与子进程3216038/start32165865准确存活；
+目前只确认RUNNING，不表示评价完成。三个候选评价契约正由普通CPU程序顺序准备。
+RustDesk保持连接。四模型最终评价、总审计及模型录像交付仍待完成。
+下方保留历史状态。
+
 # R6 三流补充训练binding均独审通过；模型冻结候选生成中
 
 2026-11-02：第三流完整补充分析退出0，30/30证据流完整，128更新、65536 transitions、

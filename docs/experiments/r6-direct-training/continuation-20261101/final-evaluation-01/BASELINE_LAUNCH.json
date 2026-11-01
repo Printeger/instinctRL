@@ -1,0 +1,73 @@
+{
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-inputs.json",
+    "sha256": "3dfa5f1b275b2265374d524cc5bfe26c23e89c8ea1f6d1c234a8e5b22c323a2d"
+  },
+  "launch": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-FINAL-BASELINE-01/launch.json",
+    "sha256": "7f1ad3af108de1353290e20a8802ca17daca2f514303bea3eb4410549499ff01"
+  },
+  "process_checks": [
+    {
+      "current": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3215911,
+        "starttime": "32164204"
+      },
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3215911,
+        "starttime": "32164204"
+      }
+    },
+    {
+      "current": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3216038,
+        "starttime": "32165865"
+      },
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3216038,
+        "starttime": "32165865"
+      }
+    }
+  ],
+  "scientific_acceptance": false,
+  "session_id": 36950,
+  "state_snapshot": {
+    "argv": [
+      "/usr/bin/bwrap",
+      "--die-with-parent",
+      "--bind",
+      "/",
+      "/",
+      "--dev-bind",
+      "/dev",
+      "/dev",
+      "--bind",
+      "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-FINAL-BASELINE-01/ipc",
+      "/dev/shm",
+      "--",
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "tools.r6_direct.worker",
+      "--inputs",
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-inputs.json"
+    ],
+    "child": {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3216038,
+      "starttime": "32165865"
+    },
+    "parent": {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3215911,
+      "starttime": "32164204"
+    },
+    "started_unix": 1793572015.1180437,
+    "status": "RUNNING"
+  },
+  "status": "SUPERVISOR_RUNNING_NOT_YET_EVALUATION_ACCEPTED"
+}
