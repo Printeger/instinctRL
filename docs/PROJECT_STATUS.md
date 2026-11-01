@@ -1,3 +1,12 @@
+# R6 SEED-01B 准确输入与CPU预检通过
+
+2026-11-02：监督器解释器修复独审通过，真实输入的科学预检及系统计账通过。
+新源码067349c1显式重绑及freeze-02独立审核PASS，方法/课程/seed/128终点不变。
+SEED-01B输入seed-01b-inputs.json、worker预检均通过；NEXT_ACTION为READY_TO_LAUNCH。
+旧SEED-01启动前失败及空目录保留，没有训练或GPU启动计费。
+RustDesk保持连接；接下来提交tag后启动首条确认流，holdout仍未揭晓。
+下方保留历史状态。
+
 # R6 确认首流启动前失败；监督器解释器边界修复待审
 
 2026-11-02：新卷挂载及科学worker CPU预检通过。SEED-01随后在系统Python

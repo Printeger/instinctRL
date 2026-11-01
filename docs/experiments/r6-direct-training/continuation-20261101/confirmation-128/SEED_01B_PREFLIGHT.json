@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "-m",
+    "tools.r6_direct.worker",
+    "--inputs",
+    "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01b-inputs.json",
+    "--check"
+  ],
+  "exit_code": 0,
+  "gpu_probe": false,
+  "stderr": "",
+  "stdout": "PASS_CPU_DIRECT_PREFLIGHT_NO_GPU\n"
+}
