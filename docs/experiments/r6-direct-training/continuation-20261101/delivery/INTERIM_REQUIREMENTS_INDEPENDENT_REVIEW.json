@@ -1,0 +1,89 @@
+{
+  "schema_version": "r6-requirements-interim-review/1",
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "INTERIM_EVIDENCE_REVIEW_NOT_FINAL_ACCEPTANCE",
+  "scope": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R10"
+  ],
+  "new_readonly_checks": [
+    "TRAIN-01 state: 107 completed updates, 54912 transitions, zero checkpoints",
+    "TRAIN-01 receipt exact owners gone and checkpoint directory empty",
+    "TRAIN-01, TRAIN-02, SEED-01C, SEED-02, SEED-03 CPU_MODULES originals: local-direct, no rlflow or prohibited modules"
+  ],
+  "prior_reviews_reused": true,
+  "findings": {
+    "R01_R03": "TRAIN-01 EVIDENCE_RAW_QUOTA with no recovery checkpoint; preflight .pt observation artifacts are not training checkpoints. TRAIN-02 starts anew from accepted u640. Failed 01B and recomputation 01C remain recorded.",
+    "R04": "Original five tasks and 16 development conditions all 32/32 for paired u640/u768. No observed regression; improvement, equivalence and generalization not established.",
+    "R05": "Registered +128 endpoint, strict recipe prefix, seed amendment, source rebinding and engineering wall limits have scoped reviews. Failed consumption cannot offset new attempts.",
+    "R06": "Three reviewed terminal models and supplemental bindings, common u640 to u768, seeds 2026102202/03/04; continuation streams, not independent training from scratch.",
+    "R02_R10": "Model/Adam and exact CUDA supplemental reviews retained with original CPU mismatches and cleanup exceptions. Module snapshots and supervisor STOP/lock/timeout implementation checked."
+  },
+  "limitations": [
+    "CUDA RNG semantics, actual full rollout random-stream use and exact physical integration replay not established by these checks",
+    "Module snapshots do not prove a complete lifetime import history",
+    "No full filesystem mutation audit proving historical/runtime paths never written",
+    "This review does not re-audit the resource ledger",
+    "Final four-model evaluation, video evidence and final owner cleanup are incomplete; R01-R10 and M3 not accepted"
+  ],
+  "rustdesk": "KEEP_CONNECTED",
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_01_RECOVERY.json",
+      "sha256": "26f17eafd733aef92c13b28a6a2f2516f17516f8b19c8e22fcd8e830eae756ff"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-01-analysis/report.json",
+      "sha256": "e225782608e442f56be797af25c9cd5d3d5dd47a0f347a4b764b5390e385ca33"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-01-analysis/summary.json",
+      "sha256": "911cb85868a02d0509cdcbd2bb11bde02bbb004587780e92444b7b7a90a2f774"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_02_PAIRED_COMPARISON.json",
+      "sha256": "f7c3986ba5974675a66ef1520eb5d7a8a012eeb19cef76ceca2959738889d03f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/POST_TRAIN_COMPARISON.json",
+      "sha256": "f32553e40611fa0a1eebeed63d73e03bfda905903e4e2f35b037ca3a61ba9431"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/BASELINE_04_INDEPENDENT_REVIEW.json",
+      "sha256": "b2702ab5e7f1a0a855941f2a73e58209294d9ff85e36ad2b186bc56d1359b376"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/freeze-02.json",
+      "sha256": "7b38afd36979a84cd6cf63404771646a87fb52b830b560ac63cc12c807bc5ec7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/recipe-source-02.json",
+      "sha256": "132342e2c7f5ba1aeba1cff8c33462f3681efc9e62562afa07efea20f6ab1c0d"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_01B_CLOSURE.json",
+      "sha256": "3c89dde8b7411d6d99f52f1e8941dd70c46f2749353376209e80f5085fceaefa"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-analysis-cuda/binding.json",
+      "sha256": "f8a29a8317c57d73fdca4173fc7697519f3f0c653b362c1eec8619d9b9a18305"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-analysis-cuda/binding.json",
+      "sha256": "3d778cdc4a38f941d702c8e7aa884b64d14b6f623074d5a031672be578e5fd0b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-analysis-cuda/binding.json",
+      "sha256": "9984546edf23d6d719f4985e27590fc17bbfe834acc4e98a7cd52608d1830d20"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-freeze-candidate.json",
+      "sha256": "7a6750ae31cb14e067fc722c9d790765bc28d8df54e0b4458f4dcf579776cb15"
+    }
+  ]
+}
