@@ -1,0 +1,25 @@
+{
+  "status": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "Independent read-only review of baseline permutation-seed analyzer correction",
+  "findings": [
+    "Hash-verified frozen u640 CPU load: PPO permutation_seed=1701; metadata training_seed=20260908.",
+    "Original u640-03 before_ppo and actual_ppo both preserve1701.",
+    "apply_method(resume=False) preserves checkpoint permutation seed; corrected analyzer matches execution.",
+    "New validate_binding passes on actual u640-03 binding.",
+    "Three in-memory negative cases rejected: baseline actual seed changed to training seed; altered before_ppo; trained candidate using1701 instead of training seed."
+  ],
+  "implementation_sha256": "2399ffb7ae988f4cc2ab9583ea21219f1c21ac599ec354a524b2e667702d168b",
+  "tests_sha256": "f128936da2dabca7de2997790cf3fe328b0f315f24bad444ea9cea77607655c2",
+  "limitations": [
+    "Does not independently reprove all scoring or physics integration or learning gain.",
+    "Reviewer did not run tests that write temporary checkpoints; used actual originals and memory copies.",
+    "Original METHOD_BINDING report must remain; reanalysis uses new destination."
+  ],
+  "reviewer_writes": false,
+  "reviewer_gpu_started": false,
+  "root_cpu_tests": {
+    "passed": 15,
+    "deselected_legacy_closed_tests": 8
+  }
+}

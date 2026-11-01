@@ -1,3 +1,22 @@
+# R6 u640 配对评估已关闭；分析器种子绑定纠错复核通过
+
+2026-11-01：`R6-DIRECT-PAIR-U640-03` 已完成193600非训练transitions、6050策略步，
+状态PASS_PENDING_CLOSE/error=null；监督回执CLOSED/-15/DIRECT_CLEANUP_TIMEOUT，
+全部8个准确父/所属进程身份退出。完整生命周期按2261秒结算，其他预留保留。
+原CPU重算原五任务及16开发条件均32/32，但报告METHOD_BINDING问题，原件保留于
+`continuation-20261101/u640-03-analysis/`，不能据分数直接认定科学验收。
+
+已查明baseline checkpoint PPO permutation_seed=1701与metadata training_seed=20260908
+是不同字段；运行apply_method(resume=False)正确保留前者，旧分析器错误期望后者。
+仅CPU分析器改为验证hash固定checkpoint的before_ppo与排列seed；候选训练seed仍严格检查。
+15项CPU测试通过，独立只读复核PASS_SCOPED，见BASELINE_PERMUTATION_REPAIR_REVIEW.json。
+修正全量分析正写入新的u640-03-analysis-fixed目录；旧报告不覆盖。
+
+u768准确输入paired-02/u768-inputs.json、同一paired-02运行快照和CPU预检已提交推送，
+输入tag为r6-direct-paired-u768-01-inputs。候选评价尚未启动。
+RustDesk保持连接。配对科学结论、三流确认、最终保留集及模型录像交付未完成。
+下方保留历史状态。
+
 # R6 配对评价：非训练契约适配已修复，u640-03 正在评价
 
 2026-11-01：`R6-DIRECT-PAIR-U640-02` 完成32960非训练transitions后，在开发block配置处
