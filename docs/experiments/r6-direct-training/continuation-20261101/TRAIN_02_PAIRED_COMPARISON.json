@@ -1,0 +1,35 @@
+{
+  "schema_version": "r6-paired-comparison/1",
+  "id": "R6-DIRECT-TRAIN-02-U768-VS-U640",
+  "candidate_id": "R6-CANDIDATE-DIRECT-MAINTENANCE-01",
+  "hypothesis": "Baseline04 saved scores and CPU replay pass all original and development conditions; test capability maintenance after 128 updates with original replay plus mild noise and bounded pulse/wall/stop/reverse exposure, keeping saved optimizer and reward/control settings. No improvement is presumed.",
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/protocol.json",
+    "sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822"
+  },
+  "split": "development",
+  "seed": 2026101901,
+  "block_ids": [
+    "S-clean-low",
+    "S-clean-high",
+    "S-noise",
+    "S-delay-drop",
+    "X-clean",
+    "X-noise",
+    "P-clean",
+    "P-combined",
+    "W-near",
+    "W-middle",
+    "W-far",
+    "W-combined",
+    "stress-S-noise",
+    "stress-S-combined",
+    "stress-P-high",
+    "stress-W-high"
+  ],
+  "method": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_METHOD_01.json",
+    "sha256": "655457c69bd6e58640651cb60d5d871b2c3bd9f9b247e95dd7854b3cd92a125c"
+  },
+  "baseline_checkpoint_sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+}
