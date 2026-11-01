@@ -1,0 +1,54 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "provenance": "Independent read-only subagent final report; transcribed by primary writer, not self-reviewed",
+  "status": "PASS_SCOPED_EVIDENCE_AND_SCORE_REPRODUCTION",
+  "scientific_acceptance": false,
+  "verified": {
+    "report_input_files": 73,
+    "report_input_bytes": 4598243940,
+    "all_input_hashes_and_sizes_match": true,
+    "replay_implementation_hashes": 7,
+    "frozen_source_files": 192,
+    "direct_context_binding": "PASS",
+    "frozen_python": "3.11",
+    "development_blocks_exact_score_replay": 16,
+    "development_block_lanes_passed": "32/32 each",
+    "original_tasks_exact_score_replay": [
+      "Z",
+      "T",
+      "S",
+      "X",
+      "W"
+    ],
+    "original_task_lanes_passed": "32/32 each",
+    "wall_motion": "32/32",
+    "policy_steps": 6050,
+    "nontraining_transitions": 193600,
+    "explicit_resets": 21,
+    "initialization_ticks": 2,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "actor_boundary": "No added privileged state found in lidar_grid and52-dimensional state_vec construction"
+  },
+  "limitations": [
+    "Existing complete measurement and physics replay coverage/implementation/hashes were inspected; full4.60GB numerical replay was not repeated.",
+    "Physics replay proves staging reconstruction, not physical integration. Measurement replay proves input-to-delivery transformation, not raycaster physical truth. Full scientific claims requiring these remain MUST_FIX pending dedicated evidence.",
+    "Single u640 and single development seed;32 lanes are stratified cases, not independent training seeds. Ceiling scores do not demonstrate learning gain or holdout generalization.",
+    "CLOSED receipt retains exit-15/DIRECT_CLEANUP_TIMEOUT; workload PASS_PENDING_CLOSE with no workload error and empty remaining processes.",
+    "Frozen Python3.11 exactly reproduces scores; system Python causes last-digit serialization differences in13 blocks without changing pass decisions."
+  ],
+  "scope_excludes": [
+    "TRAIN-02",
+    "three-stream confirmation",
+    "final holdout",
+    "full R6 completion"
+  ],
+  "reviewed_hashes": {
+    "BASELINE_RUN_INPUTS_04.json": "4283687b0448c83979ee79933d6a1bb11b07d96a59e74eb42259ca5fb2c87ff6",
+    "BASELINE_CONTRACT_04.json": "a1365e5c744cb8064ed6f381703b09fc97e442ac3e9623686ed112e4dd353f08",
+    "BASELINE_SOURCE_06.json": "ef6da43cb9dd3ca9bd6915849f83254cc1f1e82f400914600eafd00599ed50f4",
+    "BASELINE_04_CPU_REPLAY.json": "3cd703cb213e287ee127b530e7ef66d899b33216330b405862063c6ea63fc5b2",
+    "BASELINE_04_CPU_REPLAY_SUMMARY.json": "9acf785388a2f658f45462c8b78dcd4a2dbc8f65fd5cc5a1c0044dc3a4f45287"
+  }
+}
