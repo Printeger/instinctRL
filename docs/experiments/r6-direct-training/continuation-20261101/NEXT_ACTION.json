@@ -1,10 +1,14 @@
 {
-  "status": "READY_TO_LAUNCH",
+  "status": "CLOSED_DIAGNOSTIC_FAILED_DO_NOT_RESTART",
   "inputs": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-03/plan.json",
     "sha256": "2e681c4a909d38ee0667906c3b73b84934ea27cd7a8bce2bac32371531f4a000"
   },
   "source_commit": "1339bd1c1f1baa34c53ad6fa02f3ccef6ed2ffbd",
   "reason": "Match original full batch512 gate geometry",
-  "scientific_acceptance": false
+  "scientific_acceptance": false,
+  "result": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-03/RESULT.json",
+    "sha256": "0eab0454ddead943e398a3148cd6fdf9e9cf26b84afc15bc36485598d719bdb0"
+  }
 }

@@ -1,0 +1,16 @@
+{
+  "status": "FULL_BATCH_CUDA_REPLAY_FAILED",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-03/receipt.json",
+    "sha256": "84a5c80c6f44b40600f03abea2b21a769b060e12952c83504ea16060d97f98ef"
+  },
+  "stderr": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-03/stderr.log",
+    "sha256": "55b831e48deca0a85c90dff8b48dd104e498dc33e354c3af21f9de5961e200ad"
+  },
+  "first_failed_index": 6,
+  "forward_batch_size": 512,
+  "scientific_acceptance": false,
+  "owned_processes_absent": true,
+  "conclusion": "Matching original gate batch geometry is insufficient to resolve mismatch. No tolerance relaxation or training performed."
+}
