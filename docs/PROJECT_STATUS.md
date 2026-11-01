@@ -1,3 +1,23 @@
+# R6 TRAIN-02 已启动；结果核验与配对评价待运行关闭
+
+2026-11-01：已用新身份 R6-DIRECT-TRAIN-02 从共同 u640 重算首段128次更新；
+此处128是登记终点，不是已验收实绩。准确输入为
+`docs/experiments/r6-direct-training/continuation-20261101/train-02b/inputs.json`，
+只读运行快照 `snapshots/train-02b` 对应源码 a184106e；实验输入 tag 为
+`r6-direct-train-02-inputs`。本次状态更新已核对准确父/子进程身份仍存活，尚无关闭回执。
+普通Python监督器管理运行；不重复启动，不据运行中未刷新的计数接受模型。
+
+用户已取消项目累计预算与保护额度，新输入绑定 RESOURCE_POLICY_USER_AMENDMENT.json；
+历史账目与未释放预留保留。RustDesk 保持连接，已接入允许其共存的资源准入。
+TRAIN-01无恢复checkpoint的结论和失败原件保留，TRAIN-02结果不能继承旧概率回放验收。
+关闭后须核对实际计数、完整raw、checkpoint/Adam/RNG及本次准确输入的概率回放。
+
+配对比较输入已登记于 `continuation-20261101/TRAIN_02_PAIRED_COMPARISON.json`，
+基线选择绑定CPU校验通过；保持原五任务、全部16开发条件、原随机流及能力保持假设。
+候选checkpoint与分析binding仍待核验，评价尚未启动。baseline04独立科学审核已完成，
+见 `continuation-20261101/BASELINE_04_INDEPENDENT_REVIEW.json`，范围与局限以原件为准。
+配对评价、证据驱动决策、三流确认、保留集和模型/录像交付均未完成。下方保留历史状态。
+
 # R6 首批概率回放已通过；准备新训练 attempt
 
 2026-11-01：probability diagnostic04 实际 CUDA 回放通过，512样本 alpha/beta/logp
