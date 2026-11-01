@@ -1,0 +1,21 @@
+{
+  "behavior": [
+    "Ordinary Python waits without model calls",
+    "Requires CLOSED receipt and all recorded exact owners gone",
+    "Checks STOP and input hash; new CPU-only analysis destination",
+    "Does not start another evaluation or change frozen inputs"
+  ],
+  "destination": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-analysis",
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-inputs.json",
+    "sha256": "3dfa5f1b275b2265374d524cc5bfe26c23e89c8ea1f6d1c234a8e5b22c323a2d"
+  },
+  "run_id": "R6-DIRECT-FINAL-BASELINE-01",
+  "session_id": 19770,
+  "status": "WAITING_EXACT_CLOSED_FINAL_BASELINE",
+  "watcher": {
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+    "pid": 3216827,
+    "starttime": "32173709"
+  }
+}
