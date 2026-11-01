@@ -1,0 +1,17 @@
+{
+  "schema_version": "r6-resource-user-amendment/1",
+  "user_instruction": "同时取消所有保护额度和预算限制。",
+  "scope": "Current R6 continuation project cumulative resource caps and protected resource allocations",
+  "policy": "UNLIMITED_PROJECT_BUDGET_NO_PROTECTED_ALLOCATION",
+  "historical_accounting": "PRESERVE_ALL_CHARGES_UNKNOWNS_AND_UNRELEASED_RESERVATIONS",
+  "preserved": [
+    "STOP",
+    "single writer",
+    "immutable original evidence and frozen runtime",
+    "scientific acceptance criteria",
+    "preregistered finite per-run endpoints",
+    "physical capacity and resource availability"
+  ],
+  "enforcement_status": "PENDING_IMPLEMENTATION_AND_CPU_VERIFICATION",
+  "platform_limits": "Not controlled by repository policy"
+}

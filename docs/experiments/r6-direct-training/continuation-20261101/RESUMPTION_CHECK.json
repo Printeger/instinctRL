@@ -1,0 +1,61 @@
+{
+  "observed_at_utc": "2026-11-01T09:35:02.044035+00:00",
+  "source_commit": "d7d350d5ca5b6e57455037d9b427fe9c4029efeb",
+  "receipt_sha256": "84b970b214fbe3076dced24327b582ec4adbd5d5246865b37784a4295567925e",
+  "process_checks": [
+    {
+      "recorded": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pid": 2644220,
+        "starttime": "261602913"
+      },
+      "actual": null
+    },
+    {
+      "recorded": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pid": 2644248,
+        "starttime": "261603501"
+      },
+      "actual": null
+    },
+    {
+      "recorded": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pid": 2644249,
+        "starttime": "261603501"
+      },
+      "actual": null
+    },
+    {
+      "recorded": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pid": 2644461,
+        "starttime": "261610774"
+      },
+      "actual": null
+    },
+    {
+      "recorded": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pid": 2644500,
+        "starttime": "261610831"
+      },
+      "actual": null
+    },
+    {
+      "recorded": {
+        "boot_id": "fa257cc3-1204-4e6f-88a5-a8a2ea7743aa",
+        "pid": 2644501,
+        "starttime": "261610831"
+      },
+      "actual": null
+    }
+  ],
+  "receipt_status": "CLOSED",
+  "raw_access": "BLOCKED_ROOT_0600_UNMOUNTED_SUDO_PASSWORD_REQUIRED",
+  "actual_training_transitions": null,
+  "checkpoint_verified": false,
+  "ready_to_launch": false,
+  "next_action": "Restore read-only original evidence access; implement explicit resource policy amendment without modifying historical accounting."
+}
