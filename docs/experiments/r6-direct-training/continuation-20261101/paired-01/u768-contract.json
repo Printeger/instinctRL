@@ -1,0 +1,205 @@
+{
+  "schema_version": "r6-local-runtime-contract/1",
+  "execution_mode": "local-direct",
+  "operation": "evaluate",
+  "mode": "research-r6-candidate-evaluation",
+  "parameters": {
+    "baseline_bindings": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_BINDINGS.json",
+      "sha256": "6ebe90717fa2571816ba3392841f3690c2c3fe37225c3728f935bb80d3102623"
+    },
+    "evaluation_seed": 20260909,
+    "experiment_id": "R6-DIRECT-PAIR-U768-01",
+    "group": "R1",
+    "output_cap_bytes": 36037459968,
+    "r6": {
+      "block_ids": [
+        "S-clean-low",
+        "S-clean-high",
+        "S-noise",
+        "S-delay-drop",
+        "X-clean",
+        "X-noise",
+        "P-clean",
+        "P-combined",
+        "W-near",
+        "W-middle",
+        "W-far",
+        "W-combined",
+        "stress-S-noise",
+        "stress-S-combined",
+        "stress-P-high",
+        "stress-W-high"
+      ],
+      "expected_mass_kg": 1.181517923,
+      "output_quotas": {
+        "P-clean": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "P-combined": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1409286144
+        },
+        "S-clean-high": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "S-clean-low": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "S-delay-drop": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "S-noise": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1409286144
+        },
+        "W-combined": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1409286144
+        },
+        "W-far": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "W-middle": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "W-near": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "X-clean": {
+          "audit_bytes": 67108864,
+          "range_bytes": 520093696
+        },
+        "X-noise": {
+          "audit_bytes": 67108864,
+          "range_bytes": 855638016
+        },
+        "stress-P-high": {
+          "audit_bytes": 83886080,
+          "range_bytes": 855638016
+        },
+        "stress-S-combined": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1459617792
+        },
+        "stress-S-noise": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1459617792
+        },
+        "stress-W-high": {
+          "audit_bytes": 83886080,
+          "range_bytes": 1459617792
+        }
+      },
+      "protocol": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/protocol.json",
+        "sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822"
+      },
+      "run_id": "R6-DIRECT-PAIR-U768-01",
+      "seed": 2026101901,
+      "split": "development"
+    },
+    "training_seed": 2026102201,
+    "wall_seconds": 3600,
+    "evaluation_selection": {
+      "baseline_bindings": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_BINDINGS.json",
+        "sha256": "6ebe90717fa2571816ba3392841f3690c2c3fe37225c3728f935bb80d3102623"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-TRAIN-02/results/research-r6-training/checkpoints/u768.pt",
+        "sha256": "8f6bb79650218332159e24d552f17ea88498d015fde293cc5733e2f8df1b3bf6"
+      },
+      "comparison": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_02_PAIRED_COMPARISON.json",
+        "sha256": "f7c3986ba5974675a66ef1520eb5d7a8a012eeb19cef76ceca2959738889d03f"
+      },
+      "method": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_METHOD_01.json",
+        "sha256": "655457c69bd6e58640651cb60d5d871b2c3bd9f9b247e95dd7854b3cd92a125c"
+      },
+      "phase": "development",
+      "role": "trained_candidate",
+      "schema_version": "r6-local-evaluation-selection/1",
+      "training_analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis-cuda/binding.json",
+        "sha256": "681e72ec90b8fdf85c10cc01bea89cd3518c9932fc24916ba8b575cab32a66f1"
+      },
+      "training_plan": {
+        "checkpoint_updates": [
+          768
+        ],
+        "experiment_id": "R6-DIRECT-TRAIN-02",
+        "initialization": {
+          "checkpoint": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+            "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+          },
+          "kind": "COMMON_U640_NEW_STREAM",
+          "method_hashes": {
+            "checkpoint": "checkpoint-h1-v2",
+            "critic": "critic-h1-v2",
+            "curriculum": "curriculum-h1-v1",
+            "ics_clearance_margin_m": "0.15",
+            "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+            "logging": "learning-log-h1-v1",
+            "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+            "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+            "metric": "metric-h1-v1",
+            "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+            "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+            "reset_distribution": "mixed-nearwall",
+            "reward": "reward-h1-zero-neutrality-v1",
+            "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5"
+          },
+          "source_identity": {
+            "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+            "product_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+            "product_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924",
+            "workload_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+            "workload_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924"
+          }
+        },
+        "phase": "development",
+        "recipe": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/recipe.json",
+          "sha256": "65d55730a92663b6bd662c5311da7fa7fc9951a8b86cd75e125b78d6635b628e"
+        },
+        "schema_version": "r6-local-training-plan/1",
+        "selection_freeze": null,
+        "start_update": 640,
+        "storage": {
+          "branch_record_bytes": 16777216,
+          "checkpoint_bytes": 16777216,
+          "compressed_bytes": 23622320128,
+          "maximum_raw_file_bytes": 68719476736,
+          "metadata_bytes": 67108864,
+          "payload_bytes": 25769803776,
+          "plain_bytes": 2147483648
+        },
+        "target_update": 768,
+        "training_seed": 2026102201,
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "budgets": {
+    "live_process_starts": 1,
+    "simulator_initializations": 1,
+    "initialization_ticks": 10,
+    "training_transitions": 0,
+    "nontraining_transitions": 193600,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "explicit_resets": 21,
+    "automatic_resets": 193600,
+    "wall_seconds": 3600
+  }
+}

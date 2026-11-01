@@ -1,3 +1,24 @@
+# R6 TRAIN-02 完整分析通过；u640 配对对照评价已启动
+
+2026-11-01：TRAIN-02 实际记录128 updates、65536训练transitions、1024次actor及critic
+optimizer steps、一个u768 checkpoint。全量分析30/30流完整，模型/Adam、计数、课程及
+初始化RNG检查通过；CUDA05首批512样本alpha/beta/logp最大绝对误差均0。
+`continuation-20261101/train-02-analysis-cuda/` 无剩余issue；原CPU mismatch31仍保留。
+训练回执CLOSED/-15/DIRECT_CLEANUP_TIMEOUT单独保留，全部7个准确所属身份确认退出；
+完整监督生命周期按3650秒结算，其他预留未释放。
+
+独立初审及补充复审均PASS_SCOPED，见 `TRAIN_02_INDEPENDENT_REVIEW.json` 与
+`TRAIN_02_SUPPLEMENTAL_INDEPENDENT_REVIEW.json`；仅支持转开发评价，不证明学习收益。
+u768 SHA256：`8f6bb79650218332159e24d552f17ea88498d015fde293cc5733e2f8df1b3bf6`。
+保留GPU恢复/采样、CUDA RNG语义及完整物理积分等未证明事项，详见报告原件。
+
+配对对照 `R6-DIRECT-PAIR-U640-02` 已启动，准确输入 `continuation-20261101/paired-01/u640-02-inputs.json`，
+detached源码快照paired-01（fb35c16e），输入tag `r6-direct-paired-u640-02-inputs`。
+前一u640-01输入在创建run/预留/GPU启动之前被前驱绑定检查拒绝，记录保留；新身份已修正。
+比较保持原五任务、16开发条件、seed2026101901和32 lanes；u768对应评价尚未启动。
+RustDesk保持连接。配对结论、必要迭代、三流确认、保留集、最终独审和模型/录像交付未完成。
+下方为历史状态。
+
 # R6 TRAIN-02 已启动；结果核验与配对评价待运行关闭
 
 2026-11-01：已用新身份 R6-DIRECT-TRAIN-02 从共同 u640 重算首段128次更新；

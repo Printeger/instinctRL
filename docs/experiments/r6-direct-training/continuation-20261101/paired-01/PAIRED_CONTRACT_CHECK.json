@@ -1,0 +1,23 @@
+{
+  "status": "PASS_CPU_PAIRED_CONTRACT_BINDINGS",
+  "baseline_contract": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u640-02-contract.json",
+    "sha256": "67efd0c3dfb1b6747665bd293e8ee1f795f9051aa38f2acacf947999445e4af7"
+  },
+  "candidate_contract": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u768-contract.json",
+    "sha256": "3c58ca7405e6a62a5d9771e1b9597d6c17dc0c55b28f6e61b5c137171c445be5"
+  },
+  "equal_fields": [
+    "runtime budgets",
+    "all non-model parameters except run identity and source training seed",
+    "development comparison pin",
+    "method pin",
+    "baseline bindings",
+    "full protocol, block order, evaluation seed and output quotas"
+  ],
+  "limitations": [
+    "Contract validation only; actual paired evaluation and scoring still pending"
+  ],
+  "scientific_acceptance": false
+}
