@@ -1,0 +1,28 @@
+{
+  "user_context": "RustDesk is the user remote connection and must remain running",
+  "policy": {
+    "schema_version": "r6-direct-remote-desktop-admission/1",
+    "sample_count": 13,
+    "minimum_span_seconds": 60,
+    "minimum_gap_seconds": 4,
+    "maximum_gap_seconds": 8,
+    "mean_utilization_max": 8,
+    "median_utilization_max": 5,
+    "peak_utilization_max": 20,
+    "elevated_utilization_threshold": 10,
+    "elevated_samples_max": 4,
+    "consecutive_elevated_max": 1,
+    "memory_used_max_mib": 12227,
+    "memory_free_min_mib": 10240,
+    "allowed_app": "gnome-remote-desktop-daemon",
+    "allowed_app_max_mib": 256,
+    "allowed_apps": {
+      "gnome-remote-desktop-daemon": 12227,
+      "rustdesk": 12227
+    }
+  },
+  "old_window_replay": "PASS",
+  "cpu_tests_passed": 46,
+  "live_admission": false,
+  "scientific_thresholds_changed": false
+}

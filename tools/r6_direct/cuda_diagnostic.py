@@ -93,7 +93,7 @@ def main():
         ledger['status']='RUNNING_DIAGNOSTIC'
         atomic(ledger_path,ledger)
         directory.mkdir();native.mkdir();(native/'ipc').mkdir();(native/'tmp').mkdir();(native/'cache').mkdir()
-        from training_workloads.unified_h1.robustness_prelaunch import run_gate
+        from tools.r6_direct.admission import run_gate
         gate=native/'prelaunch';gate.mkdir()
         atomic(directory/'intent.json',dict(plan=plan,parent=process_identity(os.getpid())))
         try:

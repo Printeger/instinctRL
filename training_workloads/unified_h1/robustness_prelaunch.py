@@ -14,13 +14,15 @@ POLICY=dict(schema_version='r6-prelaunch-admission/1',window_policy=WINDOW_POLIC
 
 
 def run_gate(output_root,*,mode,attempt_id,authorization_sha256,resource_pins,stop_paths=(),
-             sample_provider=None,sleeper=time.sleep,clock_ns=time.monotonic_ns):
+             sample_provider=None,sleeper=time.sleep,clock_ns=time.monotonic_ns,window_policy=WINDOW_POLICY):
     """No accepted window input: always collect each sample inside this call.
 
     Existing fixed resource-query tool has its own15second per-query timeout;
     this gate also passes its remaining deadline and STOP guard into each query.
     The outer live watchdog remains responsible for a frozen/stalled process.
     """
+    WINDOW_POLICY=window_policy
+    POLICY=dict(globals()['POLICY'],window_policy=window_policy)
     if mode not in ('research-r6-evaluation','research-r6-training','research-r6-final-evaluation','research-r6-candidate-evaluation','research-r6-video-replay'):raise PermissionError('R6 prelaunch mode')
     executable=Path(resource_pins['nvidia_smi_path'])
     if executable.is_symlink() or sha256_file(executable)!=resource_pins['nvidia_smi_sha256']:
@@ -50,7 +52,7 @@ def run_gate(output_root,*,mode,attempt_id,authorization_sha256,resource_pins,st
             stamp=sample.get('monotonic_ns')
             if (type(stamp)is not int or stamp<started or not 0<=clock_ns()-stamp<=POLICY['maximum_final_sample_age_seconds']*10**9):
                 raise ValueError('R6_PRELAUNCH_STALE_OR_FUTURE_SAMPLE')
-        result=validate_window(window())
+        result=validate_window(window(),policy=window_policy)
         guard()
         if clock_ns()-samples[-1]['monotonic_ns']>POLICY['maximum_final_sample_age_seconds']*10**9:
             raise ValueError('R6_PRELAUNCH_FINAL_SAMPLE_STALE')

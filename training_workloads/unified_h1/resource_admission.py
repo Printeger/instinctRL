@@ -18,7 +18,8 @@ POLICY = dict(schema_version='r5-w-resource-admission/2', sample_count=13,
               allowed_app='gnome-remote-desktop-daemon', allowed_app_max_mib=256)
 
 
-def validate_window(window):
+def validate_window(window, *, policy=POLICY):
+    POLICY=policy
     if not isinstance(window, dict) or set(window) != {'sample_count','span_ns','samples'}:
         raise ValueError('resource window schema')
     samples = window['samples']
@@ -50,10 +51,11 @@ def validate_window(window):
             raise RuntimeError('resource utilization peak')
         utilization.append(u)
         apps = sample['compute_apps']
-        if not isinstance(apps,list) or len(apps)>1:
+        allowed=POLICY.get('allowed_apps',{POLICY['allowed_app']:POLICY['allowed_app_max_mib']})
+        if not isinstance(apps,list) or len(apps)>len(allowed):
             raise RuntimeError('unexpected compute applications')
         for app in apps:
-            if not isinstance(app,dict) or set(app) != {'pid','name','used_memory_mib'} or type(app['pid']) is not int or app['pid']<=0 or type(app['name']) is not str or Path(app['name']).name != POLICY['allowed_app'] or type(app['used_memory_mib']) is not int or not 0<=app['used_memory_mib']<=POLICY['allowed_app_max_mib']:
+            if not isinstance(app,dict) or set(app) != {'pid','name','used_memory_mib'} or type(app['pid']) is not int or app['pid']<=0 or type(app['name']) is not str or Path(app['name']).name not in allowed or type(app['used_memory_mib']) is not int or not 0<=app['used_memory_mib']<=allowed[Path(app['name']).name]:
                 raise RuntimeError('unexpected compute application')
     if type(window['span_ns']) is not int or window['span_ns'] != samples[-1]['monotonic_ns']-samples[0]['monotonic_ns'] or window['span_ns'] < POLICY['minimum_span_seconds']*10**9:
         raise ValueError('resource window span')

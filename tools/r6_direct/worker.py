@@ -107,7 +107,7 @@ def run(plan, input_pin):
     # Existing kernel-bounded volumes contain all native and scientific writes.
     from training_workloads.scale_003.persistence import install_output_write_quota
     install_output_write_quota(attempt,min(result['payload_cap_bytes'],1024**3) if contract['operation']=='render' else result['payload_cap_bytes'])
-    from training_workloads.unified_h1.robustness_prelaunch import run_gate
+    from tools.r6_direct.admission import run_gate
     from training_workloads.unified_h1.config import resource_binding_pins
     pins=resource_binding_pins()
     from tools.r6_direct.import_legacy import ROOT,OLD,NEW
