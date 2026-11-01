@@ -77,15 +77,54 @@ def evaluation_evidence(pin,protocol_pin):
     return selected
 
 
+def validate_registered_prefix(lineage, recipe, trained):
+    """Bind a shorter confirmation recipe to an actually evaluated registered node.
+
+    Historical recipe/checkpoint identities remain unchanged. Only a complete
+    curriculum-phase prefix may be selected; methods and stream lists stay exact.
+    """
+    from . import robustness_training_plan as training
+    require(set(lineage)=={'kind','development_recipe'}
+        and lineage['kind']=='REGISTERED_DEVELOPMENT_PREFIX','PREFIX_FIELDS')
+    plan=trained['selection']['training_plan']
+    require(plan['schema_version']=='r6-local-training-plan/1'
+        and plan['recipe']==lineage['development_recipe'],'PREFIX_PROVENANCE')
+    old=training.validate_recipe(base.pinned_json(lineage['development_recipe']))
+    changed={'branch_updates','checkpoint_offsets','curriculum'}
+    require(all(recipe[k]==old[k] for k in old.keys()-changed),'PREFIX_RECIPE_DRIFT')
+    end=recipe['branch_updates']
+    require(type(end)is int and end<old['branch_updates'] and end in old['checkpoint_offsets']
+        and recipe['checkpoint_offsets']==[n for n in old['checkpoint_offsets'] if n<=end],
+        'PREFIX_REGISTERED_NODE')
+    source=base.pinned_json(old['curriculum']);actual=base.pinned_json(recipe['curriculum'])
+    expected=dict(source,phases=[p for p in source['phases'] if p['end_offset']<=end])
+    require(expected['phases'] and expected['phases'][-1]['end_offset']==end
+        and actual==expected,'PREFIX_CURRICULUM')
+    require(plan['phase']=='development' and plan['start_update']==640
+        and plan['initialization']['kind']=='COMMON_U640_NEW_STREAM'
+        and plan['target_update']==trained['model']['update']==640+end
+        and plan['checkpoint_updates']==[640+n for n in recipe['checkpoint_offsets']],
+        'PREFIX_ACTUAL_ENDPOINT')
+
+
 def validate_selection_evidence(pin,recipe_pin,recipe):
     value=base.pinned_json(pin)
-    require(set(value)=={'schema_version','protocol','split_manifest','protocol_review','paired_evaluations','checkpoint_selection'}
-        and value['schema_version']=='r6-recipe-selection-evidence/1','SELECTION_EVIDENCE')
+    prefix=value.get('schema_version')=='r6-recipe-selection-evidence/2'
+    fields={'schema_version','protocol','split_manifest','protocol_review','paired_evaluations','checkpoint_selection'}
+    amended='split_amendment' in value
+    if amended:fields.add('split_amendment')
+    require((not amended or prefix) and set(value)==(fields|{'recipe_lineage'} if prefix else fields)
+        and value['schema_version'] in ('r6-recipe-selection-evidence/1','r6-recipe-selection-evidence/2'),'SELECTION_EVIDENCE')
     protocol=base.pinned_json(value['protocol']);split=base.pinned_json(value['split_manifest'])
     require(protocol.get('frozen')is True and split['schema_version']=='r6-split-manifest/1'
         and split['final']['seed_realization_generated']is False,'UNREVEALED_SPLIT')
     review=base.accepted_review(value['protocol_review'],'PASS_R6_PROTOCOL',protocol_sha256=value['protocol']['sha256'])
-    require(all(p in review['evidence_pins'] for p in (value['protocol'],value['split_manifest'])),'REVIEWED_SPLIT')
+    reviewed_split=value['split_manifest']
+    if amended:
+        reviewed_split=validate_seed_amendment(value['split_amendment'],value['protocol'],protocol,value['split_manifest'])
+    else:
+        require(protocol.get('split_manifest',reviewed_split)==reviewed_split,'PROTOCOL_SPLIT_BINDING')
+    require(all(p in review['evidence_pins'] for p in (value['protocol'],reviewed_split)),'REVIEWED_SPLIT')
     require(recipe['confirmation_seeds']==split['confirmation_training_seeds']
         and len(set(recipe['confirmation_seeds']))==3 and not set(recipe['confirmation_seeds'])&set(recipe['development_seeds']),'THREE_REGISTERED_STREAMS')
     require(value['checkpoint_selection']==dict(kind='terminal_checkpoint',common_start_update=640,
@@ -96,8 +135,40 @@ def validate_selection_evidence(pin,recipe_pin,recipe):
         require(item['selection']['role']==role and item['selection']['method']==recipe['method'],'PAIRED_ROLE_METHOD')
     control=selected['baseline_control']['selection'];trained=selected['trained_candidate']['selection']
     require(control['comparison']==trained['comparison'] and control['baseline_bindings']==trained['baseline_bindings']
-        and trained['training_plan']['recipe']==recipe_pin and trained['training_plan']['phase']=='development','PAIRED_DESIGN')
+        and trained['training_plan']['phase']=='development','PAIRED_DESIGN')
+    require(selected['baseline_control']['model']['update']==640
+        and selected['trained_candidate']['model']['update']==640+recipe['branch_updates'],
+        'EVALUATED_ENDPOINT')
+    if prefix:
+        validate_registered_prefix(value['recipe_lineage'],recipe,selected['trained_candidate'])
+    else:
+        require(trained['training_plan']['recipe']==recipe_pin,'PAIRED_DESIGN')
     return dict(evidence=value,scientific_acceptance=False,holdout_released=False)
+
+
+def validate_seed_amendment(pin,protocol_pin,protocol,split_pin):
+    """Explicit reviewed override of confirmation seeds, never test distribution."""
+    amendment=base.pinned_json(pin)
+    fields={'schema_version','protocol','original_split','replacement_split','justification',
+        'evidence_pins','independent_review'}
+    require(set(amendment)==fields and amendment['schema_version']=='r6-confirmation-seed-amendment/1'
+        and amendment['protocol']==protocol_pin
+        and amendment['original_split']==protocol['split_manifest']
+        and amendment['replacement_split']==split_pin,'SEED_AMENDMENT_BINDING')
+    old=base.pinned_json(amendment['original_split']);new=base.pinned_json(split_pin)
+    require(set(old)==set(new) and all(old[k]==new[k] for k in old if k!='confirmation_training_seeds')
+        and old['confirmation_training_seeds']!=new['confirmation_training_seeds']
+        and new['final']['seed_realization_generated']is False,'SEED_ONLY_AMENDMENT')
+    from .robustness_training_plan import seeds
+    seeds(new['confirmation_training_seeds'],3)
+    require(isinstance(amendment['justification'],str) and bool(amendment['justification'].strip())
+        and isinstance(amendment['evidence_pins'],list) and bool(amendment['evidence_pins']),
+        'SEED_AMENDMENT_EVIDENCE')
+    for evidence in amendment['evidence_pins']:validate_pin(evidence)
+    payload={k:v for k,v in amendment.items() if k!='independent_review'}
+    base.accepted_review(amendment['independent_review'],'PASS_R6_CONFIRMATION_SEED_AMENDMENT',
+        payload_sha256=base.object_sha(payload))
+    return amendment['original_split']
 
 
 def freeze_payload(recipe_pin,recipe_review,selection_evidence, *, local=False):

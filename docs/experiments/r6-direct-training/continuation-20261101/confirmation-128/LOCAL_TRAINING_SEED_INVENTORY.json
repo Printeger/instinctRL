@@ -1,0 +1,205 @@
+{
+  "schema_version": "r6-local-training-seed-inventory/1",
+  "scope": "All persisted local direct launch records, including failed runs. Historical non-direct inventory requires independent review.",
+  "proposed_confirmation_seeds": [
+    2026102202,
+    2026102203,
+    2026102204
+  ],
+  "rows": [
+    {
+      "run": "R6-DIRECT-BASELINE-01",
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-01/launch.json",
+        "sha256": "defce4b1c398415760facf0c3319b0a0f2ae07758a2a0f83f0f848cd85db754f"
+      },
+      "inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_RUN_INPUTS_01.json",
+        "sha256": "dbe2be33754393dbe050ae8c01a9855db5141fca3e734c446a95494d0106de1b"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_CONTRACT.json",
+        "sha256": "beabfc1a5993a1391fc0bc08d501ad6104ff1175966ecb50c119530311134ca9"
+      },
+      "operation": "baseline",
+      "training_seed": null,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-01/receipt.json",
+        "sha256": "491c91c4f44ee09e8d3276c589c0aa03b387fa5dcbee463eb70435528a92f0ad"
+      }
+    },
+    {
+      "run": "R6-DIRECT-BASELINE-02",
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-02/launch.json",
+        "sha256": "8e4b4b7145965a237e1cb5c7b82a6ad12f3e4396aacec16b5dabf02bb577f693"
+      },
+      "inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_RUN_INPUTS_02.json",
+        "sha256": "345e198098ca57f433ce90fb979c3e0fa588a4258151ee6e9de02f020b94acde"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_CONTRACT_02.json",
+        "sha256": "455478a039388569f8f46c9958026336541b38177341de7d8fdbaa15b6912c69"
+      },
+      "operation": "baseline",
+      "training_seed": null,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-02/receipt.json",
+        "sha256": "851eba38f982678fe0495e535f4ec32e4cfbd5d694e4390001f769878425dd57"
+      }
+    },
+    {
+      "run": "R6-DIRECT-BASELINE-03",
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-03/launch.json",
+        "sha256": "501ddb506d0afaa994590a683cbe937e7dc03f24041c00087a1611f3c3b8f9d6"
+      },
+      "inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_RUN_INPUTS_03.json",
+        "sha256": "00868a57850c581a1926611fac68f520f5fdaab21998f8d2cc7854a03a086193"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_CONTRACT_03.json",
+        "sha256": "920dd9e6f8f3b61a2d463bfd9e4102ae3a980e0fff544279c192e66c1b46760f"
+      },
+      "operation": "baseline",
+      "training_seed": null,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-03/receipt.json",
+        "sha256": "576c37d05a5fb3eb12574a8a23b28aef51b9a649781960abbc7586b627fd2802"
+      }
+    },
+    {
+      "run": "R6-DIRECT-BASELINE-04",
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-04/launch.json",
+        "sha256": "9f867d70bc83a814b30f27164a9bcecc99ce86a723a3f5d2ca4e8868bb7f44c5"
+      },
+      "inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_RUN_INPUTS_04.json",
+        "sha256": "4283687b0448c83979ee79933d6a1bb11b07d96a59e74eb42259ca5fb2c87ff6"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_CONTRACT_04.json",
+        "sha256": "a1365e5c744cb8064ed6f381703b09fc97e442ac3e9623686ed112e4dd353f08"
+      },
+      "operation": "baseline",
+      "training_seed": null,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-04/receipt.json",
+        "sha256": "13d10a7aa7414e9809f314595c4ba517f92644906ae73045c1ddc4cbda996dfb"
+      }
+    },
+    {
+      "run": "R6-DIRECT-PAIR-U640-02",
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U640-02/launch.json",
+        "sha256": "5f1c435af431b514b6154368d8007ffd7d4b24bf48eb8ad7ae21ea952da84d6b"
+      },
+      "inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u640-02-inputs.json",
+        "sha256": "85f8205487c9463f5a6f648f958a97ce38b395ddf13e6069ed53aa7c820dff62"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u640-02-contract.json",
+        "sha256": "67efd0c3dfb1b6747665bd293e8ee1f795f9051aa38f2acacf947999445e4af7"
+      },
+      "operation": "evaluate",
+      "training_seed": null,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U640-02/receipt.json",
+        "sha256": "86a0581514b01d10891c180c15b7113620a83b0486b44d6642f67c2119a8dd85"
+      }
+    },
+    {
+      "run": "R6-DIRECT-PAIR-U640-03",
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U640-03/launch.json",
+        "sha256": "15b40054db549e42f1ea5a3853565240027ba3e3dd61fa0a6da507af74d8cfdb"
+      },
+      "inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/u640-inputs.json",
+        "sha256": "d026982f9f651debd52a3c8aa63794dadf56c2c389486b7eddeb26224cf787d4"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/u640-contract.json",
+        "sha256": "131f257b4bf2b463eb32ff87dd94fad5c20849b5231c0eec7b594123ef29b1bc"
+      },
+      "operation": "evaluate",
+      "training_seed": null,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U640-03/receipt.json",
+        "sha256": "c43993a12cfb62a43fc01ede4b8cdd54c4f2302a01e7065cfa06752c4e9561e1"
+      }
+    },
+    {
+      "run": "R6-DIRECT-PAIR-U768-01",
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U768-01/launch.json",
+        "sha256": "ece9f883d36b7e3160bf39f32a6f98a8eb4d8e92496e288bda6b6347cbd7dd17"
+      },
+      "inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/u768-inputs.json",
+        "sha256": "be4aa9b06ff2c8966aa3518e12d7c15b38e6c62e1aea5d72efa1012e865ad3f7"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u768-contract.json",
+        "sha256": "3c58ca7405e6a62a5d9771e1b9597d6c17dc0c55b28f6e61b5c137171c445be5"
+      },
+      "operation": "evaluate",
+      "training_seed": null,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U768-01/receipt.json",
+        "sha256": "f98d57f031abb16421b1f7b7bfb26bea02424010199766dfc7f48777ba4ea4c5"
+      }
+    },
+    {
+      "run": "R6-DIRECT-TRAIN-01",
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-TRAIN-01/launch.json",
+        "sha256": "23100a7cabc099822cb30e065e750ea1a56c2de867fc7dca9e4adfe153638839"
+      },
+      "inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_RUN_INPUTS_01.json",
+        "sha256": "c6faf12c848365e26dcef9119367b95a8dff5c11136316ad1fd6beabed6d2d05"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_CONTRACT_01.json",
+        "sha256": "89f41617fa44793356602e51bb8cc8d970490ab7f436a0bab68ddd34fe695c33"
+      },
+      "operation": "train",
+      "training_seed": 2026102201,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-TRAIN-01/receipt.json",
+        "sha256": "84b970b214fbe3076dced24327b582ec4adbd5d5246865b37784a4295567925e"
+      }
+    },
+    {
+      "run": "R6-DIRECT-TRAIN-02",
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-TRAIN-02/launch.json",
+        "sha256": "612fa2e0e72ba5a27939227009087a5effe1c309f4c8491b567c481e8ca61b72"
+      },
+      "inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/inputs.json",
+        "sha256": "51a51147036bef23944a601b467e141755fb91b7202221fbd8293efbdf37ad7e"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/contract.json",
+        "sha256": "07a632a6de231228e123eabf361028546413b95d70b971c725c7656c36866642"
+      },
+      "operation": "train",
+      "training_seed": 2026102201,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-TRAIN-02/receipt.json",
+        "sha256": "01cfbbe60201e55549dc10f19277ba00e3944e86bf39e3ab2083d6852f2facbe"
+      }
+    }
+  ],
+  "observed_training_seeds": [
+    2026102201
+  ],
+  "proposed_seeds_used_in_local_launches": false,
+  "holdout_revealed": false
+}

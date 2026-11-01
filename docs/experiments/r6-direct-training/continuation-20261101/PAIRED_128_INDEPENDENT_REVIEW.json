@@ -1,0 +1,55 @@
+{
+  "status": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "Paired u640/u768 development evidence and decision to end development at registered +128 node",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/POST_TRAIN_COMPARISON.json",
+      "sha256": "f32553e40611fa0a1eebeed63d73e03bfda905903e4e2f35b037ca3a61ba9431"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-03-analysis-fixed/report.json",
+      "sha256": "16763c49f44c8e4d108e59342eaaf5a05a23260a8b62a023ad3305f755bff65b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-03-analysis-fixed/summary.json",
+      "sha256": "726dfc71f11910cceeb829085f0d50315d25c62f6736493acc9c8eabdab69141"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-03-analysis-fixed/binding.json",
+      "sha256": "74e92e65f29337353af1980eef1888ba25878d14cbc388f10c09b41464e8934f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u768-01-analysis/report.json",
+      "sha256": "088e771dcea4cad99f854b2d63b3feffc519197163209b9473edd9380f104884"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u768-01-analysis/summary.json",
+      "sha256": "106e75d73cfbc289031941facdb455746747dc846991565f13b532ad5583a6d4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u768-01-analysis/binding.json",
+      "sha256": "f27edfe7820bc959676ef56934bb03ed593d92833f6af56eeea6323dbb899d02"
+    }
+  ],
+  "findings": [
+    "Independently verified all 81 input hashes and lengths in each report, matching binding pins and report/summary.",
+    "Same frozen protocol, development seed2026101901, split, sixteen blocks, method and environment configuration.",
+    "All original five and sixteen blocks 32/32 in both; scoring, wall motion prerequisites, measurement delivery and force staging replay pass.",
+    "No observed regression; learning gain, statistical equivalence and generalization not established.",
+    "Ending development at evaluated registered +128 is defensible; does not establish +256 ineffective."
+  ],
+  "freeze_status": "MUST_FIX_BEFORE_FREEZE",
+  "must_fix": [
+    "Explicit lineage from unchanged development recipe to exact registered curriculum prefix.",
+    "Check evaluated model update equals declared confirmation endpoint."
+  ],
+  "limitations": [
+    "One development training stream; cross-training-stream stability unproven.",
+    "Physical integration authenticity, sensor truth and full random-stream execution semantics not independently proved.",
+    "Native cleanup errors and original CPU probability failure with CUDA supplement must remain."
+  ],
+  "reviewer_writes": false,
+  "reviewer_gpu_started": false,
+  "holdout_read": false
+}

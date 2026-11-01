@@ -21,7 +21,7 @@ def ready(case,tmp_path,monkeypatch):
         protocol_sha256=protocol['sha256'],evidence_pins=[protocol,split]))
     comparison=pin('comparison.json',{'fixture':'same paired method and stream'})
     selected={};pairs={};reports={};bindings={}
-    for role,u in [('baseline_control',640),('trained_candidate',896)]:
+    for role,u in [('baseline_control',640),('trained_candidate',1664)]:
         value=dict(role=role,method=b.recipe['method'],comparison=comparison,baseline_bindings=b.ev,training_plan=b.plan if role=='trained_candidate' else None)
         model=dict(checkpoint=b.ev,update=u);selected[role]=dict(selection=value,model=model,comparison=dict(protocol=protocol,seed=17))
         output=tmp_path/role/'results/research-r6-candidate-evaluation';output.mkdir(parents=True)
@@ -64,7 +64,7 @@ def test_complete_paired_evidence_can_be_reviewed_even_when_new_target_is_negati
     assert all(r['scoring']['successes']==0 for r in ready.reports['trained_candidate']['blocks'])
 
 
-@pytest.mark.parametrize('fault',['missing_role','seed','holdout','rule','method','pair','recipe','original','wall','block','measurement','inputs','native','raw','event','postrun'])
+@pytest.mark.parametrize('fault',['missing_role','seed','holdout','rule','method','pair','recipe','original','wall','block','measurement','inputs','native','raw','event','postrun','endpoint'])
 def test_freeze_rejects_incomplete_unpaired_or_contaminated_evidence(ready,fault):
     b=ready;b.check();e=b.evidence;r=b.reports['trained_candidate'];bound=b.bindings['trained_candidate']
     if fault=='missing_role':e['paired_evaluations'].pop('baseline_control')
@@ -74,6 +74,7 @@ def test_freeze_rejects_incomplete_unpaired_or_contaminated_evidence(ready,fault
     if fault=='method':b.selected['trained_candidate']['selection']['method']=b.ev
     if fault=='pair':b.selected['trained_candidate']['selection']['comparison']=b.ev
     if fault=='recipe':b.selected['trained_candidate']['selection']['training_plan']=dict(b.plan,recipe=b.ev)
+    if fault=='endpoint':b.selected['trained_candidate']['model']['update']=896
     if fault=='original':r['summary']['original']['all_gates_pass']=False
     if fault=='wall':r['summary']['original']['wall_motion']['per_lane'][31]=False
     if fault=='block':r['blocks'].pop()

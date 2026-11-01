@@ -7,6 +7,15 @@ from training_workloads.unified_h1 import robustness_confirmation as confirmatio
 from training_workloads.unified_h1 import robustness_training_plan as training
 
 
+def test_selection_rejects_unevaluated_declared_terminal_node(ready,monkeypatch):
+    b=ready
+    b.selected['trained_candidate']['model']['update']=896
+    monkeypatch.setattr(confirmation,'evaluation_evidence',
+        lambda pin,protocol: b.selected[next(role for role,p in b.evidence['paired_evaluations'].items() if p==pin)])
+    with pytest.raises(PermissionError,match='EVALUATED_ENDPOINT'):
+        b.check()
+
+
 def test_three_local_plans_keep_full_recipe_and_reviewed_evidence(frozen):
     arguments=dict(frozen.arguments,recipe_review=None,local=True)
     result=confirmation.build_plans(**arguments)

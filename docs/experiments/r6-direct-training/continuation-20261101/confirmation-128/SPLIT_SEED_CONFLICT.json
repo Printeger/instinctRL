@@ -1,0 +1,33 @@
+{
+  "status": "INDEPENDENT_REVIEW_PENDING",
+  "failed_check": "R6_CONFIRMATION_THREE_REGISTERED_STREAMS",
+  "original_split": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/split.json",
+    "sha256": "348eebbca030c74034d19b554cfdb3e4f0cc5dc287360f3347c7866c2adcc748"
+  },
+  "registered_development_recipe": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/recipe.json",
+    "sha256": "65d55730a92663b6bd662c5311da7fa7fc9951a8b86cd75e125b78d6635b628e"
+  },
+  "candidate_split": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/split-candidate.json",
+    "sha256": "418668c2d1c5fc11dbcca2d33f0939dafef7b51435f0bb734659be4345e4fd35"
+  },
+  "old_confirmation_seeds": [
+    2026102101,
+    2026102201,
+    2026102301
+  ],
+  "actual_development_seed": 2026102201,
+  "proposed_confirmation_seeds": [
+    2026102202,
+    2026102203,
+    2026102204
+  ],
+  "reason": "Old confirmation seed2026102201 has been consumed as actual development seed. The direct recipe already registered three distinct replacement confirmation streams. Reuse would invalidate fresh confirmation semantics.",
+  "changed_fields": [
+    "confirmation_training_seeds"
+  ],
+  "holdout_revealed": false,
+  "protocol_scoring_or_distribution_changed": false
+}

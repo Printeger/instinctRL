@@ -1,0 +1,34 @@
+{
+  "schema_version": "r6-confirmation-seed-amendment/1",
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/protocol.json",
+    "sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822"
+  },
+  "original_split": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/split.json",
+    "sha256": "348eebbca030c74034d19b554cfdb3e4f0cc5dc287360f3347c7866c2adcc748"
+  },
+  "replacement_split": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/split-candidate.json",
+    "sha256": "418668c2d1c5fc11dbcca2d33f0939dafef7b51435f0bb734659be4345e4fd35"
+  },
+  "justification": "Override only the confirmation_training_seeds binding of the original protocol: seed2026102201 was used in actual development. Use the existing direct recipe registered confirmation seeds2026102202/2026102203/2026102204; preserve all development/final distributions and unrevealed holdout.",
+  "evidence_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SPLIT_SEED_CONFLICT.json",
+      "sha256": "9f74f9a11ab5ae48ea3fa7c965e300536438c12fb6600bf46054e7088d73cf6b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/LOCAL_TRAINING_SEED_INVENTORY.json",
+      "sha256": "3fe5e11e1b79cf92601e50ee9e8f94247e9cd3af2fbbd687cf9092e727546597"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/recipe.json",
+      "sha256": "65d55730a92663b6bd662c5311da7fa7fc9951a8b86cd75e125b78d6635b628e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/PAIRED_128_INDEPENDENT_REVIEW.json",
+      "sha256": "23086f19e615cc3532d0a1a1e214687a45f344a43523450eb4e560728687ba94"
+    }
+  ]
+}
