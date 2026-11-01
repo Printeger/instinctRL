@@ -1,3 +1,14 @@
+# R6 首条确认流 SEED-01C 已进入监督器 RUNNING
+
+2026-11-02：失败01B完整CPU分析和独审已保全；33流封存不表示训练完整，
+122更新且无checkpoint，CPU概率差异保留，不能验收01B。
+新01C输入tag r6-direct-confirm-128-seed-01c-inputs已推送，启动预检再次PASS。
+准确父进程2885807/starttime30490928、子进程2887525/starttime30497898已核实存活。
+保持源码067349c1、freeze-02、seed2026102202和共同u640→u768，时限改为7200秒。
+当前只确认监督器RUNNING，尚不声称完成训练更新。禁止重复启动。
+RustDesk保持连接，holdout未揭晓；三流确认与最终评价、独审及交付尚未完成。
+下方保留历史状态。
+
 # R6 确认首流 SEED-01B 超时关闭，未产生训练 checkpoint
 
 2026-11-02：实际完成122/128更新、62944 transitions、actor/critic各976 optimizer steps；
