@@ -43,6 +43,11 @@ def preflight(plan):
     result=result_validate(plan['result_volume'],output_cap_bytes=contract['parameters']['output_cap_bytes'],
         minimum_free_bytes=0 if 'result_payload_cap_bytes' in plan else 256*1024**2,
         host_root_uid=namespace_host_root_uid())
+    # Generic newly provisioned volumes have no legacy fixed-layout payload.
+    # Derive available payload from verified filesystem capacity, retaining
+    # control headroom; never infer it from the requested backing-image size.
+    if 'payload_cap_bytes' not in result:
+        result=dict(result,payload_cap_bytes=max(0,result['free_bytes']-64*1024**2))
     if 'result_payload_cap_bytes' in plan:
         # Reuse a nonempty prepaid volume without claiming its original empty
         # capacity. Kernel volume checks above remain, and each new attempt gets

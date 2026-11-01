@@ -1,0 +1,6 @@
+{
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/train-02/tools/r6_direct/worker.py\", line 208, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/train-02/tools/r6_direct/worker.py\", line 204, in main\n    preflight(plan);print('PASS_CPU_DIRECT_PREFLIGHT_NO_GPU');return\n    ^^^^^^^^^^^^^^^\n  File \"/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/train-02/tools/r6_direct/worker.py\", line 51, in preflight\n    if type(cap) is not int or not 256*1024**2<=cap<=result['payload_cap_bytes']:\n                                                     ~~~~~~^^^^^^^^^^^^^^^^^^^^^\nKeyError: 'payload_cap_bytes'\n",
+  "gpu_probe": false
+}

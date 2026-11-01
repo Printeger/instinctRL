@@ -1,0 +1,20 @@
+{
+  "reason": "TRAIN-01 evidence quota failure with no recoverable checkpoint",
+  "lost_training_state_updates_reported": 107,
+  "lost_transitions_reported": 54912,
+  "new_attempt_updates": 128,
+  "new_attempt_transitions": 65536,
+  "original_charges_preserved": true,
+  "unchanged": [
+    "u640 origin",
+    "training_seed",
+    "curriculum",
+    "PPO",
+    "reward",
+    "ICS",
+    "checkpoint u768",
+    "scientific acceptance"
+  ],
+  "storage_reason": "Old robust measurement stream approached16GiB raw after43/64 robust updates;64GiB per-file raw and22GiB compressed allowance accommodate full segment with headroom. Actual mounted volume must pass preflight.",
+  "not_lossless_resume": true
+}
