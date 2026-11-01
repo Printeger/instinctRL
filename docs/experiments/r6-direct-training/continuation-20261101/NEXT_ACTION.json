@@ -1,20 +1,25 @@
 {
-  "status": "READY_TO_LAUNCH",
-  "operation": "train",
+  "independent_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_02_INDEPENDENT_REVIEW.json",
+    "sha256": "8aaf13522f37263681421b861e10b6e61b61c67db7f4dbb99bcfb8b087d2a95e"
+  },
   "inputs": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/inputs.json",
-    "sha256": "51a51147036bef23944a601b467e141755fb91b7202221fbd8293efbdf37ad7e"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u640-inputs.json",
+    "sha256": "8331b4c6a75aa221f0f0138d390ae31d851fdbe870809237f628f64e05026dce"
   },
-  "source_commit": "a184106e916fc3fcb47b00cfb31d899e2742e06b",
-  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/train-02b",
+  "nontraining_transitions": 193600,
+  "operation": "evaluate",
   "preflight": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/PREFLIGHT.json",
-    "sha256": "979c6e5c3f85c155a615e748a5347e56b98821a0c69adf334299d8cc6d46c220"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/U640_PREFLIGHT.json",
+    "sha256": "73e8d7944fdbb2e165f693a6c3a9a8d1652b681310190dcd14c0e42b7968a24c"
   },
-  "run_id": "R6-DIRECT-TRAIN-02",
-  "training_transitions": 65536,
-  "updates": 128,
-  "start_update": 640,
-  "target_update": 768,
-  "scientific_acceptance": false
+  "run_id": "R6-DIRECT-PAIR-U640-01",
+  "scientific_acceptance": false,
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/paired-01",
+  "source_commit": "fb35c16e390321883dea68215a1285ef35ca4c06",
+  "status": "READY_TO_LAUNCH",
+  "training_analysis": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis-cuda/binding.json",
+    "sha256": "681e72ec90b8fdf85c10cc01bea89cd3518c9932fc24916ba8b575cab32a66f1"
+  }
 }
