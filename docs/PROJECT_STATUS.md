@@ -1,3 +1,21 @@
+# R6 配对评价：非训练契约适配已修复，u640-03 正在评价
+
+2026-11-01：`R6-DIRECT-PAIR-U640-02` 完成32960非训练transitions后，在开发block配置处
+被旧baseline-only缺测奖励契约检查拒绝；不是科学负结论。失败原件、CPU不完整报告及
+CLOSED/cleanup timeout/-15保留，6个准确所属身份已退出，完整生命周期按348秒结算。
+
+仅修复 `evaluation_reward.validate_evaluation_contract`：准确匹配baseline/evaluate/final的
+非训练mode，训练transition/optimizer/checkpoint预算必须为严格整数0。八项缺测条件、
+正常奖励计算、actor及PPO拒绝保护不变。16项针对性CPU检查通过，独立审核PASS_SCOPED，
+见 `continuation-20261101/EVALUATION_CONTRACT_REPAIR_REVIEW.json`。
+
+新作业 `R6-DIRECT-PAIR-U640-03` 已启动并进入EVALUATING，准确输入为
+`continuation-20261101/paired-02/u640-inputs.json`，detached快照paired-02源码a09f899e，
+输入tag `r6-direct-paired-u640-03-inputs`。保留相同原五任务、16开发条件及评价随机流。
+TRAIN-02及u768完整证据仍有效；候选评价将使用同一修复实现，尚未启动。
+RustDesk保持连接。配对结论、三流确认、保留集与最终模型/录像交付仍未完成。
+下方保留历史状态。
+
 # R6 TRAIN-02 完整分析通过；u640 配对对照评价已启动
 
 2026-11-01：TRAIN-02 实际记录128 updates、65536训练transitions、1024次actor及critic
