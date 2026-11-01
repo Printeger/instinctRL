@@ -1,0 +1,20 @@
+{
+  "decision": "PASS_R6_CONFIRMATION_SOURCE_REBIND",
+  "findings": [
+    "Exactly10 declared source differences; before/after hashes match Git commits.",
+    "All230 new snapshot source files match manifest; HEAD013b99d8b5b1c7f282d40390e03f2d06cad6da32.",
+    "Scientific_config/execution/actor/training/method/product_deltas unchanged.",
+    "New128 recipe differs only in source_identity from prior128 candidate.",
+    "Changes cover evaluation entry adaptation, baseline permutation seed analysis, sealed CUDA supplementary analysis, confirmation prefix/seed/source validators and tests. No change found in actor input, training reward, PPO updates, curriculum sampling or control method."
+  ],
+  "holdout_read": false,
+  "limitations": [
+    "Exact source migration approval only; full recipe freeze and actual training acceptance remain required."
+  ],
+  "must_fix": [],
+  "payload_sha256": "e8d0c870d45b2e572d6160d48faf694b20f92682b3243d389a90436b78ba9fbc",
+  "recipe_sha256": "d2e2b6a79bcec44aabc7ea48818dbe7b41a1a58144eaa38e9dc5e6f64205ffea",
+  "reviewer": "/root/baseline_scientific_review",
+  "reviewer_gpu_started": false,
+  "reviewer_writes": false
+}

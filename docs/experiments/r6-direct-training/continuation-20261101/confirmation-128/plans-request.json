@@ -1,0 +1,25 @@
+{
+  "baseline_bindings": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_BINDINGS.json",
+    "sha256": "6ebe90717fa2571816ba3392841f3690c2c3fe37225c3728f935bb80d3102623"
+  },
+  "experiment_ids": [
+    "R6-DIRECT-CONFIRM-128-SEED-01",
+    "R6-DIRECT-CONFIRM-128-SEED-02",
+    "R6-DIRECT-CONFIRM-128-SEED-03"
+  ],
+  "freeze_pin": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/freeze.json",
+    "sha256": "78492061175b41b4bc94b58211ad6411fab4c6e3f4bed5142b0e7f8ce0af1c60"
+  },
+  "storage": {
+    "branch_record_bytes": 16777216,
+    "checkpoint_bytes": 16777216,
+    "compressed_bytes": 23622320128,
+    "maximum_raw_file_bytes": 68719476736,
+    "metadata_bytes": 67108864,
+    "payload_bytes": 25769803776,
+    "plain_bytes": 2147483648
+  },
+  "wall_seconds": 3600
+}

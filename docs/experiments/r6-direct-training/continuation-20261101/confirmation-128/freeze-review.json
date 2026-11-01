@@ -1,0 +1,22 @@
+{
+  "decision": "PASS_R6_RECIPE_FREEZE",
+  "findings": [
+    "Payload, recipe and selection pins verified.",
+    "Seed-only amendment and source rebinding decisions bind the exact previously reviewed payloads.",
+    "Strict128 registered prefix, historical recipe identity and evaluated u640/u768 pair retained."
+  ],
+  "freeze_payload_file_sha256": "0ae55bde3d06544b884e79dc55e967bb2a5a854805f1f1877f6e6c02bfece300",
+  "limitations": [
+    "Does not prove learning gain, three-stream success or final acceptance.",
+    "Preserve original CPU probability failure, CUDA supplement, native cleanup errors and measurement/physical authenticity limitations.",
+    "Historical seed search limited to documented verifiable inventory.",
+    "Holdout remains unrevealed; no early reveal permitted.",
+    "Launch requires exact inputs, snapshot, resources and mounted output volume."
+  ],
+  "must_fix": [],
+  "payload_sha256": "93aaef46e6cc5e2b455b257392fbe61832f1682312384d06a03a73f8c44b32dc",
+  "reviewer": "/root/baseline_scientific_review",
+  "reviewer_gpu_started": false,
+  "reviewer_writes": false,
+  "scope": "Three common-u640 continuations of128 updates to u768 with seeds2026102202/2026102203/2026102204; no later endpoint selection using confirmation or holdout."
+}

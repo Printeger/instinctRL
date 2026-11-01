@@ -1,0 +1,45 @@
+{
+  "baseline_bindings": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/BASELINE_BINDINGS.json",
+    "sha256": "6ebe90717fa2571816ba3392841f3690c2c3fe37225c3728f935bb80d3102623"
+  },
+  "expected_per_stream": {
+    "actor_optimizer_steps": 1024,
+    "checkpoint_writes": 1,
+    "critic_optimizer_steps": 1024,
+    "start_update": 640,
+    "target_update": 768,
+    "training_transitions": 65536,
+    "updates": 128
+  },
+  "expected_three_stream_training_transitions": 196608,
+  "experiment_ids": [
+    "R6-DIRECT-CONFIRM-128-SEED-01",
+    "R6-DIRECT-CONFIRM-128-SEED-02",
+    "R6-DIRECT-CONFIRM-128-SEED-03"
+  ],
+  "freeze_payload": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/freeze-payload.json",
+    "sha256": "0ae55bde3d06544b884e79dc55e967bb2a5a854805f1f1877f6e6c02bfece300"
+  },
+  "not_executable": true,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-01.json",
+    "sha256": "1b9387283bf02a355b3637fe7a3e43b9498368d5b14c9582238761c383c6c5c9"
+  },
+  "status": "WAITING_RECIPE_FREEZE_REVIEW_AND_ADMIN_STORAGE",
+  "storage": {
+    "branch_record_bytes": 16777216,
+    "checkpoint_bytes": 16777216,
+    "compressed_bytes": 23622320128,
+    "maximum_raw_file_bytes": 68719476736,
+    "metadata_bytes": 67108864,
+    "payload_bytes": 25769803776,
+    "plain_bytes": 2147483648
+  },
+  "storage_plan": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/storage-confirmation-01/PLAN.json",
+    "sha256": "9a112a6224c537c04ac284f611186d545572a5b229ab0993597c149a80ce6e9e"
+  },
+  "wall_seconds": 3600
+}

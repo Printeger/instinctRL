@@ -1,0 +1,67 @@
+{
+  "changes": [
+    {
+      "after": "e4c68c680d046e05cc21f01dc098cb199b4b347993c94d4c3fbe147b6382c53a",
+      "before": "f34134514b063625b62f0fb4833e7f60c141c3128eca3d9095038e49dc6f342b",
+      "path": "isaaclab-training/instinctlab/task/evaluation_reward.py"
+    },
+    {
+      "after": "2399ffb7ae988f4cc2ab9583ea21219f1c21ac599ec354a524b2e667702d168b",
+      "before": "5d5d6790d81c92c2b25a2cb39c55bb6c7f992c65c117445c0df92fad2265e415",
+      "path": "tools/r6_candidate_analysis.py"
+    },
+    {
+      "after": "c8909b198328186cf09a88e3f08de2c6920b8d4c11c7a462795ebebd65d625d6",
+      "before": "a3b0687e329695bc77d90a4885254d894a0208d0b8bbf96cb564fe22773b9b9d",
+      "path": "tools/r6_direct/analyze.py"
+    },
+    {
+      "after": "f6e5ba5381186af4b072205cf23c319456f51827f10db9a749ed49fd3df0f85f",
+      "before": null,
+      "path": "tools/r6_direct/probability_evidence.py"
+    },
+    {
+      "after": "f2b713455c946c35a7e5dee7b40626a74e9fd6cf8a713ed6633fa3120b5c2fa3",
+      "before": "873ac32da0bc04cd2720046584e33e7c645d25fd9e72dd068df2369b18637f8a",
+      "path": "tools/r6_direct/test_confirmation.py"
+    },
+    {
+      "after": "0d0da0ae838db6b55b08b5693b4c91283d3ea51a1cfd398c423dc9206d2a0f7b",
+      "before": "5573d432a394b0de7549f91fd563673da1725e0f6c416b7c45db9a6e3c8858bc",
+      "path": "tools/r6_direct/test_evaluation_reward.py"
+    },
+    {
+      "after": "c235b19a5542d7877bffb05ea07a32cdf2d50a14e9b9751a9738a404ed851a4b",
+      "before": null,
+      "path": "tools/r6_direct/test_probability_evidence.py"
+    },
+    {
+      "after": "723ca1189b26398f72288599d2a9e5feb084877d5335fd3adf7dd47feddcf890",
+      "before": null,
+      "path": "tools/r6_direct/test_recipe_prefix.py"
+    },
+    {
+      "after": "6ab0eed48492786e48b02fb64d9fb5aec4f7e9df4d2f5a3efe687d7b0c252856",
+      "before": "f4eef46036a33e0a2c1fa04731f73d83d7e5f1983a4cbc5c13dc58064a58b865",
+      "path": "tools/r6_training_analysis.py"
+    },
+    {
+      "after": "47667bdc551734c71cbdaf9576590b99b9095f2072b505e3d9d6b26ff12a046f",
+      "before": "cd1478fafe57d16701f2e28e5f80c766bcb720f19a2cd527249002e35f4bd076",
+      "path": "training_workloads/unified_h1/robustness_confirmation.py"
+    }
+  ],
+  "independent_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-rebinding-review.json",
+    "sha256": "d7b7879c2eecaeaacff70a6f55069994829cba6c9223cf5eca1b5ed830f9d8e3"
+  },
+  "original_source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/source.json",
+    "sha256": "cd4025bffd1747fc45aca27136c0d74983d87012647c8564af6ee6b79d93e070"
+  },
+  "replacement_source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-01.json",
+    "sha256": "1b9387283bf02a355b3637fe7a3e43b9498368d5b14c9582238761c383c6c5c9"
+  },
+  "schema_version": "r6-confirmation-source-rebinding/1"
+}
