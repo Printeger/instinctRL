@@ -1,3 +1,15 @@
+# R6 接续方案已交付；实际启动仍有前置缺口
+
+2026-11-01：新增 `docs/goals/InstinctRL_R6_Continuation_Plan.md`、
+`InstinctRL_R6_Continuation_Requirements.md` 与 `InstinctRL_R6_Continuation_Prompt.md`。
+目标为首段核验→配对评价→按证据追加训练→三随机流/保留集/独审/模型录像交付。
+本轮默认直接链13模块CPU回归通过，未启动训练或GPU探测。
+TRAIN-01原始结果卷仍不可读（未挂载，root所有且本会话无免密码sudo），实际更新和checkpoint待核验；
+旧自动模型调用496已入账+10待结算=506/512，与8次最终保护额度存在2次缺口。
+准确新作业输入、快照和可写受限输出空间尚待核验结果后生成；当前不是READY_TO_LAUNCH。
+证据：`docs/experiments/r6-direct-training/continuation-20261101/PREPARATION_CHECK.json`。
+本次只交付准备材料，未创建/启动新Goal；下方保留之前状态。
+
 # 当前开发：Codex 直接开发；R6 后续链脱离 rlflow（CPU 验证通过）
 
 2026-11-01：当前入口为 `tools/r6_direct/README.md`。训练后分析、候选评价、三随机流确认、
