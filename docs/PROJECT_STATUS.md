@@ -1,3 +1,19 @@
+# R6 u640 完整重算通过；u768 配对评价已进入 EVALUATING
+
+2026-11-01：u640-03修正全量分析已完成，原五任务与全部16开发条件均32/32，
+measurement replay与motion replay完整，candidate_binding_issues为空；与旧摘要相比
+仅该问题字段改变。见continuation-20261101/u640-03-analysis-fixed/；旧报告保留。
+排列seed分析器修复独立复核PASS_SCOPED；不据基线满分声称学习收益。
+原CLOSED/-15/cleanup timeout及2261秒结算保持，全部准确所属进程已退出。
+
+`R6-DIRECT-PAIR-U768-01` 已按提交推送的paired-02/u768-inputs.json启动，
+CPU预检再次通过，准确worker身份PID2687624/starttime29139384已进入EVALUATING。
+使用与u640-03相同paired-02 detached源码a09f899e及评价协议，
+输入tag为r6-direct-paired-u768-01-inputs。普通Python监督器管理运行，禁止重复启动。
+u768为TRAIN-02的128更新候选，尚未获得完整评价结果。
+RustDesk保持连接。配对结论、三流确认、保留集及模型录像交付仍未完成。
+下方保留历史状态。
+
 # R6 u640 配对评估已关闭；分析器种子绑定纠错复核通过
 
 2026-11-01：`R6-DIRECT-PAIR-U640-03` 已完成193600非训练transitions、6050策略步，
