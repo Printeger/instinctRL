@@ -1,0 +1,12 @@
+{
+  "status": "CPU_PASS_MOUNTS_PENDING",
+  "passed": 14,
+  "modules": [
+    "tools/r6_direct/test_storage.py",
+    "tools/r6_direct/test_run.py",
+    "tools/r6_direct/test_lifecycle.py"
+  ],
+  "fresh_volume_paths_exist": false,
+  "administrator_action": "Run CREATE_STORAGE.sh in this directory",
+  "live_started": false
+}

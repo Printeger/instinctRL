@@ -184,9 +184,19 @@ def main():
         imported=imported_budget(ledger)
         # The existing unused bounded physical volumes stay fully charged in
         # the import. Binding a new subdirectory does not release any bytes.
-        storage=[r for r in imported['reservation_mapping'] if r['original']['identity']['event_id']=='STORAGE:J-d737390980235144']
-        if len(storage)!=1:raise RuntimeError('DIRECT_STORAGE_IMPORT')
-        prior=[r for r in ledger['new_reservations'] if r.get('legacy_storage_event')==storage[0]['event_key']]
+        if 'storage_reservation_id' in plan:
+            from tools.r6_direct.storage import fresh_binding
+            storage_key=fresh_binding(plan,ledger,contract)
+            storage_field='storage_reservation_id'
+            # A new volume does not waive closure of the scientific predecessor.
+            prior=[dict(receipt=plan['predecessor_receipt'])]
+            prior.extend(r for r in ledger['new_reservations'] if r.get(storage_field)==storage_key)
+        else:
+            storage=[r for r in imported['reservation_mapping'] if r['original']['identity']['event_id']=='STORAGE:J-d737390980235144']
+            if len(storage)!=1:raise RuntimeError('DIRECT_STORAGE_IMPORT')
+            storage_key=storage[0]['event_key'];storage_field='legacy_storage_event'
+            prior=[r for r in ledger['new_reservations'] if r.get(storage_field)==storage_key]
+            if contract['parameters']['output_cap_bytes']!=storage[0]['charged']['output_actual_plus_unreleased_reservations_bytes']:raise ValueError('DIRECT_STORAGE_CAP')
         if prior:
             predecessor=plan.get('predecessor_receipt')
             if not predecessor or prior[-1].get('receipt')!=predecessor:raise RuntimeError('DIRECT_STORAGE_PREDECESSOR')
@@ -195,7 +205,6 @@ def main():
                 if receipt['status']!='CLOSED' or receipt['remaining']:raise RuntimeError('DIRECT_PRIOR_CLEANUP')
                 for owner in [receipt['parent'],*receipt['owned_processes']]:
                     if process_identity(owner['pid'])==owner:raise RuntimeError('DIRECT_PRIOR_STILL_LIVE')
-        if contract['parameters']['output_cap_bytes']!=storage[0]['charged']['output_actual_plus_unreleased_reservations_bytes']:raise ValueError('DIRECT_STORAGE_CAP')
         subprocess.run(argv+['--check'],cwd=snapshot,env=env,check=True,timeout=180)
         for key in ('attempt_dir','native_dir'):
             if Path(plan[key]).exists():raise FileExistsError(plan[key])
@@ -207,8 +216,9 @@ def main():
             raise ValueError('DIRECT_FINAL_ASSIGNMENT_ALREADY_STARTED')
         reserve(ledger,run_id,resources,purpose=purpose,resource_policy=plan.get('resource_policy'))
         if final_selection is not None:ledger['new_reservations'][-1]['final_assignment']=final_selection
-        ledger['new_reservations'][-1]['legacy_storage_event']=storage[0]['event_key']
-        ledger['new_reservations'][-1]['legacy_storage_new_binding']={k:plan[k] for k in ('attempt_dir','native_dir')}
+        ledger['new_reservations'][-1][storage_field]=storage_key
+        binding_field='storage_new_binding' if storage_field=='storage_reservation_id' else 'legacy_storage_new_binding'
+        ledger['new_reservations'][-1][binding_field]={k:plan[k] for k in ('attempt_dir','native_dir')}
         ledger['status']='RUNNING';atomic(ledger_path,ledger)
         for key in ('attempt_dir','native_dir'):Path(plan[key]).mkdir(exist_ok=False)
         ipc=Path(plan['native_dir'])/'ipc';ipc.mkdir(exist_ok=False)
