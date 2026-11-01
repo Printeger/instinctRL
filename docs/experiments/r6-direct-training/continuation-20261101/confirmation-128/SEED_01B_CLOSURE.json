@@ -1,0 +1,115 @@
+{
+  "checkpoint_files": [
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01B/results/research-r6-training/initial_preflight/raw_ray_source.pt",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01B/results/research-r6-training/initial_preflight/raw_acquisition.pt"
+  ],
+  "counters": {
+    "actor_optimizer_steps": 976,
+    "attempted_policy_steps": 1967,
+    "attempted_updates": 123,
+    "automatic_resets": 32,
+    "completed_policy_steps": 1967,
+    "completed_updates": 122,
+    "critic_optimizer_steps": 976,
+    "explicit_resets": 2,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 0,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 62944,
+    "real_optimizer_updates": 122,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 62944
+  },
+  "next_action": "Preserve failed stream; complete CPU analysis, then register a new attempt with adequate bounded execution time while preserving frozen scientific endpoint and seeds.",
+  "outcome": "INCOMPLETE_NO_TRAINING_CHECKPOINT",
+  "process_checks": [
+    {
+      "actual": null,
+      "expected": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 2774927,
+        "starttime": "30039593"
+      }
+    },
+    {
+      "actual": null,
+      "expected": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 2776598,
+        "starttime": "30046492"
+      }
+    },
+    {
+      "actual": null,
+      "expected": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 2776599,
+        "starttime": "30046493"
+      }
+    },
+    {
+      "actual": null,
+      "expected": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 2778360,
+        "starttime": "30053373"
+      }
+    },
+    {
+      "actual": null,
+      "expected": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 2780327,
+        "starttime": "30061112"
+      }
+    },
+    {
+      "actual": null,
+      "expected": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 2780374,
+        "starttime": "30061163"
+      }
+    },
+    {
+      "actual": null,
+      "expected": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 2780375,
+        "starttime": "30061165"
+      }
+    }
+  ],
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01B/receipt.json",
+    "sha256": "18683036f58baab0b508e1c479be6871564b0410607a9ab31168a3e87ca3cc93"
+  },
+  "run_id": "R6-DIRECT-CONFIRM-128-SEED-01B",
+  "settlement": {
+    "charged_seconds": 3784,
+    "original_resources": {
+      "allocated_gpu_seconds": 3790,
+      "live_starts": 1,
+      "live_wall_seconds": 3790,
+      "nontraining_transitions": 0,
+      "queue_seconds": 180,
+      "simulator_initializations": 1,
+      "training_checkpoint_writes": 1,
+      "training_transitions": 65536
+    },
+    "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+    "receipt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01B/receipt.json",
+      "sha256": "18683036f58baab0b508e1c479be6871564b0410607a9ab31168a3e87ca3cc93"
+    }
+  },
+  "workload_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01B/state.json",
+    "sha256": "530335d2f46a55ba9a2bd89f549bbd5cbf1522cb7ff86eca5df44f4da3e05788"
+  }
+}

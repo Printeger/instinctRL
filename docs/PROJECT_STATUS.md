@@ -1,3 +1,14 @@
+# R6 确认首流 SEED-01B 超时关闭，未产生训练 checkpoint
+
+2026-11-02：实际完成122/128更新、62944 transitions、actor/critic各976 optimizer steps；
+第123次更新未完成，checkpoint写入0。workload为FAIL_PENDING_CLOSE/wall-time exhausted，
+监督回执CLOSED/-15/DIRECT_WALL_TIMEOUT，不能作为完整确认流或恢复节点。
+全部7个准确所属进程身份已退出；完整生命周期3783.349秒按3784秒一次结算，其他预留保留。
+见confirmation-128/SEED_01B_CLOSURE.json。新目录seed-01b-analysis的CPU分析正在运行。
+后续须针对实际耗时登记新的有限运行时间和新attempt，保持冻结方法、seed及128更新终点；
+禁止原输入盲重试。RustDesk保持连接，holdout未揭晓；完整Goal尚未完成。
+下方保留历史状态。
+
 # R6 确认首流已从封存日志核对64次更新至u704
 
 2026-11-02：SEED-01B第一阶段updates压缩流完整解码，记录641..704共64次更新。
