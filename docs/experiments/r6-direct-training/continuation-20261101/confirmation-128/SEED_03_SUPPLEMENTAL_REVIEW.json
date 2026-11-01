@@ -1,0 +1,24 @@
+{
+  "decision": "Final seed03 supplemental training analysis binding usable as evidence for subsequent final-freeze review.",
+  "findings": [
+    "All binding reference pins verified; report and summary consistent.",
+    "Only issue_count, probability_replay and probability_gate_recomputed changed relative to original CPU summary.",
+    "Original inputs unchanged and not deleted; all stream records identical,30/30 complete,128updates65536transitions1checkpoint,issues empty.",
+    "Bound to exact previously reviewed CUDA08 envelope.",
+    "Exact association with previously reviewed seed03 checkpoint verified."
+  ],
+  "limitations": [
+    "Original CPU index29 mismatch and native -15/DIRECT_CLEANUP_TIMEOUT retained.",
+    "Reviewer did not repeat full raw replay.",
+    "Does not establish GPU sampling reproduction, full RNG semantics, physical integration, learning gain or final acceptance.",
+    "No files written, GPU launched or holdout read by reviewer.",
+    "Final-freeze candidate not approved by this scoped review."
+  ],
+  "reviewer": "/root/baseline_scientific_review",
+  "sha256": {
+    "binding": "9984546edf23d6d719f4985e27590fc17bbfe834acc4e98a7cd52608d1830d20",
+    "report": "0efaf60b9b1b74d59ed7d81c46996f573fbb69e0af7f8782a8f5a3a2a5511ce9",
+    "summary": "d56e18660013e532c1c50464891545eb87ae40e79a23ebe3168cec2c24fd8bd6"
+  },
+  "status": "PASS_SCOPED"
+}
