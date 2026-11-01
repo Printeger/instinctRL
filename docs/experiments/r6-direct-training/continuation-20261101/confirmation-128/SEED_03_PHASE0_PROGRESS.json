@@ -1,0 +1,132 @@
+{
+  "run_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+  "observed_utc": "2026-11-01T20:59:36.970426+00:00",
+  "streams": [
+    {
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/updates.jsonl.r6z",
+        "sha256": "014f5681318c9fc454dd8fe3d66b0e35405af9c1021f50f1100681826c5d3ee9"
+      },
+      "raw_sha256": "b9f1fb55fa040b10093cd59a68c0777dbbe2b1f11cec252fbb86bc9425f807b3",
+      "logical_name": "phases/0-10240-11264/learning_log/updates.jsonl",
+      "rows": 64
+    },
+    {
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/phase_complete.jsonl.r6z",
+        "sha256": "f36014d304ef8c04167139aa80a537d7d2ba5dbd8193d33c9f17c6662e57aa53"
+      },
+      "raw_sha256": "4eb69274ec199c62f416ec14a7531c6d23f9029b614aca4acc36ba4f74b4022e",
+      "logical_name": "phases/0-10240-11264/learning_log/phase_complete.jsonl",
+      "rows": 1
+    }
+  ],
+  "phase_complete": {
+    "counters": {
+      "actor_optimizer_steps": 512,
+      "attempted_policy_steps": 1024,
+      "attempted_updates": 64,
+      "automatic_resets": 32,
+      "completed_policy_steps": 1024,
+      "completed_updates": 64,
+      "critic_optimizer_steps": 512,
+      "explicit_resets": 1,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 0,
+      "real_environment_transitions": 32768,
+      "real_optimizer_updates": 64,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 32768
+    },
+    "phase": {
+      "index": 0,
+      "kind": "original",
+      "phase_end_update": 704,
+      "phase_start_update": 640,
+      "start_update": 640,
+      "target_update": 704
+    }
+  },
+  "updates": [
+    641,
+    642,
+    643,
+    644,
+    645,
+    646,
+    647,
+    648,
+    649,
+    650,
+    651,
+    652,
+    653,
+    654,
+    655,
+    656,
+    657,
+    658,
+    659,
+    660,
+    661,
+    662,
+    663,
+    664,
+    665,
+    666,
+    667,
+    668,
+    669,
+    670,
+    671,
+    672,
+    673,
+    674,
+    675,
+    676,
+    677,
+    678,
+    679,
+    680,
+    681,
+    682,
+    683,
+    684,
+    685,
+    686,
+    687,
+    688,
+    689,
+    690,
+    691,
+    692,
+    693,
+    694,
+    695,
+    696,
+    697,
+    698,
+    699,
+    700,
+    701,
+    702,
+    703,
+    704
+  ],
+  "worker_identity": {
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+    "pid": 3141084,
+    "starttime": "31525665"
+  },
+  "training_complete": false,
+  "limitations": [
+    "Sealed first phase only; full128update checkpoint and terminal receipt remain pending.",
+    "No learning gain or final scientific acceptance established."
+  ]
+}
