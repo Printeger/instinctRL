@@ -1,5 +1,5 @@
 {
-  "status": "READY_TO_LAUNCH",
+  "status": "CLOSED_DIAGNOSTIC_FAILED_DO_NOT_RESTART",
   "operation": "same-device probability diagnostic",
   "inputs": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-02/plan.json",
@@ -8,5 +8,9 @@
   "source_commit": "84c01319c8238f3162565df4efe33b819576b2dc",
   "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-02",
   "cpu_preflight": "PASS",
-  "scientific_acceptance": false
+  "scientific_acceptance": false,
+  "result": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-02/RESULT.json",
+    "sha256": "8e74f2b92d639546f32d73c1c21f4c468e8b256cd93615f814a4cdfddaa7dd96"
+  }
 }

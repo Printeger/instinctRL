@@ -1,0 +1,21 @@
+{
+  "status": "CUDA_REPLAY_FAILED_ORIGINAL_TOLERANCE",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-02/receipt.json",
+    "sha256": "aed97754200030aee162b908771ba7a60141b1098e0e35bc81c848e0510d67d3"
+  },
+  "stderr": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-02/stderr.log",
+    "sha256": "19c7c8bd178d14575c30726dbbba9739b876572ca7bb4445bc42ed6bfde5f7a9"
+  },
+  "prelaunch_gate": {
+    "path": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-02/prelaunch/prelaunch_resource_gate.json",
+    "sha256": "794f9db39edae87ec1f373cae47593ec6d2faeb41c6c8e08476f7277be70fe4c"
+  },
+  "rustdesk_coexistence_admission": "PASS",
+  "failure": "probability gate mismatch at frozen index 10",
+  "owned_processes_absent": true,
+  "training_transitions": 0,
+  "scientific_acceptance": false,
+  "next": "Compare original backend numeric settings and replay computation before further training; do not relax acceptance thresholds."
+}
