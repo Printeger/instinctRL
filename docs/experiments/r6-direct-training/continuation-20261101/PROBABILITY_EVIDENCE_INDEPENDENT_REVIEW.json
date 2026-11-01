@@ -1,0 +1,44 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "provenance": "Independent read-only final report transcribed by sole primary writer",
+  "status": "PASS_SCOPED",
+  "scope": "Exact sealed TRAIN-01 first-rollout CUDA supplemental evidence; CPU failure retained",
+  "prior_review": "MUST_FIX: freshly generated expected hashes, incomplete source coverage, starting_update/error consistency gaps",
+  "closed_findings": [
+    "Fixed envelope pins consumed for result/receipt/RUN_INPUTS/intent/origin/source trace",
+    "All frozen source files checked against one of two explicitly registered manifests",
+    "starting_update, finite nonnegative consistent errors, observation device/batch/tolerances verified"
+  ],
+  "actual_evidence_pins_verified": 244,
+  "independent_negative_checks": [
+    "starting_update mismatch",
+    "summary error mismatch",
+    "device mismatch",
+    "tolerance mismatch",
+    "source binding change",
+    "sealed hash mismatch",
+    "NaN error"
+  ],
+  "registered_manifest_diff": {
+    "file_count": 3,
+    "files": [
+      "tools/r6_direct/worker.py",
+      "training_workloads/unified_h1/direct_contract.py",
+      "tools/r6_direct/test_training.py"
+    ],
+    "interpretation": "Known output-volume engineering changes only; probability network/gate/replay implementations identical"
+  },
+  "reviewed_sha256": {
+    "tools/r6_direct/probability_evidence.py": "f6e5ba5381186af4b072205cf23c319456f51827f10db9a749ed49fd3df0f85f",
+    "tools/r6_direct/test_probability_evidence.py": "c235b19a5542d7877bffb05ea07a32cdf2d50a14e9b9751a9738a404ed851a4b",
+    "probability-cuda-04/SEALED_EVIDENCE.json": "04cef490c8981fd9c6440a27699a968e44971ce3eba1ecb26d9cd8cb3f210afa"
+  },
+  "limitations": [
+    "Envelope pin is a caller trust root, not a digital signature.",
+    "Applies to reviewed diagnostic04 envelope and registered implementations.",
+    "No repeated GPU replay, original kernel-selection proof, optimizer restoration or GPU sampling verification.",
+    "TRAIN-02 output/ledger not accessed; training completion and overall R6 completion not reviewed."
+  ],
+  "nonblocking_followup": "Existing source negative test rejects RUN_BINDING first; dedicated allowlist-branch coverage can be added later.",
+  "scientific_acceptance": false
+}
