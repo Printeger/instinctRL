@@ -1,0 +1,19 @@
+{
+  "status": "SUPERVISOR_STARTED_PREFLIGHT_PENDING",
+  "session_id": 5790,
+  "parent": {
+    "pid": 3237674,
+    "starttime": "32417084",
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce"
+  },
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-inputs.json",
+    "sha256": "16f23c39c114031d6f3048399691d241b2df451dba5073b0e3adcb1b29022fea"
+  },
+  "input_tag": "r6-direct-final-seed-01-inputs",
+  "input_commit": "462222b1",
+  "limitations": [
+    "Supervisor process started; launch and GPU evaluation not yet confirmed.",
+    "Do not duplicate this run."
+  ]
+}
