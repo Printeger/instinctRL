@@ -7,7 +7,7 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-contract.json",
     "sha256": "d4e3f68b26907a5af3c094ed8121878dbf066b4226ab62bd20baa12e056d69f2"
   },
-  "evaluation_started": false,
+  "evaluation_started": true,
   "holdout_revealed": true,
   "input_tag": "r6-direct-final-seed-01-inputs",
   "inputs": {
@@ -45,5 +45,10 @@
   "launch_evidence": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_01_LAUNCH.json",
     "sha256": "620ee5ff6cd25860160a4a4df054ef94025d8e67b4df95e68365a4b7f4b98e1a"
+  },
+  "workload_status": "EVALUATING",
+  "progress": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_01_EVALUATING.json",
+    "sha256": "4a9134302f0447ce403b78b745040384451b112b1d8bc3c8eb92f9a68eee1b12"
   }
 }
