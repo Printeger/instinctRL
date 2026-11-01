@@ -10,10 +10,28 @@ import sys
 import signal
 import subprocess
 import hashlib
+import time
 from tools.r6_direct.import_legacy import NEW,OLD,pin,process_identity,stop_paths
 from tools.r6_direct.io import atomic
 from tools.r6_direct.source import checked
 from tools.r6_direct.run import reserve,supervise
+
+
+def prelaunch(directory, gate, plan, plan_pin, run_gate):
+    """Close a failed admission attempt even when no CUDA child was created."""
+    from training_workloads.unified_h1.config import resource_binding_pins
+    started=time.monotonic()
+    try:
+        return run_gate(gate,mode='research-r6-evaluation',attempt_id=plan['run_id'],
+                        authorization_sha256=plan_pin['sha256'],
+                        resource_pins=resource_binding_pins(),
+                        stop_paths=[NEW/'STOP',directory/'STOP'])
+    except BaseException as error:
+        atomic(directory/'receipt.json',dict(status='CLOSED',phase='PRELAUNCH',
+            parent=process_identity(os.getpid()),owned_processes=[],remaining=[],child=None,
+            exit_code=1,error=repr(error),wall_seconds=time.monotonic()-started,
+            cuda_child_started=False,training_transitions=0,optimizer_updates=0))
+        raise
 
 
 def child(plan):
@@ -75,12 +93,15 @@ def main():
         ledger['status']='RUNNING_DIAGNOSTIC'
         atomic(ledger_path,ledger)
         directory.mkdir();native.mkdir();(native/'ipc').mkdir();(native/'tmp').mkdir();(native/'cache').mkdir()
-        from training_workloads.unified_h1.config import resource_binding_pins
         from training_workloads.unified_h1.robustness_prelaunch import run_gate
         gate=native/'prelaunch';gate.mkdir()
         atomic(directory/'intent.json',dict(plan=plan,parent=process_identity(os.getpid())))
-        run_gate(gate,mode='research-r6-evaluation',attempt_id=plan['run_id'],authorization_sha256=pin(args.plan)['sha256'],
-                 resource_pins=resource_binding_pins(),stop_paths=[NEW/'STOP',directory/'STOP'])
+        try:
+            prelaunch(directory,gate,plan,pin(args.plan),run_gate)
+        except BaseException:
+            ledger['new_reservations'][-1]['receipt']=pin(directory/'receipt.json')
+            ledger['status']='WAITING_FOR_ANALYSIS';atomic(ledger_path,ledger)
+            raise
         env={k:v for k,v in os.environ.items() if k in ('HOME','PATH','LANG','LC_ALL')}
         env['PYTHONPATH']=str(snapshot)+':'+str(snapshot/'isaaclab-training')
         env.update(CUDA_VISIBLE_DEVICES='0',PYTHONDONTWRITEBYTECODE='1',PYTHONNOUSERSITE='1',

@@ -1,5 +1,5 @@
 {
-  "status": "READY_TO_LAUNCH",
+  "status": "FAILED_PRELAUNCH_DO_NOT_RESTART",
   "operation": "same-device probability diagnostic",
   "inputs": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-01/plan.json",
@@ -8,5 +8,9 @@
   "source_commit": "69abbf6edfa5b61fc71b5a3b9fc63de18d014cb4",
   "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-01",
   "cpu_preflight": "CPU_DIAGNOSTIC_INPUTS_PASS",
-  "scientific_acceptance": false
+  "scientific_acceptance": false,
+  "failure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-01/ADMISSION_FAILURE.json",
+    "sha256": "bbffa714c7b522a18239bf035d9ed1a2845b8a72c15f1ce732faeb358c9c460a"
+  }
 }

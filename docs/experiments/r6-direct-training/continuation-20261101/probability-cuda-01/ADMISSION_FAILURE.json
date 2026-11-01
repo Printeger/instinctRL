@@ -1,0 +1,41 @@
+{
+  "status": "FAILED_PRELAUNCH_PARENT_EXIT_VERIFIED",
+  "run_id": "R6-DIRECT-PROBABILITY-DIAGNOSTIC-01",
+  "intent": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-01/intent.json",
+    "sha256": "966c7c7236b9d224203e0f180f3816dca3d34931905a83279798c31b55238d0d"
+  },
+  "observation": {
+    "path": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-01/prelaunch/prelaunch_resource_observations.json",
+    "sha256": "964a8667801d5d91a507dcbe484894a2e035ebe0f493434474b4b56b97e9cf1d"
+  },
+  "parent": {
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+    "pid": 2351369,
+    "starttime": "27665139"
+  },
+  "parent_current_identity": null,
+  "native_receipt_exists": false,
+  "error": "MemoryError: resource memory limit",
+  "observed_memory_used_mib": [
+    1037,
+    1037,
+    1037,
+    1037,
+    1037,
+    1037,
+    1037,
+    1037,
+    1037,
+    1037,
+    1037,
+    1037,
+    1038
+  ],
+  "cuda_child_started": false,
+  "cuda_child_evidence": "run_gate exception before supervise; RUN_INPUTS.json absent",
+  "training_transitions": 0,
+  "scientific_acceptance": false,
+  "reservation_policy": "Retain full reservation; no refund; never restart original ID",
+  "required_next": "Resolve resource admission condition before new diagnostic attempt. RustDesk is outside currently allowed compute application list."
+}
