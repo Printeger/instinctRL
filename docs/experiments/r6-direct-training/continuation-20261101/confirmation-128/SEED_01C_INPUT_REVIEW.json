@@ -1,0 +1,22 @@
+{
+  "findings": [
+    "Only run identity, paths, contract pin and predecessor receipt changed in inputs",
+    "Contract only changes experiment identity and wall 3600 to 7200",
+    "Source, recipe, freeze, storage and training count budgets unchanged",
+    "Predecessor exactly binds 01B CLOSED/DIRECT_WALL_TIMEOUT/-15",
+    "COMMON_U640_NEW_STREAM retains exact u640, seed2026102202 and target768",
+    "New attempt/native/output absent at review",
+    "Three plans retain seeds2202/2203/2204 and targets640 to768"
+  ],
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-inputs.json",
+    "sha256": "81c23fc4f2dba391353542150a83222a2937e6e4a8b1d70f51bf5e69af6d118d"
+  },
+  "limitations": [
+    "Review did not claim CPU preflight or failure analysis completion",
+    "Third stream exact input not reviewed",
+    "Failed01B consumption remains separate; successful01C would give cumulative first-seed attempts128480 transitions"
+  ],
+  "reviewer": "/root/baseline_scientific_review",
+  "status": "PASS_SCOPED"
+}
