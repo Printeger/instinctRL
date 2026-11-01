@@ -8,10 +8,12 @@ from tools.r6_direct.import_legacy import pin, stop_paths
 from tools.r6_direct.io import atomic
 
 
-def analyze(input_pin):
+def analyze(input_pin, *, probability_diagnostic=None):
     install()
     ctx = context(input_pin)
     operation = ctx['contract']['operation']
+    if probability_diagnostic is not None and operation!='train':
+        raise ValueError('PROBABILITY_DIAGNOSTIC_REQUIRES_TRAIN')
     if operation == 'render':
         from tools.r6_video_presentation import verify
         manifest=pin(ctx['output']/'media/RUN_MANIFEST.json')
@@ -29,7 +31,8 @@ def analyze(input_pin):
         from tools import r6_training_analysis, r6_candidate_analysis, r6_final_analysis
         module = {'train': r6_training_analysis, 'evaluate': r6_candidate_analysis,
                   'final': r6_final_analysis}[operation]
-        report, summary = module.analyze(ctx['output'], input_pin, direct=True)
+        extra=dict(probability_diagnostic=probability_diagnostic) if operation=='train' else {}
+        report, summary = module.analyze(ctx['output'], input_pin, direct=True,**extra)
     return report, summary
 
 
@@ -37,6 +40,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--inputs', type=Path, required=True)
     parser.add_argument('--destination', type=Path, required=True)
+    parser.add_argument('--probability-diagnostic',type=Path,
+                        help='Exact closed CUDA diagnostic plan for this training input')
     args = parser.parse_args()
     install()
     if stop_paths():
@@ -48,7 +53,7 @@ def main():
     if (destination.resolve() != destination or destination.exists()
             or any(destination == p or p in destination.parents or destination in p.parents for p in originals)):
         parser.error('new canonical destination separate from originals required')
-    report, summary = analyze(input_pin)
+    report, summary = analyze(input_pin,probability_diagnostic=None if args.probability_diagnostic is None else pin(args.probability_diagnostic))
     if len(json.dumps(report, allow_nan=False).encode()) > 16*1024**2 or len(json.dumps(summary, allow_nan=False).encode()) > 48*1024:
         raise ValueError('DIRECT_ANALYSIS_SIZE_BOUND')
     if stop_paths():

@@ -107,3 +107,29 @@ def test_empty_failed_attempt_retains_missing_evidence(evidence):
 def test_wrong_authorization_attempt_rejected_before_read(evidence):
     b=evidence
     with pytest.raises(ValueError,match='EXACT_ATTEMPT'):a.analyze(b.output.parent,b.auth)
+
+
+def test_direct_external_probability_preserves_cpu_failure_and_other_issues(evidence,monkeypatch):
+    b=evidence;b.write_streams()
+    from tools.r6_direct import evidence as direct_evidence, probability_evidence
+    auth=json.loads(Path(b.auth['path']).read_text())
+    monkeypatch.setattr(direct_evidence,'analysis_context',lambda *args:dict(contract=auth,plan=dict(attempt_dir=auth['attempt'],contract=b.auth)))
+    monkeypatch.setattr(direct_evidence,'add_inputs',lambda *args:None)
+    diagnostic=b.pin('synthetic-diagnostic.json',{'test_only':True})
+    seen=[]
+    def verified(dp,cp,rp):
+        seen.append((dp,cp,rp))
+        return dict(status='PASS',sample_count=512),[diagnostic]
+    monkeypatch.setattr(probability_evidence,'verify',verified)
+    report,summary=a.analyze(b.output,b.auth,direct=True,probability_diagnostic=diagnostic)
+    assert seen[0][:2]==(diagnostic,b.auth)
+    assert seen[0][2]==file_pin(b.output/'compressed_evidence/pilot_diagnostic/update_641_full_input.pt.r6z')
+    assert summary['cpu_probability_replay_error'] is not None
+    assert summary['probability_gate_recomputed'] is True
+    assert any(row['input']=='rng_initialization_audit' for row in report['issues'])
+    assert not any(row['input']=='first_update_probability_replay' for row in report['issues'])
+    def reject(*args):raise ValueError('cross-run diagnostic')
+    monkeypatch.setattr(probability_evidence,'verify',reject)
+    report,summary=a.analyze(b.output,b.auth,direct=True,probability_diagnostic=diagnostic)
+    assert not summary['probability_gate_recomputed']
+    assert any(row['input']=='bound_cuda_probability_replay' for row in report['issues'])

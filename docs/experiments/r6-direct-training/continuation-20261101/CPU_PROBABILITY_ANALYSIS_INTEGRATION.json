@@ -1,0 +1,9 @@
+{
+  "status": "CPU18_PASS_NOT_TRAIN02_ACCEPTANCE",
+  "tests": "tools/test_r6_training_analysis.py",
+  "cpu_error_retained": true,
+  "other_science_issues_retained": true,
+  "cross_run_rejected": true,
+  "live_inputs_modified": false,
+  "earlier_collection_error": "Legacy test_r6_training_analysis_binding imports rlflow.jobs; not applicable to direct runtime. No dependency installed or legacy path enabled."
+}

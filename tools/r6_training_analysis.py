@@ -52,7 +52,8 @@ def checkpoint_metadata(path,plan,recipe,update):
     return dict(update=update,metadata_verified=True,finite_tensor_tree=True,strict_restore_performed=False,state_audit=state_audit)
 
 
-def analyze(output,authorization_pin, *, direct=False):
+def analyze(output,authorization_pin, *, direct=False, probability_diagnostic=None):
+    require(probability_diagnostic is None or direct,'CUDA_REPLAY_DIRECT_ONLY')
     output=Path(output).absolute();require(output.resolve()==output and not output.is_symlink(),'OUTPUT_ALIAS')
     ctx = None
     if direct:
@@ -168,7 +169,7 @@ def analyze(output,authorization_pin, *, direct=False):
             row.update(checkpoint_metadata(path,plan,recipe,update))
         except (OSError,ValueError,KeyError,TypeError,RuntimeError,EOFError,pickle.UnpicklingError) as error:issue(str(path.relative_to(output)),error)
         checkpoints.append(row)
-    probability=None;origin=None;rng_audit=None
+    probability=None;origin=None;rng_audit=None;cpu_probability_error=None
     probability_name=f"pilot_diagnostic/update_{plan['start_update']+1}_full_input.pt"
     try:
         import torch
@@ -183,7 +184,19 @@ def analyze(output,authorization_pin, *, direct=False):
             retained=torch.load(reader,map_location='cpu',weights_only=True)
         probability=recompute(origin,retained,plan)
     except (OSError,ValueError,KeyError,TypeError,RuntimeError,ArithmeticError,EOFError,pickle.UnpicklingError) as error:
+        cpu_probability_error=str(error)
         issue('first_update_probability_replay',error)
+    if probability_diagnostic is not None:
+        try:
+            from tools.r6_direct.probability_evidence import verify
+            require(streams.get(probability_name,{}).get('complete') is True,'PROBABILITY_INPUT_INCOMPLETE')
+            probability,extra=verify(probability_diagnostic,ctx['plan']['contract'],
+                                     file_pin(compressed/(probability_name+'.r6z')))
+            for evidence in extra:pin(evidence['path'])
+            issues[:]=[row for row in issues if row['input']!='first_update_probability_replay']
+        except (OSError,ValueError,KeyError,TypeError,RuntimeError) as error:
+            probability=None
+            issue('bound_cuda_probability_replay',error)
     try:
         from tools.r6_training_rng_audit import audit as audit_rng
         require(origin is not None,'RNG_ORIGIN_UNAVAILABLE')
@@ -200,7 +213,8 @@ def analyze(output,authorization_pin, *, direct=False):
         stream_count=len(streams),complete_stream_count=sum(s['complete'] for s in streams.values()),
         checkpoints=checkpoints,phases=phases,issue_count=len(issues),scientific_acceptance=False,
         learning_gain_established=False,physical_replay_performed=False,strict_checkpoint_restore_performed=False,
-        rng_state_semantics_verified=False,rng_initialization_audit=rng_audit,probability_gate_recomputed=probability is not None,probability_replay=probability)
+        rng_state_semantics_verified=False,rng_initialization_audit=rng_audit,probability_gate_recomputed=probability is not None,probability_replay=probability,
+        cpu_probability_replay_error=cpu_probability_error)
     report=dict(schema_version='r6-training-analysis/1',authorization=authorization_pin,plan_sha256=contract.object_sha(plan),
         analyzer=file_pin(__file__),codec=file_pin(codec.__file__),
         rng_auditor=file_pin(Path(__file__).with_name('r6_training_rng_audit.py')),
