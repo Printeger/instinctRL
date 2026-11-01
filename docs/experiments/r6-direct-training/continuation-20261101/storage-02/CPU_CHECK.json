@@ -1,0 +1,17 @@
+{
+  "status": "PLAN_VALIDATED_NOT_APPLIED",
+  "tests_passed": 11,
+  "test_modules": [
+    "tools/test_r6_native_volume_provision.py",
+    "tools/test_r6_result_volume.py"
+  ],
+  "shell_syntax": "PASS",
+  "sudo_status": "password required",
+  "old_evidence_modified": false,
+  "new_storage_created": false,
+  "new_images_reserved_bytes": 35970351104,
+  "limitations": [
+    "CPU checks do not prove mount or actual capacity",
+    "Script deliberately refuses existing identities; on partial failure preserve output and diagnose before proceeding"
+  ]
+}

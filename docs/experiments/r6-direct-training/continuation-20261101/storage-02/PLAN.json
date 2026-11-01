@@ -1,0 +1,85 @@
+{
+  "native": {
+    "volume_id": "J-60c22d4806aa6798",
+    "image": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/native.ext4",
+    "target": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output",
+    "maximum_backing_bytes": 1610612736,
+    "owner_uid": 1000,
+    "owner_gid": 1000,
+    "commands": [
+      [
+        "/usr/bin/fallocate",
+        "--length",
+        "1610612736",
+        "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/native.ext4"
+      ],
+      [
+        "/usr/sbin/mkfs.ext4",
+        "-q",
+        "-F",
+        "-m",
+        "0",
+        "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/native.ext4"
+      ],
+      [
+        "/usr/bin/mount",
+        "-t",
+        "ext4",
+        "-o",
+        "loop,nodev,nosuid,noexec",
+        "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/native.ext4",
+        "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output"
+      ]
+    ],
+    "limitations": [
+      "Only writes inside the mounted output directory are bounded",
+      "CPU exhaustion, remount persistence and native-path containment not yet verified",
+      "Each identity retains its image; no deletion, reuse, refund or automatic startup mount",
+      "Account image plus metadata before administrator applies this plan"
+    ]
+  },
+  "result": {
+    "volume_id": "J-60c22d4806aa6798",
+    "target": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results",
+    "image": "/var/lib/instinctrl-r6-results/J-60c22d4806aa6798/results.ext4",
+    "maximum_backing_bytes": 34359738368,
+    "owner_uid": 1000,
+    "owner_gid": 1000,
+    "commands": [
+      [
+        "/usr/bin/fallocate",
+        "--length",
+        "34359738368",
+        "/var/lib/instinctrl-r6-results/J-60c22d4806aa6798/results.ext4"
+      ],
+      [
+        "/usr/sbin/mkfs.ext4",
+        "-q",
+        "-F",
+        "-m",
+        "0",
+        "/var/lib/instinctrl-r6-results/J-60c22d4806aa6798/results.ext4"
+      ],
+      [
+        "/usr/bin/mount",
+        "-t",
+        "ext4",
+        "-o",
+        "loop,nodev,nosuid,noexec",
+        "/var/lib/instinctrl-r6-results/J-60c22d4806aa6798/results.ext4",
+        "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results"
+      ]
+    ]
+  },
+  "implementation_pins": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/storage-02/provision_r6_native_volume.py",
+      "sha256": "4a4489bf36fec2b6207a7d0fc96fc4c06013a1c226268f9d1270a899e527e5eb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/storage-02/provision_r6_result_volume.py",
+      "sha256": "221b3db6f38690e01f46868f845ec36b5519030be43474815b3554ff3010c0cd"
+    }
+  ],
+  "purpose": "Fresh native diagnostic and subsequent training storage; old evidence remains read-only."
+}
