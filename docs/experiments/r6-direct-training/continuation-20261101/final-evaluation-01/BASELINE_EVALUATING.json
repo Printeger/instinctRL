@@ -1,0 +1,46 @@
+{
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-inputs.json",
+    "sha256": "3dfa5f1b275b2265374d524cc5bfe26c23e89c8ea1f6d1c234a8e5b22c323a2d"
+  },
+  "limitations": [
+    "Initial counters are not completion evidence",
+    "Final common holdout seed and frozen model unchanged"
+  ],
+  "scientific_acceptance": false,
+  "state_snapshot": {
+    "counters": {
+      "actor_optimizer_steps": 0,
+      "attempted_policy_steps": 0,
+      "attempted_updates": 0,
+      "automatic_resets": 0,
+      "completed_policy_steps": 0,
+      "completed_updates": 0,
+      "critic_optimizer_steps": 0,
+      "explicit_resets": 0,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 0,
+      "real_environment_transitions": 0,
+      "real_optimizer_updates": 0,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 0
+    },
+    "identity": {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3216039,
+      "starttime": "32165865"
+    },
+    "status": "EVALUATING"
+  },
+  "status": "EVALUATING",
+  "workload_state_observed_pin": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-FINAL-BASELINE-01/state.json",
+    "sha256": "e4d48db8c47c20a18af57b57377d869fa6460a49f37a0ec3e8a473e901eee724"
+  }
+}
