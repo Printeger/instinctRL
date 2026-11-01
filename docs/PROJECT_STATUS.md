@@ -1,3 +1,13 @@
+# R6 原件已恢复：TRAIN-01 原始证据配额失败，无可恢复 checkpoint
+
+2026-11-01：管理员已只读挂载原结果卷，实测 ro/norecovery，原件可读。
+state.json 记录107次更新、54912 transitions、0 checkpoint，失败为 EVIDENCE_RAW_QUOTA；
+后续清理另报 DIRECT_CLEANUP_TIMEOUT。计数为状态记录，尚非完整科学验收。
+只读 CPU 分析完成：28流中16完整、28项问题、无可验证恢复checkpoint，scientific_acceptance=false。
+证据见 continuation-20261101/TRAIN_01_RECOVERY.json 与 train-01-analysis/。
+下一步定位并修复原16GiB单文件raw限制，准备新attempt从已接受u640重算；不重启原run ID。
+配对评价、三流、保留集、独审和模型录像交付仍未完成。下方保留历史状态。
+
 # R6 接续：新资源授权已接线，旧账已结算，原件访问阻塞
 
 2026-11-01：新准确输入可绑定 RESOURCE_POLICY_USER_AMENDMENT.json 的 pin，

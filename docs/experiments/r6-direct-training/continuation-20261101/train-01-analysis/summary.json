@@ -1,0 +1,115 @@
+{
+  "checkpoints": [
+    {
+      "metadata_verified": false,
+      "strict_restore_performed": false,
+      "update": 768
+    }
+  ],
+  "complete_stream_count": 16,
+  "expected_counters": {
+    "actor_optimizer_steps": 1024,
+    "completed_policy_steps": 2048,
+    "completed_updates": 128,
+    "critic_optimizer_steps": 1024,
+    "explicit_resets": 2,
+    "nontraining_transitions": 0,
+    "real_checkpoint_writes": 1,
+    "real_environment_transitions": 65536,
+    "real_optimizer_updates": 128,
+    "training_transitions": 65536
+  },
+  "experiment_id": "R6-DIRECT-TRAIN-01",
+  "issue_count": 28,
+  "learning_gain_established": false,
+  "observed_counters": null,
+  "phase": "development",
+  "phases": [
+    {
+      "completed_record": true,
+      "episodes": {
+        "center:1": {
+          "count": 24,
+          "return_sum": -4357.5340576171875,
+          "right_censored": 0,
+          "steps": 24000
+        },
+        "center:RUN_END": {
+          "count": 24,
+          "return_sum": -103.37974786758423,
+          "right_censored": 24,
+          "steps": 576
+        },
+        "near_x_wall:1": {
+          "count": 4,
+          "return_sum": -654.2077789306641,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_x_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -14.909176111221313,
+          "right_censored": 4,
+          "steps": 96
+        },
+        "near_y_wall:1": {
+          "count": 4,
+          "return_sum": -696.5632629394531,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_y_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -15.785825490951538,
+          "right_censored": 4,
+          "steps": 96
+        }
+      },
+      "phase": {
+        "index": 0,
+        "kind": "original",
+        "phase_end_update": 704,
+        "phase_start_update": 640,
+        "start_update": 640,
+        "target_update": 704
+      }
+    },
+    {
+      "completed_record": false,
+      "episodes": {},
+      "phase": {
+        "index": 1,
+        "kind": "robust",
+        "phase_end_update": 768,
+        "phase_start_update": 704,
+        "start_update": 704,
+        "target_update": 768
+      }
+    }
+  ],
+  "physical_replay_performed": false,
+  "probability_gate_recomputed": false,
+  "probability_replay": null,
+  "rng_initialization_audit": {
+    "actual_rollout_rng_use_verified": false,
+    "cpu_seed_derivation_verified": true,
+    "cuda_rng_state_count": 1,
+    "cuda_seed_derivation_verified": false,
+    "kind": "COMMON_U640_NEW_STREAM",
+    "origin_rng_equal": true,
+    "persistence_order_verified": false,
+    "physical_continuity": false,
+    "resume_rng_equal": false,
+    "starting_update": 640,
+    "status": "PASS",
+    "training_seed": 2026102201
+  },
+  "rng_state_semantics_verified": false,
+  "schema_version": "r6-training-summary/1",
+  "scientific_acceptance": false,
+  "start_update": 640,
+  "stream_count": 28,
+  "strict_checkpoint_restore_performed": false,
+  "target_update": 768,
+  "training_seed": 2026102201
+}

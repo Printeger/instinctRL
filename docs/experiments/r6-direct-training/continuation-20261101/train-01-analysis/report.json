@@ -1,0 +1,1048 @@
+{
+  "analyzer": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_analysis.py",
+    "sha256": "f4eef46036a33e0a2c1fa04731f73d83d7e5f1983a4cbc5c13dc58064a58b865"
+  },
+  "checkpoint_auditor": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_checkpoint_audit.py",
+    "sha256": "0f0c9f68fa7efa4f3b28d1545bb2b567bdd90d6c1d4b87ecb966bd65da44f544"
+  },
+  "codec": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/lossless_evidence.py",
+    "sha256": "82684c9bdf7be9bf19e910f12f016092ffff41d022e7b0a537d7f965ca8779d4"
+  },
+  "inputs": [
+    {
+      "bytes": 1510761,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+      "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+    },
+    {
+      "bytes": 159745,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/CPU_MODULES.json",
+      "sha256": "6143754cd625c4ea51db71134fc1897364924dc9f6f0aef2614b7a912a9c7cfd"
+    },
+    {
+      "bytes": 2096,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/learning_log/plan.jsonl.r6z",
+      "sha256": "28b12ff31f5498ccadef09f17483c23d6760eb7c7374c963b30546ac4656d3b5"
+    },
+    {
+      "bytes": 342546,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/accounting.jsonl.r6z",
+      "sha256": "0329dc34edfe331d0bf6ebce877b1367ec26344fa9956c3ea517430308e5da87"
+    },
+    {
+      "bytes": 135722,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/command_blocks.jsonl.r6z",
+      "sha256": "51ec96c9a346ccfcdbb3478cb1d796fd73828d02d2f17e488afdbe08c20692d5"
+    },
+    {
+      "bytes": 19552080,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/compact_rollouts.jsonl.r6z",
+      "sha256": "f94a8fbcd802a7f8ded5457fdd0fba605320c74e4328db636a87b6fe3e8eb66a"
+    },
+    {
+      "bytes": 32620,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/episodes.jsonl.r6z",
+      "sha256": "2ec9c944586d9a9b6256792278dfb38d3c597036c2c0aaae3dfe594b4e974813"
+    },
+    {
+      "bytes": 57435094,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/measurement_windows.jsonl.r6z",
+      "sha256": "a1bd417a78c340d928f7daccb0b5fee23b0c3907dedead2483f9d2b8a4f55265"
+    },
+    {
+      "bytes": 174650,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/minibatches.jsonl.r6z",
+      "sha256": "9a6b253e3d4f278bcf519386622dd9fe93cc5308ffde0fcb0817e4da802ef7f7"
+    },
+    {
+      "bytes": 19521768,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/partial_rollout_steps.jsonl.r6z",
+      "sha256": "33eea055f807d441dff684c0c7f848740f525a2321d6b53d1a524e153248b7f6"
+    },
+    {
+      "bytes": 502,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/phase_complete.jsonl.r6z",
+      "sha256": "a3bf4ebaa4a0770e54dda72775bce097f2d281c1aaf5131308c6aebb7de89142"
+    },
+    {
+      "bytes": 96728,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/rollouts.jsonl.r6z",
+      "sha256": "96ed21528122e25959496646d0e1e3b157ddff3f5c2c1ec3d125455da860be61"
+    },
+    {
+      "bytes": 52006,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/updates.jsonl.r6z",
+      "sha256": "7f51245b37d777c14afa313afadde8bfcb3461d94e08b96a0c3f55a5632c909a"
+    },
+    {
+      "bytes": 233253,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/accounting.jsonl.r6z",
+      "sha256": "3fefec05c1e6a656210303662ec56e9636bae5add635620a6f99d2606778b080"
+    },
+    {
+      "bytes": 4569958,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/command_blocks.jsonl.r6z",
+      "sha256": "55dcf2cc00ba8e7b43e4aba0fccce3aa0754f08933990e5a53fa25bb965f8c7a"
+    },
+    {
+      "bytes": 13609950,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/compact_rollouts.jsonl.r6z",
+      "sha256": "036cb3f172a2de0b69022b86289615429191cd286c9c3ee19fa52fa0ab47e3e1"
+    },
+    {
+      "bytes": 159621,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/curriculum.jsonl.r6z",
+      "sha256": "13b6164e1697a8b020cc3e1a9b406137e7d159f82cca8f69ca4647e966b748ba"
+    },
+    {
+      "bytes": 123967924,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/force.jsonl.r6z",
+      "sha256": "40d8248c003d0c6743d2c50227c739ce9c54e2f7886e46460d71c6bb5281703f"
+    },
+    {
+      "bytes": 4831123824,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/measurement.jsonl.r6z",
+      "sha256": "b5cd053d3e11fc4b464353aa12bdff2be05e91c30c6214d4c2b16abf5c546d67"
+    },
+    {
+      "bytes": 56880329,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/measurement_windows.jsonl.r6z",
+      "sha256": "affd590755c89cbfc6787a7400dc6d8917c0b93a9a00f4d3603d31c9e2a603e4"
+    },
+    {
+      "bytes": 116982,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/minibatches.jsonl.r6z",
+      "sha256": "7f2a0679f724981d4af8797cab1805610426fc235c57dabe7bebfca16ed325a2"
+    },
+    {
+      "bytes": 14218984,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/partial_rollout_steps.jsonl.r6z",
+      "sha256": "10e80f38831a2503860cbfae548ea4e6f1d58fba659e362696f0bb19154870a4"
+    },
+    {
+      "bytes": 17678,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/reset.jsonl.r6z",
+      "sha256": "91b692e8317e6dd99adb15dcc87ea657aadbf34c6e9c0681d641c831a4e31f88"
+    },
+    {
+      "bytes": 66810,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/rollouts.jsonl.r6z",
+      "sha256": "965ec3401e430ce6ca76164821936f274658f306591db369704e92ff0096bdd8"
+    },
+    {
+      "bytes": 35611,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/updates.jsonl.r6z",
+      "sha256": "7ec30e7ea48565a6f7e469b3bbcbe44d488c68b358ada300d8e194eab8d1ed3c"
+    },
+    {
+      "bytes": 9699,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/setup/curriculum.jsonl.r6z",
+      "sha256": "8f36e81852c349ba375b29481c5a33d96ba8d831922697b08e420776760002c4"
+    },
+    {
+      "bytes": 9872290,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/first_update_probe.pt.r6z",
+      "sha256": "f7f41fd00072b0a6267122a71105e1122c3842f5583f6447f9b28a9b78d0c1da"
+    },
+    {
+      "bytes": 87635540,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_641_full_input.pt.r6z",
+      "sha256": "26e63e532279f51c638c372783c3114a075416e35fb0598ae94b2ca80b889f75"
+    },
+    {
+      "bytes": 97295570,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_642_full_input.pt.r6z",
+      "sha256": "4670f60de6cc8423d288d76c7ff86a4ae9b0d42ceba7dbb83cb44a4b5ee7b8c2"
+    },
+    {
+      "bytes": 23960,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/rng/initialization.pt.r6z",
+      "sha256": "b1822c3ac29b7a423bb581d847f721c8dc9dac792e00a36705ed685a936acc23"
+    },
+    {
+      "bytes": 229,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/pilot_diagnostic/first_update_gate.json",
+      "sha256": "729295fd7f62671558a1a11d94b72baecd2b519edd740395cb6c8b7eecfd690c"
+    },
+    {
+      "bytes": 909,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/state.json",
+      "sha256": "b1f7ee00d9309f01fab28c93eaa7a81a8f9c5a7ad30ddc4442882794e7491591"
+    },
+    {
+      "bytes": 3989,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_CONTRACT_01.json",
+      "sha256": "89f41617fa44793356602e51bb8cc8d970490ab7f436a0bab68ddd34fe695c33"
+    },
+    {
+      "bytes": 1956,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_RUN_INPUTS_01.json",
+      "sha256": "c6faf12c848365e26dcef9119367b95a8dff5c11136316ad1fd6beabed6d2d05"
+    },
+    {
+      "bytes": 4368,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-TRAIN-01/RUN_INPUTS.json",
+      "sha256": "26266a7730f80c78539a8ef94e410d2a6fc4fdd1af38f9fdad66820923b8471e"
+    },
+    {
+      "bytes": 334,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-TRAIN-01/launch.json",
+      "sha256": "23100a7cabc099822cb30e065e750ea1a56c2de867fc7dca9e4adfe153638839"
+    },
+    {
+      "bytes": 1103,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-TRAIN-01/receipt.json",
+      "sha256": "84b970b214fbe3076dced24327b582ec4adbd5d5246865b37784a4295567925e"
+    }
+  ],
+  "issues": [
+    {
+      "input": "phases/1-11264-12288/learning_log/accounting.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/command_blocks.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/compact_rollouts.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/curriculum.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/force.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/measurement.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/measurement_windows.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/minibatches.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/partial_rollout_steps.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/reset.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/rollouts.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/updates.jsonl",
+      "reason": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/phase_complete.jsonl",
+      "reason": "MISSING_INCOMPLETE_OR_WRONG_ROW_COUNT"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/updates.jsonl",
+      "reason": "MISSING_INCOMPLETE_OR_WRONG_ROW_COUNT"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/rollouts.jsonl",
+      "reason": "MISSING_INCOMPLETE_OR_WRONG_ROW_COUNT"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/compact_rollouts.jsonl",
+      "reason": "MISSING_INCOMPLETE_OR_WRONG_ROW_COUNT"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/minibatches.jsonl",
+      "reason": "MISSING_INCOMPLETE_OR_WRONG_ROW_COUNT"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/accounting.jsonl",
+      "reason": "MISSING_INCOMPLETE_OR_WRONG_ROW_COUNT"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/episodes.jsonl",
+      "reason": "MISSING_INCOMPLETE_OR_WRONG_ROW_COUNT"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/curriculum.jsonl",
+      "reason": "MISSING_INCOMPLETE_OR_WRONG_ROW_COUNT"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/reset.jsonl",
+      "reason": "MISSING_INCOMPLETE_OR_WRONG_ROW_COUNT"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/force.jsonl",
+      "reason": "MISSING_INCOMPLETE_OR_WRONG_ROW_COUNT"
+    },
+    {
+      "input": "phases/1-11264-12288/learning_log/measurement.jsonl",
+      "reason": "MISSING_INCOMPLETE_OR_WRONG_ROW_COUNT"
+    },
+    {
+      "input": "status.json",
+      "reason": "[Errno 2] No such file or directory: '/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/status.json'"
+    },
+    {
+      "input": "checkpoints",
+      "reason": "CHECKPOINT_SET"
+    },
+    {
+      "input": "checkpoints/u768.json",
+      "reason": "[Errno 2] No such file or directory: '/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/checkpoints/u768.json'"
+    },
+    {
+      "input": "checkpoints/u768.pt",
+      "reason": "[Errno 2] No such file or directory: '/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/checkpoints/u768.pt'"
+    },
+    {
+      "input": "first_update_probability_replay",
+      "reason": "probability gate mismatch at frozen index 31"
+    }
+  ],
+  "plan_sha256": "9d67b3b5c023a21bf84fbc3d7957cd50b74a3b2d0700152c6aea03dbf5652a53",
+  "probability_replayer": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_probability.py",
+    "sha256": "59f52747ed68c4de73d8d1c56127f3244fe0bb2f061039fd57e5880aecaa67ed"
+  },
+  "rng_auditor": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_rng_audit.py",
+    "sha256": "6840a065bb8cd5c1727e69f34076f392526c06998a4c2d116cf042710f69c7f7"
+  },
+  "run_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_RUN_INPUTS_01.json",
+    "sha256": "c6faf12c848365e26dcef9119367b95a8dff5c11136316ad1fd6beabed6d2d05"
+  },
+  "schema_version": "r6-training-analysis/1",
+  "scientific_acceptance": false,
+  "streams": [
+    {
+      "complete": true,
+      "logical_name": "learning_log/plan.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/learning_log/plan.jsonl.r6z",
+        "sha256": "28b12ff31f5498ccadef09f17483c23d6760eb7c7374c963b30546ac4656d3b5"
+      },
+      "raw_bytes": 4951,
+      "raw_sha256": "9129bc833fa561a1ee59e6a351f07c6b2d58054ee4d53b71bb8ca5ce18f78574",
+      "record": {
+        "metadata": {
+          "counters": {
+            "actor_optimizer": 5120,
+            "critic_optimizer": 5120,
+            "global_policy_step": 10240,
+            "transition": 327680,
+            "update": 640
+          },
+          "curriculum": {
+            "completed_policy_steps": 10240,
+            "version": "curriculum-h1-v1"
+          },
+          "reset_number": 323,
+          "training_seed": 20260908
+        },
+        "method_binding": {
+          "actor_adam_sha256": "020b95cdc4d523c3d9b7142c0dc7003255bfa2f436df1de01efe778266fc85fa",
+          "actual_environment": {
+            "actor_optimizer_lrs": [
+              0.0001
+            ],
+            "anchor_weight": 4.0,
+            "critic_optimizer_lrs": [
+              0.0003
+            ],
+            "ics_clearance_margin_m": 0.15,
+            "pipeline_margins": [
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15
+            ],
+            "pure_hover": false,
+            "residual_neutrality_weight": 0.05
+          },
+          "actual_ppo": {
+            "actor_learning_rate": 0.0001,
+            "advantage_epsilon": 1e-08,
+            "clip_ratio": 0.2,
+            "critic_learning_rate": 0.0003,
+            "entropy_coefficient": 0.01,
+            "epoch_count": 1,
+            "gae_lambda": 0.95,
+            "gamma": 0.99,
+            "maximum_gradient_norm": 0.5,
+            "minibatch_size": 64,
+            "permutation_seed": 1701,
+            "value_loss_coefficient": 0.5
+          },
+          "before_ppo": {
+            "actor_learning_rate": 0.0001,
+            "advantage_epsilon": 1e-08,
+            "clip_ratio": 0.2,
+            "critic_learning_rate": 0.0003,
+            "entropy_coefficient": 0.01,
+            "epoch_count": 1,
+            "gae_lambda": 0.95,
+            "gamma": 0.99,
+            "maximum_gradient_norm": 0.5,
+            "minibatch_size": 64,
+            "permutation_seed": 1701,
+            "value_loss_coefficient": 0.5
+          },
+          "mean_prior_weight": 10.0,
+          "method_sha256": "b7a1fd6b3bc53a70cc5d4bffe4f0bb538da062ca01a601f1b9ee446f384d47b9",
+          "schema_version": "r6-actual-method-binding/1",
+          "strict_resume": false,
+          "unchanged_weights_adam_moments_and_counters": true
+        },
+        "method_hashes": {
+          "checkpoint": "checkpoint-h1-v2",
+          "critic": "critic-h1-v2",
+          "curriculum": "curriculum-h1-r6-v1",
+          "ics_clearance_margin_m": "0.15",
+          "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+          "logging": "learning-log-h1-v1",
+          "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+          "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+          "metric": "metric-h1-v1",
+          "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+          "r6_method": "655457c69bd6e58640651cb60d5d871b2c3bd9f9b247e95dd7854b3cd92a125c",
+          "r6_recipe": "8b48bb0e6b070c05349fdc35b9153bbadc35483bd81c47ca7fb929338f0802f5",
+          "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+          "reset_distribution": "mixed-nearwall",
+          "reward": "reward-h1-zero-neutrality-v1",
+          "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5"
+        },
+        "physical_continuity": false,
+        "plan": {
+          "checkpoint_updates": [
+            768
+          ],
+          "experiment_id": "R6-DIRECT-TRAIN-01",
+          "initialization": {
+            "checkpoint": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+              "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+            },
+            "kind": "COMMON_U640_NEW_STREAM",
+            "method_hashes": {
+              "checkpoint": "checkpoint-h1-v2",
+              "critic": "critic-h1-v2",
+              "curriculum": "curriculum-h1-v1",
+              "ics_clearance_margin_m": "0.15",
+              "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+              "logging": "learning-log-h1-v1",
+              "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+              "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+              "metric": "metric-h1-v1",
+              "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+              "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+              "reset_distribution": "mixed-nearwall",
+              "reward": "reward-h1-zero-neutrality-v1",
+              "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5"
+            },
+            "source_identity": {
+              "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+              "product_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+              "product_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924",
+              "workload_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+              "workload_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924"
+            }
+          },
+          "phase": "development",
+          "recipe": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_RECIPE_01.json",
+            "sha256": "8b48bb0e6b070c05349fdc35b9153bbadc35483bd81c47ca7fb929338f0802f5"
+          },
+          "schema_version": "r6-local-training-plan/1",
+          "selection_freeze": null,
+          "start_update": 640,
+          "storage": {
+            "branch_record_bytes": 16777216,
+            "checkpoint_bytes": 16777216,
+            "compressed_bytes": 6442450944,
+            "maximum_raw_file_bytes": 17179869184,
+            "metadata_bytes": 67108864,
+            "payload_bytes": 8589934592,
+            "plain_bytes": 2147483648
+          },
+          "target_update": 768,
+          "training_seed": 2026102201,
+          "wall_seconds": 3600
+        },
+        "source_identity": {
+          "config_sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19",
+          "product_commit": "a032dd7c4440abec540960074408830ea846d9ed",
+          "product_tree": "9a7eb0ba4c0398a77b8fc8cb212546df4d40dc68",
+          "workload_commit": "a032dd7c4440abec540960074408830ea846d9ed",
+          "workload_tree": "9a7eb0ba4c0398a77b8fc8cb212546df4d40dc68"
+        }
+      },
+      "rows": 1
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/accounting.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/accounting.jsonl.r6z",
+        "sha256": "0329dc34edfe331d0bf6ebce877b1367ec26344fa9956c3ea517430308e5da87"
+      },
+      "raw_bytes": 313432,
+      "raw_sha256": "4cb1f50ba0e1e8a08bd44cc3c9a0da32e38a3b76b3dbdd35bc8a132b03fa2a39",
+      "rows": 2112
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/command_blocks.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/command_blocks.jsonl.r6z",
+        "sha256": "51ec96c9a346ccfcdbb3478cb1d796fd73828d02d2f17e488afdbe08c20692d5"
+      },
+      "raw_bytes": 193226,
+      "raw_sha256": "10181f54495249b64faa7480590738bca5512a8745518fbaaa2c648a6f5ca8aa",
+      "rows": 288
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/compact_rollouts.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/compact_rollouts.jsonl.r6z",
+        "sha256": "f94a8fbcd802a7f8ded5457fdd0fba605320c74e4328db636a87b6fe3e8eb66a"
+      },
+      "raw_bytes": 73178392,
+      "raw_sha256": "290167cee5713369285e32b18a9f6b833e342862fb4beb8d58de8b1f079fe994",
+      "rows": 1024
+    },
+    {
+      "complete": true,
+      "episodes": {
+        "center:1": {
+          "count": 24,
+          "return_sum": -4357.5340576171875,
+          "right_censored": 0,
+          "steps": 24000
+        },
+        "center:RUN_END": {
+          "count": 24,
+          "return_sum": -103.37974786758423,
+          "right_censored": 24,
+          "steps": 576
+        },
+        "near_x_wall:1": {
+          "count": 4,
+          "return_sum": -654.2077789306641,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_x_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -14.909176111221313,
+          "right_censored": 4,
+          "steps": 96
+        },
+        "near_y_wall:1": {
+          "count": 4,
+          "return_sum": -696.5632629394531,
+          "right_censored": 0,
+          "steps": 4000
+        },
+        "near_y_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -15.785825490951538,
+          "right_censored": 4,
+          "steps": 96
+        }
+      },
+      "logical_name": "phases/0-10240-11264/learning_log/episodes.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/episodes.jsonl.r6z",
+        "sha256": "2ec9c944586d9a9b6256792278dfb38d3c597036c2c0aaae3dfe594b4e974813"
+      },
+      "raw_bytes": 51131,
+      "raw_sha256": "85aa4e32837fdba2b06d9e6d39820ce25f7e457a2acd5bc151e713bfc1d9c19d",
+      "rows": 64
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/measurement_windows.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/measurement_windows.jsonl.r6z",
+        "sha256": "a1bd417a78c340d928f7daccb0b5fee23b0c3907dedead2483f9d2b8a4f55265"
+      },
+      "raw_bytes": 295545285,
+      "raw_sha256": "9194c5bb3f2b29225ed44745315ab85359682b6c6185dbb292caf1bbcdba21e0",
+      "rows": 16
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/minibatches.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/minibatches.jsonl.r6z",
+        "sha256": "9a6b253e3d4f278bcf519386622dd9fe93cc5308ffde0fcb0817e4da802ef7f7"
+      },
+      "raw_bytes": 243736,
+      "raw_sha256": "335b358c5c5e53f911852d97585f4ea6879abc76ab43f16a0cbe0dd58bae9158",
+      "rows": 512
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/partial_rollout_steps.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/partial_rollout_steps.jsonl.r6z",
+        "sha256": "33eea055f807d441dff684c0c7f848740f525a2321d6b53d1a524e153248b7f6"
+      },
+      "raw_bytes": 76314791,
+      "raw_sha256": "cdeebd9660a0a972d6944bec43ea8e1f1178107a2534b315a3018b22c23f10c3",
+      "rows": 1024
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/phase_complete.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/phase_complete.jsonl.r6z",
+        "sha256": "a3bf4ebaa4a0770e54dda72775bce097f2d281c1aaf5131308c6aebb7de89142"
+      },
+      "raw_bytes": 697,
+      "raw_sha256": "4eb69274ec199c62f416ec14a7531c6d23f9029b614aca4acc36ba4f74b4022e",
+      "record": {
+        "counters": {
+          "actor_optimizer_steps": 512,
+          "attempted_policy_steps": 1024,
+          "attempted_updates": 64,
+          "automatic_resets": 32,
+          "completed_policy_steps": 1024,
+          "completed_updates": 64,
+          "critic_optimizer_steps": 512,
+          "explicit_resets": 1,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 0,
+          "real_environment_transitions": 32768,
+          "real_optimizer_updates": 64,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 32768
+        },
+        "phase": {
+          "index": 0,
+          "kind": "original",
+          "phase_end_update": 704,
+          "phase_start_update": 640,
+          "start_update": 640,
+          "target_update": 704
+        }
+      },
+      "rows": 1
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/rollouts.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/rollouts.jsonl.r6z",
+        "sha256": "96ed21528122e25959496646d0e1e3b157ddff3f5c2c1ec3d125455da860be61"
+      },
+      "raw_bytes": 420098,
+      "raw_sha256": "e63cb3238610a1f7063d88d65815eeadb49a1552b76f4710a6acbd409a4e0655",
+      "rows": 64
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-11264/learning_log/updates.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/updates.jsonl.r6z",
+        "sha256": "7f51245b37d777c14afa313afadde8bfcb3461d94e08b96a0c3f55a5632c909a"
+      },
+      "raw_bytes": 174814,
+      "raw_sha256": "20133acf09743060d30755a808a0a88cb4be8cf2d0a0bad84820ea7d47467507",
+      "rows": 64,
+      "updates": [
+        641,
+        642,
+        643,
+        644,
+        645,
+        646,
+        647,
+        648,
+        649,
+        650,
+        651,
+        652,
+        653,
+        654,
+        655,
+        656,
+        657,
+        658,
+        659,
+        660,
+        661,
+        662,
+        663,
+        664,
+        665,
+        666,
+        667,
+        668,
+        669,
+        670,
+        671,
+        672,
+        673,
+        674,
+        675,
+        676,
+        677,
+        678,
+        679,
+        680,
+        681,
+        682,
+        683,
+        684,
+        685,
+        686,
+        687,
+        688,
+        689,
+        690,
+        691,
+        692,
+        693,
+        694,
+        695,
+        696,
+        697,
+        698,
+        699,
+        700,
+        701,
+        702,
+        703,
+        704
+      ]
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/accounting.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/accounting.jsonl.r6z",
+        "sha256": "3fefec05c1e6a656210303662ec56e9636bae5add635620a6f99d2606778b080"
+      },
+      "rows": 0
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/command_blocks.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/command_blocks.jsonl.r6z",
+        "sha256": "55dcf2cc00ba8e7b43e4aba0fccce3aa0754f08933990e5a53fa25bb965f8c7a"
+      },
+      "rows": 0
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/compact_rollouts.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/compact_rollouts.jsonl.r6z",
+        "sha256": "036cb3f172a2de0b69022b86289615429191cd286c9c3ee19fa52fa0ab47e3e1"
+      },
+      "rows": 0
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/curriculum.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/curriculum.jsonl.r6z",
+        "sha256": "13b6164e1697a8b020cc3e1a9b406137e7d159f82cca8f69ca4647e966b748ba"
+      },
+      "rows": 0
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/force.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/force.jsonl.r6z",
+        "sha256": "40d8248c003d0c6743d2c50227c739ce9c54e2f7886e46460d71c6bb5281703f"
+      },
+      "rows": 0
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/measurement.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/measurement.jsonl.r6z",
+        "sha256": "b5cd053d3e11fc4b464353aa12bdff2be05e91c30c6214d4c2b16abf5c546d67"
+      },
+      "rows": 0
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/measurement_windows.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/measurement_windows.jsonl.r6z",
+        "sha256": "affd590755c89cbfc6787a7400dc6d8917c0b93a9a00f4d3603d31c9e2a603e4"
+      },
+      "rows": 0
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/minibatches.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/minibatches.jsonl.r6z",
+        "sha256": "7f2a0679f724981d4af8797cab1805610426fc235c57dabe7bebfca16ed325a2"
+      },
+      "rows": 0
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/partial_rollout_steps.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/partial_rollout_steps.jsonl.r6z",
+        "sha256": "10e80f38831a2503860cbfae548ea4e6f1d58fba659e362696f0bb19154870a4"
+      },
+      "rows": 0
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/reset.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/reset.jsonl.r6z",
+        "sha256": "91b692e8317e6dd99adb15dcc87ea657aadbf34c6e9c0681d641c831a4e31f88"
+      },
+      "rows": 0
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/rollouts.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/rollouts.jsonl.r6z",
+        "sha256": "965ec3401e430ce6ca76164821936f274658f306591db369704e92ff0096bdd8"
+      },
+      "rows": 0
+    },
+    {
+      "complete": false,
+      "logical_name": "phases/1-11264-12288/learning_log/updates.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/updates.jsonl.r6z",
+        "sha256": "7ec30e7ea48565a6f7e469b3bbcbe44d488c68b358ada300d8e194eab8d1ed3c"
+      },
+      "rows": 0
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/1-11264-12288/setup/curriculum.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/phases/1-11264-12288/setup/curriculum.jsonl.r6z",
+        "sha256": "8f36e81852c349ba375b29481c5a33d96ba8d831922697b08e420776760002c4"
+      },
+      "raw_bytes": 28622,
+      "raw_sha256": "36198a1e7f87aa39c9f32ecd18622ee41a34420b33693be653b506a0bb299c92",
+      "rows": 1
+    },
+    {
+      "complete": true,
+      "logical_name": "pilot_diagnostic/first_update_probe.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/first_update_probe.pt.r6z",
+        "sha256": "f7f41fd00072b0a6267122a71105e1122c3842f5583f6447f9b28a9b78d0c1da"
+      },
+      "raw_bytes": 12289599,
+      "raw_sha256": "fce0ce90fccbafdc591b8d40e3cbc2115e7096364ab218de8005d193fa4cd9ae",
+      "rows": 0
+    },
+    {
+      "complete": true,
+      "logical_name": "pilot_diagnostic/update_641_full_input.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_641_full_input.pt.r6z",
+        "sha256": "26e63e532279f51c638c372783c3114a075416e35fb0598ae94b2ca80b889f75"
+      },
+      "raw_bytes": 522177865,
+      "raw_sha256": "cbdac6ce95a2ccaa8ab389d6b8b5419cca04fa3ad77169c0372178f2c8c90865",
+      "rows": 0
+    },
+    {
+      "complete": true,
+      "logical_name": "pilot_diagnostic/update_642_full_input.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_642_full_input.pt.r6z",
+        "sha256": "4670f60de6cc8423d288d76c7ff86a4ae9b0d42ceba7dbb83cb44a4b5ee7b8c2"
+      },
+      "raw_bytes": 522177865,
+      "raw_sha256": "f8e76d0b3fdde463caac646affe8cdc1f7bc5a094f05bfeaf4164caf5b3aabe0",
+      "rows": 0
+    },
+    {
+      "complete": true,
+      "logical_name": "rng/initialization.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/rng/initialization.pt.r6z",
+        "sha256": "b1822c3ac29b7a423bb581d847f721c8dc9dac792e00a36705ed685a936acc23"
+      },
+      "raw_bytes": 39445,
+      "raw_sha256": "ec59615d971a3a6fb20fb85b70fff0e1cb861d857faafe620cf2dc56fb8d1a78",
+      "rows": 0
+    }
+  ],
+  "summary": {
+    "checkpoints": [
+      {
+        "metadata_verified": false,
+        "strict_restore_performed": false,
+        "update": 768
+      }
+    ],
+    "complete_stream_count": 16,
+    "expected_counters": {
+      "actor_optimizer_steps": 1024,
+      "completed_policy_steps": 2048,
+      "completed_updates": 128,
+      "critic_optimizer_steps": 1024,
+      "explicit_resets": 2,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 1,
+      "real_environment_transitions": 65536,
+      "real_optimizer_updates": 128,
+      "training_transitions": 65536
+    },
+    "experiment_id": "R6-DIRECT-TRAIN-01",
+    "issue_count": 28,
+    "learning_gain_established": false,
+    "observed_counters": null,
+    "phase": "development",
+    "phases": [
+      {
+        "completed_record": true,
+        "episodes": {
+          "center:1": {
+            "count": 24,
+            "return_sum": -4357.5340576171875,
+            "right_censored": 0,
+            "steps": 24000
+          },
+          "center:RUN_END": {
+            "count": 24,
+            "return_sum": -103.37974786758423,
+            "right_censored": 24,
+            "steps": 576
+          },
+          "near_x_wall:1": {
+            "count": 4,
+            "return_sum": -654.2077789306641,
+            "right_censored": 0,
+            "steps": 4000
+          },
+          "near_x_wall:RUN_END": {
+            "count": 4,
+            "return_sum": -14.909176111221313,
+            "right_censored": 4,
+            "steps": 96
+          },
+          "near_y_wall:1": {
+            "count": 4,
+            "return_sum": -696.5632629394531,
+            "right_censored": 0,
+            "steps": 4000
+          },
+          "near_y_wall:RUN_END": {
+            "count": 4,
+            "return_sum": -15.785825490951538,
+            "right_censored": 4,
+            "steps": 96
+          }
+        },
+        "phase": {
+          "index": 0,
+          "kind": "original",
+          "phase_end_update": 704,
+          "phase_start_update": 640,
+          "start_update": 640,
+          "target_update": 704
+        }
+      },
+      {
+        "completed_record": false,
+        "episodes": {},
+        "phase": {
+          "index": 1,
+          "kind": "robust",
+          "phase_end_update": 768,
+          "phase_start_update": 704,
+          "start_update": 704,
+          "target_update": 768
+        }
+      }
+    ],
+    "physical_replay_performed": false,
+    "probability_gate_recomputed": false,
+    "probability_replay": null,
+    "rng_initialization_audit": {
+      "actual_rollout_rng_use_verified": false,
+      "cpu_seed_derivation_verified": true,
+      "cuda_rng_state_count": 1,
+      "cuda_seed_derivation_verified": false,
+      "kind": "COMMON_U640_NEW_STREAM",
+      "origin_rng_equal": true,
+      "persistence_order_verified": false,
+      "physical_continuity": false,
+      "resume_rng_equal": false,
+      "starting_update": 640,
+      "status": "PASS",
+      "training_seed": 2026102201
+    },
+    "rng_state_semantics_verified": false,
+    "schema_version": "r6-training-summary/1",
+    "scientific_acceptance": false,
+    "start_update": 640,
+    "stream_count": 28,
+    "strict_checkpoint_restore_performed": false,
+    "target_update": 768,
+    "training_seed": 2026102201
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "status": "FAILED_TRAINING_NO_CHECKPOINT_FOUND",
+  "state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/state.json",
+    "sha256": "b1f7ee00d9309f01fab28c93eaa7a81a8f9c5a7ad30ddc4442882794e7491591"
+  },
+  "counters": {
+    "actor_optimizer_steps": 856,
+    "attempted_policy_steps": 1717,
+    "attempted_updates": 108,
+    "automatic_resets": 32,
+    "completed_policy_steps": 1716,
+    "completed_updates": 107,
+    "critic_optimizer_steps": 856,
+    "explicit_resets": 2,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 0,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 54912,
+    "real_optimizer_updates": 107,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 54912
+  },
+  "training_error": "EVIDENCE_RAW_QUOTA",
+  "cleanup_error": "DIRECT_CLEANUP_TIMEOUT",
+  "mount_options": "ro,nosuid,nodev,noexec,relatime,norecovery",
+  "checkpoint_candidates": [
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/initial_preflight/raw_acquisition.pt",
+    "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/initial_preflight/raw_ray_source.pt"
+  ],
+  "file_count": 43,
+  "first_update_gate": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/pilot_diagnostic/first_update_gate.json",
+    "sha256": "729295fd7f62671558a1a11d94b72baecd2b519edd740395cb6c8b7eecfd690c"
+  },
+  "recovery_decision": "No resumable model found; retain evidence and validate full CPU analysis before preparing a new attempt from accepted u640. Do not reuse TRAIN-01.",
+  "next_engineering_issue": "Per-file raw evidence limit 16 GiB in original contract and codec; requires evidence-driven storage repair before recomputation.",
+  "counter_evidence_level": "Workload state only; full scientific analysis has observed_counters=null due incomplete evidence",
+  "analysis_summary": "train-01-analysis/summary.json",
+  "scientific_acceptance": false
+}
