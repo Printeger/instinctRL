@@ -1,0 +1,102 @@
+{
+  "stored_concentrations_log_probability": {
+    "torch.float32": {
+      "maximum_absolute_error": 7.2479248046875e-05,
+      "failed_count": 49
+    },
+    "torch.float64": {
+      "maximum_absolute_error": 7.810519383610881e-05,
+      "failed_count": 41
+    }
+  },
+  "result": {
+    "status": "FAIL",
+    "error": "probability gate mismatch at frozen index 31"
+  },
+  "measurements": [
+    {
+      "log_probability": {
+        "maximum_absolute_error": 9.5367431640625e-05,
+        "failed_count": 52,
+        "first_failures": [
+          {
+            "index": 31,
+            "old": 4.071422576904297,
+            "recomputed": 4.071468353271484,
+            "absolute_error": 4.57763671875e-05
+          },
+          {
+            "index": 53,
+            "old": 3.6039657592773438,
+            "recomputed": 3.6040115356445312,
+            "absolute_error": 4.57763671875e-05
+          },
+          {
+            "index": 88,
+            "old": 2.486175537109375,
+            "recomputed": 2.4862098693847656,
+            "absolute_error": 3.4332275390625e-05
+          },
+          {
+            "index": 98,
+            "old": 4.741275787353516,
+            "recomputed": 4.741199493408203,
+            "absolute_error": 7.62939453125e-05
+          },
+          {
+            "index": 121,
+            "old": 5.284278869628906,
+            "recomputed": 5.284217834472656,
+            "absolute_error": 6.103515625e-05
+          },
+          {
+            "index": 122,
+            "old": 4.353023529052734,
+            "recomputed": 4.352977752685547,
+            "absolute_error": 4.57763671875e-05
+          },
+          {
+            "index": 132,
+            "old": 3.4610939025878906,
+            "recomputed": 3.4610557556152344,
+            "absolute_error": 3.814697265625e-05
+          },
+          {
+            "index": 141,
+            "old": 5.183841705322266,
+            "recomputed": 5.183788299560547,
+            "absolute_error": 5.340576171875e-05
+          }
+        ]
+      },
+      "alpha": {
+        "maximum_absolute_error": 5.7220458984375e-06,
+        "failed_count": 0,
+        "first_failures": []
+      },
+      "beta": {
+        "maximum_absolute_error": 3.814697265625e-06,
+        "failed_count": 0,
+        "first_failures": []
+      }
+    }
+  ],
+  "contract": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_CONTRACT_01.json",
+    "sha256": "89f41617fa44793356602e51bb8cc8d970490ab7f436a0bab68ddd34fe695c33"
+  },
+  "retained": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_641_full_input.pt.r6z",
+    "sha256": "26e63e532279f51c638c372783c3114a075416e35fb0598ae94b2ca80b889f75"
+  },
+  "origin": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+    "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+  },
+  "device": "cpu",
+  "tolerances_changed": false,
+  "torch_version": "2.7.0+cu128",
+  "threads": 8,
+  "interpretation": "Actor concentrations pass unchanged tolerances. CPU log probability differs even using retained concentrations; cross-device arithmetic is a hypothesis, not verified cause or acceptance.",
+  "next_required": "Recompute on original CUDA device/backend under direct diagnostic lifecycle; preserve original tolerance and report both CPU and same-device results."
+}
