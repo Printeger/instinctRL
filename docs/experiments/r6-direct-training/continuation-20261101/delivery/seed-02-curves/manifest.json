@@ -1,0 +1,44 @@
+{
+  "run_id": "R6-DIRECT-CONFIRM-128-SEED-02",
+  "report": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-analysis/report.json",
+    "sha256": "38d5b7a076eeba200ef6aa438fa1e41816c8939cff24e2b06591889ba41b0c50"
+  },
+  "sources": [
+    {
+      "bytes": 52162,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-02/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/updates.jsonl.r6z",
+      "sha256": "dda7f863781e2f7e5354a00cb1493b4fc193230314db418e7a968c37cfe9c907"
+    },
+    {
+      "bytes": 54588,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-02/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/updates.jsonl.r6z",
+      "sha256": "92e11bbeaf07484bf64fe077f88e4374268c9e25475b928336b689ccbe98ee0e"
+    }
+  ],
+  "exporter": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/export_training_curves.py",
+    "sha256": "546c2674541efe2597c1dd3d625df7b30374fce5b84c4b22218c281494db1518"
+  },
+  "rows": 128,
+  "update_range": [
+    641,
+    768
+  ],
+  "outputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/seed-02-curves/updates.csv",
+      "sha256": "1af8f4605d74baa49ae5042636734be63a2de0c3f8047f246130808fc9a66180"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/seed-02-curves/training_curves.png",
+      "sha256": "1416e45a381aac194b2c056021d4419ba8c300869838d767536213bcb04fb603"
+    }
+  ],
+  "limitations": [
+    "Return target is a PPO rollout target, not episodic reward or evaluation success.",
+    "Dashed boundary separates the two registered curriculum phases.",
+    "No smoothing, no learning-gain inference, no replacement of scientific audit.",
+    "Report issues and native cleanup failure remain unchanged."
+  ]
+}

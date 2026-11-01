@@ -1,0 +1,44 @@
+{
+  "run_id": "R6-DIRECT-CONFIRM-128-SEED-01C",
+  "report": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-analysis-cuda/report.json",
+    "sha256": "fab07ccccd281a8156b8e9064474956a426c1aa6c4c6167d659cf94ede5b7bd8"
+  },
+  "sources": [
+    {
+      "bytes": 52055,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01C/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/updates.jsonl.r6z",
+      "sha256": "8941e12be263ad472f1bbc0d3a72c7143632e1455153b9bfd93d848f9aa3cffe"
+    },
+    {
+      "bytes": 52978,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01C/results/research-r6-training/compressed_evidence/phases/1-11264-12288/learning_log/updates.jsonl.r6z",
+      "sha256": "e7fbaeaf8fc292b459b73e06427b0f873c305d0604e5c42b1eeeebf5d6471f54"
+    }
+  ],
+  "exporter": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/export_training_curves.py",
+    "sha256": "546c2674541efe2597c1dd3d625df7b30374fce5b84c4b22218c281494db1518"
+  },
+  "rows": 128,
+  "update_range": [
+    641,
+    768
+  ],
+  "outputs": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/seed-01c-curves/updates.csv",
+      "sha256": "45152c83d1038c14051726712d09ac6e9d065fa1955b3bec49709a541d25a884"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/seed-01c-curves/training_curves.png",
+      "sha256": "f23620f5f812f0fcc0cdabf2cca0524a0cbbc564be3a48c043a1f22bd9d026c5"
+    }
+  ],
+  "limitations": [
+    "Return target is a PPO rollout target, not episodic reward or evaluation success.",
+    "Dashed boundary separates the two registered curriculum phases.",
+    "No smoothing, no learning-gain inference, no replacement of scientific audit.",
+    "Report issues and native cleanup failure remain unchanged."
+  ]
+}
