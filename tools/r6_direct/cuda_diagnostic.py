@@ -61,7 +61,7 @@ def main():
         if directory.exists() or native.exists():raise FileExistsError('DIAGNOSTIC_ALREADY_STARTED')
         ledger_path=NEW/'RESOURCE_LEDGER.json';ledger=json.loads(ledger_path.read_text())
         imported_budget(ledger)
-        reserve(ledger,plan['run_id'],dict(allocated_gpu_seconds=240,live_wall_seconds=240,live_starts=1,queue_seconds=180))
+        reserve(ledger,plan['run_id'],dict(allocated_gpu_seconds=240,live_wall_seconds=240,live_starts=1,queue_seconds=180),resource_policy=plan.get('resource_policy'))
         ledger['new_reservations'][-1]['output_within_existing_native_volume']=plan['native_volume']
         from training_workloads.unified_h1.native_volume import validate
         binding=validate(plan['native_volume'])

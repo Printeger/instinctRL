@@ -34,7 +34,9 @@ def run_resources(contract):
     return resources
 
 
-def reserve(ledger, run_id, resources, *, purpose='development'):
+def reserve(ledger, run_id, resources, *, purpose='development', resource_policy=None):
+    from tools.r6_direct.resource_policy import unlimited
+    uncapped = unlimited(resource_policy)
     if purpose not in ('development','confirmation_delivery'):raise ValueError('DIRECT_RESERVATION_PURPOSE')
     if any(r['id']==run_id for r in ledger['new_reservations']):raise ValueError('DIRECT_DUPLICATE_RESERVATION')
     totals={k:ledger['historical_charged'][k]+ledger['new_used'][k] for k in ledger['caps']}
@@ -44,9 +46,11 @@ def reserve(ledger, run_id, resources, *, purpose='development'):
         if k not in totals or type(v) not in (int,float) or v<0:raise ValueError('DIRECT_RESOURCE_AMOUNT')
         totals[k]+=v
     for k,total in totals.items():
-        if total>ledger['caps'][k]-(ledger['protected_confirmation_delivery_repair'].get(k,0) if purpose=='development' else 0):
+        if not uncapped and total>ledger['caps'][k]-(ledger['protected_confirmation_delivery_repair'].get(k,0) if purpose=='development' else 0):
             raise ValueError('DIRECT_PROTECTED_BUDGET:'+k)
-    ledger['new_reservations'].append(dict(id=run_id,purpose=purpose,resources=resources,status='UNRELEASED'))
+    row=dict(id=run_id,purpose=purpose,resources=resources,status='UNRELEASED')
+    if resource_policy is not None:row['resource_policy']=resource_policy
+    ledger['new_reservations'].append(row)
     return ledger
 
 
@@ -201,7 +205,7 @@ def main():
         final_selection=contract['parameters'].get('final_selection')
         if final_selection is not None and any(r.get('final_assignment')==final_selection for r in ledger['new_reservations']):
             raise ValueError('DIRECT_FINAL_ASSIGNMENT_ALREADY_STARTED')
-        reserve(ledger,run_id,resources,purpose=purpose)
+        reserve(ledger,run_id,resources,purpose=purpose,resource_policy=plan.get('resource_policy'))
         if final_selection is not None:ledger['new_reservations'][-1]['final_assignment']=final_selection
         ledger['new_reservations'][-1]['legacy_storage_event']=storage[0]['event_key']
         ledger['new_reservations'][-1]['legacy_storage_new_binding']={k:plan[k] for k in ('attempt_dir','native_dir')}

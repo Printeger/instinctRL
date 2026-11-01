@@ -1,0 +1,25 @@
+{
+  "status": "IMPLEMENTED_FOR_NEW_PINNED_INPUTS",
+  "authority": "RESOURCE_POLICY_USER_AMENDMENT.json",
+  "entrypoints": [
+    "tools.r6_direct.run",
+    "tools.r6_direct.cuda_diagnostic"
+  ],
+  "historical_ledger_modified": false,
+  "tests": {
+    "interpreter": "/usr/bin/python3",
+    "modules": [
+      "test_resource_policy",
+      "test_run",
+      "test_lifecycle",
+      "test_confirmation"
+    ],
+    "passed": 18
+  },
+  "earlier_test_attempts": [
+    "default conda Python lacks pytest",
+    "runtime Python lacks pidfd support: 4 process tests rejected before launch; 14 passed"
+  ],
+  "live_launch": false,
+  "remaining_blocker": "Original TRAIN-01 results require administrator read-only mount; new scientific inputs depend on verified results."
+}

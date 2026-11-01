@@ -69,3 +69,16 @@ pytest 默认收集范围也改为直接链；其他科学模块可显式指定�
 本地 `R6-DIRECT-TRAIN-01` 回执已关闭并记录 cleanup timeout；旧首页“未启动”已过时。
 先恢复结果卷的只读可见性，核验完整计数与 checkpoint，再运行 CPU 分析。
 本轮未挂载卷、未修改旧 ledger/raw/receipt、未消费旧实验预算，也未创建新的实验输入或发车。
+
+## 2026-11-01 接续资源授权
+
+用户已取消当前 R6 项目的累计预算上限及最终保护额度。新准确输入应包含
+`resource_policy`，其值为
+`docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json`
+的绝对路径与 SHA256 pin。`run` 和显式 CUDA 诊断入口均传入此 pin；预留时核验原件，
+取消累计 cap/保护额度比较，并在新预留中保存授权 pin。没有此字段的历史输入仍沿用旧规则，
+不得改写旧输入或重启 TRAIN-01。历史账本、未知费用及未释放预留全部保留。
+
+每个作业仍需预登记有限的科学终点、超时及实际可用输出空间；这些是单次执行契约，
+不表示恢复项目累计预算。STOP、独立科学审核、资源可用性与冻结 runtime 保护保持有效。
+平台服务额度不由此项目代码控制。
