@@ -1,0 +1,28 @@
+{
+  "cpu_tests": {
+    "passed": 6,
+    "worker_subprocesses": "synthetic CPU stubs"
+  },
+  "findings": [
+    "Default run_resources retains complete contract validation.",
+    "Entry requires successful scientific worker--check and exact inputs/contract pins before accounting.",
+    "Failure or drift rejected before new directory/reservation/worker launch.",
+    "Actual worker performs preflight again; system Python retains pidfd supervision."
+  ],
+  "implementation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_direct/run.py",
+    "sha256": "bbe253b66c502b1e261983c101fc1b686e90ba35e80ac9db871b9f31de3ccd50"
+  },
+  "limitations": [
+    "Internal accounting function requires validated caller; cannot bypass scientific checks.",
+    "New source rebind and recipe freeze approval still required.",
+    "Reviewer read source without rerunning write-producing CPU tests."
+  ],
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "Pinned scientific worker preflight before system-interpreter accounting",
+  "status": "PASS_SCOPED",
+  "test": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_direct/test_run.py",
+    "sha256": "2eac5ec1844d0bd5c966e4036567eec0dfb9aceabda66f69049129c504852493"
+  }
+}

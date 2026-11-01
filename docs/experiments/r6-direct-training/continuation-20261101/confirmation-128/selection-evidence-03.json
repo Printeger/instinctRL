@@ -1,0 +1,46 @@
+{
+  "checkpoint_selection": {
+    "common_start_update": 640,
+    "kind": "terminal_checkpoint",
+    "select_using_holdout": false,
+    "target_update": 768
+  },
+  "paired_evaluations": {
+    "baseline_control": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-03-analysis-fixed/binding.json",
+      "sha256": "74e92e65f29337353af1980eef1888ba25878d14cbc388f10c09b41464e8934f"
+    },
+    "trained_candidate": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u768-01-analysis/binding.json",
+      "sha256": "f27edfe7820bc959676ef56934bb03ed593d92833f6af56eeea6323dbb899d02"
+    }
+  },
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/protocol.json",
+    "sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822"
+  },
+  "protocol_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/reviews/protocol-capacity-freeze-01-review.json",
+    "sha256": "a4f2c630ac5a151dc05460c1214b8e5432392f84031e4d6e1b944903ea355698"
+  },
+  "recipe_lineage": {
+    "development_recipe": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/recipe.json",
+      "sha256": "65d55730a92663b6bd662c5311da7fa7fc9951a8b86cd75e125b78d6635b628e"
+    },
+    "kind": "REGISTERED_DEVELOPMENT_PREFIX",
+    "source_rebinding": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-rebinding-02.json",
+      "sha256": "005ca9ce64fac50e48012b5241d6cbbcd4f75ec9dfafee32e622c7ac2436c63c"
+    }
+  },
+  "schema_version": "r6-recipe-selection-evidence/2",
+  "split_amendment": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-amendment.json",
+    "sha256": "e8fddbba70aae937a3340a6fa0d49cb5c55d3fa53a2db15d82c78e5e71c866e8"
+  },
+  "split_manifest": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/split-candidate.json",
+    "sha256": "418668c2d1c5fc11dbcca2d33f0939dafef7b51435f0bb734659be4345e4fd35"
+  }
+}

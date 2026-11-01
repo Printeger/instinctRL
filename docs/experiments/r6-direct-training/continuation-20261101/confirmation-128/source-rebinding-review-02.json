@@ -1,0 +1,18 @@
+{
+  "decision": "PASS_R6_CONFIRMATION_SOURCE_REBIND",
+  "findings": [
+    "Exactly12 differences from oldtrain02b match payload.",
+    "Only run.py/test_run.py differ from accepted source01; prior10 unchanged.",
+    "All230 snapshot files match manifest and commit067349c103d6b344a18188b1b724e37e03fd5958.",
+    "Scientific configuration, execution, actor, training, method and product_deltas unchanged.",
+    "New recipe differs only in source_identity; seeds, method, curriculum and endpoint unchanged."
+  ],
+  "limitations": [
+    "Precise source rebind only; new whole freeze and actual CPU chain verification required."
+  ],
+  "must_fix": [],
+  "payload_sha256": "75d04b8dd71a48bc242eed0ee140dd543023024f964bf600e970bf7b88db0154",
+  "reviewer": "/root/baseline_scientific_review",
+  "reviewer_gpu_started": false,
+  "reviewer_writes": false
+}

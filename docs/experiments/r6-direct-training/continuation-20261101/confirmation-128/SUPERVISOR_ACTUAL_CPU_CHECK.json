@@ -1,0 +1,23 @@
+{
+  "gpu_started": false,
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01-inputs.json",
+    "sha256": "0187ac35f51284740118bfbff5fbc516b642c1af7549523ffef36525d3ee06f8"
+  },
+  "interpretation": "Read-only validation of preserved rejected input, not a relaunch. No reservation or workload created.",
+  "resources": {
+    "allocated_gpu_seconds": 3790,
+    "live_starts": 1,
+    "live_wall_seconds": 3790,
+    "nontraining_transitions": 0,
+    "queue_seconds": 180,
+    "simulator_initializations": 1,
+    "training_checkpoint_writes": 1,
+    "training_transitions": 65536
+  },
+  "status": "PASS_SYSTEM_SUPERVISOR_SCIENTIFIC_PREFLIGHT_AND_ACCOUNTING",
+  "supervisor_implementation": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_direct/run.py",
+    "sha256": "bbe253b66c502b1e261983c101fc1b686e90ba35e80ac9db871b9f31de3ccd50"
+  }
+}
