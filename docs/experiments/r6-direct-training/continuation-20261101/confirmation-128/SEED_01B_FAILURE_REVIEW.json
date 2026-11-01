@@ -1,0 +1,25 @@
+{
+  "decision": "No additional source repair identified as necessary before exact reviewed01C recomputation;01B remains failed and unaccepted",
+  "findings": [
+    "10 issues match incomplete phase/counters/status/checkpoint after timeout",
+    "CPU probability mismatch at frozen index20 retained; runtime gate PASS does not replace independent CUDA replay",
+    "Independently decoded failures and partial rollout boundaries show wall timeout,15 persisted partial steps,unproven_attempts0",
+    "64+58=122 updates;1024+943=1967 policy steps;62944 transitions",
+    "33 complete streams mean sealed files, not completed training"
+  ],
+  "limitations": [
+    "Reviewer did not redo all stream replay",
+    "Reviewer had not confirmed final binding completion; root subsequently observed analysis process exit0 and binding file",
+    "New attempt must independently pass its own gates"
+  ],
+  "report": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01b-analysis/report.json",
+    "sha256": "61367b1e818afe77432422ba7a6082afabc67fdce1e053c8d07cbd280978544f"
+  },
+  "reviewer": "/root/baseline_scientific_review",
+  "status": "PASS_SCOPED",
+  "summary": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01b-analysis/summary.json",
+    "sha256": "2c0ced1fd4e1596189f95fad19f8b671069617a6eadcf00b7b8ccf5a3b635cee"
+  }
+}
