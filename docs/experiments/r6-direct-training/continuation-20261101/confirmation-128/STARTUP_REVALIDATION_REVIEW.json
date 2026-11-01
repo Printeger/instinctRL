@@ -1,0 +1,21 @@
+{
+  "status": "FINITE_STARTUP_REVALIDATION_IDENTIFIED",
+  "reviewer": "/root/baseline_scientific_review",
+  "snapshot_commit": "067349c103d6b344a18188b1b724e37e03fd5958",
+  "runtime_modified": false,
+  "observed_rchar_bytes": 806013159426,
+  "rchar_interpretation": "Logical cumulative read characters including repeated reads; not physical disk bytes or remaining-time estimate.",
+  "findings": [
+    "Eleven call-graph source files matched frozen snapshot.",
+    "confirmation plan.validate revalidates both development evaluations and their complete input hashes, nesting TRAIN02 evidence checks.",
+    "Nine plan.validate calls in normal startup after initial_preflight: train_r6 runtime2, restore_and_bind/verify_loaded2, run_loaded1, training_inputs3, prepare_plan_rng1.",
+    "Learning logs are created only after several initial full validations.",
+    "No per-update or per-step freeze validation found in inspected training loop."
+  ],
+  "decision": "Keep current immutable run supervised; slow startup alone is not evidence of termination or a loop.",
+  "future_repair_scope": "A separately reviewed exact-input validated context scoped to one supervised run; preserve complete external checks, drift rejection and model/RNG checks. No permanent cross-run cache.",
+  "limitations": [
+    "Reviewer inspected static code, not live process state; exact current scan ordinal unknown.",
+    "No prediction of remaining duration or scientific success."
+  ]
+}
