@@ -1,0 +1,33 @@
+{
+  "analysis": {
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+    "pid": 3202256,
+    "starttime": "32008340"
+  },
+  "behavior": [
+    "Ordinary Python checks STOP and exact analysis process identity every five seconds",
+    "Requires complete binding, report issues empty, probability gate true, exact input and exact sealed diagnostic",
+    "Runs existing CPU final-freeze builder from pinned final-01 snapshot; no GPU or holdout read",
+    "Output remains candidate pending independent review and publication"
+  ],
+  "destination": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-freeze-candidate.json",
+  "diagnostic": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-08/SEALED_EVIDENCE.json",
+    "sha256": "dd85c8eb392c09cd447403f80ca304e170f386903de9e13ead32d59857847c76"
+  },
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-inputs.json",
+    "sha256": "d1b2831297ab6631e58920baab2c98952b80817b590cc53ff598934b01c92937"
+  },
+  "session_id": 55109,
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
+    "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
+  },
+  "status": "WAITING_EXACT_SUPPLEMENTAL_ANALYSIS",
+  "watcher": {
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+    "pid": 3203277,
+    "starttime": "32018548"
+  }
+}
