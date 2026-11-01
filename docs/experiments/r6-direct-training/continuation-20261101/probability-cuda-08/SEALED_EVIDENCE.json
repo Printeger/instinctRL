@@ -1,0 +1,31 @@
+{
+  "intent": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/intent.json",
+    "sha256": "12b0f9cbce0adf962ece3f532b99f7bf8fdf4d6593a17f794acef592e1ad076a"
+  },
+  "origin": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+    "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+  },
+  "plan": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-08/plan.json",
+    "sha256": "d75c07580611dfad252a77104d291d4066e839508237d188b42dfafbed7cd9aa"
+  },
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/receipt.json",
+    "sha256": "983b90ceb1d3f52dae324221f5b406f08468d2369229b387dc7872c36f146e83"
+  },
+  "result": {
+    "path": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/probability_result.json",
+    "sha256": "af931838916fd4643602f1c54b1311aab7e2b44f789f239f63402ca9b6dc047f"
+  },
+  "run_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/RUN_INPUTS.json",
+    "sha256": "4b106697bb49d6d607e8fcdab1413a10476ff8b1db68f59b3c164e68d68995db"
+  },
+  "schema_version": "r6-probability-sealed-evidence/1",
+  "source_trace": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/PROBABILITY_SOURCE_TRACE.json",
+    "sha256": "45a2cf48f5ec56c7917ad08de5dde863648adc5630ff2b0befed3151ccd8ad9b"
+  }
+}

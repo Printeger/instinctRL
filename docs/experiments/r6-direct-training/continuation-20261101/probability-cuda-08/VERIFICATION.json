@@ -1,0 +1,71 @@
+{
+  "limitations": [
+    "Original CPU mismatch index29 retained",
+    "Diagnostic receipt wall excludes admission; no settlement or refund",
+    "No training, optimizer update, GPU sampling or physical simulation; not final scientific acceptance"
+  ],
+  "process_checks": [
+    {
+      "current": null,
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3200760,
+        "starttime": "31994266"
+      }
+    },
+    {
+      "current": null,
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3201471,
+        "starttime": "32000347"
+      }
+    },
+    {
+      "current": null,
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3201472,
+        "starttime": "32000347"
+      }
+    },
+    {
+      "current": null,
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3201475,
+        "starttime": "32000347"
+      }
+    }
+  ],
+  "reservation_seconds_retained": 390,
+  "result": {
+    "cpu_actor_forward": false,
+    "cpu_rng_preserved": true,
+    "diagnostic": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-08/SEALED_EVIDENCE.json",
+      "sha256": "dd85c8eb392c09cd447403f80ca304e170f386903de9e13ead32d59857847c76"
+    },
+    "float32_atol": 1e-06,
+    "float32_rtol": 1e-05,
+    "forward_batch_size": 512,
+    "gpu_sampling_reproduced": false,
+    "maximum_absolute_errors": {
+      "alpha": 0.0,
+      "beta": 0.0,
+      "log_probability": 0.0
+    },
+    "optimizer_restored": false,
+    "replay_device": "cuda:0",
+    "sample_count": 512,
+    "starting_update": 640,
+    "status": "PASS",
+    "verification": "closed exact-input CUDA diagnostic"
+  },
+  "sealed": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-08/SEALED_EVIDENCE.json",
+    "sha256": "dd85c8eb392c09cd447403f80ca304e170f386903de9e13ead32d59857847c76"
+  },
+  "status": "PASS_EXACT_CUDA_REPLAY",
+  "verified_pin_count": 248
+}
