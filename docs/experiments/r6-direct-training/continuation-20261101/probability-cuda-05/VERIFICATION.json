@@ -1,0 +1,28 @@
+{
+  "status": "PASS_EXACT_TRAIN_02_PROBABILITY_REPLAY",
+  "summary": {
+    "cpu_actor_forward": false,
+    "cpu_rng_preserved": true,
+    "float32_atol": 1e-06,
+    "float32_rtol": 1e-05,
+    "forward_batch_size": 512,
+    "gpu_sampling_reproduced": false,
+    "maximum_absolute_errors": {
+      "alpha": 0.0,
+      "beta": 0.0,
+      "log_probability": 0.0
+    },
+    "optimizer_restored": false,
+    "replay_device": "cuda:0",
+    "sample_count": 512,
+    "starting_update": 640,
+    "status": "PASS",
+    "verification": "closed exact-input CUDA diagnostic",
+    "diagnostic": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-05/SEALED_EVIDENCE.json",
+      "sha256": "878ef0f37e37c4975156cac27f0e682347a9d10b8e01589728fbdea83913fa31"
+    }
+  },
+  "verified_reference_count": 244,
+  "scientific_acceptance": false
+}
