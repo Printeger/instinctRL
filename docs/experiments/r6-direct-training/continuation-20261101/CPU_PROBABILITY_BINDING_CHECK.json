@@ -1,0 +1,7 @@
+{
+  "status": "EXACT_DIAGNOSTIC_VERIFIER_PASS_ANALYSIS_INTEGRATION_PENDING",
+  "positive": "Real closed diagnostic04 accepted with11 pinned evidence inputs",
+  "negative": "Changed expected contract hash rejected as DIRECT_PROBABILITY_EXACT_INPUTS before evidence substitution",
+  "scope": "No TRAIN-02 acceptance; no GPU or model call; live input and ledger unchanged",
+  "implementation": "tools/r6_direct/probability_evidence.py"
+}
