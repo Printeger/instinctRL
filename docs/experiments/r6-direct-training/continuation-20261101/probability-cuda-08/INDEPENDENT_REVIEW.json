@@ -1,0 +1,54 @@
+{
+  "decision": "PASS_SCOPED",
+  "evidence_base": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-08",
+  "evidence_sha256": {
+    "SEALED_EVIDENCE.json": "dd85c8eb392c09cd447403f80ca304e170f386903de9e13ead32d59857847c76",
+    "VERIFICATION.json": "1fd3b3ec168045bfa7cef6faa3835c2826df0ba898f1e81e6be64d6fcdc023fa",
+    "plan.json": "d75c07580611dfad252a77104d291d4066e839508237d188b42dfafbed7cd9aa"
+  },
+  "files_modified": false,
+  "findings": {
+    "atol": 1e-06,
+    "backend": "isaaclab_seeded_reset",
+    "contract_matches_seed_03_inputs": true,
+    "error": null,
+    "exit_code": 0,
+    "forward_batch_size": 512,
+    "maximum_absolute_errors": {
+      "alpha": 0.0,
+      "beta": 0.0,
+      "log_probability": 0.0
+    },
+    "receipt_status": "CLOSED",
+    "recorded_process_identities_absent": true,
+    "remaining": [],
+    "reservation_seconds_retained": 390,
+    "retained_update": 641,
+    "rtol": 1e-05,
+    "sample_count": 512,
+    "source_commit": "d64e43c7a58df8ef5946af2796af86ed2d267f2a",
+    "source_previously_reviewed": true
+  },
+  "gpu_started_by_reviewer": false,
+  "holdout_read": false,
+  "limitations": [
+    "Original CPU index29 mismatch retained",
+    "Training cleanup -15 retained; diagnostic exit does not replace training receipt",
+    "No CUDA sampling, optimizer restore, full RNG semantics, physical integration or learning gain proof",
+    "Final seed-03-analysis-cuda binding not yet reviewed",
+    "Not three-stream or final acceptance"
+  ],
+  "must_fix": [],
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/receipt.json",
+    "sha256": "983b90ceb1d3f52dae324221f5b406f08468d2369229b387dc7872c36f146e83"
+  },
+  "result": {
+    "path": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/probability_result.json",
+    "sha256": "af931838916fd4643602f1c54b1311aab7e2b44f789f239f63402ca9b6dc047f"
+  },
+  "reviewer": "/root/baseline_scientific_review",
+  "scientific_acceptance": false,
+  "scope": "Exact third confirmation first-rollout CUDA08 supplementary probability evidence",
+  "verified_pins": 248
+}
