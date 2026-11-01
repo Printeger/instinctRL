@@ -1,0 +1,21 @@
+{
+  "decision": "PASS_R6_CONFIRMATION_SEED_AMENDMENT",
+  "findings": [
+    "All payload pins verified; split changes only confirmation_training_seeds.",
+    "All59 persisted legacy jobs/*/request.json parsed including failed jobs; no proposed confirmation seeds used.",
+    "Direct launch inventory preserves TRAIN01/02 development seed2026102201.",
+    "Readable attempts JSON up to4MB searched without matches."
+  ],
+  "implementation_sha256": "d1ce6477d98a2333916265209ddb289fd847df70044b86dca6b9587c307c6dc9",
+  "legacy_request_pin_list_object_sha256": "128643a157cc34c2548e6f2cf57dba01de6f8c198914e8c85ec0bc7789597e9b",
+  "limitations": [
+    "R6-CPU-RESULT-QUOTA-02/results permission denied; missing records and outside-workspace runs not exhaustively verified.",
+    "Seed-only approval does not replace recipe freeze or final scientific acceptance."
+  ],
+  "must_fix": [],
+  "payload_sha256": "6a0621f48b640165e528752c647e70385087e5cc2cc9b07efcde26a9d98c2daa",
+  "reviewer": "/root/baseline_scientific_review",
+  "reviewer_gpu_started": false,
+  "reviewer_writes": false,
+  "scope": "Explicit seed-only override of the original protocol confirmation training seeds; no distribution or holdout changes."
+}

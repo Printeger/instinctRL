@@ -1,0 +1,16 @@
+{
+  "existing_results_preserved": true,
+  "physical_space_observed": "432GiB host free; existing32GiB result volume16GiB free",
+  "required_backing_bytes": 104689827840,
+  "reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
+  "script": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/storage-confirmation-01/CREATE_STORAGE.sh",
+    "sha256": "a60e61774d93194068c01934c9fa7cff80c03c0389aba22f4cc5cc20f2b1d606"
+  },
+  "status": "ADMINISTRATOR_MOUNT_REQUIRED",
+  "storage_plan": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/storage-confirmation-01/PLAN.json",
+    "sha256": "9a112a6224c537c04ac284f611186d545572a5b229ab0993597c149a80ce6e9e"
+  },
+  "sudo_noninteractive": "password required"
+}

@@ -749,6 +749,22 @@
         "native_dir": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output/R6-DIRECT-PAIR-U768-01"
       },
       "storage_reservation_id": "DIRECT-STORAGE-CONTINUATION-02"
+    },
+    {
+      "id": "DIRECT-STORAGE-CONFIRMATION-128",
+      "purpose": "confirmation_delivery",
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
+        "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
+      },
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 104689827840
+      },
+      "status": "UNRELEASED",
+      "storage_plan": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/storage-confirmation-01/PLAN.json",
+        "sha256": "9a112a6224c537c04ac284f611186d545572a5b229ab0993597c149a80ce6e9e"
+      }
     }
   ],
   "new_used": {

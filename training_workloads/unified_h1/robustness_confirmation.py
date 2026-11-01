@@ -84,13 +84,17 @@ def validate_registered_prefix(lineage, recipe, trained):
     curriculum-phase prefix may be selected; methods and stream lists stay exact.
     """
     from . import robustness_training_plan as training
-    require(set(lineage)=={'kind','development_recipe'}
+    rebound='source_rebinding' in lineage
+    require(set(lineage)==({'kind','development_recipe','source_rebinding'} if rebound else {'kind','development_recipe'})
         and lineage['kind']=='REGISTERED_DEVELOPMENT_PREFIX','PREFIX_FIELDS')
     plan=trained['selection']['training_plan']
     require(plan['schema_version']=='r6-local-training-plan/1'
         and plan['recipe']==lineage['development_recipe'],'PREFIX_PROVENANCE')
     old=training.validate_recipe(base.pinned_json(lineage['development_recipe']))
     changed={'branch_updates','checkpoint_offsets','curriculum'}
+    if rebound:
+        validate_source_rebinding(lineage['source_rebinding'],old['source_identity'],recipe['source_identity'])
+        changed.add('source_identity')
     require(all(recipe[k]==old[k] for k in old.keys()-changed),'PREFIX_RECIPE_DRIFT')
     end=recipe['branch_updates']
     require(type(end)is int and end<old['branch_updates'] and end in old['checkpoint_offsets']
@@ -105,6 +109,27 @@ def validate_registered_prefix(lineage, recipe, trained):
         and plan['target_update']==trained['model']['update']==640+end
         and plan['checkpoint_updates']==[640+n for n in recipe['checkpoint_offsets']],
         'PREFIX_ACTUAL_ENDPOINT')
+
+
+def validate_source_rebinding(pin,old_identity,new_identity):
+    """Review an exact engineering source migration without relabeling old runs."""
+    from tools.r6_direct.source import training_identity
+    value=base.pinned_json(pin)
+    require(set(value)=={'schema_version','original_source','replacement_source','changes','independent_review'}
+        and value['schema_version']=='r6-confirmation-source-rebinding/1','SOURCE_REBIND_FIELDS')
+    old=base.pinned_json(value['original_source']);new=base.pinned_json(value['replacement_source'])
+    require(old['schema_version']==new['schema_version']=='r6-direct-source/1'
+        and training_identity(old)==old_identity and training_identity(new)==new_identity
+        and old_identity!=new_identity,'SOURCE_REBIND_IDENTITY')
+    require(all(old[k]==new[k] for k in ('scientific_config','execution','actor','training','method','product_deltas')),
+        'SOURCE_REBIND_METHOD')
+    changes=[dict(path=k,before=old['sources'].get(k),after=new['sources'].get(k))
+        for k in sorted(old['sources'].keys()|new['sources'].keys())
+        if old['sources'].get(k)!=new['sources'].get(k)]
+    require(changes==value['changes'] and bool(changes),'SOURCE_REBIND_DIFF')
+    payload={k:v for k,v in value.items() if k!='independent_review'}
+    base.accepted_review(value['independent_review'],'PASS_R6_CONFIRMATION_SOURCE_REBIND',
+        payload_sha256=base.object_sha(payload))
 
 
 def validate_selection_evidence(pin,recipe_pin,recipe):

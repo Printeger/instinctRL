@@ -70,3 +70,27 @@ def test_seed_amendment_requires_exact_reviewed_override(tmp_path,fault):
     else:
         with pytest.raises((PermissionError,ValueError)):
             validate_seed_amendment(amendment,protocol_pin,protocol,new_pin)
+
+
+@pytest.mark.parametrize('fault',[None,'method','diff','identity','review'])
+def test_source_rebinding_preserves_science_and_reviewed_diff(tmp_path,fault):
+    from training_workloads.unified_h1.robustness_confirmation import validate_source_rebinding,base
+    from tools.r6_direct.source import training_identity
+    def pin(name,value):
+        path=tmp_path/name;path.write_text(json.dumps(value));return file_pin(path)
+    old=json.loads(Path('docs/experiments/r6-direct-training/continuation-20261101/train-02b/source.json').read_text())
+    new=copy.deepcopy(old);new['source_commit']='a'*40;new['source_tree']='b'*40
+    key='tools/r6_direct/test_recipe_prefix.py';new['sources'][key]='c'*64
+    changes=[dict(path=key,before=old['sources'].get(key),after='c'*64)]
+    if fault=='method':new['method']={'changed':True}
+    if fault=='diff':changes=[]
+    old_id=training_identity(old);new_id=training_identity(new)
+    if fault=='identity':new_id['config_sha256']='0'*64
+    payload=dict(schema_version='r6-confirmation-source-rebinding/1',original_source=pin('old.json',old),
+        replacement_source=pin('new.json',new),changes=changes)
+    review=pin('review.json',dict(decision='MUST_FIX' if fault=='review' else 'PASS_R6_CONFIRMATION_SOURCE_REBIND',
+        reviewer='independent-fixture',must_fix=[],payload_sha256=base.object_sha(payload)))
+    value=pin('rebind.json',dict(payload,independent_review=review))
+    if fault is None:validate_source_rebinding(value,old_id,new_id)
+    else:
+        with pytest.raises(PermissionError):validate_source_rebinding(value,old_id,new_id)
