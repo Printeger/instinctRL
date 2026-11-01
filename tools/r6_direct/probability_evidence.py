@@ -8,6 +8,8 @@ from tools.r6_direct.import_legacy import process_identity
 
 TRUSTED_SOURCES = [{'path': '/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-04/source.json', 'sha256': '412ce757777d6ec9e4d09b897eac61af0a06fef220f126b737e9e541a19d6c6e'}, {'path': '/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/source.json', 'sha256': 'cd4025bffd1747fc45aca27136c0d74983d87012647c8564af6ee6b79d93e070'}]
 
+TRUSTED_SOURCES.append({'path': '/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-06/source.json', 'sha256': 'e1e5de0a7b193631c63a1de8ae117bc98df3bcddb517b57e4199eb5ee6b62734'})
+
 def verify(diagnostic_pin, contract_pin, retained_pin):
     pins=[]
     def read(pin):
