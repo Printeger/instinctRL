@@ -12,6 +12,10 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-inputs.json",
     "sha256": "d1b2831297ab6631e58920baab2c98952b80817b590cc53ff598934b01c92937"
   },
+  "launch_evidence": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_03_LAUNCH.json",
+    "sha256": "e5be71f72a20d8bf74315a8c7092b74f73e89905bb646f4f9b43fe96c5f2da22"
+  },
   "operation": "train",
   "predecessor_receipt": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-02/receipt.json",
@@ -21,7 +25,7 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_03_PREFLIGHT.json",
     "sha256": "f1049896bb6b6363bd55d00ca61c461ffad0bff9a809032149de007142bdd6bb"
   },
-  "ready_to_launch": true,
+  "ready_to_launch": false,
   "resource_policy": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
     "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
@@ -32,8 +36,8 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-02.json",
     "sha256": "10943d1820164fb4ea6266cd725122a81343ab2903990bfb53f44b4c980f4ea2"
   },
-  "status": "READY_TO_LAUNCH",
+  "status": "RUNNING",
   "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
-  "supervisor_started": false,
+  "supervisor_started": true,
   "training_started": false
 }

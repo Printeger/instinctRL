@@ -1,0 +1,73 @@
+{
+  "input": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-inputs.json",
+    "sha256": "d1b2831297ab6631e58920baab2c98952b80817b590cc53ff598934b01c92937"
+  },
+  "launch": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-03/launch.json",
+    "sha256": "704765b32c96bccb6f295efa0d1eb502fb2d206bfa438603e172e5bb808b9505"
+  },
+  "observed_utc": "2026-11-01T20:42:16.639366+00:00",
+  "process_checks": [
+    {
+      "current": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3139273,
+        "starttime": "31518280"
+      },
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3139273,
+        "starttime": "31518280"
+      }
+    },
+    {
+      "current": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3141083,
+        "starttime": "31525665"
+      },
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3141083,
+        "starttime": "31525665"
+      }
+    }
+  ],
+  "run_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+  "state_at_observation": {
+    "argv": [
+      "/usr/bin/bwrap",
+      "--die-with-parent",
+      "--bind",
+      "/",
+      "/",
+      "--dev-bind",
+      "/dev",
+      "/dev",
+      "--bind",
+      "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-CONFIRM-128-SEED-03/ipc",
+      "/dev/shm",
+      "--",
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "tools.r6_direct.worker",
+      "--inputs",
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-inputs.json"
+    ],
+    "child": {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3141083,
+      "starttime": "31525665"
+    },
+    "parent": {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3139273,
+      "starttime": "31518280"
+    },
+    "started_unix": 1793565612.2521026,
+    "status": "RUNNING"
+  },
+  "training_complete": false
+}
