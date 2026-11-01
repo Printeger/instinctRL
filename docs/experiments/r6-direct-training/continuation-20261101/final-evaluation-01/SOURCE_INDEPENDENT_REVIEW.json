@@ -1,0 +1,30 @@
+{
+  "cpu_check": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SOURCE_CPU_CHECK.json",
+    "sha256": "bb2bbbf279724eccc3865b240d8d96c0a800e1a80d39074d2670e746c72366fe"
+  },
+  "decision": "PASS_SCOPED",
+  "files_modified_by_reviewer": false,
+  "findings": [
+    "All 230 source files independently match manifest and exact snapshot HEAD",
+    "Only cuda_diagnostic.py, probability_evidence.py and test_diagnostic_prelaunch.py differ from confirmation source02",
+    "Diagnostic implementation and test exactly match independently reviewed CUDA06 source",
+    "Probability verifier only adds the exact reviewed CUDA06 source pin; verification logic unchanged",
+    "Scientific training, evaluation, actor, reward and ICS source unchanged; protected manifest fields identical"
+  ],
+  "gpu_started": false,
+  "holdout_read": false,
+  "limitations": [
+    "Source/assets/modules CPU check is not final runtime acceptance",
+    "Does not freeze final models or authorize holdout reveal",
+    "Third-stream complete analysis and exact final run input verification remain pending"
+  ],
+  "reviewer": "/root/baseline_scientific_review",
+  "scientific_acceptance": false,
+  "scope": "Exact source snapshot suitability for future final evaluation",
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
+    "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
+  },
+  "source_commit": "76c295e2192b2dfec1d30a06b330a261c1f14cc1"
+}
