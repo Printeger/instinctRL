@@ -1,0 +1,106 @@
+{
+  "argv": [
+    "/usr/bin/bwrap",
+    "--die-with-parent",
+    "--bind",
+    "/",
+    "/",
+    "--dev-bind",
+    "/dev",
+    "/dev",
+    "--bind",
+    "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-06/ipc",
+    "/dev/shm",
+    "--",
+    "/usr/bin/strace",
+    "-f",
+    "-qq",
+    "-s",
+    "256",
+    "-e",
+    "trace=%file,ioctl,prctl,mmap,mprotect",
+    "-o",
+    "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-06/syscalls.log",
+    "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+    "-B",
+    "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/cuda_diagnostic.py",
+    "--plan",
+    "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-06/plan.json",
+    "--child"
+  ],
+  "environment": {
+    "CUDA_CACHE_PATH": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-06/cache",
+    "CUDA_VISIBLE_DEVICES": "0",
+    "HOME": "/home/mint",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/home/mint/.codex/packages/app-server-daemon/releases/0.166.0-x86_64-unknown-linux-musl/codex-path:/home/mint/.codex/tmp/arg0-linux/codex-arg02rYbrr:/home/mint/.codex/tmp/arg0-linux/codex-arg0hpRb20:/home/mint/.codex/packages/app-server-daemon/releases/0.165.0-x86_64-unknown-linux-musl/codex-path:/home/mint/.codex/tmp/arg0-linux/codex-arg0Frqnzp:/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/codex-path:/home/mint/miniconda3/bin:/home/mint/miniconda3/condabin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONPATH": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06:/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/isaaclab-training",
+    "TMPDIR": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-06/tmp"
+  },
+  "plan": {
+    "bounds": {
+      "child_seconds": 180,
+      "gpu_and_wall_reservation_seconds": 390,
+      "queue_seconds": 180,
+      "syscall_log_bytes": 67108864
+    },
+    "bwrap": {
+      "path": "/usr/bin/bwrap",
+      "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+    },
+    "helper_source": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-06/source.json",
+      "sha256": "e1e5de0a7b193631c63a1de8ae117bc98df3bcddb517b57e4199eb5ee6b62734"
+    },
+    "native_dir": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-06",
+    "native_volume": {
+      "path": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/volume.json",
+      "sha256": "918a796e9539526f7a95f39105c6752d6c4aaea972766e27c89f9eaf3df60a48"
+    },
+    "output_root": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-06",
+    "predecessor_receipt": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01C/receipt.json",
+      "sha256": "f99aa29c9360222a96f91a2a63ec0efd4b8c1a9698bffbc9d84e5a77b635d3d0"
+    },
+    "probability_replay": {
+      "backend": "isaaclab_seeded_reset",
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-contract.json",
+        "sha256": "8caadb99de9c93ee6b4791cb3d9a8daff7ad6c12ac45254bd3e55f9adba1af27"
+      },
+      "retained": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01C/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_641_full_input.pt.r6z",
+        "sha256": "753d6c87fe51ba078cddf990380b03d0c84950da632c6b2b5e96bef73f7d9211"
+      }
+    },
+    "python": {
+      "path": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "sha256": "efa5468dc4ff3850e950cb68c0e430b3a1621e2c6bd9e0ef48f784ba90a9667a"
+    },
+    "resource_policy": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
+      "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
+    },
+    "run_id": "R6-DIRECT-PROBABILITY-DIAGNOSTIC-06",
+    "schema_version": "r6-direct-cuda-diagnostic/1",
+    "scope": "SEED-01C exact saved first rollout replay; unchanged gate, zero training, sampling or simulator",
+    "script": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06/tools/r6_direct/cuda_diagnostic.py",
+      "sha256": "a9cb377938126e1e23c8e69cd6ef9fba77b55dbd3b2c67119bb283ad185d378b"
+    },
+    "self_task_metadata": true,
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-06",
+    "source_commit": "d64e43c7a58df8ef5946af2796af86ed2d267f2a",
+    "source_trace": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/PROBABILITY_SOURCE_TRACE.json",
+      "sha256": "45a2cf48f5ec56c7917ad08de5dde863648adc5630ff2b0befed3151ccd8ad9b"
+    },
+    "strace": {
+      "path": "/usr/bin/strace",
+      "sha256": "28f957c227012de0b18d1bd7fff2d396cb693ea60ed8013be68de071e84b5001"
+    }
+  }
+}
