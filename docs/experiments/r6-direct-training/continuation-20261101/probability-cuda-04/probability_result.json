@@ -1,0 +1,75 @@
+{
+  "backend_before": {
+    "benchmark": false,
+    "deterministic": false
+  },
+  "device_name": "NVIDIA GeForce RTX 5070",
+  "inputs": {
+    "backend": "isaaclab_seeded_reset",
+    "contract": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_CONTRACT_01.json",
+      "sha256": "89f41617fa44793356602e51bb8cc8d970490ab7f436a0bab68ddd34fe695c33"
+    },
+    "retained": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_641_full_input.pt.r6z",
+      "sha256": "26e63e532279f51c638c372783c3114a075416e35fb0598ae94b2ca80b889f75"
+    }
+  },
+  "observations": [
+    {
+      "atol": 1e-06,
+      "backend": {
+        "cudnn_allow_tf32": true,
+        "cudnn_benchmark": true,
+        "cudnn_deterministic": false,
+        "matmul_allow_tf32": false
+      },
+      "forward_batch_size": 512,
+      "metrics": {
+        "alpha": {
+          "failed_count": 0,
+          "first_failed_indices": [],
+          "maximum_absolute_error": 0.0
+        },
+        "beta": {
+          "failed_count": 0,
+          "first_failed_indices": [],
+          "maximum_absolute_error": 0.0
+        },
+        "log_probability": {
+          "failed_count": 0,
+          "first_failed_indices": [],
+          "maximum_absolute_error": 0.0
+        }
+      },
+      "replay_device": "cuda:0",
+      "rtol": 1e-05,
+      "stored_concentrations_logp": {
+        "failed_count": 0,
+        "maximum_absolute_error": 0.0
+      }
+    }
+  ],
+  "optimizer_updates": 0,
+  "result": {
+    "cpu_actor_forward": false,
+    "cpu_rng_preserved": true,
+    "float32_atol": 1e-06,
+    "float32_rtol": 1e-05,
+    "forward_batch_size": 512,
+    "gpu_sampling_reproduced": false,
+    "maximum_absolute_errors": {
+      "alpha": 0.0,
+      "beta": 0.0,
+      "log_probability": 0.0
+    },
+    "optimizer_restored": false,
+    "replay_device": "cuda:0",
+    "sample_count": 512,
+    "starting_update": 640,
+    "status": "PASS"
+  },
+  "scientific_acceptance": false,
+  "torch_version": "2.7.0+cu128",
+  "training_transitions": 0
+}

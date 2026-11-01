@@ -1,0 +1,24 @@
+{
+  "status": "FIRST_ROLLOUT_PROBABILITY_REPLAY_PASS",
+  "original_result": {
+    "path": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-04/probability_result.json",
+    "sha256": "c3bd57fd5413070601d57a3d1a786d9d87695f89b04543f6a545538dffe0460d"
+  },
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-04/receipt.json",
+    "sha256": "13c48bef9c830331fb9cd9de07be3f8a9a001fb04c8a83d11919957f3b18d9b0"
+  },
+  "result_copy": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-04/probability_result.json",
+    "sha256": "c3bd57fd5413070601d57a3d1a786d9d87695f89b04543f6a545538dffe0460d"
+  },
+  "all_512_samples_alpha_beta_logp_absolute_error": 0.0,
+  "unchanged_tolerances": true,
+  "owned_processes_absent": true,
+  "limitations": [
+    "Does not recover missing TRAIN-01 checkpoint",
+    "Does not establish training completion or learning gain",
+    "CPU-only replay remains mismatched; preserve prior reports"
+  ],
+  "next": "Prepare fresh u640 training attempt with sufficient raw evidence capacity and new volume binding."
+}

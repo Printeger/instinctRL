@@ -1,10 +1,14 @@
 {
-  "status": "READY_TO_LAUNCH",
+  "status": "DIAGNOSTIC_COMPLETE_TRAINING_INPUTS_PENDING",
   "inputs": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-04/plan.json",
     "sha256": "bba2289d1c2fab729854b1a57624eca6caee2e434c880d44e47d219f3b723a10"
   },
   "source_commit": "cd4636c0a1459375327bc0d810919774d06c1e35",
   "reason": "Source-derived seeded reset backend flags; no tolerance change",
-  "scientific_acceptance": false
+  "scientific_acceptance": false,
+  "result": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-04/RESULT.json",
+    "sha256": "59f88b4fc97e22d5d84dee895631abff4afda449a11499310f8bd0e48c2fcf07"
+  }
 }

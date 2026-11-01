@@ -1,3 +1,14 @@
+# R6 首批概率回放已通过；准备新训练 attempt
+
+2026-11-01：probability diagnostic04 实际 CUDA 回放通过，512样本 alpha/beta/logp
+最大绝对误差均0。采用源码追踪到的 seeded-reset cuDNN benchmark=True、deterministic=False，
+匹配原 gate 的512批次；原 atol/rtol 未改。回执退出0，所属进程已退出。
+RustDesk 共存实时准入通过，新 native/results 卷身份和容量已核验。
+证据：continuation-20261101/probability-cuda-04/RESULT.json。
+旧 CPU/CUDA 默认设置回放失败原件保留；此通过只证明首批概率重算，不能证明训练完成。
+TRAIN-01 仍为原始证据额度失败、无 checkpoint；下一步新身份从u640重算，
+需要新准确输入/快照/容量预检。配对评价、三流、保留集、独审、模型录像尚未完成。
+
 # R6 原件已恢复：TRAIN-01 原始证据配额失败，无可恢复 checkpoint
 
 2026-11-01：管理员已只读挂载原结果卷，实测 ro/norecovery，原件可读。
