@@ -1,3 +1,12 @@
+# R6 确认首流已从封存日志核对64次更新至u704
+
+2026-11-02：SEED-01B第一阶段updates压缩流完整解码，记录641..704共64次更新。
+首批概率gate PASS，第二阶段updates流尚未封存；尚无最终checkpoint验收或关闭receipt。
+此前顶层文件检查未覆盖嵌套compressed_evidence，不能由顶层缺少日志推断训练未进展。
+见confirmation-128/SEED_01B_PHASE0_PROGRESS.json；继续同一监督进程，不修改输入。
+RustDesk保持连接，holdout未揭晓；完整Goal仍未完成。
+下方保留历史状态。
+
 # R6 首条确认流SEED-01B已进入TRAINING
 
 2026-11-02：资源准入PASS，RustDesk仍保持运行；准确worker2776599/starttime30046493存活。

@@ -1,0 +1,21 @@
+{
+  "status": "PARTIAL_PROGRESS_NOT_ACCEPTANCE",
+  "run_id": "R6-DIRECT-CONFIRM-128-SEED-01B",
+  "sealed_updates": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01B/results/research-r6-training/compressed_evidence/phases/0-10240-11264/learning_log/updates.jsonl.r6z",
+    "sha256": "ea1c365629bcbf2fe0a8387d5ccede804705e88ca2b459b156773d5b33fd3bbf"
+  },
+  "first_update_gate": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01B/results/research-r6-training/pilot_diagnostic/first_update_gate.json",
+    "sha256": "729295fd7f62671558a1a11d94b72baecd2b519edd740395cb6c8b7eecfd690c"
+  },
+  "verified_update_sequence": [
+    641,
+    704
+  ],
+  "completed_update_records": 64,
+  "checkpoint_accepted": false,
+  "second_phase": "ACTIVE_STREAM_NOT_SEALED",
+  "scientific_acceptance": false,
+  "monitoring_correction": "Previous top-level glob did not inspect nested compressed_evidence; lack of top-level updates is not evidence of no training progress."
+}
