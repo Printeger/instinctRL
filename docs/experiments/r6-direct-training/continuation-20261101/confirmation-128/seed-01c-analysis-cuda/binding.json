@@ -1,0 +1,34 @@
+{
+  "launch": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01C/launch.json",
+    "sha256": "298b35b63c26a8ef5ea26d2bbae7dd4a894ccf065021afcfc6ecded9bc3a2bf2"
+  },
+  "modules": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01C/CPU_MODULES.json",
+    "sha256": "c606c9ef8561d56d7b920b00a9443965ab448d47fa29cf023ec2f0337a1bbaf3"
+  },
+  "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+  "native_exit_code": -15,
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01C/receipt.json",
+    "sha256": "f99aa29c9360222a96f91a2a63ec0efd4b8c1a9698bffbc9d84e5a77b635d3d0"
+  },
+  "report": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-analysis-cuda/report.json",
+    "sha256": "fab07ccccd281a8156b8e9064474956a426c1aa6c4c6167d659cf94ede5b7bd8"
+  },
+  "run_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-inputs.json",
+    "sha256": "81c23fc4f2dba391353542150a83222a2937e6e4a8b1d70f51bf5e69af6d118d"
+  },
+  "run_record": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01C/RUN_INPUTS.json",
+    "sha256": "b6b78010521e77c5b0539f45f29af2f4c0c615d773b772901562a1b4ee48fe82"
+  },
+  "schema_version": "r6-direct-bound-analysis/1",
+  "scientific_acceptance": false,
+  "workload_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01C/state.json",
+    "sha256": "0eca8cb1fb9a35e95607eafcf7c7c0719d9190338cefd7b7edd2dd970d89869c"
+  }
+}
