@@ -1,0 +1,31 @@
+{
+  "status": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "evidence": {
+    "report": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis-cuda/report.json",
+      "sha256": "d7575a0dfd41f01e2db680815e23dccceb4501d8c2c756fb3d0be0bf9eca89c5"
+    },
+    "summary": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis-cuda/summary.json",
+      "sha256": "17e3c6918bacf48125d429ed3b3a2091658e23889f6f8d649dad2ebf7e0713ef"
+    },
+    "binding": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis-cuda/binding.json",
+      "sha256": "681e72ec90b8fdf85c10cc01bea89cd3518c9932fc24916ba8b575cab32a66f1"
+    }
+  },
+  "checks": [
+    "Only summary issue_count1->0, probability_gate_recomputed false->true and exact CUDA05 probability evidence changed",
+    "Original CPU mismatch31 preserved",
+    "Checkpoint/Adam/RNG/counters/curriculum/30 streams and limitations unchanged",
+    "Original report42 inputs retained with identical pins and sizes; supplemental282 inputs",
+    "Report-summary agree and binding pins verified",
+    "Cleanup timeout/-15, scientific_acceptance false and learning_gain_established false retained"
+  ],
+  "conclusion": "May proceed to registered development paired evaluation; no learning gain or overall completion claim",
+  "limitations": [
+    "Did not reread all compressed streams",
+    "No GPU launch or file mutation by reviewer"
+  ]
+}

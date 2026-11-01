@@ -1,0 +1,11 @@
+{
+  "status": "REJECTED_BEFORE_RUN_CREATION",
+  "input": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u640-inputs.json",
+    "sha256": "8331b4c6a75aa221f0f0138d390ae31d851fdbe870809237f628f64e05026dce"
+  },
+  "error": "DIRECT_STORAGE_PREDECESSOR",
+  "gpu_started": false,
+  "reservation_created": false,
+  "reason": "Most recent result-volume science reservation is TRAIN-02; diagnostic05 has no storage_reservation_id and cannot substitute its receipt."
+}

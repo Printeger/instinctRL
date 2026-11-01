@@ -1,19 +1,19 @@
 {
   "independent_review": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_02_INDEPENDENT_REVIEW.json",
-    "sha256": "8aaf13522f37263681421b861e10b6e61b61c67db7f4dbb99bcfb8b087d2a95e"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_02_SUPPLEMENTAL_INDEPENDENT_REVIEW.json",
+    "sha256": "0b0086e476dba8a179b0141165475088b692e940ad51c3fdaf57aea95e4270bd"
   },
   "inputs": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u640-inputs.json",
-    "sha256": "8331b4c6a75aa221f0f0138d390ae31d851fdbe870809237f628f64e05026dce"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u640-02-inputs.json",
+    "sha256": "85f8205487c9463f5a6f648f958a97ce38b395ddf13e6069ed53aa7c820dff62"
   },
   "nontraining_transitions": 193600,
   "operation": "evaluate",
   "preflight": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/U640_PREFLIGHT.json",
-    "sha256": "73e8d7944fdbb2e165f693a6c3a9a8d1652b681310190dcd14c0e42b7968a24c"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/U640_02_PREFLIGHT.json",
+    "sha256": "30af0418ceb161780e340791231e41e2513b8a9ebd4136432f3d9442880aebb0"
   },
-  "run_id": "R6-DIRECT-PAIR-U640-01",
+  "run_id": "R6-DIRECT-PAIR-U640-02",
   "scientific_acceptance": false,
   "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/paired-01",
   "source_commit": "fb35c16e390321883dea68215a1285ef35ca4c06",
