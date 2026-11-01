@@ -1,3 +1,13 @@
+# R6 确认首流启动前失败；监督器解释器边界修复待审
+
+2026-11-02：新卷挂载及科学worker CPU预检通过。SEED-01随后在系统Python
+run_resources重复科学验证时缺少torch，退出1；空run目录保留，无预留/launch/receipt/训练。
+SEED_01_PRELAUNCH_REJECTION.json记录原输入及准确失败边界；不会重用旧run ID。
+修复保持科学worker完整验证，在其成功后复核输入hash，系统监督器仅做资源计账。
+6项系统Python CPU测试通过，独立审核待完成；将固定新源码快照和SEED-01B输入。
+未安装依赖或修改runtime；RustDesk保持连接，holdout未揭晓，三流及最终交付未完成。
+下方保留历史状态。
+
 # R6 第一条128更新确认训练 READY_TO_LAUNCH
 
 2026-11-02：新native/results卷已实际挂载并通过worker CPU预检，管理员阻塞解除。

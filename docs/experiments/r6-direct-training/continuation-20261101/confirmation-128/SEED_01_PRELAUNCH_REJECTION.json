@@ -1,0 +1,22 @@
+{
+  "attempt_created": false,
+  "error": "ModuleNotFoundError: No module named 'torch'",
+  "exit_code": 1,
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01-inputs.json",
+    "sha256": "0187ac35f51284740118bfbff5fbc516b642c1af7549523ffef36525d3ee06f8"
+  },
+  "launch_created": false,
+  "location": "system Python supervisor run_resources -> confirmation selection evidence -> baseline checkpoint PPO verification",
+  "native_directory_created": false,
+  "next_run_identity": "R6-DIRECT-CONFIRM-128-SEED-01B",
+  "planned_repair": "Validate exact contract with pinned scientific worker, recheck input hashes, perform only accounting in system supervisor.",
+  "receipt_created": false,
+  "reservation_created": false,
+  "run_directory_created_empty": true,
+  "scientific_interpreter_has_pidfd_open": false,
+  "status": "FAILED_BEFORE_RESERVATION_AND_WORKER_LAUNCH",
+  "system_interpreter_retained_for_pidfd": true,
+  "training_started": false,
+  "worker_cpu_preflight": "PASS_CPU_DIRECT_PREFLIGHT_NO_GPU"
+}

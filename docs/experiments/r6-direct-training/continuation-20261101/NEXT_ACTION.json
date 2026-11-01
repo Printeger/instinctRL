@@ -1,38 +1,10 @@
 {
-  "contract": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01-contract.json",
-    "sha256": "7b2f42c40416cbb4abf914e8bea5b0c111d58758de8076110337e512157d4a6c"
+  "evidence": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_01_PRELAUNCH_REJECTION.json",
+    "sha256": "140a6298704e78fd4f93ba84bd5ee0af20340deb53450ebc3921d298f1153b15"
   },
-  "freeze": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/freeze.json",
-    "sha256": "78492061175b41b4bc94b58211ad6411fab4c6e3f4bed5142b0e7f8ce0af1c60"
-  },
-  "input_tag": "r6-direct-confirm-128-seed-01-inputs",
-  "inputs": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01-inputs.json",
-    "sha256": "0187ac35f51284740118bfbff5fbc516b642c1af7549523ffef36525d3ee06f8"
-  },
-  "operation": "train",
-  "predecessor_receipt": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U768-01/receipt.json",
-    "sha256": "f98d57f031abb16421b1f7b7bfb26bea02424010199766dfc7f48777ba4ea4c5"
-  },
-  "preflight": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_01_PREFLIGHT.json",
-    "sha256": "d6870bab6666794aa1dbd9c7516b99664592558c495b83f22e55070b7e73c693"
-  },
-  "ready_to_launch": true,
-  "resource_policy": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
-    "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
-  },
-  "run_id": "R6-DIRECT-CONFIRM-128-SEED-01",
-  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/confirmation-128-01",
-  "source": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-01.json",
-    "sha256": "1b9387283bf02a355b3637fe7a3e43b9498368d5b14c9582238761c383c6c5c9"
-  },
-  "status": "READY_TO_LAUNCH",
-  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
-  "training_started": false
+  "next_run_id": "R6-DIRECT-CONFIRM-128-SEED-01B",
+  "previous_run": "R6-DIRECT-CONFIRM-128-SEED-01",
+  "ready_to_launch": false,
+  "status": "PRELAUNCH_REPAIR_REVIEW_PENDING"
 }

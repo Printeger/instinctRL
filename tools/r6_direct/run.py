@@ -20,6 +20,11 @@ LOG_CAP=64*1024**2
 def run_resources(contract):
     from training_workloads.unified_h1.direct_contract import validate_runtime_contract
     contract=validate_runtime_contract(contract)
+    return resources_after_validation(contract)
+
+
+def resources_after_validation(contract):
+    """Pure accounting; caller must have checked the exact scientific contract."""
     budget=contract['budgets']
     resources=dict(live_starts=1,simulator_initializations=1,
         nontraining_transitions=budget['nontraining_transitions'],
@@ -32,6 +37,13 @@ def run_resources(contract):
         if contract['parameters']['r6_training_plan']['phase']=='development' and contract['parameters']['r6_training_plan']['initialization']['kind']=='COMMON_U640_NEW_STREAM':
             resources['major_scientific_candidates']=1
     return resources
+
+
+def preflight_resources(argv, snapshot, env, inputs_path, input_pin, contract_pin, contract):
+    subprocess.run(argv+['--check'],cwd=snapshot,env=env,check=True,timeout=180)
+    if pin(inputs_path)!=input_pin or pin(contract_pin['path'])!=contract_pin:
+        raise ValueError('DIRECT_PREFLIGHT_INPUT_DRIFT')
+    return resources_after_validation(contract)
 
 
 def reserve(ledger, run_id, resources, *, purpose='development', resource_policy=None):
@@ -205,11 +217,13 @@ def main():
                 if receipt['status']!='CLOSED' or receipt['remaining']:raise RuntimeError('DIRECT_PRIOR_CLEANUP')
                 for owner in [receipt['parent'],*receipt['owned_processes']]:
                     if process_identity(owner['pid'])==owner:raise RuntimeError('DIRECT_PRIOR_STILL_LIVE')
-        subprocess.run(argv+['--check'],cwd=snapshot,env=env,check=True,timeout=180)
+        # Scientific validation runs in the pinned worker interpreter (torch).
+        # Keep pidfd supervision in system Python without importing scientific
+        # dependencies again. Recheck exact bytes before trusting that validation.
+        resources=preflight_resources(argv,snapshot,env,args.inputs,input_pin,plan['contract'],contract)
         for key in ('attempt_dir','native_dir'):
             if Path(plan[key]).exists():raise FileExistsError(plan[key])
         directory.mkdir(parents=True,exist_ok=False)
-        resources=run_resources(contract)
         purpose='confirmation_delivery' if contract['operation'] in ('final','render') or (contract['operation']=='train' and contract['parameters']['r6_training_plan']['phase']=='confirmation') else 'development'
         final_selection=contract['parameters'].get('final_selection')
         if final_selection is not None and any(r.get('final_assignment')==final_selection for r in ledger['new_reservations']):

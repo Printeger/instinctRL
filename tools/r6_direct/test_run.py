@@ -6,10 +6,33 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+import subprocess
 from tools.r6_direct.run import supervise,reserve
 
 
 class RunnerTests(unittest.TestCase):
+    def test_scientific_preflight_before_pure_system_accounting(self):
+        from tools.r6_direct.run import preflight_resources
+        from tools.r6_direct.import_legacy import pin
+        contract=json.loads(Path('docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01-contract.json').read_text())
+        with tempfile.TemporaryDirectory() as tmp:
+            inputs=Path(tmp)/'inputs.json';inputs.write_text('{}')
+            cp=Path(tmp)/'contract.json';cp.write_text(json.dumps(contract))
+            ip=pin(inputs);bound=pin(cp)
+            def call(code):
+                return preflight_resources([sys.executable,'-c',code],tmp,os.environ.copy(),inputs,ip,bound,contract)
+            # CPU worker stub: process exit and exact pins are real. Scientific
+            # contract validation itself is covered by the scientific tests.
+            value=call('pass')
+            self.assertEqual(value['training_transitions'],65536)
+            self.assertNotIn('major_scientific_candidates',value)
+            with self.assertRaises(subprocess.CalledProcessError):call('raise SystemExit(2)')
+            with self.assertRaisesRegex(ValueError,'PREFLIGHT_INPUT_DRIFT'):
+                call("from pathlib import Path;Path('contract.json').write_text('{}')")
+            cp.write_text(json.dumps(contract))
+            with self.assertRaisesRegex(ValueError,'PREFLIGHT_INPUT_DRIFT'):
+                call("from pathlib import Path;Path('inputs.json').write_text('changed')")
+
     def test_child_exit_and_no_overwrite(self):
         with tempfile.TemporaryDirectory() as tmp:
             result=supervise([sys.executable,'-c','import sys; assert sys.stdin.buffer.read(1)==b"1"; print("CPU child")'],
