@@ -1,0 +1,72 @@
+{
+  "input": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-inputs.json",
+    "sha256": "706171478579feb03abc5a505cab78a55f0e7511d9ad90da2519bdb79beb88ff"
+  },
+  "launch": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-02/launch.json",
+    "sha256": "53fb265ee0aefaa1cfb0ee7153c43e97da1f2811199590a15c08f228982b21e7"
+  },
+  "process_checks": [
+    {
+      "current": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3015239,
+        "starttime": "31015392"
+      },
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3015239,
+        "starttime": "31015392"
+      }
+    },
+    {
+      "current": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3017018,
+        "starttime": "31022522"
+      },
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3017018,
+        "starttime": "31022522"
+      }
+    }
+  ],
+  "run_id": "R6-DIRECT-CONFIRM-128-SEED-02",
+  "state_at_observation": {
+    "argv": [
+      "/usr/bin/bwrap",
+      "--die-with-parent",
+      "--bind",
+      "/",
+      "/",
+      "--dev-bind",
+      "/dev",
+      "/dev",
+      "--bind",
+      "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-CONFIRM-128-SEED-02/ipc",
+      "/dev/shm",
+      "--",
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "tools.r6_direct.worker",
+      "--inputs",
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-inputs.json"
+    ],
+    "child": {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3017018,
+      "starttime": "31022522"
+    },
+    "parent": {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3015239,
+      "starttime": "31015392"
+    },
+    "started_unix": 1793560580.825198,
+    "status": "RUNNING"
+  },
+  "training_complete": false
+}
