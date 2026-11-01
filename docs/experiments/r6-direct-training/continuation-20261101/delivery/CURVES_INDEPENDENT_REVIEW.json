@@ -1,0 +1,35 @@
+{
+  "status": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "manifests": {
+    "seed-01c-curves": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/seed-01c-curves/manifest.json",
+      "sha256": "9de5d49a1bf0e9e8ccca36490c90572938c201fc01ca0e88c860281d39372a98"
+    },
+    "seed-02-curves": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/seed-02-curves/manifest.json",
+      "sha256": "3711b96266bf45314c3ab785ce0edfd34fbc504b386713e01febc2ac2d269e52"
+    },
+    "train-02-curves": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/train-02-curves/manifest.json",
+      "sha256": "0c27a97345f762391138e29484a3a22467a665de84bdac1ed9be539c25a3e3f1"
+    }
+  },
+  "exporter": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/export_training_curves.py",
+    "sha256": "546c2674541efe2597c1dd3d625df7b30374fce5b84c4b22218c281494db1518"
+  },
+  "findings": [
+    "Independently decoded six sealed update streams and compared all 384 CSV rows field by field; exact agreement and 641..768 coverage for each run.",
+    "All manifest report, exporter, compressed stream, CSV and PNG pins verified.",
+    "Labels identify return targets, values, advantages and explained variance; no episodic reward or evaluation success claim.",
+    "Curriculum boundary 704.5 correct; no smoothing, filtering or fixed axis clipping.",
+    "Seed02 plot visually inspected including negative explained variance; seed02 remains bound to original CPU index17 report."
+  ],
+  "limitations": [
+    "Descriptive artifact review only, not independent scientific acceptance of training.",
+    "Per-plot axes auto-scale; use CSV values for cross-run comparison.",
+    "Original CPU probability differences and native cleanup failures remain; no learning gain established.",
+    "No holdout or live third-stream data read; no GPU launched and no files written by reviewer."
+  ]
+}
