@@ -1,0 +1,61 @@
+{
+  "checkpoint": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/checkpoints/u768.pt",
+    "sha256": "6a616a2582190acdf037bf454b5ae3d921120da3ef85916dff5763de9137e07a"
+  },
+  "decision": "PASS_SCOPED",
+  "evidence_base": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128",
+  "evidence_sha256": {
+    "SEED_03_CLOSURE.json": "3f5f2852c9aacc0d1741e40df157b4106af5cb7d499a7e3bce5da6827392b6d3",
+    "seed-03-inputs.json": "d1b2831297ab6631e58920baab2c98952b80817b590cc53ff598934b01c92937"
+  },
+  "files_modified_by_reviewer": false,
+  "findings": {
+    "actor_critic_adam_load_pass": true,
+    "actor_optimizer_steps": 1024,
+    "adam_parameter_counts": {
+      "actor": 16,
+      "critic": 10
+    },
+    "charged_seconds": 4075,
+    "checkpoint_adam_step": 6144,
+    "checkpoint_cumulative_transitions": 393216,
+    "checkpoint_independently_loaded_on_cpu": true,
+    "checkpoint_policy_step": 12288,
+    "checkpoint_update": 768,
+    "checkpoint_writes": 1,
+    "completed_updates": 128,
+    "critic_optimizer_steps": 1024,
+    "initialization": "COMMON_U640_NEW_STREAM",
+    "recipe_hash_matches_plan": true,
+    "recorded_process_identities_gone": 6,
+    "start_update": 640,
+    "target_update": 768,
+    "training_seed": 2026102204,
+    "training_transitions": 65536
+  },
+  "gpu_started": false,
+  "holdout_read": false,
+  "limitations": [
+    "Cleanup timeout and exit -15 retained",
+    "Parseable CPU RNG payload does not establish CUDA RNG semantics or strict restore",
+    "No optimizer step, GPU sampling or physical verification performed",
+    "No learning gain or final scientific acceptance claim"
+  ],
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-03/receipt.json",
+    "sha256": "f47ceef8a62aea58b7613b8cc2a60abd897df1cbc9bdb9af5ba68c973cdd6631"
+  },
+  "reviewer": "/root/baseline_scientific_review",
+  "run_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+  "scientific_acceptance": false,
+  "scope": "Closed receipt, counters and independently CPU-loaded checkpoint; full analysis pending",
+  "unresolved": [
+    "Full report, summary and binding absent at independent review time",
+    "Complete streams, first-rollout probability and initialization RNG evidence pending"
+  ],
+  "workload_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/state.json",
+    "sha256": "1696d57e9e48e852a922821f114fcbdaba9fbe1eacea54cde5672de28d3ec193"
+  }
+}
