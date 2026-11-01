@@ -1,3 +1,16 @@
+# 当前开发：Codex 直接开发；R6 后续链脱离 rlflow（CPU 验证通过）
+
+2026-11-01：当前入口为 `tools/r6_direct/README.md`。训练后分析、候选评价、三随机流确认、
+最终评价/汇总和录像提取/渲染均接到本地契约；不依赖旧 Store、controller 状态、逐作业模型预审或聊天 RPC。
+直接链176项CPU检查及6项子检查通过，另158项旧入口兼容检查通过；默认CPU runner的13个模块全部通过。
+证据：`r6-direct-training/CPU_DECOUPLING_CHECK_20261101.json` 与 `NO_RLFLOW_CPU_AUDIT_20261101.json`。
+旧源码、原始证据、预算和未释放预留保留；安全/科学边界不变。本次仅代码与 CPU 检查，不启动训练/仿真/GPU 查询。
+
+纠正旧首页的时间状态：本地 `R6-DIRECT-TRAIN-01` 回执已经 CLOSED，记录 DIRECT_CLEANUP_TIMEOUT/-15、
+remaining=[]，约2571秒；不能继续按“未发车”重启同一作业。结果卷当前未挂载到原位置，完整训练计数及模型
+仍待原件核验；本轮不挂载、不改旧回执或 ledger，不声称已完成训练验收。
+下方是按时间保留的历史状态，不是当前动作指令。
+
 # R6 首段训练：准确输入已冻结，CPU 预检通过
 
 2026-10-22：源码 a032dd7c，detached snapshots/train-01（666033513 bytes）；TRAIN_RUN_INPUTS_01.json 全部源/资产/契约/空间CPU预检通过。计划 u640→u768，新增128 updates/65536 transitions/1 checkpoint，原PPO与奖励/ICS参数不变；首次分级课程原任务回放加轻噪声/有限扰动，不训练延迟初帧。

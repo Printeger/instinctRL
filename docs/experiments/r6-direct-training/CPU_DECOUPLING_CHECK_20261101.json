@@ -1,0 +1,284 @@
+{
+  "schema_version": "r6-direct-decoupling-validation/1",
+  "date": "2026-11-01",
+  "status": "PASS_CPU_SCOPE",
+  "direct_checks": 176,
+  "direct_subtests": 6,
+  "legacy_compatibility_checks": 158,
+  "count_note": "Direct 12 system + 157 science + 7 additional confirmation counterexamples; follow-up overlaps and default-runner repetitions not added.",
+  "checks": [
+    {
+      "log": "system.txt",
+      "python": "/usr/bin/python3",
+      "legacy_path_explicit": false,
+      "output": "............                                                             [100%]\n12 passed in 0.99s\n"
+    },
+    {
+      "log": "science.txt",
+      "python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "legacy_path_explicit": false,
+      "output": ".................................................................. [ 42%]\n........................................................................ [ 87%]\n...................                                                      [100%]\n157 passed, 6 subtests passed in 31.26s\n"
+    },
+    {
+      "log": "confirmation-followup.txt",
+      "python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "legacy_path_explicit": false,
+      "output": "..........                                                               [100%]\n10 passed in 0.14s\n"
+    },
+    {
+      "log": "direct-final-followup.txt",
+      "python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "legacy_path_explicit": false,
+      "output": "..............                                                           [100%]\n14 passed in 0.98s\n"
+    },
+    {
+      "log": "legacy-science-final2.txt",
+      "python": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "legacy_path_explicit": true,
+      "output": "........................................................................ [ 56%]\n........................................................                 [100%]\n128 passed in 2.60s\n"
+    },
+    {
+      "log": "legacy-system-final.txt",
+      "python": "/usr/bin/python3",
+      "legacy_path_explicit": true,
+      "output": "..............................                                           [100%]\n30 passed in 0.57s\n"
+    }
+  ],
+  "default_runner": {
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+      "CUDA_VISIBLE_DEVICES": "",
+      "PYTHONPATH": "/home/mint/rl_dev/instinctRL-dev:/home/mint/rl_dev/instinctRL-dev/isaaclab-training"
+    },
+    "results": [
+      {
+        "module": "tools/r6_direct/test_backend.py",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_backend.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_backend.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 0.8148226959747262
+      },
+      {
+        "module": "tools/r6_direct/test_confirmation.py",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_confirmation.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_confirmation.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 0.21388567797839642
+      },
+      {
+        "module": "tools/r6_direct/test_continuation.py",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_continuation.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_continuation.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 1.2657450249535032
+      },
+      {
+        "module": "tools/r6_direct/test_contract.py",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_contract.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_contract.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 0.11368966801092029
+      },
+      {
+        "module": "tools/r6_direct/test_evaluation_reward.py",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_evaluation_reward.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_evaluation_reward.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 0.9152099050115794
+      },
+      {
+        "module": "tools/r6_direct/test_final.py",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_final.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_final.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 0.16378242301288992
+      },
+      {
+        "module": "tools/r6_direct/test_import_legacy.py",
+        "argv": [
+          "/usr/bin/python3",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_import_legacy.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_import_legacy.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 0.11383436899632215
+      },
+      {
+        "module": "tools/r6_direct/test_ipc.py",
+        "argv": [
+          "/usr/bin/python3",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_ipc.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_ipc.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 0.11398320697480813
+      },
+      {
+        "module": "tools/r6_direct/test_lifecycle.py",
+        "argv": [
+          "/usr/bin/python3",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_lifecycle.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_lifecycle.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 0.11388022697065026
+      },
+      {
+        "module": "tools/r6_direct/test_render.py",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_render.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_render.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 2.116963186999783
+      },
+      {
+        "module": "tools/r6_direct/test_run.py",
+        "argv": [
+          "/usr/bin/python3",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_run.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_run.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 1.0654031389858574
+      },
+      {
+        "module": "tools/r6_direct/test_settle.py",
+        "argv": [
+          "/usr/bin/python3",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_settle.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_settle.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 0.11397267802385613
+      },
+      {
+        "module": "tools/r6_direct/test_training.py",
+        "argv": [
+          "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/r6_direct/test_training.py",
+          "--junitxml=/tmp/instinctrl-no-rlflow-20261101/default-runner/test_training.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 1.5660879269707948
+      }
+    ]
+  },
+  "initial_failures": [
+    "Mixed legacy suites require Torch and jsonschema in different existing interpreters; split into appropriate existing environments, no installation.",
+    "Legacy fixture missing explicit selection schema and monkeypatch targets exposed by lazy imports corrected; final suites pass.",
+    "New publication fixture referenced absent file and final fixture reused run IDs; corrected fixtures, negative gates retained."
+  ],
+  "no_gpu_queries": true,
+  "no_simulation": true,
+  "no_training": true,
+  "no_dependency_installation": true,
+  "scientific_acceptance": false,
+  "untouched": [
+    "R6 RESOURCE_LEDGER.json pre-existing change",
+    "untracked historical/live evidence",
+    "frozen runtime",
+    "actor/PPO/reward/metric implementations"
+  ],
+  "implementation_commit": "18ba7dd1f6a8c5f9bbcc774a309f8695e52f328c",
+  "source_manifest_check": {
+    "status": "PASS_CPU_READ_ONLY",
+    "source_count": 219,
+    "required_paths": [
+      "tools/r6_evidence.py",
+      "tools/r6_direct/analyze.py",
+      "tools/r6_direct/collect.py",
+      "tools/r6_direct/render.py",
+      "tools/r6_training_analysis.py",
+      "tools/render_r6_isaac_video.py",
+      "training_workloads/unified_h1/direct_selection.py"
+    ],
+    "scientific_config_sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19",
+    "experiment_manifest_written": false
+  }
+}

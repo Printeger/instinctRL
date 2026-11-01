@@ -16,7 +16,10 @@
 项目状态的唯一阅读入口为 `docs/PROJECT_STATUS.md`；机器状态为 `coordination/PROJECT_STATE.json`。
 历史 Commander/Executor 状态原文归档，不能当作新执行许可。
 
-Commander 管目标、契约、预算和独立验收；Builder 管任务内实现、必要验证及交付。
-咨询/流程维护不自动获得角色。沿用 V3 的 MUST_FIX、NON_BLOCKING、FOLLOW_UP、
+当前开发由 Codex 直接处理；Commander/Builder 是历史职责名称，不要求角色调度器或 rlflow。
+本地训练、评价、分析入口见 `tools/r6_direct/README.md`；旧 Store/逐作业模型预审/
+聊天会话或 RPC 状态不构成当前开发和直接运行的前置条件。
+沿用 V3 的 MUST_FIX、NON_BLOCKING、FOLLOW_UP、
 CONTRACT_DECISION 分类，实质缺陷按原任务局部修复，额外需求进入后续任务。
-产品、actor、方法、runtime 和资源边界不因单分支整理改变。当前没有新 live 或训练授权。
+产品、actor、方法、runtime 和资源边界不因工作流调整改变。
+live/训练是否授权按当前用户任务判断；2026-11-01 去耦任务仅执行实现与 CPU 检查。

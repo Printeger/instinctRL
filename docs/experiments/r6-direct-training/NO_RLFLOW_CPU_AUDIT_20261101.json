@@ -1,0 +1,133 @@
+{
+  "schema_version": "r6-no-rlflow-cpu-audit/1",
+  "date": "2026-11-01",
+  "status": "PASS_CPU_SCOPE",
+  "entry_modules": [
+    "tools.r6_direct.run",
+    "tools.r6_direct.worker",
+    "tools.r6_direct.analyze",
+    "tools.r6_direct.prepare",
+    "tools.r6_direct.collect",
+    "tools.r6_direct.render",
+    "tools.r6_direct.lifecycle",
+    "tools.r6_direct.evidence",
+    "tools.analyze_r6_evaluation",
+    "tools.analyze_r6_training",
+    "tools.analyze_r6_candidate",
+    "tools.analyze_r6_final",
+    "tools.prepare_r6_video_trajectories",
+    "tools.render_r6_isaac_video",
+    "tools.r6_video_presentation",
+    "tools.r6_video_trajectory",
+    "tools.r6_final_collection"
+  ],
+  "loaded_module_count": 182,
+  "forbidden_modules": [],
+  "forbidden_pythonpath": [],
+  "old_control_modules_loaded": false,
+  "negative_import_result": "DIRECT_FORBIDDEN_DEPENDENCY: rlflow",
+  "static_entry_sources": [
+    {
+      "path": "tools/analyze_r6_candidate.py",
+      "sha256": "5c0bad218f673baeeba640dafef18306212e5a1232ee91fccb00e27967b820a4"
+    },
+    {
+      "path": "tools/analyze_r6_evaluation.py",
+      "sha256": "8f45da5ce157c2b779aa307225fd6d263c3365c0f2d8e4d8ed44c7bc918ec4fa"
+    },
+    {
+      "path": "tools/analyze_r6_final.py",
+      "sha256": "2f32e067a9ee64dd7a6d91ea3a39ce09c88b473d379477c1ce52318aef5ec356"
+    },
+    {
+      "path": "tools/analyze_r6_training.py",
+      "sha256": "40931b3e5b5fc7bd94e9b5b19161f4095562ca8a194cd71033945e7f9e4d7d72"
+    },
+    {
+      "path": "tools/prepare_r6_video_trajectories.py",
+      "sha256": "5c50aa4eb2f5d95baa99e6a704435aa7480bfe77154e6cea40e791024743015d"
+    },
+    {
+      "path": "tools/r6_direct/__init__.py",
+      "sha256": "da56f7bac5c4016efa165cd918ca3d0be73608b9c5a3eeb77cc2f7f4cdb88bc0"
+    },
+    {
+      "path": "tools/r6_direct/analyze.py",
+      "sha256": "a3b0687e329695bc77d90a4885254d894a0208d0b8bbf96cb564fe22773b9b9d"
+    },
+    {
+      "path": "tools/r6_direct/collect.py",
+      "sha256": "2e537aac5da9344e6d02bc3867b5258c791fdeaf6b3df6bf8133c5d528e49316"
+    },
+    {
+      "path": "tools/r6_direct/cuda_diagnostic.py",
+      "sha256": "6a0975c225f4bb41fc8585b0cbc63df91802504d20629c83030053afbca0599c"
+    },
+    {
+      "path": "tools/r6_direct/dependencies.py",
+      "sha256": "ff52205247b162e7330338cca061e042d4e3f6fc7345c0f61713e6caa3f6521c"
+    },
+    {
+      "path": "tools/r6_direct/evidence.py",
+      "sha256": "791af92d00e9268567ecfe340c0d7d0e4c49649241c6c6228b438867cb99401b"
+    },
+    {
+      "path": "tools/r6_direct/import_legacy.py",
+      "sha256": "b3da703c7253c34ff7bbe8c4ec3a4166c5d96d66e1c9498a1fda00e633111364"
+    },
+    {
+      "path": "tools/r6_direct/io.py",
+      "sha256": "2b0f77eb3a1d678d37fdaa0212dee9ca2e3e29b44ff36ea7e61129fbd230bd8a"
+    },
+    {
+      "path": "tools/r6_direct/lifecycle.py",
+      "sha256": "cd49537944e84f61b7405381861a5622f8201602cfb73fb2d25d24fd4015e902"
+    },
+    {
+      "path": "tools/r6_direct/prepare.py",
+      "sha256": "c846f5280a9bb4d65ebaceb66e55d7bf3d198e504cc827bac08050bd1c0b0f3a"
+    },
+    {
+      "path": "tools/r6_direct/render.py",
+      "sha256": "6208ee88d1d587728b13d1c9252eed1f99034d542565276a2a1a4b75324272cd"
+    },
+    {
+      "path": "tools/r6_direct/run.py",
+      "sha256": "9b55727ce873341df2ded04a1b8f2bace2e8b15eee2d0af4e49900790ebf109a"
+    },
+    {
+      "path": "tools/r6_direct/settle.py",
+      "sha256": "674fa48b06603f5c7ac34084dd5567718bfd1dd3fc057b9ab14585bb5ed94aa4"
+    },
+    {
+      "path": "tools/r6_direct/source.py",
+      "sha256": "f990c164a3a984d634bfa43a6efce3933365c1472eec4e4ce88e7a5461298bef"
+    },
+    {
+      "path": "tools/r6_direct/worker.py",
+      "sha256": "7620614e7048366eae26c3bfd29cf84a418d7211283eb8b8aead78820b4adb07"
+    },
+    {
+      "path": "tools/r6_final_collection.py",
+      "sha256": "b3d11c6ac37cc25b6e774c3a563581cb17c6abe0cd6a085ee220418164186aa9"
+    },
+    {
+      "path": "tools/r6_video_presentation.py",
+      "sha256": "4e13b1589ea589c779b06d26507c4ffb2b7003171d93a63abfd12f922920526e"
+    },
+    {
+      "path": "tools/r6_video_trajectory.py",
+      "sha256": "609b1d1766ea7b9a668b19da638864ff62c3cf0c1a39f40844daa96f47fc439c"
+    },
+    {
+      "path": "tools/render_r6_isaac_video.py",
+      "sha256": "51d052a16869962f482871d3a46de2d0c43601d0e8867ee3a4cac5a08ec2b7dd"
+    }
+  ],
+  "limitations": [
+    "CPU import/static and fixture integration checks only; no simulation, training or GPU query.",
+    "Archived compatibility tests explicitly import rlflow in separate processes; they are not part of the direct chain.",
+    "Fresh frozen inputs and live validation are still required before using changed code for an experiment."
+  ],
+  "implementation_commit": "18ba7dd1f6a8c5f9bbcc774a309f8695e52f328c"
+}
