@@ -27,7 +27,7 @@ def validate_baseline(parameters, *, selected=None, final=False):
     require(p['group']=='R1' and type(p['training_seed']) is int and p['training_seed']==expected_seed
             and type(p['evaluation_seed']) is int and p['evaluation_seed']==20260909,'ORIGINAL_SEEDS')
     require(type(p['wall_seconds']) is int and 1<=p['wall_seconds']<=3600,'WALL')
-    require(type(p['output_cap_bytes']) is int and 0<p['output_cap_bytes']<=20250099712,'OUTPUT_CAP')
+    require(type(p['output_cap_bytes']) is int and 0<p['output_cap_bytes'],'OUTPUT_CAP')
     baseline(p)  # Rehashes actual frozen u640 and checks ICS .15 and baseline identity.
     r=p['r6']; require(isinstance(r,dict) and set(r)==R6_FIELDS,'R6_FIELDS')
     require(r['protocol']['sha256']==PROTOCOL_SHA,'PROTOCOL_IDENTITY')
@@ -80,7 +80,7 @@ def training_runtime_contract(parameters):
     require(type(p['r6_expected_mass_kg']) in (int,float)
             and abs(p['r6_expected_mass_kg']-1.181517923)<1e-8,'MASS')
     require(type(p['output_cap_bytes']) is int
-            and plan['storage']['payload_bytes']<=p['output_cap_bytes']<=20250099712,'OUTPUT_CAP')
+            and plan['storage']['payload_bytes']<=p['output_cap_bytes'],'OUTPUT_CAP')
     validate_source_identity(p['source_identity'])
     require(p['source_identity']==pinned_json(plan['recipe'])['source_identity'],'TRAINING_SOURCE')
     return dict(schema_version='r6-local-runtime-contract/1',execution_mode='local-direct',
@@ -143,7 +143,7 @@ def render_runtime_contract(parameters):
     p=copy.deepcopy(parameters)
     require(isinstance(p['experiment_id'],str) and re.fullmatch(r'R6-DIRECT-[A-Z0-9-]{1,80}',p['experiment_id']),'IDENTITY')
     require(type(p['wall_seconds']) is int and 1<=p['wall_seconds']<=3600,'WALL')
-    require(type(p['output_cap_bytes']) is int and 1024**3<=p['output_cap_bytes']<=20250099712,'OUTPUT_CAP')
+    require(type(p['output_cap_bytes']) is int and 1024**3<=p['output_cap_bytes'],'OUTPUT_CAP')
     load(p['extraction'])  # CPU rechecks every extracted trajectory and original pin.
     budgets=dict(live_process_starts=1,simulator_initializations=1,wall_seconds=p['wall_seconds'],
                  **{k:0 for k in ('training_transitions','nontraining_transitions','optimizer_updates',

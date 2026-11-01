@@ -35,6 +35,15 @@ def test_local_training_reserves_actual_updates_and_checkpoints(case):
     with pytest.raises(ValueError):run_resources(wrong)
 
 
+def test_new_volume_size_is_not_limited_to_historical_volume(case):
+    contract=local_contract(case.plan,case.identity)
+    parameters=copy.deepcopy(contract['parameters'])
+    parameters['output_cap_bytes']=int(33.5*1024**3)+64*1024**2
+    assert training_runtime_contract(parameters)['parameters']==parameters
+    parameters['output_cap_bytes']=parameters['r6_training_plan']['storage']['payload_bytes']-1
+    with pytest.raises(ValueError,match='OUTPUT_CAP'):training_runtime_contract(parameters)
+
+
 def test_local_plan_is_explicit_and_cannot_enter_legacy_or_confirmation(case):
     contract=local_contract(case.plan,case.identity)
     with pytest.raises(ValueError,match='LEGACY_PLAN_REQUIRED'):
