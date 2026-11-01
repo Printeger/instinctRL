@@ -1,0 +1,22 @@
+{
+  "decision": "PASS_R6_FINAL_FREEZE",
+  "files_modified_by_reviewer": false,
+  "findings": [
+    "Four actual checkpoint pins and three reviewed supplemental analysis/report bindings verified",
+    "Three plan hashes, recipe/freeze02, seed order2026102202/2203/2204 and common u640 initialization verified",
+    "Each stream128updates,30/30complete streams,issues empty and actual terminalu768",
+    "Terminal selection does not use holdout; recipe prefix, seed-only amendment and source rebinding rely on prior independent reviews"
+  ],
+  "freeze_sha256": "7a6750ae31cb14e067fc722c9d790765bc28d8df54e0b4458f4dcf579776cb15",
+  "gpu_started": false,
+  "holdout_read": false,
+  "limitations": [
+    "Reused prior model/Adam, probability and lineage audits; did not repeat all raw replay",
+    "Original CPU discrepancies, cleanup exceptions, RNG semantics and physical authenticity limits retained",
+    "No learning gain, final evaluation success or R6 completion claim",
+    "No holdout/nonce/realization read by reviewer; exact freeze/review Git publication required before reveal"
+  ],
+  "must_fix": [],
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "Exact baseline and three terminal models frozen for registered final evaluation"
+}
