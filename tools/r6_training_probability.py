@@ -1,9 +1,10 @@
-"""CPU replay of the exact initial actor on retained first-rollout inputs.
+"""Replay of the exact initial actor on retained first-rollout inputs.
 
+CPU is the offline default; explicit CUDA replay belongs in a supervised job.
 This does not restore Adam, reproduce GPU sampling, or establish learning gain.
 """
 
-def recompute(origin,data,plan):
+def recompute(origin,data,plan,*,device='cpu'):
     import torch
     from instinctlab.training.networks import HistoryActor,NetworkConfig,validate_policy
     from instinctlab.training.checkpoint import _validate_model_state
@@ -11,6 +12,7 @@ def recompute(origin,data,plan):
     from training_workloads.unified_h1.pilot_contract import probability_distribution_gate
     def require(ok,reason):
         if not ok:raise ValueError(reason)
+    require(device in ('cpu','cuda:0'),'PROBABILITY_REPLAY_DEVICE')
     initial=plan['initialization']
     require(origin['version']==CHECKPOINT_H1_VERSION and origin['schema']==CHECKPOINT_H1_SCHEMA,'PROBABILITY_ORIGIN_SCHEMA')
     require(origin['source_identity']==initial['source_identity'] and origin['method_hashes']==initial['method_hashes'],'PROBABILITY_ORIGIN_IDENTITY')
@@ -35,13 +37,13 @@ def recompute(origin,data,plan):
     try:
         actor=HistoryActor(config).cpu()
         _validate_model_state('probability origin actor',origin['actor'],actor.state_dict())
-        actor.load_state_dict(origin['actor'],strict=True);actor.eval()
+        actor.load_state_dict(origin['actor'],strict=True);actor.eval();actor.to(device)
         alpha=[];beta=[];logp=[]
         with torch.no_grad():
             for start in range(0,512,32):
-                output=actor({k:v[start:start+32] for k,v in policy.items()})
-                alpha.append(output.alpha);beta.append(output.beta)
-                logp.append(actor.log_probability_from_output(output,data['actions'][start:start+32]))
+                output=actor({k:v[start:start+32].to(device) for k,v in policy.items()})
+                alpha.append(output.alpha.cpu());beta.append(output.beta.cpu())
+                logp.append(actor.log_probability_from_output(output,data['actions'][start:start+32].to(device)).cpu())
         values=[torch.cat(v) for v in (logp,alpha,beta)]
         probability_distribution_gate(data['old_log_probabilities'].flatten().tolist(),values[0].flatten().tolist(),
             data['old_alpha'].flatten().tolist(),values[1].flatten().tolist(),
@@ -51,4 +53,4 @@ def recompute(origin,data,plan):
     finally:torch.set_rng_state(rng)
     return dict(status='PASS',sample_count=512,starting_update=plan['start_update'],
         float32_atol=1e-6,float32_rtol=1e-5,maximum_absolute_errors=errors,
-        cpu_actor_forward=True,cpu_rng_preserved=True,gpu_sampling_reproduced=False,optimizer_restored=False)
+        cpu_actor_forward=device=='cpu',replay_device=device,cpu_rng_preserved=True,gpu_sampling_reproduced=False,optimizer_restored=False)

@@ -38,6 +38,11 @@ def test_recompute_all_samples_preserves_cpu_rng_and_never_queries_cuda(sample,m
     assert torch.equal(before,torch.get_rng_state()) and not result['optimizer_restored']
 
 
+def test_unregistered_device_rejected(sample):
+    with pytest.raises(ValueError,match='PROBABILITY_REPLAY_DEVICE'):
+        recompute(*sample,device='cuda:1')
+
+
 @pytest.mark.parametrize('fault',['alpha','logp','actions','update','source','clock','weights','privileged','nonfinite','dtype'])
 def test_mismatches_fail_without_rng_mutation(sample,fault):
     origin,data,plan=sample

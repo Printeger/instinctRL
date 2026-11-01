@@ -1,0 +1,16 @@
+{
+  "status": "CPU_PASS_CUDA_NOT_RUN",
+  "tests_passed": 12,
+  "test_module": "tools/test_r6_training_probability.py",
+  "default_device": "cpu",
+  "explicit_diagnostic_device": "cuda:0",
+  "tolerances_changed": false,
+  "sampling_or_optimizer_added": false,
+  "entrypoint": "tools.r6_direct.cuda_diagnostic child with probability_replay request",
+  "remaining": [
+    "Freeze exact diagnostic source/input/snapshot",
+    "Provide fresh writable native volume; old target is unmounted root mode000",
+    "Run same-device replay with resource gate and owned-process cleanup"
+  ],
+  "scientific_acceptance": false
+}

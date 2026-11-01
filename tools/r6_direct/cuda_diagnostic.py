@@ -28,6 +28,10 @@ def child(plan):
     if plan.get('self_task_metadata') is True:
         policy['entries'].append((f'/proc/{os.getpid()}/task',2|(1<<14)))
     enforce(policy)
+    if 'probability_replay' in plan:
+        from tools.r6_direct.probability_replay import replay
+        atomic(native/'probability_result.json',replay(plan['probability_replay']))
+        return
     library=ctypes.CDLL('libcuda.so.1');result=library.cuInit(0)
     name=ctypes.c_char_p();library.cuGetErrorName(result,ctypes.byref(name))
     atomic(native/'cuda_result.json',dict(cuInit=result,error_name=None if name.value is None else name.value.decode(),
