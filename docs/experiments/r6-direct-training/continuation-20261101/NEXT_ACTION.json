@@ -1,44 +1,39 @@
 {
-  "candidate_destination": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-freeze-candidate.json",
-  "holdout_revealed": false,
-  "last_closed_training": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_03_CLOSURE.json",
-    "sha256": "3f5f2852c9aacc0d1741e40df157b4106af5cb7d499a7e3bce5da6827392b6d3"
+  "batch": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-batch.json",
+    "sha256": "368704cb022af1927d49af4d7d537c1edc82b6ce21f7f116456222dd191a3dda"
   },
-  "operation": "final-freeze",
-  "preparation_process": {
-    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
-    "pid": 3203277,
-    "starttime": "32018548"
+  "contract": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-contract.json",
+    "sha256": "1fad77268c5fe7ace5d8bad13625f9772d8a17e61d0f99c009721af87f8b9cc1"
   },
-  "preparation_session_id": 55109,
-  "ready_to_launch": false,
-  "request": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-freeze-request.json",
-    "sha256": "8c8e2d7f4adfe29e0b49c358fc18cd9260bc8a6a886e78b7044ee336b903f81b"
+  "holdout_revealed": true,
+  "input_tag": "r6-direct-final-baseline-01-inputs",
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-inputs.json",
+    "sha256": "3dfa5f1b275b2265374d524cc5bfe26c23e89c8ea1f6d1c234a8e5b22c323a2d"
   },
+  "operation": "final",
+  "predecessor_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-03/receipt.json",
+    "sha256": "f47ceef8a62aea58b7613b8cc2a60abd897df1cbc9bdb9af5ba68c973cdd6631"
+  },
+  "preflight": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/BASELINE_PREFLIGHT.json",
+    "sha256": "86f135f841cb7be792d1a844b0830d4bed9bed6c6d61c5d7de9f5348b2214394"
+  },
+  "ready_to_launch": true,
+  "resource_policy": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
+    "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
+  },
+  "run_id": "R6-DIRECT-FINAL-BASELINE-01",
   "scientific_acceptance": false,
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/final-01",
   "source": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
     "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
   },
-  "source_review": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SOURCE_INDEPENDENT_REVIEW.json",
-    "sha256": "513ea4b56d2d303031071ff864c333be2f7dcafc3b36322c32bcab57a9edeb14"
-  },
-  "status": "PREPARING_FINAL_FREEZE_CANDIDATE",
-  "training_reviews": [
-    {
-      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_01C_SUPPLEMENTAL_REVIEW.json",
-      "sha256": "4620e0167e363bb23d3105dfb54c21479ec612e02052c8d27462dee263f1f591"
-    },
-    {
-      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_02_SUPPLEMENTAL_REVIEW.json",
-      "sha256": "5f01581da0a709aece1bcc937606313748d94d5b9ce1add72f796364c66f9d2e"
-    },
-    {
-      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_03_SUPPLEMENTAL_REVIEW.json",
-      "sha256": "a0d2404f7de373575df5de9bb74bfe0b5b0a698a29f69c38fcf354991ee8126b"
-    }
-  ]
+  "status": "READY_TO_LAUNCH",
+  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
 }

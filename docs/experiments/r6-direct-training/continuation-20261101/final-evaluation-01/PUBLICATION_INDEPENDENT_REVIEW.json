@@ -1,0 +1,26 @@
+{
+  "decision": "PASS_SCOPED",
+  "evidence_base": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01",
+  "evidence_sha256": {
+    "PUBLICATION_AND_REVEAL_ORDER.json": "40235890a80388e8f0940cb3b9753850af3c7896bdc136450a032ab117917750",
+    "final-batch.json": "368704cb022af1927d49af4d7d537c1edc82b6ce21f7f116456222dd191a3dda",
+    "publication.json": "7d37c7571c68fc064060c14b106f566f4f9589e56802f087076c4f76386d502d",
+    "realization.json": "1545600602b0a82586146993f561a015434ffc300a99f8a720663682c54dac76"
+  },
+  "files_modified_by_reviewer": false,
+  "findings": [
+    "Committed freeze, review and publication bytes exactly match pins",
+    "Review approves exact previously audited freeze",
+    "Commitment and seed derivation verified from revealed realization; no extra private nonce read",
+    "Model order baseline,seed1,seed2,seed3 fixed, all use index0 and seed1812183990",
+    "Frozen checkpoint assignment unchanged; no other derived seed selection or retuning found"
+  ],
+  "gpu_started": false,
+  "limitations": [
+    "Actual publication-before-first-reveal timing relies on recorded ordering and remote-ref evidence; reviewer did not requery remote or observe historical operations",
+    "Not final evaluation execution or acceptance; exact run inputs require validation"
+  ],
+  "publication_commit": "74f4dcbe35842f07ad7a38d2bfd4ca319ccf42a3",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "Published exact bytes, commit/reveal and paired final assignments"
+}

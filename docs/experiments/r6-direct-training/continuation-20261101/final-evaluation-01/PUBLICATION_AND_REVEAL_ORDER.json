@@ -1,0 +1,35 @@
+{
+  "all_models_same_realization": true,
+  "final_evaluation_started": false,
+  "final_realization_index": 0,
+  "freeze": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-freeze-candidate.json",
+    "sha256": "7a6750ae31cb14e067fc722c9d790765bc28d8df54e0b4458f4dcf579776cb15"
+  },
+  "model_order": [
+    "baseline",
+    "seed1",
+    "seed2",
+    "seed3"
+  ],
+  "publication": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/publication.json",
+    "sha256": "7d37c7571c68fc064060c14b106f566f4f9589e56802f087076c4f76386d502d"
+  },
+  "publication_commit": "74f4dcbe35842f07ad7a38d2bfd4ca319ccf42a3",
+  "realization": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/realization.json",
+    "sha256": "1545600602b0a82586146993f561a015434ffc300a99f8a720663682c54dac76"
+  },
+  "remote_refs": [
+    "74f4dcbe35842f07ad7a38d2bfd4ca319ccf42a3\trefs/heads/main",
+    "74f4dcbe35842f07ad7a38d2bfd4ca319ccf42a3\trefs/tags/r6-direct-final-models-holdout-commitment-01"
+  ],
+  "retuning_allowed": false,
+  "reveal_recorded_utc": "2026-11-01T22:25:04.376679+00:00",
+  "review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-freeze-review.json",
+    "sha256": "7d8a9b6a9712d51f078aa7c7120a453f5970fd8c06f8e7682f8a6a488b582056"
+  },
+  "status": "EXACT_MODELS_REVIEW_COMMITMENT_PUSHED_BEFORE_REVEAL"
+}
