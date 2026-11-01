@@ -1,16 +1,12 @@
 {
-  "status": "FAILED_PRELAUNCH_DO_NOT_RESTART",
+  "status": "READY_TO_LAUNCH",
   "operation": "same-device probability diagnostic",
   "inputs": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-01/plan.json",
-    "sha256": "45cce275b3f1ec322abc165fcf1a913c89d9dd68b5aa757d428b68b967d9f4a8"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-02/plan.json",
+    "sha256": "faf5ecf3b901b0d6eaec114215e159d4d4fd68549bb26ed600a1fef3e3690bfc"
   },
-  "source_commit": "69abbf6edfa5b61fc71b5a3b9fc63de18d014cb4",
-  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-01",
-  "cpu_preflight": "CPU_DIAGNOSTIC_INPUTS_PASS",
-  "scientific_acceptance": false,
-  "failure": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-01/ADMISSION_FAILURE.json",
-    "sha256": "bbffa714c7b522a18239bf035d9ed1a2845b8a72c15f1ce732faeb358c9c460a"
-  }
+  "source_commit": "84c01319c8238f3162565df4efe33b819576b2dc",
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/probability-cuda-02",
+  "cpu_preflight": "PASS",
+  "scientific_acceptance": false
 }
