@@ -1,0 +1,24 @@
+{
+  "decision": "Existing exact training and CUDA06 evidence supports continuation of frozen seed02; not final acceptance.",
+  "findings": [
+    "CPU report, summary and binding pins consistent; 30/30 streams complete.",
+    "128 updates, 65536 transitions, 1024 actor/critic optimizer steps, one u768; both curriculum phases complete.",
+    "Checkpoint independently loaded: actor/critic/Adam, state counts16/10, Adam step6144, seed2202/update768.",
+    "CUDA06 independent sealed verification of 248 pins passed; all512 alpha/beta/logp max abs errors0."
+  ],
+  "limitations": [
+    "Original CPU index20 mismatch and training cleanup timeout/-15 retained.",
+    "CUDA RNG semantics, actual rollout RNG use and physical continuity not proven.",
+    "New analysis-cuda binding still pending; must verify only probability issue resolved with original CPU error retained.",
+    "Reviewer did not independently replay every compressed stream."
+  ],
+  "pins": {
+    "binding": "78c381b44a9c0dc106ae271676e849612feafde6af8399119fccb8de9288067f",
+    "checkpoint": "cbd1eda09169439e28586200f0d67e5fc626c862f5a5335f329fe139ccc13cf4",
+    "cuda_envelope": "c645b150eddc9e1831a814bb91b1a564fb443c354331d48e593c33b2b3cf95c4",
+    "report": "f1d7b9d187f3859ce5966d82bbd0e097cbcb7eb7eff936a84acf8654bdacd440",
+    "summary": "4c9df8adff868253a52f585217c7911678c26fb5da39301f840cbb2ace939e57"
+  },
+  "reviewer": "/root/baseline_scientific_review",
+  "status": "PASS_SCOPED"
+}
