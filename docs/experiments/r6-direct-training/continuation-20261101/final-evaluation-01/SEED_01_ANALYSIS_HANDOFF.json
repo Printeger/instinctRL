@@ -1,0 +1,21 @@
+{
+  "behavior": [
+    "Ordinary Python waits without model calls",
+    "Requires CLOSED receipt and all recorded exact owners gone",
+    "Checks STOP and input hash; new CPU-only analysis destination",
+    "Does not start another evaluation or change frozen inputs"
+  ],
+  "destination": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-analysis",
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-inputs.json",
+    "sha256": "16f23c39c114031d6f3048399691d241b2df451dba5073b0e3adcb1b29022fea"
+  },
+  "run_id": "R6-DIRECT-FINAL-SEED-01",
+  "status": "WAITING_EXACT_CLOSED_FINAL_SEED_01",
+  "watcher": {
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+    "pid": 3239760,
+    "starttime": "32438464"
+  },
+  "session_id": 9616
+}

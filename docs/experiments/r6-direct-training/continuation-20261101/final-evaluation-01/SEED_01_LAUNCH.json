@@ -1,0 +1,43 @@
+{
+  "status": "RUNNING",
+  "session_id": 5790,
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-inputs.json",
+    "sha256": "16f23c39c114031d6f3048399691d241b2df451dba5073b0e3adcb1b29022fea"
+  },
+  "state": {
+    "argv": [
+      "/usr/bin/bwrap",
+      "--die-with-parent",
+      "--bind",
+      "/",
+      "/",
+      "--dev-bind",
+      "/dev",
+      "/dev",
+      "--bind",
+      "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-FINAL-SEED-01/ipc",
+      "/dev/shm",
+      "--",
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "tools.r6_direct.worker",
+      "--inputs",
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-inputs.json"
+    ],
+    "child": {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3239348,
+      "starttime": "32433462"
+    },
+    "parent": {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3237674,
+      "starttime": "32417084"
+    },
+    "started_unix": 1793574691.089793,
+    "status": "RUNNING"
+  },
+  "scientific_acceptance": false
+}
