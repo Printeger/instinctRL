@@ -534,6 +534,18 @@
         "output_actual_plus_unreleased_reservations_bytes": 733630791
       },
       "status": "UNRELEASED"
+    },
+    {
+      "id": "DIRECT-SNAPSHOT-TRAIN-02B",
+      "purpose": "development",
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
+        "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
+      },
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 733672625
+      },
+      "status": "UNRELEASED"
     }
   ],
   "new_used": {
