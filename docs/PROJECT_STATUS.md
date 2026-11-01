@@ -1,3 +1,12 @@
+# R6 第一条128更新确认训练 READY_TO_LAUNCH
+
+2026-11-02：新native/results卷已实际挂载并通过worker CPU预检，管理员阻塞解除。
+第一流R6-DIRECT-CONFIRM-128-SEED-01使用seed2026102202，共同u640→u768固定128updates。
+准确输入confirmation-128/seed-01-inputs.json，源码快照013b99d8，配方冻结独审PASS。
+NEXT_ACTION及START_NEXT_RUN已更新为第一流准确入口，输入待提交/tag后执行。
+RustDesk保持连接，holdout未揭晓；其余两流和最终交付尚未完成。
+下方保留历史状态。
+
 # R6 三流确认契约CPU检查完成；等待管理员创建新卷
 
 2026-11-01：冻结配方独审PASS，三份seed-01/02/03-contract.json已生成并核对。

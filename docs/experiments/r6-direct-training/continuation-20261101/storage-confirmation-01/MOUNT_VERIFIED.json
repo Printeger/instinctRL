@@ -1,0 +1,27 @@
+{
+  "gpu_started": false,
+  "old_evidence_unchanged": true,
+  "preflight": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/SEED_01_PREFLIGHT.json",
+    "sha256": "d6870bab6666794aa1dbd9c7516b99664592558c495b83f22e55070b7e73c693"
+  },
+  "status": "CPU_PREFLIGHT_ACCEPTED",
+  "volumes": {
+    "native": {
+      "free_bytes": 1530249216,
+      "free_inodes": 98293,
+      "manifest": {
+        "path": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/volume.json",
+        "sha256": "918a796e9539526f7a95f39105c6752d6c4aaea972766e27c89f9eaf3df60a48"
+      }
+    },
+    "result": {
+      "free_bytes": 100844924928,
+      "free_inodes": 6291445,
+      "manifest": {
+        "path": "/var/lib/instinctrl-r6-results/J-324fe806adf2c0f0/volume.json",
+        "sha256": "7f7d359907d5e59365cda9574cfc4583cf349b51411b0f0ec6bda526718afc23"
+      }
+    }
+  }
+}
