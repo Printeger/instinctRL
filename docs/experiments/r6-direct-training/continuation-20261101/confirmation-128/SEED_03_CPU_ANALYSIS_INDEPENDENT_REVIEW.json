@@ -1,0 +1,34 @@
+{
+  "decision": "PASS_SCOPED",
+  "evidence_base": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101",
+  "evidence_sha256": {
+    "confirmation-128/seed-03-analysis/binding.json": "6d87be11046a0571652662b57726bd0b7c1f29d9c36baf9ff4f4dcf4674d4bb9",
+    "confirmation-128/seed-03-analysis/report.json": "c288ad2909d59bd65f3d9dcf80d520a9fdf75d9b651584b6e5d0f0f2148891ac",
+    "confirmation-128/seed-03-analysis/summary.json": "817b96074c7e0e15dc1f516b3cf7f2e3edbba20f9272c01cde71fb730116295e",
+    "delivery/seed-03-curves/manifest.json": "5a27f38bbbb6db18bb8c0f69f9201a5c45909f9f84fadabc4ba5efe8102e67e7",
+    "delivery/seed-03-curves/updates.csv": "acdd031fd82fbb79bf77bdc064b6870f657971ff120b46f216c48414ea72acba"
+  },
+  "files_modified_by_reviewer": false,
+  "findings": [
+    "Report equals summary; binding reference pins verified",
+    "30/30 complete streams and both curriculum phases completed",
+    "128 updates, 65536 transitions, actor/critic 1024 steps and one checkpoint match independently loaded checkpoint",
+    "RNG audit supports seed2026102204 CPU derivation and origin RNG identity only",
+    "Both update streams independently decoded; all 128 CSV rows fieldwise equal at updates641..768",
+    "Previously reviewed exporter preserves unsmoothed values and uses no fixed-axis clipping"
+  ],
+  "gpu_started": false,
+  "holdout_read": false,
+  "limitations": [
+    "Original cleanup timeout retained",
+    "Full raw analysis not independently repeated",
+    "CUDA RNG semantics, actual rollout RNG use and physical continuity not established",
+    "No learning gain or final scientific acceptance claim"
+  ],
+  "reviewer": "/root/baseline_scientific_review",
+  "scientific_acceptance": false,
+  "scope": "CPU report binding, counters, RNG scope and complete descriptive curve rows",
+  "unresolved": [
+    "CPU probability mismatch at frozen index29; CUDA08 not included in this review"
+  ]
+}
