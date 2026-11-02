@@ -1,0 +1,35 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "Video trajectory first identity record compatibility repair",
+  "must_fix": [],
+  "sha256": {
+    "tools/r6_video_trajectory.py": "8a26af198c0faf14b4b4dd828d8df6fc2da56580626f8269a1d24a6418268921",
+    "tools/test_r6_video_trajectory.py": "76e1a09b26c338094e9687e78ee83aaf41306d21fba2acf0938958099018e497",
+    "tools/test_r6_video_extraction.py": "9ff8d156ae5759bc1843ba97f77824ccde27600edd9d59f034bf2e77b7184c66"
+  },
+  "findings": [
+    "Matches production robustness_evaluation.run_block identity format.",
+    "Requires unique sequence-zero identity; rejects missing/duplicate/late/mismatched identity and unknown records.",
+    "Preserves complete identity payload; existing pose/quaternion/velocity/command/time/reset/episode extraction unchanged.",
+    "No pose inference, physics integration, policy inference or actor inputs added.",
+    "Fixture includes identity and eleven negative cases; prior fault indices adjusted.",
+    "Extraction test now uses local r6_evidence helpers without rlflow."
+  ],
+  "validation_limits": [
+    "Independent source review did not repeat parent pytest.",
+    "Four real trajectories and rendered outputs still require validation."
+  ],
+  "parent_test_evidence": {
+    "session_id": 81572,
+    "exit_code": 0,
+    "result": "40 passed in 49.00s",
+    "tests": [
+      "tools/test_r6_video_trajectory.py",
+      "tools/test_r6_video_extraction.py",
+      "tools/test_r6_video_presentation.py"
+    ]
+  },
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
