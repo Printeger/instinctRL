@@ -1,0 +1,29 @@
+{
+  "status": "WAITING_THIRD_ANALYSIS_TO_COLLECT_CPU_ONLY",
+  "watcher": {
+    "pid": 3322785,
+    "starttime": "33421208",
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce"
+  },
+  "analysis_identity": {
+    "pid": 3296790,
+    "starttime": "33114190",
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce"
+  },
+  "expected_pins": {
+    "baseline-analysis/binding.json": "73f080a18d2f4b2282a1c811ce8a940f48ee6db10c9a94b815469151215c2d99",
+    "seed-01-analysis/binding.json": "64433ef0a706e24642cfde12447647bcbddcb6dcacc188c1719799ac1fc06a46",
+    "seed-02-analysis/binding.json": "3f69290d4d5fa94e12471cbedfc9121f1a3152df92a8fda93296a349735bedeb",
+    "final-batch.json": "368704cb022af1927d49af4d7d537c1edc82b6ce21f7f116456222dd191a3dda",
+    "seed-03-inputs.json": "cc2dbd1ebcca180584c839a78dc73736353bc6f80ec1deefc9420d59475e4e2f"
+  },
+  "request": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/collection-request.json",
+  "destination": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/collection-01",
+  "behavior": [
+    "Wait for exact analysis process to exit and final binding to exist.",
+    "Check STOP and immutable input pins.",
+    "Run existing tools.r6_direct.collect on four ordered bindings; no GPU or rendering.",
+    "Independent review and final acceptance remain pending."
+  ],
+  "session_id": 53457
+}
