@@ -1,0 +1,61 @@
+{
+  "status": "CLOSED_RENDER_INITIALIZATION_FAILED",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-01/receipt.json",
+    "sha256": "11eeb4af424ae7679ca15c0ba270915a81c1f1664d64e789c89b418bd08b1241"
+  },
+  "workload_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-01/state.json",
+    "sha256": "07c3efe71f7a814a69ca14decc7798dba58234d2f6f6ffe8ad4331e355d67f78"
+  },
+  "native_error": "RuntimeError('DIRECT_LOG_CAP')",
+  "exit_code": -15,
+  "wall_seconds": 210.477179717971,
+  "charged_seconds": 211,
+  "exact_owner_identities_gone": [
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3346315,
+      "starttime": "33685476"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3346462,
+      "starttime": "33687163"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3346463,
+      "starttime": "33687163"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3346883,
+      "starttime": "33691227"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3347382,
+      "starttime": "33696400"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3347428,
+      "starttime": "33696494"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3347429,
+      "starttime": "33696495"
+    }
+  ],
+  "remaining": [],
+  "video_generated": false,
+  "automatic_analysis": {
+    "session_id": 46843,
+    "exit_code": 1,
+    "reason": "Refused INITIALIZING workload; no video analysis executed"
+  },
+  "diagnosis": "Repeated UsdContext::createViewportImpl RTX messages filled 64MiB stdout during AppLauncher initialization; material cache PermissionError also retained. Root cause under investigation.",
+  "rustdesk_touched": false
+}

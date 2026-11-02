@@ -1,4 +1,8 @@
 {
+  "closure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-01/CLOSURE.json",
+    "sha256": "88607c26f17a84027d6d85464a4b3ddaafa42d89f10ad1e3d147345b907576d0"
+  },
   "contract": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-01/contract.json",
     "sha256": "6c688ea08c0eed1f72788c1e80f612802837a1fd6456f11ae110600fde2f3979"
@@ -7,6 +11,10 @@
   "inputs": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-01/inputs.json",
     "sha256": "b8048b8088b7156e2fb9ce8e2678c65239381851dfb68ab14e2413e89ad22199"
+  },
+  "launch_evidence": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-01/LAUNCH.json",
+    "sha256": "dd0637fe8052d54fe177c65f542068403da64d34c8873c017f1654e3f117a8c2"
   },
   "operation": "render",
   "predecessor_receipt": {
@@ -34,14 +42,10 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-01/SOURCE_CPU_CHECK.json",
     "sha256": "f40c12170ab917729908b9eb1ae4d20e698c140a6317d728eb956acbf5bc329f"
   },
-  "status": "RUNNING_SUPERVISOR_VERIFIED",
+  "status": "CLOSED_RENDER_INITIALIZATION_FAILED",
   "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
   "supervisor_start": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-01/SUPERVISOR_START.json",
     "sha256": "2c10e6f3f458a7af150ea7fa561c59022893d41c714ac4bf9048ec5a7c2ad438"
-  },
-  "launch_evidence": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-01/LAUNCH.json",
-    "sha256": "dd0637fe8052d54fe177c65f542068403da64d34c8873c017f1654e3f117a8c2"
   }
 }
