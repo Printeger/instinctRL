@@ -1,0 +1,28 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "VIDEO02 corrected phase diagnosis and render-only Orchestrator repair",
+  "must_fix": [],
+  "sha256": {
+    "tools/r6_direct/render.py": "0c886205c05449d1ea6127a4083abf6b2949903b8dcef90ab7de639dc676ba54",
+    "tools/r6_direct/worker.py": "b28c8e8c95a1ef8d9975d8ac8b82b9f82ceb4309148f4602a8307645226802a5",
+    "tools/r6_direct/test_render.py": "b257a6f5fe2f31c1dfd34e235064af9b95ab1a19daffa38eda33a738d5b216a2"
+  },
+  "independent_findings": [
+    "Actual VIDEO02 stdout: viewport wait complete3182ms; Replicator Step3473ms followed by repeated createViewportImpl. Old INITIALIZING status stale.",
+    "Frozen headless.rendering.kit Orchestrator.enabled=false.",
+    "Installed _set_tick_graph returns without capture events when setting false.",
+    "step while condition empty _sim_times_to_write branch is not bounded by attempts; consistent with observed updates.",
+    "enabled=true only in render startup settings; effective settings checked after AppLauncher.",
+    "RENDERING state before render changes observability only.",
+    "No trajectory/pose/scoring/actor/training/physics changes."
+  ],
+  "limits_and_followup": [
+    "Mechanism supported by logs/source, still requires live confirmation.",
+    "Other renderer/cache failures possible; finite supervision retained.",
+    "Original VIDEO02 closure retained; additive REPLICATOR_DIAGNOSIS corrects phase wording;196seconds and failure retained.",
+    "Reviewer did not rerun tests/GPU; setting test not live acceptance."
+  ],
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
