@@ -5,7 +5,7 @@ import pytest
 from tools.test_r6_video_trajectory import trajectory
 from tools.prepare_r6_video_trajectories import prepare
 from tools.r6_evidence import file_pin
-from tools.r6_direct.render import run
+from tools.r6_direct.render import run, startup_settings, validate_cache_tokens
 from tools.r6_direct.run import run_resources
 from training_workloads.unified_h1.direct_contract import render_runtime_contract, validate_runtime_contract
 from training_workloads.unified_h1.budget import ExecutionCounters
@@ -37,3 +37,15 @@ def test_local_render_contract_and_process_resource_accounting(trajectory,tmp_pa
     assert json.loads((output/'status.json').read_text())['counters']['real_optimizer_updates']==0
     ticks=iter([0.,61.])
     with pytest.raises(TimeoutError):run(*args,clock=lambda:next(ticks))
+
+
+def test_render_cache_must_resolve_inside_this_attempt(tmp_path):
+    settings = startup_settings(tmp_path)
+    assert settings['/exts/omni.kit.viewport.window/startup/disableWindowOnLoad'] is True
+    resolved = {'${cache}': str(tmp_path/'render_cache'),
+                '${omni_global_cache}': str(tmp_path/'render_global_cache')}
+    validate_cache_tokens(settings, SimpleNamespace(resolve=resolved.__getitem__))
+    for name in resolved:
+        wrong = dict(resolved, **{name: '/frozen/runtime/cache'})
+        with pytest.raises(RuntimeError, match='DIRECT_RENDER_CACHE_TOKEN'):
+            validate_cache_tokens(settings, SimpleNamespace(resolve=wrong.__getitem__))

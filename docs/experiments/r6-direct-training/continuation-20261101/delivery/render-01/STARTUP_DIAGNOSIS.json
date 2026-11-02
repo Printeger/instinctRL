@@ -1,0 +1,44 @@
+{
+  "status": "TARGETED_RENDER_STARTUP_REPAIR_CPU_PASS_LIVE_UNVERIFIED",
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-01/receipt.json",
+      "sha256": "11eeb4af424ae7679ca15c0ba270915a81c1f1664d64e789c89b418bd08b1241"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-01/stdout.log",
+      "sha256": "42a14bda02610f4e69693b298036fa2cc32cc3404728e367d0f3d46304e6dc89"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-01/stderr.log",
+      "sha256": "59ce2794289d299602386fe4400c9d919f6f50f88f12921b89be20ce811a531b"
+    },
+    {
+      "path": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.window-749ab38a6c93b4e8/omni/kit/viewport/window/menu_entry.py",
+      "sha256": "f0df82811d83b053258ba8ea9cfa0bb3d9cd1a3684ab82d57c217cdce1238d45"
+    },
+    {
+      "path": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.material.library-c685952d18148e1e/omni/kit/material/library/material_library.py",
+      "sha256": "e390ffcd134f4b8b019894da9121c4ecaebf53ba66cefbc26155a661a211bf66"
+    }
+  ],
+  "observations": [
+    "SimulationApp._wait_for_viewport followed by repeated UsdContext::createViewportImpl; stdout hit64MiB and supervisor closed DIRECT_LOG_CAP.",
+    "Material cache attempted ${cache}/material_cache.json in read-only runtime; PermissionError retained.",
+    "Installed viewport extension honors startup/disableWindowOnLoad to avoid creating default window; renderer uses separate Replicator render_product."
+  ],
+  "repair": [
+    "Render-only default interactive viewport disabled.",
+    "Render-only cache and omni_global_cache tokens redirected to per-attempt native output; effective expansion verified after AppLauncher.",
+    "No changes to log cap, runtime files, recorded poses, rendering products, physics, policy or training/evaluation paths."
+  ],
+  "hypothesis": "Avoiding unused default viewport creation removes observed initialization loop; cache redirection removes observed cache permission error. Requires a new bounded live render to verify.",
+  "cpu_tests": {
+    "command": "python -m pytest -q tools/r6_direct/test_render.py",
+    "session_id": 40404,
+    "exit_code": 0,
+    "result": "2 passed in1.83s"
+  },
+  "scientific_acceptance": false,
+  "rustdesk_touched": false
+}

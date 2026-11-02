@@ -125,6 +125,11 @@ def run(plan, input_pin):
     from training_workloads.unified_h1.native_volume import settings
     from training_workloads.unified_h1.extension_inputs import validate as extension_validate,user_config_bytes
     settings_map=settings({'target':str(native_root)})
+    if contract['operation']=='render':
+        from tools.r6_direct.render import startup_settings
+        settings_map.update(startup_settings(native_root))
+        for name in ('cache','omni_global_cache'):
+            Path(settings_map['/app/tokens/'+name]).mkdir(exist_ok=False)
     for key in ('/crashreporter/dumpDir','/rtx/shaderDb/shaderCachePath','/rtx/shaderDb/driverShaderCachePath',
                 '/rtx-transient/resourcemanager/localTextureCachePath','/app/extensions/registryCacheFull',
                 '/app/extensions/registryCache','/structuredLog/logDirectory','/exts/omni.kit.pipapi/envPath',
@@ -150,6 +155,10 @@ def run(plan, input_pin):
         actual=carb.settings.get_settings()
         for key,value in settings_map.items():
             if actual.get(key)!=value:raise RuntimeError('DIRECT_NATIVE_SETTING:'+key)
+        if contract['operation']=='render':
+            import carb.tokens
+            from tools.r6_direct.render import validate_cache_tokens
+            validate_cache_tokens(settings_map,carb.tokens.get_tokens_interface())
         class Guard(RuntimeResourceGuard):
             def check(self,**kw):
                 if stop_paths() or (Path(plan['output_root'])/'STOP').exists():raise RuntimeError('STOP')

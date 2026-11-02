@@ -1,6 +1,24 @@
 """Render within the direct worker's admitted app and bounded process lifecycle."""
 import time
+from pathlib import Path
 from tools.r6_direct.io import atomic
+
+
+def startup_settings(native_root):
+    """Offscreen products do not need the default interactive viewport window."""
+    root = Path(native_root)
+    return {
+        '/exts/omni.kit.viewport.window/startup/disableWindowOnLoad': True,
+        '/app/tokens/cache': str(root/'render_cache'),
+        '/app/tokens/omni_global_cache': str(root/'render_global_cache'),
+    }
+
+
+def validate_cache_tokens(settings, tokens):
+    # Verify effective token expansion, not only the requested settings values.
+    for name in ('cache', 'omni_global_cache'):
+        if tokens.resolve('${'+name+'}') != settings['/app/tokens/'+name]:
+            raise RuntimeError('DIRECT_RENDER_CACHE_TOKEN:'+name)
 
 
 def run(plan, contract, source, output, app, counters, guard, *, clock=time.monotonic):
