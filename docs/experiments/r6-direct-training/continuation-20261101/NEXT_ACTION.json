@@ -35,7 +35,7 @@
   },
   "input_tag": "r6-direct-final-seed-02-inputs",
   "holdout_revealed": true,
-  "evaluation_started": false,
+  "evaluation_started": true,
   "supervisor_started": true,
   "scientific_acceptance": false,
   "supervisor_start": {
@@ -45,5 +45,10 @@
   "launch_evidence": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_02_LAUNCH.json",
     "sha256": "6d0f6cac3de34731af4ac32622396f3c2729badc693dd209fcf114cc02370862"
+  },
+  "workload_status": "EVALUATING",
+  "progress": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_02_EVALUATING.json",
+    "sha256": "213af663d8aae8d797dc77af76a15db19ec52e34febee3db9cd2eb8f09e2e320"
   }
 }

@@ -1,0 +1,56 @@
+{
+  "decision": "PASS_SCOPED_PENDING_FINAL_BINDING",
+  "reviewer": "/root/baseline_scientific_review",
+  "run_id": "R6-DIRECT-FINAL-SEED-01",
+  "scientific_acceptance": false,
+  "checks": {
+    "report_summary_equal": true,
+    "all_81_input_hashes_and_lengths_verified": true,
+    "final_binding_issues": [],
+    "model_role": "seed1",
+    "checkpoint_sha256": "cbd1eda09169439e28586200f0d67e5fc626c862f5a5335f329fe139ccc13cf4",
+    "realization_index": 0,
+    "evaluation_seed": 1812183990,
+    "split": "final",
+    "independent_cpu_score_replay": {
+      "python": "frozen Python 3.11",
+      "development_condition_definitions_evaluated_on_final_realization": 16,
+      "all_blocks_successes": "32/32",
+      "all_saved_block_scores_exact": true,
+      "original_Z_T_S_X_W": "each 32/32",
+      "saved_original_score_exact": true,
+      "saved_wall_motion_exact": true
+    },
+    "existing_measurement_replay_all_blocks": true,
+    "existing_staging_reconstruction_all_blocks": true,
+    "nontraining_transitions": 193600,
+    "completed_policy_steps": 6050,
+    "explicit_resets": 21,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "receipt": "CLOSED",
+    "exit_code": -15,
+    "cleanup_error": "DIRECT_CLEANUP_TIMEOUT",
+    "recorded_process_identities_absent": 10,
+    "ceil_supervised_seconds": 2988,
+    "binding_present_at_review": false
+  },
+  "limitations": [
+    "最终binding尚未生成，本审核为阶段性结果。",
+    "独立重算覆盖motion评分及原五任务评分；measurement/force采用已有CPU回放结果，独立核验其全部输入hash和覆盖范围。",
+    "交付变换与force staging重建不证明传感器真值或完整物理积分。",
+    "不证明学习增益、其他候选结果或整个R6完成。",
+    "保留cleanup异常；未核验账本去重结算。"
+  ],
+  "evidence_base": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01",
+  "evidence_sha256": {
+    "seed-01-analysis/report.json": "cb27b24469e76b0d91822a17a9b5dbad4fe242a3a8f3b425e995e789544ec01e",
+    "seed-01-analysis/summary.json": "88a539c4982b71cb98284e4c65080cc887508ebccb62b2c6c30f74a17c2d24e3",
+    "SEED_01_CLOSURE.json": "53bc81d86e48a722a3b00459758d95e8063556b21c74c8860da991ce9e4f4c8b",
+    "seed-01-inputs.json": "16f23c39c114031d6f3048399691d241b2df451dba5073b0e3adcb1b29022fea"
+  },
+  "files_modified": false,
+  "gpu_started": false,
+  "rustdesk_touched": false
+}
