@@ -1,0 +1,63 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "第三候选最终评价原始评分、输入绑定及完整分析 binding 独立只读审核",
+  "must_fix": [],
+  "evidence_base": "docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/",
+  "sha256": {
+    "seed-03-analysis/report.json": "0ed5744288ebae17c51295f4c710e7be9f5c6027314f0a4b0b28a9a04810ddc2",
+    "seed-03-analysis/summary.json": "89c1457ea0fefde8199895e6c9cde9ca2c392b748cc65df90e9927c828cbc280",
+    "seed-03-analysis/binding.json": "c50b0feb4a67f6eba2444475b5dc7b9d7ee9814c338f35d8c304ed5d2fc4a74d",
+    "SEED_03_CLOSURE.json": "71a5270b0ca5c4cfd7e621fec5985d6160ea50284ec06dcfaf7762993f7df403",
+    "seed-03-inputs.json": "cc2dbd1ebcca180584c839a78dc73736353bc6f80ec1deefc9420d59475e4e2f"
+  },
+  "independent_checks": {
+    "report_input_pins": "81 项实际文件 SHA256 与长度全部匹配",
+    "summary": "独立 summary 与 report.summary 完全相同，issues 为空",
+    "assignment": {
+      "assignment_index": 3,
+      "model_role": "seed3",
+      "realization_index": 0,
+      "evaluation_seed": 1812183990,
+      "split": "final",
+      "checkpoint_sha256": "6a616a2582190acdf037bf454b5ae3d921120da3ef85916dff5763de9137e07a"
+    },
+    "scoring": "使用冻结 Python 3.11 CPU，从本候选实际原始数据独立重算全部 16 最终条件及原五任务；各项结果与报告完全相同，全部 32/32",
+    "original_tasks": [
+      "Z",
+      "T",
+      "S",
+      "X",
+      "W"
+    ],
+    "counters": {
+      "nontraining_transitions": 193600,
+      "completed_policy_steps": 6050,
+      "explicit_resets": 21,
+      "training_transitions": 0,
+      "optimizer_updates": 0,
+      "checkpoint_writes": 0
+    },
+    "closure": {
+      "status": "CLOSED",
+      "recorded_owner_identities": 8,
+      "all_exact_identities_absent": true,
+      "elapsed_seconds_ceil": 2995,
+      "native_exit_code": -15,
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')"
+    },
+    "binding": "新生成最终 binding 的全部 7 个文件引用实际 SHA256 匹配；report 与本轮原始重算对象一致，cleanup 异常保留",
+    "module_audit": {
+      "execution_mode": "local-direct",
+      "forbidden_modules": [],
+      "forbidden_pythonpath": []
+    }
+  },
+  "limitations": [
+    "本轮独立执行原始评分重算和全部 81 输入哈希/长度核验；measurement bit-exact 与 physics staging 结论核对已有分析记录，没有另行重复完整测量与力回放。",
+    "测量转换、力施加 staging、reset/tick 证据不等于独立验证物理积分或传感器真值。",
+    "保留 native cleanup timeout/-15；完整评价证据不将原生退出改称正常退出。",
+    "未重新运行 GPU、仿真或训练，未修改文件或 RustDesk。",
+    "该结论支持此候选分析证据使用，不证明学习收益，也不等于整个 R6 目标或录像交付验收；scientific_acceptance=false 保持。"
+  ]
+}
