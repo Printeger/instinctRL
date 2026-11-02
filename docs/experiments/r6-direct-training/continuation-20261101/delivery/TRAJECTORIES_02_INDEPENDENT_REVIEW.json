@@ -1,0 +1,45 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "Independent frame-by-frame verification of four real extracted trajectories",
+  "must_fix": [],
+  "pins": {
+    "result.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/video-trajectories-02/result.json",
+      "sha256": "05bd84a66424d7fe9f0e52ca56737ca871c29b7dc1076a7cc0f42517f6062b8b"
+    },
+    "clip-00.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/video-trajectories-02/clip-00.json",
+      "sha256": "5a9cee246b1972f8e02b07418e634f4d1c7dbf8daeda661008447f36bc4317ce"
+    },
+    "clip-01.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/video-trajectories-02/clip-01.json",
+      "sha256": "c73b0c9bd757576f1df4903b620d16118186d5b8a60191cd496d061d572052eb"
+    },
+    "clip-02.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/video-trajectories-02/clip-02.json",
+      "sha256": "5c1722e9bfc489377e139a2ad38ba6461de0bc30af9733f1d40e195c7afff2c0"
+    },
+    "clip-03.json": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/video-trajectories-02/clip-03.json",
+      "sha256": "5df82f13754db40d102647dfaa5f310ca0f070efa399f7aa443a356089c919db"
+    }
+  },
+  "actual_checks": [
+    "Rehashed result, all four trajectories, selection, decoder, extractor and twelve selected raw files; references match.",
+    "Clip metadata exactly matches selection; four full 330-frame trajectories, total1320.",
+    "Used original audit reader and independent comparison script, not decode; compared all1320 root_state/quaternion/velocity/local position/sensor local position fields.",
+    "Commands and control attitudes match step_attempt; states match step_complete and motion_traces.",
+    "Frame/policy_step/control and state time/reset/episode/collision/height_violation match.",
+    "Each audit has one first identity,32 reset,1 initial,330 attempt,6600 force,330 complete; identity payload preserved.",
+    "Initial state/origin match; local position only subtracts recorded origin; no inferred poses or reintegration."
+  ],
+  "limitations": [
+    "Only four selected lanes; not a substitute for all condition metrics.",
+    "No independent physics integration or sensor truth validation.",
+    "Rendered video, frame decode, playability and visual presentation not yet verified.",
+    "scientific_acceptance remains false; not whole-goal completion."
+  ],
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}

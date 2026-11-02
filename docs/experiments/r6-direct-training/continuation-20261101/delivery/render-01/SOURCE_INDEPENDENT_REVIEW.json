@@ -1,0 +1,37 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "render-01 exact detached source",
+  "must_fix": [],
+  "sha256": {
+    "source.json": "7d4084eb43f15a5f8c88e4abb511edd92cbe6479ae8b0fe1d422778e74e38ed9",
+    "SOURCE_CPU_CHECK.json": "f40c12170ab917729908b9eb1ae4d20e698c140a6317d728eb956acbf5bc329f"
+  },
+  "verified": {
+    "snapshot_head": "1faf4d6de5e985b3655bb878c230f89adbc0f140",
+    "detached_head": true,
+    "actual_snapshot_file_hashes_verified": 230,
+    "source_path_set_unchanged": true,
+    "changed_source_paths": [
+      "tools/r6_video_trajectory.py"
+    ],
+    "decoder_sha256": "8a26af198c0faf14b4b4dd828d8df6fc2da56580626f8269a1d24a6418268921",
+    "decoder_matches_independently_reviewed_repair": true,
+    "unchanged_manifest_fields": [
+      "scientific_config",
+      "execution",
+      "actor",
+      "training",
+      "method",
+      "product_deltas"
+    ],
+    "asset_and_other_source_hashes_unchanged": true,
+    "recorded_cpu_module_audit": "local-direct; forbidden_modules and forbidden_pythonpath empty"
+  },
+  "limitations": [
+    "Saved CPU module audit inspected, not rerun.",
+    "Supports exact render source only; not GPU execution, video quality or whole-goal acceptance."
+  ],
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
