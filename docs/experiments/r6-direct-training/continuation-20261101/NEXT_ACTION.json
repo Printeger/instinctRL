@@ -18,7 +18,7 @@
     "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
   },
   "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
-  "status": "SUPERVISOR_PREFLIGHT_RUNNING",
+  "status": "RUNNING",
   "operation": "final",
   "ready_to_launch": false,
   "inputs": {
@@ -41,5 +41,9 @@
   "supervisor_start": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_02_SUPERVISOR_START.json",
     "sha256": "82e5ac70327a3aefbe94b9e84b7df1eaa07e666411fbfc75021697413c4603b3"
+  },
+  "launch_evidence": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_02_LAUNCH.json",
+    "sha256": "6d0f6cac3de34731af4ac32622396f3c2729badc693dd209fcf114cc02370862"
   }
 }
