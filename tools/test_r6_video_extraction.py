@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from tools.test_r6_video_trajectory import trajectory
 from tools import prepare_r6_video_trajectories as m
-from tools.r6_recovery import file_pin,RecoveryError
+from tools.r6_evidence import file_pin,RecoveryError
 
 @pytest.fixture
 def selected(trajectory,tmp_path):

@@ -46,9 +46,18 @@ def decode(clip):
         and len(trace['rows'])==steps,'TRACE_IDENTITY')
     origin=vector(trace['env_origin_w_m'],3)
     path=checked(clip['raw']['audit.bin']);require(path.stat().st_size<=2*1024**3,'AUDIT_CAP')
-    initial=None;pending=None;frames=[];counts={'force':0,'reset':0};episode=0
+    initial=None;pending=None;frames=[];counts={'force':0,'reset':0};episode=0;identity=None
     for record in audit.read_audit(path,run_id=clip['run_id'],block_id=clip['block_id'],expected_records=count):
         kind=record['kind'];p=record['payload']
+        if kind=='identity':
+            require(record['sequence']==0 and identity is None,'AUDIT_IDENTITY_ORDER')
+            require(p['block']['id']==clip['block_id'] and p['block']['steps']==steps
+                and p['seed']==summary['seed'] and p['split']==summary['split']
+                and p['sensor_frames']==steps+1 and p['physics_ticks']==steps*20
+                and p['actor_mode']=='deterministic_mean','AUDIT_IDENTITY')
+            identity=p
+            continue
+        require(identity is not None,'AUDIT_IDENTITY_MISSING')
         if kind in counts:counts[kind]+=1;continue
         if kind=='initial':
             require(initial is None and not frames and pending is None,'INITIAL_ORDER')
@@ -89,7 +98,7 @@ def decode(clip):
     require(initial is not None and pending is None and len(frames)==steps,'COMPLETE_TRAJECTORY')
     require(counts=={'force':summary['force_records'],'reset':summary['reset_records']},'PHYSICS_RECORD_COUNTS')
     for pin in clip['raw'].values():checked(pin)
-    return dict(schema_version='r6-video-trajectory/1',clip=clip,initial=initial,frames=frames,
+    return dict(schema_version='r6-video-trajectory/1',clip=clip,audit_identity=identity,initial=initial,frames=frames,
         decoder=file_pin(__file__),audit_reader=file_pin(audit.__file__),physics_reintegrated=False,
         state_semantics='RECORDED_PRE_RESET_POST_STEP_STATE',command_semantics='RECORDED_PRE_STEP_COMMAND',
         reset_semantics='DISPLAY_FAILURE_STATE_BEFORE_RESET_AND_BREAK_TRAIL_BEFORE_NEXT_FRAME',scientific_acceptance=False)

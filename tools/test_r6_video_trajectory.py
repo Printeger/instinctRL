@@ -11,7 +11,8 @@ def trajectory(tmp_path):
     sample=dict(sensor_position_w_m=[0.,0.,2.],velocity_w_m_s=[.1,0.,0.],episode_id=0,time_s=0.,collision=False,height_violation=False,missing=False)
     traces=[dict(lane=i,run_id=run,block_id=block,env_origin_w_m=[0.,0.,0.],initial=copy.deepcopy(sample),rows=[]) for i in range(32)]
     initial=dict(root_state_w=[root]*32,sensor_position_w_m=[[0.,0.,2.]]*32,env_origins_w_m=[[0.,0.,0.]]*32,lanes=[t['initial'] for t in traces])
-    records=[('initial',initial)]
+    records=[('identity',dict(block={'id':block,'steps':steps},seed=17,split='final',
+        sensor_frames=steps+1,physics_ticks=steps*20,actor_mode='deterministic_mean')),('initial',initial)]
     for step in range(steps):
         attempt=dict(policy_step=step,input_measurement_sequence=step,command_w_m_s=[[.2,0.,0.]]*32,command_b_m_s=[[.2,0.,0.]]*32,attitude_wxyz=[[1.,0.,0.,0.]]*32)
         rows=[]
@@ -45,13 +46,27 @@ def test_exact_pose_timing_and_last_step_reset_are_preserved(trajectory):
 @pytest.mark.parametrize('fault',['command','quaternion','order','time','episode','reset','nonfinite','truncated','identity'])
 def test_wrong_or_partial_trajectory_rejected(trajectory,fault):
     records,traces,write=trajectory
-    if fault=='command':records[1][1]['command_w_m_s']=[[9.,0.,0.]]*32
-    elif fault=='quaternion':records[2][1]['root_state_w']=[[0.,0.,2.,0.,0.,0.,0.,.1,0.,0.,0.,0.,0.]]*32
-    elif fault=='order':records[1][1]['policy_step']=1
+    if fault=='command':records[2][1]['command_w_m_s']=[[9.,0.,0.]]*32
+    elif fault=='quaternion':records[3][1]['root_state_w']=[[0.,0.,2.,0.,0.,0.,0.,.1,0.,0.,0.,0.,0.]]*32
+    elif fault=='order':records[2][1]['policy_step']=1
     elif fault=='time':traces[0]['rows'][0]['time_s']=9
     elif fault=='episode':traces[0]['rows'][-1]['episode_id']=0
     elif fault=='reset':records[-1][1]['reset_mask']=[0]*32
-    elif fault=='nonfinite':records[1][1]['command_b_m_s']=[['NaN',0.,0.]]*32
+    elif fault=='nonfinite':records[2][1]['command_b_m_s']=[['NaN',0.,0.]]*32
     elif fault=='truncated':records.pop()
     elif fault=='identity':traces[0]['run_id']='wrong'
+    with pytest.raises((RecoveryError,ValueError)):m.decode(write())
+
+
+@pytest.mark.parametrize('fault',['missing','duplicate','late','seed','split','block','steps','frames','ticks','actor','unknown'])
+def test_audit_identity_is_required_and_checked(trajectory,fault):
+    records,_,write=trajectory
+    if fault=='missing':records.pop(0)
+    elif fault=='duplicate':records.insert(1,copy.deepcopy(records[0]))
+    elif fault=='late':records.insert(1,records.pop(0))
+    elif fault=='unknown':records.insert(1,('unknown',{}))
+    else:
+        p=records[0][1]
+        if fault in ('block','steps'):p['block']['id' if fault=='block' else 'steps']='wrong'
+        else:p[{'frames':'sensor_frames','ticks':'physics_ticks','actor':'actor_mode'}.get(fault,fault)]='wrong'
     with pytest.raises((RecoveryError,ValueError)):m.decode(write())
