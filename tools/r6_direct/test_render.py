@@ -42,6 +42,7 @@ def test_local_render_contract_and_process_resource_accounting(trajectory,tmp_pa
 def test_render_cache_must_resolve_inside_this_attempt(tmp_path):
     settings = startup_settings(tmp_path)
     assert settings['/exts/omni.kit.viewport.window/startup/disableWindowOnLoad'] is True
+    assert settings['/exts/omni.replicator.core/Orchestrator/enabled'] is True
     resolved = {'${cache}': str(tmp_path/'render_cache'),
                 '${omni_global_cache}': str(tmp_path/'render_global_cache')}
     validate_cache_tokens(settings, SimpleNamespace(resolve=resolved.__getitem__))

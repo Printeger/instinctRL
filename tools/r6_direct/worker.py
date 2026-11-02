@@ -166,6 +166,8 @@ def run(plan, input_pin):
                 return super().check(**kw)
         if contract['operation']=='render':
             from tools.r6_direct.render import run as render
+            atomic(attempt/'state.json',{'status':'RENDERING',
+                'identity':process_identity(os.getpid()),'counters':counters.snapshot()})
             render(plan,contract,source,output,app,counters,Guard(gate))
         else:
             from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv,UnifiedH1DirectEnvCfg

@@ -1,0 +1,40 @@
+{
+  "status": "REPLICATOR_TICK_GRAPH_DISABLED_ROOT_CAUSE_FOUND_LIVE_REPAIR_PENDING",
+  "evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-02/stdout.log",
+      "sha256": "b4f1f5931bddbce4ac6c0d6cd51829921757ac23e8a41fed25adfdcde1abe67b"
+    },
+    {
+      "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/apps/isaaclab.python.headless.rendering.kit",
+      "sha256": "423d5cccc0438bb87c278cbc2ddcff1e1ddae61337499c011348236e5e0a9ba5"
+    },
+    {
+      "path": "/home/mint/.local/share/ov/data/exts/v2/omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311/omni/replicator/core/scripts/orchestrator.py",
+      "sha256": "c297093ae4100f5fc20f576f0b71d0dc4c765b2135f2a945764bbe63889a7c42"
+    }
+  ],
+  "correction_to_prior_diagnosis": "VIDEO02 INITIALIZING state was stale: log shows viewport wait completed at3.182s, frozen UAV asset load at3.459s and Replicator Step at3.473s. The application had returned and render code was executing, but worker did not record RENDERING.",
+  "causal_chain": [
+    "Frozen headless rendering experience disables /exts/omni.replicator.core/Orchestrator/enabled.",
+    "Installed _set_tick_graph returns False when disabled; explicit step does not enable setting.",
+    "step waits while not _sim_times_to_write OR another bounded clause; empty queue branch does not honor attempt limit.",
+    "Repeated app updates without tick-graph capture events produce observed viewport logs until supervised log cap closes attempt."
+  ],
+  "repair": [
+    "Enable Replicator tick graph in render-only startup settings, checked against effective settings after AppLauncher.",
+    "Write RENDERING before entering renderer; no changes to pose, delta_time0, pause_timelineTrue, physics/policy/optimizer/checkpoint counters or training/evaluation."
+  ],
+  "limits": [
+    "Live repair verification still pending.",
+    "DerivedDataCache old-path error remains separately; material cache error absent in second stderr.",
+    "Existing first/second failure records and fees retained; this additive diagnosis corrects phase interpretation."
+  ],
+  "cpu_tests": {
+    "session_id": 23448,
+    "result": "2 passed",
+    "exit_code": 0
+  },
+  "scientific_acceptance": false,
+  "rustdesk_touched": false
+}
