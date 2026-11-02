@@ -1,4 +1,8 @@
 {
+  "closure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-04/CLOSURE.json",
+    "sha256": "020ebd31936263988022163366e4644c58280718bc155c31228e2b93a9e6ef4e"
+  },
   "contract": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-04/contract.json",
     "sha256": "60ddc6d2e05eff8725f1fdbb6b923f492b9cf16d089abe1ed24b54b27bcc72f5"
@@ -18,7 +22,7 @@
     "sha256": "1896291cb11a59010c522c50ab12ff56f4db99df4d3bf29eb2c92665bfe01eaa"
   },
   "purpose": "Record bounded first-frame Fabric state and Python stack; no proven fix yet",
-  "ready_to_launch": true,
+  "ready_to_launch": false,
   "resource_policy": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
     "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
@@ -35,6 +39,10 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-04/SOURCE_CPU_CHECK.json",
     "sha256": "909563bf0d2cedcce4f39314e786087f4c15c20161168564c771bfd0197b4a87"
   },
-  "status": "READY_TO_LAUNCH",
-  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
+  "status": "CLOSED_DIAGNOSTIC_FIRST_FRAME_WAIT_IDENTIFIED",
+  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
+  "supervisor_start": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-04/SUPERVISOR_START.json",
+    "sha256": "f51779435f33fd2b9fa621341193c5b57d47260f1ff6de3cbd091e81601ca33c"
+  }
 }

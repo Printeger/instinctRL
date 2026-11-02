@@ -1430,6 +1430,50 @@
         "output_actual_plus_unreleased_reservations_bytes": 685838456
       },
       "status": "UNRELEASED"
+    },
+    {
+      "id": "R6-DIRECT-VIDEO-04",
+      "purpose": "confirmation_delivery",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-04/receipt.json",
+        "sha256": "93ef002ca970152843b8045768a5a6f8254f7e8d83a7016bd060a3c82dc41790"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
+        "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 165,
+        "live_starts": 1,
+        "live_wall_seconds": 165,
+        "nontraining_transitions": 0,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_transitions": 0
+      },
+      "settlement": {
+        "charged_seconds": 165,
+        "original_resources": {
+          "allocated_gpu_seconds": 3790,
+          "live_starts": 1,
+          "live_wall_seconds": 3790,
+          "nontraining_transitions": 0,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-04/receipt.json",
+          "sha256": "93ef002ca970152843b8045768a5a6f8254f7e8d83a7016bd060a3c82dc41790"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-04",
+        "native_dir": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-VIDEO-04"
+      },
+      "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
     }
   ],
   "new_used": {

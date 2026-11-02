@@ -1,3 +1,14 @@
+# R6 首帧等待已定位到渲染完成同步；录像仍待修复
+
+2026-11-02：VIDEO04 的现场 Python 栈位于 Replicator orchestrator.py:1610。
+Fabric 时间有效、捕获队列非空、渲染产品存在、timeline 保持 0；本次证据排除
+“持续无效 Fabric 时间导致空队列等待”的假设，尚未证明渲染同步失效的底层原因。
+取得诊断后仅对准确监督器发送 SIGTERM；回执 CLOSED/-15，6 个所属身份已退出，
+完整生命周期按 165 秒一次结算，其余预留保留。没有生成可验收录像。
+见 continuation-20261101/delivery/render-04/CLOSURE.json（位于 docs/experiments/r6-direct-training/）。
+原训练、最终评价、模型和轨迹独审成果不变；录像、最终需求总审计仍待完成。
+RustDesk 保持运行。下方保留历史状态。
+
 # R6 录像第三次尝试已关闭；首帧等待诊断中
 
 2026-11-02：VIDEO03 已进入 RENDERING，但未生成首帧，以 DIRECT_LOG_CAP 关闭。

@@ -1,0 +1,58 @@
+{
+  "capture_states": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-04/results/research-r6-video-replay/media/first_capture_state.jsonl",
+    "sha256": "c2cb6ff95ea8e1f37bbb040fcb698a16451ffda2c40b617a272e8300172862b3"
+  },
+  "charged_seconds": 165,
+  "exact_owner_identities_gone": [
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3365690,
+      "starttime": "33884770"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3365827,
+      "starttime": "33886370"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3365828,
+      "starttime": "33886370"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3366662,
+      "starttime": "33895550"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3366707,
+      "starttime": "33895599"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3366708,
+      "starttime": "33895600"
+    }
+  ],
+  "hypothesis_rejected_for_this_attempt": "Persistent (-1,-1) Fabric time / empty capture queue causing first scheduling wait",
+  "intentional_stop": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-04/DIAGNOSTIC_STOP.json",
+    "sha256": "460f268b1feb3e4baddd98a09276fcb2d2248d79d9611ddbeee0961652b3e078"
+  },
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-04/receipt.json",
+    "sha256": "93ef002ca970152843b8045768a5a6f8254f7e8d83a7016bd060a3c82dc41790"
+  },
+  "remaining": [],
+  "runtime_observation": "Python stack in orchestrator.py:1610 wait_for_render dispatcher reference-time loop; Fabric time valid and capture queue nonempty while timeline time stays zero.",
+  "rustdesk_touched": false,
+  "stack": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-04/results/research-r6-video-replay/render_python_stack.txt",
+    "sha256": "43fa8616a1e5a09e7a6bb6cfabff66d13d3502b863dd29efbebf0f03069ca8dd"
+  },
+  "status": "CLOSED_DIAGNOSTIC_FIRST_FRAME_WAIT_IDENTIFIED",
+  "still_unresolved": "Why render dispatcher reference time fails to reach queued capture time; no accepted video yet",
+  "video_generated": false
+}

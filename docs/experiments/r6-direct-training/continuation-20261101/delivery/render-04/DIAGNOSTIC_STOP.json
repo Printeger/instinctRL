@@ -1,0 +1,18 @@
+{
+  "capture_observation_before_stop": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-04/results/research-r6-video-replay/media/first_capture_state.jsonl",
+    "sha256": "c2cb6ff95ea8e1f37bbb040fcb698a16451ffda2c40b617a272e8300172862b3"
+  },
+  "parent": {
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+    "pid": 3365690,
+    "starttime": "33884770"
+  },
+  "reason": "Runtime stack located wait-for-render dispatcher loop; capture queue nonempty and Fabric valid. Stop this diagnostic attempt through its exact supervisor; retain original evidence.",
+  "rustdesk_touched": false,
+  "signal": "SIGTERM",
+  "stack": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-04/results/research-r6-video-replay/render_python_stack.txt",
+    "sha256": "43fa8616a1e5a09e7a6bb6cfabff66d13d3502b863dd29efbebf0f03069ca8dd"
+  }
+}
