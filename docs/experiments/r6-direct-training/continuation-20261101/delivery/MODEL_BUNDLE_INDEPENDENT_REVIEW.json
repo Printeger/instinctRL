@@ -1,0 +1,39 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "冻结模型交付归档的字节完整性和角色绑定",
+  "checks": {
+    "members_verified": 27,
+    "no_missing_extra_or_duplicate_members": true,
+    "all_member_hashes_and_lengths_match_manifest": true,
+    "all_member_bytes_equal_original_files": true,
+    "four_models_match_freeze_and_batch": true,
+    "model_order": [
+      "baseline",
+      "seed1",
+      "seed2",
+      "seed3"
+    ],
+    "model_reserialization_detected": false,
+    "archive_hash_matches_manifest": true
+  },
+  "must_fix": [],
+  "manifest": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FROZEN_MODEL_BUNDLE.json",
+    "sha256": "032e357a747f33f73eb35efdf8bc94cbb9388fe817673c6159efd7286bb8c279"
+  },
+  "archive": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/frozen-models-01.zip",
+    "sha256": "e65adcf222106295c24ee7b6061681902daf9442363e46afd446ac8c2f4efa96",
+    "bytes": 5506001
+  },
+  "limitations": [
+    "归档保留原绝对路径，不是可移植运行环境。",
+    "模型及证据为原件字节副本，不代表所有引用的外部证据均已打包。",
+    "三候选为共同u640续训，不是独立从零训练。",
+    "不证明学习增益、最终评价通过或整个Goal完成。"
+  ],
+  "files_modified": false,
+  "gpu_started": false,
+  "rustdesk_touched": false
+}
