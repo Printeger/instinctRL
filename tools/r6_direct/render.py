@@ -1,4 +1,5 @@
 """Render within the direct worker's admitted app and bounded process lifecycle."""
+import faulthandler
 import time
 from pathlib import Path
 from tools.r6_direct.io import atomic
@@ -36,9 +37,17 @@ def run(plan, contract, source, output, app, counters, guard, *, clock=time.mono
             guard.check(stage='recorded-replay',ordinal=checks)
             last=now; checks+=1
     check()
-    manifest=render(contract['parameters']['extraction'],output/'media',
-                    source_snapshot=plan['snapshot'],asset_root=source['execution']['isaacsim_asset_root'],
-                    app=app,check=check)
+    # A single bounded Python-stack observation distinguishes a stalled Kit
+    # update from Replicator's empty capture-time queue. The native watchdog
+    # still owns termination; this does not advance the timeline or physics.
+    with (output/'render_python_stack.txt').open('x') as trace:
+        faulthandler.dump_traceback_later(30, repeat=False, file=trace)
+        try:
+            manifest=render(contract['parameters']['extraction'],output/'media',
+                            source_snapshot=plan['snapshot'],asset_root=source['execution']['isaacsim_asset_root'],
+                            app=app,check=check)
+        finally:
+            faulthandler.cancel_dump_traceback_later()
     check()
     if any(manifest[k]!=0 for k in ('physics_steps','policy_inference_steps','optimizer_updates','checkpoint_writes')):
         raise RuntimeError('DIRECT_REPLAY_MUST_NOT_TRAIN')

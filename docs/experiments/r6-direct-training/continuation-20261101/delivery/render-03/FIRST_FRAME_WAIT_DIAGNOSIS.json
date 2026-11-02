@@ -1,0 +1,25 @@
+{
+  "status": "SOURCE_DIAGNOSIS_PENDING_RUNTIME_STACK",
+  "runtime_source": {
+    "path": "/home/mint/.local/share/ov/data/exts/v2/omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311/omni/replicator/core/scripts/orchestrator.py",
+    "sha256": "c297093ae4100f5fc20f576f0b71d0dc4c765b2135f2a945764bbe63889a7c42"
+  },
+  "verified_source_facts": [
+    "step lines 1582-1587: empty _sim_times_to_write branch is not limited by MAX_STEP_ATTEMPTS",
+    "on_update lines 421-428: ReadFabricTime (-1,-1) returns before capture scheduling",
+    "replay uses stopped timeline, capture_on_play=False and delta_time=0"
+  ],
+  "unproven": [
+    "Actual VIDEO03 Python loop location",
+    "Actual ReadFabricTime output values",
+    "Whether Fabric scene delegate or stopped timeline is causal"
+  ],
+  "next_observation": "Single Python traceback after 30 seconds inside admitted render; no runtime mutation or new dynamics; new frozen attempt required",
+  "validation": {
+    "cpu_tests": "tools/r6_direct/test_render.py",
+    "result": "2 passed in 1.81s",
+    "initial_test_invocation": "Collection failed because ambient ROS pytest plugin imports unavailable lark; rerun disabled plugin autoload with explicit project PYTHONPATH; no dependency installation"
+  },
+  "closed_owner_identities_rechecked_gone": true,
+  "rustdesk_touched": false
+}
