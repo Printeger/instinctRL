@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "PASS_SCOPED",
+  "scope": "VIDEO05 USD rendering engineering hypothesis and diagnostics",
+  "must_fix": [],
+  "sha256": {
+    "tools/r6_direct/render.py": "51a824bf74fc3415ed6b5950b3042952bd086ab4139a845e19b2953c2da0f07e",
+    "tools/render_r6_isaac_video.py": "f6fe06952000dd20517a8ffc05009411a221423571296c227001deeef2ea5cd2"
+  },
+  "findings": [
+    "Render-only startup settings with effective checks",
+    "USD-authored poses justify hypothesis, not proven root cause",
+    "Timeline stopped delta_time0 and wait_for_render retained",
+    "Dispatcher raw time and RGB shape/size, max12 at5seconds",
+    "No training actor scoring or runtime file changes"
+  ],
+  "limitations": [
+    "No proven repair yet",
+    "rgb.get_data may synchronize; external watchdog retained",
+    "Observation errors can lose fields",
+    "Nonempty RGB insufficient for acceptance; full frame/pose/playability checks required"
+  ],
+  "files_modified": false,
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
