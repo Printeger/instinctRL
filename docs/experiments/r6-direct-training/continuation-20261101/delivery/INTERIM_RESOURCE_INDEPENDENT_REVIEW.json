@@ -1,0 +1,80 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "R09阶段资源账本、已记录时间结算及模型待记账去重核验",
+  "ledger": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/RESOURCE_LEDGER.json",
+    "sha256_at_read": "5a1c3d6264eecfb055a3d92fb718b6e8a5f64d340883424ecbab6502c1e64753",
+    "unchanged_during_read": true,
+    "reservation_count": 44,
+    "duplicate_run_ids": [],
+    "time_settled_count": 16,
+    "unreleased_count": 28
+  },
+  "verified": {
+    "all_settlement_receipt_pins_valid": true,
+    "all_settled_receipts_closed_and_remaining_empty": true,
+    "all_charged_seconds_equal_receipt_wall_ceiling": true,
+    "allocated_gpu_and_live_wall_match_settlement": true,
+    "non_time_resources_unchanged_from_original_reservation": true,
+    "duplicate_settlement_receipt_paths": [],
+    "historical_charged_equal_legacy_import": true,
+    "model_pending_source_hash_verified": true,
+    "model_pending_charge_count": 10,
+    "model_pending_deduplication_keys_unique": true,
+    "model_settlement_records": 1,
+    "model_settlement_commit": "57c86d95",
+    "new_model_usage_before_settlement": 257,
+    "new_model_usage_after_settlement": 267,
+    "historical_model_charge": 239,
+    "historical_reconciled_total": 506,
+    "current_platform_usage_still_unknown": true
+  },
+  "time_settlements_seconds": {
+    "R6-DIRECT-BASELINE-01": 73,
+    "R6-DIRECT-BASELINE-02": 139,
+    "R6-DIRECT-BASELINE-03": 708,
+    "R6-DIRECT-BASELINE-04": 2215,
+    "R6-DIRECT-TRAIN-01": 2572,
+    "R6-DIRECT-TRAIN-02": 3650,
+    "R6-DIRECT-PAIR-U640-02": 348,
+    "R6-DIRECT-PAIR-U640-03": 2261,
+    "R6-DIRECT-PAIR-U768-01": 2253,
+    "R6-DIRECT-CONFIRM-128-SEED-01B": 3784,
+    "R6-DIRECT-CONFIRM-128-SEED-01C": 4065,
+    "R6-DIRECT-CONFIRM-128-SEED-02": 4117,
+    "R6-DIRECT-CONFIRM-128-SEED-03": 4075,
+    "R6-DIRECT-FINAL-BASELINE-01": 2274,
+    "R6-DIRECT-FINAL-SEED-01": 2988,
+    "R6-DIRECT-FINAL-SEED-02": 2967
+  },
+  "preserved_reservations": {
+    "diagnostics": "10项均UNRELEASED；7项240秒、3项390秒",
+    "storage_continuation_02_bytes": 35970351104,
+    "storage_confirmation_128_bytes": 104689827840,
+    "final_seed_03": {
+      "status": "UNRELEASED",
+      "allocated_gpu_seconds": 3790,
+      "live_wall_seconds": 3790,
+      "nontraining_transitions": 193600
+    }
+  },
+  "effective_policy": {
+    "policy": "UNLIMITED_PROJECT_BUDGET_NO_PROTECTED_ALLOCATION",
+    "amendment_sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20",
+    "historical_caps_and_protected_fields_are_not_current_limits": true,
+    "finite_run_endpoints_STOP_capacity_and_accounting_remain": true
+  },
+  "limitations": [
+    "506只是历史对账读数，不是当前平台总调用量；continuation_usage_unknown明确保留。",
+    "本次验证已记录结算和Git中的257加10变为267，不独立重建此前257次平台调用。",
+    "未重审全部历史资源实际消耗；其他资源继续保守留在未释放预留中。",
+    "第三最终候选仍未结算，本次不声称其退出或最终清理完成。",
+    "不能将TIME_SETTLED解释为全部资源释放，也不能以取消累计cap为由删除历史费用。",
+    "用户修订文件的enforcement_status仍写历史PENDING，实际政策判定函数已识别该修订；交付时应区分文档原状态与现行实现。"
+  ],
+  "must_fix_for_this_scoped_check": [],
+  "final_R09_complete": false,
+  "ledger_modified": false,
+  "rustdesk_touched": false
+}
