@@ -1,0 +1,61 @@
+{
+  "status": "CLOSED_RENDER_INITIALIZATION_FAILED",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-02/receipt.json",
+    "sha256": "89886cf94ac6bc396e44d1a05ea1ab4e49f478b6568c5b46a541723548c5da95"
+  },
+  "workload_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-02/state.json",
+    "sha256": "fc74d73c2c0e34e9fc6322e1d2d38aaee7d27bff9c76851d86e8f9df97d73a54"
+  },
+  "native_error": "RuntimeError('DIRECT_LOG_CAP')",
+  "exit_code": -15,
+  "wall_seconds": 195.6188642620109,
+  "charged_seconds": 196,
+  "exact_owner_identities_gone": [
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3352057,
+      "starttime": "33744253"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3352184,
+      "starttime": "33745779"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3352185,
+      "starttime": "33745779"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3352490,
+      "starttime": "33749306"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3352724,
+      "starttime": "33751326"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3353076,
+      "starttime": "33754912"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3353116,
+      "starttime": "33754964"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3353117,
+      "starttime": "33754965"
+    }
+  ],
+  "remaining": [],
+  "video_generated": false,
+  "diagnosis": "Disabling default viewport window did not resolve repeated createViewportImpl at initialization. Preserve negative result; no unchanged retry. DerivedDataCache old path error remains; material cache PermissionError absent from stderr.",
+  "rustdesk_touched": false
+}
