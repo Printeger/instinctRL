@@ -18,7 +18,7 @@
     "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
   },
   "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
-  "status": "RUNNING",
+  "status": "EVALUATING",
   "operation": "final",
   "ready_to_launch": false,
   "inputs": {
@@ -35,7 +35,7 @@
   },
   "input_tag": "r6-direct-final-seed-03-inputs",
   "holdout_revealed": true,
-  "evaluation_started": false,
+  "evaluation_started": true,
   "supervisor_started": true,
   "scientific_acceptance": false,
   "supervisor_start": {
@@ -45,5 +45,9 @@
   "launch_evidence": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_03_LAUNCH.json",
     "sha256": "cb797f00dd8318555ac2d6f4afc6f16d7c4a81efe24f755f812cba73c6db4fea"
+  },
+  "evaluation_evidence": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_03_EVALUATING.json",
+    "sha256": "eb864f4a8c0aece8e67a77aaaf3a0971bcc67cf516ab78db0f305c0addc70891"
   }
 }
