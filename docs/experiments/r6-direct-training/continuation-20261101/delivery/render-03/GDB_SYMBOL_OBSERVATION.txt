@@ -1,0 +1,173 @@
+[New LWP 3358073]
+[New LWP 3358065]
+[New LWP 3358049]
+[New LWP 3358048]
+[New LWP 3358046]
+[New LWP 3358044]
+[New LWP 3358043]
+[New LWP 3358042]
+[New LWP 3358041]
+[New LWP 3358021]
+[New LWP 3358020]
+[New LWP 3358019]
+[New LWP 3358018]
+[New LWP 3358017]
+[New LWP 3358016]
+[New LWP 3358015]
+[New LWP 3358014]
+[New LWP 3358013]
+[New LWP 3358012]
+[New LWP 3358011]
+[New LWP 3358010]
+[New LWP 3358009]
+[New LWP 3358008]
+[New LWP 3358007]
+[New LWP 3358006]
+[New LWP 3358005]
+[New LWP 3358004]
+[New LWP 3358003]
+[New LWP 3358002]
+[New LWP 3357999]
+[New LWP 3357998]
+[New LWP 3357997]
+[New LWP 3357996]
+[New LWP 3357995]
+[New LWP 3357994]
+[New LWP 3357993]
+[New LWP 3357992]
+[New LWP 3357991]
+[New LWP 3357990]
+[New LWP 3357989]
+[New LWP 3357988]
+[New LWP 3357987]
+[New LWP 3357986]
+[New LWP 3357985]
+[New LWP 3357978]
+[New LWP 3357977]
+[New LWP 3357976]
+[New LWP 3357974]
+[New LWP 3357975]
+[New LWP 3357973]
+[New LWP 3357972]
+[New LWP 3357971]
+[New LWP 3357969]
+[New LWP 3357970]
+[New LWP 3357968]
+[New LWP 3357967]
+[New LWP 3357966]
+[New LWP 3357965]
+[New LWP 3357964]
+[New LWP 3357963]
+[New LWP 3357946]
+[New LWP 3357945]
+[New LWP 3357944]
+[New LWP 3357943]
+[New LWP 3357942]
+[New LWP 3357941]
+[New LWP 3357940]
+[New LWP 3357939]
+[New LWP 3357938]
+[New LWP 3357937]
+[New LWP 3357936]
+[New LWP 3357935]
+[New LWP 3357934]
+[New LWP 3357933]
+[New LWP 3357932]
+[New LWP 3357927]
+[New LWP 3357926]
+[New LWP 3357925]
+[New LWP 3357924]
+[New LWP 3357923]
+[New LWP 3357922]
+[New LWP 3357921]
+[New LWP 3357920]
+[New LWP 3357919]
+[New LWP 3357918]
+[New LWP 3357917]
+[New LWP 3357916]
+[New LWP 3357915]
+[New LWP 3357914]
+[New LWP 3357913]
+[New LWP 3357912]
+[New LWP 3357911]
+[New LWP 3357910]
+[New LWP 3357909]
+[New LWP 3357908]
+[New LWP 3357907]
+[New LWP 3357906]
+[New LWP 3357905]
+[New LWP 3357902]
+[New LWP 3357901]
+[New LWP 3357899]
+[New LWP 3357898]
+[New LWP 3357894]
+[New LWP 3357893]
+[New LWP 3357890]
+[New LWP 3357889]
+[New LWP 3357888]
+[New LWP 3357884]
+[New LWP 3357881]
+[New LWP 3357880]
+[New LWP 3357879]
+[New LWP 3357875]
+[New LWP 3357874]
+[New LWP 3357873]
+[New LWP 3357871]
+[New LWP 3357869]
+[New LWP 3357868]
+[New LWP 3357866]
+[New LWP 3357865]
+[New LWP 3357864]
+[New LWP 3357863]
+[New LWP 3357862]
+[New LWP 3357861]
+[New LWP 3357860]
+[New LWP 3357859]
+[New LWP 3357858]
+[New LWP 3357857]
+[New LWP 3357856]
+[New LWP 3357855]
+[New LWP 3357854]
+[New LWP 3357853]
+[New LWP 3357852]
+[New LWP 3357851]
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007c5e1b234aa4 in std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_create(unsigned long&, unsigned long)@plt () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/settings/_settings.cpython-311-x86_64-linux-gnu.so
+#0  0x00007c5e1b234aa4 in std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_create(unsigned long&, unsigned long)@plt () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/settings/_settings.cpython-311-x86_64-linux-gnu.so
+#1  0x00007c5e1b23640d in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/settings/_settings.cpython-311-x86_64-linux-gnu.so
+#2  0x00007c5e1b243bfe in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/settings/_settings.cpython-311-x86_64-linux-gnu.so
+#3  0x00007c5e1b26a1f7 in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/settings/_settings.cpython-311-x86_64-linux-gnu.so
+#4  0x00007c5e1b26a56e in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/settings/_settings.cpython-311-x86_64-linux-gnu.so
+#5  0x00007c5e1b251fc3 in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/settings/_settings.cpython-311-x86_64-linux-gnu.so
+#6  0x00006339fb5063b6 in cfunction_call (func=0x7c5e1c4bfba0, args=<optimized out>, kwargs=<optimized out>) at /usr/local/src/conda/python-3.11.15/Objects/methodobject.c:542
+#7  0x00006339fb4e265b in _PyObject_MakeTpCall (tstate=0x6339fb883078 <_PyRuntime+166328>, callable=0x7c5e1c4bfba0, args=0x7c5e1dfccc28, nargs=<optimized out>, keywords=<optimized out>) at /usr/local/src/conda/python-3.11.15/Objects/call.c:214
+#8  0x00006339fb40c476 in trace_call_function (tstate=<optimized out>, func=0x7c5e1c4bfba0, args=<optimized out>, nargs=2, kwnames=0x0) at /usr/local/src/conda/python-3.11.15/Python/ceval.c:7285
+#9  _PyEval_EvalFrameDefault (tstate=tstate@entry=0x6339fb883078 <_PyRuntime+166328>, frame=<optimized out>, frame@entry=0x7c5e1dfccb18, throwflag=throwflag@entry=0) at /usr/local/src/conda/python-3.11.15/Python/ceval.c:4764
+#10 0x00006339fb536059 in _PyEval_EvalFrame (tstate=0x6339fb883078 <_PyRuntime+166328>, frame=0x7c5e1dfccb18, throwflag=0) at /usr/local/src/conda/python-3.11.15/Include/internal/pycore_ceval.h:73
+#11 _PyEval_Vector (tstate=0x6339fb883078 <_PyRuntime+166328>, func=0x7c58dc38bec0, locals=0x0, args=0x7ffde029ab80, argcount=2, kwnames=<optimized out>) at /usr/local/src/conda/python-3.11.15/Python/ceval.c:6434
+#12 _PyFunction_Vectorcall (func=0x7c58dc38bec0, stack=0x7ffde029ab80, nargsf=<optimized out>, kwnames=<optimized out>) at /usr/local/src/conda/python-3.11.15/Objects/call.c:393
+#13 _PyObject_VectorcallTstate (tstate=0x6339fb883078 <_PyRuntime+166328>, callable=0x7c58dc38bec0, args=0x7ffde029ab80, nargsf=<optimized out>, kwnames=<optimized out>) at /usr/local/src/conda/python-3.11.15/Include/internal/pycore_call.h:92
+#14 method_vectorcall (method=<optimized out>, args=<optimized out>, nargsf=<optimized out>, kwnames=<optimized out>) at /usr/local/src/conda/python-3.11.15/Objects/classobject.c:89
+#15 0x00007c5e1b3a533a in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/eventdispatcher/_eventdispatcher.cpython-311-x86_64-linux-gnu.so
+#16 0x00007c5e1b387a27 in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/eventdispatcher/_eventdispatcher.cpython-311-x86_64-linux-gnu.so
+#17 0x00007c5e1b387c86 in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/carb/eventdispatcher/_eventdispatcher.cpython-311-x86_64-linux-gnu.so
+#18 0x00007c5e1acf1201 in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libcarb.eventdispatcher.plugin.so
+#19 0x00007c5d68096f8d in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/exts/omni.kit.loop-isaac/bin/libomni.kit.loop-isaac.plugin.so
+#20 0x00007c5e1addb5e1 in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libomni.kit.app.plugin.so
+#21 0x00007c5e1ae487d1 in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/plugins/libomni.kit.app.plugin.so
+#22 0x00007c5e1b045847 in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/omni/kit/app/_app.cpython-311-x86_64-linux-gnu.so
+#23 0x00007c5e1b04111e in ?? () from /home/mint/miniconda3/envs/navrl_blackwell_test/lib/python3.11/site-packages/isaacsim/kit/kernel/py/omni/kit/app/_app.cpython-311-x86_64-linux-gnu.so
+#24 0x00006339fb5063b6 in cfunction_call (func=0x7c5e1c1fa890, args=<optimized out>, kwargs=<optimized out>) at /usr/local/src/conda/python-3.11.15/Objects/methodobject.c:542
+#25 0x00006339fb4e265b in _PyObject_MakeTpCall (tstate=0x6339fb883078 <_PyRuntime+166328>, callable=0x7c5e1c1fa890, args=0x7c5e1dfccaf0, nargs=<optimized out>, keywords=<optimized out>) at /usr/local/src/conda/python-3.11.15/Objects/call.c:214
+#26 0x00006339fb40c476 in trace_call_function (tstate=<optimized out>, func=0x7c5e1c1fa890, args=<optimized out>, nargs=1, kwnames=0x0) at /usr/local/src/conda/python-3.11.15/Python/ceval.c:7285
+#27 _PyEval_EvalFrameDefault (tstate=tstate@entry=0x6339fb883078 <_PyRuntime+166328>, frame=<optimized out>, frame@entry=0x7c5e1dfcc1b8, throwflag=throwflag@entry=0) at /usr/local/src/conda/python-3.11.15/Python/ceval.c:4764
+#28 0x00006339fb5acc75 in _PyEval_EvalFrame (tstate=0x6339fb883078 <_PyRuntime+166328>, frame=0x7c5e1dfcc1b8, throwflag=0) at /usr/local/src/conda/python-3.11.15/Include/internal/pycore_ceval.h:73
+#29 _PyEval_Vector (tstate=tstate@entry=0x6339fb883078 <_PyRuntime+166328>, func=func@entry=0x7c5e1dbce020, locals=locals@entry=0x7c5e1dbf3100, args=args@entry=0x0, argcount=argcount@entry=0, kwnames=kwnames@entry=0x0) at /usr/local/src/conda/python-3.11.15/Python/ceval.c:6434
+[Inferior 1 (process 3356992) detached]

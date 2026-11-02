@@ -1378,20 +1378,41 @@
     {
       "id": "R6-DIRECT-VIDEO-03",
       "purpose": "confirmation_delivery",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-03/receipt.json",
+        "sha256": "31c1a52fa2eba6c3a704060712415b5539587115df635853c93e51d74ed2822c"
+      },
       "resource_policy": {
         "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
         "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
       },
       "resources": {
-        "allocated_gpu_seconds": 3790,
+        "allocated_gpu_seconds": 211,
         "live_starts": 1,
-        "live_wall_seconds": 3790,
+        "live_wall_seconds": 211,
         "nontraining_transitions": 0,
         "queue_seconds": 180,
         "simulator_initializations": 1,
         "training_transitions": 0
       },
-      "status": "UNRELEASED",
+      "settlement": {
+        "charged_seconds": 211,
+        "original_resources": {
+          "allocated_gpu_seconds": 3790,
+          "live_starts": 1,
+          "live_wall_seconds": 3790,
+          "nontraining_transitions": 0,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-03/receipt.json",
+          "sha256": "31c1a52fa2eba6c3a704060712415b5539587115df635853c93e51d74ed2822c"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
       "storage_new_binding": {
         "attempt_dir": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-03",
         "native_dir": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-VIDEO-03"
@@ -1428,5 +1449,5 @@
     "repair": 4
   },
   "schema_version": "r6-direct-ledger/1",
-  "status": "RUNNING"
+  "status": "WAITING_FOR_ANALYSIS"
 }

@@ -1,0 +1,67 @@
+{
+  "status": "CLOSED_RENDER_FIRST_FRAME_FAILED",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-03/receipt.json",
+    "sha256": "31c1a52fa2eba6c3a704060712415b5539587115df635853c93e51d74ed2822c"
+  },
+  "workload_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-03/state.json",
+    "sha256": "b2abb00b4a3b869923e1de5f05303a487f63f972c5cd741e2d5c9801ea0481ac"
+  },
+  "native_error": "RuntimeError('DIRECT_LOG_CAP')",
+  "exit_code": -15,
+  "wall_seconds": 210.31942423898727,
+  "charged_seconds": 211,
+  "exact_owner_identities_gone": [
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3356860,
+      "starttime": "33794198"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3356991,
+      "starttime": "33795724"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3356992,
+      "starttime": "33795724"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3357441,
+      "starttime": "33800248"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3357883,
+      "starttime": "33804847"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3357928,
+      "starttime": "33804898"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3357929,
+      "starttime": "33804899"
+    }
+  ],
+  "remaining": [],
+  "video_generated": false,
+  "diagnosis": "Reached RENDERING with effective Orchestrator enabled and cache token checks passed, but repeated createViewportImpl still fills log before first frame. Enabled tick graph alone insufficient.",
+  "debug_observations": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/GDB_OBSERVATION.txt",
+      "sha256": "44f89c743827672adb45a549fc4486cea2685549385795750f3d91b86ff3b36e"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/GDB_SYMBOL_OBSERVATION.txt",
+      "sha256": "a42bf104660ea468d866ea58bb2d8dea46e99c5cefb938e76d6e8ea574b44db9"
+    }
+  ],
+  "debug_scope": "Read-only bt; gdb detached after observation; first lacked symbols, second native stack shows app update and Python event dispatcher; no evaluated target calls or writes.",
+  "rustdesk_touched": false
+}
