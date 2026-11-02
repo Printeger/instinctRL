@@ -1,0 +1,20 @@
+{
+  "status": "WAITING_RENDER_CLOSE_FOR_CPU_ANALYSIS",
+  "watcher": {
+    "pid": 3352395,
+    "starttime": "33748294",
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce"
+  },
+  "parent": {
+    "pid": 3352057,
+    "starttime": "33744253",
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce"
+  },
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-02/inputs.json",
+    "sha256": "b9b9879720054c35316f2777c766db7f4f862da33a9e394d4878ef9a5ba0ee64"
+  },
+  "destination": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-02/analysis-01",
+  "wait_seconds": 4200,
+  "rustdesk_touched": false
+}
