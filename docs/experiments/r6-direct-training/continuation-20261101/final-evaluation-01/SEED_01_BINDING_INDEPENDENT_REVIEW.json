@@ -1,0 +1,28 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "run_id": "R6-DIRECT-FINAL-SEED-01",
+  "binding": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-analysis/binding.json",
+    "sha256": "64433ef0a706e24642cfde12447647bcbddcb6dcacc188c1719799ac1fc06a46"
+  },
+  "prior_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_01_REPORT_INDEPENDENT_REVIEW.json",
+    "sha256": "87e253e6c03fb69754d93426a127ff979f2d74d68cb5d910cfd40a638cb720e0"
+  },
+  "checks": [
+    "All binding pins valid.",
+    "Report and summary bytes unchanged from prior review and contents correspond.",
+    "Module record local-direct; forbidden module/path lists empty; no recorded rlflow module.",
+    "Native -15 / DIRECT_CLEANUP_TIMEOUT retained."
+  ],
+  "inherited_scope": "81 input hashes/lengths, 16 final blocks and original five independently CPU-scored: all 32/32 and exact saved scores. No score replay repeated in this supplemental review.",
+  "limitations": [
+    "Measurement/force use bound replay evidence, not independent sensor truth or full physical integration.",
+    "No learning gain or whole-goal completion established.",
+    "Prior ledger deduplication review limitation retained."
+  ],
+  "files_modified": false,
+  "gpu_started": false,
+  "rustdesk_touched": false
+}
