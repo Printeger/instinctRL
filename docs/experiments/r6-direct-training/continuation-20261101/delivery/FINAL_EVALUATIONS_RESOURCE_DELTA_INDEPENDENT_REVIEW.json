@@ -1,0 +1,74 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "R09 third final evaluation lifecycle settlement delta",
+  "must_fix": [],
+  "sha256": {
+    "RESOURCE_LEDGER.json": "72161ed25c207ae0bb2a1ddb1216d16edfdb3c7b06a1836e17cb9368129acee5",
+    "continuation-20261101/delivery/INTERIM_RESOURCE_INDEPENDENT_REVIEW.json": "31c7a91260ce2cf2a3d841b575b4fd6acc653f2bdca8e02a53d33caccce34bf6",
+    "continuation-20261101/final-evaluation-01/SEED_03_CLOSURE.json": "71a5270b0ca5c4cfd7e621fec5985d6160ea50284ec06dcfaf7762993f7df403",
+    "runs/R6-DIRECT-FINAL-SEED-03/receipt.json": "616259e0c2bec01a8e2ec84a6391bb0f0c7024d861099f984240981c52a1da89",
+    "continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
+  },
+  "verified": {
+    "reservation_count": 44,
+    "unique_reservation_ids": 44,
+    "time_settled_count": 17,
+    "third_final_run_id_occurrences": 1,
+    "third_final_settlement_receipt_occurrences": 1,
+    "receipt_pin_matches_actual_bytes": true,
+    "receipt_status": "CLOSED",
+    "receipt_remaining": [],
+    "receipt_wall_seconds": 2994.873435086978,
+    "ceil_charged_seconds": 2995,
+    "allocated_gpu_seconds": 2995,
+    "live_wall_seconds": 2995,
+    "recorded_owner_identities": 8,
+    "exact_owner_identities_currently_alive": [],
+    "native_exit_code": -15,
+    "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "non_time_resources_match_settlement_original_resources": true,
+    "nontraining_transitions_reserved": 193600,
+    "queue_seconds_reserved": 180,
+    "live_starts_reserved": 1,
+    "simulator_initializations_reserved": 1,
+    "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED"
+  },
+  "delta": {
+    "time_reservation_before": 3790,
+    "time_settlement_after": 2995,
+    "prior_time_settled_count": 16,
+    "git_check": "55a0e056 parent has 43 entries; current first 43 unchanged; new 44th entry contains third final reservation and one settlement; other top-level fields unchanged.",
+    "historical_model_charge": 239,
+    "new_model_sessions": 267,
+    "historical_model_total": 506,
+    "current_platform_usage": "UNKNOWN",
+    "other_reservations": "Diagnostics, storage and other resources not released."
+  },
+  "effective_policy": {
+    "policy": "UNLIMITED_PROJECT_BUDGET_NO_PROTECTED_ALLOCATION",
+    "verified_implementation": "tools/r6_direct/resource_policy.py unlimited verifies exact amendment pin and policy fields",
+    "historical_caps_are_current_limits": false,
+    "preserved": [
+      "historical charges and UNKNOWN",
+      "unreleased reservations",
+      "STOP",
+      "finite per-run endpoint",
+      "physical capacity",
+      "scientific acceptance standards"
+    ]
+  },
+  "limitations": [
+    "Prior interim reviewed ledger SHA 5a1c3d6264eecfb055a3d92fb718b6e8a5f64d340883424ecbab6502c1e64753 was not restored for full byte diff; saved review read and git parent first 43 entries actually compared.",
+    "2995 seconds covers supervisor lifecycle including admission and cleanup; not measured active GPU time.",
+    "TIME_SETTLED does not release all resources; cleanup timeout/-15 retained.",
+    "506 is historical reconciled model usage, not current platform total.",
+    "Amendment enforcement_status PENDING is historical; current implementation accepts amendment.",
+    "No completion claim for running collection, pending video or final cleanup."
+  ],
+  "final_R09_complete": false,
+  "whole_goal_complete": false,
+  "reviewer_files_modified": false,
+  "gpu_probed": false,
+  "rustdesk_touched": false
+}
