@@ -1,0 +1,26 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "must_fix": [],
+  "index": "docs/experiments/r6-direct-training/continuation-20261101/delivery/ANALYSIS_RAW_EVIDENCE_INDEX.json",
+  "sha256": "0f293f738d8cd733214c861526ff89897e2874e56a1258a70696d5e3c78613b7",
+  "bytes": 533012,
+  "independent_checks": {
+    "tracked_continuation_report_coverage": "All 18 current git tracked report.json paths exactly match index.",
+    "reports": "Actual SHA256, bytes, input_count, run_inputs and top-level issues match all 18 reports.",
+    "merged_inputs": "Independently rebuilt path/sha256/bytes mapping: all 1223 file versions and source_reports match, no duplicates or omissions.",
+    "current_existence": "All 1223 recorded file versions exist.",
+    "current_lengths": "All current_bytes match actual and recorded lengths.",
+    "failed_evidence": "Original issues retained for failed and superseded reports; inclusion explicitly does not mean acceptance; scientific_acceptance=false."
+  },
+  "limitations": [
+    "Report hashes recomputed; huge raw content hashes not recomputed. Raw hashes come from pinned reports; this audit checks mapping, existence and lengths.",
+    "issues extracts top-level report field; missing fields recorded null do not mean scientific acceptance.",
+    "Covers 18 tracked continuation reports, not all historical jobs or pending videos.",
+    "Absolute paths preserved; raw data not embedded; not a portable complete archive.",
+    "Not whole-goal or final requirements acceptance."
+  ],
+  "files_modified": false,
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
