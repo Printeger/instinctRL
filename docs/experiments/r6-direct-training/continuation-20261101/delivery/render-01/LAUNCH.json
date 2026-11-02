@@ -1,0 +1,45 @@
+{
+  "status": "RUNNING_SUPERVISOR_VERIFIED",
+  "state": {
+    "argv": [
+      "/usr/bin/bwrap",
+      "--die-with-parent",
+      "--bind",
+      "/",
+      "/",
+      "--dev-bind",
+      "/dev",
+      "/dev",
+      "--bind",
+      "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-VIDEO-01/ipc",
+      "/dev/shm",
+      "--",
+      "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+      "-B",
+      "-m",
+      "tools.r6_direct.worker",
+      "--inputs",
+      "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-01/inputs.json"
+    ],
+    "child": {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3346462,
+      "starttime": "33687163"
+    },
+    "parent": {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3346315,
+      "starttime": "33685476"
+    },
+    "started_unix": 1793587228.0967596,
+    "status": "RUNNING"
+  },
+  "session_id": 32933,
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-01/inputs.json",
+    "sha256": "b8048b8088b7156e2fb9ce8e2678c65239381851dfb68ab14e2413e89ad22199"
+  },
+  "rendering_verified": false,
+  "scientific_acceptance": false,
+  "rustdesk_touched": false
+}

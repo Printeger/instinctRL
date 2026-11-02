@@ -1,0 +1,18 @@
+{
+  "status": "SUPERVISOR_STARTED_PREFLIGHT_RECHECK",
+  "session_id": 32933,
+  "parent": {
+    "pid": 3346315,
+    "starttime": "33685476",
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce"
+  },
+  "preflight_child": null,
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-01/inputs.json",
+    "sha256": "b8048b8088b7156e2fb9ce8e2678c65239381851dfb68ab14e2413e89ad22199"
+  },
+  "input_commit": "7f69195c",
+  "input_tag": "r6-direct-video-01-inputs",
+  "rendering_verified": false,
+  "rustdesk_touched": false
+}
