@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "PASS_SCOPED_DIAGNOSIS",
+  "scope": "Read-only source/log diagnosis, not validated repair",
+  "renderer_sha256": "51d052a16869962f482871d3a46de2d0c43601d0e8867ee3a4cac5a08ec2b7dd",
+  "orchestrator_sha256": "c297093ae4100f5fc20f576f0b71d0dc4c765b2135f2a945764bbe63889a7c42",
+  "confirmed": [
+    "VIDEO03 stdout lines 3314 viewport wait completed, 3377 Replicator Step, 3387 viewportHandle warning",
+    "ReadFabricTime (-1,-1) returns before queue append",
+    "Empty queue branch at orchestrator.py:1582 is not bounded by MAX_STEP_ATTEMPTS",
+    "Replay stops timeline, capture_on_play false, delta_time zero"
+  ],
+  "not_proven": [
+    "Actual Fabric time values or empty queue during VIDEO03",
+    "Causal role of viewportHandle warning or stopped timeline",
+    "Any candidate fix"
+  ],
+  "recommendations": [
+    "Read-only bounded low-frequency update observer for timeline state/time, orchestrator status, Fabric time outputs, queue length and product validity",
+    "Finite stopped-timeline app.update warmup may be investigated; preserve diagnostics on failure",
+    "Do not fabricate Fabric time or queue entries; do not advance timeline without proving zero physics steps"
+  ],
+  "new_stack_observation_reviewed": false,
+  "runtime_or_worktree_modified_by_reviewer": false,
+  "rustdesk_touched": false
+}
