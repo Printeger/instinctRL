@@ -13,6 +13,10 @@ def startup_settings(native_root):
         # Isaac Lab's camera experience disables the Replicator tick graph for
         # training performance. Explicit orchestrator.step requires that graph.
         '/exts/omni.replicator.core/Orchestrator/enabled': True,
+        # Replay authors poses directly in USD and has no SimulationContext
+        # forwarding transforms to Fabric. Use the USD rendering delegate.
+        '/app/useFabricSceneDelegate': False,
+        '/rtx/hydra/readTransformsFromFabricInRenderDelegate': False,
         '/app/tokens/cache': str(root/'render_cache'),
         '/app/tokens/omni_global_cache': str(root/'render_global_cache'),
     }

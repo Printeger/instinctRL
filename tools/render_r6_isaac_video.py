@@ -115,11 +115,17 @@ def _render(app, clips, extraction_pin, out, source, scene_sources, closure, che
             node = og.Controller().node('/Orchestrator/OgnReadFabricTime')
             fabric_time = [node.get_attribute('outputs:'+name).get() for name in
                            ('fabricFrameTimeNumerator', 'fabricFrameTimeDenominator')] if node else None
+            dispatcher = og.get_node_by_path('/Render/PostProcess/SDGPipeline/PostProcessDispatcher')
+            reference_time = [dispatcher.get_attribute('outputs:'+name).get() for name in
+                              ('referenceTimeNumerator', 'referenceTimeDenominator')] if dispatcher else None
+            rgb_data = rgb.get_data()
             record = dict(sample=observed, monotonic=now,
                           timeline_playing=timeline.is_playing(),
                           timeline_auto_update=timeline.is_auto_updating(),
                           timeline_time=timeline.get_current_time(),
                           fabric_time=fabric_time,
+                          dispatcher_reference_time=reference_time,
+                          rgb_shape=list(rgb_data.shape), rgb_size=int(rgb_data.size),
                           capture_times=list(rep.orchestrator.get_sim_times_to_write()),
                           render_product=str(product.path),
                           product_valid=bool(stage.GetPrimAtPath(str(product.path))))

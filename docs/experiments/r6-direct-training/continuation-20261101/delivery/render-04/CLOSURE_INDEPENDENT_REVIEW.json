@@ -1,0 +1,23 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "PASS_SCOPED_DIAGNOSTIC_CLOSURE",
+  "must_fix": [],
+  "verified": {
+    "pins": "All referenced hashes match",
+    "closure": "CLOSED; remaining=[]; all six exact process identities gone",
+    "termination": "Exact supervisor SIGTERM; KeyboardInterrupt(DIRECT_SIGNAL:15), exit -15 retained",
+    "settlement": "164.26912506000372 seconds ceil165; one reservation and one settlement; other resources unreleased",
+    "runtime": "12 samples timeline stopped auto_update false time0, product valid, Fabric valid",
+    "capture_queue": "sample1 empty; samples2-12 [[19,30]]",
+    "stack": "30second stack orchestrator.py:1610 wait_for_render"
+  },
+  "conclusion": "Passed initial capture scheduling, waiting for render completion. Persistent invalid Fabric or empty queue is not cause at observed time for VIDEO04; no retroactive claim about prior attempts.",
+  "unresolved": [
+    "Underlying cause among viewport/FSD/timeline/DDC/OGN not established",
+    "Fabric time increasing does not prove physics integration or successful rendering",
+    "No accepted video"
+  ],
+  "files_modified": false,
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
