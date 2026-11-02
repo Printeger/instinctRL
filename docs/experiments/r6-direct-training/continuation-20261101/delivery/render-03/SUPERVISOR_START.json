@@ -1,0 +1,17 @@
+{
+  "status": "SUPERVISOR_STARTED_RECHECK_OR_ADMISSION_PENDING",
+  "session_id": 44025,
+  "parent": {
+    "pid": 3356860,
+    "starttime": "33794198",
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce"
+  },
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/inputs.json",
+    "sha256": "3dd9228c8a993b5344bb7716c75a667fd9cc4283a99d2f88a9c0b3a9f2b572bd"
+  },
+  "input_commit": "db19920f",
+  "input_tag": "r6-direct-video-03-inputs",
+  "rendering_verified": false,
+  "rustdesk_touched": false
+}
