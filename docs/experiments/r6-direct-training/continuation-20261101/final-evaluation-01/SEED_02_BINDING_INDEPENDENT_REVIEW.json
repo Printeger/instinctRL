@@ -1,0 +1,55 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "第二候选最终评价原件、独立评分复算及已生成binding",
+  "scientific_acceptance": false,
+  "checks": {
+    "all_81_input_hashes_and_lengths_verified": true,
+    "report_summary_equal": true,
+    "binding_reference_pins_verified": true,
+    "final_binding_issues": [],
+    "assignment_index": 2,
+    "model_role": "seed2",
+    "checkpoint_sha256": "f7632803deaa9f3cabc3cfee3158e3836cee1f64ee1b735b5c9351707dab20f7",
+    "evaluation_seed": 1812183990,
+    "realization_index": 0,
+    "split": "final",
+    "independent_frozen_python_cpu_replay": {
+      "all_16_conditions": "32/32 each",
+      "all_saved_block_scores_exact": true,
+      "original_Z_T_S_X_W": "32/32 each",
+      "saved_original_score_exact": true,
+      "saved_wall_motion_exact": true
+    },
+    "existing_measurement_delivery_replay_all_blocks": true,
+    "existing_force_staging_reconstruction_all_blocks": true,
+    "nontraining_transitions": 193600,
+    "completed_policy_steps": 6050,
+    "explicit_resets": 21,
+    "training_transitions": 0,
+    "optimizer_updates": 0,
+    "checkpoint_writes": 0,
+    "receipt_status": "CLOSED",
+    "exit_code": -15,
+    "cleanup_error": "DIRECT_CLEANUP_TIMEOUT",
+    "recorded_process_identities_absent": 8,
+    "ceil_supervised_seconds": 2967
+  },
+  "limitations": [
+    "独立数值重算覆盖motion及原五任务评分；measurement/force采用已有回放结果，并核验其原始输入hash和覆盖。",
+    "不证明传感器真值或完整物理积分。",
+    "保留cleanup异常；未审账本去重结算。",
+    "不证明学习增益、尚未完成的其他交付或整个Goal完成。"
+  ],
+  "evidence_base": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01",
+  "evidence_sha256": {
+    "seed-02-analysis/binding.json": "3f69290d4d5fa94e12471cbedfc9121f1a3152df92a8fda93296a349735bedeb",
+    "seed-02-analysis/report.json": "67f635de32b8e2ae7f6a86497b0bed89ac233b4f5292206b8d857a1688f19b06",
+    "seed-02-analysis/summary.json": "07a084ebdef513e068281b9f58ca8687d86d79608eeedd0a60ab07e8c8bd79fe",
+    "SEED_02_CLOSURE.json": "e8fa98615b2bb0ece618e97bb38b1819b4706a069993d464167fd77efca8cd60",
+    "seed-02-inputs.json": "eff94edc9c36ddad0e4933412f461cb62fa712df7e228e4c507b468ae6e1cb95"
+  },
+  "files_modified": false,
+  "gpu_started": false,
+  "rustdesk_touched": false
+}
