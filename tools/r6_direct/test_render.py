@@ -50,3 +50,30 @@ def test_render_cache_must_resolve_inside_this_attempt(tmp_path):
         wrong = dict(resolved, **{name: '/frozen/runtime/cache'})
         with pytest.raises(RuntimeError, match='DIRECT_RENDER_CACHE_TOKEN'):
             validate_cache_tokens(settings, SimpleNamespace(resolve=wrong.__getitem__))
+
+
+def test_first_rgb_warmup_is_bounded_and_does_not_advance_time():
+    import numpy as np
+    from tools.render_r6_isaac_video import capture_rgb
+    from tools.r6_evidence import RecoveryError
+    calls = []
+    empty = np.zeros((0,), dtype=np.uint8)
+    valid = np.zeros((640, 960, 4), dtype=np.uint8)
+    samples = iter([empty, empty, valid])
+    data, retries = capture_rgb(lambda **kw: calls.append(kw), lambda: next(samples),
+                                lambda: None, first_capture=True, rt_subframes=4)
+    assert data is valid and retries == 2
+    assert calls == [dict(rt_subframes=4, delta_time=0., pause_timeline=True)] * 3
+    calls.clear()
+    with pytest.raises(RecoveryError, match='EMPTY_AFTER_BOUNDED_WARMUP'):
+        capture_rgb(lambda **kw: calls.append(kw), lambda: empty, lambda: None,
+                    first_capture=True, rt_subframes=4)
+    assert len(calls) == 4
+    calls.clear()
+    with pytest.raises(RecoveryError, match='EMPTY_AFTER_BOUNDED_WARMUP'):
+        capture_rgb(lambda **kw: calls.append(kw), lambda: empty, lambda: None,
+                    first_capture=False, rt_subframes=1)
+    assert len(calls) == 1
+    with pytest.raises(RecoveryError, match='RENDER_SHAPE'):
+        capture_rgb(lambda **kw: None, lambda: np.ones((2, 2, 4)), lambda: None,
+                    first_capture=True, rt_subframes=4)

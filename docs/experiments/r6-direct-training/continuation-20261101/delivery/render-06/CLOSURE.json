@@ -1,0 +1,66 @@
+{
+  "capture_states": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-06/results/research-r6-video-replay/media/first_capture_state.jsonl",
+    "sha256": "9d00faa5ae09c92bcd5fc616067f5a00c75a5f03c666678ffd518eaf6eee64ad"
+  },
+  "charged_seconds": 237,
+  "engine": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-06/results/research-r6-video-replay/media/hydra_engine.json",
+    "sha256": "32866ee900638b98891e23104404bf02f283868101ed6817cf651d4f04c5f354"
+  },
+  "exact_owner_identities_gone": [
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3373966,
+      "starttime": "33963895"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3374085,
+      "starttime": "33965391"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3374086,
+      "starttime": "33965391"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3374484,
+      "starttime": "33969430"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3374983,
+      "starttime": "33974483"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3375023,
+      "starttime": "33974531"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3375024,
+      "starttime": "33974531"
+    }
+  ],
+  "next_hypothesis": "Bounded first-frame host RGB warmup at identical recorded pose, zero timeline delta; reject empty/nonconforming image and retain normal subsequent frame checks.",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-06/receipt.json",
+    "sha256": "1edf0e8ce72a3217b269af2293c54c1f9fc03adfe0706d3603c192efb36da514"
+  },
+  "remaining": [],
+  "runtime_observation": "before engines empty; created UID1024, after rtx. First synchronous step returned but RGB empty rejected with VIDEO_PRESENTATION_RENDER_SHAPE. Native cleanup timeout retained.",
+  "rustdesk_touched": false,
+  "stack": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-06/results/research-r6-video-replay/render_python_stack.txt",
+    "sha256": "35616e72dc81a55ee36dfaff66bb14c048144a339c85dd7d6084938f5dd13506"
+  },
+  "status": "CLOSED_ENGINE_CREATED_FIRST_RGB_EMPTY",
+  "video_generated": false,
+  "workload_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-06/state.json",
+    "sha256": "69e05275b747c37a39808e67836bd62e79447a11cb374847442078b38462b1fe"
+  }
+}

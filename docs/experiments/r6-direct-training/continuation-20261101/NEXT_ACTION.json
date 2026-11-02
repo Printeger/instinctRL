@@ -1,4 +1,8 @@
 {
+  "closure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-06/CLOSURE.json",
+    "sha256": "6ad6c6e5147df4c74b03ddd2b6edeb56c320dc8441e45f49760397ec2bb28c4d"
+  },
   "contract": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-06/contract.json",
     "sha256": "0b74441b5960d2986a1f81a397e8b355cf305821d82cace966195f7589417c49"
@@ -18,7 +22,7 @@
     "sha256": "42d6a163bf32392cfdf4d9159593a1685b31d530393f8f2f1ff57d9fd395789d"
   },
   "purpose": "Verify attached RTX engine; initialize only if missing; retain synchronous capture completion",
-  "ready_to_launch": true,
+  "ready_to_launch": false,
   "resource_policy": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
     "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
@@ -35,6 +39,10 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-06/SOURCE_CPU_CHECK.json",
     "sha256": "58ae6c30c3dc9a3fbb7c42d1edb3385e3b62d289be09336b001d4231fde580da"
   },
-  "status": "READY_TO_LAUNCH",
-  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
+  "status": "CLOSED_ENGINE_CREATED_FIRST_RGB_EMPTY",
+  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
+  "supervisor_start": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-06/SUPERVISOR_START.json",
+    "sha256": "ae7c7450087c7e2040b16da60a33b6c9e5a6d4077554530441a8c1034949053f"
+  }
 }

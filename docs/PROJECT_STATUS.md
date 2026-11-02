@@ -1,3 +1,13 @@
+# R6 已证实补建 RTX 引擎；首 RGB 为空，录像未完成
+
+2026-11-02：VIDEO06 实测引擎 before=[]，创建 UID1024 后 after=[rtx]。
+首次同步 step 已返回，但 RGB 为空，原形状校验拒绝；没有写出可验收录像。
+回执 CLOSED/-15/DIRECT_CLEANUP_TIMEOUT，7 个准确所属身份已退出，237 秒一次结算。
+下一候选为首个记录姿态最多3次额外零时间捕获预热；14项CPU检查通过，尚未真实验证。
+见 delivery/render-06/CLOSURE.json；完整Goal仍缺录像、最终汇总与总审计。
+独立交付缺口清单已保存，现有训练和四模型评价无需重跑。RustDesk保持运行。
+下方保留历史状态。
+
 # R6 USD 渲染路径候选未出帧；检查 RTX 引擎附着
 
 2026-11-02：VIDEO05 仍卡于 Replicator 完成等待；RGB 读取报错，未生成录像。

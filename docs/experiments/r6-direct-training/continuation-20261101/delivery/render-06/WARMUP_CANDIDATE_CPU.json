@@ -1,0 +1,16 @@
+{
+  "status": "CPU_PASS_NOT_LIVE_VALIDATED",
+  "result": "14 passed in 13.42s",
+  "tests": [
+    "tools/r6_direct/test_render.py",
+    "tools/test_r6_video_presentation.py"
+  ],
+  "checks": [
+    "At most3retries only initial capture",
+    "delta_time0 pauseTrue",
+    "Subsequent capture empty fails immediately",
+    "Nonempty wrong shape rejected"
+  ],
+  "reason": "VIDEO06 created RTX engine and first step returned empty host RGB",
+  "scientific_acceptance": false
+}

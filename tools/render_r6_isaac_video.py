@@ -13,6 +13,18 @@ from tools.r6_evidence import checked, file_pin
 from tools import r6_video_presentation as presentation
 
 
+def capture_rgb(step, get_data, check, *, first_capture, rt_subframes):
+    """Bound initial host-buffer warmup; never advance the recorded pose."""
+    for attempt in range(4 if first_capture else 1):
+        check()
+        step(rt_subframes=rt_subframes, delta_time=0., pause_timeline=True)
+        data = get_data()
+        if data.size:
+            presentation.require(data.shape[:2] == (640, 960), 'RENDER_SHAPE')
+            return data, attempt
+    presentation.require(False, 'RENDER_EMPTY_AFTER_BOUNDED_WARMUP')
+
+
 def render(extraction_pin, output, *, source_snapshot, asset_root, app, check):
     """Use the caller-owned, admitted app; caller also owns bounded shutdown."""
     presentation.require(app is not None, 'ADMITTED_APP_REQUIRED')
@@ -169,9 +181,13 @@ def _render(app, clips, extraction_pin, out, source, scene_sources, closure, che
                     history = presentation_frame['trail']
                     trail.GetPointsAttr().Set(history if len(history)>1 else history*2)
                     trail.GetCurveVertexCountsAttr().Set([max(2,len(history))])
-                    rep.orchestrator.step(rt_subframes=4 if row['frame']==0 else 1, delta_time=0., pause_timeline=True)
-                    data = rgb.get_data()
-                    presentation.require(data.size and data.shape[:2] == (640,960), 'RENDER_SHAPE')
+                    data, warmup_retries = capture_rgb(rep.orchestrator.step, rgb.get_data, check,
+                        first_capture=index == 0 and row['frame'] == 0,
+                        rt_subframes=4 if row['frame'] == 0 else 1)
+                    if index == 0 and row['frame'] == 0:
+                        (out/'first_capture_warmup.json').write_text(json.dumps(dict(
+                            retries=warmup_retries, maximum_retries=3,
+                            timeline_delta=0., recorded_pose_unchanged=True))+'\n')
                     frame = Image.fromarray(data[:,:,:3].astype(np.uint8))
                     draw = ImageDraw.Draw(frame)
                     draw.rectangle((0,0,960,96), fill=(14,21,30))
