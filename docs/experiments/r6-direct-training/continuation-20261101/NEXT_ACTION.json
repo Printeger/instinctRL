@@ -1,12 +1,12 @@
 {
-  "run_id": "R6-DIRECT-FINAL-SEED-02",
+  "run_id": "R6-DIRECT-FINAL-SEED-03",
   "contract": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-contract.json",
-    "sha256": "2070fa28ceab22f48a2006be31444ab89e661daa4a199d4864b477a35685e549"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-contract.json",
+    "sha256": "402a15277acdaf065dc87c6e98a6d95c110c9ac8c424518dcbb030bae125ba11"
   },
   "predecessor_receipt": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-FINAL-SEED-01/receipt.json",
-    "sha256": "315ee5a9774c887ad15d8e4eef9cfb779b10c1804898059142e713e9905f6313"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-FINAL-SEED-02/receipt.json",
+    "sha256": "25553327391bf939322c3ffd8abf31c4a1b99383a29cf40b2df473b7abe48d38"
   },
   "source": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
@@ -18,42 +18,24 @@
     "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
   },
   "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
-  "status": "CLOSED_ANALYSIS_RUNNING",
+  "status": "READY_TO_LAUNCH",
   "operation": "final",
-  "ready_to_launch": false,
+  "ready_to_launch": true,
   "inputs": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-inputs.json",
-    "sha256": "eff94edc9c36ddad0e4933412f461cb62fa712df7e228e4c507b468ae6e1cb95"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-inputs.json",
+    "sha256": "cc2dbd1ebcca180584c839a78dc73736353bc6f80ec1deefc9420d59475e4e2f"
   },
   "preflight": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_02_PREFLIGHT.json",
-    "sha256": "a6c0d194f4a512f45905e50a12ea306cb78dcd800805f13ce1fefe7d9f4b62b7"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_03_PREFLIGHT.json",
+    "sha256": "bd399f9b53a425ec0770e7f3e95206fe3ca4b4600ebe0f93da96b61d8b59e85f"
   },
   "batch": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-batch.json",
     "sha256": "368704cb022af1927d49af4d7d537c1edc82b6ce21f7f116456222dd191a3dda"
   },
-  "input_tag": "r6-direct-final-seed-02-inputs",
+  "input_tag": "r6-direct-final-seed-03-inputs",
   "holdout_revealed": true,
-  "evaluation_started": true,
-  "supervisor_started": true,
-  "scientific_acceptance": false,
-  "supervisor_start": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_02_SUPERVISOR_START.json",
-    "sha256": "82e5ac70327a3aefbe94b9e84b7df1eaa07e666411fbfc75021697413c4603b3"
-  },
-  "launch_evidence": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_02_LAUNCH.json",
-    "sha256": "6d0f6cac3de34731af4ac32622396f3c2729badc693dd209fcf114cc02370862"
-  },
-  "workload_status": "PASS_PENDING_CLOSE",
-  "progress": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_02_EVALUATING.json",
-    "sha256": "213af663d8aae8d797dc77af76a15db19ec52e34febee3db9cd2eb8f09e2e320"
-  },
-  "closure": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_02_CLOSURE.json",
-    "sha256": "e8fa98615b2bb0ece618e97bb38b1819b4706a069993d464167fd77efca8cd60"
-  },
-  "next_candidate_status": "SEED_03_CPU_PREFLIGHT_RUNNING"
+  "evaluation_started": false,
+  "supervisor_started": false,
+  "scientific_acceptance": false
 }
