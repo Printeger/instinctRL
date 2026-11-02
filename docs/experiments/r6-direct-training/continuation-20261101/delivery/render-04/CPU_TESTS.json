@@ -1,0 +1,10 @@
+{
+  "status": "PASS_CPU_ONLY",
+  "tests": [
+    "tools/r6_direct/test_render.py",
+    "tools/test_r6_video_presentation.py"
+  ],
+  "result": "13 passed in 13.30s",
+  "gpu_started": false,
+  "scope": "Existing contract/presentation checks; update observer API remains live-unverified"
+}

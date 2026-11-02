@@ -1,51 +1,40 @@
 {
-  "closure": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/CLOSURE.json",
-    "sha256": "54f17c6237736ece2f00fcba4ce4e5f93b87287877bd1357982621ebe4f9f618"
-  },
   "contract": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/contract.json",
-    "sha256": "b2c39da341a71247f2935466f000382afa0d90859edf5b47ee837e491e531865"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-04/contract.json",
+    "sha256": "60ddc6d2e05eff8725f1fdbb6b923f492b9cf16d089abe1ed24b54b27bcc72f5"
   },
-  "input_tag": "r6-direct-video-03-inputs",
+  "input_tag": "r6-direct-video-04-inputs",
   "inputs": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/inputs.json",
-    "sha256": "3dd9228c8a993b5344bb7716c75a667fd9cc4283a99d2f88a9c0b3a9f2b572bd"
-  },
-  "launch_evidence": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/LAUNCH.json",
-    "sha256": "2a865c1c84d4602ae97da79ac589dee095afbfcb09713fe6dfdb8754c775c601"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-04/inputs.json",
+    "sha256": "0c9f82da66d94c8e746b45050ca3f9d04608c7891af77c20a596d8194b8d0c5e"
   },
   "operation": "render",
   "predecessor_receipt": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-02/receipt.json",
-    "sha256": "89886cf94ac6bc396e44d1a05ea1ab4e49f478b6568c5b46a541723548c5da95"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-03/receipt.json",
+    "sha256": "31c1a52fa2eba6c3a704060712415b5539587115df635853c93e51d74ed2822c"
   },
   "preflight": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/PREFLIGHT_RESULT.json",
-    "sha256": "96e125e277c5fe099c397f795b116218e5d79a9dde2f72b5e4236d6051e60f1c"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-04/PREFLIGHT_RESULT.json",
+    "sha256": "1896291cb11a59010c522c50ab12ff56f4db99df4d3bf29eb2c92665bfe01eaa"
   },
-  "ready_to_launch": false,
+  "purpose": "Record bounded first-frame Fabric state and Python stack; no proven fix yet",
+  "ready_to_launch": true,
   "resource_policy": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
     "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
   },
-  "run_id": "R6-DIRECT-VIDEO-03",
+  "run_id": "R6-DIRECT-VIDEO-04",
   "rustdesk_keep_running": true,
   "scientific_acceptance": false,
-  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/render-03",
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/render-04",
   "source": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/source.json",
-    "sha256": "f0bafaae810d6c362efefd274322a8f61a4ea734b1cb30e1ca3922ceed36a33c"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-04/source.json",
+    "sha256": "7099eb24bb49b64b30ec9d2da8e6b69d53cba09e3bc3d95ee02eabd1dfb0cb80"
   },
   "source_cpu_check": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/SOURCE_CPU_CHECK.json",
-    "sha256": "48a2069ea8cd35202605608d20dc0a87620d9e6fd12c730adc69e76d54246f73"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-04/SOURCE_CPU_CHECK.json",
+    "sha256": "909563bf0d2cedcce4f39314e786087f4c15c20161168564c771bfd0197b4a87"
   },
-  "status": "CLOSED_RENDER_FIRST_FRAME_FAILED",
-  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
-  "supervisor_start": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/SUPERVISOR_START.json",
-    "sha256": "2bcc0bd6f29b9398a91563ab6b78baf8427095e58e9dab38ce2a7d71b19034b4"
-  }
+  "status": "READY_TO_LAUNCH",
+  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
 }

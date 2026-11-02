@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "PASS_SCOPED",
+  "scope": "Read-only diagnostic instrumentation, not hang repair",
+  "must_fix": [],
+  "sha256": {
+    "tools/render_r6_isaac_video.py": "64f6349b9734d27ad11fd587f8087f8c40ba8f6e356f5b466e46991dd082e8cf",
+    "tools/r6_direct/render.py": "2d5438735e64b0aabc814c7b3893a0c2b4c299b67ee4655c8d74b6b9778afe4d"
+  },
+  "verified": [
+    "12 samples maximum, at least 5 seconds apart, flush",
+    "Read-only timeline, Fabric outputs, queue and product; no physics or timeline advancement",
+    "Same installed eventdispatcher API; observer order100 vs orchestrator order0",
+    "finally observer.reset and diagnostic.close",
+    "one-shot30second faulthandler; canceled on exit"
+  ],
+  "limitations": [
+    "Earlier blocking callback can prevent observation",
+    "Python stacks cannot prove native GPU root cause",
+    "Live API behavior unverified",
+    "Serialization or write errors can lose observations"
+  ],
+  "files_modified": false,
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
