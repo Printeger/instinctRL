@@ -1,0 +1,107 @@
+{
+  "run_id": "R6-DIRECT-FINAL-SEED-02",
+  "status": "CLOSED_CLEANUP_TIMEOUT_SCIENTIFIC_ANALYSIS_PENDING",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-FINAL-SEED-02/receipt.json",
+    "sha256": "25553327391bf939322c3ffd8abf31c4a1b99383a29cf40b2df473b7abe48d38"
+  },
+  "workload_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-FINAL-SEED-02/state.json",
+    "sha256": "13f72bc314ac235c2b5e60dfe7b26c51dee5bb1d0197cb4e84adc8b68b07034c"
+  },
+  "reported_counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 6050,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 6050,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 21,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 193600,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 193600,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "process_checks": [
+    {
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3266470,
+        "starttime": "32755507"
+      },
+      "current": null
+    },
+    {
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3267959,
+        "starttime": "32772973"
+      },
+      "current": null
+    },
+    {
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3267960,
+        "starttime": "32772973"
+      },
+      "current": null
+    },
+    {
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3269629,
+        "starttime": "32790778"
+      },
+      "current": null
+    },
+    {
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3269932,
+        "starttime": "32794311"
+      },
+      "current": null
+    },
+    {
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3270250,
+        "starttime": "32797403"
+      },
+      "current": null
+    },
+    {
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3270296,
+        "starttime": "32797509"
+      },
+      "current": null
+    },
+    {
+      "recorded": {
+        "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+        "pid": 3270297,
+        "starttime": "32797511"
+      },
+      "current": null
+    }
+  ],
+  "charged_seconds": 2967,
+  "analysis_destination": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-analysis",
+  "limitations": [
+    "Reported counters do not establish complete scientific acceptance.",
+    "Original cleanup timeout and exit -15 retained; all recorded owners gone.",
+    "Other resource reservations retained."
+  ]
+}
