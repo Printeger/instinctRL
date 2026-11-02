@@ -52,7 +52,16 @@ def _render(app, clips, extraction_pin, out, source, scene_sources, closure, che
     torch.set_num_threads(2)
     omni.timeline.get_timeline_interface().stop()
     rep.orchestrator.set_capture_on_play(False)
-    stage = omni.usd.get_context().get_stage()
+    context = omni.usd.get_context()
+    before_engines = context.get_attached_hydra_engine_names()
+    engine_uid = None
+    if 'rtx' not in before_engines:
+        engine_uid = omni.usd.create_hydra_engine('rtx', context)
+    after_engines = context.get_attached_hydra_engine_names()
+    (out/'hydra_engine.json').write_text(json.dumps(dict(
+        before=before_engines, created_uid=engine_uid, after=after_engines))+'\n')
+    presentation.require('rtx' in after_engines, 'REPLAY_RTX_ENGINE_REQUIRED')
+    stage = context.get_stage()
     UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.z)
     UsdGeom.SetStageMetersPerUnit(stage, 1.)
     light = UsdLux.DomeLight.Define(stage, '/World/ReplayLight')
@@ -118,17 +127,20 @@ def _render(app, clips, extraction_pin, out, source, scene_sources, closure, che
             dispatcher = og.get_node_by_path('/Render/PostProcess/SDGPipeline/PostProcessDispatcher')
             reference_time = [dispatcher.get_attribute('outputs:'+name).get() for name in
                               ('referenceTimeNumerator', 'referenceTimeDenominator')] if dispatcher else None
-            rgb_data = rgb.get_data()
             record = dict(sample=observed, monotonic=now,
                           timeline_playing=timeline.is_playing(),
                           timeline_auto_update=timeline.is_auto_updating(),
                           timeline_time=timeline.get_current_time(),
                           fabric_time=fabric_time,
                           dispatcher_reference_time=reference_time,
-                          rgb_shape=list(rgb_data.shape), rgb_size=int(rgb_data.size),
                           capture_times=list(rep.orchestrator.get_sim_times_to_write()),
                           render_product=str(product.path),
                           product_valid=bool(stage.GetPrimAtPath(str(product.path))))
+            try:
+                rgb_data = rgb.get_data()
+                record.update(rgb_shape=list(rgb_data.shape), rgb_size=int(rgb_data.size))
+            except Exception as exc:
+                record['rgb_error'] = repr(exc)
         except Exception as exc:
             record = dict(sample=observed, observation_error=repr(exc))
         diagnostic.write(json.dumps(record, allow_nan=False)+'\n')

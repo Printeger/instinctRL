@@ -1,3 +1,12 @@
+# R6 USD 渲染路径候选未出帧；检查 RTX 引擎附着
+
+2026-11-02：VIDEO05 仍卡于 Replicator 完成等待；RGB 读取报错，未生成录像。
+仅终止准确监督器后回执 CLOSED/-15，6 个所属身份已退出，159 秒一次结算。
+USD delegate 候选不能宣称修复成功；原始日志与栈保留在 delivery/render-05。
+下一候选直接核对 USD context 的 RTX 引擎并在缺失时通过现有公开 API 初始化，
+保存 before/uid/after；仍需新冻结输入、独审及真实验证。RustDesk 保持运行。
+训练和最终评价成果保留；录像及最终总审计未完成。下方保留历史状态。
+
 # R6 首帧等待已定位到渲染完成同步；录像仍待修复
 
 2026-11-02：VIDEO04 的现场 Python 栈位于 Replicator orchestrator.py:1610。

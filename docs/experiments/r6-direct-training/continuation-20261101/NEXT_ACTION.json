@@ -1,4 +1,8 @@
 {
+  "closure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-05/CLOSURE.json",
+    "sha256": "a24932a763b2393dd618ec860a9c07673169bc4cc16d1ab3f7ccfe17f2389ec2"
+  },
   "contract": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-05/contract.json",
     "sha256": "d3c8a0206a6bf899294b03ba7f69e803aab1fb0e22dd46ec85f7bdf64d6a0b0e"
@@ -18,7 +22,7 @@
     "sha256": "bd3577fd851e6e61a5625dade489039bbb2ab6c07464430a25c12f0d69fcb5e9"
   },
   "purpose": "Test USD delegate for USD-authored recorded replay; retain original synchronous completion check",
-  "ready_to_launch": true,
+  "ready_to_launch": false,
   "resource_policy": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
     "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
@@ -35,6 +39,10 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-05/SOURCE_CPU_CHECK.json",
     "sha256": "9cdb8d67354a3d186a77e2e8ab5a5826b87ac2d2d5c77916afbab16efea34e97"
   },
-  "status": "READY_TO_LAUNCH",
-  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
+  "status": "CLOSED_USD_DELEGATE_CANDIDATE_NO_FRAME",
+  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
+  "supervisor_start": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-05/SUPERVISOR_START.json",
+    "sha256": "09a86e6e6127d01aaa56bab9273532da9b3ed4893ca5c1f8fa0cb2c92d0975be"
+  }
 }

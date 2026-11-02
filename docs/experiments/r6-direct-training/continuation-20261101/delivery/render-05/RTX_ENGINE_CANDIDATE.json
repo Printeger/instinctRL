@@ -1,0 +1,18 @@
+{
+  "status": "CPU_CHECKED_CANDIDATE_NOT_LIVE_VALIDATED",
+  "hypothesis": "Missing attached RTX engine can prevent viewport creation; absence of initialization logs suggests checking actual context, not proof.",
+  "change": "Record attached engine names; create rtx engine only if missing; record UID and resulting names; fail if rtx absent. Isolate RGB diagnostic errors.",
+  "api_source": {
+    "path": "/home/mint/.local/share/ov/data/exts/v2/omni.usd-887896958e1fcf2f/omni/usd/_usd.pyi",
+    "sha256": "5745acb624a5bbde82b697339c7192df4d359805926abd6d4e04a155afd9acdd"
+  },
+  "tests": {
+    "paths": [
+      "tools/r6_direct/test_render.py",
+      "tools/test_r6_video_presentation.py"
+    ],
+    "result": "13 passed in 13.43s",
+    "scope": "Existing CPU presentation/contract; real engine API untested"
+  },
+  "rustdesk_touched": false
+}

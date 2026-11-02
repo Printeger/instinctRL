@@ -1,0 +1,57 @@
+{
+  "capture_states": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-05/results/research-r6-video-replay/media/first_capture_state.jsonl",
+    "sha256": "bbb706147e27b715ab73cda63bb90c6e21f6091bc54e869b8d983280b6397b68"
+  },
+  "charged_seconds": 159,
+  "exact_owner_identities_gone": [
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3370112,
+      "starttime": "33927733"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3370256,
+      "starttime": "33929274"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3370257,
+      "starttime": "33929274"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3371083,
+      "starttime": "33938355"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3371128,
+      "starttime": "33938406"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3371129,
+      "starttime": "33938407"
+    }
+  ],
+  "intentional_stop": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-05/DIAGNOSTIC_STOP.json",
+    "sha256": "272bd8d7e7449289401a0773a0d8c6b03a6fb4090e5213071e916c6972d08949"
+  },
+  "next_hypothesis": "No initializeHydraEngine/addHydraEngine success log observed; inspect actual attached RTX engines, explicitly initialize if absent. Log absence is not runtime proof.",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-05/receipt.json",
+    "sha256": "e5f29b69c0dc829e1ed21582dc989f964835c7895b29dc2c9e3058573dba7d69"
+  },
+  "remaining": [],
+  "runtime_observation": "Same orchestrator.py:1610 wait_for_render; observer RGB read raised NoneType subtraction error, losing other fields in each sample. USD delegate change did not yield a frame.",
+  "rustdesk_touched": false,
+  "stack": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-05/results/research-r6-video-replay/render_python_stack.txt",
+    "sha256": "6f200039f077f5fca57049c687cd8726c9ec4a6c46e427637f05bd8a9ebde847"
+  },
+  "status": "CLOSED_USD_DELEGATE_CANDIDATE_NO_FRAME",
+  "video_generated": false
+}
