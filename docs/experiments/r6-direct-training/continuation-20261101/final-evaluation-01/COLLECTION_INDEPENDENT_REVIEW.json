@@ -1,0 +1,34 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "Four-model final collection and deterministic video source selection",
+  "must_fix": [],
+  "sha256": {
+    "collection-01/results.json": "de1acb68a7c8abca8bad06735eff0a14d13cd17054d06e78a804cccf89c5cb72",
+    "collection-01/video-selection.json": "c8d7aaf11b61cd7f6efba988da73c8f1fb87855db4e6e28b1de989e8bdf38b1d",
+    "final-batch.json": "368704cb022af1927d49af4d7d537c1edc82b6ce21f7f116456222dd191a3dda"
+  },
+  "actual_checks": {
+    "report_and_binding_pins": "All four actual report and binding hashes match; binding.report equals collection reference.",
+    "assignments": "Exact final-batch order baseline, seed1, seed2, seed3; common evaluation_seed 1812183990, realization_index 0.",
+    "gates": "Recomputed gates from frozen protocol and reports exactly match; all 16 conditions 32/32 and original five-task gates pass for all models.",
+    "learning_gain": "All reports learning_gain_established=false; passing does not establish improvement over baseline.",
+    "native_cleanup": "All four binding cleanup timeout/-15 records match collection.",
+    "selection": "Deterministic selection function independently rerun; selected fields and unavailable categories exactly match.",
+    "clips": "Four complete S-clean-low lane0 trajectories, policy_step 0\u2013329, 330 frames each; exact baseline pairs for three candidates.",
+    "total_frames": 1320,
+    "fps": 10,
+    "unavailable_failure_categories": "All four representative_failure categories absent; NO_SUCH_OUTCOME_IN_COMPLETE_REGISTERED_BLOCKS matches all lane successes.",
+    "selected_raw": "All 12 actual selected raw files rehashed; report input mapping, lengths, result run_id/seed/block_id/audit_records match."
+  },
+  "inherited_review_scope": "Prior independent per-model raw scoring, input pins and binding audits referenced through exact same reports/bindings; no recursive collect rerun or all-training evidence rehash.",
+  "limitations": [
+    "Video source audit only, not rendered video decode or visual quality acceptance.",
+    "Four representative clips do not replace full condition/lane quantitative results.",
+    "No physics reintegration, new simulation or policy inference; measurement/force staging is not independent physics integration verification.",
+    "Original scientific_acceptance=false and independent_review_pending fields preserved; not whole-goal completion."
+  ],
+  "files_modified": false,
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
