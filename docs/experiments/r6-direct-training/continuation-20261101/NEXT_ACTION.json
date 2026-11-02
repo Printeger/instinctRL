@@ -35,7 +35,7 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
     "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
   },
-  "status": "RUNNING",
+  "status": "CLOSED_ANALYSIS_RUNNING",
   "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
   "supervisor_started": true,
   "supervisor_start": {
@@ -46,9 +46,14 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_01_LAUNCH.json",
     "sha256": "620ee5ff6cd25860160a4a4df054ef94025d8e67b4df95e68365a4b7f4b98e1a"
   },
-  "workload_status": "EVALUATING",
+  "workload_status": "PASS_PENDING_CLOSE",
   "progress": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_01_EVALUATING.json",
     "sha256": "4a9134302f0447ce403b78b745040384451b112b1d8bc3c8eb92f9a68eee1b12"
-  }
+  },
+  "closure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/SEED_01_CLOSURE.json",
+    "sha256": "53bc81d86e48a722a3b00459758d95e8063556b21c74c8860da991ce9e4f4c8b"
+  },
+  "next_candidate_status": "SEED_02_CPU_PREFLIGHT_RUNNING"
 }
