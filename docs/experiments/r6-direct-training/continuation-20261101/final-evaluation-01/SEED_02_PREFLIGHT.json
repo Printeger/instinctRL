@@ -1,0 +1,19 @@
+{
+  "status": "PASS_CPU_DIRECT_PREFLIGHT_NO_GPU",
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-inputs.json",
+    "sha256": "eff94edc9c36ddad0e4933412f461cb62fa712df7e228e4c507b468ae6e1cb95"
+  },
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
+    "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
+  },
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/final-01",
+  "interpreter": "/home/mint/miniconda3/envs/navrl_blackwell_test/bin/python3.11",
+  "gpu_started": false,
+  "final_evaluation_started": false,
+  "elapsed_seconds": 163.03887495398521,
+  "exit_code": 0,
+  "stdout": "PASS_CPU_DIRECT_PREFLIGHT_NO_GPU\n",
+  "stderr": ""
+}
