@@ -1,0 +1,28 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "PASS_SCOPED",
+  "scope": "VIDEO06 closure and bounded first RGB warmup candidate",
+  "must_fix": [],
+  "sha256": {
+    "render-06/CLOSURE.json": "6ad6c6e5147df4c74b03ddd2b6edeb56c320dc8441e45f49760397ec2bb28c4d",
+    "tools/render_r6_isaac_video.py": "79ef23a2c3b60ae2e9517716a0a2cb23ee3d88318ee79e114feefa067ac95bb7",
+    "tools/r6_direct/test_render.py": "ac07e12f7937a4d78b44632550b4836fdf35cae0e63d52f0515d7d95b4bf446d"
+  },
+  "verified": [
+    "All closure pins match; engine before[] uid1024 afterrtx",
+    "CLOSED cleanup timeout/-15;7 identities gone;237seconds once",
+    "Only first global frame up to4zero-delta captures; same pose",
+    "Original subframe rule preserved; nonempty wrong shape fails immediately",
+    "Later empty frames fail; no skipped/fabricated images"
+  ],
+  "limitations": [
+    "Not live verified",
+    "Success-only warmup JSON",
+    "Shape exception alone does not establish empty vs wrong dimensions",
+    "CPU14tests parent-reported",
+    "Valid shape insufficient for full video/pose acceptance"
+  ],
+  "files_modified": false,
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}

@@ -1586,6 +1586,18 @@
         "native_dir": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-VIDEO-06"
       },
       "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
+    },
+    {
+      "id": "DIRECT-SNAPSHOT-RENDER-07",
+      "purpose": "confirmation_delivery",
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
+        "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
+      },
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 685985995
+      },
+      "status": "UNRELEASED"
     }
   ],
   "new_used": {
