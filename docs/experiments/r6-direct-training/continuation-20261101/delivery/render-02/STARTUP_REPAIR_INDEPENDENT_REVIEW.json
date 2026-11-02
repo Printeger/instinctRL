@@ -1,0 +1,28 @@
+{
+  "decision": "PASS_SCOPED",
+  "reviewer": "/root/baseline_scientific_review",
+  "scope": "Render initialization viewport and per-attempt cache redirection repair",
+  "must_fix": [],
+  "sha256": {
+    "tools/r6_direct/render.py": "5f71f03b7e25cc5d5525cdc6e68d3e3567114e7bf80706a5a1f67fedba05fc40",
+    "tools/r6_direct/worker.py": "34b2166ee2187f80861cd74df0fba677bbbccfede6a89bcf388772e2bb2f3dcd",
+    "tools/r6_direct/test_render.py": "9f6c4ffdbf0a6687d7a18e9e3d6f900d6b925bba3b22ea63e55fe2eb7b48b42d"
+  },
+  "verified": [
+    "Only render operation adds viewport settings and two cache directories before AppLauncher via kit_args.",
+    "Frozen viewport.window menu_entry.py and extension.toml confirm disableWindowOnLoad supported.",
+    "Frozen material_library.py resolves ${cache}/material_cache.json.",
+    "Actual settings and effective cache/omni_global_cache tokens verified after AppLauncher; drift rejected.",
+    "ReplayCamera, Replicator product, trajectories, pose/time/scoring/actor/training/physics unchanged.",
+    "CPU tests cover correct token expansion and rejection of either token pointing to frozen runtime."
+  ],
+  "risks_and_limits": [
+    "CPU tests do not prove live startup or viewport issue resolved.",
+    "Token check occurs after AppLauncher returns; cannot prove initialization never attempted old cache writes; preserve logs.",
+    "SimulationApp still performs viewport wait/update; disabled window does not remove all rendering initialization.",
+    "Parent reports2passed; reviewer did not repeat tests.",
+    "VIDEO01 failure and costs preserved; not new render or video acceptance."
+  ],
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
