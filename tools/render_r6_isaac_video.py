@@ -6,6 +6,7 @@ recorded poses are displayed without policy inference or physics integration.
 """
 import json
 import os
+import time
 from pathlib import Path
 
 from tools.r6_evidence import checked, file_pin
@@ -94,6 +95,41 @@ def _render(app, clips, extraction_pin, out, source, scene_sources, closure, che
     font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 18)
     small = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 15)
     videos = []
+    # Observe the first capture without changing timeline, graph or renderer
+    # state. Sampling is bounded even if synchronous step never returns.
+    import carb.eventdispatcher
+    import omni.kit.app
+    import omni.graph.core as og
+    diagnostic = (out/'first_capture_state.jsonl').open('x')
+    observed = 0
+    last_observation = float('-inf')
+    def observe_capture(_event):
+        nonlocal observed, last_observation
+        now = time.monotonic()
+        if observed >= 12 or now-last_observation < 5:
+            return
+        observed += 1
+        last_observation = now
+        try:
+            timeline = omni.timeline.get_timeline_interface()
+            node = og.Controller().node('/Orchestrator/OgnReadFabricTime')
+            fabric_time = [node.get_attribute('outputs:'+name).get() for name in
+                           ('fabricFrameTimeNumerator', 'fabricFrameTimeDenominator')] if node else None
+            record = dict(sample=observed, monotonic=now,
+                          timeline_playing=timeline.is_playing(),
+                          timeline_auto_update=timeline.is_auto_updating(),
+                          timeline_time=timeline.get_current_time(),
+                          fabric_time=fabric_time,
+                          capture_times=list(rep.orchestrator.get_sim_times_to_write()),
+                          render_product=str(product.path),
+                          product_valid=bool(stage.GetPrimAtPath(str(product.path))))
+        except Exception as exc:
+            record = dict(sample=observed, observation_error=repr(exc))
+        diagnostic.write(json.dumps(record, allow_nan=False)+'\n')
+        diagnostic.flush()
+    observer = carb.eventdispatcher.get_eventdispatcher().observe_event(
+        order=100, event_name=omni.kit.app.GLOBAL_EVENT_UPDATE,
+        on_event=observe_capture, observer_name='instinctrl.replay.first_capture_observer')
     try:
         for index, item in enumerate(clips):
             check()
@@ -154,5 +190,7 @@ def _render(app, clips, extraction_pin, out, source, scene_sources, closure, che
         (out/'RUN_MANIFEST.json').write_text(json.dumps(manifest, indent=2, allow_nan=False)+'\n')
         return manifest
     finally:
+        observer.reset()
+        diagnostic.close()
         rgb.detach([product.path])
         product.destroy()
