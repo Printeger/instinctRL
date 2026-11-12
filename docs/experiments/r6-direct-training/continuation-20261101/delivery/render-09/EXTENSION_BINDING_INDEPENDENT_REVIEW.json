@@ -1,0 +1,29 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "PASS_SCOPED",
+  "must_fix": [],
+  "scope": "Materialized standard-name existing extension inputs, not live rendering acceptance",
+  "hashes": {
+    "materialized": "3f8b3e0f249de611a69603e41ceff2e3c0d4de4c6b061f1a5ed63a788e9c8db5",
+    "manifest": "f1b9f68db6f0874f2796e24a503bedf232b031653481e869bdab081712d635c6",
+    "implementation": "bcf0e014bf4fde0482295880d4aefb9ffc65d28d719aa2b1a53bd313925c332a"
+  },
+  "verified": [
+    "272entries/182renames unique; actual target set equals mapping",
+    "All recorded subtree identities equal",
+    "Independently rehashed graph, graph.tools, syntheticdata and cache_db metadata",
+    "Manifest tree and actual user config hash match",
+    "Copy code verifies original before/after, content, internal modes and independent inodes",
+    "One12500721684byteUNRELEASED reservation"
+  ],
+  "limitations": [
+    "Key subtrees independently rehashed, not full12.5GB",
+    "Original duplicate package TOML retained, not proof usable",
+    "Top metadata/root modes not explicitly asserted; copy2/copytree used",
+    "No installation or runtime source change, not complete filesystem audit",
+    "Runtime standard-name resolution/modules/duplicates/RGB unverified"
+  ],
+  "gpu_touched": false,
+  "files_modified": false,
+  "rustdesk_touched": false
+}

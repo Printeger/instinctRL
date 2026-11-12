@@ -1,0 +1,42 @@
+{
+  "attempt_dir": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09",
+  "contract": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-09/contract.json",
+    "sha256": "3afb5670234d85e79c1aed80868f37973ae6ca5286bff1ce27fbac1a5555399c"
+  },
+  "extension_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-08/EXTENSION_INPUTS_STANDARD_01.json",
+    "sha256": "f1b9f68db6f0874f2796e24a503bedf232b031653481e869bdab081712d635c6"
+  },
+  "ipc_wrapper": {
+    "path": "/usr/bin/bwrap",
+    "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+  },
+  "native_dir": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output/R6-DIRECT-VIDEO-09",
+  "native_volume": {
+    "path": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/volume.json",
+    "sha256": "918a796e9539526f7a95f39105c6752d6c4aaea972766e27c89f9eaf3df60a48"
+  },
+  "output_root": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-09",
+  "predecessor_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-08/receipt.json",
+    "sha256": "bdf5dcf3941f11115894f54d27d527630df2dbfdbd1c7b14b7ba66ef6e0d4b66"
+  },
+  "resource_policy": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
+    "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
+  },
+  "result_payload_cap_bytes": 1073741824,
+  "result_volume": {
+    "path": "/var/lib/instinctrl-r6-results/J-324fe806adf2c0f0/volume.json",
+    "sha256": "7f7d359907d5e59365cda9574cfc4583cf349b51411b0f0ec6bda526718afc23"
+  },
+  "run_id": "R6-DIRECT-VIDEO-09",
+  "schema_version": "r6-direct-run-inputs/1",
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/render-09",
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-09/source.json",
+    "sha256": "2e8de6ebe9ebc68c50f318427adf46e8518baa1d1fc73137e4ec57917a5bdf7e"
+  },
+  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
+}
