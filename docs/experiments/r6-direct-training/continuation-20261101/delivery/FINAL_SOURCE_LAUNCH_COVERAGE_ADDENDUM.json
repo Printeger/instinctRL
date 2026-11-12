@@ -1,0 +1,374 @@
+{
+  "status": "BOUND_LAUNCH_SOURCE_SCOPE_NOT_LIFETIME_IMPORT_AUDIT",
+  "rows": [
+    {
+      "run_id": "R6-DIRECT-BASELINE-01",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-01/receipt.json",
+        "sha256": "491c91c4f44ee09e8d3276c589c0aa03b387fa5dcbee463eb70435528a92f0ad"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-01/RUN_INPUTS.json",
+        "sha256": "268fc3585f78c8d72ad422c3a6c40ba8a3ab0555d1e779cf7ddaff2bfa2726e4"
+      },
+      "source_evidence": {
+        "source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_SOURCE_01.json",
+          "sha256": "0c04346b1f19b1a19a28e25e89db50f26e1248e0cafefe56cc2abe6c91eb07ca"
+        }
+      },
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-BASELINE-01/launch.json",
+        "sha256": "defce4b1c398415760facf0c3319b0a0f2ae07758a2a0f83f0f848cd85db754f"
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-CUDA-DIAGNOSTIC-01",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CUDA-DIAGNOSTIC-01/receipt.json",
+        "sha256": "e89655fc75b20a5ece82e20f068b19911c3cda8fc200f9638c5f4f00943ad07a"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CUDA-DIAGNOSTIC-01/RUN_INPUTS.json",
+        "sha256": "01459b74b78a2e7cdc2b35ee9539f0c5a7fb0842529986bc828db567c47eca5a"
+      },
+      "source_evidence": {
+        "helper_source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_SOURCE_04.json",
+          "sha256": "b68e1740ddc5d40d401447b262151bd42bee275d3b129e6426a451b76baaeac0"
+        },
+        "bwrap": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-CUDA-DIAGNOSTIC-02",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CUDA-DIAGNOSTIC-02/receipt.json",
+        "sha256": "526ceabc97d04e704dcb64df3c0b556d4b374c1b4f489eb710b253cd8e05f39c"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CUDA-DIAGNOSTIC-02/RUN_INPUTS.json",
+        "sha256": "242259bfbb7a765aaf6a53daf97459fe709cc507224533a021b6645178a424cf"
+      },
+      "source_evidence": {
+        "helper_source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/BASELINE_SOURCE_04.json",
+          "sha256": "b68e1740ddc5d40d401447b262151bd42bee275d3b129e6426a451b76baaeac0"
+        },
+        "bwrap": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-PROBABILITY-DIAGNOSTIC-02",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-02/receipt.json",
+        "sha256": "aed97754200030aee162b908771ba7a60141b1098e0e35bc81c848e0510d67d3"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-02/RUN_INPUTS.json",
+        "sha256": "28260049fd29004d4dc4837a64b041827fb2023476ebf3d469d4091e097d2e5c"
+      },
+      "source_evidence": {
+        "helper_source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-02/source.json",
+          "sha256": "8064c06cadfa6dbe23d92b1ffdf8c2ec5656e6bb9a9cf264a509182abda57f71"
+        },
+        "bwrap": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-PROBABILITY-DIAGNOSTIC-03",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-03/receipt.json",
+        "sha256": "84a5c80c6f44b40600f03abea2b21a769b060e12952c83504ea16060d97f98ef"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-03/RUN_INPUTS.json",
+        "sha256": "1ae6bc55111351b782a160a2e98fe8b67c21d26ec78dc5871af02891c1a3c3a5"
+      },
+      "source_evidence": {
+        "helper_source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-03/source.json",
+          "sha256": "21f5e1d4bb5efaf76df35277964fa2419c75ad19aa988caf1ce76f513991c64b"
+        },
+        "bwrap": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-PROBABILITY-DIAGNOSTIC-04",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-04/receipt.json",
+        "sha256": "13c48bef9c830331fb9cd9de07be3f8a9a001fb04c8a83d11919957f3b18d9b0"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-04/RUN_INPUTS.json",
+        "sha256": "874e1be3e04b3bcd119c61f14cf2f2c3dbb6a5c4da901bf9639240d9caafc8a8"
+      },
+      "source_evidence": {
+        "helper_source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-04/source.json",
+          "sha256": "412ce757777d6ec9e4d09b897eac61af0a06fef220f126b737e9e541a19d6c6e"
+        },
+        "bwrap": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-PROBABILITY-DIAGNOSTIC-05",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-05/receipt.json",
+        "sha256": "5278eca8169394b934e59465eccc9b9e1f3a5c95e23c29d3097a2b6451cf97f4"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-05/RUN_INPUTS.json",
+        "sha256": "a828b5855a184d610f38ce40383573bdf91a008f90d385139e72617ad4ac0f00"
+      },
+      "source_evidence": {
+        "helper_source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/source.json",
+          "sha256": "cd4025bffd1747fc45aca27136c0d74983d87012647c8564af6ee6b79d93e070"
+        },
+        "bwrap": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-PROBABILITY-DIAGNOSTIC-06",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-06/receipt.json",
+        "sha256": "22640f53f30faf1dc80d6d2b13e12d16874a25c2bcdd01daade382b1c1662455"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-06/RUN_INPUTS.json",
+        "sha256": "4d3264daa9ea94b5920f00dc370255c6403b2612374ca756474766865de66b1a"
+      },
+      "source_evidence": {
+        "helper_source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-06/source.json",
+          "sha256": "e1e5de0a7b193631c63a1de8ae117bc98df3bcddb517b57e4199eb5ee6b62734"
+        },
+        "bwrap": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-PROBABILITY-DIAGNOSTIC-07",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-07/receipt.json",
+        "sha256": "5b8042fc670ee776c1403835a5a2368b28e961f78deba092a79a18a3a0a90939"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-07/RUN_INPUTS.json",
+        "sha256": "3afcbca182d077dba53ece7ca81aa89590b22344983445cea6d5117b7b09e205"
+      },
+      "source_evidence": {
+        "helper_source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-06/source.json",
+          "sha256": "e1e5de0a7b193631c63a1de8ae117bc98df3bcddb517b57e4199eb5ee6b62734"
+        },
+        "bwrap": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-PROBABILITY-DIAGNOSTIC-08",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/receipt.json",
+        "sha256": "983b90ceb1d3f52dae324221f5b406f08468d2369229b387dc7872c36f146e83"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-08/RUN_INPUTS.json",
+        "sha256": "4b106697bb49d6d607e8fcdab1413a10476ff8b1db68f59b3c164e68d68995db"
+      },
+      "source_evidence": {
+        "helper_source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-06/source.json",
+          "sha256": "e1e5de0a7b193631c63a1de8ae117bc98df3bcddb517b57e4199eb5ee6b62734"
+        },
+        "bwrap": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-VIDEO-01",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-01/receipt.json",
+        "sha256": "11eeb4af424ae7679ca15c0ba270915a81c1f1664d64e789c89b418bd08b1241"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-01/RUN_INPUTS.json",
+        "sha256": "633ef6bf6ee2f55c4657af796752cdd3ec0b53603c53092afe40172881a8153f"
+      },
+      "source_evidence": {
+        "source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-01/source.json",
+          "sha256": "7d4084eb43f15a5f8c88e4abb511edd92cbe6479ae8b0fe1d422778e74e38ed9"
+        },
+        "ipc_wrapper": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-01/launch.json",
+        "sha256": "2b3840f88a9780d4c06ceb90ebdfa07c3f450f72fdac69a228183eb8d2b29e58"
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-VIDEO-02",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-02/receipt.json",
+        "sha256": "89886cf94ac6bc396e44d1a05ea1ab4e49f478b6568c5b46a541723548c5da95"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-02/RUN_INPUTS.json",
+        "sha256": "fcc148d21d483aa5358c26eeadcb28f08eda32d30068f43db8c2f4a3bfaf2cab"
+      },
+      "source_evidence": {
+        "source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-02/source.json",
+          "sha256": "1312136f75155494f9c7b9c4c1d7fcede6b02aad3e2f5c3379ae9b3d72d346c2"
+        },
+        "ipc_wrapper": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-02/launch.json",
+        "sha256": "3b13cc5def1f129a0ef9b0399d1f37ba0cdd7c3a5b0cf55ed8627e9f769a41b4"
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-VIDEO-03",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-03/receipt.json",
+        "sha256": "31c1a52fa2eba6c3a704060712415b5539587115df635853c93e51d74ed2822c"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-03/RUN_INPUTS.json",
+        "sha256": "bb410e4310297d627888bdd2fd03a0aed3070f26e593c27b4630759347bb5661"
+      },
+      "source_evidence": {
+        "source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-03/source.json",
+          "sha256": "f0bafaae810d6c362efefd274322a8f61a4ea734b1cb30e1ca3922ceed36a33c"
+        },
+        "ipc_wrapper": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-03/launch.json",
+        "sha256": "06e5b310e9f5dc1f4f47885a5477a9e4a36b1297d2cad3608c0ba7a14a2706dd"
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-VIDEO-04",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-04/receipt.json",
+        "sha256": "93ef002ca970152843b8045768a5a6f8254f7e8d83a7016bd060a3c82dc41790"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-04/RUN_INPUTS.json",
+        "sha256": "405a3998d0f46a2e72246f40b52192c38d95a4bd8f45de586d81ea58ac71e5a5"
+      },
+      "source_evidence": {
+        "source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-04/source.json",
+          "sha256": "7099eb24bb49b64b30ec9d2da8e6b69d53cba09e3bc3d95ee02eabd1dfb0cb80"
+        },
+        "ipc_wrapper": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-04/launch.json",
+        "sha256": "e69b8b952ffd4162420d37a3f5c2f2180b6975720e094d3c194142f776ce615b"
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    },
+    {
+      "run_id": "R6-DIRECT-VIDEO-05",
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-05/receipt.json",
+        "sha256": "e5f29b69c0dc829e1ed21582dc989f964835c7895b29dc2c9e3058573dba7d69"
+      },
+      "module_snapshot_available": false,
+      "run_record": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-05/RUN_INPUTS.json",
+        "sha256": "c2d69538813ea75e15f332414cdd7032671af7a8bcee301a1384398a602f3197"
+      },
+      "source_evidence": {
+        "source": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-05/source.json",
+          "sha256": "c7a06130b8fc63915e36834e97107a91712eee22727273a893e3e819a8ec9d6b"
+        },
+        "ipc_wrapper": {
+          "path": "/usr/bin/bwrap",
+          "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+        }
+      },
+      "launch": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-05/launch.json",
+        "sha256": "fa5f6a6747acc0e7bd9985624eca1f4759e61ff0edd2da0dd689e77d74bcc82d"
+      },
+      "scope": "Exact preserved run/source/launch bindings supplement absent module snapshot; no lifetime import claim"
+    }
+  ],
+  "limitations": [
+    "Sources are original exact versions; old source identity does not imply current main",
+    "Not every run record uses same schema; absent source_evidence remains explicit"
+  ]
+}
