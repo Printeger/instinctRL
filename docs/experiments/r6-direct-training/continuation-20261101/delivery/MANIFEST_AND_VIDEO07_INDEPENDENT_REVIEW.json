@@ -1,0 +1,41 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "PASS_SCOPED",
+  "must_fix": [],
+  "sha256": {
+    "TRAINING_AND_EVALUATION_MANIFEST.json": "6ab23115fd5053b91fc23eef83fef929c4c9863bc7a4716d02b621ea09f7952b",
+    "delivery/render-07/CLOSURE.json": "8ea5c3f17982d2a20cabdd178d852ae8771b5bf9bbd11e2a06dda516b5bf8e67"
+  },
+  "manifest": {
+    "analyses": 18,
+    "selected": 10,
+    "labels": "CPU seed02/03 retained; full paths distinguish final-evaluation",
+    "pins": "All actual hashes match",
+    "content": "Training summaries and final_results exactly match originals",
+    "goal_complete": false
+  },
+  "video07": {
+    "all_closure_pins_verified": true,
+    "workload_error": "VIDEO_PRESENTATION_RENDER_EMPTY_AFTER_BOUNDED_WARMUP",
+    "receipt_status": "CLOSED",
+    "receipt_error": "DIRECT_CLEANUP_TIMEOUT",
+    "exit_code": -15,
+    "remaining": [],
+    "exact_owner_identities_gone": 6,
+    "wall_seconds": 220.3396894329926,
+    "charged_seconds": 221,
+    "ledger_run_entries": 1,
+    "settlement_count": 1,
+    "accepted_video": false
+  },
+  "recommendation": "Record actual enabled extension IDs/names/version/path, tools/core fetch_extension_versions, module files and relevant node registrations in bounded new diagnostic",
+  "limits": [
+    "Hash directory does not prove failure",
+    "Source proves lookup error condition, not RGB causal root",
+    "No runtime patches or fabricated version returns",
+    "No video acceptance or final Goal completion"
+  ],
+  "files_modified": false,
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
