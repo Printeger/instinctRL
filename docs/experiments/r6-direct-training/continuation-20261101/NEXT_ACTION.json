@@ -1,4 +1,8 @@
 {
+  "closure": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-07/CLOSURE.json",
+    "sha256": "8ea5c3f17982d2a20cabdd178d852ae8771b5bf9bbd11e2a06dda516b5bf8e67"
+  },
   "contract": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-07/contract.json",
     "sha256": "ddce2226e604c395f61d36205881ec50c06a754622efe0604b7b498e1626b038"
@@ -18,7 +22,7 @@
     "sha256": "cbb64512b82f70af5ed6d283b1039f271cf22b687b08cc1077615b52315ae907"
   },
   "purpose": "Bound initial RGB buffer warmup at unchanged recorded pose; explicit RTX engine; synchronous capture completion",
-  "ready_to_launch": true,
+  "ready_to_launch": false,
   "resource_policy": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
     "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
@@ -35,6 +39,10 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-07/SOURCE_CPU_CHECK.json",
     "sha256": "58cbf9ff8ec5a252c31f8a43be9da39db42c025fec18c3cc55e0a9ad3726c194"
   },
-  "status": "READY_TO_LAUNCH",
-  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
+  "status": "CLOSED_BOUNDED_RGB_WARMUP_EMPTY",
+  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
+  "supervisor_start": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-07/SUPERVISOR_START.json",
+    "sha256": "4eab69af90edac58c34d61556a039dc42c5db8a2722da7f9eeb87e62891328b2"
+  }
 }

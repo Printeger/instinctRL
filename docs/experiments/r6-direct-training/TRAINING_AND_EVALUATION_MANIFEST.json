@@ -1,0 +1,3202 @@
+{
+  "analyses": [
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01b-analysis/binding.json",
+        "sha256": "7178e88428ae789421c7d302141edbc43724b67e0ad288e3c3e98c5dd6dba86b"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01b-contract.json",
+        "sha256": "64dc5758a26377b79582507d896e8984f21279ed630613bda282a77008e46437"
+      },
+      "native_error": "TimeoutError('DIRECT_WALL_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01B/receipt.json",
+        "sha256": "18683036f58baab0b508e1c479be6871564b0410607a9ab31168a3e87ca3cc93"
+      },
+      "role": "retained_failed_or_superseded_analysis",
+      "run_id": "R6-DIRECT-CONFIRM-128-SEED-01B",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01b-inputs.json",
+        "sha256": "98ffa9384460cdace5724a33246347cd24c5e878f742a27224e31f8f2440fbcd"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-02.json",
+        "sha256": "10943d1820164fb4ea6266cd725122a81343ab2903990bfb53f44b4c980f4ea2"
+      },
+      "source_commit": "067349c103d6b344a18188b1b724e37e03fd5958",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01b-analysis/summary.json",
+        "sha256": "2c0ced1fd4e1596189f95fad19f8b671069617a6eadcf00b7b8ccf5a3b635cee"
+      },
+      "training_summary": {
+        "checkpoints": [
+          {
+            "metadata_verified": false,
+            "strict_restore_performed": false,
+            "update": 768
+          }
+        ],
+        "complete_stream_count": 33,
+        "cpu_probability_replay_error": "probability gate mismatch at frozen index 20",
+        "expected_counters": {
+          "actor_optimizer_steps": 1024,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "training_transitions": 65536
+        },
+        "experiment_id": "R6-DIRECT-CONFIRM-128-SEED-01B",
+        "issue_count": 11,
+        "learning_gain_established": false,
+        "observed_counters": {
+          "actor_optimizer_steps": 976,
+          "attempted_policy_steps": 1967,
+          "attempted_updates": 123,
+          "automatic_resets": 32,
+          "completed_policy_steps": 1967,
+          "completed_updates": 122,
+          "critic_optimizer_steps": 976,
+          "explicit_resets": 2,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 0,
+          "real_environment_transitions": 62944,
+          "real_optimizer_updates": 122,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 62944
+        },
+        "phase": "confirmation",
+        "phases": [
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -4400.801834106445,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -103.77364897727966,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -632.9139404296875,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.43016791343689,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -669.3129119873047,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -16.169654846191406,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 0,
+              "kind": "original",
+              "phase_end_update": 704,
+              "phase_start_update": 640,
+              "start_update": 640,
+              "target_update": 704
+            }
+          },
+          {
+            "completed_record": false,
+            "episodes": {
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -4676.593734741211,
+                "right_censored": 24,
+                "steps": 22272
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -705.2069091796875,
+                "right_censored": 4,
+                "steps": 3712
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -811.3130187988281,
+                "right_censored": 4,
+                "steps": 3712
+              }
+            },
+            "phase": {
+              "index": 1,
+              "kind": "robust",
+              "phase_end_update": 768,
+              "phase_start_update": 704,
+              "start_update": 704,
+              "target_update": 768
+            }
+          }
+        ],
+        "physical_replay_performed": false,
+        "probability_gate_recomputed": false,
+        "probability_replay": null,
+        "rng_initialization_audit": {
+          "actual_rollout_rng_use_verified": false,
+          "cpu_seed_derivation_verified": true,
+          "cuda_rng_state_count": 1,
+          "cuda_seed_derivation_verified": false,
+          "kind": "COMMON_U640_NEW_STREAM",
+          "origin_rng_equal": true,
+          "persistence_order_verified": false,
+          "physical_continuity": false,
+          "resume_rng_equal": false,
+          "starting_update": 640,
+          "status": "PASS",
+          "training_seed": 2026102202
+        },
+        "rng_state_semantics_verified": false,
+        "schema_version": "r6-training-summary/1",
+        "scientific_acceptance": false,
+        "start_update": 640,
+        "stream_count": 33,
+        "strict_checkpoint_restore_performed": false,
+        "target_update": 768,
+        "training_seed": 2026102202
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-analysis-cuda/binding.json",
+        "sha256": "f8a29a8317c57d73fdca4173fc7697519f3f0c653b362c1eec8619d9b9a18305"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-contract.json",
+        "sha256": "8caadb99de9c93ee6b4791cb3d9a8daff7ad6c12ac45254bd3e55f9adba1af27"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01C/receipt.json",
+        "sha256": "f99aa29c9360222a96f91a2a63ec0efd4b8c1a9698bffbc9d84e5a77b635d3d0"
+      },
+      "role": "selected_analysis",
+      "run_id": "R6-DIRECT-CONFIRM-128-SEED-01C",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-inputs.json",
+        "sha256": "81c23fc4f2dba391353542150a83222a2937e6e4a8b1d70f51bf5e69af6d118d"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-02.json",
+        "sha256": "10943d1820164fb4ea6266cd725122a81343ab2903990bfb53f44b4c980f4ea2"
+      },
+      "source_commit": "067349c103d6b344a18188b1b724e37e03fd5958",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-analysis-cuda/summary.json",
+        "sha256": "9ccd75c627a129e5ad813e6dd70a5f2977f0c0496fa1b37c8d22f49627d66cce"
+      },
+      "training_summary": {
+        "checkpoints": [
+          {
+            "finite_tensor_tree": true,
+            "metadata_verified": true,
+            "pin": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01C/results/research-r6-training/checkpoints/u768.pt",
+              "sha256": "cbd1eda09169439e28586200f0d67e5fc626c862f5a5335f329fe139ccc13cf4"
+            },
+            "state_audit": {
+              "actor_critic_state_loaded": true,
+              "adam_parameter_counts": {
+                "actor": 16,
+                "critic": 10
+              },
+              "adam_state_loaded": true,
+              "adam_step": 6144,
+              "cpu_rng_payload_parseable": true,
+              "cuda_rng_semantics_verified": false,
+              "cuda_rng_state_count": 1,
+              "optimizer_step_executed": false,
+              "rng_restored": false,
+              "strict_checkpoint_restore_performed": false
+            },
+            "strict_restore_performed": false,
+            "update": 768
+          }
+        ],
+        "complete_stream_count": 30,
+        "cpu_probability_replay_error": "probability gate mismatch at frozen index 20",
+        "expected_counters": {
+          "actor_optimizer_steps": 1024,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "training_transitions": 65536
+        },
+        "experiment_id": "R6-DIRECT-CONFIRM-128-SEED-01C",
+        "issue_count": 0,
+        "learning_gain_established": false,
+        "observed_counters": {
+          "actor_optimizer_steps": 1024,
+          "attempted_policy_steps": 2048,
+          "attempted_updates": 128,
+          "automatic_resets": 64,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 65536
+        },
+        "phase": "confirmation",
+        "phases": [
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -4400.773620605469,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -103.76031303405762,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -632.9348602294922,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.429915428161621,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -669.4304809570312,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -16.168972730636597,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 0,
+              "kind": "original",
+              "phase_end_update": 704,
+              "phase_start_update": 640,
+              "start_update": 640,
+              "target_update": 704
+            }
+          },
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -5109.857376098633,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -113.64240646362305,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -772.2364807128906,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.322067499160767,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -897.5724945068359,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -14.967009544372559,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 1,
+              "kind": "robust",
+              "phase_end_update": 768,
+              "phase_start_update": 704,
+              "start_update": 704,
+              "target_update": 768
+            }
+          }
+        ],
+        "physical_replay_performed": false,
+        "probability_gate_recomputed": true,
+        "probability_replay": {
+          "cpu_actor_forward": false,
+          "cpu_rng_preserved": true,
+          "diagnostic": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-06/SEALED_EVIDENCE.json",
+            "sha256": "c645b150eddc9e1831a814bb91b1a564fb443c354331d48e593c33b2b3cf95c4"
+          },
+          "float32_atol": 1e-06,
+          "float32_rtol": 1e-05,
+          "forward_batch_size": 512,
+          "gpu_sampling_reproduced": false,
+          "maximum_absolute_errors": {
+            "alpha": 0.0,
+            "beta": 0.0,
+            "log_probability": 0.0
+          },
+          "optimizer_restored": false,
+          "replay_device": "cuda:0",
+          "sample_count": 512,
+          "starting_update": 640,
+          "status": "PASS",
+          "verification": "closed exact-input CUDA diagnostic"
+        },
+        "rng_initialization_audit": {
+          "actual_rollout_rng_use_verified": false,
+          "cpu_seed_derivation_verified": true,
+          "cuda_rng_state_count": 1,
+          "cuda_seed_derivation_verified": false,
+          "kind": "COMMON_U640_NEW_STREAM",
+          "origin_rng_equal": true,
+          "persistence_order_verified": false,
+          "physical_continuity": false,
+          "resume_rng_equal": false,
+          "starting_update": 640,
+          "status": "PASS",
+          "training_seed": 2026102202
+        },
+        "rng_state_semantics_verified": false,
+        "schema_version": "r6-training-summary/1",
+        "scientific_acceptance": false,
+        "start_update": 640,
+        "stream_count": 30,
+        "strict_checkpoint_restore_performed": false,
+        "target_update": 768,
+        "training_seed": 2026102202
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-analysis/binding.json",
+        "sha256": "78c381b44a9c0dc106ae271676e849612feafde6af8399119fccb8de9288067f"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-contract.json",
+        "sha256": "8caadb99de9c93ee6b4791cb3d9a8daff7ad6c12ac45254bd3e55f9adba1af27"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-01C/receipt.json",
+        "sha256": "f99aa29c9360222a96f91a2a63ec0efd4b8c1a9698bffbc9d84e5a77b635d3d0"
+      },
+      "role": "retained_failed_or_superseded_analysis",
+      "run_id": "R6-DIRECT-CONFIRM-128-SEED-01C",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-inputs.json",
+        "sha256": "81c23fc4f2dba391353542150a83222a2937e6e4a8b1d70f51bf5e69af6d118d"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-02.json",
+        "sha256": "10943d1820164fb4ea6266cd725122a81343ab2903990bfb53f44b4c980f4ea2"
+      },
+      "source_commit": "067349c103d6b344a18188b1b724e37e03fd5958",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-analysis/summary.json",
+        "sha256": "4c9df8adff868253a52f585217c7911678c26fb5da39301f840cbb2ace939e57"
+      },
+      "training_summary": {
+        "checkpoints": [
+          {
+            "finite_tensor_tree": true,
+            "metadata_verified": true,
+            "pin": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01C/results/research-r6-training/checkpoints/u768.pt",
+              "sha256": "cbd1eda09169439e28586200f0d67e5fc626c862f5a5335f329fe139ccc13cf4"
+            },
+            "state_audit": {
+              "actor_critic_state_loaded": true,
+              "adam_parameter_counts": {
+                "actor": 16,
+                "critic": 10
+              },
+              "adam_state_loaded": true,
+              "adam_step": 6144,
+              "cpu_rng_payload_parseable": true,
+              "cuda_rng_semantics_verified": false,
+              "cuda_rng_state_count": 1,
+              "optimizer_step_executed": false,
+              "rng_restored": false,
+              "strict_checkpoint_restore_performed": false
+            },
+            "strict_restore_performed": false,
+            "update": 768
+          }
+        ],
+        "complete_stream_count": 30,
+        "cpu_probability_replay_error": "probability gate mismatch at frozen index 20",
+        "expected_counters": {
+          "actor_optimizer_steps": 1024,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "training_transitions": 65536
+        },
+        "experiment_id": "R6-DIRECT-CONFIRM-128-SEED-01C",
+        "issue_count": 1,
+        "learning_gain_established": false,
+        "observed_counters": {
+          "actor_optimizer_steps": 1024,
+          "attempted_policy_steps": 2048,
+          "attempted_updates": 128,
+          "automatic_resets": 64,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 65536
+        },
+        "phase": "confirmation",
+        "phases": [
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -4400.773620605469,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -103.76031303405762,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -632.9348602294922,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.429915428161621,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -669.4304809570312,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -16.168972730636597,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 0,
+              "kind": "original",
+              "phase_end_update": 704,
+              "phase_start_update": 640,
+              "start_update": 640,
+              "target_update": 704
+            }
+          },
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -5109.857376098633,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -113.64240646362305,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -772.2364807128906,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.322067499160767,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -897.5724945068359,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -14.967009544372559,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 1,
+              "kind": "robust",
+              "phase_end_update": 768,
+              "phase_start_update": 704,
+              "start_update": 704,
+              "target_update": 768
+            }
+          }
+        ],
+        "physical_replay_performed": false,
+        "probability_gate_recomputed": false,
+        "probability_replay": null,
+        "rng_initialization_audit": {
+          "actual_rollout_rng_use_verified": false,
+          "cpu_seed_derivation_verified": true,
+          "cuda_rng_state_count": 1,
+          "cuda_seed_derivation_verified": false,
+          "kind": "COMMON_U640_NEW_STREAM",
+          "origin_rng_equal": true,
+          "persistence_order_verified": false,
+          "physical_continuity": false,
+          "resume_rng_equal": false,
+          "starting_update": 640,
+          "status": "PASS",
+          "training_seed": 2026102202
+        },
+        "rng_state_semantics_verified": false,
+        "schema_version": "r6-training-summary/1",
+        "scientific_acceptance": false,
+        "start_update": 640,
+        "stream_count": 30,
+        "strict_checkpoint_restore_performed": false,
+        "target_update": 768,
+        "training_seed": 2026102202
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-analysis-cuda/binding.json",
+        "sha256": "3d778cdc4a38f941d702c8e7aa884b64d14b6f623074d5a031672be578e5fd0b"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-contract-03.json",
+        "sha256": "e2b531d4d7be8b8f83a12f5c60caf5f100bb636c32bae2add6745007489e1d51"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-02/receipt.json",
+        "sha256": "d2a6093886f0ceab9459f164ed05affdb16c6fb635fca5aef2c8a67f43fac613"
+      },
+      "role": "selected_analysis",
+      "run_id": "R6-DIRECT-CONFIRM-128-SEED-02",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-inputs.json",
+        "sha256": "706171478579feb03abc5a505cab78a55f0e7511d9ad90da2519bdb79beb88ff"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-02.json",
+        "sha256": "10943d1820164fb4ea6266cd725122a81343ab2903990bfb53f44b4c980f4ea2"
+      },
+      "source_commit": "067349c103d6b344a18188b1b724e37e03fd5958",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-analysis-cuda/summary.json",
+        "sha256": "1e4b31ec4add9696a54256921dffec55c69f4a0de635cf79cdd9886c1b9c3c61"
+      },
+      "training_summary": {
+        "checkpoints": [
+          {
+            "finite_tensor_tree": true,
+            "metadata_verified": true,
+            "pin": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-02/results/research-r6-training/checkpoints/u768.pt",
+              "sha256": "f7632803deaa9f3cabc3cfee3158e3836cee1f64ee1b735b5c9351707dab20f7"
+            },
+            "state_audit": {
+              "actor_critic_state_loaded": true,
+              "adam_parameter_counts": {
+                "actor": 16,
+                "critic": 10
+              },
+              "adam_state_loaded": true,
+              "adam_step": 6144,
+              "cpu_rng_payload_parseable": true,
+              "cuda_rng_semantics_verified": false,
+              "cuda_rng_state_count": 1,
+              "optimizer_step_executed": false,
+              "rng_restored": false,
+              "strict_checkpoint_restore_performed": false
+            },
+            "strict_restore_performed": false,
+            "update": 768
+          }
+        ],
+        "complete_stream_count": 30,
+        "cpu_probability_replay_error": "probability gate mismatch at frozen index 17",
+        "expected_counters": {
+          "actor_optimizer_steps": 1024,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "training_transitions": 65536
+        },
+        "experiment_id": "R6-DIRECT-CONFIRM-128-SEED-02",
+        "issue_count": 0,
+        "learning_gain_established": false,
+        "observed_counters": {
+          "actor_optimizer_steps": 1024,
+          "attempted_policy_steps": 2048,
+          "attempted_updates": 128,
+          "automatic_resets": 64,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 65536
+        },
+        "phase": "confirmation",
+        "phases": [
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -4370.9656982421875,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -102.35983300209045,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -634.9686737060547,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -14.297099113464355,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -669.9063568115234,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -14.520346403121948,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 0,
+              "kind": "original",
+              "phase_end_update": 704,
+              "phase_start_update": 640,
+              "start_update": 640,
+              "target_update": 704
+            }
+          },
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -5865.207702636719,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -104.01870369911194,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -633.8456802368164,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -16.502885103225708,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -784.7326965332031,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -16.724753618240356,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 1,
+              "kind": "robust",
+              "phase_end_update": 768,
+              "phase_start_update": 704,
+              "start_update": 704,
+              "target_update": 768
+            }
+          }
+        ],
+        "physical_replay_performed": false,
+        "probability_gate_recomputed": true,
+        "probability_replay": {
+          "cpu_actor_forward": false,
+          "cpu_rng_preserved": true,
+          "diagnostic": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-07/SEALED_EVIDENCE.json",
+            "sha256": "97e8d49fe002133afb24764ef5f31951d9152b23aa2be6c971d14f7810c8f28a"
+          },
+          "float32_atol": 1e-06,
+          "float32_rtol": 1e-05,
+          "forward_batch_size": 512,
+          "gpu_sampling_reproduced": false,
+          "maximum_absolute_errors": {
+            "alpha": 0.0,
+            "beta": 0.0,
+            "log_probability": 0.0
+          },
+          "optimizer_restored": false,
+          "replay_device": "cuda:0",
+          "sample_count": 512,
+          "starting_update": 640,
+          "status": "PASS",
+          "verification": "closed exact-input CUDA diagnostic"
+        },
+        "rng_initialization_audit": {
+          "actual_rollout_rng_use_verified": false,
+          "cpu_seed_derivation_verified": true,
+          "cuda_rng_state_count": 1,
+          "cuda_seed_derivation_verified": false,
+          "kind": "COMMON_U640_NEW_STREAM",
+          "origin_rng_equal": true,
+          "persistence_order_verified": false,
+          "physical_continuity": false,
+          "resume_rng_equal": false,
+          "starting_update": 640,
+          "status": "PASS",
+          "training_seed": 2026102203
+        },
+        "rng_state_semantics_verified": false,
+        "schema_version": "r6-training-summary/1",
+        "scientific_acceptance": false,
+        "start_update": 640,
+        "stream_count": 30,
+        "strict_checkpoint_restore_performed": false,
+        "target_update": 768,
+        "training_seed": 2026102203
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-analysis/binding.json",
+        "sha256": "1d3965fa79e4fde73419a7cbb819cfc2e33501f0a3bb86fb51089dc5fb5164cf"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-contract-03.json",
+        "sha256": "e2b531d4d7be8b8f83a12f5c60caf5f100bb636c32bae2add6745007489e1d51"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-02/receipt.json",
+        "sha256": "d2a6093886f0ceab9459f164ed05affdb16c6fb635fca5aef2c8a67f43fac613"
+      },
+      "role": "retained_failed_or_superseded_analysis",
+      "run_id": "R6-DIRECT-CONFIRM-128-SEED-02",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-inputs.json",
+        "sha256": "706171478579feb03abc5a505cab78a55f0e7511d9ad90da2519bdb79beb88ff"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-02.json",
+        "sha256": "10943d1820164fb4ea6266cd725122a81343ab2903990bfb53f44b4c980f4ea2"
+      },
+      "source_commit": "067349c103d6b344a18188b1b724e37e03fd5958",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-analysis/summary.json",
+        "sha256": "b59156d3293932d2f44fe2a24532a23a3cfd5c11d0971aa7f59a8c740979758c"
+      },
+      "training_summary": {
+        "checkpoints": [
+          {
+            "finite_tensor_tree": true,
+            "metadata_verified": true,
+            "pin": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-02/results/research-r6-training/checkpoints/u768.pt",
+              "sha256": "f7632803deaa9f3cabc3cfee3158e3836cee1f64ee1b735b5c9351707dab20f7"
+            },
+            "state_audit": {
+              "actor_critic_state_loaded": true,
+              "adam_parameter_counts": {
+                "actor": 16,
+                "critic": 10
+              },
+              "adam_state_loaded": true,
+              "adam_step": 6144,
+              "cpu_rng_payload_parseable": true,
+              "cuda_rng_semantics_verified": false,
+              "cuda_rng_state_count": 1,
+              "optimizer_step_executed": false,
+              "rng_restored": false,
+              "strict_checkpoint_restore_performed": false
+            },
+            "strict_restore_performed": false,
+            "update": 768
+          }
+        ],
+        "complete_stream_count": 30,
+        "cpu_probability_replay_error": "probability gate mismatch at frozen index 17",
+        "expected_counters": {
+          "actor_optimizer_steps": 1024,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "training_transitions": 65536
+        },
+        "experiment_id": "R6-DIRECT-CONFIRM-128-SEED-02",
+        "issue_count": 1,
+        "learning_gain_established": false,
+        "observed_counters": {
+          "actor_optimizer_steps": 1024,
+          "attempted_policy_steps": 2048,
+          "attempted_updates": 128,
+          "automatic_resets": 64,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 65536
+        },
+        "phase": "confirmation",
+        "phases": [
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -4370.9656982421875,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -102.35983300209045,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -634.9686737060547,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -14.297099113464355,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -669.9063568115234,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -14.520346403121948,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 0,
+              "kind": "original",
+              "phase_end_update": 704,
+              "phase_start_update": 640,
+              "start_update": 640,
+              "target_update": 704
+            }
+          },
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -5865.207702636719,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -104.01870369911194,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -633.8456802368164,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -16.502885103225708,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -784.7326965332031,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -16.724753618240356,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 1,
+              "kind": "robust",
+              "phase_end_update": 768,
+              "phase_start_update": 704,
+              "start_update": 704,
+              "target_update": 768
+            }
+          }
+        ],
+        "physical_replay_performed": false,
+        "probability_gate_recomputed": false,
+        "probability_replay": null,
+        "rng_initialization_audit": {
+          "actual_rollout_rng_use_verified": false,
+          "cpu_seed_derivation_verified": true,
+          "cuda_rng_state_count": 1,
+          "cuda_seed_derivation_verified": false,
+          "kind": "COMMON_U640_NEW_STREAM",
+          "origin_rng_equal": true,
+          "persistence_order_verified": false,
+          "physical_continuity": false,
+          "resume_rng_equal": false,
+          "starting_update": 640,
+          "status": "PASS",
+          "training_seed": 2026102203
+        },
+        "rng_state_semantics_verified": false,
+        "schema_version": "r6-training-summary/1",
+        "scientific_acceptance": false,
+        "start_update": 640,
+        "stream_count": 30,
+        "strict_checkpoint_restore_performed": false,
+        "target_update": 768,
+        "training_seed": 2026102203
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-analysis-cuda/binding.json",
+        "sha256": "9984546edf23d6d719f4985e27590fc17bbfe834acc4e98a7cd52608d1830d20"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-contract-03.json",
+        "sha256": "d5adb7e936293db442e9c44877e3a13b4de12e49d4daa579e9065e5e047f0ff4"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-03/receipt.json",
+        "sha256": "f47ceef8a62aea58b7613b8cc2a60abd897df1cbc9bdb9af5ba68c973cdd6631"
+      },
+      "role": "selected_analysis",
+      "run_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-inputs.json",
+        "sha256": "d1b2831297ab6631e58920baab2c98952b80817b590cc53ff598934b01c92937"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-02.json",
+        "sha256": "10943d1820164fb4ea6266cd725122a81343ab2903990bfb53f44b4c980f4ea2"
+      },
+      "source_commit": "067349c103d6b344a18188b1b724e37e03fd5958",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-analysis-cuda/summary.json",
+        "sha256": "d56e18660013e532c1c50464891545eb87ae40e79a23ebe3168cec2c24fd8bd6"
+      },
+      "training_summary": {
+        "checkpoints": [
+          {
+            "finite_tensor_tree": true,
+            "metadata_verified": true,
+            "pin": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/checkpoints/u768.pt",
+              "sha256": "6a616a2582190acdf037bf454b5ae3d921120da3ef85916dff5763de9137e07a"
+            },
+            "state_audit": {
+              "actor_critic_state_loaded": true,
+              "adam_parameter_counts": {
+                "actor": 16,
+                "critic": 10
+              },
+              "adam_state_loaded": true,
+              "adam_step": 6144,
+              "cpu_rng_payload_parseable": true,
+              "cuda_rng_semantics_verified": false,
+              "cuda_rng_state_count": 1,
+              "optimizer_step_executed": false,
+              "rng_restored": false,
+              "strict_checkpoint_restore_performed": false
+            },
+            "strict_restore_performed": false,
+            "update": 768
+          }
+        ],
+        "complete_stream_count": 30,
+        "cpu_probability_replay_error": "probability gate mismatch at frozen index 29",
+        "expected_counters": {
+          "actor_optimizer_steps": 1024,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "training_transitions": 65536
+        },
+        "experiment_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+        "issue_count": 0,
+        "learning_gain_established": false,
+        "observed_counters": {
+          "actor_optimizer_steps": 1024,
+          "attempted_policy_steps": 2048,
+          "attempted_updates": 128,
+          "automatic_resets": 64,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 65536
+        },
+        "phase": "confirmation",
+        "phases": [
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -4409.732620239258,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -100.25915312767029,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -647.7585144042969,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.563117027282715,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -707.9929046630859,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.616305589675903,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 0,
+              "kind": "original",
+              "phase_end_update": 704,
+              "phase_start_update": 640,
+              "start_update": 640,
+              "target_update": 704
+            }
+          },
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -5422.568374633789,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -104.37218642234802,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -880.4449615478516,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.31246829032898,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -720.87109375,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -17.552359342575073,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 1,
+              "kind": "robust",
+              "phase_end_update": 768,
+              "phase_start_update": 704,
+              "start_update": 704,
+              "target_update": 768
+            }
+          }
+        ],
+        "physical_replay_performed": false,
+        "probability_gate_recomputed": true,
+        "probability_replay": {
+          "cpu_actor_forward": false,
+          "cpu_rng_preserved": true,
+          "diagnostic": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-08/SEALED_EVIDENCE.json",
+            "sha256": "dd85c8eb392c09cd447403f80ca304e170f386903de9e13ead32d59857847c76"
+          },
+          "float32_atol": 1e-06,
+          "float32_rtol": 1e-05,
+          "forward_batch_size": 512,
+          "gpu_sampling_reproduced": false,
+          "maximum_absolute_errors": {
+            "alpha": 0.0,
+            "beta": 0.0,
+            "log_probability": 0.0
+          },
+          "optimizer_restored": false,
+          "replay_device": "cuda:0",
+          "sample_count": 512,
+          "starting_update": 640,
+          "status": "PASS",
+          "verification": "closed exact-input CUDA diagnostic"
+        },
+        "rng_initialization_audit": {
+          "actual_rollout_rng_use_verified": false,
+          "cpu_seed_derivation_verified": true,
+          "cuda_rng_state_count": 1,
+          "cuda_seed_derivation_verified": false,
+          "kind": "COMMON_U640_NEW_STREAM",
+          "origin_rng_equal": true,
+          "persistence_order_verified": false,
+          "physical_continuity": false,
+          "resume_rng_equal": false,
+          "starting_update": 640,
+          "status": "PASS",
+          "training_seed": 2026102204
+        },
+        "rng_state_semantics_verified": false,
+        "schema_version": "r6-training-summary/1",
+        "scientific_acceptance": false,
+        "start_update": 640,
+        "stream_count": 30,
+        "strict_checkpoint_restore_performed": false,
+        "target_update": 768,
+        "training_seed": 2026102204
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-analysis/binding.json",
+        "sha256": "6d87be11046a0571652662b57726bd0b7c1f29d9c36baf9ff4f4dcf4674d4bb9"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-contract-03.json",
+        "sha256": "d5adb7e936293db442e9c44877e3a13b4de12e49d4daa579e9065e5e047f0ff4"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-CONFIRM-128-SEED-03/receipt.json",
+        "sha256": "f47ceef8a62aea58b7613b8cc2a60abd897df1cbc9bdb9af5ba68c973cdd6631"
+      },
+      "role": "retained_failed_or_superseded_analysis",
+      "run_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-inputs.json",
+        "sha256": "d1b2831297ab6631e58920baab2c98952b80817b590cc53ff598934b01c92937"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/source-02.json",
+        "sha256": "10943d1820164fb4ea6266cd725122a81343ab2903990bfb53f44b4c980f4ea2"
+      },
+      "source_commit": "067349c103d6b344a18188b1b724e37e03fd5958",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-analysis/summary.json",
+        "sha256": "817b96074c7e0e15dc1f516b3cf7f2e3edbba20f9272c01cde71fb730116295e"
+      },
+      "training_summary": {
+        "checkpoints": [
+          {
+            "finite_tensor_tree": true,
+            "metadata_verified": true,
+            "pin": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/checkpoints/u768.pt",
+              "sha256": "6a616a2582190acdf037bf454b5ae3d921120da3ef85916dff5763de9137e07a"
+            },
+            "state_audit": {
+              "actor_critic_state_loaded": true,
+              "adam_parameter_counts": {
+                "actor": 16,
+                "critic": 10
+              },
+              "adam_state_loaded": true,
+              "adam_step": 6144,
+              "cpu_rng_payload_parseable": true,
+              "cuda_rng_semantics_verified": false,
+              "cuda_rng_state_count": 1,
+              "optimizer_step_executed": false,
+              "rng_restored": false,
+              "strict_checkpoint_restore_performed": false
+            },
+            "strict_restore_performed": false,
+            "update": 768
+          }
+        ],
+        "complete_stream_count": 30,
+        "cpu_probability_replay_error": "probability gate mismatch at frozen index 29",
+        "expected_counters": {
+          "actor_optimizer_steps": 1024,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "training_transitions": 65536
+        },
+        "experiment_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+        "issue_count": 1,
+        "learning_gain_established": false,
+        "observed_counters": {
+          "actor_optimizer_steps": 1024,
+          "attempted_policy_steps": 2048,
+          "attempted_updates": 128,
+          "automatic_resets": 64,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 65536
+        },
+        "phase": "confirmation",
+        "phases": [
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -4409.732620239258,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -100.25915312767029,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -647.7585144042969,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.563117027282715,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -707.9929046630859,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.616305589675903,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 0,
+              "kind": "original",
+              "phase_end_update": 704,
+              "phase_start_update": 640,
+              "start_update": 640,
+              "target_update": 704
+            }
+          },
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -5422.568374633789,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -104.37218642234802,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -880.4449615478516,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.31246829032898,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -720.87109375,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -17.552359342575073,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 1,
+              "kind": "robust",
+              "phase_end_update": 768,
+              "phase_start_update": 704,
+              "start_update": 704,
+              "target_update": 768
+            }
+          }
+        ],
+        "physical_replay_performed": false,
+        "probability_gate_recomputed": false,
+        "probability_replay": null,
+        "rng_initialization_audit": {
+          "actual_rollout_rng_use_verified": false,
+          "cpu_seed_derivation_verified": true,
+          "cuda_rng_state_count": 1,
+          "cuda_seed_derivation_verified": false,
+          "kind": "COMMON_U640_NEW_STREAM",
+          "origin_rng_equal": true,
+          "persistence_order_verified": false,
+          "physical_continuity": false,
+          "resume_rng_equal": false,
+          "starting_update": 640,
+          "status": "PASS",
+          "training_seed": 2026102204
+        },
+        "rng_state_semantics_verified": false,
+        "schema_version": "r6-training-summary/1",
+        "scientific_acceptance": false,
+        "start_update": 640,
+        "stream_count": 30,
+        "strict_checkpoint_restore_performed": false,
+        "target_update": 768,
+        "training_seed": 2026102204
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-analysis/binding.json",
+        "sha256": "73f080a18d2f4b2282a1c811ce8a940f48ee6db10c9a94b815469151215c2d99"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-contract.json",
+        "sha256": "1fad77268c5fe7ace5d8bad13625f9772d8a17e61d0f99c009721af87f8b9cc1"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-FINAL-BASELINE-01/receipt.json",
+        "sha256": "669ee3c44252a5eded1e2ba81619e1a9b4c8e3bf92f493c9536c4a1a58c22d22"
+      },
+      "role": "selected_analysis",
+      "run_id": "R6-DIRECT-FINAL-BASELINE-01",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-inputs.json",
+        "sha256": "3dfa5f1b275b2265374d524cc5bfe26c23e89c8ea1f6d1c234a8e5b22c323a2d"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
+        "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
+      },
+      "source_commit": "76c295e2192b2dfec1d30a06b330a261c1f14cc1",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-analysis/summary.json",
+        "sha256": "03b779404a8a9b15736675e51153061c0077102ec3bd4807dc95f0f3a35ba9a9"
+      },
+      "training_summary": null
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-analysis/binding.json",
+        "sha256": "64433ef0a706e24642cfde12447647bcbddcb6dcacc188c1719799ac1fc06a46"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-contract.json",
+        "sha256": "d4e3f68b26907a5af3c094ed8121878dbf066b4226ab62bd20baa12e056d69f2"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-FINAL-SEED-01/receipt.json",
+        "sha256": "315ee5a9774c887ad15d8e4eef9cfb779b10c1804898059142e713e9905f6313"
+      },
+      "role": "selected_analysis",
+      "run_id": "R6-DIRECT-FINAL-SEED-01",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-inputs.json",
+        "sha256": "16f23c39c114031d6f3048399691d241b2df451dba5073b0e3adcb1b29022fea"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
+        "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
+      },
+      "source_commit": "76c295e2192b2dfec1d30a06b330a261c1f14cc1",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-analysis/summary.json",
+        "sha256": "88a539c4982b71cb98284e4c65080cc887508ebccb62b2c6c30f74a17c2d24e3"
+      },
+      "training_summary": null
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-analysis/binding.json",
+        "sha256": "3f69290d4d5fa94e12471cbedfc9121f1a3152df92a8fda93296a349735bedeb"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-contract.json",
+        "sha256": "2070fa28ceab22f48a2006be31444ab89e661daa4a199d4864b477a35685e549"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-FINAL-SEED-02/receipt.json",
+        "sha256": "25553327391bf939322c3ffd8abf31c4a1b99383a29cf40b2df473b7abe48d38"
+      },
+      "role": "selected_analysis",
+      "run_id": "R6-DIRECT-FINAL-SEED-02",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-inputs.json",
+        "sha256": "eff94edc9c36ddad0e4933412f461cb62fa712df7e228e4c507b468ae6e1cb95"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
+        "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
+      },
+      "source_commit": "76c295e2192b2dfec1d30a06b330a261c1f14cc1",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-analysis/summary.json",
+        "sha256": "07a084ebdef513e068281b9f58ca8687d86d79608eeedd0a60ab07e8c8bd79fe"
+      },
+      "training_summary": null
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-analysis/binding.json",
+        "sha256": "c50b0feb4a67f6eba2444475b5dc7b9d7ee9814c338f35d8c304ed5d2fc4a74d"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-contract.json",
+        "sha256": "402a15277acdaf065dc87c6e98a6d95c110c9ac8c424518dcbb030bae125ba11"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-FINAL-SEED-03/receipt.json",
+        "sha256": "616259e0c2bec01a8e2ec84a6391bb0f0c7024d861099f984240981c52a1da89"
+      },
+      "role": "selected_analysis",
+      "run_id": "R6-DIRECT-FINAL-SEED-03",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-inputs.json",
+        "sha256": "cc2dbd1ebcca180584c839a78dc73736353bc6f80ec1deefc9420d59475e4e2f"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/source.json",
+        "sha256": "8470ba3e9af93caa99356cfb7e6a4cdc1bfbc25f8c1fa16a6386f424f7117765"
+      },
+      "source_commit": "76c295e2192b2dfec1d30a06b330a261c1f14cc1",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-analysis/summary.json",
+        "sha256": "89c1457ea0fefde8199895e6c9cde9ca2c392b748cc65df90e9927c828cbc280"
+      },
+      "training_summary": null
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-01-analysis/binding.json",
+        "sha256": "5186b9f257cc14d7dcdfc6ce7a450867c73c594dfe2bb238ca5baff4b205397a"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_CONTRACT_01.json",
+        "sha256": "89f41617fa44793356602e51bb8cc8d970490ab7f436a0bab68ddd34fe695c33"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-TRAIN-01/receipt.json",
+        "sha256": "84b970b214fbe3076dced24327b582ec4adbd5d5246865b37784a4295567925e"
+      },
+      "role": "retained_failed_or_superseded_analysis",
+      "run_id": "R6-DIRECT-TRAIN-01",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_RUN_INPUTS_01.json",
+        "sha256": "c6faf12c848365e26dcef9119367b95a8dff5c11136316ad1fd6beabed6d2d05"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_SOURCE_01.json",
+        "sha256": "a491c8bcc8feef69320fe7947facc72a24badb872ac9f5c6e34fe0bb3e465a6c"
+      },
+      "source_commit": "a032dd7c4440abec540960074408830ea846d9ed",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-01-analysis/summary.json",
+        "sha256": "911cb85868a02d0509cdcbd2bb11bde02bbb004587780e92444b7b7a90a2f774"
+      },
+      "training_summary": {
+        "checkpoints": [
+          {
+            "metadata_verified": false,
+            "strict_restore_performed": false,
+            "update": 768
+          }
+        ],
+        "complete_stream_count": 16,
+        "expected_counters": {
+          "actor_optimizer_steps": 1024,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "training_transitions": 65536
+        },
+        "experiment_id": "R6-DIRECT-TRAIN-01",
+        "issue_count": 28,
+        "learning_gain_established": false,
+        "observed_counters": null,
+        "phase": "development",
+        "phases": [
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -4357.5340576171875,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -103.37974786758423,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -654.2077789306641,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -14.909176111221313,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -696.5632629394531,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.785825490951538,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 0,
+              "kind": "original",
+              "phase_end_update": 704,
+              "phase_start_update": 640,
+              "start_update": 640,
+              "target_update": 704
+            }
+          },
+          {
+            "completed_record": false,
+            "episodes": {},
+            "phase": {
+              "index": 1,
+              "kind": "robust",
+              "phase_end_update": 768,
+              "phase_start_update": 704,
+              "start_update": 704,
+              "target_update": 768
+            }
+          }
+        ],
+        "physical_replay_performed": false,
+        "probability_gate_recomputed": false,
+        "probability_replay": null,
+        "rng_initialization_audit": {
+          "actual_rollout_rng_use_verified": false,
+          "cpu_seed_derivation_verified": true,
+          "cuda_rng_state_count": 1,
+          "cuda_seed_derivation_verified": false,
+          "kind": "COMMON_U640_NEW_STREAM",
+          "origin_rng_equal": true,
+          "persistence_order_verified": false,
+          "physical_continuity": false,
+          "resume_rng_equal": false,
+          "starting_update": 640,
+          "status": "PASS",
+          "training_seed": 2026102201
+        },
+        "rng_state_semantics_verified": false,
+        "schema_version": "r6-training-summary/1",
+        "scientific_acceptance": false,
+        "start_update": 640,
+        "stream_count": 28,
+        "strict_checkpoint_restore_performed": false,
+        "target_update": 768,
+        "training_seed": 2026102201
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis-cuda/binding.json",
+        "sha256": "681e72ec90b8fdf85c10cc01bea89cd3518c9932fc24916ba8b575cab32a66f1"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/contract.json",
+        "sha256": "07a632a6de231228e123eabf361028546413b95d70b971c725c7656c36866642"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-TRAIN-02/receipt.json",
+        "sha256": "01cfbbe60201e55549dc10f19277ba00e3944e86bf39e3ab2083d6852f2facbe"
+      },
+      "role": "selected_analysis",
+      "run_id": "R6-DIRECT-TRAIN-02",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/inputs.json",
+        "sha256": "51a51147036bef23944a601b467e141755fb91b7202221fbd8293efbdf37ad7e"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/source.json",
+        "sha256": "cd4025bffd1747fc45aca27136c0d74983d87012647c8564af6ee6b79d93e070"
+      },
+      "source_commit": "a184106e916fc3fcb47b00cfb31d899e2742e06b",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis-cuda/summary.json",
+        "sha256": "17e3c6918bacf48125d429ed3b3a2091658e23889f6f8d649dad2ebf7e0713ef"
+      },
+      "training_summary": {
+        "checkpoints": [
+          {
+            "finite_tensor_tree": true,
+            "metadata_verified": true,
+            "pin": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-TRAIN-02/results/research-r6-training/checkpoints/u768.pt",
+              "sha256": "8f6bb79650218332159e24d552f17ea88498d015fde293cc5733e2f8df1b3bf6"
+            },
+            "state_audit": {
+              "actor_critic_state_loaded": true,
+              "adam_parameter_counts": {
+                "actor": 16,
+                "critic": 10
+              },
+              "adam_state_loaded": true,
+              "adam_step": 6144,
+              "cpu_rng_payload_parseable": true,
+              "cuda_rng_semantics_verified": false,
+              "cuda_rng_state_count": 1,
+              "optimizer_step_executed": false,
+              "rng_restored": false,
+              "strict_checkpoint_restore_performed": false
+            },
+            "strict_restore_performed": false,
+            "update": 768
+          }
+        ],
+        "complete_stream_count": 30,
+        "cpu_probability_replay_error": "probability gate mismatch at frozen index 31",
+        "expected_counters": {
+          "actor_optimizer_steps": 1024,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "training_transitions": 65536
+        },
+        "experiment_id": "R6-DIRECT-TRAIN-02",
+        "issue_count": 0,
+        "learning_gain_established": false,
+        "observed_counters": {
+          "actor_optimizer_steps": 1024,
+          "attempted_policy_steps": 2048,
+          "attempted_updates": 128,
+          "automatic_resets": 64,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 65536
+        },
+        "phase": "development",
+        "phases": [
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -4356.820358276367,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -103.38955879211426,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -654.6045074462891,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -14.909330606460571,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -695.8253021240234,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.78436017036438,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 0,
+              "kind": "original",
+              "phase_end_update": 704,
+              "phase_start_update": 640,
+              "start_update": 640,
+              "target_update": 704
+            }
+          },
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -5020.098739624023,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -103.52258110046387,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -766.7511444091797,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -16.052038192749023,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -886.8671722412109,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.486545085906982,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 1,
+              "kind": "robust",
+              "phase_end_update": 768,
+              "phase_start_update": 704,
+              "start_update": 704,
+              "target_update": 768
+            }
+          }
+        ],
+        "physical_replay_performed": false,
+        "probability_gate_recomputed": true,
+        "probability_replay": {
+          "cpu_actor_forward": false,
+          "cpu_rng_preserved": true,
+          "diagnostic": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-05/SEALED_EVIDENCE.json",
+            "sha256": "878ef0f37e37c4975156cac27f0e682347a9d10b8e01589728fbdea83913fa31"
+          },
+          "float32_atol": 1e-06,
+          "float32_rtol": 1e-05,
+          "forward_batch_size": 512,
+          "gpu_sampling_reproduced": false,
+          "maximum_absolute_errors": {
+            "alpha": 0.0,
+            "beta": 0.0,
+            "log_probability": 0.0
+          },
+          "optimizer_restored": false,
+          "replay_device": "cuda:0",
+          "sample_count": 512,
+          "starting_update": 640,
+          "status": "PASS",
+          "verification": "closed exact-input CUDA diagnostic"
+        },
+        "rng_initialization_audit": {
+          "actual_rollout_rng_use_verified": false,
+          "cpu_seed_derivation_verified": true,
+          "cuda_rng_state_count": 1,
+          "cuda_seed_derivation_verified": false,
+          "kind": "COMMON_U640_NEW_STREAM",
+          "origin_rng_equal": true,
+          "persistence_order_verified": false,
+          "physical_continuity": false,
+          "resume_rng_equal": false,
+          "starting_update": 640,
+          "status": "PASS",
+          "training_seed": 2026102201
+        },
+        "rng_state_semantics_verified": false,
+        "schema_version": "r6-training-summary/1",
+        "scientific_acceptance": false,
+        "start_update": 640,
+        "stream_count": 30,
+        "strict_checkpoint_restore_performed": false,
+        "target_update": 768,
+        "training_seed": 2026102201
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis/binding.json",
+        "sha256": "0df541a81e1fcf74ae9c8aa748c4d0beed13a91fcc639b15e7441f82f5a7b9c3"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/contract.json",
+        "sha256": "07a632a6de231228e123eabf361028546413b95d70b971c725c7656c36866642"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-TRAIN-02/receipt.json",
+        "sha256": "01cfbbe60201e55549dc10f19277ba00e3944e86bf39e3ab2083d6852f2facbe"
+      },
+      "role": "retained_failed_or_superseded_analysis",
+      "run_id": "R6-DIRECT-TRAIN-02",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/inputs.json",
+        "sha256": "51a51147036bef23944a601b467e141755fb91b7202221fbd8293efbdf37ad7e"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02b/source.json",
+        "sha256": "cd4025bffd1747fc45aca27136c0d74983d87012647c8564af6ee6b79d93e070"
+      },
+      "source_commit": "a184106e916fc3fcb47b00cfb31d899e2742e06b",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis/summary.json",
+        "sha256": "18d1ba59df63cd135cb237bf731868c6caa3543bcbbbd1e980b07a3af82fe7fe"
+      },
+      "training_summary": {
+        "checkpoints": [
+          {
+            "finite_tensor_tree": true,
+            "metadata_verified": true,
+            "pin": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-TRAIN-02/results/research-r6-training/checkpoints/u768.pt",
+              "sha256": "8f6bb79650218332159e24d552f17ea88498d015fde293cc5733e2f8df1b3bf6"
+            },
+            "state_audit": {
+              "actor_critic_state_loaded": true,
+              "adam_parameter_counts": {
+                "actor": 16,
+                "critic": 10
+              },
+              "adam_state_loaded": true,
+              "adam_step": 6144,
+              "cpu_rng_payload_parseable": true,
+              "cuda_rng_semantics_verified": false,
+              "cuda_rng_state_count": 1,
+              "optimizer_step_executed": false,
+              "rng_restored": false,
+              "strict_checkpoint_restore_performed": false
+            },
+            "strict_restore_performed": false,
+            "update": 768
+          }
+        ],
+        "complete_stream_count": 30,
+        "cpu_probability_replay_error": "probability gate mismatch at frozen index 31",
+        "expected_counters": {
+          "actor_optimizer_steps": 1024,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "training_transitions": 65536
+        },
+        "experiment_id": "R6-DIRECT-TRAIN-02",
+        "issue_count": 1,
+        "learning_gain_established": false,
+        "observed_counters": {
+          "actor_optimizer_steps": 1024,
+          "attempted_policy_steps": 2048,
+          "attempted_updates": 128,
+          "automatic_resets": 64,
+          "completed_policy_steps": 2048,
+          "completed_updates": 128,
+          "critic_optimizer_steps": 1024,
+          "explicit_resets": 2,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 65536,
+          "real_optimizer_updates": 128,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 65536
+        },
+        "phase": "development",
+        "phases": [
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -4356.820358276367,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -103.38955879211426,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -654.6045074462891,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -14.909330606460571,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -695.8253021240234,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.78436017036438,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 0,
+              "kind": "original",
+              "phase_end_update": 704,
+              "phase_start_update": 640,
+              "start_update": 640,
+              "target_update": 704
+            }
+          },
+          {
+            "completed_record": true,
+            "episodes": {
+              "center:1": {
+                "count": 24,
+                "return_sum": -5020.098739624023,
+                "right_censored": 0,
+                "steps": 24000
+              },
+              "center:RUN_END": {
+                "count": 24,
+                "return_sum": -103.52258110046387,
+                "right_censored": 24,
+                "steps": 576
+              },
+              "near_x_wall:1": {
+                "count": 4,
+                "return_sum": -766.7511444091797,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_x_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -16.052038192749023,
+                "right_censored": 4,
+                "steps": 96
+              },
+              "near_y_wall:1": {
+                "count": 4,
+                "return_sum": -886.8671722412109,
+                "right_censored": 0,
+                "steps": 4000
+              },
+              "near_y_wall:RUN_END": {
+                "count": 4,
+                "return_sum": -15.486545085906982,
+                "right_censored": 4,
+                "steps": 96
+              }
+            },
+            "phase": {
+              "index": 1,
+              "kind": "robust",
+              "phase_end_update": 768,
+              "phase_start_update": 704,
+              "start_update": 704,
+              "target_update": 768
+            }
+          }
+        ],
+        "physical_replay_performed": false,
+        "probability_gate_recomputed": false,
+        "probability_replay": null,
+        "rng_initialization_audit": {
+          "actual_rollout_rng_use_verified": false,
+          "cpu_seed_derivation_verified": true,
+          "cuda_rng_state_count": 1,
+          "cuda_seed_derivation_verified": false,
+          "kind": "COMMON_U640_NEW_STREAM",
+          "origin_rng_equal": true,
+          "persistence_order_verified": false,
+          "physical_continuity": false,
+          "resume_rng_equal": false,
+          "starting_update": 640,
+          "status": "PASS",
+          "training_seed": 2026102201
+        },
+        "rng_state_semantics_verified": false,
+        "schema_version": "r6-training-summary/1",
+        "scientific_acceptance": false,
+        "start_update": 640,
+        "stream_count": 30,
+        "strict_checkpoint_restore_performed": false,
+        "target_update": 768,
+        "training_seed": 2026102201
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-02-analysis/binding.json",
+        "sha256": "f48cbc84dfc2637d60cb4e38163b15528fc0ae7233861fa7262f7f9761fce183"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u640-02-contract.json",
+        "sha256": "67efd0c3dfb1b6747665bd293e8ee1f795f9051aa38f2acacf947999445e4af7"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U640-02/receipt.json",
+        "sha256": "86a0581514b01d10891c180c15b7113620a83b0486b44d6642f67c2119a8dd85"
+      },
+      "role": "retained_failed_or_superseded_analysis",
+      "run_id": "R6-DIRECT-PAIR-U640-02",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u640-02-inputs.json",
+        "sha256": "85f8205487c9463f5a6f648f958a97ce38b395ddf13e6069ed53aa7c820dff62"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/source.json",
+        "sha256": "7224df8fe0dcbb493b01ff9ac7c647370e1c42f804ab22b27672d013ae70d5c6"
+      },
+      "source_commit": "fb35c16e390321883dea68215a1285ef35ca4c06",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-02-analysis/summary.json",
+        "sha256": "a3341bfec8abeecb2dcfb117d574e4ef2fc1992df357fe774e2d01f8256dde2e"
+      },
+      "training_summary": null
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-03-analysis-fixed/binding.json",
+        "sha256": "74e92e65f29337353af1980eef1888ba25878d14cbc388f10c09b41464e8934f"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/u640-contract.json",
+        "sha256": "131f257b4bf2b463eb32ff87dd94fad5c20849b5231c0eec7b594123ef29b1bc"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U640-03/receipt.json",
+        "sha256": "c43993a12cfb62a43fc01ede4b8cdd54c4f2302a01e7065cfa06752c4e9561e1"
+      },
+      "role": "selected_analysis",
+      "run_id": "R6-DIRECT-PAIR-U640-03",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/u640-inputs.json",
+        "sha256": "d026982f9f651debd52a3c8aa63794dadf56c2c389486b7eddeb26224cf787d4"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/source.json",
+        "sha256": "929f62a25f46080c6060f344561d8de5f2ed819369cae9b21a33e43b0336d40b"
+      },
+      "source_commit": "a09f899e46ae5bfee2bf30ce4cb19b918d64360d",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-03-analysis-fixed/summary.json",
+        "sha256": "726dfc71f11910cceeb829085f0d50315d25c62f6736493acc9c8eabdab69141"
+      },
+      "training_summary": null
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-03-analysis/binding.json",
+        "sha256": "dc83b4756af22d1c71a00f2b62d94751e1127683a13bafc6f043fb25e185d099"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/u640-contract.json",
+        "sha256": "131f257b4bf2b463eb32ff87dd94fad5c20849b5231c0eec7b594123ef29b1bc"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U640-03/receipt.json",
+        "sha256": "c43993a12cfb62a43fc01ede4b8cdd54c4f2302a01e7065cfa06752c4e9561e1"
+      },
+      "role": "retained_failed_or_superseded_analysis",
+      "run_id": "R6-DIRECT-PAIR-U640-03",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/u640-inputs.json",
+        "sha256": "d026982f9f651debd52a3c8aa63794dadf56c2c389486b7eddeb26224cf787d4"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/source.json",
+        "sha256": "929f62a25f46080c6060f344561d8de5f2ed819369cae9b21a33e43b0336d40b"
+      },
+      "source_commit": "a09f899e46ae5bfee2bf30ce4cb19b918d64360d",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u640-03-analysis/summary.json",
+        "sha256": "a29b3de9036e105afa7c9d2d5301f067689f0393d1821be28093edc07dab2600"
+      },
+      "training_summary": null
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u768-01-analysis/binding.json",
+        "sha256": "f27edfe7820bc959676ef56934bb03ed593d92833f6af56eeea6323dbb899d02"
+      },
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-01/u768-contract.json",
+        "sha256": "3c58ca7405e6a62a5d9771e1b9597d6c17dc0c55b28f6e61b5c137171c445be5"
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PAIR-U768-01/receipt.json",
+        "sha256": "f98d57f031abb16421b1f7b7bfb26bea02424010199766dfc7f48777ba4ea4c5"
+      },
+      "role": "selected_analysis",
+      "run_id": "R6-DIRECT-PAIR-U768-01",
+      "run_inputs": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/u768-inputs.json",
+        "sha256": "be4aa9b06ff2c8966aa3518e12d7c15b38e6c62e1aea5d72efa1012e865ad3f7"
+      },
+      "scientific_config": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/workspaces/R6-baseline-source-candidate-02/training_workloads/unified_h1/candidate_config.json",
+        "sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19"
+      },
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/source.json",
+        "sha256": "929f62a25f46080c6060f344561d8de5f2ed819369cae9b21a33e43b0336d40b"
+      },
+      "source_commit": "a09f899e46ae5bfee2bf30ce4cb19b918d64360d",
+      "summary": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/u768-01-analysis/summary.json",
+        "sha256": "106e75d73cfbc289031941facdb455746747dc846991565f13b532ad5583a6d4"
+      },
+      "training_summary": null
+    }
+  ],
+  "conclusion": "All four models pass original five gates and16final conditions; ceiling baseline prevents a demonstrated learning-gain claim. Three streams continue common u640, not independent training from scratch.",
+  "curves": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/train-02-curves/manifest.json",
+      "sha256": "0c27a97345f762391138e29484a3a22467a665de84bdac1ed9be539c25a3e3f1"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/seed-01c-curves/manifest.json",
+      "sha256": "9de5d49a1bf0e9e8ccca36490c90572938c201fc01ca0e88c860281d39372a98"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/seed-02-curves/manifest.json",
+      "sha256": "3711b96266bf45314c3ab785ce0edfd34fbc504b386713e01febc2ac2d269e52"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/seed-03-curves/manifest.json",
+      "sha256": "5a27f38bbbb6db18bb8c0f69f9201a5c45909f9f84fadabc4ba5efe8102e67e7"
+    }
+  ],
+  "final_collection": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/collection-01/results.json",
+    "sha256": "de1acb68a7c8abca8bad06735eff0a14d13cd17054d06e78a804cccf89c5cb72"
+  },
+  "final_results": [
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-analysis/binding.json",
+        "sha256": "73f080a18d2f4b2282a1c811ce8a940f48ee6db10c9a94b815469151215c2d99"
+      },
+      "assignment": {
+        "checkpoint": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+          "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+        },
+        "evaluation_seed": 1812183990,
+        "model_role": "baseline",
+        "realization_index": 0,
+        "split": "final"
+      },
+      "assignment_index": 0,
+      "gates": {
+        "blocks": [
+          {
+            "block_id": "S-clean-low",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-clean-high",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-noise",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-delay-drop",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "X-clean",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "X-noise",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "P-clean",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "P-combined",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-near",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-middle",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-far",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-combined",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-S-noise",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-S-combined",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-P-high",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-W-high",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          }
+        ],
+        "original_pass": true,
+        "target_pass": true
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "report": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-analysis/report.json",
+        "sha256": "95dfe9034b11c4c0254eae41a9f7f41d801fe40e391148aa7f00c201ef504578"
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-analysis/binding.json",
+        "sha256": "64433ef0a706e24642cfde12447647bcbddcb6dcacc188c1719799ac1fc06a46"
+      },
+      "assignment": {
+        "checkpoint": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01C/results/research-r6-training/checkpoints/u768.pt",
+          "sha256": "cbd1eda09169439e28586200f0d67e5fc626c862f5a5335f329fe139ccc13cf4"
+        },
+        "evaluation_seed": 1812183990,
+        "model_role": "seed1",
+        "realization_index": 0,
+        "split": "final"
+      },
+      "assignment_index": 1,
+      "gates": {
+        "blocks": [
+          {
+            "block_id": "S-clean-low",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-clean-high",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-noise",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-delay-drop",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "X-clean",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "X-noise",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "P-clean",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "P-combined",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-near",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-middle",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-far",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-combined",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-S-noise",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-S-combined",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-P-high",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-W-high",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          }
+        ],
+        "original_pass": true,
+        "target_pass": true
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "report": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-analysis/report.json",
+        "sha256": "cb27b24469e76b0d91822a17a9b5dbad4fe242a3a8f3b425e995e789544ec01e"
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-analysis/binding.json",
+        "sha256": "3f69290d4d5fa94e12471cbedfc9121f1a3152df92a8fda93296a349735bedeb"
+      },
+      "assignment": {
+        "checkpoint": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-02/results/research-r6-training/checkpoints/u768.pt",
+          "sha256": "f7632803deaa9f3cabc3cfee3158e3836cee1f64ee1b735b5c9351707dab20f7"
+        },
+        "evaluation_seed": 1812183990,
+        "model_role": "seed2",
+        "realization_index": 0,
+        "split": "final"
+      },
+      "assignment_index": 2,
+      "gates": {
+        "blocks": [
+          {
+            "block_id": "S-clean-low",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-clean-high",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-noise",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-delay-drop",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "X-clean",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "X-noise",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "P-clean",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "P-combined",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-near",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-middle",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-far",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-combined",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-S-noise",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-S-combined",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-P-high",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-W-high",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          }
+        ],
+        "original_pass": true,
+        "target_pass": true
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "report": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-analysis/report.json",
+        "sha256": "67f635de32b8e2ae7f6a86497b0bed89ac233b4f5292206b8d857a1688f19b06"
+      }
+    },
+    {
+      "analysis": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-analysis/binding.json",
+        "sha256": "c50b0feb4a67f6eba2444475b5dc7b9d7ee9814c338f35d8c304ed5d2fc4a74d"
+      },
+      "assignment": {
+        "checkpoint": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/results/research-r6-training/checkpoints/u768.pt",
+          "sha256": "6a616a2582190acdf037bf454b5ae3d921120da3ef85916dff5763de9137e07a"
+        },
+        "evaluation_seed": 1812183990,
+        "model_role": "seed3",
+        "realization_index": 0,
+        "split": "final"
+      },
+      "assignment_index": 3,
+      "gates": {
+        "blocks": [
+          {
+            "block_id": "S-clean-low",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-clean-high",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-noise",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "S-delay-drop",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "X-clean",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "X-noise",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "P-clean",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "P-combined",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-near",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-middle",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-far",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "W-combined",
+            "domain": "target",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-S-noise",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-S-combined",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-P-high",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          },
+          {
+            "block_id": "stress-W-high",
+            "domain": "stress",
+            "passed": true,
+            "successes": 32,
+            "total": 32
+          }
+        ],
+        "original_pass": true,
+        "target_pass": true
+      },
+      "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "native_exit_code": -15,
+      "report": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-analysis/report.json",
+        "sha256": "0ed5744288ebae17c51295f4c710e7be9f5c6027314f0a4b0b28a9a04810ddc2"
+      }
+    }
+  ],
+  "goal_complete": false,
+  "limitations": [
+    "Failed and superseded analyses retained; selected labels are indexing, not new scientific acceptance",
+    "Original CPU probability mismatch and cleanup timeout retained; supplemental CUDA scope unchanged",
+    "Physical reintegration and full RNG semantics not established",
+    "Source/config/assets are bound through original source manifests; no portability or exact replay guarantee",
+    "Video not included or accepted here; final R01-R10 audit and resource closure pending"
+  ],
+  "references": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_01_RECOVERY.json",
+      "sha256": "26f17eafd733aef92c13b28a6a2f2516f17516f8b19c8e22fcd8e830eae756ff"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02/RECOMPUTATION.json",
+      "sha256": "6eeefc0f2e3a820a6b756e3af795a65284972b3edb0b5888a058dd55c6221fc0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/POST_TRAIN_COMPARISON.json",
+      "sha256": "f32553e40611fa0a1eebeed63d73e03bfda905903e4e2f35b037ca3a61ba9431"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_02_PAIRED_COMPARISON.json",
+      "sha256": "f7c3986ba5974675a66ef1520eb5d7a8a012eeb19cef76ceca2959738889d03f"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/freeze-02.json",
+      "sha256": "7b38afd36979a84cd6cf63404771646a87fb52b830b560ac63cc12c807bc5ec7"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-freeze-candidate.json",
+      "sha256": "7a6750ae31cb14e067fc722c9d790765bc28d8df54e0b4458f4dcf579776cb15"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-batch.json",
+      "sha256": "368704cb022af1927d49af4d7d537c1edc82b6ce21f7f116456222dd191a3dda"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/PUBLICATION_INDEPENDENT_REVIEW.json",
+      "sha256": "4a1607a4cb92b5795885e7e882af24be76042b3de665a031b7e79cd1f358c731"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/COLLECTION_INDEPENDENT_REVIEW.json",
+      "sha256": "77e947b2c164c55b0df0140578acd42d5573605a3e83ac2ec2cd51dab5c23ae8"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FROZEN_MODEL_INDEX.json",
+      "sha256": "efd9d43317462ca0119353f9d8de29ab1762ec29abed395cbf3e0e6d06633911"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FROZEN_MODEL_BUNDLE.json",
+      "sha256": "032e357a747f33f73eb35efdf8bc94cbb9388fe817673c6159efd7286bb8c279"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/ANALYSIS_RAW_EVIDENCE_INDEX.json",
+      "sha256": "0f293f738d8cd733214c861526ff89897e2874e56a1258a70696d5e3c78613b7"
+    }
+  ],
+  "schema_version": "r6-training-evaluation-delivery-manifest/1",
+  "status": "TRAINING_EVALUATION_INDEXED_FINAL_DELIVERY_REVIEW_PENDING"
+}

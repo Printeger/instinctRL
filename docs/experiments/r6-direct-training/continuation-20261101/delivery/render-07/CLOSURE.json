@@ -1,0 +1,56 @@
+{
+  "capture_states": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-07/results/research-r6-video-replay/media/first_capture_state.jsonl",
+    "sha256": "4007d89043f5f160d16de28012edc2d86bcd46c2dc181c0319b0669dd5396430"
+  },
+  "charged_seconds": 221,
+  "engine": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-07/results/research-r6-video-replay/media/hydra_engine.json",
+    "sha256": "32866ee900638b98891e23104404bf02f283868101ed6817cf651d4f04c5f354"
+  },
+  "exact_owner_identities_gone": [
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3380900,
+      "starttime": "34005559"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3381044,
+      "starttime": "34006141"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3381045,
+      "starttime": "34006141"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3382916,
+      "starttime": "34013426"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3382961,
+      "starttime": "34013470"
+    },
+    {
+      "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+      "pid": 3382962,
+      "starttime": "34013471"
+    }
+  ],
+  "observation": "Four synchronous capture attempts retained empty RGB; no valid video. Cleanup timeout/-15 retained.",
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-07/receipt.json",
+    "sha256": "af8ff35203a87778dea84379e1d473bc4c0abc7654227e71039e79b7116e6fec"
+  },
+  "remaining": [],
+  "rustdesk_touched": false,
+  "status": "CLOSED_BOUNDED_RGB_WARMUP_EMPTY",
+  "video_generated": false,
+  "workload_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-07/state.json",
+    "sha256": "4c046ab3ad2867f546fc34bd0ecc5293540f6d8633f8cc1dc8339634bad4e6a7"
+  }
+}
