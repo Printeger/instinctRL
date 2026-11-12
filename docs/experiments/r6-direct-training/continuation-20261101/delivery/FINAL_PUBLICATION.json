@@ -1,0 +1,27 @@
+{
+  "status": "FINAL_ACCEPTED_DELIVERY_PUBLISHED",
+  "delivery_commit": "6ce95d73f86305923c3800c981471592bc668ec9",
+  "remote_main_observed": "6ce95d73f86305923c3800c981471592bc668ec9",
+  "remote": "git@github.com:Printeger/instinctRL.git",
+  "normal_push": true,
+  "final_results": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/FINAL_R6_RESULTS.json",
+    "sha256": "bf04ee373a560857169ad877c2ced2e5b32b62786f7eb14cb67e40a33a60a6f5"
+  },
+  "delivery_index": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/DELIVERY_INDEX.json",
+    "sha256": "e92f9bb4fd1ede918b8faacbb6c1a6540768b915b7faae09645829a90ea9b1c0"
+  },
+  "independent_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+    "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+  },
+  "verification": {
+    "artifact_hash_length_checks": 23,
+    "receipt_runs_rechecked": 35,
+    "all_recorded_owners_gone": true,
+    "preadmission_parent_gone": true
+  },
+  "limitations": "This publication record is additive after the accepted delivery commit; no complete system lifetime/process-history claim",
+  "rustdesk_touched": false
+}
