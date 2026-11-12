@@ -1,0 +1,33 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "PASS_SCOPED",
+  "scope": "Exact ledger accounting, receipt-attached closure, module snapshot and model usage review",
+  "must_fix_for_scope": [],
+  "sha256": {
+    "resource_audit": "c4d6c17261102a743e809237dd96554c17d6448249f4ffc28d5fa2744fa9fb2d",
+    "model_audit": "9cd97b17a0870f26f3d22083941b3aa9c74ae94fdc8ed8027bd87fb2c7503ac5",
+    "no_rlflow": "dc52080c5803c7808ef2beddd486777e1faa1ed3158f7b0fa79006d4e752f103",
+    "ledger": "6a1826356818e1c06087208b4430de580a9170400b0c3ead7471934fc70c713f"
+  },
+  "verified": [
+    "65unique reservation IDs and exact embedded ledger",
+    "All resource totals independently recomputed; not actual consumption",
+    "35unique closed receipts actualhashmatch; remainingempty",
+    "219identity observations gone; not219uniqueprocesses",
+    "26time settlements match ceil and receipt",
+    "Video01-09 seconds211/196/211/165/159/237/221/221/238 onceeach",
+    "Extension12500721684byte reserve onceUNRELEASED",
+    "20actual localdirect module snapshots match/no forbidden",
+    "Known historical models preserved, current usageUNKNOWN"
+  ],
+  "coverage_gaps": [
+    "35receipt coverage not all historicalprocesses",
+    "Probability diagnostic01 withoutreceipt needs admissionfailureaddendum",
+    "15closedjobs missingmodule snapshots need source/launch supplemental evidence",
+    "No full lifetime import or filesystem audit"
+  ],
+  "whole_goal_complete": false,
+  "files_modified": false,
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
