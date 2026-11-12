@@ -1,8 +1,8 @@
 {
   "schema_version": "r6-final-results/1",
-  "status": "TRAINING_EVAL_VIDEO_COMPLETE_FINAL_REVIEW_PENDING",
+  "status": "TRAINING_COMPLETE_SCIENTIFIC_NEGATIVE",
   "completion_candidate": "TRAINING_COMPLETE_SCIENTIFIC_NEGATIVE",
-  "goal_complete": false,
+  "goal_complete": true,
   "scientific_conclusion": "No demonstrated learning gain; no observed regression in registered conditions; all four models pass original five and16final conditions.",
   "training": [
     {
@@ -734,7 +734,7 @@
   },
   "requirements": {
     "R01": {
-      "status": "EVIDENCE_ASSEMBLED_INDEPENDENT_FINAL_AUDIT_PENDING",
+      "status": "PASS_SCOPED: measured107updates/54912transitions, no training checkpoint, exact old identity exits",
       "evidence": [
         {
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_01_RECOVERY.json",
@@ -744,10 +744,14 @@
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-01-analysis/binding.json",
           "sha256": "5186b9f257cc14d7dcdfc6ce7a450867c73c594dfe2bb238ca5baff4b205397a"
         }
-      ]
+      ],
+      "independent_review": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+        "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+      }
     },
     "R02": {
-      "status": "EVIDENCE_ASSEMBLED_INDEPENDENT_FINAL_AUDIT_PENDING",
+      "status": "PASS_SCOPED: original streams, model/Adam/counters/curriculum and exact CUDA supplements reviewed; CPU differences and cleanup retained",
       "evidence": [
         {
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02-analysis-cuda/binding.json",
@@ -769,10 +773,14 @@
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/INTERIM_REQUIREMENTS_INDEPENDENT_REVIEW.json",
           "sha256": "65680082d2f82554a63aff0b0f4bddd58b6e4af3032872f21d82be654beae680"
         }
-      ]
+      ],
+      "independent_review": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+        "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+      }
     },
     "R03": {
-      "status": "EVIDENCE_ASSEMBLED_INDEPENDENT_FINAL_AUDIT_PENDING",
+      "status": "PASS: unrecoverable branch, new u640 recomputation; failed01B not complete node",
       "evidence": [
         {
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_01_RECOVERY.json",
@@ -786,10 +794,14 @@
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01b-analysis/binding.json",
           "sha256": "7178e88428ae789421c7d302141edbc43724b67e0ad288e3c3e98c5dd6dba86b"
         }
-      ]
+      ],
+      "independent_review": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+        "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+      }
     },
     "R04": {
-      "status": "EVIDENCE_ASSEMBLED_INDEPENDENT_FINAL_AUDIT_PENDING",
+      "status": "PASS: independently rescored registered development and original five tasks; no observed regression or gain inference",
       "evidence": [
         {
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/POST_TRAIN_COMPARISON.json",
@@ -799,10 +811,14 @@
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/TRAIN_02_PAIRED_COMPARISON.json",
           "sha256": "f7c3986ba5974675a66ef1520eb5d7a8a012eeb19cef76ceca2959738889d03f"
         }
-      ]
+      ],
+      "independent_review": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+        "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+      }
     },
     "R05": {
-      "status": "EVIDENCE_ASSEMBLED_INDEPENDENT_FINAL_AUDIT_PENDING",
+      "status": "PASS: strict128prefix, explicit seed/source amendments, bounded fixes, failed evidence and charges retained",
       "evidence": [
         {
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/POST_TRAIN_COMPARISON.json",
@@ -812,10 +828,14 @@
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/freeze-02.json",
           "sha256": "7b38afd36979a84cd6cf63404771646a87fb52b830b560ac63cc12c807bc5ec7"
         }
-      ]
+      ],
+      "independent_review": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+        "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+      }
     },
     "R06": {
-      "status": "EVIDENCE_ASSEMBLED_INDEPENDENT_FINAL_AUDIT_PENDING",
+      "status": "PASS_SCOPED: three distinct registered seeds, commonu640\u2192u768, each128updates/65536transitions/1checkpoint",
       "evidence": [
         {
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/freeze-02.json",
@@ -833,10 +853,14 @@
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-analysis-cuda/binding.json",
           "sha256": "9984546edf23d6d719f4985e27590fc17bbfe834acc4e98a7cd52608d1830d20"
         }
-      ]
+      ],
+      "independent_review": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+        "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+      }
     },
     "R07": {
-      "status": "EVIDENCE_ASSEMBLED_INDEPENDENT_FINAL_AUDIT_PENDING",
+      "status": "PASS_SCOPED: publication before reveal and common finalseed four-model record chain",
       "evidence": [
         {
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/final-freeze-candidate.json",
@@ -858,10 +882,14 @@
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/COLLECTION_INDEPENDENT_REVIEW.json",
           "sha256": "77e947b2c164c55b0df0140578acd42d5573605a3e83ac2ec2cd51dab5c23ae8"
         }
-      ]
+      ],
+      "independent_review": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+        "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+      }
     },
     "R08": {
-      "status": "EVIDENCE_ASSEMBLED_INDEPENDENT_FINAL_AUDIT_PENDING",
+      "status": "PASS_SCOPED: models/config/source, curves, rawindex, four videos and final independent review",
       "evidence": [
         {
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FROZEN_MODEL_BUNDLE.json",
@@ -887,10 +915,14 @@
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-09/VIDEO_INDEPENDENT_REVIEW.json",
           "sha256": "297841bf47485aa81a3fb14fcfdfb35b125ecb50b2002ed1831f84b63f42d30b"
         }
-      ]
+      ],
+      "independent_review": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+        "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+      }
     },
     "R09": {
-      "status": "EVIDENCE_ASSEMBLED_INDEPENDENT_FINAL_AUDIT_PENDING",
+      "status": "PASS_SCOPED:65reserves/35closedreceipts/219identityobservations and failed preadmission addendum, once-onlysettlement/UNKNOWN/unreleased",
       "evidence": [
         {
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
@@ -904,16 +936,24 @@
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/MODEL_USAGE_CONTINUATION_AUDIT.json",
           "sha256": "9cd97b17a0870f26f3d22083941b3aa9c74ae94fdc8ed8027bd87fb2c7503ac5"
         }
-      ]
+      ],
+      "independent_review": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+        "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+      }
     },
     "R10": {
-      "status": "EVIDENCE_ASSEMBLED_INDEPENDENT_FINAL_AUDIT_PENDING",
+      "status": "PASS_SCOPED: localdirect exactsources/launches,20modulesnapshots and supplemental15sourcebindings; not lifetime/fullfilesystem audit",
       "evidence": [
         {
           "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/INTERIM_REQUIREMENTS_INDEPENDENT_REVIEW.json",
           "sha256": "65680082d2f82554a63aff0b0f4bddd58b6e4af3032872f21d82be654beae680"
         }
-      ]
+      ],
+      "independent_review": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+        "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+      }
     }
   },
   "additional_evidence": [
@@ -935,5 +975,10 @@
     "Raw index covers1223versions from18analyses, not every historical raw or allvideo records. Absolute paths and frozen environment are required; model ZIP is not a portable runtime.",
     "Module snapshots do not prove lifetime import history; no complete filesystem mutation audit.",
     "Current platform model usage UNKNOWN; accounting includes unreleased reservations and is not actual workload consumption."
-  ]
+  ],
+  "reviewed_candidate_sha256": "90a5c9945616b6480a43052d2c70c2bea4167bab7e017a760b779aff95a7e2f2",
+  "independent_final_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+    "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+  }
 }

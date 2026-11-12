@@ -238,7 +238,7 @@
     "accepted": true,
     "role_call": 5,
     "independent_handle": "/root/pilot_reviewer",
-    "scope": "接受C0实际原Z负结果、C1实际启动前资源失败及准确追加入口提案的条件性预审；不接受Goal完成，不签发追加资源或release。",
+    "scope": "\u63a5\u53d7C0\u5b9e\u9645\u539fZ\u8d1f\u7ed3\u679c\u3001C1\u5b9e\u9645\u542f\u52a8\u524d\u8d44\u6e90\u5931\u8d25\u53ca\u51c6\u786e\u8ffd\u52a0\u5165\u53e3\u63d0\u6848\u7684\u6761\u4ef6\u6027\u9884\u5ba1\uff1b\u4e0d\u63a5\u53d7Goal\u5b8c\u6210\uff0c\u4e0d\u7b7e\u53d1\u8ffd\u52a0\u8d44\u6e90\u6216release\u3002",
     "completion_allowed": false,
     "live_resource_exception_granted": false,
     "evidence_commit": "890381a40e856a0b7d30c85d6ff696424fea0d0b",
@@ -307,7 +307,7 @@
       "status": "APPROVED_EXPLICIT_USER_START_INIT_CAP8",
       "decision": "docs/diagnostics/r5-readiness/user_resource_decision_startcap8.json",
       "sha256": "e564defa071fd33f1fbdca4c5cdbdd3947a7936127021b1fe3107fd2f44be9ce",
-      "user_message_exact": "批准，扩额8-10次",
+      "user_message_exact": "\u6279\u51c6\uff0c\u6269\u989d8-10\u6b21",
       "caps_delta": "cumulative live starts/initreservation4to8 only",
       "other_caps_unchanged": true
     },
@@ -621,7 +621,7 @@
       "accepted": true,
       "role_call": 5,
       "independent_handle": "/root/pilot_reviewer",
-      "scope": "接受C0实际原Z负结果、C1实际启动前资源失败及准确追加入口提案的条件性预审；不接受Goal完成，不签发追加资源或release。",
+      "scope": "\u63a5\u53d7C0\u5b9e\u9645\u539fZ\u8d1f\u7ed3\u679c\u3001C1\u5b9e\u9645\u542f\u52a8\u524d\u8d44\u6e90\u5931\u8d25\u53ca\u51c6\u786e\u8ffd\u52a0\u5165\u53e3\u63d0\u6848\u7684\u6761\u4ef6\u6027\u9884\u5ba1\uff1b\u4e0d\u63a5\u53d7Goal\u5b8c\u6210\uff0c\u4e0d\u7b7e\u53d1\u8ffd\u52a0\u8d44\u6e90\u6216release\u3002",
       "completion_allowed": false,
       "live_resource_exception_granted": false,
       "evidence_commit": "890381a40e856a0b7d30c85d6ff696424fea0d0b",
@@ -796,5 +796,22 @@
     "execution_guide": "tools/r6_direct/README.md",
     "decoupling_cpu_evidence": "docs/experiments/r6-direct-training/CPU_DECOUPLING_CHECK_20261101.json",
     "dependency_audit": "docs/experiments/r6-direct-training/NO_RLFLOW_CPU_AUDIT_20261101.json"
+  },
+  "r6_continuation_final": {
+    "status": "TRAINING_COMPLETE_SCIENTIFIC_NEGATIVE",
+    "results": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/FINAL_R6_RESULTS.json",
+      "sha256": "bf04ee373a560857169ad877c2ced2e5b32b62786f7eb14cb67e40a33a60a6f5"
+    },
+    "independent_review": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+      "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+    },
+    "video_manifest": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/videos/VIDEO_MANIFEST.json",
+      "sha256": "4cbe737edb7a2b15f551e952cb04199263da3251c943f361b89415750f52817a"
+    },
+    "scientific_conclusion": "No demonstrated learning gain",
+    "rustdesk_keep_running": true
   }
 }

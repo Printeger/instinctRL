@@ -1,8 +1,8 @@
 # R6 接续结果：未证实学习增益
 
-状态：训练、最终评价与录像已完成，最终独立需求审核待完成；Goal 尚未完成。
+状态：`TRAINING_COMPLETE_SCIENTIFIC_NEGATIVE`。训练、最终评价、模型/录像交付与独立R01–R10终审通过；发布记录见 delivery/FINAL_PUBLICATION.json（位于 continuation-20261101/）。
 
-冻结 u640 与三个续训 u768 模型均通过原五任务及16个最终条件，每条件32/32。基线同样达到天花板，不能据此声称强化学习改善、统计等价或泛化。最终科学结论候选为 `TRAINING_COMPLETE_SCIENTIFIC_NEGATIVE`。
+冻结 u640 与三个续训 u768 模型均通过原五任务及16个最终条件，每条件32/32。基线同样达到天花板，不能据此声称强化学习改善、统计等价或泛化。最终科学结论为 `TRAINING_COMPLETE_SCIENTIFIC_NEGATIVE`。
 
 首段 TRAIN01 实测107更新、54912 transitions，无可验证训练checkpoint；从已接受u640以新身份TRAIN02重算。失败01B实测122更新且无终点checkpoint，01C重新从u640开始，失败原件和费用保留。
 
@@ -35,3 +35,5 @@
 - Raw index covers1223versions from18analyses, not every historical raw or allvideo records. Absolute paths and frozen environment are required; model ZIP is not a portable runtime.
 - Module snapshots do not prove lifetime import history; no complete filesystem mutation audit.
 - Current platform model usage UNKNOWN; accounting includes unreleased reservations and is not actual workload consumption.
+
+独立终审：[FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json](continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json)。报告的状态转换依据终审；原候选hash保留在审核中。

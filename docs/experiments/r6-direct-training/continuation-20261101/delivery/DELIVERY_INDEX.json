@@ -1,16 +1,16 @@
 {
   "schema_version": "r6-delivery-index/1",
-  "status": "CONTENT_INDEXED_FINAL_REVIEW_PENDING",
+  "status": "ACCEPTED_SCIENTIFIC_NEGATIVE_DELIVERY",
   "artifacts": [
     {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/FINAL_R6_RESULTS.md",
-      "sha256": "6490f4ef54037d0ef3832146782b4c26a6faa672e7ef954b3e9e28839806376e",
-      "bytes": 3924
+      "sha256": "7eb0987c03e7e415d1ecf1fb27b09db74c7ebabb601e6475c824000bedfb7bbd",
+      "bytes": 4232
     },
     {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/FINAL_R6_RESULTS.json",
-      "sha256": "90a5c9945616b6480a43052d2c70c2bea4167bab7e017a760b779aff95a7e2f2",
-      "bytes": 35298
+      "sha256": "bf04ee373a560857169ad877c2ced2e5b32b62786f7eb14cb67e40a33a60a6f5",
+      "bytes": 39111
     },
     {
       "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAINING_AND_EVALUATION_MANIFEST.json",
@@ -111,11 +111,20 @@
       "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/results/research-r6-video-replay/media/clip-03.mp4",
       "sha256": "feb54bac9ff58de9199af260d15fcf5384f6da3cb13f247e69c6e83c0a2b751c",
       "bytes": 8154072
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+      "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379",
+      "bytes": 3407
     }
   ],
   "limitations": [
     "Raw evidence index has its original18report scope; this delivery index adds videos and final artifacts",
     "Local videos remain at original absolute evidence paths; no portable runtime/raw archive claim",
     "Final acceptance and delivery publication record will be additive"
-  ]
+  ],
+  "independent_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/FINAL_INDEPENDENT_REQUIREMENTS_REVIEW.json",
+    "sha256": "001f1cfd24e2aa54c657a5f03e29f7e9e77a1e668daf6cb6f85574717e832379"
+  }
 }

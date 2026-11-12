@@ -1,3 +1,12 @@
+# R6 接续完成：未证实学习增益，独立终审通过
+
+2026-11-12：真实训练、三流共同u640续训确认、四模型最终评价、模型与四段录像交付完成。
+独立终审 PASS_R6_FINAL_SCIENTIFIC_NEGATIVE，R01–R10通过，无must-fix。
+所有模型原五任务与16最终条件均32/32，基线同样天花板；不证明改善、等价或泛化。
+入口：docs/experiments/r6-direct-training/FINAL_R6_RESULTS.md及delivery/DELIVERY_INDEX.json（位于continuation-20261101）。
+cleanup异常、CPU差异、UNKNOWN费用及未释放预留保留；真实视频为记录姿态回放。
+RustDesk保持运行。准确交付push证据见delivery/FINAL_PUBLICATION.json。下方保留历史状态。
+
 # R6 四段录像独立审核通过；最终资源与需求总审计收尾
 
 2026-11-12：四段共1320帧独立完整解码及遥测核验通过，首/中/末画面抽样可辨认。
