@@ -1,0 +1,1386 @@
+{
+  "status": "PLANNED_NOT_MATERIALIZED_NOT_LIVE_VALIDATED",
+  "reason": "Actual enabled graph.tools hash-name cannot be found by standard-name version lookup",
+  "original_manifest": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXTENSION_INPUTS_CANDIDATE_02.json",
+    "sha256": "7d36890b12c5da14caf67905197bdad2298c080080e7049be6d714d5cce35dff"
+  },
+  "mapping": [
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/cache_db.json",
+      "target_name": "cache_db.json",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/carb.audio-411a172db5418d06",
+      "target_name": "carb.audio",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/carb.windowing.plugins-65f196fe3765be80",
+      "target_name": "carb.windowing.plugins",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/index",
+      "target_name": "index",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.asset.browser-1.3.23",
+      "target_name": "isaacsim.asset.browser-1.3.23",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.asset.importer.mjcf-2.5.13+107.3.3.lx64.r.cp311",
+      "target_name": "isaacsim.asset.importer.mjcf-2.5.13+107.3.3.lx64.r.cp311",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.asset.importer.urdf-2.4.31+107.3.3.lx64.r.cp311",
+      "target_name": "isaacsim.asset.importer.urdf-2.4.31+107.3.3.lx64.r.cp311",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.cortex.behaviors-2.0.14+107.3.3",
+      "target_name": "isaacsim.cortex.behaviors-2.0.14+107.3.3",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.cortex.framework-1.0.12+107.3.3",
+      "target_name": "isaacsim.cortex.framework-1.0.12+107.3.3",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.examples.browser-0.2.1",
+      "target_name": "isaacsim.examples.browser-0.2.1",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.replicator.behavior-1.1.16+107.3.3",
+      "target_name": "isaacsim.replicator.behavior-1.1.16+107.3.3",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.replicator.domain_randomization-1.0.16+107.3.3.lx64",
+      "target_name": "isaacsim.replicator.domain_randomization-1.0.16+107.3.3.lx64",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.replicator.examples-1.3.6+107.3.3.lx64",
+      "target_name": "isaacsim.replicator.examples-1.3.6+107.3.3.lx64",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.replicator.writers-1.0.17+107.3.3.lx64",
+      "target_name": "isaacsim.replicator.writers-1.0.17+107.3.3.lx64",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.test.docstring-1.1.0+107.3.3",
+      "target_name": "isaacsim.test.docstring-1.1.0+107.3.3",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/isaacsim.util.debug_draw-3.0.1+107.3.1.lx64.r.cp311",
+      "target_name": "isaacsim.util.debug_draw-3.0.1+107.3.1.lx64.r.cp311",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.activity.core-ea02ae1a3bda7fb3",
+      "target_name": "omni.activity.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.anim.curve.core-1.3.1+107.2.0.lx64.r.cp311.u353",
+      "target_name": "omni.anim.curve.core-1.3.1+107.2.0.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.anim.graph.schema-107.3.3+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.anim.graph.schema-107.3.3+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.anim.navigation.schema-107.3.3+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.anim.navigation.schema-107.3.3+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.appwindow-89c325032a4ae798",
+      "target_name": "omni.appwindow",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.asset_validator.core-1.3.1",
+      "target_name": "omni.asset_validator.core-1.3.1",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.assets.plugins-98526488c3190807",
+      "target_name": "omni.assets.plugins",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.blobkey-6c7dfdd8f0868aa1",
+      "target_name": "omni.blobkey",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.client-34f5f1bc258c8a82",
+      "target_name": "omni.client",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.convexdecomposition-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.convexdecomposition-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.datastore-e168a0ff3b6bde54",
+      "target_name": "omni.datastore",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.debugdraw-efbb206468235c76",
+      "target_name": "omni.debugdraw",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.fabric.commands-c42f88e0a1748a5c",
+      "target_name": "omni.fabric.commands",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.gpu_foundation-ac4242ceb78ce854",
+      "target_name": "omni.gpu_foundation",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.gpu_foundation.shadercache.vulkan-3328f727d2d7d0a1",
+      "target_name": "omni.gpu_foundation.shadercache.vulkan",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.gpucompute.plugins-3b816532b7e266ec",
+      "target_name": "omni.gpucompute.plugins",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph-419147208e336a7d",
+      "target_name": "omni.graph",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.action-1.130.0+107.3.0",
+      "target_name": "omni.graph.action-1.130.0+107.3.0",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.action_core-99620ccb042073db",
+      "target_name": "omni.graph.action_core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.action_nodes-1.51.0+107.3.0.lx64.r.cp311.u353",
+      "target_name": "omni.graph.action_nodes-1.51.0+107.3.0.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.action_nodes_core-1.2.0+107.3.0.lx64.r.cp311.u353",
+      "target_name": "omni.graph.action_nodes_core-1.2.0+107.3.0.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.core-13ee74d054bf61bf",
+      "target_name": "omni.graph.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.exec-7dcfdfe01bfee612",
+      "target_name": "omni.graph.exec",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.image.core-e505635a386f6306",
+      "target_name": "omni.graph.image.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.image.nodes-bc251a874f321cfb",
+      "target_name": "omni.graph.image.nodes",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.nodes-1.172.0+107.3.0.lx64.r.cp311.u353",
+      "target_name": "omni.graph.nodes-1.172.0+107.3.0.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.nodes_core-1.1.1+107.3.0.lx64.r.cp311.u353",
+      "target_name": "omni.graph.nodes_core-1.1.1+107.3.0.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.scriptnode-1.50.0+107.3.0",
+      "target_name": "omni.graph.scriptnode-1.50.0+107.3.0",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.tools-cc9ff0f4402f1365",
+      "target_name": "omni.graph.tools",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.ui_nodes-1.50.8+107.3.0.lx64.r.cp311.u353",
+      "target_name": "omni.graph.ui_nodes-1.50.8+107.3.0.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.visualization.nodes-2.1.4",
+      "target_name": "omni.graph.visualization.nodes-2.1.4",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.hsscclient-4cd210517896d7e0",
+      "target_name": "omni.hsscclient",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.hydra.engine.stats-213b40968d2658eb",
+      "target_name": "omni.hydra.engine.stats",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.hydra.rtx-a92aa88e9f54b05f",
+      "target_name": "omni.hydra.rtx",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.hydra.rtx.shadercache.vulkan-8165efec29eb09c1",
+      "target_name": "omni.hydra.rtx.shadercache.vulkan",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.hydra.scene_api-333a4a43dfc84d33",
+      "target_name": "omni.hydra.scene_api",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.hydra.scene_delegate-056e7617a2b48e72",
+      "target_name": "omni.hydra.scene_delegate",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.hydra.usdrt_delegate-72f509e11fb774f1",
+      "target_name": "omni.hydra.usdrt_delegate",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.index-85ad084a6057c82c",
+      "target_name": "omni.index",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.index.libs-de80df18a3de194a",
+      "target_name": "omni.index.libs",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.inspect-3b398ae6cc75c1b7",
+      "target_name": "omni.inspect",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.iray.libs-9dc5f3cf4446ab48",
+      "target_name": "omni.iray.libs",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.isaac.asset_browser-1.0.6",
+      "target_name": "omni.isaac.asset_browser-1.0.6",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.isaac.assets_check-0.3.13+107.3.3",
+      "target_name": "omni.isaac.assets_check-0.3.13+107.3.3",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.isaac.core_archive-3.0.0+107.3.3.lx64.cp311",
+      "target_name": "omni.isaac.core_archive-3.0.0+107.3.3.lx64.cp311",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.isaac.cortex-1.0.5+107.3.3",
+      "target_name": "omni.isaac.cortex-1.0.5+107.3.3",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.isaac.cortex.sample_behaviors-2.0.5+107.3.3",
+      "target_name": "omni.isaac.cortex.sample_behaviors-2.0.5+107.3.3",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.isaac.ml_archive-3.0.4+107.3.3.lx64.cp311",
+      "target_name": "omni.isaac.ml_archive-3.0.4+107.3.3.lx64.cp311",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.actions.core-f92065ee89fab450",
+      "target_name": "omni.kit.actions.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.asset_converter-5.0.17+107.3.1.lx64.r.cp311.u353",
+      "target_name": "omni.kit.asset_converter-5.0.17+107.3.1.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.audiodeviceenum-4ca06ac73e03c0a3",
+      "target_name": "omni.kit.audiodeviceenum",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.browser.core-2.3.17",
+      "target_name": "omni.kit.browser.core-2.3.17",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.browser.folder.core-1.10.10",
+      "target_name": "omni.kit.browser.folder.core-1.10.10",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.clipboard-11e5c298b077498b",
+      "target_name": "omni.kit.clipboard",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.commands-766314c1c0b845f8",
+      "target_name": "omni.kit.commands",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.context_menu-86df2428a0a4665b",
+      "target_name": "omni.kit.context_menu",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.exec.core-77c4affb1d7b6d3e",
+      "target_name": "omni.kit.exec.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.graph.delegate.default-1.2.4",
+      "target_name": "omni.kit.graph.delegate.default-1.2.4",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.graph.editor.core-1.5.3",
+      "target_name": "omni.kit.graph.editor.core-1.5.3",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.graph.usd.commands-1.3.1",
+      "target_name": "omni.kit.graph.usd.commands-1.3.1",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.helper.file_utils-54342d5f5aa91592",
+      "target_name": "omni.kit.helper.file_utils",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.hotkeys.core-cb1a93d6136317ad",
+      "target_name": "omni.kit.hotkeys.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.hydra_texture-b18dc0beebde28e9",
+      "target_name": "omni.kit.hydra_texture",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.mainwindow-12147fbdbe307d5e",
+      "target_name": "omni.kit.mainwindow",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.manipulator.camera-118a9445d8a81a89",
+      "target_name": "omni.kit.manipulator.camera",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.manipulator.prim-035fe4e618986766",
+      "target_name": "omni.kit.manipulator.prim",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.manipulator.prim.core-1b0a806cbed355ea",
+      "target_name": "omni.kit.manipulator.prim.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.manipulator.prim.fabric-4bbf26ec3a23f8ad",
+      "target_name": "omni.kit.manipulator.prim.fabric",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.manipulator.prim.usd-0672e1ad3bad17f5",
+      "target_name": "omni.kit.manipulator.prim.usd",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.manipulator.selection-984b2c49b471f7d7",
+      "target_name": "omni.kit.manipulator.selection",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.manipulator.selector-7960876f3cf63248",
+      "target_name": "omni.kit.manipulator.selector",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.manipulator.tool.snap-16609099376060f5",
+      "target_name": "omni.kit.manipulator.tool.snap",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.manipulator.transform-39cc1d455169bcb0",
+      "target_name": "omni.kit.manipulator.transform",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.manipulator.viewport-a660206eee92f35b",
+      "target_name": "omni.kit.manipulator.viewport",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.material.library-c685952d18148e1e",
+      "target_name": "omni.kit.material.library",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.menu.common-38a189f9efcf601a",
+      "target_name": "omni.kit.menu.common",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.menu.core-0e30f798233eb781",
+      "target_name": "omni.kit.menu.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.menu.create-b6075433fb95bfc5",
+      "target_name": "omni.kit.menu.create",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.menu.stage-1.2.7",
+      "target_name": "omni.kit.menu.stage-1.2.7",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.menu.utils-593474f8190443f8",
+      "target_name": "omni.kit.menu.utils",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.notification_manager-7f81d77652b84628",
+      "target_name": "omni.kit.notification_manager",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.numpy.common-719c4fb8e330e8d8",
+      "target_name": "omni.kit.numpy.common",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.pip_archive-d38fa9ecd1fb6df4",
+      "target_name": "omni.kit.pip_archive",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.pipapi-16ea48c1ed676d23",
+      "target_name": "omni.kit.pipapi",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.primitive.mesh-f5e22c3b09980656",
+      "target_name": "omni.kit.primitive.mesh",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.adapter.core-c545171f879fee26",
+      "target_name": "omni.kit.property.adapter.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.adapter.fabric-b3b9506a8f535f97",
+      "target_name": "omni.kit.property.adapter.fabric",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.adapter.usd-003bcc73b23e28b6",
+      "target_name": "omni.kit.property.adapter.usd",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.audio-8fc7c451b6738bb3",
+      "target_name": "omni.kit.property.audio",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.bundle-595e2d6968e3a116",
+      "target_name": "omni.kit.property.bundle",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.camera-03d6db9ff70b41c3",
+      "target_name": "omni.kit.property.camera",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.geometry-632ea8ce71089ef5",
+      "target_name": "omni.kit.property.geometry",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.light-71dabfccfb84ea6a",
+      "target_name": "omni.kit.property.light",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.material-2afa4cb9030d52f6",
+      "target_name": "omni.kit.property.material",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.physx-107.3.26+107.3.3.cp311.u353",
+      "target_name": "omni.kit.property.physx-107.3.26+107.3.3.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.render-c4c0dc4a1283bfda",
+      "target_name": "omni.kit.property.render",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.transform-0160a0ff9467e54f",
+      "target_name": "omni.kit.property.transform",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.property.usd-d5ee77765f63d892",
+      "target_name": "omni.kit.property.usd",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.raycast.query-e57ab8d21e6be228",
+      "target_name": "omni.kit.raycast.query",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.renderer.capture-9b799fa2da09fcc6",
+      "target_name": "omni.kit.renderer.capture",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.renderer.core-26243e93583e5553",
+      "target_name": "omni.kit.renderer.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.renderer.imgui-4ce7c9064d80b205",
+      "target_name": "omni.kit.renderer.imgui",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.renderer.init-6ab527fa42a2e7b7",
+      "target_name": "omni.kit.renderer.init",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.scripting-107.3.2+107.3.2",
+      "target_name": "omni.kit.scripting-107.3.2+107.3.2",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.selection-ed80a0ef885c44ab",
+      "target_name": "omni.kit.selection",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.stage_template.core-48816e1be3a70f52",
+      "target_name": "omni.kit.stage_template.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.stage_templates-4e0a7525ea8541c2",
+      "target_name": "omni.kit.stage_templates",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.stagerecorder.bundle-105.0.2+107.0.3",
+      "target_name": "omni.kit.stagerecorder.bundle-105.0.2+107.0.3",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.stagerecorder.core-107.0.3+107.0.3.lx64.r.cp311.u353",
+      "target_name": "omni.kit.stagerecorder.core-107.0.3+107.0.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.stagerecorder.ui-107.0.1+107.0.3",
+      "target_name": "omni.kit.stagerecorder.ui-107.0.1+107.0.3",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.telemetry-8994df2c5ad3f85e",
+      "target_name": "omni.kit.telemetry",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.test-4abfd5fd30660d23",
+      "target_name": "omni.kit.test",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.tool.asset_importer-5.1.3+107.3.1",
+      "target_name": "omni.kit.tool.asset_importer-5.1.3+107.3.1",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.tool.collect-4b09420d875dc7b2",
+      "target_name": "omni.kit.tool.collect",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.ui.actions-c3e1e8d288193b2b",
+      "target_name": "omni.kit.ui.actions",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.ui_test-6d05c9e43e776ed2",
+      "target_name": "omni.kit.ui_test",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.uiapp-9c47f1d908b37db2",
+      "target_name": "omni.kit.uiapp",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.usd.collect-583b958652bd823d",
+      "target_name": "omni.kit.usd.collect",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.usd.layers-e879211b52340874",
+      "target_name": "omni.kit.usd.layers",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.usd.mdl-c5413828e5409d2b",
+      "target_name": "omni.kit.usd.mdl",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.usd_undo-31d48c272d0be272",
+      "target_name": "omni.kit.usd_undo",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.usdz_export-1df936fb984953ff",
+      "target_name": "omni.kit.usdz_export",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.actions-8cd6a22cc46832e4",
+      "target_name": "omni.kit.viewport.actions",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.legacy_gizmos-213d2baf4e2483b5",
+      "target_name": "omni.kit.viewport.legacy_gizmos",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.manipulator.transform-017a04fab3311295",
+      "target_name": "omni.kit.viewport.manipulator.transform",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.menubar.camera-13eab2d068b07633",
+      "target_name": "omni.kit.viewport.menubar.camera",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.menubar.core-9086268b7525990e",
+      "target_name": "omni.kit.viewport.menubar.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.menubar.display-e034107ef1598da1",
+      "target_name": "omni.kit.viewport.menubar.display",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.menubar.lighting-107.3.1+107.3.0",
+      "target_name": "omni.kit.viewport.menubar.lighting-107.3.1+107.3.0",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.menubar.render-49406086172d250f",
+      "target_name": "omni.kit.viewport.menubar.render",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.menubar.settings-2a3077574ccbf36d",
+      "target_name": "omni.kit.viewport.menubar.settings",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.registry-0fb310d45c2cd811",
+      "target_name": "omni.kit.viewport.registry",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.rtx-af93dc2d7d7861b3",
+      "target_name": "omni.kit.viewport.rtx",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.scene_camera_model-eee83dbce5099538",
+      "target_name": "omni.kit.viewport.scene_camera_model",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.utility-f373ff7fb444c8e3",
+      "target_name": "omni.kit.viewport.utility",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.viewport.window-749ab38a6c93b4e8",
+      "target_name": "omni.kit.viewport.window",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.browser_bar-3ac2a3c7d6adde20",
+      "target_name": "omni.kit.widget.browser_bar",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.context_menu-52930221ba1c79e3",
+      "target_name": "omni.kit.widget.context_menu",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.filebrowser-4e8b40e183271fb2",
+      "target_name": "omni.kit.widget.filebrowser",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.filter-9f9fd50ecb63d64b",
+      "target_name": "omni.kit.widget.filter",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.graph-2d69c73e6d5fdcc2",
+      "target_name": "omni.kit.widget.graph",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.highlight_label-64c979a4d52f5ac6",
+      "target_name": "omni.kit.widget.highlight_label",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.layers-2f4167e4e529647f",
+      "target_name": "omni.kit.widget.layers",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.material_preview-1.0.16",
+      "target_name": "omni.kit.widget.material_preview-1.0.16",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.nucleus_connector-56d91e8bfc40d4b9",
+      "target_name": "omni.kit.widget.nucleus_connector",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.options_button-e8a8493f0e321983",
+      "target_name": "omni.kit.widget.options_button",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.options_menu-588fa889ca209184",
+      "target_name": "omni.kit.widget.options_menu",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.path_field-6128234538219a65",
+      "target_name": "omni.kit.widget.path_field",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.prompt-f15791cf6fc2cd11",
+      "target_name": "omni.kit.widget.prompt",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.searchable_combobox-12eab79c0b805f76",
+      "target_name": "omni.kit.widget.searchable_combobox",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.searchfield-bd708620003f11b3",
+      "target_name": "omni.kit.widget.searchfield",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.settings-e749f26b86ffd1d0",
+      "target_name": "omni.kit.widget.settings",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.stage-61131e4900bab69e",
+      "target_name": "omni.kit.widget.stage",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.stage_icons-41b8bb0e8f0b8469",
+      "target_name": "omni.kit.widget.stage_icons",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.text_editor-2f2ff3590e6e5074",
+      "target_name": "omni.kit.widget.text_editor",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.toolbar-b1e4ba21fa06e460",
+      "target_name": "omni.kit.widget.toolbar",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.viewport-8c701745cdbb3140",
+      "target_name": "omni.kit.widget.viewport",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.widget.zoombar-1.0.7",
+      "target_name": "omni.kit.widget.zoombar-1.0.7",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.console-6749f7fbfebe2c18",
+      "target_name": "omni.kit.window.console",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.content_browser-f33ce19065edd465",
+      "target_name": "omni.kit.window.content_browser",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.content_browser_registry-cd1c30045e3a3c1d",
+      "target_name": "omni.kit.window.content_browser_registry",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.drop_support-5aca7e8f2cc8ba1d",
+      "target_name": "omni.kit.window.drop_support",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.extensions-22939c2c2a248b52",
+      "target_name": "omni.kit.window.extensions",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.file-c7872f10464cd8c5",
+      "target_name": "omni.kit.window.file",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.file_exporter-4d46e4724ae9e9c5",
+      "target_name": "omni.kit.window.file_exporter",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.file_importer-18ecf6e5ea0418e3",
+      "target_name": "omni.kit.window.file_importer",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.filepicker-3e809b772acd4892",
+      "target_name": "omni.kit.window.filepicker",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.material_graph-1.9.1",
+      "target_name": "omni.kit.window.material_graph-1.9.1",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.popup_dialog-e624148537dde1a9",
+      "target_name": "omni.kit.window.popup_dialog",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.preferences-4414ff7b52edb170",
+      "target_name": "omni.kit.window.preferences",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.property-8de0864fc2e1fd5f",
+      "target_name": "omni.kit.window.property",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.script_editor-835a095a3ed7a751",
+      "target_name": "omni.kit.window.script_editor",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.stage-711709d8fd5b8585",
+      "target_name": "omni.kit.window.stage",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.status_bar-7c57f1dec25f0425",
+      "target_name": "omni.kit.window.status_bar",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kit.window.toolbar-c7bf3637fe9090a5",
+      "target_name": "omni.kit.window.toolbar",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.kvdb-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.kvdb-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.localcache-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.localcache-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.materialx.libs-6c547c3dd5ef2807",
+      "target_name": "omni.materialx.libs",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.mdl-b7c799d9b016a301",
+      "target_name": "omni.mdl",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.mdl.neuraylib-4fafc63d6e2817ab",
+      "target_name": "omni.mdl.neuraylib",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.metrics.core-90082eb983ff05a3",
+      "target_name": "omni.metrics.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.ocio-918a48b72e66c6f4",
+      "target_name": "omni.ocio",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physics-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physics-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physics.physx-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physics.physx-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physics.stageupdate-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physics.stageupdate-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physics.tensors-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physics.tensors-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.asset_validator-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx.asset_validator-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.bundle-107.3.26+107.3.3.cp311.u353",
+      "target_name": "omni.physx.bundle-107.3.26+107.3.3.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.camera-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx.camera-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.cct-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx.cct-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.commands-107.3.26+107.3.3.cp311.u353",
+      "target_name": "omni.physx.commands-107.3.26+107.3.3.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.cooking-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx.cooking-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.demos-107.3.26+107.3.3.cp311.u353",
+      "target_name": "omni.physx.demos-107.3.26+107.3.3.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.fabric-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx.fabric-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.foundation-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx.foundation-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.graph-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx.graph-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.supportui-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx.supportui-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.telemetry-107.3.26+107.3.3.cp311.u353",
+      "target_name": "omni.physx.telemetry-107.3.26+107.3.3.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.tensors-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx.tensors-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.ui-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx.ui-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.physx.vehicle-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.physx.vehicle-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.pip.cloud-1.4.3+107.3.3.lx64.cp311",
+      "target_name": "omni.pip.cloud-1.4.3+107.3.3.lx64.cp311",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.pip.compute-1.6.3+107.3.3.lx64.cp311",
+      "target_name": "omni.pip.compute-1.6.3+107.3.3.lx64.cp311",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311",
+      "target_name": "omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.replicator.isaac-2.0.8+107.3.3",
+      "target_name": "omni.replicator.isaac-2.0.8+107.3.3",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.replicator.replicator_yaml-2.0.11+107.3.3.lx64",
+      "target_name": "omni.replicator.replicator_yaml-2.0.11+107.3.3.lx64",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.resourcemonitor-4988a50d1f54ec7c",
+      "target_name": "omni.resourcemonitor",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.rtx.settings.core-71dd2bc618e50411",
+      "target_name": "omni.rtx.settings.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.rtx.window.settings-0da6f39be8e6d2d1",
+      "target_name": "omni.rtx.window.settings",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.sensors.net-8c0f45588f05e593",
+      "target_name": "omni.sensors.net",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.sensors.nv.common-d66db39d03b91fe4",
+      "target_name": "omni.sensors.nv.common",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.sensors.nv.ids-e409d8bdfa317f19",
+      "target_name": "omni.sensors.nv.ids",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.sensors.nv.lidar-654278a3b67a151f",
+      "target_name": "omni.sensors.nv.lidar",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.sensors.nv.materials-5faeb3bb89835309",
+      "target_name": "omni.sensors.nv.materials",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.sensors.nv.radar-f52729c063cb22e2",
+      "target_name": "omni.sensors.nv.radar",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.sensors.nv.wpm-12d62b51d3d9dbef",
+      "target_name": "omni.sensors.nv.wpm",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.stats-5af6570b6dbaed29",
+      "target_name": "omni.stats",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.syntheticdata-8da4796ae9f429fe",
+      "target_name": "omni.syntheticdata",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.timeline-77079a3c62b3b4cd",
+      "target_name": "omni.timeline",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.ui-b03687c86320efaf",
+      "target_name": "omni.ui",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.ui.scene-4f30a050c644ca14",
+      "target_name": "omni.ui.scene",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.ui_query-76ba21ca9a587abe",
+      "target_name": "omni.ui_query",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.uiaudio-468ffc1597d1d81a",
+      "target_name": "omni.uiaudio",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.ujitso.client-7ce0b76304173247",
+      "target_name": "omni.ujitso.client",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.ujitso.default-62d98e0ed9aee09a",
+      "target_name": "omni.ujitso.default",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd-887896958e1fcf2f",
+      "target_name": "omni.usd",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.config-9b65b713faedc757",
+      "target_name": "omni.usd.config",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.core-9ce8448d1db810d8",
+      "target_name": "omni.usd.core",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.libs-4fde11c8f289f1f4",
+      "target_name": "omni.usd.libs",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.metrics.assembler-107.3.1+107.3.0.lx64.r.cp311.u353",
+      "target_name": "omni.usd.metrics.assembler-107.3.1+107.3.0.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.metrics.assembler.physics-107.3.26+107.3.3.cp311.u353",
+      "target_name": "omni.usd.metrics.assembler.physics-107.3.26+107.3.3.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.metrics.assembler.ui-107.3.1+107.3.0.cp311.u353",
+      "target_name": "omni.usd.metrics.assembler.ui-107.3.1+107.3.0.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.anim-c0e372046bb88285",
+      "target_name": "omni.usd.schema.anim",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.audio-e6f3b0dc8dc66d41",
+      "target_name": "omni.usd.schema.audio",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.flow-107.1.1+107.1.0.u353",
+      "target_name": "omni.usd.schema.flow-107.1.1+107.1.0.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.geospatial-7ce0e0d58be4261f",
+      "target_name": "omni.usd.schema.geospatial",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.metrics.assembler-107.3.1+107.3.0.lx64.r.cp311.u353",
+      "target_name": "omni.usd.schema.metrics.assembler-107.3.1+107.3.0.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.omni_lens_distortion-85345bc35ad900bc",
+      "target_name": "omni.usd.schema.omni_lens_distortion",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.omni_sensors-5f9a566b52ef2898",
+      "target_name": "omni.usd.schema.omni_sensors",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.omnigraph-d63845fac45bce1e",
+      "target_name": "omni.usd.schema.omnigraph",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.omniscripting-bcabae79a344bf3e",
+      "target_name": "omni.usd.schema.omniscripting",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.physx-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.usd.schema.physx-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.render_settings.rtx-323539e2c27907cc",
+      "target_name": "omni.usd.schema.render_settings.rtx",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd.schema.semantics-4a1697e658a0c43f",
+      "target_name": "omni.usd.schema.semantics",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usd_resolver-b59c25e3edfbe8e9",
+      "target_name": "omni.usd_resolver",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usdphysics-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.usdphysics-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.usdphysics.ui-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "target_name": "omni.usdphysics.ui-107.3.26+107.3.3.lx64.r.cp311.u353",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.videoencoding-2d84ab3e465a263a",
+      "target_name": "omni.videoencoding",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.volume-b6555e15f0aa0e71",
+      "target_name": "omni.volume",
+      "renamed": true
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.warp-1.8.2",
+      "target_name": "omni.warp-1.8.2",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/omni.warp.core-1.8.2+lx64",
+      "target_name": "omni.warp.core-1.8.2+lx64",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/semantics.schema.editor-2.0.2",
+      "target_name": "semantics.schema.editor-2.0.2",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/semantics.schema.property-2.0.1",
+      "target_name": "semantics.schema.property-2.0.1",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/urls",
+      "target_name": "urls",
+      "renamed": false
+    },
+    {
+      "source": "/home/mint/.local/share/ov/data/exts/v2/usdrt.scenegraph-d07fb477fd5bec7c",
+      "target_name": "usdrt.scenegraph",
+      "renamed": true
+    }
+  ],
+  "verification_required": [
+    "Check configuration package/version evidence for each renamed directory",
+    "No collisions; all272preserved",
+    "Copy bytes, no hardlinks or external symlinks; originals read-only",
+    "Per-extension tree hashes/file counts/lengths equal before and after",
+    "New fulltree identity and user-config pin",
+    "New resource reservation covers fullcopy",
+    "New frozen inputs and independent review before actual run",
+    "Actual standard-name queries and loaded paths must confirm new binding"
+  ],
+  "limits": [
+    "No proven RGB repair",
+    "Do not rename omni.graph to omni.graph.core",
+    "No runtime source/config/binary edits or dependency installation"
+  ],
+  "rustdesk_touched": false
+}

@@ -1,0 +1,24 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "PASS_SCOPED_CPU_PREPARATION",
+  "scope": "New extension path binding candidate; not proven RGB repair",
+  "requirements": [
+    "Exact272mapping/182renames/no collisions",
+    "Check package/config/dependency evidence; preserve normal version/platform and omni.graph identity",
+    "Original manifest and original tree unchanged",
+    "Target absent, capacity and fullcopy reservation",
+    "No hardlinks/shared writable originals or external links; inspect cross-subdirectory links before rename",
+    "Compare all272subtree sha256/files/bytes, preserve differing root fields",
+    "No missing/extra files, new whole tree manifest and configpin",
+    "Actual runtime standard-name/IDs/modulepaths/duplicate candidate verification"
+  ],
+  "limitations": [
+    "Directory renaming alone does not establish RGB repair",
+    "CPU mapping does not prove actual runtime resolution",
+    "Do not fabricate version queries",
+    "VIDEO08 remains supervised; no acceptance inherited"
+  ],
+  "files_modified": false,
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
