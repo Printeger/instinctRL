@@ -1,0 +1,42 @@
+{
+  "status": "KNOWN_HISTORY_PRESERVED_CURRENT_PLATFORM_USAGE_UNKNOWN",
+  "historical_audit": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/MODEL_USAGE_AUDIT.json",
+    "sha256": "d22d7dad078b8c5bb38cf72c29ad21fc6be1d4308ee2770d0a0252b83d754958"
+  },
+  "ledger": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/RESOURCE_LEDGER.json",
+    "sha256": "6a1826356818e1c06087208b4430de580a9170400b0c3ead7471934fc70c713f"
+  },
+  "model_charge_settlements": [
+    {
+      "charge": 10,
+      "deduplication_keys": [
+        1448088,
+        1450688,
+        1460658,
+        1463579,
+        1466360,
+        1468669,
+        1471049,
+        1476207,
+        1479189,
+        1481628
+      ],
+      "source": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/MODEL_USAGE_PENDING_TRAIN_01.json",
+        "sha256": "df938a3f13a4a0634fe793ed7d4e5e6c752f01b022ac9bbafc9c313321151dda"
+      }
+    }
+  ],
+  "continuation_usage_unknown": "Current Codex platform invocation total not independently reconciled; historical 506 is not current total.",
+  "current_platform_sessions": "UNKNOWN",
+  "current_platform_tokens": "UNKNOWN",
+  "independent_reviewer": "/root/baseline_scientific_review",
+  "waiting": "Local jobs waited through ordinary Python supervisors/tool sessions; reviewer calls and interactive goal continuations are not assumed zero-cost",
+  "policy": "User canceled cumulative caps/protected allocations; unknown usage and unreleased charges retained; no invented exact total",
+  "limitations": [
+    "Historical239/506 are scoped historical records, not current global total",
+    "Platform continuation model usage is unavailable to project ledger"
+  ]
+}

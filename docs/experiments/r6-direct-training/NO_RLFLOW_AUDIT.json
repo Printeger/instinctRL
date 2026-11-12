@@ -1,0 +1,202 @@
+{
+  "status": "PASS_RECORDED_MODULE_SNAPSHOT_SCOPE",
+  "prior_cpu_audit": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/NO_RLFLOW_CPU_AUDIT_20261101.json",
+    "sha256": "fcbddb5904903aa5cf989d6a351bf974e3b228794b0be11829782eb683e63718"
+  },
+  "module_snapshots": [
+    {
+      "run_id": "R6-DIRECT-BASELINE-02",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-02/CPU_MODULES.json",
+        "sha256": "0faa7b92861795c648e00cdd241aea81dba36352e424791f6750418351dbe250"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 3526
+    },
+    {
+      "run_id": "R6-DIRECT-BASELINE-03",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-03/CPU_MODULES.json",
+        "sha256": "8f81c8b23e79d71ff2a5c2d849e19df24a8c31d3412c37bde16bf25b0bc9b858"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4497
+    },
+    {
+      "run_id": "R6-DIRECT-BASELINE-04",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-BASELINE-04/CPU_MODULES.json",
+        "sha256": "19783a1adf4f9bcc984da36c71d99d7f793b099e6f9bd44a48b000cb0443efd6"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4498
+    },
+    {
+      "run_id": "R6-DIRECT-TRAIN-01",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-BASELINE-ROBUSTNESS-01/results/R6-DIRECT-TRAIN-01/CPU_MODULES.json",
+        "sha256": "6143754cd625c4ea51db71134fc1897364924dc9f6f0aef2614b7a912a9c7cfd"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4507
+    },
+    {
+      "run_id": "R6-DIRECT-TRAIN-02",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-TRAIN-02/CPU_MODULES.json",
+        "sha256": "a92a4997d9022ab2d7aefcb89b98e3d1138684238a3998536e7a878004eb1224"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4509
+    },
+    {
+      "run_id": "R6-DIRECT-PAIR-U640-02",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-PAIR-U640-02/CPU_MODULES.json",
+        "sha256": "6502eb6f30c2dcdcd576a3cdce49f313511cdb1db1c5a984c0953ac2f18ecaca"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4512
+    },
+    {
+      "run_id": "R6-DIRECT-PAIR-U640-03",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-PAIR-U640-03/CPU_MODULES.json",
+        "sha256": "6502eb6f30c2dcdcd576a3cdce49f313511cdb1db1c5a984c0953ac2f18ecaca"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4512
+    },
+    {
+      "run_id": "R6-DIRECT-PAIR-U768-01",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-PAIR-U768-01/CPU_MODULES.json",
+        "sha256": "03d7f50daa702d4267afcbd140a6fe215366725ad4b26adf89b43d8471881cc6"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4515
+    },
+    {
+      "run_id": "R6-DIRECT-CONFIRM-128-SEED-01B",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01B/CPU_MODULES.json",
+        "sha256": "c606c9ef8561d56d7b920b00a9443965ab448d47fa29cf023ec2f0337a1bbaf3"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4518
+    },
+    {
+      "run_id": "R6-DIRECT-CONFIRM-128-SEED-01C",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-01C/CPU_MODULES.json",
+        "sha256": "c606c9ef8561d56d7b920b00a9443965ab448d47fa29cf023ec2f0337a1bbaf3"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4518
+    },
+    {
+      "run_id": "R6-DIRECT-CONFIRM-128-SEED-02",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-02/CPU_MODULES.json",
+        "sha256": "c606c9ef8561d56d7b920b00a9443965ab448d47fa29cf023ec2f0337a1bbaf3"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4518
+    },
+    {
+      "run_id": "R6-DIRECT-CONFIRM-128-SEED-03",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-CONFIRM-128-SEED-03/CPU_MODULES.json",
+        "sha256": "c606c9ef8561d56d7b920b00a9443965ab448d47fa29cf023ec2f0337a1bbaf3"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4518
+    },
+    {
+      "run_id": "R6-DIRECT-FINAL-BASELINE-01",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-FINAL-BASELINE-01/CPU_MODULES.json",
+        "sha256": "43342f6c710f1cc2ac677233df26a4ab6b5da6545a8feb233d2807cb1dd14f41"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4511
+    },
+    {
+      "run_id": "R6-DIRECT-FINAL-SEED-01",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-FINAL-SEED-01/CPU_MODULES.json",
+        "sha256": "c3b0e43476375444110e70ee9e966c5c18b2f2d84b5662b3e84411fe54d47398"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4518
+    },
+    {
+      "run_id": "R6-DIRECT-FINAL-SEED-02",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-FINAL-SEED-02/CPU_MODULES.json",
+        "sha256": "c3b0e43476375444110e70ee9e966c5c18b2f2d84b5662b3e84411fe54d47398"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4518
+    },
+    {
+      "run_id": "R6-DIRECT-FINAL-SEED-03",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-FINAL-SEED-03/CPU_MODULES.json",
+        "sha256": "c3b0e43476375444110e70ee9e966c5c18b2f2d84b5662b3e84411fe54d47398"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4518
+    },
+    {
+      "run_id": "R6-DIRECT-VIDEO-06",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-06/CPU_MODULES.json",
+        "sha256": "af303b2daa9d1a8c9e8e74132382098651cfcf7cbce88c1d981dc90d227af9e5"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4041
+    },
+    {
+      "run_id": "R6-DIRECT-VIDEO-07",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-07/CPU_MODULES.json",
+        "sha256": "af303b2daa9d1a8c9e8e74132382098651cfcf7cbce88c1d981dc90d227af9e5"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4041
+    },
+    {
+      "run_id": "R6-DIRECT-VIDEO-08",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-08/CPU_MODULES.json",
+        "sha256": "af303b2daa9d1a8c9e8e74132382098651cfcf7cbce88c1d981dc90d227af9e5"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4041
+    },
+    {
+      "run_id": "R6-DIRECT-VIDEO-09",
+      "modules": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/CPU_MODULES.json",
+        "sha256": "2fc64a39afac7f97205df1824021e8de4694abfcd47ec929d24fc47992c78166"
+      },
+      "execution_mode": "local-direct",
+      "loaded_module_count": 4444
+    }
+  ],
+  "implementation_guard": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_direct/dependencies.py",
+    "sha256": "ff52205247b162e7330338cca061e042d4e3f6fc7345c0f61713e6caa3f6521c"
+  },
+  "video_analysis": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-09/analysis-02/binding.json",
+    "sha256": "dce5a2062d3a629d723ad4e19e6d53a0465f385e1444a8a56535521bd3b1f933"
+  },
+  "limitations": [
+    "Snapshots do not prove complete lifetime import history",
+    "Direct entry guard and reviewed source supplement snapshots",
+    "No Store/RPC state required for execution; old documents remain historical"
+  ]
+}

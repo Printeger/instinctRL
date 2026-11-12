@@ -1,0 +1,32 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "PASS_SCOPED",
+  "scope": "Exact source binding, closure, all video frames decoded, telemetry and sampled visuals",
+  "must_fix": [],
+  "hashes": {
+    "manifest": "aa5550071b520df257c31ec5768e14d9bff6165f3a7c08d04792bec03436faf4",
+    "report": "130832a40d600bec34bdecbe0f966c51582026c5ff9caee6d3a4e5b59f5ffd2f",
+    "summary": "1eefb580f16f702126e874051c5e68bb1cd3d22b05e866322cd6eee755134066",
+    "binding": "dce5a2062d3a629d723ad4e19e6d53a0465f385e1444a8a56535521bd3b1f933"
+  },
+  "verified": [
+    "Exact frozen renderer hash/path matches, no weakened check",
+    "All binding/report8input hashes and lengths match",
+    "Independent decode4x330frames10fps960x640; all scene regions nonblank",
+    "All1320recorded rows and presentation telemetry match trajectories",
+    "Viewed4x frames0/165/329 and8originalPNG; real3DUAV/walls/grid/trail and correct readable HUD",
+    "13exactowner identities gone;CLOSED cleanup timeout/-15 retained",
+    "238secondsettlement exactly once"
+  ],
+  "limitations": [
+    "Recorded-pose replay, no new dynamics/inference",
+    "Visual sample only, not mathematical per-pixel pose proof",
+    "Gray scene/small drone; rotor phase unavailable",
+    "Four S-clean-low lane0 clips not allcondition evaluation or gain evidence",
+    "Original failed analysis and render attempts retained; not wholeGoal audit"
+  ],
+  "workspace_modified": false,
+  "temporary_visual_samples_only": true,
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}

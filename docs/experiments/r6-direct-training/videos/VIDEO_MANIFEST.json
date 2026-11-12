@@ -1,6 +1,6 @@
 {
   "schema_version": "r6-video-delivery-manifest/1",
-  "status": "FULL_DECODE_PASS_INDEPENDENT_VISUAL_REVIEW_PENDING",
+  "status": "FULL_DECODE_TELEMETRY_AND_SCOPED_VISUAL_REVIEW_PASS",
   "run_inputs": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-09/inputs.json",
     "sha256": "7cebffbf20ed633163004564beafabcdb356293f410570e6c7f9dc1241760747"
@@ -96,5 +96,9 @@
   "physics_reintegrated": false,
   "scientific_acceptance": false,
   "semantics": "Recorded final-evaluation poses in Isaac Sim with frozen scene/UAV. No new policy inference or dynamics. Video does not establish learning gain.",
-  "limitations": "Decoded pixels and matching telemetry do not independently prove pose-to-pixel fidelity; visual audit required."
+  "limitations": "Decoded pixels and matching telemetry do not independently prove pose-to-pixel fidelity; visual audit required.",
+  "independent_review": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-09/VIDEO_INDEPENDENT_REVIEW.json",
+    "sha256": "297841bf47485aa81a3fb14fcfdfb35b125ecb50b2002ed1831f84b63f42d30b"
+  }
 }
