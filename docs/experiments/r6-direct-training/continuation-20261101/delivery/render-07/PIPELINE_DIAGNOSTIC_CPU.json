@@ -1,0 +1,12 @@
+{
+  "status": "CPU_CHECKED_NOT_LIVE_VALIDATED",
+  "tests": [
+    "tools/r6_direct/test_render.py",
+    "tools/test_r6_video_presentation.py"
+  ],
+  "result": "14 passed in 13.35s",
+  "subsequent_change": "Corrected node query to GraphRegistry().get_node_type_version based on installed pyi and runtime_node_types test; syntax checked",
+  "scope": "Read-only extension/node registration snapshot; no runtime file or version-return patch",
+  "expected_output": "pipeline_registration.json",
+  "rustdesk_touched": false
+}

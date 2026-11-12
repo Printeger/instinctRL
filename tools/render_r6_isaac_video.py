@@ -25,6 +25,33 @@ def capture_rgb(step, get_data, check, *, first_capture, rt_subframes):
     presentation.require(False, 'RENDER_EMPTY_AFTER_BOUNDED_WARMUP')
 
 
+def pipeline_diagnostic(out):
+    """Read installed extension and node registration state without repair."""
+    import sys
+    import omni.kit.app
+    import omni.graph.core as og
+    manager = omni.kit.app.get_app().get_extension_manager()
+    record = dict(extensions={}, nodes={}, modules={})
+    for name in ('omni.graph.tools', 'omni.graph.core', 'omni.replicator.core', 'omni.syntheticdata'):
+        try:
+            record['extensions'][name] = dict(enabled_id=manager.get_enabled_extension_id(name),
+                versions=manager.fetch_extension_versions(name))
+        except Exception as exc:
+            record['extensions'][name] = dict(error=repr(exc))
+    for row in manager.get_extensions():
+        if 'omni.graph.tools' in str(row.get('id', '')):
+            record.setdefault('graph_tools_candidates', []).append(row)
+    for name in ('omni.replicator.core.ReadFabricTime', 'omni.replicator.core.OgnOnFrame',
+                 'omni.syntheticdata.SdRenderVarPtr', 'omni.syntheticdata.SdPostProcessDispatcher'):
+        try:
+            record['nodes'][name] = og.GraphRegistry().get_node_type_version(name)
+        except Exception as exc:
+            record['nodes'][name] = dict(error=repr(exc))
+    for name in ('omni.graph.tools', 'omni.graph.core', 'omni.replicator.core', 'omni.syntheticdata'):
+        record['modules'][name] = getattr(sys.modules.get(name), '__file__', None)
+    (out/'pipeline_registration.json').write_text(json.dumps(record, indent=2, default=repr)+'\n')
+
+
 def render(extraction_pin, output, *, source_snapshot, asset_root, app, check):
     """Use the caller-owned, admitted app; caller also owns bounded shutdown."""
     presentation.require(app is not None, 'ADMITTED_APP_REQUIRED')
@@ -64,6 +91,7 @@ def _render(app, clips, extraction_pin, out, source, scene_sources, closure, che
     torch.set_num_threads(2)
     omni.timeline.get_timeline_interface().stop()
     rep.orchestrator.set_capture_on_play(False)
+    pipeline_diagnostic(out)
     context = omni.usd.get_context()
     before_engines = context.get_attached_hydra_engine_names()
     engine_uid = None
