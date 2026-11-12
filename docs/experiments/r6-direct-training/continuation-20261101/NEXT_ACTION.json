@@ -18,7 +18,7 @@
     "sha256": "d2be47991a33b583a58e7b6c34377ada362da11e0a1ea65c536db8c054d3960a"
   },
   "purpose": "Read-only actual extension and image node registration snapshot before capture",
-  "ready_to_launch": true,
+  "ready_to_launch": false,
   "resource_policy": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/RESOURCE_POLICY_USER_AMENDMENT.json",
     "sha256": "ba29849dc78673e9e69d2b7e42fcd0543f9918df1e5fa0aa25f7448572af6c20"
@@ -35,6 +35,10 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-08/SOURCE_CPU_CHECK.json",
     "sha256": "c7dbc453371dcefcd862a5aacda6dc6e3005dbdf220a019b2ce576c98dcce5eb"
   },
-  "status": "READY_TO_LAUNCH",
-  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128"
+  "status": "RUNNING",
+  "storage_reservation_id": "DIRECT-STORAGE-CONFIRMATION-128",
+  "supervisor_start": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/render-08/SUPERVISOR_START.json",
+    "sha256": "1bb74dd4481f66955d9a762908b45524c9556a00e18bb3a00435b3fd54e48666"
+  }
 }

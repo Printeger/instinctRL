@@ -1,0 +1,74 @@
+{
+  "diagnostic": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-08/results/research-r6-video-replay/media/pipeline_registration.json",
+    "sha256": "110810e9d00d372b9a693520b417b2049244f887c79ed316cfc5f00ff1a776fa"
+  },
+  "interpretation": "Standard graph.tools lookup empty but hash-suffixed actual name enabled; representative nodes registered. Supports version lookup failure mechanism but does not yet establish RGB causality.",
+  "record": {
+    "extensions": {
+      "omni.graph.core": {
+        "enabled_id": null,
+        "versions": []
+      },
+      "omni.graph.tools": {
+        "enabled_id": null,
+        "versions": []
+      },
+      "omni.replicator.core": {
+        "enabled_id": "omni.replicator.core-1.12.27",
+        "versions": [
+          {
+            "enabled": true,
+            "id": "omni.replicator.core-1.12.27",
+            "name": "omni.replicator.core",
+            "package_id": "omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311",
+            "path": "/home/mint/.local/share/ov/data/exts/v2/omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311",
+            "title": "Omni Replicator",
+            "version": [
+              1,
+              12,
+              27,
+              "",
+              "107.3.3.lx64.r.cp311"
+            ]
+          }
+        ]
+      },
+      "omni.syntheticdata": {
+        "enabled_id": null,
+        "versions": []
+      }
+    },
+    "graph_tools_candidates": [
+      {
+        "enabled": true,
+        "id": "omni.graph.tools-cc9ff0f4402f1365-1.79.2",
+        "name": "omni.graph.tools-cc9ff0f4402f1365",
+        "package_id": "omni.graph.tools-cc9ff0f4402f1365-1.79.2+69cbf6ad",
+        "path": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.tools-cc9ff0f4402f1365",
+        "title": "OmniGraph Tools",
+        "version": [
+          1,
+          79,
+          2,
+          "",
+          "69cbf6ad"
+        ]
+      }
+    ],
+    "modules": {
+      "omni.graph.core": "/home/mint/.local/share/ov/data/exts/v2/omni.graph-419147208e336a7d/omni/graph/core/__init__.py",
+      "omni.graph.tools": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.tools-cc9ff0f4402f1365/omni/graph/tools/__init__.py",
+      "omni.replicator.core": "/home/mint/.local/share/ov/data/exts/v2/omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311/omni/replicator/core/__init__.py",
+      "omni.syntheticdata": "/home/mint/.local/share/ov/data/exts/v2/omni.syntheticdata-8da4796ae9f429fe/omni/syntheticdata/__init__.py"
+    },
+    "nodes": {
+      "omni.replicator.core.OgnOnFrame": 1,
+      "omni.replicator.core.ReadFabricTime": 1,
+      "omni.syntheticdata.SdPostProcessDispatcher": 1,
+      "omni.syntheticdata.SdRenderVarPtr": 2
+    }
+  },
+  "rustdesk_touched": false,
+  "status": "LIVE_DIAGNOSTIC_NOT_VIDEO_ACCEPTANCE"
+}
