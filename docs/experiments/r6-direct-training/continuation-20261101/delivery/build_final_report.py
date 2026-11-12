@@ -1,0 +1,30 @@
+import json
+from pathlib import Path
+from tools.r6_direct.import_legacy import pin
+b=Path('/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training');c=b/'continuation-20261101';e=c/'delivery';m=json.loads((b/'TRAINING_AND_EVALUATION_MANIFEST.json').read_text());collection=json.loads((c/'final-evaluation-01/collection-01/results.json').read_text())
+refs={
+'R01':['TRAIN_01_RECOVERY.json','train-01-analysis/binding.json'],
+'R02':['train-02-analysis-cuda/binding.json','confirmation-128/seed-01c-analysis-cuda/binding.json','confirmation-128/seed-02-analysis-cuda/binding.json','confirmation-128/seed-03-analysis-cuda/binding.json','delivery/INTERIM_REQUIREMENTS_INDEPENDENT_REVIEW.json'],
+'R03':['TRAIN_01_RECOVERY.json','train-02/RECOMPUTATION.json','confirmation-128/seed-01b-analysis/binding.json'],
+'R04':['POST_TRAIN_COMPARISON.json','TRAIN_02_PAIRED_COMPARISON.json'],
+'R05':['POST_TRAIN_COMPARISON.json','confirmation-128/freeze-02.json'],
+'R06':['confirmation-128/freeze-02.json','confirmation-128/seed-01c-analysis-cuda/binding.json','confirmation-128/seed-02-analysis-cuda/binding.json','confirmation-128/seed-03-analysis-cuda/binding.json'],
+'R07':['final-evaluation-01/final-freeze-candidate.json','final-evaluation-01/PUBLICATION_INDEPENDENT_REVIEW.json','final-evaluation-01/final-batch.json','final-evaluation-01/collection-01/results.json','final-evaluation-01/COLLECTION_INDEPENDENT_REVIEW.json'],
+'R08':['delivery/FROZEN_MODEL_BUNDLE.json','delivery/MODEL_BUNDLE_INDEPENDENT_REVIEW.json','delivery/CURVES_INDEPENDENT_REVIEW.json','delivery/ANALYSIS_RAW_EVIDENCE_INDEX.json','delivery/RAW_EVIDENCE_INDEX_INDEPENDENT_REVIEW.json','delivery/render-09/VIDEO_INDEPENDENT_REVIEW.json'],
+'R09':['RESOURCE_POLICY_USER_AMENDMENT.json','delivery/FINAL_RESOURCE_AND_CLEANUP_AUDIT.json','delivery/MODEL_USAGE_CONTINUATION_AUDIT.json'],
+'R10':['delivery/INTERIM_REQUIREMENTS_INDEPENDENT_REVIEW.json']}
+limits=['No demonstrated learning gain: baseline and all candidates pass all registered gates at ceiling; no equivalence or generalization proof.','Three confirmation streams are shared-u640 continuations, not independent training from scratch.','Original CPU probability mismatches are retained; exact CUDA supplements have limited binding scope. Full CUDA RNG semantics and independent physical reintegration are not established.','Cleanup timeout/-15 receipts are retained separately from scientifically complete workload evidence.','Video is recorded-pose replay with no new policy/physics; visual review sampled first/middle/last; no mathematical per-pixel pose proof.','Raw index covers1223versions from18analyses, not every historical raw or allvideo records. Absolute paths and frozen environment are required; model ZIP is not a portable runtime.','Module snapshots do not prove lifetime import history; no complete filesystem mutation audit.','Current platform model usage UNKNOWN; accounting includes unreleased reservations and is not actual workload consumption.']
+rows=[]
+for a in m['analyses']:
+ if a['role']=='selected_analysis' and a.get('training_summary'):
+  s=a['training_summary'];rows.append(dict(run_id=a['run_id'],seed=s['training_seed'],start_update=s['start_update'],target_update=s['target_update'],counters=s['observed_counters'],checkpoint=s['checkpoints'][0]['pin'],analysis=a['analysis'],cpu_probability_replay_error=s['cpu_probability_replay_error']))
+x=dict(schema_version='r6-final-results/1',status='TRAINING_EVAL_VIDEO_COMPLETE_FINAL_REVIEW_PENDING',completion_candidate='TRAINING_COMPLETE_SCIENTIFIC_NEGATIVE',goal_complete=False,scientific_conclusion='No demonstrated learning gain; no observed regression in registered conditions; all four models pass original five and16final conditions.',training=rows,final_evaluations=collection['results'],training_evaluation_manifest=pin(b/'TRAINING_AND_EVALUATION_MANIFEST.json'),models=pin(e/'FROZEN_MODEL_BUNDLE.json'),videos=pin(b/'videos/VIDEO_MANIFEST.json'),requirements={k:dict(status='EVIDENCE_ASSEMBLED_INDEPENDENT_FINAL_AUDIT_PENDING',evidence=[pin(c/r) for r in v]) for k,v in refs.items()},additional_evidence=[pin(b/'NO_RLFLOW_AUDIT.json'),pin(b/'RESOURCE_LEDGER.json')],limitations=limits)
+def save(p,x):
+ with p.open('x') as f:json.dump(x,f,indent=2);f.write('\n')
+save(b/'FINAL_R6_RESULTS.json',x)
+text='''# R6 接续结果：未证实学习增益\n\n状态：训练、最终评价与录像已完成，最终独立需求审核待完成；Goal 尚未完成。\n\n冻结 u640 与三个续训 u768 模型均通过原五任务及16个最终条件，每条件32/32。基线同样达到天花板，不能据此声称强化学习改善、统计等价或泛化。最终科学结论候选为 `TRAINING_COMPLETE_SCIENTIFIC_NEGATIVE`。\n\n首段 TRAIN01 实测107更新、54912 transitions，无可验证训练checkpoint；从已接受u640以新身份TRAIN02重算。失败01B实测122更新且无终点checkpoint，01C重新从u640开始，失败原件和费用保留。\n\n| 训练段 | seed | 更新 | transitions | actor/critic steps | checkpoint |\n| --- | --- | --- | --- | --- | --- |\n'''
+for r in rows:
+ q=r['counters'];text+=f"| {r['run_id']} | {r['seed']} | {r['start_update']}→{r['target_update']} | {q['training_transitions']} | {q['actor_optimizer_steps']}/{q['critic_optimizer_steps']} | {r['checkpoint']['sha256']} |\n"
+text+='''\n三条确认流共同从u640起步，seed为2026102202/03/04。它们是续训随机流，不是从零独立训练。模型冻结及承诺提交 `74f4dcbe35842f07ad7a38d2bfd4ca319ccf42a3` 发布后揭晓保留集，四模型共同最终seed1812183990；没有用最终测试调参。\n\n模型与配置索引见 [FROZEN_MODEL_BUNDLE](continuation-20261101/delivery/FROZEN_MODEL_BUNDLE.json)，可下载包为 [frozen-models-01.zip](continuation-20261101/delivery/frozen-models-01.zip)。训练统计曲线保留512行连续更新，不是独立episode收益或学习增益证据。\n\n四段录像各330帧、10fps、960×640，共1320帧，完整解码和遥测核验及独立抽样画面审核通过。播放路径和原件hash见 [VIDEO_MANIFEST](videos/VIDEO_MANIFEST.json)。它们呈现保存的评估轨迹，没有新动力学测试；旋翼相位不可得。\n\n科学与工程证据的精确路径/hash、每模型逐条件结果和R01–R10对照见 [FINAL_R6_RESULTS.json](FINAL_R6_RESULTS.json) 与 [训练评价总清单](TRAINING_AND_EVALUATION_MANIFEST.json)。历史CPU概率差异、CUDA补充核验范围、cleanup timeout/-15、失败的渲染/分析记录均保留。\n\n用户已取消累计预算及保护额度。历史账本、未知平台调用和未释放预留不清零；资源自查见 [最终资源记录](continuation-20261101/delivery/FINAL_RESOURCE_AND_CLEANUP_AUDIT.json)。RustDesk保持连接。\n\n复核与复现入口见 [REPRODUCIBILITY.md](REPRODUCIBILITY.md)。\n\n已知局限：\n\n'''
+text+='\n'.join('- '+s for s in limits)+'\n';(b/'FINAL_R6_RESULTS.md').write_text(text)
+print('final report candidate',len(rows),'training rows')

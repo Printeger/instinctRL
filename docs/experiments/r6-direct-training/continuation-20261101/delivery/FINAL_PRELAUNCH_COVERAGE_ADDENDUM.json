@@ -1,0 +1,28 @@
+{
+  "status": "PRELAUNCH_FAILURE_COVERAGE_REVALIDATED",
+  "evidence": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/probability-cuda-01/ADMISSION_FAILURE.json",
+    "sha256": "bbffa714c7b522a18239bf035d9ed1a2845b8a72c15f1ce732faeb358c9c460a"
+  },
+  "intent": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-PROBABILITY-DIAGNOSTIC-01/intent.json",
+    "sha256": "966c7c7236b9d224203e0f180f3816dca3d34931905a83279798c31b55238d0d"
+  },
+  "resource_observations": {
+    "path": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output/R6-DIRECT-PROBABILITY-DIAGNOSTIC-01/prelaunch/prelaunch_resource_observations.json",
+    "sha256": "964a8667801d5d91a507dcbe484894a2e035ebe0f493434474b4b56b97e9cf1d"
+  },
+  "parent": {
+    "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+    "pid": 2351369,
+    "starttime": "27665139"
+  },
+  "parent_current_identity": null,
+  "run_inputs_absent": true,
+  "original_cuda_child_started": false,
+  "reservation": "Full original reservation remains unreleased; no invented CLOSED receipt",
+  "historical_rustdesk_restriction": "Old admission failure wording is historical; current direct policy permits RustDesk",
+  "limitations": [
+    "Original source/control-flow evidence establishes pre-supervise failure; not full system process-history audit"
+  ]
+}
