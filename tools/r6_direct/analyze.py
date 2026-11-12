@@ -17,7 +17,12 @@ def analyze(input_pin, *, probability_diagnostic=None):
     if operation == 'render':
         from tools.r6_video_presentation import verify
         manifest=pin(ctx['output']/'media/RUN_MANIFEST.json')
-        summary=verify(manifest,ctx['contract']['parameters']['extraction'])
+        source = json.loads(Path(ctx['plan']['source']['path']).read_text())
+        from tools.r6_evidence import checked
+        checked(ctx['plan']['source'])
+        renderer = dict(path=str(Path(ctx['plan']['snapshot'])/'tools/render_r6_isaac_video.py'),
+                        sha256=source['sources']['tools/render_r6_isaac_video.py'])
+        summary=verify(manifest,ctx['contract']['parameters']['extraction'], renderer_pin=renderer)
         report=dict(schema_version='r6-direct-video-analysis/1',summary=summary,scientific_acceptance=False,
                     inputs=[dict(manifest,bytes=Path(manifest['path']).stat().st_size)])
         add_inputs(report,input_pin,ctx)

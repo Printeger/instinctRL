@@ -1,0 +1,92 @@
+{
+  "extraction": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/delivery/video-trajectories-02/result.json",
+    "sha256": "05bd84a66424d7fe9f0e52ca56737ca871c29b7dc1076a7cc0f42517f6062b8b"
+  },
+  "limitation": "Decoded pixels and matching telemetry do not independently prove pose-to-pixel fidelity; visual audit required.",
+  "physics_reintegrated": false,
+  "render_manifest": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/results/research-r6-video-replay/media/RUN_MANIFEST.json",
+    "sha256": "aa5550071b520df257c31ec5768e14d9bff6165f3a7c08d04792bec03436faf4"
+  },
+  "scientific_acceptance": false,
+  "status": "VIDEOS_DECODED_AND_TELEMETRY_MATCHED_NOT_SCIENTIFIC_ACCEPTANCE",
+  "validator": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_video_presentation.py",
+    "sha256": "4e13b1589ea589c779b06d26507c4ffb2b7003171d93a63abfd12f922920526e"
+  },
+  "videos": [
+    {
+      "all_frames_decoded": true,
+      "fps": 10,
+      "frames": 330,
+      "index": 0,
+      "resolution": [
+        960,
+        640
+      ],
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/results/research-r6-video-replay/media/clip-00.json",
+        "sha256": "f5b3b86c7a7f4df7d73022d54f515f7cb0b9b1490ec244a1e2edff9515b311f1"
+      },
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/results/research-r6-video-replay/media/clip-00.mp4",
+        "sha256": "acecfff2a9debb970478e2b7d4060f648ab7b07f3317df074b4fdec1026a3ec0"
+      }
+    },
+    {
+      "all_frames_decoded": true,
+      "fps": 10,
+      "frames": 330,
+      "index": 1,
+      "resolution": [
+        960,
+        640
+      ],
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/results/research-r6-video-replay/media/clip-01.json",
+        "sha256": "3d8e92d9bab23479f1a031b180ef281c782fba15ca6c6116fd8bd4f37d99063f"
+      },
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/results/research-r6-video-replay/media/clip-01.mp4",
+        "sha256": "fb87458ba0086befc259e08d6dd45b6889ca911796be7e03fcbad7b4dfb82f3f"
+      }
+    },
+    {
+      "all_frames_decoded": true,
+      "fps": 10,
+      "frames": 330,
+      "index": 2,
+      "resolution": [
+        960,
+        640
+      ],
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/results/research-r6-video-replay/media/clip-02.json",
+        "sha256": "d3318a78f4602e6048b54309a51589b4c80314bbab88d60661bba84a392e633f"
+      },
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/results/research-r6-video-replay/media/clip-02.mp4",
+        "sha256": "a00f42389426b7b1b711344a496ec3ef15516cedd7dec2364ab36e58196d22f0"
+      }
+    },
+    {
+      "all_frames_decoded": true,
+      "fps": 10,
+      "frames": 330,
+      "index": 3,
+      "resolution": [
+        960,
+        640
+      ],
+      "telemetry": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/results/research-r6-video-replay/media/clip-03.json",
+        "sha256": "a6c8fb68587f07a10db2ad5bd70520ac0d3afb914fe8352e519a927cdf515ced"
+      },
+      "video": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/results/research-r6-video-replay/media/clip-03.mp4",
+        "sha256": "feb54bac9ff58de9199af260d15fcf5384f6da3cb13f247e69c6e83c0a2b751c"
+      }
+    }
+  ]
+}

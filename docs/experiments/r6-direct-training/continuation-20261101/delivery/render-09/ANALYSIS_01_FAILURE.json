@@ -1,0 +1,6 @@
+{
+  "status": "FAILED_BEFORE_OUTPUT",
+  "error": "VIDEO_PRESENTATION_RENDERER",
+  "reason": "Validator default renderer pin used current workspace path; original render manifest correctly pins detached snapshot. No render rerun or evidence rewrite.",
+  "next_action": "Use exact run source manifest hash and snapshot renderer pin; new analysis destination"
+}
