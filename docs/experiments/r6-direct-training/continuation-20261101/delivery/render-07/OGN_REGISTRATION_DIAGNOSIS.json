@@ -1,0 +1,25 @@
+{
+  "status": "SOURCE_AND_LOG_OBSERVATION_NOT_PROVEN_RGB_ROOT_CAUSE",
+  "sources": [
+    {
+      "path": "/home/mint/.local/share/ov/data/exts/v2/omni.graph.tools-cc9ff0f4402f1365/omni/graph/tools/_impl/internal/versions.py",
+      "sha256": "de37f1d1c1eb694b4254fde32a3bfab97de774d775ae74f05b5b4a8913ebfa57"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-VIDEO-07/stdout.log",
+      "sha256": "cd8cbbcb7049cb6fc087ea850fe5db5c643703c1c5879007087e5932cd4e5bfa"
+    }
+  ],
+  "confirmed": [
+    "Installed generator version lookup fetch_extension_versions(omni.graph.tools) raises when no enabled entry found",
+    "Log shows omni.graph.tools-cc9ff0f4402f1365-1.79.2 started before registration errors",
+    "Graph extension callback reports failed node registration future"
+  ],
+  "unproven": [
+    "Why lookup finds no enabled entry",
+    "Which required image nodes failed registration",
+    "Whether this is causal for missing LdrColorSDhost"
+  ],
+  "next_step": "Bounded render-only diagnostic records actual enabled extension IDs, fetch_extension_versions results and required node types before capture; do not patch installed runtime or fake generator version.",
+  "rustdesk_touched": false
+}
