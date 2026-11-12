@@ -1,0 +1,23 @@
+{
+  "reviewer": "/root/baseline_scientific_review",
+  "decision": "PASS_SCOPED",
+  "scope": "VIDEO08 read-only pipeline_registration diagnostic",
+  "must_fix": [],
+  "sha256": "e49ea5f206168036c0a504e5b2773d86157ec12ce3e09c3f9bd8344c6c42ece0",
+  "verified": [
+    "Installed extension query APIs confirmed",
+    "GraphRegistry node version query confirmed",
+    "Once after timeline stop/capture false before engine creation",
+    "No extension activation/version fabrication/node repair/physics advancement"
+  ],
+  "limitations": [
+    "Pre-engine state does not prove causal node absence",
+    "Enumeration/file write exceptions can fail attempt",
+    "repr fields diagnostic only",
+    "CPU14 parent reported, no GPU review",
+    "Not scientific acceptance"
+  ],
+  "files_modified": false,
+  "gpu_touched": false,
+  "rustdesk_touched": false
+}
