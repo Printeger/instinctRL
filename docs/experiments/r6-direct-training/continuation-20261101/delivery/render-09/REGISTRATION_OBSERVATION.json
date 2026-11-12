@@ -1,0 +1,121 @@
+{
+  "diagnostic": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results/R6-DIRECT-VIDEO-09/results/research-r6-video-replay/media/pipeline_registration.json",
+    "sha256": "d4a0e2f33ba5f963835e614de7ac0e9d497032cc1ae091065609107a400d57fb"
+  },
+  "record": {
+    "extensions": {
+      "omni.graph.core": {
+        "enabled_id": "omni.graph.core-2.184.5",
+        "versions": [
+          {
+            "enabled": true,
+            "id": "omni.graph.core-2.184.5",
+            "name": "omni.graph.core",
+            "package_id": "omni.graph.core-2.184.5+69cbf6ad.lx64.r",
+            "path": "/home/mint/.local/share/instinctrl-r6/extension-bindings/standard-names-01/omni.graph.core",
+            "title": "OmniGraph",
+            "version": [
+              2,
+              184,
+              5,
+              "",
+              "69cbf6ad.lx64.r"
+            ]
+          }
+        ]
+      },
+      "omni.graph.tools": {
+        "enabled_id": "omni.graph.tools-1.79.2",
+        "versions": [
+          {
+            "enabled": true,
+            "id": "omni.graph.tools-1.79.2",
+            "name": "omni.graph.tools",
+            "package_id": "omni.graph.tools-1.79.2+69cbf6ad",
+            "path": "/home/mint/.local/share/instinctrl-r6/extension-bindings/standard-names-01/omni.graph.tools",
+            "title": "OmniGraph Tools",
+            "version": [
+              1,
+              79,
+              2,
+              "",
+              "69cbf6ad"
+            ]
+          }
+        ]
+      },
+      "omni.replicator.core": {
+        "enabled_id": "omni.replicator.core-1.12.27",
+        "versions": [
+          {
+            "enabled": true,
+            "id": "omni.replicator.core-1.12.27",
+            "name": "omni.replicator.core",
+            "package_id": "omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311",
+            "path": "/home/mint/.local/share/instinctrl-r6/extension-bindings/standard-names-01/omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311",
+            "title": "Omni Replicator",
+            "version": [
+              1,
+              12,
+              27,
+              "",
+              "107.3.3.lx64.r.cp311"
+            ]
+          }
+        ]
+      },
+      "omni.syntheticdata": {
+        "enabled_id": "omni.syntheticdata-0.6.13",
+        "versions": [
+          {
+            "enabled": true,
+            "id": "omni.syntheticdata-0.6.13",
+            "name": "omni.syntheticdata",
+            "package_id": "omni.syntheticdata-0.6.13+69cbf6ad.lx64.r.cp311",
+            "path": "/home/mint/.local/share/instinctrl-r6/extension-bindings/standard-names-01/omni.syntheticdata",
+            "title": "Synthetic Data Sensors",
+            "version": [
+              0,
+              6,
+              13,
+              "",
+              "69cbf6ad.lx64.r.cp311"
+            ]
+          }
+        ]
+      }
+    },
+    "graph_tools_candidates": [
+      {
+        "enabled": true,
+        "id": "omni.graph.tools-1.79.2",
+        "name": "omni.graph.tools",
+        "package_id": "omni.graph.tools-1.79.2+69cbf6ad",
+        "path": "/home/mint/.local/share/instinctrl-r6/extension-bindings/standard-names-01/omni.graph.tools",
+        "title": "OmniGraph Tools",
+        "version": [
+          1,
+          79,
+          2,
+          "",
+          "69cbf6ad"
+        ]
+      }
+    ],
+    "modules": {
+      "omni.graph.core": "/home/mint/.local/share/instinctrl-r6/extension-bindings/standard-names-01/omni.graph/omni/graph/core/__init__.py",
+      "omni.graph.tools": "/home/mint/.local/share/instinctrl-r6/extension-bindings/standard-names-01/omni.graph.tools/omni/graph/tools/__init__.py",
+      "omni.replicator.core": "/home/mint/.local/share/instinctrl-r6/extension-bindings/standard-names-01/omni.replicator.core-1.12.27+107.3.3.lx64.r.cp311/omni/replicator/core/__init__.py",
+      "omni.syntheticdata": "/home/mint/.local/share/instinctrl-r6/extension-bindings/standard-names-01/omni.syntheticdata/omni/syntheticdata/__init__.py"
+    },
+    "nodes": {
+      "omni.replicator.core.OgnOnFrame": 2,
+      "omni.replicator.core.ReadFabricTime": 1,
+      "omni.syntheticdata.SdPostProcessDispatcher": 1,
+      "omni.syntheticdata.SdRenderVarPtr": 2
+    }
+  },
+  "rustdesk_touched": false,
+  "status": "LIVE_BINDING_VERIFIED_NOT_VIDEO_ACCEPTANCE"
+}
