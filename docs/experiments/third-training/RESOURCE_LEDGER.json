@@ -147,6 +147,37 @@
         "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/STORAGE_BINDING.json",
         "sha256": "f78b44a66035c753bbec6047fdccf8f72f0cf72ca690630465c487cb04d353d7"
       }
+    },
+    {
+      "closed_evidence_bytes": 7977476096,
+      "id": "R6-DIRECT-THIRD-FORMAL-CONTROL-01",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-THIRD-FORMAL-CONTROL-01/control/receipt.json",
+        "sha256": "777c942bc7d6815a3f583709bc6c17193e594bdaefa9f956784fefb2657a17f0"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/RESOURCE_POLICY.json",
+        "sha256": "d761838705220fe2fc6779fe4f1f605b70a12608abfcc2fb03f183cd6c104286"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 4690,
+        "live_starts": 1,
+        "live_wall_seconds": 4690,
+        "major_scientific_candidates": 1,
+        "nontraining_transitions": 0,
+        "output_actual_plus_unreleased_reservations_bytes": 13153337344,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_checkpoint_writes": 5,
+        "training_transitions": 65536
+      },
+      "status": "UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-THIRD-FORMAL-CONTROL-01",
+        "native_dir": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output/R6-DIRECT-THIRD-FORMAL-CONTROL-01"
+      },
+      "storage_reservation_id": "THIRD-SYSTEM-PARTITION"
     }
   ],
   "new_used": {
@@ -192,5 +223,5 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/RESOURCE_POLICY.json",
     "sha256": "d761838705220fe2fc6779fe4f1f605b70a12608abfcc2fb03f183cd6c104286"
   },
-  "status": "FORMAL_INPUTS_FROZEN"
+  "status": "WAITING_FOR_ANALYSIS"
 }
