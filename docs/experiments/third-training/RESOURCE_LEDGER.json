@@ -517,7 +517,7 @@
       "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED"
     },
     {
-      "closed_evidence_bytes": 7692414976,
+      "closed_evidence_bytes": 7692640256,
       "id": "R6-DIRECT-THIRD-FORMAL-CONTROL-03",
       "purpose": "development",
       "receipt": {
@@ -529,23 +529,84 @@
         "sha256": "d761838705220fe2fc6779fe4f1f605b70a12608abfcc2fb03f183cd6c104286"
       },
       "resources": {
-        "allocated_gpu_seconds": 4690,
+        "allocated_gpu_seconds": 3615,
         "live_starts": 1,
-        "live_wall_seconds": 4690,
+        "live_wall_seconds": 3615,
         "major_scientific_candidates": 1,
         "nontraining_transitions": 0,
-        "output_actual_plus_unreleased_reservations_bytes": 13153337344,
+        "output_actual_plus_unreleased_reservations_bytes": 7692640256,
         "queue_seconds": 180,
         "simulator_initializations": 1,
         "training_checkpoint_writes": 5,
         "training_transitions": 65536
       },
-      "status": "UNRELEASED",
+      "settlement": {
+        "charged_seconds": 3615,
+        "original_resources": {
+          "allocated_gpu_seconds": 4690,
+          "live_starts": 1,
+          "live_wall_seconds": 4690,
+          "major_scientific_candidates": 1,
+          "nontraining_transitions": 0,
+          "output_actual_plus_unreleased_reservations_bytes": 13153337344,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_checkpoint_writes": 5,
+          "training_transitions": 65536
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-THIRD-FORMAL-CONTROL-03/control/receipt.json",
+          "sha256": "493fec16a236b7435c53fe2376fa50132224d4cfb37f166d947e3ca1b1e78ea5"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
       "storage_new_binding": {
         "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-THIRD-FORMAL-CONTROL-03",
         "native_dir": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output/R6-DIRECT-THIRD-FORMAL-CONTROL-03"
       },
       "storage_reservation_id": "THIRD-SYSTEM-PARTITION"
+    },
+    {
+      "closed_evidence_bytes": 3362816,
+      "diagnostic_wall_seconds": 65.12406996218488,
+      "id": "R6-DIRECT-THIRD-FORMAL-CONTROL-03-DIAGNOSTIC",
+      "output_within_existing_native_volume": {
+        "path": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/volume.json",
+        "sha256": "254edd286b3fbeb89409eb79e1717dcda8adea81f927bb6ca9cb65dc01dd23f4"
+      },
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-THIRD-FORMAL-CONTROL-03-DIAGNOSTIC/control/receipt.json",
+        "sha256": "b2dcbc8760fd87c8f05da5e9880f2f1c04ccbaf55d5dbf0b447717386e05bc88"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/RESOURCE_POLICY.json",
+        "sha256": "d761838705220fe2fc6779fe4f1f605b70a12608abfcc2fb03f183cd6c104286"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 66,
+        "live_starts": 1,
+        "live_wall_seconds": 66,
+        "output_actual_plus_unreleased_reservations_bytes": 3362816,
+        "queue_seconds": 180
+      },
+      "settlement": {
+        "charged_seconds": 66,
+        "original_resources": {
+          "allocated_gpu_seconds": 390,
+          "live_starts": 1,
+          "live_wall_seconds": 390,
+          "output_actual_plus_unreleased_reservations_bytes": 268435456,
+          "queue_seconds": 180
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-THIRD-FORMAL-CONTROL-03-DIAGNOSTIC/control/receipt.json",
+          "sha256": "b2dcbc8760fd87c8f05da5e9880f2f1c04ccbaf55d5dbf0b447717386e05bc88"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED"
     }
   ],
   "new_used": {
@@ -591,5 +652,5 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/RESOURCE_POLICY.json",
     "sha256": "d761838705220fe2fc6779fe4f1f605b70a12608abfcc2fb03f183cd6c104286"
   },
-  "status": "WAITING_FOR_ANALYSIS"
+  "status": "FORMAL_RUNNING"
 }
