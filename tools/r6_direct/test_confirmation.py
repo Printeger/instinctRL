@@ -32,12 +32,12 @@ def test_three_local_plans_keep_full_recipe_and_reviewed_evidence(frozen):
 
 
 def test_publication_checks_real_git_bytes_without_a_store():
-    from pathlib import Path
     import subprocess
+    from tools.r6_direct.import_legacy import ROOT
     from tools.r6_evidence import file_pin
     from training_workloads.unified_h1.direct_selection import verify_publication
     head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
-    pin=file_pin(Path('training_workloads/unified_h1/robustness_holdout.py'))
+    pin=file_pin(ROOT/'training_workloads/unified_h1/robustness_holdout.py')
     verify_publication(head,pin)
     with pytest.raises(PermissionError):verify_publication('not-a-commit',pin)
 
