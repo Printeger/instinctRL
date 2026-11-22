@@ -1,0 +1,43 @@
+{
+  "attempt_dir": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-02",
+  "contract": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/02-contract.json",
+    "sha256": "292cc72499082188eb6776264edfcb7c893ff3f0aaf7eabdb6f694ef1bc044ce"
+  },
+  "extension_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXTENSION_INPUTS_CANDIDATE_02.json",
+    "sha256": "7d36890b12c5da14caf67905197bdad2298c080080e7049be6d714d5cce35dff"
+  },
+  "ipc_wrapper": {
+    "path": "/usr/bin/bwrap",
+    "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+  },
+  "native_dir": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output/R6-DIRECT-THIRD-PRECHECK-02",
+  "native_minimum_free_bytes": 268435456,
+  "native_volume": {
+    "path": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/volume.json",
+    "sha256": "254edd286b3fbeb89409eb79e1717dcda8adea81f927bb6ca9cb65dc01dd23f4"
+  },
+  "output_root": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-THIRD-PRECHECK-02",
+  "predecessor_receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-THIRD-PRECHECK-01/receipt.json",
+    "sha256": "0040843b2986a1d9eecb9f6561b8a6c6956c14b247fbfeed7265b0b7b8a80888"
+  },
+  "resource_policy": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/RESOURCE_POLICY.json",
+    "sha256": "1b7332bb11175d88a601ace939c3295e9d58adf5aa5f21d8c840468df74ccf7b"
+  },
+  "result_payload_cap_bytes": 2147483648,
+  "result_volume": {
+    "path": "/var/lib/instinctrl-r6-results/J-60c22d4806aa6798/volume.json",
+    "sha256": "48e308477e041b7adfb82a1aef6ed87960ed3521ba5d49be2ec72ae9abb6b372"
+  },
+  "run_id": "R6-DIRECT-THIRD-PRECHECK-02",
+  "schema_version": "r6-direct-run-inputs/1",
+  "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/third-preflight",
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/source.json",
+    "sha256": "a4c9b1fc5cb77e467fa46a717288ae295d4318bfca4311ec7a4b087d4b39d881"
+  },
+  "storage_reservation_id": "THIRD-EXISTING-J-60c22d4806aa6798"
+}

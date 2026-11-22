@@ -1,0 +1,703 @@
+{
+  "analyzer": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_analysis.py",
+    "sha256": "6ab0eed48492786e48b02fb64d9fb5aec4f7e9df4d2f5a3efe687d7b0c252856"
+  },
+  "checkpoint_auditor": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_checkpoint_audit.py",
+    "sha256": "0f0c9f68fa7efa4f3b28d1545bb2b567bdd90d6c1d4b87ecb966bd65da44f544"
+  },
+  "codec": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/training_workloads/unified_h1/lossless_evidence.py",
+    "sha256": "2fe1801bfab6534b7f46cd2114aab8846e0f5206eea36c90bfcc779b06b1eae2"
+  },
+  "inputs": [
+    {
+      "bytes": 1510761,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+      "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+    },
+    {
+      "bytes": 159814,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/CPU_MODULES.json",
+      "sha256": "a92a4997d9022ab2d7aefcb89b98e3d1138684238a3998536e7a878004eb1224"
+    },
+    {
+      "bytes": 278,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/checkpoints/u642.json",
+      "sha256": "89b3d5032e5b8489f39284db8675877e51e0f8821dfd125306f014fe02dd72d7"
+    },
+    {
+      "bytes": 1511081,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/checkpoints/u642.pt",
+      "sha256": "36a5db3a76e09f8d696a02d08d079f415b3dd3d1f89d296a28d8a92218cdeb62"
+    },
+    {
+      "bytes": 2112,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/learning_log/plan.jsonl.r6z",
+      "sha256": "05f6a642b905cb698c0644c9cd530e70d53a91fe6c9f90c77fea32ab43ff5956"
+    },
+    {
+      "bytes": 10677,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/accounting.jsonl.r6z",
+      "sha256": "6d2fdec9a1b84b2fbe2241508c1b0f1a29222b03bd3f5159a1f87f9edb6460e4"
+    },
+    {
+      "bytes": 13945,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/command_blocks.jsonl.r6z",
+      "sha256": "0dae5bbad399a385c7a1dfd8d55e1833acaf0e8fc3f29a28e10935cc8f5e57a3"
+    },
+    {
+      "bytes": 605806,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/compact_rollouts.jsonl.r6z",
+      "sha256": "41d3e0a758477e95f58e044bd9433524a7a1f0049992c31400b7c09774dcbf28"
+    },
+    {
+      "bytes": 15569,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/episodes.jsonl.r6z",
+      "sha256": "9f7259533ea42b9c65919c07b8f049cfcbc662e6a32b8fe512727bc0eab95b66"
+    },
+    {
+      "bytes": 57417973,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/measurement_windows.jsonl.r6z",
+      "sha256": "7c09789f97eeeaf0df96eb5508acec6b3df4cb80a51b1b661e53fdea2f88c607"
+    },
+    {
+      "bytes": 5630,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/minibatches.jsonl.r6z",
+      "sha256": "84035ac5a37e8dbcb2ff43a2f7ac361d60d883e5aaf6b85b5331932fafc8f2a5"
+    },
+    {
+      "bytes": 604692,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/partial_rollout_steps.jsonl.r6z",
+      "sha256": "333148b5489122e697943c3e763286830cab5f3746c154a8dab322f39cc94280"
+    },
+    {
+      "bytes": 501,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/phase_complete.jsonl.r6z",
+      "sha256": "319f09e3f625070704db579178f955b4dc4205c2adcfab00d575ef23c3c32f64"
+    },
+    {
+      "bytes": 3044,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/rollouts.jsonl.r6z",
+      "sha256": "99325c9d931e6df002f2029b4c1586e351044c7989b6215a8eeb7ed01176bfc8"
+    },
+    {
+      "bytes": 1759,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/updates.jsonl.r6z",
+      "sha256": "64b444d73dd33cd84c29c4af3ef86654f56c765b83048b3b09fb8ab75d4cee0e"
+    },
+    {
+      "bytes": 9873387,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/first_update_probe.pt.r6z",
+      "sha256": "04620bf7b3ae041a5c3aed886882e706387153018af9bafd039f432058976d44"
+    },
+    {
+      "bytes": 87562055,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_641_full_input.pt.r6z",
+      "sha256": "47f1cd629afe0f95d072db04dc3a16d1fbbfc0928464d7ed301f9e1e8316f1d9"
+    },
+    {
+      "bytes": 97316428,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_642_full_input.pt.r6z",
+      "sha256": "379923e2e79935fbb67fad258294becb908a78b61d41570417530b1c4094fda3"
+    },
+    {
+      "bytes": 23923,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/rng/initialization.pt.r6z",
+      "sha256": "f985722ca4b4212a8dce2605aa627f914efe912625c4e478c66b778a5cf2c4da"
+    },
+    {
+      "bytes": 229,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/pilot_diagnostic/first_update_gate.json",
+      "sha256": "729295fd7f62671558a1a11d94b72baecd2b519edd740395cb6c8b7eecfd690c"
+    },
+    {
+      "bytes": 838,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/status.json",
+      "sha256": "cc98d5388e11bcc2cafccfe772297390a8336149e4c51011fe13d88fb2dee676"
+    },
+    {
+      "bytes": 863,
+      "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/state.json",
+      "sha256": "5a373084195d062d69cfbb667171e5789d9e48d6e23c648cdc83c9992ec8d364"
+    },
+    {
+      "bytes": 5400,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-THIRD-PRECHECK-01/RUN_INPUTS.json",
+      "sha256": "8f44b0e5210517e4c5d8fdc57446e0961437215990edc924ec3403ab210ef60e"
+    },
+    {
+      "bytes": 329,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-THIRD-PRECHECK-01/launch.json",
+      "sha256": "8b7e1ddc5dff03bed36b148976545c52c970e43305888a368f00a63e18a705c3"
+    },
+    {
+      "bytes": 1096,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-THIRD-PRECHECK-01/receipt.json",
+      "sha256": "0040843b2986a1d9eecb9f6561b8a6c6956c14b247fbfeed7265b0b7b8a80888"
+    },
+    {
+      "bytes": 3996,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/01-contract.json",
+      "sha256": "f024b4ee48c038b7fe37ed9321b5f92a29abfd6102f25da36271f4b0ab1d8213"
+    },
+    {
+      "bytes": 2310,
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/01-inputs.json",
+      "sha256": "de841547a4d453b8b5dcb9f2ec0536a54c7da680764fe2d641b179c8e652e6a3"
+    }
+  ],
+  "issues": [
+    {
+      "input": "first_update_probability_replay",
+      "reason": "probability gate mismatch at frozen index 0"
+    }
+  ],
+  "plan_sha256": "d2f462dcbd1f00b466fc9d8991c6006f820ff82b1f00cd52199ad54937642300",
+  "probability_replayer": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_probability.py",
+    "sha256": "07790dcb290ed38cae547f6f6d2e9664b951fb5aebf76b9f476c1a52598f637a"
+  },
+  "rng_auditor": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/tools/r6_training_rng_audit.py",
+    "sha256": "6840a065bb8cd5c1727e69f34076f392526c06998a4c2d116cf042710f69c7f7"
+  },
+  "run_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/01-inputs.json",
+    "sha256": "de841547a4d453b8b5dcb9f2ec0536a54c7da680764fe2d641b179c8e652e6a3"
+  },
+  "schema_version": "r6-training-analysis/1",
+  "scientific_acceptance": false,
+  "streams": [
+    {
+      "complete": true,
+      "logical_name": "learning_log/plan.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/learning_log/plan.jsonl.r6z",
+        "sha256": "05f6a642b905cb698c0644c9cd530e70d53a91fe6c9f90c77fea32ab43ff5956"
+      },
+      "raw_bytes": 4954,
+      "raw_sha256": "ebb2a3ca02845a1dacd24d3e48ce7bc78f97785ab52a48b0dfb04a235e5b8bda",
+      "record": {
+        "metadata": {
+          "counters": {
+            "actor_optimizer": 5120,
+            "critic_optimizer": 5120,
+            "global_policy_step": 10240,
+            "transition": 327680,
+            "update": 640
+          },
+          "curriculum": {
+            "completed_policy_steps": 10240,
+            "version": "curriculum-h1-v1"
+          },
+          "reset_number": 323,
+          "training_seed": 20260908
+        },
+        "method_binding": {
+          "actor_adam_sha256": "020b95cdc4d523c3d9b7142c0dc7003255bfa2f436df1de01efe778266fc85fa",
+          "actual_environment": {
+            "actor_optimizer_lrs": [
+              0.0001
+            ],
+            "anchor_weight": 8.0,
+            "critic_optimizer_lrs": [
+              0.0003
+            ],
+            "ics_clearance_margin_m": 0.15,
+            "pipeline_margins": [
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15,
+              0.15
+            ],
+            "pure_hover": false,
+            "residual_neutrality_weight": 0.05
+          },
+          "actual_ppo": {
+            "actor_learning_rate": 0.0001,
+            "advantage_epsilon": 1e-08,
+            "clip_ratio": 0.2,
+            "critic_learning_rate": 0.0003,
+            "entropy_coefficient": 0.01,
+            "epoch_count": 1,
+            "gae_lambda": 0.95,
+            "gamma": 0.99,
+            "maximum_gradient_norm": 0.5,
+            "minibatch_size": 64,
+            "permutation_seed": 1701,
+            "value_loss_coefficient": 0.5
+          },
+          "before_ppo": {
+            "actor_learning_rate": 0.0001,
+            "advantage_epsilon": 1e-08,
+            "clip_ratio": 0.2,
+            "critic_learning_rate": 0.0003,
+            "entropy_coefficient": 0.01,
+            "epoch_count": 1,
+            "gae_lambda": 0.95,
+            "gamma": 0.99,
+            "maximum_gradient_norm": 0.5,
+            "minibatch_size": 64,
+            "permutation_seed": 1701,
+            "value_loss_coefficient": 0.5
+          },
+          "mean_prior_weight": 10.0,
+          "method_sha256": "e3f2c5ca2e4d239dae926d436e86a8cc61d9cf45b29302a99087e1b095bdcb65",
+          "schema_version": "r6-actual-method-binding/1",
+          "strict_resume": false,
+          "unchanged_weights_adam_moments_and_counters": true
+        },
+        "method_hashes": {
+          "checkpoint": "checkpoint-h1-v2",
+          "critic": "critic-h1-v2",
+          "curriculum": "curriculum-h1-r6-v1",
+          "ics_clearance_margin_m": "0.15",
+          "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+          "logging": "learning-log-h1-v1",
+          "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+          "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+          "metric": "metric-h1-v1",
+          "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+          "r6_method": "3588ad1a47a18e618adf255f004ec10c49ab472df96a837c40b879fd17104559",
+          "r6_recipe": "07c09a29b4a0b6720b7aed10174baf45b58089d630dda37e7be3df0796fe77b3",
+          "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+          "reset_distribution": "mixed-nearwall",
+          "reward": "reward-h1-zero-neutrality-v1",
+          "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5"
+        },
+        "physical_continuity": false,
+        "plan": {
+          "checkpoint_updates": [
+            642
+          ],
+          "experiment_id": "R6-DIRECT-THIRD-PRECHECK-01",
+          "initialization": {
+            "checkpoint": {
+              "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+              "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+            },
+            "kind": "COMMON_U640_NEW_STREAM",
+            "method_hashes": {
+              "checkpoint": "checkpoint-h1-v2",
+              "critic": "critic-h1-v2",
+              "curriculum": "curriculum-h1-v1",
+              "ics_clearance_margin_m": "0.15",
+              "initialization": "accepted-checkpoint-fresh-physical-reset-v1",
+              "logging": "learning-log-h1-v1",
+              "mean_prior_contract": "d0aa5731c0712d9a50a88e1ae32f29a1eacc2b1c417b925a3e2ba3a416652da9",
+              "method": "679f5ce9b4d43a562332a355c8a64768e0e2d150741acb9cd43a13161f2ee5ec",
+              "metric": "metric-h1-v1",
+              "origin_checkpoint_sha256": "a3b9f9115268270ec000750035085b03980de2aed31987b7b08ae97bf26d8776",
+              "research_effective_method": "351b69c3505d2bdcd74002c9b991de431e08b188783d8bbf3ea9d71854aa33f6",
+              "reset_distribution": "mixed-nearwall",
+              "reward": "reward-h1-zero-neutrality-v1",
+              "w_closure_contract": "686ffa93eb48034af85cc0e31c026bcdba5c26014ae615238952b12e9c9744b5"
+            },
+            "source_identity": {
+              "config_sha256": "df96f98d0d55f997d20ace98468bfa4f4a6a614b1284d6f5b320ee34b9b2adbb",
+              "product_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+              "product_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924",
+              "workload_commit": "0c6363bbc0d2947a272f533c02e73d2995ac225a",
+              "workload_tree": "071b52ce714faa510da6ce0f33a1a9308bab2924"
+            }
+          },
+          "phase": "development",
+          "recipe": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/recipe.json",
+            "sha256": "07c09a29b4a0b6720b7aed10174baf45b58089d630dda37e7be3df0796fe77b3"
+          },
+          "schema_version": "r6-local-training-plan/1",
+          "selection_freeze": null,
+          "start_update": 640,
+          "storage": {
+            "branch_record_bytes": 16777216,
+            "checkpoint_bytes": 16777216,
+            "compressed_bytes": 805306368,
+            "maximum_raw_file_bytes": 68719476736,
+            "metadata_bytes": 67108864,
+            "payload_bytes": 1073741824,
+            "plain_bytes": 268435456
+          },
+          "target_update": 642,
+          "training_seed": 2026112200,
+          "wall_seconds": 960
+        },
+        "source_identity": {
+          "config_sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19",
+          "product_commit": "1e593743d0ef993621d1d6f633671f94d658e0ba",
+          "product_tree": "ad14464b32a8c6d547750831e78591a3b5234839",
+          "workload_commit": "1e593743d0ef993621d1d6f633671f94d658e0ba",
+          "workload_tree": "ad14464b32a8c6d547750831e78591a3b5234839"
+        }
+      },
+      "rows": 1
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-10272/learning_log/accounting.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/accounting.jsonl.r6z",
+        "sha256": "6d2fdec9a1b84b2fbe2241508c1b0f1a29222b03bd3f5159a1f87f9edb6460e4"
+      },
+      "raw_bytes": 9518,
+      "raw_sha256": "83e7fba74cd5286293bc147ee339ed339f5bfa8545e8d512b994222e589a0fa7",
+      "rows": 66
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-10272/learning_log/command_blocks.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/command_blocks.jsonl.r6z",
+        "sha256": "0dae5bbad399a385c7a1dfd8d55e1833acaf0e8fc3f29a28e10935cc8f5e57a3"
+      },
+      "raw_bytes": 18950,
+      "raw_sha256": "408afd54a041282c6a4e5e059462d303279cdb4ee32eaa1c26a0b1755d835f87",
+      "rows": 32
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-10272/learning_log/compact_rollouts.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/compact_rollouts.jsonl.r6z",
+        "sha256": "41d3e0a758477e95f58e044bd9433524a7a1f0049992c31400b7c09774dcbf28"
+      },
+      "raw_bytes": 2290481,
+      "raw_sha256": "ada5f3795ecc22441cdb7f64b5d5a4ee09c4672bb07831c6819a27e52b585126",
+      "rows": 32
+    },
+    {
+      "complete": true,
+      "episodes": {
+        "center:RUN_END": {
+          "count": 24,
+          "return_sum": -144.85293912887573,
+          "right_censored": 24,
+          "steps": 768
+        },
+        "near_x_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -21.542339324951172,
+          "right_censored": 4,
+          "steps": 128
+        },
+        "near_y_wall:RUN_END": {
+          "count": 4,
+          "return_sum": -22.752212047576904,
+          "right_censored": 4,
+          "steps": 128
+        }
+      },
+      "logical_name": "phases/0-10240-10272/learning_log/episodes.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/episodes.jsonl.r6z",
+        "sha256": "9f7259533ea42b9c65919c07b8f049cfcbc662e6a32b8fe512727bc0eab95b66"
+      },
+      "raw_bytes": 23771,
+      "raw_sha256": "c0665174eaf59b35075b54ff53c165003d7dcb11f25bd79d951a325eab07977d",
+      "rows": 32
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-10272/learning_log/measurement_windows.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/measurement_windows.jsonl.r6z",
+        "sha256": "7c09789f97eeeaf0df96eb5508acec6b3df4cb80a51b1b661e53fdea2f88c607"
+      },
+      "raw_bytes": 295774946,
+      "raw_sha256": "e65cb13f81adebd1d5fe9f7ff20c88bc88678e837a7e998473cb2741b5523518",
+      "rows": 16
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-10272/learning_log/minibatches.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/minibatches.jsonl.r6z",
+        "sha256": "84035ac5a37e8dbcb2ff43a2f7ac361d60d883e5aaf6b85b5331932fafc8f2a5"
+      },
+      "raw_bytes": 7580,
+      "raw_sha256": "058b1576e2a2303d02f97d25121abcdb6ae0318179432ee08711a1db35f8f7e4",
+      "rows": 16
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-10272/learning_log/partial_rollout_steps.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/partial_rollout_steps.jsonl.r6z",
+        "sha256": "333148b5489122e697943c3e763286830cab5f3746c154a8dab322f39cc94280"
+      },
+      "raw_bytes": 2387543,
+      "raw_sha256": "00d598911f729b86945da53271098ef78fde1724070cb45169cff9585744f181",
+      "rows": 32
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-10272/learning_log/phase_complete.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/phase_complete.jsonl.r6z",
+        "sha256": "319f09e3f625070704db579178f955b4dc4205c2adcfab00d575ef23c3c32f64"
+      },
+      "raw_bytes": 685,
+      "raw_sha256": "5fa84c91267a351740e940031496585dab34f29fa9ab12c1382ea016352567a3",
+      "record": {
+        "counters": {
+          "actor_optimizer_steps": 16,
+          "attempted_policy_steps": 32,
+          "attempted_updates": 2,
+          "automatic_resets": 0,
+          "completed_policy_steps": 32,
+          "completed_updates": 2,
+          "critic_optimizer_steps": 16,
+          "explicit_resets": 1,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 1,
+          "real_environment_transitions": 1024,
+          "real_optimizer_updates": 2,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 1024
+        },
+        "phase": {
+          "index": 0,
+          "kind": "original",
+          "phase_end_update": 642,
+          "phase_start_update": 640,
+          "start_update": 640,
+          "target_update": 642
+        }
+      },
+      "rows": 1
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-10272/learning_log/rollouts.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/rollouts.jsonl.r6z",
+        "sha256": "99325c9d931e6df002f2029b4c1586e351044c7989b6215a8eeb7ed01176bfc8"
+      },
+      "raw_bytes": 12806,
+      "raw_sha256": "1c09663ee7bb6be8bd4f5eea1755d608e6c8df270adca409fc1c1b26849a90e8",
+      "rows": 2
+    },
+    {
+      "complete": true,
+      "logical_name": "phases/0-10240-10272/learning_log/updates.jsonl",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/phases/0-10240-10272/learning_log/updates.jsonl.r6z",
+        "sha256": "64b444d73dd33cd84c29c4af3ef86654f56c765b83048b3b09fb8ab75d4cee0e"
+      },
+      "raw_bytes": 5405,
+      "raw_sha256": "f3ff05753db271626e2a36e65e3236f099a86e0282682427e5ef17a65398d0cc",
+      "rows": 2,
+      "updates": [
+        641,
+        642
+      ]
+    },
+    {
+      "complete": true,
+      "logical_name": "pilot_diagnostic/first_update_probe.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/first_update_probe.pt.r6z",
+        "sha256": "04620bf7b3ae041a5c3aed886882e706387153018af9bafd039f432058976d44"
+      },
+      "raw_bytes": 12289599,
+      "raw_sha256": "cf2dfeb9c27d47d18dbe92738c03f6d078caea9987c816ddfe4ebaa2f7270b1c",
+      "rows": 0
+    },
+    {
+      "complete": true,
+      "logical_name": "pilot_diagnostic/update_641_full_input.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_641_full_input.pt.r6z",
+        "sha256": "47f1cd629afe0f95d072db04dc3a16d1fbbfc0928464d7ed301f9e1e8316f1d9"
+      },
+      "raw_bytes": 522177865,
+      "raw_sha256": "e8e71d3a7475d5f45dc0c60ee601b637b46a11396812ec8eb4de167c59b94948",
+      "rows": 0
+    },
+    {
+      "complete": true,
+      "logical_name": "pilot_diagnostic/update_642_full_input.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/pilot_diagnostic/update_642_full_input.pt.r6z",
+        "sha256": "379923e2e79935fbb67fad258294becb908a78b61d41570417530b1c4094fda3"
+      },
+      "raw_bytes": 522177865,
+      "raw_sha256": "4116e4e2c450341b613d73bb90d660632779ff2b2d09a6efd6f14f617eb0d3a0",
+      "rows": 0
+    },
+    {
+      "complete": true,
+      "logical_name": "rng/initialization.pt",
+      "pin": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/compressed_evidence/rng/initialization.pt.r6z",
+        "sha256": "f985722ca4b4212a8dce2605aa627f914efe912625c4e478c66b778a5cf2c4da"
+      },
+      "raw_bytes": 39317,
+      "raw_sha256": "1a9eb82b87dd9e44c4712875264c9591a54aade808ef1939ba31349b8f219e98",
+      "rows": 0
+    }
+  ],
+  "summary": {
+    "checkpoints": [
+      {
+        "finite_tensor_tree": true,
+        "metadata_verified": true,
+        "pin": {
+          "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/checkpoints/u642.pt",
+          "sha256": "36a5db3a76e09f8d696a02d08d079f415b3dd3d1f89d296a28d8a92218cdeb62"
+        },
+        "state_audit": {
+          "actor_critic_state_loaded": true,
+          "adam_parameter_counts": {
+            "actor": 16,
+            "critic": 10
+          },
+          "adam_state_loaded": true,
+          "adam_step": 5136,
+          "cpu_rng_payload_parseable": true,
+          "cuda_rng_semantics_verified": false,
+          "cuda_rng_state_count": 1,
+          "optimizer_step_executed": false,
+          "rng_restored": false,
+          "strict_checkpoint_restore_performed": false
+        },
+        "strict_restore_performed": false,
+        "update": 642
+      }
+    ],
+    "complete_stream_count": 15,
+    "cpu_probability_replay_error": "probability gate mismatch at frozen index 0",
+    "expected_counters": {
+      "actor_optimizer_steps": 16,
+      "completed_policy_steps": 32,
+      "completed_updates": 2,
+      "critic_optimizer_steps": 16,
+      "explicit_resets": 1,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 1,
+      "real_environment_transitions": 1024,
+      "real_optimizer_updates": 2,
+      "training_transitions": 1024
+    },
+    "experiment_id": "R6-DIRECT-THIRD-PRECHECK-01",
+    "issue_count": 1,
+    "learning_gain_established": false,
+    "observed_counters": {
+      "actor_optimizer_steps": 16,
+      "attempted_policy_steps": 32,
+      "attempted_updates": 2,
+      "automatic_resets": 0,
+      "completed_policy_steps": 32,
+      "completed_updates": 2,
+      "critic_optimizer_steps": 16,
+      "explicit_resets": 1,
+      "initialization_physics_ticks": 2,
+      "live_process_starts": 1,
+      "nontraining_transitions": 0,
+      "real_checkpoint_writes": 1,
+      "real_environment_transitions": 1024,
+      "real_optimizer_updates": 2,
+      "simulator_initializations": 1,
+      "synthetic_optimizer_steps": 0,
+      "synthetic_optimizer_updates": 0,
+      "synthetic_samples": 0,
+      "temporary_checkpoint_writes": 0,
+      "training_transitions": 1024
+    },
+    "phase": "development",
+    "phases": [
+      {
+        "completed_record": true,
+        "episodes": {
+          "center:RUN_END": {
+            "count": 24,
+            "return_sum": -144.85293912887573,
+            "right_censored": 24,
+            "steps": 768
+          },
+          "near_x_wall:RUN_END": {
+            "count": 4,
+            "return_sum": -21.542339324951172,
+            "right_censored": 4,
+            "steps": 128
+          },
+          "near_y_wall:RUN_END": {
+            "count": 4,
+            "return_sum": -22.752212047576904,
+            "right_censored": 4,
+            "steps": 128
+          }
+        },
+        "phase": {
+          "index": 0,
+          "kind": "original",
+          "phase_end_update": 642,
+          "phase_start_update": 640,
+          "start_update": 640,
+          "target_update": 642
+        }
+      }
+    ],
+    "physical_replay_performed": false,
+    "probability_gate_recomputed": false,
+    "probability_replay": null,
+    "rng_initialization_audit": {
+      "actual_rollout_rng_use_verified": false,
+      "cpu_seed_derivation_verified": true,
+      "cuda_rng_state_count": 1,
+      "cuda_seed_derivation_verified": false,
+      "kind": "COMMON_U640_NEW_STREAM",
+      "origin_rng_equal": true,
+      "persistence_order_verified": false,
+      "physical_continuity": false,
+      "resume_rng_equal": false,
+      "starting_update": 640,
+      "status": "PASS",
+      "training_seed": 2026112200
+    },
+    "rng_state_semantics_verified": false,
+    "schema_version": "r6-training-summary/1",
+    "scientific_acceptance": false,
+    "start_update": 640,
+    "stream_count": 15,
+    "strict_checkpoint_restore_performed": false,
+    "target_update": 642,
+    "training_seed": 2026112200
+  }
+}
