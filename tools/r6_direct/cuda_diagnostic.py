@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import resource
+import shutil
 import sys
 import signal
 import subprocess
@@ -81,7 +82,14 @@ def main():
     plan=json.loads(args.plan.read_text())
     bounds=validated_bounds(plan)
     if args.child:child(plan);return
-    if pin(__file__)!=plan['script']:raise RuntimeError('DIAGNOSTIC_SOURCE_DRIFT')
+    system=plan.get('system_results') is True
+    if pin(__file__)!=plan['launcher_script' if system else 'script']:
+        raise RuntimeError('DIAGNOSTIC_SOURCE_DRIFT')
+    if system:
+        from tools.r6_direct.storage import system_paths, evidence_bytes, SYSTEM_FLOOR, CONTROL_ALLOWANCE
+        attempt=system_paths(plan,diagnostic=True)
+        if attempt.exists() or shutil.disk_usage(attempt.parent).free<SYSTEM_FLOOR+CONTROL_ALLOWANCE:
+            raise ValueError('DIRECT_DIAGNOSTIC_SYSTEM_STORAGE')
     for key in ('strace','bwrap','python','predecessor_receipt'):checked(plan[key])
     snapshot=Path(plan['snapshot']);source=json.loads(checked(plan['helper_source']).read_text())
     if subprocess.check_output(['git','-C',str(snapshot),'rev-parse','HEAD'],text=True).strip()!=source['source_commit']:raise RuntimeError('HELPER_COMMIT_DRIFT')
@@ -103,11 +111,17 @@ def main():
         ledger_path,ledger,_,third=load_run_ledger(plan['run_id'],authority)
         seconds=bounds['gpu_and_wall_reservation_seconds']
         if third is not None:
-            if directory!=NEW/'runs'/plan['run_id'] or native.name!=plan['run_id']:
+            if (not system and directory!=NEW/'runs'/plan['run_id']) or native.name!=plan['run_id']:
                 raise ValueError('DIRECT_THIRD_DIAGNOSTIC_OUTPUT')
             third_predecessor(ledger,plan['predecessor_receipt'])
             ledger['first_live_unix']=check_elapsed(ledger,third,seconds+30)
-        reserve(ledger,plan['run_id'],dict(allocated_gpu_seconds=seconds,live_wall_seconds=seconds,live_starts=1,queue_seconds=bounds['queue_seconds']),resource_policy=authority if third is None else None)
+        elif system:
+            raise ValueError('DIRECT_SYSTEM_AUTHORITY')
+        resources=dict(allocated_gpu_seconds=seconds,live_wall_seconds=seconds,live_starts=1,queue_seconds=bounds['queue_seconds'])
+        if system:
+            from tools.r6_direct.resource_policy import OUTPUT_CAP
+            resources[OUTPUT_CAP]=CONTROL_ALLOWANCE
+        reserve(ledger,plan['run_id'],resources,resource_policy=authority if third is None else None)
         if third is not None:
             ledger['new_reservations'][-1]['resource_policy']=authority
         ledger['new_reservations'][-1]['output_within_existing_native_volume']=plan['native_volume']
@@ -116,16 +130,21 @@ def main():
         if native.parent!=Path(binding['target']):raise RuntimeError('NATIVE_BINDING')
         if args.check:
             print('CPU_DIAGNOSTIC_INPUTS_PASS');return
+        started=time.monotonic()
         ledger['status']='RUNNING_DIAGNOSTIC'
         atomic(ledger_path,ledger)
+        if system:attempt.mkdir(mode=0o700)
         directory.mkdir();native.mkdir();(native/'ipc').mkdir();(native/'tmp').mkdir();(native/'cache').mkdir()
         from tools.r6_direct.admission import run_gate
-        gate=native/'prelaunch';gate.mkdir()
+        gate=(attempt if system else native)/'prelaunch';gate.mkdir()
         atomic(directory/'intent.json',dict(plan=plan,parent=process_identity(os.getpid())))
         try:
             prelaunch(directory,gate,plan,pin(args.plan),run_gate)
         except BaseException:
             ledger['new_reservations'][-1]['receipt']=pin(directory/'receipt.json')
+            if system:
+                ledger['new_reservations'][-1].update(closed_evidence_bytes=evidence_bytes(attempt,native),
+                    diagnostic_wall_seconds=time.monotonic()-started)
             ledger['status']='WAITING_FOR_ANALYSIS';atomic(ledger_path,ledger)
             raise
         env={k:v for k,v in os.environ.items() if k in ('HOME','PATH','LANG','LC_ALL')}
@@ -134,13 +153,27 @@ def main():
             TMPDIR=str(native/'tmp'),CUDA_CACHE_PATH=str(native/'cache'))
         argv=[str(checked(plan['bwrap'])),'--die-with-parent','--bind','/','/','--dev-bind','/dev','/dev',
             '--bind',str(native/'ipc'),'/dev/shm','--',str(checked(plan['strace'])),'-f','-qq','-s','256',
-            '-e','trace=%file,ioctl,prctl,mmap,mprotect','-o',str(native/'syscalls.log'),
+            '-e','trace=%file,ioctl,prctl,mmap,mprotect','-o',str((attempt if system else native)/'syscalls.log'),
             plan['python']['path'],'-B',plan['script']['path'],'--plan',str(args.plan.resolve()),'--child']
         atomic(directory/'RUN_INPUTS.json',dict(plan=plan,argv=argv,environment=env))
         resource.setrlimit(resource.RLIMIT_FSIZE,(bounds['syscall_log_bytes'],bounds['syscall_log_bytes']))
+        def storage_check():
+            if (shutil.disk_usage(attempt.parent).free<SYSTEM_FLOOR
+                    or evidence_bytes(attempt,native)>CONTROL_ALLOWANCE):
+                raise ValueError('DIRECT_DIAGNOSTIC_SYSTEM_STORAGE')
         result=supervise(argv,cwd=plan['snapshot'],env=env,directory=directory,deadline_seconds=bounds['child_seconds'],
-            stop=lambda:bool(stop_paths()) or (directory/'STOP').exists())
-        ledger['new_reservations'][-1]['receipt']=pin(directory/'receipt.json');ledger['status']='WAITING_FOR_ANALYSIS';atomic(ledger_path,ledger)
+            stop=lambda:bool(stop_paths()) or (directory/'STOP').exists(),
+            storage_check=storage_check if system else None)
+        row=ledger['new_reservations'][-1]
+        row['receipt']=pin(directory/'receipt.json')
+        if system:
+            completed=native/'probability_result.json'
+            if completed.is_file():
+                with (attempt/completed.name).open('xb') as destination:
+                    destination.write(completed.read_bytes());destination.flush();os.fsync(destination.fileno())
+            row.update(closed_evidence_bytes=evidence_bytes(attempt,native),
+                       diagnostic_wall_seconds=time.monotonic()-started)
+        ledger['status']='WAITING_FOR_ANALYSIS';atomic(ledger_path,ledger)
         sys.exit(0 if result['exit_code']==0 and not result['error'] else 1)
 
 

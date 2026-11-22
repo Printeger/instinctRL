@@ -2,7 +2,7 @@
 
 `third-training-anchor`，2026-11-22。Maverick 主持。R6 复盘和开发原件重算完成。新保留集的主指标拟选延迟加丢帧停令后的有效锚 MAE。R6 开发 u640→u768 在此项从 50.13 到 57.51 mm，两者均 32/32。候选只将锚奖励 4→8，拟和共同 u640、三条等量原配方续训比较。见 [计划](../docs/experiments/third-training/PLAN.md)。
 
-已用普通用户权限把第三轮作业绑定到现有卷。两段真实预检 u640→u642→u646 完成；第二段的恢复 RNG 与 u642 逐字节相等。两段均在清理超时后回收，保留 CLOSED/-15 和离线 CPU 概率差异。正式 128 更新比较在现有证据链下受 96 GiB 结果卷限制，首次评价缺口 3.93 GiB，完整比较缺口 12.79 GiB。正式训练未启动。下一步先在 CPU 验证能够逐 lane 复算的证据留存方案。见[采样和容量](../docs/experiments/third-training/PREFLIGHT_RESULT_AND_FORMAL_CAPACITY.json)。
+已完成两段真实恢复预检 u640→u642→u646，预检账目保留。2026-11-23 接入获批的系统盘目录和 30 GiB 守卫，三对 128 更新正式计划及保留集承诺已冻结，等量原配方 01 已启动。以普通用户权限复用 native 临时卷。保全主工作树已有的四处证据格式编辑，完整回放从干净的冻结快照运行。见[正式冻结](../docs/experiments/third-training/formal/FREEZE.json)和[独立账本](../docs/experiments/third-training/RESOURCE_LEDGER.json)。
 
 # 历史初始化工作流
 

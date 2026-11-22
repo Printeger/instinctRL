@@ -21,7 +21,12 @@ def settle_time(ledger, run_id):
     # Baseline supervisor starts its clock before creating its only live child
     # and ends after complete cleanup. Diagnostics have a separate earlier gate
     # and are deliberately excluded from this narrower settlement.
-    if not run_id.startswith('R6-DIRECT-') or 'DIAGNOSTIC' in run_id:raise ValueError('DIRECT_SETTLEMENT_SCOPE')
+    if not run_id.startswith('R6-DIRECT-'):raise ValueError('DIRECT_SETTLEMENT_SCOPE')
+    if 'DIAGNOSTIC' in run_id:
+        total=row.get('diagnostic_wall_seconds')
+        if not run_id.startswith('R6-DIRECT-THIRD-') or type(total) not in (float,int) or not math.isfinite(total) or total<seconds:
+            raise ValueError('DIRECT_SETTLEMENT_SCOPE')
+        seconds=total
     original=dict(row['resources']); charged=math.ceil(seconds)
     if any(charged>original[k] for k in ('allocated_gpu_seconds','live_wall_seconds')):
         raise ValueError('DIRECT_SETTLEMENT_OVER_RESERVATION')

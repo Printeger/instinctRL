@@ -108,5 +108,10 @@ pin，文件采用 `instinctrl-third-training-resources/1` 并绑定第三轮用
 当新增卷额度为零，使用 `instinctrl-third-storage-reuse/1` 绑定已有卷的准确 manifest，
 以独立的零分配预留和新作业目录记账。每条输入须提供 `result_payload_cap_bytes`
 及 `native_minimum_free_bytes`，入口核对挂载身份和当前剩余容量。
+第三轮正式作业的 `instinctrl-third-system-storage/1` 绑定另行使用
+`~/instinctrl-runs/<run-id>/`。工作负载、回执和分析分目录保留，来回检查系统盘的
+30 GiB 余量，并按关闭后证据结算。经冻结的第三轮可用既有直接链中的
+`python -m tools.r6_direct.study --run` 接续。它以精确监督器身份接管已有作业，
+逐条消费训练分析和回执，在发布模型清单后揭晓已承诺的评价流。
 第三轮主指标可用 `python -m tools.r6_direct.anchor_endpoint REFERENCE_REPORT TRIAL_REPORT`
 从已分析的审计原件重算。当前进度见 [第三轮计划](../../docs/experiments/third-training/PLAN.md)。

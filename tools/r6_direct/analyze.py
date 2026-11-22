@@ -55,8 +55,12 @@ def main():
     ctx = context(input_pin)
     destination = args.destination.absolute()
     originals = (Path(ctx['plan']['attempt_dir']), Path(ctx['plan']['output_root']))
+    system_analysis = (ctx['plan'].get('system_results') is True
+                       and destination.parent == originals[0]
+                       and destination.name in ('analysis-cpu', 'analysis'))
     if (destination.resolve() != destination or destination.exists()
-            or any(destination == p or p in destination.parents or destination in p.parents for p in originals)):
+            or (not system_analysis and any(destination == p or p in destination.parents
+                                             or destination in p.parents for p in originals))):
         parser.error('new canonical destination separate from originals required')
     report, summary = analyze(input_pin,probability_diagnostic=None if args.probability_diagnostic is None else pin(args.probability_diagnostic))
     if len(json.dumps(report, allow_nan=False).encode()) > 16*1024**2 or len(json.dumps(summary, allow_nan=False).encode()) > 48*1024:

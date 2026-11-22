@@ -2,9 +2,9 @@
 
 2026-11-22 起，项目开发默认使用 Maverick V1.1.1。角色与交付规则见根 `AGENTS.md`，安装与验证记录见 `.maverick/STATE.md`。R6 本地执行入口仍为 `tools/r6_direct/`。
 
-# 第三轮训练预检完成，正式比较受结果卷容量限制
+# 第三轮正式配对比较执行中
 
-第三轮两段真实恢复预检 u640→u642→u646 已完成，第二段恢复 RNG 与 u642 逐字节一致。两作业均在退出超时后完成有界清理，准确所属进程均已退出，CPU 概率复算差异保留。按两张现有结果卷的布局，96 GiB 卷在评价阶段首缺 3.93 GiB，做完全量比较缺 12.79 GiB。新增卷额度为零，正式比较尚未启动。见 [预检与容量证据](experiments/third-training/PREFLIGHT_RESULT_AND_FORMAL_CAPACITY.json)。
+两段恢复预检已通过，预检的两次启动和 563 秒继续计入预算。2026-11-23 授权在系统盘 `~/instinctrl-runs/<run-id>/` 写正式作业，保留 30 GiB 可用空间，300 GiB 新证据上限。正式方案与保留集承诺已冻结，首条等量原配方续训已启动。见 [正式冻结](experiments/third-training/formal/FREEZE.json) 和 [独立账本](experiments/third-training/RESOURCE_LEDGER.json)。
 
 # R6 接续完成：未证实学习增益，独立终审通过
 
