@@ -1,6 +1,6 @@
 # 项目开发工作流
 
-2026-11-22 起，项目开发默认使用 Maverick V1.1。角色与交付规则见根 `AGENTS.md`，安装与验证记录见 `.maverick/STATE.md`。R6 本地执行入口仍为 `tools/r6_direct/`。
+2026-11-22 起，项目开发默认使用 Maverick V1.1.1。角色与交付规则见根 `AGENTS.md`，安装与验证记录见 `.maverick/STATE.md`。R6 本地执行入口仍为 `tools/r6_direct/`。
 
 # R6 接续完成：未证实学习增益，独立终审通过
 

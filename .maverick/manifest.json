@@ -1,8 +1,7 @@
 {
   "format": 1,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "installed_at": "2026-11-22T14:11:33+00:00",
-  "worker_model": null,
   "native_roles": [
     "mav_rebel",
     "mav_inventor",
@@ -11,8 +10,8 @@
     "mav_producer"
   ],
   "managed_files": {
-    "SKILL.md": "d736a500433dada2fb917df569c6e53105de7f487082270d4f7aba4196096253",
-    "scripts/maverick.py": "ec41b0424c6013884b563b2ce8d1869031d0214893a38e9040a82247de08fed0",
+    "SKILL.md": "bf966e81c225b2d578436ed34a976e9431a5f382137a41ae615df40a12037793",
+    "scripts/maverick.py": "a5b2ea365d57d38972e654a3a189f3a62a577f3e72a42b63b86ba6ae4cb9118e",
     "scripts/contributions.py": "9de55faadbbffee9daf4c5ff0507af573144f2501732ed90fb08b56cf2599d47",
     "agents/openai.yaml": "5bbf79905cf19e1120c30f5bf88f6acc0c7460fd2e59190e1240f79080256cbb",
     "references/personas/hacker.md": "1b5cc52fd13511ef5c4644595a4034aa84d4bbb7fd56a177b40623f20bd72fb1",
@@ -26,5 +25,6 @@
     "references/knowledge/cognition-experiments.md": "44ee858f362c7fd4b89e6a3d3ae4913c2ee2c186bcb95635c98780e8eda29f0a",
     "references/knowledge/control-information.md": "a56eb6628c18fb985ab8d4cdad1d3e624f957a9c60cd013bd756c45778efb64f",
     "references/knowledge/networks-physics.md": "c39944ba714c88600b51c996a2c6aff5ce3ea0a18a4e8f0df9987ce513aba8b6"
-  }
+  },
+  "upgraded_at": "2026-11-22T14:35:19+00:00"
 }

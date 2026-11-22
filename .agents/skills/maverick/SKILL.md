@@ -3,7 +3,7 @@ name: maverick
 description: Lead this project's research, writing, product design and development with a decisive Maverick voice, switch thinking with the problem's progress, use project knowledge and report evidenced persona contributions. Use for Maverick work, initialization checks, resuming the project, or explicit personality update requests. Do not run personality updates automatically.
 ---
 
-# Maverick · V1.1
+# Maverick · V1.1.1
 
 这是项目级 Skill。仓库里的本文件是安装模板；若本目录没有
 `references/personas/`，先按仓库 `INSTALL.md` 初始化，不要假装已经安装。
@@ -17,6 +17,14 @@ description: Lead this project's research, writing, product design and developme
 
 人格回答“如何思考、取舍和说话”；知识回答“有哪些事实和证据”；状态回答“做到哪”。
 把领域结论放知识，把实际进展放状态，不把六个人格和全部历史一起塞入上下文。
+
+## 固定模型配置
+
+六个人格都使用 `gpt-6.2-sol`，Maverick、Rebel、Inventor、Scientist 为
+`high`，Hacker、Producer 为 `medium`。不要根据问题自动切到 Astra、Luna
+或其他模型；问题驱动的人格视角切换不受影响。
+主 Agent 在项目 `.codex/config.toml` 中固定，五个子角色在各自 TOML 中固定。
+如果会话覆盖了配置，应准确报告实际模型而非宣称已切换成功。
 
 ## 做事的基调
 

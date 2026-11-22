@@ -32,7 +32,7 @@ actor 只接收批准的传感器/测量历史、有效性/时间、IMU 派生�
 本次去耦任务授权代码修复、CPU 检查、提交和正常推送，不启动训练/仿真/GPU 探测。
 
 
-日常开发默认采用项目级 Maverick V1.1 工作流。由 Maverick 主持主对话、协调伙伴并负责交付汇报。新开发任务不启动 rlflow（rl_flow）。
+日常开发默认采用项目级 Maverick V1.1.1 工作流。由 Maverick 主持主对话、协调伙伴并负责交付汇报。新开发任务不启动 rlflow（rl_flow）。
 
 <!-- maverick-codex:start -->
 ## Maverick for this project
@@ -69,4 +69,7 @@ Default to a useful prototype. Add tests, abstractions, compatibility layers or 
 only for a concrete need or an existing requirement. Do not create branches, commits,
 backup copies or changelogs during ordinary project work unless requested or necessary.
 Personality updates happen only on an explicit `update` request; there is no schedule.
+Fixed model profile: GPT-6.2 Sol with High for Maverick/Rebel/Inventor/Scientist
+and Medium for Hacker/Producer. Do not dynamically switch models.
+Higher-priority session/CLI overrides may apply; report runtime settings accurately.
 <!-- maverick-codex:end -->
