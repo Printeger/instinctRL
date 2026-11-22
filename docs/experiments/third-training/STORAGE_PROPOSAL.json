@@ -1,0 +1,89 @@
+{
+  "schema_version": "instinctrl-third-storage-proposal/1",
+  "status": "AWAITING_RESOURCE_CONFIRMATION_AND_ADMINISTRATOR",
+  "volume_id": "J-d70fcbe8fd54b910",
+  "native": {
+    "volume_id": "J-d70fcbe8fd54b910",
+    "image": "/var/lib/instinctrl-r6-native/J-d70fcbe8fd54b910/native.ext4",
+    "target": "/var/lib/instinctrl-r6-native/J-d70fcbe8fd54b910/output",
+    "maximum_backing_bytes": 1610612736,
+    "owner_uid": 1000,
+    "owner_gid": 1000,
+    "commands": [
+      [
+        "/usr/bin/fallocate",
+        "--length",
+        "1610612736",
+        "/var/lib/instinctrl-r6-native/J-d70fcbe8fd54b910/native.ext4"
+      ],
+      [
+        "/usr/sbin/mkfs.ext4",
+        "-q",
+        "-F",
+        "-m",
+        "0",
+        "/var/lib/instinctrl-r6-native/J-d70fcbe8fd54b910/native.ext4"
+      ],
+      [
+        "/usr/bin/mount",
+        "-t",
+        "ext4",
+        "-o",
+        "loop,nodev,nosuid,noexec",
+        "/var/lib/instinctrl-r6-native/J-d70fcbe8fd54b910/native.ext4",
+        "/var/lib/instinctrl-r6-native/J-d70fcbe8fd54b910/output"
+      ]
+    ],
+    "limitations": [
+      "Only writes inside the mounted output directory are bounded",
+      "CPU exhaustion, remount persistence and native-path containment not yet verified",
+      "Each identity retains its image; no deletion, reuse, refund or automatic startup mount",
+      "Account image plus metadata before administrator applies this plan"
+    ]
+  },
+  "result": {
+    "volume_id": "J-d70fcbe8fd54b910",
+    "target": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-THIRD-TRAINING/results",
+    "image": "/var/lib/instinctrl-r6-results/J-d70fcbe8fd54b910/results.ext4",
+    "maximum_backing_bytes": 120259084288,
+    "owner_uid": 1000,
+    "owner_gid": 1000,
+    "commands": [
+      [
+        "/usr/bin/fallocate",
+        "--length",
+        "120259084288",
+        "/var/lib/instinctrl-r6-results/J-d70fcbe8fd54b910/results.ext4"
+      ],
+      [
+        "/usr/sbin/mkfs.ext4",
+        "-q",
+        "-F",
+        "-m",
+        "0",
+        "/var/lib/instinctrl-r6-results/J-d70fcbe8fd54b910/results.ext4"
+      ],
+      [
+        "/usr/bin/mount",
+        "-t",
+        "ext4",
+        "-o",
+        "loop,nodev,nosuid,noexec",
+        "/var/lib/instinctrl-r6-results/J-d70fcbe8fd54b910/results.ext4",
+        "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-THIRD-TRAINING/results"
+      ]
+    ]
+  },
+  "implementation_pins": {
+    "native": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_native_volume.py",
+      "sha256": "4a4489bf36fec2b6207a7d0fc96fc4c06013a1c226268f9d1270a899e527e5eb"
+    },
+    "result": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/tools/provision_r6_result_volume.py",
+      "sha256": "221b3db6f38690e01f46868f845ec36b5519030be43474815b3554ff3010c0cd"
+    }
+  },
+  "required_backing_bytes": 121869697024,
+  "reserved_control_bytes": 67108864
+}
