@@ -1,0 +1,51 @@
+{
+  "estimates_bytes": {
+    "first": 247730944,
+    "second": 712276238
+  },
+  "existing_mounts": {
+    "native": {
+      "device": "/dev/loop21",
+      "free_bytes": 1440641024,
+      "manifest": {
+        "path": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/volume.json",
+        "sha256": "254edd286b3fbeb89409eb79e1717dcda8adea81f927bb6ca9cb65dc01dd23f4"
+      },
+      "maximum_bytes": 1610612736,
+      "mount_id": "6414",
+      "target": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output"
+    },
+    "result": {
+      "device": "/dev/loop22",
+      "free_bytes": 16162234368,
+      "manifest": {
+        "path": "/var/lib/instinctrl-r6-results/J-60c22d4806aa6798/volume.json",
+        "sha256": "48e308477e041b7adfb82a1aef6ed87960ed3521ba5d49be2ec72ae9abb6b372"
+      },
+      "maximum_bytes": 34359738368,
+      "mount_id": "6435",
+      "target": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results"
+    }
+  },
+  "historical_allocated_bytes": {
+    "fixed": 244686848,
+    "native": 12046336,
+    "original_64_updates": 97411072,
+    "robust_1025_frames": 7373524992
+  },
+  "host_new_volume_allocation_bytes": 0,
+  "method": "Result fixed startup and pilot costs plus history-scaled phase. Native uses 64 MiB working estimate and existing 256 MiB admission free-space margin per job.",
+  "reservations": {
+    "first": {
+      "native_free_bytes": 268435456,
+      "result_payload_bytes": 1073741824
+    },
+    "second": {
+      "native_free_bytes": 268435456,
+      "result_payload_bytes": 2147483648
+    }
+  },
+  "schema_version": "instinctrl-third-precheck-capacity/1",
+  "source_case": "R6-DIRECT-TRAIN-02",
+  "status": "EXISTING_MOUNTS_AND_INPUT_RESERVES_PASS_CPU"
+}
