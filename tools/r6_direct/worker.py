@@ -41,7 +41,11 @@ def preflight(plan):
     from training_workloads.unified_h1.result_volume import validate as result_validate
     native=native_validate(plan['native_volume'],host_root_uid=namespace_host_root_uid(),
         minimum_free_bytes=max(256*1024**2,plan.get('native_minimum_free_bytes',0)))
-    result=result_validate(plan['result_volume'],output_cap_bytes=contract['parameters']['output_cap_bytes'],
+    if plan.get('system_results'):
+        from tools.r6_direct.storage import system_result
+        result=system_result(plan,contract,before_launch=not Path(plan['attempt_dir']).exists())
+    else:
+        result=result_validate(plan['result_volume'],output_cap_bytes=contract['parameters']['output_cap_bytes'],
         minimum_free_bytes=0 if 'result_payload_cap_bytes' in plan else 256*1024**2,
         host_root_uid=namespace_host_root_uid())
     # Generic newly provisioned volumes have no legacy fixed-layout payload.
@@ -49,7 +53,7 @@ def preflight(plan):
     # control headroom; never infer it from the requested backing-image size.
     if 'payload_cap_bytes' not in result:
         result=dict(result,payload_cap_bytes=max(0,result['free_bytes']-64*1024**2))
-    if 'result_payload_cap_bytes' in plan:
+    if 'result_payload_cap_bytes' in plan and not plan.get('system_results'):
         # Reuse a nonempty prepaid volume without claiming its original empty
         # capacity. Kernel volume checks above remain, and each new attempt gets
         # a smaller enforced write budget backed by currently free capacity.

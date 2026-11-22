@@ -1,5 +1,6 @@
 import copy
 import json
+from pathlib import Path
 import pytest
 from tools.r6_evidence import file_pin
 from tools.r6_direct.storage import fresh_binding
@@ -25,6 +26,29 @@ def test_new_storage_binding_preserves_ledger(binding):
     plan,ledger,contract=binding;before=copy.deepcopy(ledger)
     assert fresh_binding(plan,ledger,contract)=='fresh'
     assert ledger==before
+
+
+def test_system_result_path_and_capacity(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+    from tools.r6_direct import storage
+
+    root=tmp_path/'instinctrl-runs'
+    root.mkdir(mode=0o700)
+    monkeypatch.setattr(Path,'home',classmethod(lambda cls: tmp_path))
+    monkeypatch.setattr(storage,'SYSTEM_ROOT',root)
+    attempt=root/'R6-DIRECT-THIRD-FORMAL-PROBE'
+    cap=1024**3
+    plan=dict(run_id=attempt.name,attempt_dir=str(attempt),output_root=str(attempt/'control'),
+              result_payload_cap_bytes=cap)
+    contract=dict(parameters=dict(output_cap_bytes=cap))
+    floor=storage.SYSTEM_FLOOR
+    monkeypatch.setattr(storage.shutil,'disk_usage',lambda _:SimpleNamespace(free=floor+cap))
+    with pytest.raises(ValueError,match='SYSTEM_DISK_FLOOR'):
+        storage.system_result(plan,contract,before_launch=True)
+    assert storage.system_result(plan,contract)['payload_cap_bytes']==cap
+    attempt.symlink_to(tmp_path,target_is_directory=True)
+    with pytest.raises(ValueError,match='SYSTEM_PATH'):
+        storage.system_paths(plan)
 
 
 def test_existing_backing_is_bound_without_new_allocation(binding):

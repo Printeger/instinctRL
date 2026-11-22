@@ -94,7 +94,7 @@ def terminate_owned(identities, sig):
     return signaled
 
 
-def supervise(argv, *, cwd, env, directory, deadline_seconds, stop, before_release=None, workload_state=None):
+def supervise(argv, *, cwd, env, directory, deadline_seconds, stop, before_release=None, workload_state=None, storage_check=None):
     """CPU-testable exact-child runner with subreaper cleanup and bounded logs."""
     if not hasattr(os,'pidfd_open') or not hasattr(signal,'pidfd_send_signal'):
         raise RuntimeError('DIRECT_SUPERVISOR_REQUIRES_PIDFD_USE_SYSTEM_PYTHON')
@@ -121,6 +121,7 @@ def supervise(argv, *, cwd, env, directory, deadline_seconds, stop, before_relea
         while True:
             for item in descendants(os.getpid()):seen[(item['pid'],item['starttime'])]=item
             if stop():raise RuntimeError('STOP')
+            if storage_check is not None:storage_check()
             if workload_state is not None and Path(workload_state).exists():
                 state=json.loads(Path(workload_state).read_text())
                 if state.get('status') in ('PASS_PENDING_CLOSE','FAIL_PENDING_CLOSE'):
@@ -177,7 +178,11 @@ def main():
     plan=json.loads(args.inputs.read_text()); input_pin=pin(args.inputs)
     if stop_paths():raise RuntimeError('STOP')
     run_id=plan['run_id'];directory=Path(plan['output_root'])
-    if directory!=NEW/'runs'/run_id or '/' in run_id or not run_id.startswith('R6-DIRECT-'):raise ValueError('DIRECT_OUTPUT_ROOT')
+    system=plan.get('system_results') is True
+    if system:
+        from tools.r6_direct.storage import system_paths, evidence_bytes, CONTROL_ALLOWANCE, system_result
+        system_paths(plan)
+    elif directory!=NEW/'runs'/run_id or '/' in run_id or not run_id.startswith('R6-DIRECT-'):raise ValueError('DIRECT_OUTPUT_ROOT')
     snapshot=Path(plan['snapshot'])
     source=json.loads(Path(plan['source']['path']).read_text())
     if pin(plan['source']['path'])!=plan['source'] or pin(plan['contract']['path'])!=plan['contract']:raise ValueError('DIRECT_INPUT_HASH')
@@ -200,6 +205,8 @@ def main():
                 raise ValueError('DIRECT_THIRD_STORAGE_REQUIRED')
             third_predecessor(ledger,plan['predecessor_receipt'])
             check_elapsed(ledger,third,resources_after_validation(contract)['live_wall_seconds']+30)
+        elif system:
+            raise ValueError('DIRECT_SYSTEM_AUTHORITY')
         # The existing unused bounded physical volumes stay fully charged in
         # the import. Binding a new subdirectory does not release any bytes.
         if 'storage_reservation_id' in plan:
@@ -236,25 +243,41 @@ def main():
             raise ValueError('DIRECT_FINAL_ASSIGNMENT_ALREADY_STARTED')
         if third is not None:
             ledger['first_live_unix']=check_elapsed(ledger,third,resources['live_wall_seconds']+30)
+        if system:
+            from tools.r6_direct.resource_policy import OUTPUT_CAP
+            resources[OUTPUT_CAP]=plan['result_payload_cap_bytes']+CONTROL_ALLOWANCE
         reserve(ledger,run_id,resources,purpose=purpose,resource_policy=authority if third is None else None)
         if third is not None:
             ledger['new_reservations'][-1]['resource_policy']=authority
-        directory.mkdir(parents=True,exist_ok=False)
+        if system:Path(plan['attempt_dir']).mkdir(mode=0o700,exist_ok=False)
+        directory.mkdir(parents=not system,exist_ok=False)
         if final_selection is not None:ledger['new_reservations'][-1]['final_assignment']=final_selection
         ledger['new_reservations'][-1][storage_field]=storage_key
         binding_field='storage_new_binding' if storage_field=='storage_reservation_id' else 'legacy_storage_new_binding'
         ledger['new_reservations'][-1][binding_field]={k:plan[k] for k in ('attempt_dir','native_dir')}
         ledger['status']='RUNNING';atomic(ledger_path,ledger)
-        for key in ('attempt_dir','native_dir'):Path(plan[key]).mkdir(exist_ok=False)
+        if not system:Path(plan['attempt_dir']).mkdir(exist_ok=False)
+        Path(plan['native_dir']).mkdir(mode=0o700,exist_ok=False)
         ipc=Path(plan['native_dir'])/'ipc';ipc.mkdir(exist_ok=False)
         argv=[wrapper,'--die-with-parent','--bind','/','/','--dev-bind','/dev','/dev',
               '--bind',str(ipc),'/dev/shm','--',*argv]
         atomic(directory/'RUN_INPUTS.json',dict(plan=plan,input=input_pin,argv=argv,environment=env,execution_mode='local-direct'))
         atomic(directory/'launch.json',dict(parent=process_identity(os.getpid()),input=input_pin))
+        def storage_check():
+            system_result(plan,contract)
+            now=time.monotonic()
+            if now-storage_check.last>=2:
+                storage_check.last=now
+                if evidence_bytes(plan['attempt_dir'],plan['native_dir'])>resources[OUTPUT_CAP]:
+                    raise ValueError('DIRECT_SYSTEM_EVIDENCE_CAP')
+        storage_check.last=0
         result=supervise(argv,cwd=snapshot,env=env,directory=directory,deadline_seconds=contract['budgets']['wall_seconds']+180,
             stop=lambda:bool(stop_paths()) or (directory/'STOP').exists(),
-            before_release=lambda:None,workload_state=Path(plan['attempt_dir'])/'state.json')
+            before_release=lambda:None,workload_state=Path(plan['attempt_dir'])/'state.json',
+            storage_check=storage_check if system else None)
         ledger['status']='WAITING_FOR_ANALYSIS';ledger['new_reservations'][-1]['receipt']=pin(directory/'receipt.json')
+        if system:
+            ledger['new_reservations'][-1]['closed_evidence_bytes']=evidence_bytes(plan['attempt_dir'],plan['native_dir'])
         atomic(ledger_path,ledger)
         if result['error'] or result['exit_code']!=0 or result['remaining']:sys.exit(1)
 

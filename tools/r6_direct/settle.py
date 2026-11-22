@@ -29,5 +29,11 @@ def settle_time(ledger, run_id):
         policy='Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.',
         charged_seconds=charged)
     for key in ('allocated_gpu_seconds','live_wall_seconds'):row['resources'][key]=charged
+    if 'closed_evidence_bytes' in row:
+        from tools.r6_direct.resource_policy import OUTPUT_CAP
+        size=row['closed_evidence_bytes']
+        if type(size) is not int or not 0<=size<=original[OUTPUT_CAP]:
+            raise ValueError('DIRECT_SETTLEMENT_EVIDENCE_OVER_RESERVATION')
+        row['resources'][OUTPUT_CAP]=size
     row['status']='TIME_SETTLED_OTHER_RESOURCES_UNRELEASED'
     return ledger
