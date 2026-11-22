@@ -1,0 +1,388 @@
+{
+  "both_process_sets_closed": true,
+  "forecast": {
+    "best_allocation": {
+      "existing_32g": {
+        "evaluation_jobs": 3,
+        "native_required_bytes": 353517568,
+        "result_required_bytes": 14348222464,
+        "training_jobs": 0
+      },
+      "existing_96g": {
+        "evaluation_jobs": 4,
+        "evaluations_fit_after_training": 1,
+        "first_cannot_fit_evaluation_bytes": 4215788468,
+        "native_required_bytes": 454156288,
+        "result_required_bytes": 65826993076,
+        "result_shortfall_bytes": 13736530868,
+        "training_jobs": 6
+      }
+    },
+    "expected_evaluation_count": 7,
+    "expected_training_count": 6,
+    "groups": {
+      "existing_32g": {
+        "native_free_bytes": 1433288704,
+        "native_manifest": {
+          "path": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/volume.json",
+          "sha256": "254edd286b3fbeb89409eb79e1717dcda8adea81f927bb6ca9cb65dc01dd23f4"
+        },
+        "native_root": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output",
+        "result_free_bytes": 15089430528,
+        "result_manifest": {
+          "path": "/var/lib/instinctrl-r6-results/J-60c22d4806aa6798/volume.json",
+          "sha256": "48e308477e041b7adfb82a1aef6ed87960ed3521ba5d49be2ec72ae9abb6b372"
+        },
+        "result_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results"
+      },
+      "existing_96g": {
+        "native_free_bytes": 495058944,
+        "native_manifest": {
+          "path": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/volume.json",
+          "sha256": "918a796e9539526f7a95f39105c6752d6c4aaea972766e27c89f9eaf3df60a48"
+        },
+        "native_root": "/var/lib/instinctrl-r6-native/J-324fe806adf2c0f0/output",
+        "result_free_bytes": 52090462208,
+        "result_manifest": {
+          "path": "/var/lib/instinctrl-r6-results/J-324fe806adf2c0f0/volume.json",
+          "sha256": "7f7d359907d5e59365cda9574cfc4583cf349b51411b0f0ec6bda526718afc23"
+        },
+        "result_root": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONFIRMATION-128/results"
+      }
+    },
+    "historical_cases": {
+      "evaluate": [
+        {
+          "input": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/baseline-inputs.json",
+            "sha256": "3dfa5f1b275b2265374d524cc5bfe26c23e89c8ea1f6d1c234a8e5b22c323a2d"
+          },
+          "native": 28360704,
+          "result": 4648787968,
+          "run_id": "R6-DIRECT-FINAL-BASELINE-01"
+        },
+        {
+          "input": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-01-inputs.json",
+            "sha256": "16f23c39c114031d6f3048399691d241b2df451dba5073b0e3adcb1b29022fea"
+          },
+          "native": 28360704,
+          "result": 4596768768,
+          "run_id": "R6-DIRECT-FINAL-SEED-01"
+        },
+        {
+          "input": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-02-inputs.json",
+            "sha256": "eff94edc9c36ddad0e4933412f461cb62fa712df7e228e4c507b468ae6e1cb95"
+          },
+          "native": 28360704,
+          "result": 4751335424,
+          "run_id": "R6-DIRECT-FINAL-SEED-02"
+        },
+        {
+          "input": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/final-evaluation-01/seed-03-inputs.json",
+            "sha256": "cc2dbd1ebcca180584c839a78dc73736353bc6f80ec1deefc9420d59475e4e2f"
+          },
+          "native": 28360704,
+          "result": 4760371200,
+          "run_id": "R6-DIRECT-FINAL-SEED-03"
+        }
+      ],
+      "train": [
+        {
+          "input": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/train-02/inputs.json",
+            "sha256": "a75a5484cb76d91a96c2c6334874afaf59aa271cc60e05a6b8edbe409e92756d"
+          },
+          "native": 12046336,
+          "result": 7715622912,
+          "run_id": "R6-DIRECT-TRAIN-02"
+        },
+        {
+          "input": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-01c-inputs.json",
+            "sha256": "81c23fc4f2dba391353542150a83222a2937e6e4a8b1d70f51bf5e69af6d118d"
+          },
+          "native": 12046336,
+          "result": 7616131072,
+          "run_id": "R6-DIRECT-CONFIRM-128-SEED-01C"
+        },
+        {
+          "input": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-02-inputs.json",
+            "sha256": "706171478579feb03abc5a505cab78a55f0e7511d9ad90da2519bdb79beb88ff"
+          },
+          "native": 12046336,
+          "result": 7532154880,
+          "run_id": "R6-DIRECT-CONFIRM-128-SEED-02"
+        },
+        {
+          "input": {
+            "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/confirmation-128/seed-03-inputs.json",
+            "sha256": "d1b2831297ab6631e58920baab2c98952b80817b590cc53ff598934b01c92937"
+          },
+          "native": 12046336,
+          "result": 7732887552,
+          "run_id": "R6-DIRECT-CONFIRM-128-SEED-03"
+        }
+      ]
+    },
+    "method": "bounded diagnostic windows and startup counted once; remaining phase bytes scaled and checked against historical long jobs; two-volume integral placement with per-volume control and native headroom",
+    "precheck_extrapolation_bytes": {
+      "additional_checkpoints": 6062080,
+      "fixed": 245366784,
+      "original_64_updates": 98856960,
+      "robust_1025_frames": 7436114078,
+      "total": 7786399902
+    },
+    "retention": "Existing scientific binding reopens exact compressed inputs. No raw was removed or moved.",
+    "run_sizes_bytes": {
+      "evaluation_native": 28360704,
+      "evaluation_result": 4760371200,
+      "training_native": 12046336,
+      "training_result": 7786399902
+    },
+    "volume_control_headroom_bytes": 67108864
+  },
+  "full_formal_started": false,
+  "new_volume_allocation_bytes": 0,
+  "probes": [
+    {
+      "audit": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/01-analysis/report.json",
+        "sha256": "189f0a665dc2cfe2007765f81636d9c268a81dfce963da42837ab4af7f195d56"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-01/results/research-r6-training/checkpoints/u642.pt",
+        "sha256": "36a5db3a76e09f8d696a02d08d079f415b3dd3d1f89d296a28d8a92218cdeb62"
+      },
+      "count": {
+        "actor_optimizer_steps": 16,
+        "attempted_policy_steps": 32,
+        "attempted_updates": 2,
+        "automatic_resets": 0,
+        "completed_policy_steps": 32,
+        "completed_updates": 2,
+        "critic_optimizer_steps": 16,
+        "explicit_resets": 1,
+        "initialization_physics_ticks": 2,
+        "live_process_starts": 1,
+        "nontraining_transitions": 0,
+        "real_checkpoint_writes": 1,
+        "real_environment_transitions": 1024,
+        "real_optimizer_updates": 2,
+        "simulator_initializations": 1,
+        "synthetic_optimizer_steps": 0,
+        "synthetic_optimizer_updates": 0,
+        "synthetic_samples": 0,
+        "temporary_checkpoint_writes": 0,
+        "training_transitions": 1024
+      },
+      "cpu_probability_issues": [
+        {
+          "input": "first_update_probability_replay",
+          "reason": "probability gate mismatch at frozen index 0"
+        }
+      ],
+      "end_allocated_tree_bytes": {
+        "native": 3604480,
+        "result": 302903296
+      },
+      "final_free_bytes": {
+        "native": 1437036544,
+        "result": 15859331072
+      },
+      "first_free_bytes": {
+        "native": 1440641024,
+        "result": 16162234368
+      },
+      "input": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/01-inputs.json",
+        "sha256": "de841547a4d453b8b5dcb9f2ec0536a54c7da680764fe2d641b179c8e652e6a3"
+      },
+      "owned_processes": [
+        {
+          "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+          "pid": 482847,
+          "starttime": "211173684"
+        },
+        {
+          "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+          "pid": 482848,
+          "starttime": "211173684"
+        },
+        {
+          "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+          "pid": 484729,
+          "starttime": "211181002"
+        },
+        {
+          "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+          "pid": 484786,
+          "starttime": "211181075"
+        },
+        {
+          "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+          "pid": 484787,
+          "starttime": "211181076"
+        }
+      ],
+      "phase_allocated_bytes": 58716160,
+      "phase_fixed_window_bytes": 57421824,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-THIRD-PRECHECK-01/receipt.json",
+        "sha256": "0040843b2986a1d9eecb9f6561b8a6c6956c14b247fbfeed7265b0b7b8a80888"
+      },
+      "remaining": [],
+      "rng_audit": {
+        "actual_rollout_rng_use_verified": false,
+        "cpu_seed_derivation_verified": true,
+        "cuda_rng_state_count": 1,
+        "cuda_seed_derivation_verified": false,
+        "kind": "COMMON_U640_NEW_STREAM",
+        "origin_rng_equal": true,
+        "persistence_order_verified": false,
+        "physical_continuity": false,
+        "resume_rng_equal": false,
+        "starting_update": 640,
+        "status": "PASS",
+        "training_seed": 2026112200
+      },
+      "run_id": "R6-DIRECT-THIRD-PRECHECK-01",
+      "sampled_peak_bytes": {
+        "native": 3624960,
+        "result": 302903296
+      },
+      "start_update": 640,
+      "storage_samples": 391,
+      "supervisor_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "supervisor_exit_code": -15,
+      "target_update": 642,
+      "trace": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/01-storage-samples.jsonl",
+        "sha256": "db4e27a216167129ee4c92c2b65b28a3ed7d6c7c9fd646a4a2f58508a364d528"
+      },
+      "wall_seconds": 188.7378502083011
+    },
+    {
+      "audit": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/02-analysis/report.json",
+        "sha256": "06abd224184e9aab8df9dc9ec19d655cd45fca568e91b2570c4f6ae55a1ad03e"
+      },
+      "checkpoint": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-02/results/research-r6-training/checkpoints/u646.pt",
+        "sha256": "ae86752cebb6f37ebadcbb89e2fdcd6454135a9291316b30cd4730594791d17b"
+      },
+      "count": {
+        "actor_optimizer_steps": 32,
+        "attempted_policy_steps": 64,
+        "attempted_updates": 4,
+        "automatic_resets": 0,
+        "completed_policy_steps": 64,
+        "completed_updates": 4,
+        "critic_optimizer_steps": 32,
+        "explicit_resets": 1,
+        "initialization_physics_ticks": 2,
+        "live_process_starts": 1,
+        "nontraining_transitions": 0,
+        "real_checkpoint_writes": 1,
+        "real_environment_transitions": 2048,
+        "real_optimizer_updates": 4,
+        "simulator_initializations": 1,
+        "synthetic_optimizer_steps": 0,
+        "synthetic_optimizer_updates": 0,
+        "synthetic_samples": 0,
+        "temporary_checkpoint_writes": 0,
+        "training_transitions": 2048
+      },
+      "cpu_probability_issues": [
+        {
+          "input": "first_update_probability_replay",
+          "reason": "probability gate mismatch at frozen index 16"
+        }
+      ],
+      "end_allocated_tree_bytes": {
+        "native": 3747840,
+        "result": 769900544
+      },
+      "final_free_bytes": {
+        "native": 1433288704,
+        "result": 15089430528
+      },
+      "first_free_bytes": {
+        "native": 1437036544,
+        "result": 15859331072
+      },
+      "input": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/02-inputs.json",
+        "sha256": "ebd7af278cf5b516971b08969d012b7c37a2b855b5832ec1dda5aad0550a8cae"
+      },
+      "owned_processes": [
+        {
+          "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+          "pid": 489630,
+          "starttime": "211199927"
+        },
+        {
+          "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+          "pid": 489631,
+          "starttime": "211199927"
+        },
+        {
+          "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+          "pid": 491539,
+          "starttime": "211207167"
+        },
+        {
+          "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+          "pid": 491584,
+          "starttime": "211207216"
+        },
+        {
+          "boot_id": "6f03a771-37b4-4d22-9c3f-6037034f50ce",
+          "pid": 491585,
+          "starttime": "211207217"
+        }
+      ],
+      "phase_allocated_bytes": 524533760,
+      "phase_fixed_window_bytes": 56582144,
+      "receipt": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-THIRD-PRECHECK-02/receipt.json",
+        "sha256": "64ef5d1f0d45ba9f7be3014bdfa191f3172f84bca4266518f26f735683fb5faa"
+      },
+      "remaining": [],
+      "rng_audit": {
+        "actual_rollout_rng_use_verified": false,
+        "cpu_seed_derivation_verified": false,
+        "cuda_rng_state_count": 1,
+        "cuda_seed_derivation_verified": false,
+        "kind": "RESUME_R6_STREAM",
+        "origin_rng_equal": false,
+        "persistence_order_verified": false,
+        "physical_continuity": false,
+        "resume_rng_equal": true,
+        "starting_update": 642,
+        "status": "PASS",
+        "training_seed": 2026112200
+      },
+      "run_id": "R6-DIRECT-THIRD-PRECHECK-02",
+      "sampled_peak_bytes": {
+        "native": 3768320,
+        "result": 769900544
+      },
+      "start_update": 642,
+      "storage_samples": 759,
+      "supervisor_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+      "supervisor_exit_code": -15,
+      "target_update": 646,
+      "trace": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/02-storage-samples.jsonl",
+        "sha256": "eb87767b292ac1326b830d7cd26cce508a255e9aac5ea1d6ae430b6d542f2925"
+      },
+      "wall_seconds": 373.1789342374541
+    }
+  ],
+  "schema_version": "instinctrl-third-actual-precheck-and-formal-capacity/1",
+  "status": "RECOVERY_AND_BOUNDED_CLOSE_PASSED_FORMAL_RESULT_STORAGE_INSUFFICIENT"
+}

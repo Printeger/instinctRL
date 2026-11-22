@@ -1,0 +1,34 @@
+{
+  "launch": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-THIRD-PRECHECK-02/launch.json",
+    "sha256": "26fc1db2efffa94424195615b8a526491109fac0db788a24d1c80c3854e92eb8"
+  },
+  "modules": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-02/CPU_MODULES.json",
+    "sha256": "a92a4997d9022ab2d7aefcb89b98e3d1138684238a3998536e7a878004eb1224"
+  },
+  "native_error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+  "native_exit_code": -15,
+  "receipt": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-THIRD-PRECHECK-02/receipt.json",
+    "sha256": "64ef5d1f0d45ba9f7be3014bdfa191f3172f84bca4266518f26f735683fb5faa"
+  },
+  "report": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/02-analysis/report.json",
+    "sha256": "06abd224184e9aab8df9dc9ec19d655cd45fca568e91b2570c4f6ae55a1ad03e"
+  },
+  "run_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/preflight/02-inputs.json",
+    "sha256": "ebd7af278cf5b516971b08969d012b7c37a2b855b5832ec1dda5aad0550a8cae"
+  },
+  "run_record": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/runs/R6-DIRECT-THIRD-PRECHECK-02/RUN_INPUTS.json",
+    "sha256": "14c35bfbd4d1f00acda25ea40a3d0b0c5ea3e2f13c098de21ae9f549c8c334b4"
+  },
+  "schema_version": "r6-direct-bound-analysis/1",
+  "scientific_acceptance": false,
+  "workload_state": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R6-DIRECT-CONTINUATION-02/results/R6-DIRECT-THIRD-PRECHECK-02/state.json",
+    "sha256": "4c4588a1f9288a12d9ac083ba471359e6561653f626bf85eeb5a522b046e9f3f"
+  }
+}

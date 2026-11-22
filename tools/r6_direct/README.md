@@ -105,5 +105,8 @@ pin，文件采用 `instinctrl-third-training-resources/1` 并绑定第三轮用
 批准后在 `docs/experiments/third-training/RESOURCE_LEDGER.json` 记录该 pin 和相同的 caps，
 三项旧账、已用及保护字段初始为同名 caps 键的零映射，新作业沿用已有预留结构。
 训练、评价和 CUDA 复核共用本轮前驱回执顺序。科学输出仍使用现有内核限额的卷绑定。
+当新增卷额度为零，使用 `instinctrl-third-storage-reuse/1` 绑定已有卷的准确 manifest，
+以独立的零分配预留和新作业目录记账。每条输入须提供 `result_payload_cap_bytes`
+及 `native_minimum_free_bytes`，入口核对挂载身份和当前剩余容量。
 第三轮主指标可用 `python -m tools.r6_direct.anchor_endpoint REFERENCE_REPORT TRIAL_REPORT`
 从已分析的审计原件重算。当前进度见 [第三轮计划](../../docs/experiments/third-training/PLAN.md)。
