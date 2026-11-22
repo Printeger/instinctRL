@@ -49,6 +49,7 @@ def test_third_requires_own_authority_ledger_and_elapsed_window(tmp_path, monkey
     statement = tmp_path / 'user.txt'
     statement.write_text('Fixture for a finite resource allowance.')
     caps = dict.fromkeys(THIRD_CAPS, 100)
+    caps['output_actual_plus_unreleased_reservations_bytes'] = 0
     scope = tmp_path / 'scope.json'
     scope.write_text(json.dumps(dict(schema_version=THIRD_SCHEMA,
                                      user_authority=file_pin(statement), caps=caps, elapsed_seconds=100)))
@@ -68,6 +69,8 @@ def test_third_requires_own_authority_ledger_and_elapsed_window(tmp_path, monkey
         check_elapsed(ledger, policy, 90, now=511)
     with pytest.raises(ValueError, match='PROTECTED_BUDGET'):
         reserve(ledger, run_id, {'allocated_gpu_seconds': 101})
+    with pytest.raises(ValueError, match='PROTECTED_BUDGET'):
+        reserve(ledger, run_id, {'output_actual_plus_unreleased_reservations_bytes': 1})
     reserve(ledger, run_id, {'allocated_gpu_seconds': 90})
     with pytest.raises(ValueError, match='THIRD_PREDECESSOR'):
         third_predecessor(ledger, None)

@@ -204,7 +204,7 @@ def main():
         # the import. Binding a new subdirectory does not release any bytes.
         if 'storage_reservation_id' in plan:
             from tools.r6_direct.storage import fresh_binding
-            storage_key=fresh_binding(plan,ledger,contract)
+            storage_key=fresh_binding(plan,ledger,contract,third=third is not None)
             storage_field='storage_reservation_id'
             # A new volume does not waive closure of the scientific predecessor.
             prior=[dict(receipt=plan['predecessor_receipt'])]

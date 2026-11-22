@@ -27,6 +27,30 @@ def test_new_storage_binding_preserves_ledger(binding):
     assert ledger==before
 
 
+def test_existing_backing_is_bound_without_new_allocation(binding):
+    from pathlib import Path
+
+    plan,ledger,contract=binding
+    plan['run_id']='R6-DIRECT-THIRD-PROBE'
+    plan.update(result_payload_cap_bytes=1024,native_minimum_free_bytes=1024)
+    row=ledger['new_reservations'][0]
+    path=Path(row['storage_plan']['path'])
+    spec=json.loads(path.read_text())
+    spec.update(schema_version='instinctrl-third-storage-reuse/1',new_volume_allocation_bytes=0)
+    for kind,key in (('native','native_dir'),('result','attempt_dir')):
+        spec[kind]['manifest']=plan[kind+'_volume']
+        plan[key]=str(Path(spec[kind]['target'])/plan['run_id'])
+    path.write_text(json.dumps(spec))
+    row['storage_plan']=file_pin(path)
+    row['resources']['output_actual_plus_unreleased_reservations_bytes']=0
+    assert fresh_binding(plan,ledger,contract,third=True)=='fresh'
+    with pytest.raises(ValueError,match='STORAGE_REUSE_SCOPE'):
+        fresh_binding(plan,ledger,contract)
+    plan.pop('result_payload_cap_bytes')
+    with pytest.raises(ValueError,match='STORAGE_REUSE_SCOPE'):
+        fresh_binding(plan,ledger,contract,third=True)
+
+
 @pytest.mark.parametrize('fault',['missing','undercharged','destination','cap','manifest','hash'])
 def test_new_binding_rejects_drift(binding,fault):
     plan,ledger,contract=binding

@@ -13,6 +13,7 @@ THIRD_CAPS = frozenset((
     'training_checkpoint_writes', 'major_scientific_candidates',
     'output_actual_plus_unreleased_reservations_bytes',
 ))
+OUTPUT_CAP = 'output_actual_plus_unreleased_reservations_bytes'
 
 
 def unlimited(policy):
@@ -34,9 +35,9 @@ def third_policy(pin):
     if (set(policy) != {'schema_version', 'user_authority', 'caps', 'elapsed_seconds'}
             or policy['schema_version'] != THIRD_SCHEMA
             or set(policy['caps']) != THIRD_CAPS
-            or not all(type(v) is int and v > 0 for v in (
-                policy['elapsed_seconds'], *policy['caps'].values()
-            ))):
+            or type(policy['elapsed_seconds']) is not int or policy['elapsed_seconds'] <= 0
+            or not all(type(v) is int and (v >= 0 if key == OUTPUT_CAP else v > 0)
+                       for key, v in policy['caps'].items())):
         raise ValueError('DIRECT_THIRD_RESOURCE_POLICY')
     checked(policy['user_authority'])
     return policy

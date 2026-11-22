@@ -39,7 +39,8 @@ def preflight(plan):
     if plan['run_id']!=contract['parameters']['experiment_id']:raise ValueError('DIRECT_RUN_ID')
     from training_workloads.unified_h1.native_volume import validate as native_validate
     from training_workloads.unified_h1.result_volume import validate as result_validate
-    native=native_validate(plan['native_volume'],host_root_uid=namespace_host_root_uid())
+    native=native_validate(plan['native_volume'],host_root_uid=namespace_host_root_uid(),
+        minimum_free_bytes=max(256*1024**2,plan.get('native_minimum_free_bytes',0)))
     result=result_validate(plan['result_volume'],output_cap_bytes=contract['parameters']['output_cap_bytes'],
         minimum_free_bytes=0 if 'result_payload_cap_bytes' in plan else 256*1024**2,
         host_root_uid=namespace_host_root_uid())
