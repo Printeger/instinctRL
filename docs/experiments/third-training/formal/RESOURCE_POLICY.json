@@ -1,0 +1,20 @@
+{
+  "caps": {
+    "allocated_gpu_seconds": 64800,
+    "live_starts": 22,
+    "live_wall_seconds": 64800,
+    "major_scientific_candidates": 8,
+    "nontraining_transitions": 1548800,
+    "output_actual_plus_unreleased_reservations_bytes": 322122547200,
+    "queue_seconds": 3960,
+    "simulator_initializations": 22,
+    "training_checkpoint_writes": 42,
+    "training_transitions": 460800
+  },
+  "elapsed_seconds": 129600,
+  "schema_version": "instinctrl-third-training-resources/1",
+  "user_authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/EXECUTION_AUTHORITY.txt",
+    "sha256": "7ef1c0384963514a9f8a27f1476035d8dab3a72c8cbab41559f563dd5eda1a41"
+  }
+}

@@ -5,7 +5,7 @@
     "live_wall_seconds": 64800,
     "major_scientific_candidates": 8,
     "nontraining_transitions": 1548800,
-    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 322122547200,
     "queue_seconds": 3960,
     "simulator_initializations": 22,
     "training_checkpoint_writes": 42,
@@ -129,6 +129,24 @@
         "native_dir": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/output/R6-DIRECT-THIRD-PRECHECK-02"
       },
       "storage_reservation_id": "THIRD-EXISTING-J-60c22d4806aa6798"
+    },
+    {
+      "id": "THIRD-PRECHECK-EVIDENCE-ACCOUNTED",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 1081262080
+      },
+      "status": "RETAINED"
+    },
+    {
+      "id": "THIRD-SYSTEM-PARTITION",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 0
+      },
+      "status": "UNRELEASED",
+      "storage_plan": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/STORAGE_BINDING.json",
+        "sha256": "f78b44a66035c753bbec6047fdccf8f72f0cf72ca690630465c487cb04d353d7"
+      }
     }
   ],
   "new_used": {
@@ -147,6 +165,17 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/PREFLIGHT_RESULT_AND_FORMAL_CAPACITY.json",
     "sha256": "5dabf3eb6f13194c7c775aec3d0600d81ac0c18c50c876a1a5a2e6e863953137"
   },
+  "prior_scope": {
+    "git_commit": "470d217c",
+    "ledger": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/RESOURCE_LEDGER.json",
+      "sha256": "80b6a59800c3b3533127e89170f58f40bdf965e0e2d025b4bf353fc5f0952ac9"
+    },
+    "policy": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/RESOURCE_POLICY.json",
+      "sha256": "1b7332bb11175d88a601ace939c3295e9d58adf5aa5f21d8c840468df74ccf7b"
+    }
+  },
   "protected_confirmation_delivery_repair": {
     "allocated_gpu_seconds": 0,
     "live_starts": 0,
@@ -160,8 +189,8 @@
     "training_transitions": 0
   },
   "resource_policy": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/RESOURCE_POLICY.json",
-    "sha256": "1b7332bb11175d88a601ace939c3295e9d58adf5aa5f21d8c840468df74ccf7b"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/RESOURCE_POLICY.json",
+    "sha256": "d761838705220fe2fc6779fe4f1f605b70a12608abfcc2fb03f183cd6c104286"
   },
-  "status": "PREFLIGHT_COMPLETE_FORMAL_STORAGE_BLOCKED"
+  "status": "FORMAL_INPUTS_FROZEN"
 }

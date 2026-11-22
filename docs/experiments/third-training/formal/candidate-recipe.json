@@ -1,0 +1,46 @@
+{
+  "baseline_sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429",
+  "branch_updates": 128,
+  "candidate_id": "R6-CANDIDATE-THIRD-CANDIDATE",
+  "checkpoint_offsets": [
+    2,
+    32,
+    64,
+    96,
+    128
+  ],
+  "comparison": "Three paired shared-u640 continuations and frozen baseline, evaluated on one committed held-out realization.",
+  "confirmation_seeds": [
+    2026112301,
+    2026112302,
+    2026112303
+  ],
+  "curriculum": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/curriculum.json",
+    "sha256": "b6a912cdbce46984791a591f1b7cf87e31bec13b8be8293e72f7422377cd16cd"
+  },
+  "development_seeds": [
+    2026112201,
+    2026112202,
+    2026112203
+  ],
+  "diagnosis": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/R6_DEVELOPMENT_ANCHOR_ENDPOINT.json",
+      "sha256": "e2059a3813e106e1a61b58436c42315196c10b5ee033d7073b912789b2783977"
+    }
+  ],
+  "hypothesis": "Only change the anchor weight from 4 to 8.",
+  "method": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/ANCHOR_WEIGHT_8.json",
+    "sha256": "3588ad1a47a18e618adf255f004ec10c49ab472df96a837c40b879fd17104559"
+  },
+  "schema_version": "r6-training-recipe/1",
+  "source_identity": {
+    "config_sha256": "5627b7f20a5d571d928b5ab22b6eaeb2d959b8f37d540f6269f5e72b680dec19",
+    "product_commit": "ade94f2133e0a84f53e2884e60c373ab7d71cfe9",
+    "product_tree": "f3e82a363e7e7e1d7aea9a909f0e04c1b5031258",
+    "workload_commit": "ade94f2133e0a84f53e2884e60c373ab7d71cfe9",
+    "workload_tree": "f3e82a363e7e7e1d7aea9a909f0e04c1b5031258"
+  }
+}

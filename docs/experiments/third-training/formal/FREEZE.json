@@ -1,0 +1,138 @@
+{
+  "bootstrap_draws": 20000,
+  "bootstrap_seed": 2026112204,
+  "clean_increase_mm": 5,
+  "common": {
+    "extension_inputs": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/EXTENSION_INPUTS_CANDIDATE_02.json",
+      "sha256": "7d36890b12c5da14caf67905197bdad2298c080080e7049be6d714d5cce35dff"
+    },
+    "ipc_wrapper": {
+      "path": "/usr/bin/bwrap",
+      "sha256": "52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712"
+    },
+    "native_minimum_free_bytes": 268435456,
+    "native_volume": {
+      "path": "/var/lib/instinctrl-r6-native/J-60c22d4806aa6798/volume.json",
+      "sha256": "254edd286b3fbeb89409eb79e1717dcda8adea81f927bb6ca9cb65dc01dd23f4"
+    },
+    "resource_policy": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/RESOURCE_POLICY.json",
+      "sha256": "d761838705220fe2fc6779fe4f1f605b70a12608abfcc2fb03f183cd6c104286"
+    },
+    "schema_version": "r6-direct-run-inputs/1",
+    "snapshot": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/snapshots/third-formal",
+    "source": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/source.json",
+      "sha256": "74aa8c5ba9a03087993436fa6750e103c167a08f699a960f8f70d63ea1769360"
+    },
+    "storage_reservation_id": "THIRD-SYSTEM-PARTITION",
+    "system_results": true
+  },
+  "coverage_drop": 0.02,
+  "evaluation_payload_bytes": 19327352832,
+  "evaluation_template": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/continuation-20261101/paired-02/u640-contract.json",
+    "sha256": "131f257b4bf2b463eb32ff87dd94fad5c20849b5231c0eec7b594123ef29b1bc"
+  },
+  "holdout_commitment": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/holdout-nonce.sha256",
+    "sha256": "e65faf65905fd26e811397cb4a204300087900c36add818099107bd5a7147652"
+  },
+  "jobs": [
+    {
+      "arm": "control",
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/R6-DIRECT-THIRD-FORMAL-CONTROL-01-contract.json",
+        "sha256": "1702739c9f3f583b5529422302d0539e03027f96dc08a35457d3b1ac7534bdb9"
+      },
+      "pair": 1,
+      "run_id": "R6-DIRECT-THIRD-FORMAL-CONTROL-01"
+    },
+    {
+      "arm": "candidate",
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/R6-DIRECT-THIRD-FORMAL-CANDIDATE-01-contract.json",
+        "sha256": "8f8f56d32b87bd2482f00bd4951b68683df1d56ed39525f3fad911b42c209bd5"
+      },
+      "pair": 1,
+      "run_id": "R6-DIRECT-THIRD-FORMAL-CANDIDATE-01"
+    },
+    {
+      "arm": "candidate",
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/R6-DIRECT-THIRD-FORMAL-CANDIDATE-02-contract.json",
+        "sha256": "c6283202c07a6a3bfc071f90a54a0669183d91b27d97e2418b2e2a4cf3842017"
+      },
+      "pair": 2,
+      "run_id": "R6-DIRECT-THIRD-FORMAL-CANDIDATE-02"
+    },
+    {
+      "arm": "control",
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/R6-DIRECT-THIRD-FORMAL-CONTROL-02-contract.json",
+        "sha256": "779b1d30646f9b0d710c14793d6571b745898503efd8ac78d4d7978e383bf0db"
+      },
+      "pair": 2,
+      "run_id": "R6-DIRECT-THIRD-FORMAL-CONTROL-02"
+    },
+    {
+      "arm": "control",
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/R6-DIRECT-THIRD-FORMAL-CONTROL-03-contract.json",
+        "sha256": "c39f9177d2e14240d750b74322007f182c32623b33cd1bf31dac14c7e1275818"
+      },
+      "pair": 3,
+      "run_id": "R6-DIRECT-THIRD-FORMAL-CONTROL-03"
+    },
+    {
+      "arm": "candidate",
+      "contract": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/R6-DIRECT-THIRD-FORMAL-CANDIDATE-03-contract.json",
+        "sha256": "04bd6950fb291d55331bb0431157a053e10f96cf86f566dcf2508a71e8077278"
+      },
+      "pair": 3,
+      "run_id": "R6-DIRECT-THIRD-FORMAL-CANDIDATE-03"
+    }
+  ],
+  "methods": {
+    "candidate": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/ANCHOR_WEIGHT_8.json",
+      "sha256": "3588ad1a47a18e618adf255f004ec10c49ab472df96a837c40b879fd17104559"
+    },
+    "control": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-direct-training/TRAIN_METHOD_01.json",
+      "sha256": "655457c69bd6e58640651cb60d5d871b2c3bd9f9b247e95dd7854b3cd92a125c"
+    }
+  },
+  "origin": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/coordination/research/attempts/R5-W-L1-NEARWALL-RECOVERY1-R1-RESEARCH-FORMAL-TRAINING-0c6363bbc0d2/results/research-formal-training/checkpoints/u640.pt",
+    "sha256": "aaef7d40de50032cf2c61e0bc7a6e6f277a2f65e252284f3af58c0f25bae5429"
+  },
+  "plan": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/PLAN.md",
+    "sha256": "e6f105a68819d441da51e1e62519537a2d95e935833e5811e7f24bf18989546f"
+  },
+  "protocol": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/r6-robustness-auto/freeze-candidate-01/protocol.json",
+    "sha256": "9a26583bb53930f78237244350e9cc9bd33b8657ad631ab983d7ca60243a3822"
+  },
+  "recipes": {
+    "candidate": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/candidate-recipe.json",
+      "sha256": "05908c1d8920c3127e5efee49fa8564959f7789c5926660cca91e83b3b7172f3"
+    },
+    "control": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/control-recipe.json",
+      "sha256": "78c6fe4895f347ee24ff263f3ef3fb8cf5ec9f38808eb738e9f2857c2289dadb"
+    }
+  },
+  "schema_version": "instinctrl-third-formal-freeze/1",
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/source.json",
+    "sha256": "74aa8c5ba9a03087993436fa6750e103c167a08f699a960f8f70d63ea1769360"
+  },
+  "system_free_at_freeze": 385875156992,
+  "threshold_mm": 5,
+  "tracking_rmse_increase_mps": 0.01
+}
