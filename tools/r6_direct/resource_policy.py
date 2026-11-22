@@ -1,6 +1,18 @@
 """Explicit new-input resource authorization; historical accounting stays intact."""
 import json
+import time
+
 from tools.r6_evidence import checked
+
+
+THIRD_PREFIX = 'R6-DIRECT-THIRD-'
+THIRD_SCHEMA = 'instinctrl-third-training-resources/1'
+THIRD_CAPS = frozenset((
+    'allocated_gpu_seconds', 'live_wall_seconds', 'queue_seconds', 'live_starts',
+    'simulator_initializations', 'training_transitions', 'nontraining_transitions',
+    'training_checkpoint_writes', 'major_scientific_candidates',
+    'output_actual_plus_unreleased_reservations_bytes',
+))
 
 
 def unlimited(policy):
@@ -13,3 +25,56 @@ def unlimited(policy):
             or authority.get('historical_accounting') != 'PRESERVE_ALL_CHARGES_UNKNOWNS_AND_UNRELEASED_RESERVATIONS'):
         raise ValueError('DIRECT_RESOURCE_POLICY')
     return True
+
+
+def third_policy(pin):
+    if pin is None:
+        raise ValueError('DIRECT_THIRD_RESOURCE_AUTHORITY_REQUIRED')
+    policy = json.loads(checked(pin).read_text())
+    if (set(policy) != {'schema_version', 'user_authority', 'caps', 'elapsed_seconds'}
+            or policy['schema_version'] != THIRD_SCHEMA
+            or set(policy['caps']) != THIRD_CAPS
+            or not all(type(v) is int and v > 0 for v in (
+                policy['elapsed_seconds'], *policy['caps'].values()
+            ))):
+        raise ValueError('DIRECT_THIRD_RESOURCE_POLICY')
+    checked(policy['user_authority'])
+    return policy
+
+
+def load_run_ledger(run_id, authority):
+    from tools.r6_direct.import_legacy import ROOT, NEW
+    from tools.r6_direct.lifecycle import imported_budget
+
+    if not run_id.startswith(THIRD_PREFIX):
+        path = NEW / 'RESOURCE_LEDGER.json'
+        ledger = json.loads(path.read_text())
+        return path, ledger, imported_budget(ledger), None
+
+    policy = third_policy(authority)
+    path = ROOT / 'docs/experiments/third-training/RESOURCE_LEDGER.json'
+    ledger = json.loads(path.read_text())
+    zero = dict.fromkeys(THIRD_CAPS, 0)
+    if (ledger['resource_policy'] != authority or ledger['caps'] != policy['caps']
+            or ledger['historical_charged'] != zero or ledger['new_used'] != zero
+            or ledger['protected_confirmation_delivery_repair'] != zero):
+        raise ValueError('DIRECT_THIRD_LEDGER_SCOPE')
+    return path, ledger, None, policy
+
+
+def check_elapsed(ledger, policy, reservation_seconds, *, now=None):
+    """Reserve against elapsed wall time as well as cumulative GPU time."""
+    now = int(time.time()) if now is None else now
+    started = ledger.get('first_live_unix', now)
+    if type(started) is not int or started > now or started <= 0:
+        raise ValueError('DIRECT_THIRD_LEDGER_CLOCK')
+    if now + reservation_seconds > started + policy['elapsed_seconds']:
+        raise ValueError('DIRECT_THIRD_ELAPSED_LIMIT')
+    return started
+
+
+def third_predecessor(ledger, predecessor):
+    """Include direct diagnostics in the same closed-job sequence."""
+    attempts = [row for row in ledger['new_reservations'] if row['id'].startswith(THIRD_PREFIX)]
+    if attempts and (not attempts[-1].get('receipt') or attempts[-1]['receipt'] != predecessor):
+        raise ValueError('DIRECT_THIRD_PREDECESSOR')

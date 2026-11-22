@@ -93,15 +93,23 @@ def main():
     if receipt['status']!='CLOSED' or receipt['remaining']:raise RuntimeError('PRIOR_CLEANUP')
     for identity in [receipt['parent'],*receipt['owned_processes']]:
         if process_identity(identity['pid'])==identity:raise RuntimeError('PRIOR_PROCESS_ALIVE')
-    from tools.r6_direct.lifecycle import writer,imported_budget
+    from tools.r6_direct.lifecycle import writer
+    from tools.r6_direct.resource_policy import load_run_ledger, check_elapsed, third_predecessor
     with writer():
         if stop_paths():raise RuntimeError('STOP')
         directory=Path(plan['output_root']);native=Path(plan['native_dir'])
         if directory.exists() or native.exists():raise FileExistsError('DIAGNOSTIC_ALREADY_STARTED')
-        ledger_path=NEW/'RESOURCE_LEDGER.json';ledger=json.loads(ledger_path.read_text())
-        imported_budget(ledger)
+        authority=plan.get('resource_policy')
+        ledger_path,ledger,_,third=load_run_ledger(plan['run_id'],authority)
         seconds=bounds['gpu_and_wall_reservation_seconds']
-        reserve(ledger,plan['run_id'],dict(allocated_gpu_seconds=seconds,live_wall_seconds=seconds,live_starts=1,queue_seconds=bounds['queue_seconds']),resource_policy=plan.get('resource_policy'))
+        if third is not None:
+            if directory!=NEW/'runs'/plan['run_id'] or native.name!=plan['run_id']:
+                raise ValueError('DIRECT_THIRD_DIAGNOSTIC_OUTPUT')
+            third_predecessor(ledger,plan['predecessor_receipt'])
+            ledger['first_live_unix']=check_elapsed(ledger,third,seconds+30)
+        reserve(ledger,plan['run_id'],dict(allocated_gpu_seconds=seconds,live_wall_seconds=seconds,live_starts=1,queue_seconds=bounds['queue_seconds']),resource_policy=authority if third is None else None)
+        if third is not None:
+            ledger['new_reservations'][-1]['resource_policy']=authority
         ledger['new_reservations'][-1]['output_within_existing_native_volume']=plan['native_volume']
         from training_workloads.unified_h1.native_volume import validate
         binding=validate(plan['native_volume'])

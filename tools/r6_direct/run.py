@@ -190,10 +190,16 @@ def main():
     env={k:v for k,v in os.environ.items() if k in ('HOME','PATH','LANG','LC_ALL','TZ','DISPLAY')}
     env.update(PYTHONPATH=str(snapshot)+':'+str(snapshot/'isaaclab-training'),PYTHONDONTWRITEBYTECODE='1',PYTHONNOUSERSITE='1',CUDA_VISIBLE_DEVICES='0',
                ISAACSIM_ASSET_ROOT=source['execution']['isaacsim_asset_root'],OMNI_KIT_ACCEPT_EULA='YES')
-    from tools.r6_direct.lifecycle import writer,imported_budget
+    from tools.r6_direct.lifecycle import writer
+    from tools.r6_direct.resource_policy import load_run_ledger, check_elapsed, third_predecessor
     with writer():
-        ledger_path=NEW/'RESOURCE_LEDGER.json';ledger=json.loads(ledger_path.read_text())
-        imported=imported_budget(ledger)
+        authority=plan.get('resource_policy')
+        ledger_path,ledger,imported,third=load_run_ledger(run_id,authority)
+        if third is not None:
+            if 'storage_reservation_id' not in plan:
+                raise ValueError('DIRECT_THIRD_STORAGE_REQUIRED')
+            third_predecessor(ledger,plan['predecessor_receipt'])
+            check_elapsed(ledger,third,resources_after_validation(contract)['live_wall_seconds']+30)
         # The existing unused bounded physical volumes stay fully charged in
         # the import. Binding a new subdirectory does not release any bytes.
         if 'storage_reservation_id' in plan:
@@ -211,7 +217,8 @@ def main():
             if contract['parameters']['output_cap_bytes']!=storage[0]['charged']['output_actual_plus_unreleased_reservations_bytes']:raise ValueError('DIRECT_STORAGE_CAP')
         if prior:
             predecessor=plan.get('predecessor_receipt')
-            if not predecessor or prior[-1].get('receipt')!=predecessor:raise RuntimeError('DIRECT_STORAGE_PREDECESSOR')
+            if not predecessor or (third is None and prior[-1].get('receipt')!=predecessor):
+                raise RuntimeError('DIRECT_STORAGE_PREDECESSOR')
             for row in prior:
                 receipt=json.loads(checked(row['receipt']).read_text())
                 if receipt['status']!='CLOSED' or receipt['remaining']:raise RuntimeError('DIRECT_PRIOR_CLEANUP')
@@ -223,12 +230,16 @@ def main():
         resources=preflight_resources(argv,snapshot,env,args.inputs,input_pin,plan['contract'],contract)
         for key in ('attempt_dir','native_dir'):
             if Path(plan[key]).exists():raise FileExistsError(plan[key])
-        directory.mkdir(parents=True,exist_ok=False)
         purpose='confirmation_delivery' if contract['operation'] in ('final','render') or (contract['operation']=='train' and contract['parameters']['r6_training_plan']['phase']=='confirmation') else 'development'
         final_selection=contract['parameters'].get('final_selection')
         if final_selection is not None and any(r.get('final_assignment')==final_selection for r in ledger['new_reservations']):
             raise ValueError('DIRECT_FINAL_ASSIGNMENT_ALREADY_STARTED')
-        reserve(ledger,run_id,resources,purpose=purpose,resource_policy=plan.get('resource_policy'))
+        if third is not None:
+            ledger['first_live_unix']=check_elapsed(ledger,third,resources['live_wall_seconds']+30)
+        reserve(ledger,run_id,resources,purpose=purpose,resource_policy=authority if third is None else None)
+        if third is not None:
+            ledger['new_reservations'][-1]['resource_policy']=authority
+        directory.mkdir(parents=True,exist_ok=False)
         if final_selection is not None:ledger['new_reservations'][-1]['final_assignment']=final_selection
         ledger['new_reservations'][-1][storage_field]=storage_key
         binding_field='storage_new_binding' if storage_field=='storage_reservation_id' else 'legacy_storage_new_binding'

@@ -96,3 +96,14 @@ pytest 默认收集范围也改为直接链；其他科学模块可显式指定�
 此选项只读核验已完成诊断，不启动 GPU 作业，也不允许拿 TRAIN-01 的结果覆盖 TRAIN-02。
 
 CUDA补充必须使用 `r6-probability-sealed-evidence/1` envelope pin，固定原件哈希；裸plan不再接受。完整冻结源码必须属于明确登记的已知版本，未知版本须独立核查后登记。
+
+## 第三轮训练
+
+`R6-DIRECT-THIRD-` 使用同一直接链和 writer 锁。新运行输入需要 `resource_policy`
+pin，文件采用 `instinctrl-third-training-resources/1` 并绑定第三轮用户授权、`caps`
+和自首个 live 作业起的 `elapsed_seconds`。历史 R6 预算修订不能供第三轮发车。
+批准后在 `docs/experiments/third-training/RESOURCE_LEDGER.json` 记录该 pin 和相同的 caps，
+三项旧账、已用及保护字段初始为同名 caps 键的零映射，新作业沿用已有预留结构。
+训练、评价和 CUDA 复核共用本轮前驱回执顺序。科学输出仍使用现有内核限额的卷绑定。
+第三轮主指标可用 `python -m tools.r6_direct.anchor_endpoint REFERENCE_REPORT TRIAL_REPORT`
+从已分析的审计原件重算。当前进度见 [第三轮计划](../../docs/experiments/third-training/PLAN.md)。
