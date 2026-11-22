@@ -131,7 +131,9 @@ def input_path(freeze, job, *, payload):
 def analyze(input_path, dest, *, supplemental=None):
     guard()
     if not dest.exists():
-        extra = [] if supplemental is None else ['--probability-diagnostic', str(supplemental)]
+        extra = [] if supplemental is None else [
+            '--probability-diagnostic', str(supplemental),
+            '--reuse-cpu-binding', str(dest.parent/'analysis-cpu/binding.json')]
         run_command([*analysis_command(), '--inputs', str(input_path), '--destination', str(dest), *extra])
     return validate_binding(pin(dest / 'binding.json'))
 
@@ -139,6 +141,14 @@ def analyze(input_path, dest, *, supplemental=None):
 def probability_replay(freeze, inputs, report):
     name = inputs['run_id'] + '-DIAGNOSTIC'
     path = FORMAL / f'{name}-inputs.json'
+    if path.exists():
+        drafted=read(pin(path))
+        if drafted['native_volume'] != inputs['native_volume']:
+            _, ledger, _, _ = load_run_ledger(name,freeze['common']['resource_policy'])
+            if Path(drafted['output_root']).exists() or any(r['id']==name for r in ledger['new_reservations']):
+                raise RuntimeError('Mismatched diagnostic binding already has execution evidence')
+            name += '-R1'
+            path = FORMAL / f'{name}-inputs.json'
     attempt = SYSTEM_ROOT / name
     template = read(pin(DIAGNOSTIC_TEMPLATE))
     init = read(inputs['contract'])['parameters']['r6_training_plan']
@@ -153,6 +163,7 @@ def probability_replay(freeze, inputs, report):
         plan = dict(template, run_id=name, system_results=True,
                     launcher_script=pin(Path(__file__).with_name('cuda_diagnostic.py')),
                     native_dir=str(Path(inputs['native_dir']).with_name(name)),
+                    native_volume=inputs['native_volume'],
                     attempt_dir=str(attempt), output_root=str(attempt / 'control'),
                     probability_replay=request, predecessor_receipt=latest_receipt(freeze),
                     resource_policy=freeze['common']['resource_policy'])

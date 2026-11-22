@@ -3,7 +3,7 @@ import argparse
 import json
 from pathlib import Path
 from tools.r6_direct.dependencies import install
-from tools.r6_direct.evidence import context, add_inputs, bind
+from tools.r6_direct.evidence import context, add_inputs, bind, validate_binding
 from tools.r6_direct.import_legacy import pin, stop_paths
 from tools.r6_direct.io import atomic
 
@@ -41,12 +41,37 @@ def analyze(input_pin, *, probability_diagnostic=None):
     return report, summary
 
 
+def supplement_cpu(input_pin, cpu_binding, diagnostic):
+    """Reuse a fully byte-verified CPU audit for its exact CUDA-only exception."""
+    from tools.r6_direct.probability_evidence import verify
+
+    bound, ctx, report = validate_binding(cpu_binding)
+    issue, = report['issues']
+    if (bound['run_inputs'] != input_pin or ctx['contract']['operation'] != 'train'
+            or issue['input'] != 'first_update_probability_replay'
+            or report['summary']['issue_count'] != 1 or report['summary']['probability_gate_recomputed']):
+        raise ValueError('DIRECT_CPU_AUDIT_NOT_SUPPLEMENTABLE')
+    plan = ctx['contract']['parameters']['r6_training_plan']
+    retained = f'pilot_diagnostic/update_{plan["start_update"]+1}_full_input.pt'
+    stream, = [row for row in report['streams'] if row['logical_name'] == retained and row['complete']]
+    result, extra = verify(diagnostic, ctx['plan']['contract'], stream['pin'])
+    report['issues'] = []
+    summary = report['summary']
+    summary.update(issue_count=0, probability_gate_recomputed=True, probability_replay=result)
+    indexed = {row['path']: row for row in report['inputs']}
+    for item in (*extra, cpu_binding, bound['report']):
+        indexed[item['path']] = dict(item, bytes=Path(item['path']).stat().st_size)
+    report['inputs'] = sorted(indexed.values(), key=lambda row:row['path'])
+    return report,summary
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--inputs', type=Path, required=True)
     parser.add_argument('--destination', type=Path, required=True)
     parser.add_argument('--probability-diagnostic',type=Path,
                         help='Sealed evidence envelope for the exact closed CUDA diagnostic')
+    parser.add_argument('--reuse-cpu-binding',type=Path)
     args = parser.parse_args()
     install()
     if stop_paths():
@@ -62,7 +87,12 @@ def main():
             or (not system_analysis and any(destination == p or p in destination.parents
                                              or destination in p.parents for p in originals))):
         parser.error('new canonical destination separate from originals required')
-    report, summary = analyze(input_pin,probability_diagnostic=None if args.probability_diagnostic is None else pin(args.probability_diagnostic))
+    if args.reuse_cpu_binding:
+        if args.probability_diagnostic is None:
+            parser.error('reusing CPU evidence requires the sealed CUDA diagnostic')
+        report,summary=supplement_cpu(input_pin,pin(args.reuse_cpu_binding),pin(args.probability_diagnostic))
+    else:
+        report, summary = analyze(input_pin,probability_diagnostic=None if args.probability_diagnostic is None else pin(args.probability_diagnostic))
     if len(json.dumps(report, allow_nan=False).encode()) > 16*1024**2 or len(json.dumps(summary, allow_nan=False).encode()) > 48*1024:
         raise ValueError('DIRECT_ANALYSIS_SIZE_BOUND')
     if stop_paths():
