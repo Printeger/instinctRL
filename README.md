@@ -1,6 +1,6 @@
 # instinctRL
 
-当前开发使用 `main`。代码、workload、必要工具和项目状态统一在本仓库。
+当前开发使用 `main`，默认由 Maverick 协调。代码、workload、必要工具和项目状态统一在本仓库。
 
 先读 [当前项目状态](docs/PROJECT_STATUS.md) 和 [开发流程](coordination/protocols/SINGLE_BRANCH_WORKFLOW.md)。
 产品代码位于 `isaaclab-training/`；`isaac-training/`、ROS 和旧文档保留历史用途。

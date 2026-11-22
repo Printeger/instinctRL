@@ -16,7 +16,9 @@
 项目状态的唯一阅读入口为 `docs/PROJECT_STATUS.md`；机器状态为 `coordination/PROJECT_STATE.json`。
 历史 Commander/Executor 状态原文归档，不能当作新执行许可。
 
-当前开发由 Codex 直接处理；Commander/Builder 是历史职责名称，不要求角色调度器或 rlflow。
+当前开发在 Codex 中默认由 Maverick 主持；入口为根 AGENTS.md 和项目级 maverick Skill。
+Maverick 按问题进展选择视角，交付时引用证据说明贡献与关键思维转变。
+Commander/Builder 是历史职责名称，不要求角色调度器或 rlflow。
 本地训练、评价、分析入口见 `tools/r6_direct/README.md`；旧 Store/逐作业模型预审/
 聊天会话或 RPC 状态不构成当前开发和直接运行的前置条件。
 沿用 V3 的 MUST_FIX、NON_BLOCKING、FOLLOW_UP、
