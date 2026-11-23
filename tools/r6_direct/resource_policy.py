@@ -7,6 +7,12 @@ from tools.r6_evidence import checked
 
 THIRD_PREFIX = 'R6-DIRECT-THIRD-'
 THIRD_SCHEMA = 'instinctrl-third-training-resources/1'
+CYCLE_PREFIX = 'R6-DIRECT-INSTINCT-CYCLE1-'
+CYCLE_SCHEMA = 'instinctrl-first-cycle-training-resources/1'
+BOUNDED_SCOPES = {
+    THIRD_PREFIX: (THIRD_SCHEMA, 'docs/experiments/third-training/RESOURCE_LEDGER.json'),
+    CYCLE_PREFIX: (CYCLE_SCHEMA, 'docs/experiments/instinct-first-cycle/formal/RESOURCE_LEDGER.json'),
+}
 THIRD_CAPS = frozenset((
     'allocated_gpu_seconds', 'live_wall_seconds', 'queue_seconds', 'live_starts',
     'simulator_initializations', 'training_transitions', 'nontraining_transitions',
@@ -28,12 +34,12 @@ def unlimited(policy):
     return True
 
 
-def third_policy(pin):
+def third_policy(pin, *, schema=THIRD_SCHEMA):
     if pin is None:
         raise ValueError('DIRECT_THIRD_RESOURCE_AUTHORITY_REQUIRED')
     policy = json.loads(checked(pin).read_text())
     if (set(policy) != {'schema_version', 'user_authority', 'caps', 'elapsed_seconds'}
-            or policy['schema_version'] != THIRD_SCHEMA
+            or policy['schema_version'] != schema
             or set(policy['caps']) != THIRD_CAPS
             or type(policy['elapsed_seconds']) is not int or policy['elapsed_seconds'] <= 0
             or not all(type(v) is int and (v >= 0 if key == OUTPUT_CAP else v > 0)
@@ -47,13 +53,15 @@ def load_run_ledger(run_id, authority):
     from tools.r6_direct.import_legacy import ROOT, NEW
     from tools.r6_direct.lifecycle import imported_budget
 
-    if not run_id.startswith(THIRD_PREFIX):
+    scope = next((value for prefix, value in BOUNDED_SCOPES.items() if run_id.startswith(prefix)), None)
+    if scope is None:
         path = NEW / 'RESOURCE_LEDGER.json'
         ledger = json.loads(path.read_text())
         return path, ledger, imported_budget(ledger), None
 
-    policy = third_policy(authority)
-    path = ROOT / 'docs/experiments/third-training/RESOURCE_LEDGER.json'
+    schema, relative = scope
+    policy = third_policy(authority, schema=schema)
+    path = ROOT / relative
     ledger = json.loads(path.read_text())
     zero = dict.fromkeys(THIRD_CAPS, 0)
     if (ledger['resource_policy'] != authority or ledger['caps'] != policy['caps']
@@ -76,6 +84,6 @@ def check_elapsed(ledger, policy, reservation_seconds, *, now=None):
 
 def third_predecessor(ledger, predecessor):
     """Include direct diagnostics in the same closed-job sequence."""
-    attempts = [row for row in ledger['new_reservations'] if row['id'].startswith(THIRD_PREFIX)]
+    attempts = [row for row in ledger['new_reservations'] if row['id'].startswith(tuple(BOUNDED_SCOPES))]
     if attempts and (not attempts[-1].get('receipt') or attempts[-1]['receipt'] != predecessor):
         raise ValueError('DIRECT_THIRD_PREDECESSOR')

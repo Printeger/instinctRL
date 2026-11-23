@@ -23,8 +23,9 @@ def settle_time(ledger, run_id):
     # and are deliberately excluded from this narrower settlement.
     if not run_id.startswith('R6-DIRECT-'):raise ValueError('DIRECT_SETTLEMENT_SCOPE')
     if 'DIAGNOSTIC' in run_id:
+        from tools.r6_direct.resource_policy import BOUNDED_SCOPES
         total=row.get('diagnostic_wall_seconds')
-        if not run_id.startswith('R6-DIRECT-THIRD-') or type(total) not in (float,int) or not math.isfinite(total) or total<seconds:
+        if not run_id.startswith(tuple(BOUNDED_SCOPES)) or type(total) not in (float,int) or not math.isfinite(total) or total<seconds:
             raise ValueError('DIRECT_SETTLEMENT_SCOPE')
         seconds=total
     original=dict(row['resources']); charged=math.ceil(seconds)
