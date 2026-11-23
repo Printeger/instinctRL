@@ -1,6 +1,7 @@
 """Run and audit either of the two frozen instinct follow-up rounds."""
 
 import argparse
+import io
 import json
 from pathlib import Path
 
@@ -19,10 +20,33 @@ from tools.r6_direct.settle import settle_time
 from tools.r6_direct.source import ROOT as SNAPSHOT, manifest, training_identity
 from tools.r6_direct.storage import SYSTEM_ROOT, SYSTEM_STORAGE_SCHEMA
 from tools.r6_direct.study_report import compare, score_model
+from training_workloads.unified_h1.lossless_evidence import ChunkReader
 
 
 PROJECT = ROOT / 'docs/experiments/instinct-next-two-cycles'
 FIRST = ROOT / 'docs/experiments/instinct-first-cycle/formal'
+
+
+def auxiliary_support(training_report, run_id):
+    summaries = []
+    for stream in training_report['streams']:
+        name = stream['logical_name']
+        if not name.endswith('/minibatches.jsonl'):
+            continue
+        path = stream['pin']
+        if pin(path['path']) != path:
+            raise ValueError(f'Minibatch evidence drift {name}')
+        with ChunkReader(path['path'], run_id=run_id, logical_name=name,
+                         maximum_raw_bytes=stream['raw_bytes']) as raw:
+            with io.BufferedReader(raw) as buffer:
+                metrics = [json.loads(row)['actor_auxiliary_metrics'] for row in buffer]
+        summaries.append(dict(stream=path, minibatches=len(metrics),
+                              active=sum(row['range_closure_active'] for row in metrics),
+                              above_ceiling=sum(row['range_closure_above_ceiling'] for row in metrics),
+                              maximum_loss=max(row['range_closure_loss'] for row in metrics)))
+    if sum(row['minibatches'] for row in summaries) != 1024:
+        raise ValueError('Missing range closure training support')
+    return summaries
 
 
 class Round:
@@ -86,8 +110,8 @@ class Round:
         else:
             previous = PROJECT / 'round-2' / 'RESULTS.json'
             prior = load(previous)
-            delay = int(prior['candidate']['safety_pass'])
-            diagnosis.append(pin(previous))
+            delay = int(prior['comparisons']['dropout_only']['guardrails_pass'])
+            diagnosis.extend((pin(previous), pin(PROJECT / 'R3_DESIGN.md')))
             prior_run = f'{NEXT_PREFIX}R2-EVAL'
             hypothesis = 'Additional actor-only range closure supervision improves temporal selectivity.'
         curriculum['phases'][1]['delay_cycles'] = delay
@@ -172,10 +196,13 @@ class Round:
             model['stop_displacement'] = {k: displacement(model['report'], k) for k in model['endpoints']}
         settings = load(HISTORICAL / 'FREEZE.json')
         compare_results = {key: compare(settings, [candidate], [model]) for key, model in references.items()}
-        return self.write('RESULTS.json', dict(round=self.number, candidate=candidate, references=references,
-                          comparisons=compare_results, training_analysis=analysis,
-                          training_counters=training_report['summary']['observed_counters'],
-                          evaluation_analysis=pin(evaluation / 'binding.json'), ledger=pin(self.ledger)))
+        summary = dict(round=self.number, candidate=candidate, references=references,
+                       comparisons=compare_results, training_analysis=analysis,
+                       training_counters=training_report['summary']['observed_counters'],
+                       evaluation_analysis=pin(evaluation / 'binding.json'), ledger=pin(self.ledger))
+        if self.number == 3:
+            summary['range_closure_training_support'] = auxiliary_support(training_report, self.train)
+        return self.write('RESULTS.json', summary)
 
     def finish(self):
         train_path = self.input_path(self.train)

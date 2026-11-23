@@ -363,6 +363,9 @@ class PPOTrainer:
             })
             if auxiliary is not None:
                 records[-1]["actor_auxiliary_loss"] = float(auxiliary.detach().item())
+                auxiliary_metrics = getattr(self.actor_auxiliary, "last_metrics", None)
+                if auxiliary_metrics is not None:
+                    records[-1]["actor_auxiliary_metrics"] = auxiliary_metrics
         if not bool((coverage == 1).all().item()):
             raise RuntimeError("deterministic minibatching did not cover every sample exactly once per epoch")
         if not torch.equal(batch.old_log_probabilities, old_snapshot):

@@ -17,6 +17,7 @@ PRODUCT_DELTAS = {
     'isaaclab-training/instinctlab/observations/robustness.py': ('05fd977e751d4af3f78e13a1dee983c673fe4347988ee9a17449e497c20a488e', '078f37b57df010c519d8e3684185fabdcba646f0ee43a512a3e13f9668c888f5'),
     'isaaclab-training/instinctlab/observations/robustness_adapter.py': ('3d41a275babc165c0dc75b3cba85ad45abe5d680bf79f50bae95ca57f56eb463', '504bb31c85993c4ca3b18293e34eff7ed9921cd4d4fc6dd72afd1f48d98df319'),
     'isaaclab-training/instinctlab/training/rollout_h1.py': ('99368e65552960680e2fbf860fdf726ec51ab3671c420719cdec90b6992cdabc', 'e59034c1c63b76a54a9c779418b61c26f0a4c597cb247da33cf8aab9d58c74d6'),
+    'isaaclab-training/instinctlab/training/ppo.py': ('13290128ecbc79f9c429e064abbb2505bd6830c815ef21b3cec93fc0581e2431', '5d59c7f49bb3e62398f6c20275a6a883df8c28eef6bb7127e48aa73a322df186'),
     'isaaclab-training/instinctlab/observations/robustness_physics.py': (
         '19b66208bd99e93853ffc2ce4246382dac6c2e36262ed11dd688b4c7ae429863',
         '5ad27364f80376fa384bf11b29492fdab3c4899e7cf9bb7de3382fa4181ea3ac'),
@@ -49,6 +50,7 @@ def manifest():
              'tools/r6_training_rng_audit.py','tools/r6_training_probability.py',
              'tools/r6_candidate_analysis.py','tools/r6_final_analysis.py','tools/r6_final_collection.py',
              'tools/r6_video_selection.py','tools/r6_video_trajectory.py','tools/r6_video_presentation.py',
+             'tools/instinct_tube_probe.py','tools/instinct_tube_shadow.py',
              'tools/prepare_r6_video_trajectories.py','tools/render_r6_isaac_video.py')
     files=git('ls-files',*folders).splitlines()
     files=[name for name in files if Path(name).suffix in ('.py','.json','.yaml','.yml','.usd','.usda','.urdf')]

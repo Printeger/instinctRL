@@ -9,7 +9,10 @@ from pathlib import Path
 import torch
 
 from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body
-from instinct_tube_probe import body_to_world, tube_observation
+if __package__:
+    from .instinct_tube_probe import body_to_world, tube_observation
+else:
+    from instinct_tube_probe import body_to_world, tube_observation
 
 
 def project_command(command, rays, limits, steps, tolerance):

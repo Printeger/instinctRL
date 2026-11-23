@@ -22,9 +22,13 @@ def command_gain_ceiling(policy, rays, *, period_s, clearance_m):
     state = policy['state_vec'].reshape(-1, 4, 13)
     previous, latest = state[:, -2], state[:, -1]
     age = latest[:, 12, None]
-    acquisition_gap = period_s + previous[:, 12, None] - age
-    slow_rotation = (previous[:, :3].norm(dim=1) < .30) & (latest[:, :3].norm(dim=1) < .30)
-    causal_pair = (acquisition_gap > .01) & (acquisition_gap <= 2.5 * period_s) & (age <= .25)
+    previous_age = previous[:, 12, None]
+    acquisition_gap = period_s + previous_age - age
+    # Angular rates are sampled on policy ticks. Delayed measurements can span
+    # earlier ticks than the last two, so use the whole available gyro history.
+    slow_rotation = state[:, :, :3].norm(dim=2).amax(dim=1) < .12
+    causal_pair = ((acquisition_gap > .01) & (acquisition_gap <= 2.5 * period_s)
+                   & (previous_age <= 2.01 * period_s) & (age <= 2.01 * period_s))
 
     command = latest[:, 6:9]
     speed = command.norm(dim=1, keepdim=True)
@@ -51,7 +55,13 @@ def add_to_trainer(trainer, *, period_s, clearance_m):
     def combined(policy, output):
         limit = command_gain_ceiling(policy, rays, period_s=period_s, clearance_m=clearance_m)
         excess = (output.mean_action[:, 0] - limit).clamp_min(0.)
-        return previous(policy, output) + WEIGHT * excess.square().mean()
+        closure_loss = WEIGHT * excess.square().mean()
+        with torch.no_grad():
+            active, above_ceiling, loss = torch.stack(
+                ((limit < 1).sum(), (excess > 0).sum(), closure_loss)).tolist()
+        combined.last_metrics = dict(range_closure_active=int(active), range_closure_above_ceiling=int(above_ceiling),
+                                     range_closure_loss=loss)
+        return previous(policy, output) + closure_loss
 
     trainer.actor_auxiliary = combined
     return dict(sensor_inputs=['lidar_grid', 'state_vec'], actor_gain_only=True,
