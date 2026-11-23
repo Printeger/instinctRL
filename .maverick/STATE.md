@@ -1,8 +1,8 @@
-# 当前任务
+# 最近完成的任务
 
-`third-training-anchor`，2026-11-22。Maverick 主持。R6 复盘和开发原件重算完成。新保留集的主指标拟选延迟加丢帧停令后的有效锚 MAE。R6 开发 u640→u768 在此项从 50.13 到 57.51 mm，两者均 32/32。候选只将锚奖励 4→8，拟和共同 u640、三条等量原配方续训比较。见 [计划](../docs/experiments/third-training/PLAN.md)。
+`third-training-anchor`，2026-11-22 至 2026-11-23。Maverick 主持。R6 开发评价的通过率均为 32/32，重算延迟加丢帧停令锚误差后得到 50.13 和 57.51 mm。以连续误差做独立保留集比较，正式测试三对同种子、同量续训和冻结 u640。候选只改锚奖励 4→8。正式锚误差相对两个对照分别增加 0.81 和 0.37 mm，均未达标。七模型全部硬护栏通过，非零跟踪、清晰停令和有效射线覆盖也通过。见 [结项报告](../docs/experiments/third-training/formal/REPORT.md)。
 
-已完成两段真实恢复预检 u640→u642→u646，预检账目保留。2026-11-23 接入获批的系统盘目录和 30 GiB 守卫，三对 128 更新正式计划及保留集承诺已冻结，等量原配方 01 已启动。以普通用户权限复用 native 临时卷。保全主工作树已有的四处证据格式编辑，完整回放从干净的冻结快照运行。见[正式冻结](../docs/experiments/third-training/formal/FREEZE.json)和[独立账本](../docs/experiments/third-training/RESOURCE_LEDGER.json)。
+两段真实恢复预检 u640→u642→u646 与全部正式运行均已结算。系统盘普通目录的 30 GiB 守卫贯穿本地直接链，native 临时卷以普通用户权限复用。调度接续中的首次 CUDA 诊断错误保留，纠正 native 绑定后用同设备概率证据完成六条训练验收。证据和原件保留，主工作树原有证据格式编辑未参与运行。见 [正式冻结](../docs/experiments/third-training/formal/FREEZE.json) 和 [结项复核](../docs/experiments/third-training/formal/COMPLETION_AUDIT.json)。
 
 # 历史初始化工作流
 

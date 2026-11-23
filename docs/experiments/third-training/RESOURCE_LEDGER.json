@@ -12,6 +12,10 @@
     "training_transitions": 460800
   },
   "first_live_unix": 1795362097,
+  "formal_completion_evidence": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/COMPLETION_AUDIT.json",
+    "sha256": "eae27aea2c0c28d474651d1b4461fee03f2f1f78b6db074cc6e68edaed4e987f"
+  },
   "historical_charged": {
     "allocated_gpu_seconds": 0,
     "live_starts": 0,
@@ -1073,5 +1077,5 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/third-training/formal/RESOURCE_POLICY.json",
     "sha256": "d761838705220fe2fc6779fe4f1f605b70a12608abfcc2fb03f183cd6c104286"
   },
-  "status": "FORMAL_RUNNING"
+  "status": "FORMAL_COMPLETE_NOT_ACCEPTED"
 }

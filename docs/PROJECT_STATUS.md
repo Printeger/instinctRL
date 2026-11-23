@@ -2,9 +2,9 @@
 
 2026-11-22 起，项目开发默认使用 Maverick V1.1.1。角色与交付规则见根 `AGENTS.md`，安装与验证记录见 `.maverick/STATE.md`。R6 本地执行入口仍为 `tools/r6_direct/`。
 
-# 第三轮正式配对比较执行中
+# 第三轮正式配对比较完成，候选未达标
 
-两段恢复预检已通过，预检的两次启动和 563 秒继续计入预算。2026-11-23 授权在系统盘 `~/instinctrl-runs/<run-id>/` 写正式作业，保留 30 GiB 可用空间，300 GiB 新证据上限。正式方案与保留集承诺已冻结，首条等量原配方续训已启动。见 [正式冻结](experiments/third-training/formal/FREEZE.json) 和 [独立账本](experiments/third-training/RESOURCE_LEDGER.json)。
+六条正式续训及七模型评价完成。候选锚奖励系数 4→8 在延迟加丢帧的停令窗口内，锚误差相对冻结 u640 增加 0.81 mm，相对等量原配方增加 0.37 mm。全部硬护栏与附加护栏通过。两段恢复预检计入总账，21 次 live 均已关闭，正式原件保存在系统盘各作业目录。见 [结项报告](experiments/third-training/formal/REPORT.md)、[模型清单](experiments/third-training/formal/MODELS.json) 和 [独立账本](experiments/third-training/RESOURCE_LEDGER.json)。
 
 # R6 接续完成：未证实学习增益，独立终审通过
 
