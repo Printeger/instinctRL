@@ -19,6 +19,7 @@ FORMAL = ROOT / 'docs/experiments/instinct-first-cycle/formal'
 HISTORICAL = ROOT / 'docs/experiments/third-training/formal'
 TRAIN = CYCLE_PREFIX + 'TRAIN-01'
 TRAIN_RECOVERY = TRAIN + '-R1'
+TRAIN_ADMISSION_RECOVERY = TRAIN + '-R2'
 EVAL = CYCLE_PREFIX + 'EVAL-01'
 DIAG = CYCLE_PREFIX + 'PROBABILITY-DIAGNOSTIC'
 LEDGER = FORMAL / 'RESOURCE_LEDGER.json'
@@ -99,49 +100,66 @@ def recover_training():
     from tools.r6_direct.source import ROOT as snapshot, manifest, training_identity
     if snapshot == ROOT:
         raise ValueError('Recover from the clean detached execution tree')
-    original = load(FORMAL / (TRAIN + '-inputs.json'))
+    admission_retry = (FORMAL / (TRAIN_RECOVERY + '-inputs.json')).exists()
+    failed_id = TRAIN_RECOVERY if admission_retry else TRAIN
+    next_id = TRAIN_ADMISSION_RECOVERY if admission_retry else TRAIN_RECOVERY
+    suffix = '-r2' if admission_retry else '-r1'
+    original = load(FORMAL / (failed_id + '-inputs.json'))
     attempt = Path(original['attempt_dir'])
     out = Path(original['output_root'])
     stderr = (out / 'stderr.log').read_text()
-    if ('ValueError: R6 overlapping output roots' not in stderr
+    gate_failure = attempt / 'prelaunch/prelaunch_resource_gate_failure.json'
+    if admission_retry:
+        gate = load(gate_failure)
+        expected = (gate['status'] == 'FAIL' and gate['completed_samples'] == 13
+                    and gate['message'] == 'unexpected compute applications'
+                    and not (attempt / 'prelaunch/prelaunch_resource_gate.json').exists())
+    else:
+        expected = ('ValueError: R6 overlapping output roots' in stderr
+                    and not any((attempt / 'prelaunch').iterdir()))
+    if (not expected
             or (attempt / 'state.json').exists() or (attempt / 'kit_settings.json').exists()
-            or any((attempt / 'prelaunch').iterdir())
             or any((attempt / 'results/research-r6-training').iterdir())):
         raise ValueError('Recovery requires exact before-gate failure and no workload state')
     with writer():
         ledger = load(LEDGER)
-        row, = (r for r in ledger['new_reservations'] if r['id'] == TRAIN)
+        row, = (r for r in ledger['new_reservations'] if r['id'] == failed_id)
         predecessor = row['receipt']
         closed = read(predecessor)
         if closed['exit_code'] != 1 or closed['error'] is not None:
             raise ValueError('Unexpected before-gate exit')
         if 'pre_app_abort' not in row:
-            settle_time(ledger, TRAIN)
+            settle_time(ledger, failed_id)
             # All actual supervised time and retained bytes stay charged. This
             # child never entered admission or recorded an AppLauncher start.
             row['pre_app_abort'] = dict(stderr=pin(out / 'stderr.log'),
                                         receipt=predecessor, reserved_before_recovery=dict(row['resources']),
                                         scientific_launches=0, training_transitions=0)
+            if admission_retry:
+                row['pre_app_abort']['gate_failure'] = pin(gate_failure)
             for counter in ('live_starts', 'queue_seconds', 'simulator_initializations',
                             'training_transitions', 'training_checkpoint_writes', 'major_scientific_candidates'):
                 row['resources'][counter] = 0
             atomic(LEDGER, ledger)
     source = manifest()
-    source_pin = save(FORMAL / 'source-r1.json', source)
+    source_pin = save(FORMAL / f'source{suffix}.json', source)
     identity = training_identity(source)
     params = read(original['contract'])['parameters']
     plan = params['r6_training_plan']
     recipe = read(plan['recipe'])
     recipe['source_identity'] = identity
-    plan.update(experiment_id=TRAIN_RECOVERY, recipe=save(FORMAL / 'recipe-r1.json', recipe))
-    params.update(experiment_id=TRAIN_RECOVERY, source_identity=identity)
-    contract = save(FORMAL / 'TRAIN-r1-contract.json', build('contract', dict(operation='train', parameters=params)))
-    return run_inputs(TRAIN_RECOVERY, snapshot, contract, predecessor, source=source_pin)
+    plan.update(experiment_id=next_id, recipe=save(FORMAL / f'recipe{suffix}.json', recipe))
+    params.update(experiment_id=next_id, source_identity=identity)
+    contract = save(FORMAL / f'TRAIN{suffix}-contract.json', build('contract', dict(operation='train', parameters=params)))
+    return run_inputs(next_id, snapshot, contract, predecessor, source=source_pin)
 
 
 def active_training_inputs():
-    recovery = FORMAL / (TRAIN_RECOVERY + '-inputs.json')
-    return load(recovery if recovery.exists() else FORMAL / (TRAIN + '-inputs.json'))
+    for run_id in (TRAIN_ADMISSION_RECOVERY, TRAIN_RECOVERY, TRAIN):
+        path = FORMAL / (run_id + '-inputs.json')
+        if path.exists():
+            return load(path)
+    raise FileNotFoundError('No frozen training input')
 
 
 def settle(run_id):

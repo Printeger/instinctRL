@@ -52,11 +52,19 @@ def validate_window(window, *, policy=POLICY):
         utilization.append(u)
         apps = sample['compute_apps']
         allowed=POLICY.get('allowed_apps',{POLICY['allowed_app']:POLICY['allowed_app_max_mib']})
-        if not isinstance(apps,list) or len(apps)>len(allowed):
+        process_limits=POLICY.get('allowed_app_process_counts')
+        if not isinstance(apps,list) or (process_limits is None and len(apps)>len(allowed)):
             raise RuntimeError('unexpected compute applications')
         for app in apps:
             if not isinstance(app,dict) or set(app) != {'pid','name','used_memory_mib'} or type(app['pid']) is not int or app['pid']<=0 or type(app['name']) is not str or Path(app['name']).name not in allowed or type(app['used_memory_mib']) is not int or not 0<=app['used_memory_mib']<=allowed[Path(app['name']).name]:
                 raise RuntimeError('unexpected compute application')
+        if process_limits is not None:
+            if set(process_limits)!=set(allowed) or len({app['pid'] for app in apps})!=len(apps):
+                raise RuntimeError('unexpected compute application identity')
+            for name, limit in process_limits.items():
+                named=[app for app in apps if Path(app['name']).name==name]
+                if len(named)>limit or sum(app['used_memory_mib'] for app in named)>allowed[name]:
+                    raise RuntimeError('unexpected compute application instances')
     if type(window['span_ns']) is not int or window['span_ns'] != samples[-1]['monotonic_ns']-samples[0]['monotonic_ns'] or window['span_ns'] < POLICY['minimum_span_seconds']*10**9:
         raise ValueError('resource window span')
     elevated = sum(u>POLICY['elevated_utilization_threshold'] for u in utilization)
