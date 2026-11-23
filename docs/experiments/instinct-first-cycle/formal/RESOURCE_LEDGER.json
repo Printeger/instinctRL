@@ -1,15 +1,15 @@
 {
   "caps": {
     "allocated_gpu_seconds": 10000,
-    "live_starts": 3,
+    "live_starts": 4,
     "live_wall_seconds": 10000,
-    "major_scientific_candidates": 1,
+    "major_scientific_candidates": 2,
     "nontraining_transitions": 193600,
     "output_actual_plus_unreleased_reservations_bytes": 34359738368,
-    "queue_seconds": 540,
-    "simulator_initializations": 2,
-    "training_checkpoint_writes": 5,
-    "training_transitions": 65536
+    "queue_seconds": 720,
+    "simulator_initializations": 3,
+    "training_checkpoint_writes": 8,
+    "training_transitions": 98304
   },
   "first_live_unix": 1795423318,
   "historical_charged": {
@@ -189,6 +189,93 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-TRAIN-01-R1/native"
       },
       "storage_reservation_id": "CYCLE1-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 367984640,
+      "failed_progress": {
+        "counters": {
+          "actor_optimizer_steps": 512,
+          "attempted_policy_steps": 1025,
+          "attempted_updates": 65,
+          "automatic_resets": 32,
+          "completed_policy_steps": 1024,
+          "completed_updates": 64,
+          "critic_optimizer_steps": 512,
+          "explicit_resets": 2,
+          "initialization_physics_ticks": 2,
+          "live_process_starts": 1,
+          "nontraining_transitions": 0,
+          "real_checkpoint_writes": 3,
+          "real_environment_transitions": 32768,
+          "real_optimizer_updates": 64,
+          "simulator_initializations": 1,
+          "synthetic_optimizer_steps": 0,
+          "synthetic_optimizer_updates": 0,
+          "synthetic_samples": 0,
+          "temporary_checkpoint_writes": 0,
+          "training_transitions": 32768
+        },
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-TRAIN-01-R2/control/receipt.json",
+          "sha256": "71cdc0d580808c56d56c280313defb356944c161cb822691be1ea4f47c707196"
+        },
+        "retained_checkpoint": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-TRAIN-01-R2/results/research-r6-training/checkpoints/u704.pt",
+          "sha256": "a08aabe629b7d52ec73fa2a45d017a675802117d0ad52e798c6ebfa40d45c08b"
+        },
+        "state": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-TRAIN-01-R2/state.json",
+          "sha256": "ebd6d9e104f45d4aed240bdcc7e5d0f36c31ef194deac34861e0cc1f53b2b634"
+        }
+      },
+      "id": "R6-DIRECT-INSTINCT-CYCLE1-TRAIN-01-R2",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-TRAIN-01-R2/control/receipt.json",
+        "sha256": "71cdc0d580808c56d56c280313defb356944c161cb822691be1ea4f47c707196"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-first-cycle/formal/RESOURCE_POLICY.json",
+        "sha256": "ff683bbe672fe0c593e82653dd6557783e24be55b7f368361e89b03ce0100ff8"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 458,
+        "live_starts": 1,
+        "live_wall_seconds": 458,
+        "major_scientific_candidates": 1,
+        "nontraining_transitions": 0,
+        "output_actual_plus_unreleased_reservations_bytes": 367984640,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_checkpoint_writes": 3,
+        "training_transitions": 32768
+      },
+      "settlement": {
+        "charged_seconds": 458,
+        "original_resources": {
+          "allocated_gpu_seconds": 4690,
+          "live_starts": 1,
+          "live_wall_seconds": 4690,
+          "major_scientific_candidates": 1,
+          "nontraining_transitions": 0,
+          "output_actual_plus_unreleased_reservations_bytes": 13153337344,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_checkpoint_writes": 5,
+          "training_transitions": 65536
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-TRAIN-01-R2/control/receipt.json",
+          "sha256": "71cdc0d580808c56d56c280313defb356944c161cb822691be1ea4f47c707196"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-TRAIN-01-R2",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-TRAIN-01-R2/native"
+      },
+      "storage_reservation_id": "CYCLE1-SYSTEM"
     }
   ],
   "new_used": {
@@ -216,8 +303,8 @@
     "training_transitions": 0
   },
   "resource_policy": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-first-cycle/formal/RESOURCE_POLICY.json",
-    "sha256": "ff683bbe672fe0c593e82653dd6557783e24be55b7f368361e89b03ce0100ff8"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-first-cycle/formal/RESOURCE_POLICY-r3.json",
+    "sha256": "ab718868ff5c7deed69c5ac13261a018e7a8642679fd7fbebf73521271c0ee8f"
   },
-  "status": "WAITING_FOR_ANALYSIS"
+  "status": "DROPOUT_RECOVERY_FROZEN"
 }
