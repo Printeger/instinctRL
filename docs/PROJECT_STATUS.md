@@ -2,9 +2,9 @@
 
 项目开发默认使用 Maverick V1.2.0。角色与交付规则见根 `AGENTS.md`，安装与验证记录见 `.maverick/STATE.md`。R6 本地执行入口仍为 `tools/r6_direct/`。
 
-# 首次接手开发进入正式训练和评价
+# 首次接手开发完成正式训练和全量评价，等待审查
 
-在固定回波中，现行 ICS 会抑制窄管的轴向运动。方向选择性 CPU 原型能在同一 ICS 下恢复部分斜向指令的轴向速度，但在孤立柱形障碍前推进变差，对相同最新回波的移动障碍接近和远离给出同一动作。已纳入室内、树林、城市和移动障碍的目标范围。用户明确唯一审查点是正式完整训练与评价均结束之后。现按新授权冻结一轮时延和丢帧课程续训及配对评价。 [CPU 短验证](experiments/instinct-first-cycle/REPORT.md) · [正式计划](experiments/instinct-first-cycle/formal/PLAN.md)
+已完成只丢帧候选 u640→u768 的 128 次更新和 65,536 条训练转换，以及全量 193,600 条非训练评价转换。原五项任务和 16 个鲁棒条件均为 32/32。延迟加丢帧停令锚 MAE 相对基线增加 0.49 mm，相对同种子等量原配方减少 0.71 mm，未达 5 mm 工程参考。失败原件和有界关闭回执已结算。唯一审查点已达到，等待用户。 [正式结项](experiments/instinct-first-cycle/formal/REPORT.md) · [早期 CPU 短验证](experiments/instinct-first-cycle/REPORT.md)
 
 # 训练存储统一到系统分区
 
