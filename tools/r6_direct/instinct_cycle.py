@@ -20,6 +20,7 @@ HISTORICAL = ROOT / 'docs/experiments/third-training/formal'
 TRAIN = CYCLE_PREFIX + 'TRAIN-01'
 TRAIN_RECOVERY = TRAIN + '-R1'
 TRAIN_ADMISSION_RECOVERY = TRAIN + '-R2'
+TRAIN_DROPOUT_RECOVERY = TRAIN + '-R3'
 EVAL = CYCLE_PREFIX + 'EVAL-01'
 DIAG = CYCLE_PREFIX + 'PROBABILITY-DIAGNOSTIC'
 LEDGER = FORMAL / 'RESOURCE_LEDGER.json'
@@ -47,13 +48,13 @@ def destination(run_id):
                 native_dir=str(root / 'native'), system_results=True, system_native=True)
 
 
-def run_inputs(run_id, snapshot, contract, predecessor, *, source=None):
+def run_inputs(run_id, snapshot, contract, predecessor, *, source=None, resource_policy=None):
     initial = load(HISTORICAL / 'R6-DIRECT-THIRD-FORMAL-CONTROL-01-inputs.json')
     return save(FORMAL / (run_id + '-inputs.json'), dict(destination(run_id),
         schema_version='r6-direct-run-inputs/1', snapshot=str(snapshot),
         source=source or pin(FORMAL / 'source.json'), contract=contract,
         extension_inputs=initial['extension_inputs'], ipc_wrapper=initial['ipc_wrapper'],
-        resource_policy=pin(FORMAL / 'RESOURCE_POLICY.json'), storage_reservation_id='CYCLE1-SYSTEM',
+        resource_policy=resource_policy or pin(FORMAL / 'RESOURCE_POLICY.json'), storage_reservation_id='CYCLE1-SYSTEM',
         result_payload_cap_bytes=read(contract)['parameters']['output_cap_bytes'],
         predecessor_receipt=predecessor))
 
@@ -155,11 +156,71 @@ def recover_training():
 
 
 def active_training_inputs():
-    for run_id in (TRAIN_ADMISSION_RECOVERY, TRAIN_RECOVERY, TRAIN):
+    for run_id in (TRAIN_DROPOUT_RECOVERY, TRAIN_ADMISSION_RECOVERY, TRAIN_RECOVERY, TRAIN):
         path = FORMAL / (run_id + '-inputs.json')
         if path.exists():
             return load(path)
     raise FileNotFoundError('No frozen training input')
+
+
+def restart_dropout():
+    """Replace the aborted, never-fully-trained candidate with one full dropout-only run."""
+    import torch
+    from tools.r6_direct.source import ROOT as snapshot, manifest, training_identity
+    if snapshot == ROOT:
+        raise ValueError('Prepare dropout recovery from a clean detached source')
+    previous = load(FORMAL / (TRAIN_ADMISSION_RECOVERY + '-inputs.json'))
+    attempt = Path(previous['attempt_dir'])
+    state = pin(attempt / 'state.json')
+    terminal = read(state)
+    counters = terminal['counters']
+    if (terminal['status'] != 'FAIL_PENDING_CLOSE' or not terminal['error'].startswith('MeasurementCoverageUnavailable(')
+            or counters['training_transitions'] != 32768 or counters['completed_updates'] != 64
+            or counters['real_checkpoint_writes'] != 3 or counters['attempted_policy_steps'] != 1025):
+        raise ValueError('Expected exact delayed-start failure after the original phase')
+    retained = pin(attempt / 'results/research-r6-training/checkpoints/u704.pt')
+    metadata = torch.load(retained['path'], map_location='cpu', weights_only=True)
+    previous_params = read(previous['contract'])['parameters']
+    if (metadata['counters']['update'] != 704 or metadata['source_identity'] != previous_params['source_identity']
+            or metadata['method_hashes']['r6_recipe'] != previous_params['r6_training_plan']['recipe']['sha256']):
+        raise ValueError('Interrupted checkpoint does not match its bound workload')
+    policy = read(previous['resource_policy'])
+    # One completed candidate remains the objective. Retain the observed half
+    # and its actual time. The incremental allowances cover only that failed work.
+    policy['caps'].update(live_starts=4, simulator_initializations=3, queue_seconds=720,
+                          training_transitions=98304, training_checkpoint_writes=8,
+                          major_scientific_candidates=2)
+    authority = save(FORMAL / 'RESOURCE_POLICY-r3.json', policy)
+    with writer():
+        ledger = load(LEDGER)
+        row, = (r for r in ledger['new_reservations'] if r['id'] == TRAIN_ADMISSION_RECOVERY)
+        predecessor = row['receipt']
+        closed = read(predecessor)
+        if closed['exit_code'] not in (1, -15) or closed['status'] != 'CLOSED':
+            raise ValueError('Failed training has no acceptable closed receipt')
+        if 'failed_progress' not in row:
+            settle_time(ledger, TRAIN_ADMISSION_RECOVERY)
+            row['failed_progress'] = dict(state=state, receipt=predecessor, retained_checkpoint=retained,
+                                          counters=counters)
+            row['resources'].update(training_transitions=counters['training_transitions'],
+                                    training_checkpoint_writes=counters['real_checkpoint_writes'])
+            ledger.update(resource_policy=authority, caps=policy['caps'], status='DROPOUT_RECOVERY_FROZEN')
+            atomic(LEDGER, ledger)
+    source = manifest()
+    source_pin = save(FORMAL / 'source-r3.json', source)
+    identity = training_identity(source)
+    plan = previous_params['r6_training_plan']
+    recipe = read(plan['recipe'])
+    curriculum = read(recipe['curriculum'])
+    curriculum['phases'][1]['delay_cycles'] = 0
+    recipe.update(source_identity=identity, diagnosis=[*recipe['diagnosis'], state, predecessor],
+                  curriculum=save(FORMAL / 'curriculum-r3.json', curriculum),
+                  hypothesis='Isolated drop exposure improves condition-specific recovery and preserves tracking.')
+    plan.update(experiment_id=TRAIN_DROPOUT_RECOVERY, recipe=save(FORMAL / 'recipe-r3.json', recipe))
+    previous_params.update(experiment_id=TRAIN_DROPOUT_RECOVERY, source_identity=identity)
+    contract = save(FORMAL / 'TRAIN-r3-contract.json', build('contract', dict(operation='train', parameters=previous_params)))
+    return run_inputs(TRAIN_DROPOUT_RECOVERY, snapshot, contract, predecessor,
+                      source=source_pin, resource_policy=authority)
 
 
 def settle(run_id):
@@ -181,6 +242,7 @@ def prepare_diagnostic():
     spec = load(DIAG_TEMPLATE)
     del spec['native_volume']
     spec.update(destination(DIAG), resource_policy=inputs['resource_policy'],
+                scope='Cycle-one exact first-update probability replay; no simulator or training',
                 launcher_script=pin(Path(inputs['snapshot']) / 'tools/r6_direct/cuda_diagnostic.py'),
                 predecessor_receipt=settle(inputs['run_id']), probability_replay=dict(
                     backend='isaaclab_seeded_reset', contract=inputs['contract'], retained=retained))
@@ -225,11 +287,13 @@ def prepare_evaluation():
     params['r6']['run_id'] = EVAL
     contract = save(FORMAL / 'EVAL-contract.json', build('contract', dict(operation='evaluate', parameters=params)))
     predecessor = settle(DIAG if (FORMAL / (DIAG + '-inputs.json')).exists() else train_inputs['run_id'])
-    return run_inputs(EVAL, Path(train_inputs['snapshot']), contract, predecessor, source=train_inputs['source'])
+    return run_inputs(EVAL, Path(train_inputs['snapshot']), contract, predecessor,
+                      source=train_inputs['source'], resource_policy=train_inputs['resource_policy'])
 
 
 def main():
-    actions = dict(train=prepare_training, recover=recover_training, diagnostic=prepare_diagnostic, seal=seal_diagnostic,
+    actions = dict(train=prepare_training, recover=recover_training, dropout=restart_dropout,
+                   diagnostic=prepare_diagnostic, seal=seal_diagnostic,
                    evaluate=prepare_evaluation, close=lambda: settle(EVAL))
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('step', choices=actions)
