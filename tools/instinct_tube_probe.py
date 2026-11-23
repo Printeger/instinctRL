@@ -76,7 +76,7 @@ def probe_case(rays, config, inputs, half_width, yaw, endcap):
         "command_order": ["axial", "oblique", "toward_side_wall"],
         "issued_world_m_s": velocity_world.tolist(),
         "beta": result.metrics["beta"].flatten().tolist(),
-        "reward_marks_dangerous": reward_risk.dangerous.flatten().tolist(),
+        "reward_marks_dangerous": reward_risk.dangerous_command.flatten().tolist(),
         "certificate": cone,
     }
 
