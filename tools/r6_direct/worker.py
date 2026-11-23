@@ -114,7 +114,10 @@ def run(plan, input_pin):
         os.environ[name]=str(native_root/folder)
     from training_workloads.unified_h1.write_boundary import prepare,enforce
     devices=[p for p in ('/dev/null','/dev/zero','/dev/nvidia0','/dev/nvidiactl','/dev/nvidia-uvm','/dev/nvidia-uvm-tools') if Path(p).exists()]
-    policy=prepare([str(attempt),str(native_root),'/dev/shm'],devices)
+    output_roots=[str(attempt),'/dev/shm']
+    if not native_root.is_relative_to(attempt):
+        output_roots.append(str(native_root))
+    policy=prepare(output_roots,devices)
     # Validated by CUDA-DIAGNOSTIC-02: CUDA names new threads through comm.
     # Only this process's task metadata receives write/truncate permission.
     policy['entries'].append((f'/proc/{os.getpid()}/task',2|(1<<14)))

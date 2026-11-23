@@ -18,8 +18,9 @@ from tools.r6_evidence import canonical, persist_exact
 FORMAL = ROOT / 'docs/experiments/instinct-first-cycle/formal'
 HISTORICAL = ROOT / 'docs/experiments/third-training/formal'
 TRAIN = CYCLE_PREFIX + 'TRAIN-01'
+TRAIN_RECOVERY = TRAIN + '-R1'
 EVAL = CYCLE_PREFIX + 'EVAL-01'
-DIAG = TRAIN + '-DIAGNOSTIC'
+DIAG = CYCLE_PREFIX + 'PROBABILITY-DIAGNOSTIC'
 LEDGER = FORMAL / 'RESOURCE_LEDGER.json'
 TRAIN_TEMPLATE = HISTORICAL / 'R6-DIRECT-THIRD-FORMAL-CONTROL-01-contract.json'
 EVAL_TEMPLATE = HISTORICAL / 'R6-DIRECT-THIRD-EVAL-CONTROL-01-contract.json'
@@ -45,11 +46,11 @@ def destination(run_id):
                 native_dir=str(root / 'native'), system_results=True, system_native=True)
 
 
-def run_inputs(run_id, snapshot, contract, predecessor):
+def run_inputs(run_id, snapshot, contract, predecessor, *, source=None):
     initial = load(HISTORICAL / 'R6-DIRECT-THIRD-FORMAL-CONTROL-01-inputs.json')
     return save(FORMAL / (run_id + '-inputs.json'), dict(destination(run_id),
         schema_version='r6-direct-run-inputs/1', snapshot=str(snapshot),
-        source=pin(FORMAL / 'source.json'), contract=contract,
+        source=source or pin(FORMAL / 'source.json'), contract=contract,
         extension_inputs=initial['extension_inputs'], ipc_wrapper=initial['ipc_wrapper'],
         resource_policy=pin(FORMAL / 'RESOURCE_POLICY.json'), storage_reservation_id='CYCLE1-SYSTEM',
         result_payload_cap_bytes=read(contract)['parameters']['output_cap_bytes'],
@@ -94,6 +95,55 @@ def prepare_training():
     return run_inputs(TRAIN, snapshot, contract, predecessor)
 
 
+def recover_training():
+    from tools.r6_direct.source import ROOT as snapshot, manifest, training_identity
+    if snapshot == ROOT:
+        raise ValueError('Recover from the clean detached execution tree')
+    original = load(FORMAL / (TRAIN + '-inputs.json'))
+    attempt = Path(original['attempt_dir'])
+    out = Path(original['output_root'])
+    stderr = (out / 'stderr.log').read_text()
+    if ('ValueError: R6 overlapping output roots' not in stderr
+            or (attempt / 'state.json').exists() or (attempt / 'kit_settings.json').exists()
+            or any((attempt / 'prelaunch').iterdir())
+            or any((attempt / 'results/research-r6-training').iterdir())):
+        raise ValueError('Recovery requires exact before-gate failure and no workload state')
+    with writer():
+        ledger = load(LEDGER)
+        row, = (r for r in ledger['new_reservations'] if r['id'] == TRAIN)
+        predecessor = row['receipt']
+        closed = read(predecessor)
+        if closed['exit_code'] != 1 or closed['error'] is not None:
+            raise ValueError('Unexpected before-gate exit')
+        if 'pre_app_abort' not in row:
+            settle_time(ledger, TRAIN)
+            # All actual supervised time and retained bytes stay charged. This
+            # child never entered admission or recorded an AppLauncher start.
+            row['pre_app_abort'] = dict(stderr=pin(out / 'stderr.log'),
+                                        receipt=predecessor, reserved_before_recovery=dict(row['resources']),
+                                        scientific_launches=0, training_transitions=0)
+            for counter in ('live_starts', 'queue_seconds', 'simulator_initializations',
+                            'training_transitions', 'training_checkpoint_writes', 'major_scientific_candidates'):
+                row['resources'][counter] = 0
+            atomic(LEDGER, ledger)
+    source = manifest()
+    source_pin = save(FORMAL / 'source-r1.json', source)
+    identity = training_identity(source)
+    params = read(original['contract'])['parameters']
+    plan = params['r6_training_plan']
+    recipe = read(plan['recipe'])
+    recipe['source_identity'] = identity
+    plan.update(experiment_id=TRAIN_RECOVERY, recipe=save(FORMAL / 'recipe-r1.json', recipe))
+    params.update(experiment_id=TRAIN_RECOVERY, source_identity=identity)
+    contract = save(FORMAL / 'TRAIN-r1-contract.json', build('contract', dict(operation='train', parameters=params)))
+    return run_inputs(TRAIN_RECOVERY, snapshot, contract, predecessor, source=source_pin)
+
+
+def active_training_inputs():
+    recovery = FORMAL / (TRAIN_RECOVERY + '-inputs.json')
+    return load(recovery if recovery.exists() else FORMAL / (TRAIN + '-inputs.json'))
+
+
 def settle(run_id):
     with writer():
         ledger = load(LEDGER)
@@ -106,7 +156,7 @@ def settle(run_id):
 
 
 def prepare_diagnostic():
-    inputs = load(FORMAL / (TRAIN + '-inputs.json'))
+    inputs = active_training_inputs()
     report = load(Path(inputs['attempt_dir']) / 'analysis-cpu/report.json')
     retained, = (r['pin'] for r in report['streams']
                  if r['logical_name'] == 'pilot_diagnostic/update_641_full_input.pt')
@@ -114,7 +164,7 @@ def prepare_diagnostic():
     del spec['native_volume']
     spec.update(destination(DIAG), resource_policy=inputs['resource_policy'],
                 launcher_script=pin(Path(inputs['snapshot']) / 'tools/r6_direct/cuda_diagnostic.py'),
-                predecessor_receipt=settle(TRAIN), probability_replay=dict(
+                predecessor_receipt=settle(inputs['run_id']), probability_replay=dict(
                     backend='isaaclab_seeded_reset', contract=inputs['contract'], retained=retained))
     return save(FORMAL / (DIAG + '-inputs.json'), spec)
 
@@ -129,7 +179,7 @@ def seal_diagnostic():
         raise ValueError('Device probability verification did not complete')
     if pin(Path(spec['attempt_dir']) / 'probability_result.json')['sha256'] != result['sha256']:
         raise ValueError('Device probability result mirror differs')
-    origin = load(FORMAL / 'TRAIN-contract.json')['parameters']['r6_training_plan']['initialization']['checkpoint']
+    origin = read(active_training_inputs()['contract'])['parameters']['r6_training_plan']['initialization']['checkpoint']
     return save(Path(spec['attempt_dir']) / 'sealed-evidence.json', dict(
         schema_version='r6-probability-sealed-evidence/1', plan=pin(path),
         run_inputs=pin(out / 'RUN_INPUTS.json'), intent=pin(out / 'intent.json'),
@@ -137,7 +187,7 @@ def seal_diagnostic():
 
 
 def prepare_evaluation():
-    train_inputs = load(FORMAL / (TRAIN + '-inputs.json'))
+    train_inputs = active_training_inputs()
     attempt = Path(train_inputs['attempt_dir'])
     analysis = attempt / 'analysis/binding.json'
     if not analysis.exists():
@@ -156,12 +206,12 @@ def prepare_evaluation():
     params['experiment_id'] = EVAL
     params['r6']['run_id'] = EVAL
     contract = save(FORMAL / 'EVAL-contract.json', build('contract', dict(operation='evaluate', parameters=params)))
-    predecessor = settle(DIAG if (FORMAL / (DIAG + '-inputs.json')).exists() else TRAIN)
-    return run_inputs(EVAL, Path(train_inputs['snapshot']), contract, predecessor)
+    predecessor = settle(DIAG if (FORMAL / (DIAG + '-inputs.json')).exists() else train_inputs['run_id'])
+    return run_inputs(EVAL, Path(train_inputs['snapshot']), contract, predecessor, source=train_inputs['source'])
 
 
 def main():
-    actions = dict(train=prepare_training, diagnostic=prepare_diagnostic, seal=seal_diagnostic,
+    actions = dict(train=prepare_training, recover=recover_training, diagnostic=prepare_diagnostic, seal=seal_diagnostic,
                    evaluate=prepare_evaluation, close=lambda: settle(EVAL))
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('step', choices=actions)
