@@ -97,6 +97,7 @@ def restore_and_bind(backend,*,plan,execution_identity):
     from instinctlab.training.ppo import PPOConfig,PPOTrainer
     from instinctlab.training.checkpoint_h1 import load_checkpoint_h1
     from . import robustness_training_plan as contract
+    from .range_closure_prior import CANDIDATE_ID, add_to_trainer
     from .research_contract import validate_pin
     p=contract.validate(plan);recipe=pinned_json(p['recipe']);method=validate(pinned_json(recipe['method']))
     from .direct_contract import training_inputs
@@ -122,6 +123,13 @@ def restore_and_bind(backend,*,plan,execution_identity):
         contract.verify_loaded(p,metadata)
         binding=apply_method(trainer,backend.environment,method,
             resume=initial['kind']=='RESUME_R6_STREAM',training_seed=p['training_seed'])
+        if recipe['candidate_id'] == CANDIDATE_ID:
+            env = backend.environment
+            margin = env._control_pipelines[0].config.ics
+            period_s = float(env.cfg.sim.dt) * env.cfg.decimation
+            binding['range_closure_prior'] = add_to_trainer(
+                trainer, period_s=period_s, clearance_m=margin.d_safe_m + margin.clearance_margin_m)
+            trainer._r6_bound_auxiliary = trainer.actor_auxiliary
     except BaseException:
         torch.set_rng_state(before['cpu']);random.setstate(before['python']);np.random.set_state(before['numpy'])
         backend.curriculum_generator.set_state(before['curriculum'])
