@@ -327,6 +327,47 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-TRAIN-01-R3/native"
       },
       "storage_reservation_id": "CYCLE1-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 3391488,
+      "diagnostic_wall_seconds": 64.09631117898971,
+      "id": "R6-DIRECT-INSTINCT-CYCLE1-PROBABILITY-DIAGNOSTIC",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-PROBABILITY-DIAGNOSTIC/control/receipt.json",
+        "sha256": "27e7d60ecde1c5fa892d1d7c5242a397eee1330391b204d051b844d998467ab6"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-first-cycle/formal/RESOURCE_POLICY-r3.json",
+        "sha256": "ab718868ff5c7deed69c5ac13261a018e7a8642679fd7fbebf73521271c0ee8f"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 65,
+        "live_starts": 1,
+        "live_wall_seconds": 65,
+        "output_actual_plus_unreleased_reservations_bytes": 3391488,
+        "queue_seconds": 180
+      },
+      "settlement": {
+        "charged_seconds": 65,
+        "original_resources": {
+          "allocated_gpu_seconds": 390,
+          "live_starts": 1,
+          "live_wall_seconds": 390,
+          "output_actual_plus_unreleased_reservations_bytes": 268435456,
+          "queue_seconds": 180
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-PROBABILITY-DIAGNOSTIC/control/receipt.json",
+          "sha256": "27e7d60ecde1c5fa892d1d7c5242a397eee1330391b204d051b844d998467ab6"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-PROBABILITY-DIAGNOSTIC",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-CYCLE1-PROBABILITY-DIAGNOSTIC/native"
+      }
     }
   ],
   "new_used": {
