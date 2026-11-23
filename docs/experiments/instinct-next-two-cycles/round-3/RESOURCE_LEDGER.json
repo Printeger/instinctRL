@@ -86,6 +86,47 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-NEXT-R3-TRAIN/native"
       },
       "storage_reservation_id": "ROUND-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 3395584,
+      "diagnostic_wall_seconds": 64.20062373718247,
+      "id": "R6-DIRECT-INSTINCT-NEXT-R3-PROBABILITY-DIAGNOSTIC",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-NEXT-R3-PROBABILITY-DIAGNOSTIC/control/receipt.json",
+        "sha256": "6343d57d9bc89686258cbba3df527fc75e556a314eada48249d3d80cf25ea885"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-next-two-cycles/round-3/RESOURCE_POLICY.json",
+        "sha256": "ddb944bc34c1b6e207ad8083964fc17e66b737f027e8ab3fccacbadd4ef84ab6"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 65,
+        "live_starts": 1,
+        "live_wall_seconds": 65,
+        "output_actual_plus_unreleased_reservations_bytes": 3395584,
+        "queue_seconds": 180
+      },
+      "settlement": {
+        "charged_seconds": 65,
+        "original_resources": {
+          "allocated_gpu_seconds": 390,
+          "live_starts": 1,
+          "live_wall_seconds": 390,
+          "output_actual_plus_unreleased_reservations_bytes": 268435456,
+          "queue_seconds": 180
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-NEXT-R3-PROBABILITY-DIAGNOSTIC/control/receipt.json",
+          "sha256": "6343d57d9bc89686258cbba3df527fc75e556a314eada48249d3d80cf25ea885"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-NEXT-R3-PROBABILITY-DIAGNOSTIC",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-NEXT-R3-PROBABILITY-DIAGNOSTIC/native"
+      }
     }
   ],
   "new_used": {
