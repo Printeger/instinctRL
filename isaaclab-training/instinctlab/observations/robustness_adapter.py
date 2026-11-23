@@ -11,9 +11,12 @@ from .robustness import RangeDelivery
 
 class R6MeasurementMixin:
     def configure_r6_measurements(self, *, seed, stream_id, sigma_m, delay_cycles,
-                                  drop_steps, frame_limit, audit_sink, evaluation_contract=None):
+                                  drop_steps, frame_limit, audit_sink, evaluation_contract=None,
+                                  prime_after_reset=False):
         from instinctlab.task.evaluation_reward import validate_evaluation_contract
         nontraining_baseline=validate_evaluation_contract(evaluation_contract)
+        if nontraining_baseline and prime_after_reset:
+            raise ValueError('reset priming is for delayed training only')
         if getattr(self,'_r6_measurements',None) is not None:
             raise RuntimeError('finish the existing R6 measurement block first')
         if getattr(self,'_h1_evaluation_case',None) is not None:
@@ -26,7 +29,8 @@ class R6MeasurementMixin:
             raise ValueError('only distinct isolated frame drops are registered')
         if not callable(audit_sink):raise TypeError('durable measurement audit sink required')
         chain=RangeDelivery(lanes=self.num_envs,rays=RAY_COUNT,seed=seed,stream_id=stream_id,
-            sigma_m=sigma_m,delay_cycles=delay_cycles,device=self._actions.device,dtype=self._actions.dtype)
+            sigma_m=sigma_m,delay_cycles=delay_cycles,device=self._actions.device,dtype=self._actions.dtype,
+            prime_after_reset=prime_after_reset)
         self._r6_measurements=dict(chain=chain,drop_steps=frozenset(drop_steps),frame_limit=frame_limit,
             sequence=0,sink=audit_sink,reset_lanes=set(),failed=False,
             nontraining_baseline=nontraining_baseline,reward_context=None)

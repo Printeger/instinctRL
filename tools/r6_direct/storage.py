@@ -16,7 +16,7 @@ SYSTEM_STORAGE_SCHEMA = 'instinctrl-system-storage/1'
 
 def system_paths(plan, *, diagnostic=False):
     run_id = plan['run_id']
-    if not re.fullmatch(r'R6-DIRECT-(THIRD|INSTINCT-CYCLE1)-[A-Z0-9-]+', run_id):
+    if not re.fullmatch(r'R6-DIRECT-(THIRD|INSTINCT-CYCLE1|INSTINCT-NEXT-R[23])-[A-Z0-9-]+', run_id):
         raise ValueError('DIRECT_SYSTEM_RUN_ID')
     root = SYSTEM_ROOT / run_id
     if (Path(plan['output_root']) != root / 'control'

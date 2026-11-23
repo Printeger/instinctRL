@@ -11,7 +11,7 @@ import torch
 
 class RangeDelivery:
     def __init__(self, *, lanes, rays, seed, stream_id, sigma_m=0., delay_cycles=0,
-                 device='cpu', dtype=torch.float32):
+                 device='cpu', dtype=torch.float32, prime_after_reset=False):
         if type(lanes) is not int or lanes<=0 or type(rays) is not int or rays<=0:
             raise ValueError('positive tensor dimensions required')
         if type(seed) is not int or not isinstance(stream_id,str) or not stream_id:
@@ -20,9 +20,12 @@ class RangeDelivery:
             raise ValueError('unregistered noise range')
         if type(delay_cycles) is not int or delay_cycles not in (0,1):
             raise ValueError('unregistered delay')
+        if type(prime_after_reset) is not bool or (prime_after_reset and delay_cycles != 1):
+            raise ValueError('reset priming requires an explicit one-cycle delay')
         if dtype not in (torch.float32,torch.float64): raise ValueError('floating dtype required')
         self.lanes,self.rays=lanes,rays
         self.sigma,self.delay=float(sigma_m),delay_cycles
+        self.prime_after_reset=prime_after_reset
         self.device,self.dtype=torch.device(device),dtype
         self.generators=[];self.streams=[]
         for lane in range(lanes):
@@ -86,12 +89,20 @@ class RangeDelivery:
         acquired=dict(ranges=noisy,valid=validity.clone(),time=acquisition_time_s.clone(),
                       available=torch.ones((self.lanes,1),device=self.device,dtype=torch.bool))
         candidate=acquired if self.delay==0 else self.pending
+        requested_drop=drop
+        if self.prime_after_reset:
+            primed=~self.pending['available']
+            candidate={key:torch.where(primed,acquired[key],value) for key,value in candidate.items()}
+            drop=drop & ~primed
         delivered={key:torch.where(drop,self.last[key],value).clone() for key,value in candidate.items()}
         self.pending={k:v.clone() for k,v in acquired.items()}
         self.last={k:v.clone() for k,v in delivered.items()}
         self.last_time.copy_(acquisition_time_s)
-        return dict(clean_ranges=ranges_m.clone(),clean_validity=validity.clone(),
+        record=dict(clean_ranges=ranges_m.clone(),clean_validity=validity.clone(),
                     delivered_ranges=delivered['ranges'],delivered_validity=delivered['valid'],
                     acquisition_time=delivered['time'],delivery_time=acquisition_time_s.clone(),
                     frame_age=acquisition_time_s-delivered['time'],drop=drop.clone(),
                     frame_available=delivered['available'],noise_rng_identity=list(self.streams))
+        if self.prime_after_reset:
+            record.update(reset_prime=primed.clone(), requested_drop=requested_drop.clone())
+        return record

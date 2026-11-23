@@ -9,9 +9,13 @@ THIRD_PREFIX = 'R6-DIRECT-THIRD-'
 THIRD_SCHEMA = 'instinctrl-third-training-resources/1'
 CYCLE_PREFIX = 'R6-DIRECT-INSTINCT-CYCLE1-'
 CYCLE_SCHEMA = 'instinctrl-first-cycle-training-resources/1'
+NEXT_PREFIX = 'R6-DIRECT-INSTINCT-NEXT-'
+NEXT_SCHEMA = 'instinctrl-next-cycle-training-resources/1'
 BOUNDED_SCOPES = {
     THIRD_PREFIX: (THIRD_SCHEMA, 'docs/experiments/third-training/RESOURCE_LEDGER.json'),
     CYCLE_PREFIX: (CYCLE_SCHEMA, 'docs/experiments/instinct-first-cycle/formal/RESOURCE_LEDGER.json'),
+    **{f'{NEXT_PREFIX}R{n}-': (NEXT_SCHEMA, f'docs/experiments/instinct-next-two-cycles/round-{n}/RESOURCE_LEDGER.json')
+       for n in (2, 3)},
 }
 THIRD_CAPS = frozenset((
     'allocated_gpu_seconds', 'live_wall_seconds', 'queue_seconds', 'live_starts',

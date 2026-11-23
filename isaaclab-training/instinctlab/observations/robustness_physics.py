@@ -59,6 +59,10 @@ class R6PhysicsMixin:
         from training_workloads.unified_h1.robustness_curriculum import PhaseCurriculum
         if not isinstance(curriculum,PhaseCurriculum):raise TypeError('R6 phase curriculum required')
         settings=curriculum.measurement_settings(start_policy_step=start_policy_step,end_policy_step=end_policy_step)
+        if settings['delay_cycles'] == 1:
+            # Prime with the lane's freshly measured reset scan at its real time.
+            # The next acquisition resumes ordinary delayed delivery.
+            settings['prime_after_reset']=True
         if start_policy_step%16 or end_policy_step%16:raise ValueError('R6 phase update boundaries required')
         if getattr(self,'_r6_measurements',None) is not None:raise RuntimeError('R6 measurements already active')
         if self._h1_global_policy_step!=start_policy_step:raise ValueError('R6 phase global clock mismatch')
