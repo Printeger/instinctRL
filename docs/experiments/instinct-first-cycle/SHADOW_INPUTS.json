@@ -1,0 +1,24 @@
+{
+  "ics_clearance_margin_m": 0.15,
+  "history_dt_s": 0.1,
+  "command_world_m_s": [0.30, 0.25, 0.0],
+  "min_reliable_fraction": 0.10,
+  "projection_limit": 48,
+  "projection_tolerance_m_s": 0.00001,
+  "minimum_axial_gain_m_s": 0.05,
+  "yaw_degrees": [-15, 0, 30],
+  "fixtures": [
+    {"name": "axial_block", "half_width_m": 0.90},
+    {"name": "centered_boundary", "half_width_m": 0.95},
+    {"name": "offset_boundary", "half_width_m": 0.99, "offset_y_m": 0.04},
+    {"name": "slightly_wider", "half_width_m": 0.96},
+    {"name": "wide", "half_width_m": 1.40},
+    {"name": "front_endcap", "half_width_m": 1.40, "endcap_m": 0.90},
+    {"name": "dropout_sector", "half_width_m": 0.95, "drop_forward_cone_cosine": 0.85},
+    {"name": "no_returns", "half_width_m": 0.95, "drop_forward_cone_cosine": -1.0},
+    {"name": "room_doorway", "half_width_m": 2.0, "doorway": {"distance_m": 0.9, "half_opening_m": 0.95}},
+    {"name": "isolated_posts", "half_width_m": 2.5, "posts": [[1.1, 0.50, 0.25], [1.8, -0.85, 0.20]]},
+    {"name": "approaching_face", "half_width_m": 2.0, "endcap_m": 1.02, "endcap_velocity_m_s": -2.0},
+    {"name": "receding_face", "half_width_m": 2.0, "endcap_m": 1.02, "endcap_velocity_m_s": 0.6}
+  ]
+}
