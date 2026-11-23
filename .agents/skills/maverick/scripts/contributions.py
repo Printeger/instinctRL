@@ -8,10 +8,11 @@ from pathlib import Path
 ROLES = ("maverick", "rebel", "inventor", "hacker", "scientist", "producer")
 MODES = ("direct", "perspective", "native_subagent", "delegated_subagent")
 KINDS = {"direction": "方向", "implementation": "实施", "correction": "纠错"}
-STATUSES = {"proposed": "待验证建议", "confirmed": "已确认影响", "not_adopted": "未采用", "unknown": "结果未知"}
+STATUSES = {"reviewed": "已完成判断，未确认影响", "proposed": "待验证建议", "confirmed": "已确认影响",
+            "not_adopted": "未采用", "unknown": "结果未知"}
 GRADES = {1: "1 · 辅助", 2: "2 · 实质", 3: "3 · 关键"}
 REQUIRED = {"id", "task", "persona", "mode", "actor", "trigger", "kind", "contribution", "status", "outcome", "evidence", "impact"}
-IDENTITY = ("persona", "mode", "actor", "kind")
+IDENTITY = ("persona", "mode", "actor", "kind", "phase")
 
 
 def _path(project: Path) -> Path:
@@ -32,7 +33,7 @@ def _validate(event: dict) -> None:
     if not isinstance(event, dict):
         raise ValueError("A contribution must be a JSON object.")
     missing = REQUIRED - event.keys()
-    unknown = event.keys() - REQUIRED - {"at", "reused", "shift"}
+    unknown = event.keys() - REQUIRED - {"at", "reused", "shift", "phase"}
     if missing or unknown:
         raise ValueError(f"Contribution fields: missing={sorted(missing)}, unknown={sorted(unknown)}")
     for key in ("id", "task", "persona", "mode", "actor", "trigger", "kind", "contribution", "status"):
@@ -57,6 +58,13 @@ def _validate(event: dict) -> None:
         raise ValueError("Subagent work needs the actual agent/thread ID and a delegated persona.")
     if "reused" in event and type(event["reused"]) is not bool:
         raise ValueError("reused must be a boolean.")
+    if "phase" in event:
+        if event["phase"] != "initial":
+            raise ValueError("The optional phase must be initial; omit it for later work.")
+        if mode == "perspective":
+            raise ValueError("A root perspective is not an independent initial judgment.")
+        if not _nonempty(event["outcome"]) or not evidence:
+            raise ValueError("An initial judgment needs the returned conclusion and evidence references.")
     impact = event["impact"]
     if event["status"] == "confirmed":
         if type(impact) is not int or impact not in GRADES or not evidence or not _nonempty(event["outcome"]):
@@ -73,8 +81,8 @@ def _validate(event: dict) -> None:
 
 
 def _revision(previous: dict | None, event: dict) -> None:
-    if previous and any(previous[key] != event[key] for key in IDENTITY):
-        raise ValueError("A revision must retain persona, mode, actor and kind; use a new id for another contribution.")
+    if previous and any(previous.get(key) != event.get(key) for key in IDENTITY):
+        raise ValueError("A revision must retain persona, mode, actor, kind and phase; use a new id for another contribution.")
 
 
 def _load(path: Path) -> tuple[dict, bool]:
@@ -144,20 +152,55 @@ def _participation(event: dict) -> str:
     return f"{kind}：{_text(event['actor'])}{reused}"
 
 
-def report(project: Path, task: str) -> str:
-    """Render the latest recorded outcomes for one task; never infer missing participation."""
+def _task_events(project: Path, task: str) -> list[dict]:
     if not _nonempty(task):
         raise ValueError("task must be a nonempty string.")
     path = _path(project)
     if not path.exists():
         raise ValueError("Missing .maverick/contributions.jsonl; initialize or upgrade the project first.")
     latest, _ = _load(path)
-    events = [event for event in latest.values() if event["task"] == task]
+    return [event for event in latest.values() if event["task"] == task]
+
+
+def _initial_participation(events: list[dict]) -> dict:
+    actors = {}
+    for event in events:
+        if event["mode"] in ("native_subagent", "delegated_subagent"):
+            actors.setdefault(event["actor"], set()).add(event["persona"])
+    conflicts = {actor: roles for actor, roles in actors.items() if len(roles) > 1}
+    conflicted_roles = {role for roles in conflicts.values() for role in roles}
+    recorded = {event["persona"] for event in events if event.get("phase") == "initial"}
+    completed = [role for role in ROLES if role in recorded and role not in conflicted_roles]
+    missing = [role for role in ROLES if role not in completed]
+    return {"complete": not missing and not conflicts, "completed": completed, "missing": missing,
+            "conflicts": [f"{actor}: {', '.join(role for role in ROLES if role in roles)}"
+                          for actor, roles in conflicts.items()]}
+
+
+def participation(project: Path, task: str) -> dict:
+    """Check recorded initial judgments, not actual dispatch or independent reasoning."""
+    return _initial_participation(_task_events(project, task))
+
+
+def report(project: Path, task: str) -> str:
+    """Render the latest recorded outcomes for one task; never infer missing participation."""
+    events = _task_events(project, task)
+    initial = _initial_participation(events)
+    completeness = "齐全" if initial["complete"] else "不齐全"
+    completed = "、".join(role.capitalize() for role in initial["completed"]) or "无"
+    missing = "、".join(role.capitalize() for role in initial["missing"]) or "无"
     lines = [f"# Maverick 开发贡献报告 · {_text(task)}", "",
              "依据本任务已记录的最新结果汇总；证据为记录者提供的引用，未由脚本独立验证。",
              "等级表示各人格已确认影响的最高定性等级，不累加、不换算百分比。主对话借用视角与真实子 Agent 分开标明。", "",
-             "| 人格 | 参与方式 | 实际贡献与结果 | 等级 | 证据 |",
-             "| --- | --- | --- | --- | --- |"]
+             "## 首轮独立判断", "",
+             f"首轮记录{completeness}：{len(initial['completed'])}/6。Maverick 记录综合决定，其余五人格记录实际返回。", "",
+             f"- 已记录完成：{completed}。", f"- 未记录完成或身份冲突：{missing}。"]
+    if initial["conflicts"]:
+        lines.append("- 同一执行者对应不同人格：" + "；".join(_text(item) for item in initial["conflicts"]) + "。")
+    lines.extend(["", "本节只检查记录是否齐全，不验证真实调用、独立上下文或意见形成时点；没有首轮标记的旧记录不补判。",
+                  "未记录完成不等于事实上未参与，记录齐全也不代表开发任务已完成。", "",
+                  "## 实际贡献", "", "| 人格 | 参与方式 | 实际贡献与结果 | 等级 | 证据 |",
+                  "| --- | --- | --- | --- | --- |"])
     for role in ROLES:
         selected = [event for event in events if event["persona"] == role]
         if not selected:

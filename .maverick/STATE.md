@@ -22,3 +22,17 @@ PASS。在项目新开的 Codex CLI 0.171.0 会话 `01a20399-bd60-7102-858d-d5a0
 | mav_inventor | 01a2039a-14b6-7230-9afe-7eece3b19894 | f5e336b95f05 | `control-information.md:21` 的同观测机制解释 `FINAL_R6_RESULTS.md:5` 的天花板：成功计数无法区分策略余量。 |
 
 验收转折：当前对话缺少原生角色选择字段，改在新项目会话验证角色绑定与返回值。贡献记录见 `.maverick/contributions.jsonl`。
+
+## Maverick V1.2.0 升级验收
+
+任务 `maverick-v120-upgrade` 从上游 `d3b3683919e8aac934237cbf47a62ef5f43db1ba` 执行 upgrade。旧版任务和原生验收事实保留。新任务先取得五份独立返回，恢复同一任务只补缺项。
+
+项目新开的只读 CLI 父线程 `01a2072b-a4be-7292-a7aa-ff6420b7c13e` 实测 gpt-6.2-sol high。核对五个 native_subagent 的父线程、角色、模型、推理强度与带标记的最终返回。五者均为 gpt-6.2-sol。
+
+- mav_rebel · high · 01a2072b-f36d-79f3-998d-b25d74d13a94 · R12-A7
+- mav_inventor · high · 01a2072c-0e30-7ec1-aad1-b4bfaf60a1bb · I12-B8
+- mav_hacker · medium · 01a2072c-a5d8-74e0-a1f4-7cae2d44ddbc · H12-C9
+- mav_scientist · high · 01a2072c-bf59-7db1-b967-0b6cca793fdb · S12-D4
+- mav_producer · medium · 01a2072d-4c83-7e61-b04d-af06fa049947 · P12-E5
+
+五份原始返回及 Maverick 综合决定见本任务的 contributions.jsonl。doctor 为 PASS，知识 READY；report --require-full-team 已核对 6/6。原偏好为空，未发现保留人格冲突。

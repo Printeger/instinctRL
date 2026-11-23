@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "version": "1.1.1",
+  "version": "1.2.0",
   "installed_at": "2026-11-22T14:11:33+00:00",
   "native_roles": [
     "mav_rebel",
@@ -10,13 +10,13 @@
     "mav_producer"
   ],
   "managed_files": {
-    "SKILL.md": "bf966e81c225b2d578436ed34a976e9431a5f382137a41ae615df40a12037793",
-    "scripts/maverick.py": "a5b2ea365d57d38972e654a3a189f3a62a577f3e72a42b63b86ba6ae4cb9118e",
-    "scripts/contributions.py": "9de55faadbbffee9daf4c5ff0507af573144f2501732ed90fb08b56cf2599d47",
-    "agents/openai.yaml": "5bbf79905cf19e1120c30f5bf88f6acc0c7460fd2e59190e1240f79080256cbb",
+    "SKILL.md": "eb0be3779962905ca0b7830adb233fc70012de845a8dc8d7a21d865604a2d9f5",
+    "scripts/maverick.py": "a38c4796f5b890ef20e120ebe2f0ba5e57e8a5cbd7d18ec3c55ae984f6cef2f6",
+    "scripts/contributions.py": "7b7272c2eb8c46706e5320ed12befe33e7ab70f1ffb54afe024c7ae5a4a5c47c",
+    "agents/openai.yaml": "ccbf542d5ca1f011a7ccd9fa2a6bc56e215b3857588ce4ed420e3ade763c18b7",
     "references/personas/hacker.md": "1b5cc52fd13511ef5c4644595a4034aa84d4bbb7fd56a177b40623f20bd72fb1",
     "references/personas/inventor.md": "248d335a80a2f8687c99af9c9d74d2db67e7e3636f9195e136ab4fab02650dc0",
-    "references/personas/maverick.md": "b4644f94ed62a4f00cf8c11b15e0d5b489609a90530906027f3ac2df5abbc605",
+    "references/personas/maverick.md": "aeaa8a230ec513197432b01277fd86c133deb32f083dae9a1e9bcc9df54e16e7",
     "references/personas/producer.md": "88e13f2f3f4e56930b159298a5e4da02d20787e51d65cb5f0da67b35b1169182",
     "references/personas/rebel.md": "74302d0e459931477e3998117fc081c397be3c534d98124b70cb88f26e93ccbe",
     "references/personas/scientist.md": "38f28ed4f3d7b16c16e780112c36e79464eb4a53578ab3e353c372a703d12fd6",
@@ -26,5 +26,5 @@
     "references/knowledge/control-information.md": "a56eb6628c18fb985ab8d4cdad1d3e624f957a9c60cd013bd756c45778efb64f",
     "references/knowledge/networks-physics.md": "c39944ba714c88600b51c996a2c6aff5ce3ea0a18a4e8f0df9987ce513aba8b6"
   },
-  "upgraded_at": "2026-11-22T14:35:19+00:00"
+  "upgraded_at": "2026-11-23T06:49:56+00:00"
 }

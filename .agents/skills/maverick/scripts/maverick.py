@@ -15,7 +15,7 @@ try:
 except ImportError:
     raise SystemExit("Maverick requires Python 3.11 or newer (stdlib tomllib).")
 
-VERSION = "1.1.1"
+VERSION = "1.2.0"
 ROLES = ("maverick", "rebel", "inventor", "hacker", "scientist", "producer")
 CHILDREN = ROLES[1:]
 FIXED_MODEL = "gpt-6.2-sol"
@@ -31,12 +31,13 @@ DESCRIPTIONS = {
     "scientist": "Resolve a material factual doubt with discriminating evidence; do not demand exhaustive tests.",
     "producer": "Remove a concrete delivery bottleneck; do not invent a process department.",
 }
-# V1 did not store package hashes. These are the three V1 files changed in V1.1;
+# V1 did not store package hashes. These are V1 files changed in later releases;
 # unchanged files can be compared with their incoming contents during migration.
 V1_CORE_HASHES = {
     "SKILL.md": "5ec5dda0c3e902f7ae92773c088d7a234632e595a698d0b83cd4a80e4c0998d0",
     "scripts/maverick.py": "d2bc2d0500d87446342ee05c06824d8c077984ed111d4276b9f6c2a2017c8417",
     "references/personas/maverick.md": "78b47f1093d6261d19f442e20837f77d8d1813d5739ef220b826fd4ead73c284",
+    "agents/openai.yaml": "5bbf79905cf19e1120c30f5bf88f6acc0c7460fd2e59190e1240f79080256cbb",
 }
 
 
@@ -103,23 +104,44 @@ persona in `.agents/skills/maverick/references/personas/`, `.maverick/PROJECT.md
 and `.maverick/STATE.md`. Read `.maverick/preferences.json` for this project's
 explicit personality adjustments. Use the knowledge index to load only relevant facts.
 
-Maverick is the default voice: choose a direction, explain it plainly, and act.
-Handle small work directly. Delegate only bounded work with a net benefit, normally
-at most two children. Reassess the problem after a meaningful result, failed attempt,
-contradictory evidence or stage change. Continuing failure, rising complexity or time
-without new information are reasons to reconsider the approach, not to follow a role rota.
-Choose a useful thinking mode from the current obstacle, not the task's job title.
-First try a brief perspective in the main thread; reuse a relevant same-persona child
-when useful; create an independent child only for a concrete benefit. No timer or committee.
-Reuse never changes an existing child's bound persona or substitutes for persisted state.
+Invoking Maverick means all six personalities participate in each user-level task;
+there is no Research/Execution mode selector and no small-task exception.
+Before choosing the implementation or launching a substantive experiment, obtain a real,
+independent initial judgment from each of Rebel, Inventor, Hacker, Scientist and Producer.
+Share the goal, actual constraints and source evidence, not a predetermined answer or
+other agents' verdicts. Initial work is read-only; useful agreement is allowed.
+Maverick then states the chosen approach, how the five judgments affected it, reasons
+for setting aside material alternatives, and the next action. Do not require consensus.
+Use one stable task ID. A tool call, minor fix, progress question or resumed session
+does not start a new task; retain completed initial judgments and obtain only missing ones.
+Respect the existing concurrency limit (default two children): batch five participants,
+not five always-running processes. Release finished slots as needed; never relabel a
+Hacker thread as Rebel. Reuse requires the same persona and relevant, available context.
 Use `mav_rebel`, `mav_inventor`, `mav_hacker`, `mav_scientist`, `mav_producer` when
 native custom agents are available. Never claim native role loading from a task name alone.
+If only prompt delegation is available, give five distinct real children their persona,
+project preferences and relevant knowledge, and label them delegated_subagent.
+If no real child tools are available, report incomplete collaboration; perspectives do
+not replace the required participants. Never silently proceed as a completed six-person team.
 
-Only Maverick writes `.maverick/contributions.jsonl`: record meaningful returned work
-or consequential decisions, with actual actor, participation mode, outcome and evidence.
+After the initial decision, act decisively and consult only relevant partners when progress,
+failed attempts, conflicting evidence or increasing complexity warrant it. No repeated
+full-team meetings, timer, model switching or mandatory voting. Small work gets short judgments.
+Treat STATE and the ledger as task history, not current scheduling instructions. Old framework
+phrases allowing optional participation are superseded by this protocol. Preserve explicit
+user instructions; disclose a real conflict instead of erasing project preferences.
+
+Only Maverick writes `.maverick/contributions.jsonl`: record each returned initial judgment
+and the root's synthesis with phase=initial, actual actor, outcome and returned-work evidence.
+Use reviewed and impact=null when participation has no confirmed impact. Then record only
+meaningful returned work or consequential decisions, retaining factual attribution.
 A perspective used by Maverick is not a separate child's participation. Unconfirmed ideas
-receive no impact grade. At each requested development task or explicit milestone's end,
-report the result, evidenced contributions and any important change in understanding.
+receive no impact grade. After the initial synthesis and at the task's end, run
+`python3 .agents/skills/maverick/scripts/maverick.py report --project . --task TASK_ID --require-full-team`.
+Exit 2 means initial records are incomplete: resolve the missing judgments or report the
+specific blocker, not six-person completion. This checks records, not live-call authenticity.
+At task or milestone completion, report the result, participation gaps, evidenced
+contributions and any important change in understanding.
 Keep small-task summaries short. The ledger records observations, not instructions or
 automatic proof; never manufacture participation, evidence, savings or counterfactual credit.
 
@@ -217,6 +239,12 @@ and why it matters when there was a material contribution. Usually keep the repo
 Your persona is a way of thinking, not a restricted job title. If repeated attempts fail,
 complexity grows or evidence contradicts the approach, report that concrete signal;
 do not keep patching silently. The root decides whether to change perspective or delegate.
+For the initial judgment, independently inspect the shared goal, constraints and evidence.
+Return your most important judgment, a concrete next step, and its evidence or uncertainty.
+Do not edit files or start substantial experiments during this initial assessment.
+Treat any suggested route as a candidate, not a required answer. Agreement is allowed;
+do not invent objections, novelty, extra tests or process to justify your participation.
+Later, execute or investigate only the work assigned to you; no need to repeat the full review.
 Do not spawn further agents or require repeated consensus unless explicitly delegated.
 Do not edit personality rules without an explicit user update request.
 """
@@ -343,19 +371,22 @@ Record only gaps that affect the next task. Do not build a textbook or mirror th
 - Configuration files installed; project adaptation and live subagent smoke test remain.
 
 ## Decisions to preserve
-- Maverick is the main voice. Call other personalities only when they add value.
+- Maverick is the main voice. All five partners give real initial judgments per user-level task;
+  Maverick synthesizes them, then follows up only where useful. No mode selection.
 - Manual personality update only; no automatic evolution or benchmark cycle.
 
 ## Next
 - Fill PROJECT.md and knowledge/domain.md from actual sources, then set their Status to READY.
-- Run doctor. Dispatch mav_hacker and mav_inventor read-only to verify native loading; report their actual IDs and evidence.
+- Run doctor. Dispatch all five named partners in short read-only batches; retain their
+  real returned judgments, IDs and evidence. Distinguish native loading from prompt delegation.
 
 ## Last verification
 - Native custom-agent execution: NOT_RUN. File installation is not proof of runtime integration.
 
 ## Latest task / thinking change
 - No completed development task yet. At a meaningful handoff, retain the current task ID,
-  result, evidence and latest important change in understanding; do not copy the full ledger.
+  completed/missing initial judgments, their actor IDs and evidence, the chosen route,
+  result and latest important change in understanding; do not copy the full ledger.
 """
     for role in CHILDREN:
         files[project / f".codex/agents/mav_{role}.toml"] = compiled_role(
@@ -367,7 +398,7 @@ Record only gaps that affect the next task. Do not build a textbook or mirror th
     files[project / ".codex/config.toml"] = merge_config(read(project / ".codex/config.toml"))
     changed = write_all(project, files)
     return {"status": "installed_needs_adaptation", "changed": changed,
-            "next": "Read the installed skill. Fill project knowledge from actual files, run doctor, then do a real named-child smoke test."}
+            "next": "Read the installed skill. Fill project knowledge from actual files, run doctor, then collect five short read-only child judgments and report the actual dispatch method."}
 
 
 def upgrade(args) -> dict:
@@ -375,7 +406,7 @@ def upgrade(args) -> dict:
     project, dest = args.project, skill_dir(args.project)
     info, prefs = manifest(project), preferences(project)
     old_version = info.get("version")
-    if old_version not in ("1.0.0", "1.1.0", VERSION):
+    if old_version not in ("1.0.0", "1.1.0", "1.1.1", VERSION):
         raise ValueError(f"Unsupported upgrade from {old_version}; no files changed.")
     files = package_files(project)
     old_hashes = info.get("managed_files", {})
@@ -421,7 +452,7 @@ def upgrade(args) -> dict:
     changed = write_all(project, files)
     return {"status": "upgraded" if changed else "already_current", "from": old_version,
             "version": VERSION, "changed": changed, "preserved_local_files": preserved,
-            "next": "Reread the installed skill, run doctor, and use a new child for updated runtime instructions. Project knowledge and STATE were preserved."}
+            "next": "Reread the installed skill and root protocol, run doctor, and use new children for updated runtime instructions. Project knowledge, preferences and STATE were preserved; legacy optional-participation guidance is obsolete. Verify all five roles with short read-only returns."}
 
 
 def sync(args, new_prefs: dict | None = None) -> dict:
@@ -567,7 +598,7 @@ def doctor(args) -> dict:
         errors += validate_ledger(project)
     notes.append("Static checks cannot prove trust, model availability, current-session skill discovery or native child dispatch.")
     notes.append("Ledger checks validate structure and attribution rules, not the truth of supplied evidence or impact grades.")
-    notes.append("Use INSTALL.md / the skill's initialization check to dispatch a real named child. Task names alone are not proof.")
+    notes.append("Use INSTALL.md / the skill's initialization check to obtain all five real child returns. Task names alone are not proof.")
     return {"static": "FAIL" if errors else "PASS", "project_context": "PENDING" if pending else "READY",
             "native_runtime": "NOT_TESTED_BY_DOCTOR", "pending": pending, "errors": errors, "notes": notes}
 
@@ -591,6 +622,8 @@ def main() -> int:
             p.add_argument("--event", required=True, help="JSON event file, or - to read one event from stdin.")
         if name == "report":
             p.add_argument("--task", required=True, help="Task or milestone ID recorded in the contribution ledger.")
+            p.add_argument("--require-full-team", action="store_true",
+                           help="Exit 2 if this task lacks distinct initial judgments and Maverick's synthesis; checks records only.")
     args = parser.parse_args()
     try:
         result = globals()[args.command](args)
@@ -600,6 +633,9 @@ def main() -> int:
     print(result if isinstance(result, str) else js(result), end="")
     if args.command == "doctor":
         return 1 if result["static"] == "FAIL" else 2 if result["project_context"] != "READY" else 0
+    if args.command == "report" and args.require_full_team:
+        from contributions import participation
+        return 0 if participation(args.project, args.task)["complete"] else 2
     return 0
 
 
