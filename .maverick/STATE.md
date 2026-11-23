@@ -1,3 +1,7 @@
+# 第二、三轮正式评价完成，等待审查
+
+任务 `instinctrl-next-two-cycles`。Rebel、Inventor、Hacker、Scientist、Producer 的原生首轮和 Maverick 综合均已记录，首轮核验 6/6。两轮均从 u640 完整训练到 u768，各评价 193,600 条转换，21 个条件各 32/32。第二轮以真实重置首帧修复延迟训练启动，配对护栏通过。第三轮加测距时序辅助，停令锚误差下降 3.67 mm，跟踪退化超限。固定扫描对照显示策略普遍降速，逼近选择性仍缺。六个作业按准确进程身份核对关闭。下步先做跨场景动态闭环，保留第二轮作为时序实验对照。 [正式审查点](../docs/experiments/instinct-next-two-cycles/REPORT.md) · [贡献账本](contributions.jsonl)
+
 # 最近完成的任务
 
 `third-training-anchor`，2026-11-22 至 2026-11-23。Maverick 主持。R6 开发评价的通过率均为 32/32，重算延迟加丢帧停令锚误差后得到 50.13 和 57.51 mm。以连续误差做独立保留集比较，正式测试三对同种子、同量续训和冻结 u640。候选只改锚奖励 4→8。正式锚误差相对两个对照分别增加 0.81 和 0.37 mm，均未达标。七模型全部硬护栏通过，非零跟踪、清晰停令和有效射线覆盖也通过。见 [结项报告](../docs/experiments/third-training/formal/REPORT.md)。
