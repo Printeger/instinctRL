@@ -82,6 +82,9 @@ def main():
     plan=json.loads(args.plan.read_text())
     bounds=validated_bounds(plan)
     if args.child:child(plan);return
+    if not args.check or plan.get('system_native') is True:
+        from tools.r6_direct.storage import system_native
+        system_native(plan,diagnostic=True)
     system=plan.get('system_results') is True
     if pin(__file__)!=plan['launcher_script' if system else 'script']:
         raise RuntimeError('DIAGNOSTIC_SOURCE_DRIFT')
@@ -106,13 +109,15 @@ def main():
     with writer():
         if stop_paths():raise RuntimeError('STOP')
         directory=Path(plan['output_root']);native=Path(plan['native_dir'])
-        if directory.exists() or native.exists():raise FileExistsError('DIAGNOSTIC_ALREADY_STARTED')
+        if directory.exists() or native.exists() or (system and attempt.exists()):
+            raise FileExistsError('DIAGNOSTIC_ALREADY_STARTED')
         authority=plan.get('resource_policy')
         ledger_path,ledger,_,third=load_run_ledger(plan['run_id'],authority)
         seconds=bounds['gpu_and_wall_reservation_seconds']
         if third is not None:
-            if (not system and directory!=NEW/'runs'/plan['run_id']) or native.name!=plan['run_id']:
-                raise ValueError('DIRECT_THIRD_DIAGNOSTIC_OUTPUT')
+            if plan.get('system_native') is not True:
+                if (not system and directory!=NEW/'runs'/plan['run_id']) or native.name!=plan['run_id']:
+                    raise ValueError('DIRECT_THIRD_DIAGNOSTIC_OUTPUT')
             third_predecessor(ledger,plan['predecessor_receipt'])
             ledger['first_live_unix']=check_elapsed(ledger,third,seconds+30)
         elif system:
@@ -124,17 +129,20 @@ def main():
         reserve(ledger,plan['run_id'],resources,resource_policy=authority if third is None else None)
         if third is not None:
             ledger['new_reservations'][-1]['resource_policy']=authority
-        ledger['new_reservations'][-1]['output_within_existing_native_volume']=plan['native_volume']
-        from training_workloads.unified_h1.native_volume import validate
-        binding=validate(plan['native_volume'])
-        if native.parent!=Path(binding['target']):raise RuntimeError('NATIVE_BINDING')
+        if plan.get('system_native') is True:
+            ledger['new_reservations'][-1]['storage_new_binding']=dict(attempt_dir=str(attempt),native_dir=str(native))
+        else:
+            ledger['new_reservations'][-1]['output_within_existing_native_volume']=plan['native_volume']
+            from training_workloads.unified_h1.native_volume import validate
+            binding=validate(plan['native_volume'])
+            if native.parent!=Path(binding['target']):raise RuntimeError('NATIVE_BINDING')
         if args.check:
             print('CPU_DIAGNOSTIC_INPUTS_PASS');return
         started=time.monotonic()
         ledger['status']='RUNNING_DIAGNOSTIC'
         atomic(ledger_path,ledger)
         if system:attempt.mkdir(mode=0o700)
-        directory.mkdir();native.mkdir();(native/'ipc').mkdir();(native/'tmp').mkdir();(native/'cache').mkdir()
+        directory.mkdir();native.mkdir(mode=0o700);(native/'ipc').mkdir();(native/'tmp').mkdir();(native/'cache').mkdir()
         from tools.r6_direct.admission import run_gate
         gate=(attempt if system else native)/'prelaunch';gate.mkdir()
         atomic(directory/'intent.json',dict(plan=plan,parent=process_identity(os.getpid())))

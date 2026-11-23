@@ -177,6 +177,8 @@ def main():
     for sig in (signal.SIGTERM,signal.SIGHUP,signal.SIGINT):signal.signal(sig,interrupted)
     plan=json.loads(args.inputs.read_text()); input_pin=pin(args.inputs)
     if stop_paths():raise RuntimeError('STOP')
+    from tools.r6_direct.storage import system_native
+    system_native(plan)
     run_id=plan['run_id'];directory=Path(plan['output_root'])
     system=plan.get('system_results') is True
     if system:
@@ -207,8 +209,7 @@ def main():
             check_elapsed(ledger,third,resources_after_validation(contract)['live_wall_seconds']+30)
         elif system:
             raise ValueError('DIRECT_SYSTEM_AUTHORITY')
-        # The existing unused bounded physical volumes stay fully charged in
-        # the import. Binding a new subdirectory does not release any bytes.
+        # Historical resource charges remain in the import.
         if 'storage_reservation_id' in plan:
             from tools.r6_direct.storage import fresh_binding
             storage_key=fresh_binding(plan,ledger,contract,third=third is not None)

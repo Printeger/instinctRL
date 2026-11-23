@@ -51,6 +51,40 @@ def test_system_result_path_and_capacity(tmp_path, monkeypatch):
         storage.system_paths(plan)
 
 
+def test_system_native_in_run_directory_and_counted_once(tmp_path, monkeypatch):
+    from tools.r6_direct import storage
+
+    root = tmp_path / 'instinctrl-runs'
+    root.mkdir(mode=0o700)
+    monkeypatch.setattr(Path, 'home', classmethod(lambda cls: tmp_path))
+    monkeypatch.setattr(storage, 'SYSTEM_ROOT', root)
+    attempt = root / 'R6-DIRECT-THIRD-FORMAL-PROBE'
+    native = attempt / 'native'
+    plan = dict(run_id=attempt.name, attempt_dir=str(attempt), output_root=str(attempt / 'control'),
+                system_results=True, system_native=True, native_dir=str(native),
+                storage_reservation_id='ordinary', result_payload_cap_bytes=1024**3)
+    assert storage.system_native(plan) == native
+    spec = tmp_path / 'ordinary.json'
+    spec.write_text(json.dumps(dict(schema_version=storage.SYSTEM_STORAGE_SCHEMA, root=str(root),
+                                    new_volume_allocation_bytes=0)))
+    ledger = dict(new_reservations=[dict(id='ordinary', status='UNRELEASED', storage_plan=file_pin(spec),
+                                         resources=dict(output_actual_plus_unreleased_reservations_bytes=0))])
+    contract = dict(parameters=dict(output_cap_bytes=1024**3))
+    assert fresh_binding(plan, ledger, contract, third=True) == 'ordinary'
+    with pytest.raises(ValueError, match='ORDINARY_SYSTEM_STORAGE'):
+        storage.system_native(dict(plan, native_volume={'path': '/old/volume.json'}))
+    with pytest.raises(ValueError, match='SYSTEM_NATIVE_PATH'):
+        storage.system_native(dict(plan, native_dir=str(root / 'other')))
+    attempt.mkdir(mode=0o700)
+    native.mkdir(mode=0o700)
+    (native / 'settings.json').write_text('{}')
+    assert storage.system_native(plan) == native
+    assert storage.evidence_bytes(attempt, native) == storage.evidence_bytes(attempt)
+    native.chmod(0o755)
+    with pytest.raises(ValueError, match='SYSTEM_NATIVE_PERMISSIONS'):
+        storage.system_native(plan)
+
+
 def test_existing_backing_is_bound_without_new_allocation(binding):
     from pathlib import Path
 

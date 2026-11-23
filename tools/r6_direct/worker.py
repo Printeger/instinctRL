@@ -39,8 +39,14 @@ def preflight(plan):
     if plan['run_id']!=contract['parameters']['experiment_id']:raise ValueError('DIRECT_RUN_ID')
     from training_workloads.unified_h1.native_volume import validate as native_validate
     from training_workloads.unified_h1.result_volume import validate as result_validate
-    native=native_validate(plan['native_volume'],host_root_uid=namespace_host_root_uid(),
-        minimum_free_bytes=max(256*1024**2,plan.get('native_minimum_free_bytes',0)))
+    if plan.get('system_native') is True:
+        from tools.r6_direct.storage import system_native
+        native_path=system_native(plan)
+        native=dict(target=str(native_path))
+    else:
+        native=native_validate(plan['native_volume'],host_root_uid=namespace_host_root_uid(),
+            minimum_free_bytes=max(256*1024**2,plan.get('native_minimum_free_bytes',0)))
+        native_path=Path(native['target'])/plan['run_id']
     if plan.get('system_results'):
         from tools.r6_direct.storage import system_result
         result=system_result(plan,contract,before_launch=not Path(plan['attempt_dir']).exists())
@@ -66,7 +72,7 @@ def preflight(plan):
         result=dict(result,payload_cap_bytes=cap)
     if contract['operation']=='train' and contract['parameters']['r6_training_plan']['storage']['payload_bytes']>result['payload_cap_bytes']:
         raise ValueError('DIRECT_TRAINING_PAYLOAD_CAPACITY')
-    if Path(plan['native_dir'])!=Path(native['target'])/plan['run_id']:
+    if Path(plan['native_dir'])!=native_path:
         raise ValueError('DIRECT_NATIVE_DESTINATION')
     if Path(plan['attempt_dir'])!=Path(result['target'])/plan['run_id']:
         raise ValueError('DIRECT_RESULT_DESTINATION')
@@ -114,7 +120,7 @@ def run(plan, input_pin):
     policy['entries'].append((f'/proc/{os.getpid()}/task',2|(1<<14)))
     atomic(attempt/'write_boundary.json',policy)
     enforce(policy)
-    # Existing kernel-bounded volumes contain all native and scientific writes.
+    # Keep the scientific file budget as well as the supervisor's joint disk cap.
     from training_workloads.scale_003.persistence import install_output_write_quota
     install_output_write_quota(attempt,min(result['payload_cap_bytes'],1024**3) if contract['operation']=='render' else result['payload_cap_bytes'])
     from tools.r6_direct.admission import run_gate

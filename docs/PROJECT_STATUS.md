@@ -2,6 +2,10 @@
 
 2026-11-22 起，项目开发默认使用 Maverick V1.1.1。角色与交付规则见根 `AGENTS.md`，安装与验证记录见 `.maverick/STATE.md`。R6 本地执行入口仍为 `tools/r6_direct/`。
 
+# 训练存储统一到系统分区
+
+新训练、评价和 CUDA 诊断使用 `~/instinctrl-runs/<run-id>/` 普通目录，native 文件也在同一作业目录内。沿用空间余量、作业证据上限、目录隔离和回执记账。R5 的训练和评价结果目录已经在系统分区。R6 五个已挂载旧卷的 74.0 GiB 数据已复制至系统分区并逐文件校验，四个冻结模型的 SHA-256 已核对。旧路径切换、离线镜像检查和回收需在本机用管理员权限完成。 [新作业存储契约](../tools/r6_direct/README.md#新作业存储)
+
 # 第三轮正式配对比较完成，候选未达标
 
 六条正式续训及七模型评价完成。候选锚奖励系数 4→8 在延迟加丢帧的停令窗口内，锚误差相对冻结 u640 增加 0.81 mm，相对等量原配方增加 0.37 mm。全部硬护栏与附加护栏通过。两段恢复预检计入总账，21 次 live 均已关闭，正式原件保存在系统盘各作业目录。见 [结项报告](experiments/third-training/formal/REPORT.md)、[模型清单](experiments/third-training/formal/MODELS.json) 和 [独立账本](experiments/third-training/RESOURCE_LEDGER.json)。

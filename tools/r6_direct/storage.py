@@ -11,6 +11,7 @@ from tools.r6_evidence import checked
 SYSTEM_ROOT = Path.home() / 'instinctrl-runs'
 SYSTEM_FLOOR = 30 * 1024**3
 CONTROL_ALLOWANCE = 256 * 1024**2
+SYSTEM_STORAGE_SCHEMA = 'instinctrl-system-storage/1'
 
 
 def system_paths(plan, *, diagnostic=False):
@@ -33,6 +34,28 @@ def system_paths(plan, *, diagnostic=False):
     return root
 
 
+def system_native(plan, *, diagnostic=False):
+    if (plan.get('system_results') is not True or plan.get('system_native') is not True
+            or 'native_volume' in plan or 'result_volume' in plan):
+        raise ValueError('DIRECT_ORDINARY_SYSTEM_STORAGE_REQUIRED')
+    root = system_paths(plan, diagnostic=diagnostic)
+    native = root / 'native'
+    if Path(plan['native_dir']) != native or native.resolve() != native:
+        raise ValueError('DIRECT_SYSTEM_NATIVE_PATH')
+    system_device = Path('/').stat().st_dev
+    mount_targets = {row.partition(' - ')[0].split()[4]
+                     for row in Path('/proc/self/mountinfo').read_text().splitlines()}
+    for path in (SYSTEM_ROOT, root, native):
+        mount_name = re.sub(r'[\t\n \\]', lambda match: f'\\{ord(match[0]):03o}', str(path))
+        if path.exists() and (mount_name in mount_targets or path.stat().st_dev != system_device):
+            raise ValueError('DIRECT_SYSTEM_NATIVE_DEVICE')
+    if native.exists():
+        info = native.stat()
+        if not stat.S_ISDIR(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o077:
+            raise ValueError('DIRECT_SYSTEM_NATIVE_PERMISSIONS')
+    return native
+
+
 def system_result(plan, contract, *, before_launch=False):
     root = system_paths(plan)
     cap = plan['result_payload_cap_bytes']
@@ -49,7 +72,10 @@ def system_result(plan, contract, *, before_launch=False):
 def evidence_bytes(*directories):
     """Account retained bytes conservatively, including sparse/logical files."""
     total = 0
-    for directory in map(Path, directories):
+    paths = {Path(directory) for directory in directories}
+    for directory in paths:
+        if any(parent in paths for parent in directory.parents):
+            continue
         for path in (directory, *directory.rglob('*')):
             try:
                 info = path.lstat()
@@ -69,11 +95,15 @@ def fresh_binding(plan, ledger, contract, *, third=False):
     spec=json.loads(checked(row['storage_plan']).read_text())
     if plan.get('system_results'):
         from tools.r6_direct.resource_policy import OUTPUT_CAP
-        if (not third or spec.get('schema_version') != 'instinctrl-third-system-storage/1'
-                or spec.get('root') != str(SYSTEM_ROOT)
-                or plan['native_volume'] not in spec['native_manifests']
-                or row['resources'] != {OUTPUT_CAP: 0}
-                or Path(plan['attempt_dir']).exists()):
+        if (not third or spec.get('root') != str(SYSTEM_ROOT)
+                or row['resources'] != {OUTPUT_CAP: 0} or Path(plan['attempt_dir']).exists()):
+            raise ValueError('DIRECT_SYSTEM_STORAGE_BINDING')
+        if plan.get('system_native') is True:
+            if spec.get('schema_version') != SYSTEM_STORAGE_SCHEMA or spec.get('new_volume_allocation_bytes') != 0:
+                raise ValueError('DIRECT_SYSTEM_STORAGE_BINDING')
+            system_native(plan)
+        elif (spec.get('schema_version') != 'instinctrl-third-system-storage/1'
+                or plan['native_volume'] not in spec['native_manifests']):
             raise ValueError('DIRECT_SYSTEM_STORAGE_BINDING')
         system_result(plan,contract,before_launch=True)
         return identity

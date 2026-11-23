@@ -104,14 +104,21 @@ pin，文件采用 `instinctrl-third-training-resources/1` 并绑定第三轮用
 和自首个 live 作业起的 `elapsed_seconds`。历史 R6 预算修订不能供第三轮发车。
 批准后在 `docs/experiments/third-training/RESOURCE_LEDGER.json` 记录该 pin 和相同的 caps，
 三项旧账、已用及保护字段初始为同名 caps 键的零映射，新作业沿用已有预留结构。
-训练、评价和 CUDA 复核共用本轮前驱回执顺序。科学输出仍使用现有内核限额的卷绑定。
-当新增卷额度为零，使用 `instinctrl-third-storage-reuse/1` 绑定已有卷的准确 manifest，
-以独立的零分配预留和新作业目录记账。每条输入须提供 `result_payload_cap_bytes`
-及 `native_minimum_free_bytes`，入口核对挂载身份和当前剩余容量。
-第三轮正式作业的 `instinctrl-third-system-storage/1` 绑定另行使用
-`~/instinctrl-runs/<run-id>/`。工作负载、回执和分析分目录保留，来回检查系统盘的
-30 GiB 余量，并按关闭后证据结算。经冻结的第三轮可用既有直接链中的
+训练、评价和 CUDA 复核共用本轮前驱回执顺序。第三轮历史预检使用
+`instinctrl-third-storage-reuse/1` 卷绑定。历史正式作业使用
+`instinctrl-third-system-storage/1` 系统目录及既有 native 卷。经冻结的第三轮快照可用
 `python -m tools.r6_direct.study --run` 接续。它以精确监督器身份接管已有作业，
 逐条消费训练分析和回执，在发布模型清单后揭晓已承诺的评价流。
 第三轮主指标可用 `python -m tools.r6_direct.anchor_endpoint REFERENCE_REPORT TRIAL_REPORT`
 从已分析的审计原件重算。当前进度见 [第三轮计划](../../docs/experiments/third-training/PLAN.md)。
+
+## 新作业存储
+
+当前直接训练、评价和 CUDA 诊断只在系统分区建立普通目录。输入设置
+`system_results: true`、`system_native: true`，`output_root` 为
+`~/instinctrl-runs/<run-id>/control`，`native_dir` 为同一运行目录内的 `native`。
+训练和评价的 `attempt_dir` 指向运行根目录，提交本轮账本固定的
+`instinctrl-system-storage/1` 绑定，记录该根目录、零新增卷分配和零卷预留。
+当前计划和账本规则继续核验作业授权和前驱回执。每个运行目录独立创建，核对
+真实文件系统和权限，运行中维持 30 GiB 余量并对整个运行目录计量一次。
+原件可通过既有离线分析入口复算，保留历史挂载清单以说明当时的运行条件。
