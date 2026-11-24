@@ -1,8 +1,8 @@
-# R3 后的侧让续训进行中
+# R3 后的侧让续训与独评已结束，等待审查
 
 任务 `instinctrl-post-r3-long`。五位原生伙伴独立首轮和 Maverick 综合已核验 6/6。同权重 25 步方向保留使前向碰撞从 16/16 降到 0/16，后向仍 16/16。共享执行层短测把前飞逼近从 8/8 降到 3/8，普通通行和静止悬停无变化。四类场景预检完成 7,680 条 PhysX 转换并复算。完整候选从 u640 分四段新增 384 更新和 196,608 条转换，固定 u1024，随后执行全套 R6 和四类独立物理留出。 [冻结方案](../docs/experiments/instinct-post-r3/LONG_PLAN.md) · [贡献记录](contributions.jsonl)
 
-直接运行使用冻结源码 `14dc9c0f`、输入冻结 `81a82af0`。协调进程在本地 tmux `instinct-post-r3-long`，恢复日志位于 `~/instinctrl-runs/INSTINCT-POST-R3-LONG-COORDINATION/recovery-02.log`。首轮 `R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U720` 已通过入口并保存 u642。正式终点和独评均待完成。
+实际完成四段 384 更新、196,608 条训练转换，终点权重为 u1024，另完成 R6 和四类留出共 262,720 条评价转换。终点和同选项起点的前向碰撞同为 5/64，后向均 32/32；终点普通通行与漂移退化，R6 四项扰动未满分。Scientist 核实两臂幸存的管道前飞在恢复窗全部 ICS 零下发，Producer 核实 14 份权重和 10 个关闭回执，所有进程已退出。冻结源码 `14dc9c0f`、输入 `81a82af0`、结果 `eca6d933`。保留旧产品基线，停止在唯一审查点。 [审查报告](../docs/experiments/instinct-post-r3/REPORT.md)
 
 # 三轮全量 GPU 训练完成，等待审查
 
