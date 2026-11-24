@@ -174,10 +174,12 @@ class HistoryActor(nn.Module):
             (lidar[:, 0::3] / 40.0, lidar[:, 1::3], lidar[:, 2::3]), dim=1
         )
         raw = self.trunk(torch.cat((self.lidar_encoder(normalized_lidar), self.state_encoder(state)), dim=-1))
-        alpha_raw, beta_raw = raw.chunk(2, dim=-1)
         if self.hover_reflex is not None:
             shift = self.hover_reflex(lidar, state)
-            alpha_raw, beta_raw = alpha_raw + shift, beta_raw - shift
+            # Shift the full tensor before splitting. Even with zero bias,
+            # changing the two half-tensor strides can change sigmoid rounding.
+            raw = raw + torch.cat((shift, -shift), dim=1)
+        alpha_raw, beta_raw = raw.chunk(2, dim=-1)
         span = self.config.concentration_max - self.config.concentration_min
         alpha = self.config.concentration_min + span * torch.sigmoid(alpha_raw)
         beta = self.config.concentration_min + span * torch.sigmoid(beta_raw)
