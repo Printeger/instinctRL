@@ -185,7 +185,14 @@ def run(plan, input_pin):
             render(plan,contract,source,output,app,counters,Guard(gate))
         else:
             from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv,UnifiedH1DirectEnvCfg
-            env=UnifiedH1DirectEnv(UnifiedH1DirectEnvCfg())
+            operation = contract['operation']
+            moving = operation == 'dynamic'
+            if operation == 'train':
+                from training_workloads.unified_h1.checkpoint_compatibility import pinned_json
+                recipe = pinned_json(contract['parameters']['r6_training_plan']['recipe'])
+                moving = recipe['candidate_id'] in ('R6-CANDIDATE-INSTINCT-GPU-R2', 'R6-CANDIDATE-INSTINCT-GPU-R3')
+            cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
+            env=UnifiedH1DirectEnv(cfg)
             ticks=env.h1_initialization_physics_ticks
             counters.record_initialization_ticks(ticks,contract['budgets']['initialization_ticks'])
             from training_workloads.unified_h1.backend import UnifiedH1LiveBackend
@@ -205,6 +212,9 @@ def run(plan, input_pin):
                     if getattr(counters,counter)!=contract['budgets'][budget]:raise RuntimeError('DIRECT_FINAL_COUNT:'+counter)
             elif operation=='baseline':
                 evaluate_baseline(backend,parameters=contract['parameters'],bindings=baseline(contract['parameters']))
+            elif operation == 'dynamic':
+                from training_workloads.unified_h1.dynamic_assay import run as run_dynamic
+                run_dynamic(backend, contract['parameters'])
             else:
                 from training_workloads.unified_h1 import robustness_candidate_contract,robustness_final_contract
                 evaluator=robustness_final_contract if operation=='final' else robustness_candidate_contract

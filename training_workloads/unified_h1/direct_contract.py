@@ -153,11 +153,12 @@ def render_runtime_contract(parameters):
 
 
 def validate_runtime_contract(value):
+    from .dynamic_assay import contract as dynamic_contract
     require(isinstance(value,dict) and set(value)=={'schema_version','execution_mode','operation','mode','parameters','budgets'},'CONTRACT_FIELDS')
     require(value['schema_version']=='r6-local-runtime-contract/1' and value['execution_mode']=='local-direct','MODE')
     builders={'baseline':baseline_runtime_contract,'train':training_runtime_contract,
               'evaluate':evaluation_runtime_contract,'final':lambda p:evaluation_runtime_contract(p,final=True),
-              'render':render_runtime_contract}
+              'render':render_runtime_contract,'dynamic':dynamic_contract}
     require(value['operation'] in builders,'OPERATION_NOT_IMPLEMENTED')
     expected=builders[value['operation']](value['parameters'])
     require(value==expected,'EXACT_CONTRACT_BUDGET')

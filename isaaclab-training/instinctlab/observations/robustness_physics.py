@@ -108,6 +108,9 @@ class R6PhysicsMixin:
             raise
         completion=self.finish_r6_physics()
         self.finish_r6_measurements()
+        obstacle = getattr(self, '_h1_moving_sphere', None)
+        if obstacle is not None:
+            obstacle.finish()
         return completion
 
     def stage_r6_world_command(self,command):
@@ -139,6 +142,18 @@ class R6PhysicsMixin:
             except BaseException:
                 state['failed']=True
                 raise
+            obstacle = getattr(self, '_h1_moving_sphere', None)
+            if obstacle is not None and not obstacle.enabled:
+                curriculum = state['curriculum']
+                modes = [
+                    i % 5 if curriculum.value['conditions'][name]['task'] != 'wall_modes' and i % 3 != 2 else 7
+                    for i, name in enumerate(curriculum.assignments)
+                ]
+                origins = torch.tensor([s['sensor_position_local_m'] for s in specs],
+                                       device=root.device, dtype=root.dtype) + self.scene.env_origins
+                axis = torch.tensor([s['direction_world'] for s in specs], device=root.device, dtype=root.dtype)
+                obstacle.configure(origins, axis, torch.tensor(modes, device=root.device))
+                curriculum.record('MOVING_SPHERE_LAYOUT', dict(modes=modes, origins=origins, axis=axis))
         root[:,:3]=torch.tensor([specs[i]['root_position_local_m'] for i in lanes],device=root.device,dtype=root.dtype)+self.scene.env_origins[indices]
         root[:,3:7]=torch.tensor([specs[i]['root_quaternion_wxyz'] for i in lanes],device=root.device,dtype=root.dtype)
         root[:,7:13]=0.
@@ -159,6 +174,9 @@ class R6PhysicsMixin:
             if state['ticks']%20 or self._h1_global_policy_step!=step:
                 state['failed']=True
                 raise RuntimeError('R6 observation global clock mismatch')
+            obstacle = getattr(self, '_h1_moving_sphere', None)
+            if obstacle is not None and obstacle.enabled and (step-state['start_policy_step']) % 16 == 0:
+                state['curriculum'].record('MOVING_SPHERE_ACQUISITION', obstacle.latest)
         if state is not None and state['pending']:
             # Called after the actual sensor producer refresh, not from planned
             # coordinates or a cached expected sensor location.

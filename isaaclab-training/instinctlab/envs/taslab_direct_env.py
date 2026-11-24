@@ -297,6 +297,11 @@ class TaslabDirectEnv(DirectRLEnv):
         mount_pos = torch.tensor(self.cfg.ray_caster.offset.pos, device=self.device, dtype=hits_w.dtype)
         mount_quat = torch.tensor(self.cfg.ray_caster.offset.rot, device=self.device, dtype=hits_w.dtype)
         sensor_origins_w, _ = compose_mounted_sensor_pose(parent_pos_w, parent_quat_w, mount_pos, mount_quat)
+        obstacle = getattr(self, '_h1_moving_sphere', None)
+        if obstacle is not None and obstacle.enabled:
+            directions_w = quat_apply(parent_quat_w.repeat(1, RAY_COUNT), self._ray_caster.ray_directions)
+            hits_w = obstacle.merge(hits_w, sensor_origins_w, directions_w,
+                                    capture=capture_evaluation_source, tick=self.sim.current_time_step_index)
         _, ranges_m, validity = ranges_and_validity(hits_w, sensor_origins_w)
         if capture_evaluation_source:
             mounted_starts = self._ray_caster.ray_starts
@@ -331,6 +336,9 @@ class TaslabDirectEnv(DirectRLEnv):
         collision = (torch.linalg.vector_norm(forces_w, dim=-1) > self.cfg.contact_force_threshold_n).any(
             dim=1, keepdim=True
         )
+        if obstacle is not None and obstacle.enabled and capture_evaluation_source:
+            collision |= obstacle.contact
+            obstacle.pre_reset['contact_samples'] = obstacle.contact_samples + 1
         return ranges_m, validity, exact_clearance_m, collision
 
     def _refresh_task_snapshot(self) -> _TaskSnapshot:

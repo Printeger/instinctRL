@@ -13,14 +13,15 @@ ROOT=Path(__file__).resolve().parents[2]
 # implement the independently reviewed evaluation-only delayed-start handling
 # and PPO rejection guard (EVALUATION_STARTUP_REPAIR_REVIEW.json).
 PRODUCT_DELTAS = {
-    'isaaclab-training/instinctlab/envs/unified_h1_direct_env.py': ('a3c06c94865c5211d1d438abb35629071eb6171e3a4ab57fe64cd23d04508e2a', '997376697fc30d650cc69c126892272bf4ebe9a494be948edc03a367c8b3a3da'),
+    'isaaclab-training/instinctlab/envs/taslab_direct_env.py': ('940ce1e2949c9b1291020804cb9aca57a1840470353f085a5b2c18be0c46a739', '5777a2b905791ddeb975a67e3c9e7e43b64fe046a8157f85e67bf450c471d008'),
+    'isaaclab-training/instinctlab/envs/unified_h1_direct_env.py': ('a3c06c94865c5211d1d438abb35629071eb6171e3a4ab57fe64cd23d04508e2a', 'e613b2e8d80a71d0610895bd4a1131fcddb3b8669ae8b6681db50e1f2bd1a0b5'),
     'isaaclab-training/instinctlab/observations/robustness.py': ('05fd977e751d4af3f78e13a1dee983c673fe4347988ee9a17449e497c20a488e', '078f37b57df010c519d8e3684185fabdcba646f0ee43a512a3e13f9668c888f5'),
     'isaaclab-training/instinctlab/observations/robustness_adapter.py': ('3d41a275babc165c0dc75b3cba85ad45abe5d680bf79f50bae95ca57f56eb463', '504bb31c85993c4ca3b18293e34eff7ed9921cd4d4fc6dd72afd1f48d98df319'),
     'isaaclab-training/instinctlab/training/rollout_h1.py': ('99368e65552960680e2fbf860fdf726ec51ab3671c420719cdec90b6992cdabc', 'e59034c1c63b76a54a9c779418b61c26f0a4c597cb247da33cf8aab9d58c74d6'),
     'isaaclab-training/instinctlab/training/ppo.py': ('13290128ecbc79f9c429e064abbb2505bd6830c815ef21b3cec93fc0581e2431', '5d59c7f49bb3e62398f6c20275a6a883df8c28eef6bb7127e48aa73a322df186'),
     'isaaclab-training/instinctlab/observations/robustness_physics.py': (
         '19b66208bd99e93853ffc2ce4246382dac6c2e36262ed11dd688b4c7ae429863',
-        '5ad27364f80376fa384bf11b29492fdab3c4899e7cf9bb7de3382fa4181ea3ac'),
+        '2ddeadc807a48a94a961bb76162e8c26e60d9a064e9d1c78839a0fcc92858499'),
 }
 
 

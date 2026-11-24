@@ -23,7 +23,7 @@ def run_gate(output_root,*,mode,attempt_id,authorization_sha256,resource_pins,st
     """
     WINDOW_POLICY=window_policy
     POLICY=dict(globals()['POLICY'],window_policy=window_policy)
-    if mode not in ('research-r6-evaluation','research-r6-training','research-r6-final-evaluation','research-r6-candidate-evaluation','research-r6-video-replay'):raise PermissionError('R6 prelaunch mode')
+    if mode not in ('research-r6-evaluation','research-r6-training','research-r6-final-evaluation','research-r6-candidate-evaluation','research-r6-video-replay','research-r6-dynamic-assay'):raise PermissionError('R6 prelaunch mode')
     executable=Path(resource_pins['nvidia_smi_path'])
     if executable.is_symlink() or sha256_file(executable)!=resource_pins['nvidia_smi_sha256']:
         raise PermissionError('R6 prelaunch executable changed')

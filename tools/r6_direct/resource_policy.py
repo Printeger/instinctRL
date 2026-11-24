@@ -18,6 +18,12 @@ BOUNDED_SCOPES = {
     CYCLE_PREFIX: (CYCLE_SCHEMA, 'docs/experiments/instinct-first-cycle/formal/RESOURCE_LEDGER.json'),
     **{f'{NEXT_PREFIX}R{n}-': (NEXT_SCHEMA, f'docs/experiments/instinct-next-two-cycles/round-{n}/RESOURCE_LEDGER.json')
        for n in (2, 3)},
+    **{f'{GPU_STUDY_PREFIX}R2-DYNAMIC-PILOT-{attempt:02}':
+       (GPU_STUDY_SCHEMA, f'docs/experiments/instinct-gpu-three/pilot-{attempt:02}/RESOURCE_LEDGER.json')
+       for attempt in range(1, 5)},
+    **{f'{GPU_STUDY_PREFIX}R{n}-DYNAMIC':
+       (GPU_STUDY_SCHEMA, f'docs/experiments/instinct-gpu-three/round-{n}-dynamic/RESOURCE_LEDGER.json')
+       for n in (2, 3)},
     **{f'{GPU_STUDY_PREFIX}R{n}-': (GPU_STUDY_SCHEMA, f'docs/experiments/instinct-gpu-three/round-{n}/RESOURCE_LEDGER.json')
        for n in (1, 2, 3)},
 }

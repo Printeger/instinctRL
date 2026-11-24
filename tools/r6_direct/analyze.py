@@ -32,6 +32,19 @@ def analyze(input_pin, *, probability_diagnostic=None):
         report, summary = replay(ctx['output'], Path(request['protocol']['path']),
                                  run_id=request['run_id'], seed=request['seed'], split=request['split'])
         add_inputs(report, input_pin, ctx)
+    elif operation == 'dynamic':
+        from training_workloads.unified_h1.dynamic_assay import audit
+        budgets = ctx['contract']['budgets']
+        counters = ctx['state']['counters']
+        if (counters['nontraining_transitions'] != budgets['nontraining_transitions']
+                or counters['explicit_resets'] != budgets['explicit_resets']
+                or counters['real_optimizer_updates'] != 0):
+            raise ValueError('DYNAMIC_ASSAY_INCOMPLETE_COUNTERS')
+        raw, pins = audit(ctx['output'], ctx['contract']['parameters'], counters)
+        summary = {'models': raw['models'], 'counters': counters, 'witnesses_replayed': True}
+        report = dict(summary=summary, scientific_acceptance=False,
+                      inputs=[dict(v, bytes=Path(v['path']).stat().st_size) for v in pins])
+        add_inputs(report, input_pin, ctx)
     else:
         from tools import r6_training_analysis, r6_candidate_analysis, r6_final_analysis
         module = {'train': r6_training_analysis, 'evaluate': r6_candidate_analysis,

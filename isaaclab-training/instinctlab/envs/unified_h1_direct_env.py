@@ -64,6 +64,7 @@ def _spawn_unified_h1_combined_scene(env_origins: torch.Tensor) -> None:
 
 @configclass
 class UnifiedH1DirectEnvCfg(TaslabDirectEnvCfg):
+    h1_moving_sphere: bool = False
     state_space = CRITIC_H1_DIMENSION
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=32, env_spacing=100.0, replicate_physics=True)
     # Isaac Lab's configclass turns mutable defaults into instance-only
@@ -427,7 +428,12 @@ class UnifiedH1DirectEnv(R6PhysicsMixin, R6MeasurementMixin, TaslabDirectEnv):
         spawn_ground_plane("/World/ground", GroundPlaneCfg())
         self._robot = Articulation(self.cfg.robot)
         self.scene.articulations["taslab"] = self._robot
+        if self.cfg.h1_moving_sphere:
+            from instinctlab.observations.moving_sphere import MovingSphere, spawn
+            sphere = spawn(self.scene)
         self.scene.clone_environments(copy_from_source=False)
+        if self.cfg.h1_moving_sphere:
+            self._h1_moving_sphere = MovingSphere(sphere, self.scene.env_origins)
         # InteractiveScene initializes env_origins during cloning when
         # replicate_physics=True.  Author the global translated H1 geometry
         # only after that lifecycle boundary, while keeping the source robot
@@ -489,6 +495,11 @@ class UnifiedH1DirectEnv(R6PhysicsMixin, R6MeasurementMixin, TaslabDirectEnv):
     def _apply_action(self) -> None:
         """Mark only controller/rotor caches rebuilt by the real action path."""
         super()._apply_action()
+        obstacle = getattr(self, '_h1_moving_sphere', None)
+        if obstacle is not None and obstacle.enabled:
+            obstacle.sample_contact(self._contact_sensor, self.cfg.contact_force_threshold_n,
+                                    self.sim.current_time_step_index)
+            obstacle.push(float(self.cfg.sim.dt))
         if self._enhanced_b0_active:
             if self._lee is None or self._wrench is None:
                 raise RuntimeError("enhanced B0 action path did not rebuild controller/rotor caches")
@@ -496,6 +507,9 @@ class UnifiedH1DirectEnv(R6PhysicsMixin, R6MeasurementMixin, TaslabDirectEnv):
             self._enhanced_b0_cache_unavailable.clear()
 
     def _pre_physics_step(self, actions: torch.Tensor) -> None:
+        obstacle = getattr(self, '_h1_moving_sphere', None)
+        if obstacle is not None and obstacle.enabled:
+            obstacle.begin_interval(self.sim.current_time_step_index)
         if self._b0_command_b is None:
             super()._pre_physics_step(actions)
             return
@@ -669,6 +683,9 @@ class UnifiedH1DirectEnv(R6PhysicsMixin, R6MeasurementMixin, TaslabDirectEnv):
     def _reset_idx_impl(self, env_ids: Sequence[int] | torch.Tensor | None) -> None:
         indices = self._validate_reset_indices(env_ids)
         super()._reset_idx(indices)
+        obstacle = getattr(self, '_h1_moving_sphere', None)
+        if obstacle is not None:
+            obstacle.reset(indices)
         if hasattr(self, "_h1_ics_clearance_margin_m"):
             self.set_h1_ics_clearance_margin(self._h1_ics_clearance_margin_m)
         if getattr(self, '_r6_physics', None) is not None and self._reset_r6_physics(indices):

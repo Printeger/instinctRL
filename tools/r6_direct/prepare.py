@@ -62,9 +62,10 @@ def build(kind, request):
     if kind == 'contract':
         from training_workloads.unified_h1.direct_contract import (
             baseline_runtime_contract, training_runtime_contract, evaluation_runtime_contract, render_runtime_contract)
+        from training_workloads.unified_h1.dynamic_assay import contract as dynamic_contract
         builders = {'baseline': baseline_runtime_contract, 'train': training_runtime_contract,
                     'evaluate': evaluation_runtime_contract, 'final': lambda p: evaluation_runtime_contract(p, final=True),
-                    'render': render_runtime_contract}
+                    'render': render_runtime_contract, 'dynamic': dynamic_contract}
         return builders[request['operation']](request['parameters'])
     if kind == 'confirmation-plans':
         from training_workloads.unified_h1.robustness_confirmation import build_plans
