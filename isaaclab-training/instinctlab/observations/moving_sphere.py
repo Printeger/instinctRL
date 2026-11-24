@@ -6,6 +6,7 @@ import torch
 RADIUS_M = .34
 MASS_KG = 250.
 MAX_SPEED_M_S = .95
+PARK_HEIGHT_M = 65.
 DYNAMIC_MODES = ('approach', 'recede', 'cross_left', 'cross_right', 'hover',
                  'hover_wall', 'static_travel', 'static_hover')
 
@@ -22,7 +23,7 @@ def spawn(scene):
                                                         linear_damping=0., angular_damping=0.),
             collision_props=sim_utils.CollisionPropertiesCfg(collision_enabled=True),
             mass_props=sim_utils.MassPropertiesCfg(mass=MASS_KG)),
-        init_state=RigidObjectCfg.InitialStateCfg(pos=(0., 0., -20.)))
+        init_state=RigidObjectCfg.InitialStateCfg(pos=(0., 0., PARK_HEIGHT_M)))
     ball = RigidObject(cfg)
     scene.rigid_objects['r6_moving_sphere'] = ball
     return ball
@@ -50,7 +51,6 @@ def trajectories(origins, axis, modes):
     velocity = axis * torch.where(approaching, -.42, torch.where(modes == 1, .36, 0.))[:, None]
     velocity -= lateral * crossing[:, None] * sign * .58
     active = modes < 6
-    start[:, 2] = torch.where(active, start[:, 2], -20.)
     return start, velocity, active
 
 
@@ -65,9 +65,11 @@ def travel_clock(age, half_period_s):
 class MovingSphere:
     def __init__(self, asset, origins):
         self.asset = asset
-        self.origins = origins
+        self.parked = origins.clone()
+        self.parked[:, 2] += PARK_HEIGHT_M
         self.indices = torch.arange(len(origins), device=origins.device, dtype=torch.long)
         self.age = torch.zeros(len(origins), device=origins.device, dtype=torch.float32)
+        self.end_travel_s = torch.full_like(self.age, torch.inf)
         self.servo_velocity = torch.zeros_like(origins)
         self.enabled = False
         self.half_period_s = None
@@ -82,23 +84,29 @@ class MovingSphere:
         if self.enabled:
             raise RuntimeError('Existing moving-sphere block is active')
         if not self.verified_order:
-            parked = self.origins.clone()
-            parked[:, 2] -= 20.
             observed = self.asset.root_physx_view.get_transforms()[:, :3]
-            if observed.shape != parked.shape or not bool((observed-parked).abs().amax() <= .003):
-                raise RuntimeError('Moving-sphere lanes differ from Isaac scene origins')
+            if observed.shape != self.parked.shape:
+                raise RuntimeError('Moving-sphere PhysX view lane count differs from Isaac scene origins')
+            errors = (observed - self.parked).abs().amax(dim=1)
+            if not bool(errors.amax() <= .003):
+                lane = int(errors.argmax())
+                raise RuntimeError(f'Moving-sphere lane {lane} parked at {observed[lane].tolist()}, '
+                                   f'expected {self.parked[lane].tolist()}')
             masses = self.asset.root_physx_view.get_masses()
-            if masses.numel() != len(parked) or not bool((masses - MASS_KG).abs().amax() <= .01):
+            if masses.numel() != len(self.parked) or not bool((masses - MASS_KG).abs().amax() <= .01):
                 raise RuntimeError('Measured moving-sphere mass differs from the configured PhysX mass')
             self.verified_order = True
         self.start, self.velocity, self.active = trajectories(sensor_origins, axis, modes)
+        self.start = torch.where(self.active[:, None], self.start, self.parked)
+        # The wall-hover and receding lanes end before the H1 wall planes.
+        self.end_travel_s = torch.where(modes == 5, 8.7, torch.where(modes == 1, 10., torch.inf))
         self.half_period_s = half_period_s
         self.enabled = True
         self.reset(self.indices)
 
     def _pose(self):
         travel_time, _ = travel_clock(self.age, self.half_period_s)
-        return self.start + travel_time[:, None] * self.velocity
+        return self.start + travel_time.minimum(self.end_travel_s)[:, None] * self.velocity
 
     def reset(self, indices):
         if self.enabled and len(indices):
@@ -150,7 +158,8 @@ class MovingSphere:
         witnesses = torch.where(overwrite, moving_ranges, 41.).argmin(dim=1)
         lane = self.indices
         velocity = self.asset.root_physx_view.get_velocities()[:, :3].clone()
-        _, direction = travel_clock(self.age, self.half_period_s)
+        travel_time, direction = travel_clock(self.age, self.half_period_s)
+        direction *= travel_time < self.end_travel_s
         self.latest = dict(tick=tick, applied_age_s=self.age.clone(), active=self.active.clone(),
                            sphere_position_w=center, expected_position_w=pose, sphere_velocity_w=velocity,
                            expected_velocity_w=direction[:, None] * self.velocity, servo_velocity_w=self.servo_velocity.clone(),
@@ -164,8 +173,6 @@ class MovingSphere:
 
     def finish(self):
         if self.enabled:
-            position = self.origins.clone()
-            position[:, 2] -= 20.
             self.servo_velocity.zero_()
-            self._place(position)
+            self._place(self.parked)
             self.enabled = False

@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 import torch
 
-from instinctlab.observations.moving_sphere import MAX_SPEED_M_S, MovingSphere, sphere_range, trajectories
+from instinctlab.observations.moving_sphere import MAX_SPEED_M_S, PARK_HEIGHT_M, MovingSphere, sphere_range, trajectories
 from training_workloads.unified_h1.dynamic_assay import contract
 
 
@@ -33,7 +33,7 @@ def test_approach_and_crossing_paths_are_directional():
 
 
 def test_dynamic_servo_bounds_velocity_and_only_writes_pose_at_boundaries():
-    pose = torch.tensor([[0., 0., -20., 0., 0., 0., 1.]])
+    pose = torch.tensor([[0., 0., PARK_HEIGHT_M, 0., 0., 0., 1.]])
     calls = []
 
     def place(value, env_ids=None):
@@ -54,6 +54,20 @@ def test_dynamic_servo_bounds_velocity_and_only_writes_pose_at_boundaries():
     scene.finish()
     assert [kind for kind, _ in calls[-2:]] == ['pose', 'velocity']
     torch.testing.assert_close(calls[-1][1], torch.zeros(1, 6))
+
+
+def test_wall_approach_ends_before_the_ball_reaches_the_wall_plane():
+    world = torch.zeros(1, 3)
+    parked = torch.tensor([[0., 0., PARK_HEIGHT_M, 0., 0., 0., 1.]])
+    asset = SimpleNamespace(
+        root_physx_view=SimpleNamespace(get_transforms=lambda: parked, get_masses=lambda: torch.tensor([[250.]])),
+        write_root_pose_to_sim=lambda value, env_ids=None: None,
+        write_root_velocity_to_sim=lambda value, env_ids=None: None,
+    )
+    scene = MovingSphere(asset, world)
+    scene.configure(torch.tensor([[4.6, 0., 2.]]), torch.tensor([[-1., 0., 0.]]), torch.tensor([5]))
+    scene.age.fill_(12.)
+    assert 4.6 < scene._pose()[0, 0] < 6. - .34
 
 
 def test_dynamic_result_budget_is_separate_and_exact(tmp_path):
