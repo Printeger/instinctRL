@@ -23,6 +23,8 @@ def main():
     p.add_argument('--horizon', type=float, default=1.5)
     p.add_argument('--hypothesis', required=True)
     args = p.parse_args()
+    if not 0. <= args.mix <= .96 or args.repeat <= 0 or args.epochs <= 0:
+        p.error('Collection mixture and training counts are out of range')
     assert_capacity()
     if SNAPSHOT == ROOT or subprocess.check_output(['git','branch','--show-current'],text=True).strip():
         raise RuntimeError('Detached execution snapshot required')

@@ -51,10 +51,11 @@ def load_model(value):
 
 
 @torch.no_grad()
-def collect(config, behavior=None):
+def collect(config, behavior=None, *, accounting=None):
     arena = Arena(**config['train_world'])
     rng = torch.Generator().manual_seed(config['optimizer_seed'] + 1)
     rows = []
+    counts = dict(teacher=0, behavior=0, exploration=0)
     for step in range(STEPS):
         if step % 16 == 0:
             guard()
@@ -72,8 +73,13 @@ def collect(config, behavior=None):
         random_actions = torch.randint(actions.shape[1], (arena.n,), generator=rng)
         proposals = torch.where((draw > .96)[:,None], actions[torch.arange(arena.n),random_actions], proposals)
         if active.any():
+            counts['teacher'] += int(((draw < config['oracle_mix']) & active).sum())
+            counts['behavior'] += int(((draw >= config['oracle_mix']) & (draw <= .96) & active).sum())
+            counts['exploration'] += int(((draw > .96) & active).sum())
             rows.append((grid[active], state[active], risk[active], choice[active]))
         arena.advance(clearance_guard(obs, proposals), t)
+    if accounting is not None:
+        accounting.update(counts)
     return tuple(torch.cat(items) for items in zip(*rows))
 
 
@@ -226,10 +232,14 @@ def run(path):
     out.mkdir()
     save(out/'INPUTS.json', dict(config=pin(path), torch=torch.__version__, device='cpu'))
     prior = load_model(config['behavior']) if config['behavior'] else None
-    dataset = collect(config, prior)
+    accounting = {}
+    dataset = collect(config, prior, accounting=accounting)
     with (out/'DATA.pt').open('xb') as f:
         torch.save(dataset, f)
     model, training = train(config, dataset)
+    if sum(accounting.values()) != training['samples']:
+        raise ValueError('Trajectory source accounting disagrees with training samples')
+    training['collection_actions'] = accounting
     assert_capacity()
     checkpoint = save_model(out/'POLICY.pt', model)
     cases = evaluate(config['development_world'], model)
