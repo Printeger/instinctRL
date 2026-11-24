@@ -4,7 +4,7 @@
 
 # 三轮全量 GPU 训练进行中
 
-当前任务执行三轮 Isaac Lab GPU 全量训练与完整评估。第一轮已完成 128 次 PPO 更新、65,536 条训练转换和 193,600 条评估转换，原五项与 16 个扰动条件均为 32/32。相对冻结旧 GPU 第二轮，停令锚误差降低 2.32 mm，最差速度跟踪 RMSE 增加 0.0178 m/s，超出配对容差。同一扫描的历史对照未建立有用的方向选择。第二轮的真实 PhysX 移动物预检已完成独立复核，冻结对照在三类直接逼近中各碰撞 8/8。第二轮已冻结并进入正式训练。 [第一轮复盘](experiments/instinct-gpu-three/R1_LESSON.md) · [第二轮设计](experiments/instinct-gpu-three/R2_DESIGN.md) · [训练计划](experiments/instinct-gpu-three/PLAN.md)
+当前任务执行三轮 Isaac Lab GPU 全量训练与完整评估。第一轮已完成 128 次 PPO 更新、65,536 条训练转换和 193,600 条评估转换，原五项与 16 个扰动条件均为 32/32。相对冻结旧 GPU 第二轮，停令锚误差降低 2.32 mm，最差速度跟踪 RMSE 增加 0.0178 m/s，超出配对容差。同一扫描的历史对照未建立有用的方向选择。真实 PhysX 移动物预检已复核，冻结对照在三类直接逼近中各碰撞 8/8。第二轮首次尝试在首次碰撞诊断射线写入时停止，修复后从共同 u640 重跑完整训练。 [第一轮复盘](experiments/instinct-gpu-three/R1_LESSON.md) · [第二轮设计](experiments/instinct-gpu-three/R2_DESIGN.md) · [记录修复](experiments/instinct-gpu-three/R2_LOGGING_REPAIR.md)
 
 # 五轮 CPU 平面闭环预研完成
 
