@@ -307,6 +307,55 @@
         "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U896-DIAGNOSTIC",
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U896-DIAGNOSTIC/native"
       }
+    },
+    {
+      "closed_evidence_bytes": 15276417024,
+      "id": "R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U1024",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U1024/control/receipt.json",
+        "sha256": "9bc0ca5ba85bd0e5e6e72e98c7b945f7a78c94776f3f9d753458e225c134fddd"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r3/long/RESOURCE_POLICY.json",
+        "sha256": "939637af69e96610156caea4de2be60ee00b2b1d26e555ca5e58846e09053f2a"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 6492,
+        "live_starts": 1,
+        "live_wall_seconds": 6492,
+        "nontraining_transitions": 0,
+        "output_actual_plus_unreleased_reservations_bytes": 15276417024,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_checkpoint_writes": 4,
+        "training_transitions": 65536
+      },
+      "settlement": {
+        "charged_seconds": 6492,
+        "original_resources": {
+          "allocated_gpu_seconds": 9690,
+          "live_starts": 1,
+          "live_wall_seconds": 9690,
+          "nontraining_transitions": 0,
+          "output_actual_plus_unreleased_reservations_bytes": 23890755584,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_checkpoint_writes": 4,
+          "training_transitions": 65536
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U1024/control/receipt.json",
+          "sha256": "9bc0ca5ba85bd0e5e6e72e98c7b945f7a78c94776f3f9d753458e225c134fddd"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U1024",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U1024/native"
+      },
+      "storage_reservation_id": "ROUND-SYSTEM"
     }
   ],
   "new_used": {
