@@ -69,8 +69,6 @@ def mechanisms(binding):
         for group in model['groups']:
             raw = [json.loads(line) for line in checked(group['trace']).read_text().splitlines()]
             for lane_info in group['lanes']:
-                if lane_info['mode'].startswith('static_'):
-                    continue
                 lane = lane_info['lane']
                 end = next((i+1 for i,row in enumerate(raw) if row['terminal'][lane]), len(raw))
                 rows = raw[:end]
@@ -84,11 +82,14 @@ def mechanisms(binding):
                 lateral = [abs(sum(x*(y-z) for x,y,z in zip(side, r['vehicle_position_w'][lane], location)))
                            for r in rows]
                 signed_issued = .1 * sum(issued[active[0]:]) if active else None
+                contact = next((i for i,row in enumerate(rows) if row['collision'][lane]), None)
                 cases[(arm, lane_info['layout'], lane_info['mode'])].append(dict(
                     collision=lane_info['collision'], visible_s=None if first_visible is None else first_visible*.1,
                     first_option_s=None if not active else active[0]*.1, option_active_s=len(active)*.1,
+                    option_lead_to_contact_s=None if not active or contact is None else (contact-active[0])*.1,
                     option_ics_rejected_s=.1*sum(rows[i]['ics_beta'][lane] == 0 for i in active),
                     absolute_net_lateral_command_m=None if signed_issued is None else abs(signed_issued),
+                    maximum_horizontal_excursion_m=lane_info['maximum_horizontal_excursion_m'],
                     maximum_lateral_displacement_m=max(lateral),
                     minimum_root_to_obstacle_center_m=min((math.dist(r['vehicle_position_w'][lane],
                         r['post']['sphere_position_w'][lane]) for r in rows if r['post']['active'][lane]), default=None)))
