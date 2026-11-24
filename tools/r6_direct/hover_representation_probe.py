@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 import torch
+import torch.nn.functional as functional
 
 from instinctlab.control.ics import mounted_mid360_rays_body
 from tools.r6_direct.import_legacy import pin
@@ -50,16 +51,29 @@ def pairs(yaws, *, held_out):
 
 
 @torch.no_grad()
-def retreat_cue(policy):
-    scan = policy['lidar_grid'][:, :, ::3]
+def retreat_cue(policy, *, angular_neighborhood=0):
+    full_scan = policy['lidar_grid']
+    scan = full_scan[:, :, ::3]
     state = policy['state_vec'].reshape(-1, 4, 13)
     weight = torch.zeros_like(scan[:, 9])
     for k in range(3):
         gap = (3 - k) * PERIOD_S + state[:, k, 12] - state[:, -1, 12]
         gap = gap[:, None, None]
-        difference = scan[:, k * 3] - scan[:, 9]
+        old = scan[:, k * 3]
+        valid_old = scan[:, k * 3 + 2] > .55
+        if angular_neighborhood:
+            span = angular_neighborhood
+            old_full = full_scan[:, k * 3:k * 3 + 1]
+            reliable = full_scan[:, k * 3 + 2:k * 3 + 3] > .55
+            low = -torch.where(reliable, old_full, torch.inf)
+            low = functional.pad(low, (span, span, 0, 0), mode='circular')
+            low = functional.max_pool2d(low, (1, 2 * span + 1), stride=1)
+            low = functional.max_pool2d(low, (2 * span + 1, 1), stride=1, padding=(span, 0))
+            old = -low[:, 0, ::3]
+            valid_old = old.isfinite()
+        difference = old - scan[:, 9]
         coherent = (gap >= .16) & (gap <= .33) & (difference > .20 * gap) & (difference < 1.5 * gap)
-        coherent &= (scan[:, 9] < 1.9) & (scan[:, k * 3 + 2] > .55) & (scan[:, 11] > .55)
+        coherent &= (scan[:, 9] < 1.9) & valid_old & (scan[:, 11] > .55)
         neighbors = coherent.clone()
         for offset in (-2, -1, 1, 2):
             neighbors &= coherent.roll(offset, dims=-1)
