@@ -4,7 +4,7 @@
 
 # 三轮全量 GPU 训练进行中
 
-当前任务按用户定义执行三轮 Isaac Lab GPU 全量训练和完整评价。第一轮以 `instinct-gpu-r1-train-inputs` 冻结，32 环境真实 PPO 已进入后半段扰动课程。同步开发的 PhysX 移动球与 MID360 回波接口已通过 CPU 检查，真实接触及回波链等待第一轮作业关闭后实测。 [训练计划](experiments/instinct-gpu-three/PLAN.md) · [第一轮冻结输入](experiments/instinct-gpu-three/round-1/R6-DIRECT-INSTINCT-GPU-R1-TRAIN-inputs.json)
+当前任务执行三轮 Isaac Lab GPU 全量训练与完整评估。第一轮已完成 128 次 PPO 更新、65,536 条训练转换和 193,600 条评估转换，原五项与 16 个扰动条件均为 32/32。相对冻结旧 GPU 第二轮，停令锚误差降低 2.32 mm，最差速度跟踪 RMSE 增加 0.0178 m/s，超出配对容差。同一扫描的历史对照未建立有用的方向选择。第二轮转向真实移动物体，正在用冻结对照核对 PhysX 接触和 MID360 实到回波。 [第一轮复盘](experiments/instinct-gpu-three/R1_LESSON.md) · [训练计划](experiments/instinct-gpu-three/PLAN.md)
 
 # 五轮 CPU 平面闭环预研完成
 
