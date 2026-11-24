@@ -83,6 +83,7 @@ def mechanisms(binding):
                            for r in rows]
                 signed_issued = .1 * sum(issued[active[0]:]) if active else None
                 contact = next((i for i,row in enumerate(rows) if row['collision'][lane]), None)
+                recovery = rows[80:] if contact is None and lane_info['mode'] == 'approach' else []
                 cases[(arm, lane_info['layout'], lane_info['mode'])].append(dict(
                     collision=lane_info['collision'], visible_s=None if first_visible is None else first_visible*.1,
                     first_option_s=None if not active else active[0]*.1, option_active_s=len(active)*.1,
@@ -90,6 +91,9 @@ def mechanisms(binding):
                     option_ics_rejected_s=.1*sum(rows[i]['ics_beta'][lane] == 0 for i in active),
                     absolute_net_lateral_command_m=None if signed_issued is None else abs(signed_issued),
                     maximum_horizontal_excursion_m=lane_info['maximum_horizontal_excursion_m'],
+                    recovery_ics_zero_steps=None if not recovery else sum(r['ics_beta'][lane] == 0 for r in recovery),
+                    recovery_governor_mean_mps=None if not recovery else fmean(
+                        math.hypot(*r['v_gov_b'][lane][:2]) for r in recovery),
                     maximum_lateral_displacement_m=max(lateral),
                     minimum_root_to_obstacle_center_m=min((math.dist(r['vehicle_position_w'][lane],
                         r['post']['sphere_position_w'][lane]) for r in rows if r['post']['active'][lane]), default=None)))
@@ -106,6 +110,7 @@ def mechanisms(binding):
             result.append(dict(arm=arm, layout=layout, mode=mode, collision=collision, episodes=len(rows),
                                saw_mover=sum(row['visible_s'] is not None for row in rows),
                                applied_option=sum(row['first_option_s'] is not None for row in rows),
+                               recovery_ics_zero_steps=sum(row['recovery_ics_zero_steps'] or 0 for row in rows),
                                medians=medians))
     return result
 
