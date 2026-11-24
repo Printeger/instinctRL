@@ -5,6 +5,7 @@ import io
 import json
 import math
 
+from tools.r6_direct.evidence import validate_binding
 from tools.r6_direct.import_legacy import ROOT, pin
 from tools.r6_direct.instinct_cycle import load
 from tools.r6_direct.instinct_cycle_finish import command, freeze, guard
@@ -13,6 +14,7 @@ from tools.r6_direct.resource_policy import GPU_STUDY_PREFIX, GPU_STUDY_SCHEMA
 from tools.r6_direct.source import ROOT as SNAPSHOT
 from tools.r6_direct.storage import SYSTEM_ROOT
 from training_workloads.unified_h1.lossless_evidence import ChunkReader
+from training_workloads.unified_h1.robustness_training_method import HOVER_REFLEX_CANDIDATE
 
 
 def complete_window_count(rows):
@@ -57,6 +59,8 @@ class GpuRound(Round):
         self.eval = self.run_prefix + 'EVAL'
         self.diag = self.run_prefix + 'PROBABILITY-DIAGNOSTIC'
         self.candidate = f'R6-CANDIDATE-INSTINCT-GPU-R{number}'
+        if number == 3:
+            self.candidate = HOVER_REFLEX_CANDIDATE
         self.tag = f'instinct-gpu-r{number}{retry}'
 
     def design(self, plan_doc):
@@ -82,11 +86,37 @@ class GpuRound(Round):
             return load(earlier.docs / 'curriculum.json'), diagnosis, pilot_id, (
                 'Repeated physical mover encounters and bounded directional reward improve survival while preserving '
                 'static command tracking and zero-command holding away from an approaching object.')
+        if self.number == 3:
+            earlier = completed_round(2)
+            static_path = earlier.docs / 'RESULTS.json'
+            static = load(static_path)
+            counters = static['training_counters']
+            if (counters['real_optimizer_updates'], counters['training_transitions'],
+                    counters['real_checkpoint_writes']) != (128, 65536, 5):
+                raise ValueError('Round 3 requires a complete physical round 2')
+            checkpoint = static['candidate']['checkpoint']
+            _, eval_context, eval_report = validate_binding(static['evaluation_analysis'])
+            if (eval_context['state']['counters']['nontraining_transitions'] != 193600
+                    or eval_report['candidate_binding_issues'] or eval_report['candidate']['checkpoint'] != checkpoint):
+                raise ValueError('Round 3 requires complete round 2 R6 regression')
+            diagnosis = [plan_doc, pin(static_path)]
+            for kind, transitions in (('dynamic', 15360), ('visibility', 7680)):
+                path = self.project / f'round-2-{kind}' / 'RESULTS.json'
+                summary = load(path)['summary']
+                if (not summary['witnesses_replayed'] or summary['counters']['nontraining_transitions'] != transitions
+                        or summary['models']['candidate']['checkpoint'] != checkpoint):
+                    raise ValueError(f'Round 3 requires the complete paired round 2 {kind} assay')
+                diagnosis.append(pin(path))
+            diagnosis.extend(pin(self.project / name) for name in (
+                'R2_LESSON.md', 'R3_DESIGN.md', 'HOVER_REPRESENTATION_CHECK.md',
+                'HOVER_ROTATION_CHECK.md', 'HOVER_REFLEX_COMPATIBILITY.md',
+            ))
+            return load(earlier.docs / 'curriculum.json'), diagnosis, f'{GPU_STUDY_PREFIX}R2-VISIBILITY', (
+                'A learned retreat response from reliable LiDAR closure during hover reduces visible dynamic contacts '
+                'while preserving ordinary command tracking and quiet holding.')
         curriculum = load(PREVIOUS / 'round-2' / 'curriculum.json')
         earlier = pin(PREVIOUS / 'REPORT.md')
         planar = pin(ROOT / 'docs/experiments/instinct-dynamic-five/REPORT.md')
-        if self.number != 1:
-            raise ValueError('Freeze the follow-up design after its predecessor is evaluated')
         return curriculum, [plan_doc, earlier, planar], 'R6-DIRECT-INSTINCT-NEXT-R3-EVAL', (
             'Paired decoded-velocity supervision on matched current M4 samples '
             'separates approaching and opening histories while retaining command tracking.')
@@ -134,7 +164,7 @@ class GpuRound(Round):
                                             zip(row['sphere_sensor_clearance_m'], row['active']) if active),
             complete_split_measurement_windows=complete_window_count(self.training_rows(training_report, 'measurement_windows.jsonl')),
         )}
-        if any('hover_reflex_gain_parameter' in row for row in minibatches):
+        if self.candidate == HOVER_REFLEX_CANDIDATE:
             trace = {(row['update'], row['minibatch_ordinal']): row['hover_reflex_gain_parameter']
                      for row in minibatches if 'hover_reflex_gain_parameter' in row}
             expected = {(update, i) for update in range(641, 769) for i in range(8)}
