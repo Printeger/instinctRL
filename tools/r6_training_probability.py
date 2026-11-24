@@ -6,9 +6,9 @@ This does not restore Adam, reproduce GPU sampling, or establish learning gain.
 
 def recompute(origin,data,plan,*,device='cpu',diagnostic=None):
     import torch
-    from instinctlab.training.networks import HistoryActor,NetworkConfig,validate_policy
+    from instinctlab.training.networks import NetworkConfig,validate_policy
     from instinctlab.training.checkpoint import _validate_model_state
-    from instinctlab.training.checkpoint_h1 import CHECKPOINT_H1_SCHEMA,CHECKPOINT_H1_VERSION
+    from instinctlab.training.checkpoint_h1 import CHECKPOINT_H1_SCHEMA,CHECKPOINT_H1_VERSION,checkpoint_actor
     from training_workloads.unified_h1.pilot_contract import probability_distribution_gate
     def require(ok,reason):
         if not ok:raise ValueError(reason)
@@ -35,7 +35,7 @@ def recompute(origin,data,plan,*,device='cpu',diagnostic=None):
     # Do not use fork_rng(), which can query CUDA even for an offline audit.
     rng=torch.get_rng_state().clone()
     try:
-        actor=HistoryActor(config).cpu()
+        actor=checkpoint_actor(origin).cpu()
         _validate_model_state('probability origin actor',origin['actor'],actor.state_dict())
         actor.load_state_dict(origin['actor'],strict=True);actor.eval();actor.to(device)
         alpha=[];beta=[];logp=[]

@@ -15,7 +15,8 @@ import torch
 
 from instinctlab.task.critic_h1 import CRITIC_H1_DIMENSION, CRITIC_H1_FIELD_ORDER, CRITIC_H1_SCALES
 from .checkpoint import CheckpointError, _finite_tree, _validate_model_state, _validate_optimizer_state
-from .networks import ACTION_DIM, ACTOR_KEYS, LIDAR_SHAPE, STATE_DIM, HistoryActor
+from .hover_reflex import HOVER_REFLEX_FIELD, HOVER_REFLEX_METHOD, HOVER_REFLEX_PARAMETER
+from .networks import ACTION_DIM, ACTOR_KEYS, LIDAR_SHAPE, STATE_DIM, HistoryActor, NetworkConfig
 from .networks_h1 import PrivilegedCriticH1
 from .ppo import PPOTrainer
 
@@ -30,6 +31,36 @@ CHECKPOINT_H1_SCHEMA = {
     "critic_dimension": CRITIC_H1_DIMENSION, "critic_field_order": CRITIC_H1_FIELD_ORDER,
     "critic_scales": CRITIC_H1_SCALES, "action_dimension": ACTION_DIM,
 }
+
+
+def _uses_hover_reflex(method_hashes, parameter_present):
+    marker = method_hashes.get(HOVER_REFLEX_FIELD)
+    if marker not in (None, HOVER_REFLEX_METHOD) or (marker is not None) != parameter_present:
+        raise CheckpointError("checkpoint-h1 hover reflex method/state mismatch")
+    return parameter_present
+
+
+def checkpoint_actor(payload):
+    config = NetworkConfig(**payload["network_config"])
+    reflex = _uses_hover_reflex(payload["method_hashes"], HOVER_REFLEX_PARAMETER in payload["actor"])
+    return HistoryActor(config, hover_reflex=reflex)
+
+
+def attach_hover_reflex(trainer):
+    """Append a zero-gain parameter with the inherited Adam clock and empty moments."""
+    optimizer = trainer.actor_optimizer
+    clock = _optimizer_step(optimizer)
+    if trainer.update_counter != 640 or clock != 8 * trainer.update_counter or len(optimizer.param_groups) != 1:
+        raise CheckpointError("hover reflex attachment requires the verified u640 Adam stream")
+    first = next(iter(optimizer.state.values()))
+    gain = trainer.actor.add_hover_reflex()
+    optimizer.param_groups[0]["params"].append(gain)
+    optimizer.state[gain] = {
+        "step": first["step"].clone(),
+        "exp_avg": torch.zeros_like(gain),
+        "exp_avg_sq": torch.zeros_like(gain),
+    }
+    return dict(initial_gain=0., inherited_adam_clock=clock, initialized_first_and_second_moments_to_zero=True)
 
 
 def _exact_adam_step(value: object, label: str) -> int:
@@ -240,6 +271,7 @@ def save_checkpoint_h1(
         "rng": _rng_payload(curriculum_generator, trainer),
     }
     _validate_metadata(payload["method_hashes"], "method_hashes")
+    _uses_hover_reflex(payload["method_hashes"], HOVER_REFLEX_PARAMETER in payload["actor"])
     _validate_metadata(payload["source_identity"], "source_identity")
     _validate_r6_binding(payload)
     _finite_tree(payload, "checkpoint-h1")
@@ -284,6 +316,7 @@ def load_checkpoint_h1(
         raise CheckpointError("checkpoint-h1 PPO config mismatch")
     if payload["method_hashes"] != dict(expected_method_hashes) or payload["source_identity"] != dict(expected_source_identity):
         raise CheckpointError("checkpoint-h1 method/source identity mismatch")
+    _uses_hover_reflex(payload["method_hashes"], HOVER_REFLEX_PARAMETER in payload["actor"])
     actor = _validate_model_state("actor", payload["actor"], trainer.actor.state_dict())
     critic = _validate_model_state("critic", payload["critic"], trainer.critic.state_dict())
     counters = payload["counters"]

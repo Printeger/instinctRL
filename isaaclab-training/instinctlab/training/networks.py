@@ -127,7 +127,7 @@ def _validate_action(action: torch.Tensor, batch: int, device: torch.device) -> 
 class HistoryActor(nn.Module):
     """Feedforward four-frame actor that can receive only the exact policy mapping."""
 
-    def __init__(self, config: NetworkConfig = NetworkConfig()) -> None:
+    def __init__(self, config: NetworkConfig = NetworkConfig(), *, hover_reflex: bool = False) -> None:
         super().__init__()
         if not isinstance(config, NetworkConfig):
             raise TypeError("config must be NetworkConfig")
@@ -154,6 +154,18 @@ class HistoryActor(nn.Module):
             nn.LayerNorm(config.actor_hidden),
             nn.Linear(config.actor_hidden, ACTION_DIM * 2),
         )
+        self.hover_reflex = None
+        if hover_reflex:
+            self.add_hover_reflex()
+
+    def add_hover_reflex(self) -> nn.Parameter:
+        from .hover_reflex import HoverReflex
+
+        if self.hover_reflex is not None:
+            raise ValueError("Hover reflex already installed")
+        reference = next(self.parameters())
+        self.hover_reflex = HoverReflex(device=reference.device, dtype=reference.dtype)
+        return self.hover_reflex.gain
 
     def forward(self, policy: Mapping[str, torch.Tensor]) -> PolicyOutput:
         lidar, state = validate_policy(policy)
@@ -163,6 +175,9 @@ class HistoryActor(nn.Module):
         )
         raw = self.trunk(torch.cat((self.lidar_encoder(normalized_lidar), self.state_encoder(state)), dim=-1))
         alpha_raw, beta_raw = raw.chunk(2, dim=-1)
+        if self.hover_reflex is not None:
+            shift = self.hover_reflex(lidar, state)
+            alpha_raw, beta_raw = alpha_raw + shift, beta_raw - shift
         span = self.config.concentration_max - self.config.concentration_min
         alpha = self.config.concentration_min + span * torch.sigmoid(alpha_raw)
         beta = self.config.concentration_min + span * torch.sigmoid(beta_raw)

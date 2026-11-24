@@ -5,12 +5,13 @@ No optimizer step, live restoration, physics reset or scientific acceptance.
 
 def audit(value):
     import torch
-    from instinctlab.training.networks import HistoryActor,NetworkConfig
+    from instinctlab.training.networks import NetworkConfig
     from instinctlab.training.networks_h1 import PrivilegedCriticH1
     from instinctlab.training.ppo import PPOConfig,PPOTrainer
     from instinctlab.training.checkpoint import _validate_model_state,_finite_tree,CheckpointError
     from instinctlab.training.checkpoint_h1 import (CHECKPOINT_H1_KEYS,CHECKPOINT_H1_SCHEMA,CHECKPOINT_H1_VERSION,
-        _validated_saved_optimizer,_validate_rng_payload,_validate_counter,_validate_clock_and_curriculum,_validate_r6_binding)
+        _validated_saved_optimizer,_validate_rng_payload,_validate_counter,_validate_clock_and_curriculum,_validate_r6_binding,
+        checkpoint_actor)
     def require(ok,reason):
         if not ok:raise CheckpointError(reason)
     require(isinstance(value,dict) and set(value)==CHECKPOINT_H1_KEYS,'AUDIT_CHECKPOINT_KEYS')
@@ -27,7 +28,7 @@ def audit(value):
     require(max(*config.lidar_channels,config.state_hidden,config.actor_hidden,*config.critic_hidden)<=512,'AUDIT_NETWORK_BOUND')
     rng=torch.get_rng_state().clone()
     try:
-        trainer=PPOTrainer(HistoryActor(config),PrivilegedCriticH1(config),ppo)
+        trainer=PPOTrainer(checkpoint_actor(value),PrivilegedCriticH1(config),ppo)
         counts={}
         for label in ('actor','critic'):
             network=getattr(trainer,label);optimizer=getattr(trainer,label+'_optimizer')

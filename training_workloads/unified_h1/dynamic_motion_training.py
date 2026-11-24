@@ -76,17 +76,43 @@ def plausible_approach(policy, *, period_s):
     return approach.flatten(1).any(1) & stable
 
 
-def install_prior(trainer, *, weight, period_s, dynamic_block):
+def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=None):
+    if reflex is not None:
+        from instinctlab.control.ics import attenuate_command, mounted_mid360_rays_body
+
+        if ics is None:
+            raise ValueError('Hover targets require the active ICS configuration')
+        parameter = next(trainer.actor.parameters())
+        rays = mounted_mid360_rays_body(device=parameter.device, dtype=parameter.dtype)
+
     def gated(policy, output):
         zero = policy['state_vec'][:, 45:48].norm(dim=1) <= .001
         if not dynamic_block():
             gated.last_metrics = dict(hover_prior_removed=0, hover_prior_retained=int(zero.sum().item()))
             return zero_command_mean_prior(policy, output, weight)
-        approaching = plausible_approach(policy, period_s=period_s)
+        if reflex is None:
+            approaching = plausible_approach(policy, period_s=period_s)
+        else:
+            direction = reflex.retreat_direction(policy['lidar_grid'], policy['state_vec'])
+            approaching = direction.norm(dim=1) > .1
         safe = zero & ~approaching
-        penalty = ((output.mean_action[:, 1:4] - .5) / .1).square().sum(dim=1)
+        correction = output.mean_action[:, 1:4] - .5
+        penalty = (correction / .1).square().sum(dim=1)
         gated.last_metrics = dict(hover_prior_removed=int((zero & approaching).sum().item()),
                                   hover_prior_retained=int(safe.sum().item()))
-        return weight * (safe * penalty).mean()
+        prior = weight * (safe * penalty).mean()
+        if reflex is None or not bool(approaching.any()):
+            return prior
+        with torch.no_grad():
+            target = .16 * direction[approaching]
+            authority = attenuate_command(policy['lidar_grid'][approaching], rays, target, period_s, ics)
+            feasible = authority.metrics['beta'].flatten() >= .25
+        error = ((correction[approaching] - target) / .16).square().sum(dim=1)
+        gated.last_metrics['hover_reflex_targets'] = int(feasible.sum().item())
+        return prior + .15 * (feasible * error).sum() / len(policy['state_vec'])
+
     trainer.actor_auxiliary = gated
-    return dict(weight=weight, policy_period_s=period_s, inputs=['lidar_grid', 'state_vec'])
+    binding = dict(weight=weight, policy_period_s=period_s, inputs=['lidar_grid', 'state_vec'])
+    if reflex is not None:
+        binding['direct_hover_target'] = dict(speed_mps=.16, weight=.15, minimum_ics_beta=.25)
+    return binding

@@ -5,10 +5,10 @@ def restore(backend,value):
     import random
     import numpy as np
     import torch
-    from instinctlab.training.networks import HistoryActor,NetworkConfig
+    from instinctlab.training.networks import NetworkConfig
     from instinctlab.training.networks_h1 import PrivilegedCriticH1
     from instinctlab.training.ppo import PPOConfig,PPOTrainer
-    from instinctlab.training.checkpoint_h1 import load_checkpoint_h1
+    from instinctlab.training.checkpoint_h1 import checkpoint_actor,load_checkpoint_h1
     from .research_contract import validate_pin
     from .robustness_final_selection import validate,verify_loaded,require,MODE
     from .robustness_training_method import apply_method
@@ -26,7 +26,7 @@ def restore(backend,value):
         curriculum=backend.curriculum_generator.get_state().clone())
     if device.type=='cuda':before['cuda']=torch.cuda.get_rng_state_all()
     try:
-        trainer=PPOTrainer(HistoryActor(network).to(device),PrivilegedCriticH1(network).to(device),PPOConfig(**payload['ppo_config']))
+        trainer=PPOTrainer(checkpoint_actor(payload).to(device),PrivilegedCriticH1(network).to(device),PPOConfig(**payload['ppo_config']))
         metadata=load_checkpoint_h1(path,trainer,expected_method_hashes=model['method_hashes'],
             expected_source_identity=model['source_identity'],curriculum_generator=backend.curriculum_generator)
         validate_pin(model['checkpoint']);verify_loaded(selected,metadata)

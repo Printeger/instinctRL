@@ -189,8 +189,10 @@ def run(plan, input_pin):
             moving = operation == 'dynamic'
             if operation == 'train':
                 from training_workloads.unified_h1.checkpoint_compatibility import pinned_json
+                from training_workloads.unified_h1.robustness_training_method import HOVER_REFLEX_CANDIDATE
                 recipe = pinned_json(contract['parameters']['r6_training_plan']['recipe'])
-                moving = recipe['candidate_id'] in ('R6-CANDIDATE-INSTINCT-GPU-R2', 'R6-CANDIDATE-INSTINCT-GPU-R3')
+                moving = recipe['candidate_id'] in (
+                    'R6-CANDIDATE-INSTINCT-GPU-R2', 'R6-CANDIDATE-INSTINCT-GPU-R3', HOVER_REFLEX_CANDIDATE)
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
             env=UnifiedH1DirectEnv(cfg)
             ticks=env.h1_initialization_physics_ticks

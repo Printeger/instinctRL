@@ -101,7 +101,8 @@ def visibility_reset(block, *, seed, lane, mode, mount):
 
 def run(backend, params):
     import torch
-    from instinctlab.training.networks import HistoryActor, NetworkConfig
+    from instinctlab.training.checkpoint_h1 import checkpoint_actor
+    from instinctlab.training.networks import NetworkConfig
     from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz
     from training_workloads.scale_003.persistence import atomic_json_replace, reserve_output_bytes
     from .dynamic_motion_training import plausible_approach
@@ -120,7 +121,7 @@ def run(backend, params):
         network = NetworkConfig(**payload['network_config'])
         if network != NetworkConfig():
             raise ValueError('DYNAMIC_ASSAY_ACTOR_BOUNDARY')
-        actor = HistoryActor(network).to(device)
+        actor = checkpoint_actor(payload).to(device)
         actor.load_state_dict(payload['actor'], strict=True)
         actor.eval()
         cohort = []

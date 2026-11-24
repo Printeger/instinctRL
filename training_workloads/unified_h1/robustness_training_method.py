@@ -11,6 +11,7 @@ from .robustness_contract import object_sha
 PPO_FIELDS={'gamma','gae_lambda','clip_ratio','value_loss_coefficient','entropy_coefficient',
     'actor_learning_rate','critic_learning_rate','maximum_gradient_norm','advantage_epsilon','minibatch_size','epoch_count'}
 WEIGHTS={'residual_neutrality_weight','anchor_weight','mean_prior_weight','ics_clearance_margin_m'}
+HOVER_REFLEX_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R3-REFLEX'
 
 
 def require(value,reason):
@@ -90,14 +91,22 @@ def verify_applied(trainer,env,method):
         require(all(group['lr']==method['ppo'][key] for group in optimizer.param_groups),'ADAM_LR_DRIFT')
 
 
+def bound_method_hashes(plan, recipe):
+    hashes = dict(plan['initialization']['method_hashes'], r6_recipe=plan['recipe']['sha256'],
+                  r6_method=recipe['method']['sha256'], curriculum='curriculum-h1-r6-v1')
+    if recipe['candidate_id'] == HOVER_REFLEX_CANDIDATE:
+        hashes['r6_actor_reflex'] = 'm4-hover-reflex-v1'
+    return hashes
+
+
 def restore_and_bind(backend,*,plan,execution_identity):
     import random
     import numpy as np
     import torch
-    from instinctlab.training.networks import HistoryActor,NetworkConfig
+    from instinctlab.training.networks import NetworkConfig
     from instinctlab.training.networks_h1 import PrivilegedCriticH1
     from instinctlab.training.ppo import PPOConfig,PPOTrainer
-    from instinctlab.training.checkpoint_h1 import load_checkpoint_h1
+    from instinctlab.training.checkpoint_h1 import attach_hover_reflex,checkpoint_actor,load_checkpoint_h1
     from . import robustness_training_plan as contract
     from .range_closure_prior import CANDIDATE_ID, add_to_trainer
     from . import dynamic_motion_training, paired_action_prior
@@ -119,7 +128,7 @@ def restore_and_bind(backend,*,plan,execution_identity):
                 curriculum=backend.curriculum_generator.get_state().clone())
     if device.type=='cuda':before['cuda']=torch.cuda.get_rng_state_all()
     try:
-        trainer=PPOTrainer(HistoryActor(network).to(device),PrivilegedCriticH1(network).to(device),PPOConfig(**payload['ppo_config']))
+        trainer=PPOTrainer(checkpoint_actor(payload).to(device),PrivilegedCriticH1(network).to(device),PPOConfig(**payload['ppo_config']))
         metadata=load_checkpoint_h1(path,trainer,expected_method_hashes=initial['method_hashes'],
             expected_source_identity=initial['source_identity'],curriculum_generator=backend.curriculum_generator)
         validate_pin(initial['checkpoint'])
@@ -138,16 +147,19 @@ def restore_and_bind(backend,*,plan,execution_identity):
             binding['paired_action_prior'] = paired_action_prior.add_to_trainer(
                 trainer, period_s=float(cfg.sim.dt) * cfg.decimation)
             trainer._r6_bound_auxiliary = trainer.actor_auxiliary
-        elif recipe['candidate_id'] == dynamic_motion_training.CANDIDATE:
+        elif recipe['candidate_id'] in (dynamic_motion_training.CANDIDATE, HOVER_REFLEX_CANDIDATE):
             env = backend.environment
             obstacle = getattr(env, '_h1_moving_sphere', None)
             require(obstacle is not None, 'DYNAMIC_BODY_REQUIRED')
+            if recipe['candidate_id'] == HOVER_REFLEX_CANDIDATE and trainer.actor.hover_reflex is None:
+                binding['hover_reflex'] = attach_hover_reflex(trainer)
             env._h1_dynamic_reward = trainer._r6_bound_dynamic_reward = dynamic_motion_training.amend_reward
             binding['dynamic_reward'] = dict(target='forecast local separation and command deviation',
                                              scope='reward only, physical robust phase')
             binding['dynamic_hover_prior'] = dynamic_motion_training.install_prior(
                 trainer, weight=method['mean_prior_weight'], period_s=float(env.cfg.sim.dt) * env.cfg.decimation,
-                dynamic_block=lambda: obstacle.enabled)
+                dynamic_block=lambda: obstacle.enabled, reflex=trainer.actor.hover_reflex,
+                ics=env._control_pipelines[0].config.ics)
             trainer._r6_bound_auxiliary = trainer.actor_auxiliary
     except BaseException:
         torch.set_rng_state(before['cpu']);random.setstate(before['python']);np.random.set_state(before['numpy'])
@@ -158,6 +170,5 @@ def restore_and_bind(backend,*,plan,execution_identity):
         backend._r6_load_failed=True
         raise
     backend.trainer=trainer;backend._r6_method_binding=binding
-    hashes=dict(initial['method_hashes'],r6_recipe=p['recipe']['sha256'],r6_method=recipe['method']['sha256'],
-                curriculum='curriculum-h1-r6-v1')
+    hashes=bound_method_hashes(p, recipe)
     return dict(metadata=metadata,method_hashes=hashes,source_identity=execution_identity)

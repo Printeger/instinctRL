@@ -38,8 +38,8 @@ def checkpoint_metadata(path,plan,recipe,update):
     require(value['counters']==expected and all(type(v)is int for v in value['counters'].values()),'CHECKPOINT_CLOCK')
     require(type(value['training_seed'])is int and value['training_seed']==plan['training_seed']
         and value['source_identity']==recipe['source_identity'],'CHECKPOINT_IDENTITY')
-    hashes=dict(plan['initialization']['method_hashes'],r6_recipe=plan['recipe']['sha256'],
-        r6_method=recipe['method']['sha256'],curriculum='curriculum-h1-r6-v1')
+    from training_workloads.unified_h1.robustness_training_method import bound_method_hashes
+    hashes=bound_method_hashes(plan,recipe)
     require(value['method_hashes']==hashes,'CHECKPOINT_METHOD')
     method=contract.pinned_json(recipe['method'])
     require(value['ppo_config']==dict(method['ppo'],permutation_seed=plan['training_seed']),'CHECKPOINT_PPO')

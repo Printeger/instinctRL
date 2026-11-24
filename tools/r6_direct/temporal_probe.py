@@ -9,7 +9,7 @@ import torch
 from instinctlab.control.governor import decode_governor
 from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body
 from instinctlab.observations.actor import ActorObservationHistory
-from instinctlab.training.networks import HistoryActor, NetworkConfig
+from instinctlab.training.checkpoint_h1 import checkpoint_actor
 from tools.instinct_tube_probe import body_to_world
 from tools.instinct_tube_shadow import scene_scan
 from tools.r6_direct.evidence import read
@@ -68,7 +68,7 @@ def load_actor(checkpoint):
     if pin(path) != checkpoint:
         raise ValueError(f'Checkpoint drift {path}')
     payload = torch.load(path, map_location='cpu', weights_only=True)
-    actor = HistoryActor(NetworkConfig(**payload['network_config']))
+    actor = checkpoint_actor(payload)
     actor.load_state_dict(payload['actor'], strict=True)
     return actor.eval()
 

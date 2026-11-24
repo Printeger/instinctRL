@@ -348,6 +348,9 @@ class PPOTrainer:
             _module_finite(self.critic, "critic")
             _optimizer_finite(self.actor_optimizer, "actor")
             _optimizer_finite(self.critic_optimizer, "critic")
+            reflex = getattr(self.actor, "hover_reflex", None)
+            if reflex is not None:
+                reflex.project_gain()
             records.append({
                 "epoch": epoch,
                 "minibatch": iteration % minibatches_per_epoch,
@@ -361,6 +364,8 @@ class PPOTrainer:
                 "actor_pre_clip_gradient_norm": float(actor_norm.detach().item()),
                 "critic_pre_clip_gradient_norm": float(critic_norm.detach().item()),
             })
+            if reflex is not None:
+                records[-1]["hover_reflex_gain_parameter"] = float(reflex.gain.detach().item())
             if auxiliary is not None:
                 records[-1]["actor_auxiliary_loss"] = float(auxiliary.detach().item())
                 auxiliary_metrics = getattr(self.actor_auxiliary, "last_metrics", None)

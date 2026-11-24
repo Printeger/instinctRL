@@ -23,6 +23,7 @@ def verify_publication(commit, *pins):
 def training_model(plan, analysis_pin, checkpoint, method):
     from tools.r6_direct.evidence import validate_binding, verify_inputs
     from .robustness_evaluation_selection import require
+    from .robustness_training_method import bound_method_hashes
     bound, ctx, report = validate_binding(analysis_pin)
     contract = ctx['contract']
     require(plan['schema_version'] == 'r6-local-training-plan/1'
@@ -52,8 +53,7 @@ def training_model(plan, analysis_pin, checkpoint, method):
     recipe = base.pinned_json(plan['recipe'])
     return dict(checkpoint=checkpoint, update=update, training_seed=plan['training_seed'],
                 source_identity=recipe['source_identity'],
-                method_hashes=dict(plan['initialization']['method_hashes'], r6_recipe=plan['recipe']['sha256'],
-                                  r6_method=recipe['method']['sha256'], curriculum='curriculum-h1-r6-v1'),
+                method_hashes=bound_method_hashes(plan,recipe),
                 ppo_config=dict(method['ppo'], permutation_seed=plan['training_seed']))
 
 
