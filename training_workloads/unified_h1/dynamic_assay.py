@@ -77,6 +77,18 @@ def score(rows):
                            first_closure_step=next((r['step'] for r in alive if r['pre']['winning_beams'][lane]
                                                     and r['sensor_approach'][lane]), None),
                            first_contact_step=next((r['step'] for r in alive if r['collision'][lane]), None))
+        if 'reflex_direction_b' in rows[0]:
+            detections = [r for r in alive if any(r['reflex_direction_b'][lane])]
+            first_visible = next((r for r in detections if r['pre']['winning_beams'][lane]), None)
+            metrics['reflex_steps'] = len(detections)
+            metrics['first_visible_reflex'] = None
+            if first_visible is not None:
+                direction = first_visible['reflex_direction_b'][lane]
+                metrics['first_visible_reflex'] = dict(
+                    step=first_visible['step'],
+                    governor_mps=sum(x*d for x, d in zip(first_visible['v_gov_b'][lane], direction)),
+                    final_mps=sum(x*d for x, d in zip(first_visible['v_final_b'][lane], direction)),
+                )
         lanes.append(metrics)
     return lanes
 
@@ -102,6 +114,7 @@ def visibility_reset(block, *, seed, lane, mode, mount):
 def run(backend, params):
     import torch
     from instinctlab.training.checkpoint_h1 import checkpoint_actor
+    from instinctlab.training.hover_reflex import HoverReflex
     from instinctlab.training.networks import NetworkConfig
     from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz
     from training_workloads.scale_003.persistence import atomic_json_replace, reserve_output_bytes
@@ -115,6 +128,8 @@ def run(backend, params):
     device = env.device
     groups = groups_for(params['experiment_id'])
     visibility = groups == VISIBILITY_GROUPS
+    cue = (HoverReflex(device=device, dtype=torch.float32)
+           if params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-') else None)
     results = {}
     for label, checkpoint in params['models'].items():
         payload = torch.load(checked(checkpoint), map_location='cpu', weights_only=True)
@@ -177,6 +192,8 @@ def run(backend, params):
                 if observed.any() and not torch.allclose(witness[observed],before['witness_range_m'][observed],atol=.002,rtol=0):
                     raise RuntimeError('DYNAMIC_ASSAY_ACTOR_WITNESS')
                 approach = plausible_approach(policy, period_s=.1).cpu().tolist() if visibility else None
+                direction = (cue.retreat_direction(policy['lidar_grid'], policy['state_vec']).cpu().tolist()
+                             if cue is not None else None)
                 env.prepare_h1_step(global_policy_step=step, command_b=env._command_b, next_command_b=body)
                 with torch.no_grad():
                     action = actor(policy).mean_action
@@ -197,6 +214,8 @@ def run(backend, params):
                                  v_gov_b=record['control']['v_gov_b'].cpu().tolist()))
                 if visibility:
                     rows[-1]['sensor_approach'] = approach
+                if direction is not None:
+                    rows[-1]['reflex_direction_b'] = direction
             env.finish_r6_physics()
             obstacle.finish()
             rel = f'{label}-group-{index}.jsonl'
@@ -245,6 +264,12 @@ def audit(output, params, counters):
                 if groups == VISIBILITY_GROUPS and (
                         len(row['sensor_approach']) != LANES or any(type(v) is not bool for v in row['sensor_approach'])):
                     raise ValueError('DYNAMIC_ASSAY_VISIBILITY_CLOSURE_EVIDENCE')
+                if params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-'):
+                    directions = row['reflex_direction_b']
+                    if len(directions) != LANES or any(
+                            len(v) != 3 or not all(math.isfinite(x) for x in v)
+                            or abs(v[2]) > 1e-6 or math.hypot(*v[:2]) > 1.000001 for v in directions):
+                        raise ValueError('DYNAMIC_ASSAY_HOVER_CUE_EVIDENCE')
                 for j in range(LANES):
                     if max(abs(x-y) for x,y in zip(after['sphere_position_w'][j],after['expected_position_w'][j])) > .003:
                         raise ValueError('DYNAMIC_ASSAY_REPLAYED_POSE')

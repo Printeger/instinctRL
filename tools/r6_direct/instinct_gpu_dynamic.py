@@ -29,12 +29,15 @@ class Assay(GpuRound):
     def prepare(self):
         if SNAPSHOT == self.project.parents[2]:
             raise ValueError('Use the detached assay snapshot')
-        self.docs.mkdir(exist_ok=False)
-        reference = load(PREVIOUS/'round-2'/'RESULTS.json')['candidate']['checkpoint']
+        reference_result = PREVIOUS/'round-2'/'RESULTS.json'
+        if self.number == 3:
+            reference_result = completed_round(2).docs/'RESULTS.json'
+        reference = load(reference_result)['candidate']['checkpoint']
         models = {'reference': reference}
         previous = completed_round(1 if self.pilot else self.number)
         if not self.pilot:
             models['candidate'] = load(previous.docs/'RESULTS.json')['candidate']['checkpoint']
+        self.docs.mkdir(exist_ok=False)
         seed = 942810037 if self.pilot else (183421779 if self.visibility else 705934187)
         seconds = 450 if self.pilot or self.visibility else 720
         source = self.write('source.json', manifest())

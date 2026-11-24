@@ -3,7 +3,7 @@ from types import SimpleNamespace
 import torch
 
 from instinctlab.observations.moving_sphere import MAX_SPEED_M_S, PARK_HEIGHT_M, MovingSphere, sphere_range, trajectories
-from training_workloads.unified_h1.dynamic_assay import contract, visibility_reset
+from training_workloads.unified_h1.dynamic_assay import LANES, contract, score, visibility_reset
 
 
 def test_rays_choose_a_physical_near_surface_and_preserve_misses():
@@ -104,3 +104,21 @@ def test_visibility_reset_changes_only_sensor_translation_and_half_turn():
     assert w_front['root_quaternion_wxyz'] == front['root_quaternion_wxyz']
     assert w_rear['root_quaternion_wxyz'] == rear['root_quaternion_wxyz']
     assert front['root_position_local_m'] != rear['root_position_local_m']
+
+
+def test_visible_reflex_reports_directional_action_on_live_samples():
+    zero = [[0., 0., 0.]] * LANES
+    base = dict(axis_w=zero, initial_position_w=zero, command_w=zero, velocity_w=zero,
+                vehicle_position_w=zero, modes=[4] * LANES, collision=[False] * LANES,
+                post=dict(active=[False] * LANES), terminal=[False] * LANES)
+    first = dict(base, step=0, pre=dict(winning_beams=[0] * LANES),
+                 v_gov_b=zero, v_final_b=zero, reflex_direction_b=zero)
+    direction = [[-1., 0., 0.]] + zero[1:]
+    second = dict(first, step=1, reflex_direction_b=direction)
+    third = dict(second, step=2, pre=dict(winning_beams=[2] * LANES),
+                 v_gov_b=[[-.16, .02, 0.]] + zero[1:], v_final_b=[[-.04, .005, 0.]] + zero[1:])
+    first['terminal'] = [False, True] + [False] * (LANES - 2)
+    lanes = score([first, second, third])
+    assert lanes[0]['reflex_steps'] == 2
+    assert lanes[0]['first_visible_reflex'] == dict(step=2, governor_mps=.16, final_mps=.04)
+    assert lanes[1]['first_visible_reflex'] is None

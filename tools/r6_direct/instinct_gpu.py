@@ -3,6 +3,7 @@
 import argparse
 import io
 import json
+import math
 
 from tools.r6_direct.import_legacy import ROOT, pin
 from tools.r6_direct.instinct_cycle import load
@@ -110,7 +111,8 @@ class GpuRound(Round):
                     yield from map(json.loads, buffer)
 
     def extra_summary(self, training_report):
-        rows = [row['actor_auxiliary_metrics'] for row in self.training_rows(training_report, 'minibatches.jsonl')]
+        minibatches = list(self.training_rows(training_report, 'minibatches.jsonl'))
+        rows = [row['actor_auxiliary_metrics'] for row in minibatches]
         if len(rows) != 1024:
             raise ValueError('Incomplete minibatch counts')
         if self.number == 1:
@@ -123,7 +125,7 @@ class GpuRound(Round):
         scans = [row['payload'] for row in curriculum if row['event'] == 'MOVING_SPHERE_ACQUISITION']
         if len(layouts) != 1 or not scans or not any(any(row['winning_beams']) for row in scans):
             raise ValueError('Missing physical mover training exposure')
-        return {'dynamic_training': dict(
+        summary = {'dynamic_training': dict(
             minibatches=len(rows), hover_prior_removed=sum(r.get('hover_prior_removed', 0) for r in rows),
             hover_prior_retained=sum(r.get('hover_prior_retained', 0) for r in rows),
             cohort=layouts[0], sampled_acquisitions=len(scans),
@@ -132,6 +134,18 @@ class GpuRound(Round):
                                             zip(row['sphere_sensor_clearance_m'], row['active']) if active),
             complete_split_measurement_windows=complete_window_count(self.training_rows(training_report, 'measurement_windows.jsonl')),
         )}
+        if any('hover_reflex_gain_parameter' in row for row in minibatches):
+            trace = {(row['update'], row['minibatch_ordinal']): row['hover_reflex_gain_parameter']
+                     for row in minibatches if 'hover_reflex_gain_parameter' in row}
+            expected = {(update, i) for update in range(641, 769) for i in range(8)}
+            if trace.keys() != expected or not all(math.isfinite(x) and 0. <= x <= .0625 for x in trace.values()):
+                raise ValueError('Incomplete or out-of-bounds hover gain record')
+            summary['hover_reflex_training'] = dict(
+                first_minibatch_gain=trace[641, 0], phase_0_final_gain=trace[704, 7],
+                final_gain=trace[768, 7], peak_gain=max(trace.values()),
+                eligible_minibatch_examples=sum(row.get('hover_reflex_targets', 0) for row in rows),
+            )
+        return summary
 
 
 def completed_round(number):
