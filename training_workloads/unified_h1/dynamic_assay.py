@@ -16,6 +16,10 @@ VISIBILITY_GROUPS = ((8, 9, 10, 11),)
 PERSISTENCE_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-DEV-PERSISTENCE-02'
 PERSISTENCE_GROUPS = (*VISIBILITY_GROUPS, (4, 1, 6, 7))
 OPTION_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-DEV-OPTION'
+HOLDOUT_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-LONG-HOLDOUT'
+HOLDOUT_SMOKE = 'R6-DIRECT-INSTINCT-GPU-R4-HOLDOUT-SMOKE'
+HOLDOUT_GROUPS = ((8, 8, 8, 8), (0, 0, 0, 0), (2, 3, 2, 4),
+                  (6, 6, 6, 6), (7, 7, 7, 7), (9, 9, 9, 9))
 MODES = ('approach', 'recede', 'cross_left', 'cross_right',
          'hover', 'hover_wall', 'static_travel', 'static_hover',
          'open_front', 'open_rear', 'wall_front', 'wall_rear')
@@ -24,12 +28,17 @@ MODES = ('approach', 'recede', 'cross_left', 'cross_right',
 def groups_for(run_id):
     if run_id == PERSISTENCE_RUN:
         return PERSISTENCE_GROUPS
+    if run_id == HOLDOUT_RUN:
+        return HOLDOUT_GROUPS
+    if run_id == HOLDOUT_SMOKE:
+        return (HOLDOUT_GROUPS[1], HOLDOUT_GROUPS[2])
     return VISIBILITY_GROUPS if run_id.endswith('-VISIBILITY') else GROUPS
 
 
 def contract(params):
     fields = {'experiment_id', 'training_seed', 'models', 'seed', 'wall_seconds', 'output_cap_bytes'}
-    if set(params) != fields or (params['experiment_id'] not in (PERSISTENCE_RUN, OPTION_RUN) and not re.fullmatch(
+    runs = (PERSISTENCE_RUN, OPTION_RUN, HOLDOUT_RUN, HOLDOUT_SMOKE)
+    if set(params) != fields or (params['experiment_id'] not in runs and not re.fullmatch(
             r'R6-DIRECT-INSTINCT-GPU-R[23]-(?:DYNAMIC(?:-PILOT-0[1-4])?|VISIBILITY)', params['experiment_id'])):
         raise ValueError('DYNAMIC_ASSAY_CONTRACT_IDENTITY')
     if params['training_seed'] != 20260908 or not 0 <= params['seed'] < 2**31:
@@ -39,13 +48,16 @@ def contract(params):
     if type(params['output_cap_bytes']) is not int or not 512*2**20 <= params['output_cap_bytes'] <= 2**30:
         raise ValueError('DYNAMIC_ASSAY_OUTPUT')
     models = params['models']
-    if not isinstance(models, dict) or not 1 <= len(models) <= 2 or not set(models) <= {'candidate', 'reference'}:
+    allowed_models = {'candidate', 'control', 'reference'} if params['experiment_id'] == HOLDOUT_RUN else {'candidate', 'reference'}
+    if not isinstance(models, dict) or not 1 <= len(models) <= len(allowed_models) or not set(models) <= allowed_models:
         raise ValueError('DYNAMIC_ASSAY_MODELS')
     for value in models.values():
         checked(value)
     if params['experiment_id'] in (PERSISTENCE_RUN, OPTION_RUN) and (
             set(models) != {'candidate', 'reference'} or models['candidate'] != models['reference']):
         raise ValueError('DYNAMIC_ASSAY_SAME_WEIGHT_MODELS')
+    if params['experiment_id'] == HOLDOUT_RUN and set(models) != allowed_models:
+        raise ValueError('DYNAMIC_HOLDOUT_COMPLETE_COMPARISON')
     cohorts = len(models) * len(groups_for(params['experiment_id']))
     steps = cohorts * STEPS * LANES
     return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct',
@@ -97,6 +109,11 @@ def score(rows):
                     governor_mps=sum(x*d for x, d in zip(first_visible['v_gov_b'][lane], direction)),
                     final_mps=sum(x*d for x, d in zip(first_visible['v_final_b'][lane], direction)),
                 )
+        if 'layout' in rows[0]:
+            metrics.update(layout=rows[0]['layout'][lane],
+                           recovery_rmse_mps=math.sqrt(mean(speed2[80:])),
+                           maximum_horizontal_excursion_m=max(math.hypot(
+                               r['vehicle_position_w'][lane][0]-initial[0], r['vehicle_position_w'][lane][1]-initial[1]) for r in alive))
         lanes.append(metrics)
     return lanes
 
@@ -105,10 +122,10 @@ def measurements(trace):
     return {k: v.detach().cpu().tolist() if hasattr(v, 'detach') else v for k,v in trace.items()}
 
 
-def visibility_reset(block, *, seed, lane, mode, mount):
+def visibility_reset(block, *, seed, lane, mode, mount, split='development'):
     from .robustness_scenarios import reset_spec, rotate_yaw
 
-    spec = reset_spec(block, seed=seed, split='development', lane=lane % 8, mount_position_m=mount)
+    spec = reset_spec(block, seed=seed, split=split, lane=lane % 8, mount_position_m=mount)
     sensor = spec['sensor_position_local_m']
     if mode in (10, 11):
         sensor[0] = 4.60
@@ -128,6 +145,7 @@ def run(backend, params):
     from training_workloads.scale_003.persistence import atomic_json_replace, reserve_output_bytes
     from .dynamic_motion_training import plausible_approach
     from .escape_hold_probe import EscapeHoldProbe
+    from .escape_holdout_scene import LAYOUTS
     from .robustness_scenarios import reset_spec
 
     env = backend.environment
@@ -137,7 +155,9 @@ def run(backend, params):
     device = env.device
     groups = groups_for(params['experiment_id'])
     persistence = params['experiment_id'] == PERSISTENCE_RUN
-    option = params['experiment_id'] == OPTION_RUN
+    holdout = params['experiment_id'] in (HOLDOUT_RUN, HOLDOUT_SMOKE)
+    option = holdout or params['experiment_id'] == OPTION_RUN
+    split = 'heldout' if params['experiment_id'] == HOLDOUT_RUN else 'development'
     cue = (HoverReflex(device=device, dtype=torch.float32)
            if persistence or option or params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-') else None)
     results = {}
@@ -150,24 +170,28 @@ def run(backend, params):
         actor.load_state_dict(payload['actor'], strict=True)
         actor.eval()
         if option:
-            env.set_escape_option(label == 'candidate')
+            from instinctlab.control.escape_option import METHOD_FIELD, METHOD_VERSION
+            if params['experiment_id'] == HOLDOUT_RUN and label == 'candidate':
+                if payload['method_hashes'].get(METHOD_FIELD) != METHOD_VERSION:
+                    raise ValueError('DYNAMIC_HOLDOUT_METHOD_BINDING')
+            env.set_escape_option(label in ('candidate', 'control'))
         cohort = []
         for index, group in enumerate(groups):
-            visibility = group in VISIBILITY_GROUPS
+            visibility = min(group) >= 8
             modes = [mode for mode in group for _ in range(8)]
             seed = params['seed']+index
             block = dict(id=f'dynamic-{index}', task='stop', speed_m_s=.25,
                          pulse_acceleration_m_s2=0., sensor_to_wall_distance_m=None, steps=STEPS)
             env.set_h1_evaluation_case(None)
             env.set_h1_ics_clearance_margin(.15)
-            env.configure_r6_physics(block=block,seed=seed,split='development',
+            env.configure_r6_physics(block=block,seed=seed,split=split,
                                      reset_sink=lambda row: None, force_sink=lambda row: None,
                                      expected_mass_kg=1.181517923)
             specs = env._r6_physics['specs']
             for lane in range(LANES):
                 if visibility:
                     specs[lane] = visibility_reset(block, seed=seed, lane=lane, mode=modes[lane],
-                                                   mount=env.cfg.ray_caster.offset.pos)
+                                                   mount=env.cfg.ray_caster.offset.pos, split=split)
                 elif modes[lane] == 5:
                     wall = dict(block, task='wall_modes', sensor_to_wall_distance_m=1.40)
                     specs[lane] = reset_spec(wall, seed=seed, split='development', lane=lane,
@@ -178,10 +202,16 @@ def run(backend, params):
             axis[mode_tensor == 5] = axis.new_tensor([-1.,0.,0.])
             if visibility:
                 axis[:] = axis.new_tensor([-1., 0., 0.])
+            elif holdout:
+                axis[:] = axis.new_tensor([1., 0., 0.])
             command = axis * .25 * ((mode_tensor < 4) | (mode_tensor == 6))[:, None]
             local = torch.tensor([s['sensor_position_local_m'] for s in specs],device=device)
             physical_modes = torch.full_like(mode_tensor, 5) if visibility else mode_tensor
             obstacle.configure(env.scene.env_origins+local, axis, physical_modes)
+            if holdout:
+                # Keep a crossing inside the side gaps of the authored fixtures.
+                crossing = (mode_tensor == 2) | (mode_tensor == 3)
+                obstacle.end_travel_s[crossing] = 7.5
             env.set_h1_initial_command(torch.zeros_like(command),0)
             env.stage_r6_world_command(command)
             backend.resource_check('before_r6_dynamic_reset', counters.explicit_resets+1)
@@ -194,6 +224,8 @@ def run(backend, params):
             initial = env._robot.data.root_state_w[:, :3].clone().cpu().tolist()
             fixed = dict(axis_w=axis.cpu().tolist(), modes=modes, initial_position_w=initial,
                          command_w=command.cpu().tolist())
+            if holdout:
+                fixed['layout'] = [LAYOUTS[i // 8] for i in range(LANES)]
             rows = []
             for step in range(STEPS):
                 backend.resource_check('before_r6_dynamic_step', step)
@@ -275,6 +307,14 @@ def audit(output, params, counters):
     sources = [file_pin(path)]
     groups = groups_for(params['experiment_id'])
     persistence = params['experiment_id'] == PERSISTENCE_RUN
+    holdout = params['experiment_id'] in (HOLDOUT_RUN, HOLDOUT_SMOKE)
+    if holdout:
+        from .escape_holdout_scene import LAYOUTS
+        preflight = Path(output) / 'initial_preflight.json'
+        observed = json.loads(preflight.read_bytes())
+        if observed['scene'] != 'room-door-trunks-street-tube' or observed['geometry']['status'] != 'PASS':
+            raise ValueError('DYNAMIC_HOLDOUT_GEOMETRY_NOT_VERIFIED')
+        sources.append(file_pin(preflight))
     for name, result in saved['models'].items():
         if result['checkpoint'] != params['models'][name] or len(result['groups']) != len(groups):
             raise ValueError('DYNAMIC_ASSAY_MODEL_BINDING')
@@ -287,7 +327,7 @@ def audit(output, params, counters):
             if [r['step'] for r in rows] != list(range(STEPS)) or score(rows) != group['lanes']:
                 raise ValueError('DYNAMIC_ASSAY_SCORER_REPLAY')
             expected_modes = [mode for mode in groups[index] for _ in range(8)]
-            visibility = groups[index] in VISIBILITY_GROUPS
+            visibility = min(groups[index]) >= 8
             if visibility:
                 start = rows[0]['pre']
                 for center, sensor, command in zip(start['sphere_position_w'], start['sensor_position_w'], rows[0]['command_w']):
@@ -298,6 +338,8 @@ def audit(output, params, counters):
                 if (after['tick'] - before['tick'] != 20 or after['contact_samples'] != 20
                         or row['modes'] != expected_modes):
                     raise ValueError('DYNAMIC_ASSAY_ACTUAL_PHYSICS_TICKS')
+                if holdout and row['layout'] != [LAYOUTS[i // 8] for i in range(LANES)]:
+                    raise ValueError('DYNAMIC_HOLDOUT_LAYOUT_ORDER')
                 if visibility and (
                         len(row['sensor_approach']) != LANES or any(type(v) is not bool for v in row['sensor_approach'])):
                     raise ValueError('DYNAMIC_ASSAY_VISIBILITY_CLOSURE_EVIDENCE')
@@ -319,6 +361,6 @@ def audit(output, params, counters):
                         length = math.sqrt(sum((x-distance*d)**2 for x,d in zip(relative,ray)))
                         if abs(length-.34) > .003 or abs(distance-row['actor_witness_range_m'][j]) > .002:
                             raise ValueError('DYNAMIC_ASSAY_REPLAYED_SENSOR')
-            if not any(any(r['pre']['winning_beams']) for r in rows):
+            if (visibility or min(groups[index]) < 6) and not any(any(r['pre']['winning_beams']) for r in rows):
                 raise ValueError('DYNAMIC_ASSAY_NO_VISIBLE_MOVING_OBJECT')
     return saved, sources

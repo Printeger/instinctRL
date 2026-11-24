@@ -107,7 +107,9 @@ def main():
         report,summary=supplement_cpu(input_pin,pin(args.reuse_cpu_binding),pin(args.probability_diagnostic))
     else:
         report, summary = analyze(input_pin,probability_diagnostic=None if args.probability_diagnostic is None else pin(args.probability_diagnostic))
-    summary_limit = (96 if ctx['contract']['operation'] == 'dynamic' else 48) * 1024
+    from training_workloads.unified_h1.dynamic_assay import HOLDOUT_RUN
+    summary_limit = (384 if ctx['plan']['run_id'] == HOLDOUT_RUN else
+                     96 if ctx['contract']['operation'] == 'dynamic' else 48) * 1024
     if len(json.dumps(report, allow_nan=False).encode()) > 16*1024**2 or len(json.dumps(summary, allow_nan=False).encode()) > summary_limit:
         raise ValueError('DIRECT_ANALYSIS_SIZE_BOUND')
     if stop_paths():

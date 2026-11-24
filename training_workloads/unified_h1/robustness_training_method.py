@@ -12,6 +12,7 @@ PPO_FIELDS={'gamma','gae_lambda','clip_ratio','value_loss_coefficient','entropy_
     'actor_learning_rate','critic_learning_rate','maximum_gradient_norm','advantage_epsilon','minibatch_size','epoch_count'}
 WEIGHTS={'residual_neutrality_weight','anchor_weight','mean_prior_weight','ics_clearance_margin_m'}
 HOVER_REFLEX_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R3-REFLEX'
+ESCAPE_OPTION_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R4-ESCAPE-OPTION'
 
 
 def require(value,reason):
@@ -96,6 +97,9 @@ def bound_method_hashes(plan, recipe):
                   r6_method=recipe['method']['sha256'], curriculum='curriculum-h1-r6-v1')
     if recipe['candidate_id'] == HOVER_REFLEX_CANDIDATE:
         hashes['r6_actor_reflex'] = 'm4-hover-reflex-v2'
+    if recipe['candidate_id'] == ESCAPE_OPTION_CANDIDATE:
+        from instinctlab.control.escape_option import METHOD_FIELD, METHOD_VERSION
+        hashes[METHOD_FIELD] = METHOD_VERSION
     return hashes
 
 
@@ -147,18 +151,26 @@ def restore_and_bind(backend,*,plan,execution_identity):
             binding['paired_action_prior'] = paired_action_prior.add_to_trainer(
                 trainer, period_s=float(cfg.sim.dt) * cfg.decimation)
             trainer._r6_bound_auxiliary = trainer.actor_auxiliary
-        elif recipe['candidate_id'] in (dynamic_motion_training.CANDIDATE, HOVER_REFLEX_CANDIDATE):
+        elif recipe['candidate_id'] in (dynamic_motion_training.CANDIDATE, HOVER_REFLEX_CANDIDATE,
+                                       ESCAPE_OPTION_CANDIDATE):
             env = backend.environment
             obstacle = getattr(env, '_h1_moving_sphere', None)
             require(obstacle is not None, 'DYNAMIC_BODY_REQUIRED')
             if recipe['candidate_id'] == HOVER_REFLEX_CANDIDATE and trainer.actor.hover_reflex is None:
                 binding['hover_reflex'] = attach_hover_reflex(trainer)
+            reflex = trainer.actor.hover_reflex
+            if recipe['candidate_id'] == ESCAPE_OPTION_CANDIDATE:
+                from instinctlab.control.escape_option import METHOD_VERSION
+                require(getattr(env, 'escape_option', None) is not None, 'ESCAPE_OPTION_REQUIRED')
+                reflex = env.escape_option.detector
+                binding['escape_option'] = dict(version=METHOD_VERSION, placement='before governor and ICS',
+                                               policy_distribution_unchanged=True)
             env._h1_dynamic_reward = trainer._r6_bound_dynamic_reward = dynamic_motion_training.amend_reward
             binding['dynamic_reward'] = dict(target='forecast local separation and command deviation',
                                              scope='reward only, physical robust phase')
             binding['dynamic_hover_prior'] = dynamic_motion_training.install_prior(
                 trainer, weight=method['mean_prior_weight'], period_s=float(env.cfg.sim.dt) * env.cfg.decimation,
-                dynamic_block=lambda: obstacle.enabled, reflex=trainer.actor.hover_reflex,
+                dynamic_block=lambda: obstacle.enabled, reflex=reflex,
                 ics=env._control_pipelines[0].config.ics)
             trainer._r6_bound_auxiliary = trainer.actor_auxiliary
     except BaseException:

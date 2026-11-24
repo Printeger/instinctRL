@@ -37,7 +37,12 @@ def live_geometry_readback(environment: Any) -> dict[str, Any]:
     from pxr import UsdGeom, UsdPhysics
 
     origins = environment.scene.env_origins.detach().cpu()
-    expected_points, expected_indices, identities = combined_scene_triangles(origins)
+    holdout = getattr(environment, 'holdout_geometry', None)
+    if holdout is not None:
+        expected_points, expected_indices, collision_points, expected_collision = holdout
+        identities = range(len(expected_indices) // 3)
+    else:
+        expected_points, expected_indices, identities = combined_scene_triangles(origins)
     if environment.cfg.ray_caster.mesh_prim_paths != [H1_RAY_MESH_PATH]:
         raise ValueError("H1 RayCaster is not bound to the combined finite mesh")
     warp = RayCaster.meshes[H1_RAY_MESH_PATH]
@@ -51,7 +56,12 @@ def live_geometry_readback(environment: Any) -> dict[str, Any]:
         raise ValueError("actual Warp/USD combined mesh differs from the translated H1 fixture")
     collision = UsdGeom.Mesh(stage.GetPrimAtPath("/World/H1CollisionWalls/Walls"))
     collision_indices = [int(item) for item in collision.GetFaceVertexIndicesAttr().Get()]
-    if len(collision_indices) != 32 * 4 * 3 or not collision.GetPrim().HasAPI(UsdPhysics.CollisionAPI):
+    if holdout is not None:
+        collision_shape = (collision_indices == expected_collision
+                           and [list(p) for p in collision.GetPointsAttr().Get()] == collision_points)
+    else:
+        collision_shape = len(collision_indices) == 32 * 4 * 3
+    if not collision_shape or not collision.GetPrim().HasAPI(UsdPhysics.CollisionAPI):
         raise ValueError("actual H1 wall collision mesh is incomplete")
     ground_collision = any(
         str(prim.GetPath()).startswith("/World/ground") and prim.HasAPI(UsdPhysics.CollisionAPI)
@@ -100,7 +110,7 @@ def persist_initial_source(output: Path, source: Mapping[str, Any]) -> dict[str,
     return metadata
 
 
-def validate_initial_observability(source: Mapping[str, Any], output: Path) -> dict[str, Any]:
+def validate_initial_observability(source: Mapping[str, Any], output: Path, *, full_rank: bool = True) -> dict[str, Any]:
     """Run the existing exact acquisition and require finite rank-3 local coverage."""
     from instinctlab.evaluation.raycaster_observability import (
         RaycasterAcquisitionError, acquire_exact_observability_from_source,
@@ -146,7 +156,7 @@ def validate_initial_observability(source: Mapping[str, Any], output: Path) -> d
         raise ValueError("initial exact observability result must be [1,32]")
     rank = rank[0].clone()
     sigma = sigma[0].clone()
-    if not bool((rank == 3).all()) or not bool(torch.isfinite(sigma).all() and (sigma > 0).all()):
+    if full_rank and (not bool((rank == 3).all()) or not bool(torch.isfinite(sigma).all() and (sigma > 0).all())):
         raise ValueError("initial exact observability is not finite rank three for all environments")
     reconstruction = float(acquisition.reconstruction_max_error_m.max().item())
     hit_identity = float(acquisition.hit_max_error_m.max().item())

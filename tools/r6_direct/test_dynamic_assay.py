@@ -135,6 +135,18 @@ def test_option_preserves_samples_outside_threat_and_stops_on_stale_measurement(
     assert option.remaining.tolist() == [0, 0, 0]
 
 
+def test_holdout_collision_triangles_are_shared_with_the_sensor_mesh():
+    from training_workloads.unified_h1.escape_holdout_scene import scene_geometry
+
+    origins = torch.zeros((32, 3))
+    origins[:, 0] = 100 * torch.arange(32)
+    points, faces, solids, solid_faces = scene_geometry(origins, 77162057)
+    assert scene_geometry(origins, 77162057) == (points, faces, solids, solid_faces)
+    assert scene_geometry(origins, 77162058) != (points, faces, solids, solid_faces)
+    assert len(faces) == len(solid_faces) + 32 * 6
+    assert {tuple(solids[i]) for i in solid_faces} <= {tuple(points[i]) for i in faces}
+
+
 def test_visibility_reset_changes_only_sensor_translation_and_half_turn():
     block = dict(id='dynamic-0', task='stop', speed_m_s=.25, pulse_acceleration_m_s2=0.,
                  sensor_to_wall_distance_m=None, steps=120)

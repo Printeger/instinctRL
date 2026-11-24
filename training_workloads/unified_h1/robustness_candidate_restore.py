@@ -34,6 +34,12 @@ def restore(backend,selection):
         validate_pin(model['checkpoint']);verify_loaded(selected,metadata)
         method_binding=apply_method(trainer,backend.environment,selected['method'],
             resume=selection['role']=='trained_candidate',training_seed=model['training_seed'])
+        from instinctlab.control.escape_option import METHOD_FIELD, METHOD_VERSION
+        option_version = model['method_hashes'].get(METHOD_FIELD)
+        if option_version is not None:
+            require(option_version == METHOD_VERSION and getattr(backend.environment, 'escape_option', None) is not None,
+                    'ESCAPE_OPTION_DEPLOYMENT')
+            method_binding['escape_option'] = option_version
         trainer.actor.eval();trainer.critic.eval()
     except BaseException:
         torch.set_rng_state(before['cpu']);random.setstate(before['python']);np.random.set_state(before['numpy'])

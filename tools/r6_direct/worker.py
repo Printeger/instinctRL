@@ -185,19 +185,30 @@ def run(plan, input_pin):
             render(plan,contract,source,output,app,counters,Guard(gate))
         else:
             from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv,UnifiedH1DirectEnvCfg
+            from training_workloads.unified_h1.checkpoint_compatibility import pinned_json
+            from training_workloads.unified_h1.robustness_training_method import ESCAPE_OPTION_CANDIDATE, HOVER_REFLEX_CANDIDATE
             operation = contract['operation']
+            params = contract['parameters']
             moving = operation == 'dynamic'
+            use_option = False
             if operation == 'train':
-                from training_workloads.unified_h1.checkpoint_compatibility import pinned_json
-                from training_workloads.unified_h1.robustness_training_method import HOVER_REFLEX_CANDIDATE
-                recipe = pinned_json(contract['parameters']['r6_training_plan']['recipe'])
+                recipe = pinned_json(params['r6_training_plan']['recipe'])
+                use_option = recipe['candidate_id'] == ESCAPE_OPTION_CANDIDATE
                 moving = recipe['candidate_id'] in (
-                    'R6-CANDIDATE-INSTINCT-GPU-R2', 'R6-CANDIDATE-INSTINCT-GPU-R3', HOVER_REFLEX_CANDIDATE)
+                    'R6-CANDIDATE-INSTINCT-GPU-R2', 'R6-CANDIDATE-INSTINCT-GPU-R3', HOVER_REFLEX_CANDIDATE,
+                    ESCAPE_OPTION_CANDIDATE)
+            if operation == 'evaluate' and params['evaluation_selection']['training_plan'] is not None:
+                recipe = pinned_json(params['evaluation_selection']['training_plan']['recipe'])
+                use_option = recipe['candidate_id'] == ESCAPE_OPTION_CANDIDATE
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
-            from training_workloads.unified_h1.dynamic_assay import OPTION_RUN
-            if plan['run_id'] == OPTION_RUN:
+            from training_workloads.unified_h1.dynamic_assay import HOLDOUT_RUN, HOLDOUT_SMOKE, OPTION_RUN
+            if plan['run_id'] in (HOLDOUT_RUN, HOLDOUT_SMOKE):
+                from training_workloads.unified_h1.escape_option_env import EscapeHoldoutEnv
+                env = EscapeHoldoutEnv(cfg, layout_seed=params['seed'])
+            elif use_option or plan['run_id'] == OPTION_RUN:
                 from training_workloads.unified_h1.escape_option_env import EscapeOptionEnv
                 env = EscapeOptionEnv(cfg)
+                env.set_escape_option(use_option)
             else:
                 env = UnifiedH1DirectEnv(cfg)
             ticks=env.h1_initialization_physics_ticks
