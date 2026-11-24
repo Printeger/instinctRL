@@ -7,9 +7,31 @@ from torch import nn
 from .world import ACTIONS, ANGLES, BEAMS, DT, DIRECTIONS, HISTORY, LOOK, action_vectors
 
 
-def features(obs, mode):
+def command_heading(obs, threat_reference=False):
     speed = obs.command.norm(dim=-1)
-    heading = torch.where(speed > .01, torch.atan2(obs.command[:,1], obs.command[:,0]), 0.)
+    commanded = torch.atan2(obs.command[:,1], obs.command[:,0])
+    if not threat_reference:
+        return torch.where(speed > .01, commanded, 0.)
+    age = (obs.clock[:, -1:] - obs.acquisition)[..., 0]
+    rotated = ANGLES[None,None] + (obs.gyro[...,0] * age)[..., None]
+    idx = (rotated*(BEAMS/(2*math.pi))).round().long() % BEAMS
+    ranges, valid = obs.ranges.gather(-1,idx), obs.valid.gather(-1,idx)
+    gap = (obs.acquisition[:, -1:] - obs.acquisition[:, :-1])[..., 0]
+    eligible = (gap > .06) & (gap <= .32)
+    best_gap, previous = torch.where(eligible, gap, 0.).max(dim=1)
+    lane = torch.arange(len(speed))
+    closure = (ranges[lane,previous] - ranges[:,-1]) / best_gap[:,None].clamp_min(.06)
+    credible = valid[lane,previous] & valid[:,-1] & (best_gap[:,None] > 0.) & (closure <= 2.5)
+    potential = torch.where(credible, (closure-.16).clamp_min(0.) * (-ranges[:,-1]/1.2).exp(), 0.)
+    coherent = torch.minimum(potential, torch.maximum(potential.roll(1,-1),potential.roll(-1,-1)))
+    risk, bearing = coherent.max(dim=1)
+    neutral = torch.where((risk > .035) & (age[:,-1] <= .22), ANGLES[bearing], 0.)
+    return torch.where(speed > .01, commanded, neutral)
+
+
+def features(obs, mode, heading=None):
+    speed = obs.command.norm(dim=-1)
+    heading = command_heading(obs) if heading is None else heading
     age = (obs.clock[:, -1:] - obs.acquisition)[..., 0]
     # This is relative rotation within a measurement window, with no world heading.
     offset = heading[:, None] + (obs.gyro[..., 0] * age if mode != 'raw' else 0.)
@@ -35,10 +57,11 @@ def features(obs, mode):
 
 
 class Policy(nn.Module):
-    def __init__(self, mode, objective):
+    def __init__(self, mode, objective, threat_reference=False):
         super().__init__()
         self.mode = mode
         self.objective = objective
+        self.threat_reference = threat_reference
         channels = 2*HISTORY if mode == 'raw' else 4*HISTORY-2
         self.encoder = nn.Sequential(
             nn.Conv1d(channels, 24, 5, stride=2, padding=2, padding_mode='circular'), nn.SiLU(),
@@ -50,8 +73,9 @@ class Policy(nn.Module):
         return self.head(torch.cat((self.encoder(grid), state), dim=-1))
 
     def act(self, obs):
-        score = self(*features(obs, self.mode))
-        actions = action_vectors(obs.command, obs.previous)
+        heading = command_heading(obs, self.threat_reference)
+        score = self(*features(obs, self.mode, heading))
+        actions = action_vectors(obs.command, obs.previous, heading=heading)
         if self.objective == 'imitate':
             choice = score.argmax(-1)
         else:

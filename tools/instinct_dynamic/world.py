@@ -34,11 +34,13 @@ def cross(a, b):
     return a[..., 0] * b[..., 1] - a[..., 1] * b[..., 0]
 
 
-def action_vectors(command, previous, bins=ACTIONS):
+def action_vectors(command, previous, bins=ACTIONS, *, heading=None):
     # Zero command retains a body-frame basis for evacuation.
     speed = command.norm(dim=-1, keepdim=True)
     basis = torch.where(speed > .01, command / speed.clamp_min(.01),
                         command.new_tensor([1., 0.]).expand_as(command))
+    if heading is not None:
+        basis = torch.stack((heading.cos(), heading.sin()), dim=-1)
     tangent = torch.stack((-basis[..., 1], basis[..., 0]), -1)
     return ((speed[:, None] * bins[:, 0, None] + bins[:, 1, None]) * basis[:, None]
             + bins[:, 2, None] * tangent[:, None])
@@ -173,8 +175,8 @@ class Arena:
         walls = (diff - portion[..., None]*segment).norm(dim=-1).amin(-1)
         return (torch.minimum(disc, walls) - RADIUS).reshape(positions.shape[:-1])
 
-    def teacher(self, observed, t, horizon=1.5):
-        actions = action_vectors(observed.command, observed.previous)
+    def teacher(self, observed, t, horizon=1.5, *, heading=None):
+        actions = action_vectors(observed.command, observed.previous, heading=heading)
         world_actions = rotate(actions, self.yaw(t)[:, None])
         until = torch.linspace(.05, horizon, 14)
         # First-order identified speed response, integrated from the current velocity.

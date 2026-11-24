@@ -12,7 +12,7 @@ from tools.r6_direct.import_legacy import ROOT, pin
 from tools.r6_direct.instinct_cycle import load, save
 from tools.r6_direct.instinct_cycle_finish import guard
 
-from .policy import FrozenR6, Policy, clearance_guard, features
+from .policy import FrozenR6, Policy, clearance_guard, command_heading, features
 from .world import ACTIONS, DT, MOTIONS, SCENES, STEPS, Arena, Observation, action_vectors, rotate
 
 
@@ -39,13 +39,14 @@ def check_pin(value):
 
 def save_model(path, model):
     with path.open('xb') as out:
-        torch.save(dict(mode=model.mode, objective=model.objective, state=model.state_dict()), out)
+        torch.save(dict(mode=model.mode, objective=model.objective, threat_reference=model.threat_reference,
+                        state=model.state_dict()), out)
     return pin(path)
 
 
 def load_model(value):
     payload = torch.load(check_pin(value), map_location='cpu', weights_only=True)
-    model = Policy(payload['mode'], payload['objective'])
+    model = Policy(payload['mode'], payload['objective'], payload.get('threat_reference', False))
     model.load_state_dict(payload['state'], strict=True)
     return model.eval()
 
@@ -62,14 +63,16 @@ def collect(config, behavior=None, *, accounting=None):
         t = step * DT
         obs = arena.observe(step)
         active = arena.live.clone()
-        grid, state = features(obs, config['features'])
-        demonstration, risk, choice = arena.teacher(obs, t, config['oracle_horizon'])
+        reference = config.get('threat_reference', False)
+        heading = command_heading(obs, reference) if reference else None
+        grid, state = features(obs, config['features'], heading)
+        demonstration, risk, choice = arena.teacher(obs, t, config['oracle_horizon'], heading=heading)
         prior = obs.command if behavior is None else behavior.act(obs)
         # Mix instructor and current controller to retain states before successful
         # actions and expose recoveries the current controller actually visits.
         draw = torch.rand(arena.n, generator=rng)
         proposals = torch.where((draw < config['oracle_mix'])[:,None], demonstration, prior)
-        actions = action_vectors(obs.command, obs.previous)
+        actions = action_vectors(obs.command, obs.previous, heading=heading)
         random_actions = torch.randint(actions.shape[1], (arena.n,), generator=rng)
         proposals = torch.where((draw > .96)[:,None], actions[torch.arange(arena.n),random_actions], proposals)
         if active.any():
@@ -86,7 +89,7 @@ def collect(config, behavior=None, *, accounting=None):
 def train(config, data):
     torch.manual_seed(config['optimizer_seed'])
     rng = torch.Generator().manual_seed(config['optimizer_seed'])
-    model = Policy(config['features'], config['objective'])
+    model = Policy(config['features'], config['objective'], config.get('threat_reference', False))
     optim = torch.optim.AdamW(model.parameters(), lr=config['learning_rate'])
     train_x, train_state, risk, choice = data
     counts = torch.bincount(choice, minlength=len(ACTIONS))

@@ -21,6 +21,7 @@ def main():
     p.add_argument('--epochs', type=int, default=16)
     p.add_argument('--hazard', type=float, default=4.)
     p.add_argument('--horizon', type=float, default=1.5)
+    p.add_argument('--threat-reference', action='store_true')
     p.add_argument('--hypothesis', required=True)
     args = p.parse_args()
     if not 0. <= args.mix <= .96 or args.repeat <= 0 or args.epochs <= 0:
@@ -40,6 +41,7 @@ def main():
                  source_files=[pin(p) for p in source], authority=pin(PROJECT/'PLAN.md'),
                  predecessor=previous, r2_summary=pin(R2), hypothesis=args.hypothesis, features=args.features,
                  objective=args.objective, behavior=behavior, learning_rate=.0012, optimizer_seed=43102,
+                 threat_reference=args.threat_reference,
                  train_world=dict(seed=920171,repeat=args.repeat,split='train',sensor=args.sensor),
                  oracle_horizon=args.horizon, oracle_mix=args.mix, hazard_weight=args.hazard,
                  batch_size=192, epochs=args.epochs, development_world=DEVELOPMENT, confirmation_world=CONFIRMATION)
