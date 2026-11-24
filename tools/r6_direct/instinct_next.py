@@ -50,9 +50,12 @@ def auxiliary_support(training_report, run_id):
 
 
 class Round:
+    project = PROJECT
+    resource_schema = NEXT_SCHEMA
+
     def __init__(self, number):
         self.number = number
-        self.docs = PROJECT / f'round-{number}'
+        self.docs = self.project / f'round-{number}'
         self.run_prefix = f'{NEXT_PREFIX}R{number}-'
         self.train = self.run_prefix + 'TRAIN'
         self.eval = self.run_prefix + 'EVAL'
@@ -81,13 +84,13 @@ class Round:
         if SNAPSHOT == ROOT:
             raise ValueError('Run from the exact detached execution snapshot')
         self.docs.mkdir(exist_ok=False)
-        plan_doc = pin(PROJECT / 'PLAN.md')
+        plan_doc = pin(self.project / 'PLAN.md')
         zero = dict.fromkeys(THIRD_CAPS, 0)
         caps = dict(allocated_gpu_seconds=10000, live_wall_seconds=10000, queue_seconds=540,
                     live_starts=3, simulator_initializations=2, training_transitions=65536,
                     nontraining_transitions=193600, training_checkpoint_writes=5,
                     major_scientific_candidates=1, **{OUTPUT_CAP: 32 * 1024**3})
-        authority = self.write('RESOURCE_POLICY.json', dict(schema_version=NEXT_SCHEMA,
+        authority = self.write('RESOURCE_POLICY.json', dict(schema_version=self.resource_schema,
                                user_authority=plan_doc, caps=caps, elapsed_seconds=18000))
         storage = self.write('STORAGE.json', dict(schema_version=SYSTEM_STORAGE_SCHEMA,
                              root=str(SYSTEM_ROOT), new_volume_allocation_bytes=0))
@@ -101,20 +104,7 @@ class Round:
         params = load(TRAIN_TEMPLATE)['parameters']
         plan = params['r6_training_plan']
         recipe = read(plan['recipe'])
-        curriculum = load(FIRST / 'curriculum-r3.json')
-        diagnosis = [pin(FIRST / 'REPORT.md'), plan_doc]
-        prior_run = 'R6-DIRECT-INSTINCT-CYCLE1-EVAL-01'
-        if self.number == 2:
-            delay = 1
-            hypothesis = 'Causally delivered delay after real first scans adds robustness to isolated drops.'
-        else:
-            previous = PROJECT / 'round-2' / 'RESULTS.json'
-            prior = load(previous)
-            delay = int(prior['comparisons']['dropout_only']['guardrails_pass'])
-            diagnosis.extend((pin(previous), pin(PROJECT / 'R3_DESIGN.md')))
-            prior_run = f'{NEXT_PREFIX}R2-EVAL'
-            hypothesis = 'Additional actor-only range closure supervision improves temporal selectivity.'
-        curriculum['phases'][1]['delay_cycles'] = delay
+        curriculum, diagnosis, prior_run, hypothesis = self.design(plan_doc)
         recipe.update(candidate_id=self.candidate, source_identity=identity, diagnosis=diagnosis,
                       hypothesis=hypothesis, comparison='Full matched training and closed R6 paired regression.',
                       curriculum=self.write('curriculum.json', curriculum))
@@ -123,6 +113,23 @@ class Round:
         contract = self.write('TRAIN-contract.json', build('contract', dict(operation='train', parameters=params)))
         prior = pin(SYSTEM_ROOT / prior_run / 'control/receipt.json')
         return self.input(self.train, contract, prior)
+
+    def design(self, plan_doc):
+        curriculum = load(FIRST / 'curriculum-r3.json')
+        diagnosis = [pin(FIRST / 'REPORT.md'), plan_doc]
+        prior_run = 'R6-DIRECT-INSTINCT-CYCLE1-EVAL-01'
+        if self.number == 2:
+            delay = 1
+            hypothesis = 'Causally delivered delay after real first scans adds robustness to isolated drops.'
+        else:
+            previous = self.project / 'round-2' / 'RESULTS.json'
+            prior = load(previous)
+            delay = int(prior['comparisons']['dropout_only']['guardrails_pass'])
+            diagnosis.extend((pin(previous), pin(self.project / 'R3_DESIGN.md')))
+            prior_run = f'{NEXT_PREFIX}R2-EVAL'
+            hypothesis = 'Additional actor-only range closure supervision improves temporal selectivity.'
+        curriculum['phases'][1]['delay_cycles'] = delay
+        return curriculum, diagnosis, prior_run, hypothesis
 
     def settle(self, run_id):
         with writer():
@@ -181,15 +188,24 @@ class Round:
         contract = self.write('EVAL-contract.json', build('contract', dict(operation='evaluate', parameters=params)))
         self.input(self.eval, contract, predecessor)
 
-    def summarize(self, analysis, evaluation):
-        training_report = read(read(analysis)['report'])
-        evaluation_report = pin(evaluation / 'report.json')
-        candidate = score_model(dict(run_id=self.eval, arm='candidate', pair=1, report=evaluation_report))
+    def references(self):
         references = {m['arm']: m for m in load(HISTORICAL / 'RESULTS.json')['models']
                       if (m['arm'], m['pair']) in (('baseline', 0), ('control', 1))}
         references['dropout_only'], = (m for m in load(FIRST / 'RESULTS.json')['models'] if m['arm'] == 'candidate')
         if self.number == 3:
-            references['round_2'] = load(PROJECT / 'round-2' / 'RESULTS.json')['candidate']
+            references['round_2'] = load(self.project / 'round-2' / 'RESULTS.json')['candidate']
+        return references
+
+    def extra_summary(self, training_report):
+        if self.number == 3:
+            return {'range_closure_training_support': auxiliary_support(training_report, self.train)}
+        return {}
+
+    def summarize(self, analysis, evaluation):
+        training_report = read(read(analysis)['report'])
+        candidate = score_model(dict(run_id=self.eval, arm='candidate', pair=1,
+                                     report=pin(evaluation / 'report.json')))
+        references = self.references()
         for model in [candidate, *references.values()]:
             if model['seed'] != candidate['seed']:
                 raise ValueError('Mismatched archived comparison seed')
@@ -200,8 +216,7 @@ class Round:
                        comparisons=compare_results, training_analysis=analysis,
                        training_counters=training_report['summary']['observed_counters'],
                        evaluation_analysis=pin(evaluation / 'binding.json'), ledger=pin(self.ledger))
-        if self.number == 3:
-            summary['range_closure_training_support'] = auxiliary_support(training_report, self.train)
+        summary.update(self.extra_summary(training_report))
         return self.write('RESULTS.json', summary)
 
     def finish(self):

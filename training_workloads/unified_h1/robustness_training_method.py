@@ -98,6 +98,7 @@ def restore_and_bind(backend,*,plan,execution_identity):
     from instinctlab.training.checkpoint_h1 import load_checkpoint_h1
     from . import robustness_training_plan as contract
     from .range_closure_prior import CANDIDATE_ID, add_to_trainer
+    from . import paired_action_prior
     from .research_contract import validate_pin
     p=contract.validate(plan);recipe=pinned_json(p['recipe']);method=validate(pinned_json(recipe['method']))
     from .direct_contract import training_inputs
@@ -129,6 +130,11 @@ def restore_and_bind(backend,*,plan,execution_identity):
             period_s = float(env.cfg.sim.dt) * env.cfg.decimation
             binding['range_closure_prior'] = add_to_trainer(
                 trainer, period_s=period_s, clearance_m=margin.d_safe_m + margin.clearance_margin_m)
+            trainer._r6_bound_auxiliary = trainer.actor_auxiliary
+        elif recipe['candidate_id'] == paired_action_prior.CANDIDATE:
+            cfg = backend.environment.cfg
+            binding['paired_action_prior'] = paired_action_prior.add_to_trainer(
+                trainer, period_s=float(cfg.sim.dt) * cfg.decimation)
             trainer._r6_bound_auxiliary = trainer.actor_auxiliary
     except BaseException:
         torch.set_rng_state(before['cpu']);random.setstate(before['python']);np.random.set_state(before['numpy'])
