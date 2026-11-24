@@ -1,3 +1,7 @@
+# 三轮全量 GPU 训练正在执行
+
+任务 `instinctrl-gpu-three`。五位原生伙伴的独立首轮及 Maverick 综合已记录，核验 6/6。第一轮的成对方向性动作辅助通过 CPU 核对，`R6-DIRECT-INSTINCT-GPU-R1-TRAIN` 的监督器与 worker 身份仍存活，真实 32 环境已越过 u704。第一轮要完成 u768、全量 R6、历史方向对照后再定第二轮配方。PhysX 运动球体、MID360 合并最近回波及独立评价已实现，Tensor 接线仍待真实动态预检。 [训练计划](../docs/experiments/instinct-gpu-three/PLAN.md) · [动态方案](../docs/experiments/instinct-gpu-three/DYNAMIC_DESIGN.md) · [贡献记录](contributions.jsonl)
+
 # 五轮动态闭环训练完成，等待审查
 
 任务 `instinctrl-five-development-cycles`，五位原生伙伴及 Maverick 首轮均记录。第 4 至 8 轮分别完成方向模仿、候选风险、联合动作与风险、重标策略轨迹和零指令威胁方向参考。共 113,541 条训练样本、9,488 次更新。第 8 轮开发 3/192 碰撞，独立确认 8/288，安全通行 96/96 且平均进度 3.230 m。保留横穿及管道内悬停失败，下一步解析失效后再做新的六自由度闭环。已核对输入、源版本、数据、模型和退出状态。 [研究报告](../docs/experiments/instinct-dynamic-five/REPORT.md) · [记录](contributions.jsonl)

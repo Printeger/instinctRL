@@ -2,9 +2,13 @@
 
 项目开发默认使用 Maverick V1.2.0。角色与交付规则见根 `AGENTS.md`，安装与验证记录见 `.maverick/STATE.md`。R6 本地执行入口仍为 `tools/r6_direct/`。
 
-# 五轮动态闭环训练完成，等待审查
+# 三轮全量 GPU 训练进行中
 
-第 4 至 8 轮完成五次完整 CPU 解析闭环训练和配对评价，共 113,541 条训练样本与 9,488 次优化。第 8 轮开发集 3/192 碰撞，独立确认 8/288，其中横穿和管道悬停各四次。安全通行 96/96 无碰撞，平均进度 3.230 m。第 8 轮保留为后续研究候选，六自由度和实飞证据待验证。 [正式审查点](experiments/instinct-dynamic-five/REPORT.md)
+当前任务按用户定义执行三轮 Isaac Lab GPU 全量训练和完整评价。第一轮以 `instinct-gpu-r1-train-inputs` 冻结，32 环境真实 PPO 已进入后半段扰动课程。同步开发的 PhysX 移动球与 MID360 回波接口已通过 CPU 检查，真实接触及回波链等待第一轮作业关闭后实测。 [训练计划](experiments/instinct-gpu-three/PLAN.md) · [第一轮冻结输入](experiments/instinct-gpu-three/round-1/R6-DIRECT-INSTINCT-GPU-R1-TRAIN-inputs.json)
+
+# 五轮 CPU 平面闭环预研完成
+
+第 4 至 8 轮完成五次完整 CPU 解析闭环训练和配对评价，共 113,541 条训练样本与 9,488 次优化。第 8 轮开发集 3/192 碰撞，独立确认 8/288，其中横穿和管道悬停各四次。安全通行 96/96 无碰撞，平均进度 3.230 m。第 8 轮保留为后续研究候选，六自由度和实飞证据待验证。 [CPU 预研报告](experiments/instinct-dynamic-five/REPORT.md)
 
 # 接续第二、三轮已完成，等待审查
 
