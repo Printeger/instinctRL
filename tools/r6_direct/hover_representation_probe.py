@@ -100,11 +100,18 @@ def residual(model, policy, *, enhance, cue=None, gain=None):
     normalized = torch.cat((scaled, validity, reliability), dim=1)
     raw = model.trunk(torch.cat((model.lidar_encoder(normalized), model.state_encoder(state)), dim=-1))
     alpha_logits, beta_logits = raw.chunk(2, dim=-1)
-    if cue is not None:
-        shift = torch.cat((torch.zeros_like(cue[:, :1]), gain * cue), dim=1)
-        alpha_logits, beta_logits = alpha_logits + shift, beta_logits - shift
     floor = model.config.concentration_min
     span = model.config.concentration_max - floor
+    if cue is not None:
+        if gain is None:
+            # The first action scales the operator command. Its value has no
+            # effect on translation at zero command, so test reuse for reflex magnitude.
+            alpha = floor + span * alpha_logits[:, :1].sigmoid()
+            beta = floor + span * beta_logits[:, :1].sigmoid()
+            gain = 8. * beta / (alpha + beta)
+            alpha_logits, beta_logits = alpha_logits.detach(), beta_logits.detach()
+        shift = torch.cat((torch.zeros_like(cue[:, :1]), gain * cue), dim=1)
+        alpha_logits, beta_logits = alpha_logits + shift, beta_logits - shift
     alpha, beta = floor + span * alpha_logits.sigmoid(), floor + span * beta_logits.sigmoid()
     return (alpha / (alpha + beta))[:, 1:] - .5
 
@@ -115,13 +122,48 @@ def batch(triplet, selected):
 
 
 @torch.no_grad()
-def summary(model, triplet, *, enhance, gain=None):
+def summary(model, triplet, *, enhance, gain=None, reuse_channel=False):
     policy, heading = batch(triplet, slice(None))
     cue = None if gain is None else retreat_cue(policy)
+    if reuse_channel:
+        cue = retreat_cue(policy, angular_neighborhood=8)
     velocity = residual(model, policy, enhance=enhance, cue=cue, gain=gain).reshape(-1, 3, 3)
     forward = (velocity * heading[:, None]).sum(-1)
     return dict(pairs=len(heading), mean_retreat_difference_mm_s=1000 * (forward[:, 2] - forward[:, 0]).mean().item(),
                 mean_stationary_horizontal_mm_s=1000 * velocity[:, 1, :2].norm(dim=1).mean().item())
+
+
+def travel_policy(policy, heading):
+    state = policy['state_vec'].clone().reshape(-1, 3, 4, 13)
+    state[..., 6:9] = .20 * heading[:, None, None]
+    state[..., 9:12] = .15 * heading[:, None, None]
+    return dict(policy, state_vec=state.flatten(0, 1).flatten(1))
+
+
+def try_command_channel(actor, training, validation):
+    model = copy.deepcopy(actor)
+    model.trunk[-1].requires_grad_(True)
+    optimizer = torch.optim.Adam(model.trunk[-1].parameters(), lr=.003)
+    sampling = torch.Generator().manual_seed(41)
+    for _ in range(STEPS):
+        selected = torch.randint(len(training[1]), (4,), generator=sampling)
+        policy, heading = batch(training, selected)
+        target = torch.zeros(len(selected), 3, 3)
+        target[:, 0] = -.18 * heading
+        prediction = residual(model, policy, enhance=False, cue=retreat_cue(policy, angular_neighborhood=8))
+        moving = travel_policy(policy, heading)
+        baseline = actor(moving).mean_action[:, 0]
+        scale = model(moving).mean_action[:, 0]
+        optimizer.zero_grad()
+        ((prediction.reshape_as(target) - target).square().mean() + .15 * (scale - baseline).square().mean()).backward()
+        optimizer.step()
+    outcomes = {key: summary(model, value, enhance=False, reuse_channel=True) for key, value in validation.items()}
+    with torch.no_grad():
+        for key, outcome in outcomes.items():
+            moving = travel_policy(*batch(validation[key], slice(None)))
+            delta = model(moving).mean_action[:, 0] - actor(moving).mean_action[:, 0]
+            outcome['mean_forward_change_mm_s'] = 200. * delta.mean().item()
+    return outcomes
 
 
 def main():
@@ -167,6 +209,7 @@ def main():
         optimizer.step()
     results['gated_direction'] = dict(learned_gain=gain.detach().item(), before=before,
         after={key: summary(actor, value, enhance=False, gain=gain) for key, value in validation.items()})
+    results['reuse_command_channel'] = try_command_channel(actor, training, validation)
     guard()
     print(json.dumps(dict(source_commit=git('rev-parse','HEAD'), checkpoint=checkpoint, optimization_steps=STEPS,
                           training_pairs=len(training[1]), validation=results), indent=2, allow_nan=False))
