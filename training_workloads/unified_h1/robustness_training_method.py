@@ -79,6 +79,8 @@ def verify_applied(trainer,env,method):
     require(getattr(trainer,'_r6_bound_method_sha256',None)==object_sha(method),'BINDING_REQUIRED')
     require(all(asdict(trainer.config)[k]==v for k,v in method['ppo'].items()),'PPO_DRIFT')
     require(getattr(trainer,'_r6_bound_auxiliary',None) is trainer.actor_auxiliary and callable(trainer.actor_auxiliary),'AUXILIARY_DRIFT')
+    require(getattr(trainer, '_r6_bound_dynamic_reward', None) is getattr(env, '_h1_dynamic_reward', None),
+        'DYNAMIC_REWARD_DRIFT')
     require(not env._h1_pure_hover_training and env._h1_anchor_weight==method['anchor_weight']
         and env._h1_residual_neutrality_weight==method['residual_neutrality_weight']
         and env._h1_ics_clearance_margin_m==method['ics_clearance_margin_m'],'ENV_DRIFT')
@@ -98,7 +100,7 @@ def restore_and_bind(backend,*,plan,execution_identity):
     from instinctlab.training.checkpoint_h1 import load_checkpoint_h1
     from . import robustness_training_plan as contract
     from .range_closure_prior import CANDIDATE_ID, add_to_trainer
-    from . import paired_action_prior
+    from . import dynamic_motion_training, paired_action_prior
     from .research_contract import validate_pin
     p=contract.validate(plan);recipe=pinned_json(p['recipe']);method=validate(pinned_json(recipe['method']))
     from .direct_contract import training_inputs
@@ -135,6 +137,17 @@ def restore_and_bind(backend,*,plan,execution_identity):
             cfg = backend.environment.cfg
             binding['paired_action_prior'] = paired_action_prior.add_to_trainer(
                 trainer, period_s=float(cfg.sim.dt) * cfg.decimation)
+            trainer._r6_bound_auxiliary = trainer.actor_auxiliary
+        elif recipe['candidate_id'] == dynamic_motion_training.CANDIDATE:
+            env = backend.environment
+            obstacle = getattr(env, '_h1_moving_sphere', None)
+            require(obstacle is not None, 'DYNAMIC_BODY_REQUIRED')
+            env._h1_dynamic_reward = trainer._r6_bound_dynamic_reward = dynamic_motion_training.amend_reward
+            binding['dynamic_reward'] = dict(target='forecast local separation and command deviation',
+                                             scope='reward only, physical robust phase')
+            binding['dynamic_hover_prior'] = dynamic_motion_training.install_prior(
+                trainer, weight=method['mean_prior_weight'], period_s=float(env.cfg.sim.dt) * env.cfg.decimation,
+                dynamic_block=lambda: obstacle.enabled)
             trainer._r6_bound_auxiliary = trainer.actor_auxiliary
     except BaseException:
         torch.set_rng_state(before['cpu']);random.setstate(before['python']);np.random.set_state(before['numpy'])

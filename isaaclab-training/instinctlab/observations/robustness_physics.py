@@ -152,8 +152,10 @@ class R6PhysicsMixin:
                 origins = torch.tensor([s['sensor_position_local_m'] for s in specs],
                                        device=root.device, dtype=root.dtype) + self.scene.env_origins
                 axis = torch.tensor([s['direction_world'] for s in specs], device=root.device, dtype=root.dtype)
-                obstacle.configure(origins, axis, torch.tensor(modes, device=root.device))
-                curriculum.record('MOVING_SPHERE_LAYOUT', dict(modes=modes, origins=origins, axis=axis))
+                half_period_s = 9.
+                obstacle.configure(origins, axis, torch.tensor(modes, device=root.device), half_period_s=half_period_s)
+                curriculum.record('MOVING_SPHERE_LAYOUT', dict(modes=modes, origins=origins, axis=axis,
+                                                               half_period_s=half_period_s))
         root[:,:3]=torch.tensor([specs[i]['root_position_local_m'] for i in lanes],device=root.device,dtype=root.dtype)+self.scene.env_origins[indices]
         root[:,3:7]=torch.tensor([specs[i]['root_quaternion_wxyz'] for i in lanes],device=root.device,dtype=root.dtype)
         root[:,7:13]=0.

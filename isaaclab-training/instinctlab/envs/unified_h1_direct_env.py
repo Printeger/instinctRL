@@ -574,6 +574,9 @@ class UnifiedH1DirectEnv(R6PhysicsMixin, R6MeasurementMixin, TaslabDirectEnv):
             ics_beta=self._control.ics_metrics["beta"], exact_clearance_m=self._task.exact_clearance_m,
             collision=masks["collision"], below_height=masks["below_height"], above_height=masks["above_height"],
         ), context=context)
+        dynamic_reward = getattr(self, '_h1_dynamic_reward', None)
+        if reward is not None and dynamic_reward is not None and self._h1_moving_sphere.enabled:
+            reward = dynamic_reward(reward, self, self._h1_moving_sphere)
         self._reward = reward
         timeout_critic = build_critic_h1_state(
             root_state_w=self._task.root_state_w, env_origin_w=self.scene.env_origins,

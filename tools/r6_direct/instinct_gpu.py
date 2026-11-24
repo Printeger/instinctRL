@@ -40,24 +40,41 @@ class GpuRound(Round):
         return {key: load(PREVIOUS / f'round-{n}' / 'RESULTS.json')['candidate']
                 for key, n in (('previous_gpu_r2', 2), ('previous_gpu_r3', 3))}
 
-    def extra_summary(self, training_report):
-        rows = []
+    def training_rows(self, training_report, leaf):
         for stream in training_report['streams']:
             name = stream['logical_name']
-            if not name.endswith('/minibatches.jsonl'):
+            if not name.endswith('/' + leaf):
                 continue
             bind = stream['pin']
             if pin(bind['path']) != bind:
-                raise ValueError('Minibatch evidence changed')
+                raise ValueError(f'Training evidence changed: {name}')
             with ChunkReader(bind['path'], run_id=self.train, logical_name=name,
                              maximum_raw_bytes=stream['raw_bytes']) as raw:
                 with io.BufferedReader(raw) as buffer:
-                    rows.extend(json.loads(row)['actor_auxiliary_metrics'] for row in buffer)
+                    yield from map(json.loads, buffer)
+
+    def extra_summary(self, training_report):
+        rows = [row['actor_auxiliary_metrics'] for row in self.training_rows(training_report, 'minibatches.jsonl')]
         if len(rows) != 1024:
-            raise ValueError('Incomplete matched-pair training counts')
-        return {'matched_training': dict(minibatches=len(rows),
-                                         valid_pairs=sum(r['paired_examples'] for r in rows),
-                                         max_pair_loss=max(r['paired_action_loss'] for r in rows))}
+            raise ValueError('Incomplete minibatch counts')
+        if self.number == 1:
+            return {'matched_training': dict(minibatches=len(rows),
+                                             valid_pairs=sum(r['paired_examples'] for r in rows),
+                                             max_pair_loss=max(r['paired_action_loss'] for r in rows))}
+
+        curriculum = list(self.training_rows(training_report, 'curriculum.jsonl'))
+        layouts = [row['payload'] for row in curriculum if row['event'] == 'MOVING_SPHERE_LAYOUT']
+        scans = [row['payload'] for row in curriculum if row['event'] == 'MOVING_SPHERE_ACQUISITION']
+        if len(layouts) != 1 or not scans or not any(any(row['winning_beams']) for row in scans):
+            raise ValueError('Missing physical mover training exposure')
+        return {'dynamic_training': dict(
+            minibatches=len(rows), hover_prior_removed=sum(r.get('hover_prior_removed', 0) for r in rows),
+            hover_prior_retained=sum(r.get('hover_prior_retained', 0) for r in rows),
+            cohort=layouts[0], sampled_acquisitions=len(scans),
+            mover_visible_scans=sum(sum(x > 0 for x in row['winning_beams']) for row in scans),
+            closest_sampled_sensor_gap_m=min(d for row in scans for d, active in
+                                            zip(row['sphere_sensor_clearance_m'], row['active']) if active),
+        )}
 
 
 def main():

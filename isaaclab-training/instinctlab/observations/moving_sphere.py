@@ -50,6 +50,14 @@ def trajectories(origins, axis, modes):
     return start, velocity, active
 
 
+def travel_clock(age, half_period_s):
+    if half_period_s is None:
+        return age, torch.ones_like(age)
+    phase = age.remainder(2 * half_period_s)
+    returning = phase >= half_period_s
+    return torch.where(returning, 2 * half_period_s - phase, phase), torch.where(returning, -1., 1.)
+
+
 class MovingSphere:
     def __init__(self, asset, origins):
         self.asset = asset
@@ -57,6 +65,7 @@ class MovingSphere:
         self.indices = torch.arange(len(origins), device=origins.device, dtype=torch.int32)
         self.age = torch.zeros(len(origins), device=origins.device, dtype=torch.float32)
         self.enabled = False
+        self.half_period_s = None
         self.pre_reset = None
         self.latest = None
         self.verified_order = False
@@ -64,7 +73,7 @@ class MovingSphere:
         self.contact = torch.zeros(len(origins), 1, device=origins.device, dtype=torch.bool)
         self.contact_samples = 0
 
-    def configure(self, sensor_origins, axis, modes):
+    def configure(self, sensor_origins, axis, modes, *, half_period_s=None):
         if self.enabled:
             raise RuntimeError('Existing moving-sphere block is active')
         if not self.verified_order:
@@ -75,11 +84,13 @@ class MovingSphere:
                 raise RuntimeError('Moving-sphere lanes differ from Isaac scene origins')
             self.verified_order = True
         self.start, self.velocity, self.active = trajectories(sensor_origins, axis, modes)
+        self.half_period_s = half_period_s
         self.enabled = True
         self.reset(self.indices.to(torch.long))
 
     def _pose(self):
-        return self.start + self.age[:, None] * self.velocity
+        travel_time, _ = travel_clock(self.age, self.half_period_s)
+        return self.start + travel_time[:, None] * self.velocity
 
     def reset(self, indices):
         if self.enabled and len(indices):
@@ -124,8 +135,9 @@ class MovingSphere:
         result = torch.where(overwrite[:, :, None], origin[:, None] + directions * finite_range[:, :, None], hits)
         witnesses = torch.where(overwrite, moving_ranges, 41.).argmin(dim=1)
         lane = self.indices.long()
+        _, direction = travel_clock(self.age, self.half_period_s)
         self.latest = dict(tick=tick, applied_age_s=self.age.clone(), active=self.active.clone(),
-                           sphere_position_w=center, expected_position_w=pose,
+                           sphere_position_w=center, expected_position_w=pose, sphere_velocity_w=direction[:, None] * self.velocity,
                            sensor_position_w=origin.clone(), winning_beams=overwrite.sum(1),
                            sphere_sensor_clearance_m=(center-origin).norm(dim=1)-RADIUS_M,
                            witness_beam=witnesses, witness_direction_w=directions[lane, witnesses],
