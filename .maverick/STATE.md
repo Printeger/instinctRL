@@ -1,6 +1,6 @@
 # 三轮全量 GPU 训练正在执行
 
-任务 `instinctrl-gpu-three`。五位原生伙伴的独立首轮和 Maverick 综合核验 6/6。第一轮完成真实 GPU 全量训练和完整评估，新增跟踪误差超过配对容差。物理移动球预检第三次完成 7,680 条转换，冻结对照在三类逼近各碰撞 8/8。第二轮首次尝试因首次碰撞诊断的原始射线窗口超限止于 66 次更新，输入、证据和资源独立结算。以 `instinct-gpu-r2-retry-02-train-inputs` 冻结修复，并从共同 u640 完整重跑。原 R6、八类动态和视场对照串行接续。 [第一轮复盘](../docs/experiments/instinct-gpu-three/R1_LESSON.md) · [记录修复](../docs/experiments/instinct-gpu-three/R2_LOGGING_REPAIR.md) · [贡献记录](contributions.jsonl)
+任务 `instinctrl-gpu-three`。五位原生伙伴的独立首轮和 Maverick 综合核验 6/6。第一轮完整训练和评价，跟踪误差超出配对容差。第二轮首次尝试因诊断记录超限止于 66 次更新。从冻结共同 u640 重跑后，完成 128 次更新、193,600 条 R6 转换以及动态和视场配对。八类动态对照两臂均碰撞 24/64，普通通行请求由 0.218 降到 0.142 m/s，前向闭合到接触有约 4 秒，后向约 1 秒。第三轮基于连贯测距侧让，并在可靠净空下训练保持通行指令，已按 `instinct-gpu-r3-train-inputs` 启动正式 GPU 训练。审查点为三轮完整评估后。 [第二轮复盘](../docs/experiments/instinct-gpu-three/R2_LESSON.md) · [第三轮设计](../docs/experiments/instinct-gpu-three/R3_DESIGN.md) · [贡献记录](contributions.jsonl)
 
 # 五轮动态闭环训练完成，等待审查
 
