@@ -1,3 +1,9 @@
+# R3 后的侧让续训进行中
+
+任务 `instinctrl-post-r3-long`。五位原生伙伴独立首轮和 Maverick 综合已核验 6/6。同权重 25 步方向保留使前向碰撞从 16/16 降到 0/16，后向仍 16/16。共享执行层短测把前飞逼近从 8/8 降到 3/8，普通通行和静止悬停无变化。四类场景预检完成 7,680 条 PhysX 转换并复算。完整候选从 u640 分四段新增 384 更新和 196,608 条转换，固定 u1024，随后执行全套 R6 和四类独立物理留出。 [冻结方案](../docs/experiments/instinct-post-r3/LONG_PLAN.md) · [贡献记录](contributions.jsonl)
+
+直接运行使用冻结源码 `14dc9c0f`、输入冻结 `81a82af0`。协调进程在本地 tmux `instinct-post-r3-long`，恢复日志位于 `~/instinctrl-runs/INSTINCT-POST-R3-LONG-COORDINATION/recovery-02.log`。首轮 `R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U720` 已通过入口并保存 u642。正式终点和独评均待完成。
+
 # 三轮全量 GPU 训练完成，等待审查
 
 任务 `instinctrl-gpu-three`。三轮各完成 128 次 PPO 更新、65,536 条物理训练转换和 193,600 条 R6 评估转换。第二、三轮动态和视场配对均复算。第三轮恢复 21 个 R6 条件的 32/32，通过率恢复，最差配对跟踪仍超过旧合格模型的容差。第三轮在有逼近历史时形成可执行侧向动作，八类动态配对仍为 24/64 碰撞，视场配对仍为 32/32。保留旧合格模型作为基线，第三轮作为研究候选。五位原生伙伴与 Maverick 首轮核验 6/6，所有正式作业关闭，已停止在唯一审查点。 [审查报告](../docs/experiments/instinct-gpu-three/REPORT.md) · [贡献记录](contributions.jsonl)
