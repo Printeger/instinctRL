@@ -21,7 +21,7 @@ PRODUCT_DELTAS = {
     'isaaclab-training/instinctlab/training/ppo.py': ('13290128ecbc79f9c429e064abbb2505bd6830c815ef21b3cec93fc0581e2431', '5d59c7f49bb3e62398f6c20275a6a883df8c28eef6bb7127e48aa73a322df186'),
     'isaaclab-training/instinctlab/observations/robustness_physics.py': (
         '19b66208bd99e93853ffc2ce4246382dac6c2e36262ed11dd688b4c7ae429863',
-        'd3d9668424e5e6163c12f3676c3eac9d26fc11c4f73d5e615bfff82d908bb05e'),
+        'c6f1b72102760c251a2bdd4b25e6de5785334b0eb1c7fb276c0fd372c196c3be'),
 }
 
 

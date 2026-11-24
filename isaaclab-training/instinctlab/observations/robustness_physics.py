@@ -145,10 +145,11 @@ class R6PhysicsMixin:
             obstacle = getattr(self, '_h1_moving_sphere', None)
             if obstacle is not None and not obstacle.enabled:
                 curriculum = state['curriculum']
-                modes = [
-                    i % 5 if curriculum.value['conditions'][name]['task'] != 'wall_modes' and i % 3 != 2 else 7
-                    for i, name in enumerate(curriculum.assignments)
-                ]
+                modes = []
+                for lane, name in enumerate(curriculum.assignments):
+                    task = curriculum.value['conditions'][name]['task']
+                    mover = {'stop': 0, 'pulse_hold': 4, 'reverse': 1 + (lane // 3) % 3}.get(task, 7)
+                    modes.append(mover if lane % 3 != 2 else 7)
                 origins = torch.tensor([s['sensor_position_local_m'] for s in specs],
                                        device=root.device, dtype=root.dtype) + self.scene.env_origins
                 axis = torch.tensor([s['direction_world'] for s in specs], device=root.device, dtype=root.dtype)
