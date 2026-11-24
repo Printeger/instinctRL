@@ -11,7 +11,7 @@ from tools.r6_direct.instinct_next import Round
 from tools.r6_direct.prepare import build
 from tools.r6_direct.resource_policy import GPU_FOLLOWUP_SCHEMA, OUTPUT_CAP, THIRD_CAPS
 from tools.r6_direct.source import ROOT as SNAPSHOT, manifest
-from tools.r6_direct.storage import SYSTEM_ROOT, SYSTEM_STORAGE_SCHEMA
+from tools.r6_direct.storage import CONTROL_ALLOWANCE, SYSTEM_ROOT, SYSTEM_STORAGE_SCHEMA, system_native, system_result
 from training_workloads.unified_h1.dynamic_assay import PERSISTENCE_RUN
 
 
@@ -21,10 +21,10 @@ R3 = ROOT / 'docs/experiments/instinct-gpu-three'
 
 class PersistenceStudy(Round):
     def __init__(self):
-        self.docs = PROJECT / 'development'
+        self.docs = PROJECT / 'development-02'
         self.ledger = self.docs / 'RESOURCE_LEDGER.json'
         self.eval = PERSISTENCE_RUN
-        self.tag = 'instinct-post-r3-persistence'
+        self.tag = 'instinct-post-r3-persistence-02'
 
     def prepare(self):
         if SNAPSHOT == ROOT:
@@ -40,7 +40,7 @@ class PersistenceStudy(Round):
         caps = dict(allocated_gpu_seconds=1090, live_wall_seconds=1090, queue_seconds=180,
                     live_starts=1, simulator_initializations=1, training_transitions=1,
                     nontraining_transitions=contract['budgets']['nontraining_transitions'],
-                    training_checkpoint_writes=1, major_scientific_candidates=1, **{OUTPUT_CAP: 2**30 + 64*2**20})
+                    training_checkpoint_writes=1, major_scientific_candidates=1, **{OUTPUT_CAP: 2**30 + CONTROL_ALLOWANCE})
         authority = self.write('RESOURCE_POLICY.json', dict(schema_version=GPU_FOLLOWUP_SCHEMA,
                                user_authority=pin(PROJECT / 'DEVELOPMENT.md'), caps=caps, elapsed_seconds=1500))
         storage = self.write('STORAGE.json', dict(schema_version=SYSTEM_STORAGE_SCHEMA,
@@ -51,7 +51,11 @@ class PersistenceStudy(Round):
                    new_reservations=[dict(id='ROUND-SYSTEM', status='UNRELEASED',
                                           resources={OUTPUT_CAP: 0}, storage_plan=storage)]))
         prior = pin(SYSTEM_ROOT / 'R6-DIRECT-INSTINCT-GPU-R3-VISIBILITY/control/receipt.json')
-        return self.input(self.eval, contract_pin, prior)
+        inputs = self.input(self.eval, contract_pin, prior)
+        plan = load(Path(inputs['path']))
+        system_native(plan)
+        system_result(plan, contract, before_launch=True)
+        return inputs
 
     def finish(self):
         path = self.input_path(self.eval)
@@ -80,6 +84,8 @@ def main():
     else:
         if args.step == 'run':
             command(SNAPSHOT, 'run', '--inputs', study.input_path(study.eval), system=True, check=False)
+            if not (SYSTEM_ROOT / study.eval).exists():
+                raise RuntimeError('Launch stopped before allocating the run directory')
         result = study.finish()
     print(json.dumps(result), flush=True)
 

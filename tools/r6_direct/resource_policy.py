@@ -15,7 +15,9 @@ GPU_STUDY_PREFIX = 'R6-DIRECT-INSTINCT-GPU-'
 GPU_STUDY_SCHEMA = 'instinctrl-gpu-three-training-resources/1'
 GPU_FOLLOWUP_SCHEMA = 'instinctrl-post-r3-resources/1'
 BOUNDED_SCOPES = {
-    f'{GPU_STUDY_PREFIX}R4-DEV-': (GPU_FOLLOWUP_SCHEMA,
+    f'{GPU_STUDY_PREFIX}R4-DEV-PERSISTENCE-02': (GPU_FOLLOWUP_SCHEMA,
+        'docs/experiments/instinct-post-r3/development-02/RESOURCE_LEDGER.json'),
+    f'{GPU_STUDY_PREFIX}R4-DEV-PERSISTENCE': (GPU_FOLLOWUP_SCHEMA,
         'docs/experiments/instinct-post-r3/development/RESOURCE_LEDGER.json'),
     THIRD_PREFIX: (THIRD_SCHEMA, 'docs/experiments/third-training/RESOURCE_LEDGER.json'),
     CYCLE_PREFIX: (CYCLE_SCHEMA, 'docs/experiments/instinct-first-cycle/formal/RESOURCE_LEDGER.json'),

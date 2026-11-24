@@ -13,7 +13,7 @@ STEPS = 120
 LANES = 32
 GROUPS = ((0, 1, 2, 3), (4, 5, 6, 7))
 VISIBILITY_GROUPS = ((8, 9, 10, 11),)
-PERSISTENCE_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-DEV-PERSISTENCE'
+PERSISTENCE_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-DEV-PERSISTENCE-02'
 PERSISTENCE_GROUPS = (*VISIBILITY_GROUPS, (4, 1, 6, 7))
 MODES = ('approach', 'recede', 'cross_left', 'cross_right',
          'hover', 'hover_wall', 'static_travel', 'static_hover',
