@@ -63,15 +63,15 @@ def plausible_approach(policy, *, period_s):
     state = policy['state_vec'].reshape(-1, 4, 13)
     scan = policy['lidar_grid'][:, :, ::3]
     approach = torch.zeros_like(scan[:, 9], dtype=torch.bool)
-    # Use a real distinct acquisition in this four-frame window, including
-    # cases where the most recent delivered scan was repeated after a drop.
+    # Use distinct acquisitions separated long enough for the range change to
+    # stand out from measurement noise. Wrap azimuth around the scan seam.
     for k in range(3):
         gap = (3 - k) * period_s + state[:, k, 12] - state[:, -1, 12]
         delta = (scan[:, k * 3] - scan[:, 9]) / gap[:, None, None].clamp_min(.01)
-        good = ((gap > .06) & (gap <= .33))[:, None, None]
-        good = good & (delta > .14) & (delta < 1.5) & (scan[:, 9] < 1.9)
+        good = ((gap >= .16) & (gap <= .33))[:, None, None]
+        good = good & (delta > .20) & (delta < 1.5) & (scan[:, 9] < 1.9)
         good &= (scan[:, k * 3 + 2] > .55) & (scan[:, 11] > .55)
-        approach |= good & good.roll(1, dims=-1) & good.roll(-1, dims=-1)
+        approach |= good & good.roll(1, dims=-1) & good.roll(-1, dims=-1) & good.roll(2, dims=-1) & good.roll(-2, dims=-1)
     stable = (state[:, :, :3].norm(dim=2).amax(dim=1) < .22) & (state[:, -1, 12] <= .22)
     return approach.flatten(1).any(1) & stable
 

@@ -38,12 +38,13 @@ def test_forecast_retains_safe_command_and_rewards_escaping_an_immediate_threat(
 def test_hover_relief_uses_distinct_coherent_hits_and_preserves_original_static_loss():
     lidar = torch.ones(5, 12, 59, 360)
     lidar[:, 0::3] = 1.2
-    lidar[:2, 6, 30, [359, 0, 1]] = 1.24
-    lidar[2, 6, 30, 0] = 1.24  # Single beam impulse.
-    lidar[3:, 6, 30, [359, 0, 1]] = 1.24
-    lidar[3, 8, 30, [359, 0, 1]] = 0.  # Unreliable earlier return.
+    seam = [358, 359, 0, 1, 2]
+    lidar[:2, 3, 30, seam] = 1.28
+    lidar[2, 3, 30, 0] = 1.28  # Single beam impulse.
+    lidar[3:, 3, 30, seam] = 1.28
+    lidar[3, 5, 30, seam] = 0.  # Unreliable earlier return.
     state = torch.zeros(5, 4, 13)
-    state[1, -1, 12] = .1  # Repeated acquisition under last-frame drop.
+    state[1, -1, 12] = .2  # Repeated acquisition under repeated frame drops.
     state[4, -2, 2] = .30  # Angular motion can create apparent range closure.
     policy = dict(lidar_grid=lidar, state_vec=state.flatten(1))
     assert plausible_approach(policy, period_s=.1).tolist() == [True, False, False, False, False]
@@ -58,3 +59,16 @@ def test_hover_relief_uses_distinct_coherent_hits_and_preserves_original_static_
     trainer.actor_auxiliary(policy, output).backward()
     assert trainer.actor_auxiliary.last_metrics == dict(hover_prior_removed=1, hover_prior_retained=4)
     assert not mean.grad[0].any() and mean.grad[1:, 1:].all()
+
+
+def test_stationary_near_wall_noise_keeps_hover_regularization():
+    count = 16
+    scans = torch.ones(count, 12, 59, 360)
+    scans[:, 0::3] = 3.
+    scans[:, 0::3, :, 100:190] = 1.4
+    scans[:, 0::3] += .01 * torch.randn(count, 4, 59, 360, generator=torch.Generator().manual_seed(7212))
+    state = torch.zeros(count, 52)
+    # A broad locally closing return among otherwise matched wall inputs.
+    scans[-1, 3, 30:37, 125:138] += .09
+    approach = plausible_approach(dict(lidar_grid=scans, state_vec=state), period_s=.1)
+    assert approach.tolist() == [False] * (count - 1) + [True]
