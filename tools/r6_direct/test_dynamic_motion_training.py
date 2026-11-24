@@ -2,9 +2,12 @@ from types import SimpleNamespace
 
 import torch
 
+from instinctlab.control.ics import mounted_mid360_rays_body
 from instinctlab.observations.moving_sphere import travel_clock
 from instinctlab.task.rewards_h1 import REWARD_H1_COMPONENT_KEYS, RewardH1Result
-from training_workloads.unified_h1.dynamic_motion_training import amend_reward, choose_velocity, install_prior, plausible_approach
+from training_workloads.unified_h1.dynamic_motion_training import (
+    amend_reward, choose_velocity, clear_travel, install_prior, plausible_approach,
+)
 from training_workloads.unified_h1.mean_prior import zero_command_mean_prior
 
 
@@ -95,3 +98,18 @@ def test_stationary_near_wall_noise_keeps_hover_regularization():
     scans[-1, 3, 30:37, 125:138] += .09
     approach = plausible_approach(dict(lidar_grid=scans, state_vec=state), period_s=.1)
     assert approach.tolist() == [False] * (count - 1) + [True]
+
+
+def test_travel_supervision_requires_far_reliable_rays_and_no_approach():
+    rays = mounted_mid360_rays_body().reshape(59, 360, 3)[::3, ::3].reshape(-1, 3)
+    lidar = torch.ones(7, 12, 59, 360)
+    lidar[:, 0::3] = 3.
+    lidar[1, 9] = 1.2
+    lidar[2, 10] = 0.
+    state = torch.zeros(7, 52)
+    state[:6, 45] = .2
+    state[3, -1] = .3
+    state[4, 2] = .23
+    approach = torch.tensor([False, False, False, False, False, True, False])
+    eligible = clear_travel(dict(lidar_grid=lidar, state_vec=state), rays, approach)
+    assert eligible.tolist() == [True, False, False, False, False, False, False]

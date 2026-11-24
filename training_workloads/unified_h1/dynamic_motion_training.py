@@ -9,6 +9,9 @@ from .mean_prior import zero_command_mean_prior
 
 
 CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R2'
+TRAVEL_GAIN_TARGET = .87
+TRAVEL_GAIN_WEIGHT = 1.
+TRAVEL_CLEARANCE_M = 1.9
 
 
 def choose_velocity(command, velocity, relative, object_velocity, active):
@@ -76,6 +79,23 @@ def plausible_approach(policy, *, period_s):
     return approach.flatten(1).any(1) & stable
 
 
+@torch.no_grad()
+def clear_travel(policy, rays, approaching):
+    """Only measured open command cones are eligible for travel supervision."""
+    state = policy['state_vec'].reshape(-1, 4, 13)
+    command = state[:, -1, 6:9]
+    speed = command.norm(dim=1, keepdim=True)
+    scan = policy['lidar_grid'][:, 9:, ::3, ::3].flatten(2)
+    heading = command / speed.clamp_min(.03)
+    forward = (heading @ rays.T) >= .80
+    reliable = (scan[:, 1] > .5) & (scan[:, 2] > .55)
+    supported = forward & reliable
+    far = torch.where(supported, scan[:, 0], torch.inf).amin(dim=1) >= TRAVEL_CLEARANCE_M
+    return ((speed[:, 0] >= .03) & (state[:, -1, 12] <= .21)
+            & (state[:, :, :3].norm(dim=2).amax(dim=1) < .22)
+            & (supported.sum(dim=1) >= 8) & far & ~approaching)
+
+
 def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=None):
     if reflex is not None:
         from instinctlab.control.ics import attenuate_command, mounted_mid360_rays_body
@@ -84,6 +104,7 @@ def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=
             raise ValueError('Hover targets require the active ICS configuration')
         parameter = next(trainer.actor.parameters())
         rays = mounted_mid360_rays_body(device=parameter.device, dtype=parameter.dtype)
+        sampled_rays = rays.reshape(59, 360, 3)[::3, ::3].reshape(-1, 3)
 
     def gated(policy, output):
         zero = policy['state_vec'][:, 45:48].norm(dim=1) <= .001
@@ -93,21 +114,30 @@ def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=
         if reflex is None:
             approaching = plausible_approach(policy, period_s=period_s)
         else:
-            direction = reflex.retreat_direction(policy['lidar_grid'], policy['state_vec'])
+            direction = reflex.retreat_direction(policy['lidar_grid'], policy['state_vec'], hover_only=False)
             approaching = direction.norm(dim=1) > .1
-        safe = zero & ~approaching
+        hover_approach = zero & approaching
+        safe = zero & ~hover_approach
         correction = output.mean_action[:, 1:4] - .5
         penalty = (correction / .1).square().sum(dim=1)
-        gated.last_metrics = dict(hover_prior_removed=int((zero & approaching).sum().item()),
+        gated.last_metrics = dict(hover_prior_removed=int(hover_approach.sum().item()),
                                   hover_prior_retained=int(safe.sum().item()))
         prior = weight * (safe * penalty).mean()
-        if reflex is None or not bool(approaching.any()):
+        if reflex is None:
+            return prior
+        travel = clear_travel(policy, sampled_rays, approaching)
+        shortfall = (TRAVEL_GAIN_TARGET - output.mean_action[:, 0]).clamp_min(0.)
+        travel_loss = TRAVEL_GAIN_WEIGHT * (travel * shortfall.square()).mean()
+        gated.last_metrics['clear_travel_examples'] = int(travel.sum().item())
+        gated.last_metrics['clear_travel_loss'] = float(travel_loss.detach().item())
+        prior = prior + travel_loss
+        if not bool(hover_approach.any()):
             return prior
         with torch.no_grad():
-            target = .16 * direction[approaching]
-            authority = attenuate_command(policy['lidar_grid'][approaching], rays, target, period_s, ics)
+            target = .16 * direction[hover_approach]
+            authority = attenuate_command(policy['lidar_grid'][hover_approach], rays, target, period_s, ics)
             feasible = authority.metrics['beta'].flatten() >= .25
-        error = ((correction[approaching] - target) / .16).square().sum(dim=1)
+        error = ((correction[hover_approach] - target) / .16).square().sum(dim=1)
         gated.last_metrics['hover_reflex_targets'] = int(feasible.sum().item())
         return prior + .15 * (feasible * error).sum() / len(policy['state_vec'])
 
@@ -115,4 +145,6 @@ def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=
     binding = dict(weight=weight, policy_period_s=period_s, inputs=['lidar_grid', 'state_vec'])
     if reflex is not None:
         binding['direct_hover_target'] = dict(speed_mps=.16, weight=.15, minimum_ics_beta=.25)
+        binding['clear_travel_gain'] = dict(minimum_target=TRAVEL_GAIN_TARGET, weight=TRAVEL_GAIN_WEIGHT,
+                                          cone_clearance_m=TRAVEL_CLEARANCE_M)
     return binding

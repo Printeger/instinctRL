@@ -21,7 +21,7 @@ class HoverReflex(nn.Module):
         self.register_buffer('_rays', rays.reshape(59, 360, 3)[::3].reshape(-1, 3), persistent=False)
 
     @torch.no_grad()
-    def retreat_direction(self, lidar, state):
+    def retreat_direction(self, lidar, state, *, hover_only=True):
         history = state.reshape(-1, 4, 13)
         scan = lidar[:, :, ::3]
         latest = scan[:, 9]
@@ -48,8 +48,10 @@ class HoverReflex(nn.Module):
         bearing[:, 2] = 0.
         fresh = history[:, -1, 12] <= .22
         stable = history[:, :, :3].norm(dim=2).amax(dim=1) < .22
-        hover = state[:, 45:48].norm(dim=1) <= .001
-        return -bearing / bearing.norm(dim=1, keepdim=True).clamp_min(1.e-6) * (fresh & stable & hover)[:, None]
+        eligible = fresh & stable
+        if hover_only:
+            eligible &= state[:, 45:48].norm(dim=1) <= .001
+        return -bearing / bearing.norm(dim=1, keepdim=True).clamp_min(1.e-6) * eligible[:, None]
 
     def forward(self, lidar, state):
         direction = self.retreat_direction(lidar, state)

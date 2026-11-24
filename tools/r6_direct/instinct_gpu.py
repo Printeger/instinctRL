@@ -175,6 +175,10 @@ class GpuRound(Round):
                 final_gain=trace[768, 7], peak_gain=max(trace.values()),
                 eligible_minibatch_examples=sum(row.get('hover_reflex_targets', 0) for row in rows),
             )
+            summary['clear_travel_training'] = dict(
+                eligible_minibatch_examples=sum(row.get('clear_travel_examples', 0) for row in rows),
+                peak_loss=max(row.get('clear_travel_loss', 0.) for row in rows),
+            )
         return summary
 
 
