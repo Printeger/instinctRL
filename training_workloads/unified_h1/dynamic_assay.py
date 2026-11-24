@@ -315,6 +315,7 @@ def audit(output, params, counters):
         if observed['scene'] != 'room-door-trunks-street-tube' or observed['geometry']['status'] != 'PASS':
             raise ValueError('DYNAMIC_HOLDOUT_GEOMETRY_NOT_VERIFIED')
         sources.append(file_pin(preflight))
+    matched_starts = {}
     for name, result in saved['models'].items():
         if result['checkpoint'] != params['models'][name] or len(result['groups']) != len(groups):
             raise ValueError('DYNAMIC_ASSAY_MODEL_BINDING')
@@ -327,6 +328,14 @@ def audit(output, params, counters):
             if [r['step'] for r in rows] != list(range(STEPS)) or score(rows) != group['lanes']:
                 raise ValueError('DYNAMIC_ASSAY_SCORER_REPLAY')
             expected_modes = [mode for mode in groups[index] for _ in range(8)]
+            if holdout:
+                first = rows[0]
+                signature = (first['initial_position_w'], first['pre']['sphere_position_w'],
+                             first['axis_w'], first['modes'], first['command_w'])
+                previous = matched_starts.setdefault(index, signature)
+                if previous[2:] != signature[2:] or any(math.dist(a, b) > .0002
+                        for aa, bb in zip(previous[:2], signature[:2]) for a, b in zip(aa, bb)):
+                    raise ValueError('DYNAMIC_HOLDOUT_UNMATCHED_RESET')
             visibility = min(groups[index]) >= 8
             if visibility:
                 start = rows[0]['pre']
