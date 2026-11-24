@@ -1,1 +1,116 @@
-{"caps":{"allocated_gpu_seconds":640,"live_starts":1,"live_wall_seconds":640,"major_scientific_candidates":1,"nontraining_transitions":7680,"output_actual_plus_unreleased_reservations_bytes":3221225472,"queue_seconds":180,"simulator_initializations":1,"training_checkpoint_writes":1,"training_transitions":1},"historical_charged":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"new_reservations":[{"id":"ROUND-SYSTEM","resources":{"output_actual_plus_unreleased_reservations_bytes":0},"status":"UNRELEASED","storage_plan":{"path":"/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-gpu-three/round-3-visibility/STORAGE.json","sha256":"4f9598711bc296f2edf522e01727bc57d240c9c56cd4579f558fe5aadbd7d729"}}],"new_used":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"protected_confirmation_delivery_repair":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"resource_policy":{"path":"/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-gpu-three/round-3-visibility/RESOURCE_POLICY.json","sha256":"84243b352723a1abe12ec203beb44ee4ffc6a8817ea2e2cdd2fc9393fd8ffdb7"},"status":"FROZEN"}
+{
+  "caps": {
+    "allocated_gpu_seconds": 640,
+    "live_starts": 1,
+    "live_wall_seconds": 640,
+    "major_scientific_candidates": 1,
+    "nontraining_transitions": 7680,
+    "output_actual_plus_unreleased_reservations_bytes": 3221225472,
+    "queue_seconds": 180,
+    "simulator_initializations": 1,
+    "training_checkpoint_writes": 1,
+    "training_transitions": 1
+  },
+  "first_live_unix": 1795512673,
+  "historical_charged": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "new_reservations": [
+    {
+      "id": "ROUND-SYSTEM",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 0
+      },
+      "status": "UNRELEASED",
+      "storage_plan": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-gpu-three/round-3-visibility/STORAGE.json",
+        "sha256": "4f9598711bc296f2edf522e01727bc57d240c9c56cd4579f558fe5aadbd7d729"
+      }
+    },
+    {
+      "closed_evidence_bytes": 61161472,
+      "id": "R6-DIRECT-INSTINCT-GPU-R3-VISIBILITY",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R3-VISIBILITY/control/receipt.json",
+        "sha256": "b1e7c4cbb6cabe922400273a0fc1909a54a71be50a37566475b195009cf8ed78"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-gpu-three/round-3-visibility/RESOURCE_POLICY.json",
+        "sha256": "84243b352723a1abe12ec203beb44ee4ffc6a8817ea2e2cdd2fc9393fd8ffdb7"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 196,
+        "live_starts": 1,
+        "live_wall_seconds": 196,
+        "nontraining_transitions": 7680,
+        "output_actual_plus_unreleased_reservations_bytes": 61161472,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_transitions": 0
+      },
+      "settlement": {
+        "charged_seconds": 196,
+        "original_resources": {
+          "allocated_gpu_seconds": 640,
+          "live_starts": 1,
+          "live_wall_seconds": 640,
+          "nontraining_transitions": 7680,
+          "output_actual_plus_unreleased_reservations_bytes": 1342177280,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R3-VISIBILITY/control/receipt.json",
+          "sha256": "b1e7c4cbb6cabe922400273a0fc1909a54a71be50a37566475b195009cf8ed78"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R3-VISIBILITY",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R3-VISIBILITY/native"
+      },
+      "storage_reservation_id": "ROUND-SYSTEM"
+    }
+  ],
+  "new_used": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "protected_confirmation_delivery_repair": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "resource_policy": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-gpu-three/round-3-visibility/RESOURCE_POLICY.json",
+    "sha256": "84243b352723a1abe12ec203beb44ee4ffc6a8817ea2e2cdd2fc9393fd8ffdb7"
+  },
+  "status": "COMPLETE"
+}
