@@ -37,8 +37,10 @@ class GpuRound(Round):
             'separates approaching and opening histories while retaining command tracking.')
 
     def references(self):
-        return {key: load(PREVIOUS / f'round-{n}' / 'RESULTS.json')['candidate']
-                for key, n in (('previous_gpu_r2', 2), ('previous_gpu_r3', 3))}
+        archived = {f'previous_gpu_r{n}': load(PREVIOUS / f'round-{n}' / 'RESULTS.json')['candidate'] for n in (2, 3)}
+        earlier = {f'this_study_r{n}': load(self.project / f'round-{n}' / 'RESULTS.json')['candidate']
+                   for n in range(1, self.number)}
+        return archived | earlier
 
     def training_rows(self, training_report, leaf):
         for stream in training_report['streams']:

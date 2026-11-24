@@ -6,4 +6,4 @@ CPU 检查针对近距离静止墙叠加 R6 同量级的 1 cm 独立测距噪声
 
 在独立解析测距夹具中，室内活动面板、离散柱体、街道纵向障碍和管道端面各有八组不同航向与延迟。逼近触发各 8/8，同一最新扫描的静止和远离各 0/8。均匀管道各组均未触发。左右横穿夹具在两个方向分别触发 4/8 和 6/8，表面闭合只能提示附近有变化，无法给出可靠的横穿方向。
 
-候选预测在匹配的正面几何中选择侧让，保留远离时的指令，并在近距离悬停威胁中选择撤离。验证覆盖 CPU 张量、解析几何和训练接线。动态 Isaac 预检仍负责核对物理球体、回波和实到 actor 的输入。 [源码 e85ca4db](../../../training_workloads/unified_h1/dynamic_motion_training.py) · [CPU 检查](../../../tools/r6_direct/test_dynamic_motion_training.py)
+候选预测在匹配的正面几何中选择侧让，保留远离时的指令，并在近距离悬停威胁中选择撤离。居中球体头向逼近时，球心在 1.4 m 的悬停撤离和前飞侧让都能通过现有 ICS。在 0.7 m 及更近的测试点，紧急停车给出零速度。该例说明需要在急停触发前让出空间。动态 Isaac 预检仍负责核对物理球体、回波和实到 actor 的输入。 [源码 e85ca4db](../../../training_workloads/unified_h1/dynamic_motion_training.py) · [CPU 检查](../../../tools/r6_direct/test_dynamic_motion_training.py)
