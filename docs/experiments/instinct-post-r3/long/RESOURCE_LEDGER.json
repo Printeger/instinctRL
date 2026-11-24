@@ -356,6 +356,47 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U1024/native"
       },
       "storage_reservation_id": "ROUND-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 3391488,
+      "diagnostic_wall_seconds": 63.798937851097435,
+      "id": "R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U1024-DIAGNOSTIC",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U1024-DIAGNOSTIC/control/receipt.json",
+        "sha256": "8b8ab06ac1f6fd35453eb6d2bf7f05d297637cc4e9d30fe7af3f163445f2bd4b"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r3/long/RESOURCE_POLICY.json",
+        "sha256": "939637af69e96610156caea4de2be60ee00b2b1d26e555ca5e58846e09053f2a"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 64,
+        "live_starts": 1,
+        "live_wall_seconds": 64,
+        "output_actual_plus_unreleased_reservations_bytes": 3391488,
+        "queue_seconds": 180
+      },
+      "settlement": {
+        "charged_seconds": 64,
+        "original_resources": {
+          "allocated_gpu_seconds": 390,
+          "live_starts": 1,
+          "live_wall_seconds": 390,
+          "output_actual_plus_unreleased_reservations_bytes": 268435456,
+          "queue_seconds": 180
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U1024-DIAGNOSTIC/control/receipt.json",
+          "sha256": "8b8ab06ac1f6fd35453eb6d2bf7f05d297637cc4e9d30fe7af3f163445f2bd4b"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U1024-DIAGNOSTIC",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U1024-DIAGNOSTIC/native"
+      }
     }
   ],
   "new_used": {
