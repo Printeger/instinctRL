@@ -1,9 +1,11 @@
 """Run the frozen R4 continuation and two independent physical evaluations."""
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import shutil
+import subprocess
 
 from tools.r6_direct.evidence import read, validate_binding
 from tools.r6_direct.holdout_summary import compare_holdout
@@ -36,6 +38,7 @@ class LongStudy(Round):
         self.docs = PROJECT / 'long'
         self.ledger = self.docs / 'RESOURCE_LEDGER.json'
         self.eval = HOLDOUT_RUN
+        self.snapshot = SNAPSHOT
 
     def prepare(self):
         if SNAPSHOT == ROOT:
@@ -125,7 +128,7 @@ class LongStudy(Round):
                 raise ValueError('Frozen training inputs drifted')
             return path, plan
         contract = self.write(f'TRAIN-U{target}-contract.json', build('contract', dict(operation='train', parameters=params)))
-        self.input(run_id, contract, predecessor)
+        self.input(run_id, contract, predecessor, snapshot=self.snapshot)
         if publish:
             freeze(f'instinct-post-r3-train-u{target}-inputs', f'Freeze strict continuation through u{target}',
                    path, Path(contract['path']), self.ledger)
@@ -136,7 +139,7 @@ class LongStudy(Round):
         if not (Path(job['output_root']) / 'receipt.json').exists():
             if Path(job['attempt_dir']).exists():
                 raise RuntimeError(f'Existing job still needs closure: {job["run_id"]}')
-            command(SNAPSHOT, 'run', '--inputs', path, system=True, check=False)
+            command(self.snapshot, 'run', '--inputs', path, system=True, check=False)
         if not (Path(job['output_root']) / 'receipt.json').exists():
             raise RuntimeError(f'No launch receipt for {job["run_id"]}')
         receipt = wait_closed(job, minutes=3)
@@ -152,14 +155,14 @@ class LongStudy(Round):
         retained, = (r['pin'] for r in result['streams'] if r['logical_name'] == logical_name and r['complete'])
         spec.update(destination(diagnostic_id), resource_policy=job['resource_policy'],
                     scope='Exact retained first-rollout probability replay; no new simulator transitions',
-                    launcher_script=pin(SNAPSHOT/'tools/r6_direct/cuda_diagnostic.py'),
+                    launcher_script=pin(self.snapshot/'tools/r6_direct/cuda_diagnostic.py'),
                     predecessor_receipt=self.settle(job['run_id']),
                     probability_replay=dict(backend='isaaclab_seeded_reset', contract=job['contract'], retained=retained))
         self.write(path.name, spec)
         if not (Path(spec['output_root'])/'receipt.json').exists():
             freeze('instinct-post-r3-probability-u'+str(plan['target_update']),
                    'Freeze exact same-device probability replay', path, self.ledger)
-            command(SNAPSHOT, 'cuda_diagnostic', '--plan', path, system=True, check=False)
+            command(self.snapshot, 'cuda_diagnostic', '--plan', path, system=True, check=False)
         receipt = wait_closed(spec, minutes=3)
         if receipt['exit_code'] != 0 or receipt['error'] is not None:
             raise RuntimeError('Exact CUDA probability replay failed')
@@ -179,7 +182,7 @@ class LongStudy(Round):
         job, receipt = self.launch(path)
         attempt = Path(job['attempt_dir'])
         destination = attempt/'analysis-cpu'
-        result = analyze(SNAPSHOT, path, destination)
+        result = analyze(self.snapshot, path, destination)
         predecessor = self.settle(job['run_id'])
         if result['issues']:
             if [row['input'] for row in result['issues']] != ['first_update_probability_replay']:
@@ -187,7 +190,7 @@ class LongStudy(Round):
             evidence, predecessor = self.replay_probability(job, plan, result)
             cpu = destination
             destination = attempt/'analysis'
-            analyze(SNAPSHOT, path, destination, '--probability-diagnostic', evidence,
+            analyze(self.snapshot, path, destination, '--probability-diagnostic', evidence,
                     '--reuse-cpu-binding', cpu/'binding.json')
         analysis = pin(destination/'binding.json')
         _, ctx, verified = validate_binding(analysis)
@@ -228,7 +231,7 @@ class LongStudy(Round):
             params['r6']['run_id'] = run_id
         operation = 'dynamic' if physical else 'evaluate'
         contract_pin = self.write(f'{run_id}-contract.json', build('contract', dict(operation=operation, parameters=params)))
-        self.input(run_id, contract_pin, predecessor)
+        self.input(run_id, contract_pin, predecessor, snapshot=self.snapshot)
         extra = [] if physical else [Path(comparison_pin['path'])]
         freeze(f'instinct-post-r3-{operation}-inputs', 'Freeze independent candidate evaluation',
                path, Path(contract_pin['path']), self.ledger, *extra)
@@ -237,7 +240,7 @@ class LongStudy(Round):
     def evaluate(self, path):
         job, receipt = self.launch(path)
         out = Path(job['attempt_dir'])/'analysis'
-        report = analyze(SNAPSHOT, path, out)
+        report = analyze(self.snapshot, path, out)
         binding = pin(out/'binding.json')
         validate_binding(binding)
         if report.get('candidate_binding_issues'):
@@ -245,9 +248,20 @@ class LongStudy(Round):
         return dict(binding=binding, predecessor=self.settle(job['run_id']), wall_seconds=receipt['wall_seconds'])
 
     def execute(self):
-        if SNAPSHOT == ROOT or read(pin(self.docs/'source.json')) != manifest():
-            raise ValueError('Long execution source differs from the frozen detached source')
         design = load(self.docs/'DESIGN.json')
+        first_names = self.input_path(PREFIX + f'TRAIN-U{design["segments"][0][1]}')
+        first = load(first_names)
+        self.snapshot = Path(first['snapshot'])
+        source = read(design['source'])
+        git = ['git', '-C', str(self.snapshot)]
+        if (first['source'] != design['source'] or self.snapshot == ROOT
+                or subprocess.check_output(git + ['branch', '--show-current'], text=True).strip()
+                or subprocess.check_output(git + ['rev-parse', 'HEAD', 'HEAD^{tree}'], text=True).splitlines()
+                != [source['source_commit'], source['source_tree']]):
+            raise ValueError('Long execution source differs from the frozen detached source')
+        for name, digest in source['sources'].items():
+            if hashlib.sha256((self.snapshot/name).read_bytes()).hexdigest() != digest:
+                raise ValueError(f'Frozen execution bytes drifted: {name}')
         initial, predecessor, segments = design['initial'], design['first_predecessor'], []
         recipe = read(design['recipe'])
         for coordinate in design['segments']:
