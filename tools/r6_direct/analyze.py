@@ -43,6 +43,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
         raw, pins = audit(ctx['output'], ctx['contract']['parameters'], counters)
         summary = {'models': raw['models'], 'counters': counters, 'witnesses_replayed': True}
         report = dict(summary=summary, scientific_acceptance=False,
+                      analyzer=pin(Path(__file__)),
                       inputs=[dict(v, bytes=Path(v['path']).stat().st_size) for v in pins])
         add_inputs(report, input_pin, ctx)
     else:
@@ -106,7 +107,8 @@ def main():
         report,summary=supplement_cpu(input_pin,pin(args.reuse_cpu_binding),pin(args.probability_diagnostic))
     else:
         report, summary = analyze(input_pin,probability_diagnostic=None if args.probability_diagnostic is None else pin(args.probability_diagnostic))
-    if len(json.dumps(report, allow_nan=False).encode()) > 16*1024**2 or len(json.dumps(summary, allow_nan=False).encode()) > 48*1024:
+    summary_limit = (96 if ctx['contract']['operation'] == 'dynamic' else 48) * 1024
+    if len(json.dumps(report, allow_nan=False).encode()) > 16*1024**2 or len(json.dumps(summary, allow_nan=False).encode()) > summary_limit:
         raise ValueError('DIRECT_ANALYSIS_SIZE_BOUND')
     if stop_paths():
         raise RuntimeError('STOP')
