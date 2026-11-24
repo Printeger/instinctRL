@@ -12,13 +12,20 @@ MODE = 'research-r6-dynamic-assay'
 STEPS = 120
 LANES = 32
 GROUPS = ((0, 1, 2, 3), (4, 5, 6, 7))
+VISIBILITY_GROUPS = ((8, 9, 10, 11),)
 MODES = ('approach', 'recede', 'cross_left', 'cross_right',
-         'hover', 'hover_wall', 'static_travel', 'static_hover')
+         'hover', 'hover_wall', 'static_travel', 'static_hover',
+         'open_front', 'open_rear', 'wall_front', 'wall_rear')
+
+
+def groups_for(run_id):
+    return VISIBILITY_GROUPS if run_id.endswith('-VISIBILITY') else GROUPS
 
 
 def contract(params):
     fields = {'experiment_id', 'training_seed', 'models', 'seed', 'wall_seconds', 'output_cap_bytes'}
-    if set(params) != fields or not re.fullmatch(r'R6-DIRECT-INSTINCT-GPU-R[23]-DYNAMIC(?:-PILOT-0[1-4])?', params['experiment_id']):
+    if set(params) != fields or not re.fullmatch(
+            r'R6-DIRECT-INSTINCT-GPU-R[23]-(?:DYNAMIC(?:-PILOT-0[1-4])?|VISIBILITY)', params['experiment_id']):
         raise ValueError('DYNAMIC_ASSAY_CONTRACT_IDENTITY')
     if params['training_seed'] != 20260908 or not 0 <= params['seed'] < 2**31:
         raise ValueError('DYNAMIC_ASSAY_SEED')
@@ -31,13 +38,14 @@ def contract(params):
         raise ValueError('DYNAMIC_ASSAY_MODELS')
     for value in models.values():
         checked(value)
-    steps = len(models)*len(GROUPS)*STEPS*LANES
+    cohorts = len(models) * len(groups_for(params['experiment_id']))
+    steps = cohorts * STEPS * LANES
     return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct',
                 operation='dynamic', mode=MODE, parameters=params,
                 budgets=dict(live_process_starts=1, simulator_initializations=1,
                              initialization_ticks=10, training_transitions=0,
                              optimizer_updates=0, checkpoint_writes=0, nontraining_transitions=steps,
-                             explicit_resets=len(models)*len(GROUPS), automatic_resets=steps,
+                             explicit_resets=cohorts, automatic_resets=steps,
                              wall_seconds=params['wall_seconds']))
 
 
@@ -59,13 +67,17 @@ def score(rows):
         speed2 = [sum((v-c)**2 for v,c in zip(r['velocity_w'][lane],r['command_w'][lane])) for r in alive]
         command_sq = sum(v*v for v in rows[0]['command_w'][lane])
         speed2.extend([command_sq]*(STEPS-len(alive)))
-        lanes.append(dict(lane=lane, mode=MODES[rows[0]['modes'][lane]],
-                          collision=any(r['collision'][lane] for r in alive),
-                          terminal=last['terminal'][lane],
-                          sphere_surface_gap_m=min(clearance) if clearance else None,
-                          progress_m=sum(x*u for x,u in zip(delta,axis)),
-                          horizontal_displacement_m=math.hypot(*delta[:2]),
-                          tracking_rmse_mps=math.sqrt(mean(speed2))))
+        metrics = dict(lane=lane, mode=MODES[rows[0]['modes'][lane]],
+                       collision=any(r['collision'][lane] for r in alive), terminal=last['terminal'][lane],
+                       sphere_surface_gap_m=min(clearance) if clearance else None,
+                       progress_m=sum(x*u for x,u in zip(delta,axis)),
+                       horizontal_displacement_m=math.hypot(*delta[:2]), tracking_rmse_mps=math.sqrt(mean(speed2)))
+        if 'sensor_approach' in rows[0]:
+            metrics.update(first_visible_step=next((r['step'] for r in alive if r['pre']['winning_beams'][lane]), None),
+                           first_closure_step=next((r['step'] for r in alive if r['pre']['winning_beams'][lane]
+                                                    and r['sensor_approach'][lane]), None),
+                           first_contact_step=next((r['step'] for r in alive if r['collision'][lane]), None))
+        lanes.append(metrics)
     return lanes
 
 
@@ -73,11 +85,26 @@ def measurements(trace):
     return {k: v.detach().cpu().tolist() if hasattr(v, 'detach') else v for k,v in trace.items()}
 
 
+def visibility_reset(block, *, seed, lane, mode, mount):
+    from .robustness_scenarios import reset_spec, rotate_yaw
+
+    spec = reset_spec(block, seed=seed, split='development', lane=lane % 8, mount_position_m=mount)
+    sensor = spec['sensor_position_local_m']
+    if mode in (10, 11):
+        sensor[0] = 4.60
+    yaw = math.radians(spec['yaw_degrees'] + (180. if mode in (8, 10) else 0.))
+    offset = rotate_yaw(mount, yaw)
+    return dict(spec, lane=lane, direction_world=[-1., 0., 0.], yaw_degrees=math.degrees(yaw),
+                root_position_local_m=[x-y for x, y in zip(sensor, offset)],
+                root_quaternion_wxyz=[math.cos(yaw / 2), 0., 0., math.sin(yaw / 2)])
+
+
 def run(backend, params):
     import torch
     from instinctlab.training.networks import HistoryActor, NetworkConfig
     from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz
     from training_workloads.scale_003.persistence import atomic_json_replace, reserve_output_bytes
+    from .dynamic_motion_training import plausible_approach
     from .robustness_scenarios import reset_spec
 
     env = backend.environment
@@ -85,6 +112,8 @@ def run(backend, params):
     budgets = backend.runtime_contract['budgets']
     counters = backend.counters
     device = env.device
+    groups = groups_for(params['experiment_id'])
+    visibility = groups == VISIBILITY_GROUPS
     results = {}
     for label, checkpoint in params['models'].items():
         payload = torch.load(checked(checkpoint), map_location='cpu', weights_only=True)
@@ -95,7 +124,7 @@ def run(backend, params):
         actor.load_state_dict(payload['actor'], strict=True)
         actor.eval()
         cohort = []
-        for index, group in enumerate(GROUPS):
+        for index, group in enumerate(groups):
             modes = [mode for mode in group for _ in range(8)]
             seed = params['seed']+index
             block = dict(id=f'dynamic-{index}', task='stop', speed_m_s=.25,
@@ -107,7 +136,10 @@ def run(backend, params):
                                      expected_mass_kg=1.181517923)
             specs = env._r6_physics['specs']
             for lane in range(LANES):
-                if modes[lane] == 5:
+                if visibility:
+                    specs[lane] = visibility_reset(block, seed=seed, lane=lane, mode=modes[lane],
+                                                   mount=env.cfg.ray_caster.offset.pos)
+                elif modes[lane] == 5:
                     wall = dict(block, task='wall_modes', sensor_to_wall_distance_m=1.40)
                     specs[lane] = reset_spec(wall, seed=seed, split='development', lane=lane,
                                             mount_position_m=env.cfg.ray_caster.offset.pos)
@@ -115,9 +147,12 @@ def run(backend, params):
             axis = torch.stack((axis_angle.cos(),axis_angle.sin(),torch.zeros_like(axis_angle)),dim=1)
             mode_tensor = torch.tensor(modes,device=device)
             axis[mode_tensor == 5] = axis.new_tensor([-1.,0.,0.])
+            if visibility:
+                axis[:] = axis.new_tensor([-1., 0., 0.])
             command = axis * .25 * ((mode_tensor < 4) | (mode_tensor == 6))[:, None]
             local = torch.tensor([s['sensor_position_local_m'] for s in specs],device=device)
-            obstacle.configure(env.scene.env_origins+local, axis, mode_tensor)
+            physical_modes = torch.full_like(mode_tensor, 5) if visibility else mode_tensor
+            obstacle.configure(env.scene.env_origins+local, axis, physical_modes)
             env.set_h1_initial_command(torch.zeros_like(command),0)
             env.stage_r6_world_command(command)
             backend.resource_check('before_r6_dynamic_reset', counters.explicit_resets+1)
@@ -140,6 +175,7 @@ def run(backend, params):
                 observed = before['winning_beams'] > 0
                 if observed.any() and not torch.allclose(witness[observed],before['witness_range_m'][observed],atol=.002,rtol=0):
                     raise RuntimeError('DYNAMIC_ASSAY_ACTOR_WITNESS')
+                approach = plausible_approach(policy, period_s=.1).cpu().tolist() if visibility else None
                 env.prepare_h1_step(global_policy_step=step, command_b=env._command_b, next_command_b=body)
                 with torch.no_grad():
                     action = actor(policy).mean_action
@@ -158,6 +194,8 @@ def run(backend, params):
                                  collision=record['task']['termination']['masks']['collision'].reshape(-1).cpu().tolist(),
                                  v_final_b=record['control']['v_final_b'].cpu().tolist(),
                                  v_gov_b=record['control']['v_gov_b'].cpu().tolist()))
+                if visibility:
+                    rows[-1]['sensor_approach'] = approach
             env.finish_r6_physics()
             obstacle.finish()
             rel = f'{label}-group-{index}.jsonl'
@@ -180,8 +218,9 @@ def audit(output, params, counters):
     if saved['counters'] != counters or set(saved['models']) != set(params['models']):
         raise ValueError('DYNAMIC_ASSAY_SUMMARY_BINDING')
     sources = [file_pin(path)]
+    groups = groups_for(params['experiment_id'])
     for name, result in saved['models'].items():
-        if result['checkpoint'] != params['models'][name] or len(result['groups']) != len(GROUPS):
+        if result['checkpoint'] != params['models'][name] or len(result['groups']) != len(groups):
             raise ValueError('DYNAMIC_ASSAY_MODEL_BINDING')
         for index, group in enumerate(result['groups']):
             trace = checked(group['trace'])
@@ -191,12 +230,20 @@ def audit(output, params, counters):
             rows = [json.loads(line) for line in trace.read_text().splitlines()]
             if [r['step'] for r in rows] != list(range(STEPS)) or score(rows) != group['lanes']:
                 raise ValueError('DYNAMIC_ASSAY_SCORER_REPLAY')
-            expected_modes = [mode for mode in GROUPS[index] for _ in range(8)]
+            expected_modes = [mode for mode in groups[index] for _ in range(8)]
+            if groups == VISIBILITY_GROUPS:
+                start = rows[0]['pre']
+                for center, sensor, command in zip(start['sphere_position_w'], start['sensor_position_w'], rows[0]['command_w']):
+                    if any(command) or max(abs(c - s - d) for c, s, d in zip(center, sensor, (-2.75, 0., 0.))) > .003:
+                        raise ValueError('DYNAMIC_ASSAY_VISIBILITY_PAIRED_START')
             for row in rows:
                 before, after = row['pre'], row['post']
                 if (after['tick'] - before['tick'] != 20 or after['contact_samples'] != 20
                         or row['modes'] != expected_modes):
                     raise ValueError('DYNAMIC_ASSAY_ACTUAL_PHYSICS_TICKS')
+                if groups == VISIBILITY_GROUPS and (
+                        len(row['sensor_approach']) != LANES or any(type(v) is not bool for v in row['sensor_approach'])):
+                    raise ValueError('DYNAMIC_ASSAY_VISIBILITY_CLOSURE_EVIDENCE')
                 for j in range(LANES):
                     if max(abs(x-y) for x,y in zip(after['sphere_position_w'][j],after['expected_position_w'][j])) > .003:
                         raise ValueError('DYNAMIC_ASSAY_REPLAYED_POSE')

@@ -3,7 +3,7 @@ from types import SimpleNamespace
 import torch
 
 from instinctlab.observations.moving_sphere import MAX_SPEED_M_S, PARK_HEIGHT_M, MovingSphere, sphere_range, trajectories
-from training_workloads.unified_h1.dynamic_assay import contract
+from training_workloads.unified_h1.dynamic_assay import contract, visibility_reset
 
 
 def test_rays_choose_a_physical_near_surface_and_preserve_misses():
@@ -84,3 +84,23 @@ def test_dynamic_result_budget_is_separate_and_exact(tmp_path):
     assert budgets['nontraining_transitions'] == 15360
     assert budgets['explicit_resets'] == 4
     assert budgets['optimizer_updates'] == 0
+
+    visibility = contract(dict(params, experiment_id='R6-DIRECT-INSTINCT-GPU-R2-VISIBILITY'))['budgets']
+    assert visibility['nontraining_transitions'] == 7680
+    assert visibility['explicit_resets'] == 2
+    assert visibility['optimizer_updates'] == 0
+
+
+def test_visibility_reset_changes_only_sensor_translation_and_half_turn():
+    block = dict(id='dynamic-0', task='stop', speed_m_s=.25, pulse_acceleration_m_s2=0.,
+                 sensor_to_wall_distance_m=None, steps=120)
+    mount = (.12, .025, .05)
+    front, rear, w_front, w_rear = [
+        visibility_reset(block, seed=123, lane=i * 8 + 3, mode=8 + i, mount=mount) for i in range(4)]
+    assert front['sensor_position_local_m'] == rear['sensor_position_local_m']
+    assert w_front['sensor_position_local_m'] == w_rear['sensor_position_local_m']
+    assert w_front['sensor_position_local_m'] == [4.6, *front['sensor_position_local_m'][1:]]
+    assert front['yaw_degrees'] - rear['yaw_degrees'] == 180
+    assert w_front['root_quaternion_wxyz'] == front['root_quaternion_wxyz']
+    assert w_rear['root_quaternion_wxyz'] == rear['root_quaternion_wxyz']
+    assert front['root_position_local_m'] != rear['root_position_local_m']

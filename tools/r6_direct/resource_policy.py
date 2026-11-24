@@ -24,6 +24,9 @@ BOUNDED_SCOPES = {
     **{f'{GPU_STUDY_PREFIX}R{n}-DYNAMIC':
        (GPU_STUDY_SCHEMA, f'docs/experiments/instinct-gpu-three/round-{n}-dynamic/RESOURCE_LEDGER.json')
        for n in (2, 3)},
+    **{f'{GPU_STUDY_PREFIX}R{n}-VISIBILITY':
+       (GPU_STUDY_SCHEMA, f'docs/experiments/instinct-gpu-three/round-{n}-visibility/RESOURCE_LEDGER.json')
+       for n in (2, 3)},
     **{f'{GPU_STUDY_PREFIX}R{n}-': (GPU_STUDY_SCHEMA, f'docs/experiments/instinct-gpu-three/round-{n}/RESOURCE_LEDGER.json')
        for n in (1, 2, 3)},
 }

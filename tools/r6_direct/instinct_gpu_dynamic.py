@@ -14,15 +14,17 @@ from tools.r6_direct.storage import SYSTEM_ROOT, SYSTEM_STORAGE_SCHEMA
 
 
 class Assay(GpuRound):
-    def __init__(self, number, pilot):
+    def __init__(self, number, pilot, *, visibility=False):
         super().__init__(number)
         self.pilot = pilot
-        self.docs = self.project / (f'pilot-{pilot:02}' if pilot else f'round-{number}-dynamic')
-        self.eval = self.run_prefix + 'DYNAMIC'
+        self.visibility = visibility
+        kind = 'visibility' if visibility else 'dynamic'
+        self.docs = self.project / (f'pilot-{pilot:02}' if pilot else f'round-{number}-{kind}')
+        self.eval = self.run_prefix + kind.upper()
         if pilot:
             self.eval += f'-PILOT-{pilot:02}'
         self.ledger = self.docs / 'RESOURCE_LEDGER.json'
-        self.tag = f'instinct-gpu-dynamic-pilot-{pilot:02}' if pilot else f'instinct-gpu-r{number}-dynamic'
+        self.tag = f'instinct-gpu-dynamic-pilot-{pilot:02}' if pilot else f'instinct-gpu-r{number}-{kind}'
 
     def prepare(self):
         if SNAPSHOT == self.project.parents[2]:
@@ -33,10 +35,10 @@ class Assay(GpuRound):
         previous = GpuRound(1 if self.pilot else self.number)
         if not self.pilot:
             models['candidate'] = load(previous.docs/'RESULTS.json')['candidate']['checkpoint']
-        seed = 942810037 if self.pilot else 705934187
-        seconds = 450 if self.pilot else 720
+        seed = 942810037 if self.pilot else (183421779 if self.visibility else 705934187)
+        seconds = 450 if self.pilot or self.visibility else 720
         source = self.write('source.json', manifest())
-        lesson = pin(self.project/'DYNAMIC_PHYSX_GPU.md')
+        lesson = pin(self.project / ('PILOT03_VISIBILITY.md' if self.visibility else 'DYNAMIC_PHYSX_GPU.md'))
         params = dict(experiment_id=self.eval, training_seed=20260908, models=models,
                       seed=seed, wall_seconds=seconds, output_cap_bytes=2**30)
         contract = build('contract', dict(operation='dynamic', parameters=params))
@@ -59,6 +61,8 @@ class Assay(GpuRound):
         prior_run = previous.eval
         if self.pilot and self.pilot > 1:
             prior_run = Assay(self.number, self.pilot - 1).eval
+        if self.visibility:
+            prior_run = Assay(self.number, None).eval
         predecessor = pin(SYSTEM_ROOT/prior_run/'control/receipt.json')
         return self.input(self.eval, contract_pin, predecessor)
 
@@ -82,12 +86,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('round',type=int,choices=(2,3))
     parser.add_argument('step',choices=('prepare','run','finish'))
-    parser.add_argument('--pilot',type=int,choices=range(1,5))
+    variant = parser.add_mutually_exclusive_group()
+    variant.add_argument('--pilot',type=int,choices=range(1,5))
+    variant.add_argument('--visibility',action='store_true')
     args = parser.parse_args()
     if args.pilot and args.round != 2:
         parser.error('pilot precedes the second full round')
     guard()
-    assay = Assay(args.round,args.pilot)
+    assay = Assay(args.round,args.pilot,visibility=args.visibility)
     if args.step == 'prepare':
         result = assay.prepare()
         freeze(assay.tag+'-inputs',f'Freeze dynamic assay {assay.eval}',*sorted(assay.docs.iterdir()))
