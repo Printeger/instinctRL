@@ -6,7 +6,7 @@ from pathlib import Path
 from tools.r6_direct.import_legacy import pin
 from tools.r6_direct.instinct_cycle import load
 from tools.r6_direct.instinct_cycle_finish import analyze, command, freeze, guard, wait_closed
-from tools.r6_direct.instinct_gpu import GpuRound, PREVIOUS, SNAPSHOT
+from tools.r6_direct.instinct_gpu import GpuRound, PREVIOUS, SNAPSHOT, completed_round
 from tools.r6_direct.prepare import build
 from tools.r6_direct.resource_policy import OUTPUT_CAP, THIRD_CAPS
 from tools.r6_direct.source import manifest
@@ -32,7 +32,7 @@ class Assay(GpuRound):
         self.docs.mkdir(exist_ok=False)
         reference = load(PREVIOUS/'round-2'/'RESULTS.json')['candidate']['checkpoint']
         models = {'reference': reference}
-        previous = GpuRound(1 if self.pilot else self.number)
+        previous = completed_round(1 if self.pilot else self.number)
         if not self.pilot:
             models['candidate'] = load(previous.docs/'RESULTS.json')['candidate']['checkpoint']
         seed = 942810037 if self.pilot else (183421779 if self.visibility else 705934187)

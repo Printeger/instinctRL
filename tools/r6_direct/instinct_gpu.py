@@ -14,18 +14,49 @@ from tools.r6_direct.storage import SYSTEM_ROOT
 from training_workloads.unified_h1.lossless_evidence import ChunkReader
 
 
+def complete_window_count(rows):
+    pending = None
+    completed = 0
+    for row in rows:
+        index = row.get('window_row_index')
+        if index is None:
+            if pending is not None:
+                raise ValueError('Unclosed measurement window')
+            continue
+        count = row['window_row_count']
+        if pending is None:
+            pending = (row['kind'], count, 0)
+        if pending != (row['kind'], count, index) or len(row['rows']) != 1 or not 2 <= count <= 16:
+            raise ValueError('Invalid measurement window fragment')
+        if index == count - 1:
+            completed += 1
+            pending = None
+        else:
+            pending = (row['kind'], count, index + 1)
+    if pending is not None:
+        raise ValueError('Incomplete measurement window fragments')
+    return completed
+
+
 class GpuRound(Round):
     project = ROOT / 'docs/experiments/instinct-gpu-three'
     resource_schema = GPU_STUDY_SCHEMA
 
-    def __init__(self, number):
+    def __init__(self, number, *, attempt=1):
         super().__init__(number)
-        self.run_prefix = f'{GPU_STUDY_PREFIX}R{number}-'
+        if attempt != 1 and (number, attempt) != (2, 2):
+            raise ValueError('Only the closed round 2 logging failure has a registered retry')
+        self.attempt = attempt
+        retry = '' if attempt == 1 else f'-retry-{attempt:02}'
+        self.run_prefix = f'{GPU_STUDY_PREFIX}R{number}{retry.upper()}-'
+        if retry:
+            self.docs = self.project / f'round-{number}{retry}'
+            self.ledger = self.docs / 'RESOURCE_LEDGER.json'
         self.train = self.run_prefix + 'TRAIN'
         self.eval = self.run_prefix + 'EVAL'
         self.diag = self.run_prefix + 'PROBABILITY-DIAGNOSTIC'
         self.candidate = f'R6-CANDIDATE-INSTINCT-GPU-R{number}'
-        self.tag = f'instinct-gpu-r{number}'
+        self.tag = f'instinct-gpu-r{number}{retry}'
 
     def design(self, plan_doc):
         if self.number == 2:
@@ -43,6 +74,10 @@ class GpuRound(Round):
             diagnosis = [plan_doc, pin(result_path), pin(history), pin(pilot),
                          pin(self.project / 'R1_LESSON.md'), pin(self.project / 'R2_DESIGN.md'),
                          pin(self.project / 'DYNAMIC_TRAINING_CHECK.md')]
+            if self.attempt != 1:
+                failed = GpuRound(2)
+                diagnosis.extend([pin(failed.docs / 'FAILURE.json'), pin(self.project / 'R2_LOGGING_REPAIR.md')])
+                pilot_id = failed.train
             return load(earlier.docs / 'curriculum.json'), diagnosis, pilot_id, (
                 'Repeated physical mover encounters and bounded directional reward improve survival while preserving '
                 'static command tracking and zero-command holding away from an approaching object.')
@@ -57,7 +92,7 @@ class GpuRound(Round):
 
     def references(self):
         archived = {f'previous_gpu_r{n}': load(PREVIOUS / f'round-{n}' / 'RESULTS.json')['candidate'] for n in (2, 3)}
-        earlier = {f'this_study_r{n}': load(self.project / f'round-{n}' / 'RESULTS.json')['candidate']
+        earlier = {f'this_study_r{n}': load(completed_round(n).docs / 'RESULTS.json')['candidate']
                    for n in range(1, self.number)}
         return archived | earlier
 
@@ -95,16 +130,25 @@ class GpuRound(Round):
             mover_visible_scans=sum(sum(x > 0 for x in row['winning_beams']) for row in scans),
             closest_sampled_sensor_gap_m=min(d for row in scans for d, active in
                                             zip(row['sphere_sensor_clearance_m'], row['active']) if active),
+            complete_split_measurement_windows=complete_window_count(self.training_rows(training_report, 'measurement_windows.jsonl')),
         )}
+
+
+def completed_round(number):
+    planned = GpuRound(number)
+    if number == 2 and (planned.docs / 'FAILURE.json').exists():
+        return GpuRound(number, attempt=2)
+    return planned
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('round', type=int, choices=(1, 2, 3))
     parser.add_argument('step', choices=('prepare', 'run', 'finish'))
+    parser.add_argument('--attempt', type=int, choices=(1, 2), default=1)
     args = parser.parse_args()
     guard()
-    job = GpuRound(args.round)
+    job = GpuRound(args.round, attempt=args.attempt)
     if args.step == 'prepare':
         result = job.prepare()
         freeze(job.tag + '-train-inputs', f'Freeze GPU development round {job.number}',

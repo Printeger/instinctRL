@@ -74,3 +74,21 @@ def test_legacy_dispatch_rejects_local_plan(stage):
     case.plan.pop('recipe_review')
     with pytest.raises(PermissionError,match='LEGACY_PLAN_REQUIRED'):
         validate_parameters('research-r6-training',parameters)
+def test_gpu_collision_window_preserves_every_bounded_row():
+    from tools.r6_direct.instinct_gpu import complete_window_count
+    from training_workloads.unified_h1.robustness_training_storage import R6LearningLog
+
+    log = R6LearningLog.__new__(R6LearningLog)
+    log.pool = SimpleNamespace(run_id='R6-DIRECT-INSTINCT-GPU-R2-RETRY-02-TRAIN')
+    emitted = []
+    log.append = lambda path, value: emitted.append((path, value))
+    source_rows = [dict(step=step, source={'sample': step / 10.}) for step in range(16)]
+    log.record_measurement_window(dict(kind='FIRST_TASK_FAILURE_PRE_WINDOW', rows=source_rows))
+
+    assert {path for path, _ in emitted} == {'measurement_windows.jsonl'}
+    rows = [value for _, value in emitted]
+    assert all(len(row['rows']) == 1 for row in rows)
+    assert [row['rows'][0] for row in rows] == source_rows
+    assert complete_window_count(rows) == 1
+    with pytest.raises(ValueError, match='measurement window'):
+        complete_window_count(rows[:-1])

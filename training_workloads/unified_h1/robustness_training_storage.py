@@ -55,6 +55,15 @@ class R6LearningLog(LearningLog):
         if self.fixed_reset_types is not None:return self.fixed_reset_types[lane]
         return super().next_reset_start_type(lane,driver)
 
+    def record_measurement_window(self, record):
+        rows = record['rows']
+        if len(rows) <= 1 or not self.pool.run_id.startswith('R6-DIRECT-INSTINCT-GPU-'):
+            return super().record_measurement_window(record)
+        metadata = {key: value for key, value in record.items() if key != 'rows'}
+        for index, row in enumerate(rows):
+            super().record_measurement_window(dict(metadata, rows=[row],
+                                                   window_row_index=index, window_row_count=len(rows)))
+
     def finalize_evidence(self):
         """Write terminal rows once, then seal the shared diagnostic/log pool.
 
