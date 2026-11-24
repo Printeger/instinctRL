@@ -86,6 +86,47 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U720/native"
       },
       "storage_reservation_id": "ROUND-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 3395584,
+      "diagnostic_wall_seconds": 63.92858046386391,
+      "id": "R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U720-DIAGNOSTIC",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U720-DIAGNOSTIC/control/receipt.json",
+        "sha256": "e16ae527b8522fdba5cb533b06f7b1f482bf3bf38ac09f9a4d43f68eed85be39"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r3/long/RESOURCE_POLICY.json",
+        "sha256": "939637af69e96610156caea4de2be60ee00b2b1d26e555ca5e58846e09053f2a"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 64,
+        "live_starts": 1,
+        "live_wall_seconds": 64,
+        "output_actual_plus_unreleased_reservations_bytes": 3395584,
+        "queue_seconds": 180
+      },
+      "settlement": {
+        "charged_seconds": 64,
+        "original_resources": {
+          "allocated_gpu_seconds": 390,
+          "live_starts": 1,
+          "live_wall_seconds": 390,
+          "output_actual_plus_unreleased_reservations_bytes": 268435456,
+          "queue_seconds": 180
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U720-DIAGNOSTIC/control/receipt.json",
+          "sha256": "e16ae527b8522fdba5cb533b06f7b1f482bf3bf38ac09f9a4d43f68eed85be39"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U720-DIAGNOSTIC",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-LONG-TRAIN-U720-DIAGNOSTIC/native"
+      }
     }
   ],
   "new_used": {
