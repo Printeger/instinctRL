@@ -1,1 +1,116 @@
-{"caps":{"allocated_gpu_seconds":1090,"live_starts":1,"live_wall_seconds":1090,"major_scientific_candidates":1,"nontraining_transitions":15360,"output_actual_plus_unreleased_reservations_bytes":1342177280,"queue_seconds":180,"simulator_initializations":1,"training_checkpoint_writes":1,"training_transitions":1},"historical_charged":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"new_reservations":[{"id":"ROUND-SYSTEM","resources":{"output_actual_plus_unreleased_reservations_bytes":0},"status":"UNRELEASED","storage_plan":{"path":"/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r3/option-check/STORAGE.json","sha256":"4f9598711bc296f2edf522e01727bc57d240c9c56cd4579f558fe5aadbd7d729"}}],"new_used":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"protected_confirmation_delivery_repair":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"resource_policy":{"path":"/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r3/option-check/RESOURCE_POLICY.json","sha256":"a36e42f9f0fa0ee86ebb907f8a6742147738defe2ab43b1df32a3ed0515596a4"},"status":"FROZEN"}
+{
+  "caps": {
+    "allocated_gpu_seconds": 1090,
+    "live_starts": 1,
+    "live_wall_seconds": 1090,
+    "major_scientific_candidates": 1,
+    "nontraining_transitions": 15360,
+    "output_actual_plus_unreleased_reservations_bytes": 1342177280,
+    "queue_seconds": 180,
+    "simulator_initializations": 1,
+    "training_checkpoint_writes": 1,
+    "training_transitions": 1
+  },
+  "first_live_unix": 1795515115,
+  "historical_charged": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "new_reservations": [
+    {
+      "id": "ROUND-SYSTEM",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 0
+      },
+      "status": "UNRELEASED",
+      "storage_plan": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r3/option-check/STORAGE.json",
+        "sha256": "4f9598711bc296f2edf522e01727bc57d240c9c56cd4579f558fe5aadbd7d729"
+      }
+    },
+    {
+      "closed_evidence_bytes": 72392704,
+      "id": "R6-DIRECT-INSTINCT-GPU-R4-DEV-OPTION",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-DEV-OPTION/control/receipt.json",
+        "sha256": "995308c09124dff5720ea0694eef3c1a0945085ec54aecaa300c739938849ef1"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r3/option-check/RESOURCE_POLICY.json",
+        "sha256": "a36e42f9f0fa0ee86ebb907f8a6742147738defe2ab43b1df32a3ed0515596a4"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 268,
+        "live_starts": 1,
+        "live_wall_seconds": 268,
+        "nontraining_transitions": 15360,
+        "output_actual_plus_unreleased_reservations_bytes": 72392704,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_transitions": 0
+      },
+      "settlement": {
+        "charged_seconds": 268,
+        "original_resources": {
+          "allocated_gpu_seconds": 1090,
+          "live_starts": 1,
+          "live_wall_seconds": 1090,
+          "nontraining_transitions": 15360,
+          "output_actual_plus_unreleased_reservations_bytes": 1342177280,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-DEV-OPTION/control/receipt.json",
+          "sha256": "995308c09124dff5720ea0694eef3c1a0945085ec54aecaa300c739938849ef1"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-DEV-OPTION",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R4-DEV-OPTION/native"
+      },
+      "storage_reservation_id": "ROUND-SYSTEM"
+    }
+  ],
+  "new_used": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "protected_confirmation_delivery_repair": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "resource_policy": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r3/option-check/RESOURCE_POLICY.json",
+    "sha256": "a36e42f9f0fa0ee86ebb907f8a6742147738defe2ab43b1df32a3ed0515596a4"
+  },
+  "status": "COMPLETE"
+}
