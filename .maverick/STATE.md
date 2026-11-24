@@ -1,3 +1,7 @@
+# 五轮动态闭环训练完成，等待审查
+
+任务 `instinctrl-five-development-cycles`，五位原生伙伴及 Maverick 首轮均记录。第 4 至 8 轮分别完成方向模仿、候选风险、联合动作与风险、重标策略轨迹和零指令威胁方向参考。共 113,541 条训练样本、9,488 次更新。第 8 轮开发 3/192 碰撞，独立确认 8/288，安全通行 96/96 且平均进度 3.230 m。保留横穿及管道内悬停失败，下一步解析失效后再做新的六自由度闭环。已核对输入、源版本、数据、模型和退出状态。 [研究报告](../docs/experiments/instinct-dynamic-five/REPORT.md) · [记录](contributions.jsonl)
+
 # 第二、三轮正式评价完成，等待审查
 
 任务 `instinctrl-next-two-cycles`。Rebel、Inventor、Hacker、Scientist、Producer 的原生首轮和 Maverick 综合均已记录，首轮核验 6/6。两轮均从 u640 完整训练到 u768，各评价 193,600 条转换，21 个条件各 32/32。第二轮以真实重置首帧修复延迟训练启动，配对护栏通过。第三轮加测距时序辅助，停令锚误差下降 3.67 mm，跟踪退化超限。固定扫描对照显示策略普遍降速，逼近选择性仍缺。六个作业按准确进程身份核对关闭。下步先做跨场景动态闭环，保留第二轮作为时序实验对照。 [正式审查点](../docs/experiments/instinct-next-two-cycles/REPORT.md) · [贡献账本](contributions.jsonl)
