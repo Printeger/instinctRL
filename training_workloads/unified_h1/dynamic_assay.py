@@ -136,7 +136,7 @@ def run(backend, params):
                 if not torch.allclose(policy['state_vec'][:,45:48],body,atol=1e-6,rtol=0):
                     raise RuntimeError('DYNAMIC_ASSAY_COMMAND_HISTORY')
                 before = obstacle.latest
-                witness = policy['lidar_grid'][:,9].flatten(1)[obstacle.indices.long(), before['witness_beam']]
+                witness = policy['lidar_grid'][:,9].flatten(1)[obstacle.indices, before['witness_beam']]
                 observed = before['winning_beams'] > 0
                 if observed.any() and not torch.allclose(witness[observed],before['witness_range_m'][observed],atol=.002,rtol=0):
                     raise RuntimeError('DYNAMIC_ASSAY_ACTOR_WITNESS')
@@ -200,6 +200,8 @@ def audit(output, params, counters):
                 for j in range(LANES):
                     if max(abs(x-y) for x,y in zip(after['sphere_position_w'][j],after['expected_position_w'][j])) > .003:
                         raise ValueError('DYNAMIC_ASSAY_REPLAYED_POSE')
+                    if math.sqrt(sum(x*x for x in after['servo_velocity_w'][j])) > .950001:
+                        raise ValueError('DYNAMIC_ASSAY_SERVO_SPEED_BUDGET')
                     if before['winning_beams'][j]:
                         relative = [x-y for x,y in zip(before['sphere_position_w'][j],before['sensor_position_w'][j])]
                         distance = before['witness_range_m'][j]

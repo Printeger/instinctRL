@@ -14,7 +14,8 @@ def test_rays_choose_a_physical_near_surface_and_preserve_misses():
     torch.testing.assert_close(depths, torch.tensor([[.66, torch.inf, torch.inf]]))
     hits = torch.tensor([[[2.,0.,2.], [0.,2.,2.], [-2.,0.,2.]]])
     transforms = torch.cat((center, torch.zeros(1,4)), dim=1)
-    asset = SimpleNamespace(root_physx_view=SimpleNamespace(get_transforms=lambda: transforms))
+    asset = SimpleNamespace(root_physx_view=SimpleNamespace(get_transforms=lambda: transforms,
+                                                             get_velocities=lambda: torch.zeros(1, 6)))
     scene = MovingSphere(asset, origin)
     scene.start, scene.velocity, scene.active = center, torch.zeros_like(center), torch.tensor([True])
     out = scene.merge(hits, origin, directions, capture=True, tick=20)

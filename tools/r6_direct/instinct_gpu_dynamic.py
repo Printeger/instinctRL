@@ -36,7 +36,7 @@ class Assay(GpuRound):
         seed = 942810037 if self.pilot else 705934187
         seconds = 450 if self.pilot else 720
         source = self.write('source.json', manifest())
-        lesson = pin(self.project/'DYNAMIC_DESIGN.md')
+        lesson = pin(self.project/'DYNAMIC_PHYSX_GPU.md')
         params = dict(experiment_id=self.eval, training_seed=20260908, models=models,
                       seed=seed, wall_seconds=seconds, output_cap_bytes=2**30)
         contract = build('contract', dict(operation='dynamic', parameters=params))
@@ -56,8 +56,11 @@ class Assay(GpuRound):
                                      resources={OUTPUT_CAP:0},storage_plan=storage)]))
         contract_pin = self.write('DYNAMIC-contract.json', contract)
         assert source == pin(self.docs/'source.json')
-        predecessor = pin(SYSTEM_ROOT/previous.eval/'control/receipt.json')
-        return self.input(self.eval,contract_pin,predecessor)
+        prior_run = previous.eval
+        if self.pilot and self.pilot > 1:
+            prior_run = Assay(self.number, self.pilot - 1).eval
+        predecessor = pin(SYSTEM_ROOT/prior_run/'control/receipt.json')
+        return self.input(self.eval, contract_pin, predecessor)
 
     def finish_assay(self, *, launch):
         path = self.input_path(self.eval)
