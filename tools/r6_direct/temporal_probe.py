@@ -1,6 +1,7 @@
 """Compare fixed-scan history selectivity of the frozen actors on CPU."""
 
 import argparse
+from copy import deepcopy
 import json
 from pathlib import Path
 
@@ -113,6 +114,7 @@ def main():
     parser.add_argument('--round-2-results', type=Path, default=PROJECT / 'round-2' / 'RESULTS.json')
     parser.add_argument('--round-3-results', type=Path, default=PROJECT / 'round-3' / 'RESULTS.json')
     parser.add_argument('--checkpoint', nargs=2, metavar=('LABEL', 'PATH'), action='append')
+    parser.add_argument('--compare-with-zero-gain', metavar='LABEL')
     parser.add_argument('--command-speed', choices=(0., .2), type=float, default=.2)
     args = parser.parse_args()
     guard()
@@ -127,11 +129,21 @@ def main():
                   (('r1', FIRST / 'RESULTS.json'), ('r2', args.round_2_results), ('r3', args.round_3_results))}
         r1, = (m['checkpoint'] for m in read(inputs['r1'])['models'] if m['arm'] == 'candidate')
         checkpoints = dict(r1=r1, **{key: read(inputs[key])['candidate']['checkpoint'] for key in ('r2', 'r3')})
-    rows = list(evaluate({key: load_actor(value) for key, value in checkpoints.items()},
-                         command_speed=args.command_speed))
+    actors = {key: load_actor(value) for key, value in checkpoints.items()}
+    ablation = {}
+    if label := args.compare_with_zero_gain:
+        baseline = f'{label}-zero-gain'
+        if label not in actors or actors[label].hover_reflex is None or baseline in actors:
+            parser.error('Zero-gain comparison requires a unique saved actor with a hover reflex')
+        actors[baseline] = deepcopy(actors[label])
+        with torch.no_grad():
+            actors[baseline].hover_reflex.gain.zero_()
+        checkpoints[baseline] = checkpoints[label]
+        ablation['zero_gain_comparison'] = dict(saved_model=label, zero_gain_clone=baseline)
+    rows = list(evaluate(actors, command_speed=args.command_speed))
     guard()
     print(json.dumps(dict(source_commit=git('rev-parse', 'HEAD'), command_speed_mps=args.command_speed,
-                          inputs=inputs, checkpoints=checkpoints,
+                          inputs=inputs, checkpoints=checkpoints, **ablation,
                           rows=rows), allow_nan=False, indent=2))
 
 
