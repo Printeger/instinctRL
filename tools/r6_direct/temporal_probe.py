@@ -49,11 +49,11 @@ def scan_at(rays, rotation, name, fixture, rate, time):
     return scene_scan(rays, rotation, latest_geometry, time)
 
 
-def observation(rays, rotation, name, fixture, rate, age):
+def observation(rays, rotation, name, fixture, rate, age, *, command_speed=.2):
     history = ActorObservationHistory()
     zero = torch.zeros(1, 3)
     gravity = torch.tensor([[0., 0., -1.]])
-    command_w = torch.tensor([[.2, 0., 0.]])
+    command_w = torch.tensor([[command_speed, 0., 0.]])
     command = command_w @ rotation
     for idx in range(4):
         distance, valid = scan_at(rays, rotation, name, fixture, rate, (idx - 3) * PERIOD_S)
@@ -74,7 +74,7 @@ def load_actor(checkpoint):
 
 
 @torch.inference_mode()
-def evaluate(models):
+def evaluate(models, *, command_speed=.2):
     rays = mounted_mid360_rays_body()
     subsampled = sampled_rays('cpu')
     config = ICSConfig(clearance_margin_m=.15)
@@ -82,12 +82,13 @@ def evaluate(models):
         for yaw in ORIENTATIONS_DEG:
             rotation = body_to_world(yaw, rays)
             for age in AGES_S:
-                by_trend = [observation(rays, rotation, name, fixture, rate, age) for rate in RATES]
+                by_trend = [observation(rays, rotation, name, fixture, rate, age,
+                                        command_speed=command_speed) for rate in RATES]
                 latest = by_trend[0][0]['lidar_grid'][:, -3:]
                 if not all(torch.equal(latest, p['lidar_grid'][:, -3:]) for p, _ in by_trend):
                     raise ValueError(f'Latest measurement mismatch {name} {yaw} {age}')
                 policy = {key: torch.cat([p[key] for p, _ in by_trend]) for key in by_trend[0][0]}
-                heading = by_trend[0][1] / .2
+                heading = rotation[:1] if command_speed == 0. else by_trend[0][1] / command_speed
                 teacher = command_gain_ceiling(policy, subsampled, period_s=PERIOD_S,
                                                clearance_m=config.d_safe_m + config.clearance_margin_m)
                 signals = {}
@@ -99,6 +100,9 @@ def evaluate(models):
                                           before_guard_m_s=(governor.v_gov_b * heading).sum(1).tolist(),
                                           after_guard_m_s=(guard.v_final_b * heading).sum(1).tolist(),
                                           guard_beta=guard.metrics['beta'].flatten().tolist())
+                    if command_speed == 0.:
+                        signals[label].update(before_guard_world_m_s=(governor.v_gov_b @ rotation.T).tolist(),
+                                              after_guard_world_m_s=(guard.v_final_b @ rotation.T).tolist())
                 order = LATERAL if name == 'street_crossing_object' else LONGITUDINAL
                 yield dict(fixture=name, yaw_deg=yaw, age_s=age, history_order=order,
                            teacher=teacher.tolist(), signals=signals)
@@ -108,16 +112,26 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--round-2-results', type=Path, default=PROJECT / 'round-2' / 'RESULTS.json')
     parser.add_argument('--round-3-results', type=Path, default=PROJECT / 'round-3' / 'RESULTS.json')
+    parser.add_argument('--checkpoint', nargs=2, metavar=('LABEL', 'PATH'), action='append')
+    parser.add_argument('--command-speed', choices=(0., .2), type=float, default=.2)
     args = parser.parse_args()
     guard()
     torch.set_num_threads(2)
-    inputs = {key: pin(path) for key, path in
-              (('r1', FIRST / 'RESULTS.json'), ('r2', args.round_2_results), ('r3', args.round_3_results))}
-    r1, = (m['checkpoint'] for m in read(inputs['r1'])['models'] if m['arm'] == 'candidate')
-    checkpoints = dict(r1=r1, **{key: read(inputs[key])['candidate']['checkpoint'] for key in ('r2', 'r3')})
-    rows = list(evaluate({key: load_actor(value) for key, value in checkpoints.items()}))
+    if args.checkpoint:
+        checkpoints = {label: pin(Path(path).resolve(strict=True)) for label, path in args.checkpoint}
+        if len(checkpoints) != len(args.checkpoint):
+            parser.error('Checkpoint labels must be unique')
+        inputs = {}
+    else:
+        inputs = {key: pin(path) for key, path in
+                  (('r1', FIRST / 'RESULTS.json'), ('r2', args.round_2_results), ('r3', args.round_3_results))}
+        r1, = (m['checkpoint'] for m in read(inputs['r1'])['models'] if m['arm'] == 'candidate')
+        checkpoints = dict(r1=r1, **{key: read(inputs[key])['candidate']['checkpoint'] for key in ('r2', 'r3')})
+    rows = list(evaluate({key: load_actor(value) for key, value in checkpoints.items()},
+                         command_speed=args.command_speed))
     guard()
-    print(json.dumps(dict(source_commit=git('rev-parse', 'HEAD'), inputs=inputs, checkpoints=checkpoints,
+    print(json.dumps(dict(source_commit=git('rev-parse', 'HEAD'), command_speed_mps=args.command_speed,
+                          inputs=inputs, checkpoints=checkpoints,
                           rows=rows), allow_nan=False, indent=2))
 
 
