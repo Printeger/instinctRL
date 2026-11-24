@@ -11,7 +11,7 @@ HOVER_REFLEX_METHOD = 'm4-hover-reflex-v2'
 HOVER_REFLEX_FIELD = 'r6_actor_reflex'
 HOVER_REFLEX_PARAMETER = 'hover_reflex.gain'
 GAIN_SCALE = 128.
-ESCAPE_SPEED_M_S = .16
+ESCAPE_SPEED_M_S = .22
 ESCAPE_ICS = ICSConfig(clearance_margin_m=.15)
 
 

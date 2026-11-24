@@ -114,8 +114,10 @@ class GpuRound(Round):
             diagnosis.extend(pin(SYSTEM_ROOT / name / 'result.json') for name in (
                 'INSTINCT-GPU-REFLEX-PHYSICAL-OBSERVATIONS', 'INSTINCT-GPU-CLEAR-TRAVEL-LOSS-CHECK-02',
             ))
+            geometry = SYSTEM_ROOT / 'INSTINCT-GPU-ESCAPE-DIRECTION-REPLAY' / 'geometry_022.json'
+            diagnosis.extend((pin(geometry), pin(geometry.with_name('result.json'))))
             return load(earlier.docs / 'curriculum.json'), diagnosis, f'{GPU_STUDY_PREFIX}R2-VISIBILITY', (
-                'A learned retreat response from reliable LiDAR closure during hover reduces visible dynamic contacts '
+                'A learned lateral escape from reliable LiDAR closure during hover reduces visible dynamic contacts '
                 'while preserving ordinary command tracking and quiet holding.')
         curriculum = load(PREVIOUS / 'round-2' / 'curriculum.json')
         earlier = pin(PREVIOUS / 'REPORT.md')
