@@ -13,19 +13,23 @@ STEPS = 120
 LANES = 32
 GROUPS = ((0, 1, 2, 3), (4, 5, 6, 7))
 VISIBILITY_GROUPS = ((8, 9, 10, 11),)
+PERSISTENCE_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-DEV-PERSISTENCE'
+PERSISTENCE_GROUPS = (*VISIBILITY_GROUPS, (4, 1, 6, 7))
 MODES = ('approach', 'recede', 'cross_left', 'cross_right',
          'hover', 'hover_wall', 'static_travel', 'static_hover',
          'open_front', 'open_rear', 'wall_front', 'wall_rear')
 
 
 def groups_for(run_id):
+    if run_id == PERSISTENCE_RUN:
+        return PERSISTENCE_GROUPS
     return VISIBILITY_GROUPS if run_id.endswith('-VISIBILITY') else GROUPS
 
 
 def contract(params):
     fields = {'experiment_id', 'training_seed', 'models', 'seed', 'wall_seconds', 'output_cap_bytes'}
-    if set(params) != fields or not re.fullmatch(
-            r'R6-DIRECT-INSTINCT-GPU-R[23]-(?:DYNAMIC(?:-PILOT-0[1-4])?|VISIBILITY)', params['experiment_id']):
+    if set(params) != fields or (params['experiment_id'] != PERSISTENCE_RUN and not re.fullmatch(
+            r'R6-DIRECT-INSTINCT-GPU-R[23]-(?:DYNAMIC(?:-PILOT-0[1-4])?|VISIBILITY)', params['experiment_id'])):
         raise ValueError('DYNAMIC_ASSAY_CONTRACT_IDENTITY')
     if params['training_seed'] != 20260908 or not 0 <= params['seed'] < 2**31:
         raise ValueError('DYNAMIC_ASSAY_SEED')
@@ -38,6 +42,9 @@ def contract(params):
         raise ValueError('DYNAMIC_ASSAY_MODELS')
     for value in models.values():
         checked(value)
+    if params['experiment_id'] == PERSISTENCE_RUN and (
+            set(models) != {'candidate', 'reference'} or models['candidate'] != models['reference']):
+        raise ValueError('DYNAMIC_ASSAY_SAME_WEIGHT_MODELS')
     cohorts = len(models) * len(groups_for(params['experiment_id']))
     steps = cohorts * STEPS * LANES
     return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct',
@@ -119,6 +126,7 @@ def run(backend, params):
     from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz
     from training_workloads.scale_003.persistence import atomic_json_replace, reserve_output_bytes
     from .dynamic_motion_training import plausible_approach
+    from .escape_hold_probe import EscapeHoldProbe
     from .robustness_scenarios import reset_spec
 
     env = backend.environment
@@ -127,9 +135,9 @@ def run(backend, params):
     counters = backend.counters
     device = env.device
     groups = groups_for(params['experiment_id'])
-    visibility = groups == VISIBILITY_GROUPS
+    persistence = params['experiment_id'] == PERSISTENCE_RUN
     cue = (HoverReflex(device=device, dtype=torch.float32)
-           if params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-') else None)
+           if persistence or params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-') else None)
     results = {}
     for label, checkpoint in params['models'].items():
         payload = torch.load(checked(checkpoint), map_location='cpu', weights_only=True)
@@ -141,6 +149,7 @@ def run(backend, params):
         actor.eval()
         cohort = []
         for index, group in enumerate(groups):
+            visibility = group in VISIBILITY_GROUPS
             modes = [mode for mode in group for _ in range(8)]
             seed = params['seed']+index
             block = dict(id=f'dynamic-{index}', task='stop', speed_m_s=.25,
@@ -173,6 +182,11 @@ def run(backend, params):
             env.stage_r6_world_command(command)
             backend.resource_check('before_r6_dynamic_reset', counters.explicit_resets+1)
             observation, _ = backend._preserving_reset(seed=seed)
+            hold = None
+            hook = None
+            if persistence and label == 'candidate':
+                hold = EscapeHoldProbe(observation['policy']['state_vec'])
+                hook = actor.hover_reflex.register_forward_hook(hold)
             initial = env._robot.data.root_state_w[:, :3].clone().cpu().tolist()
             fixed = dict(axis_w=axis.cpu().tolist(), modes=modes, initial_position_w=initial,
                          command_w=command.cpu().tolist())
@@ -216,6 +230,19 @@ def run(backend, params):
                     rows[-1]['sensor_approach'] = approach
                 if direction is not None:
                     rows[-1]['reflex_direction_b'] = direction
+                if persistence:
+                    history = policy['state_vec'].reshape(LANES, 4, 13)
+                    rows[-1].update(
+                        gyro_peak=history[:, :, :3].norm(dim=2).amax(dim=1).cpu().tolist(),
+                        range_age_s=history[:, -1, -1].cpu().tolist(),
+                        held_bias_b=None if hold is None else hold.bias.cpu().tolist(),
+                        ics_beta=record['control']['ics_metrics']['beta'].reshape(-1).cpu().tolist(),
+                        v_final_w=record['control']['v_final_w'].cpu().tolist(),
+                    )
+                    if hold is not None:
+                        hold.reset(terminal)
+            if hook is not None:
+                hook.remove()
             env.finish_r6_physics()
             obstacle.finish()
             rel = f'{label}-group-{index}.jsonl'
@@ -239,6 +266,7 @@ def audit(output, params, counters):
         raise ValueError('DYNAMIC_ASSAY_SUMMARY_BINDING')
     sources = [file_pin(path)]
     groups = groups_for(params['experiment_id'])
+    persistence = params['experiment_id'] == PERSISTENCE_RUN
     for name, result in saved['models'].items():
         if result['checkpoint'] != params['models'][name] or len(result['groups']) != len(groups):
             raise ValueError('DYNAMIC_ASSAY_MODEL_BINDING')
@@ -251,7 +279,8 @@ def audit(output, params, counters):
             if [r['step'] for r in rows] != list(range(STEPS)) or score(rows) != group['lanes']:
                 raise ValueError('DYNAMIC_ASSAY_SCORER_REPLAY')
             expected_modes = [mode for mode in groups[index] for _ in range(8)]
-            if groups == VISIBILITY_GROUPS:
+            visibility = groups[index] in VISIBILITY_GROUPS
+            if visibility:
                 start = rows[0]['pre']
                 for center, sensor, command in zip(start['sphere_position_w'], start['sensor_position_w'], rows[0]['command_w']):
                     if any(command) or max(abs(c - s - d) for c, s, d in zip(center, sensor, (-2.75, 0., 0.))) > .003:
@@ -261,10 +290,10 @@ def audit(output, params, counters):
                 if (after['tick'] - before['tick'] != 20 or after['contact_samples'] != 20
                         or row['modes'] != expected_modes):
                     raise ValueError('DYNAMIC_ASSAY_ACTUAL_PHYSICS_TICKS')
-                if groups == VISIBILITY_GROUPS and (
+                if visibility and (
                         len(row['sensor_approach']) != LANES or any(type(v) is not bool for v in row['sensor_approach'])):
                     raise ValueError('DYNAMIC_ASSAY_VISIBILITY_CLOSURE_EVIDENCE')
-                if params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-'):
+                if persistence or params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-'):
                     directions = row['reflex_direction_b']
                     if len(directions) != LANES or any(
                             len(v) != 3 or not all(math.isfinite(x) for x in v)

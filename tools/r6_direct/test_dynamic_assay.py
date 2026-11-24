@@ -91,6 +91,28 @@ def test_dynamic_result_budget_is_separate_and_exact(tmp_path):
     assert visibility['optimizer_updates'] == 0
 
 
+def test_persistence_is_bounded_and_reset_per_lane():
+    from training_workloads.unified_h1.escape_hold_probe import EscapeHoldProbe, HOLD_STEPS
+
+    state = torch.zeros(3, 52)
+    probe = EscapeHoldProbe(state)
+    cue = torch.tensor([[0., 1., 0., 0.], [0., 1., 0., 0.], [0., 0., 0., 0.]])
+    quiet = torch.zeros_like(cue)
+    assert torch.equal(probe(None, (None, state), cue), cue)
+    state[1, -1] = .3
+    state[0, 41] = 1.
+    held = probe(None, (None, state), quiet)
+    torch.testing.assert_close(held[0, 1:3], torch.tensor([.9950042, -.0998334]))
+    assert torch.count_nonzero(held[1:]) == 0
+    state.zero_()
+    for _ in range(HOLD_STEPS - 2):
+        assert torch.count_nonzero(probe(None, (None, state), quiet)) == 2
+    assert torch.equal(probe(None, (None, state), quiet), quiet)
+    probe.reset(torch.tensor([True, False, False]))
+    probe(None, (None, state), cue)
+    assert probe.remaining.tolist() == [HOLD_STEPS - 1, 0, 0]
+
+
 def test_visibility_reset_changes_only_sensor_translation_and_half_turn():
     block = dict(id='dynamic-0', task='stop', speed_m_s=.25, pulse_acceleration_m_s2=0.,
                  sensor_to_wall_distance_m=None, steps=120)
