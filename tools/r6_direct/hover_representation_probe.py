@@ -49,19 +49,46 @@ def pairs(yaws, *, held_out):
     )
 
 
-def residual(model, policy, *, enhance):
-    if not enhance:
+@torch.no_grad()
+def retreat_cue(policy):
+    scan = policy['lidar_grid'][:, :, ::3]
+    state = policy['state_vec'].reshape(-1, 4, 13)
+    weight = torch.zeros_like(scan[:, 9])
+    for k in range(3):
+        gap = (3 - k) * PERIOD_S + state[:, k, 12] - state[:, -1, 12]
+        gap = gap[:, None, None]
+        difference = scan[:, k * 3] - scan[:, 9]
+        coherent = (gap >= .16) & (gap <= .33) & (difference > .20 * gap) & (difference < 1.5 * gap)
+        coherent &= (scan[:, 9] < 1.9) & (scan[:, k * 3 + 2] > .55) & (scan[:, 11] > .55)
+        neighbors = coherent.clone()
+        for offset in (-2, -1, 1, 2):
+            neighbors &= coherent.roll(offset, dims=-1)
+        weight = torch.maximum(weight, torch.where(neighbors, difference, 0.))
+    rays = mounted_mid360_rays_body().reshape(59, 360, 3)[::3].reshape(-1, 3)
+    bearing = weight.flatten(1) @ rays
+    bearing[:, 2] = 0.
+    active = (state[:, :, :3].norm(dim=2).amax(dim=1) < .22) & (state[:, -1, 12] <= .22)
+    return -bearing / bearing.norm(dim=1, keepdim=True).clamp_min(1.e-6) * active[:, None]
+
+
+def residual(model, policy, *, enhance, cue=None, gain=None):
+    if not enhance and cue is None:
         return model(policy).mean_action[:, 1:] - .5
     lidar, state = policy['lidar_grid'], policy['state_vec']
     ranges, validity, reliability = lidar[:, 0::3], lidar[:, 1::3], lidar[:, 2::3]
-    latest = ranges[:, -1:]
-    difference = latest - ranges[:, :3]
-    reliable_pair = (reliability[:, -1:] > .55) & (reliability[:, :3] > .55)
-    salient = reliable_pair & (latest < 2.2) & (difference.abs() > .035)
-    historical = ranges[:, :3] / 40. + torch.where(salient, .5 * difference.clamp(-.5, .5), 0.)
-    normalized = torch.cat((historical, latest / 40., validity, reliability), dim=1)
+    scaled = ranges / 40.
+    if enhance:
+        latest = ranges[:, -1:]
+        difference = latest - ranges[:, :3]
+        reliable_pair = (reliability[:, -1:] > .55) & (reliability[:, :3] > .55)
+        salient = reliable_pair & (latest < 2.2) & (difference.abs() > .035)
+        scaled[:, :3] += torch.where(salient, .5 * difference.clamp(-.5, .5), 0.)
+    normalized = torch.cat((scaled, validity, reliability), dim=1)
     raw = model.trunk(torch.cat((model.lidar_encoder(normalized), model.state_encoder(state)), dim=-1))
     alpha_logits, beta_logits = raw.chunk(2, dim=-1)
+    if cue is not None:
+        shift = torch.cat((torch.zeros_like(cue[:, :1]), gain * cue), dim=1)
+        alpha_logits, beta_logits = alpha_logits + shift, beta_logits - shift
     floor = model.config.concentration_min
     span = model.config.concentration_max - floor
     alpha, beta = floor + span * alpha_logits.sigmoid(), floor + span * beta_logits.sigmoid()
@@ -74,9 +101,10 @@ def batch(triplet, selected):
 
 
 @torch.no_grad()
-def summary(model, triplet, *, enhance):
+def summary(model, triplet, *, enhance, gain=None):
     policy, heading = batch(triplet, slice(None))
-    velocity = residual(model, policy, enhance=enhance).reshape(-1, 3, 3)
+    cue = None if gain is None else retreat_cue(policy)
+    velocity = residual(model, policy, enhance=enhance, cue=cue, gain=gain).reshape(-1, 3, 3)
     forward = (velocity * heading[:, None]).sum(-1)
     return dict(pairs=len(heading), mean_retreat_difference_mm_s=1000 * (forward[:, 2] - forward[:, 0]).mean().item(),
                 mean_stationary_horizontal_mm_s=1000 * velocity[:, 1, :2].norm(dim=1).mean().item())
@@ -109,6 +137,22 @@ def main():
             optimizer.step()
         results[label] = dict(before=before, after={key: summary(model, value, enhance=enhance)
                                                     for key, value in validation.items()})
+    actor.requires_grad_(False)
+    gain = torch.zeros((), requires_grad=True)
+    optimizer = torch.optim.Adam([gain], lr=.06)
+    sampling = torch.Generator().manual_seed(41)
+    before = {key: summary(actor, value, enhance=False, gain=gain) for key, value in validation.items()}
+    for _ in range(STEPS):
+        selected = torch.randint(len(training[1]), (4,), generator=sampling)
+        policy, heading = batch(training, selected)
+        target = torch.zeros(len(selected), 3, 3)
+        target[:, 0] = -.18 * heading
+        prediction = residual(actor, policy, enhance=False, cue=retreat_cue(policy), gain=gain).reshape_as(target)
+        optimizer.zero_grad()
+        (prediction - target).square().mean().backward()
+        optimizer.step()
+    results['gated_direction'] = dict(learned_gain=gain.detach().item(), before=before,
+        after={key: summary(actor, value, enhance=False, gain=gain) for key, value in validation.items()})
     guard()
     print(json.dumps(dict(source_commit=git('rev-parse','HEAD'), checkpoint=checkpoint, optimization_steps=STEPS,
                           training_pairs=len(training[1]), validation=results), indent=2, allow_nan=False))
