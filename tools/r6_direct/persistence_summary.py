@@ -23,9 +23,10 @@ def lane_outcome(rows, lane, score):
     cues = [row for row in rows if math.hypot(*row['reflex_direction_b'][lane][:2]) > .1]
     held = [row for row in rows if row['held_bias_b'] is not None
             and math.hypot(*row['held_bias_b'][lane][:2]) > .001]
-    first = cues[0]['step'] if cues else None
+    origin_cue = cues[0] if cues else held[0] if held else None
+    first = None if origin_cue is None else origin_cue['step']
     after_cue = rows[first:] if first is not None else []
-    first_side = (sum(x * v for x, v in zip(tangent, cues[0]['v_final_w'][lane])) if cues else 0.)
+    first_side = (sum(x * v for x, v in zip(tangent, origin_cue['v_final_w'][lane])) if origin_cue else 0.)
     signed = math.copysign(1., first_side)
     issued = .1 * sum(signed * sum(x * v for x, v in zip(tangent, row['v_final_w'][lane]))
                        for row in after_cue)

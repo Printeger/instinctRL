@@ -113,6 +113,28 @@ def test_persistence_is_bounded_and_reset_per_lane():
     assert probe.remaining.tolist() == [HOLD_STEPS - 1, 0, 0]
 
 
+def test_option_preserves_samples_outside_threat_and_stops_on_stale_measurement():
+    from instinctlab.control.escape_option import EscapeOption
+
+    option = EscapeOption(lanes=3, device='cpu', dtype=torch.float32)
+    state = torch.zeros(3, 52)
+    state[:, 45] = torch.tensor([.25, -.25, 0.])
+    option.detector = SimpleNamespace(
+        retreat_direction=lambda *args, **kwargs: torch.tensor([[-1., 0., 0.], [-1., 0., 0.], [0., 0., 0.]]),
+        choose_escape=lambda *args: (torch.tensor([[0., 1., 0.]]), torch.tensor([1.])),
+    )
+    policy = dict(lidar_grid=torch.zeros(3, 1), state_vec=state)
+    sample = torch.full((3, 4), .5)
+    expected = sample.clone()
+    expected[0] = torch.tensor([0., .5, .8, .5])
+    torch.testing.assert_close(option.apply(policy, sample), expected)
+    assert option.applied.tolist() == [True, False, False]
+    assert torch.equal(sample, torch.full((3, 4), .5))
+    state[:, -1] = .3
+    assert torch.equal(option.apply(policy, sample), sample)
+    assert option.remaining.tolist() == [0, 0, 0]
+
+
 def test_visibility_reset_changes_only_sensor_translation_and_half_turn():
     block = dict(id='dynamic-0', task='stop', speed_m_s=.25, pulse_acceleration_m_s2=0.,
                  sensor_to_wall_distance_m=None, steps=120)

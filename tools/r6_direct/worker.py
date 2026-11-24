@@ -194,7 +194,12 @@ def run(plan, input_pin):
                 moving = recipe['candidate_id'] in (
                     'R6-CANDIDATE-INSTINCT-GPU-R2', 'R6-CANDIDATE-INSTINCT-GPU-R3', HOVER_REFLEX_CANDIDATE)
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
-            env=UnifiedH1DirectEnv(cfg)
+            from training_workloads.unified_h1.dynamic_assay import OPTION_RUN
+            if plan['run_id'] == OPTION_RUN:
+                from training_workloads.unified_h1.escape_option_env import EscapeOptionEnv
+                env = EscapeOptionEnv(cfg)
+            else:
+                env = UnifiedH1DirectEnv(cfg)
             ticks=env.h1_initialization_physics_ticks
             counters.record_initialization_ticks(ticks,contract['budgets']['initialization_ticks'])
             from training_workloads.unified_h1.backend import UnifiedH1LiveBackend

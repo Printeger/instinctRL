@@ -15,6 +15,7 @@ GROUPS = ((0, 1, 2, 3), (4, 5, 6, 7))
 VISIBILITY_GROUPS = ((8, 9, 10, 11),)
 PERSISTENCE_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-DEV-PERSISTENCE-02'
 PERSISTENCE_GROUPS = (*VISIBILITY_GROUPS, (4, 1, 6, 7))
+OPTION_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-DEV-OPTION'
 MODES = ('approach', 'recede', 'cross_left', 'cross_right',
          'hover', 'hover_wall', 'static_travel', 'static_hover',
          'open_front', 'open_rear', 'wall_front', 'wall_rear')
@@ -28,7 +29,7 @@ def groups_for(run_id):
 
 def contract(params):
     fields = {'experiment_id', 'training_seed', 'models', 'seed', 'wall_seconds', 'output_cap_bytes'}
-    if set(params) != fields or (params['experiment_id'] != PERSISTENCE_RUN and not re.fullmatch(
+    if set(params) != fields or (params['experiment_id'] not in (PERSISTENCE_RUN, OPTION_RUN) and not re.fullmatch(
             r'R6-DIRECT-INSTINCT-GPU-R[23]-(?:DYNAMIC(?:-PILOT-0[1-4])?|VISIBILITY)', params['experiment_id'])):
         raise ValueError('DYNAMIC_ASSAY_CONTRACT_IDENTITY')
     if params['training_seed'] != 20260908 or not 0 <= params['seed'] < 2**31:
@@ -42,7 +43,7 @@ def contract(params):
         raise ValueError('DYNAMIC_ASSAY_MODELS')
     for value in models.values():
         checked(value)
-    if params['experiment_id'] == PERSISTENCE_RUN and (
+    if params['experiment_id'] in (PERSISTENCE_RUN, OPTION_RUN) and (
             set(models) != {'candidate', 'reference'} or models['candidate'] != models['reference']):
         raise ValueError('DYNAMIC_ASSAY_SAME_WEIGHT_MODELS')
     cohorts = len(models) * len(groups_for(params['experiment_id']))
@@ -136,8 +137,9 @@ def run(backend, params):
     device = env.device
     groups = groups_for(params['experiment_id'])
     persistence = params['experiment_id'] == PERSISTENCE_RUN
+    option = params['experiment_id'] == OPTION_RUN
     cue = (HoverReflex(device=device, dtype=torch.float32)
-           if persistence or params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-') else None)
+           if persistence or option or params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-') else None)
     results = {}
     for label, checkpoint in params['models'].items():
         payload = torch.load(checked(checkpoint), map_location='cpu', weights_only=True)
@@ -147,6 +149,8 @@ def run(backend, params):
         actor = checkpoint_actor(payload).to(device)
         actor.load_state_dict(payload['actor'], strict=True)
         actor.eval()
+        if option:
+            env.set_escape_option(label == 'candidate')
         cohort = []
         for index, group in enumerate(groups):
             visibility = group in VISIBILITY_GROUPS
@@ -230,12 +234,16 @@ def run(backend, params):
                     rows[-1]['sensor_approach'] = approach
                 if direction is not None:
                     rows[-1]['reflex_direction_b'] = direction
-                if persistence:
+                if persistence or option:
                     history = policy['state_vec'].reshape(LANES, 4, 13)
+                    applied = None if hold is None else hold.bias
+                    if option and env.escape_option is not None:
+                        current = env.escape_option
+                        applied = current.direction * current.applied[:, None]
                     rows[-1].update(
                         gyro_peak=history[:, :, :3].norm(dim=2).amax(dim=1).cpu().tolist(),
                         range_age_s=history[:, -1, -1].cpu().tolist(),
-                        held_bias_b=None if hold is None else hold.bias.cpu().tolist(),
+                        held_bias_b=None if applied is None else applied.cpu().tolist(),
                         ics_beta=record['control']['ics_metrics']['beta'].reshape(-1).cpu().tolist(),
                         v_final_w=record['control']['v_final_w'].cpu().tolist(),
                     )
