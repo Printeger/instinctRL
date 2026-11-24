@@ -95,7 +95,11 @@ def train(config, data):
                 loss = F.cross_entropy(prediction, choice[idx], weight=weights)
             else:
                 importance = 1 + config['hazard_weight'] * risk[idx]
+                if model.objective == 'hybrid':
+                    logits, prediction = prediction.chunk(2, dim=-1)
                 loss = (F.binary_cross_entropy_with_logits(prediction, risk[idx], reduction='none') * importance).mean()
+                if model.objective == 'hybrid':
+                    loss += F.cross_entropy(logits, choice[idx], weight=weights)
             if not bool(loss.isfinite()):
                 raise FloatingPointError('Nonfinite loss')
             optim.zero_grad(set_to_none=True)
@@ -213,6 +217,8 @@ def run(path):
     config = load(path)
     for item in (*config['source_files'], config['authority']):
         check_pin(item)
+    if config['predecessor']:
+        check_pin(config['predecessor'])
     head = subprocess.check_output(['git','-C',str(SNAPSHOT),'rev-parse','HEAD'],text=True).strip()
     if head != config['source_commit'] or SNAPSHOT == ROOT:
         raise RuntimeError('Formal run requires the exact detached snapshot')

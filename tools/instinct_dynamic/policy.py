@@ -43,21 +43,31 @@ class Policy(nn.Module):
         self.encoder = nn.Sequential(
             nn.Conv1d(channels, 24, 5, stride=2, padding=2, padding_mode='circular'), nn.SiLU(),
             nn.Conv1d(24, 20, 3, stride=3, padding=1, padding_mode='circular'), nn.SiLU(), nn.Flatten())
-        self.head = nn.Sequential(nn.Linear(311, 96), nn.SiLU(), nn.Linear(96,len(ACTIONS)))
+        outputs = 2 * len(ACTIONS) if objective == 'hybrid' else len(ACTIONS)
+        self.head = nn.Sequential(nn.Linear(311, 96), nn.SiLU(), nn.Linear(96, outputs))
 
     def forward(self, grid, state):
         return self.head(torch.cat((self.encoder(grid), state), dim=-1))
 
     def act(self, obs):
         score = self(*features(obs, self.mode))
+        actions = action_vectors(obs.command, obs.previous)
         if self.objective == 'imitate':
             choice = score.argmax(-1)
         else:
-            actions = action_vectors(obs.command, obs.previous)
             imitation_cost = (actions-obs.command[:,None]).square().sum(-1)
             inertial_cost = .045*(actions-obs.previous[:,None]).square().sum(-1)
-            choice = (imitation_cost + inertial_cost + 3.*score.sigmoid()).argmin(-1)
-        return action_vectors(obs.command, obs.previous)[torch.arange(len(choice)), choice]
+            if self.objective == 'hybrid':
+                logits, score = score.chunk(2, dim=-1)
+                preferred = logits.argmax(-1)
+                risk = score.sigmoid()
+                alternate = (imitation_cost + inertial_cost + 3.*risk).argmin(-1)
+                lane = torch.arange(len(preferred))
+                danger = (risk[lane, preferred] > .20) & (risk[lane, preferred] - risk[lane, alternate] > .08)
+                choice = torch.where(danger, alternate, preferred)
+            else:
+                choice = (imitation_cost + inertial_cost + 3.*score.sigmoid()).argmin(-1)
+        return actions[torch.arange(len(choice)), choice]
 
 
 def clearance_guard(obs, proposal):

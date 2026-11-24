@@ -12,7 +12,7 @@ from .study import SNAPSHOT, PROJECT, RUNS, R2, DEVELOPMENT, CONFIRMATION, asser
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('round', type=int, choices=range(4, 9))
-    p.add_argument('--objective', choices=['imitate','risk'], required=True)
+    p.add_argument('--objective', choices=['imitate','risk','hybrid'], required=True)
     p.add_argument('--features', choices=['causal','raw'], default='causal')
     p.add_argument('--behavior', type=int)
     p.add_argument('--sensor', type=float, default=1.)
