@@ -192,7 +192,7 @@ def run(backend, params):
                 if observed.any() and not torch.allclose(witness[observed],before['witness_range_m'][observed],atol=.002,rtol=0):
                     raise RuntimeError('DYNAMIC_ASSAY_ACTOR_WITNESS')
                 approach = plausible_approach(policy, period_s=.1).cpu().tolist() if visibility else None
-                direction = (cue.retreat_direction(policy['lidar_grid'], policy['state_vec']).cpu().tolist()
+                direction = (cue.escape_direction(policy['lidar_grid'], policy['state_vec']).cpu().tolist()
                              if cue is not None else None)
                 env.prepare_h1_step(global_policy_step=step, command_b=env._command_b, next_command_b=body)
                 with torch.no_grad():

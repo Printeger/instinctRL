@@ -95,7 +95,7 @@ def bound_method_hashes(plan, recipe):
     hashes = dict(plan['initialization']['method_hashes'], r6_recipe=plan['recipe']['sha256'],
                   r6_method=recipe['method']['sha256'], curriculum='curriculum-h1-r6-v1')
     if recipe['candidate_id'] == HOVER_REFLEX_CANDIDATE:
-        hashes['r6_actor_reflex'] = 'm4-hover-reflex-v1'
+        hashes['r6_actor_reflex'] = 'm4-hover-reflex-v2'
     return hashes
 
 

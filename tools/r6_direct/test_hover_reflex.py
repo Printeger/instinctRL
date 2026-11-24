@@ -1,9 +1,10 @@
 import pytest
 import torch
 
+from instinctlab.control.ics import mounted_mid360_rays_body
 from instinctlab.training.checkpoint import CheckpointError
 from instinctlab.training.checkpoint_h1 import attach_hover_reflex, checkpoint_actor, load_checkpoint_h1, save_checkpoint_h1
-from instinctlab.training.hover_reflex import HOVER_REFLEX_FIELD, HOVER_REFLEX_METHOD
+from instinctlab.training.hover_reflex import HOVER_REFLEX_FIELD, HOVER_REFLEX_METHOD, HoverReflex
 from instinctlab.training.networks import HistoryActor, NetworkConfig
 from instinctlab.training.networks_h1 import PrivilegedCriticH1
 from instinctlab.training.ppo import PPOConfig, PPOTrainer
@@ -35,13 +36,30 @@ def test_gain_zero_is_exact_and_keeps_gradient_without_changing_other_states():
     direction = actor.hover_reflex.retreat_direction(policy['lidar_grid'], policy['state_vec'])
     assert direction[0, 0] < -.5
     assert torch.count_nonzero(direction[1:]) == 0
-    shift[0, 1].backward()
-    assert gain.grad < -.5
+    escape = actor.hover_reflex.escape_direction(policy['lidar_grid'], policy['state_vec'])
+    (shift[0, 1:] @ escape[0]).backward()
+    assert gain.grad > .5
     with torch.no_grad():
         gain.fill_(5.)
         changed = actor(policy)
         assert not torch.equal(changed.mean_action[0], baseline.mean_action[0])
         assert torch.equal(changed.mean_action[1:], baseline.mean_action[1:])
+
+
+def test_escape_uses_legal_tangent_and_previous_action_to_break_ties():
+    module = HoverReflex(device='cpu', dtype=torch.float32)
+    grid = torch.ones(3, 12, 59, 360)
+    grid[:, 0::3] = 6.
+    ray_y = mounted_mid360_rays_body()[:, 1].reshape(59, 360)
+    wall = torch.where(ray_y > 0., .70 / ray_y, 6.).clamp(max=6.)
+    grid[0, 0::3] = wall
+    grid[2, 0::3] = .50
+    state = torch.zeros(3, 52)
+    state[:2, 49] = .16
+    retreat = torch.tensor([[-1., 0., 0.]]).expand(3, -1)
+    direction, authority = module.choose_escape(grid, state, retreat)
+    torch.testing.assert_close(direction[:2], torch.tensor([[0., -1., 0.], [0., 1., 0.]]))
+    torch.testing.assert_close(authority, torch.tensor([1., 1., 0.]))
 
 
 def test_checkpoint_marker_and_adam_attachment_preserve_existing_parameters(tmp_path):

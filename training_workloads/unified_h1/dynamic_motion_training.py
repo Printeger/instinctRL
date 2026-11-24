@@ -98,10 +98,11 @@ def clear_travel(policy, rays, approaching):
 
 def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=None):
     if reflex is not None:
-        from instinctlab.control.ics import attenuate_command, mounted_mid360_rays_body
+        from instinctlab.control.ics import mounted_mid360_rays_body
+        from instinctlab.training.hover_reflex import ESCAPE_ICS, ESCAPE_SPEED_M_S
 
-        if ics is None:
-            raise ValueError('Hover targets require the active ICS configuration')
+        if ics != ESCAPE_ICS or abs(period_s - .1) > 1e-8:
+            raise ValueError('Hover targets require the registered R6 ICS and policy period')
         parameter = next(trainer.actor.parameters())
         rays = mounted_mid360_rays_body(device=parameter.device, dtype=parameter.dtype)
         sampled_rays = rays.reshape(59, 360, 3)[::3, ::3].reshape(-1, 3)
@@ -134,17 +135,19 @@ def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=
         if not bool(hover_approach.any()):
             return prior
         with torch.no_grad():
-            target = .16 * direction[hover_approach]
-            authority = attenuate_command(policy['lidar_grid'][hover_approach], rays, target, period_s, ics)
-            feasible = authority.metrics['beta'].flatten() >= .25
-        error = ((correction[hover_approach] - target) / .16).square().sum(dim=1)
+            escape, authority = reflex.choose_escape(policy['lidar_grid'][hover_approach],
+                                                     policy['state_vec'][hover_approach], direction[hover_approach])
+            target = ESCAPE_SPEED_M_S * escape
+            feasible = authority >= .25
+        error = ((correction[hover_approach] - target) / ESCAPE_SPEED_M_S).square().sum(dim=1)
         gated.last_metrics['hover_reflex_targets'] = int(feasible.sum().item())
         return prior + .15 * (feasible * error).sum() / len(policy['state_vec'])
 
     trainer.actor_auxiliary = gated
     binding = dict(weight=weight, policy_period_s=period_s, inputs=['lidar_grid', 'state_vec'])
     if reflex is not None:
-        binding['direct_hover_target'] = dict(speed_mps=.16, weight=.15, minimum_ics_beta=.25)
+        binding['direct_hover_target'] = dict(speed_mps=ESCAPE_SPEED_M_S, weight=.15, minimum_ics_beta=.25,
+                                              directions=['left_tangent', 'right_tangent', 'radial_retreat'])
         binding['clear_travel_gain'] = dict(minimum_target=TRAVEL_GAIN_TARGET, weight=TRAVEL_GAIN_WEIGHT,
                                           cone_clearance_m=TRAVEL_CLEARANCE_M)
     return binding
