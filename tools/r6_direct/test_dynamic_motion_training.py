@@ -3,7 +3,8 @@ from types import SimpleNamespace
 import torch
 
 from instinctlab.observations.moving_sphere import travel_clock
-from training_workloads.unified_h1.dynamic_motion_training import choose_velocity, install_prior, plausible_approach
+from instinctlab.task.rewards_h1 import REWARD_H1_COMPONENT_KEYS, RewardH1Result
+from training_workloads.unified_h1.dynamic_motion_training import amend_reward, choose_velocity, install_prior, plausible_approach
 from training_workloads.unified_h1.mean_prior import zero_command_mean_prior
 
 
@@ -33,6 +34,28 @@ def test_forecast_retains_safe_command_and_rewards_escaping_an_immediate_threat(
                                               position @ rotation.T, velocity @ rotation.T, active)
     torch.testing.assert_close(rotated, target @ rotation.T)
     torch.testing.assert_close(hazard_rotated, hazard)
+
+
+def test_reward_changes_only_the_threatened_lane_and_keeps_contact_penalty():
+    command = torch.tensor([[.25, 0., 0.]]).repeat(3, 1)
+    root = torch.zeros(3, 13)
+    root[:, 3] = 1.
+    plant = SimpleNamespace(root_state_w=root, actual_velocity_b=torch.zeros_like(command))
+    control = SimpleNamespace(v_gov_b=command, v_final_b=command)
+    environment = SimpleNamespace(_command_b=command, _task=plant, _control=control)
+    trace = dict(sphere_position_w=torch.tensor([[1.4, 0., 0.]]).repeat(3, 1),
+                 sphere_velocity_w=torch.tensor([[-.42, 0., 0.], [.36, 0., 0.], [-.42, 0., 0.]]),
+                 active=torch.tensor([True, True, False]))
+    components = {key: torch.full((3, 1), -1.) for key in REWARD_H1_COMPONENT_KEYS[:-1]}
+    components['reward_failure'] = torch.tensor([[-300.], [0.], [0.]])
+    total = components['reward_total'] = sum(components.values())
+    original = RewardH1Result(total, components, {}, None)
+    updated = amend_reward(original, environment, SimpleNamespace(pre_reset=trace))
+
+    assert tuple(updated.components) == REWARD_H1_COMPONENT_KEYS
+    torch.testing.assert_close(updated.components['reward_failure'], original.components['reward_failure'])
+    torch.testing.assert_close(updated.total[1:], original.total[1:])
+    assert updated.components['reward_anchor'][0, 0] == 0. and original.components['reward_anchor'][0, 0] == -1.
 
 
 def test_hover_relief_uses_distinct_coherent_hits_and_preserves_original_static_loss():
