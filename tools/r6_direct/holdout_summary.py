@@ -1,9 +1,17 @@
 """Compare the prespecified held-out physical endpoints on paired episodes."""
 
+import argparse
 from collections import defaultdict
-from statistics import fmean
+import json
+import math
+from pathlib import Path
+from statistics import fmean, median
 
 from tools.r6_direct.evidence import validate_binding
+from tools.r6_direct.import_legacy import pin
+from tools.r6_direct.instinct_cycle import save
+from tools.r6_direct.instinct_cycle_finish import guard
+from tools.r6_evidence import checked
 
 
 def compare_holdout(binding):
@@ -51,3 +59,67 @@ def compare_holdout(binding):
                  ordinary_travel=motion_pass, still_hover=hover_pass)
     return dict(cases=cases, front_episode_collisions=collisions, engineering_gates=gates,
                 receipts_verified=True, gates_pass=all(gates.values()))
+
+
+def mechanisms(binding):
+    """Describe the observed sensing-to-motion chain on the initial episodes."""
+    _, _, report = validate_binding(binding)
+    cases = defaultdict(list)
+    for arm, model in report['summary']['models'].items():
+        for group in model['groups']:
+            raw = [json.loads(line) for line in checked(group['trace']).read_text().splitlines()]
+            for lane_info in group['lanes']:
+                if lane_info['mode'].startswith('static_'):
+                    continue
+                lane = lane_info['lane']
+                end = next((i+1 for i,row in enumerate(raw) if row['terminal'][lane]), len(raw))
+                rows = raw[:end]
+                first_visible = next((i for i,row in enumerate(rows) if row['pre']['winning_beams'][lane]), None)
+                active = [i for i,row in enumerate(rows) if row['held_bias_b'] is not None
+                          and math.hypot(*row['held_bias_b'][lane][:2]) > .1]
+                axis = rows[0]['axis_w'][lane]
+                side = (-axis[1], axis[0])
+                issued = [sum(x*y for x,y in zip(side, r['v_final_w'][lane])) for r in rows]
+                location = rows[0]['initial_position_w'][lane]
+                lateral = [abs(sum(x*(y-z) for x,y,z in zip(side, r['vehicle_position_w'][lane], location)))
+                           for r in rows]
+                signed_issued = .1 * sum(issued[active[0]:]) if active else None
+                cases[(arm, lane_info['layout'], lane_info['mode'])].append(dict(
+                    collision=lane_info['collision'], visible_s=None if first_visible is None else first_visible*.1,
+                    first_option_s=None if not active else active[0]*.1, option_active_s=len(active)*.1,
+                    option_ics_rejected_s=.1*sum(rows[i]['ics_beta'][lane] == 0 for i in active),
+                    absolute_net_lateral_command_m=None if signed_issued is None else abs(signed_issued),
+                    maximum_lateral_displacement_m=max(lateral),
+                    minimum_root_to_obstacle_center_m=min((math.dist(r['vehicle_position_w'][lane],
+                        r['post']['sphere_position_w'][lane]) for r in rows if r['post']['active'][lane]), default=None)))
+    result = []
+    for (arm, layout, mode), episodes in sorted(cases.items()):
+        for collision in (False, True):
+            rows = [row for row in episodes if row['collision'] == collision]
+            if not rows:
+                continue
+            medians = {}
+            for field in rows[0].keys() - {'collision'}:
+                values = [row[field] for row in rows if row[field] is not None]
+                medians[field] = median(values) if values else None
+            result.append(dict(arm=arm, layout=layout, mode=mode, collision=collision, episodes=len(rows),
+                               saw_mover=sum(row['visible_s'] is not None for row in rows),
+                               applied_option=sum(row['first_option_s'] is not None for row in rows),
+                               medians=medians))
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('binding', type=Path)
+    parser.add_argument('destination', type=Path)
+    args = parser.parse_args()
+    guard()
+    binding = pin(args.binding)
+    rows = mechanisms(binding)
+    guard()
+    save(args.destination, dict(binding=binding, analyzer=pin(Path(__file__)), episodes_by_outcome=rows))
+
+
+if __name__ == '__main__':
+    main()
