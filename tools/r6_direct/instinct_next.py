@@ -83,8 +83,9 @@ class Round:
     def prepare(self):
         if SNAPSHOT == ROOT:
             raise ValueError('Run from the exact detached execution snapshot')
-        self.docs.mkdir(exist_ok=False)
         plan_doc = pin(self.project / 'PLAN.md')
+        curriculum, diagnosis, prior_run, hypothesis = self.design(plan_doc)
+        self.docs.mkdir(exist_ok=False)
         zero = dict.fromkeys(THIRD_CAPS, 0)
         caps = dict(allocated_gpu_seconds=10000, live_wall_seconds=10000, queue_seconds=540,
                     live_starts=3, simulator_initializations=2, training_transitions=65536,
@@ -104,7 +105,6 @@ class Round:
         params = load(TRAIN_TEMPLATE)['parameters']
         plan = params['r6_training_plan']
         recipe = read(plan['recipe'])
-        curriculum, diagnosis, prior_run, hypothesis = self.design(plan_doc)
         recipe.update(candidate_id=self.candidate, source_identity=identity, diagnosis=diagnosis,
                       hypothesis=hypothesis, comparison='Full matched training and closed R6 paired regression.',
                       curriculum=self.write('curriculum.json', curriculum))

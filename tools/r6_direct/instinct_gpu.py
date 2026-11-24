@@ -10,6 +10,7 @@ from tools.r6_direct.instinct_cycle_finish import command, freeze, guard
 from tools.r6_direct.instinct_next import PROJECT as PREVIOUS, Round
 from tools.r6_direct.resource_policy import GPU_STUDY_PREFIX, GPU_STUDY_SCHEMA
 from tools.r6_direct.source import ROOT as SNAPSHOT
+from tools.r6_direct.storage import SYSTEM_ROOT
 from training_workloads.unified_h1.lossless_evidence import ChunkReader
 
 
@@ -27,6 +28,24 @@ class GpuRound(Round):
         self.tag = f'instinct-gpu-r{number}'
 
     def design(self, plan_doc):
+        if self.number == 2:
+            earlier = GpuRound(1)
+            result_path = earlier.docs / 'RESULTS.json'
+            previous_result = load(result_path)
+            if previous_result['comparisons']['previous_gpu_r2']['guardrails_pass']:
+                raise ValueError('R2 design must match the archived R1 outcome')
+            pilot, = sorted(self.project.glob('pilot-*/RESULTS.json'))
+            support = load(pilot)['summary']
+            if not support['witnesses_replayed'] or support['counters']['nontraining_transitions'] != 7680:
+                raise ValueError('Missing full physical moving-sphere preflight')
+            history = SYSTEM_ROOT / earlier.train / 'matched-history-probe.json'
+            pilot_id = f'{self.run_prefix}DYNAMIC-PILOT-{pilot.parent.name.removeprefix("pilot-")}'
+            diagnosis = [plan_doc, pin(result_path), pin(history), pin(pilot),
+                         pin(self.project / 'R1_LESSON.md'), pin(self.project / 'R2_DESIGN.md'),
+                         pin(self.project / 'DYNAMIC_TRAINING_CHECK.md')]
+            return load(earlier.docs / 'curriculum.json'), diagnosis, pilot_id, (
+                'Repeated physical mover encounters and bounded directional reward improve survival while preserving '
+                'static command tracking and zero-command holding away from an approaching object.')
         curriculum = load(PREVIOUS / 'round-2' / 'curriculum.json')
         earlier = pin(PREVIOUS / 'REPORT.md')
         planar = pin(ROOT / 'docs/experiments/instinct-dynamic-five/REPORT.md')
