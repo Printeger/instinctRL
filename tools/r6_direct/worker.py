@@ -202,7 +202,8 @@ def run(plan, input_pin):
                 use_option = recipe['candidate_id'] == ESCAPE_OPTION_CANDIDATE
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
             from training_workloads.unified_h1.dynamic_assay import HOLDOUT_RUN, HOLDOUT_SMOKE, OPTION_RUN
-            if plan['run_id'] in (HOLDOUT_RUN, HOLDOUT_SMOKE):
+            holdout = plan['run_id'] in (HOLDOUT_RUN, HOLDOUT_SMOKE)
+            if holdout:
                 from training_workloads.unified_h1.escape_option_env import EscapeHoldoutEnv
                 env = EscapeHoldoutEnv(cfg, layout_seed=params['seed'])
             elif use_option or plan['run_id'] == OPTION_RUN:
@@ -219,7 +220,10 @@ def run(plan, input_pin):
             backend.initialization_measurement=dict(status='OBSERVED',observed_physics_ticks=ticks,
                 counter_source=env.h1_initialization_tick_source,fresh_physical_reset=True)
             from training_workloads.unified_h1.robustness_contract import baseline,evaluate_baseline
-            backend.initial_preflight()
+            if holdout:
+                env.holdout_preflight(backend.output)
+            else:
+                backend.initial_preflight()
             operation=contract['operation']
             atomic(attempt/'state.json',{'status':'TRAINING' if operation=='train' else 'EVALUATING',
                 'identity':process_identity(os.getpid()),'counters':counters.snapshot()})

@@ -47,3 +47,19 @@ class EscapeHoldoutEnv(EscapeOptionEnv):
         points, faces, walls, wall_faces = self.holdout_geometry
         _define_triangle_mesh(H1_RAY_MESH_PATH, points, faces, collision=False)
         _define_triangle_mesh('/World/H1CollisionWalls/Walls', walls, wall_faces, collision=True)
+
+    def holdout_preflight(self, output):
+        from training_workloads.scale_003.persistence import atomic_json_replace
+        from .preflight import (initial_source, live_geometry_readback, persist_initial_source,
+                                validate_initial_observability)
+
+        geometry = live_geometry_readback(self)
+        atomic_json_replace(output, 'initial_preflight/geometry.json', geometry)
+        source = initial_source(self)
+        persist_initial_source(output, source)
+        observability = validate_initial_observability(source, output, full_rank=False)
+        atomic_json_replace(output, 'initial_preflight.json', {
+            'schema_version': 'unified-h1-preflight.v1', 'status': 'PASS',
+            'scene': 'room-door-trunks-street-tube', 'num_envs': 32,
+            'geometry': geometry, 'observability': observability,
+        })

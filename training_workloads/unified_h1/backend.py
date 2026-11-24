@@ -106,11 +106,10 @@ class UnifiedH1LiveBackend:
         geometry = live_geometry_readback(self.environment)
         atomic_json_replace(self.output, "initial_preflight/geometry.json", geometry)
         source = initial_source(self.environment); persist_initial_source(self.output, source)
-        holdout = getattr(self.environment, 'holdout_geometry', None) is not None
-        observability = validate_initial_observability(source, self.output, full_rank=not holdout)
+        observability = validate_initial_observability(source, self.output)
         atomic_json_replace(self.output, "initial_preflight.json", {
             "schema_version": "unified-h1-preflight.v1", "status": "PASS",
-            "scene": "room-door-trunks-street-tube" if holdout else "combined-finite-floor-x-wall-y-wall", "num_envs": 32,
+            "scene": "combined-finite-floor-x-wall-y-wall", "num_envs": 32,
             "geometry": geometry, "observability": observability,
         })
 
