@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import shutil
 
-from tools.r6_direct.evidence import read
+from tools.r6_direct.evidence import read, validate_binding
 from tools.r6_direct.import_legacy import ROOT, pin
 from tools.r6_direct.instinct_cycle import load
 from tools.r6_direct.instinct_cycle_finish import freeze, guard
@@ -31,7 +31,7 @@ class PostR4Study(LongStudy):
         if self.snapshot == ROOT:
             raise ValueError('Use a detached source snapshot')
         self.tag_prefix = 'instinct-post-r4-three'
-        self.eval = THREE_PREFIX + 'HOLDOUT-R3'
+        self.eval = THREE_PREFIX + 'R6-R3-END'
         self.protocol = load(PROTOCOL)
 
     def setup(self):
@@ -110,6 +110,12 @@ class PostR4Study(LongStudy):
             raise ValueError('Use a registered short or formal round')
         self.docs = PROJECT/label
         self.docs.mkdir(exist_ok=True)
+        design_path = self.docs/'DESIGN.json'
+        if design_path.exists():
+            design = load(design_path)
+            if design['decision'] != pin(spec_path) or read(design['source']) != manifest():
+                raise ValueError('The training design is already frozen with another input')
+            return pin(design_path)
         old = load(PREVIOUS/'FORMAL_DESIGN.json')
         recipe = read(old['recipe'])
         curriculum = read(recipe['curriculum'])
@@ -139,6 +145,23 @@ class PostR4Study(LongStudy):
         freeze(f'{self.tag_prefix}-{label.lower()}-design', f'Freeze {label} scientific and training inputs',
                spec_path, Path(source['path']), *(self.docs/name for name in ('DESIGN.json', 'curriculum.json', 'method.json', 'recipe.json')))
         return design
+
+    def development_check(self, label):
+        if label not in ('SHORT-R1', 'SHORT-R2', 'SHORT-R3', 'FORMAL-R1', 'FORMAL-R2', 'FORMAL-R3'):
+            raise ValueError('Unknown development comparison')
+        result = read(pin(PROJECT/label/'RESULTS.json'))
+        models = dict(candidate=result['end'], reference=result['start'])
+        if label.startswith('SHORT-'):
+            row = result['segments'][-1]
+            _, _, report = validate_binding(row['analysis'])
+            alternatives = [checkpoint for checkpoint in report['summary']['checkpoints']
+                            if checkpoint['pin'] != result['end']]
+            if len(alternatives) > 1:
+                raise ValueError('Only one intermediate short checkpoint enters the paired check')
+            if alternatives:
+                models['control'] = alternatives[0]['pin']
+        seed = self.protocol['development']['physical_seeds'][int(label[-1])-1]
+        return self.physical('CHECK-'+label, seed, models, dict.fromkeys(models, result['execution']), 1800)
 
     def independent_inputs(self):
         results = [pin(PROJECT/f'FORMAL-R{i}'/'RESULTS.json') for i in range(1, 4)]
@@ -276,7 +299,7 @@ class PostR4Study(LongStudy):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('stage', choices=('setup', 'rear', 'physical', 'prepare-train', 'train', 'final-evaluation'))
+    parser.add_argument('stage', choices=('setup', 'rear', 'physical', 'check', 'prepare-train', 'train', 'final-evaluation'))
     parser.add_argument('spec', nargs='?')
     args = parser.parse_args()
     guard()
@@ -286,7 +309,12 @@ def main():
     elif args.stage == 'rear':
         result = study.rear(args.spec or '01')
     elif args.stage == 'physical':
-        result = study.physical(**load(Path(args.spec)))
+        spec = load(Path(args.spec))
+        if not spec['label'].startswith('MECHANISM-'):
+            raise ValueError('Use the dedicated entry for paired development checks or final holdout')
+        result = study.physical(**spec)
+    elif args.stage == 'check':
+        result = study.development_check(args.spec)
     elif args.stage == 'prepare-train':
         result = study.prepare_training(Path(args.spec).resolve())
     elif args.stage == 'train':

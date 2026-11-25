@@ -81,7 +81,7 @@ def contract(params):
     models = params['models']
     three_arms = params['experiment_id'] in (HOLDOUT_RUN, *RECOVERY_MECHANISM_RUNS, RECOVERY_HOLDOUT)
     allowed_models = {'candidate', 'control', 'reference'} if three_arms else {'candidate', 'reference'}
-    if case in ('HOLDOUT', 'MECHANISM'):
+    if case in ('HOLDOUT', 'MECHANISM', 'CHECK'):
         allowed_models.add('control')
     if case == 'REAR':
         allowed_models.update(('candidate_slow', 'reference_slow'))
@@ -93,7 +93,8 @@ def contract(params):
         from instinctlab.control.escape_recovery import FAST_LATERAL_VERSION, LATERAL_VERSION, RECOVERY_VERSION
 
         options = params['arm_options']
-        if (not isinstance(options, dict) or set(options) != allowed_models or set(models) != allowed_models
+        expected_models = allowed_models if case != 'CHECK' or 'control' in models else {'candidate', 'reference'}
+        if (not isinstance(options, dict) or set(options) != expected_models or set(models) != expected_models
                 or not all(version in (None, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION)
                            for version in options.values())):
             raise ValueError('DYNAMIC_THREE_OPTIONS')
@@ -102,7 +103,7 @@ def contract(params):
         if case == 'REAR' and options != dict(reference=RECOVERY_VERSION, candidate=LATERAL_VERSION,
                                              reference_slow=RECOVERY_VERSION, candidate_slow=LATERAL_VERSION):
             raise ValueError('DYNAMIC_REAR_FACTORIAL')
-        if case == 'CHECK' and (options['candidate'] is None or options['candidate'] != options['reference']):
+        if case == 'CHECK' and (options['candidate'] is None or len(set(options.values())) != 1):
             raise ValueError('DYNAMIC_THREE_CHECK_EXECUTION')
         if case == 'HOLDOUT' and (options['reference'] is not None or options['candidate'] is None
                                   or options['candidate'] != options['control']):
@@ -254,7 +255,8 @@ def run(backend, params):
             if three:
                 version = params['arm_options'][label]
                 enabled = version is not None
-            if (three in ('CHECK', 'HOLDOUT') or run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT, *RECOVERY_SHORT_CHECKS)) and label == 'candidate':
+            trained = label == 'candidate' or (three == 'CHECK' and label == 'control')
+            if (three in ('CHECK', 'HOLDOUT') or run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT, *RECOVERY_SHORT_CHECKS)) and trained:
                 if payload['method_hashes'].get(METHOD_FIELD) != version:
                     raise ValueError('DYNAMIC_HOLDOUT_METHOD_BINDING')
             env.set_escape_option(enabled, version=version)
