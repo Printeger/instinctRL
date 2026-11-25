@@ -91,7 +91,8 @@ def run_loaded(backend,*,plan,metadata,source_identity,method_hashes,expected_ma
         env.set_h1_initial_command(command_at(start,device=env.device),start)
         if phase['kind']=='robust':
             sampled=PhaseCurriculum(curriculum,branch_updates=recipe['branch_updates'],phase_index=phase['index'],
-                generator=backend.curriculum_generator,audit_sink=audit)
+                generator=backend.curriculum_generator,audit_sink=audit,
+                tube_lanes=getattr(env,'tube_training_lanes',()))
             types=tuple(('near_x_wall' if lane<16 else 'near_y_wall')
                 if sampled.value['conditions'][name]['task']=='wall_modes' else 'center'
                 for lane,name in enumerate(sampled.assignments))

@@ -72,7 +72,7 @@ def slices(value,start_update,target_update):
 
 
 class PhaseCurriculum:
-    def __init__(self,value,*,branch_updates,phase_index,generator,audit_sink):
+    def __init__(self,value,*,branch_updates,phase_index,generator,audit_sink,tube_lanes=()):
         import torch
         self.value=validate(value,branch_updates=branch_updates)
         require(type(phase_index)is int and 0<=phase_index<len(value['phases']),'PHASE_INDEX')
@@ -90,6 +90,19 @@ class PhaseCurriculum:
         for half in range(2):
             permutation=torch.randperm(16,generator=generator).tolist()
             self.assignments.extend(labels[i] for i in permutation)
+        if tube_lanes:
+            from .recovery_training_scene import TUBE_LANES
+
+            require(tuple(tube_lanes) == TUBE_LANES, 'TUBE_SCENE_LANES')
+            for half in range(2):
+                target = [lane for lane in tube_lanes if lane//16 == half]
+                relative = list(range(16*half, 16*(half+1)))
+                vacant = [lane for lane in target if self.assignments[lane] != 'stop']
+                donors = [lane for lane in relative if lane not in target and self.assignments[lane] == 'stop']
+                require(len(vacant) <= len(donors), 'TUBE_STOP_COVERAGE')
+                for lane, donor in zip(vacant, donors):
+                    self.assignments[lane], self.assignments[donor] = self.assignments[donor], self.assignments[lane]
+            self.record('TUBE_TRAINING_LANES', dict(lanes=list(tube_lanes), task='stop'))
         self.record('LANE_ASSIGNMENTS',dict(phase_index=phase_index,start_policy_step=self.start,end_policy_step=self.end,
             requested_counts_per_half=self.phase['lane_counts_per_half'],actual_sampled_conditions=self.assignments,
             rng_before=before,rng_after=generator.get_state().clone(),physical_exposure_verified=False))

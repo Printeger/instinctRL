@@ -13,6 +13,15 @@ PPO_FIELDS={'gamma','gae_lambda','clip_ratio','value_loss_coefficient','entropy_
 WEIGHTS={'residual_neutrality_weight','anchor_weight','mean_prior_weight','ics_clearance_margin_m'}
 HOVER_REFLEX_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R3-REFLEX'
 ESCAPE_OPTION_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R4-ESCAPE-OPTION'
+ESCAPE_RECOVERY_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-RECOVERY'
+
+
+def action_option_version(candidate):
+    from instinctlab.control.escape_option import METHOD_VERSION
+    from instinctlab.control.escape_recovery import RECOVERY_VERSION
+
+    return {ESCAPE_OPTION_CANDIDATE: METHOD_VERSION,
+            ESCAPE_RECOVERY_CANDIDATE: RECOVERY_VERSION}.get(candidate)
 
 
 def require(value,reason):
@@ -97,9 +106,10 @@ def bound_method_hashes(plan, recipe):
                   r6_method=recipe['method']['sha256'], curriculum='curriculum-h1-r6-v1')
     if recipe['candidate_id'] == HOVER_REFLEX_CANDIDATE:
         hashes['r6_actor_reflex'] = 'm4-hover-reflex-v2'
-    if recipe['candidate_id'] == ESCAPE_OPTION_CANDIDATE:
-        from instinctlab.control.escape_option import METHOD_FIELD, METHOD_VERSION
-        hashes[METHOD_FIELD] = METHOD_VERSION
+    version = action_option_version(recipe['candidate_id'])
+    if version is not None:
+        from instinctlab.control.escape_option import METHOD_FIELD
+        hashes[METHOD_FIELD] = version
     return hashes
 
 
@@ -152,18 +162,18 @@ def restore_and_bind(backend,*,plan,execution_identity):
                 trainer, period_s=float(cfg.sim.dt) * cfg.decimation)
             trainer._r6_bound_auxiliary = trainer.actor_auxiliary
         elif recipe['candidate_id'] in (dynamic_motion_training.CANDIDATE, HOVER_REFLEX_CANDIDATE,
-                                       ESCAPE_OPTION_CANDIDATE):
+                                       ESCAPE_OPTION_CANDIDATE, ESCAPE_RECOVERY_CANDIDATE):
             env = backend.environment
             obstacle = getattr(env, '_h1_moving_sphere', None)
             require(obstacle is not None, 'DYNAMIC_BODY_REQUIRED')
             if recipe['candidate_id'] == HOVER_REFLEX_CANDIDATE and trainer.actor.hover_reflex is None:
                 binding['hover_reflex'] = attach_hover_reflex(trainer)
             reflex = trainer.actor.hover_reflex
-            if recipe['candidate_id'] == ESCAPE_OPTION_CANDIDATE:
-                from instinctlab.control.escape_option import METHOD_VERSION
-                require(getattr(env, 'escape_option', None) is not None, 'ESCAPE_OPTION_REQUIRED')
+            version = action_option_version(recipe['candidate_id'])
+            if version is not None:
+                require(getattr(env, 'escape_option_version', None) == version, 'ESCAPE_OPTION_REQUIRED')
                 reflex = env.escape_option.detector
-                binding['escape_option'] = dict(version=METHOD_VERSION, placement='before governor and ICS',
+                binding['escape_option'] = dict(version=version, placement='before governor and ICS',
                                                policy_distribution_unchanged=True)
             env._h1_dynamic_reward = trainer._r6_bound_dynamic_reward = dynamic_motion_training.amend_reward
             binding['dynamic_reward'] = dict(target='forecast local separation and command deviation',

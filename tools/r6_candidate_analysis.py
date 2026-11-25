@@ -41,8 +41,12 @@ def validate_binding(binding,selected):
 
 
 def validate_method_binding(binding,selected):
+    from training_workloads.unified_h1.robustness_candidate_restore import evaluation_option_version
+
     model=selected['model'];method=selected['method']
     actual=binding['actual_method_binding'];env=actual['actual_environment']
+    if actual.get('escape_option') != evaluation_option_version(selected):
+        raise RecoveryError('CANDIDATE_ANALYSIS_ESCAPE_OPTION_DEPLOYMENT')
     permutation_seed=model['training_seed']
     if selected['selection']['role']=='baseline_control':
         # apply_method(resume=False) preserves the frozen checkpoint's PPO

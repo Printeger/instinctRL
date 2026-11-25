@@ -186,30 +186,41 @@ def run(plan, input_pin):
         else:
             from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv,UnifiedH1DirectEnvCfg
             from training_workloads.unified_h1.checkpoint_compatibility import pinned_json
-            from training_workloads.unified_h1.robustness_training_method import ESCAPE_OPTION_CANDIDATE, HOVER_REFLEX_CANDIDATE
+            from training_workloads.unified_h1.robustness_training_method import (
+                ESCAPE_RECOVERY_CANDIDATE, HOVER_REFLEX_CANDIDATE, action_option_version,
+            )
             operation = contract['operation']
             params = contract['parameters']
             moving = operation == 'dynamic'
-            use_option = False
+            option_version = None
             if operation == 'train':
                 recipe = pinned_json(params['r6_training_plan']['recipe'])
-                use_option = recipe['candidate_id'] == ESCAPE_OPTION_CANDIDATE
-                moving = recipe['candidate_id'] in (
-                    'R6-CANDIDATE-INSTINCT-GPU-R2', 'R6-CANDIDATE-INSTINCT-GPU-R3', HOVER_REFLEX_CANDIDATE,
-                    ESCAPE_OPTION_CANDIDATE)
-            if operation == 'evaluate' and params['evaluation_selection']['training_plan'] is not None:
-                recipe = pinned_json(params['evaluation_selection']['training_plan']['recipe'])
-                use_option = recipe['candidate_id'] == ESCAPE_OPTION_CANDIDATE
+                option_version = action_option_version(recipe['candidate_id'])
+                moving = option_version is not None or recipe['candidate_id'] in (
+                    'R6-CANDIDATE-INSTINCT-GPU-R2', 'R6-CANDIDATE-INSTINCT-GPU-R3', HOVER_REFLEX_CANDIDATE)
+            if operation == 'evaluate':
+                selection = params['evaluation_selection']
+                if selection['training_plan'] is not None:
+                    recipe = pinned_json(selection['training_plan']['recipe'])
+                    option_version = action_option_version(recipe['candidate_id'])
+                elif pinned_json(selection['comparison'])['candidate_id'] == ESCAPE_RECOVERY_CANDIDATE:
+                    option_version = action_option_version(ESCAPE_RECOVERY_CANDIDATE)
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
             from training_workloads.unified_h1.dynamic_assay import PHYSICAL_LAYOUT_RUNS, OPTION_RUN, RECOVERY_PREFIX
             holdout = plan['run_id'] in PHYSICAL_LAYOUT_RUNS
+            recovery_training = operation == 'train' and recipe['candidate_id'] == ESCAPE_RECOVERY_CANDIDATE
             if holdout:
                 from training_workloads.unified_h1.escape_option_env import EscapeHoldoutEnv
                 env = EscapeHoldoutEnv(cfg, layout_seed=params['seed'])
-            elif use_option or plan['run_id'] == OPTION_RUN:
+            elif recovery_training:
+                from training_workloads.unified_h1.escape_option_env import EscapeRecoveryTrainingEnv
+                env = EscapeRecoveryTrainingEnv(cfg)
+                env.set_escape_option(True, version=option_version)
+            elif option_version is not None or plan['run_id'] == OPTION_RUN:
                 from training_workloads.unified_h1.escape_option_env import EscapeOptionEnv
                 env = EscapeOptionEnv(cfg)
-                env.set_escape_option(use_option)
+                if option_version is not None:
+                    env.set_escape_option(True, version=option_version)
             else:
                 env = UnifiedH1DirectEnv(cfg)
             ticks=env.h1_initialization_physics_ticks
@@ -222,6 +233,8 @@ def run(plan, input_pin):
             from training_workloads.unified_h1.robustness_contract import baseline,evaluate_baseline
             if holdout:
                 env.holdout_preflight(backend.output)
+            elif recovery_training:
+                env.holdout_preflight(backend.output, scene='training-tubes-and-combined-walls')
             else:
                 backend.initial_preflight()
             if plan['run_id'].startswith(RECOVERY_PREFIX):

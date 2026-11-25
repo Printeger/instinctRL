@@ -70,13 +70,14 @@ class Round:
     def input_path(self, run_id):
         return self.docs / f'{run_id}-inputs.json'
 
-    def input(self, run_id, contract, predecessor, *, snapshot=SNAPSHOT, source=None):
+    def input(self, run_id, contract, predecessor, *, snapshot=SNAPSHOT, source=None, resource_policy=None):
         template = load(FIRST / 'R6-DIRECT-INSTINCT-CYCLE1-TRAIN-01-R3-inputs.json')
         return self.write(self.input_path(run_id).name, dict(destination(run_id),
             schema_version='r6-direct-run-inputs/1', snapshot=str(snapshot),
             source=source or pin(self.docs / 'source.json'), contract=contract,
             extension_inputs=template['extension_inputs'], ipc_wrapper=template['ipc_wrapper'],
-            resource_policy=pin(self.docs / 'RESOURCE_POLICY.json'), storage_reservation_id='ROUND-SYSTEM',
+            resource_policy=resource_policy or pin(self.docs / 'RESOURCE_POLICY.json'),
+            storage_reservation_id='ROUND-SYSTEM',
             result_payload_cap_bytes=read(contract)['parameters']['output_cap_bytes'],
             predecessor_receipt=predecessor))
 

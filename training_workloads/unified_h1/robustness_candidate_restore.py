@@ -34,11 +34,16 @@ def restore(backend,selection):
         validate_pin(model['checkpoint']);verify_loaded(selected,metadata)
         method_binding=apply_method(trainer,backend.environment,selected['method'],
             resume=selection['role']=='trained_candidate',training_seed=model['training_seed'])
-        from instinctlab.control.escape_option import METHOD_FIELD, METHOD_VERSION
-        option_version = model['method_hashes'].get(METHOD_FIELD)
+        from instinctlab.control.escape_option import METHOD_FIELD
+        from .robustness_training_method import action_option_version
+        option_version = evaluation_option_version(selected)
         if option_version is not None:
-            require(option_version == METHOD_VERSION and getattr(backend.environment, 'escape_option', None) is not None,
+            require(getattr(backend.environment, 'escape_option_version', None) == option_version,
                     'ESCAPE_OPTION_DEPLOYMENT')
+            if selection['role'] == 'trained_candidate':
+                require(model['method_hashes'].get(METHOD_FIELD) == option_version
+                        and action_option_version(selected['comparison']['candidate_id']) == option_version,
+                        'ESCAPE_OPTION_CHECKPOINT_DEPLOYMENT')
             method_binding['escape_option'] = option_version
         trainer.actor.eval();trainer.critic.eval()
     except BaseException:
@@ -50,3 +55,13 @@ def restore(backend,selection):
     backend.trainer=trainer
     return dict(selection=selected,metadata=metadata,method_binding=method_binding,
         actor_input_extension=False,physical_history_continuity_claimed=False,optimizer_updates=0)
+
+
+def evaluation_option_version(selected):
+    from instinctlab.control.escape_option import METHOD_FIELD
+    from .robustness_training_method import ESCAPE_RECOVERY_CANDIDATE, action_option_version
+
+    candidate = selected['comparison']['candidate_id']
+    if selected['selection']['role'] == 'baseline_control' and candidate == ESCAPE_RECOVERY_CANDIDATE:
+        return action_option_version(candidate)
+    return selected['model']['method_hashes'].get(METHOD_FIELD)

@@ -34,6 +34,8 @@ GIB = 2**30
 
 
 class LongStudy(Round):
+    tag_prefix = 'instinct-post-r3'
+
     def __init__(self):
         self.docs = PROJECT / 'long'
         self.ledger = self.docs / 'RESOURCE_LEDGER.json'
@@ -160,7 +162,7 @@ class LongStudy(Round):
                     probability_replay=dict(backend='isaaclab_seeded_reset', contract=job['contract'], retained=retained))
         self.write(path.name, spec)
         if not (Path(spec['output_root'])/'receipt.json').exists():
-            freeze('instinct-post-r3-probability-u'+str(plan['target_update']),
+            freeze(self.tag_prefix + '-probability-u'+str(plan['target_update']),
                    'Freeze exact same-device probability replay', path, self.ledger)
             command(self.snapshot, 'cuda_diagnostic', '--plan', path, system=True, check=False)
         receipt = wait_closed(spec, minutes=3)
@@ -203,7 +205,7 @@ class LongStudy(Round):
         segment = self.docs/f'U{plan["target_update"]}.json'
         if not segment.exists():
             self.write(segment.name, row)
-            freeze(f'instinct-post-r3-u{plan["target_update"]}-closed', 'Record audited PPO segment', segment, self.ledger)
+            freeze(f'{self.tag_prefix}-u{plan["target_update"]}-closed', 'Record audited PPO segment', segment, self.ledger)
         elif load(segment) != row:
             raise ValueError('Previously closed training segment differs')
         return row

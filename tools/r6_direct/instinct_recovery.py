@@ -31,6 +31,7 @@ class RecoveryStudy(LongStudy):
         self.eval = RECOVERY_HOLDOUT
         self.snapshot = SNAPSHOT
         self.source = None
+        self.resource_policy = None
 
     def dynamic_input(self, run_id, seed, models, predecessor, *, wall_seconds):
         from tools.r6_direct.prepare import build
@@ -40,7 +41,8 @@ class RecoveryStudy(LongStudy):
                       models=models, wall_seconds=wall_seconds, output_cap_bytes=GIB)
         contract = self.write(f'{run_id}-contract.json',
                               build('contract', dict(operation='dynamic', parameters=params)))
-        self.input(run_id, contract, predecessor, snapshot=self.snapshot, source=self.source)
+        self.input(run_id, contract, predecessor, snapshot=self.snapshot, source=self.source,
+                   resource_policy=self.resource_policy)
         return path
 
     def prepare_mechanism(self):

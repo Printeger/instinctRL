@@ -24,9 +24,11 @@ RECOVERY_MECHANISM_RETRY = RECOVERY_PREFIX + 'MECHANISM-02'
 RECOVERY_MECHANISM_RUNS = (RECOVERY_MECHANISM, RECOVERY_MECHANISM_RETRY)
 RECOVERY_REAR = RECOVERY_PREFIX + 'REAR-01'
 RECOVERY_HOLDOUT = RECOVERY_PREFIX + 'HOLDOUT'
+RECOVERY_SHORT_CHECKS = tuple(RECOVERY_PREFIX + f'SHORT-CHECK-U{u}' for u in (656, 672, 704))
 HOLDOUT_GROUPS = ((8, 8, 8, 8), (0, 0, 0, 0), (2, 3, 2, 4),
                   (6, 6, 6, 6), (7, 7, 7, 7), (9, 9, 9, 9))
-PHYSICAL_LAYOUT_RUNS = (HOLDOUT_RUN, HOLDOUT_SMOKE, *RECOVERY_MECHANISM_RUNS, RECOVERY_REAR, RECOVERY_HOLDOUT)
+PHYSICAL_LAYOUT_RUNS = (HOLDOUT_RUN, HOLDOUT_SMOKE, *RECOVERY_MECHANISM_RUNS, RECOVERY_REAR,
+                        RECOVERY_HOLDOUT, *RECOVERY_SHORT_CHECKS)
 MODES = ('approach', 'recede', 'cross_left', 'cross_right',
          'hover', 'hover_wall', 'static_travel', 'static_hover',
          'open_front', 'open_rear', 'wall_front', 'wall_rear')
@@ -37,7 +39,7 @@ def groups_for(run_id):
         return PERSISTENCE_GROUPS
     if run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT):
         return HOLDOUT_GROUPS
-    if run_id in RECOVERY_MECHANISM_RUNS:
+    if run_id in (*RECOVERY_MECHANISM_RUNS, *RECOVERY_SHORT_CHECKS):
         return tuple(HOLDOUT_GROUPS[i] for i in (1, 3, 4))
     if run_id == RECOVERY_REAR:
         return (HOLDOUT_GROUPS[-1],)
@@ -68,7 +70,7 @@ def contract(params):
     if params['experiment_id'] in (PERSISTENCE_RUN, OPTION_RUN) and (
             set(models) != {'candidate', 'reference'} or models['candidate'] != models['reference']):
         raise ValueError('DYNAMIC_ASSAY_SAME_WEIGHT_MODELS')
-    if (three_arms or params['experiment_id'] == RECOVERY_REAR) and set(models) != allowed_models:
+    if (three_arms or params['experiment_id'] in (RECOVERY_REAR, *RECOVERY_SHORT_CHECKS)) and set(models) != allowed_models:
         raise ValueError('DYNAMIC_HOLDOUT_COMPLETE_COMPARISON')
     if params['experiment_id'] in (*RECOVERY_MECHANISM_RUNS, RECOVERY_REAR) and any(
             pin != models['reference'] for pin in models.values()):
@@ -206,7 +208,9 @@ def run(backend, params):
                 enabled = True
             if run_id == RECOVERY_HOLDOUT:
                 version = RECOVERY_VERSION
-            if run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT) and label == 'candidate':
+            if run_id in RECOVERY_SHORT_CHECKS:
+                enabled, version = True, RECOVERY_VERSION
+            if run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT, *RECOVERY_SHORT_CHECKS) and label == 'candidate':
                 if payload['method_hashes'].get(METHOD_FIELD) != version:
                     raise ValueError('DYNAMIC_HOLDOUT_METHOD_BINDING')
             env.set_escape_option(enabled, version=version)

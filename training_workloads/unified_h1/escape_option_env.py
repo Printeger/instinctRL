@@ -51,17 +51,21 @@ class EscapeHoldoutEnv(EscapeOptionEnv):
         super().__init__(cfg)
 
     def _setup_scene(self):
-        from instinctlab.envs.unified_h1_direct_env import _define_triangle_mesh
-        from instinctlab.task.scene_h1 import H1_RAY_MESH_PATH
         from .escape_holdout_scene import scene_geometry
 
         super()._setup_scene()
-        self.holdout_geometry = scene_geometry(self.scene.env_origins.detach().cpu(), self.layout_seed)
-        points, faces, walls, wall_faces = self.holdout_geometry
+        self._replace_mesh(scene_geometry(self.scene.env_origins.detach().cpu(), self.layout_seed))
+
+    def _replace_mesh(self, geometry):
+        from instinctlab.envs.unified_h1_direct_env import _define_triangle_mesh
+        from instinctlab.task.scene_h1 import H1_RAY_MESH_PATH
+
+        self.holdout_geometry = geometry
+        points, faces, walls, wall_faces = geometry
         _define_triangle_mesh(H1_RAY_MESH_PATH, points, faces, collision=False)
         _define_triangle_mesh('/World/H1CollisionWalls/Walls', walls, wall_faces, collision=True)
 
-    def holdout_preflight(self, output):
+    def holdout_preflight(self, output, *, scene='room-door-trunks-street-tube'):
         from training_workloads.scale_003.persistence import atomic_json_replace
         from .preflight import (initial_source, live_geometry_readback, persist_initial_source,
                                 validate_initial_observability)
@@ -73,6 +77,19 @@ class EscapeHoldoutEnv(EscapeOptionEnv):
         observability = validate_initial_observability(source, output, full_rank=False)
         atomic_json_replace(output, 'initial_preflight.json', {
             'schema_version': 'unified-h1-preflight.v1', 'status': 'PASS',
-            'scene': 'room-door-trunks-street-tube', 'num_envs': 32,
+            'scene': scene, 'num_envs': 32,
             'geometry': geometry, 'observability': observability,
         })
+
+
+class EscapeRecoveryTrainingEnv(EscapeHoldoutEnv):
+    from .recovery_training_scene import TUBE_LANES as tube_training_lanes
+
+    def __init__(self, cfg):
+        super().__init__(cfg, layout_seed=None)
+
+    def _setup_scene(self):
+        from .recovery_training_scene import geometry
+
+        EscapeOptionEnv._setup_scene(self)
+        self._replace_mesh(geometry(self.scene.env_origins.detach().cpu()))
