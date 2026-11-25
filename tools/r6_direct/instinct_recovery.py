@@ -100,10 +100,14 @@ class RecoveryStudy(LongStudy):
         start = read(pin(R4/'DESIGN.json'))['initial']['checkpoint']
         rear = self.input_path(RECOVERY_REAR)
         if not rear.exists():
+            analysis_source = []
+            if read(pin(path))['snapshot'] != str(self.snapshot):
+                self.source = self.write('source-rear.json', manifest())
+                analysis_source.append(PROJECT/'source-rear.json')
             self.dynamic_input(RECOVERY_REAR, DEVELOPMENT_SEED+1,
                                dict(reference=start, candidate=start), first['predecessor'], wall_seconds=750)
             freeze('instinct-r4-recovery-rear-inputs', 'Freeze matched sensor aspect comparison',
-                   PROJECT/f'{RECOVERY_REAR}-contract.json', rear, self.ledger)
+                   PROJECT/f'{RECOVERY_REAR}-contract.json', rear, self.ledger, *analysis_source)
         second = self.evaluate(rear)
         _, _, report = validate_binding(first['binding'])
         summary = {}
