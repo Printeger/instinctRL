@@ -1503,6 +1503,53 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-R6-CANDIDATE/native"
       },
       "storage_reservation_id": "ROUND-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 155627520,
+      "id": "R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-HOLDOUT",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-HOLDOUT/control/receipt.json",
+        "sha256": "297bde5ee4a688fe29892d6ce1197a68c73de310a97185f71f2a5bcd5b1c6f3e"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-r4-recovery/TRAIN_RETRY_RESOURCE_POLICY.json",
+        "sha256": "288363dc3fa1d09607938fc08241663a76fac3916b308c6df53d2214476585c8"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 676,
+        "live_starts": 1,
+        "live_wall_seconds": 676,
+        "nontraining_transitions": 69120,
+        "output_actual_plus_unreleased_reservations_bytes": 155627520,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_transitions": 0
+      },
+      "settlement": {
+        "charged_seconds": 676,
+        "original_resources": {
+          "allocated_gpu_seconds": 1990,
+          "live_starts": 1,
+          "live_wall_seconds": 1990,
+          "nontraining_transitions": 69120,
+          "output_actual_plus_unreleased_reservations_bytes": 1342177280,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-HOLDOUT/control/receipt.json",
+          "sha256": "297bde5ee4a688fe29892d6ce1197a68c73de310a97185f71f2a5bcd5b1c6f3e"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-HOLDOUT",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-HOLDOUT/native"
+      },
+      "storage_reservation_id": "ROUND-SYSTEM"
     }
   ],
   "new_used": {
@@ -1533,5 +1580,5 @@
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-r4-recovery/TRAIN_RETRY_RESOURCE_POLICY.json",
     "sha256": "288363dc3fa1d09607938fc08241663a76fac3916b308c6df53d2214476585c8"
   },
-  "status": "CONTROLLED_HANDOFF"
+  "status": "COMPLETE"
 }
