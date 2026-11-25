@@ -2,6 +2,10 @@
 
 项目开发默认使用 Maverick V1.2.0。角色与交付规则见根 `AGENTS.md`，安装与验证记录见 `.maverick/STATE.md`。R6 本地执行入口仍为 `tools/r6_direct/`。
 
+# R4 后续三轮研发在执行
+
+第一轮正式 `u640→u896` 已完成 256 次更新与 131,072 条训练转换，两段权重和 RNG 恢复均已核验。开发同机制配对中四布局普通进度改善，后向接触仍为 24/32，管道联合恢复为 7/8。第二轮选择固定权重对照中后向接触最低的 28° LiDAR 标定，正在进行 128 次正式更新。第三轮选路等待第二轮开发闭环。最终独评种子、指标和分母已预先冻结。 [研发计划](experiments/instinct-post-r4-three/PLAN.md) · [第一轮关闭复核](experiments/instinct-post-r4-three/FORMAL-R1-TRAINING-AUDIT.json) · [第二轮正式设计](experiments/instinct-post-r4-three/FORMAL-R2.md)
+
 # R4 后管道恢复正式训练和独评完成，等待审查
 
 固定权重实测表明，经原 governor 和 ICS 的回切把管道联合恢复从 0/8 提升到 8/8。正式从 `u640` 至 `u1664` 完成 1,024 次更新、524,288 条训练转换，以及三臂完整 R6 与四布局物理留出共 649,920 条评价转换。旧合格模型、同机制起点和终点的前向接触为 64/64、3/64、2/64，后向均为 32/32。终点街道恢复改善，管道联合恢复从 8/8 降至 7/8。四布局普通通行通过，管道悬停漂移和相对旧合格模型的 R6 跟踪误差超线。旧合格模型仍为产品基线。全部作业已关闭，保留原件和恢复证据，停在唯一审查点。 [审查报告](experiments/instinct-r4-recovery/REPORT.md) · [交付复核](experiments/instinct-r4-recovery/COMPLETION_AUDIT.json)
