@@ -2,9 +2,9 @@
 
 项目开发默认使用 Maverick V1.2.0。角色与交付规则见根 `AGENTS.md`，安装与验证记录见 `.maverick/STATE.md`。R6 本地执行入口仍为 `tools/r6_direct/`。
 
-# R4 后续三轮研发在执行
+# R4 后续三轮正式训练已关闭，统一独评在执行
 
-第一轮正式 `u640→u896` 已完成 256 次更新与 131,072 条训练转换，两段权重和 RNG 恢复均已核验。开发同机制配对中四布局普通进度改善，后向接触仍为 24/32，管道联合恢复为 7/8。第二轮选择固定权重对照中后向接触最低的 28° LiDAR 标定，正在进行 128 次正式更新。第三轮选路等待第二轮开发闭环。最终独评种子、指标和分母已预先冻结。 [研发计划](experiments/instinct-post-r4-three/PLAN.md) · [第一轮关闭复核](experiments/instinct-post-r4-three/FORMAL-R1-TRAINING-AUDIT.json) · [第二轮正式设计](experiments/instinct-post-r4-three/FORMAL-R2.md)
+三轮共完成 512 次更新、262,144 条训练转换，正式终点为 `u896`、`u768`、`u768`，各自保存完整分段权重并通过恢复复算。第三轮同 25°、同权重修正把开发后向接触从 24/32 降至 1/32。按预先冻结的同种子协议，统一评估三组起止配对和旧合格模型，包含四布局物理留出及七臂全量 R6。独立结果、复核和产品基线结论汇总后再进入唯一审查点。 [计划](experiments/instinct-post-r4-three/PLAN.md) · [预冻结独评](experiments/instinct-post-r4-three/INDEPENDENT_PROTOCOL.json) · [最终容量核对](experiments/instinct-post-r4-three/FINAL_RESOURCE_ADMISSION.json)
 
 # R4 后管道恢复正式训练和独评完成，等待审查
 
