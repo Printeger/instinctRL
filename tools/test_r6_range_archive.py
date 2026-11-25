@@ -109,6 +109,34 @@ class ArchiveTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             list(read_archive(self.path,run_id='OTHER',block_id='S-noise',expected_frames=2))
 
+    def test_recovery_training_uses_exact_frames_inside_the_evidence_pool(self):
+        from types import SimpleNamespace
+
+        import torch
+
+        from training_workloads.unified_h1.lossless_evidence import ChunkReader, EvidencePool
+        from training_workloads.unified_h1.recovery_measurements import sink
+
+        pool = EvidencePool(self.path, run_id='CPU', maximum_bytes=100000, maximum_raw_file_bytes=100000)
+        original = self.delayed_pair()
+        append = sink(SimpleNamespace(pool=pool, logical_prefix='training'))
+        for index, row in enumerate(original):
+            append(index, {k: torch.from_numpy(v) if k in ARRAY_KEYS else v for k, v in row.items()})
+        pool.close()
+        logical_name = 'training/measurement.bin'
+        with ChunkReader(self.path/(logical_name+'.r6z'), run_id='CPU', logical_name=logical_name,
+                         maximum_raw_bytes=100000) as stream:
+            restored = list(read_archive(stream, run_id='CPU', block_id='training', expected_frames=2))
+            self.assertFalse(stream.closed)
+            stream.seek(0)
+            with self.assertRaisesRegex(ValueError, 'EXTRA_FRAME_OR_TAIL'):
+                list(read_archive(stream, run_id='CPU', block_id='training', expected_frames=1))
+        for expected, actual in zip(original, restored, strict=True):
+            self.assertEqual(expected['noise_rng_identity'], actual['noise_rng_identity'])
+            for name in ARRAY_KEYS:
+                self.assertEqual(expected[name].dtype, actual[name].dtype)
+                self.assertEqual(expected[name].tobytes(), actual[name].tobytes())
+
     def test_nonfinite_and_missing_fields_rejected(self):
         f=frame();f['clean_ranges'][0,0]=np.nan
         with self.assertRaises(ValueError):encode(f,sequence=0,run_id='CPU',block_id='S-noise')

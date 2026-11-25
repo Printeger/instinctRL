@@ -78,6 +78,15 @@ def analyze(output,authorization_pin, *, direct=False, probability_diagnostic=No
             require(path.stat().st_size<=MAX_RECORD,'JSON_SIZE');pin(path)
             value=finite_json(path.read_bytes());require(isinstance(value,dict) and bool(value),'JSON_OBJECT');return value
         except (OSError,ValueError,KeyError,TypeError) as error:issue(relative,error);return None
+    from training_workloads.unified_h1.recovery_measurements import RUN_PREFIX, STREAM
+    recovery_archive = plan['experiment_id'].startswith(RUN_PREFIX)
+    recovery_frames = {}
+    if recovery_archive:
+        curriculum = contract.pinned_json(recipe['curriculum'])
+        for phase in slices(curriculum, plan['start_update'], plan['target_update']):
+            if phase['kind'] == 'robust':
+                prefix = f"phases/{phase['index']}-{phase['start_update']*16}-{phase['target_update']*16}/learning_log"
+                recovery_frames[prefix+'/'+STREAM] = (phase['target_update']-phase['start_update'])*16+1
     # Every present compressed stream is checked, including failure/partial streams.
     compressed=output/'compressed_evidence';files=[]
     for path in compressed.rglob('*.r6z'):
@@ -90,7 +99,12 @@ def analyze(output,authorization_pin, *, direct=False, probability_diagnostic=No
             with codec.ChunkReader(path,run_id=plan['experiment_id'],logical_name=name,
                     maximum_raw_bytes=plan['storage']['maximum_raw_file_bytes']) as reader:
                 row.update(raw_bytes=reader.size,raw_sha256=reader.raw_sha256)
-                if name.endswith('.jsonl'):
+                if name in recovery_frames:
+                    from training_workloads.unified_h1.range_archive import read_archive
+                    frames = read_archive(reader, run_id=plan['experiment_id'], block_id=name.rsplit('/',1)[0],
+                                          expected_frames=recovery_frames[name])
+                    row['rows'] = sum(1 for _ in frames)
+                elif name.endswith('.jsonl'):
                     retained=[];episodes={};updates=[]
                     with io.BufferedReader(reader) as buffer:
                         while True:
@@ -142,7 +156,11 @@ def analyze(output,authorization_pin, *, direct=False, probability_diagnostic=No
         for name,rows in [('rollouts.jsonl',count),('compact_rollouts.jsonl',count*16),('minibatches.jsonl',count*8)]:stream(prefix+'/'+name,rows)
         stream(prefix+'/accounting.jsonl');episodes=stream(prefix+'/episodes.jsonl')
         if phase['kind']=='robust':
-            for name in ('curriculum.jsonl','reset.jsonl','force.jsonl','measurement.jsonl'):stream(prefix+'/'+name)
+            for name in ('curriculum.jsonl','reset.jsonl','force.jsonl'):stream(prefix+'/'+name)
+            if recovery_archive:
+                stream(prefix+'/'+STREAM, count*16+1)
+            else:
+                stream(prefix+'/measurement.jsonl')
         phases.append(dict(phase=phase,completed_record=end is not None,
             episodes={} if episodes is None else episodes.get('episodes',{})))
     status=plain('status.json');expected_updates=plan['target_update']-plan['start_update']

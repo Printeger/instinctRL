@@ -13,6 +13,7 @@ from .robustness_curriculum import PhaseCurriculum,slices
 from .robustness_training_rng import prepare_plan_rng
 from .robustness_training_storage import create_training_evidence,R6LearningLog
 from .robustness_training_driver import R6WorldCommandClock,R6TrainingDriver
+from . import recovery_measurements
 from .driver import UnifiedH1Driver,UnifiedH1TrainingLoop
 from .schedule import ScheduleClock,command_at,reset_local_positions
 
@@ -101,9 +102,12 @@ def run_loaded(backend,*,plan,metadata,source_identity,method_hashes,expected_ma
         backend.journal=journal
         if sampled is not None:
             sampled.sink=audit
+            measurement_sink = (lambda seq,row:journal.append('measurement.jsonl',dict(sequence=seq,payload=row)))
+            if p['experiment_id'].startswith(recovery_measurements.RUN_PREFIX):
+                measurement_sink = recovery_measurements.sink(journal)
             env.configure_r6_training_phase(curriculum=sampled,start_policy_step=start,end_policy_step=end,
                 reset_sink=lambda row:journal.append('reset.jsonl',row),force_sink=lambda row:journal.append('force.jsonl',row),
-                measurement_sink=lambda seq,row:journal.append('measurement.jsonl',dict(sequence=seq,payload=row)),
+                measurement_sink=measurement_sink,
                 expected_mass_kg=expected_mass_kg)
         elif getattr(env,'_r6_physics',None) is not None or getattr(env,'_r6_measurements',None) is not None:
             raise RuntimeError('R6_ORIGINAL_PHASE_CONTAMINATED')

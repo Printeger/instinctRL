@@ -5,6 +5,8 @@ decoded frame; V1 independent frames remain readable. An interrupted tail
 is an error and is preserved. Reader requires the externally expected frame count;
 an EOF alone never proves a completed evaluation. This does not replace raw motion.
 """
+from contextlib import nullcontext
+from io import IOBase
 from pathlib import Path
 import hashlib
 import json
@@ -162,7 +164,7 @@ class RangeArchive:
 
 def read_archive(path,*,run_id,block_id,expected_frames):
     if type(expected_frames)is not int or expected_frames<=0:raise ValueError('EXPECTED_COUNT_REQUIRED')
-    with Path(path).open('rb') as stream:
+    with (nullcontext(path) if isinstance(path, IOBase) else Path(path).open('rb')) as stream:
         previous=None
         for sequence in range(expected_frames):
             prefix=stream.read(4)
