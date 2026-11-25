@@ -13,7 +13,7 @@ def rear(binding):
     _, _, report = validate_binding(binding)
     result = {}
     for arm, item in report['summary']['models'].items():
-        group, = item['groups']
+        group, = (group for group in item['groups'] if all(lane['mode'] == 'open_rear' for lane in group['lanes']))
         trace = checked(group['trace'])
         raw = [json.loads(line) for line in trace.read_text().splitlines()]
         rows = defaultdict(list)
@@ -27,8 +27,10 @@ def rear(binding):
             emergency = next((r['step'] for r in steps if r['ics_emergency'][lane]), None)
             contact = next((r['step'] for r in steps if r['collision'][lane]), None)
             horizon = terminal + 1 if emergency is None else emergency
-            side = steps[0]['axis_w'][lane][1], -steps[0]['axis_w'][lane][0]
+            axis = steps[0]['axis_w'][lane]
+            side = axis[1], -axis[0]
             issued = [r['v_final_w'][lane][0]*side[0] + r['v_final_w'][lane][1]*side[1] for r in steps]
+            away = [-sum(speed*direction for speed,direction in zip(r['v_final_w'][lane],axis)) for r in steps]
             origin = steps[0]['initial_position_w'][lane]
             position = [sum(a*(b-c) for a,b,c in zip(side, r['vehicle_position_w'][lane], origin)) for r in steps]
             start = horizon if trigger is None else trigger
@@ -38,6 +40,9 @@ def rear(binding):
                 trigger_step=trigger, first_issued_lateral_step=first_lateral, emergency_step=emergency, contact_step=contact,
                 visible_to_emergency_steps=None if visible is None or emergency is None else emergency-visible,
                 visible_to_contact_steps=None if visible is None or contact is None else contact-visible,
+                triggered_lateral_mps=None if trigger is None else abs(issued[trigger]),
+                triggered_axial_away_mps=None if trigger is None else away[trigger],
+                pre_emergency_axial_away_command_m=sum(away[start:horizon])*.1,
                 pre_emergency_lateral_command_m=abs(sum(issued[start:horizon]))*.1,
                 pre_emergency_lateral_motion_m=max((abs(p-baseline) for p in position[start:horizon]), default=0.),
                 maximum_physical_lateral_displacement_m=max(map(abs, position))))
