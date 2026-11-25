@@ -23,6 +23,10 @@ PREVIOUS = ROOT / 'docs/experiments/instinct-r4-recovery'
 PROTOCOL = PROJECT / 'INDEPENDENT_PROTOCOL.json'
 
 
+def execution_manifest():
+    return json.loads(json.dumps(manifest()))
+
+
 class PostR4Study(LongStudy):
     def __init__(self):
         self.docs = PROJECT
@@ -62,7 +66,7 @@ class PostR4Study(LongStudy):
         return pin(SYSTEM_ROOT / RECOVERY_HOLDOUT / 'control/receipt.json')
 
     def source(self):
-        value = manifest()
+        value = execution_manifest()
         return self.write(f'source-{value["source_commit"][:12]}.json', value)
 
     def freeze_input(self, run_id, operation, params, *, extra=(), tag=None):
@@ -112,11 +116,11 @@ class PostR4Study(LongStudy):
         self.docs.mkdir(exist_ok=True)
         if reissue and (not (self.docs/'DESIGN.json').exists() or any(self.docs.glob('*-inputs.json'))):
             raise ValueError('Reissue requires a frozen design with no issued run inputs')
-        suffix = '-reissue' if reissue else ''
+        suffix = f'-reissue-{execution_manifest()["source_commit"][:12]}' if reissue else ''
         design_path = self.docs/f'DESIGN{suffix}.json'
         if design_path.exists():
             design = load(design_path)
-            if design['decision'] != pin(spec_path) or read(design['source']) != json.loads(json.dumps(manifest())):
+            if design['decision'] != pin(spec_path) or read(design['source']) != execution_manifest():
                 raise ValueError('The training design is already frozen with another input')
             return pin(design_path)
         old = load(PREVIOUS/'FORMAL_DESIGN.json')
@@ -256,7 +260,7 @@ class PostR4Study(LongStudy):
                 'SHORT-R1', 'SHORT-R2', 'SHORT-R3', 'FORMAL-R1', 'FORMAL-R2', 'FORMAL-R3'):
             raise ValueError('Use the frozen round directory')
         source = read(design['source'])
-        if source != json.loads(json.dumps(manifest())):
+        if source != execution_manifest():
             raise ValueError('Use the exact training snapshot')
         if design['label'].startswith('FORMAL-'):
             ordinal = int(design['label'][-1])

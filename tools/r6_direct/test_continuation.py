@@ -136,3 +136,16 @@ else: raise AssertionError('scheduler import was permitted')
 '''
     env=dict(os.environ,CUDA_VISIBLE_DEVICES='',PYTHONDONTWRITEBYTECODE='1',PYTHONPATH='.:isaaclab-training')
     subprocess.run([sys.executable,'-B','-c',script],env=env,check=True,timeout=60)
+
+
+def test_post_r4_study_reuses_serialized_execution_manifest(tmp_path, monkeypatch):
+    from tools.r6_direct import instinct_post_r4_three as study
+    from tools.r6_direct.evidence import read
+
+    manifest = dict(source_commit='a'*40, product_deltas={'example.py': ('old', 'new')})
+    monkeypatch.setattr(study, 'manifest', lambda: manifest)
+    driver = study.PostR4Study.__new__(study.PostR4Study)
+    driver.docs = tmp_path
+    first = driver.source()
+    assert read(first) == study.execution_manifest()
+    assert driver.source() == first
