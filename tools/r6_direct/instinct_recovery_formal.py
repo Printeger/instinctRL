@@ -26,6 +26,7 @@ FORMAL_SEED = 2026112502
 R6_SEED = 1763541728
 HOLDOUT_SEED = 1657421097
 TOTAL_UPDATES = 1024
+TARGET_UPDATES_PER_SEGMENT = 16
 
 
 class FormalRecovery(RecoveryTraining):
@@ -59,7 +60,8 @@ class FormalRecovery(RecoveryTraining):
         curriculum = read(recipe['curriculum'])
         robust, ordinary = curriculum['phases']
         curriculum['phases'] = [part for start in range(0, TOTAL_UPDATES, 128) for part in (
-            dict(robust, end_offset=start+64), dict(ordinary, end_offset=start+128))]
+            dict(robust, end_offset=start+TARGET_UPDATES_PER_SEGMENT),
+            dict(ordinary, end_offset=start+128))]
         recipe.update(source_identity=training_identity(formal_source), branch_updates=TOTAL_UPDATES,
                       development_seeds=[FORMAL_SEED], checkpoint_offsets=list(range(64, 1025, 64)),
                       curriculum=self.write('formal-curriculum.json', curriculum),
@@ -71,6 +73,7 @@ class FormalRecovery(RecoveryTraining):
                                     predecessor=development[-1]['result']['predecessor'], training_seed=FORMAL_SEED,
                                     segments=segments, storage=limits)
         design.update(holdout_seed=HOLDOUT_SEED, r6_seed=R6_SEED, fixed_endpoint=1664,
+                      target_scene_updates=8*TARGET_UPDATES_PER_SEGMENT,
                       qualified=load(R4/'DESIGN.json')['qualified']['checkpoint'],
                       short_endpoints=[row['checkpoint'] for row in endpoints],
                       qualification=checks, expected_formal_storage_bytes=expected_disk,
