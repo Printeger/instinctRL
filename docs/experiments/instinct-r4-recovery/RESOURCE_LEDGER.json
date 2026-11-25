@@ -1,1 +1,116 @@
-{"caps":{"allocated_gpu_seconds":102000,"live_starts":30,"live_wall_seconds":102000,"major_scientific_candidates":1,"nontraining_transitions":850000,"output_actual_plus_unreleased_reservations_bytes":122406567936,"queue_seconds":5400,"simulator_initializations":20,"training_checkpoint_writes":45,"training_transitions":589824},"historical_charged":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"new_reservations":[{"id":"ROUND-SYSTEM","resources":{"output_actual_plus_unreleased_reservations_bytes":0},"status":"UNRELEASED","storage_plan":{"path":"/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-r4-recovery/STORAGE.json","sha256":"4f9598711bc296f2edf522e01727bc57d240c9c56cd4579f558fe5aadbd7d729"}}],"new_used":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"protected_confirmation_delivery_repair":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"resource_policy":{"path":"/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-r4-recovery/RESOURCE_POLICY.json","sha256":"5b1c41a9ece2788b90c7dceffb5dcf5b287c84270c91cf7f0c8fc124874aefb4"},"status":"FROZEN"}
+{
+  "caps": {
+    "allocated_gpu_seconds": 102000,
+    "live_starts": 30,
+    "live_wall_seconds": 102000,
+    "major_scientific_candidates": 1,
+    "nontraining_transitions": 850000,
+    "output_actual_plus_unreleased_reservations_bytes": 122406567936,
+    "queue_seconds": 5400,
+    "simulator_initializations": 20,
+    "training_checkpoint_writes": 45,
+    "training_transitions": 589824
+  },
+  "first_live_unix": 1795583957,
+  "historical_charged": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "new_reservations": [
+    {
+      "id": "ROUND-SYSTEM",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 0
+      },
+      "status": "UNRELEASED",
+      "storage_plan": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-r4-recovery/STORAGE.json",
+        "sha256": "4f9598711bc296f2edf522e01727bc57d240c9c56cd4579f558fe5aadbd7d729"
+      }
+    },
+    {
+      "closed_evidence_bytes": 51331072,
+      "id": "R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-MECHANISM-01",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-MECHANISM-01/control/receipt.json",
+        "sha256": "2ca7b95366709d466e90835589dab1147f625d2f206ce0f9b1dac0aff29dd468"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-r4-recovery/RESOURCE_POLICY.json",
+        "sha256": "5b1c41a9ece2788b90c7dceffb5dcf5b287c84270c91cf7f0c8fc124874aefb4"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 147,
+        "live_starts": 1,
+        "live_wall_seconds": 147,
+        "nontraining_transitions": 34560,
+        "output_actual_plus_unreleased_reservations_bytes": 51331072,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_transitions": 0
+      },
+      "settlement": {
+        "charged_seconds": 147,
+        "original_resources": {
+          "allocated_gpu_seconds": 1690,
+          "live_starts": 1,
+          "live_wall_seconds": 1690,
+          "nontraining_transitions": 34560,
+          "output_actual_plus_unreleased_reservations_bytes": 1342177280,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-MECHANISM-01/control/receipt.json",
+          "sha256": "2ca7b95366709d466e90835589dab1147f625d2f206ce0f9b1dac0aff29dd468"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-MECHANISM-01",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-MECHANISM-01/native"
+      },
+      "storage_reservation_id": "ROUND-SYSTEM"
+    }
+  ],
+  "new_used": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "protected_confirmation_delivery_repair": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "resource_policy": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-r4-recovery/RESOURCE_POLICY.json",
+    "sha256": "5b1c41a9ece2788b90c7dceffb5dcf5b287c84270c91cf7f0c8fc124874aefb4"
+  },
+  "status": "CONTROLLED_HANDOFF"
+}
