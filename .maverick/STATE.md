@@ -1,3 +1,7 @@
+# R4 后管道恢复研发进行中
+
+任务 `instinctrl-r4-recovery-long`。五位原生伙伴已独立返回，首轮核验 6/6。固定 `u640` 的三臂对照完成 34,560 条转换。回切臂八条管道前飞均无接触且恢复，固定窗口平均 0.743 m。R4 和只混合前向两臂固定窗口位移均为 0 m。后向配对完成 7,680 条，前向 0/32、后向 32/32 接触。回切使用原 governor 和 ICS。选同一动作执行版本与共同起点进行 16、32、64 次目标场景 PPO 检查。当前开始 u656 短段，正式训练冻结与终点独评待完成。 [行为与回执](../docs/experiments/instinct-r4-recovery/PHYSICAL_DEVELOPMENT.md) · [短训冻结](../docs/experiments/instinct-r4-recovery/SHORT_DESIGN.json)
+
 # R3 后的侧让续训与独评已结束，等待审查
 
 任务 `instinctrl-post-r3-long`。五位原生伙伴独立首轮和 Maverick 综合已核验 6/6。同权重 25 步方向保留使前向碰撞从 16/16 降到 0/16，后向仍 16/16。共享执行层短测把前飞逼近从 8/8 降到 3/8，普通通行和静止悬停无变化。四类场景预检完成 7,680 条 PhysX 转换并复算。完整候选从 u640 分四段新增 384 更新和 196,608 条转换，固定 u1024，随后执行全套 R6 和四类独立物理留出。 [冻结方案](../docs/experiments/instinct-post-r3/LONG_PLAN.md) · [贡献记录](contributions.jsonl)
