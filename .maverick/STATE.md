@@ -1,8 +1,8 @@
-# R4 后管道恢复正式训练已启动
+# R4 后管道恢复正式训练已结束，独评进行中
 
-任务 `instinctrl-r4-recovery-long`。五位原生伙伴独立首轮及综合核验 6/6。固定 `u640` 的三臂对照复算 34,560 条转换，回切臂八条管道无接触且恢复、平均 0.743 m。原侧让及前向混合恢复窗均 0 m。后向配对复算 7,680 条，前向 0/32、后向 32/32 接触。短 PPO 16、32、64 次全部审计，原始上限和首批同设备概率复算留存。64 次出现新增管道接触和静态退化，正式固定每段 16 次目标场景、112 次普通回放，八段共 1,024 次更新和 524,288 条转换。
+任务 `instinctrl-r4-recovery-long`。五位原生伙伴独立首轮及综合核验 6/6。固定 `u640` 的三臂对照完成 34,560 条转换，回切臂八条管道无接触且恢复，平均 0.743 m。后向配对复算 7,680 条，前向 0/32、后向 32/32 接触。短 PPO 16、32、64 次均关闭复算。64 次出现新增管道接触和静态退化，正式固定每段 16 次目标场景和 112 次普通回放。
 
-正式源码 `b40a2bb5`，冻结配置提交 `42efdb4c`。固定 `u640→u1664`，三个独立配对 R6 臂及四布局留出在端点后执行。由 `/home/mint/instinctrl-runs/INSTINCT-R4-RECOVERY-FORMAL-COORDINATION` 的协调进程 3456707 按顺序执行。当前已启动第一段、通过 CPU 预检。全量关闭、独立评价和唯一审查点尚未完成。 [物理与后向](../docs/experiments/instinct-r4-recovery/PHYSICAL_DEVELOPMENT.md) · [正式冻结](../docs/experiments/instinct-r4-recovery/FORMAL_DESIGN.json)
+正式源码 `b40a2bb5`、冻结提交 `42efdb4c`。八段均关闭并审计，共 1,024 次更新、524,288 条转换，监督耗时 6,829.67 秒，16 份恢复权重。固定终点 `u1664` SHA-256 为 `81a8294652d4374f9ee6e942f147876f303bf8802237db217a541e3c34d38b67`。协调进程 3456707 在 `~/instinctrl-runs/INSTINCT-R4-RECOVERY-FORMAL-COORDINATION`，当前开始旧合格模型完整 R6，随后是同机制起点、终点及四布局物理留出。独评和唯一审查点仍在进行。 [正式冻结](../docs/experiments/instinct-r4-recovery/FORMAL_DESIGN.json) · [终段回执](../docs/experiments/instinct-r4-recovery/U1664.json)
 
 # R3 后的侧让续训与独评已结束，等待审查
 
