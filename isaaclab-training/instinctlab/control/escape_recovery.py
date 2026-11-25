@@ -10,15 +10,19 @@ from .ics import attenuate_command
 MIXED_VERSION = 'm4-escape-mixed-v1'
 RECOVERY_VERSION = 'm4-escape-recovery-v1'
 LATERAL_VERSION = 'm4-escape-lateral-recovery-v1'
+FAST_LATERAL_VERSION = 'm4-escape-lateral-recovery-v2'
+FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
 
 
 class EscapeRecovery(EscapeOption):
-    def __init__(self, *, lanes, device, dtype, recenter, lateral=False):
+    def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
+        self.fast_lateral = fast_lateral
+        self.escape_speed = self.direction.new_full((lanes,), SPEED_M_S)
         self.since_escape = torch.full_like(self.remaining, RECOVERY_LIMIT)
         self.recovering = torch.zeros_like(self.applied)
 
@@ -26,6 +30,7 @@ class EscapeRecovery(EscapeOption):
         super().reset(lanes)
         self.since_escape[lanes] = RECOVERY_LIMIT
         self.recovering[lanes] = False
+        self.escape_speed[lanes] = SPEED_M_S
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -54,6 +59,17 @@ class EscapeRecovery(EscapeOption):
                 best_score = torch.where(better, score, best_score)
         self.direction[lanes] = best_direction
         selected[lanes, 1:] = .5 + SPEED_M_S * best_direction
+        if self.fast_lateral:
+            self.escape_speed[lanes] = SPEED_M_S
+            command, _ = extract_latest_commands(local_state)
+            rear_hover = ((command.norm(dim=1) <= .001) & (retreat[:, 0] > .65)
+                          & ((side * best_direction).sum(1).abs() > .5))
+            if bool(rear_hover.any()):
+                trial = torch.cat((torch.zeros_like(local_state[:, :1]),
+                                   .5 + FAST_LATERAL_SPEED_M_S * best_direction), dim=1)
+                issued = self.issued(local_lidar[rear_hover], local_state[rear_hover], trial[rear_hover], config).v_final_b
+                useful = (issued * side[rear_hover]).sum(1).abs() > best_score[rear_hover] + .035
+                self.escape_speed[lanes[rear_hover][useful]] = FAST_LATERAL_SPEED_M_S
 
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
@@ -61,6 +77,9 @@ class EscapeRecovery(EscapeOption):
         lidar, state = policy['lidar_grid'], policy['state_vec']
         if self.lateral:
             self.select_lateral(lidar, state, selected, config)
+        if self.fast_lateral:
+            held = self.applied.nonzero().flatten()
+            selected[held, 1:] = .5 + self.escape_speed[held, None] * self.direction[held]
         command, _ = extract_latest_commands(state)
         speed = command.norm(dim=1)
         moving = speed > .03

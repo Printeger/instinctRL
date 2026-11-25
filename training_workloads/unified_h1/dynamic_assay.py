@@ -81,7 +81,7 @@ def contract(params):
     models = params['models']
     three_arms = params['experiment_id'] in (HOLDOUT_RUN, *RECOVERY_MECHANISM_RUNS, RECOVERY_HOLDOUT)
     allowed_models = {'candidate', 'control', 'reference'} if three_arms else {'candidate', 'reference'}
-    if case == 'HOLDOUT':
+    if case in ('HOLDOUT', 'MECHANISM'):
         allowed_models.add('control')
     if case == 'REAR':
         allowed_models.update(('candidate_slow', 'reference_slow'))
@@ -90,11 +90,12 @@ def contract(params):
     for value in models.values():
         checked(value)
     if case:
-        from instinctlab.control.escape_recovery import LATERAL_VERSION, RECOVERY_VERSION
+        from instinctlab.control.escape_recovery import FAST_LATERAL_VERSION, LATERAL_VERSION, RECOVERY_VERSION
 
         options = params['arm_options']
         if (not isinstance(options, dict) or set(options) != allowed_models or set(models) != allowed_models
-                or not all(version in (None, RECOVERY_VERSION, LATERAL_VERSION) for version in options.values())):
+                or not all(version in (None, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION)
+                           for version in options.values())):
             raise ValueError('DYNAMIC_THREE_OPTIONS')
         if case in ('REAR', 'MECHANISM') and any(value != models['reference'] for value in models.values()):
             raise ValueError('DYNAMIC_THREE_SAME_WEIGHTS')
@@ -328,6 +329,9 @@ def run(backend, params):
                 before = obstacle.latest
                 witness = policy['lidar_grid'][:,9].flatten(1)[obstacle.indices, before['witness_beam']]
                 observed = before['winning_beams'] > 0
+                if three:
+                    latest_valid = policy['lidar_grid'][:, 10].flatten(1)[obstacle.indices, before['witness_beam']]
+                    delivered = (observed & (latest_valid > .5)).cpu().tolist()
                 if observed.any() and not torch.allclose(witness[observed],before['witness_range_m'][observed],atol=.002,rtol=0):
                     raise RuntimeError('DYNAMIC_ASSAY_ACTOR_WITNESS')
                 approach = plausible_approach(policy, period_s=.1).cpu().tolist() if visibility else None
@@ -388,8 +392,7 @@ def run(backend, params):
                         ics_active_beam_count=record['control']['ics_metrics']['active_beam_count'].reshape(-1).cpu().tolist(),
                     )
                 if three:
-                    latest_valid = policy['lidar_grid'][:, 10].flatten(1)[obstacle.indices, before['witness_beam']]
-                    rows[-1]['mover_witness_delivered'] = (observed & (latest_valid > .5)).cpu().tolist()
+                    rows[-1]['mover_witness_delivered'] = delivered
                     rows[-1]['sensor_split'] = split
             if hook is not None:
                 hook.remove()

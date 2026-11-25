@@ -103,6 +103,124 @@ class PostR4Study(LongStudy):
             freeze(f'{self.tag_prefix}-{label.lower()}-closed', f'Record {label} physical replay', summary, self.ledger)
         return result_pin
 
+    def prepare_training(self, spec_path):
+        spec = load(spec_path)
+        label = spec['label']
+        if label not in ('SHORT-R1', 'SHORT-R2', 'SHORT-R3', 'FORMAL-R1', 'FORMAL-R2', 'FORMAL-R3'):
+            raise ValueError('Use a registered short or formal round')
+        self.docs = PROJECT/label
+        self.docs.mkdir(exist_ok=True)
+        old = load(PREVIOUS/'FORMAL_DESIGN.json')
+        recipe = read(old['recipe'])
+        curriculum = read(recipe['curriculum'])
+        robust = dict(curriculum['phases'][0], **spec['robust_overrides'])
+        replay = curriculum['phases'][1]
+        curriculum['phases'] = [dict(robust if kind == 'robust' else replay, end_offset=offset)
+                                for kind,offset in spec['phases']]
+        method = read(recipe['method'])
+        method['ppo'].update(spec['ppo_overrides'])
+        method.update(spec['method_overrides'])
+        source = self.source()
+        training_seed = spec['training_seed']
+        recipe.update(candidate_id=spec['candidate_id'], source_identity=training_identity(read(source)),
+                      branch_updates=spec['phases'][-1][1], checkpoint_offsets=spec['checkpoint_offsets'],
+                      development_seeds=[training_seed], diagnosis=[pin(spec_path), pin(PROTOCOL), *spec['evidence']],
+                      curriculum=self.write('curriculum.json', curriculum), method=self.write('method.json', method),
+                      hypothesis=spec['hypothesis'], comparison=spec['comparison'])
+        from training_workloads.unified_h1.robustness_training_plan import validate_recipe
+
+        recipe_pin = self.write('recipe.json', recipe)
+        validate_recipe(recipe)
+        design = self.write('DESIGN.json', dict(label=label, source=source, recipe=recipe_pin,
+                            decision=pin(spec_path), initial=old['initial'], training_seed=training_seed,
+                            training_parameters=old['training_parameters'], segments=spec['segments'],
+                            storage=dict(old['storage'], payload_bytes=spec['payload_gib']*GIB,
+                                         compressed_bytes=(spec['payload_gib']-1)*GIB)))
+        freeze(f'{self.tag_prefix}-{label.lower()}-design', f'Freeze {label} scientific and training inputs',
+               spec_path, Path(source['path']), *(self.docs/name for name in ('DESIGN.json', 'curriculum.json', 'method.json', 'recipe.json')))
+        return design
+
+    def independent_inputs(self):
+        results = [pin(PROJECT/f'FORMAL-R{i}'/'RESULTS.json') for i in range(1, 4)]
+        data = [read(item) for item in results]
+        for i, row in enumerate(data, 1):
+            design = read(row['design'])
+            recipe = read(design['recipe'])
+            if (design['label'] != f'FORMAL-R{i}' or row['actual_updates'] != recipe['branch_updates']
+                    or row['actual_training_transitions'] != recipe['branch_updates']*512
+                    or row['segments'][-1]['plan']['target_update'] != 640+recipe['branch_updates']):
+                raise ValueError('Formal endpoint coverage before final evaluation')
+        prior = load(PREVIOUS/'FORMAL_DESIGN.json')
+        path = PROJECT/'FINAL_ASSIGNMENTS.json'
+        exists = path.exists()
+        frozen = self.write(path.name, dict(protocol=pin(PROTOCOL), formal=results, qualified=prior['qualified'],
+                            arm_order=self.protocol['arms'], implementation=self.source()))
+        if not exists:
+            freeze(f'{self.tag_prefix}-independent-assignments', 'Freeze the three closed endpoints and all paired evaluation arms',
+                   path, Path(read(frozen)['implementation']['path']))
+        return frozen, data
+
+    def r6(self, assignments, *, role, summary_name, seed, ordinal=None, trained=None):
+        if role == 'qualified':
+            template = ROOT/'docs/experiments/instinct-next-two-cycles/round-2/EVAL-contract.json'
+        elif role in ('origin', 'end') and ordinal in (1, 2, 3):
+            template = PREVIOUS/f'R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-R6-{"CANDIDATE" if role == "end" else "ORIGIN"}-contract.json'
+        else:
+            raise ValueError('Unknown R6 evaluation role')
+        status = self.docs/summary_name
+        run_id = THREE_PREFIX + f'R6-{status.stem.upper()}'
+        params = load(template)['parameters']
+        selection = params['evaluation_selection']
+        comparison = read(selection['comparison'])
+        comparison.update(id=run_id, seed=seed)
+        if role != 'qualified':
+            design = read(trained['design'])
+            recipe = read(design['recipe'])
+            comparison.update(candidate_id=recipe['candidate_id'], method=recipe['method'], hypothesis=recipe['hypothesis'])
+            selection['method'] = recipe['method']
+            if role == 'end':
+                final = trained['segments'][-1]
+                selection.update(checkpoint=final['checkpoint'], training_plan=final['plan'], training_analysis=final['analysis'])
+                params['training_seed'] = design['training_seed']
+            else:
+                selection['checkpoint'] = design['initial']['checkpoint']
+        elif selection['checkpoint'] != read(assignments)['qualified']:
+            raise ValueError('Qualified checkpoint drift')
+        comparison_pin = self.write(run_id+'-comparison.json', comparison)
+        selection['comparison'] = comparison_pin
+        params['experiment_id'] = run_id
+        params['r6'].update(run_id=run_id, seed=seed)
+        path = self.freeze_input(run_id, 'evaluate', params, extra=(Path(comparison_pin['path']),))
+        evaluation = self.evaluate(path)
+        exists = status.exists()
+        result = self.write(status.name, evaluation)
+        if not exists:
+            freeze(f'{self.tag_prefix}-r6-{status.stem.lower()}-closed', f'Record {status.stem} complete R6 replay', status, self.ledger)
+        return result
+
+    def final_evaluation(self):
+        assignments, rounds = self.independent_inputs()
+        r6_seed = self.protocol['r6']['perturbation_seed']
+        physical_seed = self.protocol['physical']['seed']
+        qualified = read(assignments)['qualified']
+        phys = []
+        for ordinal, trained in enumerate(rounds, 1):
+            phys.append(self.physical(f'HOLDOUT-R{ordinal}', physical_seed,
+                        dict(reference=qualified, control=trained['start'], candidate=trained['end']),
+                        dict(reference=None, control=trained['execution'], candidate=trained['execution']), 1800))
+        r6 = {'qualified': self.r6(assignments, role='qualified', summary_name='qualified.json', seed=r6_seed)}
+        for ordinal, trained in enumerate(rounds, 1):
+            for role in ('origin', 'end'):
+                name = f'r{ordinal}-{role}'
+                r6[name] = self.r6(assignments, role=role, summary_name=f'{name}.json', seed=r6_seed,
+                                   ordinal=ordinal, trained=trained)
+        path = PROJECT/'EVALUATIONS.json'
+        exists = path.exists()
+        result = self.write(path.name, dict(assignments=assignments, physical=phys, r6=r6, ledger=pin(self.ledger)))
+        if not exists:
+            freeze(f'{self.tag_prefix}-independent-closed', 'Record all closed independent evaluation arms', path, self.ledger)
+        return result
+
     def train(self, design_path):
         design = load(design_path)
         self.docs = design_path.parent
@@ -158,7 +276,7 @@ class PostR4Study(LongStudy):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('stage', choices=('setup', 'rear', 'physical', 'train'))
+    parser.add_argument('stage', choices=('setup', 'rear', 'physical', 'prepare-train', 'train', 'final-evaluation'))
     parser.add_argument('spec', nargs='?')
     args = parser.parse_args()
     guard()
@@ -169,8 +287,12 @@ def main():
         result = study.rear(args.spec or '01')
     elif args.stage == 'physical':
         result = study.physical(**load(Path(args.spec)))
-    else:
+    elif args.stage == 'prepare-train':
+        result = study.prepare_training(Path(args.spec).resolve())
+    elif args.stage == 'train':
         result = study.train(Path(args.spec).resolve())
+    else:
+        result = study.final_evaluation()
     print(json.dumps(result), flush=True)
 
 
