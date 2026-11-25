@@ -186,9 +186,12 @@ class RecoveryTraining(RecoveryStudy):
                     collisions=[sum(x['collision'] for x in rows) for rows in (c, r)],
                     recovered_without_contact=[sum(not x['collision'] and x['recovery_progress_m'] >= .5
                                                    for x in rows) for rows in (c, r)])
-        summary = self.write(f'SHORT_CHECK_U{update}.json', dict(result=result, comparisons=details))
-        freeze(f'{self.tag_prefix}-check-u{update}-results', f'Record recovery development assessment at u{update}',
-               Path(summary['path']), self.ledger)
+        name = f'SHORT_CHECK_U{update}.json'
+        existing = (PROJECT/name).exists()
+        summary = self.write(name, dict(result=result, comparisons=details))
+        if not existing:
+            freeze(f'{self.tag_prefix}-check-u{update}-results', f'Record recovery development assessment at u{update}',
+                   Path(summary['path']), self.ledger)
         return result
 
     def execute_short(self):

@@ -40,7 +40,9 @@ class FormalRecovery(RecoveryTraining):
         prior_name = f'{RECOVERY_PREFIX}{old["series"]}-TRAIN-U{SHORT_UPDATES[-1]}'
         prior, = [r for r in measured['new_reservations'] if r['id'] == prior_name]
         per_segment = 2*prior['closed_evidence_bytes'] + GIB
-        expected_disk = 8*per_segment + 18*GIB
+        # The last R6 arm needs its full 18.25 GiB launch reservation while
+        # retaining the first two arms' roughly 5 GiB each.
+        expected_disk = 8*per_segment + 30*GIB
         if shutil.disk_usage(SYSTEM_ROOT).free < SYSTEM_FLOOR + expected_disk:
             raise ValueError('Measured development volume exceeds available formal reserve')
 
@@ -83,6 +85,9 @@ class FormalRecovery(RecoveryTraining):
         run_id = f'{RECOVERY_PREFIX}R6-{role.upper()}'
         path = self.input_path(run_id)
         if path.exists():
+            previous = load(path)
+            if previous['predecessor_receipt'] != predecessor or previous['source'] != self.source:
+                raise ValueError('Frozen R6 execution chain drifted')
             return path
         if role == 'qualified':
             template = ROOT/'docs/experiments/instinct-next-two-cycles/round-2/EVAL-contract.json'
