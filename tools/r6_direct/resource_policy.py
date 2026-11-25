@@ -14,7 +14,10 @@ NEXT_SCHEMA = 'instinctrl-next-cycle-training-resources/1'
 GPU_STUDY_PREFIX = 'R6-DIRECT-INSTINCT-GPU-'
 GPU_STUDY_SCHEMA = 'instinctrl-gpu-three-training-resources/1'
 GPU_FOLLOWUP_SCHEMA = 'instinctrl-post-r3-resources/1'
+GPU_RECOVERY_SCHEMA = 'instinctrl-r4-recovery-resources/1'
 BOUNDED_SCOPES = {
+    f'{GPU_STUDY_PREFIX}R5-RECOVERY-': (GPU_RECOVERY_SCHEMA,
+        'docs/experiments/instinct-r4-recovery/RESOURCE_LEDGER.json'),
     f'{GPU_STUDY_PREFIX}R4-LONG-': (GPU_FOLLOWUP_SCHEMA,
         'docs/experiments/instinct-post-r3/long/RESOURCE_LEDGER.json'),
     f'{GPU_STUDY_PREFIX}R4-HOLDOUT-SMOKE': (GPU_FOLLOWUP_SCHEMA,

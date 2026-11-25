@@ -135,6 +135,34 @@ def test_option_preserves_samples_outside_threat_and_stops_on_stale_measurement(
     assert option.remaining.tolist() == [0, 0, 0]
 
 
+def test_recovery_keeps_the_original_ics_and_leaves_quiet_commands_alone():
+    from instinctlab.control.escape_recovery import EscapeRecovery, RECOVERY_DELAY
+    from instinctlab.control.ics import ICSConfig
+    from instinctlab.control.pipeline import ControlCoreConfig
+
+    option = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=True)
+    config = ControlCoreConfig(ics=ICSConfig(clearance_margin_m=.15))
+    state = torch.zeros((3, 52))
+    state[:2, 45] = .25
+    lidar = torch.ones((3, 12, 59, 360))
+    lidar[:, 0::3] = 10.
+    rays = option.detector._full_rays
+    beam = (rays @ torch.tensor([.7071068, .7071068, 0.])).argmax()
+    lidar[0, 0::3].reshape(4, -1)[:, beam] = .7
+    lidar[1, 0::3].reshape(4, -1)[:, beam] = .3
+    action = torch.full((3, 4), .5)
+    action[:, 0] = 1.
+    option.since_escape[:] = RECOVERY_DELAY
+    original = option.issued(lidar, state, action, config)
+    selection = option.apply_recovery(dict(lidar_grid=lidar, state_vec=state), action, config)
+    issued = option.issued(lidar, state, selection, config)
+    assert original.v_final_b[0, 0] == 0
+    assert issued.v_final_b[0, 0] > .1
+    assert issued.metrics['emergency'][1, 0] == 1
+    assert option.recovering.tolist() == [True, False, False]
+    torch.testing.assert_close(selection[1:], action[1:])
+
+
 def test_holdout_collision_triangles_are_shared_with_the_sensor_mesh():
     from training_workloads.unified_h1.escape_holdout_scene import scene_geometry
 

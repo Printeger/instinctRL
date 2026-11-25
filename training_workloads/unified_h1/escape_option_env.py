@@ -1,18 +1,29 @@
 """Apply the frozen option to motor requests while leaving PPO samples intact."""
 
-from instinctlab.control.escape_option import EscapeOption
+from instinctlab.control.escape_option import EscapeOption, METHOD_VERSION
+from instinctlab.control.escape_recovery import EscapeRecovery, MIXED_VERSION, RECOVERY_VERSION
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
 class EscapeOptionEnv(UnifiedH1DirectEnv):
     escape_option = None
 
-    def set_escape_option(self, enabled):
-        self.escape_option = (EscapeOption(lanes=self.num_envs, device=self.device, dtype=self._actions.dtype)
-                              if enabled else None)
+    def set_escape_option(self, enabled, *, version=METHOD_VERSION):
+        self.escape_option_version = version if enabled else None
+        kwargs = dict(lanes=self.num_envs, device=self.device, dtype=self._actions.dtype)
+        if not enabled:
+            self.escape_option = None
+        elif version == METHOD_VERSION:
+            self.escape_option = EscapeOption(**kwargs)
+        elif version in (MIXED_VERSION, RECOVERY_VERSION):
+            self.escape_option = EscapeRecovery(**kwargs, recenter=version == RECOVERY_VERSION)
+        else:
+            raise ValueError('ESCAPE_OPTION_VERSION')
 
     def _pre_physics_step(self, actions):
-        if self.escape_option is not None:
+        if isinstance(self.escape_option, EscapeRecovery):
+            actions = self.escape_option.apply_recovery(self._policy, actions, self._control_pipelines[0].config)
+        elif self.escape_option is not None:
             actions = self.escape_option.apply(self._policy, actions)
         super()._pre_physics_step(actions)
 
@@ -24,6 +35,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 'direction_b': self.escape_option.direction.detach().clone(),
                 'applied_action': self._actions.detach().clone(),
             }
+            if isinstance(self.escape_option, EscapeRecovery):
+                self.extras['pre_reset']['escape_option']['recovery'] = self.escape_option.recovering.detach().clone()
         return reward
 
     def _reset_idx(self, env_ids):

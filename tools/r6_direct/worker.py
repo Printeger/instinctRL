@@ -201,8 +201,8 @@ def run(plan, input_pin):
                 recipe = pinned_json(params['evaluation_selection']['training_plan']['recipe'])
                 use_option = recipe['candidate_id'] == ESCAPE_OPTION_CANDIDATE
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
-            from training_workloads.unified_h1.dynamic_assay import HOLDOUT_RUN, HOLDOUT_SMOKE, OPTION_RUN
-            holdout = plan['run_id'] in (HOLDOUT_RUN, HOLDOUT_SMOKE)
+            from training_workloads.unified_h1.dynamic_assay import PHYSICAL_LAYOUT_RUNS, OPTION_RUN
+            holdout = plan['run_id'] in PHYSICAL_LAYOUT_RUNS
             if holdout:
                 from training_workloads.unified_h1.escape_option_env import EscapeHoldoutEnv
                 env = EscapeHoldoutEnv(cfg, layout_seed=params['seed'])

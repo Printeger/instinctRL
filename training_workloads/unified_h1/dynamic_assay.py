@@ -18,8 +18,13 @@ PERSISTENCE_GROUPS = (*VISIBILITY_GROUPS, (4, 1, 6, 7))
 OPTION_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-DEV-OPTION'
 HOLDOUT_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-LONG-HOLDOUT'
 HOLDOUT_SMOKE = 'R6-DIRECT-INSTINCT-GPU-R4-HOLDOUT-SMOKE'
+RECOVERY_PREFIX = 'R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-'
+RECOVERY_MECHANISM = RECOVERY_PREFIX + 'MECHANISM-01'
+RECOVERY_REAR = RECOVERY_PREFIX + 'REAR-01'
+RECOVERY_HOLDOUT = RECOVERY_PREFIX + 'HOLDOUT'
 HOLDOUT_GROUPS = ((8, 8, 8, 8), (0, 0, 0, 0), (2, 3, 2, 4),
                   (6, 6, 6, 6), (7, 7, 7, 7), (9, 9, 9, 9))
+PHYSICAL_LAYOUT_RUNS = (HOLDOUT_RUN, HOLDOUT_SMOKE, RECOVERY_MECHANISM, RECOVERY_REAR, RECOVERY_HOLDOUT)
 MODES = ('approach', 'recede', 'cross_left', 'cross_right',
          'hover', 'hover_wall', 'static_travel', 'static_hover',
          'open_front', 'open_rear', 'wall_front', 'wall_rear')
@@ -28,8 +33,12 @@ MODES = ('approach', 'recede', 'cross_left', 'cross_right',
 def groups_for(run_id):
     if run_id == PERSISTENCE_RUN:
         return PERSISTENCE_GROUPS
-    if run_id == HOLDOUT_RUN:
+    if run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT):
         return HOLDOUT_GROUPS
+    if run_id == RECOVERY_MECHANISM:
+        return tuple(HOLDOUT_GROUPS[i] for i in (1, 3, 4))
+    if run_id == RECOVERY_REAR:
+        return (HOLDOUT_GROUPS[-1],)
     if run_id == HOLDOUT_SMOKE:
         return (HOLDOUT_GROUPS[1], HOLDOUT_GROUPS[2])
     return VISIBILITY_GROUPS if run_id.endswith('-VISIBILITY') else GROUPS
@@ -37,7 +46,7 @@ def groups_for(run_id):
 
 def contract(params):
     fields = {'experiment_id', 'training_seed', 'models', 'seed', 'wall_seconds', 'output_cap_bytes'}
-    runs = (PERSISTENCE_RUN, OPTION_RUN, HOLDOUT_RUN, HOLDOUT_SMOKE)
+    runs = (PERSISTENCE_RUN, OPTION_RUN, *PHYSICAL_LAYOUT_RUNS)
     if set(params) != fields or (params['experiment_id'] not in runs and not re.fullmatch(
             r'R6-DIRECT-INSTINCT-GPU-R[23]-(?:DYNAMIC(?:-PILOT-0[1-4])?|VISIBILITY)', params['experiment_id'])):
         raise ValueError('DYNAMIC_ASSAY_CONTRACT_IDENTITY')
@@ -48,7 +57,8 @@ def contract(params):
     if type(params['output_cap_bytes']) is not int or not 512*2**20 <= params['output_cap_bytes'] <= 2**30:
         raise ValueError('DYNAMIC_ASSAY_OUTPUT')
     models = params['models']
-    allowed_models = {'candidate', 'control', 'reference'} if params['experiment_id'] == HOLDOUT_RUN else {'candidate', 'reference'}
+    three_arms = params['experiment_id'] in (HOLDOUT_RUN, RECOVERY_MECHANISM, RECOVERY_HOLDOUT)
+    allowed_models = {'candidate', 'control', 'reference'} if three_arms else {'candidate', 'reference'}
     if not isinstance(models, dict) or not 1 <= len(models) <= len(allowed_models) or not set(models) <= allowed_models:
         raise ValueError('DYNAMIC_ASSAY_MODELS')
     for value in models.values():
@@ -56,8 +66,11 @@ def contract(params):
     if params['experiment_id'] in (PERSISTENCE_RUN, OPTION_RUN) and (
             set(models) != {'candidate', 'reference'} or models['candidate'] != models['reference']):
         raise ValueError('DYNAMIC_ASSAY_SAME_WEIGHT_MODELS')
-    if params['experiment_id'] == HOLDOUT_RUN and set(models) != allowed_models:
+    if (three_arms or params['experiment_id'] == RECOVERY_REAR) and set(models) != allowed_models:
         raise ValueError('DYNAMIC_HOLDOUT_COMPLETE_COMPARISON')
+    if params['experiment_id'] in (RECOVERY_MECHANISM, RECOVERY_REAR) and any(
+            pin != models['reference'] for pin in models.values()):
+        raise ValueError('DYNAMIC_RECOVERY_SAME_WEIGHT_MODELS')
     cohorts = len(models) * len(groups_for(params['experiment_id']))
     steps = cohorts * STEPS * LANES
     return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct',
@@ -114,6 +127,12 @@ def score(rows):
                            recovery_rmse_mps=math.sqrt(mean(speed2[80:])),
                            maximum_horizontal_excursion_m=max(math.hypot(
                                r['vehicle_position_w'][lane][0]-initial[0], r['vehicle_position_w'][lane][1]-initial[1]) for r in alive))
+        if 'escape_recovery' in rows[0]:
+            metrics['recovery_progress_m'] = 0.
+            if len(alive) > 80:
+                previous = alive[79]['vehicle_position_w'][lane]
+                metrics['recovery_progress_m'] = sum((x-y)*a for x,y,a in zip(
+                    last['vehicle_position_w'][lane], previous, axis))
         lanes.append(metrics)
     return lanes
 
@@ -155,9 +174,13 @@ def run(backend, params):
     device = env.device
     groups = groups_for(params['experiment_id'])
     persistence = params['experiment_id'] == PERSISTENCE_RUN
-    holdout = params['experiment_id'] in (HOLDOUT_RUN, HOLDOUT_SMOKE)
+    run_id = params['experiment_id']
+    holdout = run_id in PHYSICAL_LAYOUT_RUNS
+    mechanism = run_id == RECOVERY_MECHANISM
+    rear_pair = run_id == RECOVERY_REAR
+    recovery_assay = run_id.startswith(RECOVERY_PREFIX)
     option = holdout or params['experiment_id'] == OPTION_RUN
-    split = 'heldout' if params['experiment_id'] == HOLDOUT_RUN else 'development'
+    split = 'heldout' if run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT) else 'development'
     cue = (HoverReflex(device=device, dtype=torch.float32)
            if persistence or option or params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-') else None)
     results = {}
@@ -171,10 +194,20 @@ def run(backend, params):
         actor.eval()
         if option:
             from instinctlab.control.escape_option import METHOD_FIELD, METHOD_VERSION
-            if params['experiment_id'] == HOLDOUT_RUN and label == 'candidate':
-                if payload['method_hashes'].get(METHOD_FIELD) != METHOD_VERSION:
+            from instinctlab.control.escape_recovery import MIXED_VERSION, RECOVERY_VERSION
+            version = METHOD_VERSION
+            enabled = label in ('candidate', 'control')
+            if mechanism:
+                enabled = True
+                version = dict(candidate=RECOVERY_VERSION, control=MIXED_VERSION, reference=METHOD_VERSION)[label]
+            if rear_pair:
+                enabled = True
+            if run_id == RECOVERY_HOLDOUT:
+                version = RECOVERY_VERSION
+            if run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT) and label == 'candidate':
+                if payload['method_hashes'].get(METHOD_FIELD) != version:
                     raise ValueError('DYNAMIC_HOLDOUT_METHOD_BINDING')
-            env.set_escape_option(label in ('candidate', 'control'))
+            env.set_escape_option(enabled, version=version)
         cohort = []
         for index, group in enumerate(groups):
             visibility = min(group) >= 8
@@ -190,7 +223,8 @@ def run(backend, params):
             specs = env._r6_physics['specs']
             for lane in range(LANES):
                 if visibility:
-                    specs[lane] = visibility_reset(block, seed=seed, lane=lane, mode=modes[lane],
+                    orientation = 8 if rear_pair and label == 'candidate' else modes[lane]
+                    specs[lane] = visibility_reset(block, seed=seed, lane=lane, mode=orientation,
                                                    mount=env.cfg.ray_caster.offset.pos, split=split)
                 elif modes[lane] == 5:
                     wall = dict(block, task='wall_modes', sensor_to_wall_distance_m=1.40)
@@ -226,6 +260,8 @@ def run(backend, params):
                          command_w=command.cpu().tolist())
             if holdout:
                 fixed['layout'] = [LAYOUTS[i // 8] for i in range(LANES)]
+            if rear_pair:
+                fixed['sensor_aspect'] = 'front' if label == 'candidate' else 'rear'
             rows = []
             for step in range(STEPS):
                 backend.resource_check('before_r6_dynamic_step', step)
@@ -272,6 +308,9 @@ def run(backend, params):
                     if option and env.escape_option is not None:
                         current = env.escape_option
                         applied = current.direction * current.applied[:, None]
+                        if recovery_assay:
+                            saved_option = record['escape_option']
+                            applied = saved_option['direction_b'] * saved_option['active'][:, None]
                     rows[-1].update(
                         gyro_peak=history[:, :, :3].norm(dim=2).amax(dim=1).cpu().tolist(),
                         range_age_s=history[:, -1, -1].cpu().tolist(),
@@ -281,6 +320,20 @@ def run(backend, params):
                     )
                     if hold is not None:
                         hold.reset(terminal)
+                if recovery_assay:
+                    saved_option = record.get('escape_option', {})
+                    rows[-1].update(
+                        escape_recovery=measurements({
+                            'version': env.escape_option_version,
+                            'active': saved_option.get('active', torch.zeros_like(terminal)),
+                            'recovery': saved_option.get('recovery', torch.zeros_like(terminal)),
+                            'action': action,
+                            'selected_action': saved_option.get('applied_action', action),
+                        }),
+                        ics_emergency=record['control']['ics_metrics']['emergency'].reshape(-1).cpu().tolist(),
+                        ics_minimum_clearance_m=record['control']['ics_metrics']['minimum_clearance_m'].reshape(-1).cpu().tolist(),
+                        ics_active_beam_count=record['control']['ics_metrics']['active_beam_count'].reshape(-1).cpu().tolist(),
+                    )
             if hook is not None:
                 hook.remove()
             env.finish_r6_physics()
@@ -307,7 +360,7 @@ def audit(output, params, counters):
     sources = [file_pin(path)]
     groups = groups_for(params['experiment_id'])
     persistence = params['experiment_id'] == PERSISTENCE_RUN
-    holdout = params['experiment_id'] in (HOLDOUT_RUN, HOLDOUT_SMOKE)
+    holdout = params['experiment_id'] in PHYSICAL_LAYOUT_RUNS
     if holdout:
         from .escape_holdout_scene import LAYOUTS
         preflight = Path(output) / 'initial_preflight.json'
@@ -328,7 +381,7 @@ def audit(output, params, counters):
             if [r['step'] for r in rows] != list(range(STEPS)) or score(rows) != group['lanes']:
                 raise ValueError('DYNAMIC_ASSAY_SCORER_REPLAY')
             expected_modes = [mode for mode in groups[index] for _ in range(8)]
-            if holdout:
+            if holdout and params['experiment_id'] != RECOVERY_REAR:
                 first = rows[0]
                 signature = (first['initial_position_w'], first['pre']['sphere_position_w'],
                              first['axis_w'], first['modes'], first['command_w'])
