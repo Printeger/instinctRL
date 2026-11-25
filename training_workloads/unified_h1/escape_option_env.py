@@ -6,7 +6,8 @@ import torch
 
 from instinctlab.control.escape_option import EscapeOption, METHOD_VERSION
 from instinctlab.control.escape_recovery import (
-    EscapeRecovery, FAST_LATERAL_VERSION, LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES, RECOVERY_VERSION,
+    EscapeRecovery, FAST_LATERAL_VERSION, LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES,
+    RECOVERY_VERSION, REDIRECT_25_VERSION,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
@@ -55,7 +56,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         elif version in (MIXED_VERSION, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES):
             self.escape_option = EscapeRecovery(**kwargs, recenter=version != MIXED_VERSION,
                                                 lateral=version in (LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES),
-                                                fast_lateral=version in (FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES))
+                                                fast_lateral=version in (FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES),
+                                                redirect=version == REDIRECT_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -80,6 +82,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             }
             if isinstance(self.escape_option, EscapeRecovery):
                 self.extras['pre_reset']['escape_option']['recovery'] = self.escape_option.recovering.detach().clone()
+                self.extras['pre_reset']['escape_option']['redirected'] = self.escape_option.redirected.detach().clone()
         return reward
 
     def _reset_idx(self, env_ids):

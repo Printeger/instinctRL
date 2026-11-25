@@ -249,3 +249,30 @@ def test_calibration_requires_the_actual_ray_table_for_the_declared_mount(tmp_pa
     value['body_rays'] = file_pin(path)
     with pytest.raises(ValueError, match='LIDAR_CALIBRATION_RAY_READBACK'):
         verify(value, tmp_path, 'execution', 25)
+
+
+def test_redirect_recovers_nonemergency_lateral_release_with_same_side():
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=True,
+                            lateral=True, fast_lateral=True, redirect=True)
+    option.retreat_basis[:, 0] = 1.
+    option.direction[:, 1] = -1.
+    option.escape_speed.fill_(.45)
+    option.applied.fill_(True)
+    state = torch.zeros(2, 52)
+    state[1,0] = 1.
+    chosen = torch.tensor([[0., .5, .05, .5], [0., .5, .05, .5]])
+    original = chosen.clone()
+
+    def issue(lidar, state, action, config):
+        emergency = state[:, :1] > .5
+        beta = (~emergency & (action[:,1:2] > .55)).float()
+        return SimpleNamespace(metrics=dict(beta=beta, emergency=emergency),
+                               v_final_b=beta*(action[:,1:]-.5))
+
+    option.issued = issue
+    option.redirect_clipped(torch.zeros(2,1), state, chosen, None)
+    assert option.redirected.tolist() == [True, False]
+    assert chosen[0,1] > .55 and chosen[0,2] < .5
+    torch.testing.assert_close(chosen[1], original[1])

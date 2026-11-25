@@ -397,6 +397,7 @@ def run(backend, params):
                             'version': env.escape_option_version,
                             'active': saved_option.get('active', torch.zeros_like(terminal)),
                             'recovery': saved_option.get('recovery', torch.zeros_like(terminal)),
+                            'redirected': saved_option.get('redirected', torch.zeros_like(terminal)),
                             'action': action,
                             'selected_action': saved_option.get('applied_action', action),
                         }),
@@ -489,6 +490,11 @@ def audit(output, params, counters):
                               or row['sensor_split'] != ('heldout' if three == 'HOLDOUT' else 'development')
                               or row['mover_witness_delivered'] != [bool(n) for n in before['winning_beams']]):
                     raise ValueError('DYNAMIC_THREE_EXECUTION_EVIDENCE')
+                if three and any(redirected and (emergency or beta == 0.)
+                                 for redirected, emergency, beta in zip(
+                    row['escape_recovery'].get('redirected', [False] * LANES),
+                    row['ics_emergency'], row['ics_beta'], strict=True)):
+                    raise ValueError('DYNAMIC_REDIRECTION_WAS_NOT_ISSUED')
                 if three == 'REAR':
                     expected = .28 if name.endswith('_slow') else .42
                     if any(abs(v[0] - expected) > 1.e-6 for v in before['expected_velocity_w']

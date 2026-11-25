@@ -13,19 +13,23 @@ LATERAL_VERSION = 'm4-escape-lateral-recovery-v1'
 FAST_LATERAL_VERSION = 'm4-escape-lateral-recovery-v2'
 MOUNT_25_VERSION = 'm4-escape-lateral-recovery-p25-v1'
 MOUNT_28_VERSION = 'm4-escape-lateral-recovery-p28-v1'
-MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28}
+REDIRECT_25_VERSION = 'm4-escape-redirect-p25-v1'
+MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28, REDIRECT_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
 
 
 class EscapeRecovery(EscapeOption):
-    def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False):
+    def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False, redirect=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
         self.fast_lateral = fast_lateral
+        self.redirect = redirect
         self.escape_speed = self.direction.new_full((lanes,), SPEED_M_S)
+        self.retreat_basis = torch.zeros_like(self.direction)
+        self.redirected = torch.zeros_like(self.applied)
         self.since_escape = torch.full_like(self.remaining, RECOVERY_LIMIT)
         self.recovering = torch.zeros_like(self.applied)
 
@@ -34,6 +38,8 @@ class EscapeRecovery(EscapeOption):
         self.since_escape[lanes] = RECOVERY_LIMIT
         self.recovering[lanes] = False
         self.escape_speed[lanes] = SPEED_M_S
+        self.retreat_basis[lanes] = 0.
+        self.redirected[lanes] = False
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -47,6 +53,8 @@ class EscapeRecovery(EscapeOption):
             return
         local_lidar, local_state = lidar[lanes], state[lanes]
         retreat = self.detector.retreat_direction(local_lidar, local_state, hover_only=False)
+        if self.redirect:
+            self.retreat_basis[lanes] = retreat
         side = torch.stack((-retreat[:, 1], retreat[:, 0], retreat[:, 2]), dim=1)
         baseline = self.issued(local_lidar, local_state, selected[lanes], config).v_final_b
         best_score = (baseline * side).sum(1).abs() + .035
@@ -74,6 +82,34 @@ class EscapeRecovery(EscapeOption):
                 useful = (issued * side[rear_hover]).sum(1).abs() > best_score[rear_hover] + .035
                 self.escape_speed[lanes[rear_hover][useful]] = FAST_LATERAL_SPEED_M_S
 
+    def redirect_clipped(self, lidar, state, selected, config):
+        self.redirected.zero_()
+        continuing = self.applied & (self.remaining < DURATION_STEPS - 1)
+        x, y, z = self.retreat_basis.unbind(dim=1)
+        yaw = -.1 * state[:, 41]
+        rotated = torch.stack((x*yaw.cos() - y*yaw.sin(), x*yaw.sin() + y*yaw.cos(), z), dim=1)
+        self.retreat_basis = torch.where(continuing[:, None], rotated, self.retreat_basis)
+        command, _ = extract_latest_commands(state)
+        lanes = (self.applied & (command.norm(dim=1) <= .001) & (self.retreat_basis[:, 0] > .65)
+                 & (self.escape_speed >= FAST_LATERAL_SPEED_M_S)).nonzero().flatten()
+        if not len(lanes):
+            return
+        original = self.issued(lidar[lanes], state[lanes], selected[lanes], config)
+        blocked = (original.metrics['beta'].flatten() == 0.) & (original.metrics['emergency'].flatten() == 0.)
+        lanes = lanes[blocked]
+        if not len(lanes):
+            return
+        retreat, direction = self.retreat_basis[lanes], self.direction[lanes]
+        side = torch.stack((-retreat[:, 1], retreat[:, 0], retreat[:, 2]), dim=1)
+        signed_side = side * (direction * side).sum(dim=1, keepdim=True).sign()
+        proposal = direction + .45 * retreat
+        proposal /= proposal.norm(dim=1, keepdim=True).clamp_min(.01)
+        trial = torch.cat((selected[lanes, :1], .5 + self.escape_speed[lanes, None] * proposal), dim=1)
+        issued = self.issued(lidar[lanes], state[lanes], trial, config).v_final_b
+        releases_side = (issued * signed_side).sum(dim=1) > .08
+        selected[lanes[releases_side]] = trial[releases_side]
+        self.redirected[lanes[releases_side]] = True
+
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
         selected = super().apply(policy, action)
@@ -83,6 +119,8 @@ class EscapeRecovery(EscapeOption):
         if self.fast_lateral:
             held = self.applied.nonzero().flatten()
             selected[held, 1:] = .5 + self.escape_speed[held, None] * self.direction[held]
+        if self.redirect:
+            self.redirect_clipped(lidar, state, selected, config)
         command, _ = extract_latest_commands(state)
         speed = command.norm(dim=1)
         moving = speed > .03

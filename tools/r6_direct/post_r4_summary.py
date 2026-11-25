@@ -42,6 +42,10 @@ def rear(binding):
                 visible_to_contact_steps=None if visible is None or contact is None else contact-visible,
                 triggered_lateral_mps=None if trigger is None else abs(issued[trigger]),
                 triggered_axial_away_mps=None if trigger is None else away[trigger],
+                nonemergency_clipped_option_steps=sum(r['escape_recovery']['active'][lane]
+                    and r['ics_beta'][lane] == 0. and not r['ics_emergency'][lane] for r in steps[start:horizon]),
+                redirected_steps=sum(r['escape_recovery'].get('redirected', [False]*len(group['lanes']))[lane]
+                    for r in steps[start:horizon]),
                 pre_emergency_axial_away_command_m=sum(away[start:horizon])*.1,
                 pre_emergency_lateral_command_m=abs(sum(issued[start:horizon]))*.1,
                 pre_emergency_lateral_motion_m=max((abs(p-baseline) for p in position[start:horizon]), default=0.),
