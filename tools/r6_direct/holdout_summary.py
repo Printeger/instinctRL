@@ -25,15 +25,23 @@ def compare_holdout(binding):
         models[arm] = by_case
     cases = []
     fields = ('progress_m', 'tracking_rmse_mps', 'recovery_rmse_mps', 'maximum_horizontal_excursion_m')
+    recovery_scored = any('recovery_progress_m' in r for rows in models['candidate'].values() for r in rows)
+    if recovery_scored:
+        fields += ('recovery_progress_m',)
     for (layout, mode), candidate in sorted(models['candidate'].items()):
         key = layout, mode
         case = dict(layout=layout, mode=mode, episodes=len(candidate), means={}, collisions={}, paired_effects={})
+        if recovery_scored and mode == 'approach':
+            case['recovered_without_contact'] = {}
         for arm, outcomes in models.items():
             rows = outcomes[key]
             if len(rows) != len(candidate) or [r['lane'] for r in rows] != [r['lane'] for r in candidate]:
                 raise ValueError('Holdout pairing key differs across models')
             case['collisions'][arm] = sum(r['collision'] for r in rows)
             case['means'][arm] = {field: fmean(r[field] for r in rows) for field in fields}
+            if 'recovered_without_contact' in case:
+                case['recovered_without_contact'][arm] = sum(not r['collision'] and r['recovery_progress_m'] >= .5
+                                                             for r in rows)
             if arm != 'candidate':
                 case['paired_effects'][arm] = dict(
                     collision_to_pass=sum(a['collision'] and not b['collision'] for a, b in zip(rows, candidate, strict=True)),

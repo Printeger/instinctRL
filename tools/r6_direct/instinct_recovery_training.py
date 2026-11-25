@@ -41,7 +41,8 @@ class RecoveryTraining(RecoveryStudy):
             policy = read(ledger['resource_policy'])
             # The accounting admission charges each initialization from u640.
             # Short development and the single formal stream use one mechanism.
-            revised = dict(policy['caps'], major_scientific_candidates=2)
+            revised = dict(policy['caps'], major_scientific_candidates=2, live_starts=38,
+                           simulator_initializations=25, queue_seconds=7200)
             policy['caps'] = revised
             policy['user_authority'] = pin(PROJECT/'SHORT_TRAIN.md')
             path = PROJECT/'TRAIN_RESOURCE_POLICY.json'
