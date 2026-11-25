@@ -1,0 +1,125 @@
+{
+  "schema_version": "instinctrl-post-r4-three-independent/1",
+  "task": "instinctrl-post-r4-three",
+  "after_closed_rounds": 3,
+  "arms": [
+    "qualified",
+    "r1-origin",
+    "r1-end",
+    "r2-origin",
+    "r2-end",
+    "r3-origin",
+    "r3-end"
+  ],
+  "selection": "Each round selects and freezes its formal mechanism, start and exact terminal update before formal execution. The independent streams select no checkpoint.",
+  "r6": {
+    "original_seed": 20260909,
+    "perturbation_seed": 1438054595,
+    "perturbation_split": "development",
+    "original_cases": 5,
+    "perturbation_blocks": 16,
+    "initial_lanes_per_case": 32,
+    "transitions_per_arm": 193600,
+    "criteria": {
+      "all_gates_pass": true,
+      "max_paired_tracking_rmse_increase_mps": 0.01
+    }
+  },
+  "physical": {
+    "seed": 922775619,
+    "split": "heldout",
+    "layout_order": [
+      "room_door",
+      "trunk_aisle",
+      "street_gap",
+      "open_tube"
+    ],
+    "lane_modes_by_group": [
+      [
+        8,
+        8,
+        8,
+        8
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        3,
+        2,
+        4
+      ],
+      [
+        6,
+        6,
+        6,
+        6
+      ],
+      [
+        7,
+        7,
+        7,
+        7
+      ],
+      [
+        9,
+        9,
+        9,
+        9
+      ]
+    ],
+    "initial_lanes_per_group": 32,
+    "steps": 120,
+    "control_period_seconds": 0.1,
+    "initial_trajectories_per_arm": 192,
+    "denominators": {
+      "forward": 64,
+      "rear": 32,
+      "nonzero": 88,
+      "still_hover": 32,
+      "total": 192,
+      "recovery_approach_per_layout": 8
+    },
+    "metrics": [
+      "physical_contact",
+      "tracking_rmse_mps",
+      "recovery_tracking_rmse_mps",
+      "recovery_actual_progress_m",
+      "no_contact_and_recovered",
+      "maximum_horizontal_hover_excursion_m"
+    ],
+    "recovery": {
+      "start_position_step": 79,
+      "end_position_step": 119,
+      "minimum_progress_m": 0.5,
+      "contact_is_failure": true,
+      "handling": "Include the first terminal transition and no later reset data. Progress stops at terminal; trajectories terminated before the window contribute zero progress."
+    },
+    "criteria": {
+      "front_collisions_fraction_max": 0.5,
+      "no_new_contacts": true,
+      "travel_progress_min_m": 1.5,
+      "travel_progress_fraction_min": 0.95,
+      "travel_rmse_increase_max_mps": 0.01,
+      "hover_excursion_increase_max_m": 0.005
+    }
+  },
+  "pairing": "Same physical geometry, lane seeds, initial conditions and commands. End versus same-execution start measures training. Development same-weight comparisons measure execution changes. Qualified runs with its existing execution across rounds.",
+  "development": {
+    "rear_seed": 1583168485,
+    "physical_seeds": [
+      730091219,
+      1319447968,
+      1910332519
+    ],
+    "track_seeds": [
+      960766027,
+      215105611,
+      1765967139
+    ]
+  }
+}

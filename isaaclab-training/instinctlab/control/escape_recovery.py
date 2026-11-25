@@ -2,21 +2,23 @@
 
 import torch
 
-from .escape_option import EscapeOption
+from .escape_option import DURATION_STEPS, SPEED_M_S, EscapeOption
 from .governor import decode_governor, extract_latest_commands
 from .ics import attenuate_command
 
 
 MIXED_VERSION = 'm4-escape-mixed-v1'
 RECOVERY_VERSION = 'm4-escape-recovery-v1'
+LATERAL_VERSION = 'm4-escape-lateral-recovery-v1'
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
 
 
 class EscapeRecovery(EscapeOption):
-    def __init__(self, *, lanes, device, dtype, recenter):
+    def __init__(self, *, lanes, device, dtype, recenter, lateral=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
+        self.lateral = lateral
         self.since_escape = torch.full_like(self.remaining, RECOVERY_LIMIT)
         self.recovering = torch.zeros_like(self.applied)
 
@@ -29,10 +31,36 @@ class EscapeRecovery(EscapeOption):
         request = decode_governor(action, state, config.governor).v_gov_b
         return attenuate_command(lidar, self.detector._full_rays, request, .1, config.ics)
 
+    def select_lateral(self, lidar, state, selected, config):
+        # Keep the same trigger and hold. Select using the command this path can
+        # actually issue at the escape speed, including the shared emergency stop.
+        lanes = (self.applied & (self.remaining == DURATION_STEPS - 1)).nonzero().flatten()
+        if not len(lanes):
+            return
+        local_lidar, local_state = lidar[lanes], state[lanes]
+        retreat = self.detector.retreat_direction(local_lidar, local_state, hover_only=False)
+        side = torch.stack((-retreat[:, 1], retreat[:, 0], retreat[:, 2]), dim=1)
+        baseline = self.issued(local_lidar, local_state, selected[lanes], config).v_final_b
+        best_score = (baseline * side).sum(1).abs() + .035
+        best_direction = self.direction[lanes]
+        for axial in (0., .45, .85):
+            for sign in (1., -1.):
+                direction = (sign * side + axial * retreat) / (1. + axial**2)**.5
+                trial = torch.cat((torch.zeros_like(local_state[:, :1]), .5 + SPEED_M_S * direction), dim=1)
+                issued = self.issued(local_lidar, local_state, trial, config).v_final_b
+                score = (issued * side).sum(1).abs()
+                better = score > best_score
+                best_direction = torch.where(better[:, None], direction, best_direction)
+                best_score = torch.where(better, score, best_score)
+        self.direction[lanes] = best_direction
+        selected[lanes, 1:] = .5 + SPEED_M_S * best_direction
+
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
         selected = super().apply(policy, action)
         lidar, state = policy['lidar_grid'], policy['state_vec']
+        if self.lateral:
+            self.select_lateral(lidar, state, selected, config)
         command, _ = extract_latest_commands(state)
         speed = command.norm(dim=1)
         moving = speed > .03

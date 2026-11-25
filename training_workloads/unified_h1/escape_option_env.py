@@ -1,7 +1,7 @@
 """Apply the frozen option to motor requests while leaving PPO samples intact."""
 
 from instinctlab.control.escape_option import EscapeOption, METHOD_VERSION
-from instinctlab.control.escape_recovery import EscapeRecovery, MIXED_VERSION, RECOVERY_VERSION
+from instinctlab.control.escape_recovery import EscapeRecovery, LATERAL_VERSION, MIXED_VERSION, RECOVERY_VERSION
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
@@ -15,8 +15,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             self.escape_option = None
         elif version == METHOD_VERSION:
             self.escape_option = EscapeOption(**kwargs)
-        elif version in (MIXED_VERSION, RECOVERY_VERSION):
-            self.escape_option = EscapeRecovery(**kwargs, recenter=version == RECOVERY_VERSION)
+        elif version in (MIXED_VERSION, RECOVERY_VERSION, LATERAL_VERSION):
+            self.escape_option = EscapeRecovery(**kwargs, recenter=version != MIXED_VERSION,
+                                                lateral=version == LATERAL_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
 

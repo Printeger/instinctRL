@@ -206,3 +206,22 @@ def test_visible_reflex_reports_directional_action_on_live_samples():
     assert lanes[0]['reflex_steps'] == 2
     assert lanes[0]['first_visible_reflex'] == dict(step=2, governor_mps=.16, final_mps=.04)
     assert lanes[1]['first_visible_reflex'] is None
+
+
+def test_lateral_option_selects_issued_lateral_only_on_existing_trigger():
+    from instinctlab.control.escape_option import DURATION_STEPS
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=True, lateral=True)
+    option.detector = SimpleNamespace(retreat_direction=lambda lidar, state, **kwargs: state.new_tensor([[1., 0., 0.]]))
+    # The obstacle clips pure lateral candidates. Diagonal commands remain feasible.
+    option.issued = lambda lidar, state, action, config: SimpleNamespace(
+        v_final_b=(action[:, 1:] - .5) * (action[:, 1:2] > .55))
+    option.applied[:] = True
+    option.remaining[:] = torch.tensor([DURATION_STEPS-1, DURATION_STEPS-2])
+    option.direction[:, 0] = 1.
+    actions = torch.tensor([[0., .8, .5, .5], [0., .8, .5, .5]])
+    option.select_lateral(torch.zeros(2, 1), torch.zeros(2, 52), actions, None)
+    assert actions[0, 2] > .75
+    torch.testing.assert_close(actions[1], torch.tensor([0., .8, .5, .5]))
+    torch.testing.assert_close(option.direction[0].norm(), torch.tensor(1.))

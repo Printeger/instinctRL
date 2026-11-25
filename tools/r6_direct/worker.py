@@ -187,7 +187,7 @@ def run(plan, input_pin):
             from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv,UnifiedH1DirectEnvCfg
             from training_workloads.unified_h1.checkpoint_compatibility import pinned_json
             from training_workloads.unified_h1.robustness_training_method import (
-                ESCAPE_RECOVERY_CANDIDATE, HOVER_REFLEX_CANDIDATE, action_option_version,
+                RECOVERY_CANDIDATES, HOVER_REFLEX_CANDIDATE, action_option_version,
             )
             operation = contract['operation']
             params = contract['parameters']
@@ -203,12 +203,14 @@ def run(plan, input_pin):
                 if selection['training_plan'] is not None:
                     recipe = pinned_json(selection['training_plan']['recipe'])
                     option_version = action_option_version(recipe['candidate_id'])
-                elif pinned_json(selection['comparison'])['candidate_id'] == ESCAPE_RECOVERY_CANDIDATE:
-                    option_version = action_option_version(ESCAPE_RECOVERY_CANDIDATE)
+                else:
+                    candidate = pinned_json(selection['comparison'])['candidate_id']
+                    if candidate in RECOVERY_CANDIDATES:
+                        option_version = action_option_version(candidate)
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
-            from training_workloads.unified_h1.dynamic_assay import PHYSICAL_LAYOUT_RUNS, OPTION_RUN, RECOVERY_PREFIX
-            holdout = plan['run_id'] in PHYSICAL_LAYOUT_RUNS
-            recovery_training = operation == 'train' and recipe['candidate_id'] == ESCAPE_RECOVERY_CANDIDATE
+            from training_workloads.unified_h1.dynamic_assay import physical_layout, OPTION_RUN, RECOVERY_PREFIX
+            holdout = operation == 'dynamic' and physical_layout(plan['run_id'])
+            recovery_training = operation == 'train' and recipe['candidate_id'] in RECOVERY_CANDIDATES
             if holdout:
                 from training_workloads.unified_h1.escape_option_env import EscapeHoldoutEnv
                 env = EscapeHoldoutEnv(cfg, layout_seed=params['seed'])

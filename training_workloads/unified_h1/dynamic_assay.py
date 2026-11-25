@@ -19,6 +19,7 @@ OPTION_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-DEV-OPTION'
 HOLDOUT_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-LONG-HOLDOUT'
 HOLDOUT_SMOKE = 'R6-DIRECT-INSTINCT-GPU-R4-HOLDOUT-SMOKE'
 RECOVERY_PREFIX = 'R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-'
+THREE_PREFIX = RECOVERY_PREFIX + 'THREE-'
 RECOVERY_MECHANISM = RECOVERY_PREFIX + 'MECHANISM-01'
 RECOVERY_MECHANISM_RETRY = RECOVERY_PREFIX + 'MECHANISM-02'
 RECOVERY_MECHANISM_RUNS = (RECOVERY_MECHANISM, RECOVERY_MECHANISM_RETRY)
@@ -34,7 +35,21 @@ MODES = ('approach', 'recede', 'cross_left', 'cross_right',
          'open_front', 'open_rear', 'wall_front', 'wall_rear')
 
 
+def three_case(run_id):
+    match = re.fullmatch(THREE_PREFIX + r'(REAR|MECHANISM|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
+    return match[1] if match else None
+
+
+def physical_layout(run_id):
+    return run_id in PHYSICAL_LAYOUT_RUNS or three_case(run_id) is not None
+
+
 def groups_for(run_id):
+    case = three_case(run_id)
+    if case == 'REAR':
+        return (HOLDOUT_GROUPS[-1],)
+    if case in ('MECHANISM', 'CHECK', 'HOLDOUT'):
+        return HOLDOUT_GROUPS
     if run_id == PERSISTENCE_RUN:
         return PERSISTENCE_GROUPS
     if run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT):
@@ -51,7 +66,10 @@ def groups_for(run_id):
 def contract(params):
     fields = {'experiment_id', 'training_seed', 'models', 'seed', 'wall_seconds', 'output_cap_bytes'}
     runs = (PERSISTENCE_RUN, OPTION_RUN, *PHYSICAL_LAYOUT_RUNS)
-    if set(params) != fields or (params['experiment_id'] not in runs and not re.fullmatch(
+    case = three_case(params['experiment_id'])
+    if case:
+        fields.add('arm_options')
+    if set(params) != fields or (not case and params['experiment_id'] not in runs and not re.fullmatch(
             r'R6-DIRECT-INSTINCT-GPU-R[23]-(?:DYNAMIC(?:-PILOT-0[1-4])?|VISIBILITY)', params['experiment_id'])):
         raise ValueError('DYNAMIC_ASSAY_CONTRACT_IDENTITY')
     if params['training_seed'] != 20260908 or not 0 <= params['seed'] < 2**31:
@@ -63,10 +81,31 @@ def contract(params):
     models = params['models']
     three_arms = params['experiment_id'] in (HOLDOUT_RUN, *RECOVERY_MECHANISM_RUNS, RECOVERY_HOLDOUT)
     allowed_models = {'candidate', 'control', 'reference'} if three_arms else {'candidate', 'reference'}
+    if case == 'HOLDOUT':
+        allowed_models.add('control')
+    if case == 'REAR':
+        allowed_models.update(('candidate_slow', 'reference_slow'))
     if not isinstance(models, dict) or not 1 <= len(models) <= len(allowed_models) or not set(models) <= allowed_models:
         raise ValueError('DYNAMIC_ASSAY_MODELS')
     for value in models.values():
         checked(value)
+    if case:
+        from instinctlab.control.escape_recovery import LATERAL_VERSION, RECOVERY_VERSION
+
+        options = params['arm_options']
+        if (not isinstance(options, dict) or set(options) != allowed_models or set(models) != allowed_models
+                or not all(version in (None, RECOVERY_VERSION, LATERAL_VERSION) for version in options.values())):
+            raise ValueError('DYNAMIC_THREE_OPTIONS')
+        if case in ('REAR', 'MECHANISM') and any(value != models['reference'] for value in models.values()):
+            raise ValueError('DYNAMIC_THREE_SAME_WEIGHTS')
+        if case == 'REAR' and options != dict(reference=RECOVERY_VERSION, candidate=LATERAL_VERSION,
+                                             reference_slow=RECOVERY_VERSION, candidate_slow=LATERAL_VERSION):
+            raise ValueError('DYNAMIC_REAR_FACTORIAL')
+        if case == 'CHECK' and (options['candidate'] is None or options['candidate'] != options['reference']):
+            raise ValueError('DYNAMIC_THREE_CHECK_EXECUTION')
+        if case == 'HOLDOUT' and (options['reference'] is not None or options['candidate'] is None
+                                  or options['candidate'] != options['control']):
+            raise ValueError('DYNAMIC_THREE_HOLDOUT_EXECUTION')
     if params['experiment_id'] in (PERSISTENCE_RUN, OPTION_RUN) and (
             set(models) != {'candidate', 'reference'} or models['candidate'] != models['reference']):
         raise ValueError('DYNAMIC_ASSAY_SAME_WEIGHT_MODELS')
@@ -179,12 +218,13 @@ def run(backend, params):
     groups = groups_for(params['experiment_id'])
     persistence = params['experiment_id'] == PERSISTENCE_RUN
     run_id = params['experiment_id']
-    holdout = run_id in PHYSICAL_LAYOUT_RUNS
+    three = three_case(run_id)
+    holdout = physical_layout(run_id)
     mechanism = run_id in RECOVERY_MECHANISM_RUNS
     rear_pair = run_id == RECOVERY_REAR
     recovery_assay = run_id.startswith(RECOVERY_PREFIX)
     option = holdout or params['experiment_id'] == OPTION_RUN
-    split = 'heldout' if run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT) else 'development'
+    split = 'heldout' if three == 'HOLDOUT' or run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT) else 'development'
     cue = (HoverReflex(device=device, dtype=torch.float32)
            if persistence or option or params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-') else None)
     results = {}
@@ -210,7 +250,10 @@ def run(backend, params):
                 version = RECOVERY_VERSION
             if run_id in RECOVERY_SHORT_CHECKS:
                 enabled, version = True, RECOVERY_VERSION
-            if run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT, *RECOVERY_SHORT_CHECKS) and label == 'candidate':
+            if three:
+                version = params['arm_options'][label]
+                enabled = version is not None
+            if (three in ('CHECK', 'HOLDOUT') or run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT, *RECOVERY_SHORT_CHECKS)) and label == 'candidate':
                 if payload['method_hashes'].get(METHOD_FIELD) != version:
                     raise ValueError('DYNAMIC_HOLDOUT_METHOD_BINDING')
             env.set_escape_option(enabled, version=version)
@@ -234,7 +277,7 @@ def run(backend, params):
                                                    mount=env.cfg.ray_caster.offset.pos, split=split)
                 elif modes[lane] == 5:
                     wall = dict(block, task='wall_modes', sensor_to_wall_distance_m=1.40)
-                    specs[lane] = reset_spec(wall, seed=seed, split='development', lane=lane,
+                    specs[lane] = reset_spec(wall, seed=seed, split=split if three else 'development', lane=lane,
                                             mount_position_m=env.cfg.ray_caster.offset.pos)
             axis_angle = torch.arange(LANES,device=device).remainder(8)*math.pi/4
             axis = torch.stack((axis_angle.cos(),axis_angle.sin(),torch.zeros_like(axis_angle)),dim=1)
@@ -248,6 +291,10 @@ def run(backend, params):
             local = torch.tensor([s['sensor_position_local_m'] for s in specs],device=device)
             physical_modes = torch.full_like(mode_tensor, 5) if visibility else mode_tensor
             obstacle.configure(env.scene.env_origins+local, axis, physical_modes)
+            if three == 'REAR' and label.endswith('_slow'):
+                # Same path and terminal position, with more time after a rear return.
+                obstacle.velocity.mul_(2/3)
+                obstacle.end_travel_s.mul_(3/2)
             if holdout:
                 # Keep a crossing inside the side gaps of the authored fixtures.
                 crossing = (mode_tensor == 2) | (mode_tensor == 3)
@@ -340,6 +387,10 @@ def run(backend, params):
                         ics_minimum_clearance_m=record['control']['ics_metrics']['minimum_clearance_m'].reshape(-1).cpu().tolist(),
                         ics_active_beam_count=record['control']['ics_metrics']['active_beam_count'].reshape(-1).cpu().tolist(),
                     )
+                if three:
+                    latest_valid = policy['lidar_grid'][:, 10].flatten(1)[obstacle.indices, before['witness_beam']]
+                    rows[-1]['mover_witness_delivered'] = (observed & (latest_valid > .5)).cpu().tolist()
+                    rows[-1]['sensor_split'] = split
             if hook is not None:
                 hook.remove()
             env.finish_r6_physics()
@@ -366,7 +417,8 @@ def audit(output, params, counters):
     sources = [file_pin(path)]
     groups = groups_for(params['experiment_id'])
     persistence = params['experiment_id'] == PERSISTENCE_RUN
-    holdout = params['experiment_id'] in PHYSICAL_LAYOUT_RUNS
+    three = three_case(params['experiment_id'])
+    holdout = physical_layout(params['experiment_id'])
     if holdout:
         from .escape_holdout_scene import LAYOUTS
         preflight = Path(output) / 'initial_preflight.json'
@@ -408,6 +460,15 @@ def audit(output, params, counters):
                     raise ValueError('DYNAMIC_ASSAY_ACTUAL_PHYSICS_TICKS')
                 if holdout and row['layout'] != [LAYOUTS[i // 8] for i in range(LANES)]:
                     raise ValueError('DYNAMIC_HOLDOUT_LAYOUT_ORDER')
+                if three and (row['escape_recovery']['version'] != params['arm_options'][name]
+                              or row['sensor_split'] != ('heldout' if three == 'HOLDOUT' else 'development')
+                              or row['mover_witness_delivered'] != [bool(n) for n in before['winning_beams']]):
+                    raise ValueError('DYNAMIC_THREE_EXECUTION_EVIDENCE')
+                if three == 'REAR':
+                    expected = .28 if name.endswith('_slow') else .42
+                    if any(abs(v[0] - expected) > 1.e-6 for v in before['expected_velocity_w']
+                           if any(v)):
+                        raise ValueError('DYNAMIC_REAR_FACTORIAL_SPEED')
                 if visibility and (
                         len(row['sensor_approach']) != LANES or any(type(v) is not bool for v in row['sensor_approach'])):
                     raise ValueError('DYNAMIC_ASSAY_VISIBILITY_CLOSURE_EVIDENCE')

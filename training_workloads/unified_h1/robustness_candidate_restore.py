@@ -59,9 +59,9 @@ def restore(backend,selection):
 
 def evaluation_option_version(selected):
     from instinctlab.control.escape_option import METHOD_FIELD
-    from .robustness_training_method import ESCAPE_RECOVERY_CANDIDATE, action_option_version
+    from .robustness_training_method import RECOVERY_CANDIDATES, action_option_version
 
     candidate = selected['comparison']['candidate_id']
-    if selected['selection']['role'] == 'baseline_control' and candidate == ESCAPE_RECOVERY_CANDIDATE:
+    if selected['selection']['role'] == 'baseline_control' and candidate in RECOVERY_CANDIDATES:
         return action_option_version(candidate)
     return selected['model']['method_hashes'].get(METHOD_FIELD)

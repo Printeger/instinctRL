@@ -14,14 +14,19 @@ WEIGHTS={'residual_neutrality_weight','anchor_weight','mean_prior_weight','ics_c
 HOVER_REFLEX_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R3-REFLEX'
 ESCAPE_OPTION_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R4-ESCAPE-OPTION'
 ESCAPE_RECOVERY_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-RECOVERY'
+ESCAPE_LATERAL_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-LATERAL-RECOVERY'
 
 
 def action_option_version(candidate):
     from instinctlab.control.escape_option import METHOD_VERSION
-    from instinctlab.control.escape_recovery import RECOVERY_VERSION
+    from instinctlab.control.escape_recovery import LATERAL_VERSION, RECOVERY_VERSION
 
     return {ESCAPE_OPTION_CANDIDATE: METHOD_VERSION,
-            ESCAPE_RECOVERY_CANDIDATE: RECOVERY_VERSION}.get(candidate)
+            ESCAPE_RECOVERY_CANDIDATE: RECOVERY_VERSION,
+            ESCAPE_LATERAL_CANDIDATE: LATERAL_VERSION}.get(candidate)
+
+
+RECOVERY_CANDIDATES = (ESCAPE_RECOVERY_CANDIDATE, ESCAPE_LATERAL_CANDIDATE)
 
 
 def require(value,reason):
@@ -162,7 +167,7 @@ def restore_and_bind(backend,*,plan,execution_identity):
                 trainer, period_s=float(cfg.sim.dt) * cfg.decimation)
             trainer._r6_bound_auxiliary = trainer.actor_auxiliary
         elif recipe['candidate_id'] in (dynamic_motion_training.CANDIDATE, HOVER_REFLEX_CANDIDATE,
-                                       ESCAPE_OPTION_CANDIDATE, ESCAPE_RECOVERY_CANDIDATE):
+                                       ESCAPE_OPTION_CANDIDATE, *RECOVERY_CANDIDATES):
             env = backend.environment
             obstacle = getattr(env, '_h1_moving_sphere', None)
             require(obstacle is not None, 'DYNAMIC_BODY_REQUIRED')
