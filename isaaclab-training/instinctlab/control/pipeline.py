@@ -54,6 +54,7 @@ class ControlCorePipeline:
         if not isinstance(config, ControlCoreConfig):
             raise TypeError("config must be ControlCoreConfig")
         self.config = config
+        self.lidar_rays_body: torch.Tensor | None = None
         self._anchor = MeasurementAnchor(config.anchor)
         self._last_ics_cache: dict[str, torch.Tensor] = {}
 
@@ -99,7 +100,9 @@ class ControlCorePipeline:
         self._anchor.validate_update(
             latest_ranges, latest_validity, latest_reliability, v_cmd_b, episode_reset, explicit_reset
         )
-        rays = mounted_mid360_rays_body(device=lidar_grid.device, dtype=lidar_grid.dtype)
+        rays = self.lidar_rays_body
+        if rays is None:
+            rays = mounted_mid360_rays_body(device=lidar_grid.device, dtype=lidar_grid.dtype)
         validate_adapter_inputs(governor.v_gov_b, controller_quaternion_wxyz)
         ics = attenuate_command(lidar_grid, rays, governor.v_gov_b, history_dt_s, self.config.ics)
 

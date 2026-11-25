@@ -90,12 +90,14 @@ def contract(params):
     for value in models.values():
         checked(value)
     if case:
-        from instinctlab.control.escape_recovery import FAST_LATERAL_VERSION, LATERAL_VERSION, RECOVERY_VERSION
+        from instinctlab.control.escape_recovery import (
+            FAST_LATERAL_VERSION, LATERAL_VERSION, MOUNT_PITCH_DEGREES, RECOVERY_VERSION,
+        )
 
         options = params['arm_options']
         expected_models = allowed_models if case != 'CHECK' or 'control' in models else {'candidate', 'reference'}
         if (not isinstance(options, dict) or set(options) != expected_models or set(models) != expected_models
-                or not all(version in (None, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION)
+                or not all(version in (None, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES)
                            for version in options.values())):
             raise ValueError('DYNAMIC_THREE_OPTIONS')
         if case in ('REAR', 'MECHANISM') and any(value != models['reference'] for value in models.values()):
@@ -206,10 +208,12 @@ def run(backend, params):
     from instinctlab.training.hover_reflex import HoverReflex
     from instinctlab.training.networks import NetworkConfig
     from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz
+    from instinctlab.control.escape_recovery import MOUNT_PITCH_DEGREES
     from training_workloads.scale_003.persistence import atomic_json_replace, reserve_output_bytes
     from .dynamic_motion_training import plausible_approach
     from .escape_hold_probe import EscapeHoldProbe
     from .escape_holdout_scene import LAYOUTS
+    from .lidar_calibration import record as record_mount
     from .robustness_scenarios import reset_spec
 
     env = backend.environment
@@ -225,6 +229,7 @@ def run(backend, params):
     mechanism = run_id in RECOVERY_MECHANISM_RUNS
     rear_pair = run_id == RECOVERY_REAR
     recovery_assay = run_id.startswith(RECOVERY_PREFIX)
+    mount_assay = any(version in MOUNT_PITCH_DEGREES for version in params.get('arm_options', {}).values())
     option = holdout or params['experiment_id'] == OPTION_RUN
     split = 'heldout' if three == 'HOLDOUT' or run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT) else 'development'
     cue = (HoverReflex(device=device, dtype=torch.float32)
@@ -238,6 +243,7 @@ def run(backend, params):
         actor = checkpoint_actor(payload).to(device)
         actor.load_state_dict(payload['actor'], strict=True)
         actor.eval()
+        mount_record = None
         if option:
             from instinctlab.control.escape_option import METHOD_FIELD, METHOD_VERSION
             from instinctlab.control.escape_recovery import MIXED_VERSION, RECOVERY_VERSION
@@ -260,6 +266,11 @@ def run(backend, params):
                 if payload['method_hashes'].get(METHOD_FIELD) != version:
                     raise ValueError('DYNAMIC_HOLDOUT_METHOD_BINDING')
             env.set_escape_option(enabled, version=version)
+            if mount_assay:
+                mount_record = record_mount(env, backend.output, label)
+                rays = env._ray_caster.ray_directions[0]
+                cue._full_rays.copy_(rays)
+                cue._rays.copy_(rays.reshape(59,360,3)[::3].reshape(-1,3))
         cohort = []
         for index, group in enumerate(groups):
             visibility = min(group) >= 8
@@ -409,12 +420,17 @@ def run(backend, params):
                     stream.write(data)
             cohort.append(dict(trace=file_pin(trace_file), lanes=score(rows), transitions=STEPS*LANES))
         results[label] = dict(checkpoint=checkpoint, groups=cohort)
+        if mount_record is not None:
+            results[label]['lidar_mount'] = mount_record
     atomic_json_replace(backend.output,'dynamic_results.json', dict(models=results, counters=counters.snapshot()))
     return results
 
 
 def audit(output, params, counters):
     """Independently recompute lane outcomes and ray witnesses from saved inputs."""
+    from instinctlab.control.escape_recovery import MOUNT_PITCH_DEGREES
+    from .lidar_calibration import verify as verify_mount
+
     path = Path(output) / 'dynamic_results.json'
     saved = json.loads(path.read_bytes())
     if saved['counters'] != counters or set(saved['models']) != set(params['models']):
@@ -422,6 +438,7 @@ def audit(output, params, counters):
     sources = [file_pin(path)]
     groups = groups_for(params['experiment_id'])
     persistence = params['experiment_id'] == PERSISTENCE_RUN
+    mount_assay = any(version in MOUNT_PITCH_DEGREES for version in params.get('arm_options', {}).values())
     three = three_case(params['experiment_id'])
     holdout = physical_layout(params['experiment_id'])
     if holdout:
@@ -435,6 +452,9 @@ def audit(output, params, counters):
     for name, result in saved['models'].items():
         if result['checkpoint'] != params['models'][name] or len(result['groups']) != len(groups):
             raise ValueError('DYNAMIC_ASSAY_MODEL_BINDING')
+        if mount_assay:
+            pitch = MOUNT_PITCH_DEGREES.get(params['arm_options'][name], 30)
+            sources.append(verify_mount(result['lidar_mount'], output, name, pitch))
         for index, group in enumerate(result['groups']):
             trace = checked(group['trace'])
             if trace != Path(output) / f'{name}-group-{index}.jsonl':

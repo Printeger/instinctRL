@@ -571,6 +571,7 @@ class UnifiedH1DirectEnv(R6PhysicsMixin, R6MeasurementMixin, TaslabDirectEnv):
             anchor_loss=self._control.anchor_metrics["huber_loss"],
             anchor_active=self._control.anchor_metrics["active"],
             anchor_usable_fraction=self._control.anchor_metrics["usable_fraction"],
+            rays_body=getattr(self, 'lidar_rays_body', None),
             ics_beta=self._control.ics_metrics["beta"], exact_clearance_m=self._task.exact_clearance_m,
             collision=masks["collision"], below_height=masks["below_height"], above_height=masks["above_height"],
         ), context=context)

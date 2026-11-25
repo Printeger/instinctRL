@@ -239,6 +239,11 @@ def run(plan, input_pin):
                 env.holdout_preflight(backend.output, scene='training-tubes-and-combined-walls')
             else:
                 backend.initial_preflight()
+            from instinctlab.control.escape_recovery import MOUNT_PITCH_DEGREES
+            if option_version in MOUNT_PITCH_DEGREES:
+                from training_workloads.unified_h1.lidar_calibration import record as record_mount
+
+                atomic(backend.output/'lidar-calibration.json', record_mount(env, backend.output, 'execution'))
             if plan['run_id'].startswith(RECOVERY_PREFIX):
                 import torch
                 from training_workloads.scale_003.resources import RUNTIME_MIN_FREE_MEMORY_BYTES

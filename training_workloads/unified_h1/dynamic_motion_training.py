@@ -98,14 +98,11 @@ def clear_travel(policy, rays, approaching):
 
 def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=None):
     if reflex is not None:
-        from instinctlab.control.ics import mounted_mid360_rays_body
         from instinctlab.training.hover_reflex import ESCAPE_ICS, ESCAPE_SPEED_M_S
 
         if ics != ESCAPE_ICS or abs(period_s - .1) > 1e-8:
             raise ValueError('Hover targets require the registered R6 ICS and policy period')
-        parameter = next(trainer.actor.parameters())
-        rays = mounted_mid360_rays_body(device=parameter.device, dtype=parameter.dtype)
-        sampled_rays = rays.reshape(59, 360, 3)[::3, ::3].reshape(-1, 3)
+        sampled_rays = reflex._full_rays.reshape(59, 360, 3)[::3, ::3].reshape(-1, 3)
 
     def gated(policy, output):
         zero = policy['state_vec'][:, 45:48].norm(dim=1) <= .001

@@ -1,28 +1,67 @@
 """Apply the frozen option to motor requests while leaving PPO samples intact."""
 
+import math
+
+import torch
+
 from instinctlab.control.escape_option import EscapeOption, METHOD_VERSION
 from instinctlab.control.escape_recovery import (
-    EscapeRecovery, FAST_LATERAL_VERSION, LATERAL_VERSION, MIXED_VERSION, RECOVERY_VERSION,
+    EscapeRecovery, FAST_LATERAL_VERSION, LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES, RECOVERY_VERSION,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
 class EscapeOptionEnv(UnifiedH1DirectEnv):
     escape_option = None
+    lidar_mount_pitch_degrees = 30
+    lidar_rays_body = None
+
+    def _set_lidar_mount(self, pitch):
+        if pitch == self.lidar_mount_pitch_degrees:
+            return
+        sensor = self._ray_caster
+        rays = sensor.ray_directions
+        if not hasattr(self, '_nominal_lidar_rays'):
+            if not torch.equal(rays, rays[:1].expand_as(rays)):
+                raise ValueError('Per-lane ray calibration differs before mount adjustment')
+            self._nominal_lidar_rays = rays[0].clone()
+            self._nominal_lidar_rotation = tuple(sensor.cfg.offset.rot)
+        original = self._nominal_lidar_rays
+        calibrated = original
+        if pitch != 30:
+            calibrated = original.clone()
+            delta = math.radians(pitch - 30)
+            cosine, sine = math.cos(delta), math.sin(delta)
+            calibrated[:, 0] = cosine*original[:, 0] + sine*original[:, 2]
+            calibrated[:, 2] = -sine*original[:, 0] + cosine*original[:, 2]
+        rays.copy_(calibrated[None].expand_as(rays))
+        half_angle = math.radians(pitch) / 2.
+        rotation = self._nominal_lidar_rotation if pitch == 30 else (math.cos(half_angle), 0., math.sin(half_angle), 0.)
+        sensor.cfg.offset.rot = self.cfg.ray_caster.offset.rot = rotation
+        self.lidar_mount_pitch_degrees = pitch
+        self.lidar_rays_body = None if pitch == 30 else rays[0]
+        for pipeline in self._control_pipelines:
+            pipeline.lidar_rays_body = self.lidar_rays_body
 
     def set_escape_option(self, enabled, *, version=METHOD_VERSION):
+        pitch = MOUNT_PITCH_DEGREES.get(version, 30) if enabled else 30
+        self._set_lidar_mount(pitch)
         self.escape_option_version = version if enabled else None
         kwargs = dict(lanes=self.num_envs, device=self.device, dtype=self._actions.dtype)
         if not enabled:
             self.escape_option = None
         elif version == METHOD_VERSION:
             self.escape_option = EscapeOption(**kwargs)
-        elif version in (MIXED_VERSION, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION):
+        elif version in (MIXED_VERSION, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES):
             self.escape_option = EscapeRecovery(**kwargs, recenter=version != MIXED_VERSION,
-                                                lateral=version in (LATERAL_VERSION, FAST_LATERAL_VERSION),
-                                                fast_lateral=version == FAST_LATERAL_VERSION)
+                                                lateral=version in (LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES),
+                                                fast_lateral=version in (FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES))
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
+        if self.lidar_rays_body is not None:
+            detector = self.escape_option.detector
+            detector._full_rays.copy_(self.lidar_rays_body)
+            detector._rays.copy_(self.lidar_rays_body.reshape(59, 360, 3)[::3].reshape(-1, 3))
 
     def _pre_physics_step(self, actions):
         if isinstance(self.escape_option, EscapeRecovery):
@@ -47,6 +86,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         if self.escape_option is not None:
             self.escape_option.reset(self._validate_reset_indices(env_ids))
         super()._reset_idx(env_ids)
+        if self.lidar_rays_body is not None:
+            for lane in self._validate_reset_indices(env_ids).detach().cpu().tolist():
+                self._control_pipelines[lane].lidar_rays_body = self.lidar_rays_body
 
 
 class EscapeHoldoutEnv(EscapeOptionEnv):

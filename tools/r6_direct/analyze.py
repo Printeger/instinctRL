@@ -52,6 +52,23 @@ def analyze(input_pin, *, probability_diagnostic=None):
                   'final': r6_final_analysis}[operation]
         extra=dict(probability_diagnostic=probability_diagnostic) if operation=='train' else {}
         report, summary = module.analyze(ctx['output'], input_pin, direct=True,**extra)
+        if operation in ('train', 'evaluate'):
+            from instinctlab.control.escape_recovery import MOUNT_PITCH_DEGREES
+            from tools.r6_direct.evidence import read
+            from training_workloads.unified_h1.lidar_calibration import verify as verify_mount
+            from training_workloads.unified_h1.robustness_training_method import action_option_version
+
+            parameters = ctx['contract']['parameters']
+            definition = (read(parameters['r6_training_plan']['recipe']) if operation == 'train'
+                          else read(parameters['evaluation_selection']['comparison']))
+            pitch = MOUNT_PITCH_DEGREES.get(action_option_version(definition['candidate_id']))
+            if pitch is not None:
+                calibration = pin(ctx['output']/'lidar-calibration.json')
+                observed = read(calibration)
+                rays = verify_mount(observed, ctx['output'], 'execution', pitch)
+                for item in (calibration, rays):
+                    report['inputs'].append(dict(item, bytes=Path(item['path']).stat().st_size))
+                summary['lidar_mount'] = observed
     return report, summary
 
 

@@ -225,3 +225,27 @@ def test_lateral_option_selects_issued_lateral_only_on_existing_trigger():
     assert actions[0, 2] > .75
     torch.testing.assert_close(actions[1], torch.tensor([0., .8, .5, .5]))
     torch.testing.assert_close(option.direction[0].norm(), torch.tensor(1.))
+
+
+def test_calibration_requires_the_actual_ray_table_for_the_declared_mount(tmp_path):
+    import math
+    import pytest
+
+    from instinctlab.control.ics import mounted_mid360_rays_body
+    from tools.r6_evidence import file_pin
+    from training_workloads.unified_h1.lidar_calibration import verify
+
+    nominal = mounted_mid360_rays_body()
+    angle = math.radians(-5.)
+    calibrated = nominal.clone()
+    calibrated[:, 0] = math.cos(angle)*nominal[:, 0] + math.sin(angle)*nominal[:, 2]
+    calibrated[:, 2] = -math.sin(angle)*nominal[:, 0] + math.cos(angle)*nominal[:, 2]
+    path = tmp_path/'execution-lidar-rays.f32'
+    path.write_bytes(calibrated.numpy().astype('<f4').tobytes())
+    half = math.radians(25.)/2
+    value = dict(pitch_degrees=25, rotation_wxyz=[math.cos(half),0.,math.sin(half),0.], body_rays=file_pin(path))
+    assert verify(value, tmp_path, 'execution', 25) == file_pin(path)
+    path.write_bytes(nominal.numpy().astype('<f4').tobytes())
+    value['body_rays'] = file_pin(path)
+    with pytest.raises(ValueError, match='LIDAR_CALIBRATION_RAY_READBACK'):
+        verify(value, tmp_path, 'execution', 25)
