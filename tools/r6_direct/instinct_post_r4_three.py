@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+import re
 import shutil
 
 from tools.r6_direct.evidence import read, validate_binding
@@ -21,6 +22,7 @@ from training_workloads.unified_h1.robustness_training_method import action_opti
 PROJECT = ROOT / 'docs/experiments/instinct-post-r4-three'
 PREVIOUS = ROOT / 'docs/experiments/instinct-r4-recovery'
 PROTOCOL = PROJECT / 'INDEPENDENT_PROTOCOL.json'
+TRAINING_LABEL = re.compile(r'(?:SHORT-R([1-3])(?:-[B-Z])?|FORMAL-R([1-3]))')
 
 
 def execution_manifest():
@@ -110,7 +112,7 @@ class PostR4Study(LongStudy):
     def prepare_training(self, spec_path, *, reissue=False):
         spec = load(spec_path)
         label = spec['label']
-        if label not in ('SHORT-R1', 'SHORT-R2', 'SHORT-R3', 'FORMAL-R1', 'FORMAL-R2', 'FORMAL-R3'):
+        if not TRAINING_LABEL.fullmatch(label):
             raise ValueError('Use a registered short or formal round')
         self.docs = PROJECT/label
         self.docs.mkdir(exist_ok=True)
@@ -155,7 +157,8 @@ class PostR4Study(LongStudy):
         return design
 
     def development_check(self, label):
-        if label not in ('SHORT-R1', 'SHORT-R2', 'SHORT-R3', 'FORMAL-R1', 'FORMAL-R2', 'FORMAL-R3'):
+        match = TRAINING_LABEL.fullmatch(label)
+        if not match:
             raise ValueError('Unknown development comparison')
         result = read(pin(PROJECT/label/'RESULTS.json'))
         models = dict(candidate=result['end'], reference=result['start'])
@@ -168,7 +171,7 @@ class PostR4Study(LongStudy):
                 raise ValueError('Only one intermediate short checkpoint enters the paired check')
             if alternatives:
                 models['control'] = alternatives[0]['pin']
-        seed = self.protocol['development']['physical_seeds'][int(label[-1])-1]
+        seed = self.protocol['development']['physical_seeds'][int(match[1] or match[2])-1]
         return self.physical('CHECK-'+label, seed, models, dict.fromkeys(models, result['execution']), 1800)
 
     def independent_inputs(self):
@@ -256,8 +259,7 @@ class PostR4Study(LongStudy):
         design = load(design_path)
         self.docs = design_path.parent
         self.tag_prefix += '-' + design['label'].lower()
-        if self.docs != PROJECT/design['label'] or design['label'] not in (
-                'SHORT-R1', 'SHORT-R2', 'SHORT-R3', 'FORMAL-R1', 'FORMAL-R2', 'FORMAL-R3'):
+        if self.docs != PROJECT/design['label'] or not TRAINING_LABEL.fullmatch(design['label']):
             raise ValueError('Use the frozen round directory')
         source = read(design['source'])
         if source != execution_manifest():
