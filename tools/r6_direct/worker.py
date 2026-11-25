@@ -201,7 +201,7 @@ def run(plan, input_pin):
                 recipe = pinned_json(params['evaluation_selection']['training_plan']['recipe'])
                 use_option = recipe['candidate_id'] == ESCAPE_OPTION_CANDIDATE
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
-            from training_workloads.unified_h1.dynamic_assay import PHYSICAL_LAYOUT_RUNS, OPTION_RUN
+            from training_workloads.unified_h1.dynamic_assay import PHYSICAL_LAYOUT_RUNS, OPTION_RUN, RECOVERY_PREFIX
             holdout = plan['run_id'] in PHYSICAL_LAYOUT_RUNS
             if holdout:
                 from training_workloads.unified_h1.escape_option_env import EscapeHoldoutEnv
@@ -224,6 +224,27 @@ def run(plan, input_pin):
                 env.holdout_preflight(backend.output)
             else:
                 backend.initial_preflight()
+            if plan['run_id'].startswith(RECOVERY_PREFIX):
+                import torch
+                from training_workloads.scale_003.resources import RUNTIME_MIN_FREE_MEMORY_BYTES
+
+                # Preflight can leave unused caching-allocator blocks resident.
+                # Release them before the first normal resource guard and retain readings.
+                torch.cuda.synchronize()
+                before = torch.cuda.mem_get_info()[0]
+                reserved = torch.cuda.memory_reserved()
+                torch.cuda.empty_cache()
+                free = []
+                for _ in range(11):
+                    if stop_paths() or (Path(plan['output_root'])/'STOP').exists():
+                        raise RuntimeError('STOP')
+                    free.append(torch.cuda.mem_get_info()[0])
+                    if free[-1] >= RUNTIME_MIN_FREE_MEMORY_BYTES:
+                        break
+                    time.sleep(1)
+                atomic(attempt/'preflight_cuda_cache_release.json', dict(
+                    before_free_bytes=before, after_free_bytes=free, before_reserved_bytes=reserved,
+                    after_reserved_bytes=torch.cuda.memory_reserved()))
             operation=contract['operation']
             atomic(attempt/'state.json',{'status':'TRAINING' if operation=='train' else 'EVALUATING',
                 'identity':process_identity(os.getpid()),'counters':counters.snapshot()})

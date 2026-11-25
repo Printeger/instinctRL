@@ -20,11 +20,13 @@ HOLDOUT_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-LONG-HOLDOUT'
 HOLDOUT_SMOKE = 'R6-DIRECT-INSTINCT-GPU-R4-HOLDOUT-SMOKE'
 RECOVERY_PREFIX = 'R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-'
 RECOVERY_MECHANISM = RECOVERY_PREFIX + 'MECHANISM-01'
+RECOVERY_MECHANISM_RETRY = RECOVERY_PREFIX + 'MECHANISM-02'
+RECOVERY_MECHANISM_RUNS = (RECOVERY_MECHANISM, RECOVERY_MECHANISM_RETRY)
 RECOVERY_REAR = RECOVERY_PREFIX + 'REAR-01'
 RECOVERY_HOLDOUT = RECOVERY_PREFIX + 'HOLDOUT'
 HOLDOUT_GROUPS = ((8, 8, 8, 8), (0, 0, 0, 0), (2, 3, 2, 4),
                   (6, 6, 6, 6), (7, 7, 7, 7), (9, 9, 9, 9))
-PHYSICAL_LAYOUT_RUNS = (HOLDOUT_RUN, HOLDOUT_SMOKE, RECOVERY_MECHANISM, RECOVERY_REAR, RECOVERY_HOLDOUT)
+PHYSICAL_LAYOUT_RUNS = (HOLDOUT_RUN, HOLDOUT_SMOKE, *RECOVERY_MECHANISM_RUNS, RECOVERY_REAR, RECOVERY_HOLDOUT)
 MODES = ('approach', 'recede', 'cross_left', 'cross_right',
          'hover', 'hover_wall', 'static_travel', 'static_hover',
          'open_front', 'open_rear', 'wall_front', 'wall_rear')
@@ -35,7 +37,7 @@ def groups_for(run_id):
         return PERSISTENCE_GROUPS
     if run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT):
         return HOLDOUT_GROUPS
-    if run_id == RECOVERY_MECHANISM:
+    if run_id in RECOVERY_MECHANISM_RUNS:
         return tuple(HOLDOUT_GROUPS[i] for i in (1, 3, 4))
     if run_id == RECOVERY_REAR:
         return (HOLDOUT_GROUPS[-1],)
@@ -57,7 +59,7 @@ def contract(params):
     if type(params['output_cap_bytes']) is not int or not 512*2**20 <= params['output_cap_bytes'] <= 2**30:
         raise ValueError('DYNAMIC_ASSAY_OUTPUT')
     models = params['models']
-    three_arms = params['experiment_id'] in (HOLDOUT_RUN, RECOVERY_MECHANISM, RECOVERY_HOLDOUT)
+    three_arms = params['experiment_id'] in (HOLDOUT_RUN, *RECOVERY_MECHANISM_RUNS, RECOVERY_HOLDOUT)
     allowed_models = {'candidate', 'control', 'reference'} if three_arms else {'candidate', 'reference'}
     if not isinstance(models, dict) or not 1 <= len(models) <= len(allowed_models) or not set(models) <= allowed_models:
         raise ValueError('DYNAMIC_ASSAY_MODELS')
@@ -68,7 +70,7 @@ def contract(params):
         raise ValueError('DYNAMIC_ASSAY_SAME_WEIGHT_MODELS')
     if (three_arms or params['experiment_id'] == RECOVERY_REAR) and set(models) != allowed_models:
         raise ValueError('DYNAMIC_HOLDOUT_COMPLETE_COMPARISON')
-    if params['experiment_id'] in (RECOVERY_MECHANISM, RECOVERY_REAR) and any(
+    if params['experiment_id'] in (*RECOVERY_MECHANISM_RUNS, RECOVERY_REAR) and any(
             pin != models['reference'] for pin in models.values()):
         raise ValueError('DYNAMIC_RECOVERY_SAME_WEIGHT_MODELS')
     cohorts = len(models) * len(groups_for(params['experiment_id']))
@@ -176,7 +178,7 @@ def run(backend, params):
     persistence = params['experiment_id'] == PERSISTENCE_RUN
     run_id = params['experiment_id']
     holdout = run_id in PHYSICAL_LAYOUT_RUNS
-    mechanism = run_id == RECOVERY_MECHANISM
+    mechanism = run_id in RECOVERY_MECHANISM_RUNS
     rear_pair = run_id == RECOVERY_REAR
     recovery_assay = run_id.startswith(RECOVERY_PREFIX)
     option = holdout or params['experiment_id'] == OPTION_RUN

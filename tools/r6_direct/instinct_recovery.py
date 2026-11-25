@@ -6,7 +6,7 @@ from statistics import fmean
 
 from tools.r6_direct.evidence import read, validate_binding
 from tools.r6_direct.import_legacy import ROOT, pin
-from tools.r6_direct.instinct_cycle_finish import freeze, guard
+from tools.r6_direct.instinct_cycle_finish import freeze, guard, wait_closed
 from tools.r6_direct.instinct_long import GIB, LongStudy
 from tools.r6_direct.resource_policy import GPU_RECOVERY_SCHEMA, OUTPUT_CAP, THIRD_CAPS
 from tools.r6_direct.source import ROOT as SNAPSHOT, manifest
@@ -14,6 +14,7 @@ from tools.r6_direct.storage import SYSTEM_ROOT, SYSTEM_STORAGE_SCHEMA
 from training_workloads.unified_h1.dynamic_assay import (
     RECOVERY_HOLDOUT,
     RECOVERY_MECHANISM,
+    RECOVERY_MECHANISM_RETRY,
     RECOVERY_REAR,
 )
 
@@ -29,6 +30,7 @@ class RecoveryStudy(LongStudy):
         self.ledger = PROJECT / 'RESOURCE_LEDGER.json'
         self.eval = RECOVERY_HOLDOUT
         self.snapshot = SNAPSHOT
+        self.source = None
 
     def dynamic_input(self, run_id, seed, models, predecessor, *, wall_seconds):
         from tools.r6_direct.prepare import build
@@ -38,7 +40,7 @@ class RecoveryStudy(LongStudy):
                       models=models, wall_seconds=wall_seconds, output_cap_bytes=GIB)
         contract = self.write(f'{run_id}-contract.json',
                               build('contract', dict(operation='dynamic', parameters=params)))
-        self.input(run_id, contract, predecessor, snapshot=self.snapshot)
+        self.input(run_id, contract, predecessor, snapshot=self.snapshot, source=self.source)
         return path
 
     def prepare_mechanism(self):
@@ -70,8 +72,29 @@ class RecoveryStudy(LongStudy):
                PROJECT/f'{RECOVERY_MECHANISM}-contract.json', path)
         return pin(path)
 
+    def prepare_retry(self):
+        if self.snapshot == ROOT:
+            raise ValueError('Use the detached execution snapshot')
+        failed = read(pin(self.input_path(RECOVERY_MECHANISM)))
+        wait_closed(failed, minutes=3)
+        state = read(pin(SYSTEM_ROOT/RECOVERY_MECHANISM/'state.json'))
+        if state['counters']['nontraining_transitions'] != 0 or 'free CUDA memory' not in (state['error'] or ''):
+            raise ValueError('Retry expects the confirmed first-reset memory failure')
+        self.source = self.write('source-retry.json', manifest())
+        previous = self.settle(RECOVERY_MECHANISM)
+        params = read(failed['contract'])['parameters']
+        path = self.dynamic_input(RECOVERY_MECHANISM_RETRY, params['seed'], params['models'],
+                                  previous, wall_seconds=params['wall_seconds'])
+        freeze('instinct-r4-recovery-mechanism-retry-inputs', 'Freeze first-reset memory recovery assay',
+               PROJECT/'source-retry.json', PROJECT/f'{RECOVERY_MECHANISM_RETRY}-contract.json', path, self.ledger)
+        return pin(path)
+
     def execute_mechanism(self):
-        first = self.evaluate(self.input_path(RECOVERY_MECHANISM))
+        path = self.input_path(RECOVERY_MECHANISM_RETRY)
+        if not path.exists():
+            path = self.input_path(RECOVERY_MECHANISM)
+        self.source = read(pin(path))['source']
+        first = self.evaluate(path)
         start = read(pin(R4/'DESIGN.json'))['initial']['checkpoint']
         rear = self.input_path(RECOVERY_REAR)
         if not rear.exists():
@@ -102,11 +125,13 @@ class RecoveryStudy(LongStudy):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=('prepare-mechanism', 'run-mechanism'))
+    parser.add_argument('action', choices=('prepare-mechanism', 'prepare-retry', 'run-mechanism'))
     args = parser.parse_args()
     guard()
     study = RecoveryStudy()
-    result = study.prepare_mechanism() if args.action == 'prepare-mechanism' else study.execute_mechanism()
+    execute = {'prepare-mechanism': study.prepare_mechanism, 'prepare-retry': study.prepare_retry,
+               'run-mechanism': study.execute_mechanism}
+    result = execute[args.action]()
     print(json.dumps(result), flush=True)
 
 
