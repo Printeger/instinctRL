@@ -1149,6 +1149,47 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-SHORT-R3-U672/native"
       },
       "storage_reservation_id": "ROUND-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 3403776,
+      "diagnostic_wall_seconds": 64.42566316528246,
+      "id": "R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-SHORT-R3-U672-DIAGNOSTIC",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-SHORT-R3-U672-DIAGNOSTIC/control/receipt.json",
+        "sha256": "c1dbfad461b52cf3d8f7268d2e0538f460459d8cdd038c9460777a124961794f"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-three/RESOURCE_POLICY.json",
+        "sha256": "56d2ffba51bb9abbcb566357f3a45a50f04b771f93abd82c20474e4b37be9cbc"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 65,
+        "live_starts": 1,
+        "live_wall_seconds": 65,
+        "output_actual_plus_unreleased_reservations_bytes": 3403776,
+        "queue_seconds": 180
+      },
+      "settlement": {
+        "charged_seconds": 65,
+        "original_resources": {
+          "allocated_gpu_seconds": 390,
+          "live_starts": 1,
+          "live_wall_seconds": 390,
+          "output_actual_plus_unreleased_reservations_bytes": 268435456,
+          "queue_seconds": 180
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-SHORT-R3-U672-DIAGNOSTIC/control/receipt.json",
+          "sha256": "c1dbfad461b52cf3d8f7268d2e0538f460459d8cdd038c9460777a124961794f"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-SHORT-R3-U672-DIAGNOSTIC",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-SHORT-R3-U672-DIAGNOSTIC/native"
+      }
     }
   ],
   "new_used": {
