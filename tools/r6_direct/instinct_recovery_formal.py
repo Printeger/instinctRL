@@ -146,9 +146,21 @@ class FormalRecovery(RecoveryTraining):
                    path, PROJECT/f'{RECOVERY_HOLDOUT}-contract.json', self.ledger)
         physical = self.evaluate(path)
         settings = load(HISTORICAL/'FREEZE.json')
+        comparisons = {}
+        for role in ('qualified', 'origin'):
+            candidate, reference = models['candidate'], models[role]
+            candidate_metrics = candidate['tracking_rmse_mps']
+            reference_metrics = reference['tracking_rmse_mps']
+            common = candidate_metrics.keys() & reference_metrics.keys()
+            paired = compare(settings,
+                [dict(candidate, tracking_rmse_mps={k: candidate_metrics[k] for k in common})],
+                [dict(reference, tracking_rmse_mps={k: reference_metrics[k] for k in common})])
+            missing = sorted(candidate_metrics.keys() ^ reference_metrics.keys())
+            if missing:
+                paired.update(missing_paired_tracking_blocks=missing, guardrails_pass=False)
+            comparisons[role] = paired
         result = dict(r6=r6, models=models, holdout=physical, holdout_comparison=compare_holdout(physical['binding']),
-                      r6_comparisons={role: compare(settings, [models['candidate']], [models[role]])
-                                      for role in ('qualified', 'origin')},
+                      r6_comparisons=comparisons,
                       physical_mechanisms=mechanisms(physical['binding']))
         return result
 
