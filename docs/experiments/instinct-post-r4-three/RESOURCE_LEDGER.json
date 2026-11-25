@@ -1701,6 +1701,53 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-ORIGIN/native"
       },
       "storage_reservation_id": "ROUND-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 4611149824,
+      "id": "R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-END",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-END/control/receipt.json",
+        "sha256": "744697187e311b796d1606a39327747cdbd8a58586c89f4ad29554737f6c5a56"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-three/RESOURCE_POLICY.json",
+        "sha256": "56d2ffba51bb9abbcb566357f3a45a50f04b771f93abd82c20474e4b37be9cbc"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 2048,
+        "live_starts": 1,
+        "live_wall_seconds": 2048,
+        "nontraining_transitions": 193600,
+        "output_actual_plus_unreleased_reservations_bytes": 4611149824,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_transitions": 0
+      },
+      "settlement": {
+        "charged_seconds": 2048,
+        "original_resources": {
+          "allocated_gpu_seconds": 3790,
+          "live_starts": 1,
+          "live_wall_seconds": 3790,
+          "nontraining_transitions": 193600,
+          "output_actual_plus_unreleased_reservations_bytes": 19595788288,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-END/control/receipt.json",
+          "sha256": "744697187e311b796d1606a39327747cdbd8a58586c89f4ad29554737f6c5a56"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-END",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-END/native"
+      },
+      "storage_reservation_id": "ROUND-SYSTEM"
     }
   ],
   "new_used": {
