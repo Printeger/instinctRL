@@ -114,14 +114,22 @@ class ArchiveTests(unittest.TestCase):
 
         import torch
 
+        from instinctlab.observations.robustness import RangeDelivery
         from training_workloads.unified_h1.lossless_evidence import ChunkReader, EvidencePool
+        from training_workloads.unified_h1.range_archive import PRIMING_KEYS
         from training_workloads.unified_h1.recovery_measurements import sink
 
         pool = EvidencePool(self.path, run_id='CPU', maximum_bytes=100000, maximum_raw_file_bytes=100000)
-        original = self.delayed_pair()
+        delivery = RangeDelivery(lanes=2, rays=4, seed=101, stream_id='CPU', sigma_m=.01,
+                                 delay_cycles=1, prime_after_reset=True)
+        ranges = torch.full((2, 4), 2., dtype=torch.float32)
+        valid = torch.ones_like(ranges, dtype=torch.bool)
+        drops = torch.tensor([[True], [False]])
+        original = [delivery.deliver(ranges+index*.1, valid, torch.full((2, 1), index*.1), drops)
+                    for index in range(2)]
         append = sink(SimpleNamespace(pool=pool, logical_prefix='training'))
         for index, row in enumerate(original):
-            append(index, {k: torch.from_numpy(v) if k in ARRAY_KEYS else v for k, v in row.items()})
+            append(index, row)
         pool.close()
         logical_name = 'training/measurement.bin'
         with ChunkReader(self.path/(logical_name+'.r6z'), run_id='CPU', logical_name=logical_name,
@@ -133,9 +141,10 @@ class ArchiveTests(unittest.TestCase):
                 list(read_archive(stream, run_id='CPU', block_id='training', expected_frames=1))
         for expected, actual in zip(original, restored, strict=True):
             self.assertEqual(expected['noise_rng_identity'], actual['noise_rng_identity'])
-            for name in ARRAY_KEYS:
-                self.assertEqual(expected[name].dtype, actual[name].dtype)
-                self.assertEqual(expected[name].tobytes(), actual[name].tobytes())
+            for name in (*ARRAY_KEYS, *PRIMING_KEYS):
+                array = expected[name].numpy()
+                self.assertEqual(array.dtype, actual[name].dtype)
+                self.assertEqual(array.tobytes(), actual[name].tobytes())
 
     def test_nonfinite_and_missing_fields_rejected(self):
         f=frame();f['clean_ranges'][0,0]=np.nan

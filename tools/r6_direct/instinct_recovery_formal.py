@@ -13,7 +13,7 @@ from tools.r6_direct.instinct_cycle_finish import freeze, guard
 from tools.r6_direct.instinct_cycle_report import displacement
 from tools.r6_direct.instinct_long import GIB
 from tools.r6_direct.instinct_recovery import PROJECT, R4
-from tools.r6_direct.instinct_recovery_training import RecoveryTraining, SHORT_UPDATES
+from tools.r6_direct.instinct_recovery_training import RecoveryTraining, SHORT_UPDATES, short_design
 from tools.r6_direct.prepare import build
 from tools.r6_direct.source import manifest, training_identity
 from tools.r6_direct.storage import SYSTEM_FLOOR, SYSTEM_ROOT
@@ -32,12 +32,12 @@ class FormalRecovery(RecoveryTraining):
     def prepare_formal(self):
         if self.snapshot == ROOT:
             raise ValueError('Use the detached formal source')
-        old = load(PROJECT/'SHORT_DESIGN.json')
+        old = short_design()
         checks = [pin(PROJECT/f'SHORT_CHECK_U{u}.json') for u in SHORT_UPDATES]
         development = [read(p) for p in checks]
         endpoints = [read(pin(PROJECT/f'U{u}.json')) for u in SHORT_UPDATES]
         measured = load(self.ledger)
-        prior_name = f'{RECOVERY_PREFIX}SHORT-TRAIN-U{SHORT_UPDATES[-1]}'
+        prior_name = f'{RECOVERY_PREFIX}{old["series"]}-TRAIN-U{SHORT_UPDATES[-1]}'
         prior, = [r for r in measured['new_reservations'] if r['id'] == prior_name]
         per_segment = 2*prior['closed_evidence_bytes'] + GIB
         expected_disk = 8*per_segment + 18*GIB

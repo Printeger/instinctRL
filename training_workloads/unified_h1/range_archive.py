@@ -18,6 +18,7 @@ from training_workloads.scale_003.persistence import reserve_output_bytes
 
 ARRAY_KEYS = ('clean_ranges', 'clean_validity', 'delivered_ranges', 'delivered_validity',
               'acquisition_time', 'delivery_time', 'frame_age', 'drop', 'frame_available')
+PRIMING_KEYS = ('reset_prime', 'requested_drop')
 MAX_FRAME = 64*1024**2
 MAX_HEADER = 64*1024
 
@@ -27,21 +28,22 @@ def digest(raw):return hashlib.sha256(raw).hexdigest()
 
 
 def encode(frame, *, sequence, run_id, block_id, previous=None):
-    if set(frame) != {*ARRAY_KEYS,'noise_rng_identity'}:raise ValueError('FRAME_FIELDS')
+    names = (*ARRAY_KEYS, *PRIMING_KEYS) if 'reset_prime' in frame else ARRAY_KEYS
+    if set(frame) != {*names,'noise_rng_identity'}:raise ValueError('FRAME_FIELDS')
     if type(sequence) is not int or sequence<0 or not run_id or not block_id:raise ValueError('FRAME_IDENTITY')
     identities=frame['noise_rng_identity']
     if not isinstance(identities,list) or not all(isinstance(x,str) and len(x)==64 for x in identities):
         raise ValueError('RNG_IDENTITY')
     if previous is not None and sequence==0:raise ValueError('PREVIOUS_FRAME_AT_SEQUENCE_ZERO')
-    previous_keys={} if previous is None else {(a.dtype.str,a.shape,a.tobytes()):name for name,a in previous.items() if name in ARRAY_KEYS}
+    previous_keys={} if previous is None else {(a.dtype.str,a.shape,a.tobytes()):name for name,a in previous.items() if name in names}
     fields=[]; parts=[]; prior={}; raw_total=0;offset=0; originals={}
-    for name in ARRAY_KEYS:
+    for name in names:
         value=frame[name]
         if hasattr(value,'detach'):value=value.detach().cpu().numpy()
         a=np.asarray(value)
         if a.dtype.str not in ('<f4','<f8','|b1') or a.ndim!=2:raise ValueError('ARRAY_TYPE')
         if a.shape[0]!=len(identities) or a.shape[0]<=0 or a.shape[1]<=0:raise ValueError('ARRAY_SHAPE')
-        boolean=name in ('clean_validity','delivered_validity','drop','frame_available')
+        boolean=name in ('clean_validity','delivered_validity','drop','frame_available',*PRIMING_KEYS)
         if (a.dtype.kind=='b')!=boolean:raise ValueError('FIELD_DTYPE')
         if name not in ARRAY_KEYS[:4] and a.shape[1]!=1:raise ValueError('TIMESTAMP_SHAPE')
         if name in ARRAY_KEYS[1:4] and a.shape!=originals['clean_ranges'].shape:raise ValueError('BEAM_SHAPE')
@@ -79,7 +81,8 @@ def encode(frame, *, sequence, run_id, block_id, previous=None):
         fields.append(item)
         originals[name]=a
     payload=b''.join(parts)
-    header=canonical(dict(schema_version='r6-range-frame/2' if previous is not None else 'r6-range-frame/1',sequence=sequence,run_id=run_id,
+    version = 3 if names != ARRAY_KEYS else (2 if previous is not None else 1)
+    header=canonical(dict(schema_version=f'r6-range-frame/{version}',sequence=sequence,run_id=run_id,
                           block_id=block_id,noise_rng_identity=identities,fields=fields,
                           payload_bytes=len(payload),payload_sha256=digest(payload)))
     if len(header)>MAX_HEADER:raise ValueError('HEADER_TOO_LARGE')
@@ -87,9 +90,11 @@ def encode(frame, *, sequence, run_id, block_id, previous=None):
 
 
 def decode(header,payload,*,previous=None):
-    if header['schema_version'] not in ('r6-range-frame/1','r6-range-frame/2') or digest(payload)!=header['payload_sha256']:
+    version = header['schema_version']
+    if version not in ('r6-range-frame/1','r6-range-frame/2','r6-range-frame/3') or digest(payload)!=header['payload_sha256']:
         raise ValueError('FRAME_INTEGRITY')
-    if [f['name'] for f in header['fields']]!=list(ARRAY_KEYS):raise ValueError('FRAME_FIELDS')
+    names = (*ARRAY_KEYS, *PRIMING_KEYS) if version == 'r6-range-frame/3' else ARRAY_KEYS
+    if tuple(f['name'] for f in header['fields'])!=names:raise ValueError('FRAME_FIELDS')
     result={};total=0;offset=0
     for item in header['fields']:
         dtype=np.dtype(item['dtype']);shape=item['shape']
@@ -98,7 +103,7 @@ def decode(header,payload,*,previous=None):
         size=shape[0]*shape[1]*dtype.itemsize;total+=size
         if total>MAX_FRAME:raise ValueError('FRAME_TOO_LARGE')
         if 'previous_reference' in item or 'previous_xor_base' in item:
-            if header['schema_version']!='r6-range-frame/2' or previous is None or item.get('previous_sequence')!=header['sequence']-1:
+            if version=='r6-range-frame/1' or previous is None or item.get('previous_sequence')!=header['sequence']-1:
                 raise ValueError('PREVIOUS_FRAME_REQUIRED')
         if 'reference' in item:
             a=result[item['reference']].copy()
@@ -146,7 +151,7 @@ class RangeArchive:
     def append(self,frame):
         if self.failed:raise ValueError('PREVIOUS_WRITE_FAILED_PRESERVE_PARTIAL_ARCHIVE')
         record=encode(frame,sequence=self.frames,run_id=self.run_id,block_id=self.block_id,previous=self.previous)
-        next_previous={k:(v.detach().cpu().numpy().copy() if hasattr(v,'detach') else np.asarray(v).copy()) for k,v in frame.items() if k in ARRAY_KEYS}
+        next_previous={k:(v.detach().cpu().numpy().copy() if hasattr(v,'detach') else np.asarray(v).copy()) for k,v in frame.items() if k in (*ARRAY_KEYS, *PRIMING_KEYS)}
         if self.written+len(record)>self.maximum:raise ValueError('ARCHIVE_QUOTA_BEFORE_WRITE')
         reserve_output_bytes(self.path,len(record))
         try:
@@ -183,6 +188,6 @@ def read_archive(path,*,run_id,block_id,expected_frames):
             result=decode(header,payload,previous=previous)
             # Consumers may mutate returned arrays without changing the decoder
             # state used for the next physical record.
-            previous={k:v.copy() for k,v in result.items() if k in ARRAY_KEYS}
+            previous={k:v.copy() for k,v in result.items() if k in (*ARRAY_KEYS, *PRIMING_KEYS)}
             yield result
         if stream.read(1):raise ValueError('EXTRA_FRAME_OR_TAIL')

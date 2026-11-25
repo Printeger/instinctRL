@@ -8,13 +8,14 @@ from statistics import fmean
 from tools.r6_direct.evidence import read, validate_binding
 from tools.r6_direct.import_legacy import ROOT, pin
 from tools.r6_direct.instinct_cycle import load
-from tools.r6_direct.instinct_cycle_finish import freeze, guard
+from tools.r6_direct.instinct_cycle_finish import freeze, guard, wait_closed
 from tools.r6_direct.instinct_long import GIB
 from tools.r6_direct.instinct_recovery import PROJECT, R4, RecoveryStudy
 from tools.r6_direct.io import atomic
 from tools.r6_direct.lifecycle import writer
 from tools.r6_direct.prepare import build
 from tools.r6_direct.source import manifest, training_identity
+from tools.r6_direct.storage import SYSTEM_ROOT
 from training_workloads.unified_h1.dynamic_assay import RECOVERY_PREFIX
 from training_workloads.unified_h1.robustness_training_method import (
     ESCAPE_RECOVERY_CANDIDATE, bound_method_hashes,
@@ -26,26 +27,33 @@ SHORT_CHECK_SEED = 185299993
 SHORT_UPDATES = (656, 672, 704)
 
 
+def short_design():
+    retry = PROJECT/'SHORT_RETRY_DESIGN.json'
+    return load(retry if retry.exists() else PROJECT/'SHORT_DESIGN.json')
+
+
 class RecoveryTraining(RecoveryStudy):
     tag_prefix = 'instinct-r4-recovery'
 
     def __init__(self):
         super().__init__()
-        path = PROJECT/'TRAIN_RESOURCE_POLICY.json'
-        if path.exists():
-            self.resource_policy = pin(path)
+        for name in ('TRAIN_RETRY_RESOURCE_POLICY.json', 'TRAIN_RESOURCE_POLICY.json'):
+            path = PROJECT/name
+            if path.exists():
+                self.resource_policy = pin(path)
+                break
 
-    def new_policy(self):
+    def new_policy(self, *, retry=False):
         with writer():
             ledger = load(self.ledger)
             policy = read(ledger['resource_policy'])
             # The accounting admission charges each initialization from u640.
             # Short development and the single formal stream use one mechanism.
-            revised = dict(policy['caps'], major_scientific_candidates=2, live_starts=38,
+            revised = dict(policy['caps'], major_scientific_candidates=3 if retry else 2, live_starts=38,
                            simulator_initializations=25, queue_seconds=7200)
             policy['caps'] = revised
             policy['user_authority'] = pin(PROJECT/'SHORT_TRAIN.md')
-            path = PROJECT/'TRAIN_RESOURCE_POLICY.json'
+            path = PROJECT/('TRAIN_RETRY_RESOURCE_POLICY.json' if retry else 'TRAIN_RESOURCE_POLICY.json')
             resource = self.write(path.name, policy)
             atomic(self.ledger, dict(ledger, caps=revised, resource_policy=resource))
         return path
@@ -98,6 +106,30 @@ class RecoveryTraining(RecoveryStudy):
                PROJECT/'short-curriculum.json', PROJECT/'training-method.json', authority, self.ledger)
         return design_path
 
+    def prepare_short_retry(self):
+        if self.snapshot == ROOT:
+            raise ValueError('Use the detached training snapshot')
+        previous = load(PROJECT/'SHORT_DESIGN.json')
+        run_id = f'{RECOVERY_PREFIX}SHORT-TRAIN-U656'
+        failed = load(self.input_path(run_id))
+        wait_closed(failed, minutes=3)
+        state = read(pin(SYSTEM_ROOT/run_id/'state.json'))
+        if (state['counters']['training_transitions'] != 0 or state['counters']['real_optimizer_updates'] != 0
+                or state['error'] != "ValueError('FRAME_FIELDS')"):
+            raise ValueError('Retry expects the confirmed reset-frame schema failure at zero training')
+        receipt = self.settle(run_id)
+        self.source = self.write('source-training-retry.json', manifest())
+        recipe = read(previous['recipe'])
+        recipe.update(source_identity=training_identity(read(self.source)), diagnosis=[*recipe['diagnosis'], receipt])
+        recipe_pin = self.write('short-retry-recipe.json', recipe)
+        design = dict(previous, series='SHORT-RETRY', source=self.source, recipe=recipe_pin, predecessor=receipt)
+        result = self.write('SHORT_RETRY_DESIGN.json', design)
+        authority = self.new_policy(retry=True)
+        freeze(self.tag_prefix+'-short-retry-design', 'Freeze lossless reset-frame recovery',
+               PROJECT/'source-training-retry.json', PROJECT/'SHORT_RETRY_DESIGN.json',
+               PROJECT/'short-retry-recipe.json', authority, self.ledger)
+        return result
+
     def segment_input(self, design, segment, initial, predecessor):
         self.source = design['source']
         start, target, wall = segment
@@ -122,7 +154,8 @@ class RecoveryTraining(RecoveryStudy):
             contract = self.write(f'{run_id}-contract.json', build('contract', dict(operation='train', parameters=params)))
             self.input(run_id, contract, predecessor, snapshot=self.snapshot, source=self.source,
                        resource_policy=self.resource_policy)
-            freeze(f'{self.tag_prefix}-train-u{target}-inputs', f'Freeze strict continuation through u{target}',
+            tag_suffix = '-retry' if design['series'] == 'SHORT-RETRY' else ''
+            freeze(f'{self.tag_prefix}-train-u{target}{tag_suffix}-inputs', f'Freeze strict continuation through u{target}',
                    inputs, Path(contract['path']), self.ledger)
         return inputs, plan
 
@@ -159,7 +192,7 @@ class RecoveryTraining(RecoveryStudy):
         return result
 
     def execute_short(self):
-        design = load(PROJECT/'SHORT_DESIGN.json')
+        design = short_design()
         recipe = read(design['recipe'])
         predecessor, initial = design['predecessor'], design['initial']
         for section in design['segments']:
@@ -174,11 +207,13 @@ class RecoveryTraining(RecoveryStudy):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=('prepare-short', 'run-short'))
+    parser.add_argument('action', choices=('prepare-short', 'prepare-short-retry', 'run-short'))
     args = parser.parse_args()
     guard()
     study = RecoveryTraining()
-    result = study.prepare_short() if args.action == 'prepare-short' else study.execute_short()
+    execute = {'prepare-short': study.prepare_short, 'prepare-short-retry': study.prepare_short_retry,
+               'run-short': study.execute_short}
+    result = execute[args.action]()
     print(json.dumps(result), flush=True)
 
 
