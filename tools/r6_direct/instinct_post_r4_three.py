@@ -103,17 +103,20 @@ class PostR4Study(LongStudy):
             freeze(f'{self.tag_prefix}-{label.lower()}-closed', f'Record {label} physical replay', summary, self.ledger)
         return result_pin
 
-    def prepare_training(self, spec_path):
+    def prepare_training(self, spec_path, *, reissue=False):
         spec = load(spec_path)
         label = spec['label']
         if label not in ('SHORT-R1', 'SHORT-R2', 'SHORT-R3', 'FORMAL-R1', 'FORMAL-R2', 'FORMAL-R3'):
             raise ValueError('Use a registered short or formal round')
         self.docs = PROJECT/label
         self.docs.mkdir(exist_ok=True)
-        design_path = self.docs/'DESIGN.json'
+        if reissue and (not (self.docs/'DESIGN.json').exists() or any(self.docs.glob('*-inputs.json'))):
+            raise ValueError('Reissue requires a frozen design with no issued run inputs')
+        suffix = '-reissue' if reissue else ''
+        design_path = self.docs/f'DESIGN{suffix}.json'
         if design_path.exists():
             design = load(design_path)
-            if design['decision'] != pin(spec_path) or read(design['source']) != manifest():
+            if design['decision'] != pin(spec_path) or read(design['source']) != json.loads(json.dumps(manifest())):
                 raise ValueError('The training design is already frozen with another input')
             return pin(design_path)
         old = load(PREVIOUS/'FORMAL_DESIGN.json')
@@ -135,15 +138,16 @@ class PostR4Study(LongStudy):
                       hypothesis=spec['hypothesis'], comparison=spec['comparison'])
         from training_workloads.unified_h1.robustness_training_plan import validate_recipe
 
-        recipe_pin = self.write('recipe.json', recipe)
+        recipe_path = self.docs/f'recipe{suffix}.json'
+        recipe_pin = self.write(recipe_path.name, recipe)
         validate_recipe(recipe)
-        design = self.write('DESIGN.json', dict(label=label, source=source, recipe=recipe_pin,
+        design = self.write(design_path.name, dict(label=label, source=source, recipe=recipe_pin,
                             decision=pin(spec_path), initial=old['initial'], training_seed=training_seed,
                             training_parameters=old['training_parameters'], segments=spec['segments'],
                             storage=dict(old['storage'], payload_bytes=spec['payload_gib']*GIB,
                                          compressed_bytes=(spec['payload_gib']-1)*GIB)))
-        freeze(f'{self.tag_prefix}-{label.lower()}-design', f'Freeze {label} scientific and training inputs',
-               spec_path, Path(source['path']), *(self.docs/name for name in ('DESIGN.json', 'curriculum.json', 'method.json', 'recipe.json')))
+        freeze(f'{self.tag_prefix}-{label.lower()}-design{suffix}', f'Freeze {label} scientific and training inputs',
+               spec_path, Path(source['path']), design_path, recipe_path, self.docs/'curriculum.json', self.docs/'method.json')
         return design
 
     def development_check(self, label):
@@ -252,7 +256,7 @@ class PostR4Study(LongStudy):
                 'SHORT-R1', 'SHORT-R2', 'SHORT-R3', 'FORMAL-R1', 'FORMAL-R2', 'FORMAL-R3'):
             raise ValueError('Use the frozen round directory')
         source = read(design['source'])
-        if source != manifest():
+        if source != json.loads(json.dumps(manifest())):
             raise ValueError('Use the exact training snapshot')
         if design['label'].startswith('FORMAL-'):
             ordinal = int(design['label'][-1])
@@ -299,7 +303,8 @@ class PostR4Study(LongStudy):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('stage', choices=('setup', 'rear', 'physical', 'check', 'prepare-train', 'train', 'final-evaluation'))
+    parser.add_argument('stage', choices=('setup', 'rear', 'physical', 'check', 'prepare-train',
+                                         'prepare-train-reissue', 'train', 'final-evaluation'))
     parser.add_argument('spec', nargs='?')
     args = parser.parse_args()
     guard()
@@ -315,8 +320,8 @@ def main():
         result = study.physical(**spec)
     elif args.stage == 'check':
         result = study.development_check(args.spec)
-    elif args.stage == 'prepare-train':
-        result = study.prepare_training(Path(args.spec).resolve())
+    elif args.stage in ('prepare-train', 'prepare-train-reissue'):
+        result = study.prepare_training(Path(args.spec).resolve(), reissue=args.stage.endswith('reissue'))
     elif args.stage == 'train':
         result = study.train(Path(args.spec).resolve())
     else:
