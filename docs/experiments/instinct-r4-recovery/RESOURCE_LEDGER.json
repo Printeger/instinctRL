@@ -1,13 +1,13 @@
 {
   "caps": {
     "allocated_gpu_seconds": 102000,
-    "live_starts": 30,
+    "live_starts": 38,
     "live_wall_seconds": 102000,
-    "major_scientific_candidates": 1,
+    "major_scientific_candidates": 2,
     "nontraining_transitions": 850000,
     "output_actual_plus_unreleased_reservations_bytes": 122406567936,
-    "queue_seconds": 5400,
-    "simulator_initializations": 20,
+    "queue_seconds": 7200,
+    "simulator_initializations": 25,
     "training_checkpoint_writes": 45,
     "training_transitions": 589824
   },
@@ -203,8 +203,8 @@
     "training_transitions": 0
   },
   "resource_policy": {
-    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-r4-recovery/RESOURCE_POLICY.json",
-    "sha256": "5b1c41a9ece2788b90c7dceffb5dcf5b287c84270c91cf7f0c8fc124874aefb4"
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-r4-recovery/TRAIN_RESOURCE_POLICY.json",
+    "sha256": "979044feece30b7bc5c3006af59770a8adcfe7c26221be454f3a908b65f0dd10"
   },
   "status": "CONTROLLED_HANDOFF"
 }
