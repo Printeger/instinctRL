@@ -871,6 +871,47 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-FORMAL-TRAIN-U1024/native"
       },
       "storage_reservation_id": "ROUND-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 3403776,
+      "diagnostic_wall_seconds": 64.06820357823744,
+      "id": "R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-FORMAL-TRAIN-U1024-DIAGNOSTIC",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-FORMAL-TRAIN-U1024-DIAGNOSTIC/control/receipt.json",
+        "sha256": "bbee8fc0dabd5f9c19cc0f7a8e5620b81ddc5ce80936ffda03e58eeb7d7abb54"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-r4-recovery/TRAIN_RETRY_RESOURCE_POLICY.json",
+        "sha256": "288363dc3fa1d09607938fc08241663a76fac3916b308c6df53d2214476585c8"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 65,
+        "live_starts": 1,
+        "live_wall_seconds": 65,
+        "output_actual_plus_unreleased_reservations_bytes": 3403776,
+        "queue_seconds": 180
+      },
+      "settlement": {
+        "charged_seconds": 65,
+        "original_resources": {
+          "allocated_gpu_seconds": 390,
+          "live_starts": 1,
+          "live_wall_seconds": 390,
+          "output_actual_plus_unreleased_reservations_bytes": 268435456,
+          "queue_seconds": 180
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-FORMAL-TRAIN-U1024-DIAGNOSTIC/control/receipt.json",
+          "sha256": "bbee8fc0dabd5f9c19cc0f7a8e5620b81ddc5ce80936ffda03e58eeb7d7abb54"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-FORMAL-TRAIN-U1024-DIAGNOSTIC",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-FORMAL-TRAIN-U1024-DIAGNOSTIC/native"
+      }
     }
   ],
   "new_used": {
