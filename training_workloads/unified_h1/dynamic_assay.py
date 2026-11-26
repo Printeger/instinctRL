@@ -57,6 +57,15 @@ def physical_layout(run_id):
     return run_id in PHYSICAL_LAYOUT_RUNS or three_case(run_id) is not None
 
 
+def approved_execution_override(run_id, case, label, checkpoint, stored, requested):
+    from instinctlab.control.escape_recovery import FALLBACK_25_VERSION, REAR_CLEARANCE_25_VERSION
+    from .robustness_training_plan import U1792_CHECKPOINT_SHA
+
+    return (run_id.startswith(U1792_STUDY_PREFIX) and case == 'CHECK' and label == 'control'
+            and checkpoint['sha256'] == U1792_CHECKPOINT_SHA and stored == FALLBACK_25_VERSION
+            and requested == REAR_CLEARANCE_25_VERSION)
+
+
 def groups_for(run_id):
     case = three_case(run_id)
     if case in ('PIPE-AUTHORITY', 'PIPE-SWITCH', 'PIPE-CLEARANCE'):
@@ -332,9 +341,12 @@ def run(backend, params):
             if three:
                 version = params['arm_options'][label]
                 enabled = version is not None
-            trained = label == 'candidate' or (three == 'CHECK' and label == 'control')
+            trained = label == 'candidate' or (three == 'CHECK' and (
+                label == 'control' or (run_id.startswith(U1792_STUDY_PREFIX) and label == 'reference')))
             if (three in ('CHECK', 'HOLDOUT') or run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT, *RECOVERY_SHORT_CHECKS)) and trained:
-                if payload['method_hashes'].get(METHOD_FIELD) != version:
+                recorded_version = payload['method_hashes'].get(METHOD_FIELD)
+                if recorded_version != version and not approved_execution_override(
+                        run_id, three, label, checkpoint, recorded_version, version):
                     raise ValueError('DYNAMIC_HOLDOUT_METHOD_BINDING')
             env.set_escape_option(enabled, version=version)
             if mount_assay:

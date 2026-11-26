@@ -3,6 +3,21 @@ from types import SimpleNamespace
 import torch
 import pytest
 
+
+def test_clearance_check_override_is_limited_to_frozen_origin():
+    from instinctlab.control.escape_recovery import FALLBACK_25_VERSION, REAR_CLEARANCE_25_VERSION
+    from training_workloads.unified_h1.dynamic_assay import U1792_STUDY_PREFIX, approved_execution_override
+    from training_workloads.unified_h1.robustness_training_plan import U1792_CHECKPOINT_SHA
+
+    run_id = U1792_STUDY_PREFIX+'CHECK-CLEARANCE-FRESH-02'
+    exact = (run_id, 'CHECK', 'control', {'sha256':U1792_CHECKPOINT_SHA}, FALLBACK_25_VERSION, REAR_CLEARANCE_25_VERSION)
+    assert approved_execution_override(*exact)
+    for index, value in ((0, 'R6-DIRECT-OLD'), (1, 'HOLDOUT'), (2, 'candidate'), (2, 'reference'),
+                         (3, {'sha256':'0'*64}), (4, REAR_CLEARANCE_25_VERSION), (5, FALLBACK_25_VERSION)):
+        perturbed = [*exact]
+        perturbed[index] = value
+        assert not approved_execution_override(*perturbed)
+
 from instinctlab.observations.moving_sphere import MAX_SPEED_M_S, PARK_HEIGHT_M, MovingSphere, sphere_range, trajectories
 from training_workloads.unified_h1.dynamic_assay import LANES, contract, score, visibility_reset
 
