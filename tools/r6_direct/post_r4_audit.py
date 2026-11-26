@@ -67,12 +67,14 @@ def paired_r6(trial, reference, tolerance, prior_gates):
     a, b = trial['tracking_rmse_mps'], reference['tracking_rmse_mps']
     differences = {k: a[k]-b[k] for k in sorted(a.keys() & b.keys())}
     missing = sorted(a.keys() ^ b.keys())
-    worst = max(differences, key=differences.get)
+    worst = max(differences, key=differences.get, default=None)
+    worst_delta = differences.get(worst)
     legacy = compare(prior_gates,
         [dict(trial, tracking_rmse_mps={k: a[k] for k in differences})],
         [dict(reference, tracking_rmse_mps={k: b[k] for k in differences})])
-    return dict(deltas_mps=differences, missing=missing, worst_block=worst, worst_delta_mps=differences[worst],
-                legacy_r6_gates=legacy, passed=legacy['guardrails_pass'] and not missing and differences[worst]<=tolerance)
+    return dict(deltas_mps=differences, missing=missing, worst_block=worst, worst_delta_mps=worst_delta,
+                legacy_r6_gates=legacy, passed=legacy['guardrails_pass'] and not missing
+                and worst_delta is not None and worst_delta<=tolerance)
 
 
 def audit(evaluations):

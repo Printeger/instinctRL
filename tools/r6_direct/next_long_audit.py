@@ -3,7 +3,7 @@
 import argparse
 from collections import defaultdict
 import json
-from math import sqrt
+from math import dist, sqrt
 from pathlib import Path
 from statistics import fmean
 
@@ -14,6 +14,7 @@ from tools.r6_direct.instinct_cycle import HISTORICAL, save
 from tools.r6_direct.instinct_cycle_finish import guard
 from tools.r6_direct.post_r4_audit import paired_r6, verify_training
 from tools.r6_direct.study_report import score_model
+from tools.r6_evidence import checked
 from training_workloads.unified_h1.recovery_coverage import audit as audit_coverage
 
 
@@ -67,7 +68,80 @@ def coverage_metrics(result):
     return dict(totals=dict(totals), segments=segments)
 
 
-def audit(evaluations):
+def origin_guards(physical, protocol):
+    limits = protocol['physical']['gates']
+    ordinary, hover = {}, {}
+    for case in physical['cases']:
+        trial, start = (case['means'][arm] for arm in ('candidate', 'control'))
+        if case['mode'] == 'static_travel':
+            tracking = trial['tracking_rmse_mps']-start['tracking_rmse_mps']
+            progress = trial['progress_m']/start['progress_m'] if start['progress_m'] > 0 else None
+            ordinary[case['layout']] = dict(tracking_delta_mps=tracking, progress_ratio=progress,
+                passed=tracking <= limits['maximum_ordinary_rmse_delta_mps']
+                and progress is not None and progress >= limits['minimum_ordinary_progress_ratio'])
+        if case['mode'] == 'static_hover':
+            delta = trial['maximum_horizontal_excursion_m']-start['maximum_horizontal_excursion_m']
+            hover[case['layout']] = dict(drift_delta_m=delta, passed=delta <= limits['maximum_hover_increment_m'])
+    pipe, = (case for case in physical['cases'] if (case['layout'], case['mode']) == ('open_tube', 'approach'))
+    progress = pipe['means']['candidate']['recovery_progress_m']-pipe['means']['control']['recovery_progress_m']
+    saved = sum(case['paired_effects']['control']['collision_to_pass'] for case in physical['cases'])
+    new = sum(case['paired_effects']['control']['pass_to_collision'] for case in physical['cases'])
+    gates = dict(no_new_contacts=new == 0, ordinary=all(case['passed'] for case in ordinary.values()),
+                 hover=all(case['passed'] for case in hover.values()),
+                 pipe_progress=progress >= -limits['maximum_pipe_recovery_progress_loss_m'])
+    return dict(new_contacts=new, saved_contacts=saved, ordinary=ordinary, hover=hover,
+                pipe_progress_delta_m=progress, gates=gates, passed=all(gates.values()))
+
+
+def development_dose(curve_pin, formal, decision, protocol, coverage):
+    middle, end = (row['checkpoint'] for row in formal['segments'])
+    curve = read(curve_pin)
+    _, ctx, report = validate_binding(curve['binding'])
+    parameters = ctx['contract']['parameters']
+    execution = formal['execution']
+    if (parameters['seed'] != protocol['development_curve']['seed']
+            or parameters['models'] != dict(reference=middle, candidate=end)
+            or parameters['arm_options'] != dict(reference=execution, candidate=execution)):
+        raise ValueError('Development dose differs from the frozen nodes or seed')
+    admission = next(p for p in decision['development_evidence'] if Path(p['path']).name == 'FORMAL-ADMISSION.json')
+    baseline = read(read(admission)['physical'])
+    _, start_ctx, start_report = validate_binding(baseline['binding'])
+    start_params = start_ctx['contract']['parameters']
+    if (start_params['seed'] != parameters['seed'] or start_params['models']['reference'] != formal['start']
+            or start_params['arm_options']['reference'] != execution):
+        raise ValueError('Development baseline differs from the frozen origin')
+    start_groups = start_report['summary']['models']['reference']['groups']
+    for model in report['summary']['models'].values():
+        for start, trial in zip(start_groups, model['groups'], strict=True):
+            with checked(start['trace']).open() as stream:
+                left = json.loads(stream.readline())
+            with checked(trial['trace']).open() as stream:
+                right = json.loads(stream.readline())
+            if (any(left[k] != right[k] for k in ('modes', 'layout', 'axis_w', 'command_w'))
+                    or any(dist(a, b) > .0002 for first, second in (
+                        (left['initial_position_w'], right['initial_position_w']),
+                        (left['pre']['sphere_position_w'], right['pre']['sphere_position_w']))
+                        for a, b in zip(first, second, strict=True))):
+                raise ValueError('Development dose initial pairing differs from the prior origin')
+    snapshots = [baseline['metrics']['arms']['reference'], curve['metrics']['arms']['reference'],
+                 curve['metrics']['arms']['candidate']]
+    rows = {}
+    for update, arm in zip(protocol['development_curve']['absolute_checkpoints'], snapshots, strict=True):
+        pipe = arm['by_layout']['open_tube']
+        rows[str(update)] = dict(categories=arm['categories'], ordinary=pipe['static_travel'], recovery=pipe['approach'],
+                                 hover=pipe['static_hover'])
+    start, _, final = rows.values()
+    thresholds = protocol['dose_effect_outcomes']
+    differences = dict(ordinary_progress_m=final['ordinary']['progress_m']-start['ordinary']['progress_m'],
+                       recovery_progress_m=final['recovery']['recovery_progress_m']-start['recovery']['recovery_progress_m'])
+    return dict(curve=curve_pin, nodes=rows, terminal_deltas=differences, matched_initial_geometry=True,
+                coverage_passed=coverage['passed'],
+                preserves_both_progress=coverage['passed']
+                and differences['ordinary_progress_m'] >= -thresholds['ordinary_pipe_progress_margin_m']
+                and differences['recovery_progress_m'] >= -thresholds['recovery_pipe_progress_margin_m'])
+
+
+def audit(evaluations, curve):
     assembly = read(evaluations)
     assignments = read(assembly['assignments'])
     protocol = read(assignments['protocol'])
@@ -105,6 +179,17 @@ def audit(evaluations):
         for category, denominator in expected['denominators'].items():
             if sum(results[category]['denominator'] for results in layouts.values()) != denominator:
                 raise ValueError('Physical denominators differ from the frozen assignment')
+    physical_guards = compare_holdout(physical_pin)
+    start_guards = origin_guards(physical_guards, protocol)
+    execution_contrast = None
+    if 'prior' in roles:
+        execution_contrast = defaultdict(dict)
+        for group, other in zip(*(physical_result['summary']['models'][a]['groups']
+                                 for a in ('control', 'prior')), strict=True):
+            for trial, prior in zip(group['lanes'], other['lanes'], strict=True):
+                counts = execution_contrast[trial['layout']].setdefault(trial['mode'], dict(saved=0, new=0))
+                counts['saved'] += prior['collision'] and not trial['collision']
+                counts['new'] += trial['collision'] and not prior['collision']
 
     r6 = {}
     for arm in assignments['r6_arm_order']:
@@ -126,10 +211,12 @@ def audit(evaluations):
                        transitions=counters['nontraining_transitions'])
     prior_gates_pin = pin(HISTORICAL/'FREEZE.json')
     tolerance = protocol['r6']['max_paired_tracking_increase_mps']
-    r6_pairs = {role: paired_r6(r6['end'], arm, tolerance, read(prior_gates_pin))
+    r6_frozen = dict(read(prior_gates_pin), clean_increase_mm=protocol['r6']['max_clean_stop_anchor_increase_mm'],
+                     coverage_drop=protocol['r6']['max_coverage_drop_fraction'], tracking_rmse_increase_mps=tolerance)
+    r6_pairs = {role: paired_r6(r6['end'], arm, tolerance, r6_frozen)
                 for role, arm in r6.items() if role != 'end'}
     if 'prior' in r6:
-        r6_pairs['origin_vs_prior_same_weights'] = paired_r6(r6['origin'], r6['prior'], tolerance, read(prior_gates_pin))
+        r6_pairs['origin_vs_prior_same_weights'] = paired_r6(r6['origin'], r6['prior'], tolerance, r6_frozen)
 
     receipts = []
     for reservation in read(assembly['ledger'])['new_reservations']:
@@ -143,9 +230,16 @@ def audit(evaluations):
         receipts.append(dict(run_id=reservation['id'], receipt=receipt_pin,
                              native_exit=receipt['exit_code'], native_error=receipt['error'],
                              retained_bytes=reservation.get('closed_evidence_bytes'), wall_seconds=receipt['wall_seconds']))
+    dose = development_dose(curve, formal, decision, protocol, coverage)
+    promotion = dict(coverage=coverage['passed'], physical_qualified=physical_guards['gates_pass'],
+                     physical_origin=start_guards['passed'], r6_qualified=r6_pairs['qualified']['passed'],
+                     r6_origin=r6_pairs['origin']['passed'])
     return dict(evaluations=evaluations, protocol=assignments['protocol'], training=training, coverage=coverage,
+                development_dose=dose, promotion=promotion, promotion_passed=all(promotion.values()),
                 physical=dict(binding=physical_pin, by_layout=metrics, pairs=physical_bound['metrics']['pairs'],
-                              guards=compare_holdout(physical_pin), transitions=physical_ctx['state']['counters']['nontraining_transitions']),
+                              guards=physical_guards, same_execution_guards=start_guards,
+                              origin_vs_prior_same_weights=execution_contrast,
+                              transitions=physical_ctx['state']['counters']['nontraining_transitions']),
                 r6=r6, r6_pairs=r6_pairs, prior_r6_gates=prior_gates_pin, receipts=receipts, all_processes_closed=True)
 
 
@@ -153,9 +247,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('evaluations', type=Path)
     parser.add_argument('output', type=Path)
+    parser.add_argument('--development-curve', type=Path, required=True)
     args = parser.parse_args()
     guard()
-    result = audit(pin(args.evaluations))
+    result = audit(pin(args.evaluations), pin(args.development_curve))
     guard()
     print(json.dumps(save(args.output, result)))
 
