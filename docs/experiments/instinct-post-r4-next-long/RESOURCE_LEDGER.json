@@ -689,6 +689,47 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FINE-SINGLE-PASS-U896/native"
       },
       "storage_reservation_id": "ROUND-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 3358720,
+      "diagnostic_wall_seconds": 63.98807395575568,
+      "id": "R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FINE-SINGLE-PASS-U896-DIAGNOSTIC",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FINE-SINGLE-PASS-U896-DIAGNOSTIC/control/receipt.json",
+        "sha256": "88bac98e66c70f6c4a40f62f8f2628b98e4a438bc56716d4a4d0b0d2cc4d95eb"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/RESOURCE_POLICY.json",
+        "sha256": "7c828dfbb60e551e58cdacd13e2f0ddfd721b71a9b1b920b151003be3d455edb"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 64,
+        "live_starts": 1,
+        "live_wall_seconds": 64,
+        "output_actual_plus_unreleased_reservations_bytes": 3358720,
+        "queue_seconds": 180
+      },
+      "settlement": {
+        "charged_seconds": 64,
+        "original_resources": {
+          "allocated_gpu_seconds": 390,
+          "live_starts": 1,
+          "live_wall_seconds": 390,
+          "output_actual_plus_unreleased_reservations_bytes": 268435456,
+          "queue_seconds": 180
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FINE-SINGLE-PASS-U896-DIAGNOSTIC/control/receipt.json",
+          "sha256": "88bac98e66c70f6c4a40f62f8f2628b98e4a438bc56716d4a4d0b0d2cc4d95eb"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FINE-SINGLE-PASS-U896-DIAGNOSTIC",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FINE-SINGLE-PASS-U896-DIAGNOSTIC/native"
+      }
     }
   ],
   "new_used": {
