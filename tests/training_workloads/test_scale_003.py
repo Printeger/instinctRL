@@ -562,6 +562,29 @@ def test_resource_gates_order_thresholds_and_failure_persistence(tmp_path, monke
     assert json.loads((tmp_path / "runtime/runtime_resource_failure.json").read_text())["ordinal"] == 2
 
 
+def test_journaled_runtime_guard_preserves_each_decision_with_linear_writes(tmp_path, monkeypatch):
+    from training_workloads.scale_003 import persistence
+    from training_workloads.scale_003.resources import JournaledRuntimeResourceGuard
+
+    monkeypatch.setattr(persistence, "_output_quota", None)
+    quota = persistence.install_output_write_quota(tmp_path, 32 * 1024)
+    observed = dict(free_memory_bytes=2 * 1024**3, total_memory_bytes=12 * 1024**3,
+                    allocated_memory_bytes=1)
+    guard = JournaledRuntimeResourceGuard(tmp_path, observer=lambda: observed)
+    journal = tmp_path / "runtime_resource_observations.jsonl"
+    for step in range(63):
+        assert guard.check(stage="before_step", ordinal=step)["ordinal"] == step
+    observed["free_memory_bytes"] = 1024**3 - 1
+    with pytest.raises(MemoryError):
+        guard.check(stage="before_step", ordinal=63)
+    rows = [json.loads(line) for line in journal.read_text().splitlines()]
+    assert [row["ordinal"] for row in rows] == list(range(64))
+    assert json.loads((tmp_path / "runtime_resource_failure.json").read_text())["ordinal"] == 63
+    guard.seal()
+    assert json.loads((tmp_path / "runtime_resources.json").read_text())["observations"] == rows
+    assert quota.used < 2 * journal.stat().st_size + 1024
+
+
 def test_coexistence_collection_anchors_after_slow_first_sample():
     now = 0.0
     latencies = iter((3.0, 1.0, 1.0))

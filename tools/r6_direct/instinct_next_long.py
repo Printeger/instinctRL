@@ -103,19 +103,21 @@ class NextLongStudy(LongStudy):
             return self.settle(prior[-1])
         return load(PRIOR/'r3-end.json')['predecessor']
 
-    def freeze_input(self, run_id, operation, params, *extra):
+    def freeze_input(self, run_id, operation, params, *extra, result_payload_cap_bytes=None):
         guard()
         path = self.input_path(run_id)
         if path.exists():
             job = load(path)
-            if job['snapshot'] != str(self.snapshot) or read(job['contract'])['parameters'] != params:
+            if (job['snapshot'] != str(self.snapshot) or read(job['contract'])['parameters'] != params
+                    or job['result_payload_cap_bytes'] != (result_payload_cap_bytes or params['output_cap_bytes'])):
                 raise ValueError('Requested input differs from the committed contract')
             return path
         source = execution_manifest()
         source_pin = self.write(f'source-{source["source_commit"][:12]}.json', source)
         contract = self.write(f'{run_id}-contract.json', build('contract', dict(operation=operation, parameters=params)))
         self.input(run_id, contract, self.predecessor(), snapshot=self.snapshot, source=source_pin,
-                   resource_policy=pin(PROJECT/'RESOURCE_POLICY.json'))
+                   resource_policy=pin(PROJECT/'RESOURCE_POLICY.json'),
+                   result_payload_cap_bytes=result_payload_cap_bytes)
         label = run_id.removeprefix(PREFIX).lower()
         freeze(f'{self.tag_prefix}-{label}-inputs', f'Freeze {run_id} input',
                path, Path(contract['path']), Path(source_pin['path']), self.ledger, *extra)
@@ -149,19 +151,29 @@ class NextLongStudy(LongStudy):
         self.setup()
         spec = load(spec_path)
         label = spec['label']
-        if not re.fullmatch(r'(SHORT|FINE)-[A-Z0-9-]+|FORMAL', label):
+        if not re.fullmatch(r'(SHORT|FINE)-[A-Z0-9-]+|FORMAL(?:-RETRY-[0-9]{2})?', label):
             raise ValueError('Use a distinct short, finite or formal training label')
         added = spec['phases'][-1][1] * 512
         bounds = ((1, 32768) if label.startswith('SHORT-') else
                   (32769, 524287) if label.startswith('FINE-') else (524288, float('inf')))
         if not bounds[0] <= added <= bounds[1]:
             raise ValueError('Training step budget differs from the registered study scale')
-        if label == 'FORMAL':
+        recovery = []
+        if label.startswith('FORMAL'):
             protocol = read(spec['independent_protocol'])
             if (protocol['added_updates'] != spec['phases'][-1][1]
                     or protocol['fixed_endpoint'] != spec['segments'][-1][1]
                     or not spec['coverage_minimums']):
                 raise ValueError('Freeze the formal endpoint and coverage alongside the independent protocol')
+            if label != 'FORMAL':
+                recovery.append(spec['recovery'])
+                repair = read(spec['recovery'])
+                original = read(repair['original_spec'])
+                if (dict({k: v for k, v in spec.items() if k != 'recovery'}, label='FORMAL') != original
+                        or original['independent_protocol'] != repair['independent_protocol']
+                        or read(repair['failed_receipt'])['status'] != 'CLOSED'
+                        or not repair['forecast']['fits']):
+                    raise ValueError('Formal reissue must preserve the original scientific specification')
         source = execution_manifest()
         prior = load(PRIOR/'FORMAL-R3/RESULTS.json')
         prior_recipe = read(read(prior['design'])['recipe'])
@@ -192,7 +204,7 @@ class NextLongStudy(LongStudy):
         seed = spec['training_seed']
         recipe = dict(prior_recipe, candidate_id=spec['candidate_id'], source_identity=training_identity(source),
                       method=method_pin, curriculum=curriculum_pin, diagnosis=[pin(spec_path), old['analysis'],
-                                                                             *spec['development_evidence']],
+                                                                             *spec['development_evidence'], *recovery],
                       checkpoint_offsets=spec['checkpoint_offsets'], branch_updates=spec['phases'][-1][1],
                       development_seeds=[seed], hypothesis=spec['hypothesis'], comparison=spec['comparison'],
                       branch_origin={k: origin[k] for k in ('checkpoint', 'update', 'training_seed')})
@@ -295,7 +307,8 @@ class NextLongStudy(LongStudy):
         selection['comparison'] = comparison_pin
         params.update(experiment_id=run_id, output_cap_bytes=resources['output_cap_bytes'])
         params['r6'].update(run_id=run_id, seed=comparison['seed'], output_quotas=resources['output_quotas'])
-        path = self.freeze_input(run_id, 'evaluate', params, Path(comparison_pin['path']))
+        path = self.freeze_input(run_id, 'evaluate', params, Path(comparison_pin['path']),
+                                 result_payload_cap_bytes=assignments.get('r6_result_payload_cap_bytes'))
         summary_path = PROJECT/f'R6-{role.upper()}.json'
         if summary_path.exists():
             return pin(summary_path)
@@ -304,11 +317,13 @@ class NextLongStudy(LongStudy):
                summary_path, self.ledger)
         return result
 
-    def final_evaluation(self, protocol_path):
+    def final_evaluation(self, protocol_path, formal_results=None):
         from tools.r6_direct.next_long_eval_resources import forecast
         from tools.r6_direct.post_r4_audit import verify_training
 
-        path = PROJECT/'FORMAL/RESULTS.json'
+        path = formal_results or PROJECT/'FORMAL/RESULTS.json'
+        if path.parent.parent != PROJECT or path.name != 'RESULTS.json' or not path.parent.name.startswith('FORMAL'):
+            raise ValueError('Use this study’s closed formal result')
         formal = load(path)
         decision = read(read(formal['design'])['decision'])
         protocol_pin = pin(protocol_path)
@@ -332,11 +347,21 @@ class NextLongStudy(LongStudy):
             roles['prior'] = dict(checkpoint=prior['end'], execution=prior['execution'], segment=prior['segments'][-1])
         arms = ['qualified', *(['prior'] if not same_execution else []), 'origin', 'end']
         resources = read(protocol['r6_resources'])
+        holdout_retained = GIB//3
+        if 'recovery' in decision:
+            repair = read(decision['recovery'])
+            r6_cap = repair['r6_result_payload_cap_bytes']
+            if not resources['historical_r6_retained_bytes_max'] < r6_cap <= resources['output_cap_bytes']:
+                raise ValueError('The bound R6 launch payload cannot fit its verified evidence')
+            resources['output_cap_bytes'] = r6_cap
+            holdout_retained = repair['physical_retained_bytes']
+        else:
+            r6_cap = resources['output_cap_bytes']
         assignments_path = PROJECT/'FINAL_ASSIGNMENTS.json'
         existed = assignments_path.exists()
         assignments_pin = self.write(assignments_path.name, dict(
             protocol=protocol_pin, formal=pin(path), r6_resources=protocol['r6_resources'],
-            roles=roles, r6_arm_order=arms, prior_in_origin=same_execution,
+            roles=roles, r6_arm_order=arms, prior_in_origin=same_execution, r6_result_payload_cap_bytes=r6_cap,
         ))
         if not existed:
             guard()
@@ -355,7 +380,7 @@ class NextLongStudy(LongStudy):
         pending_r6 = sum(not (PROJECT/f'R6-{role.upper()}.json').exists() for role in arms)
         if pending_physical or pending_r6:
             capacity = forecast(resources, remaining_phases=[
-                dict(name='paired physical', launch_cap_bytes=GIB, retained_bytes=GIB//3),
+                dict(name='paired physical', launch_cap_bytes=GIB, retained_bytes=holdout_retained),
             ] if pending_physical else [], remaining_r6_arms=pending_r6)
             if not capacity['fits']:
                 raise ValueError(f'Independent series exceeds forecast system capacity: {capacity}')
@@ -380,9 +405,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('operation', choices=('physical', 'prepare-training', 'train', 'final-evaluation'))
     parser.add_argument('spec', type=Path)
+    parser.add_argument('--formal-results', type=Path)
     args = parser.parse_args()
+    if args.formal_results and args.operation != 'final-evaluation':
+        parser.error('--formal-results is only for final-evaluation')
     study = NextLongStudy()
-    print(json.dumps(getattr(study, args.operation.replace('-', '_'))(args.spec.resolve())), flush=True)
+    kwargs = dict(formal_results=args.formal_results.resolve()) if args.formal_results else {}
+    print(json.dumps(getattr(study, args.operation.replace('-', '_'))(args.spec.resolve(), **kwargs)), flush=True)
 
 
 if __name__ == '__main__':

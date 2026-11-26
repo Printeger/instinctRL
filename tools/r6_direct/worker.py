@@ -156,14 +156,17 @@ def run(plan, input_pin):
     kit+=' --ext-folder '+extension_validate(plan['extension_inputs'])
     kit+=' --/log/file=/proc/self/fd/1'
     atomic(attempt/'kit_settings.json',settings_map)
-    app=env=backend=None; started=time.monotonic(); error=None
+    app=env=backend=resource_guard=None; started=time.monotonic(); error=None
     from training_workloads.unified_h1.budget import ExecutionCounters
     counters=ExecutionCounters();counters.reserve_live_start(1);counters.reserve_simulator_initialization(1)
     atomic(attempt/'state.json',{'status':'INITIALIZING','identity':process_identity(os.getpid()),'counters':counters.snapshot()})
     try:
         from isaaclab.app import AppLauncher
         launcher=AppLauncher(headless=True,enable_cameras=contract['operation']=='render',fast_shutdown=False,kit_args=kit);app=launcher.app
-        from training_workloads.scale_003.resources import validate_graceful_shutdown_configuration,RuntimeResourceGuard
+        from training_workloads.scale_003.resources import (
+            JournaledRuntimeResourceGuard, RuntimeResourceGuard, validate_graceful_shutdown_configuration,
+        )
+        from training_workloads.unified_h1.dynamic_assay import NEXT_LONG_PREFIX
         validate_graceful_shutdown_configuration(app,resource_pins=pins)
         import carb.settings
         actual=carb.settings.get_settings()
@@ -173,16 +176,19 @@ def run(plan, input_pin):
             import carb.tokens
             from tools.r6_direct.render import validate_cache_tokens
             validate_cache_tokens(settings_map,carb.tokens.get_tokens_interface())
-        class Guard(RuntimeResourceGuard):
+        journaled = plan['run_id'].startswith(NEXT_LONG_PREFIX)
+
+        class Guard(JournaledRuntimeResourceGuard if journaled else RuntimeResourceGuard):
             def check(self,**kw):
                 if stop_paths() or (Path(plan['output_root'])/'STOP').exists():raise RuntimeError('STOP')
                 if shutil.disk_usage('/home/mint/rl_dev/instinctRL-dev').free<30*1024**3:raise RuntimeError('DIRECT_DISK_FLOOR')
                 return super().check(**kw)
+        resource_guard = Guard(gate)
         if contract['operation']=='render':
             from tools.r6_direct.render import run as render
             atomic(attempt/'state.json',{'status':'RENDERING',
                 'identity':process_identity(os.getpid()),'counters':counters.snapshot()})
-            render(plan,contract,source,output,app,counters,Guard(gate))
+            render(plan,contract,source,output,app,counters,resource_guard)
         else:
             from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv,UnifiedH1DirectEnvCfg
             from training_workloads.unified_h1.checkpoint_compatibility import pinned_json
@@ -235,7 +241,7 @@ def run(plan, input_pin):
             counters.record_initialization_ticks(ticks,contract['budgets']['initialization_ticks'])
             from training_workloads.unified_h1.backend import UnifiedH1LiveBackend
             backend=UnifiedH1LiveBackend(run_contract=contract,attempt=attempt,app=app,environment=env,
-                resource_guard=Guard(gate),counters=counters,process_started_monotonic=started)
+                resource_guard=resource_guard,counters=counters,process_started_monotonic=started)
             backend.initialization_measurement=dict(status='OBSERVED',observed_physics_ticks=ticks,
                 counter_source=env.h1_initialization_tick_source,fresh_physical_reset=True)
             from training_workloads.unified_h1.robustness_contract import baseline,evaluate_baseline
@@ -289,9 +295,16 @@ def run(plan, input_pin):
                 evaluator=robustness_final_contract if operation=='final' else robustness_candidate_contract
                 evaluator.evaluate_registered(backend)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
+            if journaled:
+                resource_guard.seal()
             backend.preserve('PASS_PENDING_CLOSE')
     except BaseException as exc:
         error=repr(exc)
+        if resource_guard is not None and journaled:
+            try:
+                resource_guard.seal()
+            except BaseException as seal_error:
+                exc.add_note('Runtime resource summary could not be written: '+repr(seal_error))
         if backend is not None:backend.preserve('FAIL_PENDING_CLOSE')
         raise
     finally:

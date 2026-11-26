@@ -68,6 +68,19 @@ def coverage_metrics(result):
     return dict(totals=dict(totals), segments=segments)
 
 
+def resource_journal(ctx):
+    gate = Path(ctx['plan']['attempt_dir'])/'prelaunch'
+    journal = pin(gate/'runtime_resource_observations.jsonl')
+    summary = pin(gate/'runtime_resources.json')
+    with checked(journal).open() as stream:
+        observations = [json.loads(line) for line in stream]
+    if (not observations or observations != read(summary)['observations']
+            or any(r['free_memory_bytes'] < r['minimum_free_memory_bytes'] for r in observations)):
+        raise ValueError('Runtime memory decisions differ from the closed resource journal')
+    return dict(journal=journal, summary=summary, observations=len(observations),
+                minimum_free_memory_bytes=min(r['free_memory_bytes'] for r in observations))
+
+
 def origin_guards(physical, protocol):
     limits = protocol['physical']['gates']
     ordinary, hover = {}, {}
@@ -157,6 +170,11 @@ def audit(evaluations, curve):
     minimums = decision['coverage_minimums']
     coverage['minimums'] = minimums
     coverage['passed'] = all(coverage['totals'].get(k, 0)>=n for k, n in minimums.items())
+    journals = {}
+    if 'recovery' in decision:
+        for segment in formal['segments']:
+            _, segment_ctx, _ = validate_binding(segment['analysis'])
+            journals[segment_ctx['plan']['run_id']] = resource_journal(segment_ctx)
 
     physical_bound = read(assembly['physical'])
     physical_pin = physical_bound['binding']
@@ -207,6 +225,10 @@ def audit(evaluations, curve):
         requested = params['evaluation_selection']
         if row['checkpoint'] != roles[arm]['checkpoint'] or requested.get('execution_override') != roles[arm].get('execution_override'):
             raise ValueError(f'R6 role assignment drifted for {arm}')
+        if ctx['plan']['result_payload_cap_bytes'] != assignments['r6_result_payload_cap_bytes']:
+            raise ValueError(f'R6 launch payload differs from the bound resource envelope for {arm}')
+        if 'recovery' in decision:
+            journals[ctx['plan']['run_id']] = resource_journal(ctx)
         r6[arm] = dict(row, binding=evaluation['binding'], receipt=bound['receipt'],
                        transitions=counters['nontraining_transitions'])
     prior_gates_pin = pin(HISTORICAL/'FREEZE.json')
@@ -240,7 +262,8 @@ def audit(evaluations, curve):
                               guards=physical_guards, same_execution_guards=start_guards,
                               origin_vs_prior_same_weights=execution_contrast,
                               transitions=physical_ctx['state']['counters']['nontraining_transitions']),
-                r6=r6, r6_pairs=r6_pairs, prior_r6_gates=prior_gates_pin, receipts=receipts, all_processes_closed=True)
+                r6=r6, r6_pairs=r6_pairs, prior_r6_gates=prior_gates_pin, receipts=receipts,
+                runtime_resource_journals=journals, all_processes_closed=True)
 
 
 def main():

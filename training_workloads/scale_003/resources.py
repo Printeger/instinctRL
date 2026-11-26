@@ -11,8 +11,8 @@ import subprocess
 import time
 from typing import Any
 
-from .config import load_config, sha256_file
-from .persistence import atomic_json_replace
+from .config import canonical_bytes, load_config, sha256_file
+from .persistence import atomic_json_replace, guard_stream
 
 
 GPU_IDENTITY = {"index": 0, "name": "NVIDIA GeForce RTX 5070", "driver": "580.173.02", "memory_total_mib": 12227}
@@ -212,16 +212,42 @@ class RuntimeResourceGuard:
         if any(type(raw[key]) is not int or raw[key] < 0 for key in raw):
             raise ValueError("runtime resource observation must contain nonnegative integers")
         row = {"stage": stage, "ordinal": ordinal, **dict(raw), "minimum_free_memory_bytes": RUNTIME_MIN_FREE_MEMORY_BYTES}
-        self.rows.append(row)
-        atomic_json_replace(self.output_root, "runtime_resources.json", {
-            "schema_version": "scale-003-runtime-resources.v1", "observations": self.rows,
-        })
+        self.record(row)
         if raw["free_memory_bytes"] < RUNTIME_MIN_FREE_MEMORY_BYTES:
             atomic_json_replace(self.output_root, "runtime_resource_failure.json", {
                 "schema_version": "scale-003-resource-failure.v1", "status": "FAIL", **row,
             })
             raise MemoryError("runtime free CUDA memory is below 1 GiB")
         return row
+
+    def record(self, row: dict[str, Any]) -> None:
+        self.rows.append(row)
+        self.seal()
+
+    def seal(self) -> None:
+        atomic_json_replace(self.output_root, "runtime_resources.json", {
+            "schema_version": "scale-003-runtime-resources.v1", "observations": self.rows,
+        })
+
+
+class JournaledRuntimeResourceGuard(RuntimeResourceGuard):
+    """Commit each decision before work and write the legacy summary at closure."""
+
+    def record(self, row: dict[str, Any]) -> None:
+        path = self.output_root / "runtime_resource_observations.jsonl"
+        first = not self.rows
+        with path.open("xb" if first else "ab") as stream:
+            guarded = guard_stream(stream, path)
+            guarded.write(canonical_bytes(row))
+            stream.flush()
+            os.fsync(stream.fileno())
+        if first:
+            directory = os.open(self.output_root, os.O_RDONLY)
+            try:
+                os.fsync(directory)
+            finally:
+                os.close(directory)
+        self.rows.append(row)
 
 
 def _r6_capture_binding() -> dict[str, Any]:
