@@ -19,9 +19,13 @@ RECIPE_FIELDS={'schema_version','candidate_id','baseline_sha256','diagnosis','hy
 STORAGE_FIELDS={'payload_bytes','compressed_bytes','plain_bytes','maximum_raw_file_bytes',
                 'checkpoint_bytes','branch_record_bytes','metadata_bytes'}
 LOCAL_FORK = 'LOCAL_U768_NEW_STREAM'
-NEW_STREAM_KINDS = ('COMMON_U640_NEW_STREAM', LOCAL_FORK)
+U1792_LOCAL_FORK = 'LOCAL_U1792_NEW_STREAM'
+LOCAL_FORKS = {LOCAL_FORK: 768, U1792_LOCAL_FORK: 1792}
+NEW_STREAM_KINDS = ('COMMON_U640_NEW_STREAM', *LOCAL_FORKS)
 R3_CHECKPOINT_SHA = 'a5b5c66ce2832a49b15fc5caad5fc2c0e8f192f704415ad881621fad266359e3'
 R3_TRAINING_SEED = 679851548
+U1792_CHECKPOINT_SHA = '466f7aae2d06e489b66279480c52e297c0ef40f77c8957d5e13392c35a15d9d6'
+U1792_TRAINING_SEED = 1270871049
 
 
 def require(condition,reason):
@@ -49,6 +53,11 @@ def recipe(pin,review_pin):
 def branch_start_update(recipe):
     origin = recipe.get('branch_origin')
     return 640 if origin is None else origin['update']
+
+
+def local_origin(update):
+    return {768: (R3_CHECKPOINT_SHA, R3_TRAINING_SEED),
+            1792: (U1792_CHECKPOINT_SHA, U1792_TRAINING_SEED)}.get(update)
 
 
 def validate_recipe(r):
@@ -79,12 +88,13 @@ def validate_recipe(r):
     if 'branch_origin' in r:
         origin = r['branch_origin']
         require(isinstance(origin,dict) and set(origin)=={'checkpoint','update','training_seed'}
-            and type(origin['update']) is int and origin['update']==768
-            and type(origin['training_seed']) is int and origin['training_seed']==R3_TRAINING_SEED,
+            and type(origin['update']) is int and local_origin(origin['update']) is not None
+            and type(origin['training_seed']) is int,
             'LOCAL_BRANCH_ORIGIN')
+        checkpoint_sha, origin_seed = local_origin(origin['update'])
         validate_pin(origin['checkpoint'])
-        require(origin['checkpoint']['sha256']==R3_CHECKPOINT_SHA
-            and R3_TRAINING_SEED not in r['development_seeds'],'LOCAL_BRANCH_CHECKPOINT_SEED')
+        require(origin['checkpoint']['sha256']==checkpoint_sha and origin['training_seed']==origin_seed
+            and origin_seed not in r['development_seeds'],'LOCAL_BRANCH_CHECKPOINT_SEED')
     nodes=r['checkpoint_offsets']
     require(isinstance(nodes,list) and 1<=len(nodes)<=96,'CHECKPOINTS')
     for node in nodes:integer(node,1,r['branch_updates'],'CHECKPOINT')
@@ -116,12 +126,14 @@ def validate(plan):
         and all(type(n)is int for n in plan['checkpoint_updates']),'EXACT_CHECKPOINTS')
     initial=plan['initialization']
     require(isinstance(initial,dict) and set(initial)=={'kind','checkpoint','source_identity','method_hashes'},'INITIALIZATION')
+    require(isinstance(initial['kind'],str),'INITIALIZATION_KIND')
     validate_pin(initial['checkpoint']);validate_source_identity(initial['source_identity'])
     require(isinstance(initial['method_hashes'],dict) and initial['method_hashes'],'INITIAL_METHOD')
     if initial['kind']=='COMMON_U640_NEW_STREAM':
         require(origin is None and start==640 and initial['checkpoint']['sha256']==BASELINE_SHA,'COMMON_ORIGIN')
-    elif initial['kind']==LOCAL_FORK:
-        require(origin is not None and start==anchor and initial['checkpoint']==origin['checkpoint'],
+    elif initial['kind'] in LOCAL_FORKS:
+        require(origin is not None and start==anchor and start==LOCAL_FORKS[initial['kind']]
+            and initial['checkpoint']==origin['checkpoint'],
             'LOCAL_BRANCH_INITIALIZATION')
     else:
         require(initial['kind']=='RESUME_R6_STREAM' and start>anchor
@@ -189,11 +201,12 @@ def verify_loaded(plan,metadata):
     if initial['kind']=='COMMON_U640_NEW_STREAM':
         require(metadata.get('training_seed')==20260908 and curriculum==dict(
             version='curriculum-h1-v1',completed_policy_steps=start*16),'LOADED_ORIGIN')
-    elif initial['kind']==LOCAL_FORK:
-        require(metadata['training_seed']==R3_TRAINING_SEED and initial['method_hashes'].get('r6_recipe')
+    elif initial['kind'] in LOCAL_FORKS:
+        _, origin_seed = local_origin(start)
+        require(metadata['training_seed']==origin_seed and initial['method_hashes'].get('r6_recipe')
             and curriculum==dict(version='curriculum-h1-r6-v1',completed_policy_steps=start*16,
             recipe_sha256=initial['method_hashes']['r6_recipe'],origin_checkpoint_sha256=BASELINE_SHA,
-            branch_seed=R3_TRAINING_SEED),'LOADED_LOCAL_BRANCH_ORIGIN')
+            branch_seed=origin_seed),'LOADED_LOCAL_BRANCH_ORIGIN')
     else:
         require(metadata.get('training_seed')==p['training_seed'] and curriculum==dict(
             version='curriculum-h1-r6-v1',completed_policy_steps=start*16,recipe_sha256=p['recipe']['sha256'],

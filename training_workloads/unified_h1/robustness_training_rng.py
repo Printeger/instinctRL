@@ -93,10 +93,10 @@ def prepare_plan_rng(trainer,curriculum_generator,*,plan,metadata):
         raise ValueError('R6_PLAN_ACTUAL_COUNTERS')
     if any(getattr(trainer.config,k)!=method['ppo'][k] for k in ('minibatch_size','epoch_count')):
         raise ValueError('R6_PLAN_PPO_CLOCK')
-    if plan['initialization']['kind']==contract.LOCAL_FORK:
+    if plan['initialization']['kind'] in contract.LOCAL_FORKS:
         record=_fork_stream(trainer,curriculum_generator,seed=plan['training_seed'],
             origin_sha256=plan['initialization']['checkpoint']['sha256'],metadata=metadata,
-            starting_update=binding['start_update'],kind='LOCAL_U768_NEW_CONTINUATION_STREAM')
+            starting_update=binding['start_update'],kind=f'LOCAL_U{binding["start_update"]}_NEW_CONTINUATION_STREAM')
     elif binding['branch_new_rng']:
         record=branch_from_u640(trainer,curriculum_generator,seed=plan['training_seed'],
             origin_sha256=plan['initialization']['checkpoint']['sha256'],metadata=metadata)

@@ -50,28 +50,35 @@ def test_plan_or_actual_trainer_mismatch_never_branches(case,bad):
     assert _state_fingerprint(_rng_payload(g,t))==before
 
 
-def test_local_u768_branch_and_registered_resume_keep_absolute_clocks(case,monkeypatch):
+@pytest.mark.parametrize('start, kind, previous_seed, sha_field',[
+    (768,contract.LOCAL_FORK,contract.R3_TRAINING_SEED,'R3_CHECKPOINT_SHA'),
+    (1792,contract.U1792_LOCAL_FORK,contract.U1792_TRAINING_SEED,'U1792_CHECKPOINT_SHA'),
+])
+def test_local_branch_and_registered_resume_keep_absolute_clocks(case,monkeypatch,start,kind,previous_seed,sha_field):
     b=case
     p=b.plan
     p.pop('recipe_review')
-    previous_seed=contract.R3_TRAINING_SEED
-    monkeypatch.setattr(contract,'R3_CHECKPOINT_SHA',b.ev['sha256'])
-    b.recipe.update(branch_origin=dict(checkpoint=b.ev,update=768,training_seed=previous_seed))
+    monkeypatch.setattr(contract,sha_field,b.ev['sha256'])
+    b.recipe.update(branch_origin=dict(checkpoint=b.ev,update=start,training_seed=previous_seed))
     p.update(schema_version='r6-local-training-plan/1',recipe=b.pin('recipe-local.json',b.recipe),
-        start_update=768,target_update=1024,checkpoint_updates=[1024],
-        initialization=dict(kind=contract.LOCAL_FORK,checkpoint=b.ev,source_identity=b.identity,
+        start_update=start,target_update=start+256,checkpoint_updates=[start+256],
+        initialization=dict(kind=kind,checkpoint=b.ev,source_identity=b.identity,
             method_hashes={'r6_recipe':'f'*64}))
     t,g,_=restored()
-    t.update_counter=768
+    t.update_counter=start
     t.config=replace(t.config,permutation_seed=previous_seed)
     for optimizer in (t.actor_optimizer,t.critic_optimizer):
-        for state in optimizer.state.values():state['step'].fill_(768*8)
-    old_clock=dict(version='curriculum-h1-r6-v1',completed_policy_steps=768*16,
+        for state in optimizer.state.values():state['step'].fill_(start*8)
+    old_clock=dict(version='curriculum-h1-r6-v1',completed_policy_steps=start*16,
         recipe_sha256='f'*64,origin_checkpoint_sha256=contract.BASELINE_SHA,branch_seed=previous_seed)
-    meta=metadata(768,previous_seed,old_clock)
+    meta=metadata(start,previous_seed,old_clock)
     origin=dict(meta,rng=_rng_payload(g,t),ppo_config=asdict(t.config),
         source_identity=b.identity,method_hashes=p['initialization']['method_hashes'])
     before=weights(t)
+    wrong_kind = next(name for name in contract.LOCAL_FORKS if name != kind)
+    wrong_plan = dict(p,initialization=dict(p['initialization'],kind=wrong_kind))
+    with pytest.raises(PermissionError,match='LOCAL_BRANCH_INITIALIZATION'):
+        contract.validate(wrong_plan)
     fork=r.prepare_plan_rng(t,g,plan=p,metadata=meta)
     assert t.config.permutation_seed==11 and weights(t)==before
     assert audit(fork,origin,p)['cpu_seed_derivation_verified']
@@ -83,14 +90,14 @@ def test_local_u768_branch_and_registered_resume_keep_absolute_clocks(case,monke
         budgets=budget))['major_scientific_candidates']==1
     curriculum=contract.pinned_json(b.recipe['curriculum'])
     phase=robustness_curriculum.PhaseCurriculum(curriculum,branch_updates=1024,phase_index=1,
-        generator=g,audit_sink=lambda *_:None,branch_start_update=768)
-    assert (phase.start,phase.end)==(832*16,1792*16)
+        generator=g,audit_sink=lambda *_:None,branch_start_update=start)
+    assert (phase.start,phase.end)==((start+64)*16,(start+1024)*16)
 
     hashes=bound_method_hashes(p,b.recipe)
-    p.update(start_update=1024,target_update=1280,checkpoint_updates=[1280],
+    p.update(start_update=start+256,target_update=start+512,checkpoint_updates=[start+512],
         initialization=dict(kind='RESUME_R6_STREAM',checkpoint=b.ev,source_identity=b.identity,method_hashes=hashes))
-    new_clock=dict(old_clock,completed_policy_steps=1024*16,recipe_sha256=p['recipe']['sha256'],branch_seed=11)
-    assert not contract.verify_loaded(p,metadata(1024,11,new_clock))['branch_new_rng']
+    new_clock=dict(old_clock,completed_policy_steps=(start+256)*16,recipe_sha256=p['recipe']['sha256'],branch_seed=11)
+    assert not contract.verify_loaded(p,metadata(start+256,11,new_clock))['branch_new_rng']
     assert contract.required_budget(p)['explicit_resets']==1
     hashes.pop('r6_branch_origin')
     with pytest.raises(PermissionError,match='RESUME_BRANCH_ORIGIN'):contract.validate(p)
