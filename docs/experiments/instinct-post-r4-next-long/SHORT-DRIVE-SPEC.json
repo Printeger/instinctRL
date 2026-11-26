@@ -1,0 +1,48 @@
+{
+  "candidate_id": "R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25",
+  "training_seed": 1482076341,
+  "phases": [
+    [
+      "robust",
+      16
+    ],
+    [
+      "original",
+      32
+    ]
+  ],
+  "checkpoint_offsets": [
+    16,
+    32
+  ],
+  "segments": [
+    [
+      768,
+      800,
+      1800
+    ]
+  ],
+  "payload_gib": 4,
+  "development_evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/SHORT-DESIGN.md",
+      "sha256": "94247b9c00105d861a222aa96413bee2cda4ca8a72f77c1b889629601f38a430"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/REARPAIR-01.json",
+      "sha256": "559edadddce74f88218c27fdff184b2843e61a393cd2a04455c46b1c32729ac5"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/MECHANISM-01.json",
+      "sha256": "25bfa68445f1e9130ea245b1fc5bc4c0005abe265afd78972ad1de5c2419519c"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-CPU-01/COMMANDS.json",
+      "sha256": "a1b37fe6dd2ffb1e15d32dcb1e3a6a9391e7faed4719be2a802905a8ea3543c4"
+    }
+  ],
+  "comparison": "Same u768 actor, critic, Adam, governor, ICS, seed, training volume and development evaluation. Short control has 100 tube drive steps, intervention has 144.",
+  "label": "SHORT-DRIVE",
+  "tube_drive_steps": 144,
+  "hypothesis": "Maintain the operator command after the mover recedes, increasing actual pipe recovery exposure and recovering useful signed movement under the shared execution."
+}

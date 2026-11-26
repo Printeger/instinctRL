@@ -1,0 +1,104 @@
+{
+  "schema_version": "instinctrl-next-long-probability-source-trace/1",
+  "helper_source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/source-bf677e94115e.json",
+    "sha256": "6d8800c2492e63ddef332e549805cba50db627df69497a2e1ee32d24fd2dafef"
+  },
+  "prior_replay_source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-three/source-5af381fb480f.json",
+    "sha256": "73f896ba7d1de988f6b0aeed2ace2326d56a6904641984809ca34adcfa42b909"
+  },
+  "source_pins": [
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/tools/r6_direct/cuda_diagnostic.py",
+      "sha256": "b75d331bed62130faa1cec57a52db6c6892b757c093eab4cedb8e6df2bbd3df3"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/tools/r6_direct/probability_replay.py",
+      "sha256": "5df1bc432d4b058de782c391605f24a6f4be0459cdb8a6ede55e52e8124795c3"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/tools/r6_training_probability.py",
+      "sha256": "12adc746f55a78124af2991f95b424680bc4db4fd3ceefac44ecfafda31aac4b"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/tools/r6_evidence.py",
+      "sha256": "1a78abbb0cfc1ac7e117539e40941efbb58b44500ed5193b85fc41613051ab51"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/training_workloads/unified_h1/driver.py",
+      "sha256": "9eafe508e5f26fc88a6d1e0f5dad666e96298b1b9a82bb598bc32c7df4ef3a59"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/training_workloads/unified_h1/backend.py",
+      "sha256": "700df3daa005cabcc4df929132a9dfa43c2c6663067c53cabc503459a8504fed"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/training_workloads/unified_h1/lossless_evidence.py",
+      "sha256": "2fe1801bfab6534b7f46cd2114aab8846e0f5206eea36c90bfcc779b06b1eae2"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/training_workloads/unified_h1/pilot_contract.py",
+      "sha256": "4e00ebde975491f5be10d2d19e13984be437f10547fe33b16bf28f48b4d2fc66"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/training_workloads/unified_h1/write_boundary.py",
+      "sha256": "115ce3c7ed3cdcca80bc1c142275baee8bd9463b216b02548dcfa91e59756b36"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/isaaclab-training/instinctlab/training/checkpoint_h1.py",
+      "sha256": "fb050bac5e8d9ef868a11b6001902e2b3aa2d584db2ad2db4701f4f3a6303285"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/isaaclab-training/instinctlab/training/checkpoint.py",
+      "sha256": "d04f77d3e443ed8466db5dc6f0c05d633fd012b799eedf4d6047d4e395e9b37b"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/isaaclab-training/instinctlab/training/networks.py",
+      "sha256": "4743ede94fc0d6d165693bd854a6b226724f5a4fe0373aeb76f651f34b3e43bc"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/isaaclab-training/instinctlab/training/hover_reflex.py",
+      "sha256": "b89b4357b4ef2c75d39caa40409324b028922bc8ae9307dbbc13e2641413f8d6"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/training_workloads/unified_h1/direct_contract.py",
+      "sha256": "0e51e6ea9d870422c3a729915b49c0b5dc17277ad63f30bd7acb3e1e14e8966b"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-POST-R4-NEXT-LONG-SOURCE-02/training_workloads/unified_h1/robustness_training_plan.py",
+      "sha256": "11596cb63169fbea08a9777f8123fff007ce77100c3a3a470e0f72f915cc2a8b"
+    },
+    {
+      "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/envs/direct_rl_env.py",
+      "sha256": "3a7573303d83ec8c816d11ca6e8c8997c92f6765ae5d2e0d2a369e65d2cec3c0"
+    },
+    {
+      "path": "/home/mint/rl_blackwell_test/repos/IsaacLab/source/isaaclab/isaaclab/utils/seed.py",
+      "sha256": "ee5fc5e55e8c82c93e6766d35f0fe3825d20bc81a1829f7f83a5354a8c422061"
+    }
+  ],
+  "inherited_replay_files": [
+    "tools/r6_direct/cuda_diagnostic.py",
+    "tools/r6_direct/probability_replay.py",
+    "tools/r6_training_probability.py",
+    "tools/r6_evidence.py",
+    "training_workloads/unified_h1/driver.py",
+    "training_workloads/unified_h1/backend.py",
+    "training_workloads/unified_h1/lossless_evidence.py",
+    "training_workloads/unified_h1/pilot_contract.py",
+    "training_workloads/unified_h1/write_boundary.py",
+    "isaaclab-training/instinctlab/training/checkpoint_h1.py",
+    "isaaclab-training/instinctlab/training/checkpoint.py",
+    "isaaclab-training/instinctlab/training/networks.py",
+    "isaaclab-training/instinctlab/training/hover_reflex.py"
+  ],
+  "contract_changes": "The helper reads the new local branch plan, verifies the frozen u768 origin and absolute phase offsets, then runs the inherited retained-input probability replay.",
+  "seeded_reset_path": "UnifiedH1Backend._preserving_reset -> environment.reset(seed) -> DirectRLEnv.seed -> configure_seed(torch_deterministic=False)",
+  "retained_input_order": "Bind rollout distributions, retain the first rollout, check probability, then update the trainer.",
+  "source_implied_backend_flags": {
+    "cudnn.benchmark": true,
+    "cudnn.deterministic": false
+  },
+  "limitation": "The trace supports backend configuration. The diagnostic must still match the recorded 512 samples at the original tolerance on the same device."
+}

@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+import re
 import shutil
 
 from tools.r6_direct.evidence import read, validate_binding
@@ -146,6 +147,20 @@ class NextLongStudy(LongStudy):
 
         self.setup()
         spec = load(spec_path)
+        label = spec['label']
+        if not re.fullmatch(r'(SHORT|FINE)-[A-Z0-9-]+|FORMAL', label):
+            raise ValueError('Use a distinct short, finite or formal training label')
+        added = spec['phases'][-1][1] * 512
+        bounds = ((1, 32768) if label.startswith('SHORT-') else
+                  (32769, 524287) if label.startswith('FINE-') else (524288, float('inf')))
+        if not bounds[0] <= added <= bounds[1]:
+            raise ValueError('Training step budget differs from the registered study scale')
+        if label == 'FORMAL':
+            protocol = read(spec['independent_protocol'])
+            if (protocol['added_updates'] != spec['phases'][-1][1]
+                    or protocol['fixed_endpoint'] != spec['segments'][-1][1]
+                    or not spec['coverage_minimums']):
+                raise ValueError('Freeze the formal endpoint and coverage alongside the independent protocol')
         source = manifest()
         prior = load(PRIOR/'FORMAL-R3/RESULTS.json')
         prior_recipe = read(read(prior['design'])['recipe'])
@@ -154,7 +169,7 @@ class NextLongStudy(LongStudy):
         origin = training_model(old['plan'], old['analysis'], prior['end'], method)
         if origin['update'] != old['plan']['target_update'] or origin['update'] != 768:
             raise ValueError('Branch origin must be the audited R3 terminal checkpoint')
-        self.docs = PROJECT / spec['label']
+        self.docs = PROJECT / label
         self.docs.mkdir(exist_ok=True)
         design_path = self.docs/'DESIGN.json'
         if design_path.exists():
@@ -252,10 +267,117 @@ class NextLongStudy(LongStudy):
                    result_path, self.ledger)
         return result
 
+    def r6(self, assignments, role):
+        reference = assignments['roles'][role]
+        protocol = read(assignments['protocol'])
+        resources = read(assignments['r6_resources'])
+        template = PRIOR / f'R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-{"QUALIFIED" if role == "qualified" else "R3-END"}-contract.json'
+        params = load(template)['parameters']
+        selection = params['evaluation_selection']
+        comparison = read(selection['comparison'])
+        run_id = PREFIX + 'R6-' + role.upper()
+        if role != 'qualified':
+            segment = reference['segment']
+            plan = segment['plan']
+            recipe = read(plan['recipe'])
+            selection.update(checkpoint=reference['checkpoint'], training_plan=plan,
+                             training_analysis=segment['analysis'], method=recipe['method'])
+            comparison.update(candidate_id=recipe['candidate_id'], method=recipe['method'],
+                              hypothesis=recipe['hypothesis'])
+            params['training_seed'] = plan['training_seed']
+            if reference.get('execution_override'):
+                selection['execution_override'] = reference['execution_override']
+        elif selection['checkpoint'] != reference['checkpoint']:
+            raise ValueError('Qualified R6 model differs from the locked assignment')
+        comparison.update(id=run_id, seed=protocol['r6']['perturbation_seed'])
+        comparison_pin = self.write(run_id+'-comparison.json', comparison)
+        selection['comparison'] = comparison_pin
+        params.update(experiment_id=run_id, output_cap_bytes=resources['output_cap_bytes'])
+        params['r6'].update(run_id=run_id, seed=comparison['seed'], output_quotas=resources['output_quotas'])
+        path = self.freeze_input(run_id, 'evaluate', params, Path(comparison_pin['path']))
+        summary_path = PROJECT/f'R6-{role.upper()}.json'
+        if summary_path.exists():
+            return pin(summary_path)
+        result = self.write(summary_path.name, self.evaluate(path))
+        freeze(f'{self.tag_prefix}-r6-{role}-closed', f'Record complete R6 replay for {role}',
+               summary_path, self.ledger)
+        return result
+
+    def final_evaluation(self, protocol_path):
+        from tools.r6_direct.next_long_eval_resources import forecast
+        from tools.r6_direct.post_r4_audit import verify_training
+
+        path = PROJECT/'FORMAL/RESULTS.json'
+        formal = load(path)
+        decision = read(read(formal['design'])['decision'])
+        protocol_pin = pin(protocol_path)
+        protocol = read(protocol_pin)
+        if (decision['independent_protocol'] != protocol_pin
+                or formal['actual_training_transitions'] < 524288
+                or formal['segments'][-1]['plan']['target_update'] != protocol['fixed_endpoint']):
+            raise ValueError('The independent stream requires the full locked formal endpoint')
+        verify_training(formal)
+        prior = load(PRIOR/'FORMAL-R3/RESULTS.json')
+        if prior['end'] != formal['start'] or prior['end'] != protocol['r3']['checkpoint']:
+            raise ValueError('The three required controls do not bind the formal origin')
+        same_execution = formal['execution'] == prior['execution']
+        roles = {
+            'qualified': dict(checkpoint=protocol['qualified'], execution=None),
+            'origin': dict(checkpoint=prior['end'], execution=formal['execution'], segment=prior['segments'][-1]),
+            'end': dict(checkpoint=formal['end'], execution=formal['execution'], segment=formal['segments'][-1]),
+        }
+        if not same_execution:
+            roles['origin']['execution_override'] = formal['execution']
+            roles['prior'] = dict(checkpoint=prior['end'], execution=prior['execution'], segment=prior['segments'][-1])
+        arms = ['qualified', *(['prior'] if not same_execution else []), 'origin', 'end']
+        resources = read(protocol['r6_resources'])
+        assignments_path = PROJECT/'FINAL_ASSIGNMENTS.json'
+        existed = assignments_path.exists()
+        assignments_pin = self.write(assignments_path.name, dict(
+            protocol=protocol_pin, formal=pin(path), r6_resources=protocol['r6_resources'],
+            roles=roles, r6_arm_order=arms, prior_in_origin=same_execution,
+        ))
+        if not existed:
+            guard()
+            freeze(f'{self.tag_prefix}-independent-assignments', 'Lock the formal endpoint and independent evaluation arms',
+                   assignments_path)
+        names = dict(reference='qualified', control='origin', candidate='end')
+        if not same_execution:
+            names['prior'] = 'prior'
+        physical_spec = self.write('HOLDOUT-FINAL-SPEC.json', dict(
+            label='HOLDOUT-FINAL', seed=protocol['physical']['seed'], wall_seconds=1800,
+            models={a: roles[r]['checkpoint'] for a, r in names.items()},
+            arm_options={a: roles[r]['execution'] for a, r in names.items()},
+            assignments=assignments_pin,
+        ))
+        pending_physical = not (PROJECT/'HOLDOUT-FINAL.json').exists()
+        pending_r6 = sum(not (PROJECT/f'R6-{role.upper()}.json').exists() for role in arms)
+        if pending_physical or pending_r6:
+            capacity = forecast(resources, remaining_phases=[
+                dict(name='paired physical', launch_cap_bytes=GIB, retained_bytes=GIB//3),
+            ] if pending_physical else [], remaining_r6_arms=pending_r6)
+            if not capacity['fits']:
+                raise ValueError(f'Independent series exceeds forecast system capacity: {capacity}')
+            if not (PROJECT/'FINAL_RESOURCE_ADMISSION.json').exists():
+                self.write('FINAL_RESOURCE_ADMISSION.json', capacity)
+                freeze(f'{self.tag_prefix}-independent-admission', 'Record measured prior-to-evaluation capacity',
+                       PROJECT/'FINAL_RESOURCE_ADMISSION.json')
+        physical = self.physical(Path(physical_spec['path']))
+        assignments = read(assignments_pin)
+        r6 = {role: self.r6(assignments, role) for role in arms}
+        evaluations_path = PROJECT/'EVALUATIONS.json'
+        existed = evaluations_path.exists()
+        result = self.write(evaluations_path.name, dict(assignments=assignments_pin, physical=physical,
+                                                       r6=r6, ledger=pin(self.ledger)))
+        if not existed:
+            freeze(f'{self.tag_prefix}-independent-closed', 'Record all independent evaluation originals',
+                   evaluations_path, self.ledger)
+        return result
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('operation', choices=('physical', 'prepare-training', 'train'))
+    parser.add_argument('operation', choices=('physical', 'prepare-training', 'train', 'final-evaluation'))
     parser.add_argument('spec', type=Path)
     args = parser.parse_args()
     study = NextLongStudy()
