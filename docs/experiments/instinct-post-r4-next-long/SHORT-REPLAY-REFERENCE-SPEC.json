@@ -1,0 +1,48 @@
+{
+  "label": "SHORT-REPLAY-REFERENCE",
+  "candidate_id": "R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25-REPLAY-REFERENCE",
+  "training_seed": 1270871049,
+  "tube_drive_steps": 100,
+  "phases": [
+    [
+      "robust",
+      16
+    ],
+    [
+      "original",
+      64
+    ]
+  ],
+  "checkpoint_offsets": [
+    32,
+    64
+  ],
+  "segments": [
+    [
+      768,
+      832,
+      2700
+    ]
+  ],
+  "payload_gib": 4,
+  "hypothesis": "Reference actions on matching ordinary observations can retain background velocity command response and calm hover while leaving the single-pass target phase free to learn.",
+  "comparison": "Same u768, seed, single-pass curriculum, exact budget and execution versus the retained FINE-SINGLE-PASS +64 and origin on common development episodes.",
+  "development_evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/REPLAY-REFERENCE-DESIGN.md",
+      "sha256": "701b57419413da7e981209a032ddff6768b4d32dcd0756217551165afba9c288"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/CHECK-REPLAY-GAIN.json",
+      "sha256": "1640cdeb54bdfa571508bfa8ac1fa36f9b9a198c9c382f93aa2fd1def468cc57"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/REPLAY-GAIN-TRAINING.json",
+      "sha256": "22da22bc36b0f8ecc87d429ebe799dbff1842a0cea39b79cc534bcf2e3bc4547"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/FINE-SINGLE-PASS/RESULTS.json",
+      "sha256": "b557ee0af57c38b5816df7d3d0d2e6bf89ef54b75371e28b17e6de50b68213ff"
+    }
+  ]
+}

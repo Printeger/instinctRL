@@ -14,6 +14,7 @@ TRAVEL_GAIN_WEIGHT = 1.
 TRAVEL_CLEARANCE_M = 1.9
 REPLAY_TRAVEL_GAIN_TARGET = .855
 REPLAY_TRAVEL_GAIN_WEIGHT = 16.
+REFERENCE_ACTION_WEIGHT = 32.
 
 
 def choose_velocity(command, velocity, relative, object_velocity, active):
@@ -99,7 +100,7 @@ def clear_travel(policy, rays, approaching):
 
 
 def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=None,
-                  preserve_replay_travel=False):
+                  preserve_replay_travel=False, replay_reference=None):
     if preserve_replay_travel and reflex is None:
         raise ValueError('Replay travel requires the measured ray calibration')
     if reflex is not None:
@@ -126,6 +127,16 @@ def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=
                 approaching = plausible_approach(policy, period_s=period_s)
                 prior = prior + travel_prior(policy, output, approaching,
                                              REPLAY_TRAVEL_GAIN_TARGET, REPLAY_TRAVEL_GAIN_WEIGHT)
+            if replay_reference is not None:
+                with torch.no_grad():
+                    reference = replay_reference(policy).mean_action
+                difference = output.mean_action - reference
+                loss = REFERENCE_ACTION_WEIGHT * (
+                    difference[:, 0].square() + (difference[:, 1:] / .1).square().sum(dim=1)
+                ).mean()
+                gated.last_metrics['reference_action_examples'] = len(reference)
+                gated.last_metrics['reference_action_loss'] = float(loss.detach().item())
+                prior = prior + loss
             return prior
         if reflex is None:
             approaching = plausible_approach(policy, period_s=period_s)
@@ -163,4 +174,7 @@ def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=
     if preserve_replay_travel:
         binding['original_replay_clear_travel_gain'] = dict(minimum_target=REPLAY_TRAVEL_GAIN_TARGET,
             weight=REPLAY_TRAVEL_GAIN_WEIGHT, cone_clearance_m=TRAVEL_CLEARANCE_M)
+    if replay_reference is not None:
+        binding['original_replay_reference_action'] = dict(weight=REFERENCE_ACTION_WEIGHT,
+            auxiliary_target_only=True, residual_normalization=.1)
     return binding

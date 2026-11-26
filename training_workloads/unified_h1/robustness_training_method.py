@@ -22,6 +22,7 @@ ESCAPE_REDIRECT_25_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-REDIRECT-P25'
 ESCAPE_FALLBACK_25_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25'
 ESCAPE_SINGLE_PASS_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25-SINGLE-PASS'
 ESCAPE_REPLAY_GAIN_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25-REPLAY-GAIN'
+ESCAPE_REPLAY_REFERENCE_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25-REPLAY-REFERENCE'
 
 
 def action_option_version(candidate):
@@ -39,12 +40,14 @@ def action_option_version(candidate):
             ESCAPE_REDIRECT_25_CANDIDATE: REDIRECT_25_VERSION,
             ESCAPE_FALLBACK_25_CANDIDATE: FALLBACK_25_VERSION,
             ESCAPE_SINGLE_PASS_CANDIDATE: FALLBACK_25_VERSION,
-            ESCAPE_REPLAY_GAIN_CANDIDATE: FALLBACK_25_VERSION}.get(candidate)
+            ESCAPE_REPLAY_GAIN_CANDIDATE: FALLBACK_25_VERSION,
+            ESCAPE_REPLAY_REFERENCE_CANDIDATE: FALLBACK_25_VERSION}.get(candidate)
 
 
 RECOVERY_CANDIDATES = (ESCAPE_RECOVERY_CANDIDATE, ESCAPE_LATERAL_CANDIDATE, ESCAPE_FAST_LATERAL_CANDIDATE,
                        ESCAPE_MOUNT_25_CANDIDATE, ESCAPE_MOUNT_28_CANDIDATE, ESCAPE_REDIRECT_25_CANDIDATE,
-                       ESCAPE_FALLBACK_25_CANDIDATE, ESCAPE_SINGLE_PASS_CANDIDATE, ESCAPE_REPLAY_GAIN_CANDIDATE)
+                       ESCAPE_FALLBACK_25_CANDIDATE, ESCAPE_SINGLE_PASS_CANDIDATE, ESCAPE_REPLAY_GAIN_CANDIDATE,
+                       ESCAPE_REPLAY_REFERENCE_CANDIDATE)
 
 
 def require(value,reason):
@@ -205,11 +208,24 @@ def restore_and_bind(backend,*,plan,execution_identity):
             env._h1_dynamic_reward = trainer._r6_bound_dynamic_reward = dynamic_motion_training.amend_reward
             binding['dynamic_reward'] = dict(target='forecast local separation and command deviation',
                                              scope='reward only, physical robust phase')
+            reference = None
+            if recipe['candidate_id'] == ESCAPE_REPLAY_REFERENCE_CANDIDATE:
+                reference_pin = recipe['branch_origin']['checkpoint']
+                saved_reference = torch.load(validate_pin(reference_pin), map_location='cpu', weights_only=True)
+                cpu_rng = torch.get_rng_state().clone()
+                try:
+                    reference = checkpoint_actor(saved_reference)
+                    reference.load_state_dict(saved_reference['actor'], strict=True)
+                    reference.to(device).eval().requires_grad_(False)
+                finally:
+                    torch.set_rng_state(cpu_rng)
+                binding['replay_reference_checkpoint'] = reference_pin
             binding['dynamic_hover_prior'] = dynamic_motion_training.install_prior(
                 trainer, weight=method['mean_prior_weight'], period_s=float(env.cfg.sim.dt) * env.cfg.decimation,
                 dynamic_block=lambda: obstacle.enabled, reflex=reflex,
                 ics=env._control_pipelines[0].config.ics,
-                preserve_replay_travel=recipe['candidate_id'] == ESCAPE_REPLAY_GAIN_CANDIDATE)
+                preserve_replay_travel=recipe['candidate_id'] == ESCAPE_REPLAY_GAIN_CANDIDATE,
+                replay_reference=reference)
             trainer._r6_bound_auxiliary = trainer.actor_auxiliary
     except BaseException:
         torch.set_rng_state(before['cpu']);random.setstate(before['python']);np.random.set_state(before['numpy'])
