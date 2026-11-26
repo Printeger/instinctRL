@@ -1,6 +1,10 @@
 # 接续 u1792 开发与长训发车状态
 
-`instinctrl-post-u1792-two-long` 已恢复开发，新增正式长训 **0/2**。当前正式仿真基线为已验收的 `u1792`、25° LiDAR 和原后向备选执行。 [开发与验收计划](PLAN.md) · [上一轮验收](../instinct-post-r4-next-long/REPORT.md)
+`instinctrl-post-u1792-two-long` 的两条正式训练链均已完成，验收计数等待独评。正式仿真基线为上次验收的 `u1792`、25° LiDAR 和原后向备选执行。 [开发与验收计划](PLAN.md) · [上一轮验收](../instinct-post-r4-next-long/REPORT.md)
+
+## 正式训练完成，独评运行中
+
+采用已验证的首拍选宽侧与参考在线方案，两个全新种子各由 `u1792` 严格从 `u2304` 恢复至 `u2816`。每条新增 1,024 次更新和 524,288 个实际训练步，两段之间 RNG 逐字节一致。四段均封存首批同设备概率复算、优化器及实际覆盖。A、B 两终点先冻结，再启动共享物理与五臂完整 R6。 [正式方案](study/FORMAL-RETENTION-DESIGN.md) · [A 轮](study/FORMAL-A/RESULTS.json) · [B 轮](study/FORMAL-B/RESULTS.json) · [终点及独评绑定](study/FINAL_ASSIGNMENTS.json)
 
 ## 恢复开发
 
