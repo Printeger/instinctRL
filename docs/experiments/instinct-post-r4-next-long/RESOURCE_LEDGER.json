@@ -1204,6 +1204,47 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-RETRY-01-U1280/native"
       },
       "storage_reservation_id": "ROUND-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 3371008,
+      "diagnostic_wall_seconds": 64.01000271225348,
+      "id": "R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-RETRY-01-U1280-DIAGNOSTIC",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-RETRY-01-U1280-DIAGNOSTIC/control/receipt.json",
+        "sha256": "c076c532339b256e2e539a6dabf1c3acf4bc4446fe3391fd17c627bc3c534bb2"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/RESOURCE_POLICY.json",
+        "sha256": "7c828dfbb60e551e58cdacd13e2f0ddfd721b71a9b1b920b151003be3d455edb"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 65,
+        "live_starts": 1,
+        "live_wall_seconds": 65,
+        "output_actual_plus_unreleased_reservations_bytes": 3371008,
+        "queue_seconds": 180
+      },
+      "settlement": {
+        "charged_seconds": 65,
+        "original_resources": {
+          "allocated_gpu_seconds": 390,
+          "live_starts": 1,
+          "live_wall_seconds": 390,
+          "output_actual_plus_unreleased_reservations_bytes": 268435456,
+          "queue_seconds": 180
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-RETRY-01-U1280-DIAGNOSTIC/control/receipt.json",
+          "sha256": "c076c532339b256e2e539a6dabf1c3acf4bc4446fe3391fd17c627bc3c534bb2"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-RETRY-01-U1280-DIAGNOSTIC",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-RETRY-01-U1280-DIAGNOSTIC/native"
+      }
     }
   ],
   "new_used": {
