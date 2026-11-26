@@ -1,0 +1,19 @@
+{
+  "label": "MECHANISM-01",
+  "seed": 1843096976,
+  "models": {
+    "reference": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-FORMAL-R3-U768/results/research-r6-training/checkpoints/u768.pt",
+      "sha256": "a5b5c66ce2832a49b15fc5caad5fc2c0e8f192f704415ad881621fad266359e3"
+    },
+    "candidate": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-FORMAL-R3-U768/results/research-r6-training/checkpoints/u768.pt",
+      "sha256": "a5b5c66ce2832a49b15fc5caad5fc2c0e8f192f704415ad881621fad266359e3"
+    }
+  },
+  "arm_options": {
+    "reference": "m4-escape-redirect-p25-v1",
+    "candidate": "m4-escape-fallback-p25-v1"
+  },
+  "wall_seconds": 1800
+}
