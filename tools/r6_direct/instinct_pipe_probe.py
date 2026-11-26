@@ -28,6 +28,7 @@ class PipeProbe(LongStudy):
         self.docs = PROJECT
         self.ledger = PROJECT/'RESOURCE_LEDGER.json'
         self.snapshot = SNAPSHOT
+        self.eval = PIPE_PROBE_RUN
         if SNAPSHOT == ROOT:
             raise ValueError('Run the probe from a committed detached snapshot')
 

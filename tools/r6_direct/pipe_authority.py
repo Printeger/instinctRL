@@ -68,7 +68,9 @@ def audit(result_pin):
     model = summary['models']['candidate']
     torch.set_num_threads(2)
     rays = torch.from_numpy(np.fromfile(checked(model['lidar_mount']['body_rays']),dtype='<f4').reshape(-1,3))
-    config = summary['pipe_control_config']
+    original_path = str(ctx['output']/'dynamic_results.json')
+    original, = (entry for entry in report['inputs'] if entry['path']==original_path)
+    config = read({k:original[k] for k in ('path','sha256')})['pipe_control_config']
     governor, ics = GovernorConfig(**config['governor']), ICSConfig(**config['ics'])
     if ics.range_rate_filter:
         raise ValueError('Latest-only archives cannot reconstruct a rate-filtered guard')
