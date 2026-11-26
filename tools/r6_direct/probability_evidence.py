@@ -27,6 +27,11 @@ _U1792_CLEARANCE_SOURCE = dict(path=str(_U1792_DOCS/'probability-clearance-helpe
     sha256='008d0949464b2f13b86616f94218c19c27b71a3bb5a6ccd0c766a1a7a3b9f914')
 _U1792_CLEARANCE_TRACE = dict(path=str(_U1792_DOCS/'PROBABILITY_CLEARANCE_SOURCE_TRACE.json'),
     sha256='f1b614c41226058a3cfc8c9953a7e25c1130d0ca3b747d3a7f349a613dfe973f')
+_FRONT_SNAPSHOT = Path('/home/mint/instinctrl-runs/INSTINCT-POST-U1792-TWO-LONG-SOURCE-16')
+_FRONT_SOURCE = dict(path=str(_U1792_DOCS/'study-front/probability-helper-source.json'),
+    sha256='69d7946836ded95463970bd5ec734552e8e05172a20cc596ee43955347dd2900')
+_FRONT_TRACE = dict(path=str(_U1792_DOCS/'study-front/PROBABILITY_SOURCE_TRACE.json'),
+    sha256='2c833df3ed7b85704bba0dc20de5d5c54b405b1f8b64e7c0f75c50d429166cf8')
 _SCRIPT = 'tools/r6_direct/cuda_diagnostic.py'
 
 
@@ -45,8 +50,10 @@ def _helper(snapshot, source, trace):
 
 
 def audited_helper(run_id):
-    from training_workloads.unified_h1.dynamic_assay import NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
+    from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
 
+    if run_id.startswith(FRONT_STUDY_PREFIX):
+        return _helper(_FRONT_SNAPSHOT, _FRONT_SOURCE, _FRONT_TRACE)
     continuation = run_id.removeprefix(U1792_STUDY_PREFIX)
     if continuation != run_id and continuation.startswith(('SHORT-CLEARANCE-', 'FINE-CLEARANCE-', 'FORMAL-')):
         return _helper(_U1792_CLEARANCE_SNAPSHOT, _U1792_CLEARANCE_SOURCE, _U1792_CLEARANCE_TRACE)
