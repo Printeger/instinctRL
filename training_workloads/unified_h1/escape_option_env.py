@@ -86,6 +86,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             if isinstance(self.escape_option, EscapeRecovery):
                 self.extras['pre_reset']['escape_option']['recovery'] = self.escape_option.recovering.detach().clone()
                 self.extras['pre_reset']['escape_option']['redirected'] = self.escape_option.redirected.detach().clone()
+                if getattr(self, 'mirrored_pipe_pairs', False):
+                    self.extras['pre_reset']['escape_option']['retreat_basis'] = self.escape_option.retreat_basis.detach().clone()
         return reward
 
     def _reset_idx(self, env_ids):
@@ -98,15 +100,17 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
 
 
 class EscapeHoldoutEnv(EscapeOptionEnv):
-    def __init__(self, cfg, *, layout_seed):
+    def __init__(self, cfg, *, layout_seed, mirrored_pipe_pairs=False):
         self.layout_seed = layout_seed
+        self.mirrored_pipe_pairs = mirrored_pipe_pairs
         super().__init__(cfg)
 
     def _setup_scene(self):
         from .escape_holdout_scene import scene_geometry
 
         super()._setup_scene()
-        self._replace_mesh(scene_geometry(self.scene.env_origins.detach().cpu(), self.layout_seed))
+        self._replace_mesh(scene_geometry(self.scene.env_origins.detach().cpu(), self.layout_seed,
+                                          mirrored_pipe_pairs=self.mirrored_pipe_pairs))
 
     def _replace_mesh(self, geometry):
         from instinctlab.envs.unified_h1_direct_env import _define_triangle_mesh

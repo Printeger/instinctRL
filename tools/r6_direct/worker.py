@@ -167,6 +167,7 @@ def run(plan, input_pin):
             JournaledRuntimeResourceGuard, RuntimeResourceGuard, validate_graceful_shutdown_configuration,
         )
         from training_workloads.unified_h1.dynamic_assay import NEXT_LONG_PREFIX
+        from training_workloads.unified_h1.pipe_authority_probe import PIPE_PROBE_RUN
         validate_graceful_shutdown_configuration(app,resource_pins=pins)
         import carb.settings
         actual=carb.settings.get_settings()
@@ -176,7 +177,8 @@ def run(plan, input_pin):
             import carb.tokens
             from tools.r6_direct.render import validate_cache_tokens
             validate_cache_tokens(settings_map,carb.tokens.get_tokens_interface())
-        journaled = plan['run_id'].startswith(NEXT_LONG_PREFIX)
+        pipe_probe = plan['run_id'] == PIPE_PROBE_RUN
+        journaled = plan['run_id'].startswith(NEXT_LONG_PREFIX) or pipe_probe
 
         class Guard(JournaledRuntimeResourceGuard if journaled else RuntimeResourceGuard):
             def check(self,**kw):
@@ -223,7 +225,7 @@ def run(plan, input_pin):
             recovery_training = operation == 'train' and recipe['candidate_id'] in RECOVERY_CANDIDATES
             if holdout:
                 from training_workloads.unified_h1.escape_option_env import EscapeHoldoutEnv
-                env = EscapeHoldoutEnv(cfg, layout_seed=params['seed'])
+                env = EscapeHoldoutEnv(cfg, layout_seed=params['seed'], mirrored_pipe_pairs=pipe_probe)
             elif recovery_training:
                 from training_workloads.unified_h1.escape_option_env import EscapeRecoveryTrainingEnv
                 env = EscapeRecoveryTrainingEnv(cfg)

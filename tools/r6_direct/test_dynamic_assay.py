@@ -1,9 +1,39 @@
 from types import SimpleNamespace
 
 import torch
+import pytest
 
 from instinctlab.observations.moving_sphere import MAX_SPEED_M_S, PARK_HEIGHT_M, MovingSphere, sphere_range, trajectories
 from training_workloads.unified_h1.dynamic_assay import LANES, contract, score, visibility_reset
+
+
+def test_pipe_probe_freezes_one_origin_and_three_paired_physical_modes(tmp_path, monkeypatch):
+    from instinctlab.control.escape_recovery import FALLBACK_25_VERSION
+    from tools.r6_evidence import file_pin
+    from training_workloads.unified_h1 import robustness_training_plan as plans
+    from training_workloads.unified_h1.dynamic_assay import groups_for
+    from training_workloads.unified_h1.pipe_authority_probe import PIPE_PROBE_RUN, mirror_reset
+    from training_workloads.unified_h1.robustness_scenarios import reset_spec
+
+    checkpoint = tmp_path/'u1792.pt'
+    checkpoint.write_bytes(b'fixture')
+    origin = file_pin(checkpoint)
+    monkeypatch.setattr(plans,'U1792_CHECKPOINT_SHA',origin['sha256'])
+    inputs = dict(experiment_id=PIPE_PROBE_RUN,training_seed=20260908,seed=31,wall_seconds=900,
+                  models={'candidate':origin},arm_options={'candidate':FALLBACK_25_VERSION},output_cap_bytes=2**30)
+    result = contract(inputs)
+    assert result['budgets']['nontraining_transitions'] == 11520
+    assert result['budgets']['explicit_resets'] == 3
+    assert [group[-1] for group in groups_for(PIPE_PROBE_RUN)] == [0,9,7]
+    with pytest.raises(ValueError,match='FIXED_ORIGIN'):
+        contract(dict(inputs,arm_options={'candidate':None}))
+    spec = dict(id='pipe-test',task='stop',speed_m_s=.25,steps=120)
+    left,right = (reset_spec(spec,seed=31,split='development',lane=lane,mount_position_m=(.02,0.,.05))
+                  for lane in (24,25))
+    mirrored = mirror_reset(left,right)
+    assert mirrored['lane'] == 25 and mirrored['yaw_degrees'] == -left['yaw_degrees']
+    x,y,z = left['root_position_local_m']
+    assert mirrored['root_position_local_m'] == [x,-y,z]
 
 
 def test_rays_choose_a_physical_near_surface_and_preserve_misses():

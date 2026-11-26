@@ -6,6 +6,7 @@ import re
 from statistics import mean
 
 from tools.r6_evidence import checked, file_pin
+from . import pipe_authority_probe
 
 
 MODE = 'research-r6-dynamic-assay'
@@ -37,6 +38,8 @@ MODES = ('approach', 'recede', 'cross_left', 'cross_right',
 
 
 def three_case(run_id):
+    if run_id == pipe_authority_probe.PIPE_PROBE_RUN:
+        return 'PIPE-AUTHORITY'
     match = re.fullmatch(THREE_PREFIX + r'(REAR|MECHANISM|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
     if match is None:
         match = re.fullmatch(NEXT_LONG_PREFIX + r'(REARPAIR|MECHANISM|CROSSCHECK|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
@@ -49,6 +52,8 @@ def physical_layout(run_id):
 
 def groups_for(run_id):
     case = three_case(run_id)
+    if case == 'PIPE-AUTHORITY':
+        return tuple(HOLDOUT_GROUPS[i] for i in (1, 5, 4))
     if case in ('REAR', 'REARPAIR'):
         return (HOLDOUT_GROUPS[-1],)
     if case == 'MECHANISM' and run_id.startswith(NEXT_LONG_PREFIX):
@@ -89,6 +94,8 @@ def contract(params):
     allowed_models = {'candidate', 'control', 'reference'} if three_arms else {'candidate', 'reference'}
     if case in ('HOLDOUT', 'MECHANISM', 'CROSSCHECK', 'CHECK'):
         allowed_models.add('control')
+    if case == 'PIPE-AUTHORITY':
+        allowed_models = {'candidate'}
     if next_long and case == 'HOLDOUT':
         allowed_models.add('prior')
     if case == 'REAR':
@@ -120,6 +127,11 @@ def contract(params):
             raise ValueError('DYNAMIC_REAR_FACTORIAL')
         if case == 'CHECK' and (options['candidate'] is None or len(set(options.values())) != 1):
             raise ValueError('DYNAMIC_THREE_CHECK_EXECUTION')
+        if case == 'PIPE-AUTHORITY':
+            from .robustness_training_plan import U1792_CHECKPOINT_SHA
+
+            if options['candidate'] != FALLBACK_25_VERSION or models['candidate']['sha256'] != U1792_CHECKPOINT_SHA:
+                raise ValueError('DYNAMIC_PIPE_AUTHORITY_FIXED_ORIGIN')
         if case == 'CROSSCHECK' and (
                 models['candidate'] != models['control'] or models['reference'] == models['control']
                 or options != dict(candidate=FRONT_SWITCH_25_VERSION, control=FALLBACK_25_VERSION,
@@ -252,6 +264,8 @@ def run(backend, params):
     recovery_assay = run_id.startswith(RECOVERY_PREFIX)
     mount_assay = any(version in MOUNT_PITCH_DEGREES for version in params.get('arm_options', {}).values())
     option = holdout or params['experiment_id'] == OPTION_RUN
+    pipe_probe = three == 'PIPE-AUTHORITY'
+    approved_frames = pipe_authority_probe.open_pool(backend.output) if pipe_probe else None
     split = 'heldout' if three == 'HOLDOUT' or run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT) else 'development'
     cue = (HoverReflex(device=device, dtype=torch.float32)
            if persistence or option or params['experiment_id'].startswith('R6-DIRECT-INSTINCT-GPU-R3-') else None)
@@ -314,6 +328,10 @@ def run(backend, params):
                     wall = dict(block, task='wall_modes', sensor_to_wall_distance_m=1.40)
                     specs[lane] = reset_spec(wall, seed=seed, split=split if three else 'development', lane=lane,
                                             mount_position_m=env.cfg.ray_caster.offset.pos)
+            if pipe_probe:
+                for lane in range(25, 32, 2):
+                    specs[lane] = pipe_authority_probe.mirror_reset(specs[lane-1], specs[lane])
+                approved = approved_frames.open(pipe_authority_probe.frame_name(index))
             axis_angle = torch.arange(LANES,device=device).remainder(8)*math.pi/4
             axis = torch.stack((axis_angle.cos(),axis_angle.sin(),torch.zeros_like(axis_angle)),dim=1)
             mode_tensor = torch.tensor(modes,device=device)
@@ -358,6 +376,8 @@ def run(backend, params):
                 attitude = env._robot.data.root_state_w[:,3:7]
                 body = rotate_world_to_body_wxyz(attitude,command)
                 policy = observation['policy']
+                if pipe_probe:
+                    pipe_authority_probe.capture(approved, policy)
                 if not torch.allclose(policy['state_vec'][:,45:48],body,atol=1e-6,rtol=0):
                     raise RuntimeError('DYNAMIC_ASSAY_COMMAND_HISTORY')
                 before = obstacle.latest
@@ -429,6 +449,8 @@ def run(backend, params):
                 if three:
                     rows[-1]['mover_witness_delivered'] = delivered
                     rows[-1]['sensor_split'] = split
+                if pipe_probe:
+                    rows[-1]['pipe_retreat_basis_b'] = record['escape_option']['retreat_basis'][24:].cpu().tolist()
             if hook is not None:
                 hook.remove()
             env.finish_r6_physics()
@@ -441,10 +463,21 @@ def run(backend, params):
                     reserve_output_bytes(trace_file,len(data))
                     stream.write(data)
             cohort.append(dict(trace=file_pin(trace_file), lanes=score(rows), transitions=STEPS*LANES))
+            if pipe_probe:
+                approved.close()
+                cohort[-1]['approved_frames'] = file_pin(approved.path)
         results[label] = dict(checkpoint=checkpoint, groups=cohort)
         if mount_record is not None:
             results[label]['lidar_mount'] = mount_record
-    atomic_json_replace(backend.output,'dynamic_results.json', dict(models=results, counters=counters.snapshot()))
+    if pipe_probe:
+        approved_frames.close()
+    summary = dict(models=results, counters=counters.snapshot())
+    if pipe_probe:
+        from dataclasses import asdict
+
+        config = env._control_pipelines[24].config
+        summary['pipe_control_config'] = dict(governor=asdict(config.governor), ics=asdict(config.ics))
+    atomic_json_replace(backend.output,'dynamic_results.json', summary)
     return results
 
 
@@ -482,6 +515,13 @@ def audit(output, params, counters):
             if trace != Path(output) / f'{name}-group-{index}.jsonl':
                 raise ValueError('DYNAMIC_ASSAY_TRACE_PATH')
             sources.append(file_pin(trace))
+            if three == 'PIPE-AUTHORITY':
+                approved = checked(group['approved_frames'])
+                if approved != Path(output)/'approved_measurements'/f'{pipe_authority_probe.frame_name(index)}.r6z':
+                    raise ValueError('DYNAMIC_PIPE_AUTHORITY_FRAME_PATH')
+                if sum(1 for _ in pipe_authority_probe.replay_frames(group['approved_frames'], index)) != STEPS:
+                    raise ValueError('DYNAMIC_PIPE_AUTHORITY_FRAME_COUNT')
+                sources.append(group['approved_frames'])
             rows = [json.loads(line) for line in trace.read_text().splitlines()]
             if [r['step'] for r in rows] != list(range(STEPS)) or score(rows) != group['lanes']:
                 raise ValueError('DYNAMIC_ASSAY_SCORER_REPLAY')

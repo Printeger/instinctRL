@@ -7,10 +7,11 @@ import random
 LAYOUTS = ('room_door', 'trunk_aisle', 'street_gap', 'open_tube')
 
 
-def scene_geometry(origins, seed):
+def scene_geometry(origins, seed, *, mirrored_pipe_pairs=False):
     """Construct matching sensed and collision geometry in each lane."""
     points, faces, solids, solid_faces = [], [], [], []
     rng = random.Random(seed)
+    pipe_radius = None
     for lane, origin in enumerate(origins.tolist()):
         layout = LAYOUTS[lane // 8]
 
@@ -52,6 +53,9 @@ def scene_geometry(origins, seed):
                 building(x0, x1, -half-2., -half)
         else:
             radius = rng.uniform(1.35, 1.56)
+            if mirrored_pipe_pairs and lane % 2:
+                radius = pipe_radius
+            pipe_radius = radius
             ring = [(radius*math.cos(j*math.tau/16), 2.+radius*math.sin(j*math.tau/16)) for j in range(16)]
             for (y, z), (yy, zz) in zip(ring, ring[1:] + ring[:1]):
                 face(((-42., y, z), (42., y, z), (42., yy, zz), (-42., yy, zz)))
