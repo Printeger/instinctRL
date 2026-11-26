@@ -63,18 +63,25 @@ def rear_pair(binding):
 
 class NextLongStudy(LongStudy):
     tag_prefix = 'instinct-post-r4-next-long'
+    project = PROJECT
+    run_prefix = PREFIX
+    resource_schema = NEXT_LONG_SCHEMA
+    origin_result = PRIOR/'FORMAL-R3/RESULTS.json'
+    origin_update = 768
+    branch_kind = 'LOCAL_U768_NEW_STREAM'
+    training_labels = r'(SHORT|FINE)-[A-Z0-9-]+|FORMAL(?:-RETRY-[0-9]{2})?'
 
     def __init__(self):
-        self.docs = PROJECT
-        self.ledger = PROJECT / 'RESOURCE_LEDGER.json'
+        self.docs = self.project
+        self.ledger = self.project / 'RESOURCE_LEDGER.json'
         self.snapshot = SNAPSHOT
-        self.eval = PREFIX + 'R6-END'
+        self.eval = self.run_prefix + 'R6-END'
         if self.snapshot == ROOT:
             raise ValueError('Use a committed detached execution snapshot')
 
     def setup(self):
         guard()
-        policy_path = PROJECT / 'RESOURCE_POLICY.json'
+        policy_path = self.project / 'RESOURCE_POLICY.json'
         if policy_path.exists():
             return pin(policy_path)
         free = shutil.disk_usage(SYSTEM_ROOT).free
@@ -84,8 +91,8 @@ class NextLongStudy(LongStudy):
                     live_starts=120, simulator_initializations=96, training_transitions=3000000,
                     nontraining_transitions=3500000, training_checkpoint_writes=192,
                     major_scientific_candidates=32, **{OUTPUT_CAP: free - SYSTEM_FLOOR})
-        policy = self.write(policy_path.name, dict(schema_version=NEXT_LONG_SCHEMA,
-                            user_authority=pin(PROJECT/'PLAN.md'), caps=caps, elapsed_seconds=604800))
+        policy = self.write(policy_path.name, dict(schema_version=self.resource_schema,
+                            user_authority=pin(self.project/'PLAN.md'), caps=caps, elapsed_seconds=604800))
         storage = self.write('STORAGE.json', dict(schema_version=SYSTEM_STORAGE_SCHEMA,
                              root=str(SYSTEM_ROOT), new_volume_allocation_bytes=0))
         zero = dict.fromkeys(THIRD_CAPS, 0)
@@ -98,7 +105,7 @@ class NextLongStudy(LongStudy):
         return policy
 
     def predecessor(self):
-        prior = [row['id'] for row in load(self.ledger)['new_reservations'] if row['id'].startswith(PREFIX)]
+        prior = [row['id'] for row in load(self.ledger)['new_reservations'] if row['id'].startswith(self.run_prefix)]
         if prior:
             return self.settle(prior[-1])
         return load(PRIOR/'r3-end.json')['predecessor']
@@ -116,9 +123,9 @@ class NextLongStudy(LongStudy):
         source_pin = self.write(f'source-{source["source_commit"][:12]}.json', source)
         contract = self.write(f'{run_id}-contract.json', build('contract', dict(operation=operation, parameters=params)))
         self.input(run_id, contract, self.predecessor(), snapshot=self.snapshot, source=source_pin,
-                   resource_policy=pin(PROJECT/'RESOURCE_POLICY.json'),
+                   resource_policy=pin(self.project/'RESOURCE_POLICY.json'),
                    result_payload_cap_bytes=result_payload_cap_bytes)
-        label = run_id.removeprefix(PREFIX).lower()
+        label = run_id.removeprefix(self.run_prefix).lower()
         freeze(f'{self.tag_prefix}-{label}-inputs', f'Freeze {run_id} input',
                path, Path(contract['path']), Path(source_pin['path']), self.ledger, *extra)
         return path
@@ -129,7 +136,7 @@ class NextLongStudy(LongStudy):
         self.setup()
         spec = load(spec_path)
         label = spec['label']
-        run_id = PREFIX + label
+        run_id = self.run_prefix + label
         params = dict(experiment_id=run_id, training_seed=20260908, seed=spec['seed'],
                       models=spec['models'], arm_options=spec['arm_options'],
                       wall_seconds=spec['wall_seconds'], output_cap_bytes=GIB)
@@ -151,7 +158,7 @@ class NextLongStudy(LongStudy):
         self.setup()
         spec = load(spec_path)
         label = spec['label']
-        if not re.fullmatch(r'(SHORT|FINE)-[A-Z0-9-]+|FORMAL(?:-RETRY-[0-9]{2})?', label):
+        if not re.fullmatch(self.training_labels, label):
             raise ValueError('Use a distinct short, finite or formal training label')
         added = spec['phases'][-1][1] * 512
         bounds = ((1, 32768) if label.startswith('SHORT-') else
@@ -165,7 +172,7 @@ class NextLongStudy(LongStudy):
                     or protocol['fixed_endpoint'] != spec['segments'][-1][1]
                     or not spec['coverage_minimums']):
                 raise ValueError('Freeze the formal endpoint and coverage alongside the independent protocol')
-            if label != 'FORMAL':
+            if label.startswith('FORMAL-RETRY-'):
                 recovery.append(spec['recovery'])
                 repair = read(spec['recovery'])
                 original = read(repair['original_spec'])
@@ -175,14 +182,14 @@ class NextLongStudy(LongStudy):
                         or not repair['forecast']['fits']):
                     raise ValueError('Formal reissue must preserve the original scientific specification')
         source = execution_manifest()
-        prior = load(PRIOR/'FORMAL-R3/RESULTS.json')
+        prior = load(self.origin_result)
         prior_recipe = read(read(prior['design'])['recipe'])
         old = prior['segments'][-1]
         method = read(prior_recipe['method'])
         origin = training_model(old['plan'], old['analysis'], prior['end'], method)
-        if origin['update'] != old['plan']['target_update'] or origin['update'] != 768:
-            raise ValueError('Branch origin must be the audited R3 terminal checkpoint')
-        self.docs = PROJECT / label
+        if origin['update'] != old['plan']['target_update'] or origin['update'] != self.origin_update:
+            raise ValueError('Branch origin must be the audited terminal checkpoint')
+        self.docs = self.project / label
         self.docs.mkdir(exist_ok=True)
         design_path = self.docs/'DESIGN.json'
         if design_path.exists():
@@ -210,8 +217,8 @@ class NextLongStudy(LongStudy):
                       branch_origin={k: origin[k] for k in ('checkpoint', 'update', 'training_seed')})
         validate_recipe(recipe)
         recipe_pin = self.write('recipe.json', recipe)
-        source_pin = save(PROJECT/f'source-{source["source_commit"][:12]}.json', source)
-        initial = dict(kind='LOCAL_U768_NEW_STREAM',
+        source_pin = save(self.project/f'source-{source["source_commit"][:12]}.json', source)
+        initial = dict(kind=self.branch_kind,
                        **{k: origin[k] for k in ('checkpoint', 'source_identity', 'method_hashes')})
         storage = read(prior['design'])['storage']
         storage.update(payload_bytes=spec['payload_gib']*GIB, compressed_bytes=(spec['payload_gib']-1)*GIB)
@@ -229,7 +236,7 @@ class NextLongStudy(LongStudy):
 
         self.docs = design_path.parent
         self.tag_prefix += '-' + self.docs.name.lower()
-        if self.docs.parent != PROJECT:
+        if self.docs.parent != self.project:
             raise ValueError('Use the study training directory')
         design = load(design_path)
         source = read(design['source'])
@@ -247,7 +254,7 @@ class NextLongStudy(LongStudy):
         rows = []
         coverage = []
         for start, target, wall in segments:
-            run_id = f'{PREFIX}{self.docs.name}-U{target}'
+            run_id = f'{self.run_prefix}{self.docs.name}-U{target}'
             plan = dict(schema_version='r6-local-training-plan/1', experiment_id=run_id, phase='development',
                         recipe=design['recipe'], selection_freeze=None, training_seed=design['training_seed'],
                         start_update=start, target_update=target, wall_seconds=wall, initialization=initial,
@@ -288,7 +295,7 @@ class NextLongStudy(LongStudy):
         params = load(template)['parameters']
         selection = params['evaluation_selection']
         comparison = read(selection['comparison'])
-        run_id = PREFIX + 'R6-' + role.upper()
+        run_id = self.run_prefix + 'R6-' + role.upper()
         if role != 'qualified':
             segment = reference['segment']
             plan = segment['plan']
@@ -309,7 +316,7 @@ class NextLongStudy(LongStudy):
         params['r6'].update(run_id=run_id, seed=comparison['seed'], output_quotas=resources['output_quotas'])
         path = self.freeze_input(run_id, 'evaluate', params, Path(comparison_pin['path']),
                                  result_payload_cap_bytes=assignments.get('r6_result_payload_cap_bytes'))
-        summary_path = PROJECT/f'R6-{role.upper()}.json'
+        summary_path = self.project/f'R6-{role.upper()}.json'
         if summary_path.exists():
             return pin(summary_path)
         result = self.write(summary_path.name, self.evaluate(path))
