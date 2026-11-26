@@ -1,6 +1,6 @@
 # 接续 u1792 开发与长训发车状态
 
-`instinctrl-post-u1792-two-long` 完成两次开发诊断。新增正式长训 **0/2**，新增训练转换 **0**。当前正式仿真基线为已验收的 `u1792`、25° LiDAR 和原后向备选执行。 [开发与验收计划](PLAN.md) · [上一轮验收](../instinct-post-r4-next-long/REPORT.md)
+`instinctrl-post-u1792-two-long` 已恢复开发，新增正式长训 **0/2**。当前正式仿真基线为已验收的 `u1792`、25° LiDAR 和原后向备选执行。 [开发与验收计划](PLAN.md) · [上一轮验收](../instinct-post-r4-next-long/REPORT.md)
 
 ## 恢复开发
 
