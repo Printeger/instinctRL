@@ -220,12 +220,13 @@ def run(plan, input_pin):
                     if candidate in RECOVERY_CANDIDATES:
                         option_version = action_option_version(candidate)
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
-            from training_workloads.unified_h1.dynamic_assay import physical_layout, OPTION_RUN, RECOVERY_PREFIX
+            from training_workloads.unified_h1.dynamic_assay import physical_layout, three_case, OPTION_RUN, RECOVERY_PREFIX
             holdout = operation == 'dynamic' and physical_layout(plan['run_id'])
             recovery_training = operation == 'train' and recipe['candidate_id'] in RECOVERY_CANDIDATES
             if holdout:
                 from training_workloads.unified_h1.escape_option_env import EscapeHoldoutEnv
-                env = EscapeHoldoutEnv(cfg, layout_seed=params['seed'], mirrored_pipe_pairs=pipe_probe)
+                env = EscapeHoldoutEnv(cfg, layout_seed=params['seed'], mirrored_pipe_pairs=pipe_probe,
+                                       mirrored_trunk_pairs=three_case(plan['run_id']) == 'FRONT-CLEARANCE')
             elif recovery_training:
                 from training_workloads.unified_h1.escape_option_env import EscapeRecoveryTrainingEnv
                 env = EscapeRecoveryTrainingEnv(cfg)

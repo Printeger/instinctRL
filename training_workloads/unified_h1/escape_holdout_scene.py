@@ -7,11 +7,12 @@ import random
 LAYOUTS = ('room_door', 'trunk_aisle', 'street_gap', 'open_tube')
 
 
-def scene_geometry(origins, seed, *, mirrored_pipe_pairs=False):
+def scene_geometry(origins, seed, *, mirrored_pipe_pairs=False, mirrored_trunk_pairs=False):
     """Construct matching sensed and collision geometry in each lane."""
     points, faces, solids, solid_faces = [], [], [], []
     rng = random.Random(seed)
     pipe_radius = None
+    trunk_pair = None
     for lane, origin in enumerate(origins.tolist()):
         layout = LAYOUTS[lane // 8]
 
@@ -40,9 +41,12 @@ def scene_geometry(origins, seed, *, mirrored_pipe_pairs=False):
             partition(2.1, 2.1, -half, -door)
             partition(2.1, 2.1, door, half)
         elif layout == 'trunk_aisle':
-            for x, side in ((-2.7, 1), (-.7, -1), (2.8, 1), (3.9, -1), (4.8, 1)):
-                cy = side * rng.uniform(1.15, 1.65)
-                r = rng.uniform(.22, .36)
+            trunks = [(x, side * rng.uniform(1.15, 1.65), rng.uniform(.22, .36))
+                      for x,side in ((-2.7, 1), (-.7, -1), (2.8, 1), (3.9, -1), (4.8, 1))]
+            if mirrored_trunk_pairs and lane % 2:
+                trunks = [(x,-y,r) for x,y,r in trunk_pair]
+            trunk_pair = trunks
+            for x, cy, r in trunks:
                 ring = [(x+r*math.cos(j*math.tau/8), cy+r*math.sin(j*math.tau/8)) for j in range(8)]
                 for (px, py), (qx, qy) in zip(ring, ring[1:] + ring[:1]):
                     partition(px, qx, py, qy)

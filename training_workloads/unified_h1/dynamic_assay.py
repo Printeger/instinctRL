@@ -382,6 +382,9 @@ def run(backend, params):
             if mirror_pipe:
                 for lane in range(25, 32, 2):
                     specs[lane] = pipe_authority_probe.mirror_reset(specs[lane-1], specs[lane])
+            if three == 'FRONT-CLEARANCE':
+                for lane in range(9, 16, 2):
+                    specs[lane] = pipe_authority_probe.mirror_reset(specs[lane-1], specs[lane])
             if pipe_probe:
                 approved = approved_frames.open(pipe_authority_probe.frame_name(index))
             axis_angle = torch.arange(LANES,device=device).remainder(8)*math.pi/4
