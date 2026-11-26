@@ -14,19 +14,23 @@ FAST_LATERAL_VERSION = 'm4-escape-lateral-recovery-v2'
 MOUNT_25_VERSION = 'm4-escape-lateral-recovery-p25-v1'
 MOUNT_28_VERSION = 'm4-escape-lateral-recovery-p28-v1'
 REDIRECT_25_VERSION = 'm4-escape-redirect-p25-v1'
-MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28, REDIRECT_25_VERSION: 25}
+FALLBACK_25_VERSION = 'm4-escape-fallback-p25-v1'
+MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
+                       REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
 
 
 class EscapeRecovery(EscapeOption):
-    def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False, redirect=False):
+    def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False, redirect=False,
+                 fallback=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
         self.fast_lateral = fast_lateral
         self.redirect = redirect
+        self.fallback = fallback
         self.escape_speed = self.direction.new_full((lanes,), SPEED_M_S)
         self.retreat_basis = torch.zeros_like(self.direction)
         self.redirected = torch.zeros_like(self.applied)
@@ -109,6 +113,24 @@ class EscapeRecovery(EscapeOption):
         releases_side = (issued * signed_side).sum(dim=1) > .08
         selected[lanes[releases_side]] = trial[releases_side]
         self.redirected[lanes[releases_side]] = True
+        if self.fallback:
+            unresolved = ~releases_side & (signed_side.norm(dim=1) > .5)
+            self.try_steeper_retreat(lidar, state, selected, config, lanes[unresolved], signed_side[unresolved])
+
+    def try_steeper_retreat(self, lidar, state, selected, config, lanes, side):
+        # Search only while the held action and the original redirection both
+        # fail. Preserve side commitment and use the least axial legal trial.
+        for axial in (.85, 1.4, 2.2):
+            if not len(lanes):
+                break
+            direction = (side + axial * self.retreat_basis[lanes]) / (1. + axial**2)**.5
+            trial = torch.cat((selected[lanes, :1], .5 + self.escape_speed[lanes, None] * direction), dim=1)
+            result = self.issued(lidar[lanes], state[lanes], trial, config)
+            viable = ((result.v_final_b * side).sum(dim=1) > .08)
+            viable &= result.metrics['emergency'].flatten() == 0.
+            selected[lanes[viable]] = trial[viable]
+            self.redirected[lanes[viable]] = True
+            lanes, side = lanes[~viable], side[~viable]
 
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):

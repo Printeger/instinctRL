@@ -20,6 +20,7 @@ HOLDOUT_RUN = 'R6-DIRECT-INSTINCT-GPU-R4-LONG-HOLDOUT'
 HOLDOUT_SMOKE = 'R6-DIRECT-INSTINCT-GPU-R4-HOLDOUT-SMOKE'
 RECOVERY_PREFIX = 'R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-'
 THREE_PREFIX = RECOVERY_PREFIX + 'THREE-'
+NEXT_LONG_PREFIX = RECOVERY_PREFIX + 'NEXT-LONG-'
 RECOVERY_MECHANISM = RECOVERY_PREFIX + 'MECHANISM-01'
 RECOVERY_MECHANISM_RETRY = RECOVERY_PREFIX + 'MECHANISM-02'
 RECOVERY_MECHANISM_RUNS = (RECOVERY_MECHANISM, RECOVERY_MECHANISM_RETRY)
@@ -37,6 +38,8 @@ MODES = ('approach', 'recede', 'cross_left', 'cross_right',
 
 def three_case(run_id):
     match = re.fullmatch(THREE_PREFIX + r'(REAR|MECHANISM|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
+    if match is None:
+        match = re.fullmatch(NEXT_LONG_PREFIX + r'(REARPAIR|MECHANISM|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
     return match[1] if match else None
 
 
@@ -46,7 +49,7 @@ def physical_layout(run_id):
 
 def groups_for(run_id):
     case = three_case(run_id)
-    if case == 'REAR':
+    if case in ('REAR', 'REARPAIR'):
         return (HOLDOUT_GROUPS[-1],)
     if case in ('MECHANISM', 'CHECK', 'HOLDOUT'):
         return HOLDOUT_GROUPS
@@ -100,7 +103,7 @@ def contract(params):
                 or not all(version in (None, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES)
                            for version in options.values())):
             raise ValueError('DYNAMIC_THREE_OPTIONS')
-        if case in ('REAR', 'MECHANISM') and any(value != models['reference'] for value in models.values()):
+        if case in ('REAR', 'REARPAIR', 'MECHANISM') and any(value != models['reference'] for value in models.values()):
             raise ValueError('DYNAMIC_THREE_SAME_WEIGHTS')
         if case == 'REAR' and options != dict(reference=RECOVERY_VERSION, candidate=LATERAL_VERSION,
                                              reference_slow=RECOVERY_VERSION, candidate_slow=LATERAL_VERSION):
@@ -495,7 +498,7 @@ def audit(output, params, counters):
                     row['escape_recovery'].get('redirected', [False] * LANES),
                     row['ics_emergency'], row['ics_beta'], strict=True)):
                     raise ValueError('DYNAMIC_REDIRECTION_WAS_NOT_ISSUED')
-                if three == 'REAR':
+                if three in ('REAR', 'REARPAIR'):
                     expected = .28 if name.endswith('_slow') else .42
                     if any(abs(v[0] - expected) > 1.e-6 for v in before['expected_velocity_w']
                            if any(v)):

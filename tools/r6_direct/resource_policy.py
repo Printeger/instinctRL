@@ -3,7 +3,7 @@ import json
 import time
 
 from tools.r6_evidence import checked
-from training_workloads.unified_h1.dynamic_assay import THREE_PREFIX
+from training_workloads.unified_h1.dynamic_assay import NEXT_LONG_PREFIX, THREE_PREFIX
 
 
 THIRD_PREFIX = 'R6-DIRECT-THIRD-'
@@ -17,7 +17,9 @@ GPU_STUDY_SCHEMA = 'instinctrl-gpu-three-training-resources/1'
 GPU_FOLLOWUP_SCHEMA = 'instinctrl-post-r3-resources/1'
 GPU_RECOVERY_SCHEMA = 'instinctrl-r4-recovery-resources/1'
 POST_R4_THREE_SCHEMA = 'instinctrl-post-r4-three-resources/1'
+NEXT_LONG_SCHEMA = 'instinctrl-post-r4-next-long-resources/1'
 BOUNDED_SCOPES = {
+    NEXT_LONG_PREFIX: (NEXT_LONG_SCHEMA, 'docs/experiments/instinct-post-r4-next-long/RESOURCE_LEDGER.json'),
     THREE_PREFIX: (POST_R4_THREE_SCHEMA, 'docs/experiments/instinct-post-r4-three/RESOURCE_LEDGER.json'),
     f'{GPU_STUDY_PREFIX}R5-RECOVERY-': (GPU_RECOVERY_SCHEMA,
         'docs/experiments/instinct-r4-recovery/RESOURCE_LEDGER.json'),
