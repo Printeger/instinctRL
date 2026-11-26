@@ -61,16 +61,19 @@ class FrontStudy(TwoLongStudy):
         verification = verify_training(result)
         decision = read(verification['decision'])
         end = result['segments'][-1]
-        prior = old['roles']['origin']
+        rear = old['roles']['origin']
+        execution = result['execution']
+        changed = execution == FRONT_CLEARANCE_25_VERSION
         if (decision['independent_protocol'] != protocol_pin or verification['counts']['transitions'] != 524288
-                or result['execution'] != FRONT_CLEARANCE_25_VERSION or prior['execution'] != REAR_CLEARANCE_25_VERSION
-                or result['start'] != prior['checkpoint'] or end['plan']['target_update'] != protocol['fixed_endpoint']
+                or execution not in (REAR_CLEARANCE_25_VERSION, FRONT_CLEARANCE_25_VERSION)
+                or rear['execution'] != REAR_CLEARANCE_25_VERSION
+                or result['start'] != rear['checkpoint'] or end['plan']['target_update'] != protocol['fixed_endpoint']
                 or end['plan']['training_seed'] != protocol['training_seeds']['c']
                 or result['segments'][0]['plan']['initialization']['kind'] != self.branch_kind):
             raise ValueError('The closed branch differs from the admitted independent plan')
-        roles = dict(qualified=old['roles']['qualified'], prior=prior,
-                     origin=dict(prior, execution=FRONT_CLEARANCE_25_VERSION, execution_override=FRONT_CLEARANCE_25_VERSION),
-                     c=dict(checkpoint=result['end'], execution=result['execution'], segment=end))
+        roles = dict(qualified=old['roles']['qualified'], prior=rear if changed else old['roles']['prior'],
+                     origin=dict(rear, execution=execution, execution_override=execution),
+                     c=dict(checkpoint=result['end'], execution=execution, segment=end))
         assignments = dict(protocol=protocol_pin, formal={'c':pin_c}, roles=roles,
                            r6_resources=protocol['r6_resources'], r6_arm_order=['qualified','prior','origin','c'],
                            r6_result_payload_cap_bytes=protocol['r6_result_payload_cap_bytes'])
@@ -83,7 +86,8 @@ class FrontStudy(TwoLongStudy):
         resources['output_cap_bytes'] = protocol['r6_result_payload_cap_bytes']
         phases = ([] if (self.project/'HOLDOUT-C.json').exists() else
                   [dict(name='holdout-c',launch_cap_bytes=GIB,retained_bytes=GIB//2)])
-        remaining = sum(not (self.project/f'R6-{role}.json').exists() for role in ('ORIGIN', 'C'))
+        new_r6_roles = ('ORIGIN','C') if changed else ('C',)
+        remaining = sum(not (self.project/f'R6-{role}.json').exists() for role in new_r6_roles)
         if not forecast(resources, remaining_phases=phases, remaining_r6_arms=remaining)['fits']:
             raise ValueError('The new physical and R6 arms exceed current capacity')
         names = dict(candidate='c', control='origin', reference='qualified', prior='prior')
@@ -91,8 +95,9 @@ class FrontStudy(TwoLongStudy):
             models={key:roles[value]['checkpoint'] for key,value in names.items()},
             arm_options={key:roles[value]['execution'] for key,value in names.items()},assignments=assignment_pin))
         closed = self.physical(Path(physical['path']))
-        r6 = dict(qualified=old_evaluations['r6']['qualified'], prior=old_evaluations['r6']['origin'],
-                  origin=self.r6(assignments,'origin'), c=self.r6(assignments,'c'))
+        r6 = dict(qualified=old_evaluations['r6']['qualified'],
+                  prior=old_evaluations['r6']['origin' if changed else 'prior'],
+                  origin=self.r6(assignments,'origin') if changed else old_evaluations['r6']['origin'], c=self.r6(assignments,'c'))
         destination = self.project/'EVALUATIONS.json'
         existed = destination.exists()
         output = self.write(destination.name, dict(assignments=assignment_pin, physical={'c':closed}, r6=r6, ledger=pin(self.ledger)))

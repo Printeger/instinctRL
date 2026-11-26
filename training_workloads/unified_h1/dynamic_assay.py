@@ -198,8 +198,10 @@ def contract(params):
         if front_study and case == 'HOLDOUT':
             from .robustness_training_plan import U1792_CHECKPOINT_SHA
 
+            controls = {FRONT_CLEARANCE_25_VERSION: REAR_CLEARANCE_25_VERSION,
+                        REAR_CLEARANCE_25_VERSION: FALLBACK_25_VERSION}
             if (models['prior'] != models['control'] or models['control']['sha256'] != U1792_CHECKPOINT_SHA
-                    or options['prior'] != REAR_CLEARANCE_25_VERSION or options['control'] != FRONT_CLEARANCE_25_VERSION):
+                    or options['control'] not in controls or options['prior'] != controls[options['control']]):
                 raise ValueError('DYNAMIC_FRONT_STUDY_HOLDOUT_CONTROL')
     if params['experiment_id'] in (PERSISTENCE_RUN, OPTION_RUN) and (
             set(models) != {'candidate', 'reference'} or models['candidate'] != models['reference']):
