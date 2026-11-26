@@ -1,0 +1,53 @@
+{
+  "pair": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-u1792-two-long/rear-switch/PAIRED-RECOMPUTATION.json",
+    "sha256": "7643e60c5c86e85cdf5b73a47a8cae4530653e1cf19d44000211dafc10c4f541"
+  },
+  "authority": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-u1792-two-long/PIPE-AUTHORITY-01.json",
+    "sha256": "3410f4d821cc6e04cc205f0c7df59687cfb889a11cfecf7290b81aff76dac7ed"
+  },
+  "policy_tick_seconds": 0.1,
+  "lanes": [
+    {
+      "lane": 25,
+      "first_existing_escape_step": 38,
+      "first_lateral_issue_divergence_step": 49,
+      "first_actual_positive_lateral_step": 53,
+      "actual_lateral_velocity_at_divergence_mps": -0.38231536746025085,
+      "first_candidate_emergency_step": 60,
+      "candidate_contact_step": 69,
+      "reference_contact_step": 64,
+      "earlier_legal_shadow_samples": 11,
+      "earlier_legal_direction": "+1/1.4",
+      "earlier_shadow_minimum_projected_mps": 0.44999992847442627
+    },
+    {
+      "lane": 29,
+      "first_existing_escape_step": 31,
+      "first_lateral_issue_divergence_step": 44,
+      "first_actual_positive_lateral_step": 48,
+      "actual_lateral_velocity_at_divergence_mps": -0.4029556214809418,
+      "first_candidate_emergency_step": 59,
+      "candidate_contact_step": 67,
+      "reference_contact_step": null,
+      "earlier_legal_shadow_samples": 13,
+      "earlier_legal_direction": "+1/1.4",
+      "earlier_shadow_minimum_projected_mps": 0.44999992847442627
+    },
+    {
+      "lane": 30,
+      "first_existing_escape_step": 37,
+      "first_lateral_issue_divergence_step": 48,
+      "first_actual_positive_lateral_step": 52,
+      "actual_lateral_velocity_at_divergence_mps": -0.3739214539527893,
+      "first_candidate_emergency_step": 62,
+      "candidate_contact_step": 71,
+      "reference_contact_step": 66,
+      "earlier_legal_shadow_samples": 11,
+      "earlier_legal_direction": "+1/1.4",
+      "earlier_shadow_minimum_projected_mps": 0.4499998986721039
+    }
+  ],
+  "interpretation": "Earlier action was admissible on all three recorded reference trajectories. The shadow action alone does not distinguish the two existing contacts from the added contact. Actual candidate velocity took four ticks to turn positive. Evaluate direction selection from approved range histories before increasing training dose."
+}

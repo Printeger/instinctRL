@@ -1,3 +1,7 @@
+# 接续 u1792 的两次长训等待运行空间
+
+任务 `instinctrl-post-u1792-two-long`。五位原生伙伴和 Maverick 独立首轮核验 6/6。真实 `u1792` CPU 分叉通过，完成 34,560 条同权重开发评价转换。后向反侧斜退让两条原接触各延后 5 步，并新增一条接触，未过冻结门槛，两个作业及 15 个登记进程身份均已关闭。新增正式长训 0/2。系统盘普通可用约 32 GiB，按 30 GiB 系统底线无法发车。两次完整长训和共用独评预计需 51–60 GiB 可用空间，另计后续开发。 [开发证据及恢复条件](../docs/experiments/instinct-post-u1792-two-long/STATUS.md) · [贡献账本](contributions.jsonl)
+
 # 第三轮后正式长训和四臂独评完成，等待审查
 
 任务 `instinctrl-post-r4-next-long`。五位原生伙伴的独立首判与 Maverick 综合均记录。从 `u768` 分两段共 1,024 次更新、524,288 步至 `u1792`。四臂完整 R6 和物理独评共 866,560 步。终点接触 2/192，同执行起点 3/192，第三轮组合 4/192，旧合格 104/192。全部冻结护栏通过，建议 `u1792`、25° 和后向备选为仿真产品基线。34 个作业与 212 个登记进程身份均已关闭，保留失败原件与此前权重，停在唯一审查点。 [审查报告](../docs/experiments/instinct-post-r4-next-long/REPORT.md) · [完成复算](../docs/experiments/instinct-post-r4-next-long/COMPLETION_AUDIT.json) · [贡献账本](contributions.jsonl)
