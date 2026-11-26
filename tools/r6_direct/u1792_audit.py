@@ -78,6 +78,7 @@ def formal_evidence(evaluations_pin):
             raise ValueError(f'R6 stream differs for role {role}')
         model = score_model(dict(run_id=result['run_id'], report=bound['report'], arm=role, pair=1))
         if (model['checkpoint'] != roles[role]['checkpoint']
+                or params['evaluation_selection'].get('execution_override') != roles[role].get('execution_override')
                 or ctx['plan']['result_payload_cap_bytes'] != assignments['r6_result_payload_cap_bytes']):
             raise ValueError(f'R6 assignment differs for role {role}')
         r6[role] = dict(model, binding=binding, receipt=bound['receipt'], transitions=counters['nontraining_transitions'])
@@ -103,17 +104,19 @@ def formal_evidence(evaluations_pin):
         _, ctx, report = validate_binding(physical['binding'])
         params = ctx['contract']['parameters']
         mapping = dict(candidate=arm, control='origin', reference='qualified')
+        if 'prior' in roles:
+            mapping['prior'] = 'prior'
         expected = protocol['physical']
         if (params['seed'] != expected['seed'] or params['models'] != {a: roles[r]['checkpoint'] for a,r in mapping.items()}
                 or params['arm_options'] != {a: roles[r]['execution'] for a,r in mapping.items()}
-                or ctx['state']['counters']['nontraining_transitions'] != 3*expected['transitions_per_arm']):
+                or ctx['state']['counters']['nontraining_transitions'] != len(mapping)*expected['transitions_per_arm']):
             raise ValueError(f'Physical assignment differs for {arm}')
         metrics = physical_metrics(report['summary'])
         for layouts in metrics.values():
             if set(layouts) != set(expected['layouts']) or any(sum(rows[key]['denominator'] for rows in layouts.values()) != value
                                                              for key,value in expected['denominators'].items()):
                 raise ValueError('Physical holdout has an incomplete denominator')
-        for key in ('control', 'reference'):
+        for key in (name for name in mapping if name != 'candidate'):
             groups = report['summary']['models'][key]['groups']
             signature = []
             for group in groups:
@@ -144,9 +147,10 @@ def formal_evidence(evaluations_pin):
             raise ValueError('There is an unclosed supervised process')
         receipts.append(dict(run_id=row['id'], receipt=row['receipt'], native_exit=receipt['exit_code'],
                              native_error=receipt['error'], retained_bytes=row.get('closed_evidence_bytes')))
+    execution_comparison = (paired_r6(r6['origin'], r6['prior'], tolerance, prior_gates) if 'prior' in r6 else None)
     return dict(evaluations=evaluations_pin, protocol=assignments['protocol'], rounds=rounds,
                 valid_formal_count=sum(result['passed'] for result in rounds.values()), r6=r6, receipts=receipts,
-                shared_control_contacts=shared_control_contacts)
+                shared_control_contacts=shared_control_contacts, r6_same_weight_execution=execution_comparison)
 
 
 def main():

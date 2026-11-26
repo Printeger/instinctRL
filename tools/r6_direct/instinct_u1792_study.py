@@ -38,16 +38,24 @@ class TwoLongStudy(NextLongStudy):
         return load(ROOT_DOCS/'rear-clearance/PIPE-CLEARANCE-01.json')['predecessor']
 
     def formal_evaluation(self, protocol_path):
+        from instinctlab.control.escape_recovery import REAR_CLEARANCE_25_VERSION
+
         guard()
         protocol_pin = pin(protocol_path)
         protocol = read(protocol_pin)
         prior = load(self.origin_result)
         formal = {arm: pin(self.project/f'FORMAL-{arm.upper()}/RESULTS.json') for arm in ('a', 'b')}
+        execution = read(formal['a'])['execution']
+        if execution not in (prior['execution'], REAR_CLEARANCE_25_VERSION):
+            raise ValueError('Unknown shared execution for these branches')
         seed_set = set()
         roles = {
             'qualified': dict(checkpoint=protocol['qualified'], execution=None),
-            'origin': dict(checkpoint=prior['end'], execution=prior['execution'], segment=prior['segments'][-1]),
+            'origin': dict(checkpoint=prior['end'], execution=execution, segment=prior['segments'][-1]),
         }
+        if execution != prior['execution']:
+            roles['prior'] = dict(roles['origin'], execution=prior['execution'])
+            roles['origin']['execution_override'] = execution
         for arm, result_pin in formal.items():
             result = read(result_pin)
             verification = verify_training(result)
@@ -59,13 +67,13 @@ class TwoLongStudy(NextLongStudy):
                     or first['training_seed'] != seed or seed in seed_set
                     or first['initialization']['kind'] != self.branch_kind
                     or segment['plan']['target_update'] != protocol['fixed_endpoint']
-                    or result['start'] != prior['end'] or result['execution'] != prior['execution']):
+                    or result['start'] != prior['end'] or result['execution'] != execution):
                 raise ValueError('The frozen formal branch or common execution does not match')
             seed_set.add(seed)
             roles[arm] = dict(checkpoint=result['end'], execution=result['execution'], segment=segment)
         if roles['a']['checkpoint']['sha256'] == roles['b']['checkpoint']['sha256']:
             raise ValueError('Matched independent seeds produced identical terminal weights')
-        arms = ['qualified', 'origin', 'a', 'b']
+        arms = ['qualified', *(['prior'] if 'prior' in roles else []), 'origin', 'a', 'b']
         assignments_path = self.project/'FINAL_ASSIGNMENTS.json'
         existed = assignments_path.exists()
         assignments = dict(protocol=protocol_pin, formal=formal, roles=roles,
@@ -87,6 +95,8 @@ class TwoLongStudy(NextLongStudy):
         physical = {}
         for arm in formal:
             names = dict(candidate=arm, control='origin', reference='qualified')
+            if 'prior' in roles:
+                names['prior'] = 'prior'
             spec = self.write(f'HOLDOUT-{arm.upper()}-SPEC.json', dict(label=f'HOLDOUT-{arm.upper()}',
                 seed=protocol['physical']['seed'], wall_seconds=1800,
                 models={key:roles[value]['checkpoint'] for key,value in names.items()},

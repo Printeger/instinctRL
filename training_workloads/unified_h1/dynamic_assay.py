@@ -105,7 +105,7 @@ def contract(params):
         allowed_models.add('control')
     if case == 'PIPE-AUTHORITY':
         allowed_models = {'candidate'}
-    if next_long and case == 'HOLDOUT':
+    if (next_long or u1792_study) and case == 'HOLDOUT':
         allowed_models.add('prior')
     if case == 'REAR':
         allowed_models.update(('candidate_slow', 'reference_slow'))
@@ -123,7 +123,7 @@ def contract(params):
         expected_models = allowed_models
         if (case == 'CHECK' or clearance_confirmation or (next_long and case == 'MECHANISM')) and 'control' not in models:
             expected_models = {'candidate', 'reference'}
-        if next_long and case == 'HOLDOUT' and 'prior' not in models:
+        if (next_long or u1792_study) and case == 'HOLDOUT' and 'prior' not in models:
             expected_models = allowed_models - {'prior'}
         if (not isinstance(options, dict) or set(options) != expected_models or set(models) != expected_models
                 or not all(version in (None, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES)
@@ -172,6 +172,12 @@ def contract(params):
         if next_long and case == 'HOLDOUT' and 'prior' in models:
             if options['prior'] is None or (models['control'], options['control']) == (models['prior'], options['prior']):
                 raise ValueError('DYNAMIC_NEXT_LONG_DISTINCT_PRIOR')
+        if u1792_study and case == 'HOLDOUT' and (options['control'] == REAR_CLEARANCE_25_VERSION or 'prior' in models):
+            from .robustness_training_plan import U1792_CHECKPOINT_SHA
+
+            if (models.get('prior') != models['control'] or models['control']['sha256'] != U1792_CHECKPOINT_SHA
+                    or options.get('prior') != FALLBACK_25_VERSION or options['control'] != REAR_CLEARANCE_25_VERSION):
+                raise ValueError('DYNAMIC_U1792_HOLDOUT_EXECUTION_CONTROL')
     if params['experiment_id'] in (PERSISTENCE_RUN, OPTION_RUN) and (
             set(models) != {'candidate', 'reference'} or models['candidate'] != models['reference']):
         raise ValueError('DYNAMIC_ASSAY_SAME_WEIGHT_MODELS')
