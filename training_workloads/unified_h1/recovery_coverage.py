@@ -20,9 +20,9 @@ _FIELDS = {'step', 'tick_before', 'tick_after', 'contact_samples', 'lanes', *_CO
 
 
 def tracks_run(run_id):
-    from .dynamic_assay import U1792_STUDY_PREFIX
+    from .dynamic_assay import FRONT_STUDY_PREFIX, U1792_STUDY_PREFIX
 
-    return run_id.startswith((RUN_PREFIX, U1792_STUDY_PREFIX))
+    return run_id.startswith((RUN_PREFIX, U1792_STUDY_PREFIX, FRONT_STUDY_PREFIX))
 
 
 def capture(before, after, evidence, lanes):

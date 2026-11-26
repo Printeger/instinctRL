@@ -79,6 +79,12 @@ class NextLongStudy(LongStudy):
         if self.snapshot == ROOT:
             raise ValueError('Use a committed detached execution snapshot')
 
+    def planned_caps(self, free):
+        return dict(allocated_gpu_seconds=144000, live_wall_seconds=144000, queue_seconds=21600,
+                    live_starts=120, simulator_initializations=96, training_transitions=3000000,
+                    nontraining_transitions=3500000, training_checkpoint_writes=192,
+                    major_scientific_candidates=32, **{OUTPUT_CAP: free - SYSTEM_FLOOR})
+
     def setup(self):
         guard()
         policy_path = self.project / 'RESOURCE_POLICY.json'
@@ -87,10 +93,7 @@ class NextLongStudy(LongStudy):
         free = shutil.disk_usage(SYSTEM_ROOT).free
         if free < SYSTEM_FLOOR + 2 * GIB:
             raise ValueError('Insufficient space for the development assay')
-        caps = dict(allocated_gpu_seconds=144000, live_wall_seconds=144000, queue_seconds=21600,
-                    live_starts=120, simulator_initializations=96, training_transitions=3000000,
-                    nontraining_transitions=3500000, training_checkpoint_writes=192,
-                    major_scientific_candidates=32, **{OUTPUT_CAP: free - SYSTEM_FLOOR})
+        caps = self.planned_caps(free)
         policy = self.write(policy_path.name, dict(schema_version=self.resource_schema,
                             user_authority=pin(self.project/'PLAN.md'), caps=caps, elapsed_seconds=604800))
         storage = self.write('STORAGE.json', dict(schema_version=SYSTEM_STORAGE_SCHEMA,

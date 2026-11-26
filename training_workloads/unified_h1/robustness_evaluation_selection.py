@@ -62,9 +62,9 @@ def _validate(value,*,reviewed):
         model=_training_model(plan,value['training_analysis'],value['checkpoint'],method)
     if explicit_override:
         from .robustness_training_plan import R3_CHECKPOINT_SHA, U1792_CHECKPOINT_SHA
-        from .dynamic_assay import NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
+        from .dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
         from instinctlab.control.escape_recovery import (
-            FALLBACK_25_VERSION, FRONT_SWITCH_25_VERSION, REAR_CLEARANCE_25_VERSION, REDIRECT_25_VERSION,
+            FALLBACK_25_VERSION, FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION, REAR_CLEARANCE_25_VERSION, REDIRECT_25_VERSION,
         )
         from instinctlab.control.escape_option import METHOD_FIELD
 
@@ -73,8 +73,10 @@ def _validate(value,*,reviewed):
         override = value['execution_override']
         old_comparison = (comparison['id'].startswith(NEXT_LONG_PREFIX) and digest == R3_CHECKPOINT_SHA
                           and own_version == REDIRECT_25_VERSION and override in (FALLBACK_25_VERSION, FRONT_SWITCH_25_VERSION))
-        clearance_control = (comparison['id'] == U1792_STUDY_PREFIX+'R6-ORIGIN' and digest == U1792_CHECKPOINT_SHA
-                             and own_version == FALLBACK_25_VERSION and override == REAR_CLEARANCE_25_VERSION)
+        clearance_controls = {U1792_STUDY_PREFIX+'R6-ORIGIN': REAR_CLEARANCE_25_VERSION,
+                              FRONT_STUDY_PREFIX+'R6-ORIGIN': FRONT_CLEARANCE_25_VERSION}
+        clearance_control = (digest == U1792_CHECKPOINT_SHA and own_version == FALLBACK_25_VERSION
+                             and comparison['id'] in clearance_controls and override == clearance_controls[comparison['id']])
         require(value['role']=='trained_candidate' and (old_comparison or clearance_control), 'EXPLICIT_EXECUTION_CONTROL')
     # Review explicitly adjudicates the pinned training evidence/native status,
     # comparison design and the selected node; no analysis alone grants selection.

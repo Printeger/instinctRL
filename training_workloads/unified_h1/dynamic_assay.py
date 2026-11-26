@@ -23,6 +23,7 @@ RECOVERY_PREFIX = 'R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-'
 THREE_PREFIX = RECOVERY_PREFIX + 'THREE-'
 NEXT_LONG_PREFIX = RECOVERY_PREFIX + 'NEXT-LONG-'
 U1792_STUDY_PREFIX = RECOVERY_PREFIX + 'U1792-TWO-STUDY-'
+FRONT_STUDY_PREFIX = RECOVERY_PREFIX + 'U1792-FRONT-STUDY-'
 RECOVERY_MECHANISM = RECOVERY_PREFIX + 'MECHANISM-01'
 RECOVERY_MECHANISM_RETRY = RECOVERY_PREFIX + 'MECHANISM-02'
 RECOVERY_MECHANISM_RUNS = (RECOVERY_MECHANISM, RECOVERY_MECHANISM_RETRY)
@@ -49,7 +50,9 @@ def three_case(run_id):
     if match is None:
         match = re.fullmatch(NEXT_LONG_PREFIX + r'(REARPAIR|MECHANISM|CROSSCHECK|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
     if match is None:
-        match = re.fullmatch(U1792_STUDY_PREFIX + r'(FRONT-CLEARANCE|CHECK|HOLDOUT|MECHANISM|CROSSCHECK)-[A-Z0-9-]+', run_id)
+        match = re.fullmatch(U1792_STUDY_PREFIX + r'(CHECK|HOLDOUT|MECHANISM|CROSSCHECK)-[A-Z0-9-]+', run_id)
+    if match is None:
+        match = re.fullmatch(FRONT_STUDY_PREFIX + r'(FRONT-CLEARANCE|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
     return match[1] if match else None
 
 
@@ -58,12 +61,13 @@ def physical_layout(run_id):
 
 
 def approved_execution_override(run_id, case, label, checkpoint, stored, requested):
-    from instinctlab.control.escape_recovery import FALLBACK_25_VERSION, REAR_CLEARANCE_25_VERSION
+    from instinctlab.control.escape_recovery import FALLBACK_25_VERSION, FRONT_CLEARANCE_25_VERSION, REAR_CLEARANCE_25_VERSION
     from .robustness_training_plan import U1792_CHECKPOINT_SHA
 
-    return (run_id.startswith(U1792_STUDY_PREFIX) and case == 'CHECK' and label == 'control'
-            and checkpoint['sha256'] == U1792_CHECKPOINT_SHA and stored == FALLBACK_25_VERSION
-            and requested == REAR_CLEARANCE_25_VERSION)
+    if case != 'CHECK' or label != 'control' or checkpoint['sha256'] != U1792_CHECKPOINT_SHA or stored != FALLBACK_25_VERSION:
+        return False
+    return ((run_id.startswith(U1792_STUDY_PREFIX) and requested == REAR_CLEARANCE_25_VERSION)
+            or (run_id.startswith(FRONT_STUDY_PREFIX) and requested == FRONT_CLEARANCE_25_VERSION))
 
 
 def groups_for(run_id):
@@ -95,6 +99,7 @@ def contract(params):
     case = three_case(params['experiment_id'])
     next_long = params['experiment_id'].startswith(NEXT_LONG_PREFIX)
     u1792_study = params['experiment_id'].startswith(U1792_STUDY_PREFIX)
+    front_study = params['experiment_id'].startswith(FRONT_STUDY_PREFIX)
     clearance_confirmation = u1792_study and case == 'MECHANISM'
     if case:
         fields.add('arm_options')
@@ -114,7 +119,7 @@ def contract(params):
         allowed_models.add('control')
     if case == 'PIPE-AUTHORITY':
         allowed_models = {'candidate'}
-    if (next_long or u1792_study) and case == 'HOLDOUT':
+    if (next_long or u1792_study or front_study) and case == 'HOLDOUT':
         allowed_models.add('prior')
     if case == 'REAR':
         allowed_models.update(('candidate_slow', 'reference_slow'))
@@ -190,6 +195,12 @@ def contract(params):
             if (models.get('prior') != models['control'] or models['control']['sha256'] != U1792_CHECKPOINT_SHA
                     or options.get('prior') != FALLBACK_25_VERSION or options['control'] != REAR_CLEARANCE_25_VERSION):
                 raise ValueError('DYNAMIC_U1792_HOLDOUT_EXECUTION_CONTROL')
+        if front_study and case == 'HOLDOUT':
+            from .robustness_training_plan import U1792_CHECKPOINT_SHA
+
+            if (models['prior'] != models['control'] or models['control']['sha256'] != U1792_CHECKPOINT_SHA
+                    or options['prior'] != REAR_CLEARANCE_25_VERSION or options['control'] != FRONT_CLEARANCE_25_VERSION):
+                raise ValueError('DYNAMIC_FRONT_STUDY_HOLDOUT_CONTROL')
     if params['experiment_id'] in (PERSISTENCE_RUN, OPTION_RUN) and (
             set(models) != {'candidate', 'reference'} or models['candidate'] != models['reference']):
         raise ValueError('DYNAMIC_ASSAY_SAME_WEIGHT_MODELS')
@@ -345,7 +356,7 @@ def run(backend, params):
                 version = params['arm_options'][label]
                 enabled = version is not None
             trained = label == 'candidate' or (three == 'CHECK' and (
-                label == 'control' or (run_id.startswith(U1792_STUDY_PREFIX) and label == 'reference')))
+                label == 'control' or (run_id.startswith((U1792_STUDY_PREFIX, FRONT_STUDY_PREFIX)) and label == 'reference')))
             if (three in ('CHECK', 'HOLDOUT') or run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT, *RECOVERY_SHORT_CHECKS)) and trained:
                 recorded_version = payload['method_hashes'].get(METHOD_FIELD)
                 if recorded_version != version and not approved_execution_override(

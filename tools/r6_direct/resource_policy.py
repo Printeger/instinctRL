@@ -3,7 +3,7 @@ import json
 import time
 
 from tools.r6_evidence import checked
-from training_workloads.unified_h1.dynamic_assay import NEXT_LONG_PREFIX, THREE_PREFIX, U1792_STUDY_PREFIX
+from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, THREE_PREFIX, U1792_STUDY_PREFIX
 from training_workloads.unified_h1.pipe_authority_probe import PIPE_CLEARANCE_RUN, PIPE_PROBE_RUN, PIPE_SWITCH_RUN
 
 
@@ -21,11 +21,13 @@ POST_R4_THREE_SCHEMA = 'instinctrl-post-r4-three-resources/1'
 NEXT_LONG_SCHEMA = 'instinctrl-post-r4-next-long-resources/1'
 PIPE_PROBE_SCHEMA = 'instinctrl-post-u1792-pipe-probe-resources/1'
 U1792_STUDY_SCHEMA = 'instinctrl-post-u1792-study-resources/1'
+FRONT_STUDY_SCHEMA = 'instinctrl-post-u1792-front-study-resources/1'
 BOUNDED_SCOPES = {
     PIPE_PROBE_RUN: (PIPE_PROBE_SCHEMA, 'docs/experiments/instinct-post-u1792-two-long/RESOURCE_LEDGER.json'),
     PIPE_SWITCH_RUN: (PIPE_PROBE_SCHEMA, 'docs/experiments/instinct-post-u1792-two-long/rear-switch/RESOURCE_LEDGER.json'),
     PIPE_CLEARANCE_RUN: (PIPE_PROBE_SCHEMA, 'docs/experiments/instinct-post-u1792-two-long/rear-clearance/RESOURCE_LEDGER.json'),
     U1792_STUDY_PREFIX: (U1792_STUDY_SCHEMA, 'docs/experiments/instinct-post-u1792-two-long/study/RESOURCE_LEDGER.json'),
+    FRONT_STUDY_PREFIX: (FRONT_STUDY_SCHEMA, 'docs/experiments/instinct-post-u1792-two-long/study-front/RESOURCE_LEDGER.json'),
     NEXT_LONG_PREFIX: (NEXT_LONG_SCHEMA, 'docs/experiments/instinct-post-r4-next-long/RESOURCE_LEDGER.json'),
     THREE_PREFIX: (POST_R4_THREE_SCHEMA, 'docs/experiments/instinct-post-r4-three/RESOURCE_LEDGER.json'),
     f'{GPU_STUDY_PREFIX}R5-RECOVERY-': (GPU_RECOVERY_SCHEMA,
