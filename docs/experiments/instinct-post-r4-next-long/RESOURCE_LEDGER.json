@@ -1335,6 +1335,53 @@
         "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-RETRY-01-U1792-DIAGNOSTIC",
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-RETRY-01-U1792-DIAGNOSTIC/native"
       }
+    },
+    {
+      "closed_evidence_bytes": 122064896,
+      "id": "R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-CHECK-FORMAL-CURVE",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-CHECK-FORMAL-CURVE/control/receipt.json",
+        "sha256": "1b493a7e3406ca63e556bdf4eb455d59d0fd91f9c3d24cf24449b19cfb77c505"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/RESOURCE_POLICY.json",
+        "sha256": "7c828dfbb60e551e58cdacd13e2f0ddfd721b71a9b1b920b151003be3d455edb"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 429,
+        "live_starts": 1,
+        "live_wall_seconds": 429,
+        "nontraining_transitions": 46080,
+        "output_actual_plus_unreleased_reservations_bytes": 122064896,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_transitions": 0
+      },
+      "settlement": {
+        "charged_seconds": 429,
+        "original_resources": {
+          "allocated_gpu_seconds": 1990,
+          "live_starts": 1,
+          "live_wall_seconds": 1990,
+          "nontraining_transitions": 46080,
+          "output_actual_plus_unreleased_reservations_bytes": 1342177280,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-CHECK-FORMAL-CURVE/control/receipt.json",
+          "sha256": "1b493a7e3406ca63e556bdf4eb455d59d0fd91f9c3d24cf24449b19cfb77c505"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-CHECK-FORMAL-CURVE",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-CHECK-FORMAL-CURVE/native"
+      },
+      "storage_reservation_id": "ROUND-SYSTEM"
     }
   ],
   "new_used": {
