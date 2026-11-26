@@ -963,6 +963,57 @@
         "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-TWO-STUDY-FORMAL-A-U2816-DIAGNOSTIC",
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-TWO-STUDY-FORMAL-A-U2816-DIAGNOSTIC/native"
       }
+    },
+    {
+      "closed_evidence_bytes": 1583538176,
+      "id": "R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-TWO-STUDY-FORMAL-B-U2304",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-TWO-STUDY-FORMAL-B-U2304/control/receipt.json",
+        "sha256": "f56b861a4659c2a5cbda7021931a038e275670c4f04c267bfe4fbb3f05f5f01b"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-u1792-two-long/study/RESOURCE_POLICY.json",
+        "sha256": "a061d5460e1d6c428503171dc0f49aa322697275811bdc819f41aafb00a2d091"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 2244,
+        "live_starts": 1,
+        "live_wall_seconds": 2244,
+        "major_scientific_candidates": 1,
+        "nontraining_transitions": 0,
+        "output_actual_plus_unreleased_reservations_bytes": 1583538176,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_checkpoint_writes": 5,
+        "training_transitions": 262144
+      },
+      "settlement": {
+        "charged_seconds": 2244,
+        "original_resources": {
+          "allocated_gpu_seconds": 7390,
+          "live_starts": 1,
+          "live_wall_seconds": 7390,
+          "major_scientific_candidates": 1,
+          "nontraining_transitions": 0,
+          "output_actual_plus_unreleased_reservations_bytes": 6710886400,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_checkpoint_writes": 5,
+          "training_transitions": 262144
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-TWO-STUDY-FORMAL-B-U2304/control/receipt.json",
+          "sha256": "f56b861a4659c2a5cbda7021931a038e275670c4f04c267bfe4fbb3f05f5f01b"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-TWO-STUDY-FORMAL-B-U2304",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-TWO-STUDY-FORMAL-B-U2304/native"
+      },
+      "storage_reservation_id": "ROUND-SYSTEM"
     }
   ],
   "new_used": {
