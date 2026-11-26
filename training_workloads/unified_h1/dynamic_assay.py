@@ -49,7 +49,7 @@ def three_case(run_id):
     if match is None:
         match = re.fullmatch(NEXT_LONG_PREFIX + r'(REARPAIR|MECHANISM|CROSSCHECK|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
     if match is None:
-        match = re.fullmatch(U1792_STUDY_PREFIX + r'(CHECK|HOLDOUT|MECHANISM|CROSSCHECK)-[A-Z0-9-]+', run_id)
+        match = re.fullmatch(U1792_STUDY_PREFIX + r'(FRONT-CLEARANCE|CHECK|HOLDOUT|MECHANISM|CROSSCHECK)-[A-Z0-9-]+', run_id)
     return match[1] if match else None
 
 
@@ -74,7 +74,7 @@ def groups_for(run_id):
         return (HOLDOUT_GROUPS[-1],)
     if case == 'MECHANISM' and run_id.startswith(NEXT_LONG_PREFIX):
         return (*HOLDOUT_GROUPS, (1, 1, 1, 1))
-    if case in ('MECHANISM', 'CROSSCHECK', 'CHECK', 'HOLDOUT'):
+    if case in ('MECHANISM', 'FRONT-CLEARANCE', 'CROSSCHECK', 'CHECK', 'HOLDOUT'):
         return HOLDOUT_GROUPS
     if run_id == PERSISTENCE_RUN:
         return PERSISTENCE_GROUPS
@@ -124,7 +124,7 @@ def contract(params):
         checked(value)
     if case:
         from instinctlab.control.escape_recovery import (
-            FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FRONT_SWITCH_25_VERSION,
+            FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION,
             LATERAL_VERSION, MOUNT_PITCH_DEGREES, REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION, RECOVERY_VERSION,
         )
 
@@ -162,6 +162,9 @@ def contract(params):
             if (options != dict(candidate=REAR_CLEARANCE_25_VERSION, reference=FALLBACK_25_VERSION)
                     or models['candidate']['sha256'] != U1792_CHECKPOINT_SHA):
                 raise ValueError('DYNAMIC_PIPE_CLEARANCE_CONFIRMATION_ORIGIN')
+        if case == 'FRONT-CLEARANCE' and (models['candidate'] != models['reference'] or
+                options != dict(candidate=FRONT_CLEARANCE_25_VERSION, reference=REAR_CLEARANCE_25_VERSION)):
+            raise ValueError('DYNAMIC_FRONT_CLEARANCE_FIXED_WEIGHTS')
         if case == 'CROSSCHECK' and u1792_study:
             from .robustness_training_plan import U1792_CHECKPOINT_SHA
 

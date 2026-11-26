@@ -18,9 +18,10 @@ FALLBACK_25_VERSION = 'm4-escape-fallback-p25-v1'
 FRONT_SWITCH_25_VERSION = 'm4-escape-front-switch-p25-v1'
 REAR_SWITCH_25_VERSION = 'm4-escape-rear-switch-p25-v1'
 REAR_CLEARANCE_25_VERSION = 'm4-escape-rear-clearance-p25-v1'
+FRONT_CLEARANCE_25_VERSION = 'm4-escape-front-clearance-p25-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
-                       REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25}
+                       REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -28,7 +29,7 @@ RECOVERY_LIMIT = 65
 
 class EscapeRecovery(EscapeOption):
     def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False, redirect=False,
-                 fallback=False, front_switch=False, rear_switch=False, rear_clearance=False):
+                 fallback=False, front_switch=False, rear_switch=False, rear_clearance=False, front_clearance=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -39,6 +40,7 @@ class EscapeRecovery(EscapeOption):
         self.front_switched = torch.zeros_like(self.applied)
         self.rear_switch = rear_switch
         self.rear_clearance = rear_clearance
+        self.front_clearance = front_clearance
         self.rear_switched = torch.zeros_like(self.applied)
         self.escape_speed = self.direction.new_full((lanes,), SPEED_M_S)
         self.retreat_basis = torch.zeros_like(self.direction)
@@ -85,6 +87,8 @@ class EscapeRecovery(EscapeOption):
                 best_score = torch.where(better, score, best_score)
         if self.rear_clearance:
             best_direction = self.choose_rear_clearance(local_lidar, local_state, retreat, side, best_direction, config)
+        if self.front_clearance:
+            best_direction = self.choose_front_clearance(local_lidar, local_state, retreat, side, best_direction, config)
         self.direction[lanes] = best_direction
         selected[lanes, 1:] = .5 + SPEED_M_S * best_direction
         if self.fast_lateral:
@@ -118,6 +122,21 @@ class EscapeRecovery(EscapeOption):
         command = self.issued(lidar[lanes], state[lanes], trial, config)
         viable = ((command.v_final_b * preferred).sum(dim=1) > .08) & (command.metrics['emergency'].flatten() == 0.)
         direction[lanes[viable]] = preferred[viable]
+        return direction
+
+    def choose_front_clearance(self, lidar, state, retreat, side, direction, config):
+        command, _ = extract_latest_commands(state)
+        lateral = (direction * side).sum(dim=1)
+        lanes = ((command.norm(dim=1) <= .001) & (retreat[:, 0] < -.65) & (lateral.abs() > .85)).nonzero().flatten()
+        if not len(lanes):
+            return direction
+        baseline = side[lanes] * lateral[lanes, None].sign()
+        gain = torch.zeros_like(state[lanes, :1])
+        left, right = (self.issued(lidar[lanes], state[lanes], torch.cat((gain, .5 + sign*SPEED_M_S*baseline), dim=1),
+                                   config).metrics for sign in (1., -1.))
+        unattenuated = (left['beta'] == 1.) & (right['beta'] == 1.) & (left['emergency'] == 0.) & (right['emergency'] == 0.)
+        switch = (unattenuated & (left['active_beam_count'] > 0.) & (right['active_beam_count'] == 0.)).flatten()
+        direction[lanes[switch]] = -baseline[switch]
         return direction
 
     def redirect_clipped(self, lidar, state, selected, config):
