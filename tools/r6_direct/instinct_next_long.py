@@ -11,9 +11,10 @@ from tools.r6_direct.import_legacy import ROOT, pin
 from tools.r6_direct.instinct_cycle import load, save
 from tools.r6_direct.instinct_cycle_finish import freeze, guard
 from tools.r6_direct.instinct_long import GIB, LongStudy
+from tools.r6_direct.instinct_post_r4_three import execution_manifest
 from tools.r6_direct.prepare import build
 from tools.r6_direct.resource_policy import NEXT_LONG_SCHEMA, OUTPUT_CAP, THIRD_CAPS
-from tools.r6_direct.source import ROOT as SNAPSHOT, manifest, training_identity
+from tools.r6_direct.source import ROOT as SNAPSHOT, training_identity
 from tools.r6_direct.storage import SYSTEM_FLOOR, SYSTEM_ROOT, SYSTEM_STORAGE_SCHEMA
 from tools.r6_evidence import checked
 from training_workloads.unified_h1.dynamic_assay import NEXT_LONG_PREFIX as PREFIX
@@ -110,7 +111,7 @@ class NextLongStudy(LongStudy):
             if job['snapshot'] != str(self.snapshot) or read(job['contract'])['parameters'] != params:
                 raise ValueError('Requested input differs from the committed contract')
             return path
-        source = manifest()
+        source = execution_manifest()
         source_pin = self.write(f'source-{source["source_commit"][:12]}.json', source)
         contract = self.write(f'{run_id}-contract.json', build('contract', dict(operation=operation, parameters=params)))
         self.input(run_id, contract, self.predecessor(), snapshot=self.snapshot, source=source_pin,
@@ -161,7 +162,7 @@ class NextLongStudy(LongStudy):
                     or protocol['fixed_endpoint'] != spec['segments'][-1][1]
                     or not spec['coverage_minimums']):
                 raise ValueError('Freeze the formal endpoint and coverage alongside the independent protocol')
-        source = manifest()
+        source = execution_manifest()
         prior = load(PRIOR/'FORMAL-R3/RESULTS.json')
         prior_recipe = read(read(prior['design'])['recipe'])
         old = prior['segments'][-1]
@@ -220,7 +221,7 @@ class NextLongStudy(LongStudy):
             raise ValueError('Use the study training directory')
         design = load(design_path)
         source = read(design['source'])
-        if source != manifest():
+        if source != execution_manifest():
             raise ValueError('Use the exact snapshot in the frozen design')
         identity = training_identity(source)
         recipe = read(design['recipe'])

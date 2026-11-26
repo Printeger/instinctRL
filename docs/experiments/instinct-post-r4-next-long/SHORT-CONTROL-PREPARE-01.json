@@ -1,0 +1,14 @@
+{
+  "status": "FAILED_BEFORE_RUN_ISSUE",
+  "command_exit": 1,
+  "error": "ValueError: Use the exact snapshot in the frozen design",
+  "old_design": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/SHORT-CONTROL/DESIGN.json",
+    "sha256": "1f3602fca73729cd22ec0452c7f27f2c638c4bd6cce51eaaad6143dce4141ff5"
+  },
+  "cause": "A Python tuple in the source manifest compares unequal to its serialized JSON array.",
+  "actual_gpu_starts": 0,
+  "actual_training_transitions": 0,
+  "actual_nontraining_transitions": 0,
+  "correction": "Reuse the previously validated canonical JSON manifest comparison. Issue a distinct retry design with the same scientific and resource settings."
+}
