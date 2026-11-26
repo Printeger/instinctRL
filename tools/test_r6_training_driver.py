@@ -87,6 +87,22 @@ def test_clock_finite_and_reset_cannot_rewind_it():
     with pytest.raises(ValueError,match='EXHAUSTED'):driver.step(torch.zeros(32,4))
     assert driver.counters.training_transitions==512 and env.calls.count('step')==16
 
+
+def test_u1792_robust_driver_requires_physical_pipe_coverage():
+    from training_workloads.unified_h1.dynamic_assay import U1792_STUDY_PREFIX
+    from training_workloads.unified_h1.recovery_training_scene import TUBE_LANES
+
+    env = Env()
+    journal = SimpleNamespace(pool=SimpleNamespace(run_id=U1792_STUDY_PREFIX+'SHORT-U1856'))
+    with pytest.raises(ValueError, match='R6_PIPE_COVERAGE_GEOMETRY'):
+        build(env, journal=journal)
+    env.tube_training_lanes = TUBE_LANES
+    env._h1_moving_sphere = SimpleNamespace(enabled=False, latest=None)
+    driver = build(env, journal=journal)
+    with pytest.raises(RuntimeError, match='R6_PIPE_COVERAGE_ACQUISITION_REQUIRED'):
+        driver.step(torch.zeros(32,4))
+    assert env.calls == []
+
 from tools.test_r6_training_plan import case
 
 def test_clock_from_reviewed_plan_binds_exact_seed_recipe_and_bounds(case):

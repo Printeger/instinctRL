@@ -7,12 +7,6 @@ import math
 
 
 RUN_PREFIX = 'R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-'
-
-
-def tracks_run(run_id):
-    from .dynamic_assay import U1792_STUDY_PREFIX
-
-    return run_id.startswith((RUN_PREFIX, U1792_STUDY_PREFIX))
 STREAM = 'pipe_coverage.jsonl'
 WINDOW = dict(closing_steps=3, closing_gap_m=1.9, closing_rate_mps=.20,
               recovery_steps=10, recovery_gap_m=.60, minimum_command_mps=.03,
@@ -23,6 +17,12 @@ _COLUMNS = (
     'escape_active', 'emergency', 'command_w_mps', 'issued_w_mps', 'position_w_m',
 )
 _FIELDS = {'step', 'tick_before', 'tick_after', 'contact_samples', 'lanes', *_COLUMNS}
+
+
+def tracks_run(run_id):
+    from .dynamic_assay import U1792_STUDY_PREFIX
+
+    return run_id.startswith((RUN_PREFIX, U1792_STUDY_PREFIX))
 
 
 def capture(before, after, evidence, lanes):
@@ -212,8 +212,8 @@ def audit(binding):
             continue
         start, end = (phase[key] * 16 for key in ('start_update', 'target_update'))
         name = f"phases/{phase['index']}-{start}-{end}/learning_log/{STREAM}"
-        record = streams[name]
-        if not record['complete'] or record['rows'] != end-start:
+        record = streams.get(name)
+        if record is None or not record['complete'] or record['rows'] != end-start:
             raise ValueError('R6_PIPE_COVERAGE_INCOMPLETE_ORIGINAL')
         path = checked(record['pin'])
         if path != ctx['output']/'compressed_evidence'/f'{name}.r6z':

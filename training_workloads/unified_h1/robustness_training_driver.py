@@ -93,7 +93,7 @@ class R6TrainingDriver(UnifiedH1Driver):
         super().__init__(environment,observation,clock=clock,**kwargs)
         run_id = getattr(getattr(self.journal, 'pool', None), 'run_id', '')
         self._pipe_coverage_lanes = ()
-        if run_id.startswith(recovery_coverage.RUN_PREFIX):
+        if recovery_coverage.tracks_run(run_id):
             from .recovery_training_scene import TUBE_LANES
 
             if tuple(getattr(environment, 'tube_training_lanes', ())) != TUBE_LANES:
