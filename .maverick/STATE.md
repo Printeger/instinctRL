@@ -1,16 +1,8 @@
-# R4 后三轮研发在执行
+# R4 后三轮正式训练和统一独评完成，等待审查
 
-任务 `instinctrl-post-r4-three`。五位原生伙伴首轮已返回，`report --require-full-team` 核验 6/6。独评协议和种子已提前冻结于 `4e77ddae` 与 tag `instinct-post-r4-three-protocol`。`REAR-01` 四臂关闭，正常来物换方向把横移中位从约 .020 提到 .203 m，接触仍 32/32。较慢来物配换向降至 24/32。`MECHANISM-R1` 三臂关闭，后向悬停可下发时将幅度增加到 .45 m/s，正常来物接触从 32/32 降至 24/32，前向、普通通行和静止与 .30 m/s 方向臂一致。
+任务 `instinctrl-post-r4-three`。五位原生伙伴首轮与 Maverick 综合核验 6/6。独评在 `4e77ddae` 预冻结，三轮实际完成 512 更新、262,144 条训练转换，三次 RNG 恢复逐字节一致。三终点 `u896`、`u768`、`u768` 的物理接触为 31、19、5/192，七臂所有 R6 条件逐项 32/32。第三轮 25° 裁零后转向的同权重开发对照救回 23/32 后向轨迹，独评同执行起点到终点 11→5/192，全部预冻结护栏通过。建议第三轮完整组合作为后续产品基线，保留旧合格模型作回归对照。
 
-`SHORT-R1` 已完成 32 更新、16,384 条转换和同设备概率复算。`u656`、`u672` 都已核验。前两次协调入口因源码清单 JSON 表示不一致在发车前退出，均为零 GPU，已保留 `SHORT-R1-PREPARE-01/02.json`。有效源码 `244365f9`、快照 `~/instinctrl-runs/INSTINCT-POST-R4-THREE-SOURCE-05`，有效设计 `SHORT-R1/DESIGN-reissue-244365f9eeae.json`。`CHECK-SHORT-R1` 已关闭。u640/u656/u672 后向均 24/32，前飞接触 0/32→1/32→3/32。按 Rebel 的独立复算，先完成同种子、更低 actor 学习率的 `SHORT-R1-B` 短训与配对（源码 `fe24edaa`、快照 `INSTINCT-POST-R4-THREE-SOURCE-06`），再冻结正式 R1。正式长训名额尚未使用。 [项目计划](../docs/experiments/instinct-post-r4-three/PLAN.md) · [阶段输入与账本](../docs/experiments/instinct-post-r4-three/)
-
-`SHORT-R1-B` 及三臂配对已关闭。32 次节点前飞接触 1/32、联合恢复 31/32、后向接触 24/32。R1 采用 `1e-5`，固定 `u640→u896`，2×128 更新、131,072 条转换，从同一 `fe24edaa` 快照发车。`FORMAL-R1` 正在执行，先等 `U768`、`U896` 的相同设备概率与严格续训审计，再等 `CHECK-FORMAL-R1`，然后再定 R2。 [正式设计](../docs/experiments/instinct-post-r4-three/FORMAL-R1.md)
-
-后向回波的离线无静遮挡几何重放在 30° 逐条复得 32/32 的首次命中步，标称 25° 预测提早 6–9 步。它只决定后续低成本感测对照的候选角度，尚无闭环结果。 [射线复算](../docs/experiments/instinct-post-r4-three/MOUNT_GEOMETRY_REPLAY.json)
-
-`FORMAL-R1` 和开发评价已关闭。实际 256 次更新、131,072 条转换、1,692.32 秒，终点 `u896` SHA `5e625e79931bae6c129101be4dc68a954a3a85961d30855617dd0bc7aa30f886`，第二段完整恢复逐字 RNG。开发前向接触 3→5/64，后向 24/32 不变，管道联合恢复 8→7/8，普通通行四布局都增加。剩余两个正式名额。`MECHANISM-R2` 以原 `u640` 和同 v2 动作测试 30/28/25° 标定，正在执行，冻结源码 `5e603968`、快照 `INSTINCT-POST-R4-THREE-SOURCE-07`。按三臂真实回波、接触、进度与静漂选第二轮短训。 [关闭训练复核](../docs/experiments/instinct-post-r4-three/FORMAL-R1-TRAINING-AUDIT.json) · [R2 研究问题](../docs/experiments/instinct-post-r4-three/ROUND2_DEVELOPMENT.md)
-
-`MECHANISM-R2` 已关闭，30/28/25° 后向首回波中位第 41/39/35 步，接触 24/16/24（各 32）。选择 28° 作 `SHORT-R2`（同 u640、1e-5、32 更新、两节点；源码 `5e603968`），运行状态由已提交输入和 `~/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-SHORT-R2-U672/` 回执负责。最终独评仍未运行。 [标定配对复算](../docs/experiments/instinct-post-r4-three/MECHANISM-R2-RECOMPUTED.json)
+最终复算 1,562,560 条独立评价转换，Scientist 独立重算 54 份物理轨迹和 14 份 R6 停令审计窗。41 项作业的回执和 259 个登记身份已核对退出，系统盘可用 66.425 GiB。停在唯一审查点。 [报告](../docs/experiments/instinct-post-r4-three/REPORT.md) · [完成复核](../docs/experiments/instinct-post-r4-three/COMPLETION_AUDIT.json) · [贡献记录](contributions.jsonl)
 
 # R4 后管道恢复正式训练和独评完成，等待审查
 

@@ -2,9 +2,9 @@
 
 项目开发默认使用 Maverick V1.2.0。角色与交付规则见根 `AGENTS.md`，安装与验证记录见 `.maverick/STATE.md`。R6 本地执行入口仍为 `tools/r6_direct/`。
 
-# R4 后续三轮正式训练已关闭，统一独评在执行
+# R4 后续三轮正式训练与统一独评完成，等待审查
 
-三轮共完成 512 次更新、262,144 条训练转换，正式终点为 `u896`、`u768`、`u768`，各自保存完整分段权重并通过恢复复算。第三轮同 25°、同权重修正把开发后向接触从 24/32 降至 1/32。按预先冻结的同种子协议，统一评估三组起止配对和旧合格模型，包含四布局物理留出及七臂全量 R6。独立结果、复核和产品基线结论汇总后再进入唯一审查点。 [计划](experiments/instinct-post-r4-three/PLAN.md) · [预冻结独评](experiments/instinct-post-r4-three/INDEPENDENT_PROTOCOL.json) · [最终容量核对](experiments/instinct-post-r4-three/FINAL_RESOURCE_ADMISSION.json)
+三轮合计 512 次更新、262,144 条训练转换，各有固定终点和完整分段恢复。统一独评的七个 R6 臂原五项和 16 个扰动块均逐项 32/32，三个终点全部通过物理与 R6 工程护栏。四布局物理留出中旧合格模型、三轮终点的接触依次为 104、31、19、5/192。第三轮同执行起点为 11/192，终点前向 3/64、后向 2/32，管道联合恢复 7/8，R6 最差跟踪增量相对旧合格 +0.00232 m/s。建议第三轮 `u768`、25° 标定与裁零后转向完整组合作为后续产品基线。41 项任务作业与最终复核均关闭，停在唯一审查点。 [三轮审查报告](experiments/instinct-post-r4-three/REPORT.md) · [独评复核](experiments/instinct-post-r4-three/COMPLETION_AUDIT.json)
 
 # R4 后管道恢复正式训练和独评完成，等待审查
 

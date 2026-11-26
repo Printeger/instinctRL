@@ -1,0 +1,522 @@
+{
+  "task": "instinctrl-post-r4-three",
+  "reviewer": "/root/scientist",
+  "participation": "native_subagent",
+  "reviewed_arms": 7,
+  "raw_stop_audits_rehashed": 14,
+  "review_scope": "Recomputed all lanes in both raw stop audit windows for each arm. Also checked all original and disturbance counts, frozen seeds, pair metrics, and binding against the direct replay reports.",
+  "completion_audit": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-three/COMPLETION_AUDIT.json",
+    "sha256": "355107f331087bce6f06ab5945aacc7809efb4f02ee6b261b88c7d57d3303978"
+  },
+  "arms": {
+    "qualified": {
+      "binding": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-QUALIFIED/analysis/binding.json",
+        "sha256": "95e0a62e7bc3aced9638b8448b0af86ba272fa2a3542c171a442f30371cb54e5"
+      },
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-QUALIFIED/control/receipt.json",
+        "sha256": "b6413b818d601a1f05bf2bf1a4c6c9b8f8a0c901102056a06c4da67762a3c08f"
+      },
+      "transitions": 193600,
+      "original_execution_seed": 20260909,
+      "perturbation_seed": 1438054595,
+      "original_counts": {
+        "S": 32,
+        "T": 32,
+        "W": 32,
+        "X": 32,
+        "Z": 32
+      },
+      "perturbation_counts": {
+        "P-clean": 32,
+        "P-combined": 32,
+        "S-clean-high": 32,
+        "S-clean-low": 32,
+        "S-delay-drop": 32,
+        "S-noise": 32,
+        "W-combined": 32,
+        "W-far": 32,
+        "W-middle": 32,
+        "W-near": 32,
+        "X-clean": 32,
+        "X-noise": 32,
+        "stress-P-high": 32,
+        "stress-S-combined": 32,
+        "stress-S-noise": 32,
+        "stress-W-high": 32
+      },
+      "stop_windows": {
+        "S-clean-low": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-QUALIFIED/results/research-r6-candidate-evaluation/r6/S-clean-low/audit.bin",
+            "sha256": "7928832a1b52f345b2e300d5386f7c3da380b545898a96f8f9c1a1e7e67cbab1"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 24.97462715167785,
+          "mean_usable_fraction": 0.5688246840424835
+        },
+        "S-delay-drop": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-QUALIFIED/results/research-r6-candidate-evaluation/r6/S-delay-drop/audit.bin",
+            "sha256": "6954b056f30ff08ec046674651042eaa06ce660ddd492baf5e13b4260e6fd316"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 51.1412179551553,
+          "mean_usable_fraction": 0.5694510058686137
+        }
+      }
+    },
+    "r1-origin": {
+      "binding": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-ORIGIN/analysis/binding.json",
+        "sha256": "fdfd53aaa83af5e53ffc7d257c27b4a7a0ea3722d1a5ddf719ef1246fc1cf333"
+      },
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-ORIGIN/control/receipt.json",
+        "sha256": "ad152c3ab6d4f81cada9e7b1f7b2f3a8984619818006adb6ca71247b0f4ca9d7"
+      },
+      "transitions": 193600,
+      "original_execution_seed": 20260909,
+      "perturbation_seed": 1438054595,
+      "original_counts": {
+        "S": 32,
+        "T": 32,
+        "W": 32,
+        "X": 32,
+        "Z": 32
+      },
+      "perturbation_counts": {
+        "P-clean": 32,
+        "P-combined": 32,
+        "S-clean-high": 32,
+        "S-clean-low": 32,
+        "S-delay-drop": 32,
+        "S-noise": 32,
+        "W-combined": 32,
+        "W-far": 32,
+        "W-middle": 32,
+        "W-near": 32,
+        "X-clean": 32,
+        "X-noise": 32,
+        "stress-P-high": 32,
+        "stress-S-combined": 32,
+        "stress-S-noise": 32,
+        "stress-W-high": 32
+      },
+      "stop_windows": {
+        "S-clean-low": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-ORIGIN/results/research-r6-candidate-evaluation/r6/S-clean-low/audit.bin",
+            "sha256": "77589ebb0e77954a3ce5fab80affcad7f6d5546c30dd49d523b2b371c3dd7edb"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 24.558567460044287,
+          "mean_usable_fraction": 0.5688696299865842
+        },
+        "S-delay-drop": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-ORIGIN/results/research-r6-candidate-evaluation/r6/S-delay-drop/audit.bin",
+            "sha256": "a1fb188989df20066eb567a4b0d28f8d5cb297c834f641999d8645a04006bca5"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 50.20758499682415,
+          "mean_usable_fraction": 0.569439339991659
+        }
+      }
+    },
+    "r1-end": {
+      "binding": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-END/analysis/binding.json",
+        "sha256": "c9d0082131d00219212429a75ed5efd2cab9ac0640ecaa499ab3eb4e4d687930"
+      },
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-END/control/receipt.json",
+        "sha256": "744697187e311b796d1606a39327747cdbd8a58586c89f4ad29554737f6c5a56"
+      },
+      "transitions": 193600,
+      "original_execution_seed": 20260909,
+      "perturbation_seed": 1438054595,
+      "original_counts": {
+        "S": 32,
+        "T": 32,
+        "W": 32,
+        "X": 32,
+        "Z": 32
+      },
+      "perturbation_counts": {
+        "P-clean": 32,
+        "P-combined": 32,
+        "S-clean-high": 32,
+        "S-clean-low": 32,
+        "S-delay-drop": 32,
+        "S-noise": 32,
+        "W-combined": 32,
+        "W-far": 32,
+        "W-middle": 32,
+        "W-near": 32,
+        "X-clean": 32,
+        "X-noise": 32,
+        "stress-P-high": 32,
+        "stress-S-combined": 32,
+        "stress-S-noise": 32,
+        "stress-W-high": 32
+      },
+      "stop_windows": {
+        "S-clean-low": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-END/results/research-r6-candidate-evaluation/r6/S-clean-low/audit.bin",
+            "sha256": "a2d3850861cecbfc2a18430def347c1310e6fbc6681816f0e2b083f75f71dc9b"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 25.125893328222446,
+          "mean_usable_fraction": 0.5688832519762218
+        },
+        "S-delay-drop": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R1-END/results/research-r6-candidate-evaluation/r6/S-delay-drop/audit.bin",
+            "sha256": "8a25be338584c6cc6360d6551793e2177615a5e34b8f913eacb0e1baf016a381"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 52.13025117001962,
+          "mean_usable_fraction": 0.5693515323847532
+        }
+      }
+    },
+    "r2-origin": {
+      "binding": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R2-ORIGIN/analysis/binding.json",
+        "sha256": "f7afe936f1c91761bbf02611de0b2291305eaaf4f6ece1c60b1cd927b8ef1954"
+      },
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R2-ORIGIN/control/receipt.json",
+        "sha256": "e38c610af7cb0f90f2f11ecaea3d563bda425ce165304f6b22575a1cba8cac20"
+      },
+      "transitions": 193600,
+      "original_execution_seed": 20260909,
+      "perturbation_seed": 1438054595,
+      "original_counts": {
+        "S": 32,
+        "T": 32,
+        "W": 32,
+        "X": 32,
+        "Z": 32
+      },
+      "perturbation_counts": {
+        "P-clean": 32,
+        "P-combined": 32,
+        "S-clean-high": 32,
+        "S-clean-low": 32,
+        "S-delay-drop": 32,
+        "S-noise": 32,
+        "W-combined": 32,
+        "W-far": 32,
+        "W-middle": 32,
+        "W-near": 32,
+        "X-clean": 32,
+        "X-noise": 32,
+        "stress-P-high": 32,
+        "stress-S-combined": 32,
+        "stress-S-noise": 32,
+        "stress-W-high": 32
+      },
+      "stop_windows": {
+        "S-clean-low": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R2-ORIGIN/results/research-r6-candidate-evaluation/r6/S-clean-low/audit.bin",
+            "sha256": "3eb75e508030760cce9b200b12f413814ebdafe1e8346c4cda19f4196010164d"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 24.867987078323495,
+          "mean_usable_fraction": 0.5650070042908192
+        },
+        "S-delay-drop": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R2-ORIGIN/results/research-r6-candidate-evaluation/r6/S-delay-drop/audit.bin",
+            "sha256": "66a66cf8933579a61d6b764c98fadf714d632e44d2630e82fd970487513ccd08"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 50.943182695191354,
+          "mean_usable_fraction": 0.5655227628909052
+        }
+      }
+    },
+    "r2-end": {
+      "binding": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R2-END/analysis/binding.json",
+        "sha256": "b141f1b0e431c955b3459003c5ae5ac191818998d02d224bddd14a9aee0148e7"
+      },
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R2-END/control/receipt.json",
+        "sha256": "d78194c423cb0c1515f255aa3f24432cb44e5727b6bcd4f672bca4f6dd112963"
+      },
+      "transitions": 193600,
+      "original_execution_seed": 20260909,
+      "perturbation_seed": 1438054595,
+      "original_counts": {
+        "S": 32,
+        "T": 32,
+        "W": 32,
+        "X": 32,
+        "Z": 32
+      },
+      "perturbation_counts": {
+        "P-clean": 32,
+        "P-combined": 32,
+        "S-clean-high": 32,
+        "S-clean-low": 32,
+        "S-delay-drop": 32,
+        "S-noise": 32,
+        "W-combined": 32,
+        "W-far": 32,
+        "W-middle": 32,
+        "W-near": 32,
+        "X-clean": 32,
+        "X-noise": 32,
+        "stress-P-high": 32,
+        "stress-S-combined": 32,
+        "stress-S-noise": 32,
+        "stress-W-high": 32
+      },
+      "stop_windows": {
+        "S-clean-low": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R2-END/results/research-r6-candidate-evaluation/r6/S-clean-low/audit.bin",
+            "sha256": "6fed29f2bbc78df93e0e616d979c30ee667eaba6450b6523c05ce0580116ea15"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 24.957004699099343,
+          "mean_usable_fraction": 0.5649976330623031
+        },
+        "S-delay-drop": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R2-END/results/research-r6-candidate-evaluation/r6/S-delay-drop/audit.bin",
+            "sha256": "f851bc70c9a7bdd56f35f14fab6baaac5a14f9d57182c6756200993a17c8a287"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 51.16760498203803,
+          "mean_usable_fraction": 0.565514781884849
+        }
+      }
+    },
+    "r3-origin": {
+      "binding": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R3-ORIGIN/analysis/binding.json",
+        "sha256": "bd0c386295c02d83df9428795771634564b651aaa791b26f1561192619d7f482"
+      },
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R3-ORIGIN/control/receipt.json",
+        "sha256": "3fc4d81ef3fcfe77d3dcb9fbf5c8b349cc534650397419e09dee9efcac183503"
+      },
+      "transitions": 193600,
+      "original_execution_seed": 20260909,
+      "perturbation_seed": 1438054595,
+      "original_counts": {
+        "S": 32,
+        "T": 32,
+        "W": 32,
+        "X": 32,
+        "Z": 32
+      },
+      "perturbation_counts": {
+        "P-clean": 32,
+        "P-combined": 32,
+        "S-clean-high": 32,
+        "S-clean-low": 32,
+        "S-delay-drop": 32,
+        "S-noise": 32,
+        "W-combined": 32,
+        "W-far": 32,
+        "W-middle": 32,
+        "W-near": 32,
+        "X-clean": 32,
+        "X-noise": 32,
+        "stress-P-high": 32,
+        "stress-S-combined": 32,
+        "stress-S-noise": 32,
+        "stress-W-high": 32
+      },
+      "stop_windows": {
+        "S-clean-low": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R3-ORIGIN/results/research-r6-candidate-evaluation/r6/S-clean-low/audit.bin",
+            "sha256": "73cd3febf6b03582d0fb46d1b58d6e698ee96b6a17fefbf6376e02c982ea689b"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 25.659655914641917,
+          "mean_usable_fraction": 0.5598432221263647
+        },
+        "S-delay-drop": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R3-ORIGIN/results/research-r6-candidate-evaluation/r6/S-delay-drop/audit.bin",
+            "sha256": "5c8704f8cd0e53c9edfc090f912326784d0827d59b11d92bcbf3113c60a2216a"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 52.35992143454496,
+          "mean_usable_fraction": 0.5601648571901023
+        }
+      }
+    },
+    "r3-end": {
+      "binding": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R3-END/analysis/binding.json",
+        "sha256": "a9653610ebb1f1793533cddb3baf1cc2a61b87af0ab41b22b48d7d700792ada3"
+      },
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R3-END/control/receipt.json",
+        "sha256": "0d66806b014e7b6a5c7e47bc0adb4a5c2996cff09a99b0635286fa2813d48626"
+      },
+      "transitions": 193600,
+      "original_execution_seed": 20260909,
+      "perturbation_seed": 1438054595,
+      "original_counts": {
+        "S": 32,
+        "T": 32,
+        "W": 32,
+        "X": 32,
+        "Z": 32
+      },
+      "perturbation_counts": {
+        "P-clean": 32,
+        "P-combined": 32,
+        "S-clean-high": 32,
+        "S-clean-low": 32,
+        "S-delay-drop": 32,
+        "S-noise": 32,
+        "W-combined": 32,
+        "W-far": 32,
+        "W-middle": 32,
+        "W-near": 32,
+        "X-clean": 32,
+        "X-noise": 32,
+        "stress-P-high": 32,
+        "stress-S-combined": 32,
+        "stress-S-noise": 32,
+        "stress-W-high": 32
+      },
+      "stop_windows": {
+        "S-clean-low": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R3-END/results/research-r6-candidate-evaluation/r6/S-clean-low/audit.bin",
+            "sha256": "231edcfc001bb877b4e08c74049b8d121c0d7a8964ba2804fdc21170ded45be0"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 25.753548174980097,
+          "mean_usable_fraction": 0.5597708460316062
+        },
+        "S-delay-drop": {
+          "raw_audit": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-R6-R3-END/results/research-r6-candidate-evaluation/r6/S-delay-drop/audit.bin",
+            "sha256": "8933551fdf756fd7ffce32041fb9949618f4000c00b9c44dea2a831982defd99"
+          },
+          "lane_count": 32,
+          "score_samples": 3200,
+          "invalid_samples": 0,
+          "anchor_mae_mm": 53.24613422853872,
+          "mean_usable_fraction": 0.5600375195406377
+        }
+      }
+    }
+  },
+  "pairs": [
+    {
+      "round": 1,
+      "reference": "qualified",
+      "pass_guardrails": true,
+      "worst_block": "S-clean-low",
+      "worst_delta_mps": -0.001695557661718113,
+      "improved_tracking_blocks": 13,
+      "total_tracking_blocks": 13,
+      "clean_anchor_delta_mm": 0.1512661765445955,
+      "delay_anchor_delta_mm": 0.989033214864321,
+      "coverage_delta": -9.947348386052379e-05
+    },
+    {
+      "round": 1,
+      "reference": "r1-origin",
+      "pass_guardrails": true,
+      "worst_block": "S-clean-low",
+      "worst_delta_mps": -0.0032395330279433327,
+      "improved_tracking_blocks": 13,
+      "total_tracking_blocks": 13,
+      "clean_anchor_delta_mm": 0.567325868178159,
+      "delay_anchor_delta_mm": 1.9226661731954664,
+      "coverage_delta": -8.780760690574319e-05
+    },
+    {
+      "round": 2,
+      "reference": "qualified",
+      "pass_guardrails": true,
+      "worst_block": "stress-W-high",
+      "worst_delta_mps": 0.004815313396764269,
+      "improved_tracking_blocks": 0,
+      "total_tracking_blocks": 13,
+      "clean_anchor_delta_mm": -0.017622452578507364,
+      "delay_anchor_delta_mm": 0.026387026882730424,
+      "coverage_delta": -0.003936223983764697
+    },
+    {
+      "round": 2,
+      "reference": "r2-origin",
+      "pass_guardrails": true,
+      "worst_block": "W-near",
+      "worst_delta_mps": -0.00041310554002505287,
+      "improved_tracking_blocks": 13,
+      "total_tracking_blocks": 13,
+      "clean_anchor_delta_mm": 0.08901762077584863,
+      "delay_anchor_delta_mm": 0.22442228684667498,
+      "coverage_delta": -7.981006056145823e-06
+    },
+    {
+      "round": 3,
+      "reference": "qualified",
+      "pass_guardrails": true,
+      "worst_block": "stress-W-high",
+      "worst_delta_mps": 0.002319382736417498,
+      "improved_tracking_blocks": 0,
+      "total_tracking_blocks": 13,
+      "clean_anchor_delta_mm": 0.7789210233022459,
+      "delay_anchor_delta_mm": 2.1049162733834237,
+      "coverage_delta": -0.009413486327976006
+    },
+    {
+      "round": 3,
+      "reference": "r3-origin",
+      "pass_guardrails": true,
+      "worst_block": "S-clean-low",
+      "worst_delta_mps": -0.0010228804796327488,
+      "improved_tracking_blocks": 13,
+      "total_tracking_blocks": 13,
+      "clean_anchor_delta_mm": 0.09389226033817977,
+      "delay_anchor_delta_mm": 0.8862127939937636,
+      "coverage_delta": -0.00012733764946459836
+    }
+  ]
+}
