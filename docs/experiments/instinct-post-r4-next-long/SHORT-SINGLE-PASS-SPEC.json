@@ -1,0 +1,48 @@
+{
+  "label": "SHORT-SINGLE-PASS",
+  "candidate_id": "R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25-SINGLE-PASS",
+  "training_seed": 1270871049,
+  "tube_drive_steps": 100,
+  "phases": [
+    [
+      "robust",
+      16
+    ],
+    [
+      "original",
+      32
+    ]
+  ],
+  "checkpoint_offsets": [
+    16,
+    32
+  ],
+  "segments": [
+    [
+      768,
+      800,
+      1800
+    ]
+  ],
+  "payload_gib": 4,
+  "hypothesis": "Keeping the inbound pass and removing the physical return in tube training creates usable recovery exposure under the same command.",
+  "comparison": "The first 32 updates of the closed FINE-REPLAY branch are the equal-budget oscillating-mover control. The u768 start and both +32 nodes share the same development evaluation geometry with the same execution.",
+  "development_evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/SINGLE-PASS-DESIGN.md",
+      "sha256": "6a02a1d844deeb67ec87767cbcd14fc708aef74717329e3e34370aea1d0e8ecb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/FINE-REPLAY/RESULTS.json",
+      "sha256": "f123046669d839ee1d5d684fefcc920939d812f82bdd1ad33e0e33f476084dcb"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/CHECK-FINE-REPLAY.json",
+      "sha256": "c49452adebba3d010962c3f64119ab132dab607e26b04c817bc13c06bd1c11ff"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/SHORT-PAIR-COVERAGE.json",
+      "sha256": "0504a6ca89340cbed4990ddedbb233c7a663ca78bdcee414716297d0616971fd"
+    }
+  ]
+}

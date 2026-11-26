@@ -134,6 +134,7 @@ class EscapeHoldoutEnv(EscapeOptionEnv):
 
 class EscapeRecoveryTrainingEnv(EscapeHoldoutEnv):
     from .recovery_training_scene import TUBE_LANES as tube_training_lanes
+    single_pass_tube_movers = False
 
     def __init__(self, cfg):
         super().__init__(cfg, layout_seed=None)
@@ -143,3 +144,26 @@ class EscapeRecoveryTrainingEnv(EscapeHoldoutEnv):
 
         EscapeOptionEnv._setup_scene(self)
         self._replace_mesh(geometry(self.scene.env_origins.detach().cpu()))
+
+    def _reset_r6_physics(self, indices):
+        if not self.single_pass_tube_movers:
+            return super()._reset_r6_physics(indices)
+        mover = self._h1_moving_sphere
+        was_running = mover.enabled
+        result = super()._reset_r6_physics(indices)
+        if not was_running and mover.enabled:
+            state = self._r6_physics
+            turn_seconds = mover.half_period_s
+            # Match the first pass, then hold the same endpoint past the end
+            # of the phase. Each physical reset starts the same path again.
+            mask = torch.zeros_like(mover.active)
+            mask[list(self.tube_training_lanes)] = True
+            mask &= mover.active
+            longer_than_phase = state['block']['steps'] * .1 + turn_seconds
+            mover.half_period_s = torch.where(mask, longer_than_phase, turn_seconds).to(mover.age.dtype)
+            mover.end_travel_s[mask] = turn_seconds
+            state['curriculum'].record('TUBE_SINGLE_PASS_MOVERS', dict(
+                lanes=mask.nonzero().flatten(), first_pass_seconds=turn_seconds,
+                held_at_endpoint_after_seconds=turn_seconds, half_period_s=mover.half_period_s,
+                physical_reset_repeats_first_pass=True))
+        return result
