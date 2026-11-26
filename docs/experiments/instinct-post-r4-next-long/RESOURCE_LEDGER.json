@@ -1102,6 +1102,57 @@
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-CROSSCHECK-FRONT/native"
       },
       "storage_reservation_id": "ROUND-SYSTEM"
+    },
+    {
+      "closed_evidence_bytes": 1441181696,
+      "id": "R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-U1280",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-U1280/control/receipt.json",
+        "sha256": "c4d7d37640791217b437a5c71c632771dad687c62a615a21db406ee289e43fc4"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/RESOURCE_POLICY.json",
+        "sha256": "7c828dfbb60e551e58cdacd13e2f0ddfd721b71a9b1b920b151003be3d455edb"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 1847,
+        "live_starts": 1,
+        "live_wall_seconds": 1847,
+        "major_scientific_candidates": 1,
+        "nontraining_transitions": 0,
+        "output_actual_plus_unreleased_reservations_bytes": 1441181696,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_checkpoint_writes": 5,
+        "training_transitions": 262144
+      },
+      "settlement": {
+        "charged_seconds": 1847,
+        "original_resources": {
+          "allocated_gpu_seconds": 7390,
+          "live_starts": 1,
+          "live_wall_seconds": 7390,
+          "major_scientific_candidates": 1,
+          "nontraining_transitions": 0,
+          "output_actual_plus_unreleased_reservations_bytes": 6710886400,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_checkpoint_writes": 5,
+          "training_transitions": 262144
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-U1280/control/receipt.json",
+          "sha256": "c4d7d37640791217b437a5c71c632771dad687c62a615a21db406ee289e43fc4"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-U1280",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-FORMAL-U1280/native"
+      },
+      "storage_reservation_id": "ROUND-SYSTEM"
     }
   ],
   "new_used": {
