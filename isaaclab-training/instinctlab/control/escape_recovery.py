@@ -16,8 +16,10 @@ MOUNT_28_VERSION = 'm4-escape-lateral-recovery-p28-v1'
 REDIRECT_25_VERSION = 'm4-escape-redirect-p25-v1'
 FALLBACK_25_VERSION = 'm4-escape-fallback-p25-v1'
 FRONT_SWITCH_25_VERSION = 'm4-escape-front-switch-p25-v1'
+REAR_SWITCH_25_VERSION = 'm4-escape-rear-switch-p25-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
-                       REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25}
+                       REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
+                       REAR_SWITCH_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -25,7 +27,7 @@ RECOVERY_LIMIT = 65
 
 class EscapeRecovery(EscapeOption):
     def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False, redirect=False,
-                 fallback=False, front_switch=False):
+                 fallback=False, front_switch=False, rear_switch=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -34,6 +36,8 @@ class EscapeRecovery(EscapeOption):
         self.fallback = fallback
         self.front_switch = front_switch
         self.front_switched = torch.zeros_like(self.applied)
+        self.rear_switch = rear_switch
+        self.rear_switched = torch.zeros_like(self.applied)
         self.escape_speed = self.direction.new_full((lanes,), SPEED_M_S)
         self.retreat_basis = torch.zeros_like(self.direction)
         self.redirected = torch.zeros_like(self.applied)
@@ -48,6 +52,7 @@ class EscapeRecovery(EscapeOption):
         self.retreat_basis[lanes] = 0.
         self.redirected[lanes] = False
         self.front_switched[lanes] = False
+        self.rear_switched[lanes] = False
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -93,6 +98,8 @@ class EscapeRecovery(EscapeOption):
     def redirect_clipped(self, lidar, state, selected, config):
         self.redirected.zero_()
         continuing = self.applied & (self.remaining < DURATION_STEPS - 1)
+        if self.rear_switch:
+            self.rear_switched &= continuing
         x, y, z = self.retreat_basis.unbind(dim=1)
         yaw = -.1 * state[:, 41]
         rotated = torch.stack((x*yaw.cos() - y*yaw.sin(), x*yaw.sin() + y*yaw.cos(), z), dim=1)
@@ -120,6 +127,9 @@ class EscapeRecovery(EscapeOption):
         if self.fallback:
             unresolved = ~releases_side & (signed_side.norm(dim=1) > .5)
             self.try_steeper_retreat(lidar, state, selected, config, lanes[unresolved], signed_side[unresolved])
+            if self.rear_switch:
+                switch = unresolved & continuing[lanes] & ~self.redirected[lanes] & ~self.rear_switched[lanes]
+                self.try_rear_opposite(lidar,state,selected,config,lanes[switch], -signed_side[switch])
 
     def try_steeper_retreat(self, lidar, state, selected, config, lanes, side):
         # Search only while the held action and the original redirection both
@@ -135,6 +145,21 @@ class EscapeRecovery(EscapeOption):
             selected[lanes[viable]] = trial[viable]
             self.redirected[lanes[viable]] = True
             lanes, side = lanes[~viable], side[~viable]
+
+    def try_rear_opposite(self, lidar, state, selected, config, lanes, opposite):
+        """Commit a single previously untried side when the rear option is blocked."""
+        for axial in (1.4, 2.2):
+            if not len(lanes):
+                break
+            direction = (opposite + axial*self.retreat_basis[lanes])/(1.+axial**2)**.5
+            trial = torch.cat((selected[lanes, :1], .5+self.escape_speed[lanes, None]*direction), dim=1)
+            result = self.issued(lidar[lanes],state[lanes],trial,config)
+            viable = ((result.v_final_b*opposite).sum(dim=1)>.08) & (result.metrics['emergency'].flatten()==0.)
+            used = lanes[viable]
+            selected[used] = trial[viable]
+            self.direction[used] = direction[viable]
+            self.rear_switched[used] = self.redirected[used] = True
+            lanes, opposite = lanes[~viable], opposite[~viable]
 
     def switch_blocked_front(self, lidar, state, selected, config):
         # Give a blocked frontal hover response one new side. A chosen

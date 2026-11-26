@@ -8,7 +8,7 @@ from instinctlab.control.escape_option import EscapeOption, METHOD_VERSION
 from instinctlab.control.escape_recovery import (
     EscapeRecovery, FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FRONT_SWITCH_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES,
-    RECOVERY_VERSION, REDIRECT_25_VERSION,
+    REAR_SWITCH_25_VERSION, RECOVERY_VERSION, REDIRECT_25_VERSION,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
@@ -58,9 +58,11 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             self.escape_option = EscapeRecovery(**kwargs, recenter=version != MIXED_VERSION,
                                                 lateral=version in (LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES),
                                                 fast_lateral=version in (FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES),
-                                                redirect=version in (REDIRECT_25_VERSION, FALLBACK_25_VERSION, FRONT_SWITCH_25_VERSION),
-                                                fallback=version in (FALLBACK_25_VERSION, FRONT_SWITCH_25_VERSION),
-                                                front_switch=version == FRONT_SWITCH_25_VERSION)
+                                                redirect=version in (REDIRECT_25_VERSION, FALLBACK_25_VERSION,
+                                                                     FRONT_SWITCH_25_VERSION, REAR_SWITCH_25_VERSION),
+                                                fallback=version in (FALLBACK_25_VERSION, FRONT_SWITCH_25_VERSION, REAR_SWITCH_25_VERSION),
+                                                front_switch=version == FRONT_SWITCH_25_VERSION,
+                                                rear_switch=version == REAR_SWITCH_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

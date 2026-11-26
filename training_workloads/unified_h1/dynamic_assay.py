@@ -40,6 +40,8 @@ MODES = ('approach', 'recede', 'cross_left', 'cross_right',
 def three_case(run_id):
     if run_id == pipe_authority_probe.PIPE_PROBE_RUN:
         return 'PIPE-AUTHORITY'
+    if run_id == pipe_authority_probe.PIPE_SWITCH_RUN:
+        return 'PIPE-SWITCH'
     match = re.fullmatch(THREE_PREFIX + r'(REAR|MECHANISM|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
     if match is None:
         match = re.fullmatch(NEXT_LONG_PREFIX + r'(REARPAIR|MECHANISM|CROSSCHECK|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
@@ -52,7 +54,7 @@ def physical_layout(run_id):
 
 def groups_for(run_id):
     case = three_case(run_id)
-    if case == 'PIPE-AUTHORITY':
+    if case in ('PIPE-AUTHORITY', 'PIPE-SWITCH'):
         return tuple(HOLDOUT_GROUPS[i] for i in (1, 5, 4))
     if case in ('REAR', 'REARPAIR'):
         return (HOLDOUT_GROUPS[-1],)
@@ -107,7 +109,7 @@ def contract(params):
     if case:
         from instinctlab.control.escape_recovery import (
             FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FRONT_SWITCH_25_VERSION,
-            LATERAL_VERSION, MOUNT_PITCH_DEGREES, RECOVERY_VERSION,
+            LATERAL_VERSION, MOUNT_PITCH_DEGREES, REAR_SWITCH_25_VERSION, RECOVERY_VERSION,
         )
 
         options = params['arm_options']
@@ -127,10 +129,13 @@ def contract(params):
             raise ValueError('DYNAMIC_REAR_FACTORIAL')
         if case == 'CHECK' and (options['candidate'] is None or len(set(options.values())) != 1):
             raise ValueError('DYNAMIC_THREE_CHECK_EXECUTION')
-        if case == 'PIPE-AUTHORITY':
+        if case in ('PIPE-AUTHORITY','PIPE-SWITCH'):
             from .robustness_training_plan import U1792_CHECKPOINT_SHA
 
-            if options['candidate'] != FALLBACK_25_VERSION or models['candidate']['sha256'] != U1792_CHECKPOINT_SHA:
+            expected = (dict(candidate=FALLBACK_25_VERSION) if case=='PIPE-AUTHORITY'
+                        else dict(candidate=REAR_SWITCH_25_VERSION,reference=FALLBACK_25_VERSION))
+            if options!=expected or any(pin['sha256']!=U1792_CHECKPOINT_SHA or pin!=models['candidate']
+                                        for pin in models.values()):
                 raise ValueError('DYNAMIC_PIPE_AUTHORITY_FIXED_ORIGIN')
         if case == 'CROSSCHECK' and (
                 models['candidate'] != models['control'] or models['reference'] == models['control']
@@ -265,6 +270,7 @@ def run(backend, params):
     mount_assay = any(version in MOUNT_PITCH_DEGREES for version in params.get('arm_options', {}).values())
     option = holdout or params['experiment_id'] == OPTION_RUN
     pipe_probe = three == 'PIPE-AUTHORITY'
+    mirror_pipe = run_id in pipe_authority_probe.MIRRORED_PIPE_RUNS
     approved_frames = pipe_authority_probe.open_pool(backend.output) if pipe_probe else None
     split = 'heldout' if three == 'HOLDOUT' or run_id in (HOLDOUT_RUN, RECOVERY_HOLDOUT) else 'development'
     cue = (HoverReflex(device=device, dtype=torch.float32)
@@ -328,9 +334,10 @@ def run(backend, params):
                     wall = dict(block, task='wall_modes', sensor_to_wall_distance_m=1.40)
                     specs[lane] = reset_spec(wall, seed=seed, split=split if three else 'development', lane=lane,
                                             mount_position_m=env.cfg.ray_caster.offset.pos)
-            if pipe_probe:
+            if mirror_pipe:
                 for lane in range(25, 32, 2):
                     specs[lane] = pipe_authority_probe.mirror_reset(specs[lane-1], specs[lane])
+            if pipe_probe:
                 approved = approved_frames.open(pipe_authority_probe.frame_name(index))
             axis_angle = torch.arange(LANES,device=device).remainder(8)*math.pi/4
             axis = torch.stack((axis_angle.cos(),axis_angle.sin(),torch.zeros_like(axis_angle)),dim=1)
@@ -449,7 +456,7 @@ def run(backend, params):
                 if three:
                     rows[-1]['mover_witness_delivered'] = delivered
                     rows[-1]['sensor_split'] = split
-                if pipe_probe:
+                if mirror_pipe:
                     rows[-1]['pipe_retreat_basis_b'] = record['escape_option']['retreat_basis'][24:].cpu().tolist()
             if hook is not None:
                 hook.remove()
