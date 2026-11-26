@@ -10,6 +10,8 @@
 
 A 的初始选侧差异已有原轨迹定位。新镜像场景固定 A 权重，先验证首拍选侧证据。C 已另锁独立训练种子和新物理留出，沿用既定训练规模、覆盖及验收条件。 [前向失效诊断](study/FRONT-FIRST-DESIGN.md) · [后续方案](study-front/PLAN.md) · [C 独立协议](study-front/INDEPENDENT-PROTOCOL.json)
 
+前向固定权重验证完成 46,080 步。预设的八条镜像树干轨迹首拍均无活跃束，下发方向一致，未触发待验证规则。两臂完整六组均为 6/192 次接触，案例与接触步一致。另有五条预设范围外的开管轨迹实际换侧，少了 5–7 拍非急停零下发，保留为探索证据。Scientist 独立复核 12 份原轨迹及退出回执。C 采用通过验收的 B 执行和训练配方，以提前锁定的种子 `428032978` 启动。 [固定权重复算](study-front/FRONT-CLEARANCE-01-AUDIT.json) · [原轨迹及回执绑定](study-front/FRONT-CLEARANCE-01.json) · [C 冻结方案](study-front/FORMAL-C-SPEC.json)
+
 ## 恢复开发
 
 系统盘清理后复测 122,232,791,040 字节可用。固定 `u1792` 的首拍按测距选较宽侧实验完成 23,040 条评价转换，救回两条后向原接触，整批零新增，管道前飞联合恢复仍 8/8，静止对照无差异。固定同一执行另做 16 与 32 次管道练习的等量短训，均为总计 64 次更新。首个参考作业因证据模块错误在零步关闭，已冻结同参数新作业。两条正式训练种子和新的物理与 R6 留出已锁定，待短训实际结果。 [独立测距复算](rear-clearance/CPU-REPLAY.json) · [闭环复算](rear-clearance/PAIRED-RECOMPUTATION.json) · [短训重发依据](study/SHORT-REFERENCE-02-REPAIR.json) · [独立协议](study/INDEPENDENT-PROTOCOL.json)
