@@ -105,7 +105,7 @@ def run_loaded(backend,*,plan,metadata,source_identity,method_hashes,expected_ma
         if sampled is not None:
             sampled.sink=audit
             measurement_sink = (lambda seq,row:journal.append('measurement.jsonl',dict(sequence=seq,payload=row)))
-            if p['experiment_id'].startswith(recovery_measurements.RUN_PREFIX):
+            if recovery_measurements.tracks_run(p['experiment_id']):
                 measurement_sink = recovery_measurements.sink(journal)
             env.configure_r6_training_phase(curriculum=sampled,start_policy_step=start,end_policy_step=end,
                 reset_sink=lambda row:journal.append('reset.jsonl',row),force_sink=lambda row:journal.append('force.jsonl',row),

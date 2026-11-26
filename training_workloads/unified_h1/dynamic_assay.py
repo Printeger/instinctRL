@@ -22,6 +22,7 @@ HOLDOUT_SMOKE = 'R6-DIRECT-INSTINCT-GPU-R4-HOLDOUT-SMOKE'
 RECOVERY_PREFIX = 'R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-'
 THREE_PREFIX = RECOVERY_PREFIX + 'THREE-'
 NEXT_LONG_PREFIX = RECOVERY_PREFIX + 'NEXT-LONG-'
+U1792_STUDY_PREFIX = RECOVERY_PREFIX + 'U1792-TWO-STUDY-'
 RECOVERY_MECHANISM = RECOVERY_PREFIX + 'MECHANISM-01'
 RECOVERY_MECHANISM_RETRY = RECOVERY_PREFIX + 'MECHANISM-02'
 RECOVERY_MECHANISM_RUNS = (RECOVERY_MECHANISM, RECOVERY_MECHANISM_RETRY)
@@ -42,9 +43,13 @@ def three_case(run_id):
         return 'PIPE-AUTHORITY'
     if run_id == pipe_authority_probe.PIPE_SWITCH_RUN:
         return 'PIPE-SWITCH'
+    if run_id == pipe_authority_probe.PIPE_CLEARANCE_RUN:
+        return 'PIPE-CLEARANCE'
     match = re.fullmatch(THREE_PREFIX + r'(REAR|MECHANISM|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
     if match is None:
         match = re.fullmatch(NEXT_LONG_PREFIX + r'(REARPAIR|MECHANISM|CROSSCHECK|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
+    if match is None:
+        match = re.fullmatch(U1792_STUDY_PREFIX + r'(CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
     return match[1] if match else None
 
 
@@ -54,7 +59,7 @@ def physical_layout(run_id):
 
 def groups_for(run_id):
     case = three_case(run_id)
-    if case in ('PIPE-AUTHORITY', 'PIPE-SWITCH'):
+    if case in ('PIPE-AUTHORITY', 'PIPE-SWITCH', 'PIPE-CLEARANCE'):
         return tuple(HOLDOUT_GROUPS[i] for i in (1, 5, 4))
     if case in ('REAR', 'REARPAIR'):
         return (HOLDOUT_GROUPS[-1],)
@@ -109,7 +114,7 @@ def contract(params):
     if case:
         from instinctlab.control.escape_recovery import (
             FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FRONT_SWITCH_25_VERSION,
-            LATERAL_VERSION, MOUNT_PITCH_DEGREES, REAR_SWITCH_25_VERSION, RECOVERY_VERSION,
+            LATERAL_VERSION, MOUNT_PITCH_DEGREES, REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION, RECOVERY_VERSION,
         )
 
         options = params['arm_options']
@@ -129,11 +134,14 @@ def contract(params):
             raise ValueError('DYNAMIC_REAR_FACTORIAL')
         if case == 'CHECK' and (options['candidate'] is None or len(set(options.values())) != 1):
             raise ValueError('DYNAMIC_THREE_CHECK_EXECUTION')
-        if case in ('PIPE-AUTHORITY','PIPE-SWITCH'):
+        if case in ('PIPE-AUTHORITY', 'PIPE-SWITCH', 'PIPE-CLEARANCE'):
             from .robustness_training_plan import U1792_CHECKPOINT_SHA
 
-            expected = (dict(candidate=FALLBACK_25_VERSION) if case=='PIPE-AUTHORITY'
-                        else dict(candidate=REAR_SWITCH_25_VERSION,reference=FALLBACK_25_VERSION))
+            expected = {
+                'PIPE-AUTHORITY': dict(candidate=FALLBACK_25_VERSION),
+                'PIPE-SWITCH': dict(candidate=REAR_SWITCH_25_VERSION, reference=FALLBACK_25_VERSION),
+                'PIPE-CLEARANCE': dict(candidate=REAR_CLEARANCE_25_VERSION, reference=FALLBACK_25_VERSION),
+            }[case]
             if options!=expected or any(pin['sha256']!=U1792_CHECKPOINT_SHA or pin!=models['candidate']
                                         for pin in models.values()):
                 raise ValueError('DYNAMIC_PIPE_AUTHORITY_FIXED_ORIGIN')

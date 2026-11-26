@@ -7,6 +7,12 @@ import math
 
 
 RUN_PREFIX = 'R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-'
+
+
+def tracks_run(run_id):
+    from .dynamic_assay import U1792_STUDY_PREFIX
+
+    return run_id.startswith((RUN_PREFIX, U1792_STUDY_PREFIX))
 STREAM = 'pipe_coverage.jsonl'
 WINDOW = dict(closing_steps=3, closing_gap_m=1.9, closing_rate_mps=.20,
               recovery_steps=10, recovery_gap_m=.60, minimum_command_mps=.03,
@@ -193,7 +199,7 @@ def audit(binding):
     _, ctx, report = validate_binding(binding)
     plan = ctx['contract']['parameters']['r6_training_plan']
     run_id = plan['experiment_id']
-    if not run_id.startswith(RUN_PREFIX) or report['issues']:
+    if not tracks_run(run_id) or report['issues']:
         raise ValueError('R6_PIPE_COVERAGE_CLOSED_TRAINING_REQUIRED')
     recipe = pinned_json(plan['recipe'])
     curriculum = pinned_json(recipe['curriculum'])

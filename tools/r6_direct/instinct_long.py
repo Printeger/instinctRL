@@ -21,7 +21,7 @@ from tools.r6_direct.resource_policy import GPU_FOLLOWUP_SCHEMA, OUTPUT_CAP, THI
 from tools.r6_direct.source import ROOT as SNAPSHOT, manifest, training_identity
 from tools.r6_direct.storage import CONTROL_ALLOWANCE, SYSTEM_FLOOR, SYSTEM_ROOT, SYSTEM_STORAGE_SCHEMA
 from tools.r6_direct.study_report import compare, score_model
-from training_workloads.unified_h1.dynamic_assay import HOLDOUT_RUN, HOLDOUT_SMOKE, NEXT_LONG_PREFIX
+from training_workloads.unified_h1.dynamic_assay import HOLDOUT_RUN, HOLDOUT_SMOKE
 from training_workloads.unified_h1.robustness_training_method import ESCAPE_OPTION_CANDIDATE, bound_method_hashes
 
 
@@ -149,14 +149,14 @@ class LongStudy(Round):
         return job, receipt
 
     def replay_probability(self, job, plan, result):
+        from tools.r6_direct.probability_evidence import audited_helper
+
         diagnostic_id = job['run_id'] + '-DIAGNOSTIC'
         path = self.input_path(diagnostic_id)
         spec = load(DIAG_TEMPLATE)
         spec.pop('native_volume', None)
-        if job['run_id'].startswith(NEXT_LONG_PREFIX):
-            from tools.r6_direct.probability_evidence import next_long_helper
-
-            spec.update(next_long_helper())
+        if helper := audited_helper(job['run_id']):
+            spec.update(helper)
         logical_name = f'pilot_diagnostic/update_{plan["start_update"]+1}_full_input.pt'
         retained, = (r['pin'] for r in result['streams'] if r['logical_name'] == logical_name and r['complete'])
         spec.update(destination(diagnostic_id), resource_policy=job['resource_policy'],

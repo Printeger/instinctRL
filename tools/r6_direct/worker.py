@@ -166,7 +166,7 @@ def run(plan, input_pin):
         from training_workloads.scale_003.resources import (
             JournaledRuntimeResourceGuard, RuntimeResourceGuard, validate_graceful_shutdown_configuration,
         )
-        from training_workloads.unified_h1.dynamic_assay import NEXT_LONG_PREFIX
+        from training_workloads.unified_h1.dynamic_assay import NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
         from training_workloads.unified_h1.pipe_authority_probe import MIRRORED_PIPE_RUNS
         validate_graceful_shutdown_configuration(app,resource_pins=pins)
         import carb.settings
@@ -178,7 +178,7 @@ def run(plan, input_pin):
             from tools.r6_direct.render import validate_cache_tokens
             validate_cache_tokens(settings_map,carb.tokens.get_tokens_interface())
         pipe_probe = plan['run_id'] in MIRRORED_PIPE_RUNS
-        journaled = plan['run_id'].startswith(NEXT_LONG_PREFIX) or pipe_probe
+        journaled = plan['run_id'].startswith((NEXT_LONG_PREFIX, U1792_STUDY_PREFIX)) or pipe_probe
 
         class Guard(JournaledRuntimeResourceGuard if journaled else RuntimeResourceGuard):
             def check(self,**kw):

@@ -16,23 +16,39 @@ _NEXT_LONG_HELPER_SOURCE = dict(path=str(_NEXT_LONG_DOCS/'source-bf677e94115e.js
     sha256='6d8800c2492e63ddef332e549805cba50db627df69497a2e1ee32d24fd2dafef')
 _NEXT_LONG_SOURCE_TRACE = dict(path=str(_NEXT_LONG_DOCS/'PROBABILITY_SOURCE_TRACE.json'),
     sha256='a99df07bbd605fed2e196b5a928355636acf97380252fb269bee245f966f5328')
+_U1792_DOCS = ROOT / 'docs/experiments/instinct-post-u1792-two-long'
+_U1792_SNAPSHOT = Path('/home/mint/instinctrl-runs/INSTINCT-POST-U1792-TWO-LONG-SOURCE-04')
+_U1792_HELPER_SOURCE = dict(path=str(_U1792_DOCS/'rear-switch/source-7c696d7d7db9.json'),
+    sha256='f0d373a0c964b767120fa5a9504863e8001172e699b46e17e21a09037991b49a')
+_U1792_SOURCE_TRACE = dict(path=str(_U1792_DOCS/'PROBABILITY_SOURCE_TRACE.json'),
+    sha256='810f62b2d77ead5b5028b12176a483f925210f5198799ec93f14df47109c7255')
 _SCRIPT = 'tools/r6_direct/cuda_diagnostic.py'
 
 
 def next_long_helper():
     """Use the independently pinned child that can validate the u768 fork."""
-    manifest = json.loads(checked(_NEXT_LONG_HELPER_SOURCE).read_text())
-    checked(_NEXT_LONG_SOURCE_TRACE)
-    script = dict(path=str(_NEXT_LONG_SNAPSHOT/_SCRIPT),sha256=manifest['sources'][_SCRIPT])
+    return _helper(_NEXT_LONG_SNAPSHOT, _NEXT_LONG_HELPER_SOURCE, _NEXT_LONG_SOURCE_TRACE)
+
+
+def _helper(snapshot, source, trace):
+    manifest = json.loads(checked(source).read_text())
+    checked(trace)
+    script = dict(path=str(snapshot/_SCRIPT),sha256=manifest['sources'][_SCRIPT])
     checked(script)
-    return dict(snapshot=str(_NEXT_LONG_SNAPSHOT),source_commit=manifest['source_commit'],
-                helper_source=dict(_NEXT_LONG_HELPER_SOURCE),script=script,
-                source_trace=dict(_NEXT_LONG_SOURCE_TRACE))
+    return dict(snapshot=str(snapshot),source_commit=manifest['source_commit'],
+                helper_source=dict(source),script=script,source_trace=dict(trace))
+
+
+def audited_helper(run_id):
+    from training_workloads.unified_h1.dynamic_assay import NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
+
+    if run_id.startswith(U1792_STUDY_PREFIX):
+        return _helper(_U1792_SNAPSHOT, _U1792_HELPER_SOURCE, _U1792_SOURCE_TRACE)
+    if run_id.startswith(NEXT_LONG_PREFIX):
+        return next_long_helper()
 
 
 def verify(diagnostic_pin, contract_pin, retained_pin):
-    from training_workloads.unified_h1.dynamic_assay import NEXT_LONG_PREFIX
-
     pins=[]
     def read(pin):
         value=json.loads(checked(pin).read_text());pins.append(pin);return value
@@ -59,8 +75,8 @@ def verify(diagnostic_pin, contract_pin, retained_pin):
     require(all(process_identity(x['pid'])!=x for x in [receipt['parent'],*receipt['owned_processes']]),'LIVE')
     source=read(plan['helper_source']);require(source['source_commit']==plan['source_commit'],'SOURCE_COMMIT')
     run_id=training.get('experiment_id','')
-    if run_id.startswith(NEXT_LONG_PREFIX):
-        require(all(plan[key]==value for key,value in next_long_helper().items()),'AUDITED_IMPLEMENTATION')
+    if helper := audited_helper(run_id):
+        require(all(plan[key]==value for key,value in helper.items()),'AUDITED_IMPLEMENTATION')
         require(plan['run_id'].startswith(run_id+'-DIAGNOSTIC'),'DIAGNOSTIC_ID')
         launcher=plan['launcher_script'];checked(launcher);pins.append(launcher)
         tail=[source['execution']['python_path'],'-B',plan['script']['path'],
