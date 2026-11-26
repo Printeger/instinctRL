@@ -21,6 +21,7 @@ ESCAPE_MOUNT_28_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-RECOVERY-P28'
 ESCAPE_REDIRECT_25_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-REDIRECT-P25'
 ESCAPE_FALLBACK_25_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25'
 ESCAPE_SINGLE_PASS_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25-SINGLE-PASS'
+ESCAPE_REPLAY_GAIN_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25-REPLAY-GAIN'
 
 
 def action_option_version(candidate):
@@ -37,12 +38,13 @@ def action_option_version(candidate):
             ESCAPE_MOUNT_25_CANDIDATE: MOUNT_25_VERSION, ESCAPE_MOUNT_28_CANDIDATE: MOUNT_28_VERSION,
             ESCAPE_REDIRECT_25_CANDIDATE: REDIRECT_25_VERSION,
             ESCAPE_FALLBACK_25_CANDIDATE: FALLBACK_25_VERSION,
-            ESCAPE_SINGLE_PASS_CANDIDATE: FALLBACK_25_VERSION}.get(candidate)
+            ESCAPE_SINGLE_PASS_CANDIDATE: FALLBACK_25_VERSION,
+            ESCAPE_REPLAY_GAIN_CANDIDATE: FALLBACK_25_VERSION}.get(candidate)
 
 
 RECOVERY_CANDIDATES = (ESCAPE_RECOVERY_CANDIDATE, ESCAPE_LATERAL_CANDIDATE, ESCAPE_FAST_LATERAL_CANDIDATE,
                        ESCAPE_MOUNT_25_CANDIDATE, ESCAPE_MOUNT_28_CANDIDATE, ESCAPE_REDIRECT_25_CANDIDATE,
-                       ESCAPE_FALLBACK_25_CANDIDATE, ESCAPE_SINGLE_PASS_CANDIDATE)
+                       ESCAPE_FALLBACK_25_CANDIDATE, ESCAPE_SINGLE_PASS_CANDIDATE, ESCAPE_REPLAY_GAIN_CANDIDATE)
 
 
 def require(value,reason):
@@ -206,7 +208,8 @@ def restore_and_bind(backend,*,plan,execution_identity):
             binding['dynamic_hover_prior'] = dynamic_motion_training.install_prior(
                 trainer, weight=method['mean_prior_weight'], period_s=float(env.cfg.sim.dt) * env.cfg.decimation,
                 dynamic_block=lambda: obstacle.enabled, reflex=reflex,
-                ics=env._control_pipelines[0].config.ics)
+                ics=env._control_pipelines[0].config.ics,
+                preserve_replay_travel=recipe['candidate_id'] == ESCAPE_REPLAY_GAIN_CANDIDATE)
             trainer._r6_bound_auxiliary = trainer.actor_auxiliary
     except BaseException:
         torch.set_rng_state(before['cpu']);random.setstate(before['python']);np.random.set_state(before['numpy'])

@@ -1,0 +1,48 @@
+{
+  "label": "SHORT-REPLAY-GAIN",
+  "candidate_id": "R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25-REPLAY-GAIN",
+  "training_seed": 1270871049,
+  "tube_drive_steps": 100,
+  "phases": [
+    [
+      "robust",
+      16
+    ],
+    [
+      "original",
+      64
+    ]
+  ],
+  "checkpoint_offsets": [
+    32,
+    64
+  ],
+  "segments": [
+    [
+      768,
+      832,
+      2400
+    ]
+  ],
+  "payload_gib": 4,
+  "hypothesis": "During ordinary replay the measured clear-travel one-sided gain prior offsets the dose-related loss of forward command without worsening physical contact and hover.",
+  "comparison": "Same u768 and training seed, repeated single-pass target exposure and ordinary replay. Compare the closed single-pass finite +64 node with this equal-budget gain node and same-execution start.",
+  "development_evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/REPLAY-GAIN-DESIGN.md",
+      "sha256": "ca3d0fa428c7c4f45dc4003fb420f546947f4cd1e002a723411c63ea68c572e0"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/CHECK-FINE-SINGLE-PASS.json",
+      "sha256": "1cf46dbdec55757b1d4439e845329a1f52b8a4ce495b4e802e4f3012cdc7fed4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/CROSS-COURSE-U896.json",
+      "sha256": "edd2b5caf92a08ce3c9249f850e3a7ccbe75d260b8843f2d631c6d4ea6d699fc"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/FINE-SINGLE-PASS/RESULTS.json",
+      "sha256": "b557ee0af57c38b5816df7d3d0d2e6bf89ef54b75371e28b17e6de50b68213ff"
+    }
+  ]
+}

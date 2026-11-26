@@ -12,6 +12,8 @@ CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R2'
 TRAVEL_GAIN_TARGET = .87
 TRAVEL_GAIN_WEIGHT = 1.
 TRAVEL_CLEARANCE_M = 1.9
+REPLAY_TRAVEL_GAIN_TARGET = .855
+REPLAY_TRAVEL_GAIN_WEIGHT = 16.
 
 
 def choose_velocity(command, velocity, relative, object_velocity, active):
@@ -96,7 +98,10 @@ def clear_travel(policy, rays, approaching):
             & (supported.sum(dim=1) >= 8) & far & ~approaching)
 
 
-def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=None):
+def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=None,
+                  preserve_replay_travel=False):
+    if preserve_replay_travel and reflex is None:
+        raise ValueError('Replay travel requires the measured ray calibration')
     if reflex is not None:
         from instinctlab.training.hover_reflex import ESCAPE_ICS, ESCAPE_SPEED_M_S
 
@@ -104,11 +109,24 @@ def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=
             raise ValueError('Hover targets require the registered R6 ICS and policy period')
         sampled_rays = reflex._full_rays.reshape(59, 360, 3)[::3, ::3].reshape(-1, 3)
 
+    def travel_prior(policy, output, approaching, target, gain_weight):
+        eligible = clear_travel(policy, sampled_rays, approaching)
+        shortfall = (target - output.mean_action[:, 0]).clamp_min(0.)
+        loss = gain_weight * (eligible * shortfall.square()).mean()
+        gated.last_metrics['clear_travel_examples'] = int(eligible.sum().item())
+        gated.last_metrics['clear_travel_loss'] = float(loss.detach().item())
+        return loss
+
     def gated(policy, output):
         zero = policy['state_vec'][:, 45:48].norm(dim=1) <= .001
         if not dynamic_block():
             gated.last_metrics = dict(hover_prior_removed=0, hover_prior_retained=int(zero.sum().item()))
-            return zero_command_mean_prior(policy, output, weight)
+            prior = zero_command_mean_prior(policy, output, weight)
+            if preserve_replay_travel:
+                approaching = plausible_approach(policy, period_s=period_s)
+                prior = prior + travel_prior(policy, output, approaching,
+                                             REPLAY_TRAVEL_GAIN_TARGET, REPLAY_TRAVEL_GAIN_WEIGHT)
+            return prior
         if reflex is None:
             approaching = plausible_approach(policy, period_s=period_s)
         else:
@@ -123,12 +141,7 @@ def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=
         prior = weight * (safe * penalty).mean()
         if reflex is None:
             return prior
-        travel = clear_travel(policy, sampled_rays, approaching)
-        shortfall = (TRAVEL_GAIN_TARGET - output.mean_action[:, 0]).clamp_min(0.)
-        travel_loss = TRAVEL_GAIN_WEIGHT * (travel * shortfall.square()).mean()
-        gated.last_metrics['clear_travel_examples'] = int(travel.sum().item())
-        gated.last_metrics['clear_travel_loss'] = float(travel_loss.detach().item())
-        prior = prior + travel_loss
+        prior = prior + travel_prior(policy, output, approaching, TRAVEL_GAIN_TARGET, TRAVEL_GAIN_WEIGHT)
         if not bool(hover_approach.any()):
             return prior
         with torch.no_grad():
@@ -147,4 +160,7 @@ def install_prior(trainer, *, weight, period_s, dynamic_block, reflex=None, ics=
                                               directions=['left_tangent', 'right_tangent', 'radial_retreat'])
         binding['clear_travel_gain'] = dict(minimum_target=TRAVEL_GAIN_TARGET, weight=TRAVEL_GAIN_WEIGHT,
                                           cone_clearance_m=TRAVEL_CLEARANCE_M)
+    if preserve_replay_travel:
+        binding['original_replay_clear_travel_gain'] = dict(minimum_target=REPLAY_TRAVEL_GAIN_TARGET,
+            weight=REPLAY_TRAVEL_GAIN_WEIGHT, cone_clearance_m=TRAVEL_CLEARANCE_M)
     return binding

@@ -187,7 +187,8 @@ def run(plan, input_pin):
             from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv,UnifiedH1DirectEnvCfg
             from training_workloads.unified_h1.checkpoint_compatibility import pinned_json
             from training_workloads.unified_h1.robustness_training_method import (
-                RECOVERY_CANDIDATES, HOVER_REFLEX_CANDIDATE, ESCAPE_SINGLE_PASS_CANDIDATE, action_option_version,
+                ESCAPE_REPLAY_GAIN_CANDIDATE, ESCAPE_SINGLE_PASS_CANDIDATE, HOVER_REFLEX_CANDIDATE,
+                RECOVERY_CANDIDATES, action_option_version,
             )
             operation = contract['operation']
             params = contract['parameters']
@@ -220,7 +221,8 @@ def run(plan, input_pin):
                 from training_workloads.unified_h1.escape_option_env import EscapeRecoveryTrainingEnv
                 env = EscapeRecoveryTrainingEnv(cfg)
                 env.set_escape_option(True, version=option_version)
-                env.single_pass_tube_movers = recipe['candidate_id'] == ESCAPE_SINGLE_PASS_CANDIDATE
+                env.single_pass_tube_movers = recipe['candidate_id'] in (ESCAPE_SINGLE_PASS_CANDIDATE,
+                                                                         ESCAPE_REPLAY_GAIN_CANDIDATE)
             elif option_version is not None or plan['run_id'] == OPTION_RUN:
                 from training_workloads.unified_h1.escape_option_env import EscapeOptionEnv
                 env = EscapeOptionEnv(cfg)
