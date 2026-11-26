@@ -63,13 +63,14 @@ def _validate(value,*,reviewed):
     if explicit_override:
         from .robustness_training_plan import R3_CHECKPOINT_SHA
         from .dynamic_assay import NEXT_LONG_PREFIX
-        from instinctlab.control.escape_recovery import FALLBACK_25_VERSION, REDIRECT_25_VERSION
+        from instinctlab.control.escape_recovery import FALLBACK_25_VERSION, FRONT_SWITCH_25_VERSION, REDIRECT_25_VERSION
         from instinctlab.control.escape_option import METHOD_FIELD
 
         require(value['role']=='trained_candidate' and comparison['id'].startswith(NEXT_LONG_PREFIX)
                 and value['checkpoint']['sha256']==R3_CHECKPOINT_SHA
                 and model['method_hashes'].get(METHOD_FIELD)==REDIRECT_25_VERSION
-                and value['execution_override']==FALLBACK_25_VERSION,'EXPLICIT_EXECUTION_CONTROL')
+                and value['execution_override'] in (FALLBACK_25_VERSION, FRONT_SWITCH_25_VERSION),
+                'EXPLICIT_EXECUTION_CONTROL')
     # Review explicitly adjudicates the pinned training evidence/native status,
     # comparison design and the selected node; no analysis alone grants selection.
     if reviewed:

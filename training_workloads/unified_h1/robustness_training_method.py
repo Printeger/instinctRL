@@ -23,12 +23,15 @@ ESCAPE_FALLBACK_25_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25'
 ESCAPE_SINGLE_PASS_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25-SINGLE-PASS'
 ESCAPE_REPLAY_GAIN_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25-REPLAY-GAIN'
 ESCAPE_REPLAY_REFERENCE_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25-REPLAY-REFERENCE'
+ESCAPE_FRONT_REFERENCE_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FRONT-P25-REPLAY-REFERENCE'
+REFERENCE_REPLAY_CANDIDATES = (ESCAPE_REPLAY_REFERENCE_CANDIDATE, ESCAPE_FRONT_REFERENCE_CANDIDATE)
 
 
 def action_option_version(candidate):
     from instinctlab.control.escape_option import METHOD_VERSION
     from instinctlab.control.escape_recovery import (
-        FALLBACK_25_VERSION, FAST_LATERAL_VERSION, LATERAL_VERSION, MOUNT_25_VERSION, MOUNT_28_VERSION, RECOVERY_VERSION,
+        FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FRONT_SWITCH_25_VERSION, LATERAL_VERSION,
+        MOUNT_25_VERSION, MOUNT_28_VERSION, RECOVERY_VERSION,
         REDIRECT_25_VERSION,
     )
 
@@ -41,13 +44,14 @@ def action_option_version(candidate):
             ESCAPE_FALLBACK_25_CANDIDATE: FALLBACK_25_VERSION,
             ESCAPE_SINGLE_PASS_CANDIDATE: FALLBACK_25_VERSION,
             ESCAPE_REPLAY_GAIN_CANDIDATE: FALLBACK_25_VERSION,
-            ESCAPE_REPLAY_REFERENCE_CANDIDATE: FALLBACK_25_VERSION}.get(candidate)
+            ESCAPE_REPLAY_REFERENCE_CANDIDATE: FALLBACK_25_VERSION,
+            ESCAPE_FRONT_REFERENCE_CANDIDATE: FRONT_SWITCH_25_VERSION}.get(candidate)
 
 
 RECOVERY_CANDIDATES = (ESCAPE_RECOVERY_CANDIDATE, ESCAPE_LATERAL_CANDIDATE, ESCAPE_FAST_LATERAL_CANDIDATE,
                        ESCAPE_MOUNT_25_CANDIDATE, ESCAPE_MOUNT_28_CANDIDATE, ESCAPE_REDIRECT_25_CANDIDATE,
                        ESCAPE_FALLBACK_25_CANDIDATE, ESCAPE_SINGLE_PASS_CANDIDATE, ESCAPE_REPLAY_GAIN_CANDIDATE,
-                       ESCAPE_REPLAY_REFERENCE_CANDIDATE)
+                       *REFERENCE_REPLAY_CANDIDATES)
 
 
 def require(value,reason):
@@ -209,7 +213,7 @@ def restore_and_bind(backend,*,plan,execution_identity):
             binding['dynamic_reward'] = dict(target='forecast local separation and command deviation',
                                              scope='reward only, physical robust phase')
             reference = None
-            if recipe['candidate_id'] == ESCAPE_REPLAY_REFERENCE_CANDIDATE:
+            if recipe['candidate_id'] in REFERENCE_REPLAY_CANDIDATES:
                 reference_pin = recipe['branch_origin']['checkpoint']
                 saved_reference = torch.load(validate_pin(reference_pin), map_location='cpu', weights_only=True)
                 cpu_rng = torch.get_rng_state().clone()

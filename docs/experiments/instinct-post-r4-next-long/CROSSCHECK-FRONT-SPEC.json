@@ -1,0 +1,24 @@
+{
+  "label": "CROSSCHECK-FRONT",
+  "seed": 1878547803,
+  "models": {
+    "reference": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-THREE-FORMAL-R3-U768/results/research-r6-training/checkpoints/u768.pt",
+      "sha256": "a5b5c66ce2832a49b15fc5caad5fc2c0e8f192f704415ad881621fad266359e3"
+    },
+    "control": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-SHORT-REPLAY-REFERENCE-U832/results/research-r6-training/checkpoints/u832.pt",
+      "sha256": "0142199f364e5cc6f9f60adfdac354bd46eac344ea56b35db3681e0e01228292"
+    },
+    "candidate": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-NEXT-LONG-SHORT-REPLAY-REFERENCE-U832/results/research-r6-training/checkpoints/u832.pt",
+      "sha256": "0142199f364e5cc6f9f60adfdac354bd46eac344ea56b35db3681e0e01228292"
+    }
+  },
+  "arm_options": {
+    "reference": "m4-escape-front-switch-p25-v1",
+    "control": "m4-escape-fallback-p25-v1",
+    "candidate": "m4-escape-front-switch-p25-v1"
+  },
+  "wall_seconds": 1800
+}

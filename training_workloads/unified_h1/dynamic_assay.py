@@ -39,7 +39,7 @@ MODES = ('approach', 'recede', 'cross_left', 'cross_right',
 def three_case(run_id):
     match = re.fullmatch(THREE_PREFIX + r'(REAR|MECHANISM|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
     if match is None:
-        match = re.fullmatch(NEXT_LONG_PREFIX + r'(REARPAIR|MECHANISM|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
+        match = re.fullmatch(NEXT_LONG_PREFIX + r'(REARPAIR|MECHANISM|CROSSCHECK|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
     return match[1] if match else None
 
 
@@ -53,7 +53,7 @@ def groups_for(run_id):
         return (HOLDOUT_GROUPS[-1],)
     if case == 'MECHANISM' and run_id.startswith(NEXT_LONG_PREFIX):
         return (*HOLDOUT_GROUPS, (1, 1, 1, 1))
-    if case in ('MECHANISM', 'CHECK', 'HOLDOUT'):
+    if case in ('MECHANISM', 'CROSSCHECK', 'CHECK', 'HOLDOUT'):
         return HOLDOUT_GROUPS
     if run_id == PERSISTENCE_RUN:
         return PERSISTENCE_GROUPS
@@ -87,7 +87,7 @@ def contract(params):
     models = params['models']
     three_arms = params['experiment_id'] in (HOLDOUT_RUN, *RECOVERY_MECHANISM_RUNS, RECOVERY_HOLDOUT)
     allowed_models = {'candidate', 'control', 'reference'} if three_arms else {'candidate', 'reference'}
-    if case in ('HOLDOUT', 'MECHANISM', 'CHECK'):
+    if case in ('HOLDOUT', 'MECHANISM', 'CROSSCHECK', 'CHECK'):
         allowed_models.add('control')
     if next_long and case == 'HOLDOUT':
         allowed_models.add('prior')
@@ -99,7 +99,8 @@ def contract(params):
         checked(value)
     if case:
         from instinctlab.control.escape_recovery import (
-            FAST_LATERAL_VERSION, LATERAL_VERSION, MOUNT_PITCH_DEGREES, RECOVERY_VERSION,
+            FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FRONT_SWITCH_25_VERSION,
+            LATERAL_VERSION, MOUNT_PITCH_DEGREES, RECOVERY_VERSION,
         )
 
         options = params['arm_options']
@@ -119,6 +120,11 @@ def contract(params):
             raise ValueError('DYNAMIC_REAR_FACTORIAL')
         if case == 'CHECK' and (options['candidate'] is None or len(set(options.values())) != 1):
             raise ValueError('DYNAMIC_THREE_CHECK_EXECUTION')
+        if case == 'CROSSCHECK' and (
+                models['candidate'] != models['control'] or models['reference'] == models['control']
+                or options != dict(candidate=FRONT_SWITCH_25_VERSION, control=FALLBACK_25_VERSION,
+                                   reference=FRONT_SWITCH_25_VERSION)):
+            raise ValueError('DYNAMIC_FRONT_SWITCH_PAIR')
         if case == 'HOLDOUT' and (options['reference'] is not None or options['candidate'] is None
                                   or options['candidate'] != options['control']):
             raise ValueError('DYNAMIC_THREE_HOLDOUT_EXECUTION')

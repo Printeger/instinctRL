@@ -15,8 +15,9 @@ MOUNT_25_VERSION = 'm4-escape-lateral-recovery-p25-v1'
 MOUNT_28_VERSION = 'm4-escape-lateral-recovery-p28-v1'
 REDIRECT_25_VERSION = 'm4-escape-redirect-p25-v1'
 FALLBACK_25_VERSION = 'm4-escape-fallback-p25-v1'
+FRONT_SWITCH_25_VERSION = 'm4-escape-front-switch-p25-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
-                       REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25}
+                       REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -24,13 +25,15 @@ RECOVERY_LIMIT = 65
 
 class EscapeRecovery(EscapeOption):
     def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False, redirect=False,
-                 fallback=False):
+                 fallback=False, front_switch=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
         self.fast_lateral = fast_lateral
         self.redirect = redirect
         self.fallback = fallback
+        self.front_switch = front_switch
+        self.front_switched = torch.zeros_like(self.applied)
         self.escape_speed = self.direction.new_full((lanes,), SPEED_M_S)
         self.retreat_basis = torch.zeros_like(self.direction)
         self.redirected = torch.zeros_like(self.applied)
@@ -44,6 +47,7 @@ class EscapeRecovery(EscapeOption):
         self.escape_speed[lanes] = SPEED_M_S
         self.retreat_basis[lanes] = 0.
         self.redirected[lanes] = False
+        self.front_switched[lanes] = False
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -132,6 +136,34 @@ class EscapeRecovery(EscapeOption):
             self.redirected[lanes[viable]] = True
             lanes, side = lanes[~viable], side[~viable]
 
+    def switch_blocked_front(self, lidar, state, selected, config):
+        # Give a blocked frontal hover response one new side. A chosen
+        # feasible side stays committed until the current option ends.
+        continuing = self.applied & (self.remaining < DURATION_STEPS - 1)
+        self.front_switched &= continuing
+        command, _ = extract_latest_commands(state)
+        lanes = (continuing & ~self.front_switched & (command.norm(dim=1) <= .001)
+                 & (self.retreat_basis[:, 0] < -.65)).nonzero().flatten()
+        if not len(lanes):
+            return
+        retreat = self.retreat_basis[lanes]
+        side = torch.stack((-retreat[:, 1], retreat[:, 0], retreat[:, 2]), dim=1)
+        signed = (side * self.direction[lanes]).sum(dim=1)
+        original = self.issued(lidar[lanes], state[lanes], selected[lanes], config)
+        blocked = ((original.metrics['beta'].flatten() == 0.)
+                   & (original.metrics['emergency'].flatten() == 0.) & (signed.abs() > .5))
+        lanes = lanes[blocked]
+        if not len(lanes):
+            return
+        opposite = -signed[blocked, None].sign() * side[blocked]
+        trial = torch.cat((selected[lanes, :1], .5 + self.escape_speed[lanes, None] * opposite), dim=1)
+        issued = self.issued(lidar[lanes], state[lanes], trial, config)
+        viable = ((issued.v_final_b * opposite).sum(dim=1) > .08) & (issued.metrics['emergency'].flatten() == 0.)
+        used = lanes[viable]
+        self.direction[used] = opposite[viable]
+        selected[used] = trial[viable]
+        self.front_switched[used] = self.redirected[used] = True
+
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
         selected = super().apply(policy, action)
@@ -143,6 +175,8 @@ class EscapeRecovery(EscapeOption):
             selected[held, 1:] = .5 + self.escape_speed[held, None] * self.direction[held]
         if self.redirect:
             self.redirect_clipped(lidar, state, selected, config)
+        if self.front_switch:
+            self.switch_blocked_front(lidar, state, selected, config)
         command, _ = extract_latest_commands(state)
         speed = command.norm(dim=1)
         moving = speed > .03
