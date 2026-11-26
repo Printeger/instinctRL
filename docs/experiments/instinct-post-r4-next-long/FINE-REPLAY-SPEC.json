@@ -1,0 +1,49 @@
+{
+  "label": "FINE-REPLAY",
+  "candidate_id": "R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25",
+  "training_seed": 1270871049,
+  "tube_drive_steps": 100,
+  "phases": [
+    [
+      "robust",
+      16
+    ],
+    [
+      "original",
+      128
+    ]
+  ],
+  "checkpoint_offsets": [
+    32,
+    64,
+    128
+  ],
+  "segments": [
+    [
+      768,
+      896,
+      4200
+    ]
+  ],
+  "payload_gib": 4,
+  "hypothesis": "After the registered target phase and a flat short update dose, additional ordinary experience may improve physical return to command and keep the learned contact and quiet-hover guardrails.",
+  "comparison": "One continuous finite branch with three fixed evaluation models, the same-execution u768 origin, its +32 checkpoint and its +128 endpoint. Use a fresh shared development stream.",
+  "development_evidence": [
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/FINE-DESIGN.md",
+      "sha256": "0deddebe49bc4ab7ae0fa2221c34c74612b6852138070c7aecf012d5f5977dce"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/CHECK-SHORT.json",
+      "sha256": "fcf7fa0628e63744068a781eabbdab3614d301e1c31c71524a9745ad13b802d4"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/SHORT-PAIR-COVERAGE.json",
+      "sha256": "0504a6ca89340cbed4990ddedbb233c7a663ca78bdcee414716297d0616971fd"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-r4-next-long/MECHANISM-01.json",
+      "sha256": "25bfa68445f1e9130ea245b1fc5bc4c0005abe265afd78972ad1de5c2419519c"
+    }
+  ]
+}
