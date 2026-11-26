@@ -49,7 +49,7 @@ def three_case(run_id):
     if match is None:
         match = re.fullmatch(NEXT_LONG_PREFIX + r'(REARPAIR|MECHANISM|CROSSCHECK|CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
     if match is None:
-        match = re.fullmatch(U1792_STUDY_PREFIX + r'(CHECK|HOLDOUT)-[A-Z0-9-]+', run_id)
+        match = re.fullmatch(U1792_STUDY_PREFIX + r'(CHECK|HOLDOUT|MECHANISM)-[A-Z0-9-]+', run_id)
     return match[1] if match else None
 
 
@@ -85,6 +85,7 @@ def contract(params):
     runs = (PERSISTENCE_RUN, OPTION_RUN, *PHYSICAL_LAYOUT_RUNS)
     case = three_case(params['experiment_id'])
     next_long = params['experiment_id'].startswith(NEXT_LONG_PREFIX)
+    clearance_confirmation = params['experiment_id'].startswith(U1792_STUDY_PREFIX) and case == 'MECHANISM'
     if case:
         fields.add('arm_options')
     if set(params) != fields or (not case and params['experiment_id'] not in runs and not re.fullmatch(
@@ -119,7 +120,7 @@ def contract(params):
 
         options = params['arm_options']
         expected_models = allowed_models
-        if (case == 'CHECK' or (next_long and case == 'MECHANISM')) and 'control' not in models:
+        if (case == 'CHECK' or clearance_confirmation or (next_long and case == 'MECHANISM')) and 'control' not in models:
             expected_models = {'candidate', 'reference'}
         if next_long and case == 'HOLDOUT' and 'prior' not in models:
             expected_models = allowed_models - {'prior'}
@@ -145,6 +146,12 @@ def contract(params):
             if options!=expected or any(pin['sha256']!=U1792_CHECKPOINT_SHA or pin!=models['candidate']
                                         for pin in models.values()):
                 raise ValueError('DYNAMIC_PIPE_AUTHORITY_FIXED_ORIGIN')
+        if clearance_confirmation:
+            from .robustness_training_plan import U1792_CHECKPOINT_SHA
+
+            if (options != dict(candidate=REAR_CLEARANCE_25_VERSION, reference=FALLBACK_25_VERSION)
+                    or models['candidate']['sha256'] != U1792_CHECKPOINT_SHA):
+                raise ValueError('DYNAMIC_PIPE_CLEARANCE_CONFIRMATION_ORIGIN')
         if case == 'CROSSCHECK' and (
                 models['candidate'] != models['control'] or models['reference'] == models['control']
                 or options != dict(candidate=FRONT_SWITCH_25_VERSION, control=FALLBACK_25_VERSION,
