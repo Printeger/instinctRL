@@ -78,12 +78,14 @@ def analyze(output,authorization_pin, *, direct=False, probability_diagnostic=No
             require(path.stat().st_size<=MAX_RECORD,'JSON_SIZE');pin(path)
             value=finite_json(path.read_bytes());require(isinstance(value,dict) and bool(value),'JSON_OBJECT');return value
         except (OSError,ValueError,KeyError,TypeError) as error:issue(relative,error);return None
+    curriculum = contract.pinned_json(recipe['curriculum'])
+    phase_specs = slices(curriculum, plan['start_update'], plan['target_update'],
+        branch_start_update=contract.branch_start_update(recipe))
     from training_workloads.unified_h1.recovery_measurements import RUN_PREFIX, STREAM
     recovery_archive = plan['experiment_id'].startswith(RUN_PREFIX)
     recovery_frames = {}
     if recovery_archive:
-        curriculum = contract.pinned_json(recipe['curriculum'])
-        for phase in slices(curriculum, plan['start_update'], plan['target_update']):
+        for phase in phase_specs:
             if phase['kind'] == 'robust':
                 prefix = f"phases/{phase['index']}-{phase['start_update']*16}-{phase['target_update']*16}/learning_log"
                 recovery_frames[prefix+'/'+STREAM] = (phase['target_update']-phase['start_update'])*16+1
@@ -145,8 +147,7 @@ def analyze(output,authorization_pin, *, direct=False, probability_diagnostic=No
     stream('pilot_diagnostic/first_update_probe.pt')
     for update in range(plan['start_update']+1,min(plan['target_update'],plan['start_update']+2)+1):
         stream(f'pilot_diagnostic/update_{update}_full_input.pt')
-    curriculum=contract.pinned_json(recipe['curriculum'])
-    for phase in slices(curriculum,plan['start_update'],plan['target_update']):
+    for phase in phase_specs:
         prefix=f"phases/{phase['index']}-{phase['start_update']*16}-{phase['target_update']*16}/learning_log"
         count=phase['target_update']-phase['start_update'];end=stream(prefix+'/phase_complete.jsonl',1)
         if end and end['record'].get('phase')!=phase:issue(prefix,'PHASE_IDENTITY')

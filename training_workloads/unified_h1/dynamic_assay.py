@@ -51,6 +51,8 @@ def groups_for(run_id):
     case = three_case(run_id)
     if case in ('REAR', 'REARPAIR'):
         return (HOLDOUT_GROUPS[-1],)
+    if case == 'MECHANISM' and run_id.startswith(NEXT_LONG_PREFIX):
+        return (*HOLDOUT_GROUPS, (1, 1, 1, 1))
     if case in ('MECHANISM', 'CHECK', 'HOLDOUT'):
         return HOLDOUT_GROUPS
     if run_id == PERSISTENCE_RUN:
@@ -70,6 +72,7 @@ def contract(params):
     fields = {'experiment_id', 'training_seed', 'models', 'seed', 'wall_seconds', 'output_cap_bytes'}
     runs = (PERSISTENCE_RUN, OPTION_RUN, *PHYSICAL_LAYOUT_RUNS)
     case = three_case(params['experiment_id'])
+    next_long = params['experiment_id'].startswith(NEXT_LONG_PREFIX)
     if case:
         fields.add('arm_options')
     if set(params) != fields or (not case and params['experiment_id'] not in runs and not re.fullmatch(
@@ -86,6 +89,8 @@ def contract(params):
     allowed_models = {'candidate', 'control', 'reference'} if three_arms else {'candidate', 'reference'}
     if case in ('HOLDOUT', 'MECHANISM', 'CHECK'):
         allowed_models.add('control')
+    if next_long and case == 'HOLDOUT':
+        allowed_models.add('prior')
     if case == 'REAR':
         allowed_models.update(('candidate_slow', 'reference_slow'))
     if not isinstance(models, dict) or not 1 <= len(models) <= len(allowed_models) or not set(models) <= allowed_models:
@@ -98,7 +103,11 @@ def contract(params):
         )
 
         options = params['arm_options']
-        expected_models = allowed_models if case != 'CHECK' or 'control' in models else {'candidate', 'reference'}
+        expected_models = allowed_models
+        if (case == 'CHECK' or (next_long and case == 'MECHANISM')) and 'control' not in models:
+            expected_models = {'candidate', 'reference'}
+        if next_long and case == 'HOLDOUT' and 'prior' not in models:
+            expected_models = allowed_models - {'prior'}
         if (not isinstance(options, dict) or set(options) != expected_models or set(models) != expected_models
                 or not all(version in (None, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES)
                            for version in options.values())):
@@ -113,6 +122,9 @@ def contract(params):
         if case == 'HOLDOUT' and (options['reference'] is not None or options['candidate'] is None
                                   or options['candidate'] != options['control']):
             raise ValueError('DYNAMIC_THREE_HOLDOUT_EXECUTION')
+        if next_long and case == 'HOLDOUT' and 'prior' in models:
+            if options['prior'] is None or (models['control'], options['control']) == (models['prior'], options['prior']):
+                raise ValueError('DYNAMIC_NEXT_LONG_DISTINCT_PRIOR')
     if params['experiment_id'] in (PERSISTENCE_RUN, OPTION_RUN) and (
             set(models) != {'candidate', 'reference'} or models['candidate'] != models['reference']):
         raise ValueError('DYNAMIC_ASSAY_SAME_WEIGHT_MODELS')

@@ -36,14 +36,16 @@ def validate(value,*,branch_updates):
     require(isinstance(phases,list) and 2<=len(phases)<=32,'PHASES')
     previous=0;seen=set()
     for phase in phases:
-        require(isinstance(phase,dict) and set(phase)=={'kind','end_offset','cycle_steps','lane_counts_per_half',
-            'noise_std_m','delay_cycles','drop_every_steps'},'PHASE_FIELDS')
+        required = {'kind','end_offset','cycle_steps','lane_counts_per_half',
+                    'noise_std_m','delay_cycles','drop_every_steps'}
+        require(isinstance(phase,dict) and set(phase) in (required, required | {'tube_drive_steps'}),'PHASE_FIELDS')
         require(phase['kind'] in ('original','robust') and type(phase['end_offset'])is int
             and previous<phase['end_offset']<=branch_updates,'PHASE_RANGE')
         previous=phase['end_offset'];seen.add(phase['kind'])
         if phase['kind']=='original':
             require(phase['lane_counts_per_half']=={} and all(type(phase[k])is int and phase[k]==0
-                for k in ('cycle_steps','noise_std_m','delay_cycles','drop_every_steps')),'ORIGINAL_UNIMPAIRED')
+                for k in ('cycle_steps','noise_std_m','delay_cycles','drop_every_steps')) and
+                'tube_drive_steps' not in phase,'ORIGINAL_UNIMPAIRED')
             continue
         counts=phase['lane_counts_per_half']
         require(isinstance(counts,dict) and counts and set(counts)<=set(conditions)
@@ -51,6 +53,9 @@ def validate(value,*,branch_updates):
         require(any(conditions[k]['task']=='wall_modes' for k in counts),'NEARWALL_EXPOSURE')
         require(type(phase['cycle_steps'])is int and 192<=phase['cycle_steps']<=4096
             and phase['cycle_steps']%16==0,'CYCLE')
+        if 'tube_drive_steps' in phase:
+            drive_steps = phase['tube_drive_steps']
+            require(type(drive_steps) is int and 100 <= drive_steps <= phase['cycle_steps']-40, 'TUBE_DRIVE_STEPS')
         require(type(phase['noise_std_m'])in (int,float) and math.isfinite(phase['noise_std_m'])
             and 0<=phase['noise_std_m']<=.03,'NOISE')
         require(type(phase['delay_cycles'])is int and phase['delay_cycles'] in (0,1),'DELAY')
@@ -59,11 +64,12 @@ def validate(value,*,branch_updates):
     return copy.deepcopy(value)
 
 
-def slices(value,start_update,target_update):
-    require(type(start_update)is int and type(target_update)is int and 640<=start_update<target_update,'SEGMENT')
-    result=[];start=640
+def slices(value,start_update,target_update,*,branch_start_update=640):
+    require(type(branch_start_update)is int and type(start_update)is int and type(target_update)is int
+        and 640<=branch_start_update<=start_update<target_update,'SEGMENT')
+    result=[];start=branch_start_update
     for index,phase in enumerate(value['phases']):
-        end=640+phase['end_offset'];left=max(start,start_update);right=min(end,target_update)
+        end=branch_start_update+phase['end_offset'];left=max(start,start_update);right=min(end,target_update)
         if left<right:result.append(dict(index=index,start_update=left,target_update=right,phase_start_update=start,
             phase_end_update=end,kind=phase['kind']))
         start=end
@@ -72,7 +78,7 @@ def slices(value,start_update,target_update):
 
 
 class PhaseCurriculum:
-    def __init__(self,value,*,branch_updates,phase_index,generator,audit_sink,tube_lanes=()):
+    def __init__(self,value,*,branch_updates,phase_index,generator,audit_sink,tube_lanes=(),branch_start_update=640):
         import torch
         self.value=validate(value,branch_updates=branch_updates)
         require(type(phase_index)is int and 0<=phase_index<len(value['phases']),'PHASE_INDEX')
@@ -81,8 +87,11 @@ class PhaseCurriculum:
         require(isinstance(generator,torch.Generator) and str(generator.device)=='cpu','GENERATOR')
         require(callable(audit_sink),'AUDIT_SINK')
         self.generator=generator;self.sink=audit_sink;self.failed=False
-        self.start=(640+(value['phases'][phase_index-1]['end_offset'] if phase_index else 0))*16
-        self.end=(640+self.phase['end_offset'])*16
+        self.tube_lanes = set(tube_lanes)
+        require('tube_drive_steps' not in self.phase or self.tube_lanes, 'TUBE_DRIVE_REQUIRES_TUBES')
+        require(type(branch_start_update)is int and branch_start_update>=640,'BRANCH_START')
+        self.start=(branch_start_update+(value['phases'][phase_index-1]['end_offset'] if phase_index else 0))*16
+        self.end=(branch_start_update+self.phase['end_offset'])*16
         self.reset_counts=[0]*32
         labels=[k for k,n in sorted(self.phase['lane_counts_per_half'].items()) for _ in range(n)]
         self.assignments=[]
@@ -121,7 +130,9 @@ class PhaseCurriculum:
     def world_command(self,step,*,device='cpu',dtype=None):
         import torch
         self.require_step(step);local=(step-self.start)%self.phase['cycle_steps']
-        return torch.tensor([command(self.value['conditions'][name],lane,local)
+        tube_drive_steps = self.phase.get('tube_drive_steps', 100)
+        return torch.tensor([command(self.value['conditions'][name], lane,
+                                     min(local, 99) if lane in self.tube_lanes and local < tube_drive_steps else local)
             for lane,name in enumerate(self.assignments)],device=device,dtype=dtype or torch.float32)
 
     def reset(self,lane,*,global_policy_step,mount_position_m):

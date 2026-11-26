@@ -40,7 +40,7 @@ def restore(backend,selection):
         if option_version is not None:
             require(getattr(backend.environment, 'escape_option_version', None) == option_version,
                     'ESCAPE_OPTION_DEPLOYMENT')
-            if selection['role'] == 'trained_candidate':
+            if selection['role'] == 'trained_candidate' and 'execution_override' not in selection:
                 require(model['method_hashes'].get(METHOD_FIELD) == option_version
                         and action_option_version(selected['comparison']['candidate_id']) == option_version,
                         'ESCAPE_OPTION_CHECKPOINT_DEPLOYMENT')
@@ -61,6 +61,8 @@ def evaluation_option_version(selected):
     from instinctlab.control.escape_option import METHOD_FIELD
     from .robustness_training_method import RECOVERY_CANDIDATES, action_option_version
 
+    if 'execution_override' in selected['selection']:
+        return selected['selection']['execution_override']
     candidate = selected['comparison']['candidate_id']
     if selected['selection']['role'] == 'baseline_control' and candidate in RECOVERY_CANDIDATES:
         return action_option_version(candidate)

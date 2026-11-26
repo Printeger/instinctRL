@@ -18,6 +18,10 @@ RECIPE_FIELDS={'schema_version','candidate_id','baseline_sha256','diagnosis','hy
     'checkpoint_offsets'}
 STORAGE_FIELDS={'payload_bytes','compressed_bytes','plain_bytes','maximum_raw_file_bytes',
                 'checkpoint_bytes','branch_record_bytes','metadata_bytes'}
+LOCAL_FORK = 'LOCAL_U768_NEW_STREAM'
+NEW_STREAM_KINDS = ('COMMON_U640_NEW_STREAM', LOCAL_FORK)
+R3_CHECKPOINT_SHA = 'a5b5c66ce2832a49b15fc5caad5fc2c0e8f192f704415ad881621fad266359e3'
+R3_TRAINING_SEED = 679851548
 
 
 def require(condition,reason):
@@ -42,9 +46,15 @@ def recipe(pin,review_pin):
     return r
 
 
+def branch_start_update(recipe):
+    origin = recipe.get('branch_origin')
+    return 640 if origin is None else origin['update']
+
+
 def validate_recipe(r):
     """Validate prospective recipe content; this never supplies review acceptance."""
-    require(isinstance(r,dict) and set(r)==RECIPE_FIELDS and r['schema_version']=='r6-training-recipe/1','RECIPE_FIELDS')
+    require(isinstance(r,dict) and set(r) in (RECIPE_FIELDS, RECIPE_FIELDS | {'branch_origin'})
+        and r['schema_version']=='r6-training-recipe/1','RECIPE_FIELDS')
     require(isinstance(r['candidate_id'],str) and re.fullmatch(r'R6-CANDIDATE-[A-Z0-9-]{1,64}',r['candidate_id']),'CANDIDATE')
     require(r['baseline_sha256']==BASELINE_SHA,'ORIGIN')
     for name in ('hypothesis','comparison'):
@@ -61,9 +71,20 @@ def validate_recipe(r):
     epochs=integer(ppo.get('epoch_count'),1,8,'EPOCHS')
     require(epochs*((512+batch-1)//batch)==8,'CHECKPOINT_OPTIMIZER_CLOCK')
     integer(r['branch_updates'],1,3000000//(3*512),'BRANCH_UPDATES')
-    robustness_curriculum.validate(pinned_json(r['curriculum']),branch_updates=r['branch_updates'])
+    course = robustness_curriculum.validate(pinned_json(r['curriculum']),branch_updates=r['branch_updates'])
+    require('branch_origin' in r or not any('tube_drive_steps' in phase for phase in course['phases']),
+            'LOCAL_TUBE_CURRICULUM')
     seeds(r['development_seeds']);seeds(r['confirmation_seeds'],3)
     require(not set(r['development_seeds']) & set(r['confirmation_seeds']),'CONFIRMATION_SEED_REUSE')
+    if 'branch_origin' in r:
+        origin = r['branch_origin']
+        require(isinstance(origin,dict) and set(origin)=={'checkpoint','update','training_seed'}
+            and type(origin['update']) is int and origin['update']==768
+            and type(origin['training_seed']) is int and origin['training_seed']==R3_TRAINING_SEED,
+            'LOCAL_BRANCH_ORIGIN')
+        validate_pin(origin['checkpoint'])
+        require(origin['checkpoint']['sha256']==R3_CHECKPOINT_SHA
+            and R3_TRAINING_SEED not in r['development_seeds'],'LOCAL_BRANCH_CHECKPOINT_SEED')
     nodes=r['checkpoint_offsets']
     require(isinstance(nodes,list) and 1<=len(nodes)<=96,'CHECKPOINTS')
     for node in nodes:integer(node,1,r['branch_updates'],'CHECKPOINT')
@@ -85,9 +106,12 @@ def validate(plan):
     else:r=recipe(plan['recipe'],plan['recipe_review'])
     seed=integer(plan['training_seed'],0,2**31-1,'TRAINING_SEED')
     require(seed in r[plan['phase']+'_seeds'],'UNREGISTERED_SEED')
-    start=integer(plan['start_update'],640,640+r['branch_updates']-1,'START')
-    target=integer(plan['target_update'],start+1,640+r['branch_updates'],'TARGET')
-    allowed=[640+n for n in r['checkpoint_offsets'] if start<640+n<=target]
+    origin = r.get('branch_origin')
+    anchor = branch_start_update(r)
+    require(origin is None or (local and plan['phase']=='development'),'LOCAL_BRANCH_SCOPE')
+    start=integer(plan['start_update'],anchor,anchor+r['branch_updates']-1,'START')
+    target=integer(plan['target_update'],start+1,anchor+r['branch_updates'],'TARGET')
+    allowed=[anchor+n for n in r['checkpoint_offsets'] if start<anchor+n<=target]
     require(plan['checkpoint_updates']==allowed and allowed and allowed[-1]==target
         and all(type(n)is int for n in plan['checkpoint_updates']),'EXACT_CHECKPOINTS')
     initial=plan['initialization']
@@ -95,11 +119,18 @@ def validate(plan):
     validate_pin(initial['checkpoint']);validate_source_identity(initial['source_identity'])
     require(isinstance(initial['method_hashes'],dict) and initial['method_hashes'],'INITIAL_METHOD')
     if initial['kind']=='COMMON_U640_NEW_STREAM':
-        require(start==640 and initial['checkpoint']['sha256']==BASELINE_SHA,'COMMON_ORIGIN')
+        require(origin is None and start==640 and initial['checkpoint']['sha256']==BASELINE_SHA,'COMMON_ORIGIN')
+    elif initial['kind']==LOCAL_FORK:
+        require(origin is not None and start==anchor and initial['checkpoint']==origin['checkpoint'],
+            'LOCAL_BRANCH_INITIALIZATION')
     else:
-        require(initial['kind']=='RESUME_R6_STREAM' and start>640
+        require(initial['kind']=='RESUME_R6_STREAM' and start>anchor
             and initial['source_identity']==r['source_identity']
             and initial['method_hashes'].get('r6_recipe')==plan['recipe']['sha256'],'RESUME_IDENTITY')
+        if origin is not None:
+            require(start-anchor in r['checkpoint_offsets']
+                and initial['method_hashes'].get('r6_branch_origin')==origin['checkpoint']['sha256'],
+                'RESUME_BRANCH_ORIGIN')
     if plan['phase']=='confirmation':
         freeze=pinned_json(plan['selection_freeze'])
         require(set(freeze)=={'schema_version','recipe','confirmation_seeds','selection_evidence','independent_review'}
@@ -115,7 +146,7 @@ def validate(plan):
     for name,value in storage.items():integer(value,1,128*1024**3,'STORAGE_'+name)
     require(storage['payload_bytes']%4096==0
         and storage['compressed_bytes']+storage['plain_bytes']<=storage['payload_bytes'],'PAYLOAD')
-    branch=storage['branch_record_bytes'] if initial['kind']=='COMMON_U640_NEW_STREAM' else 0
+    branch=storage['branch_record_bytes'] if initial['kind'] in NEW_STREAM_KINDS else 0
     require(storage['plain_bytes']>=len(allowed)*storage['checkpoint_bytes']+branch+storage['metadata_bytes'],'PLAIN_CAPACITY')
     return dict(plan)
 
@@ -127,8 +158,10 @@ def required_budget(plan):
 def budget_from_validated_plan(p):
     """Budget arithmetic only; callers must validate the complete plan first."""
     updates=p['target_update']-p['start_update'];transitions=updates*512
-    curriculum=pinned_json(pinned_json(p['recipe'])['curriculum'])
-    resets=len(robustness_curriculum.slices(curriculum,p['start_update'],p['target_update']))
+    recipe=pinned_json(p['recipe'])
+    curriculum=pinned_json(recipe['curriculum'])
+    resets=len(robustness_curriculum.slices(curriculum,p['start_update'],p['target_update'],
+        branch_start_update=branch_start_update(recipe)))
     return dict(live_process_starts=1,simulator_initializations=1,initialization_ticks=10,
         training_transitions=transitions,nontraining_transitions=0,optimizer_updates=updates,
         checkpoint_writes=len(p['checkpoint_updates']),explicit_resets=resets,
@@ -156,9 +189,14 @@ def verify_loaded(plan,metadata):
     if initial['kind']=='COMMON_U640_NEW_STREAM':
         require(metadata.get('training_seed')==20260908 and curriculum==dict(
             version='curriculum-h1-v1',completed_policy_steps=start*16),'LOADED_ORIGIN')
+    elif initial['kind']==LOCAL_FORK:
+        require(metadata['training_seed']==R3_TRAINING_SEED and initial['method_hashes'].get('r6_recipe')
+            and curriculum==dict(version='curriculum-h1-r6-v1',completed_policy_steps=start*16,
+            recipe_sha256=initial['method_hashes']['r6_recipe'],origin_checkpoint_sha256=BASELINE_SHA,
+            branch_seed=R3_TRAINING_SEED),'LOADED_LOCAL_BRANCH_ORIGIN')
     else:
         require(metadata.get('training_seed')==p['training_seed'] and curriculum==dict(
             version='curriculum-h1-r6-v1',completed_policy_steps=start*16,recipe_sha256=p['recipe']['sha256'],
             origin_checkpoint_sha256=BASELINE_SHA,branch_seed=p['training_seed']),'LOADED_BRANCH')
-    return dict(start_update=start,branch_new_rng=initial['kind']=='COMMON_U640_NEW_STREAM',
+    return dict(start_update=start,branch_new_rng=initial['kind'] in NEW_STREAM_KINDS,
                 fresh_physical_reset=True,dispatch_authorized=False)

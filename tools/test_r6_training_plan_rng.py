@@ -1,5 +1,5 @@
 """Real CPU RNG composition; synthetic loaded trainer/counters, no GPU or PPO."""
-from dataclasses import replace
+from dataclasses import asdict, replace
 from unittest.mock import patch
 import pytest
 from tools.test_r6_training_plan import case,metadata
@@ -7,6 +7,10 @@ from tools.test_r6_training_rng import restored,weights,preserve_global_rng
 from training_workloads.unified_h1 import robustness_training_rng as r
 from training_workloads.unified_h1.backend import _state_fingerprint
 from instinctlab.training.checkpoint_h1 import _rng_payload
+from tools.r6_direct.run import resources_after_validation
+from tools.r6_training_rng_audit import audit
+from training_workloads.unified_h1 import robustness_curriculum, robustness_training_plan as contract
+from training_workloads.unified_h1.robustness_training_method import bound_method_hashes
 
 
 def test_validated_common_origin_branches_once_without_optimizer(case):
@@ -44,3 +48,49 @@ def test_plan_or_actual_trainer_mismatch_never_branches(case,bad):
     with patch.object(r,'branch_from_u640',side_effect=AssertionError('must reject before branch')):
         with pytest.raises((ValueError,PermissionError)):r.prepare_plan_rng(t,g,plan=case.plan,metadata=m)
     assert _state_fingerprint(_rng_payload(g,t))==before
+
+
+def test_local_u768_branch_and_registered_resume_keep_absolute_clocks(case,monkeypatch):
+    b=case
+    p=b.plan
+    p.pop('recipe_review')
+    previous_seed=contract.R3_TRAINING_SEED
+    monkeypatch.setattr(contract,'R3_CHECKPOINT_SHA',b.ev['sha256'])
+    b.recipe.update(branch_origin=dict(checkpoint=b.ev,update=768,training_seed=previous_seed))
+    p.update(schema_version='r6-local-training-plan/1',recipe=b.pin('recipe-local.json',b.recipe),
+        start_update=768,target_update=1024,checkpoint_updates=[1024],
+        initialization=dict(kind=contract.LOCAL_FORK,checkpoint=b.ev,source_identity=b.identity,
+            method_hashes={'r6_recipe':'f'*64}))
+    t,g,_=restored()
+    t.update_counter=768
+    t.config=replace(t.config,permutation_seed=previous_seed)
+    for optimizer in (t.actor_optimizer,t.critic_optimizer):
+        for state in optimizer.state.values():state['step'].fill_(768*8)
+    old_clock=dict(version='curriculum-h1-r6-v1',completed_policy_steps=768*16,
+        recipe_sha256='f'*64,origin_checkpoint_sha256=contract.BASELINE_SHA,branch_seed=previous_seed)
+    meta=metadata(768,previous_seed,old_clock)
+    origin=dict(meta,rng=_rng_payload(g,t),ppo_config=asdict(t.config),
+        source_identity=b.identity,method_hashes=p['initialization']['method_hashes'])
+    before=weights(t)
+    fork=r.prepare_plan_rng(t,g,plan=p,metadata=meta)
+    assert t.config.permutation_seed==11 and weights(t)==before
+    assert audit(fork,origin,p)['cpu_seed_derivation_verified']
+    fork['rng']['origin_training_seed']=20260908
+    with pytest.raises(ValueError,match='RNG_BRANCH_IDENTITY'):audit(fork,origin,p)
+    budget=contract.required_budget(p)
+    assert budget['training_transitions']==256*512 and budget['explicit_resets']==2
+    assert resources_after_validation(dict(operation='train',parameters={'r6_training_plan':p},
+        budgets=budget))['major_scientific_candidates']==1
+    curriculum=contract.pinned_json(b.recipe['curriculum'])
+    phase=robustness_curriculum.PhaseCurriculum(curriculum,branch_updates=1024,phase_index=1,
+        generator=g,audit_sink=lambda *_:None,branch_start_update=768)
+    assert (phase.start,phase.end)==(832*16,1792*16)
+
+    hashes=bound_method_hashes(p,b.recipe)
+    p.update(start_update=1024,target_update=1280,checkpoint_updates=[1280],
+        initialization=dict(kind='RESUME_R6_STREAM',checkpoint=b.ev,source_identity=b.identity,method_hashes=hashes))
+    new_clock=dict(old_clock,completed_policy_steps=1024*16,recipe_sha256=p['recipe']['sha256'],branch_seed=11)
+    assert not contract.verify_loaded(p,metadata(1024,11,new_clock))['branch_new_rng']
+    assert contract.required_budget(p)['explicit_resets']==1
+    hashes.pop('r6_branch_origin')
+    with pytest.raises(PermissionError,match='RESUME_BRANCH_ORIGIN'):contract.validate(p)

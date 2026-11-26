@@ -32,9 +32,10 @@ def resources_after_validation(contract):
         allocated_gpu_seconds=budget['wall_seconds']+190,
         live_wall_seconds=budget['wall_seconds']+190,queue_seconds=180)
     if contract['operation']=='train':
+        from training_workloads.unified_h1.robustness_training_plan import NEW_STREAM_KINDS
         resources['training_checkpoint_writes']=budget['checkpoint_writes']
         # Conservatively charge each new development stream as a candidate.
-        if contract['parameters']['r6_training_plan']['phase']=='development' and contract['parameters']['r6_training_plan']['initialization']['kind']=='COMMON_U640_NEW_STREAM':
+        if contract['parameters']['r6_training_plan']['phase']=='development' and contract['parameters']['r6_training_plan']['initialization']['kind'] in NEW_STREAM_KINDS:
             resources['major_scientific_candidates']=1
     return resources
 

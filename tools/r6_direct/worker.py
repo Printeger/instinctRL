@@ -200,7 +200,9 @@ def run(plan, input_pin):
                     'R6-CANDIDATE-INSTINCT-GPU-R2', 'R6-CANDIDATE-INSTINCT-GPU-R3', HOVER_REFLEX_CANDIDATE)
             if operation == 'evaluate':
                 selection = params['evaluation_selection']
-                if selection['training_plan'] is not None:
+                if 'execution_override' in selection:
+                    option_version = selection['execution_override']
+                elif selection['training_plan'] is not None:
                     recipe = pinned_json(selection['training_plan']['recipe'])
                     option_version = action_option_version(recipe['candidate_id'])
                 else:

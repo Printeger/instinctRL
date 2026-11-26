@@ -7,12 +7,12 @@ import shutil
 
 from tools.r6_direct.evidence import read, validate_binding
 from tools.r6_direct.import_legacy import ROOT, pin
-from tools.r6_direct.instinct_cycle import load
+from tools.r6_direct.instinct_cycle import load, save
 from tools.r6_direct.instinct_cycle_finish import freeze, guard
 from tools.r6_direct.instinct_long import GIB, LongStudy
 from tools.r6_direct.prepare import build
 from tools.r6_direct.resource_policy import NEXT_LONG_SCHEMA, OUTPUT_CAP, THIRD_CAPS
-from tools.r6_direct.source import ROOT as SNAPSHOT, manifest
+from tools.r6_direct.source import ROOT as SNAPSHOT, manifest, training_identity
 from tools.r6_direct.storage import SYSTEM_FLOOR, SYSTEM_ROOT, SYSTEM_STORAGE_SCHEMA
 from tools.r6_evidence import checked
 from training_workloads.unified_h1.dynamic_assay import NEXT_LONG_PREFIX as PREFIX
@@ -140,14 +140,126 @@ class NextLongStudy(LongStudy):
                summary, self.ledger)
         return result_pin
 
+    def prepare_training(self, spec_path):
+        from training_workloads.unified_h1.direct_selection import training_model
+        from training_workloads.unified_h1.robustness_training_plan import validate_recipe
+
+        self.setup()
+        spec = load(spec_path)
+        source = manifest()
+        prior = load(PRIOR/'FORMAL-R3/RESULTS.json')
+        prior_recipe = read(read(prior['design'])['recipe'])
+        old = prior['segments'][-1]
+        method = read(prior_recipe['method'])
+        origin = training_model(old['plan'], old['analysis'], prior['end'], method)
+        if origin['update'] != old['plan']['target_update'] or origin['update'] != 768:
+            raise ValueError('Branch origin must be the audited R3 terminal checkpoint')
+        self.docs = PROJECT / spec['label']
+        self.docs.mkdir(exist_ok=True)
+        design_path = self.docs/'DESIGN.json'
+        if design_path.exists():
+            design = load(design_path)
+            if design['decision'] != pin(spec_path) or read(design['source']) != source:
+                raise ValueError('A different training specification or source was already frozen')
+            return pin(design_path)
+        method.update(spec.get('method_overrides', {}))
+        method['ppo'].update(spec.get('ppo_overrides', {}))
+        curriculum = read(prior_recipe['curriculum'])
+        phases = {p['kind']: p for p in curriculum['phases']}
+        curriculum['phases'] = [dict(phases[kind], end_offset=end) for kind, end in spec['phases']]
+        if 'tube_drive_steps' in spec:
+            for phase in curriculum['phases']:
+                if phase['kind'] == 'robust':
+                    phase['tube_drive_steps'] = spec['tube_drive_steps']
+        method_pin = self.write('method.json', method)
+        curriculum_pin = self.write('curriculum.json', curriculum)
+        seed = spec['training_seed']
+        recipe = dict(prior_recipe, candidate_id=spec['candidate_id'], source_identity=training_identity(source),
+                      method=method_pin, curriculum=curriculum_pin, diagnosis=[pin(spec_path), old['analysis'],
+                                                                             *spec['development_evidence']],
+                      checkpoint_offsets=spec['checkpoint_offsets'], branch_updates=spec['phases'][-1][1],
+                      development_seeds=[seed], hypothesis=spec['hypothesis'], comparison=spec['comparison'],
+                      branch_origin={k: origin[k] for k in ('checkpoint', 'update', 'training_seed')})
+        validate_recipe(recipe)
+        recipe_pin = self.write('recipe.json', recipe)
+        source_pin = save(PROJECT/f'source-{source["source_commit"][:12]}.json', source)
+        initial = dict(kind='LOCAL_U768_NEW_STREAM',
+                       **{k: origin[k] for k in ('checkpoint', 'source_identity', 'method_hashes')})
+        storage = read(prior['design'])['storage']
+        storage.update(payload_bytes=spec['payload_gib']*GIB, compressed_bytes=(spec['payload_gib']-1)*GIB)
+        params = read(prior['design'])['training_parameters']
+        design = self.write('DESIGN.json', dict(decision=pin(spec_path), source=source_pin, recipe=recipe_pin,
+                            initial=initial, training_seed=seed, storage=storage,
+                            training_parameters=params, segments=spec['segments']))
+        freeze(f'{self.tag_prefix}-{spec["label"].lower()}-design', f'Freeze {spec["label"]} training design',
+               spec_path, design_path, *(Path(p['path']) for p in (source_pin, recipe_pin, method_pin, curriculum_pin)))
+        return design
+
+    def train(self, design_path):
+        from training_workloads.unified_h1.recovery_coverage import audit as audit_coverage
+        from training_workloads.unified_h1.robustness_training_method import action_option_version, bound_method_hashes
+
+        self.docs = design_path.parent
+        self.tag_prefix += '-' + self.docs.name.lower()
+        if self.docs.parent != PROJECT:
+            raise ValueError('Use the study training directory')
+        design = load(design_path)
+        source = read(design['source'])
+        if source != manifest():
+            raise ValueError('Use the exact snapshot in the frozen design')
+        identity = training_identity(source)
+        recipe = read(design['recipe'])
+        start_update = recipe['branch_origin']['update']
+        segments = design['segments']
+        if (segments[0][0] != start_update
+                or segments[-1][1] != start_update + recipe['branch_updates']
+                or any(a[1] != b[0] for a, b in zip(segments, segments[1:]))):
+            raise ValueError('Design segments do not span the planned training branch')
+        initial, storage = design['initial'], design['storage']
+        rows = []
+        coverage = []
+        for start, target, wall in segments:
+            run_id = f'{PREFIX}{self.docs.name}-U{target}'
+            plan = dict(schema_version='r6-local-training-plan/1', experiment_id=run_id, phase='development',
+                        recipe=design['recipe'], selection_freeze=None, training_seed=design['training_seed'],
+                        start_update=start, target_update=target, wall_seconds=wall, initialization=initial,
+                        checkpoint_updates=[start_update+u for u in recipe['checkpoint_offsets']
+                                            if start < start_update+u <= target], storage=storage)
+            params = dict(design['training_parameters'], experiment_id=run_id, source_identity=identity,
+                          training_seed=design['training_seed'], output_cap_bytes=storage['payload_bytes'],
+                          r6_training_plan=plan)
+            path = self.freeze_input(run_id, 'train', params)
+            row = self.execute_segment(path, plan)
+            rows.append(row)
+            coverage_path = Path(row['analysis']['path']).parents[1]/'PIPE_COVERAGE.json'
+            if not coverage_path.exists():
+                save(coverage_path, audit_coverage(row['analysis']))
+            coverage.append(pin(coverage_path))
+            initial = dict(kind='RESUME_R6_STREAM', checkpoint=row['checkpoint'], source_identity=identity,
+                           method_hashes=bound_method_hashes(plan, recipe))
+        updates = sum(r['counters']['completed_updates'] for r in rows)
+        transitions = sum(r['counters']['training_transitions'] for r in rows)
+        if updates != recipe['branch_updates'] or transitions != updates*512:
+            raise ValueError('Training evidence must cover the entire frozen branch')
+        result_path = self.docs/'RESULTS.json'
+        existed = result_path.exists()
+        result = self.write(result_path.name, dict(design=pin(design_path), segments=rows, pipe_coverage=coverage,
+            start=design['initial']['checkpoint'], end=rows[-1]['checkpoint'], actual_updates=updates,
+            actual_training_transitions=transitions, training_supervised_seconds=sum(r['wall_seconds'] for r in rows),
+            next_predecessor=rows[-1]['next_predecessor'], execution=action_option_version(recipe['candidate_id'])))
+        if not existed:
+            freeze(self.tag_prefix+'-closed', f'Record {self.docs.name} complete training evidence',
+                   result_path, self.ledger)
+        return result
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('operation', choices=('physical',))
+    parser.add_argument('operation', choices=('physical', 'prepare-training', 'train'))
     parser.add_argument('spec', type=Path)
     args = parser.parse_args()
     study = NextLongStudy()
-    print(json.dumps(getattr(study, args.operation)(args.spec.resolve())), flush=True)
+    print(json.dumps(getattr(study, args.operation.replace('-', '_'))(args.spec.resolve())), flush=True)
 
 
 if __name__ == '__main__':

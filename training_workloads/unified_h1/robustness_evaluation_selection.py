@@ -26,7 +26,11 @@ def validate_draft(value):
 
 def _validate(value,*,reviewed):
     local = isinstance(value,dict) and value.get('schema_version') == 'r6-local-evaluation-selection/1'
-    require(isinstance(value,dict) and set(value)==(FIELDS if reviewed else FIELDS-{'independent_review'})
+    fields = FIELDS if reviewed else FIELDS-{'independent_review'}
+    explicit_override = local and 'execution_override' in value
+    if explicit_override:
+        fields = fields | {'execution_override'}
+    require(isinstance(value,dict) and set(value)==fields
         and value['schema_version'] in ('r6-evaluation-selection/1','r6-local-evaluation-selection/1'),'FIELDS')
     require(value['phase']=='development' and value['role'] in ('baseline_control','trained_candidate'),'DEVELOPMENT_ROLE')
     baseline=base.baseline(value);validate_pin(value['checkpoint'])
@@ -56,6 +60,16 @@ def _validate(value,*,reviewed):
         require(plan['phase']=='development' and recipe['candidate_id']==comparison['candidate_id']
             and value['method']==recipe['method'],'TRAINED_METHOD')
         model=_training_model(plan,value['training_analysis'],value['checkpoint'],method)
+    if explicit_override:
+        from .robustness_training_plan import R3_CHECKPOINT_SHA
+        from .dynamic_assay import NEXT_LONG_PREFIX
+        from instinctlab.control.escape_recovery import FALLBACK_25_VERSION, REDIRECT_25_VERSION
+        from instinctlab.control.escape_option import METHOD_FIELD
+
+        require(value['role']=='trained_candidate' and comparison['id'].startswith(NEXT_LONG_PREFIX)
+                and value['checkpoint']['sha256']==R3_CHECKPOINT_SHA
+                and model['method_hashes'].get(METHOD_FIELD)==REDIRECT_25_VERSION
+                and value['execution_override']==FALLBACK_25_VERSION,'EXPLICIT_EXECUTION_CONTROL')
     # Review explicitly adjudicates the pinned training evidence/native status,
     # comparison design and the selected node; no analysis alone grants selection.
     if reviewed:

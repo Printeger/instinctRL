@@ -19,12 +19,13 @@ ESCAPE_FAST_LATERAL_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FAST-LATERAL-RECOV
 ESCAPE_MOUNT_25_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-RECOVERY-P25'
 ESCAPE_MOUNT_28_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-RECOVERY-P28'
 ESCAPE_REDIRECT_25_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-REDIRECT-P25'
+ESCAPE_FALLBACK_25_CANDIDATE = 'R6-CANDIDATE-INSTINCT-GPU-R5-FALLBACK-P25'
 
 
 def action_option_version(candidate):
     from instinctlab.control.escape_option import METHOD_VERSION
     from instinctlab.control.escape_recovery import (
-        FAST_LATERAL_VERSION, LATERAL_VERSION, MOUNT_25_VERSION, MOUNT_28_VERSION, RECOVERY_VERSION,
+        FALLBACK_25_VERSION, FAST_LATERAL_VERSION, LATERAL_VERSION, MOUNT_25_VERSION, MOUNT_28_VERSION, RECOVERY_VERSION,
         REDIRECT_25_VERSION,
     )
 
@@ -33,11 +34,13 @@ def action_option_version(candidate):
             ESCAPE_LATERAL_CANDIDATE: LATERAL_VERSION,
             ESCAPE_FAST_LATERAL_CANDIDATE: FAST_LATERAL_VERSION,
             ESCAPE_MOUNT_25_CANDIDATE: MOUNT_25_VERSION, ESCAPE_MOUNT_28_CANDIDATE: MOUNT_28_VERSION,
-            ESCAPE_REDIRECT_25_CANDIDATE: REDIRECT_25_VERSION}.get(candidate)
+            ESCAPE_REDIRECT_25_CANDIDATE: REDIRECT_25_VERSION,
+            ESCAPE_FALLBACK_25_CANDIDATE: FALLBACK_25_VERSION}.get(candidate)
 
 
 RECOVERY_CANDIDATES = (ESCAPE_RECOVERY_CANDIDATE, ESCAPE_LATERAL_CANDIDATE, ESCAPE_FAST_LATERAL_CANDIDATE,
-                       ESCAPE_MOUNT_25_CANDIDATE, ESCAPE_MOUNT_28_CANDIDATE, ESCAPE_REDIRECT_25_CANDIDATE)
+                       ESCAPE_MOUNT_25_CANDIDATE, ESCAPE_MOUNT_28_CANDIDATE, ESCAPE_REDIRECT_25_CANDIDATE,
+                       ESCAPE_FALLBACK_25_CANDIDATE)
 
 
 def require(value,reason):
@@ -120,6 +123,10 @@ def verify_applied(trainer,env,method):
 def bound_method_hashes(plan, recipe):
     hashes = dict(plan['initialization']['method_hashes'], r6_recipe=plan['recipe']['sha256'],
                   r6_method=recipe['method']['sha256'], curriculum='curriculum-h1-r6-v1')
+    if 'branch_origin' in recipe:
+        # The curriculum clock retains common u640 ancestry. Bind this
+        # branch's immediate starting checkpoint separately.
+        hashes['r6_branch_origin'] = recipe['branch_origin']['checkpoint']['sha256']
     if recipe['candidate_id'] == HOVER_REFLEX_CANDIDATE:
         hashes['r6_actor_reflex'] = 'm4-hover-reflex-v2'
     version = action_option_version(recipe['candidate_id'])

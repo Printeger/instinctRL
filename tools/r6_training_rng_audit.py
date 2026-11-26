@@ -30,7 +30,7 @@ def audit(record,origin,plan):
     if binding['branch_new_rng']:
         require(saved['schema_version']=='r6-training-rng-branch/1' and saved['strict_rng_continuation'] is False
             and saved['origin_sha256']==plan['initialization']['checkpoint']['sha256']
-            and type(saved['origin_training_seed'])is int and saved['origin_training_seed']==20260908
+            and type(saved['origin_training_seed'])is int and saved['origin_training_seed']==origin['training_seed']
             and type(saved['branch_training_seed'])is int and saved['branch_training_seed']==seed,'RNG_BRANCH_IDENTITY')
         require(equal(saved['origin_rng'],origin['rng']),'RNG_ORIGIN_STATE_DRIFT')
         recipe=contract.pinned_json(plan['recipe']);method=contract.pinned_json(recipe['method'])

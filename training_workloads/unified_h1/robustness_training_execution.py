@@ -49,7 +49,8 @@ def run_loaded(backend,*,plan,metadata,source_identity,method_hashes,expected_ma
     journal.append('plan.jsonl',dict(plan=p,source_identity=source_identity,method_hashes=method_hashes,
         physical_continuity=False,metadata=metadata,method_binding=backend._r6_method_binding))
     curriculum=pinned_json(recipe['curriculum'])
-    phases=slices(curriculum,p['start_update'],p['target_update'])
+    branch_start = contract.branch_start_update(recipe)
+    phases=slices(curriculum,p['start_update'],p['target_update'],branch_start_update=branch_start)
     backend._checkpoint_reset_offset=metadata['reset_number']
 
     def checkpoint(label,trainer,driver):
@@ -92,7 +93,7 @@ def run_loaded(backend,*,plan,metadata,source_identity,method_hashes,expected_ma
         if phase['kind']=='robust':
             sampled=PhaseCurriculum(curriculum,branch_updates=recipe['branch_updates'],phase_index=phase['index'],
                 generator=backend.curriculum_generator,audit_sink=audit,
-                tube_lanes=getattr(env,'tube_training_lanes',()))
+                tube_lanes=getattr(env,'tube_training_lanes',()),branch_start_update=branch_start)
             types=tuple(('near_x_wall' if lane<16 else 'near_y_wall')
                 if sampled.value['conditions'][name]['task']=='wall_modes' else 'center'
                 for lane,name in enumerate(sampled.assignments))

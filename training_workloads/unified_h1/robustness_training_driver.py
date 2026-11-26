@@ -11,6 +11,7 @@ import torch
 from instinctlab.control.lee_velocity_controller import rotate_world_to_body_wxyz
 from .schedule import StepPlan
 from .driver import UnifiedH1Driver
+from . import recovery_coverage
 from .robustness_contract import BASELINE_SHA
 
 
@@ -90,6 +91,27 @@ class R6TrainingDriver(UnifiedH1Driver):
         if not callable(getattr(environment,'stage_r6_world_command',None)):
             raise TypeError('R6_TRAINING_PLANT_ADAPTER')
         super().__init__(environment,observation,clock=clock,**kwargs)
+        run_id = getattr(getattr(self.journal, 'pool', None), 'run_id', '')
+        self._pipe_coverage_lanes = ()
+        if run_id.startswith(recovery_coverage.RUN_PREFIX):
+            from .recovery_training_scene import TUBE_LANES
+
+            if tuple(getattr(environment, 'tube_training_lanes', ())) != TUBE_LANES:
+                raise ValueError('R6_PIPE_COVERAGE_GEOMETRY')
+            self._pipe_coverage_lanes = TUBE_LANES
+
+    def step(self, action):
+        if not self._pipe_coverage_lanes:
+            return super().step(action)
+        obstacle = self.environment._h1_moving_sphere
+        before = obstacle.latest
+        if not obstacle.enabled or before is None:
+            raise RuntimeError('R6_PIPE_COVERAGE_ACQUISITION_REQUIRED')
+        returned = super().step(action)
+        coverage = recovery_coverage.capture(before, obstacle.pre_reset, self.evidence_buffer[-1],
+                                             self._pipe_coverage_lanes)
+        self.journal.append(recovery_coverage.STREAM, coverage)
+        return returned
 
     def prepare_step(self,plan):
         # The shared measurement boundary rotates c_(t+1) with the actual new
