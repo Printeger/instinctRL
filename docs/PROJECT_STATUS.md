@@ -40,6 +40,8 @@
 
 静态参照同输入复验完成 32/32 条，零接触与中途重置，32/32 松杆和室内过门过角各 8/8。原接触轨迹首穿及折返最小净空 0.3071 米，原室内松杆漂移 0.1326 米、0.7 秒停稳。全组最低净空 0.1815 米。 [同输入结果](experiments/instinct-continuous-command/crossing_static_reference/REPORT.md)
 
+第十份独立 Crazy 回放完成 32/32 条首飞，零接触与中途重置，五类净空及 32/32 松杆均通过。最小净空 0.2142 米。短回放按正式公式检查跟踪，最差可行低进展 9.4 秒。保留此配置作为短程安全对照，继续修复可行段的跟踪和恢复。 [独立结果](experiments/instinct-continuous-command/independent_static_reference/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
