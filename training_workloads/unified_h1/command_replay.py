@@ -10,7 +10,7 @@ from .escape_holdout_scene import LAYOUTS
 
 
 PREFIX = 'R6-DIRECT-INSTINCT-GPU-COMMAND-'
-MODE = 'research-r6-command-replay'
+MODE = 'research-r6-dynamic-assay'
 LANES = 32
 STEP_MS = 100
 CROSSING_SPEED_M_S = .58
