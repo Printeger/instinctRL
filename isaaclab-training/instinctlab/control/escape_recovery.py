@@ -40,6 +40,7 @@ PRIORITY_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v5'
 COMMAND_HANDOFF_25_VERSION = 'm4-escape-brake-tube-p25-command-handoff-v1'
 OFFSET_STOP_25_VERSION = 'm4-escape-brake-tube-p25-offset-stop-v1'
 NEIGHBOR_HISTORY_25_VERSION = 'm4-escape-brake-tube-p25-neighbor-history-v1'
+CONFIRMED_STANDOFF_25_VERSION = 'm4-escape-brake-tube-p25-confirmed-standoff-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -51,7 +52,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        ALIGNED_INTERCEPT_25_VERSION: 25, RESERVE_INTERCEPT_25_VERSION: 25,
                        COMMITTED_INTERCEPT_25_VERSION: 25, PRIORITY_INTERCEPT_25_VERSION: 25,
                        COMMAND_HANDOFF_25_VERSION: 25, OFFSET_STOP_25_VERSION: 25,
-                       NEIGHBOR_HISTORY_25_VERSION: 25}
+                       NEIGHBOR_HISTORY_25_VERSION: 25, CONFIRMED_STANDOFF_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -164,7 +165,7 @@ class EscapeRecovery(EscapeOption):
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
-        return attenuate_command(lidar, self.detector._full_rays, request, .1, config.ics)
+        return attenuate_command(lidar, self.detector._full_rays, request, .1, config.ics, state_vec=state)
 
     def select_lateral(self, lidar, state, selected, config):
         # Keep the same trigger and hold. Select using the command this path can

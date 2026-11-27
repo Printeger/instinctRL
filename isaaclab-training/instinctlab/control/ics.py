@@ -38,12 +38,13 @@ class ICSConfig:
     motion_tube_radius_m: float = 0.0
     motion_tube_confirm_closure: bool = False
     motion_tube_neighbor_history: bool = False
+    confirmed_standoff_m: float = 0.0
 
     def __post_init__(self) -> None:
         for name in (
             "d_safe_m", "emergency_clearance_m", "a_max_m_s2", "active_horizon_margin_m",
             "min_reliability", "velocity_limit_m_s", "latency_s", "clearance_margin_m",
-            "empty_active_set_beta", "motion_tube_radius_m",
+            "empty_active_set_beta", "motion_tube_radius_m", "confirmed_standoff_m",
         ):
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, (int, float)):
@@ -70,6 +71,8 @@ class ICSConfig:
             raise TypeError("motion_tube_confirm_closure must be boolean")
         if not isinstance(self.motion_tube_neighbor_history, bool):
             raise TypeError("motion_tube_neighbor_history must be boolean")
+        if self.confirmed_standoff_m != 0.0 and not self.emergency_clearance_m <= self.confirmed_standoff_m <= self.d_safe_m:
+            raise ValueError("confirmed standoff must remain between emergency clearance and the usual stopping distance")
 
 
 @dataclass(frozen=True)
@@ -195,12 +198,30 @@ def _neighbor_history(ranges, reliable, rays, command, candidates, across, paral
     return lanes[supported], beams[supported]
 
 
+def _fresh_history(state, reference, interval):
+    if state is None:
+        return torch.zeros_like(reference[:, :1], dtype=torch.bool)
+    if not isinstance(state, torch.Tensor):
+        raise TypeError("measurement history must be a tensor")
+    if state.shape != (len(reference), 52) or state.device != reference.device or state.dtype != reference.dtype:
+        raise ValueError("measurement history must have shape (N, 52) and share the LiDAR dtype and device")
+    history = state.reshape(-1, 4, 13)[:, 1:]
+    age = history[:, :, 12]
+    gap = interval-age.diff(dim=1)
+    gentle_rotation = history[:, :, :3].norm(dim=2).amax(dim=1, keepdim=True) <= .22
+    fresh = (age <= .4*interval).all(dim=1, keepdim=True)
+    consecutive = ((gap >= .7*interval) & (gap <= 1.3*interval)).all(dim=1, keepdim=True)
+    return fresh & consecutive & gentle_rotation
+
+
 def attenuate_command(
     lidar_grid: torch.Tensor,
     rays_body: torch.Tensor,
     v_gov_b: torch.Tensor,
     history_dt_s: float,
     config: ICSConfig = ICSConfig(),
+    *,
+    state_vec: torch.Tensor | None = None,
 ) -> ICSResult:
     """Apply bounded scalar attenuation and zero-command emergency braking."""
     ranges, validity, reliability = _validate(lidar_grid, rays_body, v_gov_b, history_dt_s, config)
@@ -230,6 +251,15 @@ def attenuate_command(
     effective = latest_range - speed * config.latency_s - config.clearance_margin_m
     v_safe = torch.sqrt(2.0 * config.a_max_m_s2 * (effective - config.d_safe_m).clamp_min(0.0))
     reliable = latest_valid & (latest_reliability >= config.min_reliability)
+    if config.motion_tube_neighbor_history or config.confirmed_standoff_m > 0.:
+        fresh = _fresh_history(state_vec, speed, history_dt_s)
+    if config.confirmed_standoff_m > 0.:
+        last_two_rates = rates[:, -2:].flatten(2)
+        last_three_reliable = (validity[:, -3:] & (reliability[:, -3:] >= .65)).all(dim=1).flatten(1)
+        matching_speed = last_two_rates.abs().amax(dim=1) <= approach+.12
+        confirmed = fresh & (speed <= .30) & last_three_reliable & matching_speed
+        tighter = torch.sqrt(2.0*config.a_max_m_s2*(effective-config.confirmed_standoff_m).clamp_min(0.))
+        v_safe = torch.where(confirmed, tighter, v_safe)
     active = (
         reliable
         & (closing > 0.0)
@@ -249,7 +279,7 @@ def attenuate_command(
                    & (latest_reliability >= .65) & (speed <= .30))
         if config.motion_tube_neighbor_history:
             ambiguous = (active & (v_safe < closing) & ~last_two_valid & (across_m > config.motion_tube_radius_m)
-                         & (latest_reliability >= .65) & (speed <= .30))
+                         & (latest_reliability >= .65) & (speed <= .30) & fresh)
             support = (validity & (reliability >= .65)).flatten(2)
             lanes, beam_ids = _neighbor_history(ranges.flatten(2), support, rays_body, v_gov_b, ambiguous,
                                                  across_m, parallel_m)

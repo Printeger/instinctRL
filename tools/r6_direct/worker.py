@@ -168,8 +168,8 @@ def run(plan, input_pin):
         )
         from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
         from training_workloads.unified_h1.command_replay import (
-            BRAKE_EXECUTION, ENDURANCE_PREFIXES, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTION, NOVEL_PREFIX, REGRESSION_ID, STEP_MS,
-            load_lane_streams, matches as command_replay,
+            BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, ENDURANCE_PREFIXES, LONG_PREFIX,
+            NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, REGRESSION_ID, STEP_MS, load_lane_streams, matches as command_replay,
             route_layouts,
         )
         from training_workloads.unified_h1.pipe_authority_probe import MIRRORED_PIPE_RUNS
@@ -313,10 +313,12 @@ def run(plan, input_pin):
                 evaluator.evaluate_registered(backend)
                 if plan['run_id'] == REGRESSION_ID:
                     tube = option_version != BRAKE_EXECUTION
-                    use_neighbors = option_version == NEIGHBOR_HISTORY_EXECUTION
-                    expected = (.15, .60 if tube else 0., tube, use_neighbors)
+                    use_neighbors = option_version in NEIGHBOR_HISTORY_EXECUTIONS
+                    standoff = .45 if option_version == CONFIRMED_STANDOFF_EXECUTION else 0.
+                    expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
-                                 p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history)
+                                 p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
+                                 p.config.ics.confirmed_standoff_m)
                                 for p in env._control_pipelines}
                     if profiles != {expected} or env.escape_option_version != option_version or env.lidar_mount_pitch_degrees != 25:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
@@ -325,6 +327,8 @@ def run(plan, input_pin):
                            clearance_margin_m=expected[0], motion_tube_radius_m=expected[1], confirm_motion=expected[2])
                     if use_neighbors:
                         execution['uses_neighbor_history'] = True
+                    if standoff:
+                        execution['confirmed_standoff_m'] = standoff
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

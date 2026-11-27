@@ -196,9 +196,35 @@ def test_motion_tube_can_use_neighbor_history_for_a_consistent_off_path_return()
 
     assert not attenuate_command(scan, rays, velocity, .1, base).v_final_b.any()
     test = replace(base, motion_tube_neighbor_history=True)
-    issued = attenuate_command(scan, rays, velocity, .1, test)
+    issued = attenuate_command(scan, rays, velocity, .1, test, state_vec=torch.zeros(4,52))
     assert issued.v_final_b[:, 0].tolist() == pytest.approx([.24, 0., 0., 0.])
     assert issued.metrics['emergency'][:, 0].tolist() == [0., 0., 0., 1.]
+    stamped = torch.zeros(4,52)
+    stamped[0, 38] = .2
+    stale = attenuate_command(scan, rays, velocity, .1, test, state_vec=stamped)
+    assert not stale.v_final_b.any()
+
+
+def test_confirmed_standoff_keeps_emergency_and_unconfirmed_closing_guards():
+    import torch
+    from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body
+
+    rays = mounted_mid360_rays_body()
+    ahead = int(rays[:, 0].argmax())
+    velocity = torch.tensor([[.24, 0., 0.]]*4+[[.35, 0., 0.]])
+    beams = torch.zeros(5, 4, 3, len(rays))
+    beams[:, :, 0] = 40.
+    beams[:, :, 0, ahead] = .80
+    beams[:, :, 1:, ahead] = 1.
+    beams[2, 1:3, 0, ahead] = torch.tensor([.92, .86])
+    beams[3, -1, 0, ahead] = .39
+    state = torch.zeros(5, 52)
+    state[1, 51] = .20
+    config = ICSConfig(clearance_margin_m=.15, confirmed_standoff_m=.45)
+    scan = beams.reshape(5, 12, 59, 360)
+    issued = attenuate_command(scan, rays, velocity, .1, config, state_vec=state)
+    assert issued.v_final_b[:, 0].tolist() == pytest.approx([.24, 0., 0., 0., 0.])
+    assert issued.metrics['emergency'][:, 0].tolist() == [0., 0., 0., 1., 0.]
 
 
 def test_clearance_uses_the_nearest_finite_wall_surface():

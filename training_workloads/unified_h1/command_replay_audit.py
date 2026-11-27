@@ -6,8 +6,8 @@ from statistics import fmean
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
-    CROSSING_START_M, LANES, LAYOUTS,
-    INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTION, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
+    CONFIRMED_STANDOFF_EXECUTION, CROSSING_START_M, LANES, LAYOUTS,
+    INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
     RANK_EXECUTIONS, REARM_EXECUTIONS,
     STEP_MS, STOP_RELEASE_EXECUTIONS,
     arm_execution, conditions, event_schedule,
@@ -255,7 +255,9 @@ def audit(output, params, counters):
                 or model['execution'] != arm_execution(params, label)):
             raise ValueError('COMMAND_REPLAY_MODEL_BINDING')
         uses_neighbors = model.get('ics_profile', {}).get('uses_neighbor_history', False)
-        if uses_neighbors != (model['execution'] == NEIGHBOR_HISTORY_EXECUTION):
+        standoff = model.get('ics_profile', {}).get('confirmed_standoff_m', 0.)
+        expected_standoff = .45 if model['execution'] == CONFIRMED_STANDOFF_EXECUTION else 0.
+        if uses_neighbors != (model['execution'] in NEIGHBOR_HISTORY_EXECUTIONS) or standoff != expected_standoff:
             raise ValueError('COMMAND_REPLAY_NEIGHBOR_HISTORY_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}

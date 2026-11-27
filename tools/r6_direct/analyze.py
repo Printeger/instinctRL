@@ -78,7 +78,9 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     report['inputs'].append(dict(item, bytes=Path(item['path']).stat().st_size))
                 summary['lidar_mount'] = observed
             if operation == 'evaluate':
-                from training_workloads.unified_h1.command_replay import BRAKE_EXECUTION, NEIGHBOR_HISTORY_EXECUTION, REGRESSION_ID
+                from training_workloads.unified_h1.command_replay import (
+                    BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, NEIGHBOR_HISTORY_EXECUTIONS, REGRESSION_ID,
+                )
 
                 if ctx['plan']['run_id'] == REGRESSION_ID:
                     binding = pin(ctx['output']/'command-execution.json')
@@ -87,8 +89,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     expected = dict(execution=override, checkpoint=parameters['evaluation_selection']['checkpoint'],
                                     mount_pitch_degrees=25, clearance_margin_m=.15,
                                     motion_tube_radius_m=.60 if tube else 0., confirm_motion=tube)
-                    if override == NEIGHBOR_HISTORY_EXECUTION:
+                    if override in NEIGHBOR_HISTORY_EXECUTIONS:
                         expected['uses_neighbor_history'] = True
+                    if override == CONFIRMED_STANDOFF_EXECUTION:
+                        expected['confirmed_standoff_m'] = .45
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

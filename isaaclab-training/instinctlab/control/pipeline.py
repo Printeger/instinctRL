@@ -104,7 +104,7 @@ class ControlCorePipeline:
         if rays is None:
             rays = mounted_mid360_rays_body(device=lidar_grid.device, dtype=lidar_grid.dtype)
         validate_adapter_inputs(governor.v_gov_b, controller_quaternion_wxyz)
-        ics = attenuate_command(lidar_grid, rays, governor.v_gov_b, history_dt_s, self.config.ics)
+        ics = attenuate_command(lidar_grid, rays, governor.v_gov_b, history_dt_s, self.config.ics, state_vec=state_vec)
 
         anchor = self._anchor.update(
             latest_ranges, latest_validity, latest_reliability, v_cmd_b, episode_reset, explicit_reset

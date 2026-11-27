@@ -36,6 +36,7 @@ NOVEL_COMMITTED_ID = NOVEL_PREFIX+'08'
 NOVEL_PRIORITY_ID = NOVEL_PREFIX+'09'
 NOVEL_OFFSET_STOP_ID = NOVEL_PREFIX+'10'
 NOVEL_NEIGHBOR_HISTORY_ID = NOVEL_PREFIX+'11'
+NOVEL_STANDOFF_ID = NOVEL_PREFIX+'12'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -78,7 +79,9 @@ PRIORITY_INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-intercept-v5'
 COMMAND_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-command-handoff-v1'
 OFFSET_STOP_EXECUTION = 'm4-escape-brake-tube-p25-offset-stop-v1'
 NEIGHBOR_HISTORY_EXECUTION = 'm4-escape-brake-tube-p25-neighbor-history-v1'
-OFFSET_STOP_EXECUTIONS = (OFFSET_STOP_EXECUTION, NEIGHBOR_HISTORY_EXECUTION)
+CONFIRMED_STANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-confirmed-standoff-v1'
+NEIGHBOR_HISTORY_EXECUTIONS = (NEIGHBOR_HISTORY_EXECUTION, CONFIRMED_STANDOFF_EXECUTION)
+OFFSET_STOP_EXECUTIONS = (OFFSET_STOP_EXECUTION, *NEIGHBOR_HISTORY_EXECUTIONS)
 COMMAND_HANDOFF_EXECUTIONS = (COMMAND_HANDOFF_EXECUTION, *OFFSET_STOP_EXECUTIONS)
 PRIORITY_INTERCEPT_EXECUTIONS = (PRIORITY_INTERCEPT_EXECUTION, *COMMAND_HANDOFF_EXECUTIONS)
 COMMITTED_INTERCEPT_EXECUTIONS = (COMMITTED_INTERCEPT_EXECUTION, *PRIORITY_INTERCEPT_EXECUTIONS)
@@ -330,7 +333,8 @@ def novel_contract(params):
                   NOVEL_PRIORITY_ID: (COMMITTED_INTERCEPT_EXECUTION, PRIORITY_INTERCEPT_EXECUTION),
                   NOVEL_HANDOFF_ID: (PRIORITY_INTERCEPT_EXECUTION, COMMAND_HANDOFF_EXECUTION),
                   NOVEL_OFFSET_STOP_ID: (COMMAND_HANDOFF_EXECUTION, OFFSET_STOP_EXECUTION),
-                  NOVEL_NEIGHBOR_HISTORY_ID: OFFSET_STOP_EXECUTIONS}.get(params['experiment_id'])
+                  NOVEL_NEIGHBOR_HISTORY_ID: (OFFSET_STOP_EXECUTION, NEIGHBOR_HISTORY_EXECUTION),
+                  NOVEL_STANDOFF_ID: NEIGHBOR_HISTORY_EXECUTIONS}.get(params['experiment_id'])
     paired = comparison is not None
     labels = {'control', 'candidate'} if paired else {'candidate'}
     execution = (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
@@ -560,16 +564,19 @@ def run(backend, params):
         model = dict(checkpoint=checkpoint, execution=execution, lidar_mount=record_mount(env, output, label), trials={})
         if timed_crossings:
             configuration = {(p.config.ics.motion_tube_radius_m, p.config.ics.motion_tube_confirm_closure,
-                              p.config.ics.motion_tube_neighbor_history)
+                              p.config.ics.motion_tube_neighbor_history, p.config.ics.confirmed_standoff_m)
                              for p in env._control_pipelines}
             confirm = execution in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION,
                                     SIDE_HOVER_RETREAT_EXECUTION, *CLEAR_PASS_EXECUTIONS)
-            neighbors = execution == NEIGHBOR_HISTORY_EXECUTION
-            if configuration != {(.60, confirm, neighbors)}:
+            neighbors = execution in NEIGHBOR_HISTORY_EXECUTIONS
+            standoff = .45 if execution == CONFIRMED_STANDOFF_EXECUTION else 0.
+            if configuration != {(.60, confirm, neighbors, standoff)}:
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
                 model['ics_profile']['uses_neighbor_history'] = True
+            if standoff:
+                model['ics_profile']['confirmed_standoff_m'] = standoff
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
