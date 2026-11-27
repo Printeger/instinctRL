@@ -23,8 +23,7 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-CONFIRMED_STANDOFF_VERSIONS = (CONFIRMED_STANDOFF_25_VERSION, SETTLED_OFFSET_STOP_25_VERSION)
-NEIGHBOR_HISTORY_VERSIONS = (NEIGHBOR_HISTORY_25_VERSION, *CONFIRMED_STANDOFF_VERSIONS)
+NEIGHBOR_HISTORY_VERSIONS = (NEIGHBOR_HISTORY_25_VERSION, CONFIRMED_STANDOFF_25_VERSION, SETTLED_OFFSET_STOP_25_VERSION)
 OFFSET_STOPS = (OFFSET_STOP_25_VERSION, *NEIGHBOR_HISTORY_VERSIONS)
 COMMAND_HANDOFFS = (COMMAND_HANDOFF_25_VERSION, *OFFSET_STOPS)
 PRIORITY_INTERCEPTS = (PRIORITY_INTERCEPT_25_VERSION, *COMMAND_HANDOFFS)
@@ -129,7 +128,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                               *STOP_RELEASE_VERSIONS)
         radius = .60 if confirm or version == BRAKE_TUBE_25_VERSION else 0.
         neighbor_history = version in NEIGHBOR_HISTORY_VERSIONS
-        standoff = .45 if version in CONFIRMED_STANDOFF_VERSIONS else 0.
+        standoff = .45 if version == CONFIRMED_STANDOFF_25_VERSION else 0.
         for pipeline in self._control_pipelines:
             ics = pipeline.config.ics
             actual = (ics.motion_tube_radius_m, ics.motion_tube_confirm_closure,

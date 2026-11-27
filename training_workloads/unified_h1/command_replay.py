@@ -82,8 +82,7 @@ OFFSET_STOP_EXECUTION = 'm4-escape-brake-tube-p25-offset-stop-v1'
 NEIGHBOR_HISTORY_EXECUTION = 'm4-escape-brake-tube-p25-neighbor-history-v1'
 CONFIRMED_STANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-confirmed-standoff-v1'
 SETTLED_OFFSET_STOP_EXECUTION = 'm4-escape-brake-tube-p25-settled-offset-stop-v1'
-CONFIRMED_STANDOFF_EXECUTIONS = (CONFIRMED_STANDOFF_EXECUTION, SETTLED_OFFSET_STOP_EXECUTION)
-NEIGHBOR_HISTORY_EXECUTIONS = (NEIGHBOR_HISTORY_EXECUTION, *CONFIRMED_STANDOFF_EXECUTIONS)
+NEIGHBOR_HISTORY_EXECUTIONS = (NEIGHBOR_HISTORY_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, SETTLED_OFFSET_STOP_EXECUTION)
 OFFSET_STOP_EXECUTIONS = (OFFSET_STOP_EXECUTION, *NEIGHBOR_HISTORY_EXECUTIONS)
 COMMAND_HANDOFF_EXECUTIONS = (COMMAND_HANDOFF_EXECUTION, *OFFSET_STOP_EXECUTIONS)
 PRIORITY_INTERCEPT_EXECUTIONS = (PRIORITY_INTERCEPT_EXECUTION, *COMMAND_HANDOFF_EXECUTIONS)
@@ -338,7 +337,7 @@ def novel_contract(params):
                   NOVEL_OFFSET_STOP_ID: (COMMAND_HANDOFF_EXECUTION, OFFSET_STOP_EXECUTION),
                   NOVEL_NEIGHBOR_HISTORY_ID: (OFFSET_STOP_EXECUTION, NEIGHBOR_HISTORY_EXECUTION),
                   NOVEL_STANDOFF_ID: (NEIGHBOR_HISTORY_EXECUTION, CONFIRMED_STANDOFF_EXECUTION),
-                  NOVEL_SETTLED_STOP_ID: CONFIRMED_STANDOFF_EXECUTIONS}.get(params['experiment_id'])
+                  NOVEL_SETTLED_STOP_ID: (NEIGHBOR_HISTORY_EXECUTION, SETTLED_OFFSET_STOP_EXECUTION)}.get(params['experiment_id'])
     paired = comparison is not None
     labels = {'control', 'candidate'} if paired else {'candidate'}
     execution = (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
@@ -605,7 +604,7 @@ def run(backend, params):
             confirm = execution in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION,
                                     SIDE_HOVER_RETREAT_EXECUTION, *CLEAR_PASS_EXECUTIONS)
             neighbors = execution in NEIGHBOR_HISTORY_EXECUTIONS
-            standoff = .45 if execution in CONFIRMED_STANDOFF_EXECUTIONS else 0.
+            standoff = .45 if execution == CONFIRMED_STANDOFF_EXECUTION else 0.
             settled_stop = execution == SETTLED_OFFSET_STOP_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff)}
                     or env.escape_option.settled_offset_stop != settled_stop):

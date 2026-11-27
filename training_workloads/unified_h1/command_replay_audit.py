@@ -6,7 +6,7 @@ from statistics import fmean
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
-    CONFIRMED_STANDOFF_EXECUTIONS, CROSSING_START_M, LANES, LAYOUTS,
+    CONFIRMED_STANDOFF_EXECUTION, CROSSING_START_M, LANES, LAYOUTS,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
     RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTION,
     STEP_MS, STOP_RELEASE_EXECUTIONS,
@@ -256,7 +256,7 @@ def audit(output, params, counters):
             raise ValueError('COMMAND_REPLAY_MODEL_BINDING')
         uses_neighbors = model.get('ics_profile', {}).get('uses_neighbor_history', False)
         standoff = model.get('ics_profile', {}).get('confirmed_standoff_m', 0.)
-        expected_standoff = .45 if model['execution'] in CONFIRMED_STANDOFF_EXECUTIONS else 0.
+        expected_standoff = .45 if model['execution'] == CONFIRMED_STANDOFF_EXECUTION else 0.
         if uses_neighbors != (model['execution'] in NEIGHBOR_HISTORY_EXECUTIONS) or standoff != expected_standoff:
             raise ValueError('COMMAND_REPLAY_NEIGHBOR_HISTORY_PROFILE')
         if model.get('settled_offset_stop', False) is not (model['execution'] == SETTLED_OFFSET_STOP_EXECUTION):

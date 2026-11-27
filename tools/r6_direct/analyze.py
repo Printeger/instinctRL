@@ -79,7 +79,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                 summary['lidar_mount'] = observed
             if operation == 'evaluate':
                 from training_workloads.unified_h1.command_replay import (
-                    BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTIONS, NEIGHBOR_HISTORY_EXECUTIONS, REGRESSION_ID,
+                    BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, NEIGHBOR_HISTORY_EXECUTIONS, REGRESSION_ID,
                     SETTLED_OFFSET_STOP_EXECUTION,
                 )
 
@@ -92,7 +92,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                                     motion_tube_radius_m=.60 if tube else 0., confirm_motion=tube)
                     if override in NEIGHBOR_HISTORY_EXECUTIONS:
                         expected['uses_neighbor_history'] = True
-                    if override in CONFIRMED_STANDOFF_EXECUTIONS:
+                    if override == CONFIRMED_STANDOFF_EXECUTION:
                         expected['confirmed_standoff_m'] = .45
                     if override == SETTLED_OFFSET_STOP_EXECUTION:
                         expected['settled_offset_stop'] = True

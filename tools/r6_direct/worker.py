@@ -168,7 +168,7 @@ def run(plan, input_pin):
         )
         from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
         from training_workloads.unified_h1.command_replay import (
-            BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTIONS, ENDURANCE_PREFIXES, LONG_PREFIX,
+            BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, ENDURANCE_PREFIXES, LONG_PREFIX,
             NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, REGRESSION_ID, SETTLED_OFFSET_STOP_EXECUTION, STEP_MS,
             load_lane_streams, matches as command_replay,
             route_layouts,
@@ -315,7 +315,7 @@ def run(plan, input_pin):
                 if plan['run_id'] == REGRESSION_ID:
                     tube = option_version != BRAKE_EXECUTION
                     use_neighbors = option_version in NEIGHBOR_HISTORY_EXECUTIONS
-                    standoff = .45 if option_version in CONFIRMED_STANDOFF_EXECUTIONS else 0.
+                    standoff = .45 if option_version == CONFIRMED_STANDOFF_EXECUTION else 0.
                     settled_stop = option_version == SETTLED_OFFSET_STOP_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
