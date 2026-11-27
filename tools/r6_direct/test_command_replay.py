@@ -886,6 +886,42 @@ def test_inner_tube_aligns_small_turns_using_only_imu_and_command_history():
     assert result.metrics['beta'].flatten().tolist() == [1.,0.,0.,0.,0.]
 
 
+def test_verified_resume_requires_two_clear_predictions_for_the_latest_request(monkeypatch):
+    import torch
+    from instinctlab.control import escape_passage
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.pipeline import ControlCoreConfig
+
+    guard = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=False, rank_return=True,
+                           verified_resume=True)
+    guard.applied[:] = True
+    guard.braking[:] = True
+    guard.remaining[:] = 17
+    lidar = torch.ones(3,12,59,360)
+    lidar[:, 0::3] = 2.
+    state = torch.zeros(3,4,13)
+    state[:, :, 5] = -1.
+    state[:, :, 6] = .20
+    command = torch.tensor([[1., .5, .5, .5]]*3)
+    selected = torch.tensor([[0., .5, .5, .5]]*3)
+    positions = torch.tensor([[0.,1.2],[0.,1.2],[1.2,1.2]])
+    zeros = torch.zeros_like(positions)
+    tracks = (torch.arange(3), positions, zeros, zeros, torch.full((3,), .34))
+    config = ControlCoreConfig()
+    monkeypatch.setattr(escape_passage, 'clear_to_end_escape',
+                        lambda lidar, state, **kwargs: torch.zeros(len(lidar),dtype=torch.bool))
+
+    guard.resume_latest_request(lidar, state.reshape(3,52), selected, command, config, guard.applied, tracks)
+    assert guard.resumed.tolist() == [False, False, False]
+    positions[1] = torch.tensor([.3,0.])
+    state[2, -1, 6:9] = torch.tensor([0.,.20,0.])
+    guard.resume_latest_request(lidar, state.reshape(3,52), selected, command, config, guard.applied, tracks)
+    assert guard.resumed.tolist() == [True, False, False]
+    assert guard.applied.tolist() == [False, True, True]
+    assert guard.braking.tolist() == [False, True, True]
+    assert torch.equal(selected[0], command[0])
+
+
 def test_finite_edge_advances_only_toward_an_observed_flank(monkeypatch):
     import torch
     from instinctlab.control import escape_tangent

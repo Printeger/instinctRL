@@ -20,14 +20,15 @@ from instinctlab.control.escape_recovery import (
     RECOVERY_REARM_25_VERSION, RECOVERY_RETREAT_25_VERSION,
     RECOVERY_VERSION, REDIRECT_25_VERSION, RESERVE_INTERCEPT_25_VERSION, ROTATION_TUBE_25_VERSION,
     SETTLED_OFFSET_STOP_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TANGENT_MAGNITUDE_25_VERSION,
-    TURN_FIT_25_VERSION,
+    TURN_FIT_25_VERSION, VERIFIED_RESUME_25_VERSION,
     WALL_TANGENT_25_VERSION,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
+ROTATION_TUBE_VERSIONS = (ROTATION_TUBE_25_VERSION, VERIFIED_RESUME_25_VERSION)
 FINITE_EDGE_VERSIONS = (FINITE_EDGE_25_VERSION, EDGE_CONTINUATION_25_VERSION,
-                        TANGENT_MAGNITUDE_25_VERSION, ROTATION_TUBE_25_VERSION)
+                        TANGENT_MAGNITUDE_25_VERSION, *ROTATION_TUBE_VERSIONS)
 CONFIRMED_TUBE_VERSIONS = (CONFIRMED_TUBE_25_VERSION, *FINITE_EDGE_VERSIONS)
 WALL_TANGENT_VERSIONS = (WALL_TANGENT_25_VERSION, *CONFIRMED_TUBE_VERSIONS)
 SETTLED_OFFSET_STOP_VERSIONS = (SETTLED_OFFSET_STOP_25_VERSION, *WALL_TANGENT_VERSIONS)
@@ -123,7 +124,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 wall_tangent=version in WALL_TANGENT_VERSIONS,
                                                 finite_edge=version in FINITE_EDGE_VERSIONS,
                                                 edge_continuation=version == EDGE_CONTINUATION_25_VERSION,
-                                                tangent_magnitude=version == TANGENT_MAGNITUDE_25_VERSION)
+                                                tangent_magnitude=version == TANGENT_MAGNITUDE_25_VERSION,
+                                                verified_resume=version == VERIFIED_RESUME_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -142,7 +144,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         neighbor_history = version in NEIGHBOR_HISTORY_VERSIONS
         standoff = .45 if version == CONFIRMED_STANDOFF_25_VERSION else 0.
         inner = .41 if version in CONFIRMED_TUBE_VERSIONS else 0.
-        align = version == ROTATION_TUBE_25_VERSION
+        align = version in ROTATION_TUBE_VERSIONS
         for pipeline in self._control_pipelines:
             ics = pipeline.config.ics
             actual = (ics.motion_tube_radius_m, ics.motion_tube_confirm_closure,
@@ -229,6 +231,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     self.extras['pre_reset']['escape_option']['finite_edge'] = self.escape_option.detour_used.detach().clone()
                 if self.escape_option.edge_continuation:
                     self.extras['pre_reset']['escape_option']['edge_continued'] = self.escape_option.edge_continued.detach().clone()
+                if self.escape_option.verified_resume:
+                    self.extras['pre_reset']['escape_option']['verified_resume'] = self.escape_option.resumed.detach().clone()
                 if self.escape_option.brake_forward_escape:
                     self.extras['pre_reset']['escape_option']['braking'] = self.escape_option.braking.detach().clone()
                 if self.escape_option.recovery_retreat or self.escape_option.early_retreat:

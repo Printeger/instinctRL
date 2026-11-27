@@ -7,7 +7,8 @@ from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
     CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, CROSSING_START_M, EDGE_CONTINUATION_EXECUTION,
-    FINITE_EDGE_EXECUTIONS, LANES, LAYOUTS, ROTATION_TUBE_EXECUTION, TANGENT_MAGNITUDE_EXECUTION,
+    FINITE_EDGE_EXECUTIONS, LANES, LAYOUTS, ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
+    VERIFIED_RESUME_EXECUTION,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
     RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTIONS,
     STEP_MS, STOP_RELEASE_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
@@ -264,7 +265,7 @@ def audit(output, params, counters):
         aligns_rotation = model.get('ics_profile', {}).get('confirmed_tube_align_rotation', False)
         if (uses_neighbors != (model['execution'] in NEIGHBOR_HISTORY_EXECUTIONS)
                 or standoff != expected_standoff or inner_tube != expected_inner_tube
-                or aligns_rotation is not (model['execution'] == ROTATION_TUBE_EXECUTION)):
+                or aligns_rotation is not (model['execution'] in ROTATION_TUBE_EXECUTIONS)):
             raise ValueError('COMMAND_REPLAY_NEIGHBOR_HISTORY_PROFILE')
         if model.get('settled_offset_stop', False) is not (model['execution'] in SETTLED_OFFSET_STOP_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_SETTLED_OFFSET_STOP_PROFILE')
@@ -279,6 +280,9 @@ def audit(output, params, counters):
             raise ValueError('COMMAND_REPLAY_EDGE_CONTINUATION_PROFILE')
         if model.get('tangent_magnitude', False) is not (model['execution'] == TANGENT_MAGNITUDE_EXECUTION):
             raise ValueError('COMMAND_REPLAY_TANGENT_MAGNITUDE_PROFILE')
+        resume_profile = model['execution'] == VERIFIED_RESUME_EXECUTION
+        if model.get('verified_resume', False) is not resume_profile:
+            raise ValueError('COMMAND_REPLAY_VERIFIED_RESUME_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
         active_starts = []
@@ -380,6 +384,11 @@ def audit(output, params, counters):
                 continued_edge = row.get('escape_edge_continued', [False]*LANES)
                 if len(continued_edge) != LANES or any(type(value) is not bool for value in continued_edge):
                     raise ValueError('COMMAND_REPLAY_EDGE_CONTINUATION_LANES')
+                if ('escape_verified_resume' in row) != resume_profile:
+                    raise ValueError('COMMAND_REPLAY_VERIFIED_RESUME_BINDING')
+                resumed = row.get('escape_verified_resume', [False]*LANES)
+                if len(resumed) != LANES or any(type(value) is not bool for value in resumed):
+                    raise ValueError('COMMAND_REPLAY_VERIFIED_RESUME_LANES')
                 for lane in range(LANES):
                     actor = row['actor_state'][lane]
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
@@ -419,6 +428,14 @@ def audit(output, params, counters):
                     if handoff[lane] and (row['escape_active'][lane] or math.hypot(*observed) < .079999
                                           or (not intercepted[lane] and row['selected_action'][lane] != row['action'][lane])):
                         raise ValueError('COMMAND_REPLAY_HANDOFF_BEHAVIOR')
+                    if resumed[lane] and (not step or rows[step-1]['reset'][lane]
+                            or not rows[step-1]['escape_active'][lane] or row['escape_active'][lane]
+                            or intercepted[lane] or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
+                            or row['selected_action'][lane] != row['action'][lane]
+                            or not .079999 <= math.hypot(*observed) <= .300001
+                            or math.dist(actor[-2][6:9], actor[-1][6:9]) > .040001
+                            or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)):
+                        raise ValueError('COMMAND_REPLAY_VERIFIED_RESUME_BEHAVIOR')
                     if continued[lane] and (not intercepted[lane] or not step or rows[step-1]['reset'][lane]
                                             or not rows[step-1]['escape_intercepted'][lane]
                                             or math.hypot(*row['v_final_b'][lane]) < .119999):

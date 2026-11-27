@@ -48,6 +48,7 @@ FINITE_EDGE_25_VERSION = 'm4-escape-brake-tube-p25-finite-edge-v1'
 EDGE_CONTINUATION_25_VERSION = 'm4-escape-brake-tube-p25-finite-edge-continued-v1'
 TANGENT_MAGNITUDE_25_VERSION = 'm4-escape-brake-tube-p25-tangent-magnitude-v1'
 ROTATION_TUBE_25_VERSION = 'm4-escape-brake-tube-p25-rotation-aligned-v1'
+VERIFIED_RESUME_25_VERSION = 'm4-escape-brake-tube-p25-verified-resume-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -62,7 +63,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        NEIGHBOR_HISTORY_25_VERSION: 25, CONFIRMED_STANDOFF_25_VERSION: 25,
                        SETTLED_OFFSET_STOP_25_VERSION: 25, WALL_TANGENT_25_VERSION: 25,
                        CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25, EDGE_CONTINUATION_25_VERSION: 25,
-                       TANGENT_MAGNITUDE_25_VERSION: 25, ROTATION_TUBE_25_VERSION: 25}
+                       TANGENT_MAGNITUDE_25_VERSION: 25, ROTATION_TUBE_25_VERSION: 25, VERIFIED_RESUME_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -77,7 +78,7 @@ class EscapeRecovery(EscapeOption):
                  stop_release=False, turn_fallback=False, intercept=False, align_intercept=False,
                  intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False,
                  offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False,
-                 edge_continuation=False, tangent_magnitude=False):
+                 edge_continuation=False, tangent_magnitude=False, verified_resume=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -114,6 +115,10 @@ class EscapeRecovery(EscapeOption):
         self.tangent_magnitude = tangent_magnitude
         self.finite_edge = finite_edge
         self.edge_continuation = edge_continuation
+        self.verified_resume = verified_resume
+        if verified_resume:
+            self.resume_witness = torch.zeros_like(self.applied)
+            self.resumed = torch.zeros_like(self.applied)
         if wall_tangent:
             self.tangent_used = torch.zeros_like(self.applied)
         if finite_edge:
@@ -194,6 +199,9 @@ class EscapeRecovery(EscapeOption):
             self.edge_steps[lanes] = 0
             self.edge_side[lanes] = False
             self.edge_continued[lanes] = False
+        if self.verified_resume:
+            self.resume_witness[lanes] = False
+            self.resumed[lanes] = False
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -624,7 +632,59 @@ class EscapeRecovery(EscapeOption):
         self.offset_stopped[lanes[cancel]] = True
         return cancel
 
-    def avoid_interception(self, lidar, state, selected, config):
+    def resume_latest_request(self, lidar, state, selected, action, config, eligible, tracks):
+        from .escape_passage import clear_to_end_escape, intercept_scores
+
+        previous = self.resume_witness.clone()
+        self.resume_witness.zero_()
+        self.resumed.zero_()
+        history = state.reshape(-1, 4, 13)
+        command = history[:, -1, 6:9]
+        speed = command.norm(dim=1)
+        continuing = self.applied & (self.remaining < DURATION_STEPS-1) & ~self.retreating
+        ready = eligible & continuing & (history[:, :, 12] <= .04).all(dim=1) & (speed >= .08) & (speed <= .30)
+        candidates = ready.nonzero().flatten()
+        if not len(candidates):
+            return
+        scans, histories = lidar[candidates], state[candidates]
+        actor = self.issued(scans, histories, action[candidates], config)
+        held = self.issued(scans, histories, selected[candidates], config)
+        heading = command[candidates]/speed[candidates, None]
+        projection = (actor.v_final_b*heading).sum(dim=1)
+        gain = ((actor.v_final_b-held.v_final_b)*heading).sum(dim=1)
+        observed = ((scans[:, 1::3] > .5) & (scans[:, 2::3] > .55)).all(dim=1).flatten(1)
+        forward = (heading@self.detector._full_rays.T) >= .70
+        coverage = (observed & forward).sum(dim=1)/forward.sum(dim=1).clamp_min(1)
+        accepted = ((actor.metrics['beta'][:, 0] >= .90) & (actor.metrics['emergency'][:, 0] == 0.)
+                    & (projection >= .60*speed[candidates]) & (gain >= .075) & (coverage >= .45))
+        candidates, scans, histories = candidates[accepted], scans[accepted], histories[accepted]
+        if not len(candidates):
+            return
+        moving_lanes, position, motion, coast, radius = tracks
+        clear = torch.zeros_like(self.applied)
+        clear[candidates] = clear_to_end_escape(scans, histories, minimum_coverage=.50)
+        if len(moving_lanes):
+            velocities = torch.zeros_like(command)
+            velocities[candidates] = actor.v_final_b[accepted]
+            observed_lane = torch.zeros_like(self.applied)
+            observed_lane[candidates] = True
+            fits = observed_lane[moving_lanes]
+            clearance = intercept_scores(position[fits], motion[fits], coast[fits], radius[fits],
+                                         velocities[moving_lanes[fits], None])[:, 0]
+            clear[moving_lanes[fits]] = clearance >= .48
+        self.resume_witness[candidates] = clear[candidates]
+        steady = (command-history[:, -2, 6:9]).norm(dim=1) <= .04
+        release = previous & self.resume_witness & steady
+        selected[release] = action[release]
+        self.applied[release] = False
+        self.braking[release] = False
+        self.ranked[release] = False
+        self.remaining[release] = 0
+        self.cooldown[release] = 0
+        self.since_escape[release] = RECOVERY_LIMIT
+        self.resumed[release] = True
+
+    def avoid_interception(self, lidar, state, selected, config, *, actor_action=None):
         from .escape_passage import intercept_scores, moving_intercepts
 
         self.intercepted.zero_()
@@ -639,6 +699,9 @@ class EscapeRecovery(EscapeOption):
         response = (self.command_offsets, self.command_coast) if self.align_intercept else None
         lanes, position, motion, coast, radius = moving_intercepts(
             lidar, state, self.detector._full_rays, eligible, command_response=response)
+        if actor_action is not None:
+            self.resume_latest_request(lidar, state, selected, actor_action, config, eligible,
+                                       (lanes, position, motion, coast, radius))
         if self.commit_intercept:
             observed = lanes
             if self.retreat_priority:
@@ -837,7 +900,11 @@ class EscapeRecovery(EscapeOption):
 
                 self.command_offsets, self.command_coast = advance_command_response(
                     self.command_offsets, self.command_coast, state)
-            self.avoid_interception(policy['lidar_grid'], state, selected, config)
+            if self.verified_resume:
+                self.avoid_interception(policy['lidar_grid'], state, selected, config, actor_action=action)
+                self.resumed &= ~self.intercepted
+            else:
+                self.avoid_interception(policy['lidar_grid'], state, selected, config)
             if self.wall_tangent:
                 self.tangent_used &= ~self.intercepted
             if self.finite_edge:

@@ -46,6 +46,7 @@ NOVEL_REVALIDATE_ID = NOVEL_PREFIX+'17'
 NOVEL_EDGE_CONTINUATION_ID = NOVEL_PREFIX+'18'
 NOVEL_TANGENT_MAGNITUDE_ID = NOVEL_PREFIX+'19'
 NOVEL_ROTATION_TUBE_ID = NOVEL_PREFIX+'20'
+NOVEL_VERIFIED_RESUME_ID = NOVEL_PREFIX+'21'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -98,8 +99,10 @@ FINITE_EDGE_EXECUTION = 'm4-escape-brake-tube-p25-finite-edge-v1'
 EDGE_CONTINUATION_EXECUTION = 'm4-escape-brake-tube-p25-finite-edge-continued-v1'
 TANGENT_MAGNITUDE_EXECUTION = 'm4-escape-brake-tube-p25-tangent-magnitude-v1'
 ROTATION_TUBE_EXECUTION = 'm4-escape-brake-tube-p25-rotation-aligned-v1'
+VERIFIED_RESUME_EXECUTION = 'm4-escape-brake-tube-p25-verified-resume-v1'
+ROTATION_TUBE_EXECUTIONS = (ROTATION_TUBE_EXECUTION, VERIFIED_RESUME_EXECUTION)
 FINITE_EDGE_EXECUTIONS = (FINITE_EDGE_EXECUTION, EDGE_CONTINUATION_EXECUTION,
-                          TANGENT_MAGNITUDE_EXECUTION, ROTATION_TUBE_EXECUTION)
+                          TANGENT_MAGNITUDE_EXECUTION, *ROTATION_TUBE_EXECUTIONS)
 CONFIRMED_TUBE_EXECUTIONS = (CONFIRMED_TUBE_EXECUTION, *FINITE_EDGE_EXECUTIONS)
 WALL_TANGENT_EXECUTIONS = (WALL_TANGENT_EXECUTION, *CONFIRMED_TUBE_EXECUTIONS)
 SETTLED_OFFSET_STOP_EXECUTIONS = (SETTLED_OFFSET_STOP_EXECUTION, *WALL_TANGENT_EXECUTIONS)
@@ -387,6 +390,8 @@ def novel_contract(params):
         execution = (comparison[0],)
     elif params['experiment_id'] in (NOVEL_CONFIRM_ID, NOVEL_REVALIDATE_ID):
         execution = (ALIGNED_INTERCEPT_EXECUTION, RESERVE_INTERCEPT_EXECUTION, *COMMITTED_INTERCEPT_EXECUTIONS)
+    elif params['experiment_id'] == NOVEL_VERIFIED_RESUME_ID:
+        execution = (VERIFIED_RESUME_EXECUTION,)
     wall = 1800 if paired else 1200
     if paired:
         fields.add('candidate_execution')
@@ -654,11 +659,13 @@ def run(backend, params):
             detour = execution in FINITE_EDGE_EXECUTIONS
             edge_continuation = execution == EDGE_CONTINUATION_EXECUTION
             tangent_magnitude = execution == TANGENT_MAGNITUDE_EXECUTION
-            aligns_rotation = execution == ROTATION_TUBE_EXECUTION
+            aligns_rotation = execution in ROTATION_TUBE_EXECUTIONS
+            resumes = execution == VERIFIED_RESUME_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
-                    or env.escape_option.tangent_magnitude != tangent_magnitude):
+                    or env.escape_option.tangent_magnitude != tangent_magnitude
+                    or env.escape_option.verified_resume != resumes):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -679,6 +686,8 @@ def run(backend, params):
                 model['edge_continuation'] = True
             if tangent_magnitude:
                 model['tangent_magnitude'] = True
+            if resumes:
+                model['verified_resume'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
@@ -796,6 +805,8 @@ def run(backend, params):
                         tensors['escape_finite_edge'] = option['finite_edge']
                     if 'edge_continued' in option:
                         tensors['escape_edge_continued'] = option['edge_continued']
+                    if 'verified_resume' in option:
+                        tensors['escape_verified_resume'] = option['verified_resume']
                     if 'ics_limiter' in pre:
                         tensors.update(pre['ics_limiter'])
                     save_row(handle, dict(kind='transition', step=step, t_ms=step*STEP_MS,
