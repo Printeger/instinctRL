@@ -173,6 +173,8 @@ FAR_CROSSING_REFERENCE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v16'
 VERIFIED_RETREAT_ONSET_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v17'
 CLIPPED_RETREAT_ONSET_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v18'
 TUBE_STOPPING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v19'
+TUBE_STOPPING_TRACE_FIELDS = ('tube_stopping_hold_s','tube_stopping_target_b','tube_baseline_velocity_b',
+    'tube_baseline_beta','tube_gap_m','tube_required_gap_m','tube_cleared_limiting_beams')
 HOVER_REFERENCE_RESERVE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v20'
 CLIPPED_RETREAT_ONSET_EXECUTIONS = (CLIPPED_RETREAT_ONSET_EXECUTION, HOVER_REFERENCE_RESERVE_EXECUTION)
 VERIFIED_RETREAT_ONSET_EXECUTIONS = (VERIFIED_RETREAT_ONSET_EXECUTION, *CLIPPED_RETREAT_ONSET_EXECUTIONS)
@@ -1123,8 +1125,7 @@ def run(backend, params):
                     if 'retreat_request_kept' in option:
                         tensors['escape_retreat_request_kept'] = option['retreat_request_kept']
                     if 'tube_stopping_hold_s' in option:
-                        tensors['tube_stopping_hold_s'] = option['tube_stopping_hold_s']
-                        tensors['tube_stopping_target_b'] = option['tube_stopping_target_b']
+                        tensors.update({field:option[field] for field in TUBE_STOPPING_TRACE_FIELDS})
                     if 'edge_continued' in option:
                         tensors['escape_edge_continued'] = option['edge_continued']
                     if 'verified_resume' in option:

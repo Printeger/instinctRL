@@ -159,11 +159,15 @@ def test_tube_stopping_retains_independent_and_near_constraints():
         verified = certify_tube_request(scan,state.flatten(1),rays,target,config,original,previous_speed_bound=.30)
         if offset == 0. and not obstruction:
             assert verified is not None
-            result, proposed, hold = verified
-            assert result.metrics['beta'].item() == 1.
-            assert torch.equal(result.v_final_b,proposed)
-            assert .28 < float(proposed.norm()) < .30
-            assert hold == .60
+            assert verified.result.metrics['beta'].item() == 1.
+            assert torch.equal(verified.result.v_final_b,verified.target)
+            assert .28 < float(verified.target.norm()) < .30
+            assert verified.hold_s == .60
+            assert verified.observed_gap_m >= verified.required_gap_m and verified.cleared_limiting_beams > 0
+            stale = state.clone()
+            stale[:,0,12] = .12
+            assert certify_tube_request(scan,stale.flatten(1),rays,target,config,original,
+                                        previous_speed_bound=.30) is None
         else:
             assert verified is None
 

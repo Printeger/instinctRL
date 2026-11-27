@@ -337,14 +337,26 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     self.extras['pre_reset']['escape_option']['bilateral_stopping'] = self.escape_option.applied.new_tensor(used)
                 if self.tube_stopping:
                     target = torch.zeros_like(self.escape_option.direction)
-                    hold_seconds = target.new_zeros(self.num_envs)
+                    hold_seconds = target.new_zeros((self.num_envs,))
+                    baseline_velocity = torch.zeros_like(target)
+                    baseline_beta = torch.zeros_like(hold_seconds)
+                    gap = torch.zeros_like(hold_seconds)
+                    required_gap = torch.zeros_like(hold_seconds)
+                    cleared = target.new_zeros((self.num_envs,),dtype=torch.long)
                     for lane, pipeline in enumerate(self._control_pipelines):
                         if pipeline.tube_stopping is not None:
-                            command, hold = pipeline.tube_stopping
-                            target[lane] = command[0]
-                            hold_seconds[lane] = hold
-                    self.extras['pre_reset']['escape_option']['tube_stopping_target_b'] = target
-                    self.extras['pre_reset']['escape_option']['tube_stopping_hold_s'] = hold_seconds
+                            decision, velocity, beta = pipeline.tube_stopping
+                            target[lane] = decision.target[0]
+                            hold_seconds[lane] = decision.hold_s
+                            baseline_velocity[lane] = velocity[0]
+                            baseline_beta[lane] = beta[0,0]
+                            gap[lane] = decision.observed_gap_m
+                            required_gap[lane] = decision.required_gap_m
+                            cleared[lane] = decision.cleared_limiting_beams
+                    self.extras['pre_reset']['escape_option'].update(tube_stopping_target_b=target,
+                        tube_stopping_hold_s=hold_seconds, tube_baseline_velocity_b=baseline_velocity,
+                        tube_baseline_beta=baseline_beta, tube_gap_m=gap, tube_required_gap_m=required_gap,
+                        tube_cleared_limiting_beams=cleared)
                 if self.escape_option.edge_continuation:
                     self.extras['pre_reset']['escape_option']['edge_continued'] = self.escape_option.edge_continued.detach().clone()
                 if self.escape_option.verified_resume:

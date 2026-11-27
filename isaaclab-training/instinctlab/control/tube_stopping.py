@@ -1,6 +1,6 @@
 """Certify a finite command and brake through an observed stationary tube."""
 
-from dataclasses import replace
+from dataclasses import dataclass, replace
 import math
 
 import numpy as np
@@ -20,6 +20,16 @@ _STAMP_LIMIT = .04
 _MAX_REQUEST = .30
 _ANGLE_BINS = np.linspace(-math.pi, math.pi, 181)
 _MOUNT = (0., 0., .05)
+
+
+@dataclass(frozen=True)
+class TubeStoppingDecision:
+    result: ICSResult
+    target: torch.Tensor
+    hold_s: float
+    observed_gap_m: float
+    required_gap_m: float
+    cleared_limiting_beams: int
 
 
 def _surface_normals(scan, rays):
@@ -178,7 +188,7 @@ def _bounded_wall_mask(scans, rays, aligned, mount_offsets, issued, gravity, vel
         association = abs(ranges*outward-distances[:,None]) <= .018
         clear |= (outward >= .30) & valid.all(axis=0) & association.all(axis=0)
         verified += 1
-    return clear if verified >= 3 else None
+    return (clear,float(gap),float(core)) if verified >= 3 else None
 
 
 def _remaining_ratio(cache, config):
@@ -196,7 +206,7 @@ def certify_tube_request(lidar, state, rays, governed, config, baseline, *, prev
     if (bool(baseline.metrics['emergency'][0,0]) or not .03 < speed <= _MAX_REQUEST
             or float(baseline.v_final_b[0]@command) >= .60*speed**2):
         return None
-    ages = history[-3:,12]
+    ages = history[:,12]
     if (bool((ages > _STAMP_LIMIT).any() or (ages.diff().abs() > .03).any())
             or float(history[-3:,:3].norm(dim=1).max()) > .22 or bool(_return_seed(lidar,state)[0][0])):
         return None
@@ -232,7 +242,9 @@ def certify_tube_request(lidar, state, rays, governed, config, baseline, *, prev
             proved = _bounded_wall_mask(scans,ray_values,aligned,mounts,issued,state_values[-1,3:6],velocity,planes,hold,tail)
             if proved is None:
                 continue
-            remaining = active & ~torch.as_tensor(proved,device=rays.device)[None]
+            wall_beams, gap, core = proved
+            associated = torch.as_tensor(wall_beams,device=rays.device)[None]
+            remaining = active & ~associated
             count = remaining.sum(dim=1,keepdim=True)
             beta = ratios.masked_fill(~remaining,1.).amin(dim=1,keepdim=True)
             beta = torch.where(count > 0,beta,torch.full_like(beta,config.empty_active_set_beta))
@@ -245,7 +257,8 @@ def certify_tube_request(lidar, state, rays, governed, config, baseline, *, prev
                            worst_margin_m_s=torch.where(count > 0,margin,0.))
             result = ICSResult(clip_vector_norm(proposed*beta,config.velocity_limit_m_s),metrics,
                                dict(candidate.cache,active_mask=remaining))
-            return result, proposed, hold
+            cleared = int((active & associated & (ratios < .90)).sum())
+            return TubeStoppingDecision(result,proposed,hold,gap,core,cleared)
     return None
 
 
@@ -284,8 +297,8 @@ class TubeStoppingPipeline(ControlCorePipeline):
                                        previous_speed_bound=self._speed_at_oldest_scan)
         if checked is None:
             return result
-        certified, target, hold = checked
-        self.tube_stopping = (target,hold)
+        certified = checked.result
+        self.tube_stopping = (checked,result.v_final_b,result.ics_metrics['beta'])
         self._last_ics_cache = certified.cache
         world = rotate_body_to_world(certified.v_final_b,controller_quaternion_wxyz)
         return replace(result,v_final_b=certified.v_final_b,v_final_w=world,ics_metrics=certified.metrics)

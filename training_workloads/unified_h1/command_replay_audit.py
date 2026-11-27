@@ -13,7 +13,8 @@ from .command_replay import (
     CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
     BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
-    CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, HOVER_REFERENCE_RESERVE_EXECUTION,
+    CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, TUBE_STOPPING_TRACE_FIELDS,
+    HOVER_REFERENCE_RESERVE_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -495,11 +496,8 @@ def audit(output, params, counters):
                 if (('escape_retreat_request_kept' in row) != verified_retreat_profile or len(retreat_kept) != LANES
                         or any(type(value) is not bool for value in retreat_kept)):
                     raise ValueError('COMMAND_REPLAY_VERIFIED_RETREAT_BINDING')
-                tube_holds = row.get('tube_stopping_hold_s', [0.]*LANES)
-                tube_targets = row.get('tube_stopping_target_b', [[0.,0.,0.]]*LANES)
-                if (('tube_stopping_hold_s' in row) != tube_stopping_profile
-                        or ('tube_stopping_target_b' in row) != tube_stopping_profile
-                        or len(tube_holds) != LANES or len(tube_targets) != LANES):
+                if any(((field in row) != tube_stopping_profile) or (field in row and len(row[field]) != LANES)
+                       for field in TUBE_STOPPING_TRACE_FIELDS):
                     raise ValueError('COMMAND_REPLAY_FINITE_TUBE_BINDING')
                 if len(detour) != LANES or any(type(value) is not bool for value in detour):
                     raise ValueError('COMMAND_REPLAY_FINITE_EDGE_LANES')
@@ -570,14 +568,19 @@ def audit(output, params, counters):
                             or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)):
                         raise ValueError('COMMAND_REPLAY_BILATERAL_BEHAVIOR')
                     if tube_stopping_profile:
-                        hold, target = tube_holds[lane], tube_targets[lane]
-                        if not math.isfinite(hold) or len(target) != 3 or not all(math.isfinite(component) for component in target):
+                        hold, target, baseline, before_beta, gap, required, cleared = (
+                            row[field][lane] for field in TUBE_STOPPING_TRACE_FIELDS)
+                        if (len(target) != 3 or len(baseline) != 3 or type(cleared) is not int
+                                or not all(math.isfinite(x) for x in (hold,before_beta,gap,required,*target,*baseline))):
                             raise ValueError('COMMAND_REPLAY_FINITE_TUBE_TARGET')
-                        if not hold and any(target):
+                        if not hold and any((before_beta,gap,required,cleared,*target,*baseline)):
                             raise ValueError('COMMAND_REPLAY_FINITE_TUBE_INACTIVE_TARGET')
                         if hold and (min(abs(hold-.30),abs(hold-.60)) > 1.e-6
                                 or not .02999 <= math.hypot(*observed) <= .30001
                                 or not 0. < math.hypot(*target) <= .300001
+                                or not 0. <= before_beta <= 1. or cleared <= 0 or gap < required or required < .41
+                                or math.dist(baseline,[v*before_beta for v in row['v_gov_b'][lane]]) > 2.e-6
+                                or dot(actor[-1][6:9],baseline) > .60001*dot(observed,observed)
                                 or row['escape_active'][lane] or row['recovery_retreating'][lane] or held[lane]
                                 or row['escape_braking'][lane] or ranked[lane] or row['escape_recovering'][lane]
                                 or intercepted[lane] or continued[lane] or row['ics_emergency'][lane]
