@@ -1,5 +1,6 @@
 """Continuous, development-only command replay on the frozen B/C plant."""
 from bisect import bisect_right
+from contextlib import ExitStack
 from hashlib import sha256
 import json
 import math
@@ -24,6 +25,7 @@ REGRESSION_ID = PREFIX + 'R6-01'
 MODE = 'research-r6-dynamic-assay'
 LANES = 32
 STEP_MS = 100
+CLEARANCE_SHAPE = (21, LANES, 7)
 CROSSING_SPEED_M_S = .58
 CROSSING_START_M = 2.2
 CROSSING_TRAVEL_S = 7.5
@@ -205,8 +207,25 @@ def sampled_events(stream):
     return [bisect_right(times, t) - 1 for t in range(0, stream['duration_ms'] + 1, STEP_MS)]
 
 
+def clearance_radii(pin):
+    envelope = json.loads(checked(pin).read_bytes())
+    checked(envelope['asset'])
+    if (envelope['schema_version'] != 'instinctrl-collider-envelope-study/1'
+            or envelope['asset_meters_per_unit'] != 1.0 or not envelope['shapes']):
+        raise ValueError('COMMAND_REPLAY_CLEARANCE_ENVELOPE')
+    radii = {}
+    for shape in envelope['shapes']:
+        name = shape['body'].rsplit('/', 1)[-1]
+        radius = shape['link_bound_radius_m']
+        if not name or type(radius) not in (int, float) or not math.isfinite(radius) or not 0. < radius < .5:
+            raise ValueError('COMMAND_REPLAY_CLEARANCE_RADIUS')
+        radii[name] = max(radii.get(name, 0.), radius)
+    return radii
+
+
 def long_contract(params):
-    fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'protocol', 'wall_seconds', 'output_cap_bytes'}
+    fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'protocol',
+              'clearance_envelope', 'wall_seconds', 'output_cap_bytes'}
     if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
             or type(params['seed']) is not int or not 0 <= params['seed'] < 2**31 or params['seed'] in (167149835, 185193671)
             or params['wall_seconds'] != 7200 or params['output_cap_bytes'] != 2**31
@@ -214,6 +233,7 @@ def long_contract(params):
             or set(params['models']) != {'candidate'} or params['models']['candidate']['sha256'] != MODELS['b']):
         raise ValueError('COMMAND_REPLAY_LONG_PARAMETERS')
     checked(params['models']['candidate'])
+    clearance_radii(params['clearance_envelope'])
     protocol = json.loads(checked(params['protocol']).read_bytes())
     if (set(protocol) != {'schema_version', 'experiment_id', 'scene_seed', 'stream', 'execution', 'checkpoint',
                           'progress_opportunities', 'acceptance_gates', 'street_first_center_ms'}
@@ -273,6 +293,9 @@ def contract(params):
     fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'wall_seconds', 'output_cap_bytes'}
     if guard or routes:
         fields.add('candidate_execution')
+    if 'clearance_envelope' in params and run_id.startswith((EARLY_PREFIX, HOVER_PREFIX)):
+        fields.add('clearance_envelope')
+        clearance_radii(params['clearance_envelope'])
     if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
             or ((guard or routes) and params['candidate_execution'] != candidate_execution)
             or type(params['seed']) is not int
@@ -343,6 +366,11 @@ def run(backend, params):
     long_run = params['experiment_id'].startswith(LONG_PREFIX)
     timed_crossings = endurance or returns or long_run
     env.capture_ics_limiter = timed_crossings or params['experiment_id'].startswith(CRAZY_PREFIX)
+    capture = 'clearance_envelope' in params
+    if capture:
+        if env.cfg.decimation+1 != CLEARANCE_SHAPE[0]:
+            raise ValueError('COMMAND_REPLAY_CLEARANCE_CLOCK')
+        env.enable_clearance_capture(clearance_radii(params['clearance_envelope']))
 
     def save_row(handle, row):
         data = (json.dumps(row, allow_nan=False, separators=(',', ':')) + '\n').encode()
@@ -392,8 +420,11 @@ def run(backend, params):
             backend.resource_check('before_command_replay_reset', counters.explicit_resets+1)
             observation, _ = backend._preserving_reset(seed=params['seed'])
             trace = output/f'{label}-{name}.jsonl'
+            dense_path = output/f'{label}-{name}-clearance.f32'
             # Stream completed transitions to disk. A failed run still leaves its prefix intact.
-            with trace.open('xb') as handle:
+            with ExitStack() as files:
+                handle = files.enter_context(trace.open('xb'))
+                dense = files.enter_context(dense_path.open('xb')) if capture else None
                 save_row(handle, dict(kind='initial', mover_start_w=obstacle.start.cpu().tolist(),
                                       path_reference_w=sensor_origins.cpu().tolist(),
                                       scene_origins_w=env.scene.env_origins.cpu().tolist(),
@@ -458,9 +489,17 @@ def run(backend, params):
                                           physics_tick=int(before['tick']), after_tick=int(post['tick']),
                                           contact_samples=post['contact_samples'],
                                           **{key: value.detach().cpu().tolist() for key, value in tensors.items()}))
+                    if dense is not None:
+                        samples = pre['clearance_samples'].cpu().numpy().astype('<f4', copy=False)
+                        data = samples.tobytes()
+                        reserve_output_bytes(dense_path, len(data))
+                        dense.write(data)
+                        dense.flush()
                     handle.flush()
             completion = env.finish_r6_physics()
             obstacle.finish()
             model['trials'][name] = dict(trace=file_pin(trace), physics=completion)
+            if capture:
+                model['trials'][name]['clearance'] = file_pin(dense_path)
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

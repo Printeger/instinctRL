@@ -98,15 +98,45 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 pipeline.config = replace(pipeline.config, ics=replace(ics, motion_tube_radius_m=radius,
                                                                       motion_tube_confirm_closure=confirm))
 
+    def enable_clearance_capture(self, radius_by_body):
+        names = self._robot.body_names
+        if set(names) != set(radius_by_body):
+            raise ValueError('collision envelope bodies differ from the live articulation')
+        self._capture_body_radii = self._command_b.new_tensor([radius_by_body[name] for name in names])
+        self._clearance_samples = self._command_b.new_empty((self.cfg.decimation+1, self.num_envs, 7))
+
+    def _append_clearance_sample(self):
+        root = self._robot.data.root_link_pos_w
+        links = self._robot.data.body_link_pos_w
+        mover = self._h1_moving_sphere.asset.root_physx_view.get_transforms()[:, :3]
+        sample = self._clearance_samples[self._captured]
+        sample[:, :3].copy_(root)
+        sample[:, 3:6].copy_(mover)
+        radius = (links-root[:, None]).norm(dim=-1)+self._capture_body_radii
+        sample[:, 6].copy_(radius.amax(dim=1))
+        self._captured += 1
+
     def _pre_physics_step(self, actions):
+        if hasattr(self, '_clearance_samples'):
+            self._captured = 0
         if isinstance(self.escape_option, EscapeRecovery):
             actions = self.escape_option.apply_recovery(self._policy, actions, self._control_pipelines[0].config)
         elif self.escape_option is not None:
             actions = self.escape_option.apply(self._policy, actions)
         super()._pre_physics_step(actions)
 
+    def _apply_action(self):
+        if hasattr(self, '_clearance_samples'):
+            self._append_clearance_sample()
+        super()._apply_action()
+
     def _get_rewards(self):
         reward = super()._get_rewards()
+        if hasattr(self, '_clearance_samples'):
+            if self._captured != self.cfg.decimation:
+                raise RuntimeError('clearance capture missed a physics tick')
+            self._append_clearance_sample()
+            self.extras['pre_reset']['clearance_samples'] = self._clearance_samples
         if getattr(self, 'capture_ics_limiter', False):
             self.extras['pre_reset']['ics_limiter'] = self._ics_limiter_witness()
         if self.escape_option is not None:

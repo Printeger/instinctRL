@@ -4,7 +4,7 @@ import math
 from statistics import fmean
 
 from tools.r6_evidence import checked, file_pin
-from .command_replay import CONDITIONS, LANES, LAYOUTS, STEP_MS, arm_execution, conditions, event_schedule
+from .command_replay import CLEARANCE_SHAPE, CONDITIONS, LANES, LAYOUTS, STEP_MS, arm_execution, conditions, event_schedule
 
 # Development diagnostics. The corridor is fixed to the authored crossing centre.
 CORRIDOR_HALF_WIDTH_M = .58
@@ -45,6 +45,32 @@ def contiguous_windows(steps):
         else:
             windows.append([step, step])
     return windows
+
+
+def dense_clearance(path, steps):
+    import numpy as np
+
+    shape = (steps, *CLEARANCE_SHAPE)
+    if path.stat().st_size != math.prod(shape)*4:
+        raise ValueError('COMMAND_REPLAY_CLEARANCE_SIZE')
+    return np.memmap(path, dtype='<f4', mode='r', shape=shape)
+
+
+def verify_clearance(path, initial, rows):
+    import numpy as np
+
+    samples = dense_clearance(path, len(rows))
+    previous = initial
+    for step, (sample, row) in enumerate(zip(samples, rows, strict=True)):
+        uninterrupted = np.logical_not(previous['reset']) if step else np.ones(LANES, dtype=bool)
+        root_before = previous['root_state_after_w'] if step else previous['root_state_w']
+        if (not np.isfinite(sample).all() or (sample[..., 6] <= 0).any()
+                or not np.allclose(sample[0, uninterrupted, :3], np.asarray(root_before)[uninterrupted, :3], atol=2e-5, rtol=0)
+                or not np.allclose(sample[-1, :, :3], np.asarray(row['root_state_after_w'])[:, :3], atol=2e-5, rtol=0)
+                or not np.allclose(sample[0, :, 3:6], row['mover_position_w'], atol=2e-5, rtol=0)
+                or not np.allclose(sample[-1, :, 3:6], row['mover_position_after_w'], atol=2e-5, rtol=0)):
+            raise ValueError(f'COMMAND_REPLAY_CLEARANCE_ENDPOINT {step}')
+        previous = row
 
 
 def score_lane(rows, initial, lane, crossing):
@@ -164,12 +190,17 @@ def audit(output, params, counters):
     layouts, event_ids, events = event_schedule(params)
     trial_conditions = conditions(params)
     sources = [file_pin(path), params['stream']]
+    if 'clearance_envelope' in params:
+        sources.append(params['clearance_envelope'])
+    if 'protocol' in params:
+        protocol = json.loads(checked(params['protocol']).read_bytes())
+        sources.extend([params['protocol'], protocol['progress_opportunities'], protocol['acceptance_gates']])
     resets = 0
     results = {}
     first_pose = None
     for label, model in saved['models'].items():
         if (model['checkpoint'] != params['models'][label] or set(model['trials']) != set(trial_conditions)
-                or ('candidate_execution' in params and model['execution'] != arm_execution(params, label))):
+                or model['execution'] != arm_execution(params, label)):
             raise ValueError('COMMAND_REPLAY_MODEL_BINDING')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
@@ -186,6 +217,14 @@ def audit(output, params, counters):
                     or initial.get('layouts', layouts) != layouts
                     or trial['physics']['block_ticks'] != 20*len(rows)):
                 raise ValueError('COMMAND_REPLAY_TRANSITIONS')
+            if ('clearance' in trial) != ('clearance_envelope' in params):
+                raise ValueError('COMMAND_REPLAY_CLEARANCE_BINDING')
+            if 'clearance' in trial:
+                dense = checked(trial['clearance'])
+                if dense != output/f'{label}-{name}-clearance.f32':
+                    raise ValueError('COMMAND_REPLAY_CLEARANCE_PATH')
+                verify_clearance(dense, initial, rows)
+                sources.append(trial['clearance'])
             if first_pose is None:
                 first_pose = initial['root_state_w']
             if any(math.dist(a, b) > .001 for a, b in zip(first_pose, initial['root_state_w'], strict=True)):
@@ -217,6 +256,8 @@ def audit(output, params, counters):
             results[label][name] = dict(trace=trial['trace'], lanes=[
                 score_lane(rows, initial, lane, trial_conditions[name] is not None and layouts[lane] == 'street_gap')
                 for lane in range(LANES)])
+            if 'clearance' in trial:
+                results[label][name]['clearance'] = trial['clearance']
         if active_starts and any(start != active_starts[0] for start in active_starts[1:]):
             raise ValueError('COMMAND_REPLAY_MOVER_START')
     if resets != counters['automatic_resets']:

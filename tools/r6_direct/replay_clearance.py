@@ -10,6 +10,7 @@ from tools.r6_direct.import_legacy import pin, stop_paths
 from tools.r6_direct.instinct_cycle import save
 from tools.r6_evidence import checked
 from training_workloads.unified_h1.command_replay import LANES, conditions, route_layouts
+from training_workloads.unified_h1.command_replay_audit import dense_clearance
 from training_workloads.unified_h1.escape_holdout_scene import scene_geometry
 
 
@@ -107,6 +108,26 @@ def frozen_opportunity(velocities, commands, first_flight_steps, start, end):
                 observed_only_rmse_m_s=float(np.sqrt(np.mean(error**2))) if len(error) else None)
 
 
+def measured_clearance(samples, lane, end, triangles, *, crossing):
+    # Neighboring intervals share endpoints throughout the first flight.
+    starts = samples[:end, :-1, lane].reshape(-1, samples.shape[-1])
+    points = np.concatenate((starts, samples[end-1, -1:, lane]), axis=0)
+    best = (float('inf'), 0, 'static')
+    for start in range(0, len(points), 4096):
+        batch = points[start:start+4096].astype(np.float64)
+        static = static_distance(batch[:, :3], triangles)
+        moving = np.linalg.norm(batch[:, :3]-batch[:, 3:6], axis=-1)-.34 if crossing else None
+        clearance = (np.minimum(static, moving) if crossing else static)-batch[:, 6]
+        offset = int(clearance.argmin())
+        if clearance[offset] < best[0]:
+            best = (float(clearance[offset]), start+offset,
+                    'mover' if crossing and moving[offset] < static[offset] else 'static')
+    lower, tick, surface = best
+    return dict(samples=len(points), minimum_clearance_lower_bound_m=lower,
+                elapsed_physics_tick=tick, closest_surface=surface,
+                maximum_measured_link_envelope_m=float(points[:, 6].max()))
+
+
 def summarize(binding, envelope_pin, opportunity_pin=None):
     import torch
 
@@ -117,6 +138,8 @@ def summarize(binding, envelope_pin, opportunity_pin=None):
         raise ValueError('a completely audited command replay is required')
     envelope = read(envelope_pin)
     checked(envelope['asset'])
+    if 'clearance_envelope' in params and params['clearance_envelope'] != envelope_pin:
+        raise ValueError('clearance envelope differs from the launch pin')
     if envelope['status'] != 'USD_COLLIDER_BOUND_REQUIRES_LIVE_JOINT_RADIUS_VERIFICATION':
         raise ValueError('unrecognized collider envelope')
     radius = envelope['maximum_rest_pose_rotation_envelope_m']
@@ -153,6 +176,8 @@ def summarize(binding, envelope_pin, opportunity_pin=None):
             with trace.open() as source:
                 initial = json.loads(next(source))
                 rows = [json.loads(row) for row in source]
+            dense_pin = item.get('clearance')
+            dense = None if dense_pin is None else dense_clearance(checked(dense_pin), len(rows))
             contact_or_end = [len(rows) if lane['first_reset_step'] is None else lane['first_reset_step']+1
                               for lane in item['lanes']]
             states = np.asarray([row['root_state_after_w'] for row in rows], dtype=np.float64)
@@ -188,6 +213,10 @@ def summarize(binding, envelope_pin, opportunity_pin=None):
                                    closest_surface='mover' if mover is not None and mover[step] < static[step] else 'static',
                                    tracking_in_feasible_moving_windows=tracking,
                                    externally_scheduled_progress=fixed))
+                if dense is not None:
+                    values[-1]['physics_tick_clearance'] = dict(
+                        source=dense_pin, sample_period_ms=5,
+                        **measured_clearance(dense, lane, end, triangles, crossing=mover is not None))
             models[name][trial] = values
     return dict(schema_version='instinctrl-sampled-physical-clearance/1', binding=binding, geometry=geometry_pin,
                 envelope=envelope_pin, sample_period_ms=100, diagnostic_clearance_m=.15, sweep_horizon_s=.6,

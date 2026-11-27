@@ -156,6 +156,32 @@ def test_clearance_uses_the_nearest_finite_wall_surface():
     assert triangle_distance_squared(queries, triangle).tolist() == pytest.approx([1., .5, 2.])
 
 
+def test_dense_clearance_preserves_an_interior_physics_tick(tmp_path):
+    import numpy as np
+    from tools.r6_direct.replay_clearance import measured_clearance
+    from training_workloads.unified_h1.command_replay import CLEARANCE_SHAPE, LANES
+    from training_workloads.unified_h1.command_replay_audit import dense_clearance, verify_clearance
+
+    samples = np.zeros((1, *CLEARANCE_SHAPE), dtype='<f4')
+    samples[..., 2] = 1.
+    samples[..., 6] = .2
+    samples[0, 11, 0, 2] = .5
+    samples[0, 11, 0, 6] = .23
+    raw = tmp_path/'clearance.f32'
+    samples.tofile(raw)
+    initial = {'root_state_w': samples[0, 0, :, :3].tolist()}
+    end = {'root_state_after_w': samples[0, -1, :, :3].tolist(), 'mover_position_w': [[0.]*3]*LANES,
+           'mover_position_after_w': [[0.]*3]*LANES}
+    verify_clearance(raw, initial, [end])
+    result = measured_clearance(dense_clearance(raw, 1), 0, 1, np.empty((0, 3, 3)), crossing=False)
+    assert result['elapsed_physics_tick'] == 11
+    assert result['minimum_clearance_lower_bound_m'] == pytest.approx(.27)
+    samples[0, 0, 0, 0] = .1
+    samples.tofile(raw)
+    with pytest.raises(ValueError, match='COMMAND_REPLAY_CLEARANCE_ENDPOINT'):
+        verify_clearance(raw, initial, [end])
+
+
 def test_frozen_opportunities_keep_missed_ticks_in_the_denominator():
     import numpy as np
     from tools.r6_direct.replay_clearance import frozen_opportunity

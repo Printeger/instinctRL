@@ -9,7 +9,10 @@ from tools.r6_direct.evidence import validate_binding
 from tools.r6_direct.import_legacy import pin, stop_paths
 from tools.r6_direct.instinct_cycle import save
 from tools.r6_evidence import checked
-from training_workloads.unified_h1.command_replay import arm_execution, route_layouts
+from training_workloads.unified_h1.command_replay import (
+    EARLY_RETREAT_EXECUTION, RECOVERY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION,
+    TUBE_CONFIRM_EXECUTION, arm_execution, route_layouts,
+)
 from training_workloads.unified_h1.command_replay_audit import body_to_world
 from training_workloads.unified_h1.escape_holdout_scene import scene_geometry
 
@@ -96,7 +99,8 @@ def audit(binding, arm, lane, start, end):
     reflex._full_rays.copy_(ray_tensor)
     reflex._rays.copy_(ray_tensor.reshape(59, 360, 3)[::3].reshape(-1,3))
     execution = arm_execution(params, arm)
-    if 'tube-p25-v2' not in execution and 'recovery-retreat' not in execution:
+    if execution not in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION,
+                         EARLY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION):
         raise ValueError('shadow audit is registered only for the v2 sweep settings')
     config = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60, motion_tube_confirm_closure=True)
     results = []
@@ -119,6 +123,8 @@ def audit(binding, arm, lane, start, end):
             outcomes[name] = dict(beta=float(result.metrics['beta'][j,0]),
                                 issued_w_m_s=body_to_world(row['attitude_wxyz'][lane], result.v_final_b[j].tolist()))
         results.append(dict(step=i, facing_closure=float(retreat@heading),
+                          retreat_b=retreat.tolist(),
+                          retreat_w=body_to_world(row['attitude_wxyz'][lane], retreat.tolist()),
                           actor_witness_beams=row['mover_winning_beams'][lane],
                           measured_ics_beta=row['ics_beta'][lane], candidates=outcomes))
     return dict(schema_version='instinctrl-command-ray-shadow/1', binding=binding, geometry=geometry_pin,
