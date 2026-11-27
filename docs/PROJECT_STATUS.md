@@ -42,6 +42,8 @@
 
 第十份独立 Crazy 回放完成 32/32 条首飞，零接触与中途重置，五类净空及 32/32 松杆均通过。最小净空 0.2142 米。短回放按正式公式检查跟踪，最差可行低进展 9.4 秒。保留此配置作为短程安全对照，继续修复可行段的跟踪和恢复。 [独立结果](experiments/instinct-continuous-command/independent_static_reference/REPORT.md)
 
+同输入浅角选向完成 32/32 条首飞及松杆，零接触或重置，最小净空 0.2142 米。室内跟踪误差和进展比例均达标 8/8，最长低进展降到 4.6 秒。管道最长低进展升到 6.6 秒，街道跟踪误差尚未达标。 [同输入物理结果](experiments/instinct-continuous-command/shallow_steering/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
