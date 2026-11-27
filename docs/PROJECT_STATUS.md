@@ -56,6 +56,8 @@
 
 远距横穿用同一测距回波的静态平面校正方向后，同输入后段净空从 0.05257 米升至 0.26905 米。32/32 首飞及松杆、五类最低净空、室内门角均达标，零接触和重置。跟踪与恢复仍有缺口，同配置进入预登记的独立 Crazy 复验。 [同输入结果](experiments/instinct-continuous-command/far_crossing_reference/REPORT.md)
 
+远距横穿方向的独立 Crazy 复验同样完成 32/32 条首飞和预设松杆，五类安全净空通过，最低为街道 0.20579 米，零接触和重置。最长可行低进展 9.6 秒出现在管道，街道跟踪和危险后恢复也仍需改进。 [独立结果](experiments/instinct-continuous-command/independent_far_crossing_reference/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
