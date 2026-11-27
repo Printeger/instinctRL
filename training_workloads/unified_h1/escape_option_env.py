@@ -19,11 +19,13 @@ from instinctlab.control.escape_recovery import (
     RECOVERY_REARM_25_VERSION, RECOVERY_RETREAT_25_VERSION,
     RECOVERY_VERSION, REDIRECT_25_VERSION, RESERVE_INTERCEPT_25_VERSION,
     SETTLED_OFFSET_STOP_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TURN_FIT_25_VERSION,
+    WALL_TANGENT_25_VERSION,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-NEIGHBOR_HISTORY_VERSIONS = (NEIGHBOR_HISTORY_25_VERSION, CONFIRMED_STANDOFF_25_VERSION, SETTLED_OFFSET_STOP_25_VERSION)
+SETTLED_OFFSET_STOP_VERSIONS = (SETTLED_OFFSET_STOP_25_VERSION, WALL_TANGENT_25_VERSION)
+NEIGHBOR_HISTORY_VERSIONS = (NEIGHBOR_HISTORY_25_VERSION, CONFIRMED_STANDOFF_25_VERSION, *SETTLED_OFFSET_STOP_VERSIONS)
 OFFSET_STOPS = (OFFSET_STOP_25_VERSION, *NEIGHBOR_HISTORY_VERSIONS)
 COMMAND_HANDOFFS = (COMMAND_HANDOFF_25_VERSION, *OFFSET_STOPS)
 PRIORITY_INTERCEPTS = (PRIORITY_INTERCEPT_25_VERSION, *COMMAND_HANDOFFS)
@@ -111,7 +113,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 commit_intercept=version in COMMITTED_INTERCEPTS,
                                                 retreat_priority=version in PRIORITY_INTERCEPTS,
                                                 offset_stop=version in OFFSET_STOPS,
-                                                settled_offset_stop=version == SETTLED_OFFSET_STOP_25_VERSION)
+                                                settled_offset_stop=version in SETTLED_OFFSET_STOP_VERSIONS,
+                                                wall_tangent=version == WALL_TANGENT_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -206,6 +209,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     self.extras['pre_reset']['escape_option']['handoff'] = self.escape_option.handed_off.detach().clone()
                 if self.escape_option.offset_stop:
                     self.extras['pre_reset']['escape_option']['offset_stop'] = self.escape_option.offset_stopped.detach().clone()
+                if self.escape_option.wall_tangent:
+                    self.extras['pre_reset']['escape_option']['wall_tangent'] = self.escape_option.tangent_used.detach().clone()
                 if self.escape_option.brake_forward_escape:
                     self.extras['pre_reset']['escape_option']['braking'] = self.escape_option.braking.detach().clone()
                 if self.escape_option.recovery_retreat or self.escape_option.early_retreat:

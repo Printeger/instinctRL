@@ -169,7 +169,8 @@ def run(plan, input_pin):
         from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
         from training_workloads.unified_h1.command_replay import (
             BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, ENDURANCE_PREFIXES, LONG_PREFIX,
-            NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, REGRESSION_ID, SETTLED_OFFSET_STOP_EXECUTION, STEP_MS,
+            NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, REGRESSION_ID, SETTLED_OFFSET_STOP_EXECUTIONS, STEP_MS,
+            WALL_TANGENT_EXECUTION,
             load_lane_streams, matches as command_replay,
             route_layouts,
         )
@@ -316,14 +317,16 @@ def run(plan, input_pin):
                     tube = option_version != BRAKE_EXECUTION
                     use_neighbors = option_version in NEIGHBOR_HISTORY_EXECUTIONS
                     standoff = .45 if option_version == CONFIRMED_STANDOFF_EXECUTION else 0.
-                    settled_stop = option_version == SETTLED_OFFSET_STOP_EXECUTION
+                    settled_stop = option_version in SETTLED_OFFSET_STOP_EXECUTIONS
+                    tangent = option_version == WALL_TANGENT_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
                                  p.config.ics.confirmed_standoff_m)
                                 for p in env._control_pipelines}
                     if (profiles != {expected} or env.escape_option_version != option_version
-                            or env.lidar_mount_pitch_degrees != 25 or env.escape_option.settled_offset_stop != settled_stop):
+                            or env.lidar_mount_pitch_degrees != 25 or env.escape_option.settled_offset_stop != settled_stop
+                            or env.escape_option.wall_tangent != tangent):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -334,6 +337,8 @@ def run(plan, input_pin):
                         execution['confirmed_standoff_m'] = standoff
                     if settled_stop:
                         execution['settled_offset_stop'] = True
+                    if tangent:
+                        execution['wall_tangent'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

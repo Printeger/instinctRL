@@ -772,6 +772,34 @@ def test_settled_zero_onset_requires_two_clearance_fits(monkeypatch):
     assert selected[0].tolist() == pytest.approx([0., .50, .50, .50])
 
 
+def test_tangent_preserves_diagonal_progress_and_keeps_the_frontal_wall_stop():
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.ics import ICSConfig
+    from instinctlab.control.pipeline import ControlCoreConfig
+
+    guard = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=False, wall_tangent=True)
+    direction = guard.detector._full_rays[:, 1]
+    hit = direction >= .78/40.
+    depth = torch.where(hit, .78/direction.clamp_min(.01), 40.)
+    scan = torch.stack((depth, hit, hit)).reshape(3, 59, 360)
+    lidars = scan.repeat(2, 4, 1, 1)
+    states = torch.zeros(2, 4, 13)
+    states[:, :, 5] = -1.
+    states[0, :, 6:9] = torch.tensor([.15, .19, 0.])
+    states[1, :, 6:9] = torch.tensor([0., .24, 0.])
+    states = states.reshape(2, 52)
+    config = ControlCoreConfig(ics=ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60,
+                                            motion_tube_confirm_closure=True))
+    actions = torch.tensor([[1., .5, .5, .5]]*2)
+    assert guard.issued(lidars, states, actions, config).v_final_b.tolist() == [[0.,0.,0.], [0.,0.,0.]]
+    guard.retain_wall_tangent(lidars, states, actions, config)
+    result = guard.issued(lidars, states, actions, config)
+    assert guard.tangent_used.tolist() == [True, False]
+    assert result.v_final_b[0].tolist() == pytest.approx([.15, 0., 0.], abs=1.e-6)
+    assert result.v_final_b[1].tolist() == [0.,0.,0.]
+
+
 def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):
     import json
     from training_workloads.unified_h1.command_replay_audit import verify_pulse_and_crossing

@@ -8,8 +8,8 @@ from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
     CONFIRMED_STANDOFF_EXECUTION, CROSSING_START_M, LANES, LAYOUTS,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
-    RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTION,
-    STEP_MS, STOP_RELEASE_EXECUTIONS,
+    RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTIONS,
+    STEP_MS, STOP_RELEASE_EXECUTIONS, WALL_TANGENT_EXECUTION,
     arm_execution, conditions, event_schedule,
 )
 
@@ -259,8 +259,11 @@ def audit(output, params, counters):
         expected_standoff = .45 if model['execution'] == CONFIRMED_STANDOFF_EXECUTION else 0.
         if uses_neighbors != (model['execution'] in NEIGHBOR_HISTORY_EXECUTIONS) or standoff != expected_standoff:
             raise ValueError('COMMAND_REPLAY_NEIGHBOR_HISTORY_PROFILE')
-        if model.get('settled_offset_stop', False) is not (model['execution'] == SETTLED_OFFSET_STOP_EXECUTION):
+        if model.get('settled_offset_stop', False) is not (model['execution'] in SETTLED_OFFSET_STOP_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_SETTLED_OFFSET_STOP_PROFILE')
+        tangent_profile = model['execution'] == WALL_TANGENT_EXECUTION
+        if model.get('wall_tangent', False) is not tangent_profile:
+            raise ValueError('COMMAND_REPLAY_WALL_TANGENT_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
         active_starts = []
@@ -347,11 +350,20 @@ def audit(output, params, counters):
                 offset = row.get('escape_offset_stop', [False]*LANES)
                 if len(offset) != LANES or any(type(value) is not bool for value in offset):
                     raise ValueError('COMMAND_REPLAY_OFFSET_STOP_LANES')
+                if ('escape_wall_tangent' in row) != tangent_profile:
+                    raise ValueError('COMMAND_REPLAY_WALL_TANGENT_BINDING')
+                tangent = row.get('escape_wall_tangent', [False]*LANES)
+                if len(tangent) != LANES or any(type(value) is not bool for value in tangent):
+                    raise ValueError('COMMAND_REPLAY_WALL_TANGENT_LANES')
                 for lane in range(LANES):
                     actor = row['actor_state'][lane]
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
                     if math.dist(observed, lane_value(row['raw_event'], lane)['velocity_w_m_s']) > 2e-6:
                         raise ValueError('COMMAND_REPLAY_ACTOR_INPUT')
+                    if tangent[lane] and (not .09999 <= math.hypot(*observed) <= .30001
+                            or row['escape_active'][lane] or intercepted[lane] or row['ics_emergency'][lane] != 0.
+                            or dot(observed, row['v_final_w'][lane]) <= 0.):
+                        raise ValueError('COMMAND_REPLAY_WALL_TANGENT_BEHAVIOR')
                     if held[lane] and (math.hypot(*observed) > .001001 or math.hypot(*row['v_final_w'][lane]) > 1.e-6
                                        or row['escape_active'][lane]):
                         raise ValueError('COMMAND_REPLAY_HOLD_BEHAVIOR')
