@@ -33,6 +33,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                                  run_id=request['run_id'], seed=request['seed'], split=request['split'])
         add_inputs(report, input_pin, ctx)
     elif operation == 'dynamic':
+        from training_workloads.unified_h1 import command_replay
         from training_workloads.unified_h1.dynamic_assay import audit
         budgets = ctx['contract']['budgets']
         counters = ctx['state']['counters']
@@ -40,8 +41,13 @@ def analyze(input_pin, *, probability_diagnostic=None):
                 or counters['explicit_resets'] != budgets['explicit_resets']
                 or counters['real_optimizer_updates'] != 0):
             raise ValueError('DYNAMIC_ASSAY_INCOMPLETE_COUNTERS')
-        raw, pins = audit(ctx['output'], ctx['contract']['parameters'], counters)
-        summary = {'models': raw['models'], 'counters': counters, 'witnesses_replayed': True}
+        if ctx['contract']['mode'] == command_replay.MODE:
+            from training_workloads.unified_h1.command_replay_audit import audit as replay_audit
+
+            summary, pins = replay_audit(ctx['output'], ctx['contract']['parameters'], counters)
+        else:
+            raw, pins = audit(ctx['output'], ctx['contract']['parameters'], counters)
+            summary = {'models': raw['models'], 'counters': counters, 'witnesses_replayed': True}
         report = dict(summary=summary, scientific_acceptance=False,
                       analyzer=pin(Path(__file__)),
                       inputs=[dict(v, bytes=Path(v['path']).stat().st_size) for v in pins])

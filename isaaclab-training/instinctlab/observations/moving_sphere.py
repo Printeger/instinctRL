@@ -73,6 +73,7 @@ class MovingSphere:
         self.servo_velocity = torch.zeros_like(origins)
         self.enabled = False
         self.half_period_s = None
+        self.departure_delay_s = None
         self.pre_reset = None
         self.latest = None
         self.verified_order = False
@@ -80,7 +81,7 @@ class MovingSphere:
         self.contact = torch.zeros(len(origins), 1, device=origins.device, dtype=torch.bool)
         self.contact_samples = 0
 
-    def configure(self, sensor_origins, axis, modes, *, half_period_s=None):
+    def configure(self, sensor_origins, axis, modes, *, half_period_s=None, departure_delay_s=None):
         if self.enabled:
             raise RuntimeError('Existing moving-sphere block is active')
         if not self.verified_order:
@@ -101,11 +102,19 @@ class MovingSphere:
         # The wall-hover and receding lanes end before the H1 wall planes.
         self.end_travel_s = torch.where(modes == 5, 8.7, torch.where(modes == 1, 10., torch.inf))
         self.half_period_s = half_period_s
+        self.departure_delay_s = departure_delay_s
         self.enabled = True
         self.reset(self.indices)
 
+    def _travel_clock(self):
+        if self.departure_delay_s is None:
+            return travel_clock(self.age, self.half_period_s)
+        elapsed = self.age - self.departure_delay_s
+        travel_time, direction = travel_clock(elapsed.clamp_min(0.), self.half_period_s)
+        return travel_time, direction * (elapsed >= 0.)
+
     def _pose(self):
-        travel_time, _ = travel_clock(self.age, self.half_period_s)
+        travel_time, _ = self._travel_clock()
         return self.start + travel_time.minimum(self.end_travel_s)[:, None] * self.velocity
 
     def reset(self, indices):
@@ -158,7 +167,7 @@ class MovingSphere:
         witnesses = torch.where(overwrite, moving_ranges, 41.).argmin(dim=1)
         lane = self.indices
         velocity = self.asset.root_physx_view.get_velocities()[:, :3].clone()
-        travel_time, direction = travel_clock(self.age, self.half_period_s)
+        travel_time, direction = self._travel_clock()
         direction *= travel_time < self.end_travel_s
         self.latest = dict(tick=tick, applied_age_s=self.age.clone(), active=self.active.clone(),
                            sphere_position_w=center, expected_position_w=pose, sphere_velocity_w=velocity,

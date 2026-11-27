@@ -6,7 +6,7 @@ import re
 from statistics import mean
 
 from tools.r6_evidence import checked, file_pin
-from . import pipe_authority_probe
+from . import command_replay, pipe_authority_probe
 
 
 MODE = 'research-r6-dynamic-assay'
@@ -57,7 +57,7 @@ def three_case(run_id):
 
 
 def physical_layout(run_id):
-    return run_id in PHYSICAL_LAYOUT_RUNS or three_case(run_id) is not None
+    return command_replay.matches(run_id) or run_id in PHYSICAL_LAYOUT_RUNS or three_case(run_id) is not None
 
 
 def approved_execution_override(run_id, case, label, checkpoint, stored, requested):
@@ -94,6 +94,8 @@ def groups_for(run_id):
 
 
 def contract(params):
+    if command_replay.matches(params['experiment_id']):
+        return command_replay.contract(params)
     fields = {'experiment_id', 'training_seed', 'models', 'seed', 'wall_seconds', 'output_cap_bytes'}
     runs = (PERSISTENCE_RUN, OPTION_RUN, *PHYSICAL_LAYOUT_RUNS)
     case = three_case(params['experiment_id'])
@@ -296,6 +298,8 @@ def visibility_reset(block, *, seed, lane, mode, mount, split='development'):
 
 
 def run(backend, params):
+    if command_replay.matches(params['experiment_id']):
+        return command_replay.run(backend, params)
     import torch
     from instinctlab.training.checkpoint_h1 import checkpoint_actor
     from instinctlab.training.hover_reflex import HoverReflex

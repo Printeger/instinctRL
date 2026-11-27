@@ -1,0 +1,19 @@
+{
+  "schema_version": "instinctrl-world-command-stream/1",
+  "source": "scripted_development",
+  "duration_ms": 18000,
+  "events": [
+    {"t_ms": 0, "velocity_w_m_s": [0.0, 0.0, 0.0]},
+    {"t_ms": 600, "velocity_w_m_s": [0.12, 0.0, 0.0]},
+    {"t_ms": 1400, "velocity_w_m_s": [0.25, 0.0, 0.0]},
+    {"t_ms": 3700, "velocity_w_m_s": [0.29, 0.0, 0.0]},
+    {"t_ms": 5300, "velocity_w_m_s": [0.23, 0.0, 0.0]},
+    {"t_ms": 6400, "velocity_w_m_s": [-0.25, 0.0, 0.0]},
+    {"t_ms": 8800, "velocity_w_m_s": [-0.20, 0.10, 0.0]},
+    {"t_ms": 10200, "velocity_w_m_s": [0.0, 0.22, 0.0]},
+    {"t_ms": 11700, "velocity_w_m_s": [0.14, -0.12, 0.0]},
+    {"t_ms": 12800, "velocity_w_m_s": [0.0, 0.0, 0.0]},
+    {"t_ms": 15600, "velocity_w_m_s": [0.24, 0.0, 0.0]},
+    {"t_ms": 17200, "velocity_w_m_s": [0.0, 0.0, 0.0]}
+  ]
+}

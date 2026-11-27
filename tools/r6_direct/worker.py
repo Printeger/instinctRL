@@ -167,6 +167,7 @@ def run(plan, input_pin):
             JournaledRuntimeResourceGuard, RuntimeResourceGuard, validate_graceful_shutdown_configuration,
         )
         from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
+        from training_workloads.unified_h1.command_replay import matches as command_replay
         from training_workloads.unified_h1.pipe_authority_probe import MIRRORED_PIPE_RUNS
         validate_graceful_shutdown_configuration(app,resource_pins=pins)
         import carb.settings
@@ -178,7 +179,8 @@ def run(plan, input_pin):
             from tools.r6_direct.render import validate_cache_tokens
             validate_cache_tokens(settings_map,carb.tokens.get_tokens_interface())
         pipe_probe = plan['run_id'] in MIRRORED_PIPE_RUNS
-        journaled = plan['run_id'].startswith((NEXT_LONG_PREFIX, U1792_STUDY_PREFIX, FRONT_STUDY_PREFIX)) or pipe_probe
+        replay = command_replay(plan['run_id'])
+        journaled = replay or plan['run_id'].startswith((NEXT_LONG_PREFIX, U1792_STUDY_PREFIX, FRONT_STUDY_PREFIX)) or pipe_probe
 
         class Guard(JournaledRuntimeResourceGuard if journaled else RuntimeResourceGuard):
             def check(self,**kw):
@@ -259,7 +261,7 @@ def run(plan, input_pin):
                 from training_workloads.unified_h1.lidar_calibration import record as record_mount
 
                 atomic(backend.output/'lidar-calibration.json', record_mount(env, backend.output, 'execution'))
-            if plan['run_id'].startswith(RECOVERY_PREFIX):
+            if replay or plan['run_id'].startswith(RECOVERY_PREFIX):
                 import torch
                 from training_workloads.scale_003.resources import RUNTIME_MIN_FREE_MEMORY_BYTES
 
