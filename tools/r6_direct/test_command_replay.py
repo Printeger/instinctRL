@@ -840,13 +840,15 @@ def test_narrow_tube_needs_clear_axis_and_return_support_on_both_sides():
     assert candidate.metrics['beta'].flatten().tolist() == [1.,0.,0.,0.]
 
 
-def test_finite_edge_advances_only_toward_an_observed_flank():
+def test_finite_edge_advances_only_toward_an_observed_flank(monkeypatch):
     import torch
+    from instinctlab.control import escape_tangent
     from instinctlab.control.escape_recovery import EscapeRecovery
     from instinctlab.control.ics import ICSConfig
     from instinctlab.control.pipeline import ControlCoreConfig
 
-    guard = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=False, finite_edge=True)
+    guard = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=False,
+                           finite_edge=True, edge_continuation=True)
     rays = guard.detector._full_rays
     forward = rays[:, 0] > 0.
     near = .80/rays[:, 0].clamp_min(.001)
@@ -869,6 +871,21 @@ def test_finite_edge_advances_only_toward_an_observed_flank():
     assert guard.detour_used.tolist() == [True, False, False]
     assert actual[0, 0] >= .15 and actual[0, 1] > 0.
     assert actual[1:].tolist() == [[0.,0.,0.], [0.,0.,0.]]
+    targets = escape_tangent.finite_edge_targets
+
+    def scanned_without_flank(*args):
+        trial, support = targets(*args)
+        return trial, torch.zeros_like(support)
+
+    monkeypatch.setattr(escape_tangent, 'finite_edge_targets', scanned_without_flank)
+    neutral = torch.tensor([[1., .5, .5, .5]]*3)
+    guard.progress_around_edge(lidar, state, neutral, config)
+    assert guard.edge_continued.tolist() == [True, False, False]
+    assert guard.edge_steps.tolist() == [8,0,0]
+    state[0, 45] = -.25
+    guard.progress_around_edge(lidar, state, neutral, config)
+    assert not guard.edge_continued.any()
+    assert guard.edge_steps.tolist() == [0,0,0]
 
 
 def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):

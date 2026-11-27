@@ -6,7 +6,8 @@ from statistics import fmean
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
-    CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, CROSSING_START_M, FINITE_EDGE_EXECUTION, LANES, LAYOUTS,
+    CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, CROSSING_START_M, EDGE_CONTINUATION_EXECUTION,
+    FINITE_EDGE_EXECUTIONS, LANES, LAYOUTS,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
     RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTIONS,
     STEP_MS, STOP_RELEASE_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
@@ -267,9 +268,12 @@ def audit(output, params, counters):
         tangent_profile = model['execution'] in WALL_TANGENT_EXECUTIONS
         if model.get('wall_tangent', False) is not tangent_profile:
             raise ValueError('COMMAND_REPLAY_WALL_TANGENT_PROFILE')
-        detour_profile = model['execution'] == FINITE_EDGE_EXECUTION
+        detour_profile = model['execution'] in FINITE_EDGE_EXECUTIONS
         if model.get('finite_edge', False) is not detour_profile:
             raise ValueError('COMMAND_REPLAY_FINITE_EDGE_PROFILE')
+        continuation_profile = model['execution'] == EDGE_CONTINUATION_EXECUTION
+        if model.get('edge_continuation', False) is not continuation_profile:
+            raise ValueError('COMMAND_REPLAY_EDGE_CONTINUATION_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
         active_starts = []
@@ -366,6 +370,11 @@ def audit(output, params, counters):
                 detour = row.get('escape_finite_edge', [False]*LANES)
                 if len(detour) != LANES or any(type(value) is not bool for value in detour):
                     raise ValueError('COMMAND_REPLAY_FINITE_EDGE_LANES')
+                if ('escape_edge_continued' in row) != continuation_profile:
+                    raise ValueError('COMMAND_REPLAY_EDGE_CONTINUATION_BINDING')
+                continued_edge = row.get('escape_edge_continued', [False]*LANES)
+                if len(continued_edge) != LANES or any(type(value) is not bool for value in continued_edge):
+                    raise ValueError('COMMAND_REPLAY_EDGE_CONTINUATION_LANES')
                 for lane in range(LANES):
                     actor = row['actor_state'][lane]
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
@@ -380,6 +389,11 @@ def audit(output, params, counters):
                             or row['ics_emergency'][lane] != 0.
                             or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)):
                         raise ValueError('COMMAND_REPLAY_FINITE_EDGE_BEHAVIOR')
+                    if continued_edge[lane] and (not detour[lane]
+                            or any(math.dist(old[6:9], actor[-1][6:9]) > .040001 for old in actor[:-1])
+                            or not any(old['escape_finite_edge'][lane] and not old['escape_edge_continued'][lane]
+                                       for old in rows[max(0,step-8):step])):
+                        raise ValueError('COMMAND_REPLAY_EDGE_CONTINUATION_BEHAVIOR')
                     if held[lane] and (math.hypot(*observed) > .001001 or math.hypot(*row['v_final_w'][lane]) > 1.e-6
                                        or row['escape_active'][lane]):
                         raise ValueError('COMMAND_REPLAY_HOLD_BEHAVIOR')

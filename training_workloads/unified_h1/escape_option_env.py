@@ -11,7 +11,7 @@ from instinctlab.control.escape_recovery import (
     CLEAR_PASS_25_VERSION, COMMAND_HANDOFF_25_VERSION, COMMITTED_INTERCEPT_25_VERSION, CONFIRMED_STANDOFF_25_VERSION,
     CONFIRMED_TUBE_25_VERSION,
     CURVED_PASS_25_VERSION,
-    EARLY_RETREAT_25_VERSION, EscapeRecovery,
+    EARLY_RETREAT_25_VERSION, EDGE_CONTINUATION_25_VERSION, EscapeRecovery,
     FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FINITE_EDGE_25_VERSION,
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION, HOVER_PATH_25_VERSION, INTERCEPT_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES, NEIGHBOR_HISTORY_25_VERSION,
@@ -25,7 +25,8 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-CONFIRMED_TUBE_VERSIONS = (CONFIRMED_TUBE_25_VERSION, FINITE_EDGE_25_VERSION)
+FINITE_EDGE_VERSIONS = (FINITE_EDGE_25_VERSION, EDGE_CONTINUATION_25_VERSION)
+CONFIRMED_TUBE_VERSIONS = (CONFIRMED_TUBE_25_VERSION, *FINITE_EDGE_VERSIONS)
 WALL_TANGENT_VERSIONS = (WALL_TANGENT_25_VERSION, *CONFIRMED_TUBE_VERSIONS)
 SETTLED_OFFSET_STOP_VERSIONS = (SETTLED_OFFSET_STOP_25_VERSION, *WALL_TANGENT_VERSIONS)
 NEIGHBOR_HISTORY_VERSIONS = (NEIGHBOR_HISTORY_25_VERSION, CONFIRMED_STANDOFF_25_VERSION, *SETTLED_OFFSET_STOP_VERSIONS)
@@ -118,7 +119,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 offset_stop=version in OFFSET_STOPS,
                                                 settled_offset_stop=version in SETTLED_OFFSET_STOP_VERSIONS,
                                                 wall_tangent=version in WALL_TANGENT_VERSIONS,
-                                                finite_edge=version == FINITE_EDGE_25_VERSION)
+                                                finite_edge=version in FINITE_EDGE_VERSIONS,
+                                                edge_continuation=version == EDGE_CONTINUATION_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -219,6 +221,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     self.extras['pre_reset']['escape_option']['wall_tangent'] = self.escape_option.tangent_used.detach().clone()
                 if self.escape_option.finite_edge:
                     self.extras['pre_reset']['escape_option']['finite_edge'] = self.escape_option.detour_used.detach().clone()
+                if self.escape_option.edge_continuation:
+                    self.extras['pre_reset']['escape_option']['edge_continued'] = self.escape_option.edge_continued.detach().clone()
                 if self.escape_option.brake_forward_escape:
                     self.extras['pre_reset']['escape_option']['braking'] = self.escape_option.braking.detach().clone()
                 if self.escape_option.recovery_retreat or self.escape_option.early_retreat:

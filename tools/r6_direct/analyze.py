@@ -79,7 +79,8 @@ def analyze(input_pin, *, probability_diagnostic=None):
                 summary['lidar_mount'] = observed
             if operation == 'evaluate':
                 from training_workloads.unified_h1.command_replay import (
-                    BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, FINITE_EDGE_EXECUTION,
+                    BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, EDGE_CONTINUATION_EXECUTION,
+                    FINITE_EDGE_EXECUTIONS,
                     NEIGHBOR_HISTORY_EXECUTIONS, REGRESSION_IDS, SETTLED_OFFSET_STOP_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
                 )
 
@@ -100,8 +101,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['wall_tangent'] = True
                     if override in CONFIRMED_TUBE_EXECUTIONS:
                         expected['confirmed_tube_radius_m'] = .41
-                    if override == FINITE_EDGE_EXECUTION:
+                    if override in FINITE_EDGE_EXECUTIONS:
                         expected['finite_edge'] = True
+                    if override == EDGE_CONTINUATION_EXECUTION:
+                        expected['edge_continuation'] = True
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

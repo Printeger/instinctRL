@@ -45,6 +45,7 @@ SETTLED_OFFSET_STOP_25_VERSION = 'm4-escape-brake-tube-p25-settled-offset-stop-v
 WALL_TANGENT_25_VERSION = 'm4-escape-brake-tube-p25-wall-tangent-v1'
 CONFIRMED_TUBE_25_VERSION = 'm4-escape-brake-tube-p25-confirmed-inner-tube-v1'
 FINITE_EDGE_25_VERSION = 'm4-escape-brake-tube-p25-finite-edge-v1'
+EDGE_CONTINUATION_25_VERSION = 'm4-escape-brake-tube-p25-finite-edge-continued-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -58,7 +59,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        COMMAND_HANDOFF_25_VERSION: 25, OFFSET_STOP_25_VERSION: 25,
                        NEIGHBOR_HISTORY_25_VERSION: 25, CONFIRMED_STANDOFF_25_VERSION: 25,
                        SETTLED_OFFSET_STOP_25_VERSION: 25, WALL_TANGENT_25_VERSION: 25,
-                       CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25}
+                       CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25, EDGE_CONTINUATION_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -72,7 +73,8 @@ class EscapeRecovery(EscapeOption):
                  clear_pass=False, recenter_rearm=False, rank_return=False, curved_pass=False, hover_path=False,
                  stop_release=False, turn_fallback=False, intercept=False, align_intercept=False,
                  intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False,
-                 offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False):
+                 offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False,
+                 edge_continuation=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -107,10 +109,15 @@ class EscapeRecovery(EscapeOption):
         self.settled_offset_stop = settled_offset_stop
         self.wall_tangent = wall_tangent
         self.finite_edge = finite_edge
+        self.edge_continuation = edge_continuation
         if wall_tangent:
             self.tangent_used = torch.zeros_like(self.applied)
         if finite_edge:
             self.detour_used = torch.zeros_like(self.applied)
+        if edge_continuation:
+            self.edge_steps = torch.zeros_like(self.remaining)
+            self.edge_side = torch.zeros_like(self.applied)
+            self.edge_continued = torch.zeros_like(self.applied)
         if offset_stop:
             self.offset_stopped = torch.zeros_like(self.applied)
         if command_handoff:
@@ -179,6 +186,10 @@ class EscapeRecovery(EscapeOption):
             self.tangent_used[lanes] = False
         if self.finite_edge:
             self.detour_used[lanes] = False
+        if self.edge_continuation:
+            self.edge_steps[lanes] = 0
+            self.edge_side[lanes] = False
+            self.edge_continued[lanes] = False
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -725,8 +736,11 @@ class EscapeRecovery(EscapeOption):
 
     def progress_around_edge(self, lidar, state, action, config):
         from .escape_tangent import finite_edge_targets
+        from .ics import _fresh_history
 
         self.detour_used.zero_()
+        if self.edge_continuation:
+            self.edge_continued.zero_()
         if config.governor.v_corr_limit <= 0.:
             return
         command, previous = extract_latest_commands(state)
@@ -734,16 +748,37 @@ class EscapeRecovery(EscapeOption):
         ordinary = ~self.applied & ~self.retreating & ~self.recovering & ~self.braking
         if self.wall_tangent:
             ordinary &= ~self.tangent_used
-        lanes = (ordinary & (speed >= .10) & (speed <= .30) & (state[:, -1] <= .04)).nonzero().flatten()
+        eligible = ordinary & (speed >= .10) & (speed <= .30) & (state[:, -1] <= .04)
+        if self.edge_continuation:
+            self.edge_steps.sub_(1).clamp_min_(0)
+            previous_requests = state.reshape(-1, 4, 13)[:, :3, 6:9]
+            steady = (previous_requests-command[:, None]).norm(dim=2).amax(dim=1) <= .04
+            self.edge_steps.masked_fill_(~eligible | ~steady, 0)
+        lanes = eligible.nonzero().flatten()
         if not len(lanes):
             return
         scans, history = lidar[lanes], state[lanes]
         original = self.issued(scans, history, action[lanes], config)
         blocked = ((original.metrics['beta'][:, 0] <= .25) & (original.metrics['emergency'][:, 0] == 0.)).nonzero().flatten()
+        if self.edge_continuation:
+            self.edge_steps[lanes[original.metrics['beta'][:, 0] > .25]] = 0
+            self.edge_steps[lanes[original.metrics['emergency'][:, 0] != 0.]] = 0
         if not len(blocked):
             return
         limiting = original.cache['active_mask'][blocked] & (original.cache['v_safe_m_s'][blocked] < .09)
         targets, available = finite_edge_targets(scans[blocked], history[blocked], self.detector._full_rays, limiting)
+        fresh = available
+        if self.edge_continuation:
+            subset = lanes[blocked]
+            latest = scans[blocked, 9].flatten(1)
+            reliable = (scans[blocked, 10].flatten(1) > .5) & (scans[blocked, 11].flatten(1) >= .55)
+            nearest = latest.masked_fill(~reliable, torch.inf).amin(dim=1)
+            clear = nearest.isfinite() & (nearest >= .50)
+            self.edge_steps[subset[~clear]] = 0
+            valid = (self.edge_steps[subset] > 0) & clear
+            valid &= _fresh_history(history[blocked], command[subset], .1)[:, 0]
+            side = torch.arange(4, device=lidar.device) >= 2
+            available = available | (valid[:, None] & (side[None] == self.edge_side[subset, None]))
         indices, choices = available.nonzero(as_tuple=True)
         if not len(indices):
             return
@@ -762,6 +797,12 @@ class EscapeRecovery(EscapeOption):
         selected = row & gain[indices].isfinite()
         action[checked[selected]] = trial[selected]
         self.detour_used[checked[selected]] = True
+        if self.edge_continuation:
+            observed_now = fresh[indices, choices]
+            renew = selected & observed_now
+            self.edge_steps[checked[renew]] = 9
+            self.edge_side[checked[renew]] = choices[renew] >= 2
+            self.edge_continued[checked[selected & ~observed_now]] = True
 
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
@@ -784,6 +825,9 @@ class EscapeRecovery(EscapeOption):
                 self.tangent_used &= ~self.intercepted
             if self.finite_edge:
                 self.detour_used &= ~self.intercepted
+            if self.edge_continuation:
+                self.edge_continued &= ~self.intercepted
+                self.edge_steps[self.intercepted] = 0
         return selected
 
     def _apply_recovery(self, policy, action, config):
