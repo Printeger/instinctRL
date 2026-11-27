@@ -173,7 +173,8 @@ def run(plan, input_pin):
             ALONG_INTERCEPT_EXECUTIONS, CROSSING_CONTINUATION_EXECUTIONS, CROSSING_FALLBACK_EXECUTIONS,
             CROSSING_COMPATIBLE_EXECUTIONS, CROSSING_EARLY_EXECUTIONS, CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
             CROSSING_EXTENDED_RETREAT_EXECUTIONS, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
-            CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT, SHALLOW_STEERING_EXECUTION,
+            CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
+            OBSERVED_HEADING_EXECUTION, SHALLOW_STEERING_EXECUTIONS,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -353,7 +354,8 @@ def run(plan, input_pin):
                     crossing_retreat_extended = option_version in CROSSING_EXTENDED_RETREAT_EXECUTIONS
                     settled_mount = CROSSING_SETTLED_MOUNT if option_version in CROSSING_SETTLED_EXECUTIONS else None
                     crossing_reference = option_version in CROSSING_REFERENCE_EXECUTIONS
-                    shallow_steering = option_version == SHALLOW_STEERING_EXECUTION
+                    shallow_steering = option_version in SHALLOW_STEERING_EXECUTIONS
+                    observed_heading = option_version == OBSERVED_HEADING_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
@@ -387,7 +389,9 @@ def run(plan, input_pin):
                             or env.escape_option.settled_crossing_mount != settled_mount
                             or env.escape_option.static_scan_stop != crossing_reference
                             or env.escape_option.crossing_reference != crossing_reference
-                            or env.escape_option.shallow_steering != shallow_steering):
+                            or env.escape_option.shallow_steering != shallow_steering
+                            or env.escape_option.observed_heading_steering != observed_heading
+                            or env.escape_option.tracked_resume != observed_heading):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -450,6 +454,8 @@ def run(plan, input_pin):
                         execution.update(static_scan_stop=True, crossing_reference=True)
                     if shallow_steering:
                         execution['shallow_steering'] = True
+                    if observed_heading:
+                        execution.update(observed_heading_steering=True, tracked_resume=True)
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

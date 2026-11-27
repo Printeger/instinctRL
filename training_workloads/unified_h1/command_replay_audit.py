@@ -10,7 +10,8 @@ from .command_replay import (
     EARLY_DIAGONAL_EXECUTIONS, FINITE_EDGE_EXECUTIONS, INTERCEPT_CHOICE_EXECUTIONS, LANES, LAYOUTS,
     ALONG_INTERCEPT_EXECUTIONS, CROSSING_CONTINUATION_EXECUTIONS, CROSSING_COMPATIBLE_EXECUTIONS, CROSSING_EARLY_EXECUTIONS, CROSSING_FALLBACK_EXECUTIONS,
     CROSSING_EXTENDED_RETREAT_EXECUTIONS, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
-    CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT, SHALLOW_STEERING_EXECUTION,
+    CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
+    OBSERVED_HEADING_EXECUTION, SHALLOW_STEERING_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -326,9 +327,13 @@ def audit(output, params, counters):
         if (model.get('crossing_reference', False) is not crossing_reference
                 or model.get('static_scan_stop', False) is not crossing_reference):
             raise ValueError('COMMAND_REPLAY_CROSSING_REFERENCE_PROFILE')
-        shallow_profile = model['execution'] == SHALLOW_STEERING_EXECUTION
+        shallow_profile = model['execution'] in SHALLOW_STEERING_EXECUTIONS
         if model.get('shallow_steering', False) is not shallow_profile:
             raise ValueError('COMMAND_REPLAY_SHALLOW_STEERING_PROFILE')
+        observed_profile = model['execution'] == OBSERVED_HEADING_EXECUTION
+        if (model.get('observed_heading_steering', False) is not observed_profile
+                or model.get('tracked_resume', False) is not observed_profile):
+            raise ValueError('COMMAND_REPLAY_OBSERVED_HEADING_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_ALONG_INTERCEPT_PROFILE')
         opening_profile = model['execution'] in OPENING_STEERING_EXECUTIONS
@@ -437,6 +442,14 @@ def audit(output, params, counters):
                 shallow = row.get('escape_shallow_steering', [False]*LANES)
                 if len(shallow) != LANES or any(type(value) is not bool for value in shallow):
                     raise ValueError('COMMAND_REPLAY_SHALLOW_STEERING_LANES')
+                if (('escape_observed_heading' in row) != observed_profile
+                        or ('escape_tracked_resume' in row) != observed_profile):
+                    raise ValueError('COMMAND_REPLAY_OBSERVED_HEADING_BINDING')
+                observed_heading = row.get('escape_observed_heading', [False]*LANES)
+                tracked = row.get('escape_tracked_resume', [False]*LANES)
+                if any(len(flags) != LANES or any(type(value) is not bool for value in flags)
+                       for flags in (observed_heading, tracked)):
+                    raise ValueError('COMMAND_REPLAY_OBSERVED_HEADING_LANES')
                 if len(detour) != LANES or any(type(value) is not bool for value in detour):
                     raise ValueError('COMMAND_REPLAY_FINITE_EDGE_LANES')
                 if ('escape_edge_continued' in row) != continuation_profile:
@@ -463,13 +476,23 @@ def audit(output, params, counters):
                             or row['escape_active'][lane] or intercepted[lane] or row['ics_emergency'][lane] != 0.
                             or dot(observed, row['v_final_w'][lane]) <= 0.):
                         raise ValueError('COMMAND_REPLAY_WALL_TANGENT_BEHAVIOR')
-                    if detour[lane] and (not .09999 <= math.hypot(*observed) <= .30001
+                    minimum_detour_speed = .02999 if observed_heading[lane] else .09999
+                    if detour[lane] and (not minimum_detour_speed <= math.hypot(*observed) <= .30001
                             or tangent[lane] or row['escape_active'][lane] or intercepted[lane]
                             or row['ics_emergency'][lane] != 0.
                             or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)):
                         raise ValueError('COMMAND_REPLAY_FINITE_EDGE_BEHAVIOR')
                     if shallow[lane] and (not detour[lane] or row['ics_beta'][lane] < .89999):
                         raise ValueError('COMMAND_REPLAY_SHALLOW_STEERING_BEHAVIOR')
+                    if observed_heading[lane] and (not detour[lane] or shallow[lane] or row['ics_beta'][lane] < .89999):
+                        raise ValueError('COMMAND_REPLAY_OBSERVED_HEADING_BEHAVIOR')
+                    if tracked[lane] and (not row['escape_active'][lane] or row['escape_braking'][lane]
+                            or row['recovery_retreating'][lane] or ranked[lane] or held[lane] or intercepted[lane]
+                            or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
+                            or row['selected_action'][lane] != row['action'][lane]
+                            or not .079999 <= math.hypot(*observed) <= .300001
+                            or dot(observed, row['v_final_w'][lane]) < .6599*dot(observed, observed)):
+                        raise ValueError('COMMAND_REPLAY_TRACKED_RESUME_BEHAVIOR')
                     if continued_edge[lane] and (not detour[lane]
                             or any(math.dist(old[6:9], actor[-1][6:9]) > .040001 for old in actor[:-1])
                             or not any(old['escape_finite_edge'][lane] and not old['escape_edge_continued'][lane]

@@ -23,12 +23,13 @@ from instinctlab.control.escape_recovery import (
     SETTLED_OFFSET_STOP_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TANGENT_MAGNITUDE_25_VERSION,
     TURN_FIT_25_VERSION, VERIFIED_RESUME_25_VERSION, VERIFIED_ZERO_25_VERSION,
     WALL_TANGENT_25_VERSION, CROSSING_FALLBACK_25_VERSION, CROSSING_STOP_25_VERSION, CROSSING_STOP_25_V2, CROSSING_STOP_25_V3, CROSSING_STOP_25_V4, CROSSING_STOP_25_V5, CROSSING_STOP_25_V6,
-    CROSSING_STOP_25_V7, CROSSING_STOP_25_V8, CROSSING_STOP_25_V9, CROSSING_STOP_25_V10, CROSSING_STOP_25_V11,
+    CROSSING_STOP_25_V7, CROSSING_STOP_25_V8, CROSSING_STOP_25_V9, CROSSING_STOP_25_V10, CROSSING_STOP_25_V11, CROSSING_STOP_25_V12,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-CROSSING_REFERENCE_VERSIONS = (CROSSING_STOP_25_V10, CROSSING_STOP_25_V11)
+SHALLOW_STEERING_VERSIONS = (CROSSING_STOP_25_V11, CROSSING_STOP_25_V12)
+CROSSING_REFERENCE_VERSIONS = (CROSSING_STOP_25_V10, *SHALLOW_STEERING_VERSIONS)
 CROSSING_SETTLED_VERSIONS = (CROSSING_STOP_25_V9, *CROSSING_REFERENCE_VERSIONS)
 CROSSING_EXTENDED_RETREAT_VERSIONS = (CROSSING_STOP_25_V8, *CROSSING_SETTLED_VERSIONS)
 CROSSING_RECEDING_HOVER_VERSIONS = (CROSSING_STOP_25_V7, *CROSSING_EXTENDED_RETREAT_VERSIONS)
@@ -169,7 +170,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 if version in CROSSING_SETTLED_VERSIONS else None,
                                                 static_scan_stop=version in CROSSING_REFERENCE_VERSIONS,
                                                 crossing_reference=version in CROSSING_REFERENCE_VERSIONS,
-                                                shallow_steering=version == CROSSING_STOP_25_V11)
+                                                shallow_steering=version in SHALLOW_STEERING_VERSIONS,
+                                                observed_heading_steering=version == CROSSING_STOP_25_V12,
+                                                tracked_resume=version == CROSSING_STOP_25_V12)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -275,6 +278,10 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     self.extras['pre_reset']['escape_option']['finite_edge'] = self.escape_option.detour_used.detach().clone()
                 if self.escape_option.shallow_steering:
                     self.extras['pre_reset']['escape_option']['shallow_steering'] = self.escape_option.shallow_used.detach().clone()
+                if self.escape_option.observed_heading_steering:
+                    self.extras['pre_reset']['escape_option']['observed_heading'] = self.escape_option.observed_heading_used.detach().clone()
+                if self.escape_option.tracked_resume:
+                    self.extras['pre_reset']['escape_option']['tracked_resume'] = self.escape_option.tracked_resume_used.detach().clone()
                 if self.escape_option.edge_continuation:
                     self.extras['pre_reset']['escape_option']['edge_continued'] = self.escape_option.edge_continued.detach().clone()
                 if self.escape_option.verified_resume:

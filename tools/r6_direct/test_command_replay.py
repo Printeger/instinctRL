@@ -51,6 +51,42 @@ def test_shallow_steering_requires_two_observed_paths_and_respects_protection():
     assert option.issued(lidar, state.flatten(1), selected, config).v_final_b[0, 0] > .26
 
 
+def test_tracked_resume_is_reproved_without_canceling_the_held_escape():
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.pipeline import ControlCoreConfig
+
+    option = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=True,
+        align_intercept=True, intercept=True, intercept_reserve=True, commit_intercept=True, clear_pass=True,
+        retreat_priority=True, command_handoff=True, rank_return=True, intercept_choice=True,
+        reserve_direction=True, along_intercept=True, finite_intercept=True, crossing_stop=True,
+        crossing_stop_continuation=True, crossing_stop_shallow=True, crossing_stop_early=True,
+        crossing_reference=True, static_scan_stop=True, tracked_resume=True)
+    state = torch.zeros((3, 4, 13))
+    state[:, :, 5] = -1.
+    state[:, :, 6] = .28
+    lidar = torch.ones((3, 12, 59, 360))
+    lidar[:, 0::3] = 3.
+    selected = torch.tensor([[0., .5, .5, .5]]).repeat(3, 1)
+    actor = torch.tensor([[1., .5, .5, .5]]).repeat(3, 1)
+    option.applied[:] = True
+    option.remaining[:] = 12
+    tracks = (torch.arange(3), torch.tensor([[2.1, 1.2], [.20, .3], [2.1, 1.2]]),
+              torch.tensor([[0., .58]]).repeat(3, 1), torch.zeros((3, 2)), torch.full((3,), .34))
+    args = lidar, state.flatten(1), selected, actor, ControlCoreConfig(), option.applied.clone(), tracks
+    option.prove_tracked_resume(*args)
+    assert not option.tracked_resume_used.any()
+    option.prove_tracked_resume(*args)
+    option.intercepted[2] = True
+    option.resume_after_interception(selected, actor)
+
+    assert option.tracked_resume_used.tolist() == [True, False, False]
+    assert option.tracked_resume_witness.tolist() == [True, False, False]
+    assert option.applied.tolist() == [True, True, True]
+    assert option.remaining.tolist() == [12, 12, 12]
+    assert selected[:, 0].tolist() == [1., 0., 0.]
+
+
 def test_crossing_stop_proof_keeps_the_vehicle_clear_after_it_brakes():
     import torch
     from instinctlab.control.escape_passage import crossing_stop_clearance
