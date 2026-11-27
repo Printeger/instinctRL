@@ -62,6 +62,7 @@ def reconstruct(initial, row, previous, lane, rays, triangles):
 
 def audit(binding, arm, lane, start, end):
     import torch
+    from instinctlab.control.escape_passage import approach_scores
     from instinctlab.control.governor import decode_governor
     from instinctlab.control.ics import ICSConfig, attenuate_command
     from instinctlab.training.hover_reflex import HoverReflex
@@ -123,11 +124,14 @@ def audit(binding, arm, lane, start, end):
         proposals = torch.stack([recorded, original, raw, -.30*heading, .30*retreat,
                                  .30*tangent, -.30*tangent, torch.zeros_like(raw)])
         result = attenuate_command(lidar.expand(len(proposals),-1,-1,-1), ray_tensor, proposals, .1, config)
+        tracking_valid, predicted = approach_scores(lidar, state, ray_tensor, result.v_final_b[None])
         outcomes = {}
         for j, name in enumerate(('recorded_governor', 'actor_without_escape', 'latest_command', 'reverse',
                                   'away_from_return', 'tangent_left', 'tangent_right', 'hold')):
             outcomes[name] = dict(beta=float(result.metrics['beta'][j,0]),
                                 issued_w_m_s=body_to_world(row['attitude_wxyz'][lane], result.v_final_b[j].tolist()))
+            if tracking_valid[0]:
+                outcomes[name]['predicted_separation_m'] = float(predicted[0, j])
         results.append(dict(step=i, facing_closure=float(retreat@heading),
                           retreat_b=retreat.tolist(),
                           retreat_w=body_to_world(row['attitude_wxyz'][lane], retreat.tolist()),
