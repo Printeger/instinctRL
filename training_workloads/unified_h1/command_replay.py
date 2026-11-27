@@ -216,7 +216,7 @@ def conditions(params):
         return {'layout_routes': params['street_center_ms']}
     if params['experiment_id'].startswith(LONG_PREFIX):
         protocol = json.loads(checked(params['protocol']).read_bytes())
-        return {'layout_routes': protocol['street_first_center_ms']}
+        return {'layout_routes': protocol['street_center_ms']}
     if route_layouts(params['experiment_id']):
         return {'layout_routes': CONDITIONS['crossing_at_reversal']}
     return CONDITIONS
@@ -271,6 +271,11 @@ def check_corner_pair(params):
             raise ValueError('COMMAND_REPLAY_CORNER_INPUT_PAIR')
 
 
+def valid_crossing_centers(centers):
+    return (isinstance(centers, list) and len(centers) == 8
+            and all(type(t) is int and 4000 <= t <= 20000 for t in centers) and len(set(centers)) == 8)
+
+
 def novel_contract(params):
     fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'clearance_envelope',
               'street_center_ms', 'pulse_acceleration_m_s2', 'wall_seconds', 'output_cap_bytes'}
@@ -290,9 +295,7 @@ def novel_contract(params):
             or params['wall_seconds'] != wall or params['output_cap_bytes'] != 512*2**20
             or params['pulse_acceleration_m_s2'] != .5):
         raise ValueError('COMMAND_REPLAY_NOVEL_PARAMETERS')
-    centers = params['street_center_ms']
-    if (not isinstance(centers, list) or len(centers) != 8
-            or any(type(t) is not int or not 4000 <= t <= 20000 for t in centers) or len(set(centers)) != 8):
+    if not valid_crossing_centers(params['street_center_ms']):
         raise ValueError('COMMAND_REPLAY_NOVEL_CROSSINGS')
     checked(params['models']['candidate'])
     clearance_radii(params['clearance_envelope'])
@@ -313,36 +316,41 @@ def long_contract(params):
     if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
             or type(params['seed']) is not int or not 0 <= params['seed'] < 2**31 or params['seed'] in (167149835, 185193671)
             or params['wall_seconds'] != 7200 or params['output_cap_bytes'] != 2**31
-            or params['execution'] not in (TUBE_CONFIRM_EXECUTION, EARLY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION)
+            or params['execution'] not in (HOVER_PATH_EXECUTION, *STOP_RELEASE_EXECUTIONS)
             or set(params['models']) != {'candidate'} or params['models']['candidate']['sha256'] != MODELS['b']):
         raise ValueError('COMMAND_REPLAY_LONG_PARAMETERS')
     checked(params['models']['candidate'])
     clearance_radii(params['clearance_envelope'])
     protocol = json.loads(checked(params['protocol']).read_bytes())
     if (set(protocol) != {'schema_version', 'experiment_id', 'scene_seed', 'stream', 'execution', 'checkpoint',
-                          'progress_opportunities', 'acceptance_gates', 'street_first_center_ms'}
+                          'progress_opportunities', 'acceptance_gates', 'street_center_ms', 'pulse_acceleration_m_s2'}
             or protocol['schema_version'] != 'instinctrl-command-long-protocol/1'
             or protocol['experiment_id'] != params['experiment_id'] or protocol['scene_seed'] != params['seed']
             or protocol['stream'] != params['stream'] or protocol['execution'] != params['execution']
             or protocol['checkpoint'] != params['models']['candidate']
-            or type(protocol['street_first_center_ms']) is not int
-            or not 4000 <= protocol['street_first_center_ms'] <= 20000):
+            or not valid_crossing_centers(protocol['street_center_ms'])
+            or type(protocol['pulse_acceleration_m_s2']) not in (int, float)
+            or protocol['pulse_acceleration_m_s2'] not in (.5, 1.)):
         raise ValueError('COMMAND_REPLAY_LONG_FREEZE')
     opportunities = json.loads(checked(protocol['progress_opportunities']).read_bytes())
     if (opportunities['schema_version'] != 'instinctrl-frozen-progress-opportunities/1'
             or opportunities['run_id'] != params['experiment_id']
             or {row['layout'] for row in opportunities['windows']} != set(COMMAND_LAYOUTS)
-            or any(not 0 <= row['start_step'] < row['end_step'] <= 18000 for row in opportunities['windows'])):
+            or {row['lane'] for row in opportunities['stop_windows']} != set(range(LANES))
+            or any(not 0 <= row['start_step'] < row['end_step'] <= 18000 for row in opportunities['windows'])
+            or any(not 0 < row['start_step'] <= row['end_step']-20 <= 17980 for row in opportunities['stop_windows'])):
         raise ValueError('COMMAND_REPLAY_LONG_PROGRESS_PLAN')
     gates = json.loads(checked(protocol['acceptance_gates']).read_bytes())
     limits = {'minimum_clearance_m', 'maximum_tracking_rmse_m_s', 'minimum_progress_fraction',
-              'maximum_stop_s', 'maximum_stop_drift_m', 'maximum_intervention_s', 'maximum_recovery_s'}
+              'maximum_stop_s', 'maximum_stop_drift_m', 'maximum_intervention_s', 'maximum_recovery_s',
+              'maximum_slow_feasible_s'}
     if (set(gates) != {'schema_version', 'by_layout'} or gates['schema_version'] != 'instinctrl-command-acceptance-gates/1'
             or set(gates['by_layout']) != set(COMMAND_LAYOUTS)):
         raise ValueError('COMMAND_REPLAY_LONG_GATES')
+    counts = {'minimum_hazard_events', 'minimum_recovery_opportunities'}
     for gate in gates['by_layout'].values():
-        if (set(gate) != limits | {'minimum_hazard_events'} or type(gate['minimum_hazard_events']) is not int
-                or gate['minimum_hazard_events'] <= 0 or not 0 < gate['minimum_progress_fraction'] <= 1
+        if (set(gate) != limits | counts or any(type(gate[name]) is not int or gate[name] <= 0 for name in counts)
+                or not 0 < gate['minimum_progress_fraction'] <= 1
                 or any(type(gate[name]) not in (int, float) or not math.isfinite(gate[name]) or gate[name] <= 0
                        for name in limits)):
             raise ValueError('COMMAND_REPLAY_LONG_LAYOUT_GATES')
@@ -450,14 +458,16 @@ def run(backend, params):
     block = dict(id='continuous-replay-pair', task='stop', speed_m_s=.25,
                  pulse_acceleration_m_s2=0., sensor_to_wall_distance_m=None, steps=steps)
     novel = params['experiment_id'].startswith(NOVEL_PREFIX)
-    if novel:
+    long_run = params['experiment_id'].startswith(LONG_PREFIX)
+    independently_timed = novel or long_run
+    if independently_timed:
+        settings = json.loads(checked(params['protocol']).read_bytes()) if long_run else params
         block.update(id='continuous-replay-independent', task='pulse_hold',
-                     pulse_acceleration_m_s2=params['pulse_acceleration_m_s2'])
+                     pulse_acceleration_m_s2=settings['pulse_acceleration_m_s2'])
     output = Path(backend.output)
     endurance = params['experiment_id'].startswith(ENDURANCE_PREFIXES)
     returns = params['experiment_id'].startswith((RETURN_PREFIX, EARLY_PREFIX))
-    long_run = params['experiment_id'].startswith(LONG_PREFIX)
-    timed_crossings = endurance or returns or long_run or novel or params['experiment_id'].startswith(CORNER_PREFIX)
+    timed_crossings = endurance or returns or independently_timed or params['experiment_id'].startswith(CORNER_PREFIX)
     env.capture_ics_limiter = timed_crossings or params['experiment_id'].startswith(CRAZY_PREFIX)
     capture = 'clearance_envelope' in params
     if capture:
@@ -503,7 +513,7 @@ def run(backend, params):
             pulse = []
 
             def capture_force(row):
-                if novel and row['active']:
+                if independently_timed and row['active']:
                     pulse.append(dict(block_tick=row['block_tick'], sim_tick=row['sim_tick'],
                                       force_n=row['additional_world_n'].sum(dim=1).cpu().tolist(),
                                       mass_kg=row['mass_kg'].sum(dim=1).cpu().tolist()))
@@ -518,14 +528,14 @@ def run(backend, params):
             if crossing_ms is not None:
                 ids = obstacle.indices
                 modes[street] = 2 + ids[street].remainder(2)
-                if novel:
+                if independently_timed:
                     delay = axis.new_zeros(LANES)
                     delay[street] = axis.new_tensor(crossing_ms)/1000.-CROSSING_START_M/CROSSING_SPEED_M_S
                 else:
                     delay = crossing_ms/1000. - CROSSING_START_M/CROSSING_SPEED_M_S
             obstacle.configure(sensor_origins, axis, modes, departure_delay_s=delay,
                                half_period_s=CROSSING_TRAVEL_S if timed_crossings else None,
-                               exact_clock=long_run or novel)
+                               exact_clock=independently_timed)
             obstacle.end_travel_s[street & obstacle.active] = CROSSING_TRAVEL_S
             env.set_h1_initial_command(torch.zeros_like(env._command_b), 0)
             env.stage_r6_world_command(commands[0])
@@ -541,7 +551,7 @@ def run(backend, params):
                                       path_reference_w=sensor_origins.cpu().tolist(),
                                       scene_origins_w=env.scene.env_origins.cpu().tolist(),
                                       root_state_w=env._robot.data.root_state_w.cpu().tolist(),
-                                      departure_delay_s=delay.cpu().tolist() if novel else delay, layouts=layouts))
+                                      departure_delay_s=delay.cpu().tolist() if independently_timed else delay, layouts=layouts))
                 for step in range(steps):
                     backend.resource_check('before_command_replay_step', step)
                     counters.require_step_capacity(kind='nontraining', lanes=LANES,
@@ -623,7 +633,7 @@ def run(backend, params):
             model['trials'][name] = dict(trace=file_pin(trace), physics=completion)
             if capture:
                 model['trials'][name]['clearance'] = file_pin(dense_path)
-            if novel:
+            if independently_timed:
                 filename = f'{label}-{name}-pulse.json'
                 atomic_json_replace(output, filename, pulse)
                 model['trials'][name]['pulse'] = file_pin(output/filename)

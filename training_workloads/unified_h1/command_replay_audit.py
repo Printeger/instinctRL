@@ -6,7 +6,7 @@ from statistics import fmean
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S, CROSSING_START_M, LANES, LAYOUTS,
-    INTERCEPT_EXECUTION, NOVEL_PREFIX, RANK_EXECUTIONS, REARM_EXECUTIONS, STEP_MS, STOP_RELEASE_EXECUTIONS,
+    INTERCEPT_EXECUTION, LONG_PREFIX, NOVEL_PREFIX, RANK_EXECUTIONS, REARM_EXECUTIONS, STEP_MS, STOP_RELEASE_EXECUTIONS,
     arm_execution, conditions, event_schedule,
 )
 
@@ -77,7 +77,7 @@ def verify_clearance(path, initial, rows):
         previous = row
 
 
-def verify_novel_pulse(path, initial, rows, layouts, center_times, acceleration):
+def verify_pulse_and_crossing(path, initial, rows, layouts, center_times, acceleration):
     from .robustness import lane_role
 
     pulse = json.loads(path.read_bytes())
@@ -129,7 +129,8 @@ def score_lane(rows, initial, lane, crossing):
 
     def intervened(row):
         return (read(row, 'ics_emergency') or read(row, 'ics_beta') < INTERVENTION_BETA
-                or read(row, 'escape_active') or read(row, 'escape_recovering'))
+                or read(row, 'escape_active') or read(row, 'escape_recovering')
+                or ('escape_intercepted' in row and read(row, 'escape_intercepted')))
 
     def recovery_window(start):
         latest = event_index(flight[start])
@@ -223,7 +224,8 @@ def audit(output, params, counters):
         raise ValueError('COMMAND_REPLAY_COUNTERS')
     trial_conditions = conditions(params)
     sources = [file_pin(path), params['stream']]
-    novel = params['experiment_id'].startswith(NOVEL_PREFIX)
+    pulse_enabled = params['experiment_id'].startswith((NOVEL_PREFIX, LONG_PREFIX))
+    pulse_settings = params
     if 'candidate_stream' in params:
         sources.append(params['candidate_stream'])
     if 'clearance_envelope' in params:
@@ -231,6 +233,7 @@ def audit(output, params, counters):
     if 'protocol' in params:
         protocol = json.loads(checked(params['protocol']).read_bytes())
         sources.extend([params['protocol'], protocol['progress_opportunities'], protocol['acceptance_gates']])
+        pulse_settings = protocol
     resets = 0
     results = {}
     first_pose = None
@@ -262,13 +265,14 @@ def audit(output, params, counters):
                     raise ValueError('COMMAND_REPLAY_CLEARANCE_PATH')
                 verify_clearance(dense, initial, rows)
                 sources.append(trial['clearance'])
-            if ('pulse' in trial) != novel:
+            if ('pulse' in trial) != pulse_enabled:
                 raise ValueError('COMMAND_REPLAY_PULSE_BINDING')
-            if novel:
+            if pulse_enabled:
                 pulse = checked(trial['pulse'])
                 if pulse != output/f'{label}-{name}-pulse.json':
                     raise ValueError('COMMAND_REPLAY_PULSE_PATH')
-                verify_novel_pulse(pulse, initial, rows, layouts, params['street_center_ms'], params['pulse_acceleration_m_s2'])
+                verify_pulse_and_crossing(pulse, initial, rows, layouts, pulse_settings['street_center_ms'],
+                                          pulse_settings['pulse_acceleration_m_s2'])
                 sources.append(trial['pulse'])
             if first_pose is None:
                 first_pose = initial['root_state_w']
@@ -343,7 +347,7 @@ def audit(output, params, counters):
                 for lane in range(LANES)])
             if 'clearance' in trial:
                 results[label][name]['clearance'] = trial['clearance']
-            if novel:
+            if pulse_enabled:
                 results[label][name]['pulse'] = trial['pulse']
         if active_starts and any(start != active_starts[0] for start in active_starts[1:]):
             raise ValueError('COMMAND_REPLAY_MOVER_START')

@@ -473,3 +473,34 @@ def test_intercept_checks_contact_before_waiting_for_range_crop():
     assert option.intercepted.tolist() == [True, False, False, False]
     assert action[0].tolist() == pytest.approx([0., .20, .50, .50], abs=2.e-5)
     assert action[1, 1].item() == pytest.approx(.69)
+
+
+def test_long_gates_fail_lost_exposure_and_unrecovered_latest_command():
+    from copy import deepcopy
+    from tools.r6_direct.replay_clearance import long_gate_results
+
+    gate = dict(minimum_clearance_m=.15, maximum_tracking_rmse_m_s=.15, minimum_progress_fraction=.6,
+                maximum_slow_feasible_s=2., maximum_stop_s=1., maximum_stop_drift_m=.2,
+                minimum_hazard_events=1, maximum_intervention_s=.5, minimum_recovery_opportunities=1,
+                maximum_recovery_s=1.5)
+    flight = dict(layout='street_gap', elapsed_s=1800., initial_termination_reason=None,
+                  first_reset_step=None, first_contact_step=None, route_progress={})
+    measure = dict(lane=0, physics_tick_clearance=dict(samples=360001, minimum_clearance_lower_bound_m=.2),
+                   externally_scheduled_progress={'go': dict(met_fraction=.8, measured_progress_m=.4,
+                                                        requested_progress_m=.5, observed_only_rmse_m_s=.09)},
+                   tracking_in_feasible_moving_windows=dict(rmse_m_s=.08, fraction_at_least_60_percent_of_intent=.75,
+                                                           longest_slow_feasible_window_s=1.2),
+                   externally_scheduled_stops={'stop': dict(first_flight_completed_window=True,
+                                                             stopped_after_s=.8, max_drift_m=.16)},
+                   hazard_response_preview=dict(events=[dict(first_feasible_request_step=70,
+                                                             intervention_after_s=.2, recovery_after_s=1.2)]))
+    logs = [dict(deepcopy(measure), lane=i) for i in range(3)]
+    lanes = [dict(flight) for i in range(3)]
+    assert long_gate_results(logs, lanes, {'street_gap': gate})['passed']
+    assert not long_gate_results(logs[:2], lanes[:2], {'street_gap': gate})['passed']
+    lanes[0].update(elapsed_s=300., first_contact_step=2999, first_reset_step=2999)
+    logs[1]['hazard_response_preview']['events'][0]['recovery_after_s'] = None
+    results = long_gate_results(logs, lanes, {'street_gap': gate})
+    assert not results['passed']
+    assert results['by_layout']['street_gap']['lanes'][0]['failed'] == ['uninterrupted']
+    assert results['by_layout']['street_gap']['lanes'][1]['failed'] == ['latest_command_recovery']

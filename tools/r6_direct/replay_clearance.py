@@ -9,7 +9,7 @@ from tools.r6_direct.evidence import read, validate_binding
 from tools.r6_direct.import_legacy import pin, stop_paths
 from tools.r6_direct.instinct_cycle import save
 from tools.r6_evidence import checked
-from training_workloads.unified_h1.command_replay import LANES, conditions, route_layouts
+from training_workloads.unified_h1.command_replay import LANES, LONG_PREFIX, conditions, route_layouts
 from training_workloads.unified_h1.command_replay_audit import dense_clearance
 from training_workloads.unified_h1.escape_holdout_scene import scene_geometry
 
@@ -51,7 +51,7 @@ def static_distance(positions, triangles):
     return np.sqrt(squared)
 
 
-def feasible_tracking(before, measured, commands, mover, triangles, body_radius):
+def feasible_tracking(before, measured, commands, mover, triangles, body_radius, *, floor=.15):
     """Diagnostic straight-line swept clearance from the measured start state."""
     # Estimate whether the requested motion fits over the next six policy
     # boundaries. The extra half-interval of possible travel is conservative
@@ -70,7 +70,7 @@ def feasible_tracking(before, measured, commands, mover, triangles, body_radius)
         moving = np.linalg.norm(points-samples, axis=2).min(axis=1)-.34-.1*(speed+speed_bound)
         clearance = np.minimum(static, moving)
     moving_intent = speed > .03
-    feasible = moving_intent & horizon_complete & (clearance >= body_radius+.15)
+    feasible = moving_intent & horizon_complete & (clearance >= body_radius+floor)
     projection = (commands*measured).sum(axis=1)/np.maximum(speed, .001)
     error = np.linalg.norm(commands-measured, axis=1)
     slow = feasible & (projection < .6*speed)
@@ -144,7 +144,7 @@ def projected_clearance(before, measured_before, targets, mover, triangles, body
     return np.where(complete, nearest-body_radius, np.nan)
 
 
-def hazard_responses(nominal, protected, commands, measured, *, floor=.15):
+def hazard_responses(nominal, protected, commands, measured, *, floor=.15, sustained_opportunity=False):
     """Audit intervention and recovery against the current request at each boundary."""
     risky = np.isfinite(nominal) & (nominal < floor)
     edges = np.diff(np.r_[False, risky, False].astype(np.int8))
@@ -156,16 +156,69 @@ def hazard_responses(nominal, protected, commands, measured, *, floor=.15):
         intent = commands[end:next_start]
         speed = np.linalg.norm(intent, axis=1)
         feasible = (speed > .03) & (nominal[end:next_start] >= floor)
-        eligible = np.flatnonzero(feasible)
+        if sustained_opportunity:
+            eligible = confirmed_starts(feasible)
+        else:
+            eligible = np.flatnonzero(feasible)
         projected = (intent*measured[end:next_start]).sum(axis=1)/np.maximum(speed,.001)
         tracking = feasible & (projected >= .6*speed)
-        stable = np.convolve(tracking.astype(np.int8), np.ones(5, dtype=np.int8), mode='valid') if len(tracking) >= 5 else []
-        recovered = np.flatnonzero(np.asarray(stable) == 5)
+        recovered = confirmed_starts(tracking)
         events.append(dict(start_step=int(start), first_clear_step=int(end),
                            intervention_after_s=float(improved[0]*.1) if len(improved) else None,
                            first_feasible_request_step=int(end+eligible[0]) if len(eligible) else None,
                            recovery_after_s=float((recovered[0]+1-eligible[0])*.1) if len(recovered) else None))
     return dict(risk_windows=len(events), events=events)
+
+
+def confirmed_starts(mask):
+    if len(mask) < 5:
+        return np.empty(0, dtype=np.int64)
+    return np.flatnonzero(np.convolve(mask.astype(np.int8), np.ones(5, dtype=np.int8), mode='valid') == 5)
+
+
+def long_gate_results(metrics, first_flights, gates):
+    """Check every lane against the thresholds frozen in the launch protocol."""
+    layouts = {name: [] for name in gates}
+    for measures, flight in zip(metrics, first_flights, strict=True):
+        layout = flight['layout']
+        gate = gates[layout]
+        radius_bound = measures['physics_tick_clearance']
+        progress = measures['externally_scheduled_progress'].values()
+        stops = measures['externally_scheduled_stops'].values()
+        tracking = measures['tracking_in_feasible_moving_windows']
+        events = measures['hazard_response_preview']['events']
+        recoveries = [event for event in events if event['first_feasible_request_step'] is not None]
+        route = flight['route_progress']
+        passed = dict(
+            uninterrupted=(flight['elapsed_s'] == 1800 and flight['initial_termination_reason'] is None
+                           and flight['first_reset_step'] is None and flight['first_contact_step'] is None
+                           and radius_bound['samples'] == 360001),
+            clearance=radius_bound['minimum_clearance_lower_bound_m'] >= gate['minimum_clearance_m'],
+            route=layout != 'room_corner' or (route['indoor_door_passed'] and route['indoor_corner_passed']),
+            feasible_tracking=(tracking['rmse_m_s'] is not None
+                               and tracking['rmse_m_s'] <= gate['maximum_tracking_rmse_m_s']
+                               and tracking['fraction_at_least_60_percent_of_intent'] >= gate['minimum_progress_fraction']
+                               and tracking['longest_slow_feasible_window_s'] <= gate['maximum_slow_feasible_s']),
+            progress=bool(progress) and all(p['met_fraction'] >= gate['minimum_progress_fraction']
+                          and p['measured_progress_m'] >= gate['minimum_progress_fraction']*p['requested_progress_m']
+                          and p['observed_only_rmse_m_s'] is not None
+                          and p['observed_only_rmse_m_s'] <= gate['maximum_tracking_rmse_m_s'] for p in progress),
+            stops=bool(stops) and all(s['first_flight_completed_window'] and s['stopped_after_s'] is not None
+                          and s['stopped_after_s'] <= gate['maximum_stop_s']
+                          and s['max_drift_m'] <= gate['maximum_stop_drift_m'] for s in stops),
+            intervention=len(events) >= gate['minimum_hazard_events'] and all(
+                e['intervention_after_s'] is not None and e['intervention_after_s'] <= gate['maximum_intervention_s']
+                for e in events),
+            latest_command_recovery=len(recoveries) >= gate['minimum_recovery_opportunities'] and all(
+                e['recovery_after_s'] is not None and e['recovery_after_s'] <= gate['maximum_recovery_s']
+                for e in recoveries),
+        )
+        layouts[layout].append(dict(lane=measures['lane'], exposure_s=flight['elapsed_s'],
+                                    hazard_events=len(events), recovery_opportunities=len(recoveries),
+                                    failed=[check for check, assess in passed.items() if not assess]))
+    by_layout = {name: dict(passed=len(rows) >= 3 and all(not r['failed'] for r in rows), lanes=rows)
+                 for name, rows in layouts.items()}
+    return dict(passed=all(layout['passed'] for layout in by_layout.values()), by_layout=by_layout)
 
 
 def measured_clearance(samples, lane, end, triangles, *, crossing):
@@ -194,6 +247,14 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
     bound, ctx, report = validate_binding(binding)
     params = ctx['contract']['parameters']
     trials = conditions(params)
+    long_run = params['experiment_id'].startswith(LONG_PREFIX)
+    if long_run:
+        protocol = read(params['protocol'])
+        if opportunity_pin is not None and opportunity_pin != protocol['progress_opportunities']:
+            raise ValueError('progress plan differs from the frozen 30-minute protocol')
+        opportunity_pin = protocol['progress_opportunities']
+        gates = read(protocol['acceptance_gates'])['by_layout']
+        hazard_preview = True
     if not report['summary']['witnesses_replayed']:
         raise ValueError('a completely audited command replay is required')
     envelope = read(envelope_pin)
@@ -272,8 +333,10 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
                     mover = np.linalg.norm(roots[:end, lane]-movers[:end, lane], axis=-1)-.34
                 nearest = static if mover is None else np.minimum(static, mover)
                 step = int(nearest.argmin())
+                floor = gates[score['layout']]['minimum_clearance_m'] if long_run else .15
                 tracking = feasible_tracking(before[:end, lane], velocities[:end, lane], commands[:end, lane],
-                                             None if mover is None else movers_before[:end, lane], triangles, radius)
+                                             None if mover is None else movers_before[:end, lane], triangles, radius,
+                                             floor=floor)
                 fixed = {}
                 for row in opportunities:
                     if row['layout'] == score['layout']:
@@ -303,11 +366,19 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
                                                   commands[:end, lane], path_mover, triangles, collider)
                     physical = projected_clearance(before[:end, lane], velocity_before[:end, lane],
                                                    issued[:end, lane], path_mover, triangles, collider)
-                    values[-1]['hazard_response_preview'] = hazard_responses(nominal, physical, commands[:end, lane], velocities[:end, lane])
+                    values[-1]['hazard_response_preview'] = hazard_responses(
+                        nominal, physical, commands[:end, lane], velocities[:end, lane], floor=floor,
+                        sustained_opportunity=long_run)
             models[name][trial] = values
-    return dict(schema_version='instinctrl-sampled-physical-clearance/1', binding=binding, geometry=geometry_pin,
+    result = dict(schema_version='instinctrl-sampled-physical-clearance/1', binding=binding, geometry=geometry_pin,
                 envelope=envelope_pin, sample_period_ms=100, diagnostic_clearance_m=.15, sweep_horizon_s=.6,
                 opportunities=opportunity_pin, models=models, scientific_acceptance=False)
+    if long_run:
+        metrics = models['candidate']['layout_routes']
+        flights = report['summary']['models']['candidate']['layout_routes']['lanes']
+        result['long_replay'] = dict(protocol=params['protocol'], scorer=pin(Path(__file__)),
+                                     **long_gate_results(metrics, flights, gates))
+    return result
 
 
 def main():

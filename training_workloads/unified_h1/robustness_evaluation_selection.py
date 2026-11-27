@@ -62,7 +62,7 @@ def _validate(value,*,reviewed):
         model=_training_model(plan,value['training_analysis'],value['checkpoint'],method)
     if explicit_override:
         from .robustness_training_plan import R3_CHECKPOINT_SHA, U1792_CHECKPOINT_SHA
-        from .command_replay import BRAKE_EXECUTION, EXECUTION, HOVER_PATH_EXECUTION, MODELS, REGRESSION_ID, STOP_RELEASE_EXECUTION
+        from .command_replay import BRAKE_EXECUTION, EXECUTION, HOVER_PATH_EXECUTION, MODELS, REGRESSION_ID, STOP_RELEASE_EXECUTIONS
         from .dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
         from instinctlab.control.escape_recovery import (
             FALLBACK_25_VERSION, FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION, REAR_CLEARANCE_25_VERSION, REDIRECT_25_VERSION,
@@ -80,7 +80,7 @@ def _validate(value,*,reviewed):
                              and comparison['id'] in clearance_controls and override == clearance_controls[comparison['id']])
         command_regression = (comparison['id'] == REGRESSION_ID and digest == MODELS['b']
                               and own_version == EXECUTION
-                              and override in (BRAKE_EXECUTION, HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION))
+                              and override in (BRAKE_EXECUTION, HOVER_PATH_EXECUTION, *STOP_RELEASE_EXECUTIONS))
         require(value['role']=='trained_candidate' and (old_comparison or clearance_control or command_regression),
                 'EXPLICIT_EXECUTION_CONTROL')
     # Review explicitly adjudicates the pinned training evidence/native status,
