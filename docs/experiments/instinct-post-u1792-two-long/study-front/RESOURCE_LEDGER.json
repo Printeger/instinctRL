@@ -264,6 +264,53 @@
         "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-FRONT-STUDY-FORMAL-C-U2816-DIAGNOSTIC",
         "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-FRONT-STUDY-FORMAL-C-U2816-DIAGNOSTIC/native"
       }
+    },
+    {
+      "closed_evidence_bytes": 192897024,
+      "id": "R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-FRONT-STUDY-HOLDOUT-C",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-FRONT-STUDY-HOLDOUT-C/control/receipt.json",
+        "sha256": "56a43ff7c5e50b6d3758481d12f479a1d86ceb000917221abf489dcc153def33"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-post-u1792-two-long/study-front/RESOURCE_POLICY.json",
+        "sha256": "b296f835de611903fc0cd4b4c0506462f96282fd62e40fb7bba2bbf167c6a0ae"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 726,
+        "live_starts": 1,
+        "live_wall_seconds": 726,
+        "nontraining_transitions": 92160,
+        "output_actual_plus_unreleased_reservations_bytes": 192897024,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_transitions": 0
+      },
+      "settlement": {
+        "charged_seconds": 726,
+        "original_resources": {
+          "allocated_gpu_seconds": 1990,
+          "live_starts": 1,
+          "live_wall_seconds": 1990,
+          "nontraining_transitions": 92160,
+          "output_actual_plus_unreleased_reservations_bytes": 1342177280,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-FRONT-STUDY-HOLDOUT-C/control/receipt.json",
+          "sha256": "56a43ff7c5e50b6d3758481d12f479a1d86ceb000917221abf489dcc153def33"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-FRONT-STUDY-HOLDOUT-C",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-FRONT-STUDY-HOLDOUT-C/native"
+      },
+      "storage_reservation_id": "ROUND-SYSTEM"
     }
   ],
   "new_used": {
