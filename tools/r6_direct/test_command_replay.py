@@ -356,3 +356,27 @@ def test_ranked_escape_only_switches_to_an_admissible_improvement(monkeypatch):
     assert direction[0].tolist() == [-1., 0., 0.]
     assert direction[1].tolist() == pytest.approx([.55, -.83, 0.])
     assert option.ranked.tolist() == [True, False]
+
+
+def test_hover_path_stops_only_when_the_legacy_projection_loses_clearance(monkeypatch):
+    import torch
+    from types import SimpleNamespace
+    from instinctlab.control import escape_passage
+    from instinctlab.control.escape_option import DURATION_STEPS
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=True, clear_pass=True,
+                            recenter_rearm=True, rank_return=True, hover_path=True)
+    option.remaining.fill_(DURATION_STEPS-1)
+    option.applied.fill_(True)
+    monkeypatch.setattr(option.detector, 'retreat_direction', lambda *args, **kw: torch.tensor([[0., 1., 0.]]*2))
+    monkeypatch.setattr(escape_passage, 'hover_escape_scores', lambda *args: (
+        torch.tensor([True, True]), torch.tensor([[0., .66, .7, .8, .2], [.69, .68, .7, .7, .7]])))
+    monkeypatch.setattr(option, 'issued', lambda scan, history, action, config:
+        SimpleNamespace(v_final_b=action[:, 1:]-.5))
+    selected = torch.tensor([[0., .8, .5, .5]]*2)
+    option.choose_hover_path(torch.zeros(2, 1), torch.zeros(2, 52), selected, None)
+    assert selected[0].tolist() == [0., .5, .5, .5]
+    assert selected[1].tolist() == pytest.approx([0., .8, .5, .5])
+    assert option.holding.tolist() == [True, False]
+    assert option.applied.tolist() == [False, True]
