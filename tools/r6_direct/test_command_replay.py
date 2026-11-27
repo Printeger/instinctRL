@@ -38,6 +38,21 @@ def test_crossing_stop_proof_keeps_the_vehicle_clear_after_it_brakes():
     assert (clearance < .39).all()
 
 
+def test_extended_crossing_range_keeps_the_original_seed_gate():
+    import torch
+    from instinctlab.control.escape_passage import _closing_seed
+
+    elapsed = torch.tensor([[-.3, -.2, -.1, 0.]]).expand(2, -1)
+    distance = torch.tensor([2.4, 1.5])[:, None]-.6*elapsed
+    ranges = distance[:, :, None, None].expand(-1, -1, 17, 19)
+    reliable = torch.ones_like(ranges, dtype=torch.bool)
+
+    near, _ = _closing_seed(ranges, reliable, elapsed)
+    far, _ = _closing_seed(ranges, reliable, elapsed, minimum_range_m=1.9, maximum_range_m=2.65)
+    assert near.tolist() == [False, True]
+    assert far.tolist() == [True, False]
+
+
 def test_command_pair_is_admitted_as_normal_system_run(tmp_path, monkeypatch):
     from tools.r6_direct import storage
 

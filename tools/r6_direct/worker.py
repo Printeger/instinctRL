@@ -171,7 +171,7 @@ def run(plan, input_pin):
             BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, ENDURANCE_PREFIXES,
             EDGE_CONTINUATION_EXECUTION, FINITE_EDGE_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS,
             ALONG_INTERCEPT_EXECUTIONS, CROSSING_CONTINUATION_EXECUTIONS, CROSSING_FALLBACK_EXECUTIONS,
-            CROSSING_STOP_EXECUTIONS, CROSSING_STOP_SHALLOW_EXECUTION,
+            CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EARLY_EXECUTION, CROSSING_STOP_EXECUTIONS,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -343,7 +343,8 @@ def run(plan, input_pin):
                     finite_intercept = option_version in FINITE_INTERCEPT_EXECUTIONS
                     crossing_stop = option_version in CROSSING_STOP_EXECUTIONS
                     crossing_stop_continuation = option_version in CROSSING_CONTINUATION_EXECUTIONS
-                    crossing_stop_shallow = option_version == CROSSING_STOP_SHALLOW_EXECUTION
+                    crossing_stop_shallow = option_version in CROSSING_SHALLOW_EXECUTIONS
+                    crossing_stop_early = option_version == CROSSING_STOP_EARLY_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
@@ -367,7 +368,8 @@ def run(plan, input_pin):
                             or env.escape_option.finite_intercept != finite_intercept
                             or env.escape_option.crossing_stop != crossing_stop
                             or env.escape_option.crossing_stop_continuation != crossing_stop_continuation
-                            or env.escape_option.crossing_stop_shallow != crossing_stop_shallow):
+                            or env.escape_option.crossing_stop_shallow != crossing_stop_shallow
+                            or env.escape_option.crossing_stop_early != crossing_stop_early):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -414,6 +416,8 @@ def run(plan, input_pin):
                         execution['crossing_stop_continuation'] = True
                     if crossing_stop_shallow:
                         execution['crossing_stop_shallow'] = True
+                    if crossing_stop_early:
+                        execution['crossing_stop_early'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

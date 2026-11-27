@@ -4,14 +4,15 @@ import torch
 from torch.nn import functional as F
 
 
-def _closing_seed(ranges, reliable, elapsed):
+def _closing_seed(ranges, reliable, elapsed, *, minimum_range_m=0., maximum_range_m=1.9):
     old = -torch.where(reliable[:, :3], ranges[:, :3], torch.inf)
     old = F.max_pool2d(F.pad(old, (8, 8, 0, 0), mode='circular'), (1, 17), stride=1)
     nearby = -F.max_pool2d(old, (17, 1), stride=1, padding=(8, 0))
     gap = -elapsed[:, :3, None, None]
     closing = nearby-ranges[:, -1:]
+    current = ranges[:, -1:]
     support = ((gap >= .16) & (gap <= .33) & (closing > .20*gap) & (closing < 1.5*gap)
-               & nearby.isfinite() & (ranges[:, -1:] < 1.9) & reliable[:, -1:])
+               & nearby.isfinite() & (current >= minimum_range_m) & (current < maximum_range_m) & reliable[:, -1:])
     supported = support.clone()
     for offset in (-2, -1, 1, 2):
         supported &= support.roll(offset, dims=-1)
@@ -105,13 +106,14 @@ def _fit_curvature(points, patch, *, full_center=False):
     return (centers if full_center else centers[:, :2]), radius, supported
 
 
-def _return_seed(lidar, state):
+def _return_seed(lidar, state, *, minimum_range_m=0., maximum_range_m=1.9):
     histories = state.reshape(-1, 4, 13)
     ranges = lidar[:, 0::3]
     reliable = (lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)
     elapsed = ranges.new_tensor([-.3, -.2, -.1, 0.]) - histories[:, :, 12] + histories[:, -1:, 12]
     gap = elapsed.diff(dim=1)
-    accepted, seed = _closing_seed(ranges, reliable, elapsed)
+    accepted, seed = _closing_seed(ranges, reliable, elapsed, minimum_range_m=minimum_range_m,
+                                   maximum_range_m=maximum_range_m)
     accepted &= ((gap >= .065) & (gap <= .135)).all(dim=1)
     return accepted, seed, elapsed
 
@@ -269,9 +271,10 @@ def advance_command_response(offsets, coast, state):
     return torch.cat((earlier, torch.zeros_like(earlier[:, :1])), dim=1), delayed+decay*(coast-delayed)
 
 
-def moving_intercepts(lidar, state, rays, eligible, *, command_response=None):
+def moving_intercepts(lidar, state, rays, eligible, *, command_response=None, minimum_range_m=0., maximum_range_m=1.9):
     """Return approaching curved tracks supported by the four delivered scans."""
-    accepted, seed, elapsed = _return_seed(lidar, state)
+    accepted, seed, elapsed = _return_seed(lidar, state, minimum_range_m=minimum_range_m,
+                                            maximum_range_m=maximum_range_m)
     lanes = (accepted & eligible).nonzero().flatten()
     if not len(lanes):
         return lanes, None, None, None, None
