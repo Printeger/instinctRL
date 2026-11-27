@@ -39,6 +39,7 @@ NOVEL_NEIGHBOR_HISTORY_ID = NOVEL_PREFIX+'11'
 NOVEL_STANDOFF_ID = NOVEL_PREFIX+'12'
 NOVEL_SETTLED_STOP_ID = NOVEL_PREFIX+'13'
 NOVEL_WALL_TANGENT_ID = NOVEL_PREFIX+'14'
+NOVEL_CONFIRMED_TUBE_ID = NOVEL_PREFIX+'15'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -84,7 +85,9 @@ NEIGHBOR_HISTORY_EXECUTION = 'm4-escape-brake-tube-p25-neighbor-history-v1'
 CONFIRMED_STANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-confirmed-standoff-v1'
 SETTLED_OFFSET_STOP_EXECUTION = 'm4-escape-brake-tube-p25-settled-offset-stop-v1'
 WALL_TANGENT_EXECUTION = 'm4-escape-brake-tube-p25-wall-tangent-v1'
-SETTLED_OFFSET_STOP_EXECUTIONS = (SETTLED_OFFSET_STOP_EXECUTION, WALL_TANGENT_EXECUTION)
+CONFIRMED_TUBE_EXECUTION = 'm4-escape-brake-tube-p25-confirmed-inner-tube-v1'
+WALL_TANGENT_EXECUTIONS = (WALL_TANGENT_EXECUTION, CONFIRMED_TUBE_EXECUTION)
+SETTLED_OFFSET_STOP_EXECUTIONS = (SETTLED_OFFSET_STOP_EXECUTION, *WALL_TANGENT_EXECUTIONS)
 NEIGHBOR_HISTORY_EXECUTIONS = (NEIGHBOR_HISTORY_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, *SETTLED_OFFSET_STOP_EXECUTIONS)
 OFFSET_STOP_EXECUTIONS = (OFFSET_STOP_EXECUTION, *NEIGHBOR_HISTORY_EXECUTIONS)
 COMMAND_HANDOFF_EXECUTIONS = (COMMAND_HANDOFF_EXECUTION, *OFFSET_STOP_EXECUTIONS)
@@ -341,7 +344,8 @@ def novel_contract(params):
                   NOVEL_NEIGHBOR_HISTORY_ID: (OFFSET_STOP_EXECUTION, NEIGHBOR_HISTORY_EXECUTION),
                   NOVEL_STANDOFF_ID: (NEIGHBOR_HISTORY_EXECUTION, CONFIRMED_STANDOFF_EXECUTION),
                   NOVEL_SETTLED_STOP_ID: (NEIGHBOR_HISTORY_EXECUTION, SETTLED_OFFSET_STOP_EXECUTION),
-                  NOVEL_WALL_TANGENT_ID: SETTLED_OFFSET_STOP_EXECUTIONS}.get(params['experiment_id'])
+                  NOVEL_WALL_TANGENT_ID: (SETTLED_OFFSET_STOP_EXECUTION, WALL_TANGENT_EXECUTION),
+                  NOVEL_CONFIRMED_TUBE_ID: WALL_TANGENT_EXECUTIONS}.get(params['experiment_id'])
     paired = comparison is not None
     labels = {'control', 'candidate'} if paired else {'candidate'}
     execution = (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
@@ -603,15 +607,17 @@ def run(backend, params):
         model = dict(checkpoint=checkpoint, execution=execution, lidar_mount=record_mount(env, output, label), trials={})
         if timed_crossings:
             configuration = {(p.config.ics.motion_tube_radius_m, p.config.ics.motion_tube_confirm_closure,
-                              p.config.ics.motion_tube_neighbor_history, p.config.ics.confirmed_standoff_m)
+                              p.config.ics.motion_tube_neighbor_history, p.config.ics.confirmed_standoff_m,
+                              p.config.ics.confirmed_tube_radius_m)
                              for p in env._control_pipelines}
             confirm = execution in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION,
                                     SIDE_HOVER_RETREAT_EXECUTION, *CLEAR_PASS_EXECUTIONS)
             neighbors = execution in NEIGHBOR_HISTORY_EXECUTIONS
             standoff = .45 if execution == CONFIRMED_STANDOFF_EXECUTION else 0.
+            inner_tube = .41 if execution == CONFIRMED_TUBE_EXECUTION else 0.
             settled_stop = execution in SETTLED_OFFSET_STOP_EXECUTIONS
-            tangent = execution == WALL_TANGENT_EXECUTION
-            if (configuration != {(.60, confirm, neighbors, standoff)}
+            tangent = execution in WALL_TANGENT_EXECUTIONS
+            if (configuration != {(.60, confirm, neighbors, standoff, inner_tube)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
@@ -619,6 +625,8 @@ def run(backend, params):
                 model['ics_profile']['uses_neighbor_history'] = True
             if standoff:
                 model['ics_profile']['confirmed_standoff_m'] = standoff
+            if inner_tube:
+                model['ics_profile']['confirmed_tube_radius_m'] = inner_tube
             if settled_stop:
                 model['settled_offset_stop'] = True
             if tangent:

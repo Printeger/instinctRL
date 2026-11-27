@@ -9,6 +9,7 @@ from instinctlab.control.escape_option import EscapeOption, METHOD_VERSION
 from instinctlab.control.escape_recovery import (
     ALIGNED_INTERCEPT_25_VERSION, BRAKE_FORWARD_25_VERSION, BRAKE_TUBE_25_VERSION, BRAKE_TUBE_CONFIRM_25_VERSION,
     CLEAR_PASS_25_VERSION, COMMAND_HANDOFF_25_VERSION, COMMITTED_INTERCEPT_25_VERSION, CONFIRMED_STANDOFF_25_VERSION,
+    CONFIRMED_TUBE_25_VERSION,
     CURVED_PASS_25_VERSION,
     EARLY_RETREAT_25_VERSION, EscapeRecovery,
     FALLBACK_25_VERSION, FAST_LATERAL_VERSION,
@@ -24,7 +25,8 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-SETTLED_OFFSET_STOP_VERSIONS = (SETTLED_OFFSET_STOP_25_VERSION, WALL_TANGENT_25_VERSION)
+WALL_TANGENT_VERSIONS = (WALL_TANGENT_25_VERSION, CONFIRMED_TUBE_25_VERSION)
+SETTLED_OFFSET_STOP_VERSIONS = (SETTLED_OFFSET_STOP_25_VERSION, *WALL_TANGENT_VERSIONS)
 NEIGHBOR_HISTORY_VERSIONS = (NEIGHBOR_HISTORY_25_VERSION, CONFIRMED_STANDOFF_25_VERSION, *SETTLED_OFFSET_STOP_VERSIONS)
 OFFSET_STOPS = (OFFSET_STOP_25_VERSION, *NEIGHBOR_HISTORY_VERSIONS)
 COMMAND_HANDOFFS = (COMMAND_HANDOFF_25_VERSION, *OFFSET_STOPS)
@@ -114,7 +116,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 retreat_priority=version in PRIORITY_INTERCEPTS,
                                                 offset_stop=version in OFFSET_STOPS,
                                                 settled_offset_stop=version in SETTLED_OFFSET_STOP_VERSIONS,
-                                                wall_tangent=version == WALL_TANGENT_25_VERSION)
+                                                wall_tangent=version in WALL_TANGENT_VERSIONS)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -132,15 +134,17 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         radius = .60 if confirm or version == BRAKE_TUBE_25_VERSION else 0.
         neighbor_history = version in NEIGHBOR_HISTORY_VERSIONS
         standoff = .45 if version == CONFIRMED_STANDOFF_25_VERSION else 0.
+        inner = .41 if version == CONFIRMED_TUBE_25_VERSION else 0.
         for pipeline in self._control_pipelines:
             ics = pipeline.config.ics
             actual = (ics.motion_tube_radius_m, ics.motion_tube_confirm_closure,
-                      ics.motion_tube_neighbor_history, ics.confirmed_standoff_m)
-            if actual != (radius, confirm, neighbor_history, standoff):
+                      ics.motion_tube_neighbor_history, ics.confirmed_standoff_m, ics.confirmed_tube_radius_m)
+            if actual != (radius, confirm, neighbor_history, standoff, inner):
                 pipeline.config = replace(pipeline.config, ics=replace(ics, motion_tube_radius_m=radius,
                                                                       motion_tube_confirm_closure=confirm,
                                                                       motion_tube_neighbor_history=neighbor_history,
-                                                                      confirmed_standoff_m=standoff))
+                                                                      confirmed_standoff_m=standoff,
+                                                                      confirmed_tube_radius_m=inner))
 
     def enable_clearance_capture(self, radius_by_body):
         names = self._robot.body_names

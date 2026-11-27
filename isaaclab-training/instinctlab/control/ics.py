@@ -39,12 +39,13 @@ class ICSConfig:
     motion_tube_confirm_closure: bool = False
     motion_tube_neighbor_history: bool = False
     confirmed_standoff_m: float = 0.0
+    confirmed_tube_radius_m: float = 0.0
 
     def __post_init__(self) -> None:
         for name in (
             "d_safe_m", "emergency_clearance_m", "a_max_m_s2", "active_horizon_margin_m",
             "min_reliability", "velocity_limit_m_s", "latency_s", "clearance_margin_m",
-            "empty_active_set_beta", "motion_tube_radius_m", "confirmed_standoff_m",
+            "empty_active_set_beta", "motion_tube_radius_m", "confirmed_standoff_m", "confirmed_tube_radius_m",
         ):
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, (int, float)):
@@ -65,6 +66,8 @@ class ICSConfig:
             raise ValueError("empty_active_set_beta must be in [0, 1]")
         if not 0.0 <= self.motion_tube_radius_m <= self.d_safe_m:
             raise ValueError("motion tube radius must be in [0, d_safe_m]")
+        if not 0.0 <= self.confirmed_tube_radius_m <= self.motion_tube_radius_m:
+            raise ValueError("confirmed tube radius must fit inside the motion tube")
         if not isinstance(self.range_rate_filter, bool):
             raise TypeError("range_rate_filter must be boolean")
         if not isinstance(self.motion_tube_confirm_closure, bool):
@@ -214,6 +217,19 @@ def _fresh_history(state, reference, interval):
     return fresh & consecutive & gentle_rotation
 
 
+def _visible_inner_tube(ranges, reliable, rays, heading, gravity, radius):
+    """Certify forward depth using actual returns bracketing the request."""
+    cosine = (heading @ rays.T).clamp(-1., 1.)
+    depth = ranges*cosine[:, None]
+    across = ranges*(1.-cosine.square()).sqrt()[:, None]
+    occupied = reliable & (depth > 0.) & (depth <= 1.10) & (across < radius)
+    witness = reliable & (cosine[:, None] >= .99) & (depth > 1.10)
+    side = (torch.cross(gravity, heading, dim=1) @ rays.T) >= 0.
+    columns = [((witness & flank[:, None]).reshape(len(heading), 3, ELEVATION_SAMPLES, AZIMUTH_SAMPLES)
+                .any(dim=2).sum(dim=2) >= 3).all(dim=1) for flank in (side, ~side)]
+    return columns[0] & columns[1] & ~occupied.flatten(1).any(dim=1)
+
+
 def attenuate_command(
     lidar_grid: torch.Tensor,
     rays_body: torch.Tensor,
@@ -251,7 +267,7 @@ def attenuate_command(
     effective = latest_range - speed * config.latency_s - config.clearance_margin_m
     v_safe = torch.sqrt(2.0 * config.a_max_m_s2 * (effective - config.d_safe_m).clamp_min(0.0))
     reliable = latest_valid & (latest_reliability >= config.min_reliability)
-    if config.motion_tube_neighbor_history or config.confirmed_standoff_m > 0.:
+    if config.motion_tube_neighbor_history or config.confirmed_standoff_m > 0. or config.confirmed_tube_radius_m > 0.:
         fresh = _fresh_history(state_vec, speed, history_dt_s)
     if config.confirmed_standoff_m > 0.:
         last_two_rates = rates[:, -2:].flatten(2)
@@ -284,6 +300,17 @@ def attenuate_command(
             lanes, beam_ids = _neighbor_history(ranges.flatten(2), support, rays_body, v_gov_b, ambiguous,
                                                  across_m, parallel_m)
             outside[lanes, beam_ids] = True
+        if config.confirmed_tube_radius_m > 0.:
+            proof = (validity[:, -3:] & (reliability[:, -3:] >= .65)).flatten(2)
+            quiet = last_two_rates.abs().amax(dim=1) <= approach+.10
+            shoulder = (active & ~outside & (v_safe < closing) & (across_m >= config.confirmed_tube_radius_m)
+                        & proof.all(dim=1) & quiet & fresh & (speed <= .30))
+            lanes = shoulder.any(dim=1).nonzero().flatten()
+            if len(lanes):
+                heading = v_gov_b[lanes]/speed[lanes].clamp_min(1.e-6)
+                clear = _visible_inner_tube(ranges[lanes, -3:].flatten(2), proof[lanes], rays_body,
+                                            heading, state_vec[lanes, 42:45], config.confirmed_tube_radius_m)
+                outside[lanes[clear]] |= shoulder[lanes[clear]]
         active = active & ~outside
     ratios = (v_safe / closing.clamp_min(torch.finfo(v_gov_b.dtype).tiny)).clamp(0.0, 1.0)
     beta = torch.where(active, ratios, torch.ones_like(ratios)).min(dim=1, keepdim=True).values

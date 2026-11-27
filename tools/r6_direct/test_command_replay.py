@@ -812,6 +812,34 @@ def test_tangent_preserves_diagonal_progress_and_keeps_the_frontal_wall_stop():
     assert result.v_final_b[1].tolist() == [0.,0.,0.]
 
 
+def test_narrow_tube_needs_clear_axis_and_return_support_on_both_sides():
+    from dataclasses import replace
+
+    import torch
+    from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body
+
+    rays = mounted_mid360_rays_body()
+    forward = rays[:, 0] > .0
+    near = .80/rays[:, 0].clamp_min(.001)
+    far = 2.25/rays[:, 0].clamp_min(.001)
+    jamb = near*rays[:, 1] >= .42
+    side = torch.where(jamb, near, far)
+    unobserved = torch.where(jamb, near, torch.inf)
+    depths = torch.stack((side, near, unobserved, side)).masked_fill(~forward, torch.inf)
+    valid = depths <= 40.
+    scans = torch.stack((depths.clamp_max(40.), valid, valid), dim=1).reshape(4, 3, 59, 360).repeat(1, 4, 1, 1)
+    state = torch.zeros(4, 4, 13)
+    state[:, :, 5] = -1.
+    state[3, 1, 12] = .05
+    command = torch.tensor([[.24,0.,0.]]*4)
+    original = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60, motion_tube_confirm_closure=True)
+    base = attenuate_command(scans,rays,command,.1,original,state_vec=state.reshape(4, 52))
+    candidate = attenuate_command(scans,rays,command,.1,replace(original,confirmed_tube_radius_m=.41),
+                                  state_vec=state.reshape(4, 52))
+    assert base.metrics['beta'].flatten().tolist() == [0.]*4
+    assert candidate.metrics['beta'].flatten().tolist() == [1.,0.,0.,0.]
+
+
 def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):
     import json
     from training_workloads.unified_h1.command_replay_audit import verify_pulse_and_crossing

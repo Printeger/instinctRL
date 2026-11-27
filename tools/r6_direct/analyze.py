@@ -79,8 +79,8 @@ def analyze(input_pin, *, probability_diagnostic=None):
                 summary['lidar_mount'] = observed
             if operation == 'evaluate':
                 from training_workloads.unified_h1.command_replay import (
-                    BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, NEIGHBOR_HISTORY_EXECUTIONS, REGRESSION_ID,
-                    SETTLED_OFFSET_STOP_EXECUTIONS, WALL_TANGENT_EXECUTION,
+                    BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTION,
+                    NEIGHBOR_HISTORY_EXECUTIONS, REGRESSION_ID, SETTLED_OFFSET_STOP_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
                 )
 
                 if ctx['plan']['run_id'] == REGRESSION_ID:
@@ -96,8 +96,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['confirmed_standoff_m'] = .45
                     if override in SETTLED_OFFSET_STOP_EXECUTIONS:
                         expected['settled_offset_stop'] = True
-                    if override == WALL_TANGENT_EXECUTION:
+                    if override in WALL_TANGENT_EXECUTIONS:
                         expected['wall_tangent'] = True
+                    if override == CONFIRMED_TUBE_EXECUTION:
+                        expected['confirmed_tube_radius_m'] = .41
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))
